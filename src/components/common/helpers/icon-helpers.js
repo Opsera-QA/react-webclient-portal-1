@@ -1,4 +1,3 @@
-import {Image} from "react-bootstrap";
 import {faOctopusDeploy, faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import {
   faClipboardListCheck,
@@ -19,13 +18,13 @@ import {
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 import {vendorImageConstants} from "temp-library-components/image/vendorImage.constants";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
+import ImageBase from "temp-library-components/image/ImageBase";
 
 export function getLargeVendorIconFromToolIdentifier(
   toolIdentifier,
-  s3Bucket = process.env.REACT_APP_OPSERA_S3_STORAGE_URL,
   defaultIcon = faWrench,
-  height,
-  width,
+  maxHeight = 100,
+  maxWidth = 220,
 ) {
   if (toolIdentifier == null) {
     return <></>;
@@ -44,24 +43,68 @@ export function getLargeVendorIconFromToolIdentifier(
 
   switch (toolIdentifier) {
     case toolIdentifierConstants.TOOL_IDENTIFIERS.JIRA:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.JIRA} className={"jira-icon"} />;
+      return (
+        <ImageBase
+          className={"my-auto"}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.JIRA}
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.AWS_ACCOUNT:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.AWS_LAMDA:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.AWS_DEPLOY:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.AWS_ECS_DEPLOY:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.ELASTIC_BEANSTALK:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AWS} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AWS}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.BITBUCKET} className={"bitbucket-icon"} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.BITBUCKET}
+          className={"bitbucket-icon"}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.DOCKER_CLI:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.DOCKER_PUSH:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.DOCKER} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.DOCKER}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GITHUB} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GITHUB}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GITLAB} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GITLAB}
+        />
+      );
     case "git":
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GIT} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GIT}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_CLI:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_ACCOUNT:
@@ -72,54 +115,167 @@ export function getLargeVendorIconFromToolIdentifier(
     case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_ACR_PUSH:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_AKS_DEPLOY:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.S3:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AZURE} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AZURE}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.OCTOPUS:
-      return <IconBase icon={faOctopusDeploy} iconStyling={{color: "#0D80D8"}} iconClassName={"title-fa-icon"} />;
+      return (
+        <IconBase
+          icon={faOctopusDeploy}
+          iconStyling={{color: "#0D80D8"}}
+          iconClassName={"title-fa-icon"}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.SLACK:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.SLACK} className={"slack-icon"} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.SLACK}
+          className={"slack-icon"}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR:
-      return <IconBase icon={faSalesforce} iconStyling={{color: "#0D80D8"}} iconClassName={"title-fa-icon"} />;
+      return (
+        <IconBase
+          icon={faSalesforce}
+          iconStyling={{color: "#0D80D8"}}
+          iconClassName={"title-fa-icon"}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.JENKINS} className={"jenkins-icon"} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.JENKINS}
+          className={"jenkins-icon"}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.TEAMS:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.MICROSOFT_TEAMS} className={"small-title-icon"} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.MICROSOFT_TEAMS}
+          className={"small-title-icon"}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_CLOUD:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_VCS:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.TERRAFORM} className={"small-title-icon"} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.TERRAFORM}
+          className={"small-title-icon"}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.GCP_DEPLOY:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.GCP_ACCOUNT:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GOOGLE_CLOUD_PLATFORM} className={"small-title-icon"} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GOOGLE_CLOUD_PLATFORM}
+          className={"small-title-icon"}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.SELENIUM:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.SELENIUM} className={"selenium-icon"} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.SELENIUM}
+          className={"selenium-icon"}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.ANCHORE_SCAN:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.ANCHORE_INTEGRATOR:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.ANCHOR} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.ANCHOR}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
       return getVendorTitle(toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO);
     case toolIdentifierConstants.TOOL_IDENTIFIERS.SONAR:
     // TODO: Find better icon for Sonar. It looks bad
       return getVendorTitle("sonar");
-      // return <Image height={height} width={width} src={`${vendorIconPrefix}/sonarcube-65-250.png`} className={"sonarqube-icon"} />;
+      // return <ImageBase height={height} width={width} imageSource={`${vendorIconPrefix}/sonarcube-65-250.png`} className={"sonarqube-icon"} />;
     case toolIdentifierConstants.TOOL_IDENTIFIERS.JUNIT:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.JUNIT} className={"junit-icon"} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.JUNIT}
+          className={"junit-icon"}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.NEXUS:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.NEXUS} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.NEXUS}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.SPINNAKER:
       // TODO: Find better icon for spinnaker. It looks bad
       return getVendorTitle("spinnaker");
     case toolIdentifierConstants.TOOL_IDENTIFIERS.TEAMCITY:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.TEAMCITY} className={"teamcity-icon"} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.TEAMCITY}
+          className={"teamcity-icon"}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.TWISTLOCK:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.TWISTLOCK} className={"twistlock-icon"} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.TWISTLOCK}
+          className={"twistlock-icon"}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.XUNIT:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.XUNIT} className={"xunit-icon"} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.XUNIT}
+          className={"xunit-icon"}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.ANSIBLE:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.ANSIBLE} className={"ansible-icon"} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.ANSIBLE}
+          className={"ansible-icon"}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.MONGO_DB:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.MONGODB_REALM:
-      return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.MONGO_DB} />;
+      return (
+        <ImageBase
+          maxHeight={maxHeight}
+          maxWidth={maxWidth}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.MONGO_DB}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.CHILD_PIPELINE:
@@ -127,7 +283,12 @@ export function getLargeVendorIconFromToolIdentifier(
     case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.GITSCRAPER:
-      return <OpseraInfinityLogo desiredHeight={100} />;
+      return (
+        <OpseraInfinityLogo
+          desiredHeight={maxHeight}
+          desiredWidth={maxWidth}
+        />
+      );
     default:
       return (
         <IconBase
@@ -165,16 +326,16 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
       );
     case TASK_TYPE_CATEGORIES.GIT:
       return (
-        <Image
-          className={"icon-image"}
-          src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GIT}
+        <ImageBase
+          height={100}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GIT}
         />
       );
     case TASK_TYPE_CATEGORIES.AWS:
       return (
-        <Image
-          className={"icon-image"}
-          src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AWS}
+        <ImageBase
+          height={100}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AWS}
         />
       );
     case TASK_TYPE_CATEGORIES.COMPLIANCE:
@@ -186,9 +347,9 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
       );
     case TASK_TYPE_CATEGORIES.AZURE:
       return (
-        <Image
-          className={"icon-image"}
-          src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AZURE}
+        <ImageBase
+          height={100}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AZURE}
         />
       );
     default:
@@ -253,7 +414,6 @@ export function getLargeVendorIconComponentFromPipeline (pipeline) {
 
   return getLargeVendorIconFromToolIdentifier(
     toolIdentifier,
-    undefined,
     faDraftingCompass,
   );
 }

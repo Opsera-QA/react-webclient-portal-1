@@ -11,8 +11,8 @@ export default function OpseraInfinityLogo(
   return (
     <ImageBase
       className={className}
-      width={desiredWidth}
-      height={desiredHeight}
+      maxWidth={desiredWidth}
+      maxHeight={desiredHeight}
       altText={"Opsera Inc."}
       imageSource={"/img/logos/opsera_bird_infinity_171_126.png"}
     />

@@ -1,6 +1,6 @@
 import React from "react";
 import * as PropType from "prop-types";
-import { numberHelpers } from "components/common/helpers/number/number.helpers";
+import {Image} from "react-bootstrap";
 
 export default function ImageBase(
   {
@@ -9,10 +9,19 @@ export default function ImageBase(
     className,
     width,
     height,
+    maxWidth,
+    maxHeight,
   }) {
   return (
-    <div className={className}>
-      <img
+    <div
+      className={className}
+      style={{
+        maxHeight: maxHeight,
+        maxWidth: maxWidth,
+      }}
+    >
+      <Image
+        className={"img-fluid"}
         alt={altText}
         src={imageSource}
         width={width}
@@ -28,4 +37,6 @@ ImageBase.propTypes = {
   className: PropType.string,
   width: PropType.number,
   height: PropType.number,
+  maxWidth: PropType.number,
+  maxHeight: PropType.number,
 };
