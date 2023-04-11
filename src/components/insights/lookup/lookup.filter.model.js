@@ -10,6 +10,10 @@ const insightsLookupMetadata = {
       id: 'startDate'
     },
     {
+      label: "Search",
+      id: "search",
+    },
+    {
       label: 'End Date',
       id: 'endDate'
     },
@@ -18,20 +22,44 @@ const insightsLookupMetadata = {
       id: "activeFilters",
     },
     {
+      label: "Date Range",
+      id: "dateRange",
+    },
+    {
       label: "Component Names",
       id: "selectedComponentNames",
     },
     {
-      label: "Selected Component Filters",
+      label: "Component Type Filter",
       id: "selectedComponentFilterData",
+    },
+    {
+      label: "Component Pipeline Filter",
+      id: "pipelineComponentFilterData",
+    },
+    {
+      label: "Component Tasks Filter",
+      id: "tasksComponentFilterData",
+    },
+    {
+      label: "Component Orgs Filter",
+      id: "orgsComponentFilterData",
+    },
+    {
+      label: "Component Name Filter",
+      id: "namesFilterData",
     },
   ],
   newObjectFields: {
     startDate: null,
     endDate: null,
+    search: "",
     selectedComponentNames: [],
+    pipelineComponentFilterData: [],
+    orgsComponentFilterData:[],
     activeFilters: [],
     selectedComponentFilterData: [],
+    namesFilterData: [],
   },
 };
 

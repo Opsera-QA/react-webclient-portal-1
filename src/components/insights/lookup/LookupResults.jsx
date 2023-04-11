@@ -6,12 +6,12 @@ import TabTreeAndViewContainer from "components/common/tabs/tree/TabAndViewConta
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
-import LookupMultiSelectInput from "components/insights/lookup/LookupMultiSelectInput";
 
 function LookupResults({
                          isLoading,
                          loadData,
                          filterModel,
+                           setFilterModel,
                          searchResults,
                          salesforceComponentNames,
                          selectedComponentName,
@@ -19,8 +19,10 @@ function LookupResults({
                          noDataMessage,
                        }) {
   const handleTabClick = async (componentName) => {
+      let newFilterDto = filterModel;
     setSelectedComponentName(componentName);
     loadData(filterModel, componentName);
+      newFilterDto.setDefaultValue("search");
   };
 
   const getTabContainer = () => {
@@ -32,7 +34,12 @@ function LookupResults({
     }
 
     return (
-      <VanitySetVerticalTabContainer>
+      <VanitySetVerticalTabContainer
+          supportSearch={true}
+          filterModel={filterModel}
+          setFilterModel={setFilterModel}
+          loadData={loadData}
+      >
         {salesforceComponentNames?.map((component, index) => {
           const componentName = component;
           return (
@@ -77,7 +84,7 @@ function LookupResults({
         verticalTabContainer={getTabContainer()}
         currentView={getCurrentView()}
         tabColumnSize={3}
-        defaultActiveKey={0}
+        defaultActiveKey={salesforceComponentNames[0]}
       />
     );
   };
@@ -95,6 +102,7 @@ function LookupResults({
 LookupResults.propTypes = {
   isLoading: PropTypes.bool,
   filterModel: PropTypes.any,
+    setFilterModel: PropTypes.any,
   searchResults: PropTypes.array,
   salesforceComponentNames: PropTypes.array,
   loadData: PropTypes.func,

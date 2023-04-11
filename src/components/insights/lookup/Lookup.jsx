@@ -9,9 +9,14 @@ import {insightsLookupActions} from "components/insights/lookup/insightsLookup.a
 import LookupResults from "components/insights/lookup/LookupResults";
 import DateRangeInputBase from "components/common/inputs/date/range/DateRangeInputBase";
 import {formatDate} from "components/common/helpers/date/date.helpers";
-import LookupMultiSelectInput from "components/insights/lookup/LookupMultiSelectInput";
+import ComponentTypeSelectInput from "components/insights/lookup/filters/ComponentTypeSelectInput";
 import LookupFilterModel from "./lookup.filter.model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import TasksSelectInput from "./filters/TasksSelectInput";
+import OrgsSelectInput from "./filters/OrgsSelectInput";
+import PipelineSelectInput from "./filters/PipelineSelectInput";
+import DateRangeInput from "../../common/inputs/date/DateRangeInput";
+import ComponentNamesSelectInput from "./filters/ComponentNamesSelectInput";
 
 function Lookup() {
   const [isLoading, setIsLoading] = useState(false);
@@ -45,6 +50,8 @@ function Lookup() {
       return;
     }
 
+    const search = newFilterModel.getData("search");
+
     // TODO: This should just use the dates from the input and Node should do any processing on the date if necessary
     const DATE_STRING_FORMAT = "MM/dd/yyyy";
     const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
@@ -56,6 +63,10 @@ function Lookup() {
       formattedEndDate,
       newFilterModel.getData("selectedComponentNames"),
       newFilterModel.getData("selectedComponentFilterData"),
+      newFilterModel.getData("pipelineComponentFilterData"),
+      newFilterModel.getData("orgsComponentFilterData"),
+      newFilterModel
+     // newFilterModel.getData("tasksComponentFilterData"),
     );
     const names = response?.data?.data?.componentNames;
 
@@ -90,6 +101,7 @@ function Lookup() {
         formattedEndDate,
         [componentName],
         newFilterModel.getData("selectedComponentFilterData"),
+       //newFilterModel.getData("tasksComponentFilterData"),
       );
       const searchResults = insightsLookupActions.generateTransformedResults(
         response?.data?.data?.data,
@@ -113,10 +125,46 @@ function Lookup() {
 
   const getDropdownFilters = () => (
     <div className={"d-flex"}>
-      <div className={"mx-auto"}>
+      <div className={"mr-auto"}>
         <DateRangeInputBase
           model={filterModel}
           setModel={setFilterModel}
+        />
+        {/*<DateRangeInput*/}
+        {/*    dataObject={filterModel}*/}
+        {/*    setDataObject={setFilterModel}*/}
+        {/*    fieldName={"dateRange"}*/}
+        {/*/>*/}
+        <ComponentTypeSelectInput
+            fieldName={"selectedComponentFilterData"}
+            model={filterModel}
+            setModel={setFilterModel}
+            className={"mx-2"}
+        />
+        <ComponentNamesSelectInput
+            fieldName={"selectedComponentNames"}
+            model={filterModel}
+            setModel={setFilterModel}
+            className={"mx-2"}
+            data={salesforceComponentNames}
+        />
+        <PipelineSelectInput
+            fieldName={"pipelineComponentFilterData"}
+            model={filterModel}
+            setModel={setFilterModel}
+            className={"mx-2"}
+        />
+        <TasksSelectInput
+            fieldName={"tasksComponentFilterData"}
+            model={filterModel}
+            setModel={setFilterModel}
+            className={"mx-2"}
+        />
+        <OrgsSelectInput
+            fieldName={"orgsComponentFilterData"}
+            model={filterModel}
+            setModel={setFilterModel}
+            className={"mx-2"}
         />
       </div>
       {/* <AnalyticsSalesforceComponentNameMultiSelectInput
@@ -147,6 +195,7 @@ function Lookup() {
         <LookupResults
           isLoading={isLoading}
           filterModel={filterModel}
+          setFilterModel={setFilterModel}
           loadData={loadData}
           searchResults={searchResults}
           salesforceComponentNames={salesforceComponentNames}
@@ -173,12 +222,12 @@ function Lookup() {
       loadDataFunction={loadData}
       filters={getDropdownFilters()}
     >
-      <LookupMultiSelectInput
-        fieldName={"selectedComponentFilterData"}
-        model={filterModel}
-        setModel={setFilterModel}
-        className={"mx-2"}
-      />
+      {/*<ComponentTypeSelectInput*/}
+      {/*  fieldName={"selectedComponentFilterData"}*/}
+      {/*  model={filterModel}*/}
+      {/*  setModel={setFilterModel}*/}
+      {/*  className={"mx-2"}*/}
+      {/*/>*/}
       {getBody()}
     </ScreenContainer>
   );

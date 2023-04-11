@@ -10,6 +10,9 @@ insightsLookupActions.getComponentNames = async (
   endDate,
   componentNames,
   selectedComponentFilterData,
+  pipelineComponentFilterData,
+  orgsComponentFilterData,
+  tableFilterDto,
 ) => {
   const apiUrl = `/analytics/sfdc/v1/component/names`;
   const postBody = {
@@ -17,6 +20,9 @@ insightsLookupActions.getComponentNames = async (
     endDate: endDate,
     fullNameArr: componentNames,
     selectedComponentFilterData: selectedComponentFilterData,
+    pipelineComponentFilterData :pipelineComponentFilterData,
+    orgsComponentFilterData: orgsComponentFilterData,
+    search: tableFilterDto?.getData("search"),
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,

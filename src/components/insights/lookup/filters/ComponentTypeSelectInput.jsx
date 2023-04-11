@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {insightsLookupActions} from "components/insights/lookup/insightsLookup.actions";
-import {capitalizeFirstLetter} from "../../common/helpers/string-helpers";
+import {capitalizeFirstLetter} from "../../../common/helpers/string-helpers";
 
-function LookupMultiSelectInput(
+function ComponentTypeSelectInput(
   {
     fieldName,
     model,
@@ -50,41 +50,22 @@ function LookupMultiSelectInput(
     }
   };
 
-  const loadComponentNames = async () => {
-    const componentTypeResponse = await insightsLookupActions.getComponentTypes(
-      getAccessToken,
-      cancelTokenSource,
-    );
-    const pipelinesResponse = await insightsLookupActions.getPipelines(
-      getAccessToken,
-      cancelTokenSource,
-    );
-    const tasksResponse = await insightsLookupActions.getTasks(
-      getAccessToken,
-      cancelTokenSource,
-    );
-    const orgsResponse = await insightsLookupActions.getOrgs(
-      getAccessToken,
-      cancelTokenSource,
-    );
+    const loadComponentNames = async () => {
+      const componentTypeResponse = await insightsLookupActions.getComponentTypes(
+          getAccessToken,
+          cancelTokenSource,
+      );
 
-    const types = componentTypeResponse?.data?.data;
-    const pipelines = pipelinesResponse?.data?.results;
-    const tasks = tasksResponse?.data?.results;
-    const orgs = orgsResponse?.data?.results;
+      const types = componentTypeResponse?.data?.data;
+      console.log("types", types);
 
-    if (
-      isMounted?.current === true &&
-      Array.isArray(pipelines) &&
-      Array.isArray(pipelines) &&
-      Array.isArray(tasks) &&
-      Array.isArray(orgs) &&
-      Array.isArray(types)
-    ) {
-      const resultArray = [...types, ...pipelines, ...tasks, ...orgs];
-      setSalesforceComponentNames(resultArray);
-    }
-  };
+      if (
+          isMounted?.current === true &&
+          Array.isArray(types)
+      ) {
+        setSalesforceComponentNames(types);
+      }
+    };
 
   return (
     <MultiSelectInputBase
@@ -96,9 +77,9 @@ function LookupMultiSelectInput(
       selectOptions={salesforceComponentNames}
       formatDataFunction={formatDataFunction}
       clearDataFunction={clearDataFunction}
-      groupBy={(filterOption) =>
-        capitalizeFirstLetter(filterOption?.type, " ", "Undefined Type")
-      }
+      // groupBy={(filterOption) =>
+      //   capitalizeFirstLetter(filterOption?.type, " ", "Undefined Type")
+      // }
       textField={(data) =>
         capitalizeFirstLetter(data["type"]) +
         ": " +
@@ -113,7 +94,7 @@ function LookupMultiSelectInput(
   );
 }
 
-LookupMultiSelectInput.propTypes = {
+ComponentTypeSelectInput.propTypes = {
   className: PropTypes.string,
   fieldName: PropTypes.string,
   model: PropTypes.object,
@@ -126,8 +107,8 @@ LookupMultiSelectInput.propTypes = {
   clearDataFunction: PropTypes.func,
 };
 
-LookupMultiSelectInput.defaultProps = {
+ComponentTypeSelectInput.defaultProps = {
   textField: "name",
 };
 
-export default LookupMultiSelectInput;
+export default ComponentTypeSelectInput;
