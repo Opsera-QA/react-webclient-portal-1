@@ -1,6 +1,6 @@
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { faAws, faGitAlt, faMicrosoft, faSalesforce } from "@fortawesome/free-brands-svg-icons";
-import { faClipboardListCheck, faTasks } from "@fortawesome/pro-light-svg-icons";
+import {faClipboardListCheck, faShieldKeyhole, faTasks} from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Rewrite to follow current standards
 export const taskTypeConstants = {};
@@ -8,6 +8,10 @@ export const taskTypeConstants = {};
 taskTypeConstants.getIconForTaskType = (taskType) => {
   if (hasStringValue(taskType) === false) {
     return null;
+  }
+
+  if (taskType === TASK_TYPES.GITSCRAPER) {
+    return faShieldKeyhole;
   }
 
   const category = taskTypeConstants.getTaskCategoryForType(taskType);
