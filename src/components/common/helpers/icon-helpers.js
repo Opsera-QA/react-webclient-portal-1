@@ -1,8 +1,8 @@
 import {Image} from "react-bootstrap";
-import {faOctopusDeploy, faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import {faTasks, faWrench} from "@fortawesome/pro-light-svg-icons";
+import {faAws, faGitAlt, faMicrosoft, faOctopusDeploy, faSalesforce} from "@fortawesome/free-brands-svg-icons";
+import {faClipboardListCheck, faShieldKeyhole, faTasks, faWrench} from "@fortawesome/pro-light-svg-icons";
 import React from "react";
-import {TASK_TYPES} from "components/tasks/task.types";
+import {TASK_TYPE_CATEGORIES, TASK_TYPES, taskTypeConstants} from "components/tasks/task.types";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import IconBase from "components/common/icons/IconBase";
 
@@ -97,21 +97,61 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
 
   const vendorIconPrefix = `${process.env.REACT_APP_OPSERA_S3_STORAGE_URL}/vendor-logos`;
 
-  switch (taskType) {
-    case TASK_TYPES.SYNC_SALESFORCE_REPO:
-    case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
-      return <IconBase icon={faSalesforce} iconStyling={{color: "#0D80D8"}} iconClassName={"title-fa-icon icon-image"} />;
-    case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
-    case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
-    case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
-      return <Image className={"icon-image"} src={`${vendorIconPrefix}/icons8-amazon-web-services-96.png`} />;
-    case TASK_TYPES.SYNC_GIT_BRANCHES:
-      return <Image className={"icon-image"} src={`${vendorIconPrefix}/icons8-git-96.png`} />;
-    case TASK_TYPES.AZURE_CLUSTER_CREATION:
-      return <Image className={"icon-image"} src={`${vendorIconPrefix}/icons8-azure-96.png`} />;
+  if (taskType === TASK_TYPES.GITSCRAPER) {
+    return (
+      <IconBase
+        icon={faShieldKeyhole}
+        iconClassName={"title-fa-icon wrench"}
+      />
+    );
+  }
+
+  const category = taskTypeConstants.getTaskCategoryForType(taskType);
+
+  switch (category) {
+    case TASK_TYPE_CATEGORIES.SALESFORCE:
+      return (
+        <IconBase
+          icon={faSalesforce}
+          iconStyling={{color: "#0D80D8"}}
+          iconClassName={"title-fa-icon icon-image"}
+        />
+      );
+    case TASK_TYPE_CATEGORIES.GIT:
+      return (
+        <Image
+          className={"icon-image"}
+          src={`${vendorIconPrefix}/icons8-git-96.png`}
+        />
+      );
+    case TASK_TYPE_CATEGORIES.AWS:
+      return (
+        <Image
+          className={"icon-image"}
+          src={`${vendorIconPrefix}/icons8-amazon-web-services-96.png`}
+        />
+      );
+    case TASK_TYPE_CATEGORIES.COMPLIANCE:
+      return (
+        <IconBase
+          icon={faClipboardListCheck}
+          iconClassName={"title-fa-icon wrench"}
+        />
+      );
+    case TASK_TYPE_CATEGORIES.AZURE:
+      return (
+        <Image
+          className={"icon-image"}
+          src={`${vendorIconPrefix}/icons8-azure-96.png`}
+        />
+      );
     default:
-      return <IconBase icon={faTasks} iconClassName={"title-fa-icon wrench"} />;
+      return (
+        <IconBase
+          icon={faTasks}
+          iconClassName={"title-fa-icon wrench"}
+        />
+      );
   }
 }
 
