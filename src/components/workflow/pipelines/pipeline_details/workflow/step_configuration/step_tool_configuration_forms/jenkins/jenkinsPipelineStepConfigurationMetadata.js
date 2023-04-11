@@ -267,7 +267,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "useBuildStepResource"
     },
     {
-      label: "Build Step Info",
+      label: "Build Step",
       id: "buildStepId",
       isRequiredFunction: (model) => {
         return model?.getData("useBuildStepResource") === true;

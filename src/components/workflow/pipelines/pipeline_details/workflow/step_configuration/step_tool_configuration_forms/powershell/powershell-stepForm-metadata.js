@@ -34,18 +34,18 @@ const powershellStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Select SCM Type",
+      label: "Source Code Management Type",
       id: "type",
       isRequired: true
     },
     
     {
-      label: "Source Control Management Account",
+      label: "Source Code Management Tool",
       id: "gitCredential",
       isRequired: true
     },
     {
-      // label: "Select Account",
+      // label: "Source Code Management Tool",
       id: "gitToolId",
       isRequired: true
     },
@@ -57,7 +57,7 @@ const powershellStepFormMetadata = {
     },
     
     {
-      // label: "Type of GIT Service",
+      // label: "Source Code Management Type",
       id: "service",
       isRequired: true
     },
