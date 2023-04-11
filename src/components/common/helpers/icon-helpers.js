@@ -42,16 +42,16 @@ export function getLargeVendorIconFromToolIdentifier(
   });
 
   switch (toolIdentifier) {
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.ANCHORE_SCAN:
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.ANCHORE_INTEGRATOR:
-      return (
-        <ImageBase
-          className={"d-flex h-100"}
-          imageClassName={"my-auto"}
-          height={75}
-          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.ANCHOR}
-        />
-      );
+    // case toolIdentifierConstants.TOOL_IDENTIFIERS.ANCHORE_SCAN:
+    // case toolIdentifierConstants.TOOL_IDENTIFIERS.ANCHORE_INTEGRATOR:
+    //   return (
+    //     <ImageBase
+    //       className={"d-flex h-100"}
+    //       imageClassName={"my-auto"}
+    //       height={75}
+    //       imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.ANCHOR}
+    //     />
+    //   );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.ANSIBLE:
       return (
         <ImageBase
