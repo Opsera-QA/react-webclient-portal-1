@@ -126,7 +126,3 @@ vendorImageConstants.TOOL_IDENTIFIER_LOGOS = {
   XUNIT: vendorImageConstants.IMAGE_LINKS.XUNIT,
   YAML_GIT_PROCESSOR: undefined,
 };
-
-vendorImageConstants.FONTAWESOME_ICONS = {
-
-};
