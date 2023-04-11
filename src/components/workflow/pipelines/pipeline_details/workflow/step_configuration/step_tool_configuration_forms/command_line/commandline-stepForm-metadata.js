@@ -38,18 +38,18 @@ const commandLineStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "SCM Type",
+      label: "Source Code Management Type",
       id: "type",
       isRequired: true
     },
     
     {
-      label: "Account",
+      label: "Source Code Management Tool",
       id: "gitCredential",
       isRequired: true
     },
     {
-      // label: "Select Account",
+      // label: "Source Code Management Tool",
       id: "gitToolId",
       isRequired: true
     },
@@ -61,7 +61,7 @@ const commandLineStepFormMetadata = {
     },
     
     {
-      // label: "Type of GIT Service",
+      // label: "Source Code Management Type",
       id: "service",
       isRequired: true
     },
@@ -263,18 +263,18 @@ const commandLineStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Select SCM Type",
+      label: "Source Code Management Type",
       id: "type",
       isRequired: true
     },
     
     {
-      label: "Account",
+      label: "Source Code Management Tool",
       id: "gitCredential",
       isRequired: true
     },
     {
-      // label: "Select Account",
+      // label: "Source Code Management Tool",
       id: "gitToolId",
       isRequired: true
     },
@@ -289,7 +289,7 @@ const commandLineStepFormMetadata = {
     },
     
     {
-      // label: "Type of GIT Service",
+      // label: "Source Code Management Type",
       id: "service",
       isRequired: true
     },

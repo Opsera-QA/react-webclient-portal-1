@@ -52,7 +52,7 @@ const sonarPipelineStepMetadata = {
       },
     },
     {
-      label: "Sonar Credentials",
+      label: "SonarQube Tool",
       id: "sonarToolConfigId",
       isRequiredFunction: (model) => {
         return model?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB;

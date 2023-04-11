@@ -4,12 +4,12 @@ const dockerCliStepFormMetadata = {
   type: "Docker CLI Tool Configuration",
   fields: [
     {
-      label: "SCM Type",
+      label: "Source Code Management Type",
       id: "service",
       isRequired: true
     },
     {
-      label: "Select Account",
+      label: "Account",
       id: "gitToolId",
       isRequired: true
     },

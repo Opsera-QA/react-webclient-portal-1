@@ -29,8 +29,8 @@ const jfrogStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Repository Name",
-      id: "repositoryName",      
+      label: "Repository",
+      id: "repositoryName",
     },
     {
       label: "Job Description",
@@ -96,7 +96,7 @@ const jfrogStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Repository Name",
+      label: "Repository",
       id: "repositoryName",
     },
     {
@@ -130,6 +130,8 @@ const jfrogStepFormMetadata = {
     {
       label : "Repository Sub Folder Name",
       id: "repositorySubFolderName",
+      maxLength: 256,
+      regexDefinitionName: "generalTextWithSpacesSlash",
       isRequiredFunction: (model) => {
         return model?.getData("useRepositorySubFolderName") === true;
       },
