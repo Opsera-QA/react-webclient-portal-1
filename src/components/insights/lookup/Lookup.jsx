@@ -158,7 +158,7 @@ function Lookup() {
       helpComponent={<SalesforceLookUpHelpDocumentation/>}
       filterModel={filterModel}
       loadDataFunction={loadData}
-      filters={
+      filterOverlay={
         <SalesforceLookupFilters
           salesforceLookupFilterModel={filterModel}
           loadDataFunction={loadData}
