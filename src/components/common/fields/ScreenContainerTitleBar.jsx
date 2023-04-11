@@ -21,7 +21,7 @@ function ScreenContainerTitleBar(
     titleActionBar,
     helpComponent,
     isBeta,
-    filters,
+    filterOverlay,
     filterModel,
     setFilterModel,
     loadDataFunction,
@@ -70,8 +70,7 @@ function ScreenContainerTitleBar(
         />
         <EditFiltersIcon
           filterModel={filterModel}
-          filters={filters}
-          loadDataFunction={loadDataFunction}
+          filterOverlay={filterOverlay}
           className={"ml-3"}
         />
         <CopyToClipboardIconBase
@@ -123,7 +122,7 @@ ScreenContainerTitleBar.propTypes = {
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
   loadDataFunction: PropTypes.func,
-  filters: PropTypes.any,
+  filterOverlay: PropTypes.any,
   addRecordFunction: PropTypes.func,
   addRecordButtonCustomText: PropTypes.string,
 };
