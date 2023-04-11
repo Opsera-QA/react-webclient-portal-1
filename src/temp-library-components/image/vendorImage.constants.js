@@ -19,6 +19,7 @@ vendorImageConstants.IMAGE_LINKS = {
   MICROSOFT_TEAMS: `${baseBucketUrl}/icons8-microsoft-teams-48.png`,
   MONGO_DB: `${baseBucketUrl}/icons8-mongodb-96.png`,
   NEXUS: `${baseBucketUrl}/nexus-122-116.png`,
+  OPSERA: `/img/logos/opsera_bird_infinity_171_126.png`,
   SELENIUM: `${baseBucketUrl}/selenium-64-261.png`,
   SLACK: `${baseBucketUrl}/slack-64-252.png`,
   TEAMCITY: `${baseBucketUrl}/teamcity-120-120.png`,
@@ -27,7 +28,7 @@ vendorImageConstants.IMAGE_LINKS = {
   XUNIT: `${baseBucketUrl}/xunit-60-213.png`,
 };
 
-vendorImageConstants.TOOL_IDENTIFIER_IMAGES = {
+vendorImageConstants.TOOL_IDENTIFIER_LOGOS = {
   ANCHORE_INTEGRATOR: vendorImageConstants.IMAGE_LINKS.ANCHOR,
   ANCHORE_SCAN: vendorImageConstants.IMAGE_LINKS.ANCHOR,
   ANSIBLE: vendorImageConstants.IMAGE_LINKS.ANSIBLE,

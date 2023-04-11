@@ -18,6 +18,7 @@ import {
 } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 import {vendorImageConstants} from "temp-library-components/image/vendorImage.constants";
+import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 
 export function getLargeVendorIconFromToolIdentifier(
   toolIdentifier,
@@ -107,6 +108,11 @@ export function getLargeVendorIconFromToolIdentifier(
     case toolIdentifierConstants.TOOL_IDENTIFIERS.MONGO_DB:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.MONGODB_REALM:
       return <Image height={height} width={width} src={vendorImageConstants.IMAGE_LINKS.MONGO_DB} />;
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.CHILD_PIPELINE:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.PARALLEL_PROCESSOR:
+      return <OpseraInfinityLogo scale={.75} />;
     default:
       return (
         <IconBase
