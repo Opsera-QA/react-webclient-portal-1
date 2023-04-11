@@ -6,19 +6,17 @@ import ToolNameFieldDisplayer from "components/common/fields/inventory/name/Tool
 const SfdcPipelineWizardUploadComponentSummary = ({pipelineWizardModel}) => (
   <div className="my-3 p-3 message-field info-message-field mx-1">
     <span>
-      This is {pipelineWizardModel.getData('isOrgToOrg') === true 
-      ? 'Org to Org' : 'Git'} 
-      {` based pipeline & `} 
-      { pipelineWizardModel.getData('isOrgToOrg') === true 
+    Components will be Retrieved from 
+      {pipelineWizardModel.getData('isOrgToOrg') === true 
       ?
         <>
+          <span>{` Salesforce Org : `}</span>
           <ToolNameFieldDisplayer 
             toolId={pipelineWizardModel?.getData("sfdcToolId")}
             loadToolInNewWindow={true} 
           />
-          <span> Salesforce Org </span>
         </>
-      : `${pipelineWizardModel.getData('repository')} repository & ${pipelineWizardModel.getData('gitBranch')} branch`} will be used for fetching & validating components
+      : ` ${pipelineWizardModel.getData('repository')} Git repository and ${pipelineWizardModel.getData('gitBranch')} branch`}
     </span>
   </div>
 );
