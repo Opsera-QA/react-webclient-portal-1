@@ -50,6 +50,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
     "github-time-taken-to-complete-merge-request-review",
   GITHUB_TOTAL_COMMITS_BY_PROJECT: "github-total-commits-by-project",
   GITHUB_MERGE_REQUESTS_BY_MAXIMUM_TIME: "github-merge-request-by-maximum-time",
+  GITHUB_COMMITS_STATISTICS: "github-commit-statistics",
 
   // Gitlab
   GITLAB_COMMITS_BY_AUTHOR: "gitlab-commits-by-author",

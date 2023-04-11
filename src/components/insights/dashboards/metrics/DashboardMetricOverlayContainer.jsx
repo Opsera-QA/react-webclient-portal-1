@@ -49,6 +49,7 @@ import GithubTotalCommitsByProjectEditorPanel from "../../charts/github/pie_char
 import GithubMostActiveContributorsEditorPanel from "../../charts/github/table/most_active_contributors/GithubMostActiveContributorsEditorPanel";
 import GithubPendingMergeRequestsEditorPanel from "../../charts/github/table/pending_merge_requests/GithubPendingMergeRequestsEditorPanel";
 import GithubRecentMergeRequestsEditorPanel from "../../charts/github/table/recent_merge_requests/GithubRecentMergeRequestsEditorPanel";
+import GithubCommitsStatisticsEditorPanel from "../../charts/github/pie_chart/commits_statistics/GithubCommitsStatisticsEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer({
@@ -496,6 +497,16 @@ function DashboardMetricOverlayContainer({
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_RECENT_MERGE_REQUESTS:
         return (
           <GithubRecentMergeRequestsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_COMMITS_STATISTICS:
+        return (
+          <GithubCommitsStatisticsEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}

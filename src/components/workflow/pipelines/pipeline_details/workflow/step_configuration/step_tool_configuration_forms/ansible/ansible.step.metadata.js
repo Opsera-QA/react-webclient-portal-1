@@ -25,7 +25,7 @@ const ansibleStepMetadata = {
       dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
-      label: "Source Code Management Type",
+      label: "Source Control Management Type",
       id: "service",
     },
     {
