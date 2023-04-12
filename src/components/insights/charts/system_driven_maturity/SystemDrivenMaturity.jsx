@@ -9,8 +9,7 @@ import SystemDrivenMaturityHelpDocumentation from "components/common/help/docume
 import {
   getDeploymentStageFromKpiConfiguration,
   getResultFromKpiConfiguration,
-  getUseDashboardTagsFromKpiConfiguration,
-  MATURITY_SCORE_TEXT
+  getUseDashboardTagsFromKpiConfiguration
 } from "../charts-helpers";
 import doraActions from "../dora/dora.action";
 import SystemDrivenMaturityChart from './SystemDrivenMaturityChart';
@@ -57,23 +56,23 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
       const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
 
       if (selectedDeploymentStages && jiraResolutionNames?.length && useDashboardTags && dashboardOrgs?.length) {
-        const response = await doraActions.jiraGitlabRolledUp(
+        const response = await doraActions.systemDrivenMaturityGroups({
           getAccessToken,
           cancelSource,
           kpiConfiguration,
           dashboardTags,
           dashboardOrgs,
           jiraResolutionNames
-        );
+        });
 
-        const metrics = response?.data?.data;
+        const maturityScores = response?.data?.data;
 
-        if (isMounted?.current === true && metrics?.length) {
+        if (isMounted?.current === true && Object.keys(maturityScores).length) {
           setMetricData(
-            metrics.map(({ name, overallMaturityScoreText }) => ({
+            maturityScores.map(({ name, overallMaturityScoreText, previousOverallMaturityScoreText }) => ({
               name,
               score: overallMaturityScoreText,
-              previousScore: MATURITY_SCORE_TEXT.LOW // TODO: set from api
+              previousScore: previousOverallMaturityScoreText
             }))
           );
         } else {
@@ -92,12 +91,12 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
     }
   };
 
-  const onRowSelect = orgTag => {
+  const onRowSelect = group => {
     toastContext.showOverlayPanel(
       <SystemDrivenMaturityOverlay
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
-        orgTag={orgTag}
+        group={group}
       />
     );
   };

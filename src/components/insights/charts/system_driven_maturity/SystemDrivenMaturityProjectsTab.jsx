@@ -11,7 +11,7 @@ import doraActions from "../dora/dora.action";
 import { MaturityScoreItemType } from './maturityScoreItemType';
 import SystemDrivenMaturityTimelineChart from './SystemDrivenMaturityTimelineChart';
 
-function SystemDrivenMaturityProjectsTab ({ kpiConfiguration, dashboardData, group }) {
+function SystemDrivenMaturityProjectsTab ({ kpiConfiguration, dashboardData, orgTag }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metricData, setMetricData] = useState(null);
@@ -54,7 +54,7 @@ function SystemDrivenMaturityProjectsTab ({ kpiConfiguration, dashboardData, gro
         dashboardTags,
         dashboardOrgs,
         jiraResolutionNames,
-        group: group?.name
+        orgTag: orgTag?.name
       });
 
       const projects = response?.data?.projects;
@@ -100,7 +100,7 @@ function SystemDrivenMaturityProjectsTab ({ kpiConfiguration, dashboardData, gro
 SystemDrivenMaturityProjectsTab.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  group: MaturityScoreItemType,
+  orgTag: MaturityScoreItemType,
 };
 
 export default SystemDrivenMaturityProjectsTab;
