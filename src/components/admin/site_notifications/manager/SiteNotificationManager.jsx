@@ -31,6 +31,10 @@ function SiteNotificationManager() {
 
   const loadData = async () => {
     try {
+      if (isOpseraAdministrator !== true) {
+        return;
+      }
+
       setIsLoading(true);
       await getSiteNotifications();
     } catch (error) {
@@ -53,6 +57,10 @@ function SiteNotificationManager() {
       setSiteWideNotificationData(siteWideNotification);
     }
   };
+
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
 
   return (
     <DetailScreenContainer
