@@ -11,7 +11,7 @@ export default function Reports() {
     accessRoleData,
     isOpseraAdministrator,
     isSiteAdministrator,
-    isSassUser,
+    isSaasUser,
     isPowerUser,
     isSecurityManager,
     isAuditor,
@@ -24,7 +24,7 @@ export default function Reports() {
   if (
     isOpseraAdministrator !== true
     && isSiteAdministrator !== true
-    && isSassUser !== true
+    && isSaasUser !== true
     && isPowerUser !== true
     && isSecurityManager !== true
     && isAuditor !== true

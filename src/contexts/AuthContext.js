@@ -144,7 +144,6 @@ const AuthContextProvider = (
       userAccessRoles: userAccessRoles,
       isPowerUser: userAccessRoles?.PowerUser === true,
       isSiteAdministrator: userAccessRoles?.Administrator === true,
-      isSassUser: () => userAccessRoles?.SassPowerUser === true,
       isOpseraAdministrator:() => userAccessRoles?.OpseraAdministrator === true,
       getUserRecord: () => userData,
     }}>
