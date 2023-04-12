@@ -1,8 +1,6 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import { Button } from "react-bootstrap";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import taskActions from "components/tasks/task.actions";
 import RoleRestrictedJenkinsToolMultiSelectInput
   from "components/common/list_of_values_input/tools/jenkins/tool/RoleRestrictedJenkinsToolMultiSelectInput";
@@ -12,8 +10,8 @@ function JenkinsSynchPanel({gitTasksData, setGitTasksData}) {
     const [isSynching, setIsSynching] = useState(false);
     const {
       getAccessToken,
+      toastContext,
     } = useComponentStateReference();
-    let toastContext = useContext(DialogToastContext);
 
     const handleSynch = async() => {
         console.log("Trigger kafka call here"); 
