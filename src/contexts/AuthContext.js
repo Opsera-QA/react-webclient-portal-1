@@ -141,15 +141,12 @@ const AuthContextProvider = (
       organizationSettingsRecord: organizationSettingsRecord,
       featureFlags: featureFlags,
 
-      // TODO: Remove after updating uses to use newer hooks instead
-      getAccessRoleData: () => userAccessRoles,
       userAccessRoles: userAccessRoles,
       isPowerUser: userAccessRoles?.PowerUser === true,
       isSiteAdministrator: userAccessRoles?.Administrator === true,
       isSassUser: () => userAccessRoles?.SassPowerUser === true,
       isOpseraAdministrator:() => userAccessRoles?.OpseraAdministrator === true,
       getUserRecord: () => userData,
-      setAccessRoles: () => userAccessRoles,
     }}>
       <MainViewContainer
         backgroundColor={backgroundColor}
