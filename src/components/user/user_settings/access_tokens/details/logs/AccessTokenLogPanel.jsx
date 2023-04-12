@@ -15,7 +15,6 @@ function AccessTokenLogPanel({ accessToken }) {
     cancelTokenSource,
     toastContext,
     isMounted,
-    accessRoleData,
     getAccessToken,
   } = useComponentStateReference();
 

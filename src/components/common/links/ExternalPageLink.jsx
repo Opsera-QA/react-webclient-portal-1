@@ -13,8 +13,6 @@ export default function ExternalPageLink(
     tooltip,
     tooltipPlacement,
   }) {
-
-
   return (
     <TooltipWrapper
       innerText={tooltip}
