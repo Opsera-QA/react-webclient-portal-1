@@ -233,6 +233,11 @@ export const getTagColumn = (field, className) => {
     accessor: getCustomTableAccessor(field),
     Cell: function stringifyArray(row) {
       const tags = row?.value;
+      console.log("tags", tags);
+      console.log(<AppliedTagBadge
+          className={"group-badge"}
+          tags={tags}
+      />);
 
       return (
         <AppliedTagBadge

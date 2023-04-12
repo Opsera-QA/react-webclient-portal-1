@@ -93,6 +93,7 @@ function Lookup() {
         newFilterModel.getData("selectedComponentFilterData"),
        //newFilterModel.getData("tasksComponentFilterData"),
       );
+      console.log("response", response);
       const searchResults = insightsLookupActions.generateTransformedResults(
         response?.data?.data?.data,
       );
@@ -126,6 +127,8 @@ function Lookup() {
     //   return "Please select at least one Salesforce component.";
     // }
   };
+
+  console.log("searchResults");
 
   const getBody = () => {
     return (
@@ -166,12 +169,6 @@ function Lookup() {
         />
       }
     >
-      {/*<SalesforceComponentTypeMultiSelectInput*/}
-      {/*  fieldName={"selectedComponentFilterData"}*/}
-      {/*  model={filterModel}*/}
-      {/*  setModel={setFilterModel}*/}
-      {/*  className={"mx-2"}*/}
-      {/*/>*/}
       {getBody()}
     </ScreenContainer>
   );

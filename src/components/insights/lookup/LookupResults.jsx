@@ -56,6 +56,8 @@ function LookupResults({
     );
   };
 
+    console.log("selected", searchResults);
+
   const getCurrentView = () => {
     const selectedComponent = searchResults?.find(
       (component) => component.componentName === selectedComponentName,
@@ -72,6 +74,8 @@ function LookupResults({
           <InsightsLookupPipelinesTable
             pipelines={selectedComponent?.pipelines}
             componentName={selectedComponentName}
+            startDate = {filterModel?.getData("startDate")}
+            endDate = {filterModel?.getData("endDate")}
           />
         </div>
       );
@@ -84,7 +88,7 @@ function LookupResults({
         verticalTabContainer={getTabContainer()}
         currentView={getCurrentView()}
         tabColumnSize={3}
-        defaultActiveKey={salesforceComponentNames[0]}
+        defaultActiveKey={0}
       />
     );
   };

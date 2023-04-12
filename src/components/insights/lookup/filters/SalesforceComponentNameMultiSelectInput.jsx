@@ -16,7 +16,6 @@ function SalesforceComponentNameMultiSelectInput(
     className,
     data,
     placeholderText,
-    disabled,
   }) {
   const [salesforceComponentNames, setSalesforceComponentNames] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -54,6 +53,9 @@ function SalesforceComponentNameMultiSelectInput(
     setSalesforceComponentNames(data);
   };
 
+  const disabled = model.getArrayData('selectedComponentFilterData').length === 0;
+  console.log("disabled", disabled);
+
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
@@ -65,7 +67,7 @@ function SalesforceComponentNameMultiSelectInput(
       error={error}
       textField={textField}
       placeholderText={placeholderText}
-      disabled={disabled}
+      disabled={disabled || isLoading}
       pluralTopic={"Filters"}
     />
   );
@@ -83,7 +85,6 @@ SalesforceComponentNameMultiSelectInput.propTypes = {
   clearDataFunction: PropTypes.func,
   data: PropTypes.any,
   placeholderText: PropTypes.string,
-  disabled: PropTypes.bool,
 };
 
 SalesforceComponentNameMultiSelectInput.defaultProps = {

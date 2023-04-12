@@ -7,13 +7,15 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import InsightsLookupDetailsTable from "./InsightsLookupDetailsTable";
 import axios from "axios";
 
-const InsightsLookupPipelineOverlay = ({ componentName }) => {
+const InsightsLookupPipelineOverlay = ({ componentName, pipeline }) => {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [lookupDetails, setLookupDetails] = useState([]);
+
+  console.log("pipeline", pipeline);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -103,6 +105,7 @@ const InsightsLookupPipelineOverlay = ({ componentName }) => {
 
 InsightsLookupPipelineOverlay.propTypes = {
   componentName: PropTypes.string,
+  pipeline: PropTypes.string,
 };
 
 export default InsightsLookupPipelineOverlay;

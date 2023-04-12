@@ -61,12 +61,17 @@ const initialState = {
   ],
 };
 
-const InsightsLookupPipelinesTable = ({ pipelines, componentName }) => {
+const InsightsLookupPipelinesTable = ({ pipelines, componentName, startDate,endDate }) => {
   const toastContext = useContext(DialogToastContext);
 
+  console.log("start", startDate.toISOString());
+  console.log("end", endDate.toISOString());
+  console.log("pipelines", pipelines);
+
   const onRowSelect = (row) => {
+    console.log("row", row);
     toastContext.showOverlayPanel(
-      <InsightsLookupPipelineOverlay componentName={componentName} />,
+      <InsightsLookupPipelineOverlay componentName={componentName} pipeline={row?.original?.pipelineId} />,
     );
   };
 
@@ -107,6 +112,8 @@ const InsightsLookupPipelinesTable = ({ pipelines, componentName }) => {
 InsightsLookupPipelinesTable.propTypes = {
   pipelines: PropTypes.array,
   componentName: PropTypes.string,
+  startDate: PropTypes.string,
+  endDate: PropTypes.string,
 };
 
 export default InsightsLookupPipelinesTable;

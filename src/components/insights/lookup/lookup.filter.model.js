@@ -1,6 +1,8 @@
 import FilterModelBase from "core/data_model/filterModel.base";
 import { formatDate, hasDateValue } from "components/common/helpers/date/date.helpers";
 import {subDays} from "date-fns";
+import AppliedTagBadge from "../../common/badges/tag/AppliedTagBadge";
+import React from "react";
 
 const insightsLookupMetadata = {
   idProperty: "_id",
@@ -76,7 +78,6 @@ export class LookupFilterModel extends FilterModelBase {
     const DATE_STRING_FORMAT = "MM/dd/yyyy";
 
     const startDate = this.getData("startDate");
-
     if (hasDateValue(startDate) === true) {
       const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
       activeFilters.push({
@@ -93,6 +94,54 @@ export class LookupFilterModel extends FilterModelBase {
         text: `End Date: ${formattedEndDate}`
       });
     }
+
+    const type = [{type: 'task', value: 'hemadri-task'}];
+    if(type.length > 0) {
+      if (hasDateValue(type) === true) {
+        activeFilters.push(
+        <AppliedTagBadge
+            className={"group-badge"}
+            tags={type}
+        />
+        );
+      }
+    }
+
+    const name = this.getData("selectedComponentNames");
+    if(name.length > 0) {
+      if (hasDateValue(name) === true) {
+        activeFilters.push({
+          filterId: "Name",
+          text: `Name : ${name}`
+        });
+      }
+    }
+
+    const pipeline = this.getData("pipelineComponentFilterData");
+    if(pipeline.length > 0) {
+      for (let temp in pipeline) {
+        if (hasDateValue(pipeline) === true) {
+          activeFilters.push({
+            filterId: "Pipeline",
+            text: `Pipeline : ${pipeline[temp].name}`
+          });
+        }
+      }
+    }
+
+    const org = this.getData("orgsComponentFilterData");
+    if(org.length > 0) {
+      for (let temp in org) {
+        if (hasDateValue(org) === true) {
+          activeFilters.push({
+            filterId: "Org",
+            text: `Org : ${org[temp].name}`
+          });
+        }
+      }
+    }
+
+    console.log("active", activeFilters);
 
     return activeFilters;
   };
