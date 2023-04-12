@@ -77,7 +77,7 @@ export default function FilterSelectionOverlayContainer(
           <VanityButtonBase
             onClickFunction={loadFilters}
             normalText={"Filter"}
-            className={"mr-2"}
+            className={"ml-3"}
             icon={faFilter}
           />
           {/*<VanityButtonBase*/}
@@ -87,7 +87,7 @@ export default function FilterSelectionOverlayContainer(
           {/*  variant={"outline-secondary"}*/}
           {/*  icon={<StackedFilterRemovalIcon />}*/}
           {/*/>*/}
-          <div className={"ml-2"}>
+          <div className={"ml-3"}>
             <Button
               variant={"outline-secondary"}
               onClick={() => resetFilters()}
@@ -103,7 +103,7 @@ export default function FilterSelectionOverlayContainer(
           <CancelButton
             cancelFunction={closePanelFunction}
             size={"md"}
-            className={"ml-2"}
+            className={"ml-3"}
           />
         </ButtonContainerBase>
       </div>

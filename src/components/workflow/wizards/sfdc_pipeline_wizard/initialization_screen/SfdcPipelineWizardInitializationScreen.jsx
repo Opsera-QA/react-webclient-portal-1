@@ -19,7 +19,6 @@ import SfdcPipelineWizardFileUploadComponent
   from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardFileUploadComponent";
 import SfdcPipelineWizardPastRunComponent
   from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardPastRunComponent";
-import toolsActions from "components/inventory/tools/tools-actions";
 const DataParsingHelper = require("@opsera/persephone/helpers/data/dataParsing.helper");
 
 const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, pipeline, gitTaskData, setError }) => {
@@ -73,6 +72,29 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
+    }
+  };
+
+  const getLatestApiVersion = async (sfdcToolId) => {
+    try {
+      const response = await sfdcPipelineActions.getApiVersions(
+        getAccessToken,
+        cancelTokenSource,
+        sfdcToolId,
+      );
+      let apiVersions = DataParsingHelper.parseNestedArray(
+        response,
+        "data.message",
+        [],
+      );
+      if (apiVersions && apiVersions.length > 0) return apiVersions[0];
+      return "";
+    } catch (error) {
+      console.error(error);
+      setError(
+        "Could not get default API version for Salesforce Pipeline",
+      );
+      return "";
     }
   };
 
@@ -189,6 +211,9 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   const initializePipelineWizardRecord = async (newPipelineWizardModel = pipelineWizardModel) => {
     const result = await sfdcPipelineActions.findExistingRecordV2(getAccessToken, cancelTokenSource, newPipelineWizardModel);
     const existingRecord = result?.data;
+
+    let apiVersion = existingRecord?.apiVersion ? existingRecord?.apiVersion : await getLatestApiVersion(newPipelineWizardModel.getData("sfdcToolId"));
+    newPipelineWizardModel.setData("apiVersion", apiVersion);
 
     if (existingRecord) {
       setExistingRecord(existingRecord);

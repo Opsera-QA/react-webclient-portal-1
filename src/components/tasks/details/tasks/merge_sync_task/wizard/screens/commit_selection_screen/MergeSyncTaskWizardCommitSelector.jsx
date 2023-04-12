@@ -22,6 +22,7 @@ const MergeSyncTaskWizardCommitSelector = ({
   setWizardModel,
   setCurrentScreen,
   handleClose,
+  skipConfig,
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -140,6 +141,8 @@ const MergeSyncTaskWizardCommitSelector = ({
         <BackButton
           className={"mr-2"}
           backButtonFunction={() => {
+            skipConfig ? 
+            setCurrentScreen(MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN) : 
             setCurrentScreen(MERGE_SYNC_WIZARD_SCREENS.FILE_SELECTION_SCREEN);
           }}
         />
@@ -163,6 +166,7 @@ MergeSyncTaskWizardCommitSelector.propTypes = {
   setWizardModel: PropTypes.func,
   setCurrentScreen: PropTypes.func,
   handleClose: PropTypes.func,
+  skipConfig: PropTypes.bool,
 };
 
 export default MergeSyncTaskWizardCommitSelector;
