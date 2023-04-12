@@ -1,12 +1,8 @@
-import { AuthContext } from "contexts/AuthContext";
-import React, {useContext, useEffect, useRef, useState} from "react";
-import { DialogToastContext } from "contexts/DialogToastContext";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 import ToolIdentifierTableCardView from "components/admin/tools/identifiers/ToolIdentifierTableCardView";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ToolManagementSubNavigationBar from "components/admin/tools/ToolManagementSubNavigationBar";
 import ToolFilterModel from "components/inventory/tools/tool.filter.model";
 import useComponentStateReference from "hooks/useComponentStateReference";
@@ -66,9 +62,6 @@ function ToolIdentifierManagement() {
 
   return (
     <ScreenContainer
-      accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
-      isLoading={!accessRoleData || isLoading}
       navigationTabContainer={<ToolManagementSubNavigationBar activeTab={"identifiers"}/>}
       breadcrumbDestination={"toolManagement"}
     >
