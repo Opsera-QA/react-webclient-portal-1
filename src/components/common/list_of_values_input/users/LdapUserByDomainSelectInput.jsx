@@ -1,11 +1,9 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import axios from "axios";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function LdapUserByDomainSelectInput(
   {
@@ -18,55 +16,41 @@ function LdapUserByDomainSelectInput(
     setDataFunction,
     organizationDomain,
   }) {
-  const { getAccessToken, getUserRecord, setAccessRoles, isSassUser } = useContext(AuthContext);
-  const toastContext  = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [users, setUsers] = useState([]);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    cancelTokenSource,
+    isMounted,
+    getAccessToken,
+    isSaasUser,
+    domain,
+    isOpseraAdministrator,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    isMounted.current = true;
-
-    if (isSassUser() === false) {
-      loadData(source).catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      setIsLoading(true);
-      const user = await getUserRecord();
-      const ldap = user?.ldap;
-      const userRoleAccess = await setAccessRoles(user);
+      setUsers([]);
 
-      if (userRoleAccess && userRoleAccess?.Type !== "sass-user" && ldap?.domain != null) {
-        // Because Opsera Administrators can add LDAP Groups, Departments, etc. we need to be able to force lookup
-        // for users in those domains. Otherwise, we default to users in the active user's organization account.
-        const domainToCheck =
-          hasStringValue(organizationDomain) && userRoleAccess?.OpseraAdministrator ? organizationDomain : ldap?.domain;
-        await getUsers(cancelSource, domainToCheck);
+      if (isSaasUser !== false) {
+        return;
       }
+
+      setIsLoading(true);
+        const domainToCheck =
+          hasStringValue(organizationDomain) && isOpseraAdministrator === true ? organizationDomain : domain;
+        await getUsers(cancelSource, domainToCheck);
     }
     catch (error) {
-      console.error(error);
-      toastContext.showErrorDialog(error,"Could not load users.");
+      setError(error);
     }
     finally {
       setIsLoading(false);
@@ -88,7 +72,7 @@ function LdapUserByDomainSelectInput(
     }
   };
 
-  if (isSassUser() === true) {
+  if (isSaasUser !== false) {
     return null;
   }
 
@@ -96,7 +80,6 @@ function LdapUserByDomainSelectInput(
     <SelectInputBase
       fieldName={fieldName}
       busy={isLoading}
-      placeholderText={"Select User"}
       valueField={valueField}
       textField={textField}
       showClearValueButton={showClearValueButton}
@@ -104,6 +87,9 @@ function LdapUserByDomainSelectInput(
       setDataFunction={setDataFunction}
       dataObject={model}
       selectOptions={users}
+      singularTopic={"User"}
+      pluralTopic={"Users"}
+      error={error}
     />
   );
 }

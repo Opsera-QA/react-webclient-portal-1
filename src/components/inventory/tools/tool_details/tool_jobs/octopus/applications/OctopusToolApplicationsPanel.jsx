@@ -11,7 +11,7 @@ import {AuthContext} from "contexts/AuthContext";
 import octopusActions from "components/inventory/tools/tool_details/tool_jobs/octopus/octopus-actions";
 
 function OctopusToolApplicationsPanel({ toolData }) {
-  const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
   const [octopusApplications, setOctopusApplications] = useState([]);
   const [octopusApplicationData, setOctopusApplicationData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +62,6 @@ function OctopusToolApplicationsPanel({ toolData }) {
   const getOctopusApplications = async (filterDto = parameterFilterModel, cancelSource = cancelTokenSource) => {
     const response = await octopusActions.getOctopusApplicationsV2(getAccessToken, cancelSource, toolData?.getData("_id"));
     const applications = response?.data?.data;
-    // const userRoleAccess = await getAccessRoleData();
 
     if (isMounted?.current === true && Array.isArray(applications)) {
       setOctopusApplications([...applications]);

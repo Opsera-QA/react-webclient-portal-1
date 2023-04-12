@@ -1,41 +1,20 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import ActionBarButton from "./ActionBarButton";
 import {faTrash} from "@fortawesome/pro-light-svg-icons";
 import {useHistory} from "react-router-dom";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import DeleteModal from "components/common/modal/DeleteModal";
-import {AuthContext} from "contexts/AuthContext";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ActionBarOpseraAdminDeleteButton({handleDelete, relocationPath, dataObject, className}) {
-  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const isMounted = useRef(false);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
+  const {
+    isOpseraAdministrator,
+    toastContext,
+  } = useComponentStateReference();
 
-  useEffect(() => {
-    isMounted.current = true;
-
-    getRoles().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
-  const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (isMounted?.current === true && userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-    }
-  };
+  useEffect(() => {}, []);
 
   const deleteObject = async () => {
     try {
@@ -65,7 +44,7 @@ function ActionBarOpseraAdminDeleteButton({handleDelete, relocationPath, dataObj
     setShowDeleteModal(true);
   };
 
-  if (accessRoleData == null || !accessRoleData?.OpseraAdministrator) {
+  if (isOpseraAdministrator !== true) {
     return null;
   }
 

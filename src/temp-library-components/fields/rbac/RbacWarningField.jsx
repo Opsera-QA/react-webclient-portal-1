@@ -9,13 +9,13 @@ import VanityInlineError from "temp-library-components/fields/info/VanityInlineE
 export default function RbacWarningField({ model }) {
   const currentData = model?.getCurrentData();
   const {
-    isSassUser,
+    isSaasUser,
   } = useComponentStateReference();
   const {
     user,
   } = useGetUserById(model?.getData("owner"));
 
-  if (isSassUser !== false) {
+  if (isSaasUser !== false) {
     return null;
   }
 

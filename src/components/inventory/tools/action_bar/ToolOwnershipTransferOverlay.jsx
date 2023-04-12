@@ -17,7 +17,7 @@ export default function ToolOwnershipTransferOverlay(
   const [toolCopy, setToolCopy] = useState(undefined);
   const {
     cancelTokenSource,
-    isSassUser,
+    isSaasUser,
     getAccessToken,
     userData,
     toastContext,
@@ -61,7 +61,7 @@ export default function ToolOwnershipTransferOverlay(
     toastContext.clearOverlayPanel();
   };
 
-  if (isSassUser !== false || toolModel?.canTransferRegistryToolOwnership() !== true) {
+  if (isSaasUser !== false || toolModel?.canTransferRegistryToolOwnership() !== true) {
     return null;
   }
 

@@ -20,7 +20,7 @@ export default function CustomerPipelineTemplateOwnershipTransferOverlay(
   const [pipelineTemplateCopy, setPipelineTemplateCopy] = useState(undefined);
   const {
     cancelTokenSource,
-    isSassUser,
+    isSaasUser,
     getAccessToken,
     userData,
     toastContext,
@@ -69,7 +69,7 @@ export default function CustomerPipelineTemplateOwnershipTransferOverlay(
     toastContext.clearOverlayPanel();
   };
 
-  if (isSassUser !== false) {
+  if (isSaasUser !== false) {
     return null;
   }
 

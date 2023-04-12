@@ -12,7 +12,7 @@ function ActionBarTransferToolButton(
     className,
   }) {
   const {
-    isSassUser,
+    isSaasUser,
     toastContext,
   } = useComponentStateReference();
 
@@ -26,7 +26,7 @@ function ActionBarTransferToolButton(
     );
   };
 
-  if (isSassUser !== false || toolModel?.canTransferRegistryToolOwnership() !== true) {
+  if (isSaasUser !== false || toolModel?.canTransferRegistryToolOwnership() !== true) {
     return null;
   }
 

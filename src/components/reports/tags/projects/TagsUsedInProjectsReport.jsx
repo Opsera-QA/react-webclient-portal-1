@@ -16,7 +16,7 @@ function TagsUsedInProjectsReport() {
   const {
     isOpseraAdministrator,
     isSiteAdministrator,
-    isSassUser,
+    isSaasUser,
     isPowerUser,
     isSecurityManager,
     isAuditor,
@@ -25,7 +25,7 @@ function TagsUsedInProjectsReport() {
   if (
     isOpseraAdministrator !== true
     && isSiteAdministrator !== true
-    && isSassUser !== true
+    && isSaasUser !== true
     && isPowerUser !== true
     && isSecurityManager !== true
     && isAuditor !== true

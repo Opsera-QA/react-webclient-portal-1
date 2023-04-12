@@ -1,7 +1,5 @@
-import React, {useContext, useState, useEffect, useRef} from "react";
-import {useHistory, useParams} from "react-router-dom";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import React, {useState, useEffect} from "react";
+import {useParams} from "react-router-dom";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {ldapOrganizationMetaData} from "components/admin/accounts/ldap/organizations/ldap-organizations-metadata";
 import Model from "core/data_model/model";
@@ -10,48 +8,41 @@ import ActionBarBackButton from "components/common/actions/buttons/ActionBarBack
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import LdapOrganizationDetailPanel
   from "components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationDetailPanel";
-import axios from "axios";
-import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import LdapOrganizationManagementSubNavigationBar
   from "components/admin/accounts/ldap/organizations/LdapOrganizationManagementSubNavigationBar";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function LdapOrganizationDetailView() {
-  const history = useHistory();
   const { organizationName } = useParams();
-  const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [accessRoleData, setAccessRoleData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
   const [organizationAccounts, setOrganizationAccounts] = useState(undefined);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    cancelTokenSource,
+    isMounted,
+    isOpseraAdministrator,
+    toastContext,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [organizationName]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
+      setLdapOrganizationData(undefined);
+
+      if (isOpseraAdministrator !== true) {
+        return;
+      }
+
       setIsLoading(true);
-      await getRoles(cancelSource);
+      await loadOrganization();
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -66,25 +57,8 @@ function LdapOrganizationDetailView() {
     }
   };
 
-  const getRoles = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    let {ldap} = user;
-    const userRoleAccess = await setAccessRoles(user);
-    if (isMounted?.current === true && userRoleAccess) {
-      if (organizationName == null || (!userRoleAccess?.OpseraAdministrator && ldap?.organization !== organizationName)) {
-        history.push(`/admin/organizations/details/${ldap.organization}`);
-      }
-
-      setAccessRoleData(userRoleAccess);
-
-      if (userRoleAccess?.OpseraAdministrator) {
-        await loadOrganization(cancelSource);
-      }
-    }
-  };
-
-  const loadOrganization = async (cancelSource = cancelTokenSource) => {
-    const response = await accountsActions.getOrganizationByNameV2(getAccessToken, cancelSource, organizationName);
+  const loadOrganization = async () => {
+    const response = await accountsActions.getOrganizationByNameV2(getAccessToken, cancelTokenSource, organizationName);
     const organization = response?.data;
 
     if (isMounted?.current === true && organization != null) {
@@ -103,12 +77,14 @@ function LdapOrganizationDetailView() {
     );
   };
 
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
+
   return (
     <DetailScreenContainer
       breadcrumbDestination={"ldapOrganizationDetailView"}
       metadata={ldapOrganizationMetaData}
-      accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       dataObject={ldapOrganizationData}
       isLoading={isLoading}
       navigationTabContainer={<LdapOrganizationManagementSubNavigationBar activeTab={"organizationViewer"}/>}

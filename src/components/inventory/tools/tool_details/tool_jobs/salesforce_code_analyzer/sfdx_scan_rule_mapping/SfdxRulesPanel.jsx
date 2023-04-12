@@ -10,7 +10,7 @@ import sfdxScanActions from "../sfdx-scan-actions";
 import SfdxRulesEditorPanel from "./details/SfdxRulesEditorPanel";
 
 function SfdxRulesPanel({ toolData }) {
-  const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   // TODO: Replace with actual filter model for this area OR make generic one
   const [parameterFilterModel, setParameterFilterModel] = useState(new ParameterFilterModel());
@@ -62,7 +62,6 @@ function SfdxRulesPanel({ toolData }) {
   const getPmdRules = async (filterDto = parameterFilterModel, cancelSource = cancelTokenSource) => {
     const response = await sfdxScanActions.getSfdxScanMappings(getAccessToken, cancelSource, toolData?.getData("_id"));
     const mappings = response?.data?.data;
-    // const userRoleAccess = await getAccessRoleData();
 
     if (isMounted?.current === true && Array.isArray(mappings)) {
       setToolRules([...mappings]);

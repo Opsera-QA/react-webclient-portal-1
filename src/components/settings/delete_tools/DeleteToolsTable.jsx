@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ToolMetadata from "components/settings/delete_tools/tool-metadata";
 import {
@@ -6,24 +6,23 @@ import {
   getTableTextColumn,
   getDeletePlatformToolTableButtonColumn,
 } from "components/common/table/table-column-helpers";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import { AuthContext } from "contexts/AuthContext";
 import { getField } from "components/common/metadata/metadata-helpers";
 import DestructiveDeleteModal from "components/common/modal/DestructiveDeleteModal";
 import Model from "../../../core/data_model/model";
 import CustomTable from "components/common/table/CustomTable";
 import deleteToolsActions from "components/settings/delete_tools/settings-delete-tools-action.js";
 import DeleteToolDependenciesView from './DeleteToolDependenciesView';
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function DeleteToolsTable({ data, loadData, isLoading, className }) {
-    
   let fields = ToolMetadata.fields;
-  
-  const toastContext = useContext(DialogToastContext);
-  const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
   const [confirmationModal, setShowConfirmationModal] = useState(false);
   const [selectedTool, setSelectedTool] = useState(undefined);
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
+  const {
+    toastContext,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
     setShowConfirmationModal(false);
