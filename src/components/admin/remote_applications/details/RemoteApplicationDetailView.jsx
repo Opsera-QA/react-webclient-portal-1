@@ -65,7 +65,7 @@ function RemoteApplicationDetailView() {
 
     if (isMounted?.current === true && record) {
       setTelemetryMetadata(metadata);
-      setTelemetryData(new RemoteApplicationModel(record, metadata, false, getAccessToken, cancelSource, loadData, false, true, setTelemetryData));
+      setTelemetryData(new RemoteApplicationModel(record, metadata, false, getAccessToken, cancelTokenSource, loadData, false, true, setTelemetryData));
     }
   };
 
