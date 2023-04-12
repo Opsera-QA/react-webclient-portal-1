@@ -110,6 +110,8 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import useComponentStateReference from "hooks/useComponentStateReference";
 import HelmStepConfiguration from "./step_tool_configuration_forms/helm/HelmStepConfiguration";
 import ServiceNowStepConfiguration from "./step_tool_configuration_forms/service_now/ServiceNowStepConfiguration";
+import OracleFusionReportMigrationStepConfiguration 
+  from "./step_tool_configuration_forms/oracle_fusion_report_migration/OracleFusionReportMigrationStepConfiguration";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -1495,6 +1497,17 @@ function StepToolConfiguration({
             closeEditorPanel={closeEditorPanel}
           />
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ORACLE_FUSION_REPORT_MIGRATION:
+        return (
+          <OracleFusionReportMigrationStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );        
     }
   };
 
