@@ -9,44 +9,37 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ToolManagementSubNavigationBar from "components/admin/tools/ToolManagementSubNavigationBar";
 import ToolFilterModel from "components/inventory/tools/tool.filter.model";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ToolIdentifierManagement() {
-  const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
   const [toolIdentifierFilterModel, setToolIdentifierFilterModel] = useState(new ToolFilterModel());
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
+  const {
+    accessRoleData,
+    toastContext,
+    getAccessToken,
+    cancelTokenSource,
+    isMounted,
+    isOpseraAdministrator,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
+      if (isOpseraAdministrator !== true) {
+        return;
+      }
+
       setLoading(true);
-      const newAccessRoleData = await getAccessRoleData();
-      setAccessRoleData(newAccessRoleData);
-      await getToolIdentifiers(cancelSource);
+      await getToolIdentifiers();
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -58,14 +51,18 @@ function ToolIdentifierManagement() {
     }
   };
 
-  const getToolIdentifiers = async (cancelSource) => {
-    const response = await toolIdentifierActions.getToolIdentifiersV2(getAccessToken, cancelSource);
+  const getToolIdentifiers = async () => {
+    const response = await toolIdentifierActions.getToolIdentifiersV2(getAccessToken, cancelTokenSource);
     const identifiers = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(identifiers)) {
       setToolIdentifiers(identifiers);
     }
   };
+
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
 
   return (
     <ScreenContainer
