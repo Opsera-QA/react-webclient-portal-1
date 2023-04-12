@@ -15,7 +15,7 @@ export default function ActionBarTransferCustomerPipelineTemplateButton(
     className,
   }) {
   const {
-    isSassUser,
+    isSaasUser,
     userData,
     toastContext,
   } = useComponentStateReference();
@@ -29,7 +29,7 @@ export default function ActionBarTransferCustomerPipelineTemplateButton(
     );
   };
 
-  if (isSassUser !== false || CustomerPipelineTemplateRoleHelper.canTransferOwnership(userData, templateModel?.getOriginalData()) !== true) {
+  if (isSaasUser !== false || CustomerPipelineTemplateRoleHelper.canTransferOwnership(userData, templateModel?.getOriginalData()) !== true) {
     return null;
   }
 

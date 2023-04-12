@@ -93,7 +93,6 @@ function DetailScreenContainer(
         <div className={"content-block-footer-text-container pt-2"}>
           <AccessRoleLevelField
             className={"mx-2"}
-            accessRoleData={accessRoleData}
             objectRoles={objectRoles}
             dataObject={dataObject}
           />

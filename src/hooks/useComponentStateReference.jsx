@@ -56,7 +56,6 @@ export default function useComponentStateReference() {
     isAuditor: isAuditor,
     isProductionEnvironment: isProductionEnvironment,
     isTestEnvironment: isTestEnvironment,
-    isSassUser: isSaasUser, // TODO: Remove and replace with the proper spelling
     isSaasUser: isSaasUser,
     userData: userData,
     loadUserData: renewUserToken,

@@ -25,7 +25,7 @@ export default function HelpDocumentationLink(
 }
 
 HelpDocumentationLink.propTypes = {
-  linkText: PropTypes.string.isRequired,
+  linkText: PropTypes.string,
   link: PropTypes.string.isRequired,
   className: PropTypes.string,
   icon: PropTypes.object,

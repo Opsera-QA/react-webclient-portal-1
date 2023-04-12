@@ -1,19 +1,19 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import { AuthContext } from "contexts/AuthContext";
-import LoadingDialog from "components/common/status_notifications/loading";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import systemStatusActions from "components/admin/status/system-status-actions";
 import SystemStatusCard from "components/admin/status/SystemStatusCard";
 import StatusLegend from "components/common/status/StatusLegend";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function SystemStatus() {
-  const toastContext = useContext(DialogToastContext);
-  const {getAccessToken, getUserRecord, setAccessRoles} = useContext(AuthContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [systemStatusData, setSystemStatusData] = useState(undefined);
+  const {
+    isOpseraAdministrator,
+    getAccessToken,
+    toastContext,
+  } = useComponentStateReference();
 
   useEffect(() => {
     loadData();
@@ -21,28 +21,20 @@ function SystemStatus() {
 
   const loadData = async () => {
     try {
+      setSystemStatusData(undefined);
+
+      if (isOpseraAdministrator !== true) {
+        return;
+      }
+
       setIsLoading(true);
-      await getRoles();
+      await getSystemStatuses();
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);
-      console.error(error);
     }
     finally {
       setIsLoading(false);
-    }
-  };
-
-  const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-
-      if (userRoleAccess?.OpseraAdministrator) {
-        await getSystemStatuses();
-      }
     }
   };
 
@@ -65,15 +57,14 @@ function SystemStatus() {
     }
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog />);
+  if (isOpseraAdministrator !== true) {
+    return null;
   }
 
   return (
     <ScreenContainer
       breadcrumbDestination={"systemStatus"}
       pageDescription={"Listed below is the current status of system tools for Opsera"}
-      accessDenied={!isLoading && !accessRoleData.OpseraAdministrator}
       isLoading={isLoading}
     >
       <Row>
