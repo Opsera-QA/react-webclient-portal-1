@@ -1,8 +1,5 @@
-import React, {useEffect, useState, useContext, useRef} from "react";
-import { AuthContext } from "contexts/AuthContext";
+import React, {useEffect, useState} from "react";
 import LoadingDialog from "components/common/status_notifications/loading";
-import axios from "axios";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import analyticsActions from "components/settings/analytics/analytics-settings-actions";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
@@ -12,49 +9,38 @@ import InsightsHelpDocumentation from "../../common/help/documentation/insights/
 import DashboardTableView
   from "components/insights/dashboards/views/DashboardTableView";
 import DashboardFilterModel from "components/insights/dashboards/views/dashboard.filter.model";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function Insights() {
-  const toastContext = useContext(DialogToastContext);
-  const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [dashboards, setDashboards] = useState(undefined);
   const [dashboardFilterModel, setDashboardFilterModel] = useState(undefined);
   const [areAnalyticsToolsEnabled, setAreAnalyticsToolsEnabled] = useState(undefined);
   const [dashboardRoleDefinitions, setDashboardRoleDefinitions] = useState([]);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    cancelTokenSource,
+    getAccessToken,
+    toastContext,
+    isMounted,
+    accessRoleData,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
     const newDashboardFilterModel = new DashboardFilterModel(getAccessToken);
-
-    loadData(newDashboardFilterModel, source).catch((error) => {
+    loadData(newDashboardFilterModel).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (filterModel = dashboardFilterModel, cancelSource = cancelTokenSource) => {
+  const loadData = async (filterModel = dashboardFilterModel) => {
     try {
       setIsLoading(true);
-      await getRoles(filterModel, cancelSource);
+      await getProfile(filterModel);
     } catch (error) {
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
-        console.error(error);
       }
     } finally {
       if (isMounted.current === true) {
@@ -63,30 +49,20 @@ function Insights() {
     }
   };
 
-  const getRoles = async (filterModel = dashboardFilterModel, cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-
-    if (isMounted.current === true && userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-      await getProfile(filterModel, cancelSource);
-    }
-  };
-
-  const getProfile = async(filterDto = dashboardFilterModel, cancelSource = cancelTokenSource) => {
-    const response = await analyticsActions.areAnalyticsToolsEnabled(getAccessToken, cancelSource);
+  const getProfile = async(filterDto = dashboardFilterModel) => {
+    const response = await analyticsActions.areAnalyticsToolsEnabled(getAccessToken, cancelTokenSource);
     const analyticsAreEnabled = response?.data.areAnalyticsToolsEnabled;
     setAreAnalyticsToolsEnabled(analyticsAreEnabled);
 
     if (isMounted.current === true && analyticsAreEnabled === true) {
-      await getDashboards(filterDto, cancelSource);
+      await getDashboards(filterDto);
     }
   };
 
-  const getDashboards = async (filterModel = dashboardFilterModel, cancelSource = cancelTokenSource) => {
+  const getDashboards = async (filterModel = dashboardFilterModel) => {
     const response = await dashboardsActions.getAllDashboardsV2(
       getAccessToken,
-      cancelSource,
+      cancelTokenSource,
       filterModel,
     );
     const dashboards = response?.data?.data;

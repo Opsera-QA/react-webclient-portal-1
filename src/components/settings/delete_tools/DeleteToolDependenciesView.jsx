@@ -1,46 +1,31 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
-import {AuthContext} from "contexts/AuthContext";
-import axios from "axios";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import Model from "core/data_model/model";
+import React, {useState, useEffect} from "react";
 import PropTypes from 'prop-types';
 import PlatformToolRegistryTable from 'components/inventory/tools/tool_details/PlatformToolRegistryTable';
 import deleteToolsActions from "components/settings/delete_tools/settings-delete-tools-action.js";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function DeleteToolDependenciesView({ selectedTool }) {
-
-  const toastContext = useContext(DialogToastContext);
-  const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [relevantToolRegistries, setRelevantToolRegistries] = useState([]);
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
+  const {
+    isMounted,
+    cancelTokenSource,
+    getAccessToken,
+    toastContext,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    isMounted.current = true;
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [selectedTool]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
       setLoading(true);
-      await loadRelevantToolRegistries(cancelSource);
+      await loadRelevantToolRegistries();
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -55,17 +40,16 @@ function DeleteToolDependenciesView({ selectedTool }) {
     }
   };
 
-  const loadRelevantToolRegistries = async (cancelSource = cancelTokenSource) => {
+  const loadRelevantToolRegistries = async () => {
     if (selectedTool?._id) {
       try {
-        let response = await deleteToolsActions.getRegistryUsedByTool(getAccessToken, selectedTool?._id, cancelSource);
+        let response = await deleteToolsActions.getRegistryUsedByTool(getAccessToken, selectedTool?._id, cancelTokenSource);
       
         if (response?.data != null) {
           setRelevantToolRegistries(response?.data?.data);
         }
       }
       catch (error) {
-        console.error(error);
         toastContext.showSystemErrorToast(error);
       }
     }

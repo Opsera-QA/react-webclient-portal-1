@@ -18,7 +18,7 @@ import ResetMetricConfirmationPanel
   from "components/insights/marketplace/dashboards/metrics/reset/ResetMetricConfirmationPanel";
 
 function AutomationTestAdoptionRateEditorPanel({ kpiConfiguration, setKpiConfiguration, index, dashboardData, setKpis, closePanelFunction }) {
-  const { getAccessToken, isSassUser } = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
   const [kpiSettings, setKpiSettings] = useState(undefined);
   const [toolDataDto, setToolDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);

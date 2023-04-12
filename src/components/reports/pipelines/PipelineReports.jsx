@@ -6,7 +6,7 @@ export default function PipelineReports() {
   const {
     isOpseraAdministrator,
     isSiteAdministrator,
-    isSassUser,
+    isSaasUser,
     isPowerUser,
     isSecurityManager,
     isAuditor,
@@ -15,7 +15,7 @@ export default function PipelineReports() {
   if (
     isOpseraAdministrator !== true
     && isSiteAdministrator !== true
-    && isSassUser !== true
+    && isSaasUser !== true
     && isPowerUser !== true
     && isSecurityManager !== true
     && isAuditor !== true

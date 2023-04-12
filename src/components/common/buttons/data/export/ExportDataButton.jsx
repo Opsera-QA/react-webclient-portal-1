@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { faFileExport, } from "@fortawesome/pro-light-svg-icons";
 import ButtonBase from "components/common/buttons/ButtonBase";
 import { AuthContext } from "contexts/AuthContext";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ExportDataButton(
   {
@@ -11,9 +12,11 @@ function ExportDataButton(
     isLoading,
     disabled,
   }) {
-  const { isOpseraAdministrator } = useContext(AuthContext);
+  const {
+    isOpseraAdministrator,
+  } = useComponentStateReference();
 
-  if (exportDataFunction == null || isOpseraAdministrator() !== true) {
+  if (exportDataFunction == null || isOpseraAdministrator !== true) {
     return null;
   }
 

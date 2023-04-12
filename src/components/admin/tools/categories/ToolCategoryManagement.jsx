@@ -1,47 +1,40 @@
-import { AuthContext } from "contexts/AuthContext";
-import React, {useContext, useEffect, useRef, useState} from "react";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import axios from "axios";
+import React, {useEffect, useState} from "react";
 import ToolCategoryTable from "components/admin/tools/categories/ToolCategoryTable";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ToolManagementSubNavigationBar from "components/admin/tools/ToolManagementSubNavigationBar";
 import {toolCategoryActions} from "components/admin/tools/categories/toolCategory.actions";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ToolCategoryManagement() {
-  const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [toolTypes, setToolTypes] = useState([]);
-  const isMounted = useRef(false);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    getAccessToken,
+    accessRoleData,
+    isOpseraAdministrator,
+    toastContext,
+    isMounted,
+    cancelTokenSource,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (cancelSource) => {
+  const loadData = async () => {
     try {
+      setToolTypes([]);
+
+      if (isOpseraAdministrator !== true) {
+        return;
+      }
+
       setIsLoading(true);
-      await getRoles(cancelSource);
+      await getToolTypes();
     }
     finally {
       if (isMounted?.current === true) {
@@ -50,21 +43,9 @@ function ToolCategoryManagement() {
     }
   };
 
-  const getRoles = async (cancelSource) => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    setAccessRoleData(userRoleAccess);
-    if (userRoleAccess) {
-
-      if (userRoleAccess?.OpseraAdministrator) {
-        await getToolTypes(cancelSource);
-      }
-    }
-  };
-
-  const getToolTypes = async (cancelSource) => {
+  const getToolTypes = async () => {
     try {
-      const response = await toolCategoryActions.getToolTypesV2(getAccessToken, cancelSource, true);
+      const response = await toolCategoryActions.getToolTypesV2(getAccessToken, cancelTokenSource, true);
       const toolTypes = response?.data?.data;
 
       if (isMounted?.current === true && Array.isArray(toolTypes)) {
@@ -77,11 +58,13 @@ function ToolCategoryManagement() {
     }
   };
 
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
+
   return (
     <ScreenContainer
       accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
-      isLoading={!accessRoleData || isLoading}
       navigationTabContainer={<ToolManagementSubNavigationBar activeTab={"categories"} />}
       breadcrumbDestination={"toolManagement"}
     >

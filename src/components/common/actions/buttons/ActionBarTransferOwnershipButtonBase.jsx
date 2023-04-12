@@ -25,7 +25,7 @@ export default function ActionBarTransferOwnershipButtonBase(
   const [transferOwnershipModel, setTransferOwnershipModel] = useState(undefined);
   const [transferState, setTransferState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
   const {
-    isSassUser,
+    isSaasUser,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -85,7 +85,7 @@ export default function ActionBarTransferOwnershipButtonBase(
   };
 
   if (
-    isSassUser !== false
+    isSaasUser !== false
     || model == null
     || model?.canTransferOwnership() !== true
     || visible === false

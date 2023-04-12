@@ -10,7 +10,7 @@ import SnaplogicProjectEditorPanel from "./details/SnaplogicProjectEditorPanel";
 import snaplogicToolActions from "../snaplogic-tool-actions";
 
 function SnaplogicProjectsPanel({ toolData }) {
-  const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   // TODO: Replace with actual filter model for this area OR make generic one
   const [parameterFilterModel, setParameterFilterModel] = useState(
@@ -74,7 +74,6 @@ function SnaplogicProjectsPanel({ toolData }) {
       toolData?.getData("_id"),
     );
     const projects = response?.data?.data;
-    // const userRoleAccess = await getAccessRoleData();
 
     if (isMounted?.current === true && Array.isArray(projects)) {
       setToolProjects([...projects]);
