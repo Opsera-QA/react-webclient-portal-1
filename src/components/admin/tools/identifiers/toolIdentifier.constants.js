@@ -71,6 +71,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   NUNIT: "nunit",
   OCTOPUS: "octopus",
   ORACLE_FUSION: "oracle_fusion",
+  ORACLE_FUSION_REPORT_MIGRATION: "oracle_fusion_report_migration",
   PACKER: "packer",
   PARALLEL_PROCESSOR: "parallel-processor",
   PMD: "pmd",
