@@ -27,6 +27,12 @@ function ToolCategoryManagement() {
 
   const loadData = async () => {
     try {
+      setToolTypes([]);
+
+      if (isOpseraAdministrator !== true) {
+        return;
+      }
+
       setIsLoading(true);
       await getToolTypes();
     }
