@@ -6,10 +6,13 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import taskActions from "components/tasks/task.actions";
 import RoleRestrictedJenkinsToolMultiSelectInput
   from "components/common/list_of_values_input/tools/jenkins/tool/RoleRestrictedJenkinsToolMultiSelectInput";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function JenkinsSynchPanel({gitTasksData, setGitTasksData}) {
     const [isSynching, setIsSynching] = useState(false);
-    const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
+    const {
+      getAccessToken,
+    } = useComponentStateReference();
     let toastContext = useContext(DialogToastContext);
 
     const handleSynch = async() => {
