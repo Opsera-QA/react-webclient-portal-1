@@ -80,7 +80,7 @@ const InsightsLookupPipelineOverlay = ({ componentName, pipeline, startDate, end
       temp.validated = false;
     }
 
-    if(temp.checkOnly == true && (temp.successUnitTests != "Unknown" || temp.failedUnitTests != "Unknown")){
+    if(temp.checkOnly == true && (temp.successUnitTests.length > 0  || temp.failedUnitTests.length > 0)){
       temp.unitTests = true;
     } else{
       temp.unitTests = false;

@@ -22,7 +22,7 @@ const fields = [
     id: "validations_passed",
   },
   {
-    label: "Failed",
+    label: " Validations Failed",
     id: "validations_failed",
   },
   {
@@ -30,11 +30,11 @@ const fields = [
     id: "unit_tests_passed",
   },
   {
-    label: "Failed",
+    label: "Unit Tests Failed",
     id: "unit_tests_failed",
   },
   {
-    label: "Deployed",
+    label: "Deployed By",
     id: "last_deploy",
   },
 ];
