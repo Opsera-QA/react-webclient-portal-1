@@ -31,7 +31,7 @@ function KpiIdentifierManagement() {
     });
   }, []);
 
-  const loadData = async (filterDto = kpiFilterDto, cancelSource = cancelTokenSource) => {
+  const loadData = async (filterDto = kpiFilterDto) => {
     try {
       setKpiList([]);
 
@@ -40,7 +40,7 @@ function KpiIdentifierManagement() {
       }
 
       setIsLoading(true);
-      await getKpis(filterDto, cancelSource);
+      await getKpis(filterDto);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -53,8 +53,8 @@ function KpiIdentifierManagement() {
     }
   };
 
-  const getKpis = async (filterDto = kpiFilterDto, cancelSource = cancelTokenSource) => {
-    const response = await KpiActions.getKpisV2(getAccessToken, cancelSource, filterDto);
+  const getKpis = async (filterDto = kpiFilterDto) => {
+    const response = await KpiActions.getKpisV2(getAccessToken, cancelTokenSource, filterDto);
 
     if (isMounted?.current === true && response?.data?.data) {
       setKpiList(response.data.data);
@@ -64,6 +64,10 @@ function KpiIdentifierManagement() {
       setKpiFilterDto({ ...newFilterDto });
     }
   };
+
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
 
   return (
     <ScreenContainer
