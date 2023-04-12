@@ -13,40 +13,27 @@ function TaskManagement() {
   const [isLoading, setIsLoading] = useState(true);
   const [tasks, setTasks] = useState([]);
   const [taskFilterModel, setTaskFilterModel] = useState(undefined);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const {
     accessRoleData,
     toastContext,
     getAccessToken,
+    cancelTokenSource,
+    isMounted,
   } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    const newTaskFilterModel = new TaskFilterModel(getAccessToken, source, loadData);
-    loadData(newTaskFilterModel, source).catch((error) => {
+    const newTaskFilterModel = new TaskFilterModel(getAccessToken, cancelTokenSource, loadData);
+    loadData(newTaskFilterModel).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (newFilterModel = taskFilterModel, cancelSource = cancelTokenSource) => {
+  const loadData = async (newFilterModel = taskFilterModel) => {
     try {
       setIsLoading(true);
-      await getTasksList(newFilterModel, cancelSource);
+      await getTasksList(newFilterModel);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -59,9 +46,9 @@ function TaskManagement() {
     }
   };
 
-  const getTasksList = async (newFilterModel = taskFilterModel, cancelSource = cancelTokenSource) => {
+  const getTasksList = async (newFilterModel = taskFilterModel) => {
     const tableFields = ["name", "description", "type", "tags", "createdAt", "updatedAt", "active", "status", "run_count"];
-    const response = await taskActions.getTasksListV2(getAccessToken, cancelSource, newFilterModel, tableFields);
+    const response = await taskActions.getTasksListV2(getAccessToken, cancelTokenSource, newFilterModel, tableFields);
     const taskList = response?.data?.data;
 
     if (isMounted.current === true && Array.isArray(taskList)) {
