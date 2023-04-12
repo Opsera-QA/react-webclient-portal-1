@@ -15,7 +15,7 @@ const fields = [
   },
   {
     label: "Deploy Count",
-    id: "deploy_count",
+    id: "deployments",
   },
   {
     label: "Validations Passed",
@@ -61,19 +61,19 @@ const initialState = {
   ],
 };
 
-const InsightsLookupPipelinesTable = ({ pipelines, componentName }) => {
+const InsightsLookupPipelinesTable = ({ pipelines, componentName, startDate,endDate }) => {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect = (row) => {
     toastContext.showOverlayPanel(
-      <InsightsLookupPipelineOverlay componentName={componentName} />,
+      <InsightsLookupPipelineOverlay componentName={componentName} pipeline={row?.original?.pipeline} startDate={startDate} endDate={endDate}/>,
     );
   };
 
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "pipeline"), "no-wrap-inline"),
-      getTableTextColumn(getField(fields, "deploy_count")),
+      getTableTextColumn(getField(fields, "deployments")),
       getTableTextColumn(getField(fields, "validations_passed")),
       getTableTextColumn(getField(fields, "validations_failed")),
       getTableTextColumn(getField(fields, "unit_tests_passed")),
@@ -107,6 +107,8 @@ const InsightsLookupPipelinesTable = ({ pipelines, componentName }) => {
 InsightsLookupPipelinesTable.propTypes = {
   pipelines: PropTypes.array,
   componentName: PropTypes.string,
+  startDate: PropTypes.string,
+  endDate: PropTypes.string,
 };
 
 export default InsightsLookupPipelinesTable;

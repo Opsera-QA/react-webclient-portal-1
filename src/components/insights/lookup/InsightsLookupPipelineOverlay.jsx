@@ -7,7 +7,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import InsightsLookupDetailsTable from "./InsightsLookupDetailsTable";
 import axios from "axios";
 
-const InsightsLookupPipelineOverlay = ({ componentName }) => {
+const InsightsLookupPipelineOverlay = ({ componentName, pipeline, startDate, endDate }) => {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -44,6 +44,9 @@ const InsightsLookupPipelineOverlay = ({ componentName }) => {
         getAccessToken,
         cancelTokenSource,
         componentName,
+          pipeline,
+          startDate,
+          endDate
       );
 
       setLookupDetails(data.data.results);
@@ -103,6 +106,9 @@ const InsightsLookupPipelineOverlay = ({ componentName }) => {
 
 InsightsLookupPipelineOverlay.propTypes = {
   componentName: PropTypes.string,
+  pipeline: PropTypes.string,
+  startDate: PropTypes.string,
+  endDate:PropTypes.string,
 };
 
 export default InsightsLookupPipelineOverlay;
