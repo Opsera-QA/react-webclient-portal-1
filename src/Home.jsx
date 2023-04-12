@@ -24,6 +24,6 @@ export default function Home() {
     return (<FreeTrialLanding />);
   }
 
-  return (<Landing />);
-  // return (<OverviewLanding />);
+  // return (<Landing />);
+  return (<OverviewLanding />);
 }
