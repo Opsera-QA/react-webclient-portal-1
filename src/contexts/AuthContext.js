@@ -141,7 +141,6 @@ const AuthContextProvider = (
       organizationSettingsRecord: organizationSettingsRecord,
       featureFlags: featureFlags,
 
-      userAccessRoles: userAccessRoles,
       isPowerUser: userAccessRoles?.PowerUser === true,
       isSiteAdministrator: userAccessRoles?.Administrator === true,
       isOpseraAdministrator:() => userAccessRoles?.OpseraAdministrator === true,
