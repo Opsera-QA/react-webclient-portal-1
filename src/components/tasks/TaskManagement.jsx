@@ -1,7 +1,5 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
-import { AuthContext } from "contexts/AuthContext";
+import React, {useEffect, useRef, useState} from 'react';
 import taskActions from "components/tasks/task.actions";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
@@ -9,16 +7,19 @@ import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
 import TaskViews from "components/tasks/TaskViews";
 import TaskFilterModel from "components/tasks/task.filter.model";
 import TasksHelpDocumentation from "../common/help/documentation/tasks/TasksHelpDocumentation";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function TaskManagement() {
-  const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [tasks, setTasks] = useState([]);
   const [taskFilterModel, setTaskFilterModel] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    accessRoleData,
+    toastContext,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -45,7 +46,7 @@ function TaskManagement() {
   const loadData = async (newFilterModel = taskFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles(newFilterModel, cancelSource);
+      await getTasksList(newFilterModel, cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -55,16 +56,6 @@ function TaskManagement() {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
-    }
-  };
-
-  const getRoles = async (newFilterModel = taskFilterModel, cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-
-    if (isMounted?.current === true && userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-      await getTasksList(newFilterModel, cancelSource);
     }
   };
 
