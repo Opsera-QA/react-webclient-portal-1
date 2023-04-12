@@ -76,7 +76,6 @@ function RemoteApplicationManagement() {
   return (
     <ScreenContainer
       breadcrumbDestination={"remoteApplications"}
-      isLoading={!remoteApplicationMetadata}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       navigationTabContainer={
