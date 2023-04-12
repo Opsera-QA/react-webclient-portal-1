@@ -1,7 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import taskActions from "components/tasks/task.actions";
 import LoadingDialog from "components/common/status_notifications/loading";
-import axios from "axios";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
 import TaskViews from "components/tasks/TaskViews";
