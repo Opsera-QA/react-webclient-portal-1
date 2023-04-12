@@ -134,7 +134,6 @@ const AuthContextProvider = (
       setTheme: setTheme,
       websocketClient: websocketClient,
       userData: userData,
-      userExpiration: getFreeTrialUserExpirationDate(),
       backgroundColor: backgroundColor,
       setBackgroundColor: setBackgroundColor,
       platformSettingsRecord: platformSettingsRecord,
