@@ -1,9 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
 import BreadcrumbPageLinkCard from "components/common/card/link/BreadcrumbPageLinkCard";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-function UserSettingsPageLinkCard() {
+export default function UserSettingsPageLinkCard() {
   const {
     isSaasUser,
     isOpseraAdministrator,
@@ -26,8 +25,4 @@ function UserSettingsPageLinkCard() {
   );
 }
 
-UserSettingsPageLinkCard.propTypes = {
-  accessRoleData: PropTypes.object,
-};
-
-export default UserSettingsPageLinkCard;
+UserSettingsPageLinkCard.propTypes = {};
