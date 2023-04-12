@@ -12,7 +12,7 @@ import { MaturityScoreItemType } from './maturityScoreItemType';
 import SystemDrivenMaturityTimelineChart from './SystemDrivenMaturityTimelineChart';
 import SystemDrivenMaturityChart from './SystemDrivenMaturityChart';
 
-function SystemDrivenMaturityGroupsTab ({ kpiConfiguration, dashboardData, orgTag, onSelectGroup }) {
+function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, group, onSelectGroup }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metricData, setMetricData] = useState(null);
@@ -48,24 +48,24 @@ function SystemDrivenMaturityGroupsTab ({ kpiConfiguration, dashboardData, orgTa
       const dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
       const jiraResolutionNames = getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names');
 
-      const response = await doraActions.systemDrivenMaturityGroups({
+      const response = await doraActions.systemDrivenMaturityOrgTags({
         getAccessToken,
         cancelSource,
         kpiConfiguration,
         dashboardTags,
         dashboardOrgs,
         jiraResolutionNames,
-        orgTag: orgTag?.name
+        group: group?.name
       });
 
-      const groups = response?.data?.groups;
+      const orgTags = response?.data?.orgTags;
 
-      if (isMounted?.current === true && groups?.length) {
+      if (isMounted?.current === true && orgTags?.length) {
         setMetricData(
-          groups.map(({ name, overallMaturityScoreText }) => ({
+          orgTags.map(({ name, overallMaturityScoreText, previousOverallMaturityScoreText }) => ({
             name,
             score: overallMaturityScoreText,
-            previousScore: MATURITY_SCORE_TEXT.LOW // TODO: set from api
+            previousScore: previousOverallMaturityScoreText
           }))
         );
       } else {
@@ -105,11 +105,11 @@ function SystemDrivenMaturityGroupsTab ({ kpiConfiguration, dashboardData, orgTa
   );
 }
 
-SystemDrivenMaturityGroupsTab.propTypes = {
+SystemDrivenMaturityOrgTagsTab.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  orgTag: MaturityScoreItemType,
+  group: MaturityScoreItemType,
   onSelectGroup: PropTypes.func
 };
 
-export default SystemDrivenMaturityGroupsTab;
+export default SystemDrivenMaturityOrgTagsTab;

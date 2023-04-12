@@ -161,6 +161,62 @@ doraActions.systemDrivenMaturityGroups = async ({
   );
 };
 
+doraActions.systemDrivenMaturityOrgTags = async ({
+  getAccessToken,
+  cancelTokenSource,
+  kpiConfiguration,
+  dashboardTags,
+  dashboardOrgs,
+  jiraResolutionNames,
+  group
+}) => {
+  const apiUrl = doraBaseURL + "systemDrivenMaturityOrgTags";
+  const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  const startDate = new Date(dateRange?.start);
+  const endDate = new Date(dateRange?.end);
+
+  // Checking the use kpi tags toggle
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags =
+    getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+    dashboardOrgs = null;
+  }
+
+  const postBody = {
+    startDate: startDate.toISOString(),
+    endDate: endDate.toISOString(),
+    tags:
+      tags && dashboardTags
+        ? tags.concat(dashboardTags)
+        : dashboardTags?.length > 0
+        ? dashboardTags
+        : tags,
+    dashboardOrgs,
+    deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
+    gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
+    jiraProjectsMTTR: getResultFromKpiConfiguration(kpiConfiguration, "jira-projects-mttr"),
+    jiraProjectsCFR: getResultFromKpiConfiguration(kpiConfiguration, "jira-projects-cfr"),
+    jiraChangeTypes: getResultFromKpiConfiguration(kpiConfiguration, KPI_FILTER_TYPES.JIRA_CHANGE_TYPES),
+    jiraResolutionNames,
+    jiraExcludedResolutionNames: getResultFromKpiConfiguration(kpiConfiguration, KPI_FILTER_TYPES.JIRA_EXCLUDED_RESOLUTION_NAMES),
+    group
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 doraActions.systemDrivenMaturityProjects = async ({
   getAccessToken,
   cancelTokenSource,
