@@ -9,6 +9,7 @@ import {formatDate} from "components/common/helpers/date/date.helpers";
 import LookupFilterModel from "./lookup.filter.model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import SalesforceLookupFilters from "components/insights/lookup/SalesforceLookupFilters";
+import {subDays} from "date-fns";
 
 function Lookup() {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +20,15 @@ function Lookup() {
   );
   const {isMounted, cancelTokenSource, toastContext, getAccessToken} =
     useComponentStateReference();
-  const [filterModel, setFilterModel] = useState(new LookupFilterModel());
+
+  const [filterModel, setFilterModel] = useState(undefined);
+
+  useEffect(() => {
+    const newFilterModel = new LookupFilterModel();
+    newFilterModel.setData("startDate", subDays(new Date(), 30));
+    newFilterModel.setData("endDate", new Date());
+    setFilterModel({...newFilterModel});
+  }, []);
 
   useEffect(() => {
     loadComponentNames();
