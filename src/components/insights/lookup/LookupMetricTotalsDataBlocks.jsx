@@ -23,7 +23,7 @@ const LookupMetricTotalsDataBlocks = (
             <DataBlockBoxContainer showBorder={true}>
               <TwoLineScoreDataBlock
                 className={"p-2"}
-                score={metrics?.deploy_count}
+                score={metrics?.deployments}
                 subtitle={"Deploy Count"}
               />
             </DataBlockBoxContainer>

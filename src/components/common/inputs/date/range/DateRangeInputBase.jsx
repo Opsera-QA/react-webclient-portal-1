@@ -58,7 +58,6 @@ export default function DateRangeInputBase(
       validateAndSetData(newStartDate, newEndDate);
     }
   };
-  console.log("internal", internalDate);
 
   return (
     <InputContainer>

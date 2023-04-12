@@ -54,7 +54,6 @@ function SalesforceComponentNameMultiSelectInput(
   };
 
   const disabled = model.getArrayData('selectedComponentFilterData').length === 0;
-  console.log("disabled", disabled);
 
   return (
     <MultiSelectInputBase

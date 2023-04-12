@@ -66,14 +66,14 @@ export default function SalesforceLookupFilters(
             className={"mx-2"}
           />
         </Col>
-        <Col xs={12}>
-          <TasksSelectInput
-            fieldName={"tasksComponentFilterData"}
-            model={filterModel}
-            setModel={setFilterModel}
-            className={"mx-2"}
-          />
-        </Col>
+        {/*<Col xs={12}>*/}
+        {/*  <TasksSelectInput*/}
+        {/*    fieldName={"tasksComponentFilterData"}*/}
+        {/*    model={filterModel}*/}
+        {/*    setModel={setFilterModel}*/}
+        {/*    className={"mx-2"}*/}
+        {/*  />*/}
+        {/*</Col>*/}
         <Col xs={12}>
           <OrgsSelectInput
             fieldName={"orgsComponentFilterData"}

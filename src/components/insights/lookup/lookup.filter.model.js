@@ -95,14 +95,13 @@ export class LookupFilterModel extends FilterModelBase {
       });
     }
 
-    const type = [{type: 'task', value: 'hemadri-task'}];
+    const type = this.getData("selectedComponentFilterData");
     if(type.length > 0) {
       if (hasDateValue(type) === true) {
-        activeFilters.push(
-        <AppliedTagBadge
-            className={"group-badge"}
-            tags={type}
-        />
+        activeFilters.push({
+          filterId: "Type",
+          text: `Type : ${type}`
+            }
         );
       }
     }
@@ -140,8 +139,6 @@ export class LookupFilterModel extends FilterModelBase {
         }
       }
     }
-
-    console.log("active", activeFilters);
 
     return activeFilters;
   };

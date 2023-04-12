@@ -128,7 +128,7 @@ function Lookup() {
     // }
   };
 
-  console.log("searchResults");
+  console.log("searchResults", searchResults);
 
   const getBody = () => {
     return (
