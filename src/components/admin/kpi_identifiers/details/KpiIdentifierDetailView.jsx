@@ -14,46 +14,36 @@ import { meetsRequirements, ROLE_LEVELS } from "components/common/helpers/role-h
 import axios from "axios";
 import KpiIdentifierManagementSubNavigationBar
   from "components/admin/kpi_identifiers/KpiIdentifierManagementSubNavigationBar";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function KpiIdentifierDetailView() {
-  const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [accessRoleData, setAccessRoleData] = useState({});
   const [kpiData, setKpiData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    accessRoleData,
+    getAccessToken,
+    toastContext,
+    cancelTokenSource,
+    isMounted,
+    isOpseraAdministrator,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    isMounted.current = true;
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   },[]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
       setIsLoading(true);
-      await getRoles(cancelSource);
+      await getKpi();
     } catch (error) {
       if (isMounted?.current === true && !error?.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
-        console.error(error);
       }
     } finally {
       if (isMounted?.current === true) {
@@ -62,23 +52,11 @@ function KpiIdentifierDetailView() {
     }
   };
 
-  const getKpi = async (cancelSource = cancelTokenSource) => {
-    const response = await KpiActions.getKpiById(getAccessToken, cancelSource, id);
+  const getKpi = async () => {
+    const response = await KpiActions.getKpiById(getAccessToken, cancelTokenSource, id);
 
     if (isMounted?.current === true && response?.data) {
       setKpiData(new Model(response?.data, kpiIdentifierMetadata, false));
-    }
-  };
-
-  const getRoles = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (isMounted.current === true && userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-
-      if (meetsRequirements(ROLE_LEVELS.OPSERA_ADMINISTRATORS, userRoleAccess) && id) {
-        await getKpi(cancelSource);
-      }
     }
   };
 
@@ -89,9 +67,7 @@ function KpiIdentifierDetailView() {
           <ActionBarBackButton path={"/admin/kpis"} />
         </div>
         <div>
-          {meetsRequirements(ROLE_LEVELS.OPSERA_ADMINISTRATORS, accessRoleData) && (
-            <ActionBarDeleteButton2 dataObject={kpiData} relocationPath={"/admin/kpis"} handleDelete={handleDelete} />
-          )}
+          <ActionBarDeleteButton2 dataObject={kpiData} relocationPath={"/admin/kpis"} handleDelete={handleDelete} />
         </div>
       </ActionBarContainer>
     );
@@ -111,11 +87,13 @@ function KpiIdentifierDetailView() {
     );
   };
 
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
+
   return (
     <DetailScreenContainer
-      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       breadcrumbDestination={"kpiDetailView"}
-      accessRoleData={accessRoleData}
       metadata={kpiIdentifierMetadata}
       navigationTabContainer={<KpiIdentifierManagementSubNavigationBar activeTab={"kpiIdentifierViewer"} />}
       dataObject={kpiData}

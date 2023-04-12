@@ -1,102 +1,64 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
-import {faSync, faCheckCircle, faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
-import {AuthContext} from "contexts/AuthContext";
+import {faSync} from "@fortawesome/pro-light-svg-icons";
 import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
-import IconBase from "components/common/icons/IconBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
+import useApiState, {API_STATES} from "hooks/general/api/useApiState";
 
-function SyncLdapButton({ disable, userData, loadData }) {
-  const { getAccessToken, setAccessRoles } = useContext(AuthContext);
-  const [syncing, isSyncing] = useState(false);
-  const [successfulConnection, setSuccessfulConnection] = useState(false);
-  const [failedConnection, setFailedConnection] = useState(false);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
+export default function SyncLdapButton({ disabled, userData, loadData }) {
+  const {
+    getAccessToken,
+    isOpseraAdministrator,
+  } = useComponentStateReference();
+  const {
+    apiState,
+    apiStateFunctions,
+  } = useApiState();
 
-  useEffect(() => {
-    pullUserAccessRole();
-  }, []);
-
-  const pullUserAccessRole = async () => {
-    setIsLoading(true);
-    const userRoleAccess = await setAccessRoles(userData.getPersistData());
-    setAccessRoleData(userRoleAccess);
-    setIsLoading(false);
-  };
+  useEffect(() => {}, []);
 
   const syncLdap = async () => {
     try {
-      isSyncing(true);
-      setSuccessfulConnection(false);
-      setFailedConnection(false);
+      apiStateFunctions.setBusyState();
       let response;
       response = await RegisteredUserActions.syncLdap(userData?.getMongoDbId(), getAccessToken);
 
       if (response?.data?.ldap !== null) {
-        setSuccessfulConnection(true);
+        apiStateFunctions.setSuccessState();
       }
       else {
-        setFailedConnection(true);
+        apiStateFunctions.setErrorState();
       }
 
       await loadData(true);
     }
     catch (error) {
-      setFailedConnection(true);
+      apiStateFunctions.setErrorState();
     }
-    finally {
-      isSyncing(false);
-    }
-
   };
 
-  const getVariant = () => {
-    if (successfulConnection) {
-      return "success";
-    }
-
-    if (failedConnection) {
-      return "danger";
-    }
-
-    return ("secondary");
-  };
-
-  const getLabel = () => {
-    if (syncing) {
-      return (<span><IconBase isLoading={true} className={"mr-2"}/>Syncing LDAP</span>);
-    }
-
-    if (failedConnection) {
-      return (<span><IconBase icon={faExclamationTriangle} className={"mr-2"}/>LDAP Sync Failed!</span>);
-    }
-
-    if (successfulConnection) {
-      return (<span><IconBase icon={faCheckCircle} className={"mr-2"}/>LDAP Sync Succeeded!</span>);
-    }
-
-    return (<span><IconBase icon={faSync} className={"mr-2"}/>Sync LDAP</span>);
-  };
-
-  const buttonSupported = () => {
-    return (accessRoleData.Type === "sass-user" || accessRoleData.Type === "ldap-user" || accessRoleData.Type === "ldap-account");
-  };
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
 
   return (
-    <Button
-      variant={getVariant()}
-      disabled={syncing || disable || isLoading || !buttonSupported()}
-      onClick={() => syncLdap()}>
-      {getLabel()}
-    </Button>
+    <VanityButtonBase
+      variant={"secondary"}
+      disabled={apiState === API_STATES.BUSY || disabled}
+      onClickFunction={syncLdap}
+      normalText={"Sync LDAP"}
+      busyText={"Syncing LDAP"}
+      errorText={"LDAP Sync Failed!"}
+      successText={"LDAP Sync Succeeded!"}
+      icon={faSync}
+      buttonState={apiState}
+    />
   );
 }
 
 SyncLdapButton.propTypes = {
   userData: PropTypes.object,
-  disable: PropTypes.bool,
+  disabled: PropTypes.bool,
   loadData: PropTypes.func
 };
-
-export default SyncLdapButton;
