@@ -3,25 +3,25 @@ import PropTypes from 'prop-types';
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import SystemDrivenMaturityGroupsTab from './SystemDrivenMaturityGroupsTab';
+import SystemDrivenMaturityOrgTagsTab from './SystemDrivenMaturityOrgTagsTab';
 import SystemDrivenMaturityProjectsTab from './SystemDrivenMaturityProjectsTab';
 import { MaturityScoreItemType } from './maturityScoreItemType';
 import NavigationTabContainer from 'components/common/tabs/navigation/NavigationTabContainer';
 import NavigationTab from 'components/common/tabs/navigation/NavigationTab';
 
 const OVERLAY_TABS = {
-  GROUPS: 'groups',
+  ORG_TAGS: 'orgTags',
   PROJECTS: 'projects'
 };
 
-function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, orgTag }) {
+function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, group }) {
   const toastContext = useContext(DialogToastContext);
-  const [activeTab, setActiveTab] = useState(OVERLAY_TABS.GROUPS);
-  const [selectedGroup, setSelectedGroup] = useState(null);
+  const [activeTab, setActiveTab] = useState(OVERLAY_TABS.ORG_TAGS);
+  const [selectedOrgTag, setDelectedOrgTag] = useState(null);
 
-  const onSelectGroup = (group) => {
+  const onSelectOrgTag = (group) => {
     setActiveTab(OVERLAY_TABS.PROJECTS);
-    setSelectedGroup(group);
+    setDelectedOrgTag(group);
   };
 
   const handleTabClick = (tabSelection) => e => {
@@ -32,9 +32,9 @@ function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, orgTag 
     }
 
     switch (tabSelection) {
-      case OVERLAY_TABS.GROUPS:
-        setActiveTab(OVERLAY_TABS.GROUPS);
-        setSelectedGroup(null);
+      case OVERLAY_TABS.ORG_TAGS:
+        setActiveTab(OVERLAY_TABS.ORG_TAGS);
+        setDelectedOrgTag(null);
         return;
     }
   };
@@ -44,17 +44,17 @@ function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, orgTag 
   };
 
   const getBody = () => {
-    if (!orgTag) {
+    if (!group) {
       return 'No organization tag';
     }
 
-    if (activeTab === OVERLAY_TABS.GROUPS) {
+    if (activeTab === OVERLAY_TABS.ORG_TAGS) {
       return (
-        <SystemDrivenMaturityGroupsTab
-            kpiConfiguration={kpiConfiguration}
-            dashboardData={dashboardData}
-            orgTag={orgTag}
-            onSelectGroup={onSelectGroup}
+        <SystemDrivenMaturityOrgTagsTab
+          kpiConfiguration={kpiConfiguration}
+          dashboardData={dashboardData}
+          orgTag={group}
+          onSelectGroup={onSelectOrgTag}
         />
       );
     }
@@ -64,7 +64,7 @@ function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, orgTag 
         <SystemDrivenMaturityProjectsTab
           kpiConfiguration={kpiConfiguration}
           dashboardData={dashboardData}
-          group={selectedGroup}
+          orgTag={selectedOrgTag}
         />
       );
     }
@@ -74,22 +74,22 @@ function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, orgTag 
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={"Dora Organization Tags Actionable Insights"}
+      titleText={"System Driven Maturity Insights"}
       showToasts={true}
     >
       <NavigationTabContainer>
         <NavigationTab
-          tabName={OVERLAY_TABS.GROUPS}
+          tabName={OVERLAY_TABS.ORG_TAGS}
           handleTabClick={handleTabClick}
           activeTab={activeTab}
-          tabText={orgTag.name}
+          tabText={group.name}
         />
         <NavigationTab
           tabName={OVERLAY_TABS.PROJECTS}
           handleTabClick={handleTabClick}
           activeTab={activeTab}
-          tabText={selectedGroup?.name ?? ''}
-          visible={selectedGroup ?? false}
+          tabText={selectedOrgTag?.name ?? ''}
+          visible={Boolean(selectedOrgTag)}
         />
       </NavigationTabContainer>
       <div className={"p-3"}>
@@ -102,7 +102,7 @@ function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, orgTag 
 SystemDrivenMaturityOverlay.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  orgTag: MaturityScoreItemType
+  group: MaturityScoreItemType
 };
 
 export default SystemDrivenMaturityOverlay;
