@@ -7,14 +7,14 @@ const OracleFusionReportMigrationStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Source Instance Tool ID",
+      label: "Source Tool ID",
       id: "sourceInstanceToolId",
       isRequiredFunction: (model) => {
         return model?.getData("migrationType") === "instance_to_instance";
       },
     },    
     {
-      label: "Source Instance Folder Path",
+      label: "Source Folder",
       id: "sourceInstancePath",
       isRequiredFunction: (model) => {
         return model?.getData("migrationType") === "instance_to_instance";
@@ -23,19 +23,19 @@ const OracleFusionReportMigrationStepFormMetadata = {
       maxLength: 1024,
     },
     {
-      label: "Source Instance Reports",
+      label: "Source Reports",
       id: "sourceInstanceReports",
       isRequiredFunction: (model) => {
         return model?.getData("migrationType") === "instance_to_instance";
       },
     },
     {
-      label: "Target Instance Tool ID",
+      label: "Target Tool ID",
       id: "targetInstanceToolId",
       isRequired: true,
     },
     {
-      label: "Target Instance Folder Path",
+      label: "Target Folder Path",
       id: "targetInstancePath",
       isRequired: true,
       regexDefinitionName: "pathField",

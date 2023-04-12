@@ -19,7 +19,7 @@ function OracleFusionReportMigrationStepMigrationTypeSelectInput({model, setMode
     let newModel = {...model};
     newModel.setData("migrationType", selectedOption?.value);
     newModel.setDefaultValue("sourceInstanceToolId");
-    newModel.setDefaultValue("sourceInstanceFolderAbsolutePath");
+    newModel.setDefaultValue("sourceInstancePath");
     newModel.setDefaultValue("sourceInstanceReports");
     newModel.setDefaultValue("artifactStepId");
     setModel({...newModel});
