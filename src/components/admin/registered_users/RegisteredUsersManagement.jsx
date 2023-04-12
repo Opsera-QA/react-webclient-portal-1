@@ -5,7 +5,6 @@ import registeredUsersFilterMetadata from "components/admin/registered_users/reg
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faUserCircle} from "@fortawesome/pro-light-svg-icons";
-import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import RegisteredUserCardView from "components/admin/registered_users/RegisteredUserCardView";
 import RegisteredUsersManagementSubNavigationBar
   from "components/admin/registered_users/RegisteredUsersManagementSubNavigationBar";
