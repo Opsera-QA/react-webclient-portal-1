@@ -120,6 +120,8 @@ import FortifyMetadata
   import snykConnectionMetadata from "./tool_jobs/snyk/snyk-connection-metadata";
 import AquasecToolConfigurationSummaryPanel from "./tool_jobs/aquasec/AquasecToolConfigurationSummaryPanel";
 import AquasecMetadata from "./tool_jobs/aquasec/aquasec-tool-metadata";
+import OracleFusionToolConfigurationSummaryPanel from "./tool_jobs/oracle_fusion/OracleFusionToolConfigurationSummaryPanel";
+import OracleFusionMetadata from "./tool_jobs/oracle_fusion/oracleFusion-tool-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -337,6 +339,12 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
         return (
           <AquasecToolConfigurationSummaryPanel
             aquasecToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, AquasecMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ORACLE_FUSION:
+        return (
+          <OracleFusionToolConfigurationSummaryPanel
+            oracleFusionToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, OracleFusionMetadata)}
           />
         );
       default:
