@@ -8,6 +8,10 @@ import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/Wid
 import PipelineActionControls from "components/workflow/pipelines/action_controls/PipelineActionControls";
 import useGetPollingPipelineById from "hooks/workflow/pipelines/useGetPollingPipelineById";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import SoftwareDevelopmentLandingWorkspaceWidgetHeaderTabBarBase
+  from "components/landing/v2/widgets/workspace/SoftwareDevelopmentLandingWorkspaceWidgetHeaderTabBarBase";
+import SoftwareDevelopmentLandingWorkspacePipelineWidgetHeaderTabBarBase
+  from "components/landing/v2/widgets/pipelines/widgets/SoftwareDevelopmentLandingWorkspacePipelineWidgetHeaderTabBarBase";
 
 export default function SoftwareDevelopmentLandingPipelineWorkflowWidget(
   {
@@ -27,22 +31,16 @@ export default function SoftwareDevelopmentLandingPipelineWorkflowWidget(
     runCount,
   } = useGetPollingPipelineById(selectedPipeline?._id);
 
-  const getPipelineActionControls = () => {
-    if (pipeline) {
-      return (
-        <PipelineActionControls
-          isLoading={isLoading}
-          runCount={runCount}
-          pipeline={pipeline}
-          disabledActionState={false}
-          fetchData={loadData}
-          setPipeline={setSelectedPipeline}
-          workflowStatus={status}
-          isQueued={isQueued}
-        />
-      );
-    }
-  };
+  const getPipelineActionControls = () => (
+    <PipelineActionControls
+      pipeline={pipeline || selectedPipeline}
+      workflowStatus={status}
+      isLoading={isLoading}
+      fetchData={loadData}
+      isQueued={isQueued}
+      runCount={runCount}
+    />
+  );
 
   return (
     <div className={className}>
@@ -51,7 +49,7 @@ export default function SoftwareDevelopmentLandingPipelineWorkflowWidget(
         rightSideTitleBarItems={getPipelineActionControls()}
         isLoading={isLoading || pipelineRefreshing}
       >
-        <FreeTrialLandingWorkflowWidgetHeaderTabBarBase
+        <SoftwareDevelopmentLandingWorkspacePipelineWidgetHeaderTabBarBase
           selectedHeaderItem={selectedHeaderItem}
           setSelectedHeaderItem={setSelectedHeaderItem}
           selectedWorkflow={selectedPipeline}
