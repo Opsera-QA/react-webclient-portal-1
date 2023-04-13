@@ -8,12 +8,10 @@ import ClientWebsocket from "core/websocket/client.websocket";
 import { DATE_FN_TIME_SCALES, handleDateAdditionForTimeScale } from "components/common/helpers/date/date.helpers";
 import MainViewContainer from "components/common/containers/MainViewContainer";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
-import {platformSettingsActions} from "components/admin/platform_settings/platformSettings.actions";
-import useAxiosCancelToken from "hooks/useAxiosCancelToken";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import organizationActions from "components/settings/organizations/organization-actions";
-import commonActions from "components/common/common.actions";
 import useAuthenticationToken from "hooks/general/api/useAuthenticationToken";
+import useGetActivePlatformSettingsRecord from "hooks/platform/useGetActivePlatformSettingsRecord";
+import useGetOrganizationSettingsRecord from "hooks/settings/organization_settings/useGetOrganizationSettingsRecord";
+import useGetConfigurationFeatureFlags from "hooks/platform/feature_flags/useGetConfigurationFeatureFlags";
 
 const websocketClient = new ClientWebsocket();
 
@@ -44,61 +42,30 @@ const AuthContextProvider = (
   const [viewMode, setViewMode] = useState(SITE_VIEW_MODES.BUSINESS);
   const [theme, setTheme] = useState(THEMES.LIGHT);
   const [backgroundColor, setBackgroundColor] = useState(lightThemeConstants.COLOR_PALETTE.WHITE);
-  const [platformSettingsRecord, setPlatformSettingsRecord] = useState(undefined);
-  const [organizationSettingsRecord, setOrganizationSettingsRecord] = useState(undefined);
-  const [featureFlags, setFeatureFlags] = useState(undefined);
-  const { cancelTokenSource } = useAxiosCancelToken();
   const {
     authClient,
     getAccessToken,
     getIsAuthenticated,
   } = useAuthenticationToken();
+  const {
+    platformSettingsRecord,
+  } = useGetActivePlatformSettingsRecord(userData);
+  const {
+    organizationSettingsRecord,
+  } = useGetOrganizationSettingsRecord(userData);
+  const {
+    featureFlags,
+  } = useGetConfigurationFeatureFlags(userData);
   const userAccessRoles = SiteRoleHelper.getAccessRoles(userData);
 
   useEffect(() => {
-    setPlatformSettingsRecord(undefined);
-    setOrganizationSettingsRecord(undefined);
-
     if (userData) {
       // websocketClient?.initializeWebsocket(userData);
-      initializeUserData();
     }
     // else {
     //   websocketClient?.closeWebsocket();
     // }
   }, [userData]);
-
-  const initializeUserData = () => {
-    platformSettingsActions.getActivePlatformSettings(
-      getAccessToken,
-      cancelTokenSource,
-    ).then((response) => {
-      const platformSettings = DataParsingHelper.parseNestedObject(response, "data.data");
-
-      if (platformSettings) {
-        setPlatformSettingsRecord({...platformSettings});
-      }
-    }).catch(() => console.error("Could not pull platform settings record"));
-
-    organizationActions.getOrganizationSettings(
-      getAccessToken,
-      cancelTokenSource,
-    ).then((response) => {
-      const organizationSettings = DataParsingHelper.parseNestedObject(response, "data.data");
-
-      if (organizationSettings) {
-        setOrganizationSettingsRecord({...organizationSettings});
-      }
-    }).catch(() => console.error("Could not pull organization settings record"));
-
-    commonActions.getFeatureFlagsV2(
-      getAccessToken,
-      cancelTokenSource,
-    ).then((response) => {
-      const flags = DataParsingHelper.parseNestedObject(response, "data", {});
-      setFeatureFlags({...flags});
-    }).catch(() => console.error("Could not pull flags"));
-  };
 
   const logoutUserContext = async () => {
     authClient.tokenManager.clear();
