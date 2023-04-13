@@ -19,6 +19,7 @@ import SoftwareDevelopmentSalesforceLandingWidget
 import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
 import CreateWorkspaceResourceWizard from "components/wizard/workspace/CreateWorkspaceResourceWizard";
 import useGetWorkspaceWorkflowResources from "hooks/workspace/useGetWorkspaceWorkflowResources";
+import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 
 export default function SoftwareDevelopmentLandingWorkspaceWidget({ className }) {
   const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
@@ -124,7 +125,7 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
       return (
         <>
           <FreeTrialLandingTaskWorkflowWidget
-            selectedTask={modelHelpers.parseObjectIntoModel(selectedWorkflowItem, taskMetadata)}
+            selectedTask={modelHelpers.parseObjectIntoModel(selectedWorkflowItem, tasksMetadata)}
             setSelectedTask={setSelectedWorkflowItem}
           />
           <div className={"py-3 mx-auto"}>
