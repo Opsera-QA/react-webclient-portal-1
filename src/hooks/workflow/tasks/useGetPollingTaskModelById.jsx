@@ -21,9 +21,7 @@ export default function useGetPollingTaskModelById(
   } = useGetPollingTaskById(id, handleErrorFunction);
 
   useEffect(() => {
-    console.log("got new task");
     if (ObjectHelper.areObjectsEqualLodash(task, taskModel?.getOriginalData()) !== true) {
-      console.log("task is different");
       setTaskModel({...getNewTaskModel(task, false)});
     }
   }, [task]);
