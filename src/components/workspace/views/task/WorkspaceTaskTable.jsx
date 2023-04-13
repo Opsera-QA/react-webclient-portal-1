@@ -10,14 +10,13 @@ import {
 import {useHistory} from "react-router-dom";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {getTaskTypeLabel} from "components/tasks/task.types";
-import { taskHelper } from "components/tasks/task.helper";
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
+import {workspaceHelper} from "components/workspace/workspace.helper";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 export default function WorkspaceTaskTable(
   {
     tasks,
-    taskFilterModel,
-    setTaskFilterModel,
     loadData,
     isLoading,
   }) {
@@ -38,19 +37,20 @@ export default function WorkspaceTaskTable(
 
 
   const onRowSelect = (row) => {
-    history.push(taskHelper.getDetailViewLink(row?.original?._id));
+    const detailViewLink = workspaceHelper.getWorkspaceItemDetailLink(row?.original);
+
+    if (hasStringValue(detailViewLink) === true) {
+      history.push(detailViewLink);
+    }
   };
 
   return (
     <CustomTable
       className={"makeup-container-table"}
-      nextGeneration={true}
       columns={columns}
       data={tasks}
       isLoading={isLoading}
       onRowSelect={onRowSelect}
-      paginationDto={taskFilterModel}
-      setPaginationDto={setTaskFilterModel}
       loadData={loadData}
     />
   );
@@ -60,6 +60,4 @@ WorkspaceTaskTable.propTypes = {
   tasks: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  taskFilterModel: PropTypes.object,
-  setTaskFilterModel: PropTypes.func,
 };

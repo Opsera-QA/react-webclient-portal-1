@@ -63,7 +63,7 @@ export default function Sidebar({ hideSideBar }) {
     <div
       className={getClassNames()}
     >
-      <div className={"sticky-top py-5 sidebar-menu"}>
+      <div className={"sticky-top py-3 sidebar-menu"}>
         <HomeSidebarNavigationLink
           isSidebarCollapsed={isSidebarCollapsed}
         />

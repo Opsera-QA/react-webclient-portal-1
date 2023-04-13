@@ -78,6 +78,17 @@ pipelineHelper.getStepIndexFromPlan = (plan, stepId) => {
   return parsedPlan.findIndex((pipelineStep) => pipelineStep?._id === stepId);
 };
 
+pipelineHelper.getFirstPipelineStepIdentifier = (pipeline) => {
+  const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
+  const toolIdentifier = DataParsingHelper.parseNestedString(plan[0], "tool.tool_identifier");
+
+  if (plan.length === 0) {
+    return undefined;
+  }
+
+  return toolIdentifier;
+};
+
 pipelineHelper.getTagValueForStep = (step) => {
   const parsedStep = DataParsingHelper.parseObject(step, {});
   const parsedMongoDbId = DataParsingHelper.parseMongoDbId(parsedStep?._id);

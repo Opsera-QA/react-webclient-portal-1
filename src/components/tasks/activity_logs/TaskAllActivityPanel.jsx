@@ -144,7 +144,7 @@ function TaskAllActivityPanel() {
     <ScreenContainer
       breadcrumbDestination={"taskActivityLogs"}
       pageDescription={`
-        View Opsera Task logs.
+        View Task logs.
       `}
       navigationTabContainer={<TasksSubNavigationBar currentTab={"activity"}/>}
     >

@@ -1,6 +1,4 @@
 import useApiService from "hooks/api/service/useApiService";
-import baseActions from "utils/actionsBase";
-import {platformUsersActions} from "components/settings/users/ssoUser.actions";
 
 export default function usePlatformUsersActions() {
   const apiService = useApiService();

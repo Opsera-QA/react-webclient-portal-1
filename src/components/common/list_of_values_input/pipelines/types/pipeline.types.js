@@ -4,6 +4,7 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import constantsHelper from "@opsera/definitions/constants/constants.helper";
+import {getLargeVendorIconFromToolIdentifier} from "components/common/helpers/icon-helpers";
 
 // TODO: Refactor
 export const pipelineTypeConstants = {};
@@ -96,6 +97,26 @@ pipelineTypeConstants.getIconForPipelineType = (typeString) => {
     default:
       return (faDraftingCompass);
   }
+};
+
+pipelineTypeConstants.getIconForPipeline = (pipeline) => {
+  const type = pipelineTypeConstants.getTypeForTypesArray(pipeline);
+
+  if (hasStringValue(type) !== true) {
+    return (faDraftingCompass);
+  }
+
+  const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
+  const toolIdentifier = DataParsingHelper.parseNestedString(plan[0], "tool.tool_identifier");
+
+  if (type !== PIPELINE_TYPES.SOFTWARE_DEVELOPMENT || !toolIdentifier) {
+    return pipelineTypeConstants.getIconForPipelineType(type);
+  }
+
+  return getLargeVendorIconFromToolIdentifier(
+    toolIdentifier,
+    faDraftingCompass,
+  );
 };
 
 export const PIPELINE_TYPE_SELECT_OPTIONS = [

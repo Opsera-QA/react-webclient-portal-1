@@ -110,6 +110,24 @@ function SalesforceToGitMergeSyncTaskSummaryCard(
             visible={salesforceConfigurationModel?.getData("packageXmlReferencePath") === true}
           />
         </Col>
+        <Col xs={6}>
+          <ToolNameField
+            model={gitConfigurationModel}
+            fieldName={"jiraToolId"}
+          />
+        </Col>
+        <Col xs={6}>
+          <TextFieldBase
+            dataObject={gitConfigurationModel}
+            fieldName={"jiraProjectKey"}            
+          />
+        </Col>
+        <Col xs={6}>
+          <TextFieldBase
+            dataObject={gitConfigurationModel}
+            fieldName={"jiraIssueId"}            
+          />
+        </Col>
       </Row>
     </TaskSummaryCardContainer>
   );

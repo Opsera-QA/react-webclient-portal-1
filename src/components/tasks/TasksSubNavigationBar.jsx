@@ -4,6 +4,7 @@ import NavigationTabContainer from "components/common/tabs/navigation/Navigation
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {faClipboardList, faTasks} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import BackToWorkspaceSubNavigationBarItem from "components/workspace/BackToWorkspaceSubNavigationBarItem";
 
 function TasksSubNavigationBar({currentTab}) {
   const history = useHistory();
@@ -40,7 +41,8 @@ function TasksSubNavigationBar({currentTab}) {
 
   return (
     <NavigationTabContainer>
-      <NavigationTab tabName={"tasks"} icon={faTasks} tabText={"Opsera Tasks"} handleTabClick={handleTabClick} activeTab={currentTab} />
+      <BackToWorkspaceSubNavigationBarItem />
+      <NavigationTab tabName={"tasks"} icon={faTasks} tabText={"Tasks"} handleTabClick={handleTabClick} activeTab={currentTab} />
       <NavigationTab tabName={"activity"} icon={faClipboardList} tabText={"Activity Logs"} handleTabClick={handleTabClick} activeTab={currentTab} />
       {getActiveViewerTab()}
     </NavigationTabContainer>

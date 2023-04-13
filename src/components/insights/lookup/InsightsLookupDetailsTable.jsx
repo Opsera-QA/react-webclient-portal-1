@@ -50,6 +50,12 @@ function InsightsLookupDetailsTable({
         undefined,
         undefined,
       ),
+      getTableTextColumn(
+          getField(fields, "runCount"),
+          "no-wrap-inline",
+          undefined,
+          undefined,
+      ),
         getTableBooleanIconColumn(
             getField(fields, "validated"),
             "no-wrap-inline",
@@ -66,7 +72,7 @@ function InsightsLookupDetailsTable({
             undefined,
         ),
       getTableTextColumn(
-        getField(fields, "createdByName"),
+        getField(fields, "deployName"),
         "no-wrap-inline",
         undefined,
         undefined,

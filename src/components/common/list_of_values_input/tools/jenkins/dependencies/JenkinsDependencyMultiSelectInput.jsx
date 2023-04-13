@@ -5,99 +5,6 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-export const itemArray = [
-  {
-    name: "Java openJDK Version 7",
-    dependencyType: "java",
-    version: "7",
-  },
-  {
-    name: "Java openJDK Version 8",
-    dependencyType: "java",
-    version: "8",
-  },
-  {
-    name: "Java openJDK Version 9",
-    dependencyType: "java",
-    version: "9",
-  },
-  {
-    name: "Java openJDK Version 10",
-    dependencyType: "java",
-    version: "10",
-  },
-  {
-    name: "Java openJDK Version 11",
-    dependencyType: "java",
-    version: "11",
-  },
-  {
-    name: "Maven Version 3.0.5",
-    dependencyType: "maven",
-    version: "3.0.5",
-  },
-  {
-    name: "Maven Version 3.1.1",
-    dependencyType: "maven",
-    version: "3.1.1",
-  },
-  {
-    name: "Maven Version 3.2.5",
-    dependencyType: "maven",
-    version: "3.2.5",
-  },
-  {
-    name: "Maven Version 3.3.9",
-    dependencyType: "maven",
-    version: "3.3.9",
-  },
-  {
-    name: "Maven Version 3.5.0",
-    dependencyType: "maven",
-    version: "3.5.0",
-  },
-  {
-    name: "Maven Version 3.5.2",
-    dependencyType: "maven",
-    version: "3.5.2",
-  },
-  {
-    name: "Maven Version 3.5.3",
-    dependencyType: "maven",
-    version: "3.5.3",
-  },
-  {
-    name: "Maven Version 3.5.4",
-    dependencyType: "maven",
-    version: "3.5.4",
-  },
-  {
-    name: "Maven Version 3.6.0",
-    dependencyType: "maven",
-    version: "3.6.0",
-  },
-  {
-    name: "Maven Version 3.6.1",
-    dependencyType: "maven",
-    version: "3.6.1",
-  },
-  {
-    name: "Maven Version 3.6.2",
-    dependencyType: "maven",
-    version: "3.6.2",
-  },
-  {
-    name: "Maven Version 3.6.3",
-    dependencyType: "maven",
-    version: "3.6.3",
-  },
-  {
-    name: "Maven Version 3.8.2",
-    dependencyType: "maven",
-    version: "3.8.2",
-  },
-];
-
 // TODO: This code should be cleaned up.
 //  If we need to support having dependencyType and version with a dash, make that an object property.
 //  Stop constructing and deconstructing static objects-- these don't change so we can just make a constant out of it.
@@ -107,6 +14,7 @@ function JenkinsDependencyMultiSelectInput({
   setModel,
   setDataFunction,
   clearDataFunction,
+  dependencies,
 }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -133,7 +41,7 @@ function JenkinsDependencyMultiSelectInput({
     let disabledObj = [];
     if (model.getData(fieldName) && model.getData(fieldName).length > 0) {
       const selectedDependencyTypes = getSelectedDependencyTypes();
-      itemArray.map((item) => {
+      dependencies.map((item) => {
         if (selectedDependencyTypes.includes(item.dependencyType)) {
           disabledObj.push(item);
         }
@@ -170,7 +78,7 @@ function JenkinsDependencyMultiSelectInput({
     const selectedDependencyTypes = currentData.map(
       (dependency) => dependency.dependencyType,
     );
-    const filteredArr = itemArray.filter(
+    const filteredArr = dependencies.filter(
         (dependency) =>
             !selectedDependencyTypes.includes(dependency.dependencyType),
     );
@@ -222,6 +130,7 @@ JenkinsDependencyMultiSelectInput.propTypes = {
   setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
+  dependencies: PropTypes.array,
 };
 
 export default JenkinsDependencyMultiSelectInput;

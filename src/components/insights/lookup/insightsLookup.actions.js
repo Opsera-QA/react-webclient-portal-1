@@ -10,6 +10,9 @@ insightsLookupActions.getComponentNames = async (
   endDate,
   componentNames,
   selectedComponentFilterData,
+  pipelineComponentFilterData,
+  orgsComponentFilterData,
+  tableFilterDto,
 ) => {
   const apiUrl = `/analytics/sfdc/v1/component/names`;
   const postBody = {
@@ -17,6 +20,9 @@ insightsLookupActions.getComponentNames = async (
     endDate: endDate,
     fullNameArr: componentNames,
     selectedComponentFilterData: selectedComponentFilterData,
+    pipelineComponentFilterData :pipelineComponentFilterData,
+    orgsComponentFilterData: orgsComponentFilterData,
+    search: tableFilterDto?.getData("search"),
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,
@@ -30,9 +36,17 @@ insightsLookupActions.getComponentByName = async (
   getAccessToken,
   cancelTokenSource,
   componentName,
+  pipeline,
+  startDate,
+  endDate
 ) => {
   const apiUrl = `/analytics/sfdc/v1/component/get-component-by-name`;
-  const postBody = { componentName: componentName };
+  const postBody = {
+    componentName: componentName,
+    pipeline:pipeline,
+    startDate: startDate,
+    endDate: endDate,
+  };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,
     cancelTokenSource,
@@ -127,6 +141,7 @@ insightsLookupActions.generateTransformedResults = (searchResults) => {
       const pipelineData = searchResults[pipelineName].currentResults;
       cleanedResults[pipelineName] = {
         totalTimesComponentDeployed: pipelineData.totalTimesComponentDeployed,
+        deploymentTotal:pipelineData.deploymentTotal,
         totalUnitTestsFailed: pipelineData.totalUnitTestsFailed,
         totalUnitTestsPassed: pipelineData.totalUnitTestsPassed,
         totalValidationsFailed: pipelineData.totalValidationsFailed,
@@ -141,6 +156,7 @@ insightsLookupActions.generateTransformedResults = (searchResults) => {
     const totals = [
       {
         deploy_count: data.totalTimesComponentDeployed,
+        deployments: data.deploymentTotal,
         validations_passed: data.totalValidationsPassed,
         validations_failed: data.totalValidationsFailed,
         unit_tests_passed: data.totalUnitTestsPassed,
@@ -156,6 +172,7 @@ insightsLookupActions.generateTransformedResults = (searchResults) => {
       pipelines.push({
         pipeline: pipelineName,
         deploy_count: pipeline.totalTimesComponentDeployed,
+        deployments: pipeline.deploymentTotal,
         validations_passed: pipeline.totalValidationsPassed,
         validations_failed: pipeline.totalValidationsFailed,
         unit_tests_passed: pipeline.totalUnitTestsPassed,

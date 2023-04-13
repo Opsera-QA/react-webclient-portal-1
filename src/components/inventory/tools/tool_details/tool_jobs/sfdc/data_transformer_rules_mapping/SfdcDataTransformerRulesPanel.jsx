@@ -5,12 +5,11 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import ParameterFilterModel from "components/inventory/parameters/parameter.filter.model";
 import {AuthContext} from "contexts/AuthContext";
-import modelHelpers from "components/common/model/modelHelpers";
 import sfdcDataTransformerRulesActions from "./sfdc-data-transformer-rules-actions";
 import SfdcDataTransformerRulesEditorPanel from "./details/SfdcDataTransformerRulesEditorPanel";
 
 function SfdcDataTransformerRulesPanel({ toolData }) {
-  const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   // TODO: Replace with actual filter model for this area OR make generic one
   const [parameterFilterModel, setParameterFilterModel] = useState(new ParameterFilterModel());

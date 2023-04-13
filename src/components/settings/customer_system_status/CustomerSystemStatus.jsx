@@ -1,19 +1,21 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import { AuthContext } from "contexts/AuthContext";
-import LoadingDialog from "components/common/status_notifications/loading";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import customerSystemStatusActions from "components/settings/customer_system_status/customer-system-status-actions";
 import StatusLegend from "components/common/status/StatusLegend";
 import SystemStatusCard from "components/admin/status/SystemStatusCard";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function CustomerSystemStatus() {
-  const toastContext = useContext(DialogToastContext);
-  const {getAccessToken, getUserRecord, setAccessRoles} = useContext(AuthContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [customerSystemStatusData, setCustomerSystemStatusData] = useState(undefined);
+  const {
+    toastContext,
+    getAccessToken,
+    isOpseraAdministrator,
+    isSiteAdministrator,
+    isPowerUser,
+  } = useComponentStateReference();
 
   useEffect(() => {
     loadData();
@@ -21,28 +23,18 @@ function CustomerSystemStatus() {
 
   const loadData = async () => {
     try {
+      if (isOpseraAdministrator !== true && isSiteAdministrator !== true && isPowerUser !== true) {
+        return;
+      }
+
       setIsLoading(true);
-      await getRoles();
+      await getSystemStatuses();
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);
-      console.error(error);
     }
     finally {
       setIsLoading(false);
-    }
-  };
-
-  const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-
-      if (userRoleAccess?.PowerUser || userRoleAccess?.Administrator || userRoleAccess?.OpseraAdministrator) {
-        await getSystemStatuses();
-      }
     }
   };
 
@@ -68,13 +60,12 @@ function CustomerSystemStatus() {
     );
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog />);
+  if (isOpseraAdministrator !== true && isSiteAdministrator !== true && isPowerUser !== true) {
+    return null;
   }
 
   return (
     <ScreenContainer
-      accessDenied={!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator}
       breadcrumbDestination={"customerSystemStatus"}
       pageDescription={`View the current system status for Customer Tools`}
       isLoading={isLoading}

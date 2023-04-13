@@ -4,10 +4,10 @@ import useLocationReference from "hooks/useLocationReference";
 import ToastContextProvider from "contexts/DialogToastContext";
 import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
 import OpseraHeaderBar from "components/header/OpseraHeaderBar";
+import useAuthenticationToken from "hooks/general/api/useAuthenticationToken";
 
 export default function MainViewContainer(
   {
-    isAuthenticated,
     backgroundColor,
     children,
   }) {
@@ -15,9 +15,7 @@ export default function MainViewContainer(
 
   const getNavBar = () => {
     return (
-      <OpseraHeaderBar
-        hideAuthComponents={!isAuthenticated}
-      />
+      <OpseraHeaderBar />
     );
   };
 

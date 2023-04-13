@@ -18,8 +18,6 @@ export default function WorkspaceItemTable(
   {
     workspaceItems,
     isLoading,
-    paginationModel,
-    setPaginationModel,
     loadData,
   }) {
   const history = useHistory();
@@ -65,12 +63,9 @@ export default function WorkspaceItemTable(
 
   return (
     <CustomTable
-      nextGeneration={true}
       columns={columns}
       onRowSelect={(row) => onRowClickFunction(row?.original)}
-      paginationDto={paginationModel}
       loadData={loadData}
-      setPaginationDto={setPaginationModel}
       data={workspaceItems}
       isLoading={isLoading}
     />
@@ -80,7 +75,5 @@ export default function WorkspaceItemTable(
 WorkspaceItemTable.propTypes = {
   workspaceItems: PropTypes.array,
   isLoading: PropTypes.bool,
-  setPaginationModel: PropTypes.func,
-  paginationModel: PropTypes.object,
   loadData: PropTypes.func,
 };

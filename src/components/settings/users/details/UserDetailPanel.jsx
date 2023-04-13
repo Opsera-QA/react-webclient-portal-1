@@ -5,14 +5,20 @@ import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
 import SummaryTab from "../../../common/tabs/detail_view/SummaryTab";
 import UserSummaryPanel from "components/settings/users/details/UserSummaryPanel";
 import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTabPanelContainer";
-import SettingsTab from "../../../common/tabs/detail_view/SettingsTab";
 import UserAssignedRolesPanel from "components/settings/users/details/assigned_roles/UserAssignedRolesPanel";
-import {faIdCard} from "@fortawesome/pro-light-svg-icons";
+import {faIdCard, faTable} from "@fortawesome/pro-light-svg-icons";
 import CustomTab from "components/common/tabs/CustomTab";
-import LdapUserEditorPanel from "components/admin/accounts/ldap/users/details/LdapUserEditorPanel";
+import UserAccessTokenActivityLogPanel from "components/settings/users/details/UserAccessTokenActivityLogPanel";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function UserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, hideSettings }) {
   const [activeTab, setActiveTab] = useState("summary");
+  const {
+    isSiteAdministrator,
+    isAuditor,
+    isSecurityManager,
+    userData,
+  } = useComponentStateReference();
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
@@ -34,6 +40,14 @@ function UserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, hideSetting
           handleTabClick={handleTabClick}
           activeTab={activeTab}
           tabText={"Assigned Role Access"}
+        />
+        <CustomTab
+          icon={faTable}
+          tabName={"access-token-activity-logs"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Access Token Activity Logs"}
+          visible={isSiteAdministrator === true || isAuditor === true || isSecurityManager === true || userData?._id === ldapUserData?.getData("_id")}
         />
       </CustomTabContainer>
     );
@@ -60,6 +74,13 @@ function UserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, hideSetting
         return (
           <UserAssignedRolesPanel
             userEmailAddress={ldapUserData?.getData("emailAddress")}
+          />
+        );
+      case "access-token-activity-logs":
+        return (
+          <UserAccessTokenActivityLogPanel
+            userId={ldapUserData?.getData("_id")}
+            className={"mt-2"}
           />
         );
       default:

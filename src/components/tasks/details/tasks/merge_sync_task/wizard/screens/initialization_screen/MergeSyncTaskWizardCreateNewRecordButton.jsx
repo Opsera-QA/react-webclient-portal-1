@@ -20,6 +20,7 @@ function MergeSyncTaskWizardCreateNewRecordButton({
   className,
   disabled,
   icon,
+  skipConfig,
 }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -51,6 +52,7 @@ function MergeSyncTaskWizardCreateNewRecordButton({
         wizardModel?.getData("taskId"),
         wizardModel?.getData("runCount"),
         wizardModel?.getData("isProfiles"),
+        wizardModel?.getData("apiVersion"),
       );
       const newRecord = response?.data?.data;
 
@@ -58,7 +60,7 @@ function MergeSyncTaskWizardCreateNewRecordButton({
         wizardModel?.setData("recordId", newRecord._id);
         setWizardModel({ ...wizardModel });
         setCurrentScreen(
-          MERGE_SYNC_WIZARD_SCREENS.CONFIGURATION_SCREEN,
+          skipConfig ? MERGE_SYNC_WIZARD_SCREENS.COMMIT_SELECTION_SCREEN : MERGE_SYNC_WIZARD_SCREENS.CONFIGURATION_SCREEN
         );
       }
     } catch (error) {
@@ -114,6 +116,7 @@ MergeSyncTaskWizardCreateNewRecordButton.propTypes = {
   size: PropTypes.string,
   className: PropTypes.string,
   isLoading: PropTypes.bool,
+  skipConfig: PropTypes.bool,
 };
 
 MergeSyncTaskWizardCreateNewRecordButton.defaultProps = {

@@ -83,6 +83,7 @@ export default function RadioButtonCard(
             value={value}
             checked={model?.getData(fieldName) === value}
             disabled={disabled}
+            onChange={() => {}}
           />
           <strong>{label}</strong>
         </div>

@@ -5,12 +5,12 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import tokenActions from "components/user/user_settings/access_tokens/token-actions";
-import {accessTokenMetadata} from "components/user/user_settings/access_tokens/access-token-metadata";
 import AccessTokenDetailPanel from "components/user/user_settings/access_tokens/details/AccessTokenDetailPanel";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import UserSettingsSubNavigationBar from "components/user/user_settings/UserSettingsSubNavigationBar";
 import {USER_SETTINGS_PAGES} from "components/user/user_settings/userSettings.paths";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import accessTokenMetadata from "@opsera/definitions/constants/access_tokens/accessToken.metadata";
 
 function AccessTokenDetailView() {
   const {tokenId} = useParams();

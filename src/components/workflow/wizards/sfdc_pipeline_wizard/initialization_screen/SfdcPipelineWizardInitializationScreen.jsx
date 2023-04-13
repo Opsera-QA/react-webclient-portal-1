@@ -19,7 +19,6 @@ import SfdcPipelineWizardFileUploadComponent
   from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardFileUploadComponent";
 import SfdcPipelineWizardPastRunComponent
   from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardPastRunComponent";
-import toolsActions from "components/inventory/tools/tools-actions";
 const DataParsingHelper = require("@opsera/persephone/helpers/data/dataParsing.helper");
 
 const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, pipeline, gitTaskData, setError }) => {
@@ -76,6 +75,29 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     }
   };
 
+  const getLatestApiVersion = async (sfdcToolId) => {
+    try {
+      const response = await sfdcPipelineActions.getApiVersions(
+        getAccessToken,
+        cancelTokenSource,
+        sfdcToolId,
+      );
+      let apiVersions = DataParsingHelper.parseNestedArray(
+        response,
+        "data.message",
+        [],
+      );
+      if (apiVersions && apiVersions.length > 0) return apiVersions[0];
+      return "";
+    } catch (error) {
+      console.error(error);
+      setError(
+        "Could not get default API version for Salesforce Pipeline",
+      );
+      return "";
+    }
+  };
+
   const loadGitTaskInformation = (newPipelineWizardModel, gitTaskData) => {
     const gitTaskId = gitTaskData.getData("_id");
     const sfdcToolId = gitTaskData.getData("configuration")?.sfdcToolId;
@@ -83,7 +105,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     const sfdcDestToolId = gitTaskData.getData("configuration")?.sfdcDestToolId;
     const accountUsername = gitTaskData.getData("configuration")?.accountUsername;
     const gitBranch = gitTaskData.getData("configuration")?.gitBranch;
-
+    const repository = gitTaskData.getData("configuration")?.repository;
 
     if (gitTaskId == null || gitTaskId === "") {
       setError("Could not find Git Task");
@@ -102,6 +124,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     newPipelineWizardModel.setData("gitToolId", gitToolId);
     newPipelineWizardModel.setData("pipelineId", "N/A");
     newPipelineWizardModel.setData("stepId", "N/A");
+    newPipelineWizardModel.setData("repository", repository);
     setPipelineWizardModel({...newPipelineWizardModel});
     return newPipelineWizardModel;
   };
@@ -135,6 +158,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     const workspace = sfdcStep?.tool?.configuration?.workspace;
     const service = sfdcStep?.tool?.configuration?.service;
     const repository = sfdcStep?.tool?.configuration?.repository;
+    const jobTypeId = sfdcStep?.tool?.configuration?.job_type;
 
     if (pipelineId == null) {
       setError("Could not find Pipeline");
@@ -166,6 +190,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     newPipelineWizardModel.setData("workspace", workspace);
     newPipelineWizardModel.setData("service", service);
     newPipelineWizardModel.setData("repository", repository);
+    newPipelineWizardModel.setData("jobTypeId", jobTypeId);
     const isSfdx = await checkIfSfdx(cancelSource, sfdcToolId);
     newPipelineWizardModel.setData("isSfdx", isSfdx);
     newPipelineWizardModel.setData("ignoreWarning", ignoreWarning);
@@ -186,6 +211,9 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   const initializePipelineWizardRecord = async (newPipelineWizardModel = pipelineWizardModel) => {
     const result = await sfdcPipelineActions.findExistingRecordV2(getAccessToken, cancelTokenSource, newPipelineWizardModel);
     const existingRecord = result?.data;
+
+    let apiVersion = existingRecord?.apiVersion ? existingRecord?.apiVersion : await getLatestApiVersion(newPipelineWizardModel.getData("sfdcToolId"));
+    newPipelineWizardModel.setData("apiVersion", apiVersion);
 
     if (existingRecord) {
       setExistingRecord(existingRecord);

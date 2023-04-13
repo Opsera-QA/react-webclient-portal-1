@@ -1,38 +1,30 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {faBracketsCurly, faExclamationTriangle, faTimes} from "@fortawesome/pro-light-svg-icons";
+import {faBracketsCurly, faTimes} from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
-import {AuthContext} from "contexts/AuthContext";
 import regexDefinitions from "utils/regexDefinitions";
 import StandaloneComboBoxInput from "components/common/inputs/combo_box/StandaloneComboBoxInput";
 import IconBase from "components/common/icons/IconBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
+// TODO: If we're gonna reuse this, it needs to be rewritten to follow current standards
 function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}) {
-  const [field] = useState(dataObject.getFieldById(fieldName));
-  const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
+  const field = dataObject.getFieldById(fieldName);
   const [errorMessage, setErrorMessage] = useState("");
   const [properties, setProperties] = useState([]);
+  const {
+    isOpseraAdministrator,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    getRoles();
-  }, []);
-
-  const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-
-      if (userRoleAccess?.OpseraAdministrator) {
-        await loadData();
-      }
+    if (isOpseraAdministrator) {
+      loadData();
     }
-  };
+  }, []);
 
   const loadData = () => {
     let currentData = dataObject.getData(fieldName);
@@ -213,7 +205,7 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
     }
   };
 
-  if (field == null || accessRoleData?.OpseraAdministrator !== true) {
+  if (field == null || isOpseraAdministrator !== true) {
     return <></>;
   }
 

@@ -10,6 +10,8 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import SalesforcePackageVersionSelectionInput
+  from "../../../../../../../workflow/wizards/sfdc_pipeline_wizard/xml_viewer/xml/SalesforcePackageVersionSelectionInput";
 
 const MergeSyncTaskWizardInitializationScreen = ({
   wizardModel,
@@ -17,6 +19,7 @@ const MergeSyncTaskWizardInitializationScreen = ({
   setCurrentScreen,
   handleClose,
   mergeSyncType,
+  skipConfig,
 }) => {
   const getBody = () => {
     if (wizardModel == null) {
@@ -50,23 +53,33 @@ const MergeSyncTaskWizardInitializationScreen = ({
           </div>
         </div>
         {wizardModel?.getData("taskType") === "SFDC_GIT_COMPARE_SYNC" &&
-          <Row className="mx-0 mt-3 d-flex">
-            <div className="ml-auto d-flex">
-              <Col>
-                <BooleanToggleInput
-                  fieldName={"isProfiles"}
-                  dataObject={wizardModel}
-                  setDataObject={setWizardModel}
-                />
-              </Col>
-            </div>
-          </Row>
+          <>
+            {wizardModel.getData("sfdcToolId") &&
+              <SalesforcePackageVersionSelectionInput
+                pipelineWizardModel={wizardModel}
+                setPipelineWizardModel={setWizardModel}
+                fieldName={"apiVersion"}
+              />
+            }
+            <Row className="mx-0 mt-3 d-flex">
+              <div className="ml-auto d-flex">
+                <Col>
+                  <BooleanToggleInput
+                    fieldName={"isProfiles"}
+                    dataObject={wizardModel}
+                    setDataObject={setWizardModel}
+                  />
+                </Col>
+              </div>
+            </Row>
+          </>
         }
         <SaveButtonContainer>
           <MergeSyncTaskWizardCreateNewRecordButton
             wizardModel={wizardModel}
             setWizardModel={setWizardModel}
             setCurrentScreen={setCurrentScreen}
+            skipConfig={skipConfig}
             className={"mr-2"}
           />
           <CancelButton
@@ -94,12 +107,17 @@ const MergeSyncTaskWizardInitializationScreen = ({
   );
 };
 
+MergeSyncTaskWizardInitializationScreen.defaultProps = {
+  skipConfig: false,
+};
+
 MergeSyncTaskWizardInitializationScreen.propTypes = {
   mergeSyncType: PropTypes.string,
   setCurrentScreen: PropTypes.func,
   handleClose: PropTypes.func,
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
+  skipConfig: PropTypes.bool,
 };
 
 export default MergeSyncTaskWizardInitializationScreen;

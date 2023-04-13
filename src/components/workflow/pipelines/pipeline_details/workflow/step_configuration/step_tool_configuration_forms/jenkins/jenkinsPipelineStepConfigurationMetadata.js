@@ -191,7 +191,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       formText:"Note: TestLevel of NoTestRun cannot be used in production organizations"
     },
     {
-      label:"Destination Salesforce Credentials",
+      label:"Destination Salesforce Org",
       id:"sfdcDestToolId",
       // isRequired: true
     },
