@@ -1,6 +1,4 @@
 import useApiService from "hooks/api/service/useApiService";
-import baseActions from "utils/actionsBase";
-import pipelineActions from "components/workflow/pipeline-actions";
 
 export default function usePipelineActions() {
   const apiService = useApiService();
