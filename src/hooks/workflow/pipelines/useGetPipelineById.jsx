@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
-import pipelineActions from "components/workflow/pipeline-actions";
 import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
+import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 
 export default function useGetPipelineById(
   id,
@@ -17,6 +16,7 @@ export default function useGetPipelineById(
     setError,
     loadData,
   } = useLoadData();
+  const pipelineActions = usePipelineActions();
 
   useEffect(() => {
     setPipeline(undefined);
@@ -31,7 +31,7 @@ export default function useGetPipelineById(
       return;
     }
 
-    const response = await pipelineActions.getPipelineByIdV2(getAccessToken, cancelTokenSource, id);
+    const response = await  pipelineActions.getPipelineById(id);
     const newPipeline = DataParsingHelper.parseObject(response?.data?.data);
 
     if (ObjectHelper.areObjectsEqualLodash(newPipeline, pipeline) !== true) {
