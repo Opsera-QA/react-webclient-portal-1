@@ -34,7 +34,7 @@ const SOCIAL_ICONS = {
   TWITTER_TOOLTIP: "Opsera on Twitter",
 };
 
-export default function FreeTrialLandingSalesforceWidget({ className }) {
+export default function SoftwareDevelopmentLandingSalesforceWidget({ className }) {
   const {
     themeConstants,
     userData,
@@ -162,6 +162,6 @@ export default function FreeTrialLandingSalesforceWidget({ className }) {
   );
 }
 
-FreeTrialLandingSalesforceWidget.propTypes = {
+SoftwareDevelopmentLandingSalesforceWidget.propTypes = {
   className: PropTypes.string,
 };
