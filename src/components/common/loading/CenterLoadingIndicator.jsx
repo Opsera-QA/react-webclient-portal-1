@@ -23,7 +23,7 @@ export default function CenterLoadingIndicator(
     <CenteredContentWrapper
       minHeight={minHeight}
     >
-      <div className={"mb-5"}>
+      <div className={"mb-4"}>
         <div
           // style={{
           //   marginTop: "-120px",
