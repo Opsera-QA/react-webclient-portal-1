@@ -145,7 +145,7 @@ export default function TaskTypeSelect({
                     subTitleClassName={"mx-auto"}
                 />
             }
-            description={"Description to come for this. Lorem Ipsum test description goes here for spacing."}
+            description={"Review and Sync Salesforce Branch Structure and corresponding details."}
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />
         </SelectionCardColumn>
