@@ -30,5 +30,10 @@ export default function useTaskActions() {
     );
   };
 
+  taskActions.getTaskById = async (taskId) => {
+    const apiUrl = `/tasks/${taskId}`;
+    return await apiService.handleApiGetRequest(apiUrl);
+  };
+
   return taskActions;
 }

@@ -6,6 +6,7 @@ export default function useGetPollingTaskOrchestrationStatusById(
   id,
   pollingDelayInMs = 10000,
   handleErrorFunction,
+  enabled = true,
 ) {
   const {
     isLoading,
@@ -14,7 +15,6 @@ export default function useGetPollingTaskOrchestrationStatusById(
     loadData,
     status,
     runCount,
-    restingStepId,
     updatedAt,
   } = useGetTaskOrchestrationStatusById(id, handleErrorFunction);
 
@@ -22,12 +22,11 @@ export default function useGetPollingTaskOrchestrationStatusById(
     if (loadData) {
       loadData();
     }
-  }, Math.max(pollingDelayInMs, 5000), error);
+  }, Math.max(pollingDelayInMs, 5000), error, enabled);
 
   return ({
     status: status,
     runCount: runCount,
-    restingStepId: restingStepId,
     updatedAt: updatedAt,
     loadData: loadData,
     isLoading: isLoading,
