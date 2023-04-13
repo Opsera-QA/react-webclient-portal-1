@@ -69,6 +69,7 @@ function OracleFusionReportMigrationStepConfiguration({ pipelineId, stepTool, pl
             model={oracleFusionReportMigrationStepConfigurationModel}
             setModel={setOracleFusionReportMigrationStepConfigurationModel}
             sourceToolId={oracleFusionReportMigrationStepConfigurationModel?.getData("sourceInstanceToolId")}
+            sourceFolder={oracleFusionReportMigrationStepConfigurationModel?.getData("sourceInstancePath")}
           />
         </>
       );

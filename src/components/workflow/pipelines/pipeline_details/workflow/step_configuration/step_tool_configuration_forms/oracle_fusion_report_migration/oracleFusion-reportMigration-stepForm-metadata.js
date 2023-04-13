@@ -53,7 +53,7 @@ const OracleFusionReportMigrationStepFormMetadata = {
     migrationType: "",
     sourceInstanceToolId: "",    
     sourceInstancePath: "",
-    sourceInstanceReports: "",
+    sourceInstanceReports: [],
     targetInstanceToolId: "",
     targetInstancePath: "",
     artifactStepId: "",    
