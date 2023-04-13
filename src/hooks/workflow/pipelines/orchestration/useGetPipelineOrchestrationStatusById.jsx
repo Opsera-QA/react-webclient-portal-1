@@ -44,7 +44,7 @@ export default function useGetPipelineOrchestrationStatusById(
     const newOrchestrationStatus = DataParsingHelper.parseObject(response?.data?.data, {});
 
     if (ObjectHelper.areObjectsEqualLodash(newOrchestrationStatus, orchestrationStatus) === false) {
-      setOrchestrationStatus(newOrchestrationStatus);
+      setOrchestrationStatus({...newOrchestrationStatus});
     }
   };
 
