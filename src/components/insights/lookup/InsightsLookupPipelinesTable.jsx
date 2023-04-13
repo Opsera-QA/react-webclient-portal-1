@@ -26,7 +26,7 @@ const fields = [
     id: "validations_failed",
   },
   {
-    label: "Unit Tests \n Passed",
+    label: "Unit Tests Passed",
     id: "unit_tests_passed",
   },
   {

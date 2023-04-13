@@ -5,7 +5,6 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InfoContainer from "components/common/containers/InfoContainer";
 import { faCalendar } from "@fortawesome/pro-light-svg-icons";
 import {STATIC_DATE_RANGES} from "components/common/inputs/date/DateRangeInput";
-import {getDatesFromLabel} from "../../../../insights/charts/charts-helpers";
 
 // TODO: This should be reworked
 export default function DateRangeInputBase(
@@ -46,7 +45,6 @@ export default function DateRangeInputBase(
   };
 
   const updateValue = (newStartDate, newEndDate) => {
-
     const unpackedInternalDate = {
       startDate: new Date(newStartDate),
       endDate: new Date(newEndDate),
@@ -84,10 +82,8 @@ export default function DateRangeInputBase(
               months={1}
               ranges={[internalDate]}
               staticRanges={STATIC_DATE_RANGES}
-              showCustomRangeLabel={true}
               direction={"horizontal"}
               className={"mx-auto"}
-              selectionType={"range"}
             />
           </div>
         </InfoContainer>
