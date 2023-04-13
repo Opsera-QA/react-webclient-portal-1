@@ -24,7 +24,7 @@ export const insightsLookupDetailsMetadata = {
     },
     {
       label: "Deployed By",
-      id: "deployName",
+      id: "customerName",
     },
     {
       label: "Deployment Start",

@@ -56,7 +56,6 @@ function LookupResults({
     );
   };
 
-    console.log("selected", searchResults);
 
   const getCurrentView = () => {
     const selectedComponent = searchResults?.find(
