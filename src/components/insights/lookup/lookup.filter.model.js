@@ -25,6 +25,10 @@ const insightsLookupMetadata = {
       id: "activeFilters",
     },
     {
+      label: "Label",
+      id: "label",
+    },
+    {
       label: "Date Range",
       id: "dateRange",
     },
@@ -57,6 +61,7 @@ const insightsLookupMetadata = {
     startDate: null,
     endDate: null,
     search: "",
+    label: "",
     selectedComponentNames: [],
     pipelineComponentFilterData: [],
     orgsComponentFilterData:[],

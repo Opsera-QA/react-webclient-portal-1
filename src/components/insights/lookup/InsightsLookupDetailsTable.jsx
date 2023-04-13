@@ -72,7 +72,7 @@ function InsightsLookupDetailsTable({
             undefined,
         ),
       getTableTextColumn(
-        getField(fields, "deployName"),
+        getField(fields, "customerName"),
         "no-wrap-inline",
         undefined,
         undefined,

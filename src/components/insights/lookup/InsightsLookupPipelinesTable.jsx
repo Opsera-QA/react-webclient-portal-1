@@ -26,7 +26,7 @@ const fields = [
     id: "validations_failed",
   },
   {
-    label: "Unit Tests Passed",
+    label: "Unit Tests \n Passed",
     id: "unit_tests_passed",
   },
   {
@@ -72,7 +72,7 @@ const InsightsLookupPipelinesTable = ({ pipelines, componentName, startDate,endD
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "pipeline"), "no-wrap-inline"),
+      getTableTextColumn(getField(fields, "pipeline") ,"force-text-wrap"),
       getTableTextColumn(getField(fields, "deployments")),
       getTableTextColumn(getField(fields, "validations_passed")),
       getTableTextColumn(getField(fields, "validations_failed")),
