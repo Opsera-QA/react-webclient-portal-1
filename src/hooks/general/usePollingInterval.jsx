@@ -15,7 +15,7 @@ export default function usePollingInterval(callback, delay, error, enabled = tru
       savedCallback.current();
     };
 
-    if (delay != null && [404, 403].includes(errorResponseStatus) !== true && enabled !== true) {
+    if (delay != null && [404, 403].includes(errorResponseStatus) !== true && enabled === true) {
       let id = setInterval(tick, delay);
       return () => clearInterval(id);
     }
