@@ -70,27 +70,28 @@ export default function TaskTypeSelect({
                     subTitleClassName={"mx-auto"}
                 />
             }
+            description={"Retrieve and Create Salesforce Repo."}
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />
         </SelectionCardColumn>
-        <SelectionCardColumn>
-          <TaskCardBase
-            option={TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION}
-            handleFlowSelection={handleFlowSelection}
-            selectedFlow={selectedFlow}
-            icon={
-                <IconTitleBar
-                    icon={
-                        getLargeVendorIconFromToolIdentifier(toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR)
-                    }
-                    title={TASK_TYPE_LABELS.SALESFORCE_CERTIFICATE_GENERATION}
-                    titleClassName={"mx-auto"}
-                    subTitleClassName={"mx-auto"}
-                />
-            }
-            workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
-          />
-        </SelectionCardColumn>
+        {/*<SelectionCardColumn>*/}
+        {/*  <TaskCardBase*/}
+        {/*    option={TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION}*/}
+        {/*    handleFlowSelection={handleFlowSelection}*/}
+        {/*    selectedFlow={selectedFlow}*/}
+        {/*    icon={*/}
+        {/*        <IconTitleBar*/}
+        {/*            icon={*/}
+        {/*                getLargeVendorIconFromToolIdentifier(toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR)*/}
+        {/*            }*/}
+        {/*            title={TASK_TYPE_LABELS.SALESFORCE_CERTIFICATE_GENERATION}*/}
+        {/*            titleClassName={"mx-auto"}*/}
+        {/*            subTitleClassName={"mx-auto"}*/}
+        {/*        />*/}
+        {/*    }*/}
+        {/*    workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}*/}
+        {/*  />*/}
+        {/*</SelectionCardColumn>*/}
         <SelectionCardColumn>
           <TaskCardBase
             option={TASK_TYPES.SALESFORCE_QUICK_DEPLOY}
@@ -106,27 +107,29 @@ export default function TaskTypeSelect({
                     subTitleClassName={"mx-auto"}
                 />
             }
+            description={"Quick Deploy validated packages."}
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />
         </SelectionCardColumn>
-        {/*disabled for now need to activate later*/}
-        {/*<SelectionCardColumn>*/}
-        {/*  <TaskCardBase*/}
-        {/*    option={TASK_TYPES.GIT_TO_GIT_MERGE_SYNC}*/}
-        {/*    handleFlowSelection={handleFlowSelection}*/}
-        {/*    selectedFlow={selectedFlow}*/}
-        {/*    title={TASK_TYPE_LABELS.SALESFORCE_TO_GIT_MERGE_SYNC}*/}
-        {/*    icon={*/}
-        {/*      <IconBase*/}
-        {/*        icon={faSalesforce}*/}
-        {/*        iconColor={"#1798c1"}*/}
-        {/*        className={"mt-5"}*/}
-        {/*        iconSize={"3x"}*/}
-        {/*      />*/}
-        {/*    }*/}
-        {/*    workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}*/}
-        {/*  />*/}
-        {/*</SelectionCardColumn>*/}
+          <SelectionCardColumn>
+              <TaskCardBase
+                  option={TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC}
+                  handleFlowSelection={handleFlowSelection}
+                  selectedFlow={selectedFlow}
+                  icon={
+                      <IconTitleBar
+                          icon={
+                              getLargeVendorIconFromToolIdentifier(toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR)
+                          }
+                          title={TASK_TYPE_LABELS.SALESFORCE_TO_GIT_MERGE_SYNC}
+                          titleClassName={"mx-auto"}
+                          subTitleClassName={"mx-auto"}
+                      />
+                  }
+                  description={"Retrieve and deploy components from Salesforce Org to Git Branch (With Merge Conflict Resolution)."}
+                  workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
+              />
+          </SelectionCardColumn>
         <SelectionCardColumn>
           <TaskCardBase
             option={TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE}
@@ -142,6 +145,7 @@ export default function TaskTypeSelect({
                     subTitleClassName={"mx-auto"}
                 />
             }
+            description={"Description to come for this. Lorem Ipsum test description goes here for spacing."}
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />
         </SelectionCardColumn>
@@ -160,6 +164,7 @@ export default function TaskTypeSelect({
                     subTitleClassName={"mx-auto"}
                 />
             }
+            description={"Retrieve and deploy components from Salesforce Org to Git Branch (Without Merge Conflict Resolution)."}
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />
         </SelectionCardColumn>
