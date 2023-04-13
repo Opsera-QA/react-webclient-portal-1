@@ -70,7 +70,9 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
           <Row>
             <Col xs={0} sm={0} md={0} lg={2} xl={3} />
             <Col xs={12} sm={12} md={12} lg={8} xl={6}>
-              <NoRegisteredWorkflowsCard />
+              <NoRegisteredWorkflowsCard
+                loadDataFunction={loadData}
+              />
             </Col>
             <Col xs={0} sm={0} md={0} lg={2} xl={3} />
           </Row>
@@ -92,6 +94,7 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
             rightSideTitleBarItems={getNewButton()}
           >
             <FreeTrialWorkflowItemSelectionCardView
+              workflowFilterModel={workspaceFilterModel}
               heightSize={5}
               workspaceItems={workspaceItems}
               loadData={loadData}
