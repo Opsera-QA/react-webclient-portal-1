@@ -45,8 +45,7 @@ function OracleFusionReportMigrationSourceReportsMultiSelectInput({ model, setMo
       setIsLoading(true);
       setSourceReports([]);
       await fetchSourceInstanceReports(cancelSource);
-    } catch (error) {
-      console.log({error});
+    } catch (error) {      
       if (isMounted?.current === true) {
         setError(error);
         console.error(error);
