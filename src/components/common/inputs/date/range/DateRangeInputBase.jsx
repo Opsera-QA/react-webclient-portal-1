@@ -18,7 +18,6 @@ export default function DateRangeInputBase(
     key,
     titleText,
   }) {
-  console.log("model", model);
   const [internalDate, setInternalDate] = useState({
     startDate: null,
     endDate: null,
@@ -47,14 +46,6 @@ export default function DateRangeInputBase(
   };
 
   const updateValue = (newStartDate, newEndDate) => {
-    if(model?.label) {
-      setInternalDate({
-        label: model?.label,
-        startDate: new Date(newStartDate),
-        endDate: new Date(newEndDate),
-        key: key,
-      });
-    }
 
     const unpackedInternalDate = {
       startDate: new Date(newStartDate),
