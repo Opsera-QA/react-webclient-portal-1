@@ -6,7 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import OracleFusionReportMigrationStepActions from "../oracleFusion-reportMigration-step-actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 
-function OracleFusionReportMigrationSourceReportsMultiSelectInput({ model, setModel, disabled, sourceToolId }) {
+function OracleFusionReportMigrationSourceReportsMultiSelectInput({ model, setModel, disabled, sourceToolId, sourceFolder }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -38,14 +38,14 @@ function OracleFusionReportMigrationSourceReportsMultiSelectInput({ model, setMo
       source.cancel();
       isMounted.current = false;
     };
-  }, [sourceToolId]);
+  }, [sourceToolId, sourceFolder]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       setSourceReports([]);
       await fetchSourceInstanceReports(cancelSource);
-    } catch (error) {
+    } catch (error) {      
       if (isMounted?.current === true) {
         setError(error);
         console.error(error);
@@ -60,7 +60,8 @@ function OracleFusionReportMigrationSourceReportsMultiSelectInput({ model, setMo
     const response = await OracleFusionReportMigrationStepActions.getSourceInstanceReports(
       getAccessToken,
       cancelSource,
-      sourceToolId
+      sourceToolId,
+      sourceFolder,
     );
 
     const result = response?.data?.data;
@@ -103,6 +104,7 @@ OracleFusionReportMigrationSourceReportsMultiSelectInput.propTypes = {
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   sourceToolId: PropTypes.string,
+  sourceFolder: PropTypes.string,
 };
 
 export default OracleFusionReportMigrationSourceReportsMultiSelectInput;
