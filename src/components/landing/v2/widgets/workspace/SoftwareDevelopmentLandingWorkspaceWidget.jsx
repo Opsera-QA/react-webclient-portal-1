@@ -18,62 +18,22 @@ import SoftwareDevelopmentSalesforceLandingWidget
   from "components/landing/v2/widgets/SoftwareDevelopmentSalesforceLandingWidget";
 import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
 import CreateWorkspaceResourceWizard from "components/wizard/workspace/CreateWorkspaceResourceWizard";
+import useGetWorkspaceWorkflowResources from "hooks/workspace/useGetWorkspaceWorkflowResources";
 
 export default function SoftwareDevelopmentLandingWorkspaceWidget({ className }) {
   const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
-  const [workspaceItems, setWorkspaceItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [taskMetadata, setTaskMetadata] = useState(false);
   const {
-    isMounted,
-    getAccessToken,
-    cancelTokenSource,
     toastContext,
   } = useComponentStateReference();
+  const {
+    workspaceItems,
+    isLoading,
+    workspaceFilterModel,
+    setWorkspaceFilterModel,
+    loadData,
+  } = useGetWorkspaceWorkflowResources();
 
-  useEffect(() => {
-    setWorkspaceItems([]);
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-  }, []);
-
-  const loadData = async () => {
-    try {
-      setWorkspaceItems([]);
-      setIsLoading(true);
-      await getWorkspaceItems();
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  // TODO: Write separate request for this.
-  const getWorkspaceItems = async () => {
-    const response = await freeTrialWorkspaceActions.getFreeTrialWorkspaceItems(
-      getAccessToken,
-      cancelTokenSource,
-    );
-    const items = response?.data?.data;
-
-    if (isMounted?.current === true && Array.isArray(items)) {
-      setTaskMetadata(response?.data?.taskMetadata);
-      const supportedWorkspaceTypes = [
-        workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE,
-        workspaceConstants.WORKSPACE_ITEM_TYPES.TASK,
-      ];
-      const filteredItems = items.filter((workspaceItem) => supportedWorkspaceTypes.includes(workspaceItem.workspaceType) === true);
-      setWorkspaceItems([...filteredItems]);
-    }
-  };
+  useEffect(() => {}, []);
 
   const createWorkspaceItem = () => {
     toastContext.showOverlayPanel(
@@ -137,7 +97,6 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
               isLoading={isLoading}
               setSelectedWorkflowItem={setSelectedWorkflowItem}
               selectedWorkflowItem={selectedWorkflowItem}
-              taskMetadata={taskMetadata}
             />
           </WidgetDataBlockBase>
           <div className={"py-3 mx-auto"}>

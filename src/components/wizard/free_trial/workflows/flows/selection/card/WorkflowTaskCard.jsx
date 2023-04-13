@@ -22,7 +22,6 @@ export default function WorkflowTaskCard(
 
 WorkflowTaskCard.propTypes = {
   task: PropTypes.object,
-  taskMetadata: PropTypes.object,
   setSelectedFlow: PropTypes.func,
   selectedFlow: PropTypes.object,
 };

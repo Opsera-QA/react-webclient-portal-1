@@ -15,7 +15,6 @@ export default function FreeTrialWorkflowItemSelectionCardView(
     workspaceItems,
     loadData,
     isLoading,
-    taskMetadata,
     selectedWorkflowItem,
     setSelectedWorkflowItem,
     heightSize,
@@ -37,7 +36,6 @@ export default function FreeTrialWorkflowItemSelectionCardView(
             selectedFlow={selectedWorkflowItem}
             setSelectedFlow={setSelectedWorkflowItem}
             task={workspaceItem}
-            taskMetadata={taskMetadata}
           />
         );
     }
@@ -77,7 +75,6 @@ FreeTrialWorkflowItemSelectionCardView.propTypes = {
   workflowFilterModel: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  taskMetadata: PropTypes.object,
   selectedWorkflowItem: PropTypes.object,
   setSelectedWorkflowItem: PropTypes.func,
   heightSize: PropTypes.number,
