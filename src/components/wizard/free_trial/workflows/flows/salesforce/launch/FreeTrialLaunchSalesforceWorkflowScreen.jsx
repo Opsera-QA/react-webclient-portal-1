@@ -8,8 +8,8 @@ import {
 } from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
 import BackButton from "components/common/buttons/back/BackButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import FreeTrialWorkflowItemSelectionCardView
-  from "components/wizard/free_trial/workflows/flows/selection/card/FreeTrialWorkflowItemSelectionCardView";
+import WorkspaceWorkflowSelectionCardView
+  from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
 import FreeTrialLaunchWorkflowButton
   from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
@@ -51,7 +51,7 @@ export default function FreeTrialLaunchSalesforceWorkflowScreen(
     }
 
     return (
-      <FreeTrialWorkflowItemSelectionCardView
+      <WorkspaceWorkflowSelectionCardView
         isLoading={isLoading}
         loadData={loadData}
         workspaceItems={workspaceItems}

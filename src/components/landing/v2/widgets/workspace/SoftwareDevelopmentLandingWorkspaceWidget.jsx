@@ -4,8 +4,6 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import { freeTrialWorkspaceActions } from "components/workspace/trial/freeTrialWorkspace.actions";
 import WorkspaceWorkflowSelectionCardView
   from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
-import FreeTrialLandingPipelineWorkflowWidget
-  from "components/trial/landing/widgets/pipelines/widgets/FreeTrialLandingPipelineWorkflowWidget";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -20,6 +18,8 @@ import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/Wid
 import CreateWorkspaceResourceWizard from "components/wizard/workspace/CreateWorkspaceResourceWizard";
 import useGetWorkspaceWorkflowResources from "hooks/workspace/useGetWorkspaceWorkflowResources";
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
+import SoftwareDevelopmentLandingPipelineWorkflowWidget
+  from "components/landing/v2/widgets/pipelines/widgets/SoftwareDevelopmentLandingPipelineWorkflowWidget";
 
 export default function SoftwareDevelopmentLandingWorkspaceWidget({ className }) {
   const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
@@ -113,7 +113,7 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
     if (selectedWorkflowItem.workspaceType === workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE) {
       return (
         <>
-          <FreeTrialLandingPipelineWorkflowWidget
+          <SoftwareDevelopmentLandingPipelineWorkflowWidget
             selectedPipeline={selectedWorkflowItem}
             setSelectedPipeline={setSelectedWorkflowItem}
           />
