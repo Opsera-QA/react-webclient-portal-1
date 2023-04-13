@@ -4,6 +4,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import {pipelineOrchestrationActions} from "components/workflow/orchestration/pipelineOrchestration.actions";
+import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
 
 export default function useGetPipelineOrchestrationStatusById(
   id,
@@ -39,7 +40,12 @@ export default function useGetPipelineOrchestrationStatusById(
       cancelTokenSource,
       id,
     );
-    setOrchestrationStatus(DataParsingHelper.parseObject(response?.data?.data, {}));
+
+    const newOrchestrationStatus = DataParsingHelper.parseObject(response?.data?.data, {});
+
+    if (ObjectHelper.areObjectsEqualLodash(newOrchestrationStatus, orchestrationStatus) === false) {
+      setOrchestrationStatus(newOrchestrationStatus);
+    }
   };
 
   return ({
