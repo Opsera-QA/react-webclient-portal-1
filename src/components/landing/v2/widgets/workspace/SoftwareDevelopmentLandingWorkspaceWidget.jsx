@@ -87,8 +87,8 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
             heightSize={5}
             title={
               isLoading === true
-                ? "Loading Your Workspace"
-                : `My Workspace`
+                ? "Loading Workflows"
+                : `My Workflows`
             }
             isLoading={isLoading}
             rightSideTitleBarItems={getNewButton()}
