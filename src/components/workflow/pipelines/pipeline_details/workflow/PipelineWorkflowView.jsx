@@ -11,12 +11,9 @@ function PipelineWorkflowView(
     editItem,
     setEditItem,
     fetchPlan,
-    setPipeline,
     softLoading,
     pipelineStatus,
-    isQueued,
     lastStep,
-    runCount,
   }) {
   const parsedPipeline = DataParsingHelper.parseObject(pipeline);
 
@@ -73,11 +70,8 @@ PipelineWorkflowView.propTypes = {
   setActiveTab: PropTypes.func,
   fetchPlan: PropTypes.func,
   pipelineStatus: PropTypes.string,
-  setPipeline: PropTypes.func,
   softLoading: PropTypes.bool,
-  isQueued: PropTypes.bool,
   lastStep: PropTypes.any,
-  runCount: PropTypes.number,
 };
 
 export default PipelineWorkflowView;
