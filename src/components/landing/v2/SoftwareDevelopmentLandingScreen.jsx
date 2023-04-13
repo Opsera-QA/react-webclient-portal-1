@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import FreeTrialLandingWorkflowWidget from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidget";
 import FreeTrialLandingAccountStatsWidget from "components/trial/landing/widgets/FreeTrialLandingAccountStatsWidget";
 
-export default function Landing() {
+export default function SoftwareDevelopmentLandingScreen() {
   return (
     <div className={"max-content-width"}
     >
@@ -37,4 +37,4 @@ export default function Landing() {
   );
 }
 
-Landing.propTypes = {};
+SoftwareDevelopmentLandingScreen.propTypes = {};
