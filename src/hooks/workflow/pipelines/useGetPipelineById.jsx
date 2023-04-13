@@ -45,7 +45,7 @@ export default function useGetPipelineById(
   return ({
     pipeline: pipeline,
     setPipeline: setPipeline,
-    loadData: loadData,
+    loadData: async () => await loadData(getPipeline, handleErrorFunction),
     isLoading: isLoading,
     error: error,
     setError: setError,

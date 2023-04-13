@@ -4,9 +4,10 @@ import FreeTrialLandingPipelineWidgetBody from "components/trial/landing/widgets
 import FreeTrialLandingWorkflowWidgetHeaderTabBarBase, {
   FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS,
 } from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
-import SoftwareDevelopmentLandingPipelineWidgetHeaderTitleBar
-  from "components/landing/v2/widgets/pipelines/widgets/SoftwareDevelopmentLandingPipelineWidgetHeaderTitleBar";
 import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
+import PipelineActionControls from "components/workflow/pipelines/action_controls/PipelineActionControls";
+import useGetPollingPipelineById from "hooks/workflow/pipelines/useGetPollingPipelineById";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function SoftwareDevelopmentLandingPipelineWorkflowWidget(
   {
@@ -15,24 +16,39 @@ export default function SoftwareDevelopmentLandingPipelineWorkflowWidget(
     setSelectedPipeline,
   }) {
   const [selectedHeaderItem, setSelectedHeaderItem] = useState(FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.SUMMARY);
-  const [isLoading, setIsLoading] = useState(false);
   const [pipelineRefreshing, setPipelineRefreshing] = useState(false);
+  const {
+    pipeline,
+    isLoading,
+    error,
+    loadData,
+    status,
+    isQueued,
+    runCount,
+  } = useGetPollingPipelineById(selectedPipeline?._id);
 
-  const getTitleBar = () => {
-    return (
-      <SoftwareDevelopmentLandingPipelineWidgetHeaderTitleBar
-        setSelectedPipeline={setSelectedPipeline}
-        selectedPipeline={selectedPipeline}
-        selectedHeaderItem={selectedHeaderItem}
-        setIsLoading={setIsLoading}
-      />
-    );
+  const getPipelineActionControls = () => {
+    if (pipeline) {
+      return (
+        <PipelineActionControls
+          isLoading={isLoading}
+          runCount={runCount}
+          pipeline={pipeline}
+          disabledActionState={false}
+          fetchData={loadData}
+          setPipeline={setSelectedPipeline}
+          workflowStatus={status}
+          isQueued={isQueued}
+        />
+      );
+    }
   };
 
   return (
     <div className={className}>
       <WidgetDataBlockBase
-        title={getTitleBar()}
+        title={DataParsingHelper.parseNestedString(pipeline, "name", selectedPipeline?.name)}
+        rightSideTitleBarItems={getPipelineActionControls()}
         isLoading={isLoading || pipelineRefreshing}
       >
         <FreeTrialLandingWorkflowWidgetHeaderTabBarBase
