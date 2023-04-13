@@ -4,6 +4,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import pipelineActions from "components/workflow/pipeline-actions";
+import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
 
 export default function useGetPipelineById(
   id,
@@ -37,8 +38,8 @@ export default function useGetPipelineById(
     const response = await pipelineActions.getPipelineByIdV2(getAccessToken, cancelTokenSource, id);
     const newPipeline = DataParsingHelper.parseObject(response?.data?.data);
 
-    if (newPipeline) {
-      setPipeline(newPipeline);
+    if (ObjectHelper.areObjectsEqualLodash(newPipeline, pipeline) !== true) {
+      setPipeline({...newPipeline});
     }
   };
 
