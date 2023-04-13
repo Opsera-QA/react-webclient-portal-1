@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { freeTrialWorkspaceActions } from "components/workspace/trial/freeTrialWorkspace.actions";
-import FreeTrialWorkflowItemSelectionCardView
-  from "components/wizard/free_trial/workflows/flows/selection/card/FreeTrialWorkflowItemSelectionCardView";
+import WorkspaceWorkflowSelectionCardView
+  from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
 import FreeTrialLandingPipelineWorkflowWidget
   from "components/trial/landing/widgets/pipelines/widgets/FreeTrialLandingPipelineWorkflowWidget";
 import { workspaceConstants } from "components/workspace/workspace.constants";
@@ -93,7 +93,7 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
             isLoading={isLoading}
             rightSideTitleBarItems={getNewButton()}
           >
-            <FreeTrialWorkflowItemSelectionCardView
+            <WorkspaceWorkflowSelectionCardView
               workflowFilterModel={workspaceFilterModel}
               heightSize={5}
               workspaceItems={workspaceItems}
