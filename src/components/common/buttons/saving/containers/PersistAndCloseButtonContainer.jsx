@@ -84,6 +84,8 @@ function PersistAndCloseButtonContainer(
         </>
       );
     }
+
+    return extraButtons;
   };
 
   return (
