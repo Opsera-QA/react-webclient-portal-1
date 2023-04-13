@@ -8,6 +8,8 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import FreeTrialLaunchSalesforceWorkflowWizardOverlay
   from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
+import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
+import { faHandPointer } from "@fortawesome/pro-light-svg-icons";
 
 const EXTERNAL_LINKS = {
   YOUTUBE_CHANNEL: "https://youtube.com/channel/UCJJFTWPkGfK8Kq4nPbNAtaQ",
@@ -32,7 +34,7 @@ const SOCIAL_ICONS = {
   TWITTER_TOOLTIP: "Opsera on Twitter",
 };
 
-export default function SFDCLandingWidget({ className }) {
+export default function SoftwareDevelopmentLandingSalesforceWidget({ className }) {
   const {
     themeConstants,
     userData,
@@ -64,7 +66,7 @@ export default function SFDCLandingWidget({ className }) {
         innerText={tooltip}
         placement={"bottom"}
       >
-        <div className={"marketingModulesText pointer"} style={{ float: "left", bottom: "20px" }}
+        <div className={"marketingModulesText pointer mx-1"}
              onClick={handleClick(url)}>
           <IconBase
             icon={icon}
@@ -78,57 +80,80 @@ export default function SFDCLandingWidget({ className }) {
     );
   };
 
+  const getMainSalesforceWidget = () => {
+    return (
+      <IconCardContainerBase
+        className={"focusText"}
+        titleBar={
+          <div className={"mt-4 mb-3"}>
+            <img alt="Get started with Salesforce Deployments with Opsera!"
+                 src="/img/salesforce/salesforce_logo_white_475x332.png"
+                 width="220"
+                 height="154"
+            />
+          </div>
+        }
+        contentBody={
+          <div className={"mb-3 mr-2"}>
+            Get started!
+          </div>
+        }
+        onClickFunction={launchWorkflowCreationWizard}
+        // className={className}
+        tooltip={"Get started with Salesforce Deployments with Opsera!"}
+        tooltipPosition={"bottom"}
+      />
+    );
+  };
+
+  const getAppExchangeWidget = () => {
+    return (
+      <IconCardContainerBase
+        className={"focusText"}
+        contentBody={
+          <div className={"d-flex h-100"}>
+            <div className={"m-auto"}>
+              <span className={"focusText"}>Opsera On</span>
+              <img alt="Opsera is available on Salesforce AppExchange!"
+                   src="/img/salesforce/salesforce_appexchange_240x80.png"
+                   width="240"
+                   height="80"
+              />
+            </div>
+          </div>
+        }
+        onClickFunction={handleClick(EXTERNAL_LINKS.SALESFORCE_APPEXCHANGE)}
+        tooltip={"Opsera is available on Salesforce AppExchange!"}
+        tooltipPosition={"bottom"}
+      />
+    );
+  };
 
   return (
-    <div className={className} style={{ minHeight: "150px", width: "90%" }}>
-
-      <Row className={"m-3"}>
-        <Col style={{ textAlign: "center" }}>
-          <TooltipWrapper
-            innerText={"Get started with Salesforce on Opsera!"}
-            placement={"bottom"}
-          >
-            <div className={"pointer focusText"}
-                 onClick={launchWorkflowCreationWizard}>
-              <img alt="Get started with Salesforce on Opsera!"
-                   src="/img/salesforce/salesforce_logo_white_475x332.png"
-                   width="220"
-                   height="154"
-                   style={{ marginRight: "10px" }}
-              />
-              Get Started by clicking here!
-            </div>
-          </TooltipWrapper>
+    <div className={className} style={{ minHeight: "150px" }}>
+      <Row>
+        <Col
+          xs={12} lg={6}
+          className={"my-3"}
+          style={{ textAlign: "center" }}
+        >
+          {getMainSalesforceWidget()}
         </Col>
-        <Col>
+        <Col
+          xs={12} lg={6}
+          style={{ textAlign: "center" }}
+          className={"my-3"}
+        >
+          {getAppExchangeWidget()}
 
-          <div className={"h-100"} style={{ textAlign: "center", paddingTop: "50px", paddingLeft: "50px" }}>
-            <TooltipWrapper
-              innerText={"Opsera is available on Salesforce AppExchange!"}
-              placement={"bottom"}
-            >
-              <div>
-                <span className={"focusText"}>Opsera On</span>
-                <img alt="Opsera is available on Salesforce AppExchange!"
-                     src="/img/salesforce/salesforce_appexchange_240x80.png"
-                     width="240"
-                     height="80"
-                     onClick={handleClick(EXTERNAL_LINKS.SALESFORCE_APPEXCHANGE)}
-                     className={"pointer"}
-                />
-              </div>
-            </TooltipWrapper>
-          </div>
-          <div className={"w-100"} style={{ textAlign: "right" }}>
-            <div style={{ position: "relative", float: "right" }}>
+          <div className={"w-100 mt-2 pr-1"} >
+            <div className={"d-flex flex-row-reverse"}>
               {getSocialAccountLogo(EXTERNAL_LINKS.YOUTUBE_CHANNEL, SOCIAL_ICONS.YOUTUBE, SOCIAL_ICONS.YOUTUBE_COLOR, SOCIAL_ICONS.YOUTUBE_TOOLTIP)}
               {getSocialAccountLogo(EXTERNAL_LINKS.LINKEDIN, SOCIAL_ICONS.LINKEDIN, SOCIAL_ICONS.LINKEDIN_COLOR, SOCIAL_ICONS.LINKEDIN_TOOLTIP)}
               {getSocialAccountLogo(EXTERNAL_LINKS.TWITTER, SOCIAL_ICONS.TWITTER, SOCIAL_ICONS.TWITTER_COLOR, SOCIAL_ICONS.TWITTER_TOOLTIP)}
               {getSocialAccountLogo(EXTERNAL_LINKS.FACEBOOK, SOCIAL_ICONS.FACEBOOK, SOCIAL_ICONS.FACEBOOK_COLOR, SOCIAL_ICONS.FACEBOOK_TOOLTIP)}
             </div>
           </div>
-
-
         </Col>
       </Row>
 
@@ -137,6 +162,6 @@ export default function SFDCLandingWidget({ className }) {
   );
 }
 
-SFDCLandingWidget.propTypes = {
+SoftwareDevelopmentLandingSalesforceWidget.propTypes = {
   className: PropTypes.string,
 };

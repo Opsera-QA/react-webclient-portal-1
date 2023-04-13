@@ -7,7 +7,7 @@ export default function useGetPlatformSettingsFeatureFlagByName(
   name,
 ) {
   const [platformSettingsFeatureFlag, setPlatformSettingsFeatureFlag] = useState(undefined);
-  const { platformSettingsRecord } = useContext(AuthContext);
+  const { platformSettingsRecord, isLoadingPlatformSettingsRecord } = useContext(AuthContext);
 
   useEffect(() => {
     setPlatformSettingsFeatureFlag(undefined);
@@ -25,6 +25,7 @@ export default function useGetPlatformSettingsFeatureFlagByName(
   return ({
     platformSettingsFeatureFlag: platformSettingsFeatureFlag,
     setPlatformSettingsFeatureFlag: setPlatformSettingsFeatureFlag,
+    isLoading: isLoadingPlatformSettingsRecord,
     isActive: platformSettingsFeatureFlag?.active === true,
   });
 }

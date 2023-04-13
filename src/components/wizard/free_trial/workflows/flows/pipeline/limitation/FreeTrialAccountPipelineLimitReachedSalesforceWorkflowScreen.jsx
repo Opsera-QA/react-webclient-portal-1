@@ -14,8 +14,8 @@ import OverlayWizardButtonContainerBase from "temp-library-components/button/ove
 import {
   pipelineTemplateIdentifierConstants
 } from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
-import FreeTrialWorkflowItemSelectionCardView
-  from "components/wizard/free_trial/workflows/flows/selection/card/FreeTrialWorkflowItemSelectionCardView";
+import WorkspaceWorkflowSelectionCardView
+  from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import FreeTrialLaunchWorkflowButton
   from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
@@ -133,7 +133,7 @@ export default function FreeTrialAccountPipelineLimitReachedSalesforceWorkflowSc
         <div className={"mb-3 focusText"}>You may select and run an existing Pipeline or delete one to add another</div>
       </CenteredContentWrapper>
       <div>
-        <FreeTrialWorkflowItemSelectionCardView
+        <WorkspaceWorkflowSelectionCardView
           isLoading={isLoading}
           workspaceItems={workspaceItems}
           setSelectedWorkflowItem={selectWorkflowFunction}
