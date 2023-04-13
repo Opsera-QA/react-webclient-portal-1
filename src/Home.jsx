@@ -13,9 +13,9 @@ import SoftwareDevelopmentLandingScreen from "components/landing/v2/SoftwareDeve
 export default function Home() {
   const { authState } = useOktaAuth();
   const { isFreeTrial } = useComponentStateReference();
-  const { isActive } = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_LANDING_PAGE);
+  const { isActive, isLoading } = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_LANDING_PAGE);
 
-  if (authState?.isAuthenticated !== true) {
+  if (authState?.isAuthenticated !== true || isLoading === true) {
     return (
       <CenterLoadingIndicator
         customMessage={"Loading..."}
