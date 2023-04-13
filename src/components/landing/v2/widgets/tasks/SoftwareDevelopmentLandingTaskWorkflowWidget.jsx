@@ -1,21 +1,15 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import FreeTrialLandingTaskWidgetBody from "components/trial/landing/widgets/tasks/body/FreeTrialLandingTaskWidgetBody";
 import ActionBarDeleteTaskButton from "components/tasks/buttons/ActionBarDeleteTaskButton";
 import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
 import SoftwareDevelopmentLandingTaskWidgetHeaderTabBarBase, {
   TASK_WORKFLOW_WIDGET_HEADER_ITEMS
 } from "components/landing/v2/widgets/tasks/SoftwareDevelopmentLandingTaskWidgetHeaderTabBarBase";
-import FreeTrialLandingTaskWidgetTaskSummaryPanel
-  from "components/trial/landing/widgets/tasks/body/FreeTrialLandingTaskWidgetTaskSummaryPanel";
-import FreeTrialLandingTaskWidgetTaskActivityLogsPanel
-  from "components/trial/landing/widgets/tasks/body/FreeTrialLandingTaskWidgetTaskActivityLogsPanel";
-import FreeTrialLandingTaskWidgetAnalyticsBody
-  from "components/trial/landing/widgets/tasks/analytics/FreeTrialLandingTaskWidgetAnalyticsBody";
 import SoftwareDevelopmentLandingTaskWidgetAnalyticsBody
   from "components/landing/v2/widgets/tasks/analytics/SoftwareDevelopmentLandingTaskWidgetAnalyticsBody";
 import TaskActivityPanel from "components/tasks/activity_logs/TaskActivityPanel";
 import TaskSummaryPanel from "components/tasks/details/TaskSummaryPanel";
+import useGetPollingTaskModelById from "hooks/workflow/tasks/useGetPollingTaskModelById";
 
 export default function SoftwareDevelopmentLandingTaskWorkflowWidget(
   {
@@ -24,8 +18,16 @@ export default function SoftwareDevelopmentLandingTaskWorkflowWidget(
     setSelectedTask,
   }) {
   const [selectedHeaderItem, setSelectedHeaderItem] = useState(TASK_WORKFLOW_WIDGET_HEADER_ITEMS.SUMMARY);
-  const [isLoading, setIsLoading] = useState(false);
-  const [taskIsLoading, setTaskIsLoading] = useState(false);
+  const {
+    taskModel,
+    setTaskModel,
+    isLoading,
+    error,
+    loadData,
+    status,
+    runCount,
+  } = useGetPollingTaskModelById(selectedTask?._id);
+
 
   const getTitleBar = () => {
     return (
@@ -39,10 +41,10 @@ export default function SoftwareDevelopmentLandingTaskWorkflowWidget(
     switch (selectedHeaderItem) {
       case TASK_WORKFLOW_WIDGET_HEADER_ITEMS.SUMMARY:
         return (
-          <div className={"mx-2 mb-2"}>
+          <div className={"m-3"}>
             <TaskSummaryPanel
-              gitTasksData={selectedTask}
-              setGitTasksData={setSelectedTask}
+              gitTasksData={taskModel || selectedTask}
+              setGitTasksData={setTaskModel}
             />
           </div>
         );
@@ -50,11 +52,11 @@ export default function SoftwareDevelopmentLandingTaskWorkflowWidget(
         return (
           <div className={"m-3"}>
             <TaskActivityPanel
-              taskModel={selectedTask}
+              taskModel={taskModel || selectedTask}
               showFilterContainerIcon={false}
               taskId={selectedTask?.getMongoDbId()}
-              taskRunCount={selectedTask?.getData("run_count")}
-              // status={}
+              taskRunCount={runCount}
+              status={status}
             />
           </div>
         );
@@ -77,7 +79,7 @@ export default function SoftwareDevelopmentLandingTaskWorkflowWidget(
     <div className={className}>
       <WidgetDataBlockBase
         title={getTitleBar()}
-        isLoading={isLoading || taskIsLoading}
+        isLoading={isLoading}
       >
         <div className={"d-flex justify-content-between"}>
           <SoftwareDevelopmentLandingTaskWidgetHeaderTabBarBase
