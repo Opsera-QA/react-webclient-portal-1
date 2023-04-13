@@ -1,4 +1,6 @@
 import useApiService from "hooks/api/service/useApiService";
+import baseActions from "utils/actionsBase";
+import pipelineActions from "components/workflow/pipeline-actions";
 
 export default function usePipelineActions() {
   const apiService = useApiService();
@@ -28,6 +30,11 @@ export default function usePipelineActions() {
       apiUrl,
       queryParameters,
     );
+  };
+
+  pipelineActions.getPipelineById = async (pipelineId) => {
+    const apiUrl = `/pipelines/v2/${pipelineId}`;
+    return await apiService.handleApiGetRequest(apiUrl);
   };
 
   pipelineActions.getPipelineNameById = async (

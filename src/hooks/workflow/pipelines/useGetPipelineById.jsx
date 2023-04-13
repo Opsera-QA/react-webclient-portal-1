@@ -12,10 +12,6 @@ export default function useGetPipelineById(
 ) {
   const [pipeline, setPipeline] = useState(undefined);
   const {
-    getAccessToken,
-    cancelTokenSource,
-  } = useComponentStateReference();
-  const {
     isLoading,
     error,
     setError,
