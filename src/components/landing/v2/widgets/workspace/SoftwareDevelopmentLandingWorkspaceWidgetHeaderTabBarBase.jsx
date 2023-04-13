@@ -16,7 +16,7 @@ export const FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS = {
   MORE_DETAILS: "more_details",
 };
 
-export default function FreeTrialLandingWorkflowWidgetHeaderTabBarBase(
+export default function SoftwareDevelopmentLandingWorkspaceWidgetHeaderTabBarBase(
   {
     selectedHeaderItem,
     setSelectedHeaderItem,
@@ -88,7 +88,7 @@ export default function FreeTrialLandingWorkflowWidgetHeaderTabBarBase(
   );
 }
 
-FreeTrialLandingWorkflowWidgetHeaderTabBarBase.propTypes = {
+SoftwareDevelopmentLandingWorkspaceWidgetHeaderTabBarBase.propTypes = {
   selectedHeaderItem: PropTypes.string,
   setSelectedHeaderItem: PropTypes.func,
   selectedWorkflow: PropTypes.object,

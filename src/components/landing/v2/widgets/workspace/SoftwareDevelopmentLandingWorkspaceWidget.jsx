@@ -18,7 +18,7 @@ import CreateWorkflowWizard from "components/wizard/free_trial/workflows/CreateW
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 import modelHelpers from "components/common/model/modelHelpers";
 
-export default function FreeTrialLandingWorkflowWidget({ className }) {
+export default function SoftwareDevelopmentLandingWorkspaceWidget({ className }) {
   const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
   const [workspaceItems, setWorkspaceItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -102,7 +102,7 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
           <div className={"py-3 mx-auto"}>
             {/*<FreeTrialLandingWizardWidgets />*/}
             <FreeTrialLandingSalesforceWidget className={"mx-4"} />
-            {/*<SFDCLandingWidget />*/}
+            {/*<SoftwareDevelopmentSalesforceLandingWidget />*/}
           </div>
           <Row>
             <Col xs={0} sm={0} md={0} lg={2} xl={3} />
@@ -141,7 +141,7 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
           <div className={"py-3 mx-auto"}>
             {/*<FreeTrialLandingWizardWidgets />*/}
             <FreeTrialLandingSalesforceWidget className={"mx-4"} />
-            {/*<SFDCLandingWidget />*/}
+            {/*<SoftwareDevelopmentSalesforceLandingWidget />*/}
           </div>
         </>
       );
@@ -157,7 +157,7 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
           <div className={"py-3 mx-auto"}>
             {/*<FreeTrialLandingWizardWidgets />*/}
             <FreeTrialLandingSalesforceWidget className={"mx-4"} />
-            {/*<SFDCLandingWidget />*/}
+            {/*<SoftwareDevelopmentSalesforceLandingWidget />*/}
           </div>
         </>
       );
@@ -173,7 +173,7 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
           <div className={"py-3 mx-auto"}>
             {/*<FreeTrialLandingWizardWidgets />*/}
             <FreeTrialLandingSalesforceWidget className={"mx-4"} />
-            {/*<SFDCLandingWidget />*/}
+            {/*<SoftwareDevelopmentSalesforceLandingWidget />*/}
           </div>
         </>
       );
@@ -187,6 +187,6 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
   );
 }
 
-FreeTrialLandingWorkflowWidget.propTypes = {
+SoftwareDevelopmentLandingWorkspaceWidget.propTypes = {
   className: PropTypes.string,
 };

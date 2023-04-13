@@ -32,7 +32,7 @@ const SOCIAL_ICONS = {
   TWITTER_TOOLTIP: "Opsera on Twitter",
 };
 
-export default function SFDCLandingWidget({ className }) {
+export default function SoftwareDevelopmentSalesforceLandingWidget({ className }) {
   const {
     themeConstants,
     userData,
@@ -137,6 +137,6 @@ export default function SFDCLandingWidget({ className }) {
   );
 }
 
-SFDCLandingWidget.propTypes = {
+SoftwareDevelopmentSalesforceLandingWidget.propTypes = {
   className: PropTypes.string,
 };
