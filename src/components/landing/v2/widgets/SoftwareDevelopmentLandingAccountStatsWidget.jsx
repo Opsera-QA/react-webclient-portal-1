@@ -13,7 +13,7 @@ import {EXTERNAL_LINKS} from "components/header/legacy/HeaderNavBar";
 import { ExternalLink } from "temp-library-components/link/ExternalLink";
 
 // TODO: This needs to be rewritten to be standardized and cleaned up
-export default function FreeTrialLandingAccountStatsWidget({ className }) {
+export default function SoftwareDevelopmentLandingAccountStatsWidget({ className }) {
   const [isLoading, setIsLoading] = useState(undefined);
   const [accountMetrics, setAccountMetrics] = useState(undefined);
   const {
@@ -291,7 +291,7 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
   );
 }
 
-FreeTrialLandingAccountStatsWidget.propTypes = {
+SoftwareDevelopmentLandingAccountStatsWidget.propTypes = {
   className: PropTypes.string,
 };
 

@@ -1,82 +1,46 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
 import { freeTrialWorkspaceActions } from "components/workspace/trial/freeTrialWorkspace.actions";
 import WorkspaceWorkflowSelectionCardView
   from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
-import FreeTrialLandingPipelineWorkflowWidget
-  from "components/trial/landing/widgets/pipelines/widgets/FreeTrialLandingPipelineWorkflowWidget";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import NoRegisteredWorkflowsCard from "components/wizard/free_trial/workflows/NoRegisteredWorkflowsCard";
 import FreeTrialLandingTaskWorkflowWidget
   from "components/trial/landing/widgets/tasks/FreeTrialLandingTaskWorkflowWidget";
-import FreeTrialLandingSalesforceWidget from "components/trial/landing/widgets/FreeTrialLandingSalesforceWidget";
-import CreateWorkflowWizard from "components/wizard/free_trial/workflows/CreateWorkflowWizard";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 import modelHelpers from "components/common/model/modelHelpers";
+import SoftwareDevelopmentSalesforceLandingWidget
+  from "components/landing/v2/widgets/SoftwareDevelopmentSalesforceLandingWidget";
+import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
+import CreateWorkspaceResourceWizard from "components/wizard/workspace/CreateWorkspaceResourceWizard";
+import useGetWorkspaceWorkflowResources from "hooks/workspace/useGetWorkspaceWorkflowResources";
+import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
+import SoftwareDevelopmentLandingPipelineWorkflowWidget
+  from "components/landing/v2/widgets/pipelines/widgets/SoftwareDevelopmentLandingPipelineWorkflowWidget";
 
-export default function FreeTrialLandingWorkflowWidget({ className }) {
+export default function SoftwareDevelopmentLandingWorkspaceWidget({ className }) {
   const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
-  const [workspaceItems, setWorkspaceItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [taskMetadata, setTaskMetadata] = useState(false);
   const {
-    isMounted,
-    getAccessToken,
-    cancelTokenSource,
     toastContext,
   } = useComponentStateReference();
+  const {
+    workspaceItems,
+    isLoading,
+    workspaceFilterModel,
+    setWorkspaceFilterModel,
+    loadData,
+  } = useGetWorkspaceWorkflowResources();
 
-  useEffect(() => {
-    setWorkspaceItems([]);
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-  }, []);
-
-  const loadData = async () => {
-    try {
-      setWorkspaceItems([]);
-      setIsLoading(true);
-      await getWorkspaceItems();
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  // TODO: Write separate request for this.
-  const getWorkspaceItems = async () => {
-    const response = await freeTrialWorkspaceActions.getFreeTrialWorkspaceItems(
-      getAccessToken,
-      cancelTokenSource,
-    );
-    const items = response?.data?.data;
-
-    if (isMounted?.current === true && Array.isArray(items)) {
-      setTaskMetadata(response?.data?.taskMetadata);
-      const supportedWorkspaceTypes = [
-        workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE,
-        workspaceConstants.WORKSPACE_ITEM_TYPES.TASK,
-      ];
-      const filteredItems = items.filter((workspaceItem) => supportedWorkspaceTypes.includes(workspaceItem.workspaceType) === true);
-      setWorkspaceItems([...filteredItems]);
-    }
-  };
+  useEffect(() => {}, []);
 
   const createWorkspaceItem = () => {
     toastContext.showOverlayPanel(
-      <CreateWorkflowWizard />
+      <CreateWorkspaceResourceWizard
+        loadDataFunction={loadData}
+      />
     );
   };
 
@@ -87,6 +51,7 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
         type={""}
         isLoading={isLoading}
         variant={"success"}
+        customButtonText={"Create New"}
       />
     );
   };
@@ -100,14 +65,14 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
       return (
         <>
           <div className={"py-3 mx-auto"}>
-            {/*<FreeTrialLandingWizardWidgets />*/}
-            <FreeTrialLandingSalesforceWidget className={"mx-4"} />
-            {/*<SFDCLandingWidget />*/}
+            <SoftwareDevelopmentSalesforceLandingWidget className={"mx-4"} />
           </div>
           <Row>
             <Col xs={0} sm={0} md={0} lg={2} xl={3} />
             <Col xs={12} sm={12} md={12} lg={8} xl={6}>
-              <NoRegisteredWorkflowsCard />
+              <NoRegisteredWorkflowsCard
+                loadDataFunction={loadData}
+              />
             </Col>
             <Col xs={0} sm={0} md={0} lg={2} xl={3} />
           </Row>
@@ -118,30 +83,28 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
     if (selectedWorkflowItem == null) {
       return (
         <>
-          <FreeTrialWidgetDataBlockBase
+          <WidgetDataBlockBase
             heightSize={5}
             title={
               isLoading === true
-                ? "Loading Registered Workflows"
-                : `${workspaceItems.length} Registered Workflows`
+                ? "Loading Your Workspace"
+                : `My Workspace`
             }
             isLoading={isLoading}
             rightSideTitleBarItems={getNewButton()}
           >
             <WorkspaceWorkflowSelectionCardView
+              workflowFilterModel={workspaceFilterModel}
               heightSize={5}
               workspaceItems={workspaceItems}
               loadData={loadData}
               isLoading={isLoading}
               setSelectedWorkflowItem={setSelectedWorkflowItem}
               selectedWorkflowItem={selectedWorkflowItem}
-              taskMetadata={taskMetadata}
             />
-          </FreeTrialWidgetDataBlockBase>
+          </WidgetDataBlockBase>
           <div className={"py-3 mx-auto"}>
-            {/*<FreeTrialLandingWizardWidgets />*/}
-            <FreeTrialLandingSalesforceWidget className={"mx-4"} />
-            {/*<SFDCLandingWidget />*/}
+            <SoftwareDevelopmentSalesforceLandingWidget className={"mx-4"} />
           </div>
         </>
       );
@@ -150,14 +113,12 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
     if (selectedWorkflowItem.workspaceType === workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE) {
       return (
         <>
-          <FreeTrialLandingPipelineWorkflowWidget
+          <SoftwareDevelopmentLandingPipelineWorkflowWidget
             selectedPipeline={selectedWorkflowItem}
             setSelectedPipeline={setSelectedWorkflowItem}
           />
           <div className={"py-3 mx-auto"}>
-            {/*<FreeTrialLandingWizardWidgets />*/}
-            <FreeTrialLandingSalesforceWidget className={"mx-4"} />
-            {/*<SFDCLandingWidget />*/}
+            <SoftwareDevelopmentSalesforceLandingWidget className={"mx-4"} />
           </div>
         </>
       );
@@ -167,13 +128,11 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
       return (
         <>
           <FreeTrialLandingTaskWorkflowWidget
-            selectedTask={modelHelpers.parseObjectIntoModel(selectedWorkflowItem, taskMetadata)}
+            selectedTask={modelHelpers.parseObjectIntoModel(selectedWorkflowItem, tasksMetadata)}
             setSelectedTask={setSelectedWorkflowItem}
           />
           <div className={"py-3 mx-auto"}>
-            {/*<FreeTrialLandingWizardWidgets />*/}
-            <FreeTrialLandingSalesforceWidget className={"mx-4"} />
-            {/*<SFDCLandingWidget />*/}
+            <SoftwareDevelopmentSalesforceLandingWidget className={"mx-4"} />
           </div>
         </>
       );
@@ -187,6 +146,6 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
   );
 }
 
-FreeTrialLandingWorkflowWidget.propTypes = {
+SoftwareDevelopmentLandingWorkspaceWidget.propTypes = {
   className: PropTypes.string,
 };

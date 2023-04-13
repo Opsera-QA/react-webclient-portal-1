@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
 import React from "react";
-import CreateWorkflowWizard from "components/wizard/free_trial/workflows/CreateWorkflowWizard";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import OpseraInfinityLogoSelectionCardBase from "temp-library-components/cards/opsera/OpseraInfinityLogoSelectionCardBase";
+import CreateWorkspaceResourceWizard from "components/wizard/workspace/CreateWorkspaceResourceWizard";
 
 export default function NoRegisteredWorkflowsCard(
   {
     className,
+    loadDataFunction,
   }) {
   const {
     toastContext,
@@ -14,7 +15,9 @@ export default function NoRegisteredWorkflowsCard(
 
   const launchWorkflowCreationWizardFunction = () => {
     toastContext.showOverlayPanel(
-      <CreateWorkflowWizard />
+      <CreateWorkspaceResourceWizard
+        loadDataFunction={loadDataFunction}
+      />
     );
   };
 
@@ -30,4 +33,5 @@ export default function NoRegisteredWorkflowsCard(
 
 NoRegisteredWorkflowsCard.propTypes = {
   className: PropTypes.string,
+  loadDataFunction: PropTypes.func,
 };

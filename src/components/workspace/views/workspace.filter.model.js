@@ -49,7 +49,7 @@ const workspaceFilterMetadata = {
     },
   ],
   newObjectFields: {
-    pageSize: 100,
+    pageSize: 25,
     currentPage: 1,
     totalCount: 0,
     activeFilters: [],
