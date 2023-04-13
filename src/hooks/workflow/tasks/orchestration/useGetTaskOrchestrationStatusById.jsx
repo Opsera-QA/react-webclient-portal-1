@@ -41,7 +41,6 @@ export default function useGetTaskOrchestrationStatusById(
       id,
     );
 
-    console.log("got new task orchestration status");
     const newOrchestrationStatus = DataParsingHelper.parseObject(response?.data?.data, {});
 
     if (ObjectHelper.areObjectsEqualLodash(orchestrationStatus, newOrchestrationStatus) !== true) {
