@@ -48,7 +48,7 @@ export default function SoftwareDevelopmentLandingPipelineWorkflowWidget(
         return (
           <div className={"m-3"}>
             <PipelineSummaryPanel
-              pipeline={pipeline}
+              pipeline={pipeline || selectedPipeline}
               parentWorkflowStatus={status}
               fetchPlan={loadData}
             />
