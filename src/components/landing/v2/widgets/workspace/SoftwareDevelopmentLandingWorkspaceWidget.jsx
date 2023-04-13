@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import { freeTrialWorkspaceActions } from "components/workspace/trial/freeTrialWorkspace.actions";
 import WorkspaceWorkflowSelectionCardView
   from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import NoRegisteredWorkflowsCard from "components/wizard/free_trial/workflows/NoRegisteredWorkflowsCard";
-import FreeTrialLandingTaskWorkflowWidget
-  from "components/trial/landing/widgets/tasks/FreeTrialLandingTaskWorkflowWidget";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 import modelHelpers from "components/common/model/modelHelpers";
 import SoftwareDevelopmentSalesforceLandingWidget
@@ -20,6 +17,8 @@ import useGetWorkspaceWorkflowResources from "hooks/workspace/useGetWorkspaceWor
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 import SoftwareDevelopmentLandingPipelineWorkflowWidget
   from "components/landing/v2/widgets/pipelines/widgets/SoftwareDevelopmentLandingPipelineWorkflowWidget";
+import SoftwareDevelopmentLandingTaskWorkflowWidget
+  from "components/landing/v2/widgets/tasks/SoftwareDevelopmentLandingTaskWorkflowWidget";
 
 export default function SoftwareDevelopmentLandingWorkspaceWidget({ className }) {
   const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
@@ -127,7 +126,7 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
     if (selectedWorkflowItem?.workspaceType === workspaceConstants.WORKSPACE_ITEM_TYPES.TASK) {
       return (
         <>
-          <FreeTrialLandingTaskWorkflowWidget
+          <SoftwareDevelopmentLandingTaskWorkflowWidget
             selectedTask={modelHelpers.parseObjectIntoModel(selectedWorkflowItem, tasksMetadata)}
             setSelectedTask={setSelectedWorkflowItem}
           />
