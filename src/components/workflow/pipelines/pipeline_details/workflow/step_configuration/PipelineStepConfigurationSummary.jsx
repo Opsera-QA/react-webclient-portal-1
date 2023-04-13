@@ -584,7 +584,7 @@ function PipelineStepConfigurationSummary({
             azureAcrPushPipelineDataObject={getModelWrappedObject(azureAcrPushStepFormMetadata)}
           />
         );
-      case "azure_zip-deployment":
+      case "azure-zip-deployment":
         return (
           <AzureZipDeploymentStepConfigurationSummaryPanel
             pipelineData={pipelineData}
