@@ -6,6 +6,7 @@ import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
 import useAxiosCancelToken from "hooks/useAxiosCancelToken";
 import {useContext} from "react";
 import {AuthContext} from "contexts/AuthContext";
+import useAuthenticationToken from "hooks/general/api/useAuthenticationToken";
 
 export const parseAxiosError = (error) => {
   if (!axios.isCancel(error)) {
@@ -46,7 +47,7 @@ const getAxiosInstance = (token, cancelToken) => {
 };
 
 export default function useApiService() {
-  const { getAccessToken } = useContext(AuthContext);
+  const { getAccessToken } = useAuthenticationToken();
   const { cancelTokenSource } = useAxiosCancelToken();
 
   const apiService = {};
