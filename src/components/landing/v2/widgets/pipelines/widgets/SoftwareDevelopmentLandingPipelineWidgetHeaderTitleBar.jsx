@@ -6,7 +6,7 @@ import PipelineActionControls from "components/workflow/pipelines/action_control
 import useGetPollingPipelineOrchestrationStatusById
   from "hooks/workflow/pipelines/orchestration/useGetPollingPipelineOrchestrationStatusById";
 
-export default function FreeTrialLandingPipelineWidgetHeaderTitleBar(
+export default function SoftwareDevelopmentLandingPipelineWidgetHeaderTitleBar(
   {
     selectedPipeline,
     setSelectedPipeline,
@@ -81,14 +81,14 @@ export default function FreeTrialLandingPipelineWidgetHeaderTitleBar(
   }
 
   return (
-    <div className={"d-flex w-100 justify-content-between"}>
+    <div className={"d-flex w-100"}>
       <div className={"my-auto"}>{selectedPipeline?.name}</div>
-      <div className={"ml-auto"}>{getPipelineActionControls()}</div>
+      {getPipelineActionControls()}
     </div>
   );
 }
 
-FreeTrialLandingPipelineWidgetHeaderTitleBar.propTypes = {
+SoftwareDevelopmentLandingPipelineWidgetHeaderTitleBar.propTypes = {
   selectedHeaderItem: PropTypes.string,
   setIsLoading: PropTypes.func,
   selectedPipeline: PropTypes.object,

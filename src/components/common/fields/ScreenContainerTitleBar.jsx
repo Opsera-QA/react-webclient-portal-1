@@ -34,7 +34,7 @@ function ScreenContainerTitleBar(
 
   const getInactiveText = () => {
     if (inactive) {
-      return (<span className="text-white-50 mx-1">{inactive && "Inactive"}</span>);
+      return (<span className="text-white-50 ml-3">{inactive && "Inactive"}</span>);
     }
   };
 

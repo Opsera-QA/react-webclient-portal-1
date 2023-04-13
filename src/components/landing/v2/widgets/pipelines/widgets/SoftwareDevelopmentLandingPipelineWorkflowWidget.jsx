@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import FreeTrialLandingPipelineWidgetBody from "components/trial/landing/widgets/pipelines/widgets/body/FreeTrialLandingPipelineWidgetBody";
-import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
 import FreeTrialLandingWorkflowWidgetHeaderTabBarBase, {
   FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS,
 } from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
-import FreeTrialLandingPipelineWidgetHeaderTitleBar
-  from "components/trial/landing/widgets/pipelines/widgets/FreeTrialLandingPipelineWidgetHeaderTitleBar";
+import SoftwareDevelopmentLandingPipelineWidgetHeaderTitleBar
+  from "components/landing/v2/widgets/pipelines/widgets/SoftwareDevelopmentLandingPipelineWidgetHeaderTitleBar";
+import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
 
-export default function FreeTrialLandingPipelineWorkflowWidget(
+export default function SoftwareDevelopmentLandingPipelineWorkflowWidget(
   {
     className,
     selectedPipeline,
@@ -20,7 +20,7 @@ export default function FreeTrialLandingPipelineWorkflowWidget(
 
   const getTitleBar = () => {
     return (
-      <FreeTrialLandingPipelineWidgetHeaderTitleBar
+      <SoftwareDevelopmentLandingPipelineWidgetHeaderTitleBar
         setSelectedPipeline={setSelectedPipeline}
         selectedPipeline={selectedPipeline}
         selectedHeaderItem={selectedHeaderItem}
@@ -31,7 +31,7 @@ export default function FreeTrialLandingPipelineWorkflowWidget(
 
   return (
     <div className={className}>
-      <FreeTrialWidgetDataBlockBase
+      <WidgetDataBlockBase
         title={getTitleBar()}
         isLoading={isLoading || pipelineRefreshing}
       >
@@ -48,12 +48,12 @@ export default function FreeTrialLandingPipelineWorkflowWidget(
           isLoading={isLoading}
           setIsLoading={setPipelineRefreshing}
         />
-      </FreeTrialWidgetDataBlockBase>
+      </WidgetDataBlockBase>
     </div>
   );
 }
 
-FreeTrialLandingPipelineWorkflowWidget.propTypes = {
+SoftwareDevelopmentLandingPipelineWorkflowWidget.propTypes = {
   className: PropTypes.string,
   selectedPipeline: PropTypes.object,
   setSelectedPipeline: PropTypes.func,

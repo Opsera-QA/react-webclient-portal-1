@@ -3,19 +3,18 @@ import PropTypes from "prop-types";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
-import WorkflowPipelineCard from "components/wizard/free_trial/workflows/flows/selection/card/WorkflowPipelineCard";
-import WorkflowTaskCard from "components/wizard/free_trial/workflows/flows/selection/card/WorkflowTaskCard";
+import WorkflowPipelineCard from "components/landing/v2/widgets/workspace/card/WorkflowPipelineCard";
+import WorkflowTaskCard from "components/landing/v2/widgets/workspace/card/WorkflowTaskCard";
 import { numberHelpers } from "components/common/helpers/number/number.helpers";
 import { widgetHelper } from "temp-library-components/helpers/widgets/widget.helper";
 import { heightHelper } from "temp-library-components/helpers/height/height.helper";
 
-export default function FreeTrialWorkflowItemSelectionCardView(
+export default function WorkspaceWorkflowSelectionCardView(
   {
     workflowFilterModel,
     workspaceItems,
     loadData,
     isLoading,
-    taskMetadata,
     selectedWorkflowItem,
     setSelectedWorkflowItem,
     heightSize,
@@ -37,7 +36,6 @@ export default function FreeTrialWorkflowItemSelectionCardView(
             selectedFlow={selectedWorkflowItem}
             setSelectedFlow={setSelectedWorkflowItem}
             task={workspaceItem}
-            taskMetadata={taskMetadata}
           />
         );
     }
@@ -72,12 +70,11 @@ export default function FreeTrialWorkflowItemSelectionCardView(
   );
 }
 
-FreeTrialWorkflowItemSelectionCardView.propTypes = {
+WorkspaceWorkflowSelectionCardView.propTypes = {
   workspaceItems: PropTypes.array,
   workflowFilterModel: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  taskMetadata: PropTypes.object,
   selectedWorkflowItem: PropTypes.object,
   setSelectedWorkflowItem: PropTypes.func,
   heightSize: PropTypes.number,
