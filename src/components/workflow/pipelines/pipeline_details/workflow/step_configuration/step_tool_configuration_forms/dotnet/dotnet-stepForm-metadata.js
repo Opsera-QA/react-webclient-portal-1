@@ -9,17 +9,17 @@ const dotnetStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Jenkins Tool Name",
+      label: "Jenkins Tool",
       id: "toolName",
       isRequired: true
     },
     {
-      label: "Jenkins Job",
+      label: "Job",
       id: "toolJobName",
       isRequired: true
     },
     {
-      label: "Jenkins Job",
+      label: "Job",
       id: "toolJobId",
       isRequired: true
     },
