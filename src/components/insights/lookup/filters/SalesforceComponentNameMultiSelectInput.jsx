@@ -34,6 +34,7 @@ function SalesforceComponentNameMultiSelectInput(
   }, [projects, startDate, endDate]);
 
   const disabled = model.getArrayData('selectedComponentFilterData').length === 0;
+    if(disabled){ model?.setData("selectedComponentNames", []);}
 
   const loadData = async () => {
     try {

@@ -58,8 +58,8 @@ const insightsLookupMetadata = {
     },
   ],
   newObjectFields: {
-    startDate: null,
-    endDate: null,
+    startDate: subDays(new Date(), 30),
+    endDate: new Date(),
     search: "",
     label: "",
     selectedComponentNames: [],
