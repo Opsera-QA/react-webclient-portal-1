@@ -89,6 +89,10 @@ function Lookup() {
         return;
       }
 
+      if(!componentName){
+        componentName = salesforceComponentNames?.[0];
+      }
+
       // TODO: This should just use the dates from the input and Node should do any processing on the date if necessary
       const DATE_STRING_FORMAT = "MM/dd/yyyy";
       const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
@@ -129,6 +133,9 @@ function Lookup() {
     // const componentNames = filterModel?.getArrayData("selectedComponentNames");
 
     if (!startDate || !endDate) {
+      return "Please select start and end dates.";
+    }
+    else{
       return "Please select start and end dates.";
     }
 

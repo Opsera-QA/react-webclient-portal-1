@@ -18,10 +18,17 @@ function LookupResults({
                          setSelectedComponentName,
                          noDataMessage,
                        }) {
+   let firstElement = salesforceComponentNames?.[0];
   const handleTabClick = async (componentName) => {
       let newFilterDto = filterModel;
-    setSelectedComponentName(componentName);
-    loadData(filterModel, componentName);
+      if(componentName){
+        setSelectedComponentName(componentName);
+        loadData(filterModel, componentName);}
+      else {
+          setSelectedComponentName(firstElement);
+          loadData(filterModel, firstElement);
+      }
+
       newFilterDto.setDefaultValue("search");
   };
 
@@ -30,7 +37,7 @@ function LookupResults({
       !Array.isArray(salesforceComponentNames) ||
       salesforceComponentNames.length === 0
     ) {
-      return null;
+      return "NO Data available";
     }
 
     return (
@@ -48,7 +55,7 @@ function LookupResults({
               tabText={componentName}
               tabName={componentName}
               handleTabClick={handleTabClick}
-              activeTab={selectedComponentName}
+              activeTab={selectedComponentName ? selectedComponentName : firstElement}
             />
           );
         })}
@@ -58,9 +65,24 @@ function LookupResults({
 
 
   const getCurrentView = () => {
-    const selectedComponent = searchResults?.find(
-      (component) => component.componentName === selectedComponentName,
-    );
+
+      console.log("first element", firstElement);
+      console.log("search results", searchResults);
+
+      let selectedComponent = "";
+      if(selectedComponentName) {
+          console.log("in chosen");
+          selectedComponent = searchResults?.find(
+              (component) => component.componentName === selectedComponentName,
+          );
+      }
+      // } else {
+      //     console.log("in default");
+      //     selectedComponent = searchResults?.find(
+      //         (component) => component.componentName === firstElement,
+      //     );
+      // }
+      console.log("selected", selectedComponent);
 
     if (selectedComponent) {
       return (
