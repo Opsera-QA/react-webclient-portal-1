@@ -40,7 +40,7 @@ const dotnetStepFormMetadata = {
     },
     
     {
-      label: "Source Code Management Tool",
+      label: "Account",
       id: "gitCredential",
       isRequired: true
     },
