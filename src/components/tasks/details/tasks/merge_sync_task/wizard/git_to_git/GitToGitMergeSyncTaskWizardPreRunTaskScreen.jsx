@@ -119,20 +119,22 @@ export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
       />
       <div>Please select the repository and branch you wish to use for this Salesforce workflow</div>
       <Row>
-      <Col lg={12}>
-        <MergeSyncTaskJiraIssueMultiSelectInput
-          model={gitConfigurationModel}
-          setModel={setModelFunction}
-          jiraToolId={gitConfigurationModel?.getData("jiraToolId")}
-          jiraProjectKey={gitConfigurationModel?.getData("jiraProjectKey")}
-        />
-      </Col>      
-      <Col lg={12}>
-        <GitToGitMergeSyncTaskBitbucketWorkspaceSelectInput
-          model={gitConfigurationModel}
-          setModel={setModelFunction}
-        />
-      </Col>
+        {gitConfigurationModel?.getData("jiraIssueIds") && 
+          <Col lg={12}>
+            <MergeSyncTaskJiraIssueMultiSelectInput
+              model={gitConfigurationModel}
+              setModel={setModelFunction}
+              jiraToolId={gitConfigurationModel?.getData("jiraToolId")}
+              jiraProjectKey={gitConfigurationModel?.getData("jiraProjectKey")}
+            />
+          </Col>
+        }              
+        <Col lg={12}>
+          <GitToGitMergeSyncTaskBitbucketWorkspaceSelectInput
+            model={gitConfigurationModel}
+            setModel={setModelFunction}
+          />
+        </Col>
         <Col lg={12}>
           <GitToGitMergeSyncTaskRepositorySelectInput
             model={gitConfigurationModel}

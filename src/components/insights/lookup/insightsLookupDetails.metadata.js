@@ -15,12 +15,16 @@ export const insightsLookupDetailsMetadata = {
       id: "jobType",
     },
     {
+      label: "Run Count",
+      id: "runCount",
+    },
+    {
       label: "Step Id",
       id: "stepId",
     },
     {
       label: "Deployed By",
-      id: "createdByName",
+      id: "customerName",
     },
     {
       label: "Deployment Start",

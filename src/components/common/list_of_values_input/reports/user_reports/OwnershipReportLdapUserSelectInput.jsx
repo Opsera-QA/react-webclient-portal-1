@@ -1,17 +1,27 @@
-import React, {useContext} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import {AuthContext} from "contexts/AuthContext";
 import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilter";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function OwnershipReportLdapUserSelectInput({ model, loadData }) {
-  const { isSassUser } = useContext(AuthContext);
+export default function OwnershipReportLdapUserSelectInput(
+  {
+    model,
+    loadData,
+    placeholderText,
+  }) {
+  const { isSaasUser } = useComponentStateReference();
 
   const setDataFunction = (fieldName, user) => {
     model.setData("owner", user?._id);
     loadData(model);
   };
 
-  if (isSassUser() === true) {
+  const clearDataFunction = () => {
+    model.setDefaultValue("owner");
+    loadData(model);
+  };
+
+  if (isSaasUser === true) {
     return null;
   }
 
@@ -20,6 +30,8 @@ function OwnershipReportLdapUserSelectInput({ model, loadData }) {
       filterModel={model}
       fieldName={"owner"}
       setDataFunction={setDataFunction}
+      placeholderText={placeholderText}
+      clearDataFunction={clearDataFunction}
     />
   );
 }
@@ -27,8 +39,5 @@ function OwnershipReportLdapUserSelectInput({ model, loadData }) {
 OwnershipReportLdapUserSelectInput.propTypes = {
   model: PropTypes.object,
   loadData: PropTypes.func,
+  placeholderText: PropTypes.string,
 };
-
-export default OwnershipReportLdapUserSelectInput;
-
-

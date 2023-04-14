@@ -258,6 +258,10 @@ import ServiceNowPipelineStepConfigurationMetadata
   from "./step_tool_configuration_forms/service_now/serviceNow-step-configuration-metadata";
 import ServiceNowPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/service_now/ServiceNowPipelineStepConfigurationSummaryPanel";
+import OracleFusionReportMigrationStepFormMetadata
+  from "./step_tool_configuration_forms/oracle_fusion_report_migration/oracleFusion-reportMigration-stepForm-metadata";
+import OracleFusionReportMigrationStepConfigurationSummary
+  from "./step_tool_configuration_forms/oracle_fusion_report_migration/OracleFusionReportMigrationStepConfigurationSummary";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -815,6 +819,13 @@ function PipelineStepConfigurationSummary({
                 serviceNowPipelineDataObject={getModelWrappedObject(ServiceNowPipelineStepConfigurationMetadata)}
             />
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ORACLE_FUSION_REPORT_MIGRATION:
+        return (
+          <OracleFusionReportMigrationStepConfigurationSummary
+            pipelineData={pipelineData}
+            oracleFusionReportMigrationPipelineDataObject={getModelWrappedObject(OracleFusionReportMigrationStepFormMetadata)}
+          />
+        );        
       default:
         return (
           <SummaryPanelContainer>

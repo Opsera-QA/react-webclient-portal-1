@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useContext} from "react";
-import { AuthContext } from "contexts/AuthContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
@@ -10,7 +9,6 @@ import { taskTemplateActions } from "components/admin/task_templates/taskTemplat
 import TaskTemplatesTable from "components/admin/task_templates/TaskTemplatesTable";
 
 export default function TaskTemplateManagement() {
-  const { getAccessToken, userAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [taskTemplates, setTaskTemplates] = useState([]);
@@ -19,6 +17,7 @@ export default function TaskTemplateManagement() {
     cancelTokenSource,
     accessRoleData,
     isOpseraAdministrator,
+    getAccessToken,
   } = useComponentStateReference();
 
   useEffect(() => {

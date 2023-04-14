@@ -41,6 +41,15 @@ import GitlabCommitsByAuthorEditorPanel from "../../charts/gitlab/calendar_chart
 import GitLogDeveloper360EditorPanel from "../../charts/gitlog/commit_activities/GitLogDeveloper360EditorPanel";
 import SalesforceCodeAnalyserChartEditorPanel from "../../charts/sfdc/salesforce_code_analyser/SalesforceCodeAnalyserChartEditorPanel";
 import GithubMergeRequestsPushesAndCommentsChartEditorPanel from "../../charts/github/calendar_chart/merge_requests_pushes_and_comments/GithubMergeRequestsPushesAndCommentsEditorPanel";
+import GithubMergeRequestByMaximumTimeEditorPanel from "../../charts/github/bar_chart/merge_request_by_maximum_time/GithubMergeRequestByMaximumTimeEditorPanel";
+import GithubMergeRequestsByUserEditorPanel from "../../charts/github/bar_chart/merge_requests_by_user/GithubMergeRequestsByUserEditorPanel";
+import GithubTimeTakenToCompleteMergeRequestReviewEditorPanel from "../../charts/github/bar_chart/time_taken_to_complete_merge_request_review/GithubTimeTakenToCompleteMergeRequestReviewEditorPanel";
+import GithubCommitsByAuthorEditorPanel from "../../charts/github/calendar_chart/commits_by_author/GithubCommitsByAuthorEditorPanel";
+import GithubTotalCommitsByProjectEditorPanel from "../../charts/github/pie_chart/total_commits_by_project/GithubTotalCommitsByProjectEditorPanel";
+import GithubMostActiveContributorsEditorPanel from "../../charts/github/table/most_active_contributors/GithubMostActiveContributorsEditorPanel";
+import GithubPendingMergeRequestsEditorPanel from "../../charts/github/table/pending_merge_requests/GithubPendingMergeRequestsEditorPanel";
+import GithubRecentMergeRequestsEditorPanel from "../../charts/github/table/recent_merge_requests/GithubRecentMergeRequestsEditorPanel";
+import GithubCommitsStatisticsEditorPanel from "../../charts/github/pie_chart/commits_statistics/GithubCommitsStatisticsEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer({
@@ -404,6 +413,100 @@ function DashboardMetricOverlayContainer({
         .GITHUB_MERGE_REQUESTS_PUSHES_AND_COMMENTS:
         return (
           <GithubMergeRequestsPushesAndCommentsChartEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS
+        .GITHUB_MERGE_REQUESTS_BY_MAXIMUM_TIME:
+        return (
+          <GithubMergeRequestByMaximumTimeEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_MERGE_REQUESTS_BY_USER:
+        return (
+          <GithubMergeRequestsByUserEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS
+        .GITHUB_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW:
+        return (
+          <GithubTimeTakenToCompleteMergeRequestReviewEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_COMMITS_BY_AUTHOR:
+        return (
+          <GithubCommitsByAuthorEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS
+        .GITHUB_TOTAL_COMMITS_BY_PROJECT:
+        return (
+          <GithubTotalCommitsByProjectEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS
+        .GITHUB_MOST_ACTIVE_CONTRIBUTORS:
+        return (
+          <GithubMostActiveContributorsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_PENDING_MERGE_REQUESTS:
+        return (
+          <GithubPendingMergeRequestsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_RECENT_MERGE_REQUESTS:
+        return (
+          <GithubRecentMergeRequestsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_COMMITS_STATISTICS:
+        return (
+          <GithubCommitsStatisticsEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}

@@ -25,9 +25,13 @@ import SalesforceToGitMergeSyncTaskWizardFileSelectionScreen
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { TASK_TYPES } from "components/tasks/task.types";
+import sfdcPipelineActions from "../../../../../../workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import { AuthContext } from "../../../../../../../contexts/AuthContext";
 
 const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
   const toastContext = useContext(DialogToastContext);
+  const { getAccessToken } = useContext(AuthContext);
   const [currentScreen, setCurrentScreen] = useState(MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN);
   const [wizardModel, setWizardModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -45,7 +49,11 @@ const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
     setWizardModel(undefined);
 
     if (isMongoDbId(taskModel?.getMongoDbId()) === true) {
-      initializeWizardRecord();
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
     }
 
     return () => {
@@ -54,7 +62,36 @@ const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
     };
   }, [taskModel]);
 
-  const initializeWizardRecord = () => {
+  const getLatestApiVersion = async (sfdcToolId) => {
+    try {
+      const response = await sfdcPipelineActions.getApiVersions(
+        getAccessToken,
+        cancelTokenSource,
+        sfdcToolId,
+      );
+      let apiVersions = DataParsingHelper.parseNestedArray(
+        response,
+        "data.message",
+        [],
+      );
+      if (apiVersions && apiVersions.length > 0) return apiVersions[0];
+      return "";
+    } catch (error) {
+      console.error(error);
+      return "";
+    }
+  };
+
+  const loadData = async () => {
+    try {
+      await initializeWizardRecord();
+    } catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    }
+  };
+  const initializeWizardRecord = async () => {
     const newWizardModel = modelHelpers.parseObjectIntoModel({}, mergeSyncTaskWizardMetadata);
     newWizardModel.setDefaultValue("sourceCommitList");
     newWizardModel.setDefaultValue("selectedFileList");
@@ -71,6 +108,8 @@ const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
 
     if (dataParsingHelper.parseObject(sfdc)) {
       newWizardModel?.setData("sfdcToolId", sfdc?.sourceToolId);
+      let apiVersion = await getLatestApiVersion(sfdc?.sourceToolId);
+      newWizardModel.setData("apiVersion", apiVersion);
     }
     if (dataParsingHelper.parseObject(git)) {
       newWizardModel?.setData("targetBranch", git?.targetBranch);

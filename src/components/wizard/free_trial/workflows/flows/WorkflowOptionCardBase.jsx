@@ -11,6 +11,7 @@ export const WORKFLOW_OPTION_TYPES = {
   TASK: "task",
 };
 
+// TODO: Combine with WorkspaceResourceOptionCardBase
 export default function WorkflowOptionCardBase(
   {
     icon,

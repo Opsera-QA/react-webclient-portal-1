@@ -1,54 +1,44 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 import Model from "core/data_model/model";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
-import {ldapUserMetadata} from "components/admin/accounts/ldap/users/ldapUser.metadata";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import LdapUserDetailPanel from "components/admin/accounts/ldap/users/details/LdapUserDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import {ssoUserMetadata} from "components/settings/users/ssoUser.metadata";
-import axios from "axios";
 import SsoUserDetailPanel from "components/settings/users/sso_user_details/SsoUserDetailPanel";
 import UserManagementSubNavigationBar from "components/settings/users/UserManagementSubNavigationBar";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function SsoUserDetailView() {
   const {userId} = useParams();
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [ssoUserData, setSsoUserData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isMounted,
+    cancelTokenSource,
+    toastContext,
+    getAccessToken,
+    isSaasUser,
+    domain,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
+      if (isSaasUser !== false) {
+        return;
+      }
+
       setIsLoading(true);
-      await getRoles(cancelSource);
+      await getSsoUser();
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -58,21 +48,8 @@ function SsoUserDetailView() {
     }
   };
 
-  const getRoles = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-      const organizationDomain = user?.ldap?.domain;
-
-      if (organizationDomain) {
-        await getSsoUser(cancelSource, organizationDomain);
-      }
-    }
-  };
-
-  const getSsoUser = async (cancelSource = cancelTokenSource, organizationDomain) => {
-    const response = await accountsActions.getPendingUserByIdV2(getAccessToken, cancelSource, organizationDomain, userId);
+  const getSsoUser = async () => {
+    const response = await accountsActions.getPendingUserByIdV2(getAccessToken, cancelTokenSource, domain, userId);
     const user = response?.data?.user;
 
     if (user != null) {
@@ -93,6 +70,10 @@ function SsoUserDetailView() {
       );
     }
   };
+
+  if (isSaasUser !== false) {
+    return null;
+  }
 
   return (
     <DetailScreenContainer

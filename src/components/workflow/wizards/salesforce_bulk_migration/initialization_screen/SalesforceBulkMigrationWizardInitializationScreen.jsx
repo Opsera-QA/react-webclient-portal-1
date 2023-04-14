@@ -15,6 +15,10 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import SalesforcePackageVersionSelectionInput
+  from "../../sfdc_pipeline_wizard/xml_viewer/xml/SalesforcePackageVersionSelectionInput";
+import sfdcPipelineActions from "../../sfdc_pipeline_wizard/sfdc-pipeline-actions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const SalesforceBulkMigrationWizardInitializationScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, taskModel, setError }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -46,7 +50,7 @@ const SalesforceBulkMigrationWizardInitializationScreen = ({ pipelineWizardModel
   const loadData = async () => {
     try {
       setIsLoading(true);
-      let newPipelineWizardRecord = loadGitTaskInformation(pipelineWizardModel);
+      let newPipelineWizardRecord = await loadGitTaskInformation(pipelineWizardModel);
       setPipelineWizardModel({...newPipelineWizardRecord});
     }
     catch (error) {
@@ -60,14 +64,37 @@ const SalesforceBulkMigrationWizardInitializationScreen = ({ pipelineWizardModel
     }
   };
 
-  const loadGitTaskInformation = (newPipelineWizardModel) => {
+  const getLatestApiVersion = async (sfdcToolId) => {
+    try {
+      const response = await sfdcPipelineActions.getApiVersions(
+        getAccessToken,
+        cancelTokenSource,
+        sfdcToolId,
+      );
+      let apiVersions = DataParsingHelper.parseNestedArray(
+        response,
+        "data.message",
+        [],
+      );
+      if (apiVersions && apiVersions.length > 0) return apiVersions[0];
+      return "";
+    } catch (error) {
+      console.error(error);
+      setError(
+        "Could not get default API version for Salesforce Bulk Migration Wizard",
+      );
+      return "";
+    }
+  };
+
+  const loadGitTaskInformation = async (newPipelineWizardModel) => {
     const taskId = taskModel.getData("_id");
     const sfdcToolId = taskModel.getData("configuration")?.sfdcToolId;
     const gitToolId = taskModel.getData("configuration")?.gitToolId;
     const sfdcDestToolId = taskModel.getData("configuration")?.sfdcDestToolId;
     const accountUsername = taskModel.getData("configuration")?.accountUsername;
     const gitBranch = taskModel.getData("configuration")?.gitBranch;
-
+    const apiVersion = await getLatestApiVersion(sfdcToolId);
 
     if (taskId == null || taskId === "") {
       setError("Could not find Task");
@@ -84,6 +111,7 @@ const SalesforceBulkMigrationWizardInitializationScreen = ({ pipelineWizardModel
     newPipelineWizardModel.setData("gitTaskId", taskId);
     newPipelineWizardModel.setData("sfdcToolId", sfdcToolId);
     newPipelineWizardModel.setData("gitToolId", gitToolId);
+    newPipelineWizardModel.setData("apiVersion", apiVersion);
     setPipelineWizardModel({...newPipelineWizardModel});
     return newPipelineWizardModel;
   };
@@ -142,6 +170,13 @@ const SalesforceBulkMigrationWizardInitializationScreen = ({ pipelineWizardModel
             </CenteredContentWrapper>
           </div>
         </div>
+        {pipelineWizardModel.getData("sfdcToolId") &&
+          <SalesforcePackageVersionSelectionInput
+            pipelineWizardModel={pipelineWizardModel}
+            setPipelineWizardModel={setPipelineWizardModel}
+            fieldName={"apiVersion"}
+          />
+        }
         <SaveButtonContainer>
           <Button
             className={"mr-2"}

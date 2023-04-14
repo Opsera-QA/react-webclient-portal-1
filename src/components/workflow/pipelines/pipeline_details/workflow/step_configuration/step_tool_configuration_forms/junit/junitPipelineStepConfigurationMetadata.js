@@ -24,12 +24,12 @@ const junitPipelineStepConfigurationMetadata = {
       isRequired: true
     },
     {
-      label: "Tool Job",
+      label: "Job",
       id: "toolJobId",
       isRequired: true
     },
     {
-      label: "Account",
+      label: "Source Code Management Tool",
       id: "gitCredential",
       isRequired: true
     },

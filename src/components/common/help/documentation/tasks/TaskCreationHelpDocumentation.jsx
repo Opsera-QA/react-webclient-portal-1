@@ -6,7 +6,7 @@ import { getTaskTypeLabel, TASK_TYPES } from "../../../../tasks/task.types";
 function TaskCreationHelpDocumentation({closeHelpPanel}) {
   return (
     <HelpDocumentationContainer helpTopic={"Create New Task"} closeHelpPanel={closeHelpPanel}>
-      <div className={"mb-1"}>Use the following instructions to create an Opsera Task. For in depth documentation on Opsera Tasks Management, view the <b><a href="https://opsera.atlassian.net/l/c/cd5ujPjA" target="_blank" rel="noreferrer">Opsera Task Management Help Documentation</a></b>.</div>
+      <div className={"mb-1"}>Use the following instructions to create a Task. For in depth documentation on Tasks Management, view the <b><a href="https://opsera.atlassian.net/l/c/cd5ujPjA" target="_blank" rel="noreferrer">Opsera Task Management Help Documentation</a></b>.</div>
       <ol>
         <li>Provide values for the following fields.
           <ul style={{listStyleType: "none"}}>

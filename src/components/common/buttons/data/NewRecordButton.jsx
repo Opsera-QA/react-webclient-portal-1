@@ -21,7 +21,11 @@ function NewRecordButton(
       return customButtonText;
     }
 
-    return (`New ${type}`);
+    if (hasStringValue(type) === true) {
+      return (`New ${type}`);
+    }
+
+    return "Create New";
   };
 
   if (!addRecordFunction) {

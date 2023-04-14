@@ -24,7 +24,7 @@ const xunitPipelineStepConfigurationMetadata = {
       isRequired: true
     },
     {
-      label: "Tool Job",
+      label: "Job",
       id: "toolJobId",
       isRequired: true
     },

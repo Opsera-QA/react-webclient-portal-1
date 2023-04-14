@@ -2,17 +2,11 @@ import paths from "./paths";
 import {
   faAnalytics,
   faClipboardList,
-  faDraftingCompass,
-  faFileInvoice,
   faLink,
-  faTags,
-  faUser,
   faChartNetwork,
   faEnvelope,
   faProjectDiagram,
-  faTally,
   faTools,
-  faUsers,
   faChartArea,
   faHome,
   faListAlt,
@@ -26,7 +20,6 @@ import {
   faBook,
   faMagnifyingGlass,
   faShieldKeyhole,
-  faRectangleList,
   faHouseUser,
   faDiamondExclamation,
   faUserShield,
@@ -41,6 +34,8 @@ import {userSettingsTrails} from "components/user/user_settings/userSettings.tra
 import {pipelinesTrails} from "components/workflow/pipelines.trails";
 import {accountSettingsTrails} from "components/settings/accountSettings.trails";
 import {adminToolsTrails} from "components/admin/adminTools.trails";
+import {reportsTrails} from "components/reports/reports.trails";
+import {workspaceTrails} from "components/workspace/workspace.trails";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
 export const breadcrumbs = {
@@ -188,189 +183,6 @@ export const breadcrumbs = {
     linkText: "Git Custodian",
     icon: faShieldKeyhole,
   },
-  reports: {
-    parent: undefined,
-    name: "reports",
-    path: paths.reports,
-    title: "All Reports",
-    linkText: "All Reports",
-    icon: faAnalytics
-  },
-
-  toolReports: {
-    parent: "reports",
-    name: "toolReports",
-    path: paths.toolReports,
-    title: "Tool Reports",
-    linkText: "Tool Reports",
-    icon: faTools
-  },
-  sonarReports: {
-    parent: undefined,
-    name: "sonarReports",
-    path: paths.sonarReports,
-    title: "Sonar Reports",
-    linkText: "Sonar Reports",
-    icon: faAnalytics
-  },
-  coverityReports: {
-    parent: undefined,
-    name: "coverityReports",
-    path: paths.coverityReports,
-    title: "Coverity Reports",
-    linkText: "Coverity Reports",
-    icon: faAnalytics
-  },
-  aquasecReports: {
-    parent: undefined,
-    name: "aquasecReports",
-    path: paths.aquasecReports,
-    title: "Aquasec Reports",
-    linkText: "Aquasec Reports",
-    icon: faAnalytics
-  },
-  gitscraperReports: {
-    parent: undefined,
-    name: "gitscraperReports",
-    path: paths.gitscraperReports,
-    title: "Git Custodian Reports",
-    linkText: "Git Custodian Reports",
-    icon: faAnalytics
-  },
-  toolsUsedInPipelineReport: {
-    parent: "toolReports",
-    name: "toolsUsedInPipelineReport",
-    path: paths.toolsUsedInPipelineReport,
-    title: "Pipelines by Tool",
-    linkText: "Pipelines by Tool",
-    icon: faAnalytics,
-    pageDescription: "View Pipelines based on the selected Tools.",
-  },
-  toolCountsReport: {
-    parent: "toolReports",
-    name: "toolCountsReport",
-    path: paths.toolCountsReport,
-    title: "Tool Counts",
-    linkText: "Tool Counts",
-    icon: faTally,
-    pageDescription: "View tool usage counts.",
-  },
-  detailedToolReport: {
-    parent: "toolReports",
-    name: "detailedToolReport",
-    path: paths.detailedToolReport,
-    title: "Detailed Tool Report",
-    linkText: "Detailed Tool Report",
-    icon: faFileInvoice
-  },
-
-  tagReports: {
-    parent: "reports",
-    name: "tagReports",
-    path: paths.tagReports,
-    title: "Tag Reports",
-    linkText: "Tag Reports",
-    icon: faTags
-  },
-  tagsUsedInPipelineReport: {
-    parent: "tagReports",
-    name: "tagsUsedInPipelineReport",
-    path: paths.tagsUsedInPipelineReport,
-    title: "Pipelines by Tags",
-    linkText: "Pipelines by Tags",
-    icon: faDraftingCompass,
-    pageDescription: "View Pipelines based on the selected Tags.",
-  },
-  tagsUsedInToolsReport: {
-    parent: "tagReports",
-    name: "tagsUsedInToolsReport",
-    path: paths.tagsUsedInToolsReport,
-    title: "Tools by Tags",
-    linkText: "Tools by Tags",
-    icon: faTools,
-    pageDescription: "View Tools based on the selected Tags.",
-  },
-  tagsUsedInDashboardsReport: {
-    parent: "tagReports",
-    name: "tagsUsedInDashboardsReport",
-    path: paths.tagsUsedInDashboardsReport,
-    title: "Dashboards by Tags",
-    linkText: "Dashboards by Tags",
-    icon: faChartNetwork,
-    pageDescription: "View Dashboards based on the selected Tags.",
-  },
-  tagsUsedInProjectsReport: {
-    parent: "tagReports",
-    name: "tagsUsedInProjectsReport",
-    path: paths.tagsUsedInProjectsReport,
-    title: "Projects by Tags",
-    linkText: "Projects by Tags",
-    icon: faTags,
-    pageDescription: "View Projects based on the selected Tags.",
-  },
-
-  userReports: {
-    parent: "reports",
-    name: "userReports",
-    path: paths.userReports,
-    title: "User Reports",
-    linkText: "User Reports",
-    icon: faUser
-  },
-  groupMembershipReport: {
-    parent: "userReports",
-    name: "groupMembershipReport",
-    path: paths.groupMembershipReport,
-    title: "Group Membership",
-    linkText: "Group Membership",
-    icon: faUsers,
-    pageDescription: "View the Group Membership of a selected User."
-  },
-  pipelineOwnershipReport: {
-    parent: "userReports",
-    name: "pipelineOwnershipReport",
-    path: paths.pipelineOwnershipReport,
-    title: "Pipelines by Owner",
-    linkText: "Pipelines by Owner",
-    icon: faDraftingCompass,
-    pageDescription: "Find all Pipelines owned by the selected User."
-  },
-  toolOwnershipReport: {
-    parent: "userReports",
-    name: "toolOwnershipReport",
-    path: paths.toolOwnershipReport,
-    title: "Tools by Owner",
-    linkText: "Tools by Owner",
-    icon: faTools,
-    pageDescription: "Find all Tools owned by the selected user."
-  },
-  taskOwnershipReport: {
-    parent: "userReports",
-    name: "taskOwnershipReport",
-    path: paths.taskOwnershipReport,
-    title: "Tasks by Owner",
-    linkText: "Tasks by Owner",
-    icon: faTasks,
-    pageDescription: "Find all Tasks owned by the selected user."
-  },
-  consolidatedUserReport: {
-    parent: "userReports",
-    name: "consolidatedUserReport",
-    path: paths.consolidatedUserReport,
-    title: "User Report",
-    linkText: "User Report",
-    icon: faUser,
-    pageDescription: "View the consolidated report for selected user."
-  },
-
-  pipelineReports: {
-    parent: "reports",
-    name: "pipelineReports",
-    path: paths.pipelineReports,
-    title: "Pipeline Reports",
-    linkText: "Pipeline Reports",
-    icon: faDraftingCompass
-  },
 
   //Notifications
   notificationManagement : {
@@ -403,8 +215,8 @@ export const breadcrumbs = {
     parent: undefined,
     name: "taskManagement",
     path: paths.taskManagement,
-    title: "Opsera Task Management",
-    linkText: "Opsera Task Management",
+    title: "Task Management",
+    linkText: "Task Management",
     icon: faTasks,
     pageDescription: "Create and Manage Opsera Related Tasks.",
   },
@@ -412,16 +224,16 @@ export const breadcrumbs = {
     parent: undefined,
     name: "taskManagement",
     path: paths.taskActivityLogs,
-    title: "Opsera Task Activity Logs",
-    linkText: "Opsera Task Activity Logs",
+    title: "Task Activity Logs",
+    linkText: "Task Activity Logs",
     icon: faClipboardList
   },
   taskManagementDetailView: {
     parent: "taskManagement",
     name: "taskManagementDetailView",
     path: paths.taskManagementDetailView,
-    title: "Opsera Task Details",
-    linkText: "Opsera Task Details",
+    title: "Task Details",
+    linkText: "Task Details",
     icon: faTasks,
     dynamicIconFunction: (model) => {
       return taskTypeConstants.getIconForTaskType(model?.getData("type"));
@@ -460,16 +272,6 @@ export const breadcrumbs = {
     title: "Access Denied",
     linkText: "Access Denied",
     icon: faEnvelope
-  },
-
-  workspace: {
-    parent: undefined,
-    name: "workspace",
-    path: paths.workspace,
-    title: "Workspace",
-    linkText: "Workspace",
-    icon: faRectangleList,
-    pageDescription: "The Opsera workspace allows you to configure and track all workflows in one central location.",
   },
 
   freeTrialLanding: {
@@ -542,6 +344,8 @@ export const breadcrumbs = {
   ...userSettingsTrails,
   ...accountSettingsTrails,
   ...adminToolsTrails,
+  ...reportsTrails,
+  ...workspaceTrails,
 };
 
 export const getTrail = (breadcrumb) => {

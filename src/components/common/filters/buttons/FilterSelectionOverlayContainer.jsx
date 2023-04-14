@@ -8,6 +8,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import Model from "core/data_model/model";
+import CancelButton from "components/common/buttons/CancelButton";
 
 export default function FilterSelectionOverlayContainer(
   {
@@ -72,13 +73,13 @@ export default function FilterSelectionOverlayContainer(
     >
       <div className={"bg-white m-3"}>
         {children}
-        <ButtonContainerBase>
-            <VanityButtonBase
-              onClickFunction={loadFilters}
-              normalText={"Filter"}
-              className={"mr-2"}
-              icon={faFilter}
-            />
+        <ButtonContainerBase className={"mt-3"}>
+          <VanityButtonBase
+            onClickFunction={loadFilters}
+            normalText={"Filter"}
+            className={"ml-3"}
+            icon={faFilter}
+          />
           {/*<VanityButtonBase*/}
           {/*  disabled={isLoading || filterDto?.getData("activeFilters").length === 0}*/}
           {/*  onClickFunction={() => loadFilters()}*/}
@@ -86,12 +87,24 @@ export default function FilterSelectionOverlayContainer(
           {/*  variant={"outline-secondary"}*/}
           {/*  icon={<StackedFilterRemovalIcon />}*/}
           {/*/>*/}
+          <div className={"ml-3"}>
             <Button
               variant={"outline-secondary"}
-              onClick={resetFilters}
+              onClick={() => resetFilters()}
+              className={"w-100"}
+              disabled={filterModel?.getData("activeFilters").length === 0}
             >
-              <span><span className={"mr-2"}><StackedFilterRemovalIcon/></span>Remove</span>
+              <div className={"d-flex no-wrap-inline"}>
+                <span className="mr-2"><StackedFilterRemovalIcon/></span>
+                Remove Filters
+              </div>
             </Button>
+          </div>
+          <CancelButton
+            cancelFunction={closePanelFunction}
+            size={"md"}
+            className={"ml-3"}
+          />
         </ButtonContainerBase>
       </div>
     </CenterOverlayContainer>

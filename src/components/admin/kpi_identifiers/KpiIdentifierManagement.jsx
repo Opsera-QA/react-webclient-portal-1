@@ -1,53 +1,46 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
-import { AuthContext } from "contexts/AuthContext";
+import React, { useState, useEffect } from "react";
 import Model from "core/data_model/model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import kpiFilterMetadata from "components/admin/kpi_identifiers/kpi-filter-metadata";
 import KpiIdentifierTable from "components/admin/kpi_identifiers/KpiIdentifierTable";
 import KpiActions from "components/admin/kpi_identifiers/kpi.actions";
-import { meetsRequirements, ROLE_LEVELS } from "components/common/helpers/role-helpers";
-import axios from "axios";
 import KpiIdentifierManagementSubNavigationBar
   from "components/admin/kpi_identifiers/KpiIdentifierManagementSubNavigationBar";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function KpiIdentifierManagement() {
-  const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [kpiList, setKpiList] = useState([]);
   const [kpiFilterDto, setKpiFilterDto] = useState(
     new Model({ ...kpiFilterMetadata.newObjectFields }, kpiFilterMetadata, false)
   );
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    accessRoleData,
+    getAccessToken,
+    toastContext,
+    cancelTokenSource,
+    isMounted,
+    isOpseraAdministrator,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(kpiFilterDto, source).catch((error) => {
+    loadData(kpiFilterDto).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (filterDto = kpiFilterDto, cancelSource = cancelTokenSource) => {
+  const loadData = async (filterDto = kpiFilterDto) => {
     try {
+      setKpiList([]);
+
+      if (isOpseraAdministrator !== true) {
+        return;
+      }
+
       setIsLoading(true);
-      await getRoles(filterDto, cancelSource);
+      await getKpis(filterDto);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -60,8 +53,8 @@ function KpiIdentifierManagement() {
     }
   };
 
-  const getKpis = async (filterDto = kpiFilterDto, cancelSource = cancelTokenSource) => {
-    const response = await KpiActions.getKpisV2(getAccessToken, cancelSource, filterDto);
+  const getKpis = async (filterDto = kpiFilterDto) => {
+    const response = await KpiActions.getKpisV2(getAccessToken, cancelTokenSource, filterDto);
 
     if (isMounted?.current === true && response?.data?.data) {
       setKpiList(response.data.data);
@@ -72,24 +65,15 @@ function KpiIdentifierManagement() {
     }
   };
 
-  const getRoles = async (filterDto = kpiFilterDto, cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (isMounted?.current === true && userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-
-      if (meetsRequirements(ROLE_LEVELS.OPSERA_ADMINISTRATORS, userRoleAccess)) {
-        await getKpis(filterDto, cancelSource);
-      }
-    }
-  };
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
 
   return (
     <ScreenContainer
       breadcrumbDestination={"kpiManagement"}
-      isLoading={!accessRoleData}
-      accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
+      isLoading={accessRoleData == null}
+      accessDenied={isOpseraAdministrator !== true}
       navigationTabContainer={<KpiIdentifierManagementSubNavigationBar activeTab={"kpiIdentifierManagement"} />}
     >
       <KpiIdentifierTable

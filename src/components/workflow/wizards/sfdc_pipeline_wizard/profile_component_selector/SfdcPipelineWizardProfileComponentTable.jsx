@@ -57,7 +57,7 @@ const SfdcPipelineWizardProfileComponentTable = ({ pipelineWizardModel, setPipel
   const loadData = async (newFilterDto = filterDto, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await profilePolling(cancelSource, undefined, newFilterDto);
+      await profilePolling(cancelSource, newFilterDto);
     } catch (error) {
       toastContext.showInlineErrorMessage(error);
     }
@@ -77,7 +77,7 @@ const SfdcPipelineWizardProfileComponentTable = ({ pipelineWizardModel, setPipel
 
     if (isMounted?.current === true && !Array.isArray(sfdcCommitList) && count <= 5 && filePullCompleted === false) {
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
-      return await profilePolling(cancelSource, count + 1, newFilterDto);
+      return await profilePolling(cancelSource, newFilterDto, count + 1, );
     }
   };
 

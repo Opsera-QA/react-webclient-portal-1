@@ -9,6 +9,7 @@ salesforceBulkMigrationWizardActions.createNewRecordV2 = async (getAccessToken, 
     sfdcToolId: pipelineWizardModel.getData("sfdcToolId"),
     sfdcDestToolId: pipelineWizardModel.getData("sfdcDestToolId"),
     runCount: pipelineWizardModel.getData("run_count"),
+    apiVersion: pipelineWizardModel.getData("apiVersion"),
   };
 
   const apiUrl = `/tasks/wizard/salesforce/bulk-migration/create-record`;

@@ -9,7 +9,7 @@ const dockerCliStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Source Code Management Tool",
+      label: "Account",
       id: "gitToolId",
       isRequired: true
     },

@@ -24,7 +24,7 @@ export const REGISTRY_WIZARD_SCREENS = {
   TOOL_DETAIL: "tool_detail"
 };
 
-export default function CreateToolRegistryWizard({ loadData }) {
+export default function CreateToolRegistryWizard({ loadData, backButtonFunction, }) {
   const [currentScreen, setCurrentScreen] = useState(
     REGISTRY_WIZARD_SCREENS.MODE_SELECT,
   );
@@ -77,7 +77,7 @@ export default function CreateToolRegistryWizard({ loadData }) {
     history.push(history.location);
   };
 
-  const backButtonFunction = () => {
+  const handleBackButtonFunction = () => {
     if (currentScreen === "tool_identifier_select") {
       setCurrentScreen(REGISTRY_WIZARD_SCREENS.MODE_SELECT);
     }
@@ -153,6 +153,7 @@ export default function CreateToolRegistryWizard({ loadData }) {
             setSetupMode={setSetupMode}
             setupMode={setUpMode}
             className={"py-5"}
+            backButtonFunction={backButtonFunction}
           />
         );
       case REGISTRY_WIZARD_SCREENS.TOOL_IDENTIFIER_SELECT:
@@ -174,7 +175,7 @@ export default function CreateToolRegistryWizard({ loadData }) {
             toolData={toolModel}
             setButtonContainer={setButtonContainer}
             setCurrentScreen={setCurrentScreen}
-            backButtonFunction={backButtonFunction}
+            backButtonFunction={handleBackButtonFunction}
             handleClose={closeOverlayFunction}
           />
         );
@@ -197,4 +198,5 @@ export default function CreateToolRegistryWizard({ loadData }) {
 
 CreateToolRegistryWizard.propTypes = {
   loadData: PropTypes.func,
+  backButtonFunction: PropTypes.func,
 };

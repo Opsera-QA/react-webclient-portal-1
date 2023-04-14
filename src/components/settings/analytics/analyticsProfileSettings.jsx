@@ -1,7 +1,5 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Card, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { AuthContext } from "contexts/AuthContext";
-import { DialogToastContext } from "../../../contexts/DialogToastContext";
 import analyticsActions from "components/settings/analytics/analytics-settings-actions";
 import Model from "core/data_model/model";
 import AnalyticsProfileMetadata from "components/settings/analytics/analyticsProfile.metadata";
@@ -14,21 +12,21 @@ import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSel
 import AnalyticsDefaultPersonaSelectInput
   from "components/common/list_of_values_input/analytics_profile/AnalyticsDefaultPersonaSelectInput";
 import AnalyticsProfileSubNavigationBar from "components/settings/analytics/AnalyticsProfileSubNavigationBar";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function AnalyticsProfileSettings() {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [analyticsProfileData, setAnalyticsProfileData] = useState(undefined);
-  console.log(process.env.REACT_APP_STACK);
+  const {
+    getAccessToken,
+    toastContext,
+  } = useComponentStateReference();
 
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
-    await getRoles();
     try {
       setIsLoading(true);
       let fetchedSettings = await fetchProfile();
@@ -44,14 +42,6 @@ function AnalyticsProfileSettings() {
       console.error(error);
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
     }
   };
 

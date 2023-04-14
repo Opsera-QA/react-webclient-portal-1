@@ -11,7 +11,7 @@ export default function UserActivityAuditLogReport() {
     accessRoleData,
     isOpseraAdministrator,
     isSiteAdministrator,
-    isSassUser,
+    isSaasUser,
     isSecurityManager,
     isAuditor,
   } = useComponentStateReference();
@@ -23,7 +23,7 @@ export default function UserActivityAuditLogReport() {
   if (
     isOpseraAdministrator !== true
     && isSiteAdministrator !== true
-    && isSassUser !== true
+    && isSaasUser !== true
     && isSecurityManager !== true
     && isAuditor !== true
   ) {

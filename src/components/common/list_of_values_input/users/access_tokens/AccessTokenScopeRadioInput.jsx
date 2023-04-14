@@ -92,7 +92,7 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
             value={"tasks"}
             label={<span>Tasks Access</span>}
             description={`
-            Grants access to the Opsera Tasks API for specifically running tasks based on the role access permitted for this user in that task.
+            Grants access to the Tasks API for specifically running tasks based on the role access permitted for this user in that task.
                 Site wide roles and individual task access rules are enforced.
             `}
           />
@@ -105,7 +105,7 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
             disabled={disabled}
             value={"tasks-readonly"}
             label={<span>Tasks Access (Read Only)</span>}
-            description={`Grants read access only to the Opsera Tasks API for getting log activity on tasks. No actions are supported.`}
+            description={`Grants read access only to the Tasks API for getting log activity on tasks. No actions are supported.`}
           />
         </Col>
         <Col xs={12} md={6} className={"d-flex pr-2 py-2"}>

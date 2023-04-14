@@ -8,6 +8,7 @@ import {meetsRequirements} from "components/common/helpers/role-helpers";
 import AccessRoleLevelField from "components/common/fields/access/AccessRoleLevelField";
 import ScreenContainerBodyLoadingDialog
   from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function VanitySetDetailScreenContainer(
   {
@@ -18,13 +19,15 @@ function VanitySetDetailScreenContainer(
     isLoading,
     accessDenied,
     navigationTabContainer,
-    accessRoleData,
     roleRequirement,
     titleActionBar,
     objectRoles,
     helpComponent
   }) {
   const [breadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
+  const {
+    accessRoleData,
+  } = useComponentStateReference();
 
   const getTopNavigation = () => {
     if (navigationTabContainer) {
@@ -86,7 +89,6 @@ function VanitySetDetailScreenContainer(
         <div className="content-block-footer-text-container pt-2">
           <AccessRoleLevelField
             className={"mx-2"}
-            accessRoleData={accessRoleData}
             objectRoles={objectRoles}
             dataObject={model}
           />

@@ -8,7 +8,8 @@ export const SCRIPT_LIBRARY_LANGUAGES = [
   {value: "c_sharp", text: "C#", mode: "csharp"},
   {value: "f_sharp", text: "F#", mode: "fsharp"},
   {value: "python", text: "Python", mode: "python"},
-  {value: "yaml", text: "YAML", mode: "yaml"}
+  {value: "yaml", text: "YAML", mode: "yaml"},
+  {value: "xml", text: "XML", mode: "xml"},
 ];
 
 export const getScriptLanguageDisplayText = (value) => {

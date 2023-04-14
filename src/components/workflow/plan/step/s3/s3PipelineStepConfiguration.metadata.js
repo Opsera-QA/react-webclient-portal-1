@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 export const s3PipelineStepConfigurationMetadata = {
   type: "S3 Pipeline Step Configuration",
   fields: [
@@ -15,7 +17,8 @@ export const s3PipelineStepConfigurationMetadata = {
     {
       label: "S3 Url",
       id: "s3Url",
-      maxLength: 150,
+      isUrl: true,
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.URL,
     },
     {
       label: "Job Type",

@@ -25,7 +25,6 @@ export default function WorkspaceTaskCardView(
     <VanitySetCardView
       isLoading={isLoading}
       loadData={loadData}
-      paginationModel={taskFilterModel}
       className={"makeup-container-table m-2"}
       cards={
         <VerticalCardViewBase

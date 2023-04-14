@@ -18,7 +18,7 @@ function OctopusDeployStepConfigurationHelpDocumentation() {
           <ol>
             <li>Once the initial Step Setup is configured with the Octopus tool, set the following values:
               <ul style={{listStyleType: "none"}}>
-                <li><b>Octopus Tool ID</b> - Select a configured Octopus Tool from Tool Registry. Confirm configuration in Connections is successful before proceeding with tool.</li>
+                <li><b>Octopus Tool</b> - Select a configured Octopus Tool from Tool Registry. Confirm configuration in Connections is successful before proceeding with tool.</li>
                 <li><b>Space Name</b> - Choose the Space Name, found in Octopus portal.</li>
                 <li><b>Environment Configurations</b> - Select the environment(s) required. Select multiple environments so the same build can be deployed to both environments using a single pipeline. Environments can be added manually in Octopus Tool details in the Applications tab. Opsera currently supports selecting a maximum of 30 environments. </li>
                 <li><b>Project Type</b> - Enter a prefix to be prepended to the uniquely generated name.

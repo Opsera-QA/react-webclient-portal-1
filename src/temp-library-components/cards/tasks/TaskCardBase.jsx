@@ -12,6 +12,7 @@ import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import TaskCardBody from "temp-library-components/cards/tasks/TaskCardBody";
+import {getLargeVendorIconComponentFromTaskType} from "components/common/helpers/icon-helpers";
 
 const getLastRunDetails = (taskModel) => {
   const runCount = DataParsingHelper.parseInteger(taskModel?.getData("run_count"), 0);
@@ -77,13 +78,11 @@ export default function TaskCardBase(
 
   const getTitleBar = () => {
     const type = taskModel?.getData("type");
-    const icon = taskTypeConstants.getIconForTaskType(type);
-    const category = taskTypeConstants.getTaskCategoryForType(type);
+    const icon = getLargeVendorIconComponentFromTaskType(type);
 
     return (
       <CardIconTitleBar
-        icon={icon}
-        iconColor={category === TASK_TYPE_CATEGORIES.SALESFORCE ? themeConstants.COLOR_PALETTE.SALESFORCE_BLUE : undefined}
+        formattedIcon={icon}
         title={`${taskModel?.getData("name")}`}
         className={"mx-1"}
         iconSize={"4x"}
