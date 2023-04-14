@@ -1,15 +1,12 @@
 import React from "react";
-import pipelinesFaq from 'markdown/faq/pipelines/pipelines.faq.md';
-import ReactMarkdownWrapper from "components/common/markdown/ReactMarkdownWrapper";
+import pipelinesFaq from '@opsera/react-faq-markdown/src/markdown/faq/pipelines/pipelines.faq.md';
+import {ReactMarkdownWrapper} from "@opsera/react-vanity-set/dist/makeup-and-vanity-set.module.modern";
 
-const PipelinesFrequentlyAskedQuestions = () => {
+export default function PipelinesFrequentlyAskedQuestions() {
   return (
       <ReactMarkdownWrapper
         markdownFile={pipelinesFaq}
         className={"m-4"}
       />
   );
-};
-
-
-export default PipelinesFrequentlyAskedQuestions;
+}
