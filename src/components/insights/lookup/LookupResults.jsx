@@ -59,9 +59,9 @@ function LookupResults({
 
 
   const getCurrentView = () => {
-         const selectedComponent = searchResults?.find(
-              (component) => component.componentName === selectedComponentName,
-          );
+     const selectedComponent = searchResults?.find(
+          (component) => component.componentName === selectedComponentName,
+      );
 
     if (selectedComponent) {
       return (

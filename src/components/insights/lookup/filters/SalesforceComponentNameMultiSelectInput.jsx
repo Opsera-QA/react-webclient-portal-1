@@ -10,16 +10,12 @@ function SalesforceComponentNameMultiSelectInput(
     fieldName,
     model,
     setModel,
-    formatDataFunction,
     textField,
     valueField,
-    setDataFunction,
-    clearDataFunction,
-    className,
-    data,
     placeholderText,
-      projects,
-      startDate,endDate
+    projects,
+    startDate,
+    endDate
   }) {
   const [salesforceComponentNames, setSalesforceComponentNames] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,13 +33,7 @@ function SalesforceComponentNameMultiSelectInput(
     });
   }, [projects, startDate, endDate]);
 
-  console.log("projects",projects);
-
-    const disabled = model.getArrayData('selectedComponentFilterData').length === 0;
-    console.log("disabled", disabled);
-    if(disabled){
-        console.log("model", model);
-    }
+  const disabled = model.getArrayData('selectedComponentFilterData').length === 0;
 
   const loadData = async () => {
     try {
@@ -61,12 +51,7 @@ function SalesforceComponentNameMultiSelectInput(
     }
   };
 
-  // const loadComponentNames = async () => {
-  //   setSalesforceComponentNames(data);
-  // };
-
   const loadComponentNames = async (newFilterModel = model) => {
-      console.log("in the loop");
       const DATE_STRING_FORMAT = "MM/dd/yyyy";
       const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
       const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
@@ -82,17 +67,11 @@ function SalesforceComponentNameMultiSelectInput(
           newFilterModel
       );
       const names = response?.data?.data?.componentNames;
-      console.log("component names",names);
 
       if (isMounted?.current === true && Array.isArray(names)) {
         setSalesforceComponentNames(names);
       }
   };
-
-  console.log("value field", valueField);
-    console.log("text field", textField);
-    console.log("placeholder", placeholderText);
-    console.log("fieldname", fieldName);
 
   return (
     <MultiSelectInputBase
@@ -124,8 +103,8 @@ SalesforceComponentNameMultiSelectInput.propTypes = {
   data: PropTypes.any,
   projects: PropTypes.any,
   placeholderText: PropTypes.string,
-    startDate: PropTypes.string,
-    endDate: PropTypes.string,
+  startDate: PropTypes.string,
+  endDate: PropTypes.string,
 };
 
 SalesforceComponentNameMultiSelectInput.defaultProps = {

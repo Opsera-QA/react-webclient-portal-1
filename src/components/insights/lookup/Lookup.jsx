@@ -10,8 +10,6 @@ import LookupFilterModel from "./lookup.filter.model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import SalesforceLookupFilters from "components/insights/lookup/SalesforceLookupFilters";
 import {subDays} from "date-fns";
-import {faSearch} from "@fortawesome/pro-thin-svg-icons";
-import FilterContainer from "../../common/table/FilterContainer";
 
 function Lookup() {
   const [isLoading, setIsLoading] = useState(false);
