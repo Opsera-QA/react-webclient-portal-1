@@ -3,7 +3,7 @@ import React from "react";
 import OpseraInfinityLogoSelectionCardBase from "temp-library-components/cards/opsera/OpseraInfinityLogoSelectionCardBase";
 import { useHistory } from "react-router-dom";
 
-export default function FreeTrialLandingTaskWidgetAnalyticsBody(
+export default function SoftwareDevelopmentLandingTaskWidgetAnalyticsBody(
   {
     className,
   }) {
@@ -23,6 +23,6 @@ export default function FreeTrialLandingTaskWidgetAnalyticsBody(
   );
 }
 
-FreeTrialLandingTaskWidgetAnalyticsBody.propTypes = {
+SoftwareDevelopmentLandingTaskWidgetAnalyticsBody.propTypes = {
   className: PropTypes.string,
 };

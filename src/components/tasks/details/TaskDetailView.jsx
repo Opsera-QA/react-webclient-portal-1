@@ -69,7 +69,7 @@ function TaskDetailView() {
     if (hasStringValue(status) === true && numberHelpers.hasNumberValue(runCount) === true &&
       (taskModel?.getData("status") !== status || taskModel?.getData("run_count") !== runCount || taskModel?.getData("updatedAt") !== updatedAt)
     ) {
-      console.log(`got polling update for Task [${id}] status [${status}] run count [${runCount}], Last Updated At [${updatedAt}]`);
+      console.log(`Refreshing Task [${id}] with \nStatus [${status}]\n Run Count [${runCount}]\n Last Updated At [${updatedAt}]`);
 
       loadData();
     }
