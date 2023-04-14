@@ -58,5 +58,5 @@ ReactLoggingHandler.logWarningMessage = (
   warningMessage,
 ) => {
   const originText = LOG_ORIGIN_METADATA === true ? `[${originComponentName}.${functionName}] ` : "";
-  console.debug(`${originText}${String(warningMessage)}`);
+  console.warn(`${originText}${String(warningMessage)}`);
 };
