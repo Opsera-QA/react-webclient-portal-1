@@ -10,6 +10,8 @@ import LookupFilterModel from "./lookup.filter.model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import SalesforceLookupFilters from "components/insights/lookup/SalesforceLookupFilters";
 import {subDays} from "date-fns";
+import {faSearch} from "@fortawesome/pro-thin-svg-icons";
+import FilterContainer from "../../common/table/FilterContainer";
 
 function Lookup() {
   const [isLoading, setIsLoading] = useState(false);
@@ -43,8 +45,6 @@ function Lookup() {
         toastContext.showInlineErrorMessage("Please select start and end dates.");
         return;
       }
-
-      const search = newFilterModel.getData("search");
 
       // TODO: This should just use the dates from the input and Node should do any processing on the date if necessary
       const DATE_STRING_FORMAT = "MM/dd/yyyy";
@@ -89,10 +89,6 @@ function Lookup() {
         return;
       }
 
-      if(!componentName){
-        componentName = salesforceComponentNames?.[0];
-      }
-
       // TODO: This should just use the dates from the input and Node should do any processing on the date if necessary
       const DATE_STRING_FORMAT = "MM/dd/yyyy";
       const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
@@ -135,13 +131,7 @@ function Lookup() {
     if (!startDate || !endDate) {
       return "Please select start and end dates.";
     }
-    else{
-      return "Please select start and end dates.";
-    }
 
-    // if (componentNames.length === 0) {
-    //   return "Please select at least one Salesforce component.";
-    // }
   };
 
   const getBody = () => {
@@ -172,6 +162,7 @@ function Lookup() {
         <InsightsSubNavigationBar currentTab={"lookup"}/>
       }
       breadcrumbDestination={"lookup"}
+      isLoading={isLoading}
       helpComponent={<SalesforceLookUpHelpDocumentation/>}
       filterModel={filterModel}
       loadDataFunction={loadData}
@@ -183,7 +174,7 @@ function Lookup() {
         />
       }
     >
-      {getBody()}
+     {getBody()}
     </ScreenContainer>
   );
 }

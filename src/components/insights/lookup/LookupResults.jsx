@@ -18,17 +18,10 @@ function LookupResults({
                          setSelectedComponentName,
                          noDataMessage,
                        }) {
-   let firstElement = salesforceComponentNames?.[0];
   const handleTabClick = async (componentName) => {
       let newFilterDto = filterModel;
-      if(componentName){
         setSelectedComponentName(componentName);
-        loadData(filterModel, componentName);}
-      else {
-          setSelectedComponentName(firstElement);
-          loadData(filterModel, firstElement);
-      }
-
+        loadData(filterModel, componentName);
       newFilterDto.setDefaultValue("search");
   };
 
@@ -37,7 +30,7 @@ function LookupResults({
       !Array.isArray(salesforceComponentNames) ||
       salesforceComponentNames.length === 0
     ) {
-      return "NO Data available";
+      return null;
     }
 
     return (
@@ -46,6 +39,7 @@ function LookupResults({
           filterModel={filterModel}
           setFilterModel={setFilterModel}
           loadData={loadData}
+          isLoading={isLoading}
       >
         {salesforceComponentNames?.map((component, index) => {
           const componentName = component;
@@ -55,7 +49,7 @@ function LookupResults({
               tabText={componentName}
               tabName={componentName}
               handleTabClick={handleTabClick}
-              activeTab={selectedComponentName ? selectedComponentName : firstElement}
+              activeTab={selectedComponentName}
             />
           );
         })}
@@ -65,24 +59,9 @@ function LookupResults({
 
 
   const getCurrentView = () => {
-
-      console.log("first element", firstElement);
-      console.log("search results", searchResults);
-
-      let selectedComponent = "";
-      if(selectedComponentName) {
-          console.log("in chosen");
-          selectedComponent = searchResults?.find(
+         const selectedComponent = searchResults?.find(
               (component) => component.componentName === selectedComponentName,
           );
-      }
-      // } else {
-      //     console.log("in default");
-      //     selectedComponent = searchResults?.find(
-      //         (component) => component.componentName === firstElement,
-      //     );
-      // }
-      console.log("selected", selectedComponent);
 
     if (selectedComponent) {
       return (

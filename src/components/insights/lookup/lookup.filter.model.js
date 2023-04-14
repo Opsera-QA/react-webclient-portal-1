@@ -33,7 +33,7 @@ const insightsLookupMetadata = {
       id: "dateRange",
     },
     {
-      label: "Component Names",
+      label: "Component Names (select date range and component type to load this filter)",
       id: "selectedComponentNames",
     },
     {

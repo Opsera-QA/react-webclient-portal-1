@@ -56,6 +56,9 @@ export default function SalesforceLookupFilters(
             setModel={setFilterModel}
             className={"mx-2"}
             data={salesforceComponentNames}
+            projects={filterModel?.getData("selectedComponentFilterData")}
+            startDate={filterModel?.getData("startDate")}
+            endDate={filterModel?.getData("endDate")}
           />
         </Col>
         <Col xs={12}>
@@ -66,14 +69,6 @@ export default function SalesforceLookupFilters(
             className={"mx-2"}
           />
         </Col>
-        {/*<Col xs={12}>*/}
-        {/*  <TasksSelectInput*/}
-        {/*    fieldName={"tasksComponentFilterData"}*/}
-        {/*    model={filterModel}*/}
-        {/*    setModel={setFilterModel}*/}
-        {/*    className={"mx-2"}*/}
-        {/*  />*/}
-        {/*</Col>*/}
         <Col xs={12}>
           <OrgsSelectInput
             fieldName={"orgsComponentFilterData"}
@@ -82,13 +77,6 @@ export default function SalesforceLookupFilters(
             className={"mx-2"}
           />
         </Col>
-        {/*<Col xs={12}>*/}
-        {/*  <AnalyticsSalesforceComponentNameMultiSelectInput*/}
-        {/*    fieldName={"selectedComponentNames"}*/}
-        {/*    model={filterModel}*/}
-        {/*    setModel={setFilterModel}*/}
-        {/*  />*/}
-        {/*</Col>*/}
       </Row>
     </FilterSelectionOverlayContainer>
   );
