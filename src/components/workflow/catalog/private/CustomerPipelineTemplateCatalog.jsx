@@ -8,7 +8,7 @@ import CustomerPipelineTemplateCardView from "components/workflow/catalog/privat
 import useGetCustomerPipelineTemplates from "hooks/workflow/catalog/customer/useGetCustomerPipelineTemplates";
 import CustomerTagFilter from "components/common/filters/tags/tag/CustomerTagFilter";
 
-export default function CustomerPipelineTemplateCatalog({activeTemplates}) {
+export default function CustomerPipelineTemplateCatalog({activeTemplates, selectTemplateFunction}) {
   const {
     pipelineTemplates,
     pipelineTemplateFilterModel,
@@ -28,6 +28,7 @@ export default function CustomerPipelineTemplateCatalog({activeTemplates}) {
         setPipelineTemplateFilterModel={setPipelineTemplateFilterModel}
         activeTemplates={activeTemplates}
         error={error}
+        selectTemplateFunction={selectTemplateFunction}
       />
     );
   };
@@ -79,5 +80,6 @@ export default function CustomerPipelineTemplateCatalog({activeTemplates}) {
 }
 
 CustomerPipelineTemplateCatalog.propTypes = {
-  activeTemplates: PropTypes.array
+  activeTemplates: PropTypes.array,
+  selectTemplateFunction: PropTypes.func,
 };

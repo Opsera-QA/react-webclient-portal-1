@@ -100,11 +100,12 @@ export default function EditFiltersOverlay(
       closePanel={closePanel}
       titleIcon={faFilter}
       titleText={`Edit Filters`}
-      buttonContainer={getButtonContainer()}
+      showCloseButton={false}
     >
       <div className={"m-3"}>
         {filters}
       </div>
+      {getButtonContainer()}
     </CenterOverlayContainer>
   );
 }

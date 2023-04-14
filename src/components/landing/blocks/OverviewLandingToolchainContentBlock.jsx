@@ -1,16 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 import {useHistory} from "react-router-dom";
-import { AuthContext } from "contexts/AuthContext";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function OverviewLandingToolchainContentBlock() {
   const history = useHistory();
   const {
-    userAccessRoles,
-    isSassUser,
+    isSaasUser,
     isOpseraAdministrator,
     isPowerUser,
     isSiteAdministrator,
-  } = useContext(AuthContext);
+  } = useComponentStateReference();
 
   const loadPlatforms = () => {
     history.push("/platform");
@@ -18,12 +17,11 @@ function OverviewLandingToolchainContentBlock() {
 
   const isLinkAllowed = () =>  {
     if (
-      userAccessRoles != null
-      && (isSassUser() === true
-        || isOpseraAdministrator() === true
+      isSaasUser === true
+        || isOpseraAdministrator === true
         || isPowerUser === true
         || isSiteAdministrator === true
-      )) {
+      ) {
       return true;
     }
   };

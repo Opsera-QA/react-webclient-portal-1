@@ -4,6 +4,7 @@ import NavigationTabContainer from "components/common/tabs/navigation/Navigation
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {faFileCode, faHandshake, faProjectDiagram, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import BackToWorkspaceSubNavigationBarItem from "components/workspace/BackToWorkspaceSubNavigationBarItem";
 
 function InventorySubNavigationBar({currentTab}) {
   const history = useHistory();
@@ -56,6 +57,7 @@ function InventorySubNavigationBar({currentTab}) {
 
   return (
     <NavigationTabContainer>
+      <BackToWorkspaceSubNavigationBarItem />
       <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={currentTab} tabText={"Tools"} />
       <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={currentTab} tabText={"Platform"} />
       <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={currentTab} tabText={"Parameters"} />

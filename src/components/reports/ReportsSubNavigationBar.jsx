@@ -1,19 +1,19 @@
-import React, {useContext} from "react";
+import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {
-  faAnalytics, faShieldCross,
+  faAnalytics,
   faTags,
   faTools,
   faUsers
 } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
-import {AuthContext} from "contexts/AuthContext";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ReportsSubNavigationBar({currentTab}) {
   const history = useHistory();
-  const { isSassUser } = useContext(AuthContext);
+  const { isSaasUser } = useComponentStateReference();
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
@@ -78,7 +78,7 @@ function ReportsSubNavigationBar({currentTab}) {
   };
 
   const getDynamicUserTab = () => {
-    if (isSassUser() === false) {
+    if (isSaasUser === false) {
       return (
         <NavigationTab
           activeTab={currentTab}

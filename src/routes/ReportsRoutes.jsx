@@ -17,12 +17,13 @@ import UserPipelineOwnershipReport from "components/reports/users/pipelines/User
 import UserToolOwnershipReport from "components/reports/users/tools/UserToolOwnershipReport";
 import UserTaskOwnershipReport from "components/reports/users/tasks/UserTaskOwnershipReport";
 import ConsolidatedUserReport from "components/reports/users/user/consolidated_user_report/ConsolidatedUserReport";
+import UserAccessTokenUsageReport from "components/reports/users/access_tokens/UserAccessTokenUsageReport";
 
 export default function ReportsRoutes() {
   const {
     isOpseraAdministrator,
     isSiteAdministrator,
-    isSassUser,
+    isSaasUser,
     isPowerUser,
     isSecurityManager,
     isAuditor,
@@ -31,7 +32,7 @@ export default function ReportsRoutes() {
   if (
     isOpseraAdministrator !== true
     && isSiteAdministrator !== true
-    && isSassUser !== true
+    && isSaasUser !== true
     && isPowerUser !== true
     && isSecurityManager !== true
     && isAuditor !== true
@@ -61,6 +62,7 @@ export default function ReportsRoutes() {
       <SecureRoute path="/reports/users/tool-ownership" exact component={UserToolOwnershipReport} />
       <SecureRoute path="/reports/users/task-ownership" exact component={UserTaskOwnershipReport} />
       <SecureRoute path="/reports/users/user-report" exact component={ConsolidatedUserReport} />
+      <SecureRoute path={"/reports/users/access-token-usage/"} exact component={UserAccessTokenUsageReport} />
     </>
   );
 }

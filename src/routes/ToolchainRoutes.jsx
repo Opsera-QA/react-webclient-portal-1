@@ -7,14 +7,14 @@ export default function ToolchainRoutes() {
   const {
     isOpseraAdministrator,
     isSiteAdministrator,
-    isSassUser,
+    isSaasUser,
     isPowerUser,
   } = useComponentStateReference();
 
   if (
     isOpseraAdministrator !== true
     && isSiteAdministrator !== true
-    && isSassUser !== true
+    && isSaasUser !== true
     && isPowerUser !== true
   ) {
     return null;

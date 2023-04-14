@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faExclamationCircle, faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
+import {faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
-import {errorHelpers} from "components/common/helpers/error-helpers";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import ErrorLoadingDataField from "components/common/fields/text/message/ErrorLoadingDataField";
 
 // TODO: Fix so when passing in height the height doesn't change after the table loads
 function TableBodyLoadingWrapper(
@@ -18,16 +18,12 @@ function TableBodyLoadingWrapper(
   }) {
   if (error) {
     return (
-      <CenteredContentWrapper minHeight={tableHeight}>
-        <div className={"error-text-alt mx-3"}>
-          <IconBase
-            icon={faExclamationCircle}
-            isLoading={isLoading}
-            iconSize={"xl"}
-            className={"mr-2"}
-          />
-          {errorHelpers.parseApiErrorForInfoText(undefined, error)}
-        </div>
+      <CenteredContentWrapper
+        minHeight={tableHeight}
+      >
+        <ErrorLoadingDataField
+          error={error}
+        />
       </CenteredContentWrapper>
     );
   }

@@ -59,7 +59,7 @@ function PipelineCatalogLibrary() {
   };
 
   const getCurrentView = () => {
-    if (policyModel == null && activeTab == "all") {
+    if (policyModel == null && activeTab === "all") {
       return (
         <OpseraPipelineMarketplace
           activeTemplates={activeTemplates}

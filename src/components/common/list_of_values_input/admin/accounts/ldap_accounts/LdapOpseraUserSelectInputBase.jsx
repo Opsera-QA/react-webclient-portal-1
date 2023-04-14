@@ -1,44 +1,33 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import accountsActions from "components/admin/accounts/accounts-actions";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
-import axios from "axios";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function LdapOpseraUserSelectInputBase({ model, setDataFunction, fieldName}) {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken, getUserRecord, getAccessRoleData } = useContext(AuthContext);
   const [opseraUserList, setOpseraUsersList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    getAccessToken,
+    toastContext,
+    cancelTokenSource,
+    isMounted,
+    userData,
+    isOpseraAdministrator,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
       setIsLoading(true);
-      await loadOpseraUsers(cancelSource);
+      await loadOpseraUsers();
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -48,16 +37,14 @@ function LdapOpseraUserSelectInputBase({ model, setDataFunction, fieldName}) {
     }
   };
 
-  const loadOpseraUsers = async (cancelSource = cancelTokenSource) => {
-    const userRecord = getUserRecord();
-    const accessRoleData = getAccessRoleData();
-    const response = await accountsActions.getUsersV2(getAccessToken, cancelSource);
+  const loadOpseraUsers = async () => {
+    const response = await accountsActions.getUsersV2(getAccessToken, cancelTokenSource);
     const users = response?.data?.data;
     const parsedUserNames = [];
 
     if (isMounted?.current === true && Array.isArray(users) && users.length > 0) {
       users.map(user => {
-        if (model.isNew() || accessRoleData?.OpseraAdministrator === true || userRecord?.ldap?.organization === user?.organization) {
+        if (model.isNew() || isOpseraAdministrator === true || userData?.ldap?.organization === user?.organization) {
           parsedUserNames.push(user);
         }
       });

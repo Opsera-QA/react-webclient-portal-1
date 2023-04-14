@@ -8,8 +8,12 @@ import { toolHelper } from "components/inventory/tools/tool.helper";
 
 export const workspaceHelper = {};
 
+workspaceHelper.getManagementScreenLink = () => {
+  return "/workspace";
+};
+
 workspaceHelper.getWorkspaceItemDetailLink = (workspaceItem) => {
-  return workspaceHelper.getWorkspaceItemDetailLinkBase(workspaceItem?.workspaceType, workspaceItem?._id);
+  return `${workspaceHelper.getWorkspaceItemDetailLinkBase(workspaceItem?.workspaceType, workspaceItem?._id)}?fromWorkspace=true`;
 };
 
 workspaceHelper.getWorkspaceItemDetailLinkBase = (type, mongoId) => {
