@@ -22,6 +22,11 @@ import CreateBitbucketToolButton from "./CreateBitbucketToolButton";
 import VaultTextAreaInput from "../../../../../../../common/inputs/text/VaultTextAreaInput";
 import BitbucketTwoFactorToggle from "../../../../../../../inventory/tools/tool_details/tool_jobs/bitbucket/BitbucketTwoFactorToggle";
 import SelectInputBase from "../../../../../../../common/inputs/select/SelectInputBase";
+import modelHelpers from "../../../../../../../common/model/modelHelpers";
+import wizardPortalMetadata from "../../../../wizardPortalMetadata";
+import BooleanToggleInput from "../../../../../../../common/inputs/boolean/BooleanToggleInput";
+import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
+import useComponentStateReference from "../../../../../../../../hooks/useComponentStateReference";
 
 const bitBucketApiTypeArray = [
   {
@@ -49,6 +54,10 @@ export default function CreateWorkflowWizardCreateBitbucketToolEditorPanel({
   setConnectionFailure,
 }) {
   const [currentToolCount, setCurrentToolCount] = useState(0);
+  const [wizardMetadata, setWizardMetadata] = useState(
+    modelHelpers.getToolConfigurationModel({}, wizardPortalMetadata),
+  );
+  const { userData } = useComponentStateReference();
 
   useEffect(() => {
     if (setButtonContainer) {
@@ -135,9 +144,30 @@ export default function CreateWorkflowWizardCreateBitbucketToolEditorPanel({
     );
   };
 
+  const canCreateTool = () => {
+    return RegistryToolRoleHelper.canCreateRegistryTool(
+        userData,
+    );
+  };
+
   if (gitToolModel == null) {
     return null;
   }
+
+  const createNewToolToggle = () => {
+    if (!gitToolId && canCreateTool()) {
+      return (
+        <Col lg={12}>
+          <BooleanToggleInput
+            disabled={gitToolId}
+            fieldName={"newTool"}
+            dataObject={wizardMetadata}
+            setDataObject={setWizardMetadata}
+          />
+        </Col>
+      );
+    }
+  };
 
   return (
     <div className={className}>
@@ -145,6 +175,7 @@ export default function CreateWorkflowWizardCreateBitbucketToolEditorPanel({
         toolType={toolType}
         className={"mt-3"}
         toolName={"Bitbucket"}
+        canCreateTool={canCreateTool()}
       />
       <Form>
         <Row>
@@ -160,39 +191,44 @@ export default function CreateWorkflowWizardCreateBitbucketToolEditorPanel({
               setCurrentToolCount={setCurrentToolCount}
             />
           </Col>
-          <Col sm={12}>
-            <TextInputBase
-              dataObject={gitToolModel}
-              setDataObject={setGitToolModel}
-              fieldName={"url"}
-            />
-          </Col>
-          <Col sm={12}>
-            <TextInputBase
-              dataObject={gitToolModel}
-              setDataObject={setGitToolModel}
-              fieldName={"accountUsername"}
-            />
-          </Col>
-          <Col sm={12}>
-            <BitbucketTwoFactorToggle
-              dataObject={gitToolModel}
-              setDataObject={setGitToolModel}
-              fieldName={"twoFactorAuthentication"}
-            />
-          </Col>
-          <Col sm={12}>{getDynamicFields()}</Col>
-          <Col sm={12}>
-            {/* select input for apiType */}
-            <SelectInputBase
-              fieldName={"apiType"}
-              dataObject={gitToolModel}
-              setDataObject={setGitToolModel}
-              selectOptions={bitBucketApiTypeArray}
-              valueField="value"
-              textField="name"
-            />
-          </Col>
+          {createNewToolToggle()}
+          {(canCreateTool() && (wizardMetadata?.getData("newTool") || gitToolId)) && (
+            <>
+              <Col sm={12}>
+                <TextInputBase
+                  dataObject={gitToolModel}
+                  setDataObject={setGitToolModel}
+                  fieldName={"url"}
+                />
+              </Col>
+              <Col sm={12}>
+                <TextInputBase
+                  dataObject={gitToolModel}
+                  setDataObject={setGitToolModel}
+                  fieldName={"accountUsername"}
+                />
+              </Col>
+              <Col sm={12}>
+                <BitbucketTwoFactorToggle
+                  dataObject={gitToolModel}
+                  setDataObject={setGitToolModel}
+                  fieldName={"twoFactorAuthentication"}
+                />
+              </Col>
+              <Col sm={12}>{getDynamicFields()}</Col>
+              <Col sm={12}>
+                {/* select input for apiType */}
+                <SelectInputBase
+                  fieldName={"apiType"}
+                  dataObject={gitToolModel}
+                  setDataObject={setGitToolModel}
+                  selectOptions={bitBucketApiTypeArray}
+                  valueField="value"
+                  textField="name"
+                />
+              </Col>
+            </>
+          )}
         </Row>
       </Form>
     </div>

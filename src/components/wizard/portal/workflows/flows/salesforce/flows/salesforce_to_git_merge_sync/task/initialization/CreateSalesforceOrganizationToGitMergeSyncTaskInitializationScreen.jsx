@@ -33,7 +33,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskInitializa
       gitToolOption
     );
     setTask({...updatedTask});
-    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN);
+    setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.EDIT_WORKFLOW_INPUT);
   };
 
   return (
