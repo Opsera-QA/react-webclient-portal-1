@@ -14,6 +14,7 @@ function InlineClientSideSearchFilter(
     fieldName,
     className,
     isLoading,
+    inputClassName,
   }) {
   const {
     isFreeTrial,
@@ -35,7 +36,7 @@ function InlineClientSideSearchFilter(
           disabled={disabled || isLoading}
           placeholder={"Search"}
           value={filterModel?.getData(fieldName) || ""}
-          className={"text-input inline-client-side-search-input inline-filter-input w-100"}
+          className={inputClassName}
           onChange={e => validateAndSetData(e.target.value)}
         />
         <InputGroup.Append>
@@ -63,10 +64,12 @@ InlineClientSideSearchFilter.propTypes = {
   isLoading: PropTypes.bool,
   className: PropTypes.string,
   supportClientSideSearching: PropTypes.bool,
+  inputClassName: PropTypes.string,
 };
 
 InlineClientSideSearchFilter.defaultProps = {
   fieldName: "search",
+  inputClassName: "text-input inline-client-side-search-input inline-filter-input w-100",
 };
 
 export default InlineClientSideSearchFilter;
