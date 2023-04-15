@@ -8,6 +8,7 @@ import useGetEntitlementModel from "hooks/settings/organization_settings/entitle
 import entitlementConstants
   from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
 
+// TODO: Don't use this for now, use useGetPlatformSettingsEntitlementByName
 export default function useGetEntitlementModelByName(
   entitlementName,
   handleErrorFunction,
