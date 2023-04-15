@@ -134,19 +134,17 @@ function Lookup() {
 
   const getBody = () => {
     return (
-      <>
-        <LookupResults
-          isLoading={isLoading}
-          filterModel={filterModel}
-          setFilterModel={setFilterModel}
-          loadData={loadData}
-          searchResults={searchResults}
-          salesforceComponentNames={salesforceComponentNames}
-          selectedComponentName={selectedComponentName}
-          setSelectedComponentName={setSelectedComponentName}
-          noDataMessage={getNoDataMessage()}
-        />
-      </>
+      <LookupResults
+        isLoading={isLoading}
+        filterModel={filterModel}
+        setFilterModel={setFilterModel}
+        loadData={loadData}
+        searchResults={searchResults}
+        salesforceComponentNames={salesforceComponentNames}
+        selectedComponentName={selectedComponentName}
+        setSelectedComponentName={setSelectedComponentName}
+        noDataMessage={getNoDataMessage()}
+      />
     );
   };
 
