@@ -4,7 +4,7 @@ const mongodbRealmStepFormMetadata = {
   type: "MongoDB Realm Tool Configuration",
   fields: [
     {
-      label: "Jenkins Tool Selection",
+      label: "Jenkins Tool",
       id: "toolConfigId",
       isRequired: true
     },

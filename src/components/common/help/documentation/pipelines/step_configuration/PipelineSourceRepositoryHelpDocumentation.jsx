@@ -9,8 +9,8 @@ function PipelineSourceRepositoryHelpDocumentation({ closeHelpPanel }) {
           <h6>Repository</h6>
           <div>Configure the repository settings below then enable the additional Git functionality required. For Git functionality to take effect, configurations must be saved. </div>
             <ul style={{listStyleType: "none"}}>
-              <li><b>Platform</b> - Select the source control management platform containing the project where your webhook will be enabled or where the current version of the pipeline will be published (if enabling <b>Pipeline Git Revisions</b>). Choose from GitLab, GitHub, Bitbucket or Azure Devops.</li>
-              <li><b>Account</b> - Select the account containing the project you wish to configure. </li>
+              <li><b>Platform</b> - Select the source code management platform containing the project where your webhook will be enabled or where the current version of the pipeline will be published (if enabling <b>Pipeline Git Revisions</b>). Choose from GitLab, GitHub, Bitbucket or Azure Devops.</li>
+              <li><b>Source Code Management Tool</b> - Select the tool containing the project you wish to configure. </li>
               <li><b>Repository</b> -  Once an account is selected, a list of its repositories will be fetched. Select the particular Repository of your project.</li>
               <li><b>Primary Branch</b> - The pipeline will be bound to the selected branch.</li>
               <li><b>Secondary Branch</b> - Optionally, select a second branch. The pipeline will also be bound to this branch if selected.</li>
