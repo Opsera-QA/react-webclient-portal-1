@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import featureFlagConstants
-  from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
-import OrganizationSettingsVnextSidebarLinkFeatureFlagPageLinkCard
-  from "components/admin/organization_settings/details/features/analytics/vnext/OrganizationSettingsVnextSidebarLinkFeatureFlagPageLinkCard";
+import OrganizationSettingsEntitlementTestPageLinkCard
+  from "components/admin/organization_settings/details/entitlements/cards/test/OrganizationSettingsEntitlementTestPageLinkCard";
+import entitlementConstants
+  from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
 
 export default function OrganizationSettingsEntitlementsPanel(
   {
@@ -12,17 +12,17 @@ export default function OrganizationSettingsEntitlementsPanel(
     organizationDomain,
     organizationAccountId,
   }) {
-  const parsedFeatures = DataParsingHelper.parseArray(organizationSettingsModel?.getData("features"), []);
-  const showInsightsVnextSidebarLinkFeatureFlag = parsedFeatures.find((featureFlag) => featureFlag.name === featureFlagConstants.FEATURE_FLAG_NAMES.SHOW_INSIGHTS_VNEXT_SIDEBAR_LINK);
+  const parsedEntitlements = DataParsingHelper.parseArray(organizationSettingsModel?.getData("entitlements"), []);
+  const testEntitlement = parsedEntitlements.find((entitlement) => entitlement.name === entitlementConstants.ENTITLEMENT_NAMES.TEST_ENTITLEMENT);
 
-  if (!parsedFeatures) {
+  if (!parsedEntitlements) {
     return null;
   }
 
   return (
     <div className={"mx-3"}>
-      <OrganizationSettingsVnextSidebarLinkFeatureFlagPageLinkCard
-        featureFlag={showInsightsVnextSidebarLinkFeatureFlag}
+      <OrganizationSettingsEntitlementTestPageLinkCard
+        entitlement={testEntitlement}
         organizationDomain={organizationDomain}
         organizationAccountId={organizationAccountId}
       />
