@@ -44,8 +44,6 @@ function Lookup() {
         return;
       }
 
-      const search = newFilterModel.getData("search");
-
       // TODO: This should just use the dates from the input and Node should do any processing on the date if necessary
       const DATE_STRING_FORMAT = "MM/dd/yyyy";
       const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
@@ -132,9 +130,6 @@ function Lookup() {
       return "Please select start and end dates.";
     }
 
-    // if (componentNames.length === 0) {
-    //   return "Please select at least one Salesforce component.";
-    // }
   };
 
   const getBody = () => {
@@ -165,6 +160,7 @@ function Lookup() {
         <InsightsSubNavigationBar currentTab={"lookup"}/>
       }
       breadcrumbDestination={"lookup"}
+      isLoading={isLoading}
       helpComponent={<SalesforceLookUpHelpDocumentation/>}
       filterModel={filterModel}
       loadDataFunction={loadData}
@@ -176,7 +172,7 @@ function Lookup() {
         />
       }
     >
-      {getBody()}
+     {getBody()}
     </ScreenContainer>
   );
 }

@@ -20,8 +20,8 @@ function LookupResults({
                        }) {
   const handleTabClick = async (componentName) => {
       let newFilterDto = filterModel;
-    setSelectedComponentName(componentName);
-    loadData(filterModel, componentName);
+        setSelectedComponentName(componentName);
+        loadData(filterModel, componentName);
       newFilterDto.setDefaultValue("search");
   };
 
@@ -39,6 +39,7 @@ function LookupResults({
           filterModel={filterModel}
           setFilterModel={setFilterModel}
           loadData={loadData}
+          isLoading={isLoading}
       >
         {salesforceComponentNames?.map((component, index) => {
           const componentName = component;
@@ -58,9 +59,9 @@ function LookupResults({
 
 
   const getCurrentView = () => {
-    const selectedComponent = searchResults?.find(
-      (component) => component.componentName === selectedComponentName,
-    );
+     const selectedComponent = searchResults?.find(
+          (component) => component.componentName === selectedComponentName,
+      );
 
     if (selectedComponent) {
       return (
