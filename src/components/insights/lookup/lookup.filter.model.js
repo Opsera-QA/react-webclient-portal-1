@@ -74,7 +74,7 @@ const insightsLookupMetadata = {
 export class LookupFilterModel extends FilterModelBase {
   constructor() {
     super(insightsLookupMetadata);
-    this.setData("startDate", subDays(new Date(), 7));
+    this.setData("startDate", subDays(new Date(), 30));
     this.setData("endDate", new Date());
   }
 
