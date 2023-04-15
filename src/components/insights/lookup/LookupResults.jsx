@@ -114,7 +114,7 @@ function LookupResults(
 
   return (
     <TableBodyLoadingWrapper
-      isLoading={isLoading}
+      isLoading={isLoading && getFilteredResults(salesforceComponentNames, "")?.length === 0}
       data={salesforceComponentNames}
       noDataMessage={noDataMessage}
       tableComponent={getBody()}
