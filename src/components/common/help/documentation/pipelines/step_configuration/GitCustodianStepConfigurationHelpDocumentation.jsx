@@ -12,13 +12,13 @@ function GitCustodianStepConfigurationHelpDocumentation() {
   const getHelpDocumentation = () => {
     return (
       <div>
-        <div className={"ml-2 mb-2"}>Opsera offers Git Custodian support in a pipeline step that allows users to choose from Custodian libraries then run a scan against the configured SCM repos. You can define a maximum threshold and pipeline will use the values to determine the final status of the step. For more detailed information on the Git Custodian workflow, view the <a href="https://docs.opsera.io/quality-and-security-scan/git-custodian-pipeline" target="_blank" rel="noreferrer"><b>Git Custodian Pipeline Help Documentation</b>. </a>
+        <div className={"ml-2 mb-2"}>Opsera offers Git Custodian support in a pipeline step that allows users to choose from Custodian libraries then run a scan against the configured Source Code Management repository. You can define a maximum threshold and pipeline will use the values to determine the final status of the step. For more detailed information on the Git Custodian workflow, view the <a href="https://docs.opsera.io/quality-and-security-scan/git-custodian-pipeline" target="_blank" rel="noreferrer"><b>Git Custodian Pipeline Help Documentation</b>. </a>
         </div>
         <div className={"ml-4"}>
           <ol>
             <li>Once the initial Step Setup is configured with the Git Custodian tool, set the following values:
               <ul style={{listStyleType: "none"}}>
-                <li><b>Source Code Management Tool Type</b> - Select a Source Code Management Tool Type from the drop-down. Choose Bitbucket, Github, GitLab or Azure.</li>
+                <li><b>Source Code Management Type</b> - Select a Source Code Management Tool Type from the drop-down. Choose Bitbucket, Github, GitLab or Azure.</li>
                 <li><b>Source Code Management Tool</b> - Select the respective Source Code Management Tool containing the repository to run a scan against.</li>
                 <li><b>Repository</b> - Select the repository to run a scan against.</li>
                 <li><b>Branch</b> - Select the branch to run a scan against.</li>
