@@ -3,11 +3,8 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Model from "core/data_model/model";
 import {ldapIdpAccountsMetaData} from "components/admin/accounts/ldap/idp_accounts/ldap-idp-account-metadata";
-import accountsActions from "components/admin/accounts/accounts-actions";
-import {AuthContext} from "contexts/AuthContext";
 
 function LdapOrganizationAccountIdpPanel({ ldapOrganizationAccountData, loadData, currentUser, isMounted }) {
-  const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
   const [showIdpEditPanel, setShowIdpEditPanel] = useState(false);
   const [ldapIdpAccountData, setLdapIdpAccountData] = useState(undefined);
   const [authorizedIdpActions, setAuthorizedIdpActions] = useState([]);
@@ -19,8 +16,6 @@ function LdapOrganizationAccountIdpPanel({ ldapOrganizationAccountData, loadData
   }, []);
 
   const initializeData = async () => {
-    const {ldap} = currentUser;
-    const userRoleAccess = await setAccessRoles(currentUser);
     // let authorizedIdpActions = await accountsActions.getAllowedIdpAccountActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
     // setAuthorizedIdpActions(authorizedIdpActions);
     //

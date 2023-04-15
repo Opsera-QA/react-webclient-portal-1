@@ -9,13 +9,14 @@ import {
 import {useHistory} from "react-router-dom";
 import {getField} from "components/common/metadata/metadata-helpers";
 import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
+import {workspaceHelper} from "components/workspace/workspace.helper";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 export default function WorkspaceRegistryTable(
   {
     tools,
     loadData,
     isLoading,
-    rowClickFunction,
   }) {
   const fields = registryToolMetadata.fields;
   const history = useHistory();
@@ -29,13 +30,11 @@ export default function WorkspaceRegistryTable(
     [fields]
   );
 
-  // TODO: This is temporary until I finish the tool info overlay
   const onRowSelect = (rowData) => {
-    if (rowClickFunction) {
-      rowClickFunction(rowData?.original);
-    }
-    else {
-      history.push(`/inventory/tools/details/${rowData.original._id}`);
+    const detailViewLink = workspaceHelper.getWorkspaceItemDetailLink(rowData?.original);
+
+    if (hasStringValue(detailViewLink) === true) {
+      history.push(detailViewLink);
     }
   };
 
@@ -54,6 +53,4 @@ WorkspaceRegistryTable.propTypes = {
   tools: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  toolMetadata: PropTypes.object,
-  rowClickFunction: PropTypes.func,
 };

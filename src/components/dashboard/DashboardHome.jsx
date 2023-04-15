@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "../../contexts/AuthContext";
 import { axiosApiService } from "../../api/apiService";
 import ErrorDialog from "../common/status_notifications/error";
 import LogsDashboard from "components/dashboard/LogsDashboard";
@@ -15,9 +14,9 @@ import { OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import LoadingView from "../common/status_notifications/loading";
 import AnalyticsProfileSettings from "../settings/analytics/activateAnalyticsCard";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import IconBase from "components/common/icons/IconBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 const INDICES = [
   "jenkins",
@@ -86,7 +85,6 @@ const DATELABELS = [
 ];
 
 function DashboardHome() {
-  const contextType = useContext(AuthContext);
   const [hasError, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [index, setIndex] = useState([]);
@@ -96,18 +94,16 @@ function DashboardHome() {
   const [loading, setLoading] = useState(false);
   const [profile, setProfile] = useState({});
   const [label, setLabel] = useState("Last 3 Months");
-  const { getUserRecord, setAccessRoles } = contextType;
   const [personaDisabled, setPersonaDisabled] = useState(false);
-  const toastContext = useContext(DialogToastContext);
-  let userAccess = {};
+  const {
+    accessRoleData,
+    toastContext,
+    getAccessToken,
+  } = useComponentStateReference();
 
   const getRoles = async () => {
-    const user = await getUserRecord();
-    userAccess = await setAccessRoles(user);
-    if (userAccess) {
-      if (userAccess.Role === "free_trial") {
-        setPersonaDisabled(true);
-      }
+    if (accessRoleData?.Role === "free_trial") {
+      setPersonaDisabled(true);
     }
   };
 
@@ -135,7 +131,6 @@ function DashboardHome() {
 
   async function fetchData() {
     setLoading(true);
-    const { getAccessToken } = contextType; //getIsPreviewRole
     const accessToken = await getAccessToken();
     const apiUrl = "/analytics/settings";
     setToken(accessToken);

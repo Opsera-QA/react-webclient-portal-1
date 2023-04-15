@@ -6,7 +6,6 @@ import StandaloneDeleteButtonWithConfirmationModal
 import { platformSettingFeatureActions }
   from "components/admin/platform_settings/details/features/platformSettingFeature.actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";

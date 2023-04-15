@@ -70,6 +70,7 @@ function FilterBar(
           loadData={loadData}
           className={dropdownFilters != null || loadData != null || supportViewToggle ? "ml-2 d-none d-md-block" : null}
           metadata={metadata}
+          visible={typeof filterModel?.canSearch === "function" && filterModel?.canSearch() === true}
         />
       );
     }

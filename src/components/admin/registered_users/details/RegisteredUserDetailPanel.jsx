@@ -38,13 +38,13 @@ function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData
           activeTab={activeTab}
           tabText={"Assigned Role Access"}
         />
-        {/*<CustomTab*/}
-        {/*  icon={faTable}*/}
-        {/*  tabName={"access-token-activity-logs"}*/}
-        {/*  handleTabClick={handleTabClick}*/}
-        {/*  activeTab={activeTab}*/}
-        {/*  tabText={"Access Token Activity Logs"}*/}
-        {/*/>*/}
+        <CustomTab
+          icon={faTable}
+          tabName={"access-token-activity-logs"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Access Token Activity Logs"}
+        />
         {/*<SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />*/}
       </CustomTabContainer>
     );

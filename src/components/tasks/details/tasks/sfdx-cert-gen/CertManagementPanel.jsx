@@ -9,48 +9,36 @@ import PropTypes from 'prop-types';
 import GenerateSalesforceCertificateButton from "components/tasks/buttons/GenerateSalesforceCertificateButton";
 import DownloadSalesforceCertificateButton from "components/tasks/buttons/DownloadSalesforceCertificateButton";
 import JenkinsSynchPanel from "./panels/JenkinsSynchPanel";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function CertManagementPanel({gitTasksData, setGitTasksData, loadData, handleClose}) {
-    const location = useLocation();
     const { id } = useParams();
-    const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
-    const toastContext = useContext(DialogToastContext);
     const [task, setTask] = useState(undefined);
     const [certDownloadable, isCertDownloadable] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [accessRole, setAccessRole] = useState(undefined);
-    const isMounted = useRef(false);
-    const [cancelTokenSource, setCancelTokenSource] = useState(undefined);  
+    const {
+      accessRoleData,
+      cancelTokenSource,
+      toastContext,
+      isMounted,
+      getAccessToken,
+    } = useComponentStateReference();
     
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    isMounted.current = true;
-    loadTaskData(source).catch((error) => {
+    loadTaskData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadTaskData = async (cancelSource = cancelTokenSource) => {
+  const loadTaskData = async () => {
     try {
       setIsLoading(true);
-      await loadRecord(cancelSource);
+      await loadRecord();
     } catch (error) {
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
-        console.error(error);
       }
     } finally {
       if (isMounted.current === true) {
@@ -59,8 +47,8 @@ function CertManagementPanel({gitTasksData, setGitTasksData, loadData, handleClo
     }
   };
 
-  const loadRecord = async (cancelSource = cancelTokenSource) => {
-    const response = await taskActions.getTaskByIdV2(getAccessToken, cancelSource, id);
+  const loadRecord = async () => {
+    const response = await taskActions.getTaskByIdV2(getAccessToken, cancelTokenSource, id);
     const task = response?.data?.data[0];
     const certDownloadable = response?.data?.data[0]?.configuration?.downloadable;
     setTask(task);

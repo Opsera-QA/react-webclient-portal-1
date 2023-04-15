@@ -60,7 +60,7 @@ const dockerPushStepFormMetadata = {
         isRequired: true
       },
       {
-        label: "Build Step Info",
+        label: "Build Step",
         id: "buildStepId",
         isRequired: true
       },

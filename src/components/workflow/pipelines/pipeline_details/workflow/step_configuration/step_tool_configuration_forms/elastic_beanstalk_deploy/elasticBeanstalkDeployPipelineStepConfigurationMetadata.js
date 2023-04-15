@@ -47,7 +47,7 @@ const elasticBeanstalkDeployPipelineStepConfigurationMetadata = {
       maxLength: 50,
     },
     {
-      label: "S3 Step Info",
+      label: "S3 Step",
       id: "s3StepId",
     },
     {

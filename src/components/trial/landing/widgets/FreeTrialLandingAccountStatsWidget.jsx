@@ -245,7 +245,7 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
             <div className={"d-flex"}>
               <div className={"d-none d-sm-inline"}>
                 <OpseraInfinityLogoLarge
-                  scale={.29}
+                  desiredHeight={166}
                   className={"mt-3"}
                 />
               </div>

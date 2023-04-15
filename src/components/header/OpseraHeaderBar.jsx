@@ -6,7 +6,7 @@ import OpseraHeaderAccountAuthenticationComponent from "components/header/Opsera
 import useComponentStateReference from "hooks/useComponentStateReference";
 import LandingHeaderNavigationBar from "components/landing/v2/LandingHeaderNavigationBar";
 
-export default function OpseraHeaderBar({ hideAuthComponents }) {
+export default function OpseraHeaderBar() {
   const {
     themeConstants,
   } = useComponentStateReference();
@@ -24,7 +24,6 @@ export default function OpseraHeaderBar({ hideAuthComponents }) {
         </div>
         <LandingHeaderNavigationBar />
         <OpseraHeaderAccountAuthenticationComponent
-          hideAuthComponents={hideAuthComponents}
         />
       </div>
     </Navbar>
@@ -32,6 +31,5 @@ export default function OpseraHeaderBar({ hideAuthComponents }) {
 }
 
 OpseraHeaderBar.propTypes = {
-  hideAuthComponents: PropTypes.bool,
   userData: PropTypes.object,
 };

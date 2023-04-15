@@ -9,6 +9,8 @@ import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import SiteRoleField from "components/common/fields/access/SiteRoleField";
 import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
 import BooleanField from "components/common/fields/boolean/BooleanField";
+import SiteRoleFieldBase from "components/common/fields/access/SiteRoleFieldBase";
+import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
 function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString }) {
 
@@ -63,7 +65,10 @@ function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString 
           <DateFieldBase fieldName={"updatedAt"} dataObject={userData}/>
         </Col>
         <Col lg={12}>
-          <SiteRoleField />
+          <SiteRoleFieldBase
+            userData={userData}
+            accessRoleData={SiteRoleHelper.getAccessRoles(userData?.getOriginalData())}
+          />
         </Col>
         <Col lg={12}>
           <GroupField

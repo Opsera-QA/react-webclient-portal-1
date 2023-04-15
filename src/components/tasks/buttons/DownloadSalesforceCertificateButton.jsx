@@ -1,26 +1,20 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {faFileDownload, faSpinner} from "@fortawesome/pro-light-svg-icons";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import taskActions from "components/tasks/task.actions";
 import IconBase from "components/common/icons/IconBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function DownloadSalesforceCertificateButton({recordDto, disable, size, showSuccessToasts, className, saveButtonText}) {
-  const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
-  let toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
-  const isMounted = useRef(false);
+  const {
+    isMounted,
+    getAccessToken,
+    toastContext,
+  } = useComponentStateReference();
 
-  useEffect(() => {
-    isMounted.current = true;
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
+  useEffect(() => {}, []);
 
   const downloadCertificate = async () => {
     try{

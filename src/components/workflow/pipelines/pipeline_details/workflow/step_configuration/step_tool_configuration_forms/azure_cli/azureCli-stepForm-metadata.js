@@ -33,28 +33,28 @@ const azureCliStepFormMetadata = {
       },
     },    
     {
-      label: "SCM Tool Type",
+      label: "Source Code Management Type",
       id: "type",
       isRequiredFunction: (model) => {
         return model?.getData("scriptType") === "package";
       },
     },    
     {
-      label: "SCM Tool",
+      label: "Source Code Management Tool",
       id: "gitToolId",
       isRequiredFunction: (model) => {
         return model?.getData("scriptType") === "package";
       },
     },
     {
-      label: "BitBucket Workspace",
+      label: "Workspace",
       id: "bitbucketWorkspace",
       isRequiredFunction: (model) => {
         return model?.getData("scriptType") === "package";
       },
     },
     {
-      label: "BitBucket Workspace/Project",
+      label: "Workspace/Project",
       id: "bitbucketWorkspaceName",
       isRequiredFunction: (model) => {
         return model?.getData("scriptType") === "package";

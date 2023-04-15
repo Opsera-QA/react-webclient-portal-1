@@ -1,29 +1,20 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import LoadingDialog from "components/common/status_notifications/loading";
 import LdapCustomerOnboardEditorPanel from "./LdapCustomerOnboardEditorPanel";
 import AccessDeniedMessage from "components/common/status_notifications/AccessDeniedMessage";
-import {AuthContext} from "contexts/AuthContext";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import LdapCustomerOnboardingSubNavigationBar
   from "components/admin/accounts/ldap/customer_onboard/LdapCustomerOnboarderSubNavigationBar";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function LdapCustomerOnboard() {
-  const [accessRoleData, setAccessRoleData] = useState({});
-  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
+  const {
+    accessRoleData,
+  } = useComponentStateReference();
 
-  useEffect(() => {
-    getRoles();
-  }, []);
-
-  const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-    }
-  };
+  useEffect(() => {}, []);
 
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);

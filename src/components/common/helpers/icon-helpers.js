@@ -1,92 +1,309 @@
-import {Image} from "react-bootstrap";
 import {faOctopusDeploy, faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import {faTasks, faWrench} from "@fortawesome/pro-light-svg-icons";
+import {
+  faClipboardListCheck,
+  faDraftingCompass,
+  faShieldKeyhole,
+  faTasks,
+  faWrench
+} from "@fortawesome/pro-light-svg-icons";
 import React from "react";
-import {TASK_TYPES} from "components/tasks/task.types";
+import {TASK_TYPE_CATEGORIES, TASK_TYPES, taskTypeConstants} from "components/tasks/task.types";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import IconBase from "components/common/icons/IconBase";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import {
+  PIPELINE_TYPES,
+  pipelineTypeConstants
+} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
+import {pipelineHelper} from "components/workflow/pipeline.helper";
+import {vendorImageConstants} from "temp-library-components/image/vendorImage.constants";
+import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
+import ImageBase from "temp-library-components/image/ImageBase";
 
 export function getLargeVendorIconFromToolIdentifier(
   toolIdentifier,
-  s3Bucket = process.env.REACT_APP_OPSERA_S3_STORAGE_URL,
-  height,
-  width,
+  defaultIcon = faWrench,
 ) {
   if (toolIdentifier == null) {
     return <></>;
   }
 
-  const vendorIconPrefix = `${s3Bucket}/vendor-logos`;
+  const keys = Object.keys(vendorImageConstants.TOOL_IDENTIFIER_LOGOS);
+  const noImage = [];
+
+  keys.forEach((key) => {
+    const logo = vendorImageConstants.TOOL_IDENTIFIER_LOGOS[key];
+
+    if (logo == null) {
+      noImage.push(toolIdentifierConstants.TOOL_IDENTIFIERS[key]);
+    }
+  });
 
   switch (toolIdentifier) {
-    case "jira":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/jira-74-220.png`} className={"jira-icon"} />;
-    case "aws_account":
-    case "elastic-beanstalk":
-    case "aws-deploy":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/icons8-amazon-web-services-96.png`} />;
-    case "bitbucket":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/bitbucket-76-75.png`} className={"bitbucket-icon"} />;
-    case "docker-push":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/icons8-docker-96.png`} />;
-    case "github":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/icons8-github-96.png`} />;
-    case "gitlab":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/icons8-gitlab-96.png`} />;
-    case "git":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/icons8-git-96.png`} />;
-    case "azure":
+    // case toolIdentifierConstants.TOOL_IDENTIFIERS.ANCHORE_SCAN:
+    // case toolIdentifierConstants.TOOL_IDENTIFIERS.ANCHORE_INTEGRATOR:
+    //   return (
+    //     <ImageBase
+    //       className={"d-flex h-100"}
+    //       imageClassName={"my-auto"}
+    //       height={75}
+    //       imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.ANCHOR}
+    //     />
+    //   );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.ANSIBLE:
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          height={100}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.ANSIBLE}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.CHILD_PIPELINE:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.PARALLEL_PROCESSOR:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITSCRAPER:
+      return (
+        <OpseraInfinityLogo
+          desiredHeight={100}
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.AWS_ACCOUNT:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.AWS_LAMDA:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.AWS_DEPLOY:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.AWS_ECS_DEPLOY:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.ELASTIC_BEANSTALK:
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          height={100}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AWS}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_CLI:
-    case "azure-devops":
-    case "azure-functions":
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_ACCOUNT:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_WEBAPPS:
-    case "azure_account":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/icons8-azure-96.png`} />;
-    case "octopus":
-      return <IconBase icon={faOctopusDeploy} iconStyling={{color: "#0D80D8"}} iconClassName={"title-fa-icon"} />;
-    case "slack":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/slack-64-252.png`} className={"slack-icon"} />;
-    case "sfdc-configurator":
-      return <IconBase icon={faSalesforce} iconStyling={{color: "#0D80D8"}} iconClassName={"title-fa-icon"} />;
-    case "jenkins":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/jenkins-98-113.png`} className={"jenkins-icon"} />;
-    case "teams":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/icons8-microsoft-teams-48.png`} className={"small-title-icon"} />;
-    case "terraform":
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_ZIP_DEPLOYMENT:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_FUNCTIONS:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_ACR_PUSH:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_AKS_DEPLOY:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.S3:
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          height={100}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AZURE}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.BITBUCKET}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.DOCKER_CLI:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.DOCKER_PUSH:
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.DOCKER}
+          height={100}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.GCP_DEPLOY:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.GCP_ACCOUNT:
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          height={100}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GOOGLE_CLOUD_PLATFORM}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          height={100}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GITHUB}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          height={100}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GITLAB}
+        />
+      );
+    case "git":
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          height={100}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GIT}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.JIRA:
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.JIRA}
+          height={60}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS:
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.JENKINS}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.MONGO_DB:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.MONGODB_REALM:
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          height={100}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.MONGO_DB}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.OCTOPUS:
+      return (
+        <IconBase
+          icon={faOctopusDeploy}
+          iconStyling={{color: "#0D80D8"}}
+          iconClassName={"title-fa-icon"}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR:
+      return (
+        <IconBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          icon={faSalesforce}
+          iconStyling={{color: "#0D80D8"}}
+          iconClassName={"title-fa-icon"}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.SELENIUM:
+      return (
+        <ImageBase
+          height={50}
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.SELENIUM}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.SLACK:
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          height={50}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.SLACK}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.TEAMS:
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          height={50}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.MICROSOFT_TEAMS}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_CLOUD:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_VCS:
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/hashicorp-terraform-48.png`} className={"small-title-icon"} />;
-    case "gcp-deploy":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/icons8-google-cloud-platform-64.png`} className={"small-title-icon"} />;
-    case "selenium":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/selenium-64-261.png`} className={"selenium-icon"} />;
-    case "anchor":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/anchor-96-256.png`} />;
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          height={50}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.TERRAFORM}
+        />
+      );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
       return getVendorTitle(toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO);
-    case "sonar":
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.SONAR:
     // TODO: Find better icon for Sonar. It looks bad
       return getVendorTitle("sonar");
-      // return <Image height={height} width={width} src={`${vendorIconPrefix}/sonarcube-65-250.png`} className={"sonarqube-icon"} />;
-    case "junit":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/junit-97-172.png`} className={"junit-icon"} />;
-    case "nexus":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/nexus-122-116.png`} />;
-    case "spinnaker":
+      // return <ImageBase height={height} width={width} imageSource={`${vendorIconPrefix}/sonarcube-65-250.png`} className={"sonarqube-icon"} />;
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.JUNIT:
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          height={100}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.JUNIT}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.NEXUS:
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          height={100}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.NEXUS}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.SPINNAKER:
       // TODO: Find better icon for spinnaker. It looks bad
       return getVendorTitle("spinnaker");
-    case "teamcity":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/teamcity-120-120.png`} className={"teamcity-icon"} />;
-    case "twistlock":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/twistlock-64-254.png`} className={"twistlock-icon"} />;
-    case "xunit":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/xunit-60-213.png`} className={"xunit-icon"} />;
-    case "ansible":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/ansible-98-124.png`} className={"ansible-icon"} />;
-    case "mongodb":
-    case "mongodb_realm":
-      return <Image height={height} width={width} src={`${vendorIconPrefix}/icons8-mongodb-96.png`} />;
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.TEAMCITY:
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          height={100}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.TEAMCITY}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.TWISTLOCK:
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          height={50}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.TWISTLOCK}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.XUNIT:
+      return (
+        <ImageBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          height={50}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.XUNIT}
+        />
+      );
     default:
-      return <IconBase icon={faWrench} iconClassName={"title-fa-icon wrench"} />;
+      return (
+        <IconBase
+          icon={defaultIcon}
+          iconClassName={"title-fa-icon wrench"}
+        />
+      );
   }
 }
 
@@ -95,23 +312,61 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
     return <></>;
   }
 
-  const vendorIconPrefix = `${process.env.REACT_APP_OPSERA_S3_STORAGE_URL}/vendor-logos`;
+  if (taskType === TASK_TYPES.GITSCRAPER) {
+    return (
+      <IconBase
+        icon={faShieldKeyhole}
+        iconClassName={"title-fa-icon"}
+      />
+    );
+  }
 
-  switch (taskType) {
-    case TASK_TYPES.SYNC_SALESFORCE_REPO:
-    case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
-      return <IconBase icon={faSalesforce} iconStyling={{color: "#0D80D8"}} iconClassName={"title-fa-icon icon-image"} />;
-    case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
-    case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
-    case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
-      return <Image className={"icon-image"} src={`${vendorIconPrefix}/icons8-amazon-web-services-96.png`} />;
-    case TASK_TYPES.SYNC_GIT_BRANCHES:
-      return <Image className={"icon-image"} src={`${vendorIconPrefix}/icons8-git-96.png`} />;
-    case TASK_TYPES.AZURE_CLUSTER_CREATION:
-      return <Image className={"icon-image"} src={`${vendorIconPrefix}/icons8-azure-96.png`} />;
+  const category = taskTypeConstants.getTaskCategoryForType(taskType);
+
+  switch (category) {
+    case TASK_TYPE_CATEGORIES.SALESFORCE:
+      return (
+        <IconBase
+          icon={faSalesforce}
+          iconStyling={{color: "#0D80D8"}}
+          iconClassName={"title-fa-icon"}
+        />
+      );
+    case TASK_TYPE_CATEGORIES.GIT:
+      return (
+        <ImageBase
+          height={100}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GIT}
+        />
+      );
+    case TASK_TYPE_CATEGORIES.AWS:
+      return (
+        <ImageBase
+          height={100}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AWS}
+        />
+      );
+    case TASK_TYPE_CATEGORIES.COMPLIANCE:
+      return (
+        <IconBase
+          icon={faClipboardListCheck}
+          iconClassName={"title-fa-icon"}
+        />
+      );
+    case TASK_TYPE_CATEGORIES.AZURE:
+      return (
+        <ImageBase
+          height={100}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AZURE}
+        />
+      );
     default:
-      return <IconBase icon={faTasks} iconClassName={"title-fa-icon wrench"} />;
+      return (
+        <IconBase
+          icon={faTasks}
+          iconClassName={"title-fa-icon"}
+        />
+      );
   }
 }
 
@@ -120,24 +375,55 @@ export function getLargeVendorIconFromTaskType (taskType) {
     return <></>;
   }
 
-  const vendorIconPrefix = `${process.env.REACT_APP_OPSERA_S3_STORAGE_URL}/vendor-logos`;
+  if (taskType === TASK_TYPES.GITSCRAPER) {
+    return faShieldKeyhole;
+  }
 
-  switch (taskType) {
-    case TASK_TYPES.SYNC_SALESFORCE_REPO:
-    case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+  const category = taskTypeConstants.getTaskCategoryForType(taskType);
+
+  switch (category) {
+    case TASK_TYPE_CATEGORIES.SALESFORCE:
       return faSalesforce;
-    case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
-    case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
-    case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
-      return `${vendorIconPrefix}/icons8-amazon-web-services-96.png`;
-    case TASK_TYPES.SYNC_GIT_BRANCHES:
-      return `${vendorIconPrefix}/icons8-git-96.png`;
-    case TASK_TYPES.AZURE_CLUSTER_CREATION:
-      return `${vendorIconPrefix}/icons8-azure-96.png`;
+    case TASK_TYPE_CATEGORIES.GIT:
+      return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GIT;
+    case TASK_TYPE_CATEGORIES.AWS:
+      return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AWS;
+    case TASK_TYPE_CATEGORIES.COMPLIANCE:
+      return faClipboardListCheck;
+    case TASK_TYPE_CATEGORIES.AZURE:
+      return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AZURE;
     default:
       return faTasks;
   }
+}
+
+export function getLargeVendorIconComponentFromPipeline (pipeline) {
+  const type = pipelineTypeConstants.getTypeForTypesArray(pipeline);
+
+  if (hasStringValue(type) !== true) {
+    return (
+      <IconBase
+        icon={faDraftingCompass}
+        iconClassName={"title-fa-icon"}
+      />
+    );
+  }
+
+  const toolIdentifier = pipelineHelper.getFirstPipelineStepIdentifier(pipeline);
+
+  if (type !== PIPELINE_TYPES.SOFTWARE_DEVELOPMENT || !toolIdentifier) {
+    return (
+      <IconBase
+        icon={pipelineTypeConstants.getIconForPipelineType(type)}
+        iconClassName={"title-fa-icon"}
+      />
+    );
+  }
+
+  return getLargeVendorIconFromToolIdentifier(
+    toolIdentifier,
+    faDraftingCompass,
+  );
 }
 
 export function getVendorTitle (toolIdentifier) {

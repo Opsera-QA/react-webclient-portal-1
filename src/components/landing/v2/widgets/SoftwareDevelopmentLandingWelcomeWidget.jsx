@@ -11,7 +11,7 @@ import FreetrialWizardHelpDocumentation
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {EXTERNAL_LINKS} from "components/header/legacy/HeaderNavBar";
 
-export default function WelcomeWidget({ className }) {
+export default function SoftwareDevelopmentLandingWelcomeWidget({ className }) {
   const {
     themeConstants,
     userData,
@@ -143,6 +143,6 @@ export default function WelcomeWidget({ className }) {
   );
 }
 
-WelcomeWidget.propTypes = {
+SoftwareDevelopmentLandingWelcomeWidget.propTypes = {
   className: PropTypes.string,
 };

@@ -9,7 +9,7 @@ const boomiMetadata = {
             isRequired: true
         },
         {
-            label: "SCM Tool",
+            label: " Source Code Management Tool",
             id: "gitToolId",
         },
         {
@@ -23,7 +23,7 @@ const boomiMetadata = {
             dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
         },
         {
-            label: "SCM Service Type",
+            label: "Source Code Management Type",
             id: "service",
         },
         {
@@ -93,7 +93,7 @@ const boomiMetadata = {
             id: "targetEnvironmentId",
         },
         {
-            label: "Fetch components from SCM",
+            label: "Fetch components from Source Code Management",
             id: "fetchComponentsFromGit"
         }
     ],
