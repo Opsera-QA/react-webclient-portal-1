@@ -19,7 +19,7 @@ export default function OrganizationSettingsInactiveTestEntitlementPageLinkCard(
   const launchActivationConfirmationOverlay = () => {
     toastContext.showOverlayPanel(
       <OrganizationSettingsEntitlementActivationConfirmationOverlay
-        featureFlagName={entitlementConstants.ENTITLEMENT_NAME_LABELS.TEST_ENTITLEMENT}
+        entitlementName={entitlementConstants.ENTITLEMENT_NAME_LABELS.TEST_ENTITLEMENT}
         organizationDomain={organizationDomain}
         organizationAccountName={organizationAccountId}
       />
