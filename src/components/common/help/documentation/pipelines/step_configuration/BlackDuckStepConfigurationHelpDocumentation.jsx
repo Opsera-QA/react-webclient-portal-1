@@ -19,8 +19,8 @@ function BlackDuckStepConfigurationHelpDocumentation() {
             <li>Once the initial Step Setup is configured with the Black Duck tool, set the following values:
               <ul style={{listStyleType: "none"}}>
                 <li><b>BlackDuck Tool</b> - Select a configured Black Duck tool.</li>
-                <li><b>SCM Service</b> - Select Bitbucket, Github or GitLab.</li>
-                <li><b>Select Account</b> - Select the SCM Account containing the project with files for the Black Duck scan.</li>
+                <li><b>Source Code Management Type</b> - Select Bitbucket, Github or GitLab.</li>
+                <li><b>Source Code Management Tool</b> - Select the Source Code Management tool containing the project with files for the Black Duck scan.</li>
                 <li><b>Repository</b> - Select the Repository containing the project with files for the Black Duck scan.</li>
                 <li><b>Branch</b> - Provide the branch where scans will occur.</li>
                 <li><b>Git File Path</b> - Provide the path of file for scan.</li>
