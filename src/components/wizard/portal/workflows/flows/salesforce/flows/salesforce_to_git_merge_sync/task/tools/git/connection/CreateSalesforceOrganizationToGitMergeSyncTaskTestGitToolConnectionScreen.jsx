@@ -11,6 +11,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskTestGitToo
   setButtonContainer,
   gitToolId,
   gitToolOption,
+                                                                                                    setConnectionFailure
 }) {
   const onSuccessFunction = () => {
     setCurrentScreen(
@@ -19,6 +20,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskTestGitToo
   };
 
   const onFailureFunction = () => {
+    setConnectionFailure(true);
     setCurrentScreen(
         CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.REGISTER_DESTINATION_GIT_ACCOUNT_SCREEN,
     );
@@ -42,5 +44,6 @@ CreateSalesforceOrganizationToGitMergeSyncTaskTestGitToolConnectionScreen.propTy
   gitToolOption: PropTypes.string,
   setCurrentScreen: PropTypes.func,
   setButtonContainer: PropTypes.func,
+  setConnectionFailure: PropTypes.func,
 };
 

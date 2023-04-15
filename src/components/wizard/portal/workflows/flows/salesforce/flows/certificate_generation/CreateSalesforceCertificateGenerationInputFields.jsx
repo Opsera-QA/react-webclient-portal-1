@@ -24,6 +24,7 @@ import SalesforceOrganizationSyncTaskJenkinsToolSelectInput from "../../../../..
 import TextInputBase from "../../../../../../../common/inputs/text/TextInputBase";
 import DateTimeInput from "../../../../../../../common/inputs/date/DateTimeInput";
 import AgentLabelsSelectInput from "../../../../../../../common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
+import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 
 function CreateSalesforceCertificateGenerationInputFields({
   taskModel,
@@ -38,6 +39,8 @@ function CreateSalesforceCertificateGenerationInputFields({
       sfdxCertGenTaskConfigurationMetadata,
     ),
   );
+  const [parentConfig, setParentConfig] =    useState(modelHelpers.parseObjectIntoModel(taskModel, tasksMetadata));
+
 
   useEffect(() => {
     if (setButtonContainer) {
@@ -52,6 +55,8 @@ function CreateSalesforceCertificateGenerationInputFields({
   const updateToolSpecificDetails = () => {
     let newDataObject = taskModel;
     newDataObject.configuration = taskConfigurationModel.getPersistData();
+    newDataObject.name = parentConfig?.getData("name");
+    newDataObject.description = parentConfig?.getData("description");
     setTaskModel(newDataObject);
     onSuccessFunction();
   };
@@ -98,6 +103,12 @@ function CreateSalesforceCertificateGenerationInputFields({
         />
       </div>
       <Row>
+        <Col lg={12}>
+          <TextInputBase dataObject={parentConfig} setDataObject={setParentConfig} fieldName={"name"} />
+        </Col>
+        <Col lg={12}>
+          <TextInputBase dataObject={parentConfig} setDataObject={setParentConfig} fieldName={"description"} />
+        </Col>
         <Col lg={12}>
           <TextInputBase
             dataObject={taskConfigurationModel}

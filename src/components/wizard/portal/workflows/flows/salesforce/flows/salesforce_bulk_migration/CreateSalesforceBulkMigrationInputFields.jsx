@@ -19,6 +19,8 @@ import VanityButtonBase from "../../../../../../../../temp-library-components/bu
 import H5FieldSubHeader from "../../../../../../../common/fields/subheader/H5FieldSubHeader";
 import SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
   from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput";
+import TextInputBase from "../../../../../../../common/inputs/text/TextInputBase";
+import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 
 function CreateSalesforceBulkMigrationInputFields({
   taskModel,
@@ -29,6 +31,7 @@ function CreateSalesforceBulkMigrationInputFields({
 }) {
   const [taskConfigurationModel, setTaskConfigurationModel] =
     useState(modelHelpers.parseObjectIntoModel(taskModel?.configuration, salesforceBulkMigrationTaskConfigurationMetadata));
+  const [parentConfig, setParentConfig] =    useState(modelHelpers.parseObjectIntoModel(taskModel, tasksMetadata));
 
   useEffect(() => {
     if (setButtonContainer) {
@@ -43,6 +46,8 @@ function CreateSalesforceBulkMigrationInputFields({
   const updateToolSpecificDetails = () => {
     let newDataObject = taskModel;
     newDataObject.configuration = taskConfigurationModel.getPersistData();
+    newDataObject.name = parentConfig?.getData("name");
+    newDataObject.description = parentConfig?.getData("description");
     setTaskModel(newDataObject);
     onSuccessFunction();
   };
@@ -108,6 +113,12 @@ function CreateSalesforceBulkMigrationInputFields({
         />
       </div>
       <Row>
+        <Col lg={12}>
+          <TextInputBase dataObject={parentConfig} setDataObject={setParentConfig} fieldName={"name"} />
+        </Col>
+        <Col lg={12}>
+          <TextInputBase dataObject={parentConfig} setDataObject={setParentConfig} fieldName={"description"} />
+        </Col>
         <Col lg={12}>
           <SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
               model={taskConfigurationModel}
