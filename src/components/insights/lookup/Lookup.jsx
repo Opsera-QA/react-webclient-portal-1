@@ -158,6 +158,7 @@ function Lookup() {
         <InsightsSubNavigationBar currentTab={"lookup"}/>
       }
       breadcrumbDestination={"lookup"}
+      isLoading={isLoading}
       helpComponent={<SalesforceLookUpHelpDocumentation/>}
       filterModel={filterModel}
       loadDataFunction={loadData}

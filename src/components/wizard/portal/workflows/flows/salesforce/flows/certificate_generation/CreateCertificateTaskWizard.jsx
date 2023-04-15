@@ -32,7 +32,7 @@ export default function CreateCertificateTaskWizard({
   flow,
   setButtonContainer,
   backButtonFunction,
-                                                      handleClose
+    handleClose
 }) {
   const [currentScreen, setCurrentScreen] = useState(
     CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_JENKINS_ACCOUNT_SCREEN,

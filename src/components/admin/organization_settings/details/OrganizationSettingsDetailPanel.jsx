@@ -12,6 +12,8 @@ import OrganizationSettingsPoliciesPanel
 import {faFlag, faShieldCross} from "@fortawesome/pro-light-svg-icons";
 import OrganizationSettingsFeatureFlagsPanel
   from "components/admin/organization_settings/details/features/OrganizationSettingsFeatureFlagsPanel";
+import OrganizationSettingsEntitlementsPanel
+  from "components/admin/organization_settings/details/entitlements/OrganizationSettingsEntitlementsPanel";
 
 export default function OrganizationSettingsDetailPanel(
   {
@@ -54,7 +56,6 @@ export default function OrganizationSettingsDetailPanel(
           icon={faShieldCross}
           activeTab={activeTab}
           tabName={"entitlements"}
-          disabled={true}
         />
       </CustomTabContainer>
     );
@@ -80,6 +81,14 @@ export default function OrganizationSettingsDetailPanel(
       case "featureFlags":
         return (
           <OrganizationSettingsFeatureFlagsPanel
+            organizationSettingsModel={organizationSettingsModel}
+            organizationDomain={organizationDomain}
+            organizationAccountId={organizationAccountId}
+          />
+        );
+      case "entitlements":
+        return (
+          <OrganizationSettingsEntitlementsPanel
             organizationSettingsModel={organizationSettingsModel}
             organizationDomain={organizationDomain}
             organizationAccountId={organizationAccountId}

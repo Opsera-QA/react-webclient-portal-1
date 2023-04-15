@@ -14,6 +14,7 @@ export default function CreateWorkflowWizardRegisterToolHeaderText(
     toolName,
     className,
     toolType,
+    canCreateTool
   }) {
   if (hasStringValue(toolName) !== true) {
     return null;
@@ -24,7 +25,7 @@ export default function CreateWorkflowWizardRegisterToolHeaderText(
       <div className={className}>
         <h4>Source {toolName} Account</h4>
         <H5FieldSubHeader
-          subheaderText={`Enter the ${toolName} Account to use as the source for this workflow`}
+          subheaderText={`${canCreateTool ? `Enter` : `Select`} the ${toolName} Account to use as the source for this workflow`}
         />
       </div>
     );
@@ -35,7 +36,7 @@ export default function CreateWorkflowWizardRegisterToolHeaderText(
       <div className={className}>
         <h4>Destination {toolName} Account</h4>
         <H5FieldSubHeader
-          subheaderText={`Enter the ${toolName} Account to use as the target destination for this workflow`}
+          subheaderText={`${canCreateTool ? `Enter` : `Select`} the ${toolName} Account to use as the target destination for this workflow`}
         />
       </div>
     );
@@ -45,7 +46,7 @@ export default function CreateWorkflowWizardRegisterToolHeaderText(
     <div className={className}>
       <h4>{toolName} Account</h4>
       <H5FieldSubHeader
-        subheaderText={`Enter the ${toolName} Account to use for this workflow`}
+        subheaderText={`${canCreateTool ? `Enter` : `Select`} the ${toolName} Account to use for this workflow`}
       />
     </div>
   );
@@ -55,4 +56,5 @@ CreateWorkflowWizardRegisterToolHeaderText.propTypes = {
   className: PropTypes.string,
   toolName: PropTypes.string,
   toolType: PropTypes.string,
+  canCreateTool: PropTypes.bool
 };
