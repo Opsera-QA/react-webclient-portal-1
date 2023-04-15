@@ -38,6 +38,7 @@ function VanitySetVerticalTabContainer(
             setFilterModel={setFilterModel}
             isLoading={isLoading}
             supportClientSideSearching={supportClientSideSearching}
+            className={loadData != null ? "px-2 d-none d-md-block vertical-tab-container-search" : "vertical-tab-container-search"}
           />
         </div>
       );

@@ -7,6 +7,7 @@ import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 const getFilteredResults = (componentNames, searchText) => {
   const parsedComponentNames = DataParsingHelper.parseArray(componentNames, []);
@@ -69,6 +70,14 @@ function LookupResults(
 
 
   const getCurrentView = () => {
+    if (isLoading) {
+      return (
+        <CenterLoadingIndicator
+          minHeight={"250px"}
+        />
+      );
+    }
+
     const selectedComponent = searchResults?.find(
       (component) => component.componentName === selectedComponentName,
     );
