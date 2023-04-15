@@ -9,33 +9,28 @@ import {formatDate} from "components/common/helpers/date/date.helpers";
 import LookupFilterModel from "./lookup.filter.model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import SalesforceLookupFilters from "components/insights/lookup/SalesforceLookupFilters";
-import {subDays} from "date-fns";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
-function Lookup() {
+function SalesforceLookup() {
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingSalesforceComponentNames, setIsLoadingSalesforceComponentNames] = useState(false);
   const [salesforceComponentNames, setSalesforceComponentNames] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
-  const [selectedComponentName, setSelectedComponentName] = useState(
-    salesforceComponentNames?.[0],
-  );
+  const [selectedComponentName, setSelectedComponentName] = useState("");
   const {isMounted, cancelTokenSource, toastContext, getAccessToken} =
     useComponentStateReference();
-
-  const [filterModel, setFilterModel] = useState(undefined);
+  // Divyesha, if you need to adjust initial dates, do it inside the lookup filter model, don't make a use effect for it.
+  const [filterModel, setFilterModel] = useState(new LookupFilterModel());
 
   useEffect(() => {
-    const newFilterModel = new LookupFilterModel();
-    newFilterModel.setData("startDate", subDays(new Date(), 30));
-    newFilterModel.setData("endDate", new Date());
-    setFilterModel({...newFilterModel});
+    loadComponentNames().catch(() => {});
   }, []);
 
-  useEffect(() => {
-    loadComponentNames();
-  }, [filterModel]);
-
-  const loadComponentNames = async (newFilterModel = filterModel) => {
+  const loadComponentNames = async (newFilterModel = filterModel, componentName = selectedComponentName) => {
     try {
+      setIsLoadingSalesforceComponentNames(true);
       const startDate = newFilterModel?.getData("startDate");
       const endDate = newFilterModel?.getData("endDate");
 
@@ -60,21 +55,40 @@ function Lookup() {
         newFilterModel
         // newFilterModel.getData("tasksComponentFilterData"),
       );
-      const names = response?.data?.data?.componentNames;
+      const names = DataParsingHelper.parseArray(response?.data?.data?.componentNames, []);
 
       if (isMounted?.current === true && Array.isArray(names)) {
-        setSalesforceComponentNames(names);
+        setSalesforceComponentNames([...names]);
+        newFilterModel.setData("activeFilters", filterModel.getActiveFilters());
+        setFilterModel({...newFilterModel});
+
+        if (names.length === 0) {
+          setSelectedComponentName("");
+        } else if (names.length > 0) {
+          let newComponentName = componentName;
+
+          if (names.includes(selectedComponentName) !== true || hasStringValue(selectedComponentName) !== true) {
+            newComponentName = names[0];
+          }
+
+          await loadData(newFilterModel, newComponentName);
+        }
       }
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showInlineErrorMessage(error);
       }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoadingSalesforceComponentNames(false);
+      }
     }
   };
 
-  const loadData = async (newFilterModel = filterModel, componentName) => {
+  const loadData = async (newFilterModel = filterModel, componentName = selectedComponentName) => {
     try {
       setIsLoading(true);
+      setSelectedComponentName(componentName);
       setSearchResults([]);
       toastContext.removeInlineMessage();
       const startDate = newFilterModel?.getData("startDate");
@@ -104,11 +118,10 @@ function Lookup() {
       const searchResults = insightsLookupActions.generateTransformedResults(
         response?.data?.data?.data,
       );
+      const parsedSearchResults = DataParsingHelper.parseArray(searchResults, []);
 
-      if (isMounted?.current === true && Array.isArray(searchResults)) {
-        setSearchResults(searchResults);
-        newFilterModel.setData("activeFilters", filterModel.getActiveFilters());
-        setFilterModel({...newFilterModel});
+      if (isMounted?.current === true) {
+        setSearchResults([...parsedSearchResults]);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -133,20 +146,25 @@ function Lookup() {
   };
 
   const getBody = () => {
-    return (
-      <>
-        <LookupResults
-          isLoading={isLoading}
-          filterModel={filterModel}
-          setFilterModel={setFilterModel}
-          loadData={loadData}
-          searchResults={searchResults}
-          salesforceComponentNames={salesforceComponentNames}
-          selectedComponentName={selectedComponentName}
-          setSelectedComponentName={setSelectedComponentName}
-          noDataMessage={getNoDataMessage()}
+    if (isLoadingSalesforceComponentNames) {
+      return (
+        <CenterLoadingIndicator
         />
-      </>
+      );
+    }
+
+    return (
+      <LookupResults
+        isLoading={isLoading}
+        filterModel={filterModel}
+        setFilterModel={setFilterModel}
+        loadData={loadData}
+        searchResults={searchResults}
+        salesforceComponentNames={salesforceComponentNames}
+        selectedComponentName={selectedComponentName}
+        setSelectedComponentName={setSelectedComponentName}
+        noDataMessage={getNoDataMessage()}
+      />
     );
   };
 
@@ -160,14 +178,14 @@ function Lookup() {
         <InsightsSubNavigationBar currentTab={"lookup"}/>
       }
       breadcrumbDestination={"lookup"}
-      isLoading={isLoading}
+      isLoading={isLoadingSalesforceComponentNames}
       helpComponent={<SalesforceLookUpHelpDocumentation/>}
       filterModel={filterModel}
-      loadDataFunction={loadData}
+      loadDataFunction={loadComponentNames}
       filterOverlay={
         <SalesforceLookupFilters
           salesforceLookupFilterModel={filterModel}
-          loadDataFunction={loadData}
+          loadDataFunction={loadComponentNames}
           salesforceComponentNames={salesforceComponentNames}
         />
       }
@@ -177,4 +195,4 @@ function Lookup() {
   );
 }
 
-export default Lookup;
+export default SalesforceLookup;

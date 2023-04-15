@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import LookupMetricTotalsDataBlocks from "components/insights/lookup/LookupMetricTotalsDataBlocks";
 import InsightsLookupPipelinesTable from "components/insights/lookup/InsightsLookupPipelinesTable";
@@ -6,23 +6,34 @@ import TabTreeAndViewContainer from "components/common/tabs/tree/TabAndViewConta
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
-function LookupResults({
-                         isLoading,
-                         loadData,
-                         filterModel,
-                           setFilterModel,
-                         searchResults,
-                         salesforceComponentNames,
-                         selectedComponentName,
-                         setSelectedComponentName,
-                         noDataMessage,
-                       }) {
+const getFilteredResults = (componentNames, searchText) => {
+  const parsedComponentNames = DataParsingHelper.parseArray(componentNames, []);
+  const parsedSearchText = DataParsingHelper.parseAndLowercaseString(searchText, "");
+
+  return parsedComponentNames.filter((componentName) => DataParsingHelper.parseAndLowercaseString(componentName, "").includes(parsedSearchText));
+};
+
+
+function LookupResults(
+  {
+    isLoading,
+    loadData,
+    filterModel,
+    setFilterModel,
+    searchResults,
+    salesforceComponentNames,
+    selectedComponentName,
+    setSelectedComponentName,
+    noDataMessage,
+  }) {
   const handleTabClick = async (componentName) => {
-      let newFilterDto = filterModel;
-        setSelectedComponentName(componentName);
-        loadData(filterModel, componentName);
-      newFilterDto.setDefaultValue("search");
+    setSelectedComponentName(componentName);
+    loadData(filterModel, componentName);
+    filterModel.setDefaultValue("search");
+    setFilterModel({...filterModel});
   };
 
   const getTabContainer = () => {
@@ -35,13 +46,13 @@ function LookupResults({
 
     return (
       <VanitySetVerticalTabContainer
-          supportSearch={true}
-          filterModel={filterModel}
-          setFilterModel={setFilterModel}
-          loadData={loadData}
-          isLoading={isLoading}
+        supportClientSideSearching={true}
+        filterModel={filterModel}
+        setFilterModel={setFilterModel}
+        loadData={loadData}
+        isLoading={isLoading}
       >
-        {salesforceComponentNames?.map((component, index) => {
+        {getFilteredResults(salesforceComponentNames, filterModel?.getData("search"))?.map((component, index) => {
           const componentName = component;
           return (
             <VanitySetVerticalTab
@@ -59,9 +70,17 @@ function LookupResults({
 
 
   const getCurrentView = () => {
-     const selectedComponent = searchResults?.find(
-          (component) => component.componentName === selectedComponentName,
+    if (isLoading) {
+      return (
+        <CenterLoadingIndicator
+          minHeight={"250px"}
+        />
       );
+    }
+
+    const selectedComponent = searchResults?.find(
+      (component) => component.componentName === selectedComponentName,
+    );
 
     if (selectedComponent) {
       return (
@@ -70,12 +89,12 @@ function LookupResults({
             metrics={selectedComponent?.totals?.[0]}
             componentName={selectedComponentName}
           />
-          <div className={"mt-2"} />
+          <div className={"mt-2"}/>
           <InsightsLookupPipelinesTable
             pipelines={selectedComponent?.pipelines}
             componentName={selectedComponentName}
-            startDate = {filterModel?.getData("startDate")}
-            endDate = {filterModel?.getData("endDate")}
+            startDate={filterModel?.getData("startDate")}
+            endDate={filterModel?.getData("endDate")}
           />
         </div>
       );
@@ -95,7 +114,7 @@ function LookupResults({
 
   return (
     <TableBodyLoadingWrapper
-      isLoading={isLoading}
+      isLoading={isLoading && getFilteredResults(salesforceComponentNames, "")?.length === 0}
       data={salesforceComponentNames}
       noDataMessage={noDataMessage}
       tableComponent={getBody()}
@@ -106,7 +125,7 @@ function LookupResults({
 LookupResults.propTypes = {
   isLoading: PropTypes.bool,
   filterModel: PropTypes.any,
-    setFilterModel: PropTypes.any,
+  setFilterModel: PropTypes.any,
   searchResults: PropTypes.array,
   salesforceComponentNames: PropTypes.array,
   loadData: PropTypes.func,
