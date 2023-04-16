@@ -3,18 +3,28 @@ import PropTypes from "prop-types";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import ThreeLineScoreDataBlock from "../../../../../../common/metrics/score/ThreeLineScoreDataBlock";
 
-function AvgComponentsDeployedPerExecution({ score, icon, className, dataPoint, onSelect, lastScore, iconOverlayBody}) {
+function AvgComponentsDeployedPerExecution({
+  score,
+  icon,
+  className,
+  dataPoint,
+  onSelect,
+  lastScore,
+  iconOverlayBody,
+}) {
   return (
-    <DataBlockBoxContainer showBorder={true} onClickFunction={onSelect}>
+    <DataBlockBoxContainer
+      showBorder={true}
+      onClickFunction={onSelect}
+    >
       <ThreeLineScoreDataBlock
         className={`${className} p-3`}
         score={score}
-        topText={"Average Components Deployed"}
+        topText={"Unique Components Deployed"}
         bottomText={"Previous Result: " + lastScore}
         icon={icon}
-        iconOverlayBody = {iconOverlayBody}
+        iconOverlayBody={iconOverlayBody}
         dataPoint={dataPoint}
-
       />
     </DataBlockBoxContainer>
   );
