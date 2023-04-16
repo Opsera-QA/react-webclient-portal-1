@@ -29,6 +29,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import InlinePipelineTypeSelectInput from "components/workflow/pipelines/summary/inputs/type/InlinePipelineTypeSelectInput";
 import {Divider} from "temp-library-components/divider/Divider";
+import {ProgressBarBase} from "@opsera/react-vanity-set";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -318,6 +319,12 @@ function PipelineSummaryPanel(
 
           <Col sm={12}>
             <PipelineDurationMetricsStandaloneField
+              pipelineId={pipeline?._id}
+              pipelineRunCount={pipeline?.workflow?.run_count}
+            />
+          </Col>
+          <Col sm={12}>
+            <ProgressBarBase
               pipelineId={pipeline?._id}
               pipelineRunCount={pipeline?.workflow?.run_count}
             />
