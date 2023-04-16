@@ -1,6 +1,6 @@
 import React from "react";
 import pipelinesFaq from '@opsera/react-faq-markdown/src/markdown/faq/pipelines/pipelines.faq.md';
-import {ReactMarkdownWrapper} from "@opsera/react-vanity-set/dist/makeup-and-vanity-set.module.modern";
+import {ReactMarkdownWrapper} from "@opsera/react-vanity-set";
 
 export default function PipelinesFrequentlyAskedQuestions() {
   return (
