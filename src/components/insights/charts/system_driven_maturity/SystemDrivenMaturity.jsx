@@ -65,11 +65,11 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
           jiraResolutionNames
         });
 
-        const maturityScores = response?.data?.data;
+        const { groups } = response?.data;
 
-        if (isMounted?.current === true && Object.keys(maturityScores).length) {
+        if (isMounted?.current === true && Object.keys(groups).length) {
           setMetricData(
-            maturityScores.map(({ name, overallMaturityScoreText, previousOverallMaturityScoreText }) => ({
+            groups.map(({ name, overallMaturityScoreText, previousOverallMaturityScoreText }) => ({
               name,
               score: overallMaturityScoreText,
               previousScore: previousOverallMaturityScoreText
