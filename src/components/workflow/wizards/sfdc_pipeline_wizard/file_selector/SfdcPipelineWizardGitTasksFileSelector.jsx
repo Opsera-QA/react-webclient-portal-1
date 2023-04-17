@@ -10,6 +10,8 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
+import SfdcPipelineWizardBasicSummary
+  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardBasicSummary";
 
 const SfdcPipelineWizardGitTasksFileSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -106,9 +108,7 @@ const SfdcPipelineWizardGitTasksFileSelector = ({ pipelineWizardModel, setPipeli
   return (
     <div>
       <div className="h5">Salesforce Pipeline Run: File Selection for {pipelineWizardModel?.getArrayData("selectedComponentTypes")?.length} Components</div>
-      <div className="text-muted mb-2">
-        Select which files will have changes impacted in this pipeline run by using filter rules.
-      </div>
+      <SfdcPipelineWizardBasicSummary pipelineWizardModel={pipelineWizardModel} />
       {getTabContainer()}
       <SfdcPipelineWizardSfdcFileSelector
         pipelineWizardModel={pipelineWizardModel}

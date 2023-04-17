@@ -181,7 +181,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "inputDetails",
     },
     {
-      label:"Salesforce Configurator Tool",
+      label:"Salesforce Org",
       id:"sfdcToolId",
       // isRequired: true,
     },

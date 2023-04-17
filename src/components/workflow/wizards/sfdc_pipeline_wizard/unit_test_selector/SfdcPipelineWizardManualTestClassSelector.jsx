@@ -158,7 +158,7 @@ function SfdcPipelineWizardManualTestClassSelector({ unitTestRecordId, selectedS
           type="switch"
           id="inputFLag"
           checked={manuallyEnteringTestClasses}
-          label="Manually Enter Test Classes?"
+          label="Manually Enter Test Classes"
           onChange={(e) => {
             setManuallyEnteringTestClasses(e.target.checked);
           }}
