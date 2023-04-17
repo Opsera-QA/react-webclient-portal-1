@@ -83,6 +83,16 @@ function BlueprintSearch({sideBySide, id, run}) {
         newLog.anchoreStats = response?.data?.reports?.anchore_stats ? response.data.reports.anchore_stats : false;
         newLog.twistlock = response?.data?.reports?.twistlock_report ? response.data.reports.twistlock_report : false;
         newLog.twistlockStats = response?.data?.reports?.twistlock_stats ? response.data.reports.twistlock_stats : false;
+        newLog.aquasec = response?.data?.reports?.aquasec_report ? response.data.reports.aquasec_report : false;
+        newLog.aquasecStats = response?.data?.reports?.aquasec_stats ? response.data.reports.aquasec_stats : false;
+        newLog.blackduck = response?.data?.reports?.blackduck_report ? response.data.reports.blackduck_report : false;
+        newLog.blackduckStats = response?.data?.reports?.blackduck_stats ? response.data.reports.blackduck_stats : false;
+        newLog.coverity = response?.data?.reports?.coverity_report ? response.data.reports.coverity_report : false;
+        newLog.coverityStats = response?.data?.reports?.coverity_stats ? response.data.reports.coverity_stats : false;
+        newLog.snyk = response?.data?.reports?.snyk_report ? response.data.reports.snyk_report : false;
+        newLog.snykStats = response?.data?.reports?.snyk_stats ? response.data.reports.snyk_stats : false;
+        newLog.sonar = response?.data?.reports?.sonar_report ? response.data.reports.sonar_report : false;
+        newLog.sonarStats = response?.data?.reports?.sonar_stats ? response.data.reports.sonar_stats : false;
         newLogTabData[newLogTab] = newLog;
         setLogData([...newLogTabData]);
       }
