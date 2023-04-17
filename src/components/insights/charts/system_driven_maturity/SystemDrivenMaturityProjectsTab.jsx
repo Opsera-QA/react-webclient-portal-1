@@ -85,11 +85,9 @@ function SystemDrivenMaturityProjectsTab ({ kpiConfiguration, dashboardData, org
     );
   }
 
-  console.log({ metricData });
-
   return (
-    <Container>
-      <SystemDrivenMaturityTimelineChart data={metricData} />
+    <Container style={{ height: '15rem' }}>
+      <SystemDrivenMaturityTimelineChart data={maturityChartData} />
     </Container>
   );
 }
