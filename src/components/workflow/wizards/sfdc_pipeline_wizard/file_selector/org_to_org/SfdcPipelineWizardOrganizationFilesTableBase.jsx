@@ -11,12 +11,15 @@ import VanityTable from "components/common/table/VanityTable";
 
 const SfdcPipelineWizardOrganizationFilesTableBase = ({ pipelineWizardModel, loadData, data, isLoading, paginationModel, setPaginationModel, title, filePullCompleted }) => {
   const fields = sfdcTableConstants.fields;
-  const noDataFilesPulledMessage = "The Git Files pull has been completed. There is no data for the selected criteria.";
-  const noDataFilesNotPulledMessage = "The Git Files list has not been received from SFDC yet. Please click the table's refresh button to resume polling for the files.";
+  const noDataFilesPulledMessage = "File pull has been completed. There is no data for the selected criteria.";
+  const noDataFilesNotPulledMessage = "File list has not been received from SFDC yet. Please click the table's refresh button to resume polling for the files.";
 
   const columns = useMemo(
     () => [
+      {...getTableTextColumn(fields.find(field => { return field.id === "committedFileId";})), class: "force-text-wrap"},
+      {...getTableTextColumn(fields.find(field => { return field.id === "componentType";})), class: "force-text-wrap"},
       {...getTableTextColumn(fields.find(field => { return field.id === "componentName";})), class: "force-text-wrap"},
+      {...getTableTextColumn(fields.find(field => { return field.id === "committedBy";})), class: "force-text-wrap"},
       getTableDateTimeColumn(fields.find(field => { return field.id === "committedTime";})),
     ],
     [],

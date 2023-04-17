@@ -18,6 +18,8 @@ import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline
 import SalesforcePipelineComponentCountsViewer
   from "components/workflow/wizards/sfdc_pipeline_wizard/xml_viewer/counts/SalesforcePipelineComponentCountsViewer";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
+import SfdcPipelineWizardBasicSummary
+  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardBasicSummary";
 
 // TODO: This should be refactored and cleaned up.
 const SfdcPipelineWizardXmlViewer = (
@@ -248,6 +250,7 @@ const SfdcPipelineWizardXmlViewer = (
 
   return (
     <div>
+      <SfdcPipelineWizardBasicSummary pipelineWizardModel={pipelineWizardModel} />
       <div className="flex-container">
         {getTabContainer()}
         {getView()}        
