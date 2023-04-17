@@ -5,12 +5,13 @@ import axios from "axios";
 import sfdcPipelineActions from "../../sfdc-pipeline-actions";
 import SelectInputBase from "../../../../../common/inputs/select/SelectInputBase";
 import LoadingIcon from "../../../../../common/icons/LoadingIcon";
+import { parseError } from "../../../../../common/helpers/error-helpers";
 
 function SalesforcePackageVersionSelectionInput({ fieldName, pipelineWizardModel, setPipelineWizardModel, disabled }) {
   const { getAccessToken } = useContext(AuthContext);
   const [apiVersions, setApiVersions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -23,6 +24,7 @@ function SalesforcePackageVersionSelectionInput({ fieldName, pipelineWizardModel
     setCancelTokenSource(source);
     isMounted.current = true;
 
+    setErrorMessage(undefined);
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -42,8 +44,8 @@ function SalesforcePackageVersionSelectionInput({ fieldName, pipelineWizardModel
     }
     catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
-        setErrorMessage("Could Not Load API versions");
+        console.error(parseError(error));
+        setErrorMessage(parseError(error));
       }
     }
     finally {
@@ -62,27 +64,17 @@ function SalesforcePackageVersionSelectionInput({ fieldName, pipelineWizardModel
     setApiVersions(response?.data?.message);
   };
 
-  const getVersionSelectionView = () => {
-    if (apiVersions && apiVersions.length > 0 ) {
-      return (
-        <SelectInputBase
-          fieldName={fieldName}
-          selectOptions={apiVersions}
-          dataObject={pipelineWizardModel}
-          setDataObject={setPipelineWizardModel}
-          defaultValue={apiVersions[0]}
-          busy={isLoading}
-          placeholderText={"Select API Version"}
-          disabled={disabled}
-        />
-      );
-    }
-
-    return (<div className={"m-2"}>No Versions Found, Will use latest API version for deployment</div>);
-  };
-
   return (
-    getVersionSelectionView()
+    <SelectInputBase
+      fieldName={fieldName}
+      selectOptions={apiVersions}
+      dataObject={pipelineWizardModel}
+      setDataObject={setPipelineWizardModel}
+      busy={isLoading}
+      placeholderText={"Select API Version"}
+      disabled={disabled}
+      error={errorMessage}
+    />
   );
 }
 SalesforcePackageVersionSelectionInput.propTypes = {
