@@ -53,7 +53,7 @@ function StandalonePackageXmlFieldBase({xml, title, errorMessage, className, isL
       );
     }
 
-    if (hasStringValue(errorMessage) === "true") {
+    if (hasStringValue(errorMessage) === true) {
       return (
         <CenteredContentWrapper>
           <ErrorDialog error={errorMessage}/>
