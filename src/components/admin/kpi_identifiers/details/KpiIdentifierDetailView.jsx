@@ -3,15 +3,12 @@ import { useParams } from "react-router-dom";
 import { AuthContext } from "contexts/AuthContext";
 import Model from "core/data_model/model";
 import kpiIdentifierMetadata from "components/admin/kpi_identifiers/kpiIdentifier.metadata";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import KpiActions from "components/admin/kpi_identifiers/kpi.actions";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import KpiIdentifierDetailPanel from "components/admin/kpi_identifiers/details/KpiIdentifierDetailPanel";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import { meetsRequirements, ROLE_LEVELS } from "components/common/helpers/role-helpers";
-import axios from "axios";
 import KpiIdentifierManagementSubNavigationBar
   from "components/admin/kpi_identifiers/KpiIdentifierManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
