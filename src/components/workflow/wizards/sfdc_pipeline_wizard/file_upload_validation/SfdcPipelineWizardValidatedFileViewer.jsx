@@ -18,6 +18,17 @@ const SfdcPipelineWizardValidatedFileViewer = ({ pipelineWizardModel, setPipelin
       );
     }
 
+    if (pipelineWizardModel.getData("fromGitTasks") === true) {
+      return (
+        <SfdcPipelineWizardValidatedSfdcFileViewer
+          pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardModel={setPipelineWizardModel}
+          setPipelineWizardScreen={setPipelineWizardScreen}
+          handleClose={handleClose}
+        />
+      );
+    }
+
     if (pipelineWizardModel.getData("isOrgToOrg") === false) {
       return (
         <SfdcPipelineWizardValidatedGitFileViewer
