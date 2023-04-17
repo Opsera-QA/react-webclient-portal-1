@@ -3,10 +3,7 @@ import axios from "axios";
 import PropTypes from 'prop-types';
 import Container from "react-bootstrap/Container";
 import { AuthContext } from "contexts/AuthContext";
-import {
-  getResultFromKpiConfiguration,
-  MATURITY_SCORE_TEXT
-} from "../charts-helpers";
+import { getResultFromKpiConfiguration } from "../charts-helpers";
 import doraActions from "../dora/dora.action";
 import { MaturityScoreItemType } from './maturityScoreItemType';
 import SystemDrivenMaturityTimelineChart from './SystemDrivenMaturityTimelineChart';
