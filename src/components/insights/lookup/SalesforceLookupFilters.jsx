@@ -49,7 +49,7 @@ export default function SalesforceLookupFilters(
             className={"mx-2"}
           />
         </Col>
-        <Col xs={12}>
+        <Col xs={12} className={"ml-2 mt-2"}>
           <SalesforceComponentNameMultiSelectInput
             fieldName={"selectedComponentNames"}
             model={filterModel}
@@ -61,7 +61,7 @@ export default function SalesforceLookupFilters(
             endDate={filterModel?.getData("endDate")}
           />
         </Col>
-        <Col xs={12}>
+        <Col xs={12} className={"mb-3"}>
           <PipelineSelectInput
             fieldName={"pipelineComponentFilterData"}
             model={filterModel}
