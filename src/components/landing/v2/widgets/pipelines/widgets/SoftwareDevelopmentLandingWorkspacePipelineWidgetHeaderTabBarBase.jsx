@@ -30,34 +30,34 @@ export default function SoftwareDevelopmentLandingWorkspacePipelineWidgetHeaderT
   }
 
   return (
-    <div className={"w-100 d-flex my-2"}>
-      <SubMenuContainer className={"mx-auto"}>
+    <div className={"w-100 d-flex"}>
+      <SubMenuContainer className={"m-auto"}>
         <LeftArrowSubMenuItem
           onClickFunction={() => setSelectedWorkflow(undefined)}
         />
         <SubMenuItem
-          className={"px-3"}
+          className={"px-2"}
           itemKey={PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS.SUMMARY}
           activeKey={selectedHeaderItem}
           setActiveKey={setSelectedHeaderItem}
           label={"Summary"}
         />
         <SubMenuItem
-          className={"px-3"}
+          className={"px-2"}
           itemKey={PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS.ACTIVITY_LOGS}
           activeKey={selectedHeaderItem}
           setActiveKey={setSelectedHeaderItem}
           label={"Activity Logs"}
         />
         <SubMenuItem
-          className={"px-3"}
+          className={"px-2"}
           itemKey={PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS.ANALYTICS}
           activeKey={selectedHeaderItem}
           setActiveKey={setSelectedHeaderItem}
           label={"Analytics"}
         />
         <SubMenuItem
-          className={"px-3"}
+          className={"px-2"}
           itemKey={PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS.MORE_DETAILS}
           setActiveKey={handleHeaderItemClick}
           label={"Full Details"}
