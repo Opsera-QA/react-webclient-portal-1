@@ -9,7 +9,7 @@ import { MaturityScoreItemType } from './maturityScoreItemType';
 import SystemDrivenMaturityTimelineChart from './SystemDrivenMaturityTimelineChart';
 import SystemDrivenMaturityChart from './SystemDrivenMaturityChart';
 
-function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, group, onSelectGroup }) {
+function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, group, onSelect }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metricData, setMetricData] = useState(null);
@@ -74,19 +74,19 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
           setMaturityChartData([
             {
               id: 'LTFC',
-              data: ltfc.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
+              data: ltfc.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
             },
             {
               id: 'DF',
-              data: df.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
+              data: df.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
             },
             {
               id: 'MTTR',
-              data: mttr.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
+              data: mttr.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
             },
             {
               id: 'CFR',
-              data: cfr.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
+              data: cfr.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
             }
           ]);
         }
@@ -124,7 +124,7 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
         <SystemDrivenMaturityTimelineChart data={maturityChartData} />
       </div>
       <div style={{ fontSize: '2rem' }}>
-        <SystemDrivenMaturityChart items={metricData} onRowSelect={onSelectGroup} />
+        <SystemDrivenMaturityChart items={metricData} onRowSelect={onSelect} />
       </div>
     </Container>
   );
@@ -134,7 +134,7 @@ SystemDrivenMaturityOrgTagsTab.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   group: MaturityScoreItemType,
-  onSelectGroup: PropTypes.func
+  onSelect: PropTypes.func
 };
 
 export default SystemDrivenMaturityOrgTagsTab;

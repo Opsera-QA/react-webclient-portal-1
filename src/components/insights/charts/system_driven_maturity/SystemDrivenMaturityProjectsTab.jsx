@@ -11,7 +11,6 @@ import SystemDrivenMaturityTimelineChart from './SystemDrivenMaturityTimelineCha
 function SystemDrivenMaturityProjectsTab ({ kpiConfiguration, dashboardData, orgTag }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
-  const [metricData, setMetricData] = useState(null);
   const [maturityChartData, setMaturityChartData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
@@ -55,36 +54,29 @@ function SystemDrivenMaturityProjectsTab ({ kpiConfiguration, dashboardData, org
         orgTag: orgTag?.name
       });
 
-      const { projects, chartData } = response?.data;
+      const { chartData } = response?.data;
 
-      if (isMounted?.current === true) {
-        if (projects?.length) {
-          setMetricData(projects);
-        }
-
-        if (chartData) {
-          const { ltfc, df, mttr, cfr } = chartData;
-          setMaturityChartData([
-            {
-              id: 'LTFC',
-              data: ltfc.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
-            },
-            {
-              id: 'DF',
-              data: df.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
-            },
-            {
-              id: 'MTTR',
-              data: mttr.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
-            },
-            {
-              id: 'CFR',
-              data: cfr.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
-            }
-          ]);
-        }
+      if (isMounted?.current === true && chartData) {
+        const { ltfc, df, mttr, cfr } = chartData;
+        setMaturityChartData([
+          {
+            id: 'LTFC',
+            data: ltfc.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
+          },
+          {
+            id: 'DF',
+            data: df.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
+          },
+          {
+            id: 'MTTR',
+            data: mttr.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
+          },
+          {
+            id: 'CFR',
+            data: cfr.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
+          }
+        ]);
       } else {
-        setMetricData([]);
         setMaturityChartData([]);
       }
     } catch (error) {
