@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
-import useComponentStateReference from "hooks/useComponentStateReference";
-import HeaderNavigationBarItem from "components/header/navigation_bar/HeaderNavigationBarItem";
-import { workspaceConstants } from "components/workspace/workspace.constants";
-import { pipelineHelper } from "components/workflow/pipeline.helper";
 import { taskHelper } from "components/tasks/task.helper";
 import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
 import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
+import {SubMenuContainer, SubMenuItem} from "@opsera/react-vanity-set";
+import {
+  PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS
+} from "components/landing/v2/widgets/pipelines/widgets/SoftwareDevelopmentLandingWorkspacePipelineWidgetHeaderTabBarBase";
 
 export const TASK_WORKFLOW_WIDGET_HEADER_ITEMS = {
   SUMMARY: "summary",
@@ -24,20 +24,9 @@ export default function SoftwareDevelopmentLandingTaskWidgetHeaderTabBarBase(
     setSelectedWorkflow,
   }) {
   const history = useHistory();
-  const {
-    themeConstants,
-  } = useComponentStateReference();
 
-  // TODO: Ensure both pipelines and tasks are using models to clean this up with a switch statement.
   const handleHeaderItemClick = () => {
-    if (selectedWorkflow?.workspaceType === workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE) {
-      history.push(pipelineHelper.getDetailViewLink(selectedWorkflow?._id));
-      return;
-    }
-
-    if (selectedWorkflow?.getData("workspaceType") === workspaceConstants.WORKSPACE_ITEM_TYPES.TASK) {
-      history.push(taskHelper.getDetailViewLink(selectedWorkflow?.getMongoDbId()));
-    }
+    history.push(taskHelper.getDetailViewLink(selectedWorkflow?.getMongoDbId()));
   };
 
   if (selectedWorkflow == null) {
@@ -52,38 +41,35 @@ export default function SoftwareDevelopmentLandingTaskWidgetHeaderTabBarBase(
         popoverText={"Select Another Workflow"}
         className={"ml-2"}
       />
-      <HeaderNavigationBarItem
-        currentScreen={selectedHeaderItem}
-        screenName={TASK_WORKFLOW_WIDGET_HEADER_ITEMS.SUMMARY}
-        screenLabel={"Summary"}
-        setCurrentScreen={setSelectedHeaderItem}
-        className={"my-auto"}
-        fontColor={themeConstants.COLOR_PALETTE.BLACK}
-      />
-      <HeaderNavigationBarItem
-        currentScreen={selectedHeaderItem}
-        screenName={TASK_WORKFLOW_WIDGET_HEADER_ITEMS.ACTIVITY_LOGS}
-        screenLabel={"Activity Logs"}
-        setCurrentScreen={setSelectedHeaderItem}
-        className={"my-auto"}
-        fontColor={themeConstants.COLOR_PALETTE.BLACK}
-      />
-      <HeaderNavigationBarItem
-        currentScreen={selectedHeaderItem}
-        screenName={TASK_WORKFLOW_WIDGET_HEADER_ITEMS.ANALYTICS}
-        screenLabel={"Analytics"}
-        setCurrentScreen={setSelectedHeaderItem}
-        className={"my-auto"}
-        fontColor={themeConstants.COLOR_PALETTE.BLACK}
-      />
-      <HeaderNavigationBarItem
-        currentScreen={selectedHeaderItem}
-        screenName={TASK_WORKFLOW_WIDGET_HEADER_ITEMS.MORE_DETAILS}
-        screenLabel={"Full Details"}
-        setCurrentScreen={handleHeaderItemClick}
-        className={"my-auto"}
-        fontColor={themeConstants.COLOR_PALETTE.BLACK}
-      />
+      <SubMenuContainer className={"mx-auto"}>
+        <SubMenuItem
+          className={"px-3"}
+          itemKey={PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS.SUMMARY}
+          activeKey={selectedHeaderItem}
+          setActiveKey={setSelectedHeaderItem}
+          label={"Summary"}
+        />
+        <SubMenuItem
+          className={"px-3"}
+          itemKey={PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS.ACTIVITY_LOGS}
+          activeKey={selectedHeaderItem}
+          setActiveKey={setSelectedHeaderItem}
+          label={"Activity Logs"}
+        />
+        <SubMenuItem
+          className={"px-3"}
+          itemKey={PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS.ANALYTICS}
+          activeKey={selectedHeaderItem}
+          setActiveKey={setSelectedHeaderItem}
+          label={"Analytics"}
+        />
+        <SubMenuItem
+          className={"px-3"}
+          itemKey={PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS.MORE_DETAILS}
+          setActiveKey={handleHeaderItemClick}
+          label={"Full Details"}
+        />
+      </SubMenuContainer>
     </div>
   );
 }

@@ -1,11 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
-import useComponentStateReference from "hooks/useComponentStateReference";
-import HeaderNavigationBarItem from "components/header/navigation_bar/HeaderNavigationBarItem";
 import { pipelineHelper } from "components/workflow/pipeline.helper";
 import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
 import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
+import {SubMenuContainer, SubMenuItem} from "@opsera/react-vanity-set";
 
 export const PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS = {
   SUMMARY: "summary",
@@ -22,9 +21,6 @@ export default function SoftwareDevelopmentLandingWorkspacePipelineWidgetHeaderT
     setSelectedWorkflow,
   }) {
   const history = useHistory();
-  const {
-    themeConstants,
-  } = useComponentStateReference();
 
   const handleHeaderItemClick = () => {
     history.push(pipelineHelper.getDetailViewLink(selectedWorkflow?._id));
@@ -42,38 +38,35 @@ export default function SoftwareDevelopmentLandingWorkspacePipelineWidgetHeaderT
         popoverText={"Select Another Workflow"}
         className={"ml-2"}
       />
-      <HeaderNavigationBarItem
-        currentScreen={selectedHeaderItem}
-        screenName={PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS.SUMMARY}
-        screenLabel={"Summary"}
-        setCurrentScreen={setSelectedHeaderItem}
-        className={"my-auto"}
-        fontColor={themeConstants.COLOR_PALETTE.BLACK}
-      />
-      <HeaderNavigationBarItem
-        currentScreen={selectedHeaderItem}
-        screenName={PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS.ACTIVITY_LOGS}
-        screenLabel={"Activity Logs"}
-        setCurrentScreen={setSelectedHeaderItem}
-        className={"my-auto"}
-        fontColor={themeConstants.COLOR_PALETTE.BLACK}
-      />
-      <HeaderNavigationBarItem
-        currentScreen={selectedHeaderItem}
-        screenName={PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS.ANALYTICS}
-        screenLabel={"Analytics"}
-        setCurrentScreen={setSelectedHeaderItem}
-        className={"my-auto"}
-        fontColor={themeConstants.COLOR_PALETTE.BLACK}
-      />
-      <HeaderNavigationBarItem
-        currentScreen={selectedHeaderItem}
-        screenName={PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS.MORE_DETAILS}
-        screenLabel={"Full Details"}
-        setCurrentScreen={handleHeaderItemClick}
-        className={"my-auto"}
-        fontColor={themeConstants.COLOR_PALETTE.BLACK}
-      />
+      <SubMenuContainer className={"mx-auto"}>
+        <SubMenuItem
+          className={"px-3"}
+          itemKey={PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS.SUMMARY}
+          activeKey={selectedHeaderItem}
+          setActiveKey={setSelectedHeaderItem}
+          label={"Summary"}
+        />
+        <SubMenuItem
+          className={"px-3"}
+          itemKey={PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS.ACTIVITY_LOGS}
+          activeKey={selectedHeaderItem}
+          setActiveKey={setSelectedHeaderItem}
+          label={"Activity Logs"}
+        />
+        <SubMenuItem
+          className={"px-3"}
+          itemKey={PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS.ANALYTICS}
+          activeKey={selectedHeaderItem}
+          setActiveKey={setSelectedHeaderItem}
+          label={"Analytics"}
+        />
+        <SubMenuItem
+          className={"px-3"}
+          itemKey={PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS.MORE_DETAILS}
+          setActiveKey={handleHeaderItemClick}
+          label={"Full Details"}
+        />
+      </SubMenuContainer>
     </div>
   );
 }
