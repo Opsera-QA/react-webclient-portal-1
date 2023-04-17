@@ -2,9 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { pipelineHelper } from "components/workflow/pipeline.helper";
-import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
-import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
 import {SubMenuContainer, SubMenuItem} from "@opsera/react-vanity-set";
+import LeftArrowSubMenuItem from "temp-library-components/navigation/LeftArrowSubMenuItem";
 
 export const PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS = {
   SUMMARY: "summary",
@@ -32,13 +31,10 @@ export default function SoftwareDevelopmentLandingWorkspacePipelineWidgetHeaderT
 
   return (
     <div className={"w-100 d-flex my-2"}>
-      <ActionBarButton
-        action={() => setSelectedWorkflow(undefined)}
-        icon={faArrowLeft}
-        popoverText={"Select Another Workflow"}
-        className={"ml-2"}
-      />
       <SubMenuContainer className={"mx-auto"}>
+        <LeftArrowSubMenuItem
+          onClickFunction={() => setSelectedWorkflow(undefined)}
+        />
         <SubMenuItem
           className={"px-3"}
           itemKey={PIPELINE_WORKFLOW_WIDGET_HEADER_ITEMS.SUMMARY}
