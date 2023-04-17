@@ -222,7 +222,7 @@ doraActions.systemDrivenMaturityProjects = async ({
   dashboardTags,
   dashboardOrgs,
   jiraResolutionNames,
-  group
+  orgTag
 }) => {
   const apiUrl = doraBaseURL + "systemDrivenMaturityProjects";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
@@ -260,7 +260,7 @@ doraActions.systemDrivenMaturityProjects = async ({
     jiraChangeTypes: getResultFromKpiConfiguration(kpiConfiguration, KPI_FILTER_TYPES.JIRA_CHANGE_TYPES),
     jiraResolutionNames,
     jiraExcludedResolutionNames: getResultFromKpiConfiguration(kpiConfiguration, KPI_FILTER_TYPES.JIRA_EXCLUDED_RESOLUTION_NAMES),
-    group
+    orgTag
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
