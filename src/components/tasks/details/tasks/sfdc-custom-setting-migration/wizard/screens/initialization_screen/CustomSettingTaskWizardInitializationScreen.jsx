@@ -2,15 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import CancelButton from "components/common/buttons/CancelButton";
-import MergeSyncTaskWizardCreateNewRecordButton from "components/tasks/details/tasks/merge_sync_task/wizard/screens/initialization_screen/MergeSyncTaskWizardCreateNewRecordButton";
-import BooleanToggleInput from "../../../../../../../common/inputs/boolean/BooleanToggleInput";
-import { Row, Col } from "react-bootstrap";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import TaskMigrationTypeField from "../../../../../../../common/fields/tasks/TaskMigrationTypeField";
 import { getMigrationTypeLabel } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
+import CustomSettingTaskWizardCreateNewRecordButton from "./CustomSettingTaskWizardCreateNewRecordButton";
 
 const CustomSettingTaskWizardInitializationScreen = ({
   wizardModel,
@@ -55,7 +52,12 @@ const CustomSettingTaskWizardInitializationScreen = ({
           </div>
         </div>
         <SaveButtonContainer>
-          {/* TODO : Create a create record button */}
+          <CustomSettingTaskWizardCreateNewRecordButton
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            className={"mr-2"}
+          />
           <CancelButton
             showUnsavedChangesMessage={false}
             cancelFunction={handleClose}
