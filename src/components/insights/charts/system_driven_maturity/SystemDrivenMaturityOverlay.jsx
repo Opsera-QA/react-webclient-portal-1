@@ -53,7 +53,7 @@ function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, group }
         <SystemDrivenMaturityOrgTagsTab
           kpiConfiguration={kpiConfiguration}
           dashboardData={dashboardData}
-          orgTag={group}
+          group={group}
           onSelectGroup={onSelectOrgTag}
         />
       );
