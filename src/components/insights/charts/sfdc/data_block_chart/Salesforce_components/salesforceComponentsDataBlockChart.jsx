@@ -38,7 +38,7 @@ function SalesforceComponentsDataBlockChart({
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [totalComponentsDataPoint, setTotalComponentsDatapoint] =
     useState(undefined);
-  const [averageDataPoint, setAverageDatapoint] = useState(undefined);
+  const [uniqueDataPoint, setUniqueDatapoint] = useState(undefined);
   const [totalSalesforceDataPoint, setTotalSalesforceDatapoint] =
     useState(undefined);
   const [deploymentDataPoint, setDeploymentDatapoint] = useState(undefined);
@@ -117,12 +117,12 @@ function SalesforceComponentsDataBlockChart({
         .SALESFORCE_TOTAL_COMPONENTS_DATA_POINT,
     );
     setTotalComponentsDatapoint(salesforceTotalComponentsDataPoint);
-    const salesforceAverageDataPoint = dataPointHelpers.getDataPoint(
+    const salesforceUniqueDataPoint = dataPointHelpers.getDataPoint(
       dataPoints,
       dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS
-        .SALESFORCE_AVERAGE_DATA_POINT,
+        .SALESFORCE_UNIQUE_COMPONENTS_DATA_POINT,
     );
-    setAverageDatapoint(salesforceAverageDataPoint);
+    setUniqueDatapoint(salesforceUniqueDataPoint);
     const totalExecutionsDataPoint = dataPointHelpers.getDataPoint(
       dataPoints,
       dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS
@@ -237,7 +237,7 @@ function SalesforceComponentsDataBlockChart({
                 />
               </Col>
             )}
-            {dataPointHelpers.isDataPointVisible(averageDataPoint) && (
+            {dataPointHelpers.isDataPointVisible(uniqueDataPoint) && (
               <Col>
                 <AvgComponentsDeployedPerExecution
                   score={
@@ -258,7 +258,7 @@ function SalesforceComponentsDataBlockChart({
                   iconOverlayBody={getDescription(
                     metrics[0]?.trends?.totalUniqueComponentsDeployed,
                   )}
-                  dataPoint={averageDataPoint}
+                  dataPoint={uniqueDataPoint}
                 />
               </Col>
             )}
