@@ -70,22 +70,23 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
         }
 
         if (chartData) {
+          const { ltfc, df, mttr, cfr } = chartData;
           setMaturityChartData([
             {
               id: 'LTFC',
-              data: chartData.ltfc.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
+              data: ltfc.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
             },
             {
               id: 'DF',
-              data: chartData.df.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
+              data: df.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
             },
             {
               id: 'MTTR',
-              data: chartData.mttr.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
+              data: mttr.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
             },
             {
               id: 'CFR',
-              data: chartData.cfr.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
+              data: cfr.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
             }
           ]);
         }
