@@ -92,9 +92,47 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
     );
   }
 
+  const kpiChartData = [
+    {
+      id: 'df',
+      data: [
+        {
+          x: '2023-01-01',
+          y: 2.5,
+          range: '2023-01-01 to 2023-01-31',
+          sdmScore: 3
+        }
+      ]
+    },
+    // {
+    //   id: 'mttr',
+    //   data: [
+    //     {
+    //       x: '2023-01-01',
+    //       y: 0.5,
+    //       range: '2023-01-01 to 2023-01-31',
+    //       sdmScore: 1
+    //     }
+    //   ]
+    // },
+    // {
+    //   id: 'cfr',
+    //   data: [
+    //     {
+    //       x: '2023-01-01',
+    //       y: 5.3,
+    //       range: '2023-01-01 to 2023-01-31',
+    //       sdmScore: 4
+    //     }
+    //   ]
+    // }
+  ];
+
   return (
     <Container>
-      <SystemDrivenMaturityTimelineChart data={metricData} />
+      <div style={{ minHeight: '5rem' }}>
+        <SystemDrivenMaturityTimelineChart kpiChartData={kpiChartData} />
+      </div>
       <div style={{ fontSize: '2rem' }}>
         <SystemDrivenMaturityChart items={metricData} onRowSelect={onSelectGroup} />
       </div>
