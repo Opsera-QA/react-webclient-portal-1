@@ -56,8 +56,7 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
         group: group?.name
       });
 
-      const orgTags = response?.data?.orgTags;
-      const chartData = response?.data?.chartData;
+      const { orgTags, chartData } = response?.data;
 
       if (isMounted?.current === true) {
         if (orgTags?.length) {
