@@ -248,15 +248,15 @@ function PipelineSummaryPanel(
   };
 
   const getProgressBar = () => {
-    console.log("parent workflow status: " + JSON.stringify(parentWorkflowStatus));
+    const completionPercentage = pipelineHelper.getPipelineCompletionPercentage(pipeline);
+
     if (parentWorkflowStatus === "running") {
       return (
         <Col sm={12}>
           <ProgressBarBase
             className={"mx-3"}
-            completionPercentage={pipelineHelper.getPipelineCompletionPercentage(pipeline)}
+            completionPercentage={completionPercentage}
             isInProgress={true}
-            variant={"danger"}
           />
         </Col>
       );
@@ -267,8 +267,9 @@ function PipelineSummaryPanel(
         <Col sm={12}>
           <ProgressBarBase
             className={"mx-3"}
-            completionPercentage={pipelineHelper.getPipelineCompletionPercentage(pipeline)}
+            completionPercentage={completionPercentage}
             variant={"warning"}
+            label={"Awaiting User Response"}
           />
         </Col>
       );
