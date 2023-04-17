@@ -7,7 +7,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import InsightsLookupDetailsTable from "./InsightsLookupDetailsTable";
 import axios from "axios";
 
-const InsightsLookupPipelineOverlay = ({ componentName }) => {
+const InsightsLookupPipelineOverlay = ({ componentName, pipeline, startDate, endDate }) => {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -41,9 +41,12 @@ const InsightsLookupPipelineOverlay = ({ componentName }) => {
       setIsLoading(true);
 
       const data = await insightsLookupActions.getComponentByName(
-        getAccessToken,
-        cancelTokenSource,
-        componentName,
+          getAccessToken,
+          cancelTokenSource,
+          componentName,
+          pipeline,
+          startDate,
+          endDate
       );
 
       setLookupDetails(data.data.results);
@@ -62,6 +65,27 @@ const InsightsLookupPipelineOverlay = ({ componentName }) => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
   };
+
+  lookupDetails.forEach((temp) => {
+    temp.difference = ((new Date(temp.endTimestamp) - new Date(temp.startTimestamp))/60000).toFixed(2).toString();
+    if(temp.checkOnly == false){
+      temp.deployed = true;
+    } else{
+      temp.deployed = false;
+    }
+
+    if(temp.checkOnly == true){
+      temp.validated = true;
+    } else{
+      temp.validated = false;
+    }
+
+    if(temp.checkOnly == true && (temp.successUnitTests.length > 0  || temp.failedUnitTests.length > 0)){
+      temp.unitTests = true;
+    } else{
+      temp.unitTests = false;
+    }
+  });
 
   return (
     <CenterOverlayContainer
@@ -82,6 +106,9 @@ const InsightsLookupPipelineOverlay = ({ componentName }) => {
 
 InsightsLookupPipelineOverlay.propTypes = {
   componentName: PropTypes.string,
+  pipeline: PropTypes.string,
+  startDate: PropTypes.string,
+  endDate:PropTypes.string,
 };
 
 export default InsightsLookupPipelineOverlay;
