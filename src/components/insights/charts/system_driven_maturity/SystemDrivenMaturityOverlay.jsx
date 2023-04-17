@@ -17,11 +17,11 @@ const OVERLAY_TABS = {
 function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, group }) {
   const toastContext = useContext(DialogToastContext);
   const [activeTab, setActiveTab] = useState(OVERLAY_TABS.ORG_TAGS);
-  const [selectedOrgTag, setDelectedOrgTag] = useState(null);
+  const [selectedOrgTag, setSelectedOrgTag] = useState(null);
 
-  const onSelectOrgTag = (group) => {
+  const onSelectOrgTag = (orgTag) => {
     setActiveTab(OVERLAY_TABS.PROJECTS);
-    setDelectedOrgTag(group);
+    setSelectedOrgTag(orgTag);
   };
 
   const handleTabClick = (tabSelection) => e => {
@@ -34,7 +34,7 @@ function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, group }
     switch (tabSelection) {
       case OVERLAY_TABS.ORG_TAGS:
         setActiveTab(OVERLAY_TABS.ORG_TAGS);
-        setDelectedOrgTag(null);
+        setSelectedOrgTag(null);
         return;
     }
   };
@@ -54,7 +54,7 @@ function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, group }
           kpiConfiguration={kpiConfiguration}
           dashboardData={dashboardData}
           group={group}
-          onSelectGroup={onSelectOrgTag}
+          onSelect={onSelectOrgTag}
         />
       );
     }
