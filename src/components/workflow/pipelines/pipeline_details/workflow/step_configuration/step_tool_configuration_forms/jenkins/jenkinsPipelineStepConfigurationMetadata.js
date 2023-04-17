@@ -23,12 +23,12 @@ const jenkinsPipelineStepConfigurationMetadata = {
       type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
-      label: "Job",
+      label: "Tool Job",
       id: "toolJobId",
       // isRequired: true
     },
     {
-      label: "Source Code Management Tool",
+      label: "Account",
       id: "gitCredential",
       // isRequired: true
     },
@@ -181,7 +181,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "inputDetails",
     },
     {
-      label:"Salesforce Org",
+      label:"Specify Salesforce Credentials",
       id:"sfdcToolId",
       // isRequired: true,
     },
@@ -191,7 +191,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       formText:"Note: TestLevel of NoTestRun cannot be used in production organizations"
     },
     {
-      label:"Destination Salesforce Org",
+      label:"Destination Salesforce Credentials",
       id:"sfdcDestToolId",
       // isRequired: true
     },
