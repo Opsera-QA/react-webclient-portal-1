@@ -208,7 +208,7 @@ regexDefinitions.customParameterNameRegex = {
 };
 
 regexDefinitions.localVariableName = {
-  regex: /^opsera-local-[a-z0-9-]*$/,
+  regex: /^opsera-local-[a-z0-9-_]*$/,
   formText: "Name must begin with \"opsera-local-\" and can contain lowercase letters, numbers, underscores, and dashes",
   errorFormText: "Name must begin with \"opsera-local-\" and can contain lowercase letters, numbers, underscores, and dashes",
 };
