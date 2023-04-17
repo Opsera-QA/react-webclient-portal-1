@@ -181,7 +181,7 @@ pipelineHelper.getPipelineCompletionPercentage = (pipeline) => {
     DataParsingHelper.parseNestedBoolean(lastStep, "running.paused")
     || DataParsingHelper.parseNestedString(lastStep, "running.status") === "pending";
   const isFailed = DataParsingHelper.parseNestedMongoDbId(lastStep, "failed.step_id") === restingStepId;
-  const finalStepIndex = isSuccess === true || (isStepRunning !== true && isPaused !== true && isFailed !== true) ? activeStepIndex + 1 : activeStepIndex;
+  const finalStepIndex = isSuccess === true || (isStepRunning !== true && isPaused !== true && isFailed !== true) ? activeStepIndex + 1 : activeStepIndex + 0.25;
 
   return Math.max(finalStepIndex / activeStepCount, 0) * 100;
 };
