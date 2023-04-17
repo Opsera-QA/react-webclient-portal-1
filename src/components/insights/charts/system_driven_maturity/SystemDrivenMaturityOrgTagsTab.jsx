@@ -13,6 +13,7 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metricData, setMetricData] = useState(null);
+  const [maturityChartData, setMaturityChartData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -65,6 +66,65 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
             previousScore: previousOverallMaturityScoreText
           }))
         );
+        setMaturityChartData([
+          {
+            id: 'df',
+            data: [
+              {
+                x: '2023-01-01',
+                y: 2.5,
+                range: '2023-01-01 to 2023-01-31',
+                sdmScore: 3,
+                total: 5
+              },
+              {
+                x: '2023-02-01',
+                y: 1.5,
+                range: '2023-02-01 to 2023-02-28',
+                sdmScore: 2,
+                total: 2
+              }
+            ]
+          },
+          {
+            id: 'mttr',
+            data: [
+              {
+                x: '2023-01-01',
+                y: 0.5,
+                range: '2023-01-01 to 2023-01-31',
+                sdmScore: 1,
+                total: 4
+              },
+              {
+                x: '2023-02-01',
+                y: 1.5,
+                range: '2023-02-01 to 2023-02-28',
+                sdmScore: 2,
+                total: 2
+              }
+            ]
+          },
+          {
+            id: 'cfr',
+            data: [
+              {
+                x: '2023-01-01',
+                y: 5.3,
+                range: '2023-01-01 to 2023-01-31',
+                sdmScore: 4,
+                total: 1
+              },
+              {
+                x: '2023-02-01',
+                y: 3.5,
+                range: '2023-02-01 to 2023-02-28',
+                sdmScore: 4,
+                total: 2
+              }
+            ]
+          }
+        ]);
       } else {
         setMetricData([]);
       }
@@ -92,46 +152,10 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
     );
   }
 
-  const kpiChartData = [
-    {
-      id: 'df',
-      data: [
-        {
-          x: '2023-01-01',
-          y: 2.5,
-          range: '2023-01-01 to 2023-01-31',
-          sdmScore: 3
-        }
-      ]
-    },
-    // {
-    //   id: 'mttr',
-    //   data: [
-    //     {
-    //       x: '2023-01-01',
-    //       y: 0.5,
-    //       range: '2023-01-01 to 2023-01-31',
-    //       sdmScore: 1
-    //     }
-    //   ]
-    // },
-    // {
-    //   id: 'cfr',
-    //   data: [
-    //     {
-    //       x: '2023-01-01',
-    //       y: 5.3,
-    //       range: '2023-01-01 to 2023-01-31',
-    //       sdmScore: 4
-    //     }
-    //   ]
-    // }
-  ];
-
   return (
     <Container>
-      <div style={{ minHeight: '5rem' }}>
-        <SystemDrivenMaturityTimelineChart kpiChartData={kpiChartData} />
+      <div style={{ height: '15rem' }}>
+        <SystemDrivenMaturityTimelineChart data={maturityChartData} />
       </div>
       <div style={{ fontSize: '2rem' }}>
         <SystemDrivenMaturityChart items={metricData} onRowSelect={onSelectGroup} />
