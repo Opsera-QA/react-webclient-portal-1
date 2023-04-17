@@ -1,12 +1,8 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { AuthContext } from "contexts/AuthContext";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import { meetsRequirements, ROLE_LEVELS } from "components/common/helpers/role-helpers";
-import axios from "axios";
 import RemoteApplicationTelemetryActions from "components/admin/remote_applications/remote-application-actions";
 import RemoteApplicationDetailPanel
   from "components/admin/remote_applications/details/RemoteApplicationDetailPanel";
@@ -79,11 +75,13 @@ function RemoteApplicationDetailView() {
     );
   };
 
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
+
   return (
     <DetailScreenContainer
-      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       breadcrumbDestination={"remoteApplicationsDetailView"}
-      accessRoleData={accessRoleData}
       metadata={telemetryMetadata}
       dataObject={telemetryData}
       isLoading={isLoading}
