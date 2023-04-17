@@ -116,7 +116,7 @@ const SfdcPipelineWizardOriginOrganizationFilesTable = ({ pipelineWizardModel, s
 
   return (
     <>
-      <InlineWarning warningMessage={sfdcWarningMessage} className="pl-3"/>
+      <InlineWarning warningMessage={sfdcWarningMessage} className="pl-2"/>
       <SfdcPipelineWizardOrganizationFilesTableBase
         data={originFiles}
         loadData={loadData}

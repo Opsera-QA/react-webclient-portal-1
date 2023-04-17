@@ -13,6 +13,8 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import {parseError} from "components/common/helpers/error-helpers";
+import SfdcPipelineWizardBasicSummary
+  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardBasicSummary";
 
 const SfdcPipelineWizardStandardFileSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -84,7 +86,7 @@ const SfdcPipelineWizardStandardFileSelector = ({ pipelineWizardModel, setPipeli
   };
 
   const getView = () => {
-    if (pipelineWizardModel.getData("modifiedFilesOrigin") === "sfdc") {
+    if (pipelineWizardModel.getData("isOrgToOrg")) {
       return (
         <SfdcPipelineWizardSfdcFileSelector
           pipelineWizardModel={pipelineWizardModel}
@@ -95,7 +97,7 @@ const SfdcPipelineWizardStandardFileSelector = ({ pipelineWizardModel, setPipeli
       );
     }
 
-    if (pipelineWizardModel.getData("modifiedFilesOrigin") === "git") {
+    if (!pipelineWizardModel.getData("isOrgToOrg")) {
       return (
         <SfdcPipelineWizardGitFileSelector
           pipelineWizardModel={pipelineWizardModel}
@@ -110,22 +112,22 @@ const SfdcPipelineWizardStandardFileSelector = ({ pipelineWizardModel, setPipeli
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <CustomTab
-          activeTab={pipelineWizardModel.getData("modifiedFilesOrigin")}
-          tabText={"Salesforce Files"}
-          handleTabClick={handleTabClick}
-          tabName={"sfdc"}
-          toolTipText={"Salesforce Files"}
-          icon={faSalesforce}
-        />
-        <CustomTab
-          activeTab={pipelineWizardModel.getData("modifiedFilesOrigin")}
-          tabText={"Git Files"}
-          handleTabClick={handleTabClick}
-          tabName={"git"}
-          toolTipText={"Git Files"}
-          icon={faCode}
-        />
+        {pipelineWizardModel.getData("isOrgToOrg") && <CustomTab
+            activeTab={"sfdc"}
+            tabText={"Salesforce Files"}
+            handleTabClick={handleTabClick}
+            tabName={"sfdc"}
+            toolTipText={"Salesforce Files"}
+            icon={faSalesforce}
+          />}
+         {!pipelineWizardModel.getData("isOrgToOrg") && <CustomTab
+            activeTab={"git"}
+            tabText={"Git Files"}
+            handleTabClick={handleTabClick}
+            tabName={"git"}
+            toolTipText={"Git Files"}
+            icon={faCode}
+          />}
       </CustomTabContainer>
     );
   };
@@ -141,9 +143,7 @@ const SfdcPipelineWizardStandardFileSelector = ({ pipelineWizardModel, setPipeli
   return (
     <div>
       <div className="h5">Salesforce Pipeline Run: File Selection for {pipelineWizardModel?.getArrayData("selectedComponentTypes")?.length} Components</div>
-      <div className="text-muted mb-2">
-        Select which files will have changes impacted in this pipeline run by using filter rules.
-      </div>
+      <SfdcPipelineWizardBasicSummary pipelineWizardModel={pipelineWizardModel} />
       {getTabContainer()}
       {getView()}
     </div>

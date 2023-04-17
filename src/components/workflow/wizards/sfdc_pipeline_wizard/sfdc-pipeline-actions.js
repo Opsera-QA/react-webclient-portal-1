@@ -27,7 +27,7 @@ sfdcPipelineActions.updateSelectedComponentTypesV2 = async (getAccessToken, canc
 };
 
 sfdcPipelineActions.triggerSfdcFilesPullV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
-  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/trigger_sfdc_files_pull`;
+  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/trigger_sfdc_files_pull?orgToOrg=${pipelineWizardModel.getData("isOrgToOrg")}`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
