@@ -51,7 +51,7 @@ function SystemDrivenMaturityProjectsTab ({ kpiConfiguration, dashboardData, org
         dashboardTags,
         dashboardOrgs,
         jiraResolutionNames,
-        orgTag: orgTag?.name
+        orgTag
       });
 
       const { chartData } = response?.data;
