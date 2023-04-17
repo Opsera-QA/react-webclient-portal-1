@@ -3,8 +3,7 @@ import { Navbar } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useLocationReference from "hooks/useLocationReference";
-import {SubMenuContainer} from "@opsera/react-vanity-set";
-import {SubMenuItem} from "@opsera/react-vanity-set";
+import {SubMenuContainer, SubMenuItem} from "@opsera/react-vanity-set";
 import GitCustodianRoleHelper from "@opsera/know-your-role/roles/compliance/git_custodian/gitCustodianRole.helper";
 import useGetPlatformSettingsFeatureFlagByName from "hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
 import platformSettingFeatureConstants
