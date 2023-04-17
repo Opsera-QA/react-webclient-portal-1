@@ -10,8 +10,6 @@
 .sub-menu-container > ul {
   border-radius: 26px;
   margin: 0;
-  //max-height: 46px;
-  //min-height: 46px;
   align-items: center;
   justify-content: center;
   background: $insights-tab-bg;
@@ -22,6 +20,9 @@
 .sub-menu-container > ul > li {
   display: inline-block;
   text-align: center;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
 }
 
 .sub-menu-container > ul > li div {
@@ -34,7 +35,6 @@
 
 .sub-menu-container > ul > li.active {
   background: #fff;
-  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
