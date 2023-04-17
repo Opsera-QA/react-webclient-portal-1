@@ -57,76 +57,42 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
       });
 
       const orgTags = response?.data?.orgTags;
+      const chartData = response?.data?.chartData;
 
-      if (isMounted?.current === true && orgTags?.length) {
-        setMetricData(
-          orgTags.map(({ name, overallMaturityScoreText, previousOverallMaturityScoreText }) => ({
-            name,
-            score: overallMaturityScoreText,
-            previousScore: previousOverallMaturityScoreText
-          }))
-        );
-        setMaturityChartData([
-          {
-            id: 'df',
-            data: [
-              {
-                x: '2023-01-01',
-                y: 2.5,
-                range: '2023-01-01 to 2023-01-31',
-                sdmScore: 3,
-                total: 5
-              },
-              {
-                x: '2023-02-01',
-                y: 1.5,
-                range: '2023-02-01 to 2023-02-28',
-                sdmScore: 2,
-                total: 2
-              }
-            ]
-          },
-          {
-            id: 'mttr',
-            data: [
-              {
-                x: '2023-01-01',
-                y: 0.5,
-                range: '2023-01-01 to 2023-01-31',
-                sdmScore: 1,
-                total: 4
-              },
-              {
-                x: '2023-02-01',
-                y: 1.5,
-                range: '2023-02-01 to 2023-02-28',
-                sdmScore: 2,
-                total: 2
-              }
-            ]
-          },
-          {
-            id: 'cfr',
-            data: [
-              {
-                x: '2023-01-01',
-                y: 5.3,
-                range: '2023-01-01 to 2023-01-31',
-                sdmScore: 4,
-                total: 1
-              },
-              {
-                x: '2023-02-01',
-                y: 3.5,
-                range: '2023-02-01 to 2023-02-28',
-                sdmScore: 4,
-                total: 2
-              }
-            ]
-          }
-        ]);
+      if (isMounted?.current === true) {
+        if (orgTags?.length) {
+          setMetricData(
+            orgTags.map(({ name, overallMaturityScoreText, previousOverallMaturityScoreText }) => ({
+              name,
+              score: overallMaturityScoreText,
+              previousScore: previousOverallMaturityScoreText
+            }))
+          ); 
+        }
+
+        if (chartData) {
+          setMaturityChartData([
+            {
+              id: 'LTFC',
+              data: chartData.ltfc.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
+            },
+            {
+              id: 'DF',
+              data: chartData.df.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
+            },
+            {
+              id: 'MTTR',
+              data: chartData.mttr.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
+            },
+            {
+              id: 'CFR',
+              data: chartData.cfr.map(({ x, range, sdmScore, sdmScoreText }) => ({ x, y: sdmScore, range, sdmScoreText })),
+            }
+          ]);
+        }
       } else {
         setMetricData([]);
+        setMaturityChartData([]);
       }
     } catch (error) {
       if (isMounted?.current === true) {
