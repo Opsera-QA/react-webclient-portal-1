@@ -84,7 +84,7 @@ const LookupMetricTotalsDataBlocks = (
       showBorder={false}
       body={getDataBlocks()}
       titleIcon={faBug}
-      title={`${componentName}: Totals`}
+      title={`${componentName}: Total`}
     />
   );
 };
