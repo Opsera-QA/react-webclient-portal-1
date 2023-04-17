@@ -198,7 +198,6 @@ reportsTrails.consolidatedUserReport = {
   allowedRoles: [
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
-    SiteRoleHelper.SITE_ROLES.POWER_USER,
     SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
     SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],

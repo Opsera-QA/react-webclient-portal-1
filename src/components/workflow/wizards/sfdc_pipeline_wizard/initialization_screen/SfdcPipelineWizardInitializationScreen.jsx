@@ -83,7 +83,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     const sfdcDestToolId = gitTaskData.getData("configuration")?.sfdcDestToolId;
     const accountUsername = gitTaskData.getData("configuration")?.accountUsername;
     const gitBranch = gitTaskData.getData("configuration")?.gitBranch;
-
+    const repository = gitTaskData.getData("configuration")?.repository;
 
     if (gitTaskId == null || gitTaskId === "") {
       setError("Could not find Git Task");
@@ -102,6 +102,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     newPipelineWizardModel.setData("gitToolId", gitToolId);
     newPipelineWizardModel.setData("pipelineId", "N/A");
     newPipelineWizardModel.setData("stepId", "N/A");
+    newPipelineWizardModel.setData("repository", repository);
     setPipelineWizardModel({...newPipelineWizardModel});
     return newPipelineWizardModel;
   };
@@ -132,6 +133,10 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     const ignoreWarning = sfdcStep?.tool?.configuration?.ignoreWarning === true;
     const isProfiles = jobType === "sfdc-ant-profile" || jobType?.toUpperCase() === "SFDC PROFILE DEPLOY";
     const isTranslations = false;
+    const workspace = sfdcStep?.tool?.configuration?.workspace;
+    const service = sfdcStep?.tool?.configuration?.service;
+    const repository = sfdcStep?.tool?.configuration?.repository;
+    const jobTypeId = sfdcStep?.tool?.configuration?.job_type;
 
     if (pipelineId == null) {
       setError("Could not find Pipeline");
@@ -160,6 +165,10 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     newPipelineWizardModel.setData("isProfiles", isProfiles);
     newPipelineWizardModel.setData("isTranslations", isTranslations);
     newPipelineWizardModel.setData("unitTestSteps", getCustomUnitTestSteps(steps));
+    newPipelineWizardModel.setData("workspace", workspace);
+    newPipelineWizardModel.setData("service", service);
+    newPipelineWizardModel.setData("repository", repository);
+    newPipelineWizardModel.setData("jobTypeId", jobTypeId);
     const isSfdx = await checkIfSfdx(cancelSource, sfdcToolId);
     newPipelineWizardModel.setData("isSfdx", isSfdx);
     newPipelineWizardModel.setData("ignoreWarning", ignoreWarning);

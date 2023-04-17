@@ -112,6 +112,11 @@ export const sourceRepositoryConfigurationMetadata = {
       type: metadataConstants.SUPPORTED_VALUE_TYPES.BOOLEAN,
     },
     {
+      label: "Add Comment With Pipeline Status To PR When Pipeline Is Completed",
+      id: "isMonitored",
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.BOOLEAN,
+    },
+    {
       label: "Enabled",
       id: "dynamicSettings",
       type: metadataConstants.SUPPORTED_VALUE_TYPES.BOOLEAN,
@@ -150,6 +155,7 @@ export const sourceRepositoryConfigurationMetadata = {
     "trigger_active",
     "isPushEvent",
     "isPrEvent",
+    "isMonitored",
     "prCreatedEvent",
     "prApprovedEvent",
     "gitExportEnabled",
@@ -174,6 +180,7 @@ export const sourceRepositoryConfigurationMetadata = {
     trigger_active: false,
     isPushEvent: true,
     isPrEvent: false,
+    isMonitored: false,
     prCreatedEvent: true,
     prApprovedEvent: false,
     dynamicSettings: false,

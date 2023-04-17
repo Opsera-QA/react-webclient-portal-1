@@ -7,7 +7,7 @@ import SfdcPipelineWizardValidatedSfdcFileViewer
 
 const SfdcPipelineWizardValidatedFileViewer = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {
   const getView = () => {
-    if (pipelineWizardModel.getData("modifiedFilesOrigin") === "sfdc") {
+    if (pipelineWizardModel.getData("isOrgToOrg") === true) {
       return (
         <SfdcPipelineWizardValidatedSfdcFileViewer
           pipelineWizardModel={pipelineWizardModel}
@@ -18,7 +18,18 @@ const SfdcPipelineWizardValidatedFileViewer = ({ pipelineWizardModel, setPipelin
       );
     }
 
-    if (pipelineWizardModel.getData("modifiedFilesOrigin") === "git") {
+    if (pipelineWizardModel.getData("fromGitTasks") === true) {
+      return (
+        <SfdcPipelineWizardValidatedSfdcFileViewer
+          pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardModel={setPipelineWizardModel}
+          setPipelineWizardScreen={setPipelineWizardScreen}
+          handleClose={handleClose}
+        />
+      );
+    }
+
+    if (pipelineWizardModel.getData("isOrgToOrg") === false) {
       return (
         <SfdcPipelineWizardValidatedGitFileViewer
           pipelineWizardModel={pipelineWizardModel}
