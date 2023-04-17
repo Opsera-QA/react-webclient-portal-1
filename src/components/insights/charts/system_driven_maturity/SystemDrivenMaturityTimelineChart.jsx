@@ -1,11 +1,9 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import { ResponsiveLine } from '@nivo/line';
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import ChartTooltip from 'components/insights/charts/ChartTooltip';
 import { defaultConfig } from 'components/insights/charts/charts-views';
-import config from './systemDrivenMaturityTimelineChartConfig';
-
-const MAX_MATURITY_SCORE = 4;
 
 function SystemDrivenMaturityTimelineChart ({ data }) {
   console.log('SDM Timeline Chart', { data });
@@ -13,24 +11,56 @@ function SystemDrivenMaturityTimelineChart ({ data }) {
     <ResponsiveLine
     data={data}
     {...defaultConfig("", "Date", false, true, "numbers", "monthDate2")}
-    {...config()}
+    colors={[
+      METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_1,
+      METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2,
+      METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_3,
+      METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_4
+    ]}
+    enableGridX={false}
+    xFormat="time:%Y-%m-%d"
+    axisBottom={{
+      format: d => { var date = new Date(d).toUTCString(); date = date.split(" "); return date[2]+" "+date[1]; },
+      tickRotation: -45,
+      legend: 'Date',
+      legendOffset: 55,
+      legendPosition: 'middle'
+    }}
+    enableGridY={false}
+    axisLeft={{
+      tickValues: [1, 2, 3, 4],
+      legend: "Maturity Score",
+      legendOffset: -35,
+      legendPosition: "middle",
+    }}
     yScale={{
       type: "linear",
-      min: "0",
-      max: MAX_MATURITY_SCORE,
+      min: 0,
+      max: 4,
       stacked: false,
       reverse: false,
     }}
-    axisLeft={{
-      tickValues: [0, MAX_MATURITY_SCORE],
-      legend: "Maturity Score",
-      legendOffset: -38,
-      legendPosition: "middle",
+    pointSize={10}
+    margin={{
+      top: 40,
+      bottom: 80,
+      left: 50,
+      right: 80
     }}
+    legends={[
+      {
+        anchor: "right",
+        direction: "column",
+        itemWidth: 10,
+        itemHeight: 10,
+        itemsSpacing: 15,
+        translateX: 30
+      }
+    ]}
     tooltip={(node) => (
       <ChartTooltip
         titles={["Date Range", "Maturity Score"]}
-        values={[node.point.data.range, node.point.data.sdmScore]}
+        values={[node.point.data.range, node.point.data.sdmScoreText]}
       />
     )}
     />
@@ -46,7 +76,8 @@ SystemDrivenMaturityTimelineChart.propTypes = {
           x: PropTypes.string,
           y: PropTypes.number,
           range: PropTypes.string,
-          sdmScore: PropTypes.number
+          sdmScore: PropTypes.number,
+          sdmScoreText: PropTypes.string
         })
       )
     })
