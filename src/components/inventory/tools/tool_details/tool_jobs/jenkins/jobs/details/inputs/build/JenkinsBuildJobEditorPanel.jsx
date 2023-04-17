@@ -12,6 +12,8 @@ import JenkinsJobsBuildTypeSelectInput
   from "components/common/list_of_values_input/tools/jenkins/jobs/build/JenkinsJobsBuildTypeSelectInput";
 import JenkinsJobsPythonAgentLabelSelectInput
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobsPythonAgentLabelSelectInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import ScriptLibrarySelectInput from "components/common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
 
 function JenkinsBuildJobEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled }) {
   useEffect(() => {
@@ -33,9 +35,27 @@ function JenkinsBuildJobEditorPanel({ jenkinsJobConfiguration, model, setModel, 
         );
       case "maven":
         return (
-          <Col lg={6}>
-            <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"mavenTask"}/>
-          </Col>
+          <>
+            <Col lg={6}>
+              <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"mavenTask"}/>
+            </Col>
+            <Col lg={12}>
+              <BooleanToggleInput 
+                dataObject={model}
+                setDataObject={setModel}
+                fieldName={"customMavenSettings"}
+              />
+            </Col>
+            {model?.getData("customMavenSettings") === true && 
+              <Col lg={12}>
+                <ScriptLibrarySelectInput
+                  fieldName={"scriptId"}
+                  model={model}
+                  setModel={setModel}
+                />
+              </Col>
+            }            
+          </>          
         );
       case "msbuild":
         return (

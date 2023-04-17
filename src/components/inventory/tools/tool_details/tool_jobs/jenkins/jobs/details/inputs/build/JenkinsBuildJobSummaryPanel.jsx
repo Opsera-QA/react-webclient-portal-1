@@ -14,9 +14,14 @@ function JenkinsBuildJobSummaryPanel({ dataObject }) {
         );
       case "maven":
         return (
-          <Col lg={6}>
-            <TextFieldBase dataObject={dataObject} fieldName={"mavenTask"} />
-          </Col>
+          <>
+            <Col lg={6}>
+              <TextFieldBase dataObject={dataObject} fieldName={"mavenTask"} />
+            </Col>
+            <Col lg={6}>
+              <TextFieldBase dataObject={dataObject} fieldName={"scriptId"} />
+            </Col>
+          </>          
         );
       case "msbuild":
         return (
