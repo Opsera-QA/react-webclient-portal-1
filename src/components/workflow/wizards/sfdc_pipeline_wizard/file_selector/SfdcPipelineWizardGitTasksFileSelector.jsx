@@ -109,9 +109,6 @@ const SfdcPipelineWizardGitTasksFileSelector = ({ pipelineWizardModel, setPipeli
     <div>
       <div className="h5">Salesforce Pipeline Run: File Selection for {pipelineWizardModel?.getArrayData("selectedComponentTypes")?.length} Components</div>
       <SfdcPipelineWizardBasicSummary pipelineWizardModel={pipelineWizardModel} />
-      <div className="text-muted mb-2">
-        Select which files will have changes impacted in this pipeline run by using filter rules.
-      </div>
       {getTabContainer()}
       <SfdcPipelineWizardSfdcFileSelector
         pipelineWizardModel={pipelineWizardModel}
