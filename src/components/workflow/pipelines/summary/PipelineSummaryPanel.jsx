@@ -377,7 +377,7 @@ function PipelineSummaryPanel(
               pipelineRunCount={pipeline?.workflow?.run_count}
             />
           </Col>
-          {getProgressBar()}
+          {/*{getProgressBar()}*/}
         </Row>
       </div>
     </>
