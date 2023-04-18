@@ -106,10 +106,10 @@ function TaskDetailView() {
             className={"ml-3"}
             taskModel={taskModel}
           />
-          {/*<TaskSubscriptionIcon*/}
-          {/*  taskModel={taskModel}*/}
-          {/*  className={"ml-3"}*/}
-          {/*/>*/}
+          <TaskSubscriptionIcon
+            taskModel={taskModel}
+            className={"ml-3"}
+          />
           <ActionBarDeleteTaskButton
             taskModel={taskModel}
             className={"ml-3"}
