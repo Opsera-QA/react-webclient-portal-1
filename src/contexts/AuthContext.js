@@ -36,6 +36,7 @@ const featureFlagHideItemInTest = () => {
 const AuthContextProvider = (
   {
     userData,
+    loadUserData,
     children,
   }) => {
   const history = useHistory();
@@ -105,6 +106,7 @@ const AuthContextProvider = (
       isLoadingPlatformSettingsRecord: getActivePlatformSettingsRecordHook.isLoading,
       organizationSettingsRecord: organizationSettingsRecord,
       featureFlags: featureFlags,
+      loadUserData: loadUserData,
 
       isPowerUser: userAccessRoles?.PowerUser === true,
       isSiteAdministrator: userAccessRoles?.Administrator === true,
@@ -123,6 +125,7 @@ const AuthContextProvider = (
 
 AuthContextProvider.propTypes = {
   userData: PropTypes.object,
+  loadUserData: PropTypes.func,
   children: PropTypes.any,
 };
 

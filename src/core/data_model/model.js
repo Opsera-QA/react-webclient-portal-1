@@ -398,7 +398,7 @@ export class Model {
   };
 
   getMongoDbId = () => {
-    return this.getData("_id");
+    return DataParsingHelper.parseMongoDbId(this.getData("_id"));
   };
 
   getFields = () => {

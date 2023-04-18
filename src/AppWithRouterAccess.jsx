@@ -128,6 +128,11 @@ const AppWithRouterAccess = () => {
     }
   };
 
+  const reloadUserData = async () => {
+    const tokens = await authClient.tokenManager.getTokens();
+    await loadUsersData(tokens?.accessToken?.accessToken);
+  };
+
   const getError = () => {
     if (
       error &&
@@ -192,6 +197,7 @@ const AppWithRouterAccess = () => {
       {getError()}
       <AuthContextProvider
         userData={userData}
+        loadUserData={reloadUserData}
       >
         {getRoutes()}
       </AuthContextProvider>
