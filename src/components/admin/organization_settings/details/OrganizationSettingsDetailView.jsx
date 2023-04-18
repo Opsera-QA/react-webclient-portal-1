@@ -6,7 +6,6 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import {organizationSettingsHelper} from "components/admin/organization_settings/organizationSettings.helper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import OrganizationSettingsManagementSubNavigationBar
   from "components/admin/organization_settings/OrganizationSettingsManagementSubNavigationBar";
 import OrganizationSettingsDetailPanel
@@ -19,7 +18,7 @@ import organizationSettingsMetadata
 function OrganizationSettingsDetailView() {
   const { organizationDomain, organizationAccount, } = useParams();
   const {
-    accessRoleData,
+    isOpseraAdministrator,
   } = useComponentStateReference();
   const {
     organizationSettingsModel,
@@ -48,16 +47,19 @@ function OrganizationSettingsDetailView() {
     );
   }
 
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
+
   return (
     <DetailScreenContainer
       breadcrumbDestination={"ldapOrganizationSettingsDetailView"}
-      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       metadata={organizationSettingsMetadata}
-      accessRoleData={accessRoleData}
       navigationTabContainer={<OrganizationSettingsManagementSubNavigationBar activeTab={"ldapOrganizationSettingsViewer"} />}
       dataObject={organizationSettingsModel}
       isLoading={isLoading}
       actionBar={getActionBar()}
+      error={error}
       detailPanel={
         <OrganizationSettingsDetailPanel
           organizationSettingsModel={organizationSettingsModel}

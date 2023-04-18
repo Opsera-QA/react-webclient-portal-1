@@ -5,7 +5,6 @@ import accountsActions from "components/admin/accounts/accounts-actions";
 import LdapOrganizationAccountsTable
   from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountsTable";
 import axios from "axios";
-import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import LdapOrganizationAccountManagementSubNavigationBar
   from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
@@ -91,11 +90,14 @@ function LdapOrganizationAccountManagement() {
     }
   };
 
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
+
   return (
     <ScreenContainer
       breadcrumbDestination={"ldapOrganizationAccountManagement"}
       isLoading={!accessRoleData}
-      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       accessRoleData={accessRoleData}
       navigationTabContainer={
         <LdapOrganizationAccountManagementSubNavigationBar

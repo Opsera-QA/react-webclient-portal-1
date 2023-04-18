@@ -67,6 +67,11 @@ pipelineHelper.getPipelineStatus = (pipeline) => {
   return status;
 };
 
+pipelineHelper.getStepIndexFromPipeline = (pipeline, stepId) => {
+  const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan");
+  return pipelineHelper.getStepIndexFromPlan(plan, stepId);
+};
+
 pipelineHelper.getStepIndexFromPlan = (plan, stepId) => {
   const parsedStepId = DataParsingHelper.parseMongoDbId(stepId);
   const parsedPlan = DataParsingHelper.parseArray(plan);
@@ -104,4 +109,79 @@ pipelineHelper.getTagValueForStep = (step) => {
   transformedName = transformedName.toLowerCase();
 
   return `${transformedName}_${parsedMongoDbId}`;
+};
+
+pipelineHelper.getActiveStepCountFromPipeline = (pipeline) => {
+  const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
+  let count = 0;
+
+  for (let i = 0; i < plan.length; i++) {
+    const step = plan[i];
+
+    if (step.active === true) {
+      count += 1;
+    }
+  }
+
+  return count;
+};
+
+pipelineHelper.getActiveStepIndex = (pipeline, stepId) => {
+  const stepIndex = pipelineHelper.getStepIndexFromPipeline(pipeline, stepId);
+  const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
+
+  if (stepIndex === -1 || plan.length === 0) {
+    return -1;
+  }
+
+  let activeStepIndex = -1;
+
+  for (let i = 0; i < plan.length; i++) {
+    const step = plan[i];
+
+    if (step.active === true) {
+      activeStepIndex += 1;
+    }
+
+    if (step._id === stepId) {
+      break;
+    }
+  }
+
+  return activeStepIndex;
+};
+
+pipelineHelper.getRestingStepIdFromPipeline = (pipeline) => {
+  return DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.step_id");
+};
+
+pipelineHelper.getPipelineCompletionPercentage = (pipeline) => {
+  const lastStep = DataParsingHelper.parseNestedObject(pipeline, "workflow.last_step");
+
+  if (!lastStep) {
+    return 0;
+  }
+
+  const restingStepId = pipelineHelper.getRestingStepIdFromPipeline(pipeline);
+
+  if (!restingStepId) {
+    return 0;
+  }
+
+  const activeStepIndex = pipelineHelper.getActiveStepIndex(pipeline, restingStepId);
+
+  if (activeStepIndex === -1) {
+    return 0;
+  }
+
+  const activeStepCount = pipelineHelper.getActiveStepCountFromPipeline(pipeline);
+  const isStepRunning = lastStep.status === "running";
+  const isSuccess = DataParsingHelper.parseNestedMongoDbId(lastStep, "success.step_id") === restingStepId;
+  const isPaused =
+    DataParsingHelper.parseNestedBoolean(lastStep, "running.paused")
+    || DataParsingHelper.parseNestedString(lastStep, "running.status") === "pending";
+  const isFailed = DataParsingHelper.parseNestedMongoDbId(lastStep, "failed.step_id") === restingStepId;
+  const finalStepIndex = isSuccess === true || (isStepRunning !== true && isPaused !== true && isFailed !== true) ? activeStepIndex + 1 : activeStepIndex + 0.25;
+
+  return Math.max(finalStepIndex / activeStepCount, 0) * 100;
 };

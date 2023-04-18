@@ -32,6 +32,11 @@ export default function usePipelineActions() {
     );
   };
 
+  pipelineActions.getPipelineById = async (pipelineId) => {
+    const apiUrl = `/pipelines/v2/${pipelineId}`;
+    return await apiService.handleApiGetRequest(apiUrl);
+  };
+
   pipelineActions.getPipelineNameById = async (
     pipelineId,
   ) => {
