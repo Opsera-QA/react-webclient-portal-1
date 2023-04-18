@@ -53,7 +53,7 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
         dashboardTags,
         dashboardOrgs,
         jiraResolutionNames,
-        group: group?.name
+        group
       });
 
       const { orgTags, chartData } = response?.data;
