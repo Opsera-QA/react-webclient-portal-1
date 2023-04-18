@@ -1,26 +1,23 @@
-import React, { useContext } from "react";
-import { AuthContext } from "contexts/AuthContext";
+import React from "react";
 import SidebarNavigationLinkBase from "components/common/links/sidebar/SidebarNavigationLinkBase";
 import { faBox } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function ToolchainSidebarNavigationLink({ isSidebarCollapsed, }) {
   const {
-    userAccessRoles,
-    isSassUser,
+    isSaasUser,
     isOpseraAdministrator,
     isPowerUser,
     isSiteAdministrator,
-  } = useContext(AuthContext);
+  } = useComponentStateReference();
 
   if (
-    userAccessRoles == null
-    || (
-      isSassUser() !== true
-      && isOpseraAdministrator() !== true
+    isSaasUser !== true
+      && isOpseraAdministrator !== true
       && isPowerUser !== true
       && isSiteAdministrator !== true
-    )) {
+    ) {
     return null;
   }
 

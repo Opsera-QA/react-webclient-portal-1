@@ -11,6 +11,7 @@ import VanityButtonBase from "../../../../../../../../temp-library-components/bu
 import H5FieldSubHeader from "../../../../../../../common/fields/subheader/H5FieldSubHeader";
 import TextInputBase from "../../../../../../../common/inputs/text/TextInputBase";
 import salesforceQuickDeployTaskConfigurationMetadata from "../../../../../../../tasks/details/tasks/sfdc-quick-deploy/salesforceQuickDeployTaskConfigurationMetadata";
+import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 
 function CreateSalesforceQuickDeployInputFields({
   taskModel,
@@ -25,6 +26,7 @@ function CreateSalesforceQuickDeployInputFields({
       salesforceQuickDeployTaskConfigurationMetadata,
     ),
   );
+  const [parentConfig, setParentConfig] =    useState(modelHelpers.parseObjectIntoModel(taskModel, tasksMetadata));
 
   useEffect(() => {
     if (setButtonContainer) {
@@ -39,6 +41,8 @@ function CreateSalesforceQuickDeployInputFields({
   const updateToolSpecificDetails = () => {
     let newDataObject = taskModel;
     newDataObject.configuration = taskConfigurationModel.getPersistData();
+    newDataObject.name = parentConfig?.getData("name");
+    newDataObject.description = parentConfig?.getData("description");
     setTaskModel(newDataObject);
     onSuccessFunction();
   };
@@ -71,6 +75,12 @@ function CreateSalesforceQuickDeployInputFields({
         />
       </div>
       <Row>
+        <Col lg={12}>
+          <TextInputBase dataObject={parentConfig} setDataObject={setParentConfig} fieldName={"name"} />
+        </Col>
+        <Col lg={12}>
+          <TextInputBase dataObject={parentConfig} setDataObject={setParentConfig} fieldName={"description"} />
+        </Col>
         <Col lg={12}>
           <TextInputBase
             dataObject={taskConfigurationModel}

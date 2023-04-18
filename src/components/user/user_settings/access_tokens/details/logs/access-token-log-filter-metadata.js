@@ -21,6 +21,11 @@ const accessTokenLogFilterMetadata = {
       id: "sortOption",
     },
     {
+      label: "User",
+      id: "userId",
+      formText: "Please Note: This only shows Users that have used an Access Token",
+    },
+    {
       label: "Search",
       id: "search",
     },
@@ -51,6 +56,7 @@ const accessTokenLogFilterMetadata = {
     currentPage: 1,
     sortOption: {text: "Newest", option: "newest"},
     search: "",
+    userId: "",
     activeFilters: []
   },
   sortOptions: [

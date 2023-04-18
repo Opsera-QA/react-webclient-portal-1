@@ -232,7 +232,6 @@ export default function CreateSalesforceOrganizationSyncTaskWizard({
             flow={flow}
             setButtonContainer={setButtonContainer}
             handleClose={handleClose}
-            connectionFailure={failureCount}
           />
         );
     }

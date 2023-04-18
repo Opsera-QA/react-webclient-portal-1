@@ -8,6 +8,9 @@ import CopyToClipboardIconBase from "components/common/icons/link/CopyToClipboar
 import {faLink} from "@fortawesome/pro-light-svg-icons";
 import EditFiltersIcon from "temp-library-components/icon/filters/EditFiltersIcon";
 import RefreshIcon from "temp-library-components/icon/refresh/RefreshIcon";
+import SearchFilter from "components/common/filters/search/SearchFilter";
+import NewRecordButton from "components/common/buttons/data/NewRecordButton";
+import ViewToggle from "components/common/view/ViewToggle";
 
 function ScreenContainerTitleBar(
   {
@@ -18,9 +21,12 @@ function ScreenContainerTitleBar(
     titleActionBar,
     helpComponent,
     isBeta,
-    filters,
+    filterOverlay,
     filterModel,
+    setFilterModel,
     loadDataFunction,
+    addRecordFunction,
+    addRecordButtonCustomText,
   }) {
   const {
     currentUrl,
@@ -28,19 +34,43 @@ function ScreenContainerTitleBar(
 
   const getInactiveText = () => {
     if (inactive) {
-      return (<span className="text-white-50 mx-1">{inactive && "Inactive"}</span>);
+      return (<span className="text-white-50 ml-3">{inactive && "Inactive"}</span>);
     }
   };
 
   const getRightSideItems = () => {
     return (
       <div className="ml-auto d-flex">
-        {getInactiveText()}
+        <NewRecordButton
+          className={"ml-2 my-auto text-nowrap"}
+          addRecordFunction={addRecordFunction}
+          type={filterModel?.getType()}
+          isLoading={isLoading}
+          variant={"success"}
+          customButtonText={addRecordButtonCustomText}
+        />
         {titleActionBar}
+        <SearchFilter
+          isLoading={isLoading}
+          paginationModel={filterModel}
+          searchText={filterModel?.getData("search")}
+          loadData={loadDataFunction}
+          className={"ml-3"}
+          metadata={filterModel?.getMetaData()}
+          visible={typeof filterModel?.canSearch === "function" && filterModel?.canSearch() === true}
+          variant={"secondary"}
+        />
+        <ViewToggle
+          supportViewToggle={typeof filterModel?.canToggleView === "function" && filterModel?.canToggleView() === true}
+          filterModel={filterModel}
+          setFilterModel={setFilterModel}
+          isLoading={isLoading}
+          className={"ml-2"}
+          variant={"secondary"}
+        />
         <EditFiltersIcon
           filterModel={filterModel}
-          filters={filters}
-          loadDataFunction={loadDataFunction}
+          filterOverlay={filterOverlay}
           className={"ml-3"}
         />
         <CopyToClipboardIconBase
@@ -63,6 +93,7 @@ function ScreenContainerTitleBar(
           isBeta={isBeta}
           className={"mr-1 ml-3 my-auto"}
         />
+        {getInactiveText()}
       </div>
     );
   };
@@ -89,8 +120,11 @@ ScreenContainerTitleBar.propTypes = {
   helpComponent: PropTypes.object,
   isBeta: PropTypes.bool,
   filterModel: PropTypes.object,
+  setFilterModel: PropTypes.func,
   loadDataFunction: PropTypes.func,
-  filters: PropTypes.any,
+  filterOverlay: PropTypes.any,
+  addRecordFunction: PropTypes.func,
+  addRecordButtonCustomText: PropTypes.string,
 };
 
 export default ScreenContainerTitleBar;

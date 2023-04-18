@@ -15,26 +15,9 @@ export default function PlatformSettingsManagementSubNavigationBar({activeTab}) 
       case "adminTools":
         history.push(`/admin`);
         return;
-      case "platformSystemParameterManagement":
+      case "platformSettingsManagement":
         history.push(`/admin/platform/system-parameters`);
         return;
-    }
-  };
-
-  const getActiveViewerTab = () => {
-    switch (activeTab) {
-      case "platformSettingsViewer":
-        return (
-          <NavigationTab
-            icon={faFolderCog}
-            tabName={"platformSettingsViewer"}
-            handleTabClick={handleTabClick}
-            activeTab={activeTab}
-            tabText={"Platform Settings Viewer"}
-          />
-        );
-      default:
-        return null;
     }
   };
 
@@ -54,7 +37,14 @@ export default function PlatformSettingsManagementSubNavigationBar({activeTab}) 
         activeTab={activeTab}
         tabText={"Platform Settings Manager"}
       />
-      {getActiveViewerTab()}
+      <NavigationTab
+        icon={faFolderCog}
+        tabName={"platformSettingsViewer"}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+        tabText={"Platform Settings Viewer"}
+        hideIfInactive={true}
+      />
     </NavigationTabContainer>
   );
 }

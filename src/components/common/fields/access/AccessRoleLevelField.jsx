@@ -1,12 +1,15 @@
-import React, {useContext} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {getUserRoleLevel} from "components/common/helpers/role-helpers";
-import {AuthContext} from "contexts/AuthContext";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function AccessRoleLevelField({accessRoleData, objectRoles, dataObject, className}) {
-  const { isSassUser } = useContext(AuthContext);
+function AccessRoleLevelField({objectRoles, dataObject, className}) {
+  const {
+    isSaasUser,
+    accessRoleData,
+  } = useComponentStateReference();
 
-  if (accessRoleData == null || isSassUser() === true) {
+  if (accessRoleData == null || isSaasUser !== false) {
     return null;
   }
 

@@ -1,15 +1,15 @@
-import React, { useContext } from "react";
-import { AuthContext } from "contexts/AuthContext";
+import React from "react";
 import SidebarNavigationLinkBase from "components/common/links/sidebar/SidebarNavigationLinkBase";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function AdminToolsSidebarNavigationLink({ isSidebarCollapsed, }) {
   const {
     isOpseraAdministrator,
-  } = useContext(AuthContext);
+  } = useComponentStateReference();
 
-  if (isOpseraAdministrator() !== true) {
+  if (isOpseraAdministrator !== true) {
     return null;
   }
 

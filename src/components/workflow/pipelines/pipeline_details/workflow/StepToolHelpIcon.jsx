@@ -105,12 +105,12 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
         return <SnykStepConfigurationHelpDocumentation/>;
       case "twistlock":
         return <TwistlockStepConfigurationHelpDocumentation/>;
-      case "anchore-scan":
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
       case "terraform":
         return <TerraformStepConfigurationHelpDocumentation/>;
       case "terrascan":
         return <TerrascanStepConfigurationHelpDocumentation/>;
+      case "anchore-scan":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
       case "aws-deploy":
       case "azure-functions":
       case "command-line":

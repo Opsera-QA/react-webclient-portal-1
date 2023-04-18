@@ -14,6 +14,7 @@ function VanitySetVerticalTabContainer(
     setFilterModel,
     isLoading,
     supportSearch,
+    supportClientSideSearching,
     loadData,
     metadata,
     width,
@@ -29,6 +30,21 @@ function VanitySetVerticalTabContainer(
   };
 
   const getSearchBar = () => {
+    if (supportClientSideSearching === true) {
+      return (
+        <div style={{flex: "0 0 auto"}}>
+          <InlineClientSideSearchFilter
+            filterModel={filterModel}
+            setFilterModel={setFilterModel}
+            isLoading={isLoading}
+            supportClientSideSearching={supportClientSideSearching}
+            className={"px-2 d-none d-sm-block"}
+            inputClassName={"w-100"}
+          />
+        </div>
+      );
+    }
+
     return (
       <div style={{flex: "0 0 auto"}}>
         <InlineSearchFilter
@@ -82,6 +98,7 @@ VanitySetVerticalTabContainer.propTypes = {
   loadData: PropTypes.func,
   metadata: PropTypes.object,
   width: PropTypes.string,
+  supportClientSideSearching: PropTypes.bool,
 };
 
 VanitySetVerticalTabContainer.defaultProps = {

@@ -16,6 +16,8 @@ function ArrayToTextField({ model, fieldName, className, visible }) {
         if (hasStringValue(value)) {
           if (commaSeparatedText.length > 0) {
             commaSeparatedText += commaSeparatedText?.length > 0 ? `, ${value}` : value;
+          } else {
+            commaSeparatedText = value;
           }
         }
       });

@@ -14,6 +14,7 @@ import { toolIdentifierConstants } from "components/admin/tools/identifiers/tool
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import InlineLoadingDialog from "components/common/status_notifications/loading/InlineLoadingDialog";
 
 function SalesforceToGitMergeSyncTaskWithJiraTargetBranchInput(
   {
@@ -81,11 +82,12 @@ function SalesforceToGitMergeSyncTaskWithJiraTargetBranchInput(
           response = {};
       }
 
-      const data = DataParsingHelper.parseObject(response?.data, false);
+      const data = DataParsingHelper.parseObject(response?.data?.data, false);
       const newModel = { ...model };
       if (data && (data?.branch === jiraIssueId || data?.name === jiraIssueId)) {
         newModel?.setData("targetBranch", jiraIssueId);
         newModel?.setData("isNewBranch", false);
+        newModel?.setDefaultValue("upstreamBranch");
       } else {
         newModel?.setData("isNewBranch", true);
         newModel?.setData("targetBranch", jiraIssueId);
@@ -138,7 +140,11 @@ function SalesforceToGitMergeSyncTaskWithJiraTargetBranchInput(
   };
 
   if (isLoading) {
-    return null;
+    return (
+      <Col lg={12}>
+        <InlineLoadingDialog />
+      </Col>
+    );
   }
 
   return (

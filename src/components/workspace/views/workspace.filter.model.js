@@ -33,6 +33,7 @@ const workspaceFilterMetadata = {
     {
       label: "Tag",
       id: "tag",
+      formText: "Please Note: This only contains Tags applied to the Workspace resources"
     },
     {
       label: "Owner",
@@ -48,7 +49,7 @@ const workspaceFilterMetadata = {
     },
   ],
   newObjectFields: {
-    pageSize: 100,
+    pageSize: 25,
     currentPage: 1,
     totalCount: 0,
     activeFilters: [],

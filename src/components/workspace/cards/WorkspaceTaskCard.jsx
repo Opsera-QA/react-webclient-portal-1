@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import TaskCardBase from "temp-library-components/cards/tasks/TaskCardBase";
 import { taskHelper } from "components/tasks/task.helper";
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
+import {workspaceHelper} from "components/workspace/workspace.helper";
 
 export default function WorkspaceTaskCard(
   {
@@ -13,7 +14,7 @@ export default function WorkspaceTaskCard(
   const history = useHistory();
 
   const onClickFunction = () => {
-    history.push(taskHelper.getDetailViewLink(task?._id));
+    history.push(workspaceHelper.getWorkspaceItemDetailLink(task));
   };
 
   return (

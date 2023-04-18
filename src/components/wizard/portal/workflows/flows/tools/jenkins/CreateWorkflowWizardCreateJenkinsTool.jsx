@@ -21,6 +21,9 @@ import VanityButtonBase from "../../../../../../../temp-library-components/butto
 import CreateJenkinsToolButton from "./CreateJenkinsToolButton";
 import JenkinsProxyToggle from "../../../../../../inventory/tools/tool_details/tool_jobs/jenkins/JenkinsProxyToggle";
 import BooleanToggleInput from "../../../../../../common/inputs/boolean/BooleanToggleInput";
+import modelHelpers from "../../../../../../common/model/modelHelpers";
+import wizardPortalMetadata from "../../../wizardPortalMetadata";
+import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
 
 export default function CreateWorkflowWizardCreateJenkinsTool({
   className,
@@ -38,7 +41,10 @@ export default function CreateWorkflowWizardCreateJenkinsTool({
   onSkipConnectionTestFunction,
 }) {
   const [currentToolCount, setCurrentToolCount] = useState(0);
-  const { themeConstants } = useComponentStateReference();
+  const { themeConstants, userData } = useComponentStateReference();
+  const [wizardMetadata, setWizardMetadata] = useState(
+    modelHelpers.getToolConfigurationModel({}, wizardPortalMetadata),
+  );
 
   useEffect(() => {
     if (setButtonContainer) {
@@ -132,6 +138,28 @@ export default function CreateWorkflowWizardCreateJenkinsTool({
     );
   };
 
+  const canCreateTool = () => {
+    return RegistryToolRoleHelper.canCreateRegistryTool(
+        userData,
+    );
+  };
+
+
+  const createNewToolToggle = () => {
+    if (!jenkinsToolId && canCreateTool()) {
+      return (
+        <Col lg={12}>
+          <BooleanToggleInput
+            disabled={jenkinsToolId}
+            fieldName={"newTool"}
+            dataObject={wizardMetadata}
+            setDataObject={setWizardMetadata}
+          />
+        </Col>
+      );
+    }
+  };
+
   return (
     <div className={className}>
       <CreateWorkflowWizardRegisterAccountContainer>
@@ -158,6 +186,7 @@ export default function CreateWorkflowWizardCreateJenkinsTool({
           toolType={toolType}
           toolName={"Jenkins"}
           className={"mt-3"}
+          canCreateTool={canCreateTool()}
         />
         <Row>
           <Col sm={12}>
@@ -170,42 +199,47 @@ export default function CreateWorkflowWizardCreateJenkinsTool({
               setCurrentToolCount={setCurrentToolCount}
             />
           </Col>
-          <Col sm={12}>
-            <TextInputBase
-              dataObject={jenkinsToolModel}
-              setDataObject={setJenkinsToolModel}
-              fieldName={"jenkinsUrl"}
-            />
-          </Col>
-          <Col sm={12}>
-            <TextInputBase
-              dataObject={jenkinsToolModel}
-              setDataObject={setJenkinsToolModel}
-              fieldName={"jenkinsPort"}
-            />
-          </Col>
-          <Col sm={12}>
-            <TextInputBase
-              dataObject={jenkinsToolModel}
-              setDataObject={setJenkinsToolModel}
-              fieldName={"jUserId"}
-            />
-          </Col>
-          <Col sm={12}>
-            <JenkinsProxyToggle
-              dataObject={jenkinsToolModel}
-              setDataObject={setJenkinsToolModel}
-              fieldName={"proxyEnable"}
-            />
-          </Col>
-          <Col sm={12}>
-            <BooleanToggleInput
-              dataObject={jenkinsToolModel}
-              setDataObject={setJenkinsToolModel}
-              fieldName={"autoScaleEnable"}
-            />
-          </Col>
-          <Col sm={12}>{getDynamicFields()}</Col>
+          {createNewToolToggle()}
+          {(canCreateTool() && (wizardMetadata?.getData("newTool") || jenkinsToolId)) && (
+            <>
+              <Col sm={12}>
+                <TextInputBase
+                  dataObject={jenkinsToolModel}
+                  setDataObject={setJenkinsToolModel}
+                  fieldName={"jenkinsUrl"}
+                />
+              </Col>
+              <Col sm={12}>
+                <TextInputBase
+                  dataObject={jenkinsToolModel}
+                  setDataObject={setJenkinsToolModel}
+                  fieldName={"jenkinsPort"}
+                />
+              </Col>
+              <Col sm={12}>
+                <TextInputBase
+                  dataObject={jenkinsToolModel}
+                  setDataObject={setJenkinsToolModel}
+                  fieldName={"jUserId"}
+                />
+              </Col>
+              <Col sm={12}>
+                <JenkinsProxyToggle
+                  dataObject={jenkinsToolModel}
+                  setDataObject={setJenkinsToolModel}
+                  fieldName={"proxyEnable"}
+                />
+              </Col>
+              <Col sm={12}>
+                <BooleanToggleInput
+                  dataObject={jenkinsToolModel}
+                  setDataObject={setJenkinsToolModel}
+                  fieldName={"autoScaleEnable"}
+                />
+              </Col>
+              <Col sm={12}>{getDynamicFields()}</Col>
+            </>
+          )}
         </Row>
       </CreateWorkflowWizardRegisterAccountContainer>
     </div>

@@ -82,7 +82,7 @@ function SfdcUnitTestManagementPanel({unitTestRecordId, reload, members, setMemb
 
   const getSearchBar = () => {
     return (
-      <div className="membership-search d-flex mx-auto">
+      <div className="w-100 d-flex px-3">
         <IconBase icon={faSearch} iconClassName={"mr-2 opsera-dark-purple h-100"} />
         <input
           placeholder="Search"

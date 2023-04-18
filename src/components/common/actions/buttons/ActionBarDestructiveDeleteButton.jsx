@@ -1,40 +1,20 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import ActionBarButton from "./ActionBarButton";
 import {faTrash} from "@fortawesome/pro-light-svg-icons";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import {useHistory} from "react-router-dom";
 import DestructiveDeleteModal from "../../modal/DestructiveDeleteModal";
-import {AuthContext} from "../../../../contexts/AuthContext";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ActionBarDestructiveDeleteButton({handleDelete, relocationPath, dataObject, deleteTopic, mustBeOpseraAdmin}) {
-  const toastContext = useContext(DialogToastContext);
-  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
   const history = useHistory();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isOpseraAdmin, setIsOpseraAdmin] = useState(false);
+  const {
+    isOpseraAministrator,
+    toastContext,
+  } = useComponentStateReference();
 
-  useEffect(() => {
-    if (mustBeOpseraAdmin) {
-      checkPermissions();
-    }
-  }, []);
-
-  const checkPermissions = async () => {
-    setIsLoading(true);
-    await getRoles();
-    setIsLoading(false);
-  };
-
-  const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
-      setIsOpseraAdmin(userRoleAccess.OpseraAdministrator);
-    }
-  };
-
+  useEffect(() => { }, [isOpseraAministrator]);
 
   const deleteObject = async () => {
     try {
@@ -59,7 +39,7 @@ function ActionBarDestructiveDeleteButton({handleDelete, relocationPath, dataObj
     setShowDeleteModal(true);
   };
 
-  if (isLoading || (!isOpseraAdmin && mustBeOpseraAdmin)) {
+  if (isOpseraAministrator !== true && mustBeOpseraAdmin) {
     return <></>;
   }
 

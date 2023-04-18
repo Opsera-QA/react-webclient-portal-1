@@ -1,18 +1,20 @@
 import React from "react";
 import * as PropType from "prop-types";
-import ImageBase from "temp-library-components/image/ImageBase";
+import {ImageBase} from "@opsera/react-vanity-set";
 
 export default function OpseraInfinityLogo(
   {
-    scale,
+    desiredHeight,
+    desiredWidth,
     className,
+    imageClassName,
   }) {
   return (
     <ImageBase
       className={className}
-      scale={scale}
-      defaultWidth={171}
-      defaultHeight={126}
+      imageClassName={imageClassName}
+      width={desiredWidth}
+      height={desiredHeight}
       altText={"Opsera Inc."}
       imageSource={"/img/logos/opsera_bird_infinity_171_126.png"}
     />
@@ -20,6 +22,8 @@ export default function OpseraInfinityLogo(
 }
 
 OpseraInfinityLogo.propTypes = {
-  scale: PropType.number,
+  desiredHeight: PropType.number,
+  desiredWidth: PropType.number,
   className: PropType.string,
+  imageClassName: PropType.string,
 };

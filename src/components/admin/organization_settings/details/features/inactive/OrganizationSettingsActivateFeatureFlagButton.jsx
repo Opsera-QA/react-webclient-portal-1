@@ -26,7 +26,7 @@ export default function OrganizationSettingsActivateFeatureFlagButton(
   } = useButtonState();
   const featureFlagAdministrationActions = useFeatureFlagAdministrationActions();
 
-  const activateSiteRole = async () => {
+  const activateFeatureFlag = async () => {
     try {
       buttonStateFunctions.setBusyState();
       const response = await featureFlagAdministrationActions.activateFeatureFlag(
@@ -56,7 +56,7 @@ export default function OrganizationSettingsActivateFeatureFlagButton(
       busyText={"Activating Feature Flag"}
       errorText={"Error Activating Feature Flag!"}
       successText={"Successfully Activated Feature Flag!"}
-      onClickFunction={activateSiteRole}
+      onClickFunction={activateFeatureFlag}
     />
   );
 }

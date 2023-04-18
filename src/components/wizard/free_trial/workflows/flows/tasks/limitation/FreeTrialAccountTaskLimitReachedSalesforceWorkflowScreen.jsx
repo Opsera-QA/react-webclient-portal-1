@@ -10,8 +10,8 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import { faWarning } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
-import FreeTrialWorkflowItemSelectionCardView
-  from "components/wizard/free_trial/workflows/flows/selection/card/FreeTrialWorkflowItemSelectionCardView";
+import WorkspaceWorkflowSelectionCardView
+  from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
 import { taskTemplateIdentifierConstants } from "components/admin/task_templates/taskTemplateIdentifier.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import FreeTrialLaunchWorkflowButton
@@ -131,7 +131,7 @@ export default function FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
         <div className={"mb-3 focusText"}>You may select and run an existing Task or delete one to add another</div>
       </CenteredContentWrapper>
       <div>
-        <FreeTrialWorkflowItemSelectionCardView
+        <WorkspaceWorkflowSelectionCardView
           isLoading={isLoading}
           workspaceItems={workspaceItems}
           setSelectedWorkflowItem={selectWorkflowFunction}

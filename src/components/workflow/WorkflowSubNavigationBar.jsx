@@ -2,11 +2,15 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faBallotCheck, faDraftingCompass, faHexagon, faLayerGroup} from "@fortawesome/pro-light-svg-icons";
+import {faArrowLeft, faBallotCheck, faDraftingCompass, faHexagon, faLayerGroup} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import {pipelineInstructionsHelper} from "components/workflow/instructions/pipelineInstructions.helper";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 import {pipelineCatalogHelper} from "components/workflow/catalog/pipelineCatalog.helper";
+import {workspaceHelper} from "components/workspace/workspace.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import sessionHelper from "utils/session.helper";
+import BackToWorkspaceSubNavigationBarItem from "components/workspace/BackToWorkspaceSubNavigationBarItem";
 
 function WorkflowSubNavigationBar({currentTab}) {
   const history = useHistory();
@@ -29,6 +33,7 @@ function WorkflowSubNavigationBar({currentTab}) {
 
   return (
     <NavigationTabContainer>
+      <BackToWorkspaceSubNavigationBarItem />
       <NavigationTab
         activeTab={currentTab}
         tabText={"Catalog"}

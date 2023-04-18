@@ -1,28 +1,31 @@
-import React, {useContext, useState, useEffect, useRef} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {useHistory, useParams} from "react-router-dom";
-import ToastContext from "react-bootstrap/cjs/ToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import {AuthContext} from "contexts/AuthContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import LdapOrganizationAccountsTable
   from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountsTable";
 import axios from "axios";
-import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import LdapOrganizationAccountManagementSubNavigationBar
   from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountManagementSubNavigationBar";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 // TODO: If we ever support multiple administrators, we will need to remove the requirement to be an Opsera Administrator
 function LdapOrganizationAccountManagement() {
   const history = useHistory();
   const { organizationName } = useParams();
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
   const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
   const [organizationAccounts, setOrganizationAccounts] = useState(undefined);
-  const toastContext = useContext(ToastContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    accessRoleData,
+    getAccessToken,
+    toastContext,
+    isOpseraAdministrator,
+    userData,
+  } = useComponentStateReference();
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -48,11 +51,19 @@ function LdapOrganizationAccountManagement() {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles(cancelSource);
+
+      const ldapOrganization = DataParsingHelper.parseNestedString(userData, "ldap.organization");
+
+      if (organizationName == null || (isOpseraAdministrator !== true && ldapOrganization !== organizationName)) {
+        history.push(`/admin/organization-accounts/${ldapOrganization}`);
+      }
+
+      if (isOpseraAdministrator === true) {
+        await loadOrganizationByName(organizationName, cancelSource);
+      }
     }
     catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     }
@@ -74,35 +85,19 @@ function LdapOrganizationAccountManagement() {
       }
     } catch (error) {
       if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error.message);
-        console.error(error.message);
+        toastContext.showLoadingErrorDialog(error);
       }
     }
   };
 
-  const getRoles = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    const {ldap} = user;
-
-    if (isMounted?.current === true && userRoleAccess) {
-      if (organizationName == null || (!userRoleAccess?.OpseraAdministrator && ldap?.organization !== organizationName)) {
-        history.push(`/admin/organization-accounts/${ldap.organization}`);
-      }
-
-      setAccessRoleData(userRoleAccess);
-
-      if (userRoleAccess?.OpseraAdministrator) {
-        await loadOrganizationByName(organizationName, cancelSource);
-      }
-    }
-  };
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
 
   return (
     <ScreenContainer
       breadcrumbDestination={"ldapOrganizationAccountManagement"}
       isLoading={!accessRoleData}
-      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       accessRoleData={accessRoleData}
       navigationTabContainer={
         <LdapOrganizationAccountManagementSubNavigationBar

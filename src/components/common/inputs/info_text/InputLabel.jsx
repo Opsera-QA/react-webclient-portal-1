@@ -163,7 +163,7 @@ InputLabel.propTypes = {
   inputHelpOverlay: PropTypes.any,
   hasError: PropTypes.bool,
   helpTooltipText: PropTypes.string,
-  loadDataFunction: PropTypes.bool,
+  loadDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   isLoading: PropTypes.bool,
   ellipsisOnClickFunction: PropTypes.func,

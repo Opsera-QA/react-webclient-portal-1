@@ -31,7 +31,7 @@ function DetailScreenContainer(
     isBeta,
     showActiveFilters,
     filterModel,
-    filters,
+    filterOverlay,
     loadDataFunction,
   }) {
   const breadcrumb = getBreadcrumb(breadcrumbDestination);
@@ -93,7 +93,6 @@ function DetailScreenContainer(
         <div className={"content-block-footer-text-container pt-2"}>
           <AccessRoleLevelField
             className={"mx-2"}
-            accessRoleData={accessRoleData}
             objectRoles={objectRoles}
             dataObject={dataObject}
           />
@@ -189,7 +188,7 @@ function DetailScreenContainer(
               helpComponent={helpComponent}
               isBeta={isBeta}
               filterModel={filterModel}
-              filters={filters}
+              filterOverlay={filterOverlay}
               loadDataFunction={loadDataFunction}
             />
           </div>
@@ -222,7 +221,7 @@ DetailScreenContainer.propTypes = {
   isBeta: PropTypes.bool,
   showActiveFilters: PropTypes.bool,
   filterModel: PropTypes.object,
-  filters: PropTypes.any,
+  filterOverlay: PropTypes.any,
   loadDataFunction: PropTypes.func,
 };
 

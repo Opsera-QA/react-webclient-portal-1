@@ -4,6 +4,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import taskActions from "components/tasks/task.actions";
+import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
 
 export default function useGetTaskOrchestrationStatusById(
   id,
@@ -39,7 +40,12 @@ export default function useGetTaskOrchestrationStatusById(
       cancelTokenSource,
       id,
     );
-    setOrchestrationStatus(DataParsingHelper.parseObject(response?.data?.data, {}));
+
+    const newOrchestrationStatus = DataParsingHelper.parseObject(response?.data?.data, {});
+
+    if (ObjectHelper.areObjectsEqualLodash(orchestrationStatus, newOrchestrationStatus) !== true) {
+      setOrchestrationStatus({...newOrchestrationStatus});
+    }
   };
 
   return ({

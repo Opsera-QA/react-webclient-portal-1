@@ -10,13 +10,11 @@ import modelHelpers from "components/common/model/modelHelpers";
 import LogsExportOptionsSubNavigationBar from "components/settings/logs_management/LogsExportOptionsSubNavigationBar";
 
 function LogsExportManagement() {
-  const { userAccessRoles } = useContext(AuthContext);
   const [scheduledTaskModel, setScheduledTaskModel] = useState(modelHelpers.parseObjectIntoModel(undefined, logsExportScheduledTaskMetadata));
 
   return (
     <ScreenContainer
       breadcrumbDestination={"logsExportManagement"}
-      accessRoleData={userAccessRoles}
       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       navigationTabContainer={<LogsExportOptionsSubNavigationBar activeTab={"logsExportOptions"} />}
     >

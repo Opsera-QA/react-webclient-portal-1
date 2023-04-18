@@ -124,6 +124,10 @@ chartsActions.getGithubPullRequestsMetrics = async (
   const useDashboardTags =
     getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
 
+  const githubRepository =
+    getGithubRepositoryFromKpiConfiguration(kpiConfiguration);
+  const githubBranch = getGithubBranchFromKpiConfiguration(kpiConfiguration);
+
   if (!useKpiTags) {
     tags = null;
   }
@@ -145,6 +149,8 @@ chartsActions.getGithubPullRequestsMetrics = async (
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
     type: type,
+    githubRepository: githubRepository,
+    githubBranch: githubBranch,
     repository,
   };
 
@@ -230,6 +236,10 @@ chartsActions.getGithubTotalCommitsMetrics = async (
     dashboardOrgs = null;
   }
 
+  const githubRepository =
+    getGithubRepositoryFromKpiConfiguration(kpiConfiguration);
+  const githubBranch = getGithubBranchFromKpiConfiguration(kpiConfiguration);
+
   const postBody = {
     startDate: date.start,
     endDate: date.end,
@@ -240,6 +250,8 @@ chartsActions.getGithubTotalCommitsMetrics = async (
         ? dashboardTags
         : tags,
     dashboardOrgs: dashboardOrgs,
+    githubRepository: githubRepository,
+    githubBranch: githubBranch,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -903,6 +915,10 @@ chartsActions.getGithubListOfRepositories = async (
   const useDashboardTags =
     getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
 
+  const githubRepository =
+    getGithubRepositoryFromKpiConfiguration(kpiConfiguration);
+  const githubBranch = getGithubBranchFromKpiConfiguration(kpiConfiguration);
+
   if (!useKpiTags) {
     tags = null;
   }
@@ -926,6 +942,8 @@ chartsActions.getGithubListOfRepositories = async (
     search: tableFilterDto?.getData("search"),
     type: tableFilterDto?.getData("type"),
     sortOption: tableFilterDto?.getData("sortOption")?.value,
+    githubRepository: githubRepository,
+    githubBranch: githubBranch,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(

@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import JenkinsDependencyMultiSelectInput
   from "components/common/list_of_values_input/tools/jenkins/dependencies/JenkinsDependencyMultiSelectInput";
-import JenkinsNativeNodeDependencyMultiSelectInput
-  from "components/common/list_of_values_input/tools/jenkins/dependencies/JenkinsNativeNodeDependencyMultiSelectInput";
+import {getJenkinsDependencies}
+  from "components/common/list_of_values_input/tools/jenkins/dependencies/jenkinsDependencyConstants";
 
 const excludeArr = ["SFDC DATA TRANSFORM"];
 
@@ -27,19 +27,6 @@ function JenkinsStepDependencyTypeInput({model, setModel, disabled, buildType}) 
     return null;
   }
 
- if (buildType && buildType === "node") {
-   return (
-       <JenkinsNativeNodeDependencyMultiSelectInput
-           model={model}
-           setDataFunction={setDependencyTypes}
-           clearDataFunction={clearDataFunction}
-           fieldName={"dependencyType"}
-           setModel={setModel}
-           disabled={disabled}
-       />
-   );
- }
-
   return (
     <JenkinsDependencyMultiSelectInput
       model={model}
@@ -48,6 +35,7 @@ function JenkinsStepDependencyTypeInput({model, setModel, disabled, buildType}) 
       fieldName={"dependencyType"}
       setModel={setModel}
       disabled={disabled}
+      dependencies={getJenkinsDependencies(buildType)}
     />
   );
 }

@@ -18,7 +18,7 @@ function GitCustodianStepConfigurationHelpDocumentation() {
           <ol>
             <li>Once the initial Step Setup is configured with the Git Custodian tool, set the following values:
               <ul style={{listStyleType: "none"}}>
-                <li><b>Source Code Management Tool Type</b> - Select a Source Code Management Tool Type from the drop-down. Choose Bitbucket, Github, GitLab or Azure.</li>
+                <li><b>Source Code Management Type</b> - Select a Source Code Management Tool Type from the drop-down. Choose Bitbucket, Github, GitLab or Azure.</li>
                 <li><b>Source Code Management Tool</b> - Select the respective Source Code Management Tool containing the repository to run a scan against.</li>
                 <li><b>Repository</b> - Select the repository to run a scan against.</li>
                 <li><b>Branch</b> - Select the branch to run a scan against.</li>
