@@ -55,6 +55,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     newDataObject.setData("csvFileContent", []);
     newDataObject.setData("isXml", false);
     newDataObject.setData("isCsv", false);
+    newDataObject.setData("modifiedFilesOrigin", (pipelineWizardModel.getData('isOrgToOrg') || pipelineWizardModel.getData("fromGitTasks")) ? "sfdc" : "git");
     setCsvData([]);
     setPipelineWizardModel({...newDataObject});
   };
