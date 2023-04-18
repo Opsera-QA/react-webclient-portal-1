@@ -1,7 +1,6 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import JsonField from "components/common/fields/json/JsonField";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer
@@ -17,31 +16,22 @@ function OracleFusionReportMigrationStepConfigurationSummary({ oracleFusionRepor
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <ToolNameField model={oracleFusionReportMigrationPipelineDataObject} fieldName={"blackDuckToolId"}/>
+          <TextFieldBase dataObject={oracleFusionReportMigrationPipelineDataObject} fieldName={"migrationType"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={oracleFusionReportMigrationPipelineDataObject} fieldName={"type"}/>
+          <ToolNameField model={oracleFusionReportMigrationPipelineDataObject} fieldName={"sourceInstanceToolId"}/>
         </Col>
         <Col lg={6}>
-          <ToolNameField model={oracleFusionReportMigrationPipelineDataObject} fieldName={"gitToolId"}/>
+          <TextFieldBase dataObject={oracleFusionReportMigrationPipelineDataObject} fieldName={"sourceInstancePath"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={oracleFusionReportMigrationPipelineDataObject} fieldName={"workspace"}/>
+          <ToolNameField model={oracleFusionReportMigrationPipelineDataObject} fieldName={"targetInstanceToolId"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={oracleFusionReportMigrationPipelineDataObject} fieldName={"gitRepository"}/>
+          <TextFieldBase dataObject={oracleFusionReportMigrationPipelineDataObject} fieldName={"targetInstancePath"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={oracleFusionReportMigrationPipelineDataObject} fieldName={"defaultBranch"}/>
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={oracleFusionReportMigrationPipelineDataObject} fieldName={"gitFilePath"}/>
-        </Col>        
-        <Col lg={6}>
-          <TextFieldBase dataObject={oracleFusionReportMigrationPipelineDataObject} fieldName={"projectName"}/>
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={oracleFusionReportMigrationPipelineDataObject} fieldName={"tag"}/>
+          <TextFieldBase dataObject={oracleFusionReportMigrationPipelineDataObject} fieldName={"artifactStepId"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
