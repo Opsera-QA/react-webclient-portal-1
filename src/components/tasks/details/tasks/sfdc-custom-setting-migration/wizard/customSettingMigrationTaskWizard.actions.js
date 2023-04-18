@@ -43,4 +43,28 @@ customSettingMigrationTaskWizardActions.triggerCustomSettingsPull = async (
     postBody,
   );
 };
+
+// TODO: wire it up using wizard model
+customSettingMigrationTaskWizardActions.triggerFieldPropertiesPull = async (
+  getAccessToken,
+  cancelTokenSource,
+  taskId,
+  runCount,
+  storageRecordId
+) => {
+  const apiUrl = `/tasks/custom-setting-migration-task/wizard/trigger-list-field-properties`;
+  const postBody = {
+    taskId: taskId,
+    runCount: runCount,
+    pipelineStorageRecordId: storageRecordId,
+    componentFileList: []
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
 export default customSettingMigrationTaskWizardActions;
