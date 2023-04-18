@@ -49,6 +49,9 @@ const SfdcPipelineWizardStandardFileSelector = ({ pipelineWizardModel, setPipeli
     try {
       setIsLoading(true);
       await pullSfdcFiles(cancelSource);
+      if (!pipelineWizardModel?.getData("isOrgToOrg")) {
+        pipelineWizardModel.setData("modifiedFilesOrigin", "git");
+      }
     }
     catch (error) {
       if (isMounted?.current === true) {
