@@ -38,6 +38,7 @@ import useGetPollingTaskOrchestrationStatusById
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {numberHelpers} from "components/common/helpers/number/number.helpers";
 import ViewTaskAuditLogsActionBarButton from "components/tasks/buttons/ViewTaskAuditLogsActionBarButton";
+import TaskSubscriptionIcon from "components/tasks/subscriptions/TaskSubscriptionIcon";
 
 const pausedMessage = "This Task has been paused. Please check the activity logs for details.";
 const stoppedMessage = "This Task has completed running. Please check the activity logs for details.";
@@ -104,6 +105,10 @@ function TaskDetailView() {
           <ViewTaskAuditLogsActionBarButton
             className={"ml-3"}
             taskModel={taskModel}
+          />
+          <TaskSubscriptionIcon
+            taskModel={taskModel}
+            className={"ml-3"}
           />
           <ActionBarDeleteTaskButton
             taskModel={taskModel}
