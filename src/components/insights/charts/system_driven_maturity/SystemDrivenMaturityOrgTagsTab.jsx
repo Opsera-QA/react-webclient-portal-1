@@ -61,8 +61,8 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
       if (isMounted?.current === true) {
         if (orgTags?.length) {
           setMetricData(
-            orgTags.map(({ name, overallMaturityScoreText, previousOverallMaturityScoreText }) => ({
-              name,
+            orgTags.map(({ value, overallMaturityScoreText, previousOverallMaturityScoreText }) => ({
+              name: value,
               score: overallMaturityScoreText,
               previousScore: previousOverallMaturityScoreText
             }))
