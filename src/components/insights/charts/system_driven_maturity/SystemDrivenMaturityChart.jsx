@@ -98,10 +98,6 @@ const MaturityScoreRow = ({ item, onRowSelect }) => {
     ...determineColor(MATURITY_SCORE_TEXT.ELITE, score, previousScore),
   };
 
-  const cellStyle = {
-    border: '1px solid grey'
-  };
-
   const onClickHandler = () => {
     if (onRowSelect) {
       onRowSelect(item);
@@ -110,17 +106,17 @@ const MaturityScoreRow = ({ item, onRowSelect }) => {
 
   return (
     <tr>
-      <td style={{borderBottom: '1px solid grey'}} className="py-2">{name}</td>
-      <td style={cellStyle} className="py-2">
+      <td className="py-2">{name}</td>
+      <td className="py-2">
         <Icon color={icons[MATURITY_SCORE_TEXT.LOW]} onSelect={onClickHandler} />
       </td>
-      <td style={cellStyle} className="py-2">
+      <td className="py-2">
         <Icon color={icons[MATURITY_SCORE_TEXT.MEDIUM]} onSelect={onClickHandler} />
       </td>
-      <td style={cellStyle} className="py-2">
+      <td className="py-2">
         <Icon color={icons[MATURITY_SCORE_TEXT.HIGH]} onSelect={onClickHandler} />
       </td>
-      <td style={cellStyle} className="py-2">
+      <td className="py-2">
         <Icon color={icons[MATURITY_SCORE_TEXT.ELITE]} onSelect={onClickHandler} />
       </td>
     </tr>
