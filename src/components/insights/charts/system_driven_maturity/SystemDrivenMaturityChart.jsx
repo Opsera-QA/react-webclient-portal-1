@@ -20,12 +20,12 @@ function SystemDrivenMaturityChart ({ items, onRowSelect }) {
   return (
     <table className="text-center w-100">
       <thead>
-        <tr>
-          <th></th>
-          <th>Low</th>
-          <th>Medium</th>
-          <th>High</th>
-          <th>Elite</th>
+        <tr className='d-flex'>
+          <th style={{ flex: 4 }}></th>
+          <th style={{ flex: 1 }}>Low</th>
+          <th style={{ flex: 1 }}>Medium</th>
+          <th style={{ flex: 1 }}>High</th>
+          <th style={{ flex: 1 }}>Elite</th>
         </tr>
       </thead>
       <tbody>
@@ -105,18 +105,18 @@ const MaturityScoreRow = ({ item, onRowSelect }) => {
   };
 
   return (
-    <tr>
-      <td className="py-2">{name}</td>
-      <td className="py-2">
+    <tr className='d-flex'>
+      <td className="py-2" style={{ flex: 4 }}>{name}</td>
+      <td className="py-2" style={{ flex: 1 }}>
         <Icon color={icons[MATURITY_SCORE_TEXT.LOW]} onSelect={onClickHandler} />
       </td>
-      <td className="py-2">
+      <td className="py-2" style={{ flex: 1 }}>
         <Icon color={icons[MATURITY_SCORE_TEXT.MEDIUM]} onSelect={onClickHandler} />
       </td>
-      <td className="py-2">
+      <td className="py-2" style={{ flex: 1 }}>
         <Icon color={icons[MATURITY_SCORE_TEXT.HIGH]} onSelect={onClickHandler} />
       </td>
-      <td className="py-2">
+      <td className="py-2" style={{ flex: 1 }}>
         <Icon color={icons[MATURITY_SCORE_TEXT.ELITE]} onSelect={onClickHandler} />
       </td>
     </tr>
