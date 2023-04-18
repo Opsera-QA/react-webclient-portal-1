@@ -23,6 +23,15 @@ export const customSettingMigrationTaskWizardMetadata = {
       label: "Run Count",
       id: "runCount",
     },
+    {
+      label: "Custom Setting",
+      id: "selectedCustomSetting",
+    },
+    {
+      label: "Field Properties",
+      id: "selectedFieldProperties",
+    },
+
   ],
   newObjectFields: {
     taskId: "",
@@ -32,5 +41,7 @@ export const customSettingMigrationTaskWizardMetadata = {
     runCount: 1,
     type: "",
     taskType: "",
+    selectedCustomSetting: "",
+    selectedFieldProperties: [],
   }
 };

@@ -54,6 +54,13 @@ function CustomSettingTaskWizardCreateNewRecordButton({
       if (isMounted?.current === true && newRecord != null) {
         wizardModel?.setData("recordId", newRecord._id);
         setWizardModel({ ...wizardModel });
+        await customSettingMigrationTaskWizardActions.triggerCustomSettingsPull(
+          getAccessToken,
+          cancelTokenSource,
+          wizardModel?.getData("taskId"),
+          wizardModel?.getData("runCount"),
+          newRecord._id,
+        );
         setCurrentScreen(
           CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN,
         );

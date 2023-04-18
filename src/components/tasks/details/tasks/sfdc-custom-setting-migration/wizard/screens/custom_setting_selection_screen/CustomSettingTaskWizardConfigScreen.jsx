@@ -6,10 +6,8 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import { getMigrationTypeLabel } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
-import CustomSettingTaskWizardCreateNewRecordButton from "./CustomSettingTaskWizardCreateNewRecordButton";
 
-const CustomSettingTaskWizardInitializationScreen = ({
+const CustomSettingTaskWizardConfigScreen = ({
   wizardModel,
   setWizardModel,
   setCurrentScreen,
@@ -21,7 +19,7 @@ const CustomSettingTaskWizardInitializationScreen = ({
       return (
         <CenterLoadingIndicator
           minHeight={"500px"}
-          message={`Initializing ${taskType} Custom Setting Migration Wizard`}
+          message={`Loading`}
         />
       );
     }
@@ -37,27 +35,12 @@ const CustomSettingTaskWizardInitializationScreen = ({
             </CenteredContentWrapper>
             <CenteredContentWrapper>
               <div className={"mx-auto mt-3"}>
-                <H5FieldSubHeader
-                  subheaderText={`${getMigrationTypeLabel(
-                    taskType,
-                  )} : Initialization`}
-                />
-                <div className={"focusText"}>
-                  {`Would you like to start a new ${getMigrationTypeLabel(
-                    taskType,
-                  )} Task Wizard Instance?`}
-                </div>
+                Setting Screen Placeholder
               </div>
             </CenteredContentWrapper>
           </div>
         </div>
         <SaveButtonContainer>
-          <CustomSettingTaskWizardCreateNewRecordButton
-            wizardModel={wizardModel}
-            setWizardModel={setWizardModel}
-            setCurrentScreen={setCurrentScreen}
-            className={"mr-2"}
-          />
           <CancelButton
             showUnsavedChangesMessage={false}
             cancelFunction={handleClose}
@@ -75,7 +58,7 @@ const CustomSettingTaskWizardInitializationScreen = ({
   );
 };
 
-CustomSettingTaskWizardInitializationScreen.propTypes = {
+CustomSettingTaskWizardConfigScreen.propTypes = {
   taskType: PropTypes.string,
   setCurrentScreen: PropTypes.func,
   handleClose: PropTypes.func,
@@ -83,4 +66,4 @@ CustomSettingTaskWizardInitializationScreen.propTypes = {
   setWizardModel: PropTypes.func,
 };
 
-export default CustomSettingTaskWizardInitializationScreen;
+export default CustomSettingTaskWizardConfigScreen;

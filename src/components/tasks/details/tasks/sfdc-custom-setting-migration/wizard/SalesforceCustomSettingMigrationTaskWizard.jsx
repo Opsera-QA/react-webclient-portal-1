@@ -13,6 +13,8 @@ import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "./customSettingMigratio
 import CustomSettingTaskWizardInitializationScreen
   from "./screens/initialization_screen/CustomSettingTaskWizardInitializationScreen";
 import { customSettingMigrationTaskWizardMetadata } from "./customSettingMigrationWizard.metadata";
+import CustomSettingTaskWizardConfigScreen
+  from "./screens/custom_setting_selection_screen/CustomSettingTaskWizardConfigScreen";
 
 const SalesforceCustomSettingMigrationTaskWizard = ({ handleClose, taskModel }) => {
   const toastContext = useContext(DialogToastContext);
@@ -84,7 +86,15 @@ const SalesforceCustomSettingMigrationTaskWizard = ({ handleClose, taskModel }) 
           />
         );
       case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN:
-        return (<></>);
+        return (
+          <CustomSettingTaskWizardConfigScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+            taskType={wizardModel?.getData("taskType")}
+          />
+        );
       case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.MAPPING_SCREEN:
         return (<></>);
       case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.QUERY_BUILDER_SCREEN:
