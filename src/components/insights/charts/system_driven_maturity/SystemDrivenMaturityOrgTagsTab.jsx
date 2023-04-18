@@ -72,10 +72,11 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
         if (chartData) {
           const { ltfc, df, mttr, cfr } = chartData;
           setMaturityChartData([
-            {
-              id: 'LTFC',
-              data: ltfc.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
-            },
+            // TODO: LTFC does not have bucketed chart data yet
+            // {
+            //   id: 'LTFC',
+            //   data: ltfc.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
+            // },
             {
               id: 'DF',
               data: df.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
