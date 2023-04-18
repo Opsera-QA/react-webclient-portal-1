@@ -59,11 +59,10 @@ function SystemDrivenMaturityProjectsTab ({ kpiConfiguration, dashboardData, org
       if (isMounted?.current === true && chartData) {
         const { ltfc, df, mttr, cfr } = chartData;
         setMaturityChartData([
-          // TODO: LTFC does not have bucketed chart data yet
-          // {
-          //   id: 'LTFC',
-          //   data: ltfc.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
-          // },
+          {
+            id: 'LTFC',
+            data: ltfc.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
+          },
           {
             id: 'DF',
             data: df.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
