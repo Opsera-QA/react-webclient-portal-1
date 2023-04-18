@@ -5,6 +5,7 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
 import FilterTitleBar from "components/common/table/FilterTitleBar";
 import { widgetHelper } from "temp-library-components/helpers/widgets/widget.helper";
+import WidgetTitleBar from "temp-library-components/widgets/data_blocks/WidgetTitleBar";
 
 function WidgetDataBlockBaseContainer(
   {
@@ -24,6 +25,7 @@ function WidgetDataBlockBaseContainer(
     disabled,
     isLoading,
     rightSideTitleBarItems,
+    centerTitleBarItems,
   }) {
   const getHeight = () => {
     if (numberHelpers.isNumberGreaterThan(0, heightSize)) {
@@ -64,11 +66,12 @@ function WidgetDataBlockBaseContainer(
       return (
         <>
           <div className={"w-100 d-flex px-3 py-2"}>
-            <FilterTitleBar
+            <WidgetTitleBar
               isLoading={isLoading}
               title={title}
               titleIcon={titleIcon}
-              inlineFilters={rightSideTitleBarItems}
+              middleComponents={centerTitleBarItems}
+              rightSideComponents={rightSideTitleBarItems}
             />
           </div>
           {children}
@@ -141,6 +144,7 @@ WidgetDataBlockBaseContainer.propTypes = {
   titleIcon: PropTypes.object,
   isLoading: PropTypes.bool,
   rightSideTitleBarItems: PropTypes.any,
+  centerTitleBarItems: PropTypes.any,
 };
 
 WidgetDataBlockBaseContainer.defaultProps = {

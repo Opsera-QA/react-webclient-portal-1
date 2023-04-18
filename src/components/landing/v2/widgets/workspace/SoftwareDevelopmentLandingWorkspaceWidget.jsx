@@ -19,9 +19,13 @@ import SoftwareDevelopmentLandingPipelineWorkflowWidget
   from "components/landing/v2/widgets/pipelines/widgets/SoftwareDevelopmentLandingPipelineWorkflowWidget";
 import SoftwareDevelopmentLandingTaskWorkflowWidget
   from "components/landing/v2/widgets/tasks/SoftwareDevelopmentLandingTaskWorkflowWidget";
+import WorkflowWidgetNavigationBar, {
+  WORKFLOW_WIDGET_VIEWS
+} from "components/landing/v2/widgets/workspace/WorkflowWidgetNavigationBar";
 
 export default function SoftwareDevelopmentLandingWorkspaceWidget({ className }) {
   const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
+  const [activeKey, setActiveKey] = useState(WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS);
   const {
     toastContext,
   } = useComponentStateReference();
@@ -90,6 +94,12 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
                 : `My Workflows`
             }
             isLoading={isLoading}
+            centerTitleBarItems={
+              <WorkflowWidgetNavigationBar
+                activeKey={activeKey}
+                setActiveKey={setActiveKey}
+              />
+            }
             rightSideTitleBarItems={getNewButton()}
           >
             <WorkspaceWorkflowSelectionCardView

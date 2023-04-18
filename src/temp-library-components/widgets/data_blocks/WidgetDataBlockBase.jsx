@@ -8,6 +8,7 @@ export default function WidgetDataBlockBase(
     title,
     titleIcon,
     rightSideTitleBarItems,
+    centerTitleBarItems,
     heightSize,
     widthSize,
     fontColor,
@@ -26,6 +27,7 @@ export default function WidgetDataBlockBase(
     <WidgetDataBlockBaseContainer
       title={title}
       titleIcon={titleIcon}
+      centerTitleBarItems={centerTitleBarItems}
       rightSideTitleBarItems={rightSideTitleBarItems}
       heightSize={heightSize}
       widthSize={widthSize}
@@ -59,6 +61,7 @@ WidgetDataBlockBase.propTypes = {
   title: PropTypes.any,
   titleIcon: PropTypes.object,
   rightSideTitleBarItems: PropTypes.any,
+  centerTitleBarItems: PropTypes.any,
   isLoading: PropTypes.bool,
 };
 
