@@ -234,6 +234,7 @@ export const isTaskTypeOfCategory = (taskType, category, allowNullCategory = tru
     hasStringValue(category) !== true
     || hasStringValue(taskType) !== true
     || category === "owner"
+    || category === "subscribed"
   ) {
     return true;
   }
