@@ -7,6 +7,7 @@ export default function useGetPollingPipelineOrchestrationStatusById(
   id,
   pollingDelayInMs = 10000,
   handleErrorFunction,
+  enabled = true,
 ) {
   const {
     isLoading,
@@ -25,7 +26,7 @@ export default function useGetPollingPipelineOrchestrationStatusById(
     if (loadData) {
       loadData();
     }
-  }, Math.max(pollingDelayInMs, 5000), error);
+  }, Math.max(pollingDelayInMs, 5000), error, enabled);
 
   return ({
     status: status,

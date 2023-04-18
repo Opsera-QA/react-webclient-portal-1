@@ -16,6 +16,7 @@ export default function OpseraHeaderBar() {
       className={"py-2 px-3 w-100"}
       style={{
         backgroundColor: themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE,
+        minHeight: "58px",
       }}
     >
       <div className={"w-100 d-flex justify-content-between"}>
