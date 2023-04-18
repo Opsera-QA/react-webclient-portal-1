@@ -167,6 +167,10 @@ const sfdcPipelineWizardMetadata = {
       label: "Salesforce Destination Org",
       id: "sfdcDestToolId",
     },
+    {
+      label: "Salesforce API Version",
+      id: "apiVersion"
+    }
   ],
   newObjectFields: {
     includedComponentTypes: "all",
@@ -205,6 +209,7 @@ const sfdcPipelineWizardMetadata = {
     service: "",
     repository: "",
     sfdcDestToolId: "",
+    apiVersion: "",
   }
 };
 
