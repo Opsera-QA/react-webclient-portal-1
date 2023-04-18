@@ -19,7 +19,7 @@ const OracleFusionReportMigrationStepFormMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("migrationType") === "instance_to_instance";
       },
-      regexDefinitionName: "pathField",
+      regexDefinitionName: "fusionPathField",
       maxLength: 1024,
     },
     {
@@ -35,10 +35,9 @@ const OracleFusionReportMigrationStepFormMetadata = {
       isRequired: true,
     },
     {
-      label: "Target Folder Path",
+      label: "Target Folder",
       id: "targetInstancePath",
-      isRequired: true,
-      regexDefinitionName: "pathField",
+      regexDefinitionName: "fusionPathField",
       maxLength: 1024,
     },
     {
