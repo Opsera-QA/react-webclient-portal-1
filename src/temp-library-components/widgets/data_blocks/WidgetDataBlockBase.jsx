@@ -18,6 +18,7 @@ export default function WidgetDataBlockBase(
     onClickFunction,
     disabled,
     isLoading,
+    titleBarClassName,
   }) {
   const {
     themeConstants,
@@ -41,6 +42,7 @@ export default function WidgetDataBlockBase(
       fontColor={fontColor}
       disabledFontColor={themeConstants.COLOR_PALETTE.DARK_GRAY}
       fontFamily={fontFamily}
+      titleBarClassName={titleBarClassName}
     >
       {children}
     </WidgetDataBlockBaseContainer>
@@ -63,6 +65,7 @@ WidgetDataBlockBase.propTypes = {
   rightSideTitleBarItems: PropTypes.any,
   centerTitleBarItems: PropTypes.any,
   isLoading: PropTypes.bool,
+  titleBarClassName: PropTypes.string,
 };
 
 WidgetDataBlockBase.defaultProps = {

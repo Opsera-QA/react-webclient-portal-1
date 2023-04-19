@@ -1340,6 +1340,11 @@ div.data-blocks-ellipses {
     letter-spacing: .05rem;
 }
 
+.widget-title-text {
+    font-size: 1.15rem;
+    letter-spacing: .1rem;
+}
+
 .filter-body {
     min-width: 250px;
 }

@@ -34,8 +34,6 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
     hasMoreItems,
   } = useGetWorkspaceWorkflowResources(currentView);
 
-  console.log("currentView: " + JSON.stringify(currentView));
-
   useEffect(() => {}, []);
 
   const createWorkspaceItem = () => {
@@ -55,7 +53,7 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
         variant={"success"}
         customButtonText={"Create New"}
         size={"1x"}
-        className={"my-auto"}
+        className={"my-auto pt-1"}
       />
     );
   };
@@ -100,6 +98,7 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
             />
           }
           rightSideTitleBarItems={getNewButton()}
+          titleBarClassName={"px-3 pt-2"}
         >
           <WorkspaceWorkflowSelectionCardView
             workflowFilterModel={workflowWidgetFilterModel}

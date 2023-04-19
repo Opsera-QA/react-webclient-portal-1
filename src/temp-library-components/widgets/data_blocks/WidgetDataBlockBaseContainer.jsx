@@ -26,6 +26,7 @@ function WidgetDataBlockBaseContainer(
     isLoading,
     rightSideTitleBarItems,
     centerTitleBarItems,
+    titleBarClassName,
   }) {
   const getHeight = () => {
     if (numberHelpers.isNumberGreaterThan(0, heightSize)) {
@@ -61,11 +62,21 @@ function WidgetDataBlockBaseContainer(
     return classNames;
   };
 
+  const getTitleBarClassNames = () => {
+    let classNames = `w-100 d-flex`;
+
+    if (hasStringValue(titleBarClassName) === true) {
+      classNames += ` ${titleBarClassName}`;
+    }
+
+    return classNames;
+  };
+
   const getBody = () => {
     if (title) {
       return (
         <>
-          <div className={"w-100 d-flex px-3 pt-2"}>
+          <div className={getTitleBarClassNames()}>
             <WidgetTitleBar
               isLoading={isLoading}
               title={title}
@@ -145,11 +156,13 @@ WidgetDataBlockBaseContainer.propTypes = {
   isLoading: PropTypes.bool,
   rightSideTitleBarItems: PropTypes.any,
   centerTitleBarItems: PropTypes.any,
+  titleBarClassName: PropTypes.string,
 };
 
 WidgetDataBlockBaseContainer.defaultProps = {
   backgroundColor: "#FFFFFF",
   disabledBackgroundColor: "#E5E5E5",
+  titleBarClassName: "px-3 pt-2",
 };
 
 export default WidgetDataBlockBaseContainer;
