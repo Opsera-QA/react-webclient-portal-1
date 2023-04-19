@@ -270,6 +270,7 @@ function GitCustodianVulnerableCommitsTable({
         gitCustodianData={gitCustodianData}
         data={vulnerableCommits}
         isLoading={isLoading}
+        count={tableFilterModel.getData("totalCount")}
       />
     );
   };
