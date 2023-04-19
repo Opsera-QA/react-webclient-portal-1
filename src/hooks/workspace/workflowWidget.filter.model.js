@@ -47,6 +47,11 @@ const workflowWidgetFilterMetadata = {
       label: "Sort Option",
       id: "sortOption",
     },
+    {
+      label: "Search",
+      id: "search",
+      maxLength: 25,
+    },
   ],
   newObjectFields: {
     pageSize: 12,
@@ -58,6 +63,7 @@ const workflowWidgetFilterMetadata = {
     tag: undefined,
     active: "",
     sortOption: "name",
+    search: "",
   },
 };
 
