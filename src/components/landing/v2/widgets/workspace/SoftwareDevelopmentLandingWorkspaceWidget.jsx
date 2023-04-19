@@ -22,10 +22,12 @@ import SoftwareDevelopmentLandingTaskWorkflowWidget
 import WorkflowWidgetNavigationBar, {
   WORKFLOW_WIDGET_VIEWS
 } from "components/landing/v2/widgets/workspace/WorkflowWidgetNavigationBar";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import sessionHelper from "utils/session.helper";
 
 export default function SoftwareDevelopmentLandingWorkspaceWidget({ className }) {
   const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
-  const [activeKey, setActiveKey] = useState(WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS);
+  const [currentView, setCurrentView] = useState(DataParsingHelper.parseString(sessionHelper.getCookie(sessionHelper.SUPPORTED_COOKIE_STORAGE_KEYS.LANDING_SCREEN_WORKFLOW_WIDGET_CURRENT_VIEW), WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS));
   const {
     toastContext,
   } = useComponentStateReference();
@@ -98,8 +100,8 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
             isLoading={isLoading}
             centerTitleBarItems={
               <WorkflowWidgetNavigationBar
-                activeKey={activeKey}
-                setActiveKey={setActiveKey}
+                currentView={currentView}
+                setCurrentView={setCurrentView}
               />
             }
             rightSideTitleBarItems={getNewButton()}

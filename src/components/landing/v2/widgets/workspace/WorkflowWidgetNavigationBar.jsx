@@ -10,37 +10,29 @@ export const WORKFLOW_WIDGET_VIEWS = {
 
 export default function WorkflowWidgetNavigationBar(
   {
-    activeKey,
-    setActiveKey,
+    currentView,
+    setCurrentView,
   }) {
-  const handleSubItemClick = (newScreen) => {
-    if (newScreen === activeKey) {
-      return;
-    }
-
-    setActiveKey(newScreen);
-  };
-
   return (
     <SubMenuContainer className={"mx-auto"}>
       <SubMenuItem
         className={"px-3"}
         itemKey={WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS}
-        activeKey={activeKey}
-        setActiveKey={handleSubItemClick}
+        currentView={currentView}
+        setCurrentView={setCurrentView}
         label={"My Workflows"}
       />
       <SubMenuItem
         className={"px-3"}
-        activeKey={activeKey}
-        setActiveKey={setActiveKey}
+        currentView={currentView}
+        setCurrentView={setCurrentView}
         label={"Following"}
         itemKey={WORKFLOW_WIDGET_VIEWS.FOLLOWING}
       />
       <SubMenuItem
         className={"px-3"}
-        activeKey={activeKey}
-        setActiveKey={setActiveKey}
+        currentView={currentView}
+        setCurrentView={setCurrentView}
         label={"Recent"}
         itemKey={WORKFLOW_WIDGET_VIEWS.RECENT_ACTIVITY}
       />
@@ -49,6 +41,6 @@ export default function WorkflowWidgetNavigationBar(
 }
 
 WorkflowWidgetNavigationBar.propTypes = {
-  activeKey: PropTypes.string,
-  setActiveKey: PropTypes.func,
+  currentView: PropTypes.string,
+  setCurrentView: PropTypes.func,
 };
