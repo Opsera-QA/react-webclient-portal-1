@@ -71,14 +71,11 @@ export default function useGetWorkspaceWorkflowResources(
     setWorkflowWidgetFilterModel({...newFilterModel});
   };
 
-  const hasMoreItems = currentPage * 12 <= workspaceItemIds.length;
-  console.log("workspaceItemIds: " + JSON.stringify(workspaceItemIds.length));
+  const hasMoreItems = currentPage * 12 < workspaceItemIds.length;
 
   const loadMoreWorkflows = async () => {
     const startIndex = currentPage * 12;
-    console.log("itemIdsBefore: " + JSON.stringify(workspaceItemIds));
     const idArray = workspaceItemIds.slice(startIndex, startIndex + 12);
-    console.log("idArray: " + JSON.stringify(idArray));
 
     const response = await workspaceActions.getWorkspaceWorkflowResourcesByIds(
       idArray,
