@@ -520,6 +520,8 @@ chartsActions.getGitScraperIssues = async (
     dashboardOrgs: dashboardOrgs,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
+    search: tableFilterDto?.getData("search"),
+    sortOption: tableFilterDto?.getData("sortOption")?.value,
     type: type,
     repository,
   };
@@ -570,6 +572,8 @@ chartsActions.getGitScraperCleanRepos = async (
     dashboardOrgs: dashboardOrgs,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
+    search: tableFilterDto?.getData("search"),
+    sortOption: tableFilterDto?.getData("sortOption")?.value,
     type: type,
     repository,
   };
