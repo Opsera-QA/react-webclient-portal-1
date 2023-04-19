@@ -11,21 +11,55 @@ export default function WidgetTitleBar(
     isLoading,
     isPolling,
   }) {
+  const getBody = (stacked) => {
+    if (stacked === true) {
+      return (
+        <>
+          <div className={"d-flex w-100 justify-content-between"}>
+            <div className={"my-auto mr-2 widget-title-text text-nowrap"}>
+              <span className={"d-flex"}>
+                <IconBase icon={titleIcon} isLoading={isLoading || isPolling} className={"mr-2 d-none d-lg-block"}/>
+                {title}
+              </span>
+            </div>
+            <div className={"d-flex"}>
+              {rightSideComponents}
+            </div>
+          </div>
+          <div className={"mt-3"}>
+            {middleComponents}
+          </div>
+        </>
+      );
+    }
+
+    return (
+      <div className={"d-flex w-100 justify-content-between"}>
+        <div className={"my-auto mr-2 widget-title-text text-nowrap"}>
+          <span className={"d-flex"}>
+            <IconBase icon={titleIcon} isLoading={isLoading || isPolling} className={"mr-2 d-none d-lg-block"} />
+            {title}
+          </span>
+        </div>
+        <div>
+          {middleComponents}
+        </div>
+        <div className={"d-flex"}>
+          {rightSideComponents}
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <div className={"d-flex w-100 justify-content-between"}>
-      <div className={"my-auto mr-2 widget-title-text text-nowrap"}>
-        <span className={"d-flex"}>
-          <IconBase icon={titleIcon} isLoading={isLoading || isPolling} className={"mr-2 d-none d-lg-block"} />
-          {title}
-        </span>
+    <>
+      <div className={"d-none d-xs-inline d-sm-inline d-md-inline d-lg-none d-xl-none w-100"}>
+        {getBody(true)}
       </div>
-      <div>
-        {middleComponents}
+      <div className={"d-none d-xs-none d-sm-none d-md-none d-lg-inline d-xl-inline w-100 d-flex"}>
+        {getBody()}
       </div>
-      <div className={"d-flex"}>
-        {rightSideComponents}
-      </div>
-    </div>
+    </>
   );
 }
 

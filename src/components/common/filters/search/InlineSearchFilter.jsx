@@ -21,7 +21,6 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
     const newSearchText = DataParsingHelper.parseString(value, "");
     const maxLength = filterDto?.getMaxLength(fieldName);
 
-    console.log("maxLength: " + JSON.stringify(maxLength));
     if (maxLength) {
       filterDto.setData(fieldName, newSearchText.substring(0, maxLength));
     } else {

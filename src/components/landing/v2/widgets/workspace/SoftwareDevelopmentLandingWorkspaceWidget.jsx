@@ -61,7 +61,7 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
           filterDto={workflowWidgetFilterModel}
           setFilterDto={setWorkflowWidgetFilterModel}
           isLoading={isLoading}
-          className={"ml-3 my-auto d-none d-md-none d-lg-block"}
+          className={"ml-3 my-auto"}
           supportSearch={workflowWidgetFilterModel?.canSearch()}
           loadData={loadData}
         />
