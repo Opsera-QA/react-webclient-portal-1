@@ -21,7 +21,7 @@ export function parseError(error) {
       return responseData;
     }
 
-    const responseDataMessage = error?.response?.data?.message;
+    const responseDataMessage = error?.response?.data?.message || error?.response?.data?.error;
 
     if (hasStringValue(responseDataMessage) === true) {
       return responseDataMessage;

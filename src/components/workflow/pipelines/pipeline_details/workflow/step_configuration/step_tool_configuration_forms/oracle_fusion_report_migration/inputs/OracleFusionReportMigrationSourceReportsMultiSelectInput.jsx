@@ -72,13 +72,21 @@ function OracleFusionReportMigrationSourceReportsMultiSelectInput({ model, setMo
     }
 
     if (result?.length === 0) {
+      setSourceReports([]);
       setPlaceholderText("No Source Instance Reports found");
+      clearDataFunction();
     }
   };
 
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData("sourceInstanceReports", selectedOption);
+    setModel({...newModel});
+  };
+
+  const clearDataFunction = (fieldName) => {
+    let newModel = {...model};
+    newModel.setDefaultValue("sourceInstanceReports");
     setModel({...newModel});
   };
 
@@ -94,7 +102,10 @@ function OracleFusionReportMigrationSourceReportsMultiSelectInput({ model, setMo
       busy={isLoading}
       disabled={disabled || !sourceToolId}
       setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
       error={error}
+      singularTopic={"Source Report"}
+      pluralTopic={"Source Reports"}
     />
   );
 }

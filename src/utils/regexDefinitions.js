@@ -299,9 +299,9 @@ regexDefinitions.argoParameterInputRules = {
 };
 
 regexDefinitions.fusionPathField = {
-  regex: /^[A-Za-z0-9\-_;./\\']*$/,
-  formText: "Letters, numbers, dashes, slashes, semi-colons, underscores, single-quotes, and periods are allowed",
-  errorFormText: "Only letters, numbers, dashes, slashes, semi-colons, underscores, single-quotes, and periods are allowed"
+  regex: /^[A-Za-z0-9\-_;./\\' ]*$/,
+  formText: "Letters, numbers, dashes, slashes, semi-colons, spaces, underscores, single-quotes, and periods are allowed",
+  errorFormText: "Only letters, numbers, dashes, slashes, semi-colons, spaces, underscores, single-quotes, and periods are allowed"
 };
 
 export default regexDefinitions;
