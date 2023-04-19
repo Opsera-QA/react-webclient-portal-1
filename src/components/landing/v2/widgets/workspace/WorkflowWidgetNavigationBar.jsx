@@ -13,26 +13,31 @@ export default function WorkflowWidgetNavigationBar(
     currentView,
     setCurrentView,
   }) {
+
+  if (setCurrentView == null) {
+    return null;
+  }
+
   return (
     <SubMenuContainer className={"mx-auto"}>
       <SubMenuItem
         className={"px-3"}
         itemKey={WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS}
-        currentView={currentView}
-        setCurrentView={setCurrentView}
+        activeKey={currentView}
+        setActiveKey={setCurrentView}
         label={"My Workflows"}
       />
       <SubMenuItem
         className={"px-3"}
-        currentView={currentView}
-        setCurrentView={setCurrentView}
+        activeKey={currentView}
+        setActiveKey={setCurrentView}
         label={"Following"}
         itemKey={WORKFLOW_WIDGET_VIEWS.FOLLOWING}
       />
       <SubMenuItem
         className={"px-3"}
-        currentView={currentView}
-        setCurrentView={setCurrentView}
+        activeKey={currentView}
+        setActiveKey={setCurrentView}
         label={"Recent"}
         itemKey={WORKFLOW_WIDGET_VIEWS.RECENT_ACTIVITY}
       />
