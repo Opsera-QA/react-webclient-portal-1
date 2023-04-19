@@ -65,7 +65,7 @@ function WidgetDataBlockBaseContainer(
     if (title) {
       return (
         <>
-          <div className={"w-100 d-flex px-3 py-2"}>
+          <div className={"w-100 d-flex px-3 pt-2"}>
             <WidgetTitleBar
               isLoading={isLoading}
               title={title}
