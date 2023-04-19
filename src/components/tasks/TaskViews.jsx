@@ -16,6 +16,8 @@ import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer
 import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
+import PaginationContainer from "components/common/pagination/PaginationContainer";
+import SideBySideViewBase from "components/common/tabs/SideBySideViewBase";
 
 function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, taskData, isMounted}) {
   const {
@@ -76,7 +78,6 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
         isLoading={isLoading}
         loadData={loadData}
         taskData={taskData}
-        taskFilterModel={taskFilterModel}
       />
     );
   };
@@ -87,33 +88,48 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
         isLoading={isLoading}
         loadData={loadData}
         taskData={taskData}
-        taskFilterModel={taskFilterModel}
-        setTaskFilterModel={setTaskFilterModel}
       />
     );
   };
 
+  const getVerticalTabContainer = () => {
+    return (
+      <TaskVerticalTabContainer
+        isLoading={isLoading}
+        loadData={loadData}
+        taskFilterModel={taskFilterModel}
+      />
+    );
+  };
+
+  const getCurrentView = () => {
+    return (
+      <TableCardView
+        data={taskData}
+        isLoading={isLoading}
+        cardView={getCardView()}
+        tableView={getTableView()}
+      />
+    );
+  };
 
   const getTableCardView = () => {
     return (
-      <TabAndViewContainer
-        verticalTabContainer={
-          <TaskVerticalTabContainer
-            isLoading={isLoading}
-            loadData={loadData}
-            taskFilterModel={taskFilterModel}
-          />
-        }
-        currentView={
-          <TableCardView
-            filterModel={taskFilterModel}
-            data={taskData}
-            isLoading={isLoading}
-            cardView={getCardView()}
-            tableView={getTableView()}
-          />
-        }
-      />
+      <PaginationContainer
+        loadData={loadData}
+        isLoading={isLoading}
+        filterDto={taskFilterModel}
+        setFilterDto={setTaskFilterModel}
+        data={taskData}
+        nextGeneration={true}
+      >
+        <SideBySideViewBase
+          leftSideView={getVerticalTabContainer()}
+          rightSideView={getCurrentView()}
+          leftSideMinimumWidth={"175px"}
+          leftSideMaximumWidth={"175px"}
+        />
+      </PaginationContainer>
     );
   };
 
