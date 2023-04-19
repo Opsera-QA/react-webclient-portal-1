@@ -3,14 +3,18 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import useWorkspaceActions from "hooks/workspace/useWorkspaceActions";
 import WorkspaceFilterModel from "components/workspace/views/workspace.filter.model";
+import {WORKFLOW_WIDGET_VIEWS} from "components/landing/v2/widgets/workspace/WorkflowWidgetNavigationBar";
+import WorkflowWidgetFilterModel from "hooks/workspace/workflowWidget.filter.model";
 
 export default function useGetWorkspaceWorkflowResources(
+  currentView,
   fields,
-  pageSize,
   handleErrorFunction,
 ) {
   const [workspaceItems, setWorkspaceItems] = useState([]);
-  const [workspaceFilterModel, setWorkspaceFilterModel] = useState(new WorkspaceFilterModel());
+  const [workspaceItemIds, setWorkspaceItemIds] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [workflowWidgetFilterModel, setWorkflowWidgetFilterModel] = useState(new WorkflowWidgetFilterModel());
   const {
     isLoading,
     error,
@@ -22,37 +26,76 @@ export default function useGetWorkspaceWorkflowResources(
   useEffect(() => {
     setWorkspaceItems([]);
 
-    if (pageSize) {
-      workspaceFilterModel.setData("pageSize", pageSize);
-    }
-
-    if (loadData) {
+    if (loadData && currentView) {
       loadData(getWorkspaceWorkflowResources, handleErrorFunction).catch(() => {});
     }
-  }, []);
+  }, [currentView]);
 
   const getWorkspaceWorkflowResources = async (
-    newFilterModel = workspaceFilterModel,
+    newFilterModel = workflowWidgetFilterModel,
   ) => {
     setWorkspaceItems([]);
-    const response = await workspaceActions.getMyWorkspaceWorkflowResources(
-      newFilterModel,
-      fields,
-      newFilterModel?.getData("active"),
-    );
+    let response;
+
+    switch (currentView) {
+      case WORKFLOW_WIDGET_VIEWS.FOLLOWING:
+        response = await workspaceActions.getSubscribedWorkflowResources(
+          newFilterModel,
+          fields,
+          newFilterModel?.getData("active"),
+        );
+        break;
+      case WORKFLOW_WIDGET_VIEWS.RECENT_ACTIVITY:
+        response = await workspaceActions.getRecentWorkflowResources(
+          newFilterModel,
+          fields,
+          newFilterModel?.getData("active"),
+        );
+        break;
+      case WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS:
+      default:
+        response = await workspaceActions.getMyWorkspaceWorkflowResources(
+          newFilterModel,
+          fields,
+          newFilterModel?.getData("active"),
+        );
+        break;
+    }
+
     const items = DataParsingHelper.parseNestedArray(response, "data.data", []);
+    const ids = DataParsingHelper.parseNestedArray(response, "data.sortedIds", []);
+    setWorkspaceItemIds([...ids]);
     setWorkspaceItems([...items]);
     newFilterModel.updateTotalCount(DataParsingHelper.parseNestedInteger(response, "data.count", 0));
     newFilterModel.updateActiveFilters();
-    setWorkspaceFilterModel({...newFilterModel});
+    setWorkflowWidgetFilterModel({...newFilterModel});
+  };
+
+  const hasMoreItems = currentPage * 12 <= workspaceItemIds.length;
+  console.log("workspaceItemIds: " + JSON.stringify(workspaceItemIds.length));
+
+  const loadMoreWorkflows = async () => {
+    const startIndex = currentPage * 12;
+    console.log("itemIdsBefore: " + JSON.stringify(workspaceItemIds));
+    const idArray = workspaceItemIds.slice(startIndex, startIndex + 12);
+    console.log("idArray: " + JSON.stringify(idArray));
+
+    const response = await workspaceActions.getWorkspaceWorkflowResourcesByIds(
+      idArray,
+    );
+    const items = DataParsingHelper.parseNestedArray(response, "data.data", []);
+    setWorkspaceItems([...workspaceItems, ...items]);
+    setCurrentPage(currentPage + 1);
   };
 
   return ({
     workspaceItems: workspaceItems,
     setWorkspaceItems: setWorkspaceItems,
-    workspaceFilterModel: workspaceFilterModel,
-    setWorkspaceFilterModel: setWorkspaceFilterModel,
+    workflowWidgetFilterModel: workflowWidgetFilterModel,
+    setWorkflowWidgetFilterModel: setWorkflowWidgetFilterModel,
     loadData: async (newFilterModel) => loadData(async () => getWorkspaceWorkflowResources(newFilterModel), handleErrorFunction),
+    loadMoreWorkflows: loadMoreWorkflows,
+    hasMoreItems: hasMoreItems,
     isLoading: isLoading,
     error: error,
     setError: setError,

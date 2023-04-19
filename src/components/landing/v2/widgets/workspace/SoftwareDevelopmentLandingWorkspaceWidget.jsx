@@ -1,29 +1,22 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import WorkspaceWorkflowSelectionCardView
-  from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
-import { workspaceConstants } from "components/workspace/workspace.constants";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import NoRegisteredWorkflowsCard from "components/wizard/free_trial/workflows/NoRegisteredWorkflowsCard";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
-import modelHelpers from "components/common/model/modelHelpers";
 import SoftwareDevelopmentSalesforceLandingWidget
   from "components/landing/v2/widgets/SoftwareDevelopmentSalesforceLandingWidget";
 import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
 import CreateWorkspaceResourceWizard from "components/wizard/workspace/CreateWorkspaceResourceWizard";
-import useGetWorkspaceWorkflowResources from "hooks/workspace/useGetWorkspaceWorkflowResources";
-import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
-import SoftwareDevelopmentLandingPipelineWorkflowWidget
-  from "components/landing/v2/widgets/pipelines/widgets/SoftwareDevelopmentLandingPipelineWorkflowWidget";
-import SoftwareDevelopmentLandingTaskWorkflowWidget
-  from "components/landing/v2/widgets/tasks/SoftwareDevelopmentLandingTaskWorkflowWidget";
 import WorkflowWidgetNavigationBar, {
   WORKFLOW_WIDGET_VIEWS
 } from "components/landing/v2/widgets/workspace/WorkflowWidgetNavigationBar";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import sessionHelper from "utils/session.helper";
+import useGetWorkspaceWorkflowResources from "hooks/workspace/useGetWorkspaceWorkflowResources";
+import WorkspaceWorkflowSelectionCardView
+  from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
 
 export default function SoftwareDevelopmentLandingWorkspaceWidget({ className }) {
   const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
@@ -34,10 +27,14 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
   const {
     workspaceItems,
     isLoading,
-    workspaceFilterModel,
-    setWorkspaceFilterModel,
+    workflowWidgetFilterModel,
+    setWorkflowWidgetFilterModel,
     loadData,
-  } = useGetWorkspaceWorkflowResources();
+    loadMoreWorkflows,
+    hasMoreItems,
+  } = useGetWorkspaceWorkflowResources(currentView);
+
+  console.log("currentView: " + JSON.stringify(currentView));
 
   useEffect(() => {}, []);
 
@@ -63,7 +60,6 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
     );
   };
 
-  // TODO: Cleanup
   const getBody = () => {
     if (
       isLoading !== true
@@ -87,69 +83,41 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
       );
     }
 
-    if (selectedWorkflowItem == null) {
-      return (
-        <>
-          <WidgetDataBlockBase
-            heightSize={5}
-            title={
-              isLoading === true
-                ? "Loading Workflows"
-                : `My Workflows`
-            }
-            isLoading={isLoading}
-            centerTitleBarItems={
-              <WorkflowWidgetNavigationBar
-                currentView={currentView}
-                setCurrentView={setCurrentView}
-              />
-            }
-            rightSideTitleBarItems={getNewButton()}
-          >
-            <WorkspaceWorkflowSelectionCardView
-              workflowFilterModel={workspaceFilterModel}
-              heightSize={5}
-              workspaceItems={workspaceItems}
-              loadData={loadData}
-              isLoading={isLoading}
-              setSelectedWorkflowItem={setSelectedWorkflowItem}
-              selectedWorkflowItem={selectedWorkflowItem}
+    return (
+      <>
+        <WidgetDataBlockBase
+          heightSize={5}
+          title={
+            isLoading === true
+              ? "Loading Workflows"
+              : `My Workflows`
+          }
+          isLoading={isLoading}
+          centerTitleBarItems={
+            <WorkflowWidgetNavigationBar
+              currentView={currentView}
+              setCurrentView={setCurrentView}
             />
-          </WidgetDataBlockBase>
-          <div className={"py-3 mx-auto"}>
-            <SoftwareDevelopmentSalesforceLandingWidget className={"mx-4"} />
-          </div>
-        </>
-      );
-    }
-
-    if (selectedWorkflowItem.workspaceType === workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE) {
-      return (
-        <>
-          <SoftwareDevelopmentLandingPipelineWorkflowWidget
-            selectedPipeline={selectedWorkflowItem}
-            setSelectedPipeline={setSelectedWorkflowItem}
+          }
+          rightSideTitleBarItems={getNewButton()}
+        >
+          <WorkspaceWorkflowSelectionCardView
+            workflowFilterModel={workflowWidgetFilterModel}
+            heightSize={5}
+            workspaceItems={workspaceItems}
+            loadData={loadData}
+            isLoading={isLoading}
+            setSelectedWorkflowItem={setSelectedWorkflowItem}
+            selectedWorkflowItem={undefined}
+            hasMoreItems={hasMoreItems}
+            loadMoreWorkflows={loadMoreWorkflows}
           />
-          <div className={"py-3 mx-auto"}>
-            <SoftwareDevelopmentSalesforceLandingWidget className={"mx-4"} />
-          </div>
-        </>
-      );
-    }
-
-    if (selectedWorkflowItem?.workspaceType === workspaceConstants.WORKSPACE_ITEM_TYPES.TASK) {
-      return (
-        <>
-          <SoftwareDevelopmentLandingTaskWorkflowWidget
-            selectedTask={modelHelpers.parseObjectIntoModel(selectedWorkflowItem, tasksMetadata)}
-            setSelectedTask={setSelectedWorkflowItem}
-          />
-          <div className={"py-3 mx-auto"}>
-            <SoftwareDevelopmentSalesforceLandingWidget className={"mx-4"} />
-          </div>
-        </>
-      );
-    }
+        </WidgetDataBlockBase>
+        <div className={"py-3 mx-auto"}>
+          <SoftwareDevelopmentSalesforceLandingWidget className={"mx-4"}/>
+        </div>
+      </>
+    );
   };
 
   return (
