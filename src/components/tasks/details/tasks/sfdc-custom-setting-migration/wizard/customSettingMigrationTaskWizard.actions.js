@@ -44,6 +44,20 @@ customSettingMigrationTaskWizardActions.triggerCustomSettingsPull = async (
   );
 };
 
+customSettingMigrationTaskWizardActions.pullCustomSettingsList = async (
+  getAccessToken,
+  cancelTokenSource,
+  wizardModel,
+) => {
+  const apiUrl = `/tasks/custom-setting-migration-task/wizard/${wizardModel?.getData("recordId")}/pull-custom-settings-list`;
+
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
 // TODO: wire it up using wizard model
 customSettingMigrationTaskWizardActions.triggerFieldPropertiesPull = async (
   getAccessToken,

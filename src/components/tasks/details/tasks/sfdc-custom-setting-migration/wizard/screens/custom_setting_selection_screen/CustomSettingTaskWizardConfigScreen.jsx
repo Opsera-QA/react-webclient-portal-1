@@ -6,6 +6,7 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import CustomSettingSelector from "./CustomSettingSelector";
 
 const CustomSettingTaskWizardConfigScreen = ({
   wizardModel,
@@ -27,18 +28,10 @@ const CustomSettingTaskWizardConfigScreen = ({
     return (
       <div>
         <div className={"m-3"}>
-          <div className={"mb-4"}>
-            <CenteredContentWrapper>
-              <div className={"mx-auto"}>
-                <OpseraInfinityLogo />
-              </div>
-            </CenteredContentWrapper>
-            <CenteredContentWrapper>
-              <div className={"mx-auto mt-3"}>
-                Setting Screen Placeholder
-              </div>
-            </CenteredContentWrapper>
-          </div>
+          <CustomSettingSelector
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+          />
         </div>
         <SaveButtonContainer>
           <CancelButton
