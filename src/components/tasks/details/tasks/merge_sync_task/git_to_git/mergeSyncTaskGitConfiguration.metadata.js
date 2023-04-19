@@ -99,7 +99,11 @@ export const mergeSyncTaskGitConfigurationMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("isSalesforce") === true;
       },
-    },    
+    },
+    {
+      label: "Enable Jira Integration",
+      id: "enableJiraIntegration",
+    },
   ],
   newObjectFields: {
     toolId: "",
@@ -119,5 +123,6 @@ export const mergeSyncTaskGitConfigurationMetadata = {
     jiraIssueIds: undefined,
     buildType: "",
     isSalesforce: false,
+    enableJiraIntegration: false,
   }
 };

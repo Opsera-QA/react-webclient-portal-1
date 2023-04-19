@@ -41,6 +41,8 @@ import MergeSyncTaskJiraIssueSelectInput
   from "components/tasks/details/tasks/merge_sync_task/inputs/MergeSyncTaskJiraIssueSelectInput";
 import SalesforceToGitMergeSyncTaskWithJiraTargetBranchInput
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskWithJiraTargetBranchInput";
+import SalesforceMergeSyncTaskEnableJiraToggleInput
+  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceMergeSyncTaskEnableJiraToggleInput";
 
 function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
   {
@@ -149,6 +151,11 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
   };
 
   const getJiraInputs = () => {
+
+    if (gitConfigurationModel?.getData("enableJiraIntegration") !== true) {
+      return null;
+    }
+
     return (
       <>
         <Col lg={12}>
@@ -187,6 +194,12 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
           model={salesforceConfigurationModel}
           setModel={setSalesforceModelFunction}
           fieldName={"sourceToolId"}
+        />
+      </Col>
+      <Col lg={12}>
+        <SalesforceMergeSyncTaskEnableJiraToggleInput 
+          model={gitConfigurationModel}
+          setModel={setGitModelFunction}
         />
       </Col>
       {getJiraInputs()}
