@@ -17,6 +17,7 @@ import sessionHelper from "utils/session.helper";
 import useGetWorkspaceWorkflowResources from "hooks/workspace/useGetWorkspaceWorkflowResources";
 import WorkspaceWorkflowSelectionCardView
   from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
+import InlineSearchFilter from "components/common/filters/search/InlineSearchFilter";
 
 export default function SoftwareDevelopmentLandingWorkspaceWidget({ className }) {
   const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
@@ -44,17 +45,27 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
     );
   };
 
-  const getNewButton = () => {
+  const getRightSideTitleBarItems = () => {
     return (
-      <NewRecordButton
-        addRecordFunction={createWorkspaceItem}
-        type={""}
-        isLoading={isLoading}
-        variant={"success"}
-        customButtonText={"Create New"}
-        size={"1x"}
-        className={"my-auto pt-1"}
-      />
+      <>
+        <InlineSearchFilter
+          filterDto={workflowWidgetFilterModel}
+          setFilterDto={setWorkflowWidgetFilterModel}
+          isLoading={isLoading}
+          className={"mr-3 my-auto d-none d-md-none d-lg-block"}
+          supportSearch={workflowWidgetFilterModel?.canSearch()}
+          loadData={loadData}
+        />
+        <NewRecordButton
+          addRecordFunction={createWorkspaceItem}
+          type={""}
+          isLoading={isLoading}
+          variant={"success"}
+          customButtonText={"Create New"}
+          // size={"1x"}
+          className={"my-auto"}
+        />
+      </>
     );
   };
 
@@ -97,7 +108,7 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
               setCurrentView={setCurrentView}
             />
           }
-          rightSideTitleBarItems={getNewButton()}
+          rightSideTitleBarItems={getRightSideTitleBarItems()}
           titleBarClassName={"px-3 pt-2"}
         >
           <WorkspaceWorkflowSelectionCardView
