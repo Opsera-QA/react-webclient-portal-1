@@ -55,6 +55,8 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
         isLoading={isLoading}
         variant={"success"}
         customButtonText={"Create New"}
+        size={"1x"}
+        className={"my-auto"}
       />
     );
   };
