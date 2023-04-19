@@ -564,8 +564,6 @@ export const getLookupIconColumn = (field, className, width = 60) => {
       else{
         iconCss = "fa-minus";
       }
-
-      // const iconCss = text === true ? "fa-check-circle green" : "fa-times-circle red";
       return (
           `<i class="fal ${iconCss} cell-icon vertical-align-item"></i>`
       );
