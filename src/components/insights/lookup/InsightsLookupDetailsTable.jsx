@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import {
-  getTableTextColumn,
-  getTableDateTimeColumn,getTableBooleanIconColumn
+    getTableTextColumn,
+    getTableDateTimeColumn, getColumnHeader, getColumnId
 } from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -24,80 +24,113 @@ function InsightsLookupDetailsTable({
   const [showExportPanel, setShowExportPanel] = useState(false);
   const fields = insightsLookupDetailsMetadata.fields;
 
-  const columns = useMemo(
-    () => [
-      getTableTextColumn(
-        getField(fields, "pipelineId"),
-        "no-wrap-inline",
-        undefined,
-        undefined,
-      ),
-      getTableTextColumn(
-        getField(fields, "pipelineName"),
-        "no-wrap-inline",
-        undefined,
-        undefined,
-      ),
-        getTableTextColumn(
-            getField(fields, "stepId"),
-            "no-wrap-inline",
-            undefined,
-            undefined,
-        ),
-      getTableTextColumn(
-        getField(fields, "jobType"),
-        "no-wrap-inline",
-        undefined,
-        undefined,
-      ),
-      getTableTextColumn(
-          getField(fields, "runCount"),
-          "no-wrap-inline",
-          undefined,
-          undefined,
-      ),
-        getTableBooleanIconColumn(
-            getField(fields, "validated"),
-            "no-wrap-inline",
-            undefined,
-        ),
-        getTableBooleanIconColumn(
-            getField(fields, "deployed"),
-            "no-wrap-inline",
-            undefined,
-        ),
-        getTableBooleanIconColumn(
-            getField(fields, "unitTests"),
-            "no-wrap-inline",
-            undefined,
-        ),
-      getTableTextColumn(
-        getField(fields, "customerName"),
-        "no-wrap-inline",
-        undefined,
-        undefined,
-      ),
-        getTableDateTimeColumn(
-            getField(fields, "startTimestamp"),
-            "no-wrap-inline",
-            undefined,
-            undefined,
-        ),
-        getTableDateTimeColumn(
-            getField(fields, "endTimestamp"),
-            "no-wrap-inline",
-            undefined,
-            undefined,
-        ),
-        getTableTextColumn(
-            getField(fields, "difference"),
-            "no-wrap-inline",
-            undefined,
-            undefined,
-        ),
-    ],
-    [],
-  );
+  const getLookupIconColumn = (field, className, width = 60) => {
+    return {
+        header: getColumnHeader(field),
+        id: getColumnId(field),
+        align: "center",
+        width: width,
+        template: function (text) {
+            let iconCss = "";
+            console.log("text", text);
+
+            if(text === "true"){
+                iconCss = "fa-check-circle green";
+            }
+            else if(text === "false"){
+                iconCss = "fa-times-circle red";
+            }
+            else if(text === "neutral"){
+                iconCss = "fa-minus";
+            }
+            else if(text === "unit"){
+                return `<i class="fal ${("fa-check-circle green")} cell-icon vertical-align-item"></i><i class="fal ${("fa-shield-check green")} cell-icon vertical-align-item"></i>`;
+            }
+            else{
+                iconCss = "fa-minus";
+            }
+            return (
+                `<i class="fal ${iconCss} cell-icon vertical-align-item"></i>`
+            );
+        },
+        class: className
+    };
+  };
+
+    const columns = useMemo(
+        () => [
+            getTableTextColumn(
+                getField(fields, "pipelineId"),
+                "no-wrap-inline",
+                undefined,
+                undefined,
+            ),
+            getTableTextColumn(
+                getField(fields, "pipelineName"),
+                "no-wrap-inline",
+                undefined,
+                undefined,
+            ),
+            getTableTextColumn(
+                getField(fields, "sfdcToolId"),
+                "no-wrap-inline",
+                undefined,
+                undefined,
+            ),
+            getTableTextColumn(
+                getField(fields, "org"),
+                "no-wrap-inline",
+                undefined,
+                undefined,
+            ),
+            getTableTextColumn(
+                getField(fields, "runCount"),
+                "no-wrap-inline",
+                undefined,
+                undefined,
+            ),
+            getLookupIconColumn(
+                getField(fields, "validate"),
+                "no-wrap-inline",
+                undefined,
+            ),
+            getLookupIconColumn(
+                getField(fields, "deploy"),
+                "no-wrap-inline",
+                undefined,
+            ),
+            getLookupIconColumn(
+                getField(fields, "unitTest"),
+                "no-wrap-inline",
+                undefined,
+            ),
+            getTableTextColumn(
+                getField(fields, "customerName"),
+                "no-wrap-inline",
+                undefined,
+                undefined,
+            ),
+            getTableDateTimeColumn(
+                getField(fields, "startTimestamp"),
+                "no-wrap-inline",
+                undefined,
+                undefined,
+            ),
+            getTableDateTimeColumn(
+                getField(fields, "endTimestamp"),
+                "no-wrap-inline",
+                undefined,
+                undefined,
+            ),
+            getTableTextColumn(
+                getField(fields, "difference"),
+                "no-wrap-inline",
+                undefined,
+                undefined,
+            ),
+        ],
+        [],
+    );
 
   const getInsightsLookupDetailsTable = () => {
     if (showExportPanel === true) {
