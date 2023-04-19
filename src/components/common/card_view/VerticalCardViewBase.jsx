@@ -6,6 +6,7 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import Col from "react-bootstrap/Col";
+import LoadMoreItemsButton from "temp-library-components/button/load/LoadMoreItemsButton";
 
 export default function VerticalCardViewBase(
   {
@@ -31,16 +32,14 @@ export default function VerticalCardViewBase(
     );
   }
 
-  const getLoadMoreItemsButton = () => {
+  const getLoadMoreItemsLink = () => {
     if (hasMoreItems === true && loadMoreItems) {
       return (
         <Col xs={12}>
           <div className={"d-flex w-100"}>
-            <VanityButtonBase
-              className={"mx-auto"}
-              onClickFunction={loadMoreItems}
-              normalText={"Load More Items"}
-
+            <LoadMoreItemsButton
+              hasMoreItems={hasMoreItems}
+              loadMoreItems={loadMoreItems}
             />
           </div>
         </Col>
@@ -57,7 +56,7 @@ export default function VerticalCardViewBase(
           {getCardFunction(toolData)}
         </SelectionCardColumn>
       ))}
-      {getLoadMoreItemsButton()}
+      {getLoadMoreItemsLink()}
     </Row>
   );
 }
