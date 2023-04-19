@@ -539,39 +539,6 @@ export const getTableBooleanIconColumn = (field, className, width = 60) => {
   };
 };
 
-export const getLookupIconColumn = (field, className, width = 60) => {
-  return {
-    header: getColumnHeader(field),
-    id: getColumnId(field),
-    align: "center",
-    width: width,
-    template: function (text) {
-      let iconCss = "";
-      console.log("text", text);
-
-      if(text === "true"){
-        iconCss = "fa-check-circle green";
-      }
-      else if(text === "false"){
-        iconCss = "fa-times-circle red";
-      }
-      else if(text === "neutral"){
-        iconCss = "fa-minus";
-      }
-      else if(text === "unit"){
-        return `<i class="fal ${("fa-check-circle green")} cell-icon vertical-align-item"></i><i class="fal ${("fa-shield-check green")} cell-icon vertical-align-item"></i>`;
-      }
-      else{
-        iconCss = "fa-minus";
-      }
-      return (
-          `<i class="fal ${iconCss} cell-icon vertical-align-item"></i>`
-      );
-    },
-    class: className
-  };
-};
-
 export const getTableActiveBooleanIconColumn = (field, className, width = 60, tooltipTemplateFunction) => {
   return {
     header: getColumnHeader(field),
