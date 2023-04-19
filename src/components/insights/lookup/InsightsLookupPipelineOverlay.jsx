@@ -68,23 +68,6 @@ const InsightsLookupPipelineOverlay = ({ componentName, pipeline, startDate, end
 
   lookupDetails.forEach((temp) => {
     temp.difference = ((new Date(temp.endTimestamp) - new Date(temp.startTimestamp))/60000).toFixed(2).toString();
-    if(temp.checkOnly == false){
-      temp.deployed = true;
-    } else{
-      temp.deployed = false;
-    }
-
-    if(temp.checkOnly == true){
-      temp.validated = true;
-    } else{
-      temp.validated = false;
-    }
-
-    if(temp.checkOnly == true && (temp.successUnitTests.length > 0  || temp.failedUnitTests.length > 0)){
-      temp.unitTests = true;
-    } else{
-      temp.unitTests = false;
-    }
   });
 
   return (
