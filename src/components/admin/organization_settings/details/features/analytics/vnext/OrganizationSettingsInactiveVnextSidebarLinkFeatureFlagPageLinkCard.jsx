@@ -30,7 +30,7 @@ export default function OrganizationSettingsInactiveVnextSidebarLinkFeatureFlagP
     return (
       <div>
         <div className={"mb-2"}>The {featureFlagConstants.FEATURE_FLAG_NAME_LABELS.SHOW_INSIGHTS_VNEXT_SIDEBAR_LINK} Feature Flag is an optional Feature Flag that Opsera Administrators Administrators can enable.</div>
-        <div className={"mb-2"}>By activating this Feature Flag, you can toggle the visiblity of the Insights Vnext Sidebar Link.</div>
+        <div className={"mb-2"}>By activating this Feature Flag, you can toggle the visibility of the Insights Vnext Sidebar Link.</div>
       </div>
     );
   };

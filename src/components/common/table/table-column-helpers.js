@@ -921,3 +921,21 @@ export const getPathDefinition = (field, className, maxLength = 50, overlayWidth
     class: className ? className : undefined
   };
 };
+
+export const getExternalLinkIconWithTextColumnDefinition = (field, className, maxLength = 50, overlayWidth=200) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    width: 150,
+    Cell: function getPageLink(row){
+      return (
+        <PageLinkIcon
+          pageLink={row?.value?.url}
+          externalLink={true}            
+          pageLinkText={row?.value?.key}
+        />
+      );
+    },
+    class: className ? className : undefined
+  };
+};

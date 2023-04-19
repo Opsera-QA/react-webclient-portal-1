@@ -96,7 +96,7 @@ function PackageXmlFieldBase({model, fieldName, className, isLoading}) {
   return (
     <InputContainer className={className} fieldName={fieldName}>
       <div className="object-properties-input">
-        <div className="content-container">
+        <div className="content-container content-container-curved-top">
           <FieldTitleBar field={field} icon={faFileCode} actionButtons={<CopyToClipboardIcon copyString={formattedXml} />} isLoading={isLoading} />
           <div style={{height: "500px", maxHeight: "500px", overflowY: "auto"}}>
             {getBody()}

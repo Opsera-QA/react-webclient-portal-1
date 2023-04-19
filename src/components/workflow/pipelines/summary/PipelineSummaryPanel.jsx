@@ -29,6 +29,8 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import InlinePipelineTypeSelectInput from "components/workflow/pipelines/summary/inputs/type/InlinePipelineTypeSelectInput";
 import {Divider} from "temp-library-components/divider/Divider";
+import {ProgressBarBase} from "@opsera/react-vanity-set";
+import {pipelineHelper} from "components/workflow/pipeline.helper";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -245,6 +247,59 @@ function PipelineSummaryPanel(
     }
   };
 
+  const getProgressBar = () => {
+    const completionPercentage = pipelineHelper.getPipelineCompletionPercentage(pipeline);
+
+    if (parentWorkflowStatus === "running") {
+      return (
+        <Col sm={12}>
+          <ProgressBarBase
+            className={"mx-3"}
+            completionPercentage={completionPercentage}
+            isInProgress={true}
+          />
+        </Col>
+      );
+    }
+
+    if (parentWorkflowStatus === "paused") {
+      return (
+        <Col sm={12}>
+          <ProgressBarBase
+            className={"mx-3"}
+            completionPercentage={completionPercentage}
+            variant={"warning"}
+            label={"Awaiting User Response"}
+          />
+        </Col>
+      );
+    }
+
+    if (parentWorkflowStatus === "failed") {
+      return (
+        <Col sm={12}>
+          <ProgressBarBase
+            className={"mx-3"}
+            completionPercentage={100}
+            variant={"danger"}
+          />
+        </Col>
+      );
+    }
+
+    if (parentWorkflowStatus === "success") {
+      return (
+        <Col sm={12}>
+          <ProgressBarBase
+            className={"mx-3"}
+            completionPercentage={100}
+            variant={"success"}
+          />
+        </Col>
+      );
+    }
+  };
+
   if (pipeline == null || typeof pipeline !== "object" || Object.keys(pipeline).length === 0) {
     return (
       <InformationDialog
@@ -322,6 +377,7 @@ function PipelineSummaryPanel(
               pipelineRunCount={pipeline?.workflow?.run_count}
             />
           </Col>
+          {/*{getProgressBar()}*/}
         </Row>
       </div>
     </>

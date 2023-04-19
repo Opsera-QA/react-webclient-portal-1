@@ -52,7 +52,7 @@ export default function OrganizationSettingsSummaryPanel(
         <Col lg={6}>
           <JsonField
             dataObject={organizationSettingsModel}
-            fieldName={"entitlement"}
+            fieldName={"entitlements"}
           />
         </Col>
         <Col lg={6}>

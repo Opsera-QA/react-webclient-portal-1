@@ -101,7 +101,7 @@ function ListFieldBase({fieldName, dataObject, selectOptions, valueField, textFi
 
   return (
     <FieldContainer className="list-input my-2">
-      <div className={"content-container"}>
+      <div className={"content-container content-container-curved-top"}>
         <InputTitleBar
           disabled={true}
           icon={icon}

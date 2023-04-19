@@ -38,6 +38,7 @@ import useGetPollingTaskOrchestrationStatusById
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {numberHelpers} from "components/common/helpers/number/number.helpers";
 import ViewTaskAuditLogsActionBarButton from "components/tasks/buttons/ViewTaskAuditLogsActionBarButton";
+import TaskSubscriptionIcon from "components/tasks/subscriptions/TaskSubscriptionIcon";
 
 const pausedMessage = "This Task has been paused. Please check the activity logs for details.";
 const stoppedMessage = "This Task has completed running. Please check the activity logs for details.";
@@ -69,7 +70,7 @@ function TaskDetailView() {
     if (hasStringValue(status) === true && numberHelpers.hasNumberValue(runCount) === true &&
       (taskModel?.getData("status") !== status || taskModel?.getData("run_count") !== runCount || taskModel?.getData("updatedAt") !== updatedAt)
     ) {
-      console.log(`got polling update for Task [${id}] status [${status}] run count [${runCount}], Last Updated At [${updatedAt}]`);
+      console.log(`Refreshing Task [${id}] with \nStatus [${status}]\n Run Count [${runCount}]\n Last Updated At [${updatedAt}]`);
 
       loadData();
     }
@@ -105,6 +106,10 @@ function TaskDetailView() {
             className={"ml-3"}
             taskModel={taskModel}
           />
+          {/*<TaskSubscriptionIcon*/}
+          {/*  taskModel={taskModel}*/}
+          {/*  className={"ml-3"}*/}
+          {/*/>*/}
           <ActionBarDeleteTaskButton
             taskModel={taskModel}
             className={"ml-3"}

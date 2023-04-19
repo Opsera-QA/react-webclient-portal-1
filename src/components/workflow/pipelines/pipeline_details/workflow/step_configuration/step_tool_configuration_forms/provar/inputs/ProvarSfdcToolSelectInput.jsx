@@ -16,7 +16,7 @@ function ProvarSfdcToolSelectInput({ model, setModel, disabled, fieldName }) {
       return (
         <RoleRestrictedToolByIdentifierInputBase
           toolIdentifier={"sfdc-configurator"}
-          toolFriendlyName={"Salesforce Credentials"}
+          toolFriendlyName={"Salesforce Org"}
           fieldName={"sfdcToolId"}
           model={model}
           setModel={setModel}
