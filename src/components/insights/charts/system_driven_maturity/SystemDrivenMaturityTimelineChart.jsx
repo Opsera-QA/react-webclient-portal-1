@@ -4,6 +4,7 @@ import { ResponsiveLine } from '@nivo/line';
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import ChartTooltip from 'components/insights/charts/ChartTooltip';
 import { defaultConfig } from 'components/insights/charts/charts-views';
+import { MATURITY_SCORE_TEXT_TO_LABEL } from "../charts-helpers";
 
 function SystemDrivenMaturityTimelineChart ({ data }) {
   return (
@@ -28,8 +29,9 @@ function SystemDrivenMaturityTimelineChart ({ data }) {
       enableGridY={false}
       axisLeft={{
         tickValues: [1, 2, 3, 4],
+        format: score => MATURITY_SCORE_TEXT_TO_LABEL[score],
         legend: "Maturity Score",
-        legendOffset: -35,
+        legendOffset: -60,
         legendPosition: "middle",
       }}
       yScale={{
@@ -43,7 +45,7 @@ function SystemDrivenMaturityTimelineChart ({ data }) {
       margin={{
         top: 40,
         bottom: 80,
-        left: 50,
+        left: 80,
         right: 80
       }}
       legends={[
