@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 import axios from "axios";
 import PropTypes from 'prop-types';
 import Container from "react-bootstrap/Container";
+import { getDateObjectFromKpiConfiguration } from "components/insights/charts/charts-helpers";
 import { AuthContext } from "contexts/AuthContext";
 import { getResultFromKpiConfiguration } from "../charts-helpers";
 import doraActions from "../dora/dora.action";
@@ -118,8 +119,11 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
     );
   }
 
+  const dateRangeLabel = getDateObjectFromKpiConfiguration(kpiConfiguration)?.label;
+
   return (
     <Container>
+      <h5 className='text-muted'>{dateRangeLabel}</h5>
       <div style={{ height: '15rem' }}>
         <SystemDrivenMaturityTimelineChart data={maturityChartData} />
       </div>
