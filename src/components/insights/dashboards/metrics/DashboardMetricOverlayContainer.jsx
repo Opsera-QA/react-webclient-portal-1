@@ -32,6 +32,7 @@ import JiraMeanTimeToResolutionEditorPanel from "../../charts/jira/bar_chart/mea
 import JiraChangeFailureRateEditorPanel from "components/insights/charts/jira/line_chart/change_failure_rate/JiraChangeFailureRateEditorPanel";
 import GitlabPipelineStatisticsEditorPanel from "../../charts/gitlab/line_chart/pipeline-statistics/GitlabPipelineStatisticsEditorPanel";
 import DoraJiraGitlabRolledUpEditorPanel from "../../charts/dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpEditorPanel";
+import SystemDrivenMaturityEditorPanel from "../../charts/system_driven_maturity/SystemDrivenMaturityEditorPanel";
 import GitlabMergeRequestStatisticsEditorPanel from "../../charts/gitlab/merge_request_statistics/GitlabMergeRequestStatisticsEditorPanel";
 import GithubActionsWorkflowEditorPanel from "../../charts/github_actions/workflows/GithubActionsWorkflowEditorPanel";
 import GitlabMostActiveContributorsEditorPanel from "../../charts/gitlab/table/most_active_contributors/GitlabMostActiveContributorsEditorPanel";
@@ -190,6 +191,16 @@ function DashboardMetricOverlayContainer({
       case kpiIdentifierConstants.KPI_IDENTIFIERS.DORA_JIRA_GITLAB_ROLLED_UP:
         return (
           <DoraJiraGitlabRolledUpEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SYSTEM_DRIVEN_MATURITY:
+        return (
+          <SystemDrivenMaturityEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}
