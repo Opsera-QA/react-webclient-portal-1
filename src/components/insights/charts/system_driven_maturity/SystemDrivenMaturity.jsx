@@ -123,6 +123,7 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
       chartHelpComponent={(closeHelpPanel) => (
         <SystemDrivenMaturityHelpDocumentation onClose={closeHelpPanel} />
       )}
+      isBeta
     />
   );
 }
