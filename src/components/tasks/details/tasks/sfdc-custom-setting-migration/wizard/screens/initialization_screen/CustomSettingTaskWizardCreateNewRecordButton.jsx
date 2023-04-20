@@ -59,6 +59,7 @@ function CustomSettingTaskWizardCreateNewRecordButton({
           cancelTokenSource,
           wizardModel?.getData("taskId"),
           wizardModel?.getData("runCount"),
+          wizardModel?.getData("sourceToolId"),
           newRecord._id,
         );
         setCurrentScreen(

@@ -140,7 +140,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
         dataObject={wizardModel}
         setDataObject={setWizardModel}
         setDataFunction={setSelectedCustomSettingFunc}
-        textField={"committedFile"}
+        textField={"componentName"}
         busy={isLoading}
         placeholderText={"Select a Custom Setting"}
         disabled={isLoading}
