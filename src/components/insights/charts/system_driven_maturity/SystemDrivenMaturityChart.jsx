@@ -106,7 +106,7 @@ const MaturityScoreRow = ({ item, onRowSelect }) => {
 
   return (
     <tr className='d-flex'>
-      <td className="py-2" style={{ flex: 4 }}>{name}</td>
+      <td className="py-2 text-left" style={{ flex: 4 }}>{name}</td>
       <td className="py-2" style={{ flex: 1 }}>
         <Icon color={icons[MATURITY_SCORE_TEXT.LOW]} onSelect={onClickHandler} />
       </td>

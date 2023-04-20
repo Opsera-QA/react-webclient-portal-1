@@ -3,6 +3,7 @@ import axios from "axios";
 import PropTypes from 'prop-types';
 import Container from "react-bootstrap/Container";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
+import InfoDialog from "components/common/status_notifications/info";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SystemDrivenMaturityHelpDocumentation from "components/common/help/documentation/insights/charts/SystemDrivenMaturityHelpDocumentation";
@@ -102,6 +103,18 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
   };
 
   const getChartBody = () => {
+    const selectedDeploymentStages = getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
+    const jiraResolutionNames = getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names');
+    const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+    const dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
+    if (!selectedDeploymentStages || !jiraResolutionNames?.length || !useDashboardTags || !dashboardOrgs?.length) {
+      return (
+        <Container>
+          <InfoDialog message="Missing Required Filters. Dashboard Organization tags, Deployment Stages, and Jira Resolution Names are mandatory" />
+        </Container>
+      );
+    }
+
     return (
       <Container className="p-3" style={{fontSize: '2rem'}}>
         <SystemDrivenMaturityChart items={metricData} onRowSelect={onRowSelect} />
@@ -123,6 +136,7 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
       chartHelpComponent={(closeHelpPanel) => (
         <SystemDrivenMaturityHelpDocumentation onClose={closeHelpPanel} />
       )}
+      isBeta
     />
   );
 }
