@@ -6,7 +6,6 @@ import ChartTooltip from 'components/insights/charts/ChartTooltip';
 import { defaultConfig } from 'components/insights/charts/charts-views';
 
 function SystemDrivenMaturityTimelineChart ({ data }) {
-  console.log('SDM Timeline Chart', { data });
   return (
     <ResponsiveLine
       data={data}
