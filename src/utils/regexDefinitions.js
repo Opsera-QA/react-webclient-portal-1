@@ -298,4 +298,10 @@ regexDefinitions.argoParameterInputRules = {
   errorFormText: "Only spaces, letters, numbers, underscores, dashes, forward slashes, periods, commas, parentheses, brackets, plus symbols, asterisks, ampersands, and exclamation marks are allowed",
 };
 
+regexDefinitions.fusionPathField = {
+  regex: /^[A-Za-z0-9\-_;./\\' ]*$/,
+  formText: "Letters, numbers, dashes, slashes, semi-colons, spaces, underscores, single-quotes, and periods are allowed",
+  errorFormText: "Only letters, numbers, dashes, slashes, semi-colons, spaces, underscores, single-quotes, and periods are allowed"
+};
+
 export default regexDefinitions;
