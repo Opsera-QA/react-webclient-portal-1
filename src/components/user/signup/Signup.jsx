@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import { Form, Row, Col, Card } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import defaultSignupFormFields from "components/user/signup/signup-form-fields.js";
 import "components/user/user.css";
 import Model from "core/data_model/model";
@@ -83,9 +83,10 @@ function Signup() {
           <Card.Header as="h5" className="new-user-header">Sign Up For Opsera</Card.Header>
           <Card.Body className="new-user-body-full p-3">
             <InfoMessageFieldBase
-              message={`
-          Use this form if you are a new customer getting started with Opsera. If you are an existing customer wishing to add users to your active Opsera account, view instructions on adding new users.
-        ` }
+              message={<>
+                Use this form if you are a new customer getting started with Opsera.
+                If you are an existing customer wishing to add users to your active Opsera account,  <Link to="https://docs.opsera.io/role-based-access-pipelines-and-tool-registry/manage-users-and-organization#create-a-new-user" target="_blank" rel="noopener noreferrer">view instructions on adding new users</Link>.
+              </>}
               className={"mt-2"}
             />
             <Row>
