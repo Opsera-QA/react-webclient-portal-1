@@ -15,6 +15,7 @@ import UsStateSelectInput from "components/common/list_of_values_input/general/U
 import useComponentStateReference from "hooks/useComponentStateReference";
 import AwsCloudProviderRegionSelectInput
   from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
+import InfoMessageFieldBase from "../../common/fields/text/message/InfoMessageFieldBase";
 
 function Signup() {
   const history = useHistory();
@@ -31,7 +32,7 @@ function Signup() {
           defaultSignupFormFields.newObjectFields,
           defaultSignupFormFields,
           true,
-          )
+        )
     });
   }, []);
 
@@ -81,6 +82,12 @@ function Signup() {
         <Card>
           <Card.Header as="h5" className="new-user-header">Sign Up For Opsera</Card.Header>
           <Card.Body className="new-user-body-full p-3">
+            <InfoMessageFieldBase
+              message={`
+          Use this form if you are a new customer getting started with Opsera. If you are an existing customer wishing to add users to your active Opsera account, view instructions on adding new users.
+        ` }
+              className={"mt-2"}
+            />
             <Row>
               <Col md={6}>
                 <TextInputBase fieldName={"firstName"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
