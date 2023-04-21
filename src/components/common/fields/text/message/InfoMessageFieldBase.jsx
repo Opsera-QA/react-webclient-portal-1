@@ -46,7 +46,7 @@ export default function InfoMessageFieldBase(
 
 InfoMessageFieldBase.propTypes = {
   label: PropTypes.string,
-  message: PropTypes.string,
+  message: PropTypes.any,
   className: PropTypes.string,
   showInformationLabel: PropTypes.bool,
 };
