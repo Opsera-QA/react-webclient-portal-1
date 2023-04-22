@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { DiffEditor } from "@monaco-editor/react";
+import { loader, DiffEditor } from "@monaco-editor/react";
 import MonacoEditorCodeInputBase from "./MonacoEditorCodeInputBase";
 
 
