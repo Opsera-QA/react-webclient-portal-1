@@ -1,45 +1,44 @@
 {
-  "env": {
-    "browser": true,
-    "es6": true
-  },
-  "extends": [
-    "prettier",
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended"
-  ],
-  "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly",
-    "require": "readonly",
-    "process": "readonly"
-  },
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
+    "env": {
+        "browser": true,
+        "es6": true
     },
-    "requireConfigFile": false,
-    "ecmaVersion": 2018,
-    "sourceType": "module"
-  },
-  "plugins": [
-    "react",
-    "prettier"
-  ],
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "paths": [
-          "src"
-        ]
+    "extends": [
+        "prettier",
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly",
+        "require": "readonly",
+        "process": "readonly"
+    },
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+      "requireConfigFile": false,
+      "babelOptions": {
+        "babelrc": false,
+        "configFile": false,
+        "presets": ["@babel/preset-react", "@babel/preset-env"]
+      },
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "prettier"
+    ],
+    "settings": {
+     "import/resolver": {
+       "node": {
+         "paths": ["src"]
+       }
+     },
+      "react": {
+        "version": "detect"
       }
     },
-    "react": {
-      "version": "detect"
-    }
-  },
   "rules": {
     "semi": [
       "error",
@@ -55,6 +54,7 @@
     "no-useless-escape": "error",
     "no-empty-pattern": "error",
     "no-fallthrough": "error",
+    "no-unsafe-optional-chaining": "off",
     "react-hooks/exhaustive-deps": "off"
   }
 }
