@@ -3,42 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "react-app-rewired build",
-    "build:freetrial": "env-cmd -f .env.freetrial react-app-rewired build && mv build build-freetrial",
-    "build:honeywell": "env-cmd -f .env.honeywell react-app-rewired build && mv build build-honeywell",
-    "build:honeywell-sandbox": "env-cmd -f .env.honeywell-sandbox react-app-rewired build && mv build build-honeywell-sandbox",
-    "build:kube-dev": "env-cmd -f .env.kube-dev react-app-rewired build && mv build build-kube-dev",
-    "build:kube-generic": "env-cmd -f .env.kube-generic react-app-rewired build && mv build build-kube-generic",
-    "build:kube-prod": "env-cmd -f .env.kube-prod react-app-rewired build && mv build build-kube-prod",
-    "build:kube-test": "env-cmd -f .env.kube-test react-app-rewired build && mv build build-kube-test",
-    "build:production": "react-app-rewired build",
-    "build:staging": "env-cmd -f .env.staging react-app-rewired build && mv build build-staging",
-    "build:test": "env-cmd -f .env.test react-app-rewired build && mv build build-test",
-    "eject": "react-app-rewired eject",
     "lint": "eslint --fix --ext .js,.jsx .",
     "refresh-internal-libraries": "rm -rf node_modules/@opsera && npm install --legacy-peer-deps",
+    "update-lock-file": "rm -rf node_modules && rm -rf package-lock.json && npm install --legacy-peer-deps",
     "start": "PORT=8080 react-app-rewired start",
-    "start-analytics-dev-mac": "GENERATE_SOURCEMAP=false && npm run refresh-internal-libraries && PORT=8080 REACT_APP_ANALYTICS_API_SERVER_URL='https://localhost:5005' react-app-rewired start",
-    "start-analytics-dev-windows": "set PORT=8080 && set REACT_APP_ANALYTICS_API_SERVER_URL='https://localhost:5005' && set FAST_REFRESH=false && react-app-rewired start",
-    "start-linux-mac": "GENERATE_SOURCEMAP=false && npm run refresh-internal-libraries && PORT=8080 react-app-rewired start",
-    "start-windows": "set PORT=8080 && set FAST_REFRESH=false && react-app-rewired start",
-    "test": "react-app-rewired test",
-    "update-lock-file": "rm -rf node_modules/@opsera && rm -rf package-lock.json && npm install --legacy-peer-deps"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "start-linux-mac": "npm run refresh-internal-libraries && PORT=8080 FAST_REFRESH=false react-scripts start",
+    "start-analytics-dev-mac": "npm run refresh-internal-libraries && PORT=8080 REACT_APP_ANALYTICS_API_SERVER_URL='https://localhost:5005' FAST_REFRESH=false react-scripts start",
+    "start-windows": "set PORT=8080 && set FAST_REFRESH=false && react-scripts start",
+    "start-analytics-dev-windows": "set PORT=8080 && set REACT_APP_ANALYTICS_API_SERVER_URL='https://localhost:5005' && set FAST_REFRESH=false && react-scripts start",
+    "build:test": "env-cmd -f .env.test react-scripts build && mv build build-test",
+    "build:staging": "env-cmd -f .env.staging react-scripts build && mv build build-staging",
+    "build:freetrial": "env-cmd -f .env.freetrial react-scripts build && mv build build-freetrial",
+    "build:kube-generic": "env-cmd -f .env.kube-generic react-scripts build && mv build build-kube-generic",
+    "build:kube-dev": "env-cmd -f .env.kube-dev react-scripts build && mv build build-kube-dev",
+    "build:kube-test": "env-cmd -f .env.kube-test react-scripts build && mv build build-kube-test",
+    "build:kube-prod": "env-cmd -f .env.kube-prod react-scripts build && mv build build-kube-prod",
+    "build:honeywell": "env-cmd -f .env.honeywell react-scripts build && mv build build-honeywell",
+    "build:honeywell-sandbox": "env-cmd -f .env.honeywell-sandbox react-scripts build && mv build build-honeywell-sandbox",
+    "build:production": "react-scripts build",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "@editorjs/checklist": "1.3.0",
@@ -117,7 +102,7 @@
     "react-lineto": "^3.3.0",
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.3.4",
-    "react-scripts": "5.0.0",
+    "react-scripts": "^4.0.3",
     "react-select": "^5.7.2",
     "react-syntax-highlighter": "^15.5.0",
     "react-table": "^7.8.0",
@@ -142,10 +127,7 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.7.1",
-    "prop-types": "^15.8.1"
-  },
-  "engines": {
-    "node": ">=16.5.0",
-    "npm": ">=7.5.2"
+    "prop-types": "^15.8.1",
+    "react-app-rewired": "^2.2.1"
   }
 }
