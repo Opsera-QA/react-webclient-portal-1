@@ -1,4 +1,4 @@
-FROM node:16-alpine3.15 as build
+FROM node:18-alpine3.17 as build
 ARG build_env=kube-generic
 RUN echo ${build_env}
 RUN apk add curl
@@ -11,7 +11,6 @@ COPY package.json /usr/src/app/package.json
 COPY package-lock.json /usr/src/app/package-lock.json
 COPY .npmrc /usr/src/app/.npmrc
 #This line is needed when installing different versions for building the project.
-#After they're installed, they should not need to be installed again unless the workspace is cleaned
 #RUN npm install npm@9.5.0 react-app-rewired@2.2.1 react-scripts@5.0.0 -g --legacy-peer-deps
 RUN npm install --legacy-peer-deps --omit=dev
 COPY . /usr/src/app
