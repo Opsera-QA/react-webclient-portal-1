@@ -46,7 +46,7 @@ function TaskManagement() {
   };
 
   const getTasksList = async (newFilterModel = taskFilterModel) => {
-    const tableFields = ["name", "description", "type", "tags", "createdAt", "updatedAt", "active", "status", "run_count"];
+    const tableFields = ["name", "description", "type", "tags", "createdAt", "updatedAt", "active", "status", "run_count", "completion"];
     const response = await taskActions.getTasksListV2(getAccessToken, cancelTokenSource, newFilterModel, tableFields);
     const taskList = response?.data?.data;
 
