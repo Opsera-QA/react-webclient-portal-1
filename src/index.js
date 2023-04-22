@@ -1,25 +1,7 @@
 import "core-js";
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import App from "./App";
-import "@fortawesome/fontawesome-pro/css/all.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "@opsera/dhx-suite-package/codebase/suite.css";
-import "react-widgets/styles.css";
-import "css/general/navbar.css";
-import "css/general/theme.css";
-import "css/general/field.css";
-import "css/general/container.css";
-import "css/general/index.css";
-import "css/general/freetrial.css";
-import "css/analytics/analytics.css";
-import "css/pipelines/workflows.css";
-import "css/general/sidebar.css";
-import "css/table/table.css";
-import "css/inputs/rich-text-input.css";
-import "temp-library-components/scss/opsera-theme.scss";
-import "temp-library-components/scss/sub-menu.scss";
-import "assets/scss/fonts.scss";
 import * as serviceWorker from "./serviceWorker";
 
 if (typeof window["TextEncoder"] !== "function") {
@@ -53,7 +35,9 @@ if (browserNotSupported) {
   Chromium Edge browser (released January 2020).  Please return with one of those browsers to ensure a secure experience.</div>";
   document.body.innerHTML = uiMessage;
 } else {
-  ReactDOM.render(<App />, document.getElementById("root"));
+  const container = document.getElementById('root');
+  const root = createRoot(container);
+  root.render(<App tab="home" />);
 }
 
 // If you want your app to work offline and load faster, you can change
