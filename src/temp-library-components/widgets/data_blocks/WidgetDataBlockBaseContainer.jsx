@@ -5,6 +5,7 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
 import FilterTitleBar from "components/common/table/FilterTitleBar";
 import { widgetHelper } from "temp-library-components/helpers/widgets/widget.helper";
+import WidgetTitleBar from "temp-library-components/widgets/data_blocks/WidgetTitleBar";
 
 function WidgetDataBlockBaseContainer(
   {
@@ -24,6 +25,8 @@ function WidgetDataBlockBaseContainer(
     disabled,
     isLoading,
     rightSideTitleBarItems,
+    centerTitleBarItems,
+    titleBarClassName,
   }) {
   const getHeight = () => {
     if (numberHelpers.isNumberGreaterThan(0, heightSize)) {
@@ -59,16 +62,27 @@ function WidgetDataBlockBaseContainer(
     return classNames;
   };
 
+  const getTitleBarClassNames = () => {
+    let classNames = `w-100 d-flex`;
+
+    if (hasStringValue(titleBarClassName) === true) {
+      classNames += ` ${titleBarClassName}`;
+    }
+
+    return classNames;
+  };
+
   const getBody = () => {
     if (title) {
       return (
         <>
-          <div className={"w-100 d-flex px-3 py-2"}>
-            <FilterTitleBar
+          <div className={getTitleBarClassNames()}>
+            <WidgetTitleBar
               isLoading={isLoading}
               title={title}
               titleIcon={titleIcon}
-              inlineFilters={rightSideTitleBarItems}
+              middleComponents={centerTitleBarItems}
+              rightSideComponents={rightSideTitleBarItems}
             />
           </div>
           {children}
@@ -141,11 +155,14 @@ WidgetDataBlockBaseContainer.propTypes = {
   titleIcon: PropTypes.object,
   isLoading: PropTypes.bool,
   rightSideTitleBarItems: PropTypes.any,
+  centerTitleBarItems: PropTypes.any,
+  titleBarClassName: PropTypes.string,
 };
 
 WidgetDataBlockBaseContainer.defaultProps = {
   backgroundColor: "#FFFFFF",
   disabledBackgroundColor: "#E5E5E5",
+  titleBarClassName: "px-3 pt-2",
 };
 
 export default WidgetDataBlockBaseContainer;
