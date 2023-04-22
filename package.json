@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "eslint --fix --ext .js,.jsx .",
     "refresh-internal-libraries": "rm -rf node_modules/@opsera && npm install",
-    "update-lock-file": "rm -rf node_modules && rm -rf package-lock.json && npm install",
+    "update-lock-file": "rm -rf node_modules/@opsera && rm -rf package-lock.json && npm install",
     "start": "PORT=8080 react-app-rewired start",
     "start-linux-mac": "npm run refresh-internal-libraries && PORT=8080 FAST_REFRESH=false react-scripts start",
     "start-analytics-dev-mac": "npm run refresh-internal-libraries && PORT=8080 REACT_APP_ANALYTICS_API_SERVER_URL='https://localhost:5005' FAST_REFRESH=false react-scripts start",
