@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useRef } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { loader, DiffEditor } from "@monaco-editor/react";
+import { DiffEditor } from "@monaco-editor/react";
 import MonacoEditorCodeInputBase from "./MonacoEditorCodeInputBase";
 
-// loader.config({ paths: { vs: "dependencies/vs" } });
 
 export default function MonacoEditorCodeDiffInputBase({
   mode,
