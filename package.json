@@ -81,7 +81,6 @@
     "@opsera/persephone": "latest",
     "@opsera/react-faq-markdown": "latest",
     "@opsera/react-vanity-set": "latest",
-    "@types/react-router-dom": "^5.3.3",
     "ace-builds": "^1.18.0",
     "assert": "^2.0.0",
     "axios": "^0.26.1",
