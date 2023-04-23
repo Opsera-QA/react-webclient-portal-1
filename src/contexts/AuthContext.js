@@ -4,7 +4,6 @@ import {useHistory} from "react-router-dom";
 import {SITE_VIEW_MODES} from "components/header/view_modes/siteViewMode.constants";
 import { THEMES } from "temp-library-components/theme/theme.constants";
 import { lightThemeConstants } from "temp-library-components/theme/light.theme.constants";
-import ClientWebsocket from "core/websocket/client.websocket";
 import { DATE_FN_TIME_SCALES, handleDateAdditionForTimeScale } from "components/common/helpers/date/date.helpers";
 import MainViewContainer from "components/common/containers/MainViewContainer";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
@@ -13,6 +12,7 @@ import useGetActivePlatformSettingsRecord from "hooks/platform/useGetActivePlatf
 import useGetOrganizationSettingsRecord from "hooks/settings/organization_settings/useGetOrganizationSettingsRecord";
 import useGetConfigurationFeatureFlags from "hooks/platform/feature_flags/useGetConfigurationFeatureFlags";
 
+// import ClientWebsocket from "core/websocket/client.websocket";
 // const websocketClient = new ClientWebsocket();
 
 // TODO: Move
