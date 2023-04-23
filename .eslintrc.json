@@ -4,7 +4,6 @@
         "es6": true
     },
     "extends": [
-        "react-app",
         "prettier",
         "eslint:recommended",
         "plugin:react/recommended",
@@ -28,7 +27,6 @@
     },
     "plugins": [
         "react",
-        "react-hooks",
         "prettier"
     ],
     "settings": {
