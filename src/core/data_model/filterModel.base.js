@@ -529,11 +529,11 @@ export class FilterModelBase {
 
   isNew = () => {
     return true;
-  }
+  };
 
   isChanged = () => {
     return false;
-  }
+  };
 }
 
 export default FilterModelBase;

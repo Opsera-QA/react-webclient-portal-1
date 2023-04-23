@@ -42,11 +42,11 @@ export class ParameterFilterModel extends FilterModelBase {
 
   canSearch = () => {
     return true;
-  }
+  };
 
   showPagination = () => {
     return false;
-  }
+  };
 }
 
 export default ParameterFilterModel;
