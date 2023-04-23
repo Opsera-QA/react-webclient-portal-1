@@ -5,7 +5,7 @@ import AnchoreIntegratorStepConfigurationSummaryPanel
 import anchoreIntegratorStepConfigurationMetadata
   from "./step_tool_configuration_forms/anchore_integrator/anchore-integrator-step-configuration-metadata";
 import Model from "../../../../../../core/data_model/model";
-import ReactJson from "react-json-view";
+import ReactJson from "@microlink/react-json-view";
 import ChildPipelineStepConfigurationSummaryPanel
   from "../../../../plan/step/child/ChildPipelineStepConfigurationSummaryPanel";
 import {childPipelineStepMetadata}

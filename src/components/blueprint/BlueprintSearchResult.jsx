@@ -9,7 +9,7 @@ import {
   faExclamationCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import Tab from "react-bootstrap/Tab";
-import ReactJson from "react-json-view";
+import ReactJson from "@microlink/react-json-view";
 import ExportBlueprintLogButton from "components/common/buttons/export/blueprints/ExportBlueprintLogButton";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";

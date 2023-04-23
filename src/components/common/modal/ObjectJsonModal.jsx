@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
-import ReactJson from "react-json-view";
+import ReactJson from "@microlink/react-json-view";
 import LoadingDialog from "components/common/status_notifications/loading";
 
 function ObjectJsonModal({ header, size, jsonData, show, setParentVisibility }) {

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import locale from "react-json-editor-ajrm/locale/en";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import ReactJson from "react-json-view";
+import ReactJson from "@microlink/react-json-view";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import JSONInput from "react-json-editor-ajrm";

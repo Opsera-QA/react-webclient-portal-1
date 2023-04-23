@@ -8,7 +8,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import parametersActions from "components/inventory/parameters/parameters-actions";
 import axios from "axios";
-import ReactJson from "react-json-view";
+import ReactJson from "@microlink/react-json-view";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import IconBase from "components/common/icons/IconBase";

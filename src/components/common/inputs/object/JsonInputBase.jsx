@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import locale from "react-json-editor-ajrm/locale/en";
-import ReactJson from "react-json-view";
+import ReactJson from "@microlink/react-json-view";
 import JSONInput from "react-json-editor-ajrm";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
