@@ -4,7 +4,7 @@ import { RMContext } from "./RMContext";
 import PropTypes from "prop-types";
 
 class ReleaseManagementOtherServices extends React.PureComponent {
-  static contextType = RMContext
+  static contextType = RMContext;
   render() {
     return (
       <>
@@ -25,7 +25,7 @@ class ReleaseManagementOtherServices extends React.PureComponent {
 }
 
 class ConfigurationManagement extends React.PureComponent {
-  static contextType = RMContext
+  static contextType = RMContext;
   render() {
     const { serviceClick } = this.context;
     const { tools } = this.props;

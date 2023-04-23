@@ -5,7 +5,7 @@ import { Modal, Form, Button, Alert } from "react-bootstrap";
 import { RMContext } from "./RMContext";
 
 class RMModal extends PureComponent {
-  static contextType = RMContext
+  static contextType = RMContext;
   state = {
     validationError: false
   };
