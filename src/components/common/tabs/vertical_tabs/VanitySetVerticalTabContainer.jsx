@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Nav} from "react-bootstrap";
 import InlineSearchFilter from "../../filters/search/InlineSearchFilter";
+import InlineClientSideSearchFilter from "components/common/filters/search/InlineClientSideSearchFilter";
 
 function VanitySetVerticalTabContainer(
   {
