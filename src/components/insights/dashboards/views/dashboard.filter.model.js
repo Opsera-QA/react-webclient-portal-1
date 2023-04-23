@@ -74,7 +74,7 @@ export class DashboardFilterModel extends FilterModelBase {
   // TODO: Add card view
   canToggleView = () => {
     return false;
-  }
+  };
 
   getActiveFilters = () => {
     const activeFilters = [];
