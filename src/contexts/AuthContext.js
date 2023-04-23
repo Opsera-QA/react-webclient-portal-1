@@ -13,7 +13,7 @@ import useGetActivePlatformSettingsRecord from "hooks/platform/useGetActivePlatf
 import useGetOrganizationSettingsRecord from "hooks/settings/organization_settings/useGetOrganizationSettingsRecord";
 import useGetConfigurationFeatureFlags from "hooks/platform/feature_flags/useGetConfigurationFeatureFlags";
 
-const websocketClient = new ClientWebsocket();
+// const websocketClient = new ClientWebsocket();
 
 // TODO: Move
 export const getFreeTrialUserExpirationDate = (userData) => {
@@ -98,7 +98,7 @@ const AuthContextProvider = (
       setViewMode: setViewMode,
       theme: theme,
       setTheme: setTheme,
-      websocketClient: websocketClient,
+      // websocketClient: websocketClient,
       userData: userData,
       backgroundColor: backgroundColor,
       setBackgroundColor: setBackgroundColor,
