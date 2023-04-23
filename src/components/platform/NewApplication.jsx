@@ -17,7 +17,7 @@ import { faWrench, faClipboardList } from "@fortawesome/free-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
 class NewApplication extends React.PureComponent {
-  static contextType = NewAppContext
+  static contextType = NewAppContext;
 
   state = {
     appname: "",
@@ -29,7 +29,7 @@ class NewApplication extends React.PureComponent {
     error: null,
     messages: null,
     editTools: false
-  }
+  };
 
   handleAppNameChange = ({ target: { name, value } }) => {
     let error = null;
@@ -43,7 +43,7 @@ class NewApplication extends React.PureComponent {
       [name]: value,
       appnameError: error,
     });
-  }
+  };
 
   handleTabClick = param => e => {
     // param is the argument you passed to the function
@@ -68,7 +68,7 @@ class NewApplication extends React.PureComponent {
         this.getApiData();
       }
     });
-  }
+  };
 
   async getApiData() {
     const { token, user } = this.context;
@@ -97,7 +97,7 @@ class NewApplication extends React.PureComponent {
     this.setState({ key: e.target.value }, () => {
       this.setSelectedApp();
     });
-  }
+  };
 
   setSelectedApp() {
     const { setAppDetails } = this.context;
@@ -171,7 +171,7 @@ class NewApplication extends React.PureComponent {
           appname: currentComponent.state.appname,
         }));
       });
-  }
+  };
 
   handleSaveTools = async () => {
     const { appname: name, data, token, user, appid: id } = this.context;
@@ -218,7 +218,7 @@ class NewApplication extends React.PureComponent {
     this.setState({
       saving: false,
     });
-  }
+  };
 
   render() {
     const { checkingAppName, appnameError, appname, error, messages, status, editTools, dropdownData, fetching, savingStatus } = this.state;

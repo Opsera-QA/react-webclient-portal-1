@@ -32,7 +32,7 @@ export default class SiteRoleModel extends ModelBase {
 
   getType = () => {
     return "Group";
-  }
+  };
 }
 
 

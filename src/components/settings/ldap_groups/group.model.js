@@ -33,7 +33,7 @@ export default class GroupModel extends ModelBase {
 
   getType = () => {
     return "Group";
-  }
+  };
 }
 
 
