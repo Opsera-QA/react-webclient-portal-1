@@ -3,8 +3,6 @@ import { Button, Row, Col } from "react-bootstrap";
 import { axiosApiService } from "../../api/apiService";
 import { useHistory } from "react-router-dom";
 import { faArrowLeft } from "@fortawesome/pro-solid-svg-icons";
-import { AuthContext } from "../../contexts/AuthContext";
-import "@okta/okta-signin-widget/dist/css/okta-sign-in.min.css";
 import { useOktaAuth } from "@okta/okta-react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import PropTypes from "prop-types";
