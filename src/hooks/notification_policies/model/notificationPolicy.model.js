@@ -41,7 +41,7 @@ export default class NotificationPolicyModel extends ModelBase {
 
   getType = () => {
     return "Notification Policy";
-  }
+  };
 }
 
 

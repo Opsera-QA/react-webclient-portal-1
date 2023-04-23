@@ -34,7 +34,7 @@ export default class EntitlementModel extends ModelBase {
 
   getType = () => {
     return "Entitlement";
-  }
+  };
 }
 
 

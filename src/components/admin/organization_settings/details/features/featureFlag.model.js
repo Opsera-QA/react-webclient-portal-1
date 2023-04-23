@@ -34,7 +34,7 @@ export default class FeatureFlagModel extends ModelBase {
 
   getType = () => {
     return "Feature Flag";
-  }
+  };
 }
 
 

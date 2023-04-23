@@ -20,7 +20,7 @@ export default class OrganizationSettingsModel extends ModelBase {
 
   getType = () => {
     return "Organization Settings";
-  }
+  };
 }
 
 
