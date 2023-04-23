@@ -121,6 +121,8 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
   const setSelectedCustomSettingFunc = (fieldName, selectedOption) => {
     let newWizardModel = { ...wizardModel };
     newWizardModel.setData(fieldName, selectedOption);
+    newWizardModel.setData("selectedFieldList", []);
+    newWizardModel.setData("filterQuery", "");
     setWizardModel({ ...newWizardModel });
   };
 

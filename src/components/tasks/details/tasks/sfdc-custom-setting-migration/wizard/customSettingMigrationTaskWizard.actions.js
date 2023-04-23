@@ -116,4 +116,24 @@ customSettingMigrationTaskWizardActions.pullFieldList = async (
     apiUrl,
   );
 };
+
+customSettingMigrationTaskWizardActions.updateSelectedFields = async (
+  getAccessToken,
+  cancelTokenSource,
+  wizardModel,
+  members,
+) => {
+  const apiUrl = `/tasks/custom-setting-migration-task/wizard/${wizardModel?.getData("recordId")}/selected-field-list`;
+  const postBody = {
+    selectedFieldList: members,
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 export default customSettingMigrationTaskWizardActions;

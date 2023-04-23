@@ -14,9 +14,12 @@ import axios from "axios";
 import IconBase from "components/common/icons/IconBase";
 import FieldListPanel from "./FieldListPanel";
 import SelectedFieldListPanel from "./SelectedFieldListPanel";
+import customSettingMigrationTaskWizardActions from "../../../customSettingMigrationTaskWizard.actions";
 
 function FieldSelectorBasePanel({
   recordId,
+  wizardModel,
+  setWizardModel,
   reload,
   setSelectedFields,
   fieldList,
@@ -85,7 +88,13 @@ function FieldSelectorBasePanel({
 
   const updateMembers = async () => {
     try {
-      // await sfdcPipelineActions.updateSelectedUnitTestClassesV2(getAccessToken, cancelTokenSource, recordId, selectedFields);
+      wizardModel.setData("selectedFieldList", members);
+      await customSettingMigrationTaskWizardActions.updateSelectedFields(
+        getAccessToken,
+        cancelTokenSource,
+        wizardModel,
+        members,
+      );
       setShowUnsavedChangesMessage(false);
     } catch (error) {
       console.error(error);
@@ -93,6 +102,7 @@ function FieldSelectorBasePanel({
     }
   };
 
+  // console.log(wizardModel?.getPersistData());
   const getWarningMessage = () => {
     if (showUnsavedChangesMessage) {
       return (
@@ -115,6 +125,7 @@ function FieldSelectorBasePanel({
         <div>{getWarningMessage()}</div>
         <div>
           <StandaloneSaveButton
+            disable={!(members.length > 0)}
             saveFunction={updateMembers}
             type={"Field Properties"}
           />
@@ -222,12 +233,12 @@ function FieldSelectorBasePanel({
       </Row>
       <Row>
         <div className={"mx-3 mb-3 mt-2"}>
-        <MessageFieldBase
-          message={` 
+          <MessageFieldBase
+            message={` 
             Select field properties below by adding items from the left column into the right or removing from the right column.  
             Changes must be saved before being complete.
           `}
-        />
+          />
         </div>
       </Row>
       {getBody()}
@@ -237,6 +248,8 @@ function FieldSelectorBasePanel({
 
 FieldSelectorBasePanel.propTypes = {
   recordId: PropTypes.string,
+  wizardModel: PropTypes.object,
+  setWizardModel: PropTypes.func,
   reload: PropTypes.func,
   setSelectedFields: PropTypes.func,
   fieldList: PropTypes.any,

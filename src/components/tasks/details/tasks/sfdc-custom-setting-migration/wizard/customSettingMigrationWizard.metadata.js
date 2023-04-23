@@ -28,10 +28,13 @@ export const customSettingMigrationTaskWizardMetadata = {
       id: "selectedCustomSetting",
     },
     {
-      label: "Field Properties",
-      id: "selectedFieldProperties",
+      label: "Selected Field Properties",
+      id: "selectedFieldList",
     },
-
+    {
+      label: "Query",
+      id: "filterQuery"
+    }
   ],
   newObjectFields: {
     taskId: "",
@@ -42,6 +45,7 @@ export const customSettingMigrationTaskWizardMetadata = {
     type: "",
     taskType: "",
     selectedCustomSetting: "",
-    selectedFieldProperties: [],
+    selectedFieldList: [],
+    filterQuery: "",
   }
 };

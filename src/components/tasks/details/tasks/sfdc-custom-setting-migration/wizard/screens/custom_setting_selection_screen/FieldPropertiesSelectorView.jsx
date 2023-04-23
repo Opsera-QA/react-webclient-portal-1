@@ -127,6 +127,8 @@ const FieldPropertiesSelectorView = ({ wizardModel, setWizardModel }) => {
         setSelectedFields={setSelectedFields}
         fieldList={fieldsPropertiesList}
         isLoading={isLoading}
+        wizardModel={wizardModel}
+        setWizardModel={setWizardModel}
       />
     </div>
   );
