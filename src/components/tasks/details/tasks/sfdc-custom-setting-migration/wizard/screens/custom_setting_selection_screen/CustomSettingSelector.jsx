@@ -128,11 +128,9 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
   const saveAndTriggerFieldsPull = async () => {
     try {
       setIsLoading(true);
-      setEnableEdit(false);
       await customSettingMigrationTaskWizardActions.setSelectedObjectList(
         getAccessToken,
         cancelTokenSource,
-        wizardModel?.getData("recordId"),
         wizardModel,
       );
       await customSettingMigrationTaskWizardActions.triggerFieldPropertiesPull(
@@ -151,6 +149,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
     } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
+        setEnableEdit(false);
       }
     }
   };
@@ -190,9 +189,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
           <Button
             className={"mr-2"}
             variant="primary"
-            onClick={() => {
-              saveAndTriggerFieldsPull();
-            }}
+            onClick={saveAndTriggerFieldsPull}
             disabled={isLoading}
           >
             <span>
@@ -209,7 +206,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
     );
   };
 
-  const getFieldSlectionView = () => {
+  const getFieldSelectionView = () => {
     return <>Fields selection view</>;
   };
 
@@ -217,7 +214,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
     <div>
       {getSelectView()}
 
-      {getFieldSlectionView()}
+      {getFieldSelectionView()}
     </div>
   );
 };

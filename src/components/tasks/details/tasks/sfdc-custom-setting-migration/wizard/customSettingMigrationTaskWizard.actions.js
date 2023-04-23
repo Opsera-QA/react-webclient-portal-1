@@ -88,10 +88,9 @@ customSettingMigrationTaskWizardActions.triggerFieldPropertiesPull = async (
 customSettingMigrationTaskWizardActions.setSelectedObjectList = async (
   getAccessToken,
   cancelTokenSource,
-  pipelineStorageRecordId,
   wizardModel,
 ) => {
-  const apiUrl = `/tasks/custom-setting-migration-task/wizard/${pipelineStorageRecordId}/selected-object-list`;
+  const apiUrl = `/tasks/custom-setting-migration-task/wizard/${wizardModel?.getData("recordId")}/selected-object-list`;
   const postBody = {
     selectedObject: [wizardModel?.getData("selectedCustomSetting")],
   };
@@ -101,6 +100,20 @@ customSettingMigrationTaskWizardActions.setSelectedObjectList = async (
     cancelTokenSource,
     apiUrl,
     postBody,
+  );
+};
+
+customSettingMigrationTaskWizardActions.pullFieldList = async (
+  getAccessToken,
+  cancelTokenSource,
+  wizardModel,
+) => {
+  const apiUrl = `/tasks/custom-setting-migration-task/wizard/${wizardModel?.getData("recordId")}/pull-field-list`;
+
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
   );
 };
 export default customSettingMigrationTaskWizardActions;
