@@ -16,14 +16,14 @@
     "build:test": "env-cmd -f .env.test react-app-rewired build && mv build build-test",
     "eject": "react-app-rewired eject",
     "lint": "eslint --fix --ext .js,.jsx .",
-    "refresh-internal-libraries": "rm -rf node_modules/@opsera && npm install --legacy-peer-deps",
+    "refresh-internal-libraries": "rm -rf node_modules/@opsera && npm install",
     "start": "PORT=8080 react-app-rewired start",
     "start-analytics-dev-mac": "GENERATE_SOURCEMAP=false && npm run refresh-internal-libraries && PORT=8080 REACT_APP_ANALYTICS_API_SERVER_URL='https://localhost:5005' react-app-rewired start",
     "start-analytics-dev-windows": "set PORT=8080 && set REACT_APP_ANALYTICS_API_SERVER_URL='https://localhost:5005' && set FAST_REFRESH=false && react-app-rewired start",
     "start-linux-mac": "GENERATE_SOURCEMAP=false && npm run refresh-internal-libraries && PORT=8080 react-app-rewired start",
     "start-windows": "set PORT=8080 && set FAST_REFRESH=false && react-app-rewired start",
     "test": "react-app-rewired test",
-    "update-lock-file": "rm -rf node_modules/@opsera && rm -rf package-lock.json && npm install --legacy-peer-deps"
+    "update-lock-file": "rm -rf node_modules/@opsera && rm -rf package-lock.json && npm install"
   },
   "browserslist": {
     "production": [
