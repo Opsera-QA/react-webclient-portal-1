@@ -150,7 +150,7 @@ export class TaskFilterModel extends FilterModelBase {
 
   canToggleView = () => {
     return true;
-  }
+  };
 
   unpackUrlParameters = () => {
     let hasUrlParams = this.unpackCommonUrlParameters();

@@ -73,7 +73,7 @@ ConfigurationManagement.propTypes = {
 };
 
 class ContinousIntegration extends React.PureComponent {
-  static contextType = RMContext
+  static contextType = RMContext;
   render() {
     const { serviceClick } = this.context;
     const { tools } = this.props;
@@ -111,7 +111,7 @@ ContinousIntegration.propTypes = {
 };
 
 class LogManagement extends React.PureComponent {
-  static contextType = RMContext
+  static contextType = RMContext;
   render() {
     const { serviceClick } = this.context;
     const { tools } = this.props;
@@ -147,7 +147,7 @@ LogManagement.propTypes = {
 };
 
 class RepositoryManagement extends React.PureComponent {
-  static contextType = RMContext
+  static contextType = RMContext;
   render() {
     return (
       <ServicesWrapper label="Repository Management">
@@ -185,7 +185,7 @@ function ServicesWrapper({ label, children }) {
 
 
 class SASST extends React.PureComponent {
-  static contextType = RMContext
+  static contextType = RMContext;
   render() {
     const { serviceClick } = this.context;
     const { tools } = this.props;
@@ -215,7 +215,7 @@ SASST.propTypes = {
 };
 
 class Monitoring extends React.PureComponent {
-  static contextType = RMContext
+  static contextType = RMContext;
   render() {
     const { serviceClick } = this.context;
     const { tools } = this.props;
@@ -250,7 +250,7 @@ Monitoring.propTypes = {
 };
 
 export class Confirmation extends React.PureComponent {
-  static contextType = RMContext
+  static contextType = RMContext;
 
   render() {
     const { services, checkBoxChange } = this.context;
