@@ -7,8 +7,11 @@ import { parseError } from "components/common/helpers/error-helpers";
 import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import EnableEditingIcon from "../../../../../../../common/icons/enable/EnableEditingIcon";
-import { faPencilAlt } from "@fortawesome/pro-light-svg-icons";
+import { faPencilAlt, faSave } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "../../../../../../../common/icons/IconBase";
+import { Button } from "react-bootstrap";
+import CancelButton from "../../../../../../../common/buttons/CancelButton";
+import SaveButtonContainer from "../../../../../../../common/buttons/saving/containers/SaveButtonContainer";
 
 const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -118,13 +121,36 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
     let newWizardModel = { ...wizardModel };
     newWizardModel.setData(fieldName, selectedOption);
     setWizardModel({ ...newWizardModel });
-    setEnableEdit(false);
   };
 
   console.log(customSettingsList);
 
+  const saveAndTriggerFieldsPull = async () => {
+    try {
+      setIsLoading(true);
+      setEnableEdit(false);
+      await customSettingMigrationTaskWizardActions.triggerFieldPropertiesPull(
+        getAccessToken,
+        cancelTokenSource,
+        wizardModel?.getData("taskId"),
+        wizardModel?.getData("runCount"),
+        wizardModel,
+        wizardModel?.getData("selectedCustomSetting")?.componentName,
+      );
+    } catch (error) {
+      if (isMounted?.current === true) {
+        const parsedError = parseError(error);
+        toastContext.showInlineErrorMessage(parsedError);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+
   const getSelectView = () => {
-    if ( !enableEdit && wizardModel?.getData("selectedCustomSetting")) {
+    if (!enableEdit && wizardModel?.getData("selectedCustomSetting")) {
       return (
         <div className={"d-flex w-100"}>
           Selected Custom Object :{" "}
@@ -135,26 +161,59 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
             iconSize={"sm"}
             onClickFunction={() => {
               setEnableEdit(true);
-            }} />
+            }}
+          />
         </div>
       );
     }
+
     return (
-      <SelectInputBase
-        fieldName={"selectedCustomSetting"}
-        selectOptions={customSettingsList}
-        dataObject={wizardModel}
-        setDataObject={setWizardModel}
-        setDataFunction={setSelectedCustomSettingFunc}
-        textField={"componentName"}
-        busy={isLoading}
-        placeholderText={"Select a Custom Setting"}
-        disabled={isLoading}
-      />
+      <>
+        <SelectInputBase
+          fieldName={"selectedCustomSetting"}
+          selectOptions={customSettingsList}
+          dataObject={wizardModel}
+          setDataObject={setWizardModel}
+          setDataFunction={setSelectedCustomSettingFunc}
+          textField={"componentName"}
+          busy={isLoading}
+          placeholderText={"Select a Custom Setting"}
+          disabled={isLoading}
+        />
+        <SaveButtonContainer>
+          <Button
+            className={"mr-2"}
+            variant="primary"
+            onClick={() => {
+              saveAndTriggerFieldsPull();
+            }}
+            disabled={isLoading}
+          >
+            <span>
+              <IconBase
+                icon={faSave}
+                fixedWidth
+                className="mr-2"
+              />
+              Save and Pull Fields
+            </span>
+          </Button>
+        </SaveButtonContainer>
+      </>
     );
   };
 
-  return <div>{getSelectView()}</div>;
+  const getFieldSlectionView = () => {
+    return <>Fields selection view</>;
+  };
+
+  return (
+    <div>
+      {getSelectView()}
+
+      {getFieldSlectionView()}
+    </div>
+  );
 };
 
 CustomSettingSelector.propTypes = {

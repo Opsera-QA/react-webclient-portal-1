@@ -60,23 +60,21 @@ customSettingMigrationTaskWizardActions.pullCustomSettingsList = async (
   );
 };
 
-// TODO: wire it up using wizard model
 customSettingMigrationTaskWizardActions.triggerFieldPropertiesPull = async (
   getAccessToken,
   cancelTokenSource,
   taskId,
   runCount,
-  sfdcToolId,
-  storageRecordId,
   wizardModel,
+  selectedObjectName,
 ) => {
   const apiUrl = `/tasks/custom-setting-migration-task/wizard/trigger-list-field-properties`;
   const postBody = {
     taskId: taskId,
     runCount: runCount,
-    sfdcToolId: wizardModel?.getData("recordId"),
+    sfdcToolId: wizardModel?.getData("sourceToolId"),
     pipelineStorageRecordId: wizardModel?.getData("recordId"),
-    objectName: ""
+    objectName: selectedObjectName
   };
 
   return await baseActions.apiPostCallV2(
