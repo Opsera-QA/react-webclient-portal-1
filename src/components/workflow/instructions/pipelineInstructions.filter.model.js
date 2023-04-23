@@ -77,7 +77,7 @@ export class PipelineInstructionsFilterModel extends FilterModelBase {
 
   canSearch = () => {
     return true;
-  }
+  };
 
   getActiveFilters = () => {
     const activeFilters = [];
@@ -135,6 +135,6 @@ export class PipelineInstructionsFilterModel extends FilterModelBase {
 
   showPagination = () => {
     return false;
-  }
+  };
 }
 
