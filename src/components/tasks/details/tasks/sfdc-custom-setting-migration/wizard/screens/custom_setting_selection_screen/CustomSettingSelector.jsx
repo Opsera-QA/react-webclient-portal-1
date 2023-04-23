@@ -6,18 +6,16 @@ import { AuthContext } from "contexts/AuthContext";
 import { parseError } from "components/common/helpers/error-helpers";
 import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import EnableEditingIcon from "../../../../../../../common/icons/enable/EnableEditingIcon";
+import { faPencilAlt } from "@fortawesome/pro-light-svg-icons";
+import IconBase from "../../../../../../../common/icons/IconBase";
 
 const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
+  const [enableEdit, setEnableEdit] = useState(true);
   const [customSettingsList, setCustomSettingsList] = useState([]);
-  // const [customSettingsList, setCustomSettingsList] = useState([
-  //   {
-  //     committedFile: "String",
-  //     committedFileId: "String",
-  //   },
-  // ]);
   const [filePullCompleted, setFilePullCompleted] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -120,19 +118,27 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
     let newWizardModel = { ...wizardModel };
     newWizardModel.setData(fieldName, selectedOption);
     setWizardModel({ ...newWizardModel });
+    setEnableEdit(false);
   };
 
   console.log(customSettingsList);
 
   const getSelectView = () => {
-    // if (wizardModel?.getData("selectedCustomSetting")) {
-    //   return (
-    //     <>
-    //       Selected Custom Object :{" "}
-    //       {wizardModel?.getData("selectedCustomSetting")?.committedFile}
-    //     </>
-    //   );
-    // }
+    if ( !enableEdit && wizardModel?.getData("selectedCustomSetting")) {
+      return (
+        <div className={"d-flex w-100"}>
+          Selected Custom Object :{" "}
+          {wizardModel?.getData("selectedCustomSetting")?.componentName}
+          <IconBase
+            icon={faPencilAlt}
+            className={"ml-2 text-muted pointer"}
+            iconSize={"sm"}
+            onClickFunction={() => {
+              setEnableEdit(true);
+            }} />
+        </div>
+      );
+    }
     return (
       <SelectInputBase
         fieldName={"selectedCustomSetting"}
