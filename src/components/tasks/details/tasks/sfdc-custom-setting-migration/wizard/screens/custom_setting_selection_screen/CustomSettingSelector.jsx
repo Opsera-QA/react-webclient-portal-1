@@ -129,6 +129,12 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
     try {
       setIsLoading(true);
       setEnableEdit(false);
+      await customSettingMigrationTaskWizardActions.setSelectedObjectList(
+        getAccessToken,
+        cancelTokenSource,
+        wizardModel?.getData("recordId"),
+        wizardModel,
+      );
       await customSettingMigrationTaskWizardActions.triggerFieldPropertiesPull(
         getAccessToken,
         cancelTokenSource,
