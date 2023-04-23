@@ -13,6 +13,12 @@ module.exports = function override(config) {
     "url": require.resolve("url"),
   });
   config.resolve.fallback = fallback;
+  config.module.rules.push({
+    test: /\.m?js/,
+    resolve: {
+      fullySpecified: false,
+    },
+  });
   config.ignoreWarnings = [/Failed to parse source map/];
   config.plugins = (config.plugins || []).concat([
     new webpack.ProvidePlugin({
