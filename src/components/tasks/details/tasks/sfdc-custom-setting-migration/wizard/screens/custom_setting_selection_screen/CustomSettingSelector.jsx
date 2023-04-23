@@ -12,6 +12,7 @@ import IconBase from "../../../../../../../common/icons/IconBase";
 import { Button } from "react-bootstrap";
 import CancelButton from "../../../../../../../common/buttons/CancelButton";
 import SaveButtonContainer from "../../../../../../../common/buttons/saving/containers/SaveButtonContainer";
+import FieldPropertiesSelectorView from "./FieldPropertiesSelectorView";
 
 const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -123,8 +124,6 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
     setWizardModel({ ...newWizardModel });
   };
 
-  console.log(customSettingsList);
-
   const saveAndTriggerFieldsPull = async () => {
     try {
       setIsLoading(true);
@@ -207,13 +206,20 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
   };
 
   const getFieldSelectionView = () => {
-    return <>Fields selection view</>;
+    if(!enableEdit) {
+      return(
+        <FieldPropertiesSelectorView
+          wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
+        />
+      );
+    }
+    return null;
   };
 
   return (
     <div>
       {getSelectView()}
-
       {getFieldSelectionView()}
     </div>
   );
