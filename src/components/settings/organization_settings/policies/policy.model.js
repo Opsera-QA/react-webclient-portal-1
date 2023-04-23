@@ -37,7 +37,7 @@ export default class PolicyModel extends ModelBase {
 
   getType = () => {
     return "Policy";
-  }
+  };
 }
 
 

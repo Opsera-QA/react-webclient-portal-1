@@ -130,7 +130,7 @@ const jenkinsPipelineNode = {
 // }
 
 class ReleaseManagementServices extends React.PureComponent {
-  static contextType = RMContext
+  static contextType = RMContext;
   constructor(props) {
     super(props);
     this.state = {};
