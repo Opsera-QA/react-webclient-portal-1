@@ -135,5 +135,9 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.8.8",
     "prop-types": "^15.8.1"
+  },
+  "engines": {
+    "node": ">=16.5.0",
+    "npm": ">=7.5.2"
   }
 }
