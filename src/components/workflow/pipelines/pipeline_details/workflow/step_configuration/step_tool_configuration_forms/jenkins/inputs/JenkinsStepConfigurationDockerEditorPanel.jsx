@@ -6,7 +6,7 @@ import DockerSecretsInput from "../DockerSecretsInput";
 import _ from "lodash";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import DockerTagTypeSelectionInput from "./DockerTagTypeSelectionInput";
-import ReactJson from "react-json-view";
+import ReactJson from "@microlink/react-json-view";
 import DockerPreviousStepDataInputForm from "./DockerPreviousStepDataInputForm";
 import DockerNameInput from "./DockerNameInput";
 import DockerCommitShaTrimDirectionSelectionInput from "./DockerCommitShaTrimDirectionSelectionInput";

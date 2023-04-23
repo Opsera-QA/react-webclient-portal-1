@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactJson from "react-json-view";
+import ReactJson from "@microlink/react-json-view";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 

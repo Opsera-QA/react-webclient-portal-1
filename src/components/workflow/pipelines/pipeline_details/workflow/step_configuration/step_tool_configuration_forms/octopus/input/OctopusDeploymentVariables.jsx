@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { OverlayTrigger, Popover } from "react-bootstrap";
-import ReactJson from "react-json-view";
 import { faInfoCircle } from "@fortawesome/pro-light-svg-icons";
 import JsonInput from "../../../../../../../../common/inputs/object/JsonInput";
 import IconBase from "components/common/icons/IconBase";
+import ReactJson from "@microlink/react-json-view";
 
 const SAMPLE_DATA = [
   {
