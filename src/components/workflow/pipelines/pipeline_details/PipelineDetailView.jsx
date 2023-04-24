@@ -37,6 +37,7 @@ function PipelineDetailView() {
   const [editItem, setEditItem] = useState(false);
   const [isPipelineRunning, setIsPipelineRunning] = useState(false);
   const [pipelineModel, setPipelineModel] = useState(undefined);
+  const [error, setError] = useState(undefined);
   const {
     getAccessToken,
     toastContext,
@@ -50,7 +51,7 @@ function PipelineDetailView() {
     lastStep,
     restingStepId,
     updatedAt,
-  } = useGetPollingPipelineOrchestrationStatusById(id, refreshInterval);
+  } = useGetPollingPipelineOrchestrationStatusById(id, refreshInterval, error, pipeline != null);
 
   // TODO: We probably don't need to refresh the pipeline on resting step changes.
   useEffect(() => {
@@ -69,7 +70,7 @@ function PipelineDetailView() {
       await getPipeline();
     } catch (error) {
       if (isMounted?.current === true) {
-        console.error(error.message);
+        setError(error);
         toastContext.showLoadingErrorDialog(error);
       }
     } finally {

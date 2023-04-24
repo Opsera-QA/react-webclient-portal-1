@@ -14,10 +14,10 @@ const getVnextLink = () => {
 export default function InnovationLabsNavigationLinks({ isSidebarCollapsed, }) {
   return (
     <>
-      <SidebarSubheaderText
-        isSidebarCollapsed={isSidebarCollapsed}
-        subheaderText={"Innovation Labs"}
-      />
+      {/*<SidebarSubheaderText*/}
+      {/*  isSidebarCollapsed={isSidebarCollapsed}*/}
+      {/*  subheaderText={"Innovation Labs"}*/}
+      {/*/>*/}
       <SidebarNavigationLinkBase
         link={getVnextLink()}
         label={"Insights 2.0 (Beta)"}

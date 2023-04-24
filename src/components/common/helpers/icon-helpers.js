@@ -18,7 +18,7 @@ import {
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 import {vendorImageConstants} from "temp-library-components/image/vendorImage.constants";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
-import ImageBase from "temp-library-components/image/ImageBase";
+import {ImageBase} from "@opsera/react-vanity-set";
 
 export function getLargeVendorIconFromToolIdentifier(
   toolIdentifier,

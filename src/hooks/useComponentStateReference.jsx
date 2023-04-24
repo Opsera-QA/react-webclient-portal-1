@@ -23,7 +23,7 @@ export default function useComponentStateReference() {
   const {
     userData,
     backgroundColor,
-    renewUserToken,
+    loadUserData,
   } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const {
@@ -58,7 +58,7 @@ export default function useComponentStateReference() {
     isTestEnvironment: isTestEnvironment,
     isSaasUser: isSaasUser,
     userData: userData,
-    loadUserData: renewUserToken,
+    loadUserData: loadUserData,
     isFreeTrial: false,
     backgroundColor: backgroundColor,
     isAuthenticated: isAuthenticated,

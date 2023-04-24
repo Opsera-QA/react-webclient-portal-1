@@ -114,6 +114,7 @@ sessionHelper.clearOutSessionStorage = () => {
 };
 
 sessionHelper.SUPPORTED_COOKIE_STORAGE_KEYS = {
+  LANDING_SCREEN_WORKFLOW_WIDGET_CURRENT_VIEW: "landing_screen_workflow_widget_current_view",
   COLLAPSE_SIDEBAR: "collapse_sidebar",
 };
 

@@ -42,11 +42,11 @@ export class ToolLogsFilterModel extends FilterModelBase {
 
   canSearch = () => {
     return true;
-  }
+  };
 
   showPagination = () => {
     return true;
-  }
+  };
 }
 
 export default ToolLogsFilterModel;

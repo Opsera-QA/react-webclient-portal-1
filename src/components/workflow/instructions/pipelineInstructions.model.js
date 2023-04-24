@@ -158,7 +158,7 @@ export default class PipelineInstructionsModel extends ModelBase {
 
   getType = () => {
     return "Pipeline Instructions";
-  }
+  };
 }
 
 

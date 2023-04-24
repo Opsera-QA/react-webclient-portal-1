@@ -19,6 +19,8 @@ export default function WorkspaceWorkflowSelectionCardView(
     setSelectedWorkflowItem,
     heightSize,
     hasTitleBar,
+    hasMoreItems,
+    loadMoreWorkflows,
   }) {
   const getWorkspaceItemCard = (workspaceItem) => {
     switch (workspaceItem?.workspaceType) {
@@ -64,6 +66,8 @@ export default function WorkspaceWorkflowSelectionCardView(
           getCardFunction={getWorkspaceItemCard}
           data={workspaceItems}
           isLoading={isLoading}
+          hasMoreItems={hasMoreItems}
+          loadMoreItems={loadMoreWorkflows}
         />
       }
     />
@@ -79,4 +83,6 @@ WorkspaceWorkflowSelectionCardView.propTypes = {
   setSelectedWorkflowItem: PropTypes.func,
   heightSize: PropTypes.number,
   hasTitleBar: PropTypes.bool,
+  hasMoreItems: PropTypes.bool,
+  loadMoreWorkflows: PropTypes.func,
 };

@@ -1,14 +1,12 @@
 import React, { useContext } from "react";
-import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import {
   getSiteViewModeLabel,
   SITE_VIEW_MODE_SELECT_OPTIONS,
 } from "components/header/view_modes/siteViewMode.constants";
-import NavigationDropdownSelectInputBase
-  from "temp-library-components/navigation/dropdown/input/NavigationDropdownSelectInputBase";
+import {NavigationDropdownSelectInputBase} from "@opsera/react-vanity-set";
 
-function SiteViewModeNavigationSelectInput() {
+export default function SiteViewModeNavigationSelectInput() {
   const {
     viewMode,
     setViewMode,
@@ -24,9 +22,4 @@ function SiteViewModeNavigationSelectInput() {
   );
 }
 
-SiteViewModeNavigationSelectInput.propTypes = {
-  hideAuthComponents: PropTypes.bool,
-  userData: PropTypes.object,
-};
-
-export default SiteViewModeNavigationSelectInput;
+SiteViewModeNavigationSelectInput.propTypes = {};

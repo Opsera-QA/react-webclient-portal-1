@@ -33,6 +33,8 @@ function BlueprintSearchResult({ logData, closeModal }) {
             completeInput.push(logData.data[item].api_response.jenkinsConsoleLog);
           } else if (logData.data[item].api_response.jenkins_console_log) {
             completeInput.push(logData.data[item].api_response.jenkins_console_log);
+          } else if (logData.data[item].api_response.consoleLog) {            
+            completeInput.push(logData.data[item].api_response.consoleLog);
           } else if (logData.data[item].step_configuration?.topic === "opsera.pipeline.octopus.console.log") {
             completeInput.push(logData.data[item].api_response.message);
           } else if (logData.data[item].api_response.status) {
@@ -241,6 +243,10 @@ function BlueprintSearchResult({ logData, closeModal }) {
                       ) : item.api_response.buildLog ? (
                         <div key={idx} className="console-text-invert">
                           {item.api_response.buildLog}
+                        </div>
+                      ) : item.api_response.consoleLog ? (
+                        <div key={idx} className="console-text-invert">
+                          {item.api_response.consoleLog}
                         </div>
                       ) : typeof item.api_response === "string" ? (
                         <div key={idx} className="console-text-invert">

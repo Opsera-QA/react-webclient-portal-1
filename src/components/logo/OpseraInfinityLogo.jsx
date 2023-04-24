@@ -1,6 +1,6 @@
 import React from "react";
 import * as PropType from "prop-types";
-import ImageBase from "temp-library-components/image/ImageBase";
+import {ImageBase} from "@opsera/react-vanity-set";
 
 export default function OpseraInfinityLogo(
   {

@@ -234,6 +234,7 @@ export const isTaskTypeOfCategory = (taskType, category, allowNullCategory = tru
     hasStringValue(category) !== true
     || hasStringValue(taskType) !== true
     || category === "owner"
+    || category === "subscribed"
   ) {
     return true;
   }
@@ -251,7 +252,7 @@ export const isTaskTypeOfCategory = (taskType, category, allowNullCategory = tru
 };
 
 export const getProductionTaskTypesForCategory = (category) => {
-  if (hasStringValue(category) !== true || category === "owner") {
+  if (hasStringValue(category) !== true || category === "owner" || category === "subscribed") {
     return PRODUCTION_TASK_TYPE_SELECT_OPTIONS;
   }
 
@@ -262,7 +263,7 @@ export const getProductionTaskTypesForCategory = (category) => {
 };
 
 export const getNonProductionTaskTypesForCategory = (category) => {
-  if (hasStringValue(category) !== true || category === "owner") {
+  if (hasStringValue(category) !== true || category === "owner" || category === "subscribed") {
     return NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS;
   }
 

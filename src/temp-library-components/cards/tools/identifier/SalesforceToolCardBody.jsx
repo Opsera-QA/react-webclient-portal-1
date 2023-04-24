@@ -12,7 +12,7 @@ export default function SalesforceToolCardBody(
       return(
         <Col xs={12} className={"mb-2"}>
           <span className="mr-2 text-muted">Username</span>
-          <div>{toolModel?.getData("configuration.accountUsername")}</div>
+          <div className={"force-text-wrap"}>{toolModel?.getData("configuration.accountUsername")}</div>
         </Col>
       );
     }
