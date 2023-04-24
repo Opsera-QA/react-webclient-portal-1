@@ -14,6 +14,7 @@ export default function TaskWizardConfirmRepositorySettingsButton(
     taskModel,
     disabled,
     className,
+    validateBranchNameParams,
   }) {
   const [buttonState, setButtonState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
   const {
@@ -26,13 +27,14 @@ export default function TaskWizardConfirmRepositorySettingsButton(
   const updateTask = async () => {
     try {
       setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
+      await taskActions.validateBranchName(getAccessToken, cancelTokenSource, validateBranchNameParams);
       await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
       setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
       setCurrentScreen(SALESFORCE_ORGANIZATION_TASK_WIZARD_SCREENS.SALESFORCE_TASK_WIZARD);
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showInlineErrorMessage(error, "Error Finishing Workflow Initialization");
-        setButtonState(buttonLabelHelper.BUTTON_STATES.ERROR);
+        setButtonState(buttonLabelHelper.BUTTON_STATES.READY);
       }
     }
   };
@@ -86,5 +88,10 @@ TaskWizardConfirmRepositorySettingsButton.propTypes = {
   taskModel: PropTypes.object,
   disabled: PropTypes.bool,
   className: PropTypes.string,
+  validateBranchNameParams: PropTypes.object,
+};
+
+TaskWizardConfirmRepositorySettingsButton.defaultProps = {
+  validateBranchNameParams: {},
 };
 
