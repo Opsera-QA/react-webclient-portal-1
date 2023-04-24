@@ -50,7 +50,7 @@ export default function PipelineCardBase(
       cardHeader={<PipelineCardHeader pipelineModel={pipelineModel} />}
       titleBar={getTitleBar()}
       contentBody={<PipelineCardBody pipelineModel={pipelineModel} />}
-      cardFooter={<PipelineCardFooter />}
+      cardFooter={<PipelineCardFooter pipelineModel={pipelineModel} />}
       selectedOption={selectedOption}
       option={option}
       highlightedBorderColor={themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE}

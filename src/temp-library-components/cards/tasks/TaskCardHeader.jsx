@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import OrchestrationStateFieldBase
   from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 export default function TaskCardHeader(
   {
@@ -12,21 +11,15 @@ export default function TaskCardHeader(
   }) {
   const state = taskModel?.getData("status");
   const runCount = DataParsingHelper.parseInteger(taskModel?.getData("run_count"), 0);
-  const lastRunCompletionDate = taskModel?.getData("completion");
 
   const getOrchestrationStateFieldBase = () => {
     if (runCount > 0) {
       return (
-        <div className={"d-flex justify-content-between"}>
-          {DateFormatHelper.formatDateAsTimestampWithoutSeconds(lastRunCompletionDate)}
-          <div>
-            <OrchestrationStateFieldBase
-              orchestrationState={state}
-              type={"Task"}
-              showStoppedState={false}
-            />
-          </div>
-        </div>
+        <OrchestrationStateFieldBase
+          orchestrationState={state}
+          type={"Task"}
+          showStoppedState={false}
+        />
       );
     }
   };
