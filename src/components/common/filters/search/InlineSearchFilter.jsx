@@ -18,7 +18,13 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
   } = useComponentStateReference();
 
   const validateAndSetData = (value) => {
-    const newSearchText = DataParsingHelper.parseString(value, "");
+    const newSearchText = DataParsingHelper.parseString(
+      value,
+      "",
+      undefined,
+      undefined,
+      false,
+    );
     const maxLength = filterDto?.getMaxLength(fieldName);
 
     if (maxLength) {
