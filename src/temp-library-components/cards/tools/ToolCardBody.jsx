@@ -6,6 +6,7 @@ import { toolIdentifierConstants } from "components/admin/tools/identifiers/tool
 import GitlabToolCardBody from "temp-library-components/cards/tools/identifier/GitlabToolCardBody";
 import GithubToolCardBody from "temp-library-components/cards/tools/identifier/GithubToolCardBody";
 import SalesforceToolCardBody from "temp-library-components/cards/tools/identifier/SalesforceToolCardBody";
+import DescriptionField from "components/common/fields/text/DescriptionField";
 
 export default function ToolCardBody(
   {
@@ -41,14 +42,17 @@ export default function ToolCardBody(
   return (
     <div
       style={{
-        minHeight: "51px",
+        minHeight: "45px",
       }}
     >
       <Row className={"small"}>
-        {getCardBodyByIdentifier()}
-        {/*<Col xs={12}>*/}
-        {/*<DescriptionField dataObject={toolModel} className={"description-height"} />*/}
-        {/*</Col>*/}
+        <Col xs={12}>
+          <DescriptionField
+            dataObject={toolModel}
+            characterLimit={100}
+            className={"dummy"}
+          />
+        </Col>
       </Row>
     </div>
   );
