@@ -14,6 +14,7 @@ import JenkinsJobsPythonAgentLabelSelectInput
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobsPythonAgentLabelSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import ScriptLibrarySelectInput from "components/common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
+import PasswordInput from "components/common/inputs/text/PasswordInput";
 
 function JenkinsBuildJobEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled }) {
   useEffect(() => {
@@ -63,10 +64,33 @@ function JenkinsBuildJobEditorPanel({ jenkinsJobConfiguration, model, setModel, 
             <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"commandLineArgs"}/>
           </Col>
         );
+      case "xcode":
+        return (
+          <>
+            <Col lg={12}>
+              <ScriptLibrarySelectInput
+                fieldName={"scriptId"}
+                model={model}
+                setModel={setModel}
+                customLabel={"Custom Plist"}
+              />
+            </Col>            
+            <Col lg={12}>
+              <PasswordInput 
+                dataObject={model} 
+                setDataObject={setModel} 
+                fieldName={"developerTeamId"}
+              />
+            </Col>
+          </>          
+        );        
     }
   };
 
   const getAutoScalingField = () => {
+    if (model?.getData("buildType") === "xcode") {
+      return null;
+    }
     if (autoScalingEnabled === true && model) {
       if (model?.getData("buildType") === "python") {
         return (

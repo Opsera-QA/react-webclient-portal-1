@@ -36,6 +36,7 @@ function JenkinsStepToolJobSelectInput({ fieldName, model, setModel, disabled, j
     const mavenTask = configuration?.mavenTask || "";
     const customMavenSettings = configuration?.customMavenSettings || false;
     const scriptId = customMavenSettings === true ? (configuration?.scriptId || "") : "";
+    const developerTeamId = configuration?.developerTeamId || "";
     const buildTool = configuration?.buildTool || "";
     const agentLabels = configuration?.agentLabels || "";
     const buildType = configuration?.buildType || "";
@@ -44,6 +45,7 @@ function JenkinsStepToolJobSelectInput({ fieldName, model, setModel, disabled, j
     newDataObject.setData("mavenTask", mavenTask);
     newDataObject.setData("customMavenSettings", customMavenSettings);
     newDataObject.setData("scriptId", scriptId);
+    newDataObject.setData("developerTeamId", developerTeamId);
     newDataObject.setData("agentLabels", agentLabels);
     newDataObject.setData("buildType", buildType);
     newDataObject.setData("buildTool", buildTool);
