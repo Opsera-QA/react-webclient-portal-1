@@ -68,7 +68,7 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
       source.cancel();
       isMounted.current = false;
     };
-  }, [JSON.stringify(dashboardData)]);
+  }, [JSON.stringify(dashboardData), activeTab]);
 
   const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
@@ -169,7 +169,7 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
       setMetrics([]);
     } else {
       setActiveTab(projectName);
-      await loadData(cancelTokenSource,newFilterDto);
+      //await loadData(cancelTokenSource,newFilterDto);
     }
   };
   const getFilterContainer = () => {
