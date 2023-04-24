@@ -9,7 +9,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
-import { faSave, faSearch } from "@fortawesome/pro-light-svg-icons";
+import { faArrowRight, faSearch } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import IconBase from "components/common/icons/IconBase";
 import FieldListPanel from "./FieldListPanel";
@@ -249,7 +249,7 @@ function FieldSelectorBasePanel({
             <IconBase
               className={"mr-2"}
               isLoading={isSaving}
-              icon={faSave}
+              icon={faArrowRight}
             />
             Save and Proceed
           </Button>

@@ -6,7 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import { parseError } from "components/common/helpers/error-helpers";
 import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import { faPencilAlt, faSave } from "@fortawesome/pro-light-svg-icons";
+import { faArrowLeft, faArrowRight } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "../../../../../../../common/icons/IconBase";
 import { Button, Row } from "react-bootstrap";
 import SaveButtonContainer from "../../../../../../../common/buttons/saving/containers/SaveButtonContainer";
@@ -198,11 +198,12 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
           >
             <span>
               <IconBase
-                icon={faSave}
+                icon={faArrowRight}
                 fixedWidth
+                isLoading={isLoading}
                 className="mr-2"
               />
-              Save and Proceed
+              {isLoading ? "Saving" : "Save and Proceed"}
             </span>
           </Button>
         </SaveButtonContainer>

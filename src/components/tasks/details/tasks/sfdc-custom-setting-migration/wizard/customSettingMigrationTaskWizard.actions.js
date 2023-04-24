@@ -136,4 +136,25 @@ customSettingMigrationTaskWizardActions.updateSelectedFields = async (
   );
 };
 
+customSettingMigrationTaskWizardActions.setFilterQuery = async (
+  getAccessToken,
+  cancelTokenSource,
+  wizardModel,
+  query,
+  queryFilters,
+) => {
+  const apiUrl = `/tasks/custom-setting-migration-task/wizard/${wizardModel?.getData("recordId")}/set-query-filter`;
+  const postBody = {
+    query: query,
+    queryFilters: queryFilters,
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 export default customSettingMigrationTaskWizardActions;

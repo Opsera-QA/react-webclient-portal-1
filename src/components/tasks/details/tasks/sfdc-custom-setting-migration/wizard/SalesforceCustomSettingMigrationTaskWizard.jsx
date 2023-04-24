@@ -16,6 +16,7 @@ import { customSettingMigrationTaskWizardMetadata } from "./customSettingMigrati
 import CustomSettingTaskWizardConfigScreen
   from "./screens/custom_setting_selection_screen/CustomSettingTaskWizardConfigScreen";
 import CustomSettingQueryBuilderScreen from "./screens/query_builder_screen/CustomSettingQueryBuilderScreen";
+import CustomSettingTaskConfirmationScreen from "./screens/confirmation_screen/CustomSettingTaskConfirmationScreen";
 
 const SalesforceCustomSettingMigrationTaskWizard = ({ handleClose, taskModel }) => {
   const toastContext = useContext(DialogToastContext);
@@ -109,7 +110,15 @@ const SalesforceCustomSettingMigrationTaskWizard = ({ handleClose, taskModel }) 
           />
         );
       case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN:
-        return <></>;
+        return (
+          <CustomSettingTaskConfirmationScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+            taskType={wizardModel?.getData("taskType")}
+          />
+        );
     }
   };
 

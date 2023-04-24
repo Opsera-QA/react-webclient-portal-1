@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useRef } from "react";
+import React, { useState, useMemo, useEffect, useRef, useContext } from "react";
 import PropTypes from "prop-types";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import CancelButton from "components/common/buttons/CancelButton";
@@ -15,6 +15,11 @@ import customSettingQueryMetadata from "./custom-setting-query-metadata";
 import TextAreaClipboardField from "../../../../../../../common/fields/clipboard/TextAreaClipboardField";
 import DetailPanelContainer from "../../../../../../../common/panels/detail_panel_container/DetailPanelContainer";
 import { getMigrationTypeLabel } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
+import { faSave } from "@fortawesome/pro-light-svg-icons";
+import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
+import { parseError } from "../../../../../../../common/helpers/error-helpers";
+import { AuthContext } from "../../../../../../../../contexts/AuthContext";
+import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 
 const operators = [
   "=",
@@ -40,9 +45,13 @@ const CustomSettingQueryBuilderScreen = ({
 }) => {
   console.log(wizardModel?.getPersistData());
 
+  const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [fieldsList, setFieldsList] = useState([]);
   const [queryFilters, setQueryFilters] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
 
   console.log(queryFilters);
@@ -170,6 +179,30 @@ const CustomSettingQueryBuilderScreen = ({
     );
   };
 
+  const saveAndProceed = async () => {
+    try {
+      setIsLoading(true);
+      wizardModel.setData("filterQuery",query);
+      wizardModel.setData("queryFilters",queryFilters);
+      await customSettingMigrationTaskWizardActions.setFilterQuery(
+        getAccessToken,
+        cancelTokenSource,
+        wizardModel,
+        query,
+        queryFilters,
+      );
+      setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN);
+    } catch (error) {
+      if (isMounted?.current === true) {
+        const parsedError = parseError(error);
+        toastContext.showInlineErrorMessage(parsedError);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
   const getBody = () => {
     if (wizardModel == null) {
       return (
@@ -231,6 +264,23 @@ const CustomSettingQueryBuilderScreen = ({
               className="mr-2"
             />
             Back
+          </Button>
+          <Button
+            className={"mr-2"}
+            size="sm"
+            variant="primary"
+            onClick={saveAndProceed}
+            disabled={isLoading}
+          >
+            <span>
+              <IconBase
+                icon={faSave}
+                isLoading={isLoading}
+                fixedWidth
+                className="mr-2"
+              />
+              {isLoading ? "Saving Query" : "Save and Proceed"}
+            </span>
           </Button>
           <CancelButton
             showUnsavedChangesMessage={false}
