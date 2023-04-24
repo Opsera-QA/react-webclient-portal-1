@@ -29,6 +29,12 @@ function JenkinsBuildJobSummaryPanel({ dataObject }) {
             <TextFieldBase dataObject={dataObject} fieldName={"commandLineArgs"} />
           </Col>
         );
+      case "xcode":
+        return (                      
+          <Col lg={6}>
+            <TextFieldBase dataObject={dataObject} fieldName={"scriptId"} />
+          </Col>
+        );
     }
   };
 
