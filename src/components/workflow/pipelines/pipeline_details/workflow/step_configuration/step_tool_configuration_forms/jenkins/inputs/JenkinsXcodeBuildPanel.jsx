@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import TextAreaInput from "components/common/inputs/text/TextAreaInput";
+import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 import JenkinsXcodeContentTypeSelectInput from "./JenkinsXcodeContentTypeSelectInput";
 import JenkinsXcodeScriptTypeSelectInput from "./JenkinsXcodeScriptTypeSelectInput";
 import ParameterSelectListInputBase
@@ -21,7 +21,11 @@ function JenkinsIosBuildPanel({plan, model, setModel, buildType}) {
       <TextInputBase dataObject={model} fieldName={"projectWorkspace"} setDataObject={setModel} />
       <JenkinsXcodeContentTypeSelectInput model={model} setModel={setModel} />
       <JenkinsXcodeScriptTypeSelectInput model={model} setModel={setModel} />      
-      <TextAreaInput dataObject={model} setDataObject={setModel} fieldName={"commands"}/>
+      <TextAreaInputBase 
+        fieldName={"commands"} 
+        model={model} 
+        setModel={setModel}
+      />
       <ParameterSelectListInputBase
         titleIcon={faHandshake}
         dataObject={model}
