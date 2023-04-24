@@ -32,6 +32,10 @@ export const customSettingMigrationTaskWizardMetadata = {
       id: "selectedFieldList",
     },
     {
+      label: "Query Filters",
+      id: "queryFilters",
+    },
+    {
       label: "Query",
       id: "filterQuery"
     }
@@ -46,6 +50,7 @@ export const customSettingMigrationTaskWizardMetadata = {
     taskType: "",
     selectedCustomSetting: "",
     selectedFieldList: [],
+    queryFilters: [],
     filterQuery: "",
   }
 };

@@ -121,6 +121,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
     newWizardModel.setData(fieldName, selectedOption);
     newWizardModel.setData("selectedFieldList", []);
     newWizardModel.setData("filterQuery", "");
+    newWizardModel.setData("queryFilters", []);
     setWizardModel({ ...newWizardModel });
   };
 

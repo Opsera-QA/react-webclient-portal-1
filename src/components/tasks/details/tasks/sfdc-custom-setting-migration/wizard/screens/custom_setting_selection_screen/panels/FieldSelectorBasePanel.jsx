@@ -95,6 +95,8 @@ function FieldSelectorBasePanel({
     try {
       setIsSaving(true);
       wizardModel.setData("selectedFieldList", members);
+      wizardModel.setData("queryFilters", []);
+      wizardModel.setData("filterQuery", "");
       await customSettingMigrationTaskWizardActions.updateSelectedFields(
         getAccessToken,
         cancelTokenSource,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import CancelButton from "components/common/buttons/CancelButton";
@@ -6,7 +6,29 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import { Button } from "react-bootstrap";
+import IconBase from "../../../../../../../common/icons/IconBase";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
+import FieldQueryComponent from "./FieldQueryComponent";
+import customSettingQueryMetadata from "./custom-setting-query-metadata";
+import TextAreaClipboardField from "../../../../../../../common/fields/clipboard/TextAreaClipboardField";
 
+const operators = [
+  "=",
+  "!=",
+  ">",
+  ">=",
+  "<",
+  "<=",
+  "STARTS WITH",
+  "ENDS WITH",
+  "CONTAINS",
+  "IN",
+  "NOT IN",
+  "INCLUDES",
+  "EXCLUDES",
+];
 const CustomSettingQueryBuilderScreen = ({
   wizardModel,
   setWizardModel,
@@ -14,6 +36,138 @@ const CustomSettingQueryBuilderScreen = ({
   handleClose,
   taskType,
 }) => {
+  console.log(wizardModel?.getPersistData());
+
+  const [fieldsList, setFieldsList] = useState([]);
+  const [queryFilters, setQueryFilters] = useState([]);
+
+  const isMounted = useRef(false);
+
+  console.log(queryFilters);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    loadData();
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, [wizardModel?.getData("selectedFieldList")]);
+
+  const loadData = () => {
+    try {
+      if (wizardModel?.getData("selectedFieldList")) {
+        const filteredData = wizardModel
+          ?.getData("selectedFieldList")
+          ?.filter((item) => {
+            return item.filterable === true;
+          });
+
+        const filteredFieldsList = filteredData.map((item) => {
+          return item.name;
+          // return { label: item.label, name: item.name };
+        });
+        setFieldsList(filteredFieldsList);
+
+        const filters =
+          Array.isArray(wizardModel?.getData("queryFilters")) &&
+          wizardModel?.getData("queryFilters").length > 0
+            ? wizardModel?.getData("queryFilters")
+            : [];
+        if (filters.length === 0) {
+          filters.push({ ...customSettingQueryMetadata.newObjectFields });
+        }
+        setQueryFilters([...filters]);
+        console.log(filteredFieldsList);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleFieldChange = (index, value) => {
+    setQueryFilters((prevFilters) => {
+      const newFilters = [...prevFilters];
+      newFilters[index].field = value;
+      return newFilters;
+    });
+  };
+
+  const handleOperatorChange = (index, value) => {
+    setQueryFilters((prevFilters) => {
+      const newFilters = [...prevFilters];
+      newFilters[index].operator = value;
+      return newFilters;
+    });
+  };
+
+  const handleValueChange = (index, value) => {
+    setQueryFilters((prevFilters) => {
+      const newFilters = [...prevFilters];
+      newFilters[index].value = value;
+      return newFilters;
+    });
+  };
+
+  const handleAddFilter = () => {
+    setQueryFilters((prevFilters) => [
+      ...prevFilters,
+      { field: fieldsList[0], operator: operators[0], value: "" },
+    ]);
+  };
+
+  const handleRemoveFilter = (index) => {
+    setQueryFilters((prevFilters) => {
+      const newFilters = [...prevFilters];
+      newFilters.splice(index, 1);
+      return newFilters;
+    });
+  };
+
+  const generateQuery = () => {
+    const whereClause = queryFilters
+      .map((filter) => {
+        switch (filter.operator) {
+          case "=":
+          case "!=":
+          case ">":
+          case ">=":
+          case "<":
+          case "<=":
+            return `${filter.field} ${filter.operator} '${filter.value}'`;
+          case "STARTS WITH":
+            return `${filter.field} LIKE '${filter.value}%'`;
+          case "ENDS WITH":
+            return `${filter.field} LIKE '%${filter.value}'`;
+          case "CONTAINS":
+            return `${filter.field} LIKE '%${filter.value}%'`;
+          case "IN":
+            return `${filter.field} IN (${filter.value})`;
+          case "NOT IN":
+            return `${filter.field} NOT IN (${filter.value})`;
+          case "INCLUDES":
+            return `${filter.value} IN ${filter.field}`;
+          case "EXCLUDES":
+            return `${filter.value} NOT IN ${filter.field}`;
+          default:
+            return `${filter.field} ${filter.operator} '${filter.value}'`;
+        }
+      })
+      .join(" AND ");
+    const query = `SELECT ${fieldsList.join(", ")} FROM ${
+      wizardModel?.getData("selectedCustomSetting")?.componentName
+    }${whereClause ? ` WHERE ${whereClause}` : ""}`;
+    return query;
+  };
+
+  const query = useMemo(() => generateQuery(), [queryFilters]);
+  const handleBackButton = () => {
+    setCurrentScreen(
+      CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN,
+    );
+  };
+
   const getBody = () => {
     if (wizardModel == null) {
       return (
@@ -24,10 +178,59 @@ const CustomSettingQueryBuilderScreen = ({
       );
     }
 
+    console.log(query);
+
     return (
       <div>
-        <div className={"m-3"}>Query Builder Area</div>
+        <div className={"m-3"}>
+          Query Builder Area
+          {fieldsList &&
+            fieldsList.length > 0 &&
+            queryFilters &&
+            queryFilters.length > 0 && (
+              <div>
+                {queryFilters.map((filter, index) => (
+                  <FieldQueryComponent
+                    key={index}
+                    index={index}
+                    fields={fieldsList}
+                    operators={operators}
+                    filter={filter}
+                    onFieldChange={handleFieldChange}
+                    onOperatorChange={handleOperatorChange}
+                    onValueChange={handleValueChange}
+                    onRemove={handleRemoveFilter}
+                    onAdd={handleAddFilter}
+                    isRemovable={queryFilters.length > 1}
+                  />
+                ))}
+                <div>
+                  <TextAreaClipboardField
+                    allowResize={false}
+                    rows={10}
+                    textAreaValue={query}
+                    description={`SOQL query generated based of filter selection made above.`}
+                  />
+                </div>
+              </div>
+            )}
+        </div>
         <SaveButtonContainer>
+          <Button
+            variant="secondary"
+            size="sm"
+            className="mr-2"
+            onClick={() => {
+              handleBackButton();
+            }}
+          >
+            <IconBase
+              icon={faArrowLeft}
+              fixedWidth
+              className="mr-2"
+            />
+            Back
+          </Button>
           <CancelButton
             showUnsavedChangesMessage={false}
             cancelFunction={handleClose}

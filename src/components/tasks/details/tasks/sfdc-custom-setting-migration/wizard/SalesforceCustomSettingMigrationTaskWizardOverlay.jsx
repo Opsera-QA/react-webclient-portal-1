@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import { faFileInvoice } from "@fortawesome/pro-light-svg-icons";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import SalesforceCustomSettingMigrationTaskWizard from "./SalesforceCustomSettingMigrationTaskWizard";
+import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 
 export const SALESFORCE_CUSTOM_SETTING_MIGRATION_TASK_WIZARD_SCREENS = {
   PRE_RUN_TASK_SCREEN: "pre_run_task_screen",
@@ -44,7 +44,7 @@ function SalesforceCustomSettingMigrationTaskWizardOverlay({ taskModel }) {
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       titleText={`Salesforce Custom Setting Migration Wizard`}
-      titleIcon={faFileInvoice}
+      titleIcon={faSalesforce}
       showToasts={true}
       showCloseButton={false}
     >
