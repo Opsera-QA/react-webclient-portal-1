@@ -30,7 +30,7 @@ function TextFieldBase(
   return (
     <FieldContainer className={className}>
       <div className="w-100 d-flex">
-        <FieldLabel field={field}/>
+        <FieldLabel field={field} />
         <span>{dataObject.getData(fieldName)}</span>
         {getClipboardButton()}
       </div>
