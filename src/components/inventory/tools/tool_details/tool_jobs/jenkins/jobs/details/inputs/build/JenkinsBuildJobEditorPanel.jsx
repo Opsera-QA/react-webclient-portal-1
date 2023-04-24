@@ -15,14 +15,33 @@ import JenkinsJobsPythonAgentLabelSelectInput
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import ScriptLibrarySelectInput from "components/common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
 import PasswordInput from "components/common/inputs/text/PasswordInput";
+import {
+  jenkinsXcodeBuildJobMetadata
+} from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/build/jenkinsXcodeBuildJob.metadata";
 
-function JenkinsBuildJobEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled }) {
+const getMetadataForBuildType = (buildType) => {
+  switch (buildType) {
+    case "xunit":
+      return jenkinsXcodeBuildJobMetadata;
+    default:
+      return JenkinsJobsBuildMetadata;
+  }
+};
+
+function JenkinsBuildJobEditorPanel(
+  {
+    jenkinsJobConfiguration,
+    model,
+    setModel,
+    autoScalingEnabled,
+    buildType,
+  }) {
   useEffect(() => {
     unpackJobConfiguration();
-  }, [jenkinsJobConfiguration]);
+  }, [jenkinsJobConfiguration, buildType]);
 
   const unpackJobConfiguration = () => {
-    const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, JenkinsJobsBuildMetadata);
+    const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, getMetadataForBuildType(buildType));
     setModel({...parsedModel});
   };
 
@@ -72,7 +91,6 @@ function JenkinsBuildJobEditorPanel({ jenkinsJobConfiguration, model, setModel, 
                 fieldName={"scriptId"}
                 model={model}
                 setModel={setModel}
-                customLabel={"Custom Plist"}
               />
             </Col>            
             <Col lg={12}>
@@ -139,6 +157,7 @@ JenkinsBuildJobEditorPanel.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   autoScalingEnabled: PropTypes.bool,
+  buildType: PropTypes.string,
 };
 
 export default JenkinsBuildJobEditorPanel;
