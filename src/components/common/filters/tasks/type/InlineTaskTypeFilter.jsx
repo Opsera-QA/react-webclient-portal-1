@@ -1,14 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TaskTypeFilter from "components/common/filters/tasks/type/TaskTypeFilter";
+import {isTaskTypeOfCategory} from "components/tasks/task.types";
 
 function InlineTaskTypeFilter({ filterModel, setFilterModel, className, fieldName, loadData}) {
   const setDataFunction = (fieldName, selectedOption) => {
-    let newModel = filterModel;
-    newModel.setData(fieldName, selectedOption?.value);
-    newModel.setData("category", "");
-    newModel.setData("currentPage", 1);
-    loadData(newModel);
+    const newTaskType = selectedOption?.value;
+    filterModel.setData(fieldName, newTaskType);
+    const currentCategory = filterModel?.getData("category");
+
+    if (isTaskTypeOfCategory(newTaskType, currentCategory) !== true) {
+      filterModel.setData("category", "");
+    }
+
+    filterModel.setData("currentPage", 1);
+    loadData(filterModel);
   };
 
   if (filterModel == null) {

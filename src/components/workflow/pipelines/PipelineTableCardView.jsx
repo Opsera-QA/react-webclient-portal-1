@@ -5,7 +5,9 @@ import PipelinesTableBase from "components/workflow/pipelines/pipeline_details/P
 import InformationDialog from "components/common/status_notifications/info";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import PipelineCardView from "components/workflow/pipelines/PipelineCardView";
-import FilterContainer from "components/common/table/FilterContainer";
+import FilterContainer, {
+  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
+} from "components/common/table/FilterContainer";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import pipelineSummaryMetadata
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
@@ -17,9 +19,10 @@ import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
-import PipelineTagFilter from "components/common/filters/tags/tag/pipelines/PipelineTagFilter";
 import PipelineStepToolIdentifierFilter
   from "components/common/filters/tools/tool_identifier/pipelines/PipelineStepToolIdentifierFilter";
+import SideBySideViewBase from "components/common/tabs/SideBySideViewBase";
+import PaginationContainer from "components/common/pagination/PaginationContainer";
 
 function PipelineTableCardView(
   {
@@ -80,7 +83,6 @@ function PipelineTableCardView(
         isLoading={isLoading}
         loadData={loadData}
         pipelines={pipelines}
-        pipelineFilterModel={pipelineFilterModel}
         subscribedPipelineIds={subscribedPipelineIds}
       />
     );
@@ -90,11 +92,31 @@ function PipelineTableCardView(
     return (
       <PipelinesTableBase
         isLoading={isLoading}
-        paginationModel={pipelineFilterModel}
-        setPaginationModel={setPipelineFilterModel}
         pipelines={pipelines}
         loadData={loadData}
         onRowClickFunction={onRowSelect}
+      />
+    );
+  };
+
+  const getVerticalTabContainer = () => {
+    return (
+      <PipelineVerticalTabContainer
+        pipelineFilterModel={pipelineFilterModel}
+        isLoading={isLoading}
+        loadData={loadData}
+      />
+    );
+  };
+
+  const getCurrentView = () => {
+    return (
+      <TableCardView
+        filterModel={pipelineFilterModel}
+        data={pipelines}
+        isLoading={isLoading}
+        cardView={getCardView()}
+        tableView={getTableView()}
       />
     );
   };
@@ -109,24 +131,21 @@ function PipelineTableCardView(
     }
 
     return (
-      <TabAndViewContainer
-        verticalTabContainer={
-          <PipelineVerticalTabContainer
-            pipelineFilterModel={pipelineFilterModel}
-            isLoading={isLoading}
-            loadData={loadData}
-          />
-        }
-        currentView={
-          <TableCardView
-            filterModel={pipelineFilterModel}
-            data={pipelines}
-            isLoading={isLoading}
-            cardView={getCardView()}
-            tableView={getTableView()}
-          />
-        }
-      />
+      <PaginationContainer
+        loadData={loadData}
+        isLoading={isLoading}
+        filterDto={pipelineFilterModel}
+        setFilterDto={setPipelineFilterModel}
+        data={pipelines}
+        nextGeneration={true}
+      >
+        <SideBySideViewBase
+          leftSideView={getVerticalTabContainer()}
+          rightSideView={getCurrentView()}
+          leftSideMinimumWidth={"245px"}
+          leftSideMaximumWidth={"245px"}
+        />
+      </PaginationContainer>
     );
   };
 

@@ -1340,6 +1340,11 @@ div.data-blocks-ellipses {
     letter-spacing: .05rem;
 }
 
+.widget-title-text {
+    font-size: 1.15rem;
+    letter-spacing: .1rem;
+}
+
 .filter-body {
     min-width: 250px;
 }
@@ -1592,7 +1597,7 @@ div.data-blocks-ellipses {
     }
 
     .inline-search-filter {
-        min-width: 350px;
+        min-width: 230px;
     }
 
     .stacked-vertical-tab .inline-select-filter {
