@@ -37,13 +37,10 @@ function JenkinsBuildJobEditorPanel(
     buildType,
   }) {
   useEffect(() => {
-    unpackJobConfiguration();
-  }, [jenkinsJobConfiguration, buildType]);
-
-  const unpackJobConfiguration = () => {
-    const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, getMetadataForBuildType(buildType));
+    const metadata = getMetadataForBuildType(buildType);
+    const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, metadata);
     setModel({...parsedModel});
-  };
+  }, [jenkinsJobConfiguration, buildType]);
 
   const getDynamicBuildTypeFields = () => {
     switch (model?.getData("buildType")) {
