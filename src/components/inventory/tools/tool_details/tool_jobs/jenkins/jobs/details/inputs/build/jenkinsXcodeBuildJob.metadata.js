@@ -1,4 +1,5 @@
-const JenkinsBuildJobMetadata = {
+// TODO: Remove unnecessary fields
+export const jenkinsXcodeBuildJobMetadata = {
   type: "Jenkins Build Job",
   fields: [
     {
@@ -32,7 +33,7 @@ const JenkinsBuildJobMetadata = {
       id: "customMavenSettings"
     },
     {
-      label: "Custom Settings",
+      label: "Custom Plist",
       id: "scriptId",
       isRequiredFunction: (model) => {
         return model?.getData("customMavenSettings") === true;
@@ -55,4 +56,3 @@ const JenkinsBuildJobMetadata = {
   },
 };
 
-export default JenkinsBuildJobMetadata;
