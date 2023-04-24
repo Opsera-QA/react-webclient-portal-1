@@ -8,6 +8,7 @@ export default function WidgetDataBlockBase(
     title,
     titleIcon,
     rightSideTitleBarItems,
+    centerTitleBarItems,
     heightSize,
     widthSize,
     fontColor,
@@ -17,6 +18,7 @@ export default function WidgetDataBlockBase(
     onClickFunction,
     disabled,
     isLoading,
+    titleBarClassName,
   }) {
   const {
     themeConstants,
@@ -26,6 +28,7 @@ export default function WidgetDataBlockBase(
     <WidgetDataBlockBaseContainer
       title={title}
       titleIcon={titleIcon}
+      centerTitleBarItems={centerTitleBarItems}
       rightSideTitleBarItems={rightSideTitleBarItems}
       heightSize={heightSize}
       widthSize={widthSize}
@@ -39,6 +42,7 @@ export default function WidgetDataBlockBase(
       fontColor={fontColor}
       disabledFontColor={themeConstants.COLOR_PALETTE.DARK_GRAY}
       fontFamily={fontFamily}
+      titleBarClassName={titleBarClassName}
     >
       {children}
     </WidgetDataBlockBaseContainer>
@@ -59,7 +63,9 @@ WidgetDataBlockBase.propTypes = {
   title: PropTypes.any,
   titleIcon: PropTypes.object,
   rightSideTitleBarItems: PropTypes.any,
+  centerTitleBarItems: PropTypes.any,
   isLoading: PropTypes.bool,
+  titleBarClassName: PropTypes.string,
 };
 
 WidgetDataBlockBase.defaultProps = {
