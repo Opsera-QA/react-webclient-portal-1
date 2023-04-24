@@ -27,8 +27,6 @@ function FieldQueryComponent({
   const [isLoading, setIsLoading] = useState(undefined);
   const isMounted = useRef(false);
 
-  console.log(filter);
-
   useEffect(() => {
     isMounted.current = true;
 

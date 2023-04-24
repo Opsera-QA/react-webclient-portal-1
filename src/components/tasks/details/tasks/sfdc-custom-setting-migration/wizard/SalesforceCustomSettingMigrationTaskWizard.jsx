@@ -73,8 +73,6 @@ const SalesforceCustomSettingMigrationTaskWizard = ({ handleClose, taskModel }) 
     setWizardModel({ ...newWizardModel });
   };
 
-  console.log(wizardModel?.getPersistData());
-
   const getBody = () => {
     switch (currentScreen) {
       case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN:

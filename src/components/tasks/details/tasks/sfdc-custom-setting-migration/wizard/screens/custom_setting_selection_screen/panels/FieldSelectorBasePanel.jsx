@@ -88,8 +88,8 @@ function FieldSelectorBasePanel({
     loadMemberStatus();
   }, [selectedFields]);
 
-  console.log(members);
-  console.log(nonMembers);
+  // console.log(members);
+  // console.log(nonMembers);
 
   const updateMembers = async () => {
     try {

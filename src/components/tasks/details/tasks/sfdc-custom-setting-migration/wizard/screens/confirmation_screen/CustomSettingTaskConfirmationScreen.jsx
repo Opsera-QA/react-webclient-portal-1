@@ -28,8 +28,6 @@ const CustomSettingTaskConfirmationScreen = ({
   handleClose,
   taskType,
 }) => {
-  console.log(wizardModel?.getPersistData());
-
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);

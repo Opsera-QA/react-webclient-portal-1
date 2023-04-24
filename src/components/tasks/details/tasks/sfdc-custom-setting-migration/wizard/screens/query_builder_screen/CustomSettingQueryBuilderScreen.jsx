@@ -43,8 +43,6 @@ const CustomSettingQueryBuilderScreen = ({
   handleClose,
   taskType,
 }) => {
-  console.log(wizardModel?.getPersistData());
-
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [fieldsList, setFieldsList] = useState([]);
@@ -53,8 +51,6 @@ const CustomSettingQueryBuilderScreen = ({
 
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
-
-  console.log(queryFilters);
 
   useEffect(() => {
     isMounted.current = true;
@@ -90,7 +86,6 @@ const CustomSettingQueryBuilderScreen = ({
           filters.push({ ...customSettingQueryMetadata.newObjectFields });
         }
         setQueryFilters([...filters]);
-        console.log(filteredFieldsList);
       }
     } catch (e) {
       console.log(e);
@@ -212,8 +207,6 @@ const CustomSettingQueryBuilderScreen = ({
         />
       );
     }
-
-    console.log(query);
 
     return (
       <div>
