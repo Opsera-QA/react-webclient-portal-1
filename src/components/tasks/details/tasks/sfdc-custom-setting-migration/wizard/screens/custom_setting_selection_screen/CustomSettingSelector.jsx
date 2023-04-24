@@ -162,7 +162,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
   const getSelectView = () => {
     if (!enableEdit && wizardModel?.getData("selectedCustomSetting")) {
       return (
-        <div className={"d-flex mx-1 w-100"}>
+        <div className={"d-flex mx-1 my-3 w-100"}>
           Selected Custom Object :{" "}
           {wizardModel?.getData("selectedCustomSetting")?.componentName}
           <EnableEditingIcon
