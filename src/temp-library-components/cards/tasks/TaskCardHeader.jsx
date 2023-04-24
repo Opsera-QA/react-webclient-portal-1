@@ -31,7 +31,7 @@ export default function TaskCardHeader(
         <div>
           <span>{runCount} Runs</span>
         </div>
-        <div>
+        <div className={"my-auto"}>
           {getOrchestrationStateFieldBase()}
         </div>
       </div>

@@ -5,9 +5,8 @@ import PropTypes from "prop-types";
 
 export default function PipelineCardFooter({ pipelineModel }) {
   const state = pipelineModel?.getData("state");
-  const lastRun = pipelineModel?.getData("workflow.last_run");
-  const lastRunState = lastRun?.status;
-  const orchestrationState = state === "running" ? state : lastRunState;
+  const lastRunState = pipelineModel?.getData("workflow.last_run.status");
+  const orchestrationState = state === "paused" || state === "running" || lastRunState == null ? state : lastRunState;
   const { themeConstants } = useComponentStateReference();
 
   const getColor = () => {

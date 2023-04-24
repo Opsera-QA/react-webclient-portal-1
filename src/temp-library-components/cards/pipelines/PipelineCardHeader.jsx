@@ -10,10 +10,9 @@ export default function PipelineCardHeader(
     pipelineModel,
   }) {
   const state = pipelineModel?.getData("state");
-  const lastRun = pipelineModel?.getData("workflow.last_run");
-  const lastRunState = lastRun?.status;
+  const lastRunState = pipelineModel?.getData("workflow.last_run.status");
+  const orchestrationState = state === "paused" || state === "running" || lastRunState == null ? state : lastRunState;
   const runCount = DataParsingHelper.parseInteger(pipelineModel?.getData("workflow.run_count"), 0);
-  const orchestrationState = state === "running" ? state : lastRunState;
 
   const getOrchestrationStateFieldBase = () => {
     if (runCount > 0) {
