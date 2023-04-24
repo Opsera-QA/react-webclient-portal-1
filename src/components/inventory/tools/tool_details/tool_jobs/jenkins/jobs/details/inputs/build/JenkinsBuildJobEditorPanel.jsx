@@ -39,6 +39,7 @@ function JenkinsBuildJobEditorPanel(
   useEffect(() => {
     const metadata = getMetadataForBuildType(buildType);
     const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, metadata);
+    parsedModel.setData("buildType", buildType);
     setModel({...parsedModel});
   }, [jenkinsJobConfiguration, buildType]);
 
