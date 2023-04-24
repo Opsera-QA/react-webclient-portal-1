@@ -13,6 +13,7 @@ function TextFieldBase(
     showClipboardButton,
     visible,
     requireSavedValue,
+    customLabel,
   }) {
   const field = dataObject?.getFieldById(fieldName);
   const value = DataParsingHelper.parseString(dataObject?.getData(fieldName));
@@ -30,7 +31,7 @@ function TextFieldBase(
   return (
     <FieldContainer className={className}>
       <div className="w-100 d-flex">
-        <FieldLabel field={field}/>
+        <FieldLabel field={field} customLabel={customLabel} />
         <span>{dataObject.getData(fieldName)}</span>
         {getClipboardButton()}
       </div>
@@ -45,6 +46,7 @@ TextFieldBase.propTypes = {
   showClipboardButton: PropTypes.bool,
   visible: PropTypes.bool,
   requireSavedValue: PropTypes.bool,
+  customLabel: PropTypes.string,
 };
 
 export default TextFieldBase;

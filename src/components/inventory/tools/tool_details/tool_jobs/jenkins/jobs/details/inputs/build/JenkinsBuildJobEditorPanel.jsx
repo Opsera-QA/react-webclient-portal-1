@@ -71,7 +71,8 @@ function JenkinsBuildJobEditorPanel({ jenkinsJobConfiguration, model, setModel, 
               <ScriptLibrarySelectInput
                 fieldName={"scriptId"}
                 model={model}
-                setModel={setModel}                
+                setModel={setModel}
+                customLabel={"Custom Plist"}
               />
             </Col>            
             <Col lg={12}>

@@ -32,7 +32,7 @@ function JenkinsBuildJobSummaryPanel({ dataObject }) {
       case "xcode":
         return (                      
           <Col lg={6}>
-            <TextFieldBase dataObject={dataObject} fieldName={"scriptId"} />
+            <TextFieldBase dataObject={dataObject} fieldName={"scriptId"} customLabel={"Custom Plist"} />
           </Col>
         );
     }
