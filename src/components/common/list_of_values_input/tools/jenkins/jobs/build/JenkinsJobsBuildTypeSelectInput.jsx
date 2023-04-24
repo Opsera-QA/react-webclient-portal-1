@@ -31,6 +31,10 @@ const JENKINS_BUILD_OPTIONS = [
         name: "Node",
         value: "node",
     },
+    {
+      name: "Xcode",
+      value: "xcode",
+  },
   ];
 
 function JenkinsJobsBuildTypeSelectInput({ fieldName, model, setModel }) {

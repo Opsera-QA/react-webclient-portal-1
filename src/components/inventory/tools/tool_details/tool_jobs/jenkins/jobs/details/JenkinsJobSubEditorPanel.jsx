@@ -67,6 +67,7 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
             autoScalingEnabled={autoScalingEnabled}
+            buildType={jenkinsJobConfigurationModel?.getData("buildType")}
           />
         );
       case "SFDC":
