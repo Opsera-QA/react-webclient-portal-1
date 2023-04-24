@@ -6,13 +6,15 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import { Button } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
 import IconBase from "../../../../../../../common/icons/IconBase";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
 import FieldQueryComponent from "./FieldQueryComponent";
 import customSettingQueryMetadata from "./custom-setting-query-metadata";
 import TextAreaClipboardField from "../../../../../../../common/fields/clipboard/TextAreaClipboardField";
+import DetailPanelContainer from "../../../../../../../common/panels/detail_panel_container/DetailPanelContainer";
+import { getMigrationTypeLabel } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 
 const operators = [
   "=",
@@ -183,7 +185,6 @@ const CustomSettingQueryBuilderScreen = ({
     return (
       <div>
         <div className={"m-3"}>
-          Query Builder Area
           {fieldsList &&
             fieldsList.length > 0 &&
             queryFilters &&
@@ -242,9 +243,16 @@ const CustomSettingQueryBuilderScreen = ({
   };
 
   return (
-    <div>
+    <DetailPanelContainer>
+      <Row className="mx-2">
+        <H5FieldSubHeader
+          subheaderText={`${getMigrationTypeLabel(
+            taskType,
+          )} : Query Builder Screen`}
+        />
+      </Row>
       <div className={"my-3"}>{getBody()}</div>
-    </div>
+    </DetailPanelContainer>
   );
 };
 

@@ -104,8 +104,6 @@ function FieldQueryComponent({
     onRemove(index);
   };
 
-  console.log(ruleModel?.getPersistData());
-
   if (isLoading) {
     return (
       <div className={"m-3"}>
@@ -120,7 +118,7 @@ function FieldQueryComponent({
   }
 
   return (
-    <Row className="d-flex mx-2 justify-content-between">
+    <Row className="d-flex mx-1 justify-content-between">
       <Col sm={12} className={"px-0"}>
         <Row className={"mx-0"}>
           <Col

@@ -123,27 +123,6 @@ function FieldSelectorBasePanel({
     }
   };
 
-  const getSaveAndCancelButtonContainer = () => {
-    return (
-      <div className="w-100 d-flex justify-content-between py-2 mx-3">
-        <div>
-          {/*<CancelButton*/}
-          {/*  isLoading={isLoading}*/}
-          {/*  cancelFunction={handleClose}*/}
-          {/*/>*/}
-        </div>
-        <div>{getWarningMessage()}</div>
-        <div>
-          <StandaloneSaveButton
-            disable={isSaving || !(members.length > 0)}
-            saveFunction={updateMembers}
-            type={"Field Properties"}
-          />
-        </div>
-      </div>
-    );
-  };
-
   const updateSearchText = (value) => {
     setSelectedNonMembers([]);
     setSelectedMembers([]);
@@ -235,7 +214,6 @@ function FieldSelectorBasePanel({
             />
           </Col>
         </Row>
-        <Row>{getSaveAndCancelButtonContainer()}</Row>
       </div>
     );
   };
@@ -245,7 +223,7 @@ function FieldSelectorBasePanel({
       <DetailPanelContainer>
         <Row className="mx-2">
           <div>
-            <h5>Add or remove field properties</h5>
+            <h5>Select Field Properties to proceed with Query Generation</h5>
           </div>
         </Row>
         <Row>

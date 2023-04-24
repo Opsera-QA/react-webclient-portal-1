@@ -8,9 +8,14 @@ import customSettingMigrationTaskWizardActions from "../../customSettingMigratio
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { faPencilAlt, faSave } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "../../../../../../../common/icons/IconBase";
-import { Button } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
 import SaveButtonContainer from "../../../../../../../common/buttons/saving/containers/SaveButtonContainer";
 import FieldPropertiesSelectorView from "./FieldPropertiesSelectorView";
+import EnableEditingIcon from "../../../../../../../common/icons/enable/EnableEditingIcon";
+import MessageFieldBase from "../../../../../../../common/fields/text/MessageFieldBase";
+import DetailPanelContainer from "../../../../../../../common/panels/detail_panel_container/DetailPanelContainer";
+import { getMigrationTypeLabel } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
+import H5FieldSubHeader from "../../../../../../../common/fields/subheader/H5FieldSubHeader";
 
 const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCurrentScreen }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -157,16 +162,14 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
   const getSelectView = () => {
     if (!enableEdit && wizardModel?.getData("selectedCustomSetting")) {
       return (
-        <div className={"d-flex w-100"}>
+        <div className={"d-flex mx-1 w-100"}>
           Selected Custom Object :{" "}
           {wizardModel?.getData("selectedCustomSetting")?.componentName}
-          <IconBase
-            icon={faPencilAlt}
-            className={"ml-2 text-muted pointer"}
-            iconSize={"sm"}
-            onClickFunction={() => {
+          <EnableEditingIcon
+            enableEditingFunction={() => {
               setEnableEdit(true);
             }}
+            className={"ml-2 my-auto"}
           />
         </div>
       );
@@ -199,7 +202,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
                 fixedWidth
                 className="mr-2"
               />
-              Save
+              Save and Proceed
             </span>
           </Button>
         </SaveButtonContainer>
@@ -223,6 +226,13 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
 
   return (
     <div>
+      <Row className="mx-1">
+        <H5FieldSubHeader
+          subheaderText={`${getMigrationTypeLabel(
+            wizardModel?.getData("taskType"),
+          )} : Custom Setting Selection Screen`}
+        />
+      </Row>
       {getSelectView()}
       {getFieldSelectionView()}
     </div>
