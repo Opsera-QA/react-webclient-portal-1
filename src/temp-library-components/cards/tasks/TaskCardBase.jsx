@@ -39,9 +39,9 @@ export default function TaskCardBase(
   return (
     <SelectionIconCard
       cardHeader={<TaskCardHeader taskModel={taskModel} />}
-      cardFooter={<TaskCardFooter />}
       titleBar={getTitleBar()}
       contentBody={<TaskCardBody taskModel={taskModel} />}
+      cardFooter={<TaskCardFooter />}
       onClickFunction={onClickFunction}
       tooltip={tooltip}
       selectedOption={selectedOption}
