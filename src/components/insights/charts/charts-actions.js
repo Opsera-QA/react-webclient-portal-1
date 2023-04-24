@@ -235,6 +235,9 @@ chartsActions.getGithubTotalCommitsMetrics = async (
     dashboardTags = null;
     dashboardOrgs = null;
   }
+  const githubRepository =
+    getGithubRepositoryFromKpiConfiguration(kpiConfiguration);
+  const githubBranch = getGithubBranchFromKpiConfiguration(kpiConfiguration);
 
   const githubRepository =
     getGithubRepositoryFromKpiConfiguration(kpiConfiguration);
@@ -918,6 +921,9 @@ chartsActions.getGithubListOfRepositories = async (
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
     getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+  const githubRepository =
+    getGithubRepositoryFromKpiConfiguration(kpiConfiguration);
+  const githubBranch = getGithubBranchFromKpiConfiguration(kpiConfiguration);
 
   const githubRepository =
     getGithubRepositoryFromKpiConfiguration(kpiConfiguration);
