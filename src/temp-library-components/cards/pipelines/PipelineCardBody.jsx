@@ -5,15 +5,15 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import {Col} from "react-bootstrap";
 
-const getLastRunDetails = (taskModel) => {
-  const runCount = DataParsingHelper.parseInteger(taskModel?.getData("run_count"), 0);
-  const lastRunCompletionDate = taskModel?.getData("completion");
+const getLastRunDetails = (pipelineModel) => {
+  const runCount = DataParsingHelper.parseInteger(pipelineModel?.getData("workflow.run_count"), 0);
+  const lastRunCompletionDate = pipelineModel?.getData("workflow.last_run.completed");
 
   if (runCount === 0) {
     return (
       <div className={"d-flex"}>
         <div className={"text-muted m-auto"}>
-          {`This Task has not been run yet`}
+          {`This Pipeline has not been run yet`}
         </div>
       </div>
     );
@@ -38,8 +38,8 @@ const getLastRunDetails = (taskModel) => {
   );
 };
 
-const getLastRunEntry = (taskModel) => {
-  const runCount = DataParsingHelper.parseInteger(taskModel?.getData("run_count"), 0);
+const getLastRunEntry = (pipelineModel) => {
+  const runCount = DataParsingHelper.parseInteger(pipelineModel?.getData("workflow.run_count"), 0);
   const lastRunColor =
     runCount > 0
       ? ""
@@ -53,19 +53,19 @@ const getLastRunEntry = (taskModel) => {
             <span style={{color: lastRunColor}}>Last Run</span>
           </div>
         </div>
-        {getLastRunDetails(taskModel)}
+        {getLastRunDetails(pipelineModel)}
       </div>
     </Col>
   );
 };
 
-export default function TaskCardBody(
+export default function PipelineCardBody(
   {
-    taskModel,
+    pipelineModel,
   }) {
-  const formattedLastRun = getLastRunEntry(taskModel);
+  const formattedLastRun = getLastRunEntry(pipelineModel);
 
-  if (taskModel == null) {
+  if (pipelineModel == null) {
     return undefined;
   }
 
@@ -78,6 +78,6 @@ export default function TaskCardBody(
   );
 }
 
-TaskCardBody.propTypes = {
-  taskModel: PropTypes.object,
+PipelineCardBody.propTypes = {
+  pipelineModel: PropTypes.object,
 };

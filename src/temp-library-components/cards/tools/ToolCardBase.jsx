@@ -39,14 +39,6 @@ export default function ToolCardBase(
     );
   };
 
-  const getToolCardBody = () => {
-    return (
-      <ToolCardBody
-        toolModel={toolModel}
-      />
-    );
-  };
-
   if (toolModel == null) {
     return undefined;
   }
@@ -56,7 +48,7 @@ export default function ToolCardBase(
       className={"h-100"}
       cardHeader={<ToolCardHeader toolModel={toolModel} />}
       titleBar={getTitleBar()}
-      contentBody={getToolCardBody()}
+      contentBody={<ToolCardBody toolModel={toolModel} />}
       onClickFunction={onClickFunction}
       tooltip={tooltip}
       cardFooter={<ToolCardFooter />}
