@@ -1,4 +1,6 @@
 import {faOctopusDeploy, faSalesforce} from "@fortawesome/free-brands-svg-icons";
+import toolIdentifierConstants from "@opsera/definitions/constants/tool_identifiers/toolIdentifier.constants";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const baseBucketUrl = `${process.env.REACT_APP_OPSERA_S3_STORAGE_URL}/vendor-logos`;
 
@@ -59,6 +61,63 @@ vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS = {
   THYCOTIC_VAULT: `${baseBucketUrl}/thycotic.png`,
   TWISTLOCK: `${baseBucketUrl}/twistlock-64-254.png`,
   XUNIT: `${baseBucketUrl}/xunit-60-213.png`,
+};
+
+vendorImageConstants.VENDOR_LOGO_IMAGE_CARD_HEIGHTS = {
+  ANCHOR: 75,
+  ANSIBLE: 100,
+  APIGEE: `${baseBucketUrl}/apigee.png`,
+  AQUASEC: `${baseBucketUrl}/aquasec.png`,
+  AWS: 100,
+  AZURE: 100,
+  BITBUCKET: undefined,
+  BLACKDUCK: `${baseBucketUrl}/blackduck.png`,
+  BOOMI: `${baseBucketUrl}/boomi.png`,
+  BUILDKITE: `${baseBucketUrl}/buildkite.png`,
+  COVERITY: `${baseBucketUrl}/coverity.png`,
+  CYPRESS: `${baseBucketUrl}/cypress.png`,
+  DOCKER: 100,
+  DOTNET: `${baseBucketUrl}/dotnet.png`,
+  FLYWAY: `${baseBucketUrl}/flyway.png`,
+  FORTIFY: `${baseBucketUrl}/fortify.png`,
+  GIT: 100,
+  GITHUB: 100,
+  GITLAB: 100,
+  GOOGLE_CHAT: `${baseBucketUrl}/gchat.png`,
+  GOOGLE_CLOUD_PLATFORM: 100,
+  HASHICORP: `${baseBucketUrl}/hashicorp.png`,
+  HELM: `${baseBucketUrl}/heml.png`,
+  INFORMATICA: `${baseBucketUrl}/informatica.png`,
+  JENKINS: undefined,
+  JFROG: `${baseBucketUrl}/jfrog.png`,
+  JIRA: 60,
+  JMETER: `${baseBucketUrl}/jmeter.png`,
+  JUNIT: 100,
+  KAFKA: `${baseBucketUrl}/kafka.png`,
+  LIQUIBASE: `${baseBucketUrl}/liquibase.png`,
+  MICROSOFT: `${baseBucketUrl}/microsoft.png`,
+  MICROSOFT_TEAMS: 50,
+  MONGO_DB: 100,
+  NEXUS: 100,
+  NPM: `${baseBucketUrl}/npm.png`,
+  NUNIT: `${baseBucketUrl}/nunit.png`,
+  OPSERA: 100,
+  ORACLE: `${baseBucketUrl}/oracle.png`,
+  PROVAR: `${baseBucketUrl}/provar.png`,
+  SAP: `${baseBucketUrl}/sap.png`,
+  SELENIUM: 50,
+  SERVICE_NOW: `${baseBucketUrl}/servicenow.png`,
+  SLACK: 50,
+  SNAPLOGIC: `${baseBucketUrl}/snaplogic.png`,
+  SNYK: `${baseBucketUrl}/snyk.png`,
+  SONAR: `${baseBucketUrl}/sonar.png`,
+  SPINNAKER: `${baseBucketUrl}/spinnaker.png`,
+  TEAMCITY: 100,
+  TERRAFORM: 50,
+  TERRASCAN: `${baseBucketUrl}/terrascan.png`,
+  THYCOTIC_VAULT: `${baseBucketUrl}/thycotic.png`,
+  TWISTLOCK: 50,
+  XUNIT: 50,
 };
 
 vendorImageConstants.VENDOR_LOGO_FONTAWESOME_ICONS = {
@@ -168,3 +227,34 @@ vendorImageConstants.TOOL_IDENTIFIER_LOGOS = {
   XUNIT: vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.XUNIT,
   YAML_GIT_PROCESSOR: vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.OPSERA,
 };
+
+vendorImageConstants.getVendorImageForToolIdentifier = (
+  toolIdentifier,
+) => {
+  const key = toolIdentifierConstants.getEnumKeyForToolIdentifier(toolIdentifier);
+
+  if (!key) {
+    return undefined;
+  }
+
+  return DataParsingHelper.parseString(
+    vendorImageConstants.TOOL_IDENTIFIER_LOGOS[key],
+  );
+};
+
+vendorImageConstants.getRecommendedCardVendorImageHeight = (
+  toolIdentifier,
+) => {
+  const key = toolIdentifierConstants.getEnumKeyForToolIdentifier(toolIdentifier);
+
+  if (!key) {
+    return undefined;
+  }
+
+  const recommendedHeight = DataParsingHelper.parseInteger(vendorImageConstants.VENDOR_LOGO_IMAGE_CARD_HEIGHTS[key]);
+
+  if (recommendedHeight) {
+    return recommendedHeight;
+  }
+};
+
