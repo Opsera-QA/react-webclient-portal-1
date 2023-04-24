@@ -21,7 +21,7 @@ import {
 
 const getMetadataForBuildType = (buildType) => {
   switch (buildType) {
-    case "xunit":
+    case "xcode":
       return jenkinsXcodeBuildJobMetadata;
     default:
       return JenkinsJobsBuildMetadata;
@@ -37,13 +37,11 @@ function JenkinsBuildJobEditorPanel(
     buildType,
   }) {
   useEffect(() => {
-    unpackJobConfiguration();
-  }, [jenkinsJobConfiguration, buildType]);
-
-  const unpackJobConfiguration = () => {
-    const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, getMetadataForBuildType(buildType));
+    const metadata = getMetadataForBuildType(buildType);
+    const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, metadata);
+    parsedModel.setData("buildType", buildType);
     setModel({...parsedModel});
-  };
+  }, [jenkinsJobConfiguration, buildType]);
 
   const getDynamicBuildTypeFields = () => {
     switch (model?.getData("buildType")) {
