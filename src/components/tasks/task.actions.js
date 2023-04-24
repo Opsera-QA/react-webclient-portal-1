@@ -42,6 +42,17 @@ taskActions.getTaskByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+
+
+taskActions.validateBranchName = async (getAccessToken, cancelTokenSource, apiParams) => {
+  const apiUrl = '/tasks/validate-branch';
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, {
+    params: {
+      ...apiParams,
+    },
+  });
+};
+
 taskActions.createTaskV2 = async (getAccessToken, cancelTokenSource, taskModel) => {
   const apiUrl = "/tasks/create";
   const postBody = {
