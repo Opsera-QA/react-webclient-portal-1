@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -9,12 +9,14 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
-import { faSearch } from "@fortawesome/pro-light-svg-icons";
+import { faSave, faSearch } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import IconBase from "components/common/icons/IconBase";
 import FieldListPanel from "./FieldListPanel";
 import SelectedFieldListPanel from "./SelectedFieldListPanel";
 import customSettingMigrationTaskWizardActions from "../../../customSettingMigrationTaskWizard.actions";
+import SaveButtonContainer from "../../../../../../../../common/buttons/saving/containers/SaveButtonContainer";
+import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../../customSettingMigrationTaskWizard.constants";
 
 function FieldSelectorBasePanel({
   recordId,
@@ -25,6 +27,8 @@ function FieldSelectorBasePanel({
   fieldList,
   selectedFields,
   isLoading,
+  handleClose,
+  setCurrentScreen,
 }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -37,6 +41,7 @@ function FieldSelectorBasePanel({
   const [searchText, setSearchText] = useState("");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -88,6 +93,7 @@ function FieldSelectorBasePanel({
 
   const updateMembers = async () => {
     try {
+      setIsSaving(true);
       wizardModel.setData("selectedFieldList", members);
       await customSettingMigrationTaskWizardActions.updateSelectedFields(
         getAccessToken,
@@ -99,6 +105,8 @@ function FieldSelectorBasePanel({
     } catch (error) {
       console.error(error);
       toastContext.showLoadingErrorDialog(error);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -117,15 +125,15 @@ function FieldSelectorBasePanel({
     return (
       <div className="w-100 d-flex justify-content-between py-2 mx-3">
         <div>
-          <CancelButton
-            isLoading={isLoading}
-            cancelFunction={reload}
-          />
+          {/*<CancelButton*/}
+          {/*  isLoading={isLoading}*/}
+          {/*  cancelFunction={handleClose}*/}
+          {/*/>*/}
         </div>
         <div>{getWarningMessage()}</div>
         <div>
           <StandaloneSaveButton
-            disable={!(members.length > 0)}
+            disable={isSaving || !(members.length > 0)}
             saveFunction={updateMembers}
             type={"Field Properties"}
           />
@@ -142,7 +150,7 @@ function FieldSelectorBasePanel({
 
   const getSearchBar = () => {
     return (
-      <div className="membership-search d-flex mx-auto">
+      <div className="membership-search d-flex mx-auto my-3">
         <IconBase
           icon={faSearch}
           iconClassName={"mr-2 opsera-dark-purple h-100"}
@@ -179,6 +187,13 @@ function FieldSelectorBasePanel({
     return nonMembers;
   };
 
+  const updateAndProceed = async () => {
+    await updateMembers();
+    setCurrentScreen(
+      CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.QUERY_BUILDER_SCREEN,
+    );
+  };
+
   const getBody = () => {
     if (isLoading) {
       return (
@@ -192,7 +207,6 @@ function FieldSelectorBasePanel({
     return (
       <div>
         <Row>{getSearchBar()}</Row>
-        <Row>{getSaveAndCancelButtonContainer()}</Row>
         <Row>
           <Col xs={6}>
             <FieldListPanel
@@ -225,24 +239,48 @@ function FieldSelectorBasePanel({
   };
 
   return (
-    <DetailPanelContainer>
-      <Row className="mx-2">
-        <div>
-          <h5>Add or remove field properties</h5>
-        </div>
-      </Row>
-      <Row>
-        <div className={"mx-3 mb-3 mt-2"}>
-          <MessageFieldBase
-            message={` 
+    <>
+      <DetailPanelContainer>
+        <Row className="mx-2">
+          <div>
+            <h5>Add or remove field properties</h5>
+          </div>
+        </Row>
+        <Row>
+          <div className={"mx-3 mb-3 mt-2"}>
+            <MessageFieldBase
+              message={` 
             Select field properties below by adding items from the left column into the right or removing from the right column.  
             Changes must be saved before being complete.
           `}
-          />
+            />
+          </div>
+        </Row>
+        {getBody()}
+      </DetailPanelContainer>
+      <SaveButtonContainer>
+        <div className={"mr-2"}>
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={updateAndProceed}
+            disabled={isSaving || members?.length === 0}
+          >
+            <IconBase
+              className={"mr-2"}
+              isLoading={isSaving}
+              icon={faSave}
+            />
+            Save and Proceed
+          </Button>
         </div>
-      </Row>
-      {getBody()}
-    </DetailPanelContainer>
+        <CancelButton
+          showUnsavedChangesMessage={false}
+          cancelFunction={handleClose}
+          size={"sm"}
+        />
+      </SaveButtonContainer>
+    </>
   );
 }
 
@@ -255,6 +293,8 @@ FieldSelectorBasePanel.propTypes = {
   fieldList: PropTypes.any,
   selectedFields: PropTypes.any,
   isLoading: PropTypes.bool,
+  setCurrentScreen: PropTypes.func,
+  handleClose: PropTypes.func,
 };
 
 export default FieldSelectorBasePanel;

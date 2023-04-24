@@ -6,15 +6,13 @@ import { AuthContext } from "contexts/AuthContext";
 import { parseError } from "components/common/helpers/error-helpers";
 import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import EnableEditingIcon from "../../../../../../../common/icons/enable/EnableEditingIcon";
 import { faPencilAlt, faSave } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "../../../../../../../common/icons/IconBase";
 import { Button } from "react-bootstrap";
-import CancelButton from "../../../../../../../common/buttons/CancelButton";
 import SaveButtonContainer from "../../../../../../../common/buttons/saving/containers/SaveButtonContainer";
 import FieldPropertiesSelectorView from "./FieldPropertiesSelectorView";
 
-const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
+const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCurrentScreen }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -189,6 +187,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
         <SaveButtonContainer>
           <Button
             className={"mr-2"}
+            size="sm"
             variant="primary"
             onClick={saveAndTriggerFieldsPull}
             disabled={isLoading}
@@ -199,7 +198,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
                 fixedWidth
                 className="mr-2"
               />
-              Save and Pull Fields
+              Save
             </span>
           </Button>
         </SaveButtonContainer>
@@ -213,6 +212,8 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
         <FieldPropertiesSelectorView
           wizardModel={wizardModel}
           setWizardModel={setWizardModel}
+          handleClose={handleClose}
+          setCurrentScreen={setCurrentScreen}
         />
       );
     }
@@ -230,6 +231,8 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel }) => {
 CustomSettingSelector.propTypes = {
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
+  setCurrentScreen: PropTypes.func,
+  handleClose: PropTypes.func,
 };
 
 export default CustomSettingSelector;

@@ -31,15 +31,17 @@ const CustomSettingTaskWizardConfigScreen = ({
           <CustomSettingSelector
             wizardModel={wizardModel}
             setWizardModel={setWizardModel}
+            handleClose={handleClose}
+            setCurrentScreen={setCurrentScreen}
           />
         </div>
-        <SaveButtonContainer>
-          <CancelButton
-            showUnsavedChangesMessage={false}
-            cancelFunction={handleClose}
-            size={"sm"}
-          />
-        </SaveButtonContainer>
+        {/*<SaveButtonContainer>*/}
+        {/*  <CancelButton*/}
+        {/*    showUnsavedChangesMessage={false}*/}
+        {/*    cancelFunction={handleClose}*/}
+        {/*    size={"sm"}*/}
+        {/*  />*/}
+        {/*</SaveButtonContainer>*/}
       </div>
     );
   };

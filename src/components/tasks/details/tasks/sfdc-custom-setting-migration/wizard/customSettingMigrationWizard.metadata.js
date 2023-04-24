@@ -1,6 +1,6 @@
 export const customSettingMigrationTaskWizardMetadata = {
   idProperty: "_id",
-  type: "Merge Sync Task Wizard Metadata",
+  type: "Custom Setting Migration Task Wizard Metadata",
   activeField: "active",
   fields: [
     {

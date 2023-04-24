@@ -8,7 +8,7 @@ import customSettingMigrationTaskWizardActions from "../../customSettingMigratio
 import CenterLoadingIndicator from "../../../../../../../common/loading/CenterLoadingIndicator";
 import FieldSelectorBasePanel from "./panels/FieldSelectorBasePanel";
 
-const FieldPropertiesSelectorView = ({ wizardModel, setWizardModel }) => {
+const FieldPropertiesSelectorView = ({ wizardModel, setWizardModel, handleClose, setCurrentScreen }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -129,6 +129,8 @@ const FieldPropertiesSelectorView = ({ wizardModel, setWizardModel }) => {
         isLoading={isLoading}
         wizardModel={wizardModel}
         setWizardModel={setWizardModel}
+        handleClose={handleClose}
+        setCurrentScreen={setCurrentScreen}
       />
     </div>
   );
@@ -137,6 +139,8 @@ const FieldPropertiesSelectorView = ({ wizardModel, setWizardModel }) => {
 FieldPropertiesSelectorView.propTypes = {
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
+  setCurrentScreen: PropTypes.func,
+  handleClose: PropTypes.func,
 };
 
 export default FieldPropertiesSelectorView;

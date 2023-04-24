@@ -120,7 +120,7 @@ const SalesforceCustomSettingMigrationTaskWizard = ({ handleClose, taskModel }) 
   if (wizardModel == null) {
     return (
       <LoadingDialog
-        message={"Initializing Salesforce to Git Merge Sync Wizard"}
+        message={"Initializing Custom Setting Migration Wizard"}
         size={"sm"}
       />
     );

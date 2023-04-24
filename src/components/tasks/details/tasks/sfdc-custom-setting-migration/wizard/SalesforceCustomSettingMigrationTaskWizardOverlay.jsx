@@ -43,7 +43,7 @@ function SalesforceCustomSettingMigrationTaskWizardOverlay({ taskModel }) {
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
-      titleText={`Salesforce to Git Merge Sync Wizard`}
+      titleText={`Salesforce Custom Setting Migration Wizard`}
       titleIcon={faFileInvoice}
       showToasts={true}
       showCloseButton={false}
