@@ -1,6 +1,7 @@
 import {faOctopusDeploy, faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import toolIdentifierConstants from "@opsera/definitions/constants/tool_identifiers/toolIdentifier.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import constantsHelper from "@opsera/definitions/constants/constants.helper";
 
 const baseBucketUrl = `${process.env.REACT_APP_OPSERA_S3_STORAGE_URL}/vendor-logos`;
 
@@ -32,7 +33,7 @@ vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS = {
   HELM: `${baseBucketUrl}/heml.png`,
   INFORMATICA: `${baseBucketUrl}/informatica.png`,
   JENKINS: `${baseBucketUrl}/jenkins-98-113.png`,
-  JFROG: `${baseBucketUrl}/jfrog.png`,
+  JFROG: `${baseBucketUrl}/jfog.jpg`,
   JIRA: `${baseBucketUrl}/jira-74-220.png`,
   JMETER: `${baseBucketUrl}/jmeter.png`,
   JUNIT: `${baseBucketUrl}/junit-97-172.png`,
@@ -66,32 +67,32 @@ vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS = {
 vendorImageConstants.VENDOR_LOGO_IMAGE_CARD_HEIGHTS = {
   ANCHOR: 75,
   ANSIBLE: 100,
-  APIGEE: `${baseBucketUrl}/apigee.png`,
-  AQUASEC: `${baseBucketUrl}/aquasec.png`,
+  APIGEE: undefined,
+  AQUASEC: 40,
   AWS: 100,
   AZURE: 100,
   BITBUCKET: undefined,
-  BLACKDUCK: `${baseBucketUrl}/blackduck.png`,
-  BOOMI: `${baseBucketUrl}/boomi.png`,
-  BUILDKITE: `${baseBucketUrl}/buildkite.png`,
-  COVERITY: `${baseBucketUrl}/coverity.png`,
-  CYPRESS: `${baseBucketUrl}/cypress.png`,
+  BLACKDUCK: undefined,
+  BOOMI: undefined,
+  BUILDKITE: undefined,
+  COVERITY: undefined,
+  CYPRESS: undefined,
   DOCKER: 100,
-  DOTNET: `${baseBucketUrl}/dotnet.png`,
-  FLYWAY: `${baseBucketUrl}/flyway.png`,
-  FORTIFY: `${baseBucketUrl}/fortify.png`,
+  DOTNET: 65,
+  FLYWAY: 90,
+  FORTIFY: undefined,
   GIT: 100,
   GITHUB: 100,
   GITLAB: 100,
-  GOOGLE_CHAT: `${baseBucketUrl}/gchat.png`,
-  GOOGLE_CLOUD_PLATFORM: 100,
-  HASHICORP: `${baseBucketUrl}/hashicorp.png`,
-  HELM: `${baseBucketUrl}/heml.png`,
-  INFORMATICA: `${baseBucketUrl}/informatica.png`,
+  GOOGLE_CHAT: 75,
+  GOOGLE_CLOUD_PLATFORM: 90,
+  HASHICORP: 75,
+  HELM: 100,
+  INFORMATICA: 50,
   JENKINS: undefined,
   JFROG: `${baseBucketUrl}/jfrog.png`,
   JIRA: 60,
-  JMETER: `${baseBucketUrl}/jmeter.png`,
+  JMETER: 30,
   JUNIT: 100,
   KAFKA: `${baseBucketUrl}/kafka.png`,
   LIQUIBASE: `${baseBucketUrl}/liquibase.png`,
@@ -245,7 +246,16 @@ vendorImageConstants.getVendorImageForToolIdentifier = (
 vendorImageConstants.getRecommendedCardVendorImageHeight = (
   toolIdentifier,
 ) => {
-  const key = toolIdentifierConstants.getEnumKeyForToolIdentifier(toolIdentifier);
+  const vendorImageLink = vendorImageConstants.getVendorImageForToolIdentifier(toolIdentifier);
+
+  if (!vendorImageLink) {
+    return undefined;
+  }
+
+  const key = constantsHelper.getKeyForValue(
+    vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS,
+    vendorImageLink,
+  );
 
   if (!key) {
     return undefined;
