@@ -21,7 +21,7 @@ import {
 
 const getMetadataForBuildType = (buildType) => {
   switch (buildType) {
-    case "xunit":
+    case "xcode":
       return jenkinsXcodeBuildJobMetadata;
     default:
       return JenkinsJobsBuildMetadata;
