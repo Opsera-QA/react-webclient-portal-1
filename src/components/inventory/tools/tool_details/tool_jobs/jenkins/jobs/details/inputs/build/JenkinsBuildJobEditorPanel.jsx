@@ -19,7 +19,7 @@ import {
   jenkinsXcodeBuildJobMetadata
 } from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/build/jenkinsXcodeBuildJob.metadata";
 
-const getMetadataForBuildType = (buildType) => {
+export const getMetadataForJenkinsJobBuildType = (buildType) => {
   switch (buildType) {
     case "xcode":
       return jenkinsXcodeBuildJobMetadata;
@@ -37,9 +37,13 @@ function JenkinsBuildJobEditorPanel(
     buildType,
   }) {
   useEffect(() => {
-    const metadata = getMetadataForBuildType(buildType);
+    const metadata = getMetadataForJenkinsJobBuildType(buildType);
     const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, metadata);
-    parsedModel.setData("buildType", buildType);
+
+    if (buildType) {
+      parsedModel.setData("buildType", buildType);
+    }
+
     setModel({...parsedModel});
   }, [jenkinsJobConfiguration, buildType]);
 
