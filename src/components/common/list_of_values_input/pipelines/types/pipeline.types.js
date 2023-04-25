@@ -160,6 +160,10 @@ pipelineTypeConstants.getImageLinkForPipeline = (pipeline) => {
     return pipelineTypeConstants.getImageLinkForPipelineType(type);
   }
 
+  if (!imageLink) {
+    return platformImageConstants.PRODUCT_IMAGE_LINKS.PIPELINES_GENERAL;
+  }
+
   return imageLink;
 };
 
