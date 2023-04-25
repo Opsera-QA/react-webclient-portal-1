@@ -27,11 +27,11 @@ export default function TaskCardHeader(
 
   return (
     <CardHeaderBase>
-      <div className={"w-100 d-flex justify-content-between pl-3 pr-2 pt-1 small"}>
+      <div className={"w-100 d-flex justify-content-between px-2 pt-1 small"}>
         <div>
           <span>{runCount} Runs</span>
         </div>
-        <div>
+        <div className={"my-auto"}>
           {getOrchestrationStateFieldBase()}
         </div>
       </div>
