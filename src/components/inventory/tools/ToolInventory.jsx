@@ -18,6 +18,9 @@ import ToolsTable from "components/inventory/tools/ToolsTable";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 import TableCardView from "components/common/table/TableCardView";
 import ToolFilterOverlay from "components/inventory/tools/ToolFilterOverlay";
+import {
+  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
+} from "components/common/table/FilterContainer";
 
 function ToolInventory() {
   const {
@@ -121,6 +124,7 @@ function ToolInventory() {
           isLoading={isLoading}
           cardView={getCardView()}
           tableView={getTableView()}
+          tableHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
         />
       </PaginationContainer>
     </ScreenContainer>
