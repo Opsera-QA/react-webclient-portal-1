@@ -52,6 +52,7 @@ function PaginationContainer(
       return (
         <CenterLoadingIndicator
           message={loadingMessage}
+          minHeight={containerHeight}
         />
       );
     }

@@ -110,6 +110,7 @@ function TaskManagement() {
       loadDataFunction={loadData}
       filterModel={taskFilterModel}
       setFilterModel={setTaskFilterModel}
+      titleActionBar={getInlineFilters()}
     >
       <PaginationContainer
         loadData={loadData}
@@ -125,6 +126,7 @@ function TaskManagement() {
           rightSideView={getCurrentView()}
           leftSideMinimumWidth={"175px"}
           leftSideMaximumWidth={"175px"}
+          minimumHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
         />
       </PaginationContainer>
     </ScreenContainer>

@@ -129,6 +129,7 @@ function ToolInventory() {
           isLoading={isLoading}
           cardView={getCardView()}
           tableView={getTableView()}
+          minimumHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
         />
       </PaginationContainer>
     </ScreenContainer>
