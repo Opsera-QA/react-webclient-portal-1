@@ -52,6 +52,11 @@ export const getPipelineTypeLabel = (pipelineType) => {
   }
 };
 
+pipelineTypeConstants.getTypeForPipeline = (pipeline, defaultToSdlc = true) => {
+  const parsedTypes = DataParsingHelper.parseNestedArray(pipeline, "type");
+  return pipelineTypeConstants.getTypeForTypesArray(parsedTypes, defaultToSdlc);
+};
+
 pipelineTypeConstants.getTypeForTypesArray = (pipelineTypes, defaultToSdlc = true) => {
   const parsedTypes = DataParsingHelper.parseArray(pipelineTypes);
   const defaultType = defaultToSdlc === false ? undefined : PIPELINE_TYPES.SOFTWARE_DEVELOPMENT;
@@ -125,7 +130,7 @@ pipelineTypeConstants.getImageLinkForPipelineType = (typeString) => {
 
 
 pipelineTypeConstants.getIconForPipeline = (pipeline) => {
-  const type = pipelineTypeConstants.getTypeForTypesArray(pipeline);
+  const type = pipelineTypeConstants.getTypeForPipeline(pipeline);
 
   if (hasStringValue(type) !== true) {
     return (faDraftingCompass);
@@ -147,7 +152,7 @@ pipelineTypeConstants.getIconForPipeline = (pipeline) => {
 pipelineTypeConstants.getImageLinkForPipeline = (pipeline) => {
   const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
   const toolIdentifier = DataParsingHelper.parseNestedString(plan[0], "tool.tool_identifier");
-  const type = pipelineTypeConstants.getTypeForTypesArray(pipeline);
+  const type = pipelineTypeConstants.getTypeForPipeline(pipeline);
 
   if (type !== PIPELINE_TYPES.SOFTWARE_DEVELOPMENT || !toolIdentifier) {
     return pipelineTypeConstants.getImageLinkForPipelineType(type);
