@@ -200,8 +200,6 @@ export function getLargeVendorIconComponentFromPipeline (pipeline) {
     );
   }
 
-  console.log("type: " + JSON.stringify(type));
-
   const imageLink = pipelineTypeConstants.getImageLinkForPipeline(
     pipeline,
   );
