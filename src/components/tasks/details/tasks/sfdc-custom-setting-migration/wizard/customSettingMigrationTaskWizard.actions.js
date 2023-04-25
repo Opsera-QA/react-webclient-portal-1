@@ -1,4 +1,5 @@
 import baseActions from "utils/actionsBase";
+import taskActions from "../../../../task.actions";
 
 const customSettingMigrationTaskWizardActions = {};
 
@@ -212,6 +213,19 @@ customSettingMigrationTaskWizardActions.getStorageDetails = async (
     getAccessToken,
     cancelTokenSource,
     apiUrl,
+    postBody,
+  );
+};
+
+customSettingMigrationTaskWizardActions.runCustomSettingMigrationTask = async (getAccessToken, cancelTokenSource, wizardModel) => {
+  const postBody = {
+    pipelineStorageRecordId: wizardModel?.getData("recordId"),
+  };
+
+  return await taskActions.runTaskV3(
+    getAccessToken,
+    cancelTokenSource,
+    wizardModel?.getData("taskId"),
     postBody,
   );
 };

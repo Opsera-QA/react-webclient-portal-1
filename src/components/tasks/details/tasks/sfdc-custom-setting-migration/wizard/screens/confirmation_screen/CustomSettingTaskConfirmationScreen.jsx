@@ -102,11 +102,11 @@ const CustomSettingTaskConfirmationScreen = ({
   const triggerTask = async () => {
     try {
       setIsStartig(true);
-      // await customSettingMigrationTaskWizardActions.setFilterQuery(
-      //   getAccessToken,
-      //   cancelTokenSource,
-      //   wizardModel,
-      // );
+      await customSettingMigrationTaskWizardActions.runCustomSettingMigrationTask(
+        getAccessToken,
+        cancelTokenSource,
+        wizardModel,
+      );
     } catch (error) {
       if (isMounted?.current === true) {
         const parsedError = parseError(error);
