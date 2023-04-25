@@ -8,7 +8,7 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import { Button, Row } from "react-bootstrap";
 import IconBase from "../../../../../../../common/icons/IconBase";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/pro-solid-svg-icons";
 import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
 import FieldQueryComponent from "./FieldQueryComponent";
 import customSettingQueryMetadata from "./custom-setting-query-metadata";
@@ -41,12 +41,12 @@ const operators = [
   "EXCLUDES",
 ];
 const CustomSettingQueryBuilderScreen = ({
-  wizardModel,
-  setWizardModel,
-  setCurrentScreen,
-  handleClose,
-  taskType,
-}) => {
+                                           wizardModel,
+                                           setWizardModel,
+                                           setCurrentScreen,
+                                           handleClose,
+                                           taskType,
+                                         }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [fieldsList, setFieldsList] = useState([]);
