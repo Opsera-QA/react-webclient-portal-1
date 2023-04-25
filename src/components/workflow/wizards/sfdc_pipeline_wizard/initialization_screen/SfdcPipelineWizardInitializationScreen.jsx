@@ -50,6 +50,8 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     };
   }, [pipeline]);
 
+  const getPipelineOrTaskText = (lowercase) => pipelineWizardModel.getData('fromGitTasks') ? lowercase ? 'task' : 'Task' : lowercase ? 'pipeline' :'Pipeline';
+
   const loadData = async (newPipelineWizardModel, gitTaskData, plan, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
@@ -66,7 +68,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     }
     catch (error) {
       console.error(error);
-      setError("Could not initialize Salesforce Pipeline Wizard");
+      setError(`Could not initialize Salesforce ${getPipelineOrTaskText()} Wizard`);
     }
     finally {
       if (isMounted?.current === true) {
@@ -92,7 +94,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     } catch (error) {
       console.error(error);
       setError(
-        "Could not get default API version for Salesforce Pipeline",
+        `Could not get default API version for Salesforce ${getPipelineOrTaskText()}`,
       );
       return "";
     }
@@ -135,7 +137,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     );
     if (stepArrayIndex === -1) {
       setError(
-        "Warning, this pipeline is missing the default SFDC Jenkins Step needed. Please edit the workflow and add the SFDC Ant Job setting in order to run this pipeline."
+        `Warning, this ${getPipelineOrTaskText(true)} is missing the default SFDC Jenkins Step needed. Please edit the workflow and add the SFDC Ant Job setting in order to run this ${getPipelineOrTaskText(true)}.`
       );
       return;
     }
@@ -167,7 +169,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     if (stepId == null || sfdcToolId == null) {
       setError(`
         Could not find Salesforce Jenkins step needed to run the Pipeline Wizard. 
-        Please edit the workflow and add the SFDC Ant Job setting in order to run this pipeline.
+        Please edit the workflow and add the SFDC Ant Job setting in order to run this ${getPipelineOrTaskText(true)}.
       `);
     }
 
@@ -334,7 +336,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   const getBody = () => {
     if (isLoading || pipelineWizardModel == null) {
       return (
-        <LoadingDialog message={"Initializing Salesforce Pipeline Wizard"} size={"sm"} />
+        <LoadingDialog message={`Initializing Salesforce ${getPipelineOrTaskText()} Wizard`} size={"sm"} />
       );
     }
 
@@ -343,7 +345,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
         <div>
           <div>
             {`
-          The Salesforce Pipeline Run Wizard was previously initiated on ${format(new Date(existingRecord?.createdAt), "yyyy-MM-dd', 'hh:mm a")} by 
+          The Salesforce ${getPipelineOrTaskText()} Run Wizard was previously initiated on ${format(new Date(existingRecord?.createdAt), "yyyy-MM-dd', 'hh:mm a")} by 
           ${existingRecord?.owner_name || "ERROR PULLING OWNER'S NAME"} but was not completed.
           `}
           </div>
@@ -354,7 +356,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
             {`If you continue, you will be able to adjust all parameters that were previously applied.`}
           </div>
           <div className={"mt-2"}>
-            {`Please note, using the Salesforce Pipeline Run Wizard at the same time as someone else for the same use case will lead to unintended side effects.`}
+            {`Please note, using the Salesforce ${getPipelineOrTaskText()} Run Wizard at the same time as someone else for the same use case will lead to unintended side effects.`}
           </div>
           {pipelineWizardModel.getData("isProfiles") === true ? 
             <SaveButtonContainer>
@@ -446,13 +448,13 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     return (
       <div>
         <div className={"mt-2"}>
-          Would you like to start a manual Pipeline Wizard run or use the XML/File Upload Process?
+          Would you like to start a manual {getPipelineOrTaskText(true)} wizard run or use the XML/File Upload Process?
         </div>
         <div className={"mt-2"}>
           <CustomTabContainer>
             <CustomTab
               activeTab={activeTab}
-              tabText={"Manual Pipeline Wizard Run"}
+              tabText={`Manual ${getPipelineOrTaskText()} Wizard Run`}
               handleTabClick={handleTabClick}
               tabName={"manual"}
               toolTipText={"Use Salesforce Component Selection Deployment"}
@@ -511,13 +513,13 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   const getMainView = () => {
     if (creatingNewRecord) {
       return (
-        <LoadingDialog message={"Starting a new Salesforce Pipeline Wizard Instance"} size={"sm"} />
+        <LoadingDialog message={`Starting a new Salesforce ${getPipelineOrTaskText()} Wizard Instance`} size={"sm"} />
       );
     }
 
     return (
       <div>
-        <div className="h5">Salesforce Pipeline Run: Initialization</div>
+        <div className="h5">Salesforce {getPipelineOrTaskText()} Run: Initialization</div>
         {getTabContainer()}
         <div className="my-3">
           {getView()}

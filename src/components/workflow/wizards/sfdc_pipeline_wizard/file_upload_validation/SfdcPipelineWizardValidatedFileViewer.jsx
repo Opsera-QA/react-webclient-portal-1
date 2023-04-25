@@ -6,6 +6,8 @@ import SfdcPipelineWizardValidatedSfdcFileViewer
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/sfdc/SfdcPipelineWizardValidatedSfdcFileViewer";
 
 const SfdcPipelineWizardValidatedFileViewer = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {
+  const getPipelineOrTaskText = () => pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline';
+
   const getView = () => {
     if (pipelineWizardModel.getData("isOrgToOrg") === true) {
       return (
@@ -43,7 +45,7 @@ const SfdcPipelineWizardValidatedFileViewer = ({ pipelineWizardModel, setPipelin
 
   return (
     <div>
-      <div className="h5">Salesforce Pipeline Run: Validated File Viewer</div>
+      <div className="h5">Salesforce {getPipelineOrTaskText()} Run: Validated File Viewer</div>
       <div className="text-muted mb-2">
         View validation results for the uploaded file.
       </div>
