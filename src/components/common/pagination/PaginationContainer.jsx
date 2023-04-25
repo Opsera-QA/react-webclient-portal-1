@@ -19,7 +19,8 @@ function PaginationContainer(
     loadingMessage,
     paginationStyle,
     topPaginationStyle,
-    bodyClassName
+    bodyClassName,
+    containerHeight,
   }) {
   const getTopPaginator = () => {
     return (
@@ -65,7 +66,12 @@ function PaginationContainer(
   //TODO: This is a workaround until everything is updated to new standards
   if (nextGeneration === true) {
     return (
-      <VanityPaginationContainer paginationModel={filterDto} isLoading={isLoading} loadData={loadData}>
+      <VanityPaginationContainer
+        paginationModel={filterDto}
+        isLoading={isLoading}
+        loadData={loadData}
+        containerHeight={containerHeight}
+      >
         {children}
       </VanityPaginationContainer>
     );
@@ -92,7 +98,8 @@ PaginationContainer.propTypes = {
   loadingMessage: PropTypes.string,
   paginationStyle: PropTypes.string,
   topPaginationStyle: PropTypes.string,
-  bodyClassName: PropTypes.string
+  bodyClassName: PropTypes.string,
+  containerHeight: PropTypes.string,
 };
 
 PaginationContainer.defaultProps = {
