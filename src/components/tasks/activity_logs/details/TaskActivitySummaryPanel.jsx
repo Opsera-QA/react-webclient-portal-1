@@ -32,6 +32,12 @@ function TaskActivitySummaryPanel({ taskActivityLogModel }) {
       );
     }
 
+    if(taskActivityLogModel.getPersistData()?.type === "CUSTOM_SETTING_MIGRATION" && taskActivityLogModel.getPersistData()?.log_type === "report") {
+      return (
+        <GitscraperLogSummaryReportPanel pipelineTaskData={taskActivityLogModel.getPersistData()}/>
+      );
+    }
+
     return (
         <SummaryPanelContainer>
           <Row>
