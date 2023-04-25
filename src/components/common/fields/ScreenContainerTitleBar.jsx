@@ -114,7 +114,7 @@ function ScreenContainerTitleBar(
 
   return (
     <div className="d-flex">
-      <div><span><IconBase icon={titleIcon} className={"mr-2"}/>{title}</span></div>
+      <div className={"title-text-header-1"}><span><IconBase icon={titleIcon} className={"mr-2"}/>{title}</span></div>
       {getRightSideItems()}
     </div>
   );
