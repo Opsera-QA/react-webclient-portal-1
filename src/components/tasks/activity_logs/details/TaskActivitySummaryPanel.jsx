@@ -11,6 +11,8 @@ import DateTimeField from "components/common/fields/date/DateTimeField";
 import SalesforceLogSummaryReportPanel
   from "../../../workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceLogSummaryReportPanel";
 import GitscraperLogSummaryReportPanel from "../../details/tasks/gitscraper/GitscraperLogSummaryPanel";
+import CustomSettingMigrationLogSummaryReportPanel
+  from "../../details/tasks/sfdc-custom-setting-migration/report/CustomSettingMigrationLogSummaryReportPanel";
 
 function TaskActivitySummaryPanel({ taskActivityLogModel }) {
 
@@ -34,7 +36,7 @@ function TaskActivitySummaryPanel({ taskActivityLogModel }) {
 
     if(taskActivityLogModel.getPersistData()?.type === "CUSTOM_SETTING_MIGRATION" && taskActivityLogModel.getPersistData()?.log_type === "report") {
       return (
-        <GitscraperLogSummaryReportPanel pipelineTaskData={taskActivityLogModel.getPersistData()}/>
+        <CustomSettingMigrationLogSummaryReportPanel activityData={taskActivityLogModel.getPersistData()}/>
       );
     }
 

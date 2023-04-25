@@ -14,7 +14,7 @@ import FieldQueryComponent from "./FieldQueryComponent";
 import customSettingQueryMetadata from "./custom-setting-query-metadata";
 import DetailPanelContainer from "../../../../../../../common/panels/detail_panel_container/DetailPanelContainer";
 import { getMigrationTypeLabel } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
-import { faPlug, faSave } from "@fortawesome/pro-light-svg-icons";
+import { faPlug, faPlus, faSave } from "@fortawesome/pro-light-svg-icons";
 import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
 import { parseError } from "../../../../../../../common/helpers/error-helpers";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
@@ -253,6 +253,22 @@ const CustomSettingQueryBuilderScreen = ({
         />
       );
     }
+
+    const getAddRuleButton = () => {
+      return (
+        <Button
+          variant="link"
+          onClick={handleAddFilter}
+        >
+        <span>
+          <IconBase
+            className={"opsera-primary"}
+            icon={faPlus}
+          />
+        </span>
+        </Button>
+      );
+    };
 
     return (
       <div>

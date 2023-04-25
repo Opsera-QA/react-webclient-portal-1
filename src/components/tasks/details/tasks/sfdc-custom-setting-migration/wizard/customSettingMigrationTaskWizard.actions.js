@@ -230,4 +230,20 @@ customSettingMigrationTaskWizardActions.runCustomSettingMigrationTask = async (g
   );
 };
 
+customSettingMigrationTaskWizardActions.downloadCustomSettingsReport = async (getAccessToken, cancelTokenSource, taskId, runCount, expiryDate) => {
+  const postBody = {
+    taskId: taskId,
+    runCount: runCount,
+    expiryDate: expiryDate
+  };
+
+  const apiUrl = `/tasks/custom-setting-migration-task/wizard/download-report`;
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 export default customSettingMigrationTaskWizardActions;

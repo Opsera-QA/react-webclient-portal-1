@@ -10,8 +10,8 @@ const customSettingMigrationReportMetadata = {
       id: "fieldList",
     },
     {
-      label: "Filter Query",
-      id: "filterQuery",
+      label: "SOQL Query",
+      id: "queryFilter",
     },
     {
       label: "Records Processed",
@@ -41,11 +41,15 @@ const customSettingMigrationReportMetadata = {
       label: "Expiration Time",
       id: "expirationTime",
     },
+    {
+      label: "Status",
+      id: "status",
+    },
   ],
   newObjectFields: {
     objectList: "",
     fieldList: "",
-    filterQuery: "",
+    queryFilter: "",
     recordsProcessed: "",
     recordsSuccessful: "",
     recordsFailed: "",
@@ -53,6 +57,7 @@ const customSettingMigrationReportMetadata = {
     errorMessage: "",
     hasDowloadableReport: false,
     expirationTime: "",
+    status: "",
   },
 };
 
