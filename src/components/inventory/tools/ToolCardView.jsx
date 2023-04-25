@@ -1,30 +1,42 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RegistryToolCard from "components/common/fields/inventory/RegistryToolCard";
 import Model from "core/data_model/model";
-import CardView from "components/common/card/CardView";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
 import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
+import {useHistory} from "react-router-dom";
+import {toolHelper} from "components/inventory/tools/tool.helper";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import ToolCardBase from "temp-library-components/cards/tools/ToolCardBase";
+import VanitySetCardView from "components/common/card/VanitySetCardView";
 
-function ToolCardView({ data, toolFilterDto, setToolFilterDto, loadData, isLoading }) {
+export default function ToolCardView({ tools, loadData, isLoading }) {
+  const history = useHistory();
+
+  const loadTool = (tool) => {
+    const toolLink = toolHelper.getDetailViewLink(tool._id);
+
+    if (hasStringValue(toolLink) === true) {
+      history.push(toolLink);
+    }
+  };
+
   const getRegistryToolCard = (tool) => {
     return (
-      <RegistryToolCard
-        toolData={new Model({ ...tool }, registryToolMetadata, false)}
+      <ToolCardBase
+        toolModel={new Model({ ...tool }, registryToolMetadata, false)}
+        onClickFunction={() => loadTool(tool)}
+        tooltip={"Click to view Tool"}
       />
     );
   };
 
   return (
-    <CardView
+    <VanitySetCardView
       isLoading={isLoading}
       loadData={loadData}
-      setPaginationDto={setToolFilterDto}
-      paginationDto={toolFilterDto}
-      nextGeneration={true}
       cards={
         <VerticalCardViewBase
-          data={data}
+          data={tools}
           getCardFunction={getRegistryToolCard}
         />
       }
@@ -33,11 +45,7 @@ function ToolCardView({ data, toolFilterDto, setToolFilterDto, loadData, isLoadi
 }
 
 ToolCardView.propTypes = {
-  data: PropTypes.array,
-  toolFilterDto: PropTypes.object,
-  setToolFilterDto: PropTypes.func,
+  tools: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
 };
-
-export default ToolCardView;

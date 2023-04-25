@@ -17,6 +17,7 @@ import CreateToolRegistryWizard from "./tool_details/wizards/CreateToolRegistryW
 import useGetPlatformSettingsFeatureFlagByName from "hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
 import platformSettingFeatureConstants
   from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
+import PaginationContainer from "components/common/pagination/PaginationContainer";
 
 function ToolTableCardView(
   {
@@ -89,9 +90,7 @@ function ToolTableCardView(
       <ToolCardView
         isLoading={isLoading}
         loadData={loadData}
-        data={tools}
-        toolFilterDto={toolFilterDto}
-        setToolFilterDto={setToolFilterDto}
+        tools={tools}
       />
     );
   };
@@ -102,21 +101,28 @@ function ToolTableCardView(
         isLoading={isLoading || getPlatformSettingsFeatureFlagByName.isLoading}
         loadData={loadData}
         data={tools}
-        toolFilterDto={toolFilterDto}
-        setToolFilterDto={setToolFilterDto}
       />
     );
   };
 
   const getTableCardView = () => {
     return (
-      <TableCardView
-        filterModel={toolFilterDto}
-        data={tools}
+      <PaginationContainer
+        loadData={loadData}
         isLoading={isLoading}
-        cardView={getCardView()}
-        tableView={getTableView()}
-      />
+        filterDto={toolFilterDto}
+        setFilterDto={setToolFilterDto}
+        data={tools}
+        nextGeneration={true}
+      >
+        <TableCardView
+          filterModel={toolFilterDto}
+          data={tools}
+          isLoading={isLoading}
+          cardView={getCardView()}
+          tableView={getTableView()}
+        />
+      </PaginationContainer>
     );
   };
 

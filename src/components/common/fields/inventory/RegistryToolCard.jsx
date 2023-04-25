@@ -7,6 +7,7 @@ import DescriptionField from "components/common/fields/text/DescriptionField";
 import CreateAndUpdateDateFieldBase from "components/common/fields/date/CreateAndUpdateDateFieldBase";
 import {getLargeVendorIconFromToolIdentifier} from "components/common/helpers/icon-helpers";
 
+// TODO: Remove after some time has passed
 function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
   const getTitleBar = () => {
     let icon = getLargeVendorIconFromToolIdentifier(toolData?.getData("tool_identifier"));
