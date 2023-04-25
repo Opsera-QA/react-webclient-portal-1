@@ -1,10 +1,8 @@
 import React, {useEffect} from 'react';
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
-import TaskViews from "components/tasks/TaskViews";
 import TasksHelpDocumentation from "../common/help/documentation/tasks/TasksHelpDocumentation";
 import useGetTasks from "hooks/workflow/tasks/useGetTasks";
-import NewTaskOverlay from "components/tasks/NewTaskOverlay";
 import InlineTaskTypeFilter from "components/common/filters/tasks/type/InlineTaskTypeFilter";
 import TaskCardView from "components/tasks/TaskCardView";
 import TaskTable from "components/tasks/TaskTable";
@@ -18,6 +16,7 @@ import {
 } from "components/common/table/FilterContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import TaskFilterOverlay from "components/tasks/TaskFilterOverlay";
+import NewTaskOverlay from "components/tasks/NewTaskOverlay";
 
 const tableFields = ["name", "description", "type", "tags", "createdAt", "updatedAt", "active", "status", "run_count", "completion"];
 
@@ -41,6 +40,7 @@ function TaskManagement() {
 
   const createNewTask = () => {
     toastContext.showOverlayPanel(
+      // <CreateTasksWizard loadData={loadData} isMounted={isMounted}/>
       <NewTaskOverlay
         loadData={loadData}
       />
