@@ -114,6 +114,7 @@ const CustomSettingTaskConfirmationScreen = ({
       }
     } finally {
       if (isMounted?.current === true) {
+        handleClose();
         setIsStartig(false);
       }
     }
