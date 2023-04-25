@@ -9,7 +9,13 @@ import {useHistory} from "react-router-dom";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {taskHelper} from "components/tasks/task.helper";
 
-export default function TaskCardView({ taskData, loadData, isLoading }) {
+export default function TaskCardView(
+  {
+    taskData,
+    loadData,
+    isLoading,
+    containerHeight,
+  }) {
   const history = useHistory();
 
   const loadTask = (task) => {
@@ -38,6 +44,7 @@ export default function TaskCardView({ taskData, loadData, isLoading }) {
         <VerticalCardViewBase
           getCardFunction={getTaskCard}
           data={taskData}
+          minHeight={containerHeight}
         />
       }
     />
@@ -47,5 +54,6 @@ export default function TaskCardView({ taskData, loadData, isLoading }) {
 TaskCardView.propTypes = {
   taskData: PropTypes.array,
   loadData: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  containerHeight: PropTypes.string,
 };
