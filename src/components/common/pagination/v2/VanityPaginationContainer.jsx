@@ -22,9 +22,18 @@ function VanityPaginationContainer(
         minHeight: containerHeight,
       }}
     >
-      <TopPaginator paginationModel={paginationModel} isLoading={isLoading} loadData={loadData} />
+      <TopPaginator
+        paginationModel={paginationModel}
+        isLoading={isLoading}
+        loadData={loadData}
+      />
       {children}
-      <BottomPaginator nextGeneration={true} loadData={loadData} isLoading={isLoading} paginationModel={paginationModel} />
+      <BottomPaginator
+        nextGeneration={true}
+        loadData={loadData}
+        isLoading={isLoading}
+        paginationModel={paginationModel}
+      />
     </div>
   );
 }

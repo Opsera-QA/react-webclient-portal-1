@@ -96,7 +96,6 @@ function TaskManagement() {
         cardView={getCardView()}
         tableView={getTableView()}
         filterModel={taskFilterModel}
-        tableHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
       />
     );
   };
@@ -121,7 +120,6 @@ function TaskManagement() {
         setFilterDto={setTaskFilterModel}
         data={tasks}
         nextGeneration={true}
-        containerHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
       >
         <SideBySideViewBase
           leftSideView={getVerticalTabContainer()}

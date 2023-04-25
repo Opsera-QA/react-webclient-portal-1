@@ -79,7 +79,10 @@ function PaginationContainer(
   }
 
   return (
-    <div className="pagination-container h-100" style={{display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
+    <div
+      className={"pagination-container h-100"}
+      style={{display: "flex", flexDirection: "column", justifyContent: "space-between"}}
+    >
       {getTopPaginator()}
       {getBody()}
       {getBottomPaginator()}

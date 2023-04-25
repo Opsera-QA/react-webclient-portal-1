@@ -121,7 +121,6 @@ function ToolInventory() {
         setFilterDto={setRegistryToolFilterModel}
         data={registryTools}
         nextGeneration={true}
-        containerHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
       >
         <TableCardView
           filterModel={registryToolFilterModel}
