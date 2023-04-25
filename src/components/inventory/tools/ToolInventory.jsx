@@ -30,7 +30,11 @@ function ToolInventory() {
     loadData,
     isLoading,
     error,
-  } = useGetRegistryTools();
+  } = useGetRegistryTools(
+    undefined,
+    undefined,
+    true,
+  );
   const {
     userData,
     toastContext,
