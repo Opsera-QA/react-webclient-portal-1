@@ -112,15 +112,28 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
     );
   }
 
+  const gitBasedSalesforceTasks = [
+    TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE,
+    TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC,
+  ];
+
+  if (gitBasedSalesforceTasks.includes(taskType)) {
+    return (
+      <ImageBase
+        height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PRODUCT_IMAGE_LINKS.SALESFORCE_GIT_TASK)}
+        imageSource={platformImageConstants.PRODUCT_IMAGE_LINKS.SALESFORCE_GIT_TASK}
+      />
+    );
+  }
+
   const category = taskTypeConstants.getTaskCategoryForType(taskType);
 
   switch (category) {
     case TASK_TYPE_CATEGORIES.SALESFORCE:
       return (
-        <IconBase
-          icon={faSalesforce}
-          iconStyling={{color: "#0D80D8"}}
-          iconClassName={"title-fa-icon"}
+        <ImageBase
+          height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PRODUCT_IMAGE_LINKS.SALESFORCE_GENERAL)}
+          imageSource={platformImageConstants.PRODUCT_IMAGE_LINKS.SALESFORCE_GENERAL}
         />
       );
     case TASK_TYPE_CATEGORIES.GIT:
