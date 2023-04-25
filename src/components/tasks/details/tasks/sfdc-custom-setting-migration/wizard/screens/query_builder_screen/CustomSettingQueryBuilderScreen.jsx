@@ -6,7 +6,7 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import { Button, Row } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 import IconBase from "../../../../../../../common/icons/IconBase";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
@@ -14,11 +14,13 @@ import FieldQueryComponent from "./FieldQueryComponent";
 import customSettingQueryMetadata from "./custom-setting-query-metadata";
 import DetailPanelContainer from "../../../../../../../common/panels/detail_panel_container/DetailPanelContainer";
 import { getMigrationTypeLabel } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
-import { faPlug, faPlus, faSave } from "@fortawesome/pro-light-svg-icons";
+import { faEdit, faPlug, faPlus, faSave } from "@fortawesome/pro-light-svg-icons";
 import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
 import { parseError } from "../../../../../../../common/helpers/error-helpers";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
+import TooltipWrapper from "../../../../../../../common/tooltip/TooltipWrapper";
+import IconTitleBar from "../../../../../../../common/fields/title/IconTitleBar";
 
 const operators = [
   "=",
@@ -48,6 +50,8 @@ const CustomSettingQueryBuilderScreen = ({
   const [queryFilters, setQueryFilters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isValidating, setIsValidating] = useState(false);
+  const [isManual, setIsManual] = useState(false);
+  const [manualQuery, setManualQuery] = useState("");
 
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
@@ -82,9 +86,9 @@ const CustomSettingQueryBuilderScreen = ({
           wizardModel?.getData("queryFilters").length > 0
             ? wizardModel?.getData("queryFilters")
             : [];
-        if (filters.length === 0) {
-          filters.push({ ...customSettingQueryMetadata.newObjectFields });
-        }
+        // if (filters.length === 0) {
+        //   filters.push({ ...customSettingQueryMetadata.newObjectFields });
+        // }
         setQueryFilters([...filters]);
       }
     } catch (e) {
@@ -244,6 +248,71 @@ const CustomSettingQueryBuilderScreen = ({
     }
   };
 
+  const cardView = () => {
+    return (
+      <Row>
+        <Col lg={6}>
+          <TooltipWrapper innerText={"Manual Query Editor"} placement={"top"}>
+            <div
+              onClick={()=>{setIsManual(true);}}
+            >
+              <div className={"p-2"}>
+                <IconTitleBar
+                  className={""}
+                  title={"Manual Query Editor"}
+                  titleClassName={"mx-auto"}
+                  inactive={!isManual}
+                  icon={<IconBase
+                    className={"opsera-primary"}
+                    icon={faEdit}
+                  />}
+                />
+              </div>
+            </div>
+          </TooltipWrapper>
+        </Col>
+        <Col lg={6}>
+          <TooltipWrapper innerText={"Filter based Query Editor"} placement={"top"}>
+            <div
+              onClick={()=>{setIsManual(false);}}
+            >
+              <div className={"p-2"}>
+                <IconTitleBar
+                  className={""}
+                  title={"Manual Query Editor"}
+                  titleClassName={"mx-auto"}
+                  inactive={isManual}
+                  icon={<IconBase
+                    className={"opsera-primary"}
+                    icon={faPlus}
+                  />}
+                />
+              </div>
+            </div>
+          </TooltipWrapper>
+        </Col>
+
+      </Row>
+
+    );
+  };
+
+  const getAddRuleButton = () => {
+    return (
+      <Button
+        variant="link"
+        onClick={handleAddFilter}
+      >
+        <span>
+          <IconBase
+            className={"opsera-primary"}
+            icon={faPlus}
+          />
+        </span>
+      </Button>
+    );
+  };
+
   const getBody = () => {
     if (wizardModel == null) {
       return (
@@ -254,73 +323,62 @@ const CustomSettingQueryBuilderScreen = ({
       );
     }
 
-    const getAddRuleButton = () => {
-      return (
-        <Button
-          variant="link"
-          onClick={handleAddFilter}
-        >
-        <span>
-          <IconBase
-            className={"opsera-primary"}
-            icon={faPlus}
-          />
-        </span>
-        </Button>
-      );
-    };
-
     return (
       <div>
         <div className={"m-3"}>
           {fieldsList &&
-            fieldsList.length > 0 &&
-            queryFilters &&
-            queryFilters.length > 0 && (
+          fieldsList.length > 0 &&
+          queryFilters &&
+          queryFilters.length > 0 ? (
+            <div>
+              {queryFilters.map((filter, index) => (
+                <FieldQueryComponent
+                  key={index}
+                  index={index}
+                  fields={fieldsList}
+                  operators={operators}
+                  filter={filter}
+                  onFieldChange={handleFieldChange}
+                  onOperatorChange={handleOperatorChange}
+                  onValueChange={handleValueChange}
+                  onRemove={handleRemoveFilter}
+                  onAdd={handleAddFilter}
+                  isRemovable={queryFilters.length > 1}
+                />
+              ))}
+            </div>
+          ) : (
+            <>
+              {getAddRuleButton()}
+              {cardView()}
               <div>
-                {queryFilters.map((filter, index) => (
-                  <FieldQueryComponent
-                    key={index}
-                    index={index}
-                    fields={fieldsList}
-                    operators={operators}
-                    filter={filter}
-                    onFieldChange={handleFieldChange}
-                    onOperatorChange={handleOperatorChange}
-                    onValueChange={handleValueChange}
-                    onRemove={handleRemoveFilter}
-                    onAdd={handleAddFilter}
-                    isRemovable={queryFilters.length > 1}
-                  />
-                ))}
-                <div>
-                  <textarea
-                    value={query}
-                    disabled={true}
-                    className={`form-control`}
-                    rows={10}
-                  />
-                  <div className="d-flex justify-content-between mt-2">
-                    {`SOQL query generated based of filter selection made above.`}
-                    <Button
-                      variant="primary"
-                      size="sm"
+                <textarea
+                  value={query}
+                  disabled={queryFilters && queryFilters.length > 0}
+                  className={`form-control`}
+                  rows={10}
+                />
+                <div className="d-flex justify-content-between mt-2">
+                  {`SOQL query generated based of filter selection made above.`}
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    className="mr-2"
+                    onClick={validateQuery}
+                    disabled={isValidating}
+                  >
+                    <IconBase
+                      icon={faPlug}
+                      fixedWidth
                       className="mr-2"
-                      onClick={validateQuery}
-                      disabled={isValidating}
-                    >
-                      <IconBase
-                        icon={faPlug}
-                        fixedWidth
-                        className="mr-2"
-                        isLoading={isValidating}
-                      />
-                      {isValidating ? "Validating" : "Validate Query"}
-                    </Button>
-                  </div>
+                      isLoading={isValidating}
+                    />
+                    {isValidating ? "Validating" : "Validate Query"}
+                  </Button>
                 </div>
               </div>
-            )}
+            </>
+          )}
         </div>
         <SaveButtonContainer>
           <Button

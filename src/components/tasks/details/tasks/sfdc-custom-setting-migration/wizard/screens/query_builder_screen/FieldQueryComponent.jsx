@@ -78,7 +78,7 @@ function FieldQueryComponent({
       <Button
         variant="link"
         onClick={() => handleRemove(index)}
-        disabled={!isRemovable}
+        // disabled={!isRemovable}
       >
         <span>
           <IconBase
