@@ -52,7 +52,7 @@ function TaskManagement() {
       <InlineTaskTypeFilter
         filterModel={taskFilterModel}
         setFilterModel={setTaskFilterModel}
-        className={"mr-2"}
+        className={"ml-2"}
         loadData={loadData}
       />
     );
@@ -95,6 +95,7 @@ function TaskManagement() {
         isLoading={isLoading}
         cardView={getCardView()}
         tableView={getTableView()}
+        filterModel={taskFilterModel}
         tableHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
       />
     );
