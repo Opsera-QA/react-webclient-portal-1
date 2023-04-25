@@ -177,4 +177,43 @@ customSettingMigrationTaskWizardActions.validateQuery = async (
   );
 };
 
+customSettingMigrationTaskWizardActions.getRecordCount = async (
+  getAccessToken,
+  cancelTokenSource,
+  wizardModel,
+) => {
+  const apiUrl = `/tasks/custom-setting-migration-task/wizard/records-count`;
+  const postBody = {
+    pipelineStorageRecordId: wizardModel?.getData("recordId"),
+    taskId: wizardModel?.getData("taskId"),
+    sfdcToolId: wizardModel?.getData("sourceToolId"),
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
+customSettingMigrationTaskWizardActions.getStorageDetails = async (
+  getAccessToken,
+  cancelTokenSource,
+  wizardModel,
+) => {
+  const apiUrl = `/tasks/custom-setting-migration-task/wizard/org-size-limit`;
+  const postBody = {
+    taskId: wizardModel?.getData("taskId"),
+    sfdcToolId: wizardModel?.getData("targetToolId"),
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 export default customSettingMigrationTaskWizardActions;

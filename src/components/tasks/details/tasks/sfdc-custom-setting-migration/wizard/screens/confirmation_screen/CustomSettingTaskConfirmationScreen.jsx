@@ -11,14 +11,16 @@ import IconBase from "../../../../../../../common/icons/IconBase";
 import { faArrowLeft, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
 import DetailPanelContainer from "../../../../../../../common/panels/detail_panel_container/DetailPanelContainer";
-import { getMigrationTypeLabel, MIGRATION_TYPES } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
+import {
+  getMigrationTypeLabel,
+  MIGRATION_TYPES,
+} from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
 import { parseError } from "../../../../../../../common/helpers/error-helpers";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import TextAreaClipboardField from "../../../../../../../common/fields/clipboard/TextAreaClipboardField";
 import TaskMigrationTypeField from "../../../../../../../common/fields/tasks/TaskMigrationTypeField";
-import TextFieldBase from "../../../../../../../common/fields/text/TextFieldBase";
 import ToolNameField from "../../../../../../../common/fields/inventory/ToolNameField";
 import axios from "axios";
 
@@ -32,6 +34,9 @@ const CustomSettingTaskConfirmationScreen = ({
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
+  const [isStarting, setIsStartig] = useState(false);
+  const [recordCount, setRecordCount] = useState("");
+  const [storageDetails, setStorageDetails] = useState({});
 
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
@@ -58,14 +63,33 @@ const CustomSettingTaskConfirmationScreen = ({
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      if(taskType !== MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
-        // TODO : make a call to get count of records
+      setIsLoading(true);
+      if (taskType !== MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
+        const recordCountResponse =
+          await customSettingMigrationTaskWizardActions.getRecordCount(
+            getAccessToken,
+            cancelSource,
+            wizardModel,
+          );
+        setRecordCount(recordCountResponse?.data?.message?.totalSize);
       }
-      if(taskType !== MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV) {
-        // TODO : make a call to available storage on target org
+      if (taskType !== MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV) {
+        const storageResponse =
+          await customSettingMigrationTaskWizardActions.getStorageDetails(
+            getAccessToken,
+            cancelSource,
+            wizardModel,
+          );
+        setStorageDetails(storageResponse?.data?.message?.DataStorageMB);
       }
     } catch (e) {
-      console.log(e);
+      if (isMounted?.current === true) {
+        toastContext.showInlineErrorMessage(e);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -77,7 +101,7 @@ const CustomSettingTaskConfirmationScreen = ({
 
   const triggerTask = async () => {
     try {
-      setIsLoading(true);
+      setIsStartig(true);
       // await customSettingMigrationTaskWizardActions.setFilterQuery(
       //   getAccessToken,
       //   cancelTokenSource,
@@ -90,26 +114,38 @@ const CustomSettingTaskConfirmationScreen = ({
       }
     } finally {
       if (isMounted?.current === true) {
-        setIsLoading(false);
+        setIsStartig(false);
       }
     }
   };
 
   const getCountOfRecords = () => {
-
-    return (
-      <><span className={"mb-0 mr-2 text-muted no-wrap-inline"}>Records (count):</span> ${} </>
-    );
+    if (taskType !== MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
+      return (
+        <Col xs={6}>
+          <span className={"mb-0 mr-2 text-muted no-wrap-inline"}>
+            Records (count):
+          </span>{" "}
+          {recordCount}{" "}
+        </Col>
+      );
+    }
   };
   const getAvailableStorage = () => {
-
-    return (
-      <><span className={"mb-0 mr-2 text-muted no-wrap-inline"}>Available Storage:</span> ${} </>
-    );
+    if (taskType !== MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV) {
+      return (
+        <Col xs={6}>
+          <span className={"mb-0 mr-2 text-muted no-wrap-inline"}>
+            Available Storage:
+          </span>{" "}
+          {storageDetails?.Remaining} of {storageDetails?.Max} (in MB){" "}
+        </Col>
+      );
+    }
   };
 
   const getBody = () => {
-    if (wizardModel == null) {
+    if (wizardModel == null || isLoading) {
       return (
         <CenterLoadingIndicator
           minHeight={"500px"}
@@ -134,17 +170,17 @@ const CustomSettingTaskConfirmationScreen = ({
               />
             </Col>
             <Col xs={12}>
-              <span className={"mb-0 mr-2 text-muted no-wrap-inline"}>Query:</span>
+              <span className={"mb-0 mr-2 text-muted no-wrap-inline"}>
+                Query:
+              </span>
               <TextAreaClipboardField
                 allowResize={false}
                 rows={10}
                 textAreaValue={wizardModel?.getData("filterQuery")}
               />
             </Col>
-            <Col>
-              {getCountOfRecords()}
-              {getAvailableStorage()}
-            </Col>
+            {getCountOfRecords()}
+            {getAvailableStorage()}
           </Row>
         </div>
         <SaveButtonContainer>
@@ -167,12 +203,12 @@ const CustomSettingTaskConfirmationScreen = ({
             variant="success"
             size="sm"
             onClick={triggerTask}
-            disabled={isLoading}
+            disabled={isStarting}
             className="mr-2"
           >
             <IconBase
               className={"mr-2"}
-              isLoading={isLoading}
+              isLoading={isStarting}
               icon={faCheck}
             />
             Proceed
