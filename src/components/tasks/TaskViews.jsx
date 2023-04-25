@@ -19,7 +19,7 @@ import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 import SideBySideViewBase from "components/common/tabs/SideBySideViewBase";
 
-function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, taskData, isMounted}) {
+function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, taskData}) {
   const {
     toastContext,
     userData,
@@ -29,7 +29,6 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
     toastContext.showOverlayPanel(
       <NewTaskOverlay
         loadData={loadData}
-        isMounted={isMounted}
       />
     );
   };
@@ -160,7 +159,6 @@ TaskViews.propTypes = {
   taskFilterModel: PropTypes.object,
   setTaskFilterModel: PropTypes.func,
   loadData: PropTypes.func,
-  isMounted: PropTypes.object,
 };
 
 export default TaskViews;

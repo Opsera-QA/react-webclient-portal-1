@@ -27,7 +27,6 @@ export default function SelectedTaskList(
     tasks,
   } = useGetTasks(
     ["name", "owner"],
-    undefined,
     false,
     10000,
   );
