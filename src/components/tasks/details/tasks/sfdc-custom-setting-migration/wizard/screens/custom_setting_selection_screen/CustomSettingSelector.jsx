@@ -21,6 +21,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const [enableEdit, setEnableEdit] = useState(true);
   const [customSettingsList, setCustomSettingsList] = useState([]);
   const [filePullCompleted, setFilePullCompleted] = useState(false);
@@ -132,7 +133,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
 
   const saveAndTriggerFieldsPull = async () => {
     try {
-      setIsLoading(true);
+      setIsSaving(true);
       await customSettingMigrationTaskWizardActions.setSelectedObjectList(
         getAccessToken,
         cancelTokenSource,
@@ -153,7 +154,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
       }
     } finally {
       if (isMounted?.current === true) {
-        setIsLoading(false);
+        setIsSaving(false);
         setEnableEdit(false);
       }
     }
@@ -186,7 +187,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
           textField={"componentName"}
           busy={isLoading}
           placeholderText={"Select a Custom Setting"}
-          disabled={isLoading}
+          disabled={isLoading || isSaving}
         />
         <SaveButtonContainer>
           <Button
@@ -194,16 +195,16 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
             size="sm"
             variant="primary"
             onClick={saveAndTriggerFieldsPull}
-            disabled={isLoading}
+            disabled={isLoading || isSaving}
           >
             <span>
               <IconBase
                 icon={faArrowRight}
                 fixedWidth
-                isLoading={isLoading}
+                isLoading={isSaving}
                 className="mr-2"
               />
-              {isLoading ? "Saving" : "Save and Proceed"}
+              {isSaving ? "Saving" : "Save and Proceed"}
             </span>
           </Button>
         </SaveButtonContainer>

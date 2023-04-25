@@ -19,6 +19,7 @@ const customSettingQueryMetadata = {
     field: "",
     operator: "=",
     value: "",
+    type: "string"
   }
 };
 

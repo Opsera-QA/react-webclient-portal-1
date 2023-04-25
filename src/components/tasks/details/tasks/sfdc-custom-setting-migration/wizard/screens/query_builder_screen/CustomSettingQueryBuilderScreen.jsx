@@ -72,8 +72,8 @@ const CustomSettingQueryBuilderScreen = ({
           });
 
         const filteredFieldsList = filteredData.map((item) => {
-          return item.name;
-          // return { label: item.label, name: item.name };
+          // return item.name;
+          return { name: item.name, type: item.type };
         });
         setFieldsList(filteredFieldsList);
 
@@ -95,7 +95,8 @@ const CustomSettingQueryBuilderScreen = ({
   const handleFieldChange = (index, value) => {
     setQueryFilters((prevFilters) => {
       const newFilters = [...prevFilters];
-      newFilters[index].field = value;
+      newFilters[index].field = value.name;
+      newFilters[index].type = value.type;
       return newFilters;
     });
   };
@@ -119,7 +120,7 @@ const CustomSettingQueryBuilderScreen = ({
   const handleAddFilter = () => {
     setQueryFilters((prevFilters) => [
       ...prevFilters,
-      { field: fieldsList[0], operator: operators[0], value: "" },
+      { field: "", operator: operators[0], value: "" },
     ]);
   };
 
@@ -141,6 +142,12 @@ const CustomSettingQueryBuilderScreen = ({
           case ">=":
           case "<":
           case "<=":
+            if (
+              filter?.type === "number" ||
+              filter?.type === "double" ||
+              filter?.type === "boolean"
+            )
+              return `${filter.field} ${filter.operator} ${filter.value}`;
             return `${filter.field} ${filter.operator} '${filter.value}'`;
           case "STARTS WITH":
             return `${filter.field} LIKE '${filter.value}%'`;
@@ -161,7 +168,9 @@ const CustomSettingQueryBuilderScreen = ({
         }
       })
       .join(" AND ");
-    const query = `SELECT ${fieldsList.join(", ")} FROM ${
+    const query = `SELECT ${fieldsList
+      ?.map((ele) => ele.name)
+      .join(", ")} FROM ${
       wizardModel?.getData("selectedCustomSetting")?.componentName
     }${whereClause ? ` WHERE ${whereClause}` : ""}`;
     return query;
@@ -177,8 +186,8 @@ const CustomSettingQueryBuilderScreen = ({
   const saveAndProceed = async () => {
     try {
       setIsLoading(true);
-      wizardModel.setData("filterQuery",query);
-      wizardModel.setData("queryFilters",queryFilters);
+      wizardModel.setData("filterQuery", query);
+      wizardModel.setData("queryFilters", queryFilters);
       await customSettingMigrationTaskWizardActions.setFilterQuery(
         getAccessToken,
         cancelTokenSource,
@@ -186,7 +195,9 @@ const CustomSettingQueryBuilderScreen = ({
         query,
         queryFilters,
       );
-      setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN);
+      setCurrentScreen(
+        CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN,
+      );
     } catch (error) {
       if (isMounted?.current === true) {
         const parsedError = parseError(error);
@@ -202,21 +213,22 @@ const CustomSettingQueryBuilderScreen = ({
   const validateQuery = async () => {
     try {
       setIsValidating(true);
-      wizardModel.setData("filterQuery",query);
-      wizardModel.setData("queryFilters",queryFilters);
-      const response = await customSettingMigrationTaskWizardActions.validateQuery(
-        getAccessToken,
-        cancelTokenSource,
-        wizardModel,
-        query,
-      );
+      wizardModel.setData("filterQuery", query);
+      wizardModel.setData("queryFilters", queryFilters);
+      const response =
+        await customSettingMigrationTaskWizardActions.validateQuery(
+          getAccessToken,
+          cancelTokenSource,
+          wizardModel,
+          query,
+        );
 
       if (isMounted.current === true) {
-        if(response?.status === 200 ) {
+        if (response?.status === 200) {
           toastContext.showSystemSuccessToast("Validation Succeeded.");
         }
         if (response?.status !== 200) {
-              console.log(response);
+          console.log(response);
         }
       }
     } catch (error) {
@@ -270,7 +282,7 @@ const CustomSettingQueryBuilderScreen = ({
                     value={query}
                     disabled={true}
                     className={`form-control`}
-                    rows={5}
+                    rows={10}
                   />
                   <div className="d-flex justify-content-between mt-2">
                     {`SOQL query generated based of filter selection made above.`}
@@ -287,7 +299,7 @@ const CustomSettingQueryBuilderScreen = ({
                         className="mr-2"
                         isLoading={isValidating}
                       />
-                      {isValidating? "Validating" : "Validate Query"}
+                      {isValidating ? "Validating" : "Validate Query"}
                     </Button>
                   </div>
                 </div>

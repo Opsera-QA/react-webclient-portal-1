@@ -35,13 +35,6 @@ const CustomSettingTaskWizardConfigScreen = ({
             setCurrentScreen={setCurrentScreen}
           />
         </div>
-        {/*<SaveButtonContainer>*/}
-        {/*  <CancelButton*/}
-        {/*    showUnsavedChangesMessage={false}*/}
-        {/*    cancelFunction={handleClose}*/}
-        {/*    size={"sm"}*/}
-        {/*  />*/}
-        {/*</SaveButtonContainer>*/}
       </div>
     );
   };

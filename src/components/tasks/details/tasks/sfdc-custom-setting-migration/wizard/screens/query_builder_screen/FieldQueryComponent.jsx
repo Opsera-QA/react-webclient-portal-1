@@ -10,7 +10,13 @@ import TextInputBase from "../../../../../../../common/inputs/text/TextInputBase
 import { Button } from "react-bootstrap";
 import IconBase from "../../../../../../../common/icons/IconBase";
 import { faPlus, faTimes } from "@fortawesome/pro-light-svg-icons";
+import NumberPickerInputBase from "../../../../../../../common/inputs/number/picker/base/NumberPickerInputBase";
+import CustomSettingBooleanQuerySelectInput from "./inputs/CustomSettingBooleanQuerySelectInput";
 
+const booleanOperators = [
+  "=",
+  "!=",
+];
 function FieldQueryComponent({
   index,
   fields,
@@ -43,10 +49,12 @@ function FieldQueryComponent({
     setRuleModel({ ...newModel });
     setIsLoading(false);
   };
+  console.log(ruleModel?.getPersistData());
 
   const handleFieldChange = (fieldName, selectedValue) => {
     let newDataObject = ruleModel;
-    newDataObject.setData(fieldName, selectedValue);
+    newDataObject.setData(fieldName, selectedValue.name);
+    newDataObject.setData("type", selectedValue.type);
     setRuleModel({ ...newDataObject });
     onFieldChange(index, selectedValue);
   };
@@ -115,6 +123,58 @@ function FieldQueryComponent({
     return null;
   }
 
+  const getDynamicInputField = () => {
+    switch (ruleModel?.getData("type")) {
+      case "number":
+      case "double":
+        return (
+          <Col
+            xs={4}
+            className={"pr-1 pl-0"}
+          >
+            <NumberPickerInputBase
+              fieldName={"value"}
+              dataObject={ruleModel}
+              setDataObject={setRuleModel}
+              setDataFunction={handleValueChange}
+              showLabel={false}
+            />
+          </Col>
+        );
+      case "boolean":
+        return (
+          <Col
+            xs={4}
+            className={"pr-1 pl-0"}
+          >
+            <CustomSettingBooleanQuerySelectInput
+              model={ruleModel}
+              setModel={setRuleModel}
+              setDataFunction={handleValueChange}
+              fieldName={"value"}
+              showLabel={false}
+            />
+          </Col>
+
+        );
+      default:
+        return (
+          <Col
+            xs={4}
+            className={"pr-1 pl-0"}
+          >
+            <TextInputBase
+              setDataObject={setRuleModel}
+              dataObject={ruleModel}
+              fieldName={"value"}
+              setDataFunction={handleValueChange}
+              showLabel={false}
+            />
+          </Col>
+        );
+    }
+  };
+
   return (
     <Row className="d-flex mx-1 justify-content-between">
       <Col sm={12} className={"px-0"}>
@@ -128,6 +188,8 @@ function FieldQueryComponent({
               selectOptions={fields}
               dataObject={ruleModel}
               setDataObject={setRuleModel}
+              valueField={"name"}
+              textField={"name"}
               setDataFunction={handleFieldChange}
               placeholderText={"Select Field"}
               showLabel={false}
@@ -139,25 +201,14 @@ function FieldQueryComponent({
           >
             <SelectInputBase
               fieldName={"operator"}
-              selectOptions={operators}
+              selectOptions={ruleModel?.getData("type") === "boolean" ? booleanOperators : operators}
               dataObject={ruleModel}
               setDataObject={setRuleModel}
               setDataFunction={handleOperatorChange}
               showLabel={false}
             />
           </Col>
-          <Col
-            xs={4}
-            className={"pr-1 pl-0"}
-          >
-            <TextInputBase
-              setDataObject={setRuleModel}
-              dataObject={ruleModel}
-              fieldName={"value"}
-              setDataFunction={handleValueChange}
-              showLabel={false}
-            />
-          </Col>
+          {getDynamicInputField()}
           <Col
             xs={1}
             className={"my-auto d-flex"}
