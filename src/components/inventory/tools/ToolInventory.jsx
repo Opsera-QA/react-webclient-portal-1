@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
 import PropTypes from "prop-types";
-import ToolTableCardView from "components/inventory/tools/ToolTableCardView";
 import ToolRegistryHelpDocumentation
   from "components/common/help/documentation/tool_registry/ToolRegistryHelpDocumentation";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
@@ -13,9 +12,6 @@ import platformSettingFeatureConstants
 import CreateToolRegistryWizard from "components/inventory/tools/tool_details/wizards/CreateToolRegistryWizard";
 import NewToolOverlay from "components/inventory/tools/create_overlay/NewToolOverlay";
 import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
-import ActiveFilter from "components/common/filters/status/ActiveFilter";
-import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
-import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import InlineToolIdentifierFilter from "components/common/filters/tools/tool_identifier/InlineToolIdentifierFilter";
 import ToolCardView from "components/inventory/tools/ToolCardView";
 import ToolsTable from "components/inventory/tools/ToolsTable";
@@ -65,7 +61,7 @@ function ToolInventory() {
         filterModel={registryToolFilterModel}
         setFilterModel={setRegistryToolFilterModel}
         loadData={loadData}
-        className={"mr-2"}
+        className={"ml-2"}
         isLoading={isLoading}
       />
     );
@@ -104,11 +100,12 @@ function ToolInventory() {
         <ToolRegistryHelpDocumentation />
       }
       error={error}
-      addRecordFunction={createNewTool}
+      addRecordFunction={getCreateNewToolFunction()}
       filterModel={registryToolFilterModel}
       setFilterModel={setRegistryToolFilterModel}
       loadDataFunction={loadData}
       filterOverlay={<ToolFilterOverlay loadDataFunction={loadData} toolFilterModel={registryToolFilterModel} />}
+      titleActionBar={getInlineFilters()}
     >
       <PaginationContainer
         loadData={loadData}
