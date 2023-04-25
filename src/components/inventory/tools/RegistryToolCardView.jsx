@@ -9,7 +9,7 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import ToolCardBase from "temp-library-components/cards/tools/ToolCardBase";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
 
-export default function ToolCardView({ tools, loadData, isLoading }) {
+export default function RegistryToolCardView({ tools, loadData, isLoading }) {
   const history = useHistory();
 
   const loadTool = (tool) => {
@@ -44,7 +44,7 @@ export default function ToolCardView({ tools, loadData, isLoading }) {
   );
 }
 
-ToolCardView.propTypes = {
+RegistryToolCardView.propTypes = {
   tools: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,

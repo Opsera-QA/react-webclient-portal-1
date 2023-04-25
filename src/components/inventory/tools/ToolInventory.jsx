@@ -13,7 +13,7 @@ import CreateToolRegistryWizard from "components/inventory/tools/tool_details/wi
 import NewToolOverlay from "components/inventory/tools/create_overlay/NewToolOverlay";
 import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
 import InlineToolIdentifierFilter from "components/common/filters/tools/tool_identifier/InlineToolIdentifierFilter";
-import ToolCardView from "components/inventory/tools/ToolCardView";
+import RegistryToolCardView from "components/inventory/tools/RegistryToolCardView";
 import ToolsTable from "components/inventory/tools/ToolsTable";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 import TableCardView from "components/common/table/TableCardView";
@@ -69,7 +69,7 @@ function ToolInventory() {
 
   const getCardView = () => {
     return (
-      <ToolCardView
+      <RegistryToolCardView
         isLoading={isLoading}
         loadData={loadData}
         tools={registryTools}
