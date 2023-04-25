@@ -126,6 +126,8 @@ function TaskEditorPanel({ taskData, handleClose, backButtonFunction }) {
         break;
       case TASK_TYPES.SNAPLOGIC_TASK:
         break;
+      case TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION:
+        break;
       default:
         return <TaskCreationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
     }

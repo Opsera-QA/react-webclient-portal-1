@@ -48,6 +48,11 @@ import GitscraperSummaryPanel from "./tasks/gitscraper/GitscraperSummaryPanel";
 import gitscraperTaskConfigurationMetadata from "./tasks/gitscraper/gitscraper-metadata";
 import salesforceQuickDeployTaskConfigurationMetadata
   from "./tasks/sfdc-quick-deploy/salesforceQuickDeployTaskConfigurationMetadata";
+import SalesforceCustomSettingMigrationTaskSummaryCard
+  from "./tasks/sfdc-custom-setting-migration/SalesforceCustomSettingMigrationTaskSummaryCard";
+import salesforceCustomSettingMigrationTaskMetadata, {
+  customSettingTaskSalesforceConfigurationMetadata
+} from "./tasks/sfdc-custom-setting-migration/salesforceCustomSettingMigrationTaskMetadata";
 
 function TaskConfigurationSummaryPanel({ taskModel }) {
   const getTaskTypeSummaryPanel = () => {
@@ -192,7 +197,18 @@ function TaskConfigurationSummaryPanel({ taskModel }) {
             gitTasksData={taskModel}
           />
         );
-  
+      case TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION:
+        return (
+          <SalesforceCustomSettingMigrationTaskSummaryCard
+            taskConfigDataModel={
+              modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), salesforceCustomSettingMigrationTaskMetadata)
+            }
+            salesforceConfigurationModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration")?.sfdc,
+              customSettingTaskSalesforceConfigurationMetadata,
+            )}
+          />
+        );
       default:
         return <div>No type associated with this Task</div>;
     }

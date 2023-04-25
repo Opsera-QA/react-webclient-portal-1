@@ -20,6 +20,8 @@ import SalesforceQuickDeployTaskConfigurationEditorPanel
   from "components/tasks/details/tasks/sfdc-quick-deploy/SalesforceQuickDeployTaskConfigurationEditorPanel";
 import SnaplogicTaskConfigurationEditorPanel from "./snaplogic/SnaplogicTaskConfigurationEditorPanel";
 import GitScraperConfigurationPanel from "./gitscraper/GitScraperConfigurationPanel";
+import SalesforceCustomSettingMigrationTaskEditorPanel
+  from "./sfdc-custom-setting-migration/SalesforceCustomSettingMigrationTaskEditorPanel";
 
 function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationModel, setTaskConfigurationModel, taskType }) {
   const getConfigurationPanel = () => {
@@ -134,6 +136,14 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
             gitTasksConfigurationData={taskConfigurationModel}
             setGitTasksConfigurationData={setTaskConfigurationModel}
             gitTasksDataDto={taskModel}
+          />
+        );
+      case TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION:
+        return (
+          <SalesforceCustomSettingMigrationTaskEditorPanel
+            taskModel={taskModel}
+            setTaskConfigurationModel={setTaskConfigurationModel}
+            taskConfigurationModel={taskConfigurationModel}
           />
         );
       default:
