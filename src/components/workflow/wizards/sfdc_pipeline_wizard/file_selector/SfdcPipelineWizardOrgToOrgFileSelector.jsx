@@ -73,6 +73,8 @@ const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipeli
     }
   };
 
+  const getPipelineOrTaskText = () => pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline';
+
   const pullOrgToOrgFiles = async (cancelSource = cancelTokenSource) => {
    await sfdcPipelineActions.triggerOrgToOrgFilesPullV2(getAccessToken, cancelSource, pipelineWizardModel);
   };
@@ -114,7 +116,7 @@ const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipeli
 
   return (
     <div>
-      <div className="h5">Salesforce Pipeline Run: File Selection for {pipelineWizardModel?.getArrayData("selectedComponentTypes")?.length} Components</div>
+      <div className="h5">Salesforce {getPipelineOrTaskText()} Run: File Selection for {pipelineWizardModel?.getArrayData("selectedComponentTypes")?.length} Components</div>
       <SfdcPipelineWizardBasicSummary pipelineWizardModel={pipelineWizardModel} />
       {getBody()}
       <SaveButtonContainer>

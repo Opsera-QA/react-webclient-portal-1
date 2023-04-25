@@ -2,10 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
 
-function SfdcWizardUnitTestSelectionViewHelpDocumentation({closeHelpPanel}) {
+function SfdcWizardUnitTestSelectionViewHelpDocumentation({closeHelpPanel, pipelineWizardModel}) {
+  const getPipelineOrTaskText = () => pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline';
+
   return (
     <HelpDocumentationContainer
-      helpTopic={"SalesForce Pipeline Run: Unit Test Selection View"}
+      helpTopic={`SalesForce ${getPipelineOrTaskText()} Run: Unit Test Selection View`}
       closeHelpPanel={closeHelpPanel}
       confluenceLink={`https://docs.opsera.io/salesforce/salesforce-wizard-run`}
     >
@@ -37,7 +39,8 @@ function SfdcWizardUnitTestSelectionViewHelpDocumentation({closeHelpPanel}) {
 }
 
 SfdcWizardUnitTestSelectionViewHelpDocumentation.propTypes = {
-  closeHelpPanel: PropTypes.func
+  closeHelpPanel: PropTypes.func,
+  pipelineWizardModel: PropTypes.object,
 };
 
 export default React.memo(SfdcWizardUnitTestSelectionViewHelpDocumentation);

@@ -42,6 +42,8 @@ const SfdcPipelineWizardGitTasksFileSelector = ({ pipelineWizardModel, setPipeli
     };
   }, []);
 
+  const getPipelineOrTaskText = () => pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline';
+
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
@@ -107,7 +109,7 @@ const SfdcPipelineWizardGitTasksFileSelector = ({ pipelineWizardModel, setPipeli
 
   return (
     <div>
-      <div className="h5">Salesforce Pipeline Run: File Selection for {pipelineWizardModel?.getArrayData("selectedComponentTypes")?.length} Components</div>
+      <div className="h5">Salesforce {getPipelineOrTaskText()} Run: File Selection for {pipelineWizardModel?.getArrayData("selectedComponentTypes")?.length} Components</div>
       <SfdcPipelineWizardBasicSummary pipelineWizardModel={pipelineWizardModel} />
       {getTabContainer()}
       <SfdcPipelineWizardSfdcFileSelector
