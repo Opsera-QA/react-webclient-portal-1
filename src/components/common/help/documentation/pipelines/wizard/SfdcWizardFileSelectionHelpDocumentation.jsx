@@ -2,10 +2,12 @@ import React from "react";
 import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
 import PropTypes from "prop-types";
 
-function SfdcWizardFileSelectionHelpDocumentation({closeHelpPanel}) {
+function SfdcWizardFileSelectionHelpDocumentation({closeHelpPanel, pipelineWizardModel}) {
+  const getPipelineOrTaskText = () => pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline';
+
   return (
     <HelpDocumentationContainer
-      helpTopic={"SalesForce Pipeline Run: File Selection"}
+      helpTopic={`SalesForce ${getPipelineOrTaskText()} Run: File Selection`}
       closeHelpPanel={closeHelpPanel}
       confluenceLink={`https://docs.opsera.io/salesforce/salesforce-wizard-run`}
     >
@@ -71,7 +73,8 @@ function SfdcWizardFileSelectionHelpDocumentation({closeHelpPanel}) {
 }
 
 SfdcWizardFileSelectionHelpDocumentation.propTypes = {
-  closeHelpPanel: PropTypes.func
+  closeHelpPanel: PropTypes.func,
+  pipelineWizardModel: PropTypes.object,
 };
 
 export default React.memo(SfdcWizardFileSelectionHelpDocumentation);

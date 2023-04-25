@@ -2,10 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
 
-function SfdcWizardXmlViewerHelpDocumentation({closeHelpPanel}) {
+function SfdcWizardXmlViewerHelpDocumentation({closeHelpPanel, pipelineWizardModel}) {
+  const getPipelineOrTaskText = () => pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline';
+
   return (
     <HelpDocumentationContainer
-      helpTopic={"SalesForce Pipeline Run: XML Viewer"}
+      helpTopic={`SalesForce ${getPipelineOrTaskText()} Run: XML Viewer`}
       closeHelpPanel={closeHelpPanel}
       confluenceLink={`https://docs.opsera.io/salesforce/salesforce-wizard-run`}
     >
@@ -15,7 +17,8 @@ function SfdcWizardXmlViewerHelpDocumentation({closeHelpPanel}) {
 }
 
 SfdcWizardXmlViewerHelpDocumentation.propTypes = {
-  closeHelpPanel: PropTypes.func
+  closeHelpPanel: PropTypes.func,
+  pipelineWizardModel: PropTypes.object,
 };
 
 export default React.memo(SfdcWizardXmlViewerHelpDocumentation);
