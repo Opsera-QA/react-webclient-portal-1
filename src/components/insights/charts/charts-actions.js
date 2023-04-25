@@ -239,10 +239,6 @@ chartsActions.getGithubTotalCommitsMetrics = async (
     getGithubRepositoryFromKpiConfiguration(kpiConfiguration);
   const githubBranch = getGithubBranchFromKpiConfiguration(kpiConfiguration);
 
-  const githubRepository =
-    getGithubRepositoryFromKpiConfiguration(kpiConfiguration);
-  const githubBranch = getGithubBranchFromKpiConfiguration(kpiConfiguration);
-
   const postBody = {
     startDate: date.start,
     endDate: date.end,
