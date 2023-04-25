@@ -117,10 +117,9 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
   switch (category) {
     case TASK_TYPE_CATEGORIES.SALESFORCE:
       return (
-        <IconBase
-          icon={faSalesforce}
-          iconStyling={{color: "#0D80D8"}}
-          iconClassName={"title-fa-icon"}
+        <ImageBase
+          height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PRODUCT_IMAGE_LINKS.SALESFORCE_GENERAL)}
+          imageSource={platformImageConstants.PRODUCT_IMAGE_LINKS.SALESFORCE_GENERAL}
         />
       );
     case TASK_TYPE_CATEGORIES.GIT:
