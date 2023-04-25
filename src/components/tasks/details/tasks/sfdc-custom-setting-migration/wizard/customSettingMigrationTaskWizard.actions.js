@@ -157,4 +157,24 @@ customSettingMigrationTaskWizardActions.setFilterQuery = async (
   );
 };
 
+customSettingMigrationTaskWizardActions.validateQuery = async (
+  getAccessToken,
+  cancelTokenSource,
+  wizardModel,
+  query,
+) => {
+  const apiUrl = `/tasks/custom-setting-migration-task/wizard/validate-query`;
+  const postBody = {
+    query: query,
+    sfdcToolId: wizardModel?.getData("sourceToolId"),
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 export default customSettingMigrationTaskWizardActions;

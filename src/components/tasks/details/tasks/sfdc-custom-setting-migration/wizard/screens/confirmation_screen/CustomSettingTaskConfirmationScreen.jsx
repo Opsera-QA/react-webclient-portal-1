@@ -20,6 +20,7 @@ import TextAreaClipboardField from "../../../../../../../common/fields/clipboard
 import TaskMigrationTypeField from "../../../../../../../common/fields/tasks/TaskMigrationTypeField";
 import TextFieldBase from "../../../../../../../common/fields/text/TextFieldBase";
 import ToolNameField from "../../../../../../../common/fields/inventory/ToolNameField";
+import axios from "axios";
 
 const CustomSettingTaskConfirmationScreen = ({
   wizardModel,
@@ -36,16 +37,26 @@ const CustomSettingTaskConfirmationScreen = ({
   const isMounted = useRef(false);
 
   useEffect(() => {
-    isMounted.current = true;
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
 
-    loadData();
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
 
     return () => {
+      source.cancel();
       isMounted.current = false;
     };
   }, []);
 
-  const loadData = () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       if(taskType !== MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
         // TODO : make a call to get count of records

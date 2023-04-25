@@ -12,10 +12,9 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
 import FieldQueryComponent from "./FieldQueryComponent";
 import customSettingQueryMetadata from "./custom-setting-query-metadata";
-import TextAreaClipboardField from "../../../../../../../common/fields/clipboard/TextAreaClipboardField";
 import DetailPanelContainer from "../../../../../../../common/panels/detail_panel_container/DetailPanelContainer";
 import { getMigrationTypeLabel } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
-import { faSave } from "@fortawesome/pro-light-svg-icons";
+import { faPlug, faSave } from "@fortawesome/pro-light-svg-icons";
 import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
 import { parseError } from "../../../../../../../common/helpers/error-helpers";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
@@ -48,6 +47,7 @@ const CustomSettingQueryBuilderScreen = ({
   const [fieldsList, setFieldsList] = useState([]);
   const [queryFilters, setQueryFilters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isValidating, setIsValidating] = useState(false);
 
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
@@ -198,6 +198,40 @@ const CustomSettingQueryBuilderScreen = ({
       }
     }
   };
+
+  const validateQuery = async () => {
+    try {
+      setIsValidating(true);
+      wizardModel.setData("filterQuery",query);
+      wizardModel.setData("queryFilters",queryFilters);
+      const response = await customSettingMigrationTaskWizardActions.validateQuery(
+        getAccessToken,
+        cancelTokenSource,
+        wizardModel,
+        query,
+      );
+
+      if (isMounted.current === true) {
+        if(response?.status === 200 ) {
+          toastContext.showSystemSuccessToast("Validation Succeeded.");
+        }
+        if (response?.status !== 200) {
+              console.log(response);
+        }
+      }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        console.log(error);
+        const parsedError = parseError(error);
+        toastContext.showInlineErrorMessage(parsedError);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsValidating(false);
+      }
+    }
+  };
+
   const getBody = () => {
     if (wizardModel == null) {
       return (
@@ -232,12 +266,30 @@ const CustomSettingQueryBuilderScreen = ({
                   />
                 ))}
                 <div>
-                  <TextAreaClipboardField
-                    allowResize={false}
-                    rows={10}
-                    textAreaValue={query}
-                    description={`SOQL query generated based of filter selection made above.`}
+                  <textarea
+                    value={query}
+                    disabled={true}
+                    className={`form-control`}
+                    rows={5}
                   />
+                  <div className="d-flex justify-content-between mt-2">
+                    {`SOQL query generated based of filter selection made above.`}
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      className="mr-2"
+                      onClick={validateQuery}
+                      disabled={isValidating}
+                    >
+                      <IconBase
+                        icon={faPlug}
+                        fixedWidth
+                        className="mr-2"
+                        isLoading={isValidating}
+                      />
+                      {isValidating? "Validating" : "Validate Query"}
+                    </Button>
+                  </div>
                 </div>
               </div>
             )}

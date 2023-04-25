@@ -129,6 +129,7 @@ function FieldQueryComponent({
               dataObject={ruleModel}
               setDataObject={setRuleModel}
               setDataFunction={handleFieldChange}
+              placeholderText={"Select Field"}
               showLabel={false}
             />
           </Col>
