@@ -1,7 +1,7 @@
 import {faOctopusDeploy, faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import {
   faClipboardListCheck,
-  faDraftingCompass,
+  faDraftingCompass, faMicrochip,
   faShieldKeyhole,
   faTasks,
   faWrench
@@ -10,15 +10,14 @@ import React from "react";
 import {TASK_TYPE_CATEGORIES, TASK_TYPES, taskTypeConstants} from "components/tasks/task.types";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import IconBase from "components/common/icons/IconBase";
-import {hasStringValue} from "components/common/helpers/string-helpers";
 import {
   PIPELINE_TYPES,
   pipelineTypeConstants
 } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
-import {pipelineHelper} from "components/workflow/pipeline.helper";
 import {vendorImageConstants} from "temp-library-components/image/vendorImage.constants";
 import {ImageBase} from "@opsera/react-vanity-set";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
+import {platformImageConstants} from "temp-library-components/image/platformImage.constants";
 
 export const getToolIdentifiersWithMissingImages = () => {
   const keys = Object.keys(vendorImageConstants.TOOL_IDENTIFIER_LOGOS);
@@ -190,31 +189,38 @@ export function getLargeVendorIconFromTaskType (taskType) {
 }
 
 export function getLargeVendorIconComponentFromPipeline (pipeline) {
-  const type = pipelineTypeConstants.getTypeForTypesArray(pipeline);
+  const type = pipelineTypeConstants.getTypeForPipeline(pipeline, false);
 
-  if (hasStringValue(type) !== true) {
+  if (type === PIPELINE_TYPES.MACHINE_LEARNING) {
     return (
       <IconBase
-        icon={faDraftingCompass}
+        icon={faMicrochip}
         iconClassName={"title-fa-icon"}
       />
     );
   }
 
-  const toolIdentifier = pipelineHelper.getFirstPipelineStepIdentifier(pipeline);
+  const imageLink = pipelineTypeConstants.getImageLinkForPipeline(
+    pipeline,
+  );
 
-  if (type !== PIPELINE_TYPES.SOFTWARE_DEVELOPMENT || !toolIdentifier) {
+  if (imageLink === vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.OPSERA) {
     return (
-      <IconBase
-        icon={pipelineTypeConstants.getIconForPipelineType(type)}
-        iconClassName={"title-fa-icon"}
+      <OpseraInfinityLogo
+        desiredHeight={100}
+        className={"d-flex h-100"}
+        imageClassName={"my-auto"}
       />
     );
   }
 
-  return getLargeVendorIconFromToolIdentifier(
-    toolIdentifier,
-    faDraftingCompass,
+  const imageHeight = platformImageConstants.getRecommendedCardPlatformImageHeight(imageLink);
+
+  return (
+    <ImageBase
+      height={imageHeight}
+      imageSource={imageLink}
+    />
   );
 }
 

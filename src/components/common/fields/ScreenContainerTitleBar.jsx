@@ -38,6 +38,16 @@ function ScreenContainerTitleBar(
     }
   };
 
+  const getTitleActionBar = () => {
+    if (titleActionBar) {
+      return (
+        <div className={"normal-text"}>
+          {titleActionBar}
+        </div>
+      );
+    }
+  };
+
   const getRightSideItems = () => {
     return (
       <div className="ml-auto d-flex">
@@ -49,7 +59,7 @@ function ScreenContainerTitleBar(
           variant={"success"}
           customButtonText={addRecordButtonCustomText}
         />
-        {titleActionBar}
+        {getTitleActionBar()}
         <SearchFilter
           isLoading={isLoading}
           paginationModel={filterModel}
@@ -104,7 +114,7 @@ function ScreenContainerTitleBar(
 
   return (
     <div className="d-flex">
-      <div><span><IconBase icon={titleIcon} className={"mr-2"}/>{title}</span></div>
+      <div className={"title-text-header-1"}><span><IconBase icon={titleIcon} className={"mr-2"}/>{title}</span></div>
       {getRightSideItems()}
     </div>
   );
