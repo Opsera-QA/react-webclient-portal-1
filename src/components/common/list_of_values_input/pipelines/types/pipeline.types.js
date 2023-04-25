@@ -5,6 +5,9 @@ import { dataParsingHelper } from "components/common/helpers/data/dataParsing.he
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import constantsHelper from "@opsera/definitions/constants/constants.helper";
 import {getLargeVendorIconFromToolIdentifier} from "components/common/helpers/icon-helpers";
+import {platformImageConstants} from "temp-library-components/image/platformImage.constants";
+import {vendorImageConstants} from "temp-library-components/image/vendorImage.constants";
+import React from "react";
 
 // TODO: Refactor
 export const pipelineTypeConstants = {};
@@ -99,6 +102,28 @@ pipelineTypeConstants.getIconForPipelineType = (typeString) => {
   }
 };
 
+pipelineTypeConstants.getImageLinkForPipelineType = (typeString) => {
+  const parsedType = DataParsingHelper.parseString(typeString, "");
+
+  switch (parsedType) {
+    case PIPELINE_TYPES.APIGEE:
+      return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.APIGEE;
+    case PIPELINE_TYPES.INFORMATICA:
+      return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.INFORMATICA;
+    case PIPELINE_TYPES.MACHINE_LEARNING:
+      return undefined;
+    case PIPELINE_TYPES.SALESFORCE:
+      return platformImageConstants.PRODUCT_IMAGE_LINKS.SALESFORCE_GENERAL;
+    case PIPELINE_TYPES.SAP_CPQ:
+      return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.SAP;
+    case PIPELINE_TYPES.SOFTWARE_DEVELOPMENT:
+      return platformImageConstants.PRODUCT_IMAGE_LINKS.SOFTWARE_DEVELOPMENT_GENERAL;
+    default:
+      return platformImageConstants.PRODUCT_IMAGE_LINKS.PIPELINES_GENERAL;
+  }
+};
+
+
 pipelineTypeConstants.getIconForPipeline = (pipeline) => {
   const type = pipelineTypeConstants.getTypeForTypesArray(pipeline);
 
@@ -117,6 +142,36 @@ pipelineTypeConstants.getIconForPipeline = (pipeline) => {
     toolIdentifier,
     faDraftingCompass,
   );
+};
+
+pipelineTypeConstants.getImageLinkForPipeline = (pipeline) => {
+  const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
+  const toolIdentifier = DataParsingHelper.parseNestedString(plan[0], "tool.tool_identifier");
+  const type = pipelineTypeConstants.getTypeForTypesArray(pipeline);
+
+  if (type !== PIPELINE_TYPES.SOFTWARE_DEVELOPMENT || !toolIdentifier) {
+    return pipelineTypeConstants.getImageLinkForPipelineType(type);
+  }
+
+  const imageLink = vendorImageConstants.getVendorImageForToolIdentifier(toolIdentifier);
+
+  if (!toolIdentifier || !imageLink) {
+    return platformImageConstants.PRODUCT_IMAGE_LINKS.PIPELINES_GENERAL;
+  }
+
+  return imageLink;
+};
+
+pipelineTypeConstants.getImageLinkForPipelineStep = (pipelineStep) => {
+  const parsedPipelineStep = DataParsingHelper.parseObject(pipelineStep, {});
+  const toolIdentifier = DataParsingHelper.parseNestedString(parsedPipelineStep, "tool.tool_identifier");
+  const imageLink = vendorImageConstants.getVendorImageForToolIdentifier(toolIdentifier);
+
+  if (!toolIdentifier || !imageLink) {
+    return platformImageConstants.PRODUCT_IMAGE_LINKS.PIPELINES_GENERAL;
+  }
+
+  return imageLink;
 };
 
 export const PIPELINE_TYPE_SELECT_OPTIONS = [
