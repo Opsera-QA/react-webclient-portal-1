@@ -8,6 +8,7 @@ import {getLargeVendorIconFromToolIdentifier} from "components/common/helpers/ic
 import {platformImageConstants} from "temp-library-components/image/platformImage.constants";
 import {vendorImageConstants} from "temp-library-components/image/vendorImage.constants";
 import React from "react";
+import toolIdentifierConstants from "@opsera/definitions/constants/tool_identifiers/toolIdentifier.constants";
 
 // TODO: Refactor
 export const pipelineTypeConstants = {};
@@ -153,15 +154,10 @@ pipelineTypeConstants.getImageLinkForPipeline = (pipeline) => {
   const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
   const toolIdentifier = DataParsingHelper.parseNestedString(plan[0], "tool.tool_identifier");
   const type = pipelineTypeConstants.getTypeForPipeline(pipeline);
-
-  if (type !== PIPELINE_TYPES.SOFTWARE_DEVELOPMENT || !toolIdentifier) {
-    return pipelineTypeConstants.getImageLinkForPipelineType(type);
-  }
-
   const imageLink = vendorImageConstants.getVendorImageForToolIdentifier(toolIdentifier);
 
-  if (!toolIdentifier || !imageLink) {
-    return platformImageConstants.PRODUCT_IMAGE_LINKS.PIPELINES_GENERAL;
+  if (type !== PIPELINE_TYPES.SOFTWARE_DEVELOPMENT || !toolIdentifier || toolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS) {
+    return pipelineTypeConstants.getImageLinkForPipelineType(type);
   }
 
   return imageLink;
