@@ -42,6 +42,8 @@ const SfdcPipelineWizardGitTasksFileSelector = ({ pipelineWizardModel, setPipeli
     };
   }, []);
 
+  const getPipelineOrTaskText = () => pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline';
+
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
@@ -50,7 +52,7 @@ const SfdcPipelineWizardGitTasksFileSelector = ({ pipelineWizardModel, setPipeli
     catch (error) {
       if (isMounted?.current === true) {
         console.error("Service Error Pulling File List from Salesforce: " + error);
-        toastContext.showInlineErrorMessage("Service Error Pulling File List from SalefForce: " + error);
+        toastContext.showInlineErrorMessage("Service Error Pulling File List from SalesForce: " + error);
       }
     }
     finally {
@@ -107,7 +109,7 @@ const SfdcPipelineWizardGitTasksFileSelector = ({ pipelineWizardModel, setPipeli
 
   return (
     <div>
-      <div className="h5">Salesforce Pipeline Run: File Selection for {pipelineWizardModel?.getArrayData("selectedComponentTypes")?.length} Components</div>
+      <div className="h5">Salesforce {getPipelineOrTaskText()} Run: File Selection for {pipelineWizardModel?.getArrayData("selectedComponentTypes")?.length} Components</div>
       <SfdcPipelineWizardBasicSummary pipelineWizardModel={pipelineWizardModel} />
       {getTabContainer()}
       <SfdcPipelineWizardSfdcFileSelector
