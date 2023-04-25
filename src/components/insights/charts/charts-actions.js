@@ -921,10 +921,6 @@ chartsActions.getGithubListOfRepositories = async (
     getGithubRepositoryFromKpiConfiguration(kpiConfiguration);
   const githubBranch = getGithubBranchFromKpiConfiguration(kpiConfiguration);
 
-  const githubRepository =
-    getGithubRepositoryFromKpiConfiguration(kpiConfiguration);
-  const githubBranch = getGithubBranchFromKpiConfiguration(kpiConfiguration);
-
   if (!useKpiTags) {
     tags = null;
   }
