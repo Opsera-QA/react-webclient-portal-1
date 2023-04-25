@@ -1,31 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
+import TaskCard from "components/common/fields/tasks/TaskCard";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
-import TaskCardBase from "temp-library-components/cards/tasks/TaskCardBase";
-import {useHistory} from "react-router-dom";
-import {hasStringValue} from "components/common/helpers/string-helpers";
-import {taskHelper} from "components/tasks/task.helper";
 
-export default function TaskCardView({ taskData, loadData, isLoading }) {
-  const history = useHistory();
-
-  const loadTask = (task) => {
-    const taskLink = taskHelper.getDetailViewLink(task._id);
-
-    if (hasStringValue(taskLink) === true) {
-      history.push(taskLink);
-    }
-  };
-
+function LegacyTaskCardView({ taskData, taskFilterModel, loadData, isLoading }) {
   const getTaskCard = (task) => {
     return (
-      <TaskCardBase
-        onClickFunction={loadTask}
+      <TaskCard
         taskModel={new Model({...task}, tasksMetadata, false)}
-        tooltip={"Click to view Task"}
       />
     );
   };
@@ -34,6 +19,8 @@ export default function TaskCardView({ taskData, loadData, isLoading }) {
     <VanitySetCardView
       isLoading={isLoading}
       loadData={loadData}
+      paginationModel={taskFilterModel}
+      className={"makeup-container-table m-2"}
       cards={
         <VerticalCardViewBase
           getCardFunction={getTaskCard}
@@ -44,8 +31,12 @@ export default function TaskCardView({ taskData, loadData, isLoading }) {
   );
 }
 
-TaskCardView.propTypes = {
+LegacyTaskCardView.propTypes = {
   taskData: PropTypes.array,
+  taskFilterModel: PropTypes.object,
+  taskMetadata: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool
 };
+
+export default LegacyTaskCardView;
