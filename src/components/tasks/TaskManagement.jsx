@@ -1,85 +1,137 @@
-import React, {useEffect, useState} from 'react';
-import taskActions from "components/tasks/task.actions";
-import LoadingDialog from "components/common/status_notifications/loading";
+import React, {useEffect} from 'react';
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
-import TaskViews from "components/tasks/TaskViews";
-import TaskFilterModel from "components/tasks/task.filter.model";
 import TasksHelpDocumentation from "../common/help/documentation/tasks/TasksHelpDocumentation";
+import useGetTasks from "hooks/workflow/tasks/useGetTasks";
+import InlineTaskTypeFilter from "components/common/filters/tasks/type/InlineTaskTypeFilter";
+import TaskCardView from "components/tasks/TaskCardView";
+import TaskTable from "components/tasks/TaskTable";
+import TaskVerticalTabContainer from "components/tasks/TaskVerticalTabContainer";
+import TableCardView from "components/common/table/TableCardView";
+import PaginationContainer from "components/common/pagination/PaginationContainer";
+import SideBySideViewBase from "components/common/tabs/SideBySideViewBase";
+import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
+import {
+  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
+} from "components/common/table/FilterContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import TaskFilterOverlay from "components/tasks/TaskFilterOverlay";
+import CreateTasksWizard from "components/tasks/portal_tasks_wizard/CreateTasksWizard";
+
+const tableFields = ["name", "description", "type", "tags", "createdAt", "updatedAt", "active", "status", "run_count", "completion"];
 
 function TaskManagement() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [tasks, setTasks] = useState([]);
-  const [taskFilterModel, setTaskFilterModel] = useState(undefined);
   const {
-    accessRoleData,
+    tasks,
+    isLoading,
+    taskFilterModel,
+    setTaskFilterModel,
+    loadData,
+  } = useGetTasks(
+    tableFields,
+    true,
+  );
+  const {
+    userData,
     toastContext,
-    getAccessToken,
-    cancelTokenSource,
     isMounted,
   } = useComponentStateReference();
 
-  useEffect(() => {
-    const newTaskFilterModel = new TaskFilterModel(getAccessToken, cancelTokenSource, loadData);
-    loadData(newTaskFilterModel).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-  }, []);
+  useEffect(() => {}, []);
 
-  const loadData = async (newFilterModel = taskFilterModel) => {
-    try {
-      setIsLoading(true);
-      await getTasksList(newFilterModel);
-    } catch (error) {
-      if (isMounted?.current === true) {
-        console.error(error);
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
+  const createNewTask = () => {
+    toastContext.showOverlayPanel(
+      <CreateTasksWizard loadData={loadData} isMounted={isMounted}/>
+      // <NewTaskOverlay
+      //   loadData={loadData}
+      // />
+    );
   };
 
-  const getTasksList = async (newFilterModel = taskFilterModel) => {
-    const tableFields = ["name", "description", "type", "tags", "createdAt", "updatedAt", "active", "status", "run_count", "completion"];
-    const response = await taskActions.getTasksListV2(getAccessToken, cancelTokenSource, newFilterModel, tableFields);
-    const taskList = response?.data?.data;
-
-    if (isMounted.current === true && Array.isArray(taskList)) {
-      setTasks(taskList);
-      newFilterModel.updateTotalCount(response?.data?.count);
-      newFilterModel.updateActiveFilters();
-      setTaskFilterModel({...newFilterModel});
-    }
+  const getInlineFilters = () => {
+    return (
+      <InlineTaskTypeFilter
+        filterModel={taskFilterModel}
+        setFilterModel={setTaskFilterModel}
+        className={"ml-2"}
+        loadData={loadData}
+      />
+    );
   };
 
-  const getHelpComponent = () => {
-    return (<TasksHelpDocumentation/>);
+  const getCardView = () => {
+    return (
+      <TaskCardView
+        isLoading={isLoading}
+        loadData={loadData}
+        taskData={tasks}
+      />
+    );
   };
 
-  if (!accessRoleData) {
-    return <LoadingDialog size="sm" />;
-  }
+  const getTableView = () => {
+    return (
+      <TaskTable
+        isLoading={isLoading}
+        loadData={loadData}
+        taskData={tasks}
+      />
+    );
+  };
+
+  const getVerticalTabContainer = () => {
+    return (
+      <TaskVerticalTabContainer
+        isLoading={isLoading}
+        loadData={loadData}
+        taskFilterModel={taskFilterModel}
+      />
+    );
+  };
+
+  const getCurrentView = () => {
+    return (
+      <TableCardView
+        data={tasks}
+        isLoading={isLoading}
+        cardView={getCardView()}
+        tableView={getTableView()}
+        filterModel={taskFilterModel}
+        tableHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
+      />
+    );
+  };
+
 
   return (
     <ScreenContainer
       breadcrumbDestination={"taskManagement"}
-      helpComponent={getHelpComponent()}
+      helpComponent={<TasksHelpDocumentation />}
       navigationTabContainer={<TasksSubNavigationBar currentTab={"tasks"}/>}
+      addRecordFunction={TaskRoleHelper.canCreateTask(userData) === true ? createNewTask : undefined}
+      filterOverlay={<TaskFilterOverlay taskFilterModel={taskFilterModel} loadDataFunction={loadData} />}
+      loadDataFunction={loadData}
+      filterModel={taskFilterModel}
+      setFilterModel={setTaskFilterModel}
+      titleActionBar={getInlineFilters()}
     >
-      <TaskViews
-        taskData={tasks}
+      <PaginationContainer
         loadData={loadData}
         isLoading={isLoading}
-        isMounted={isMounted}
-        taskFilterModel={taskFilterModel}
-        setTaskFilterModel={setTaskFilterModel}
-      />
+        filterDto={taskFilterModel}
+        setFilterDto={setTaskFilterModel}
+        data={tasks}
+        nextGeneration={true}
+        containerHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
+      >
+        <SideBySideViewBase
+          leftSideView={getVerticalTabContainer()}
+          rightSideView={getCurrentView()}
+          leftSideMinimumWidth={"175px"}
+          leftSideMaximumWidth={"175px"}
+          minimumHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
+        />
+      </PaginationContainer>
     </ScreenContainer>
   );
 }
