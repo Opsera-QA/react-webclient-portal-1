@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {faHandshake} from "@fortawesome/pro-light-svg-icons";
@@ -11,20 +11,11 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function AssignedRoleAccessTable({ roleAccessDefinitions, isLoading }) {
-  const [accessRoles, setAccessRoles] = useState([]);
   const fields = accessRoleDefinitionMetadata?.fields;
   const {
-    accessRoleData,
     isSaasUser,
   } = useComponentStateReference();
-
-  useEffect(() => {
-    setAccessRoles([]);
-    if (isSaasUser === false && roleAccessDefinitions && accessRoleData) {
-      const tableRows = DataParsingHelper.parseArray(parseRoleDefinitionsIntoRbacTableRows(roleAccessDefinitions, accessRoleData), []);
-      setAccessRoles([...tableRows]);
-    }
-  }, [roleAccessDefinitions]);
+  const tableRows = DataParsingHelper.parseArray(parseRoleDefinitionsIntoRbacTableRows(roleAccessDefinitions), []);
 
   const columns = useMemo(
     () => [
@@ -36,13 +27,13 @@ function AssignedRoleAccessTable({ roleAccessDefinitions, isLoading }) {
       getTableBooleanIconColumn(getField(fields, "guest"), undefined, 45),
       getTableBooleanIconColumn(getField(fields, "no_access_rules"), undefined, 165),
     ],
-    []
+    [fields]
   );
 
   const getRoleDefinitionTable = () => {
     return (
       <CustomTable
-        data={accessRoles}
+        data={tableRows}
         columns={columns}
         isLoading={isLoading}
       />
