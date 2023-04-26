@@ -86,11 +86,11 @@ export default function WorkspaceResourceOptionCardBase(
   const getHighlightedBorderColorForWorkspaceResourceType = () => {
     switch (option) {
       case WORKSPACE_RESOURCE_TYPES.TASK:
-        return themeConstants.COLOR_PALETTE.SALESFORCE_BLUE;
+        return themeConstants.RESOURCE_COLORS.TASKS;
       case WORKSPACE_RESOURCE_TYPES.PIPELINE:
-        return themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE;
+        return themeConstants.RESOURCE_COLORS.PIPELINES;
       case WORKSPACE_RESOURCE_TYPES.TOOL:
-        return themeConstants.COLOR_PALETTE.GREEN;
+        return themeConstants.RESOURCE_COLORS.TOOLS;
     }
   };
 
