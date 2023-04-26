@@ -24,12 +24,12 @@ export default function WarningMessageFieldBase(
   const getMessage = () => {
     return (
       <div>
-        {getLabel()}{parsedMessage}
+        {getLabel()}{message}
       </div>
     );
   };
 
-  if (!parsedMessage) {
+  if (message == null) {
     return null;
   }
 
