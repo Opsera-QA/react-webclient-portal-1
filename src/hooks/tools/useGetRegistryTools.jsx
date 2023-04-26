@@ -38,6 +38,8 @@ export default function useGetRegistryTools(
   const getRegistryTools = async (
     newFilterModel = registryToolFilterModel,
   ) => {
+    setRegistryTools([]);
+
     if (RegistryToolRoleHelper.canGetRegistryTools(userData) !== true) {
       return;
     }
