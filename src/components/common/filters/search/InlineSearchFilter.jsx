@@ -26,7 +26,6 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
       false,
     );
     const maxLength = DataParsingHelper.parseInteger(filterDto?.getMaxLength(fieldName), 25);
-    console.log("maxLength: " + JSON.stringify(maxLength));
     filterDto.setData(fieldName, newSearchText.substring(0, maxLength));
 
     // TODO: Setting state on filter model should only be handled in the load data function and this should be removed.
