@@ -122,9 +122,6 @@ function CustomSettingMigrationLogSummaryReportPanel({ activityData }) {
                 <TextFieldBase dataObject={summaryData} fieldName={"recordsSuccessful"} />
               </Col>
               <Col lg={6}>
-                <TextFieldBase dataObject={summaryData} fieldName={"recordsSuccessful"} />
-              </Col>
-              <Col lg={6}>
                 <TextFieldBase dataObject={summaryData} fieldName={"recordsFailed"} />
               </Col>
               <Col lg={6}>
