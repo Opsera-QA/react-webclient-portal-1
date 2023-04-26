@@ -123,7 +123,7 @@ pipelineTypeConstants.getImageLinkForPipelineType = (typeString) => {
     case PIPELINE_TYPES.SAP_CPQ:
       return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.SAP;
     case PIPELINE_TYPES.SOFTWARE_DEVELOPMENT:
-      return platformImageConstants.PLATFORM_IMAGE_LINKS.SOFTWARE_DEVELOPMENT_GENERAL;
+      return platformImageConstants.PLATFORM_IMAGE_LINKS.PIPELINES_GENERAL;
     default:
       return platformImageConstants.PLATFORM_IMAGE_LINKS.PIPELINES_GENERAL;
   }
