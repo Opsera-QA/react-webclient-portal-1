@@ -42,7 +42,7 @@ export default function ToolCardBody(
   return (
     <div
       style={{
-        minHeight: "45px",
+        minHeight: "50px",
       }}
     >
       <Row className={"small"}>

@@ -18,7 +18,6 @@ export default function ToolMultiSelectInput(
     registryTools,
   } = useGetRegistryTools(
     undefined,
-    undefined,
     10000,
     false,
   );

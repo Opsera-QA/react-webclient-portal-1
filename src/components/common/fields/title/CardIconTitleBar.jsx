@@ -115,7 +115,7 @@ export default function CardIconTitleBar(
       return (
         <div className={"d-flex w-100 mt-3"}>
           <div className={titleClassName}>
-            <div className={"icon-card-title"}>
+            <div className={"icon-card-title force-text-wrap"}>
               {parsedTitle}
             </div>
           </div>

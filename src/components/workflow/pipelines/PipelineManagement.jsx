@@ -8,7 +8,7 @@ import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.m
 import useComponentStateReference from "hooks/useComponentStateReference";
 import auditLogTypeConstants from "@opsera/definitions/constants/audit-logs/types/auditLogType.constants";
 
-function Pipelines() {
+function PipelineManagement() {
   const [pipelines, setPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [pipelineFilterModel, setPipelineFilterModel] = useState(new PipelineFilterModel());
@@ -96,4 +96,4 @@ function Pipelines() {
 
 }
 
-export default Pipelines;
+export default PipelineManagement;

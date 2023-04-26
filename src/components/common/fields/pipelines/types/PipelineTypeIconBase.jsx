@@ -1,46 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import {faBracketsCurly, faDraftingCompass, faMicrochip} from "@fortawesome/pro-light-svg-icons";
-import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import IconBase from "components/common/icons/IconBase";
+import {
+  getPipelineTypeLabel,
+  pipelineTypeConstants
+} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 
 function PipelineTypeIconBase(
   {
     type,
     className,
   }) {
-  const getTooltipText = () => {
-    switch (type) {
-      case "sfdc":
-        return ("Salesforce");
-      case "ai-ml":
-        return ("Machine Learning (AI)");
-      case "sdlc":
-        return ("Software Development");
-      default:
-        return ("No Pipeline Type Assigned");
-    }
-  };
-
-  const getTypeIcon = () => {
-    switch (type) {
-      case "sfdc":
-        return (faSalesforce);
-      case "ai-ml":
-        return (faMicrochip);
-      case "sdlc":
-        return (faBracketsCurly);
-      default:
-        return (faDraftingCompass);
-    }
-  };
-
   return (
-    <TooltipWrapper innerText={getTooltipText()}>
+    <TooltipWrapper innerText={getPipelineTypeLabel(type)}>
       <div>
         <IconBase
-          icon={getTypeIcon()}
+          icon={pipelineTypeConstants.getIconForPipelineType(type)}
           className={className}
           iconSize={"lg"}
         />

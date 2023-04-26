@@ -53,7 +53,7 @@ export default function PipelineCardBase(
       cardFooter={<PipelineCardFooter pipelineModel={pipelineModel} />}
       selectedOption={selectedOption}
       option={option}
-      highlightedBorderColor={themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE}
+      highlightedBorderColor={themeConstants.COLOR_PALETTE.BLUE}
     />
   );
 }

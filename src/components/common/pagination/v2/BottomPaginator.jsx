@@ -68,12 +68,12 @@ function BottomPaginator({ paginationModel, nextGeneration, loadData, isLoading 
     return (getResultSummary(paginationModel, isLoading));
   };
 
-  if (!paginationModel || paginationModel?.getFilterValue("totalCount") == null) {
-    return null;
-  }
+  const getBody = () => {
+    if (paginationModel?.getFilterValue("totalCount") == null) {
+      return null;
+    }
 
-  return (
-    <div className="bottom-pagination">
+    return (
       <Row className="pagination-block small d-flex justify-content-between px-2">
         <Col xs={4} className="my-auto results-summary">
           {getResultSummaryField()}
@@ -83,6 +83,16 @@ function BottomPaginator({ paginationModel, nextGeneration, loadData, isLoading 
         </Col>
         <Col xs={4} />
       </Row>
+    );
+  };
+
+  if (paginationModel == null) {
+    return null;
+  }
+
+  return (
+    <div className="bottom-pagination">
+      {getBody()}
     </div>
   );
 }

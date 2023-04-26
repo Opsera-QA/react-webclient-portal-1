@@ -38,6 +38,7 @@ function ScreenContainer(
     loadDataFunction,
     addRecordFunction,
     addRecordButtonCustomText,
+    isSoftLoading,
   }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const toastContext = useContext(DialogToastContext);
@@ -195,6 +196,7 @@ function ScreenContainer(
               title={breadcrumb?.title}
               isBeta={breadcrumb?.isBeta === true}
               isLoading={isLoading}
+              isSoftLoading={isSoftLoading}
               titleActionBar={titleActionBar}
               helpComponent={helpComponent}
               auditLogType={auditLogType}
@@ -242,6 +244,7 @@ ScreenContainer.propTypes = {
   filterOverlay: PropTypes.any,
   addRecordFunction: PropTypes.func,
   addRecordButtonCustomText: PropTypes.string,
+  isSoftLoading: PropTypes.bool,
 };
 
 ScreenContainer.defaultProps = {

@@ -138,6 +138,7 @@ export default function Workspace() {
       addRecordFunction={createWorkspaceItem}
       bodyClassName={""}
       navigationTabContainer={<WorkspaceSubNavigationBar />}
+      isSoftLoading={isLoading}
     >
       {getTabAndViewContainer()}
     </ScreenContainer>

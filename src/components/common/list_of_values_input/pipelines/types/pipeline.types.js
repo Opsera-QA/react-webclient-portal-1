@@ -8,6 +8,7 @@ import {getLargeVendorIconFromToolIdentifier} from "components/common/helpers/ic
 import {platformImageConstants} from "temp-library-components/image/platformImage.constants";
 import {vendorImageConstants} from "temp-library-components/image/vendorImage.constants";
 import React from "react";
+import toolIdentifierConstants from "@opsera/definitions/constants/tool_identifiers/toolIdentifier.constants";
 
 // TODO: Refactor
 export const pipelineTypeConstants = {};
@@ -50,6 +51,11 @@ export const getPipelineTypeLabel = (pipelineType) => {
     default:
       return "No Pipeline Type Applied";
   }
+};
+
+pipelineTypeConstants.getTypeForPipeline = (pipeline, defaultToSdlc = true) => {
+  const parsedTypes = DataParsingHelper.parseNestedArray(pipeline, "type");
+  return pipelineTypeConstants.getTypeForTypesArray(parsedTypes, defaultToSdlc);
 };
 
 pipelineTypeConstants.getTypeForTypesArray = (pipelineTypes, defaultToSdlc = true) => {
@@ -125,7 +131,7 @@ pipelineTypeConstants.getImageLinkForPipelineType = (typeString) => {
 
 
 pipelineTypeConstants.getIconForPipeline = (pipeline) => {
-  const type = pipelineTypeConstants.getTypeForTypesArray(pipeline);
+  const type = pipelineTypeConstants.getTypeForPipeline(pipeline);
 
   if (hasStringValue(type) !== true) {
     return (faDraftingCompass);
@@ -147,15 +153,14 @@ pipelineTypeConstants.getIconForPipeline = (pipeline) => {
 pipelineTypeConstants.getImageLinkForPipeline = (pipeline) => {
   const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
   const toolIdentifier = DataParsingHelper.parseNestedString(plan[0], "tool.tool_identifier");
-  const type = pipelineTypeConstants.getTypeForTypesArray(pipeline);
+  const type = pipelineTypeConstants.getTypeForPipeline(pipeline);
+  const imageLink = vendorImageConstants.getVendorImageForToolIdentifier(toolIdentifier);
 
-  if (type !== PIPELINE_TYPES.SOFTWARE_DEVELOPMENT || !toolIdentifier) {
+  if (type !== PIPELINE_TYPES.SOFTWARE_DEVELOPMENT || !toolIdentifier || toolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS) {
     return pipelineTypeConstants.getImageLinkForPipelineType(type);
   }
 
-  const imageLink = vendorImageConstants.getVendorImageForToolIdentifier(toolIdentifier);
-
-  if (!toolIdentifier || !imageLink) {
+  if (!imageLink) {
     return platformImageConstants.PRODUCT_IMAGE_LINKS.PIPELINES_GENERAL;
   }
 

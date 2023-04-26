@@ -27,7 +27,6 @@ export default function SelectedToolList(
     registryTools,
   } = useGetRegistryTools(
     ["name", "owner"],
-    undefined,
     10000,
     false,
   );
