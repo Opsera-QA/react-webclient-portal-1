@@ -62,8 +62,6 @@ export function getLargeVendorIconFromToolIdentifier(
           iconClassName={"title-fa-icon"}
         />
       );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
-      return getVendorTitle(toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO);
   }
 
   const imageLink = vendorImageConstants.getVendorImageForToolIdentifier(toolIdentifier);
