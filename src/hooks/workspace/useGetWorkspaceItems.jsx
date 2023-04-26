@@ -6,7 +6,6 @@ import WorkspaceFilterModel from "components/workspace/views/workspace.filter.mo
 
 export default function useGetWorkspaceItems(
   fields,
-  pageSize,
   handleErrorFunction,
 ) {
   const [workspaceItems, setWorkspaceItems] = useState([]);
@@ -21,10 +20,6 @@ export default function useGetWorkspaceItems(
 
   useEffect(() => {
     setWorkspaceItems([]);
-
-    if (pageSize) {
-      workspaceFilterModel.setData("pageSize", pageSize);
-    }
 
     if (loadData) {
       loadData(getWorkspaceItems, handleErrorFunction).catch(() => {});
