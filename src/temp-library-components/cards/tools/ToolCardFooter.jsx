@@ -7,7 +7,7 @@ export default function ToolCardFooter() {
 
   return (
     <CardFooterBase
-      backgroundColor={themeConstants.COLOR_PALETTE.GREEN}
+      backgroundColor={themeConstants.RESOURCE_COLORS.TOOLS}
       color={themeConstants.COLOR_PALETTE.WHITE}
       text={"Tool"}
     />

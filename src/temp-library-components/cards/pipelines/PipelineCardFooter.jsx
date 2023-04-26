@@ -16,7 +16,7 @@ export default function PipelineCardFooter({ pipelineModel }) {
       case "running":
         return themeConstants.COLOR_PALETTE.GREEN;
       default:
-        return themeConstants.COLOR_PALETTE.BLUE;
+        return themeConstants.RESOURCE_COLORS.PIPELINES;
     }
   };
 
