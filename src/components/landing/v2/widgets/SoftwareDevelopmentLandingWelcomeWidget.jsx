@@ -12,6 +12,7 @@ import {EXTERNAL_LINKS} from "components/header/legacy/HeaderNavBar";
 import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
 import {platformImageConstants} from "temp-library-components/image/platformImage.constants";
 import {ImageBase} from "@opsera/react-vanity-set";
+import {Link} from "react-router-dom";
 
 export default function SoftwareDevelopmentLandingWelcomeWidget({ className }) {
   const {
@@ -47,32 +48,6 @@ export default function SoftwareDevelopmentLandingWelcomeWidget({ className }) {
       );
   };
 
-  const getHowToLinks = () => {
-    return (
-      <div className={"d-flex"}>
-        <div className={"mt-auto"}>
-          <div className={"mt-2"}>
-            <ExternalLink
-              link={EXTERNAL_LINKS.SALESFORCE_RELEASE_MANAGEMENT}
-              label={"Salesforce Release Management"}
-            />
-          </div>
-          <div className={"my-2"}>
-            <ExternalLink
-              link={EXTERNAL_LINKS.SALESFORCE_USER_GUIDE}
-              label={"Salesforce User Guide"}
-            />
-          </div>
-          <div className={"my-2"}>
-            <a className={"externalLink"} onClick={toggleVideosView} href="#">
-              Getting Started Videos
-            </a>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   return (
     <WidgetDataBlockBase
       title={getWelcomeText()}
@@ -89,20 +64,26 @@ export default function SoftwareDevelopmentLandingWelcomeWidget({ className }) {
             </div>
             <div className={"mt-3"}>
               <ExternalLink
-                link={EXTERNAL_LINKS.SALESFORCE_RELEASE_MANAGEMENT}
-                label={"Salesforce Release Management"}
+                link={EXTERNAL_LINKS.KNOWLEDGE_BASE}
+                label={"Getting Started with Opsera"}
+              />
+            </div>
+            <div className={"my-2"}>
+              <Link to={"/faq"}>
+                <span className={"externalLink"}>Frequently Asked Questions</span>
+              </Link>
+            </div>
+            <div className={"my-2"}>
+              <ExternalLink
+                link={EXTERNAL_LINKS.HOW_TO_ARTICLES}
+                label={"How To Articles"}
               />
             </div>
             <div className={"my-2"}>
               <ExternalLink
-                link={EXTERNAL_LINKS.SALESFORCE_USER_GUIDE}
-                label={"Salesforce User Guide"}
+                link={EXTERNAL_LINKS.RELEASE_NOTES}
+                label={"Latest Release Notes"}
               />
-            </div>
-            <div className={"my-2"}>
-              <a className={"externalLink"} onClick={toggleVideosView} href="#">
-                Getting Started Videos
-              </a>
             </div>
           </div>
           <div className={"d-none d-md-inline ml-3"}>
