@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 export const actionTypes = [
-  {text: "Insert", value: "INSERT"},
-  {text: "Update", value: "UPDATE"},
-  {text: "Upsert", value: "UPSERT"},
-  {text: "Delete", value: "DELETE"}
+  {text: "Insert", value: "Insert"},
+  {text: "Update", value: "Update"},
+  {text: "Upsert", value: "Upsert"},
+  {text: "Delete", value: "Delete"}
 ];
 
 function SalesforceCustomSettingTaskActionSelectInput({ fieldName, model, setModel, placeholderText, disabled, setDataFunction }) {

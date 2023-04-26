@@ -19,6 +19,11 @@ import customSettingMigrationTaskWizardActions from "../../customSettingMigratio
 import { parseError } from "../../../../../../../common/helpers/error-helpers";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
+import CustomSettingQueryBuilderMenuBar, {
+  QUERY_BUILDER_VIEWS,
+} from "./CustomSettingQueryBuilderMenuBar";
+import axios from "axios";
+import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
 const operators = [
   "=",
@@ -48,11 +53,17 @@ const CustomSettingQueryBuilderScreen = ({
   const [queryFilters, setQueryFilters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isValidating, setIsValidating] = useState(false);
+  const [currentView, setCurrentView] = useState(
+    QUERY_BUILDER_VIEWS.FILTER_SELECTION_QUERY_BUILDER,
+  );
+  const [manualQueryString, setManualQueryString] = useState("");
 
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
     isMounted.current = true;
 
     loadData();
@@ -82,9 +93,10 @@ const CustomSettingQueryBuilderScreen = ({
           wizardModel?.getData("queryFilters").length > 0
             ? wizardModel?.getData("queryFilters")
             : [];
-        if (filters.length === 0) {
-          filters.push({ ...customSettingQueryMetadata.newObjectFields });
-        }
+        // if (filters.length === 0) {
+        //   filters.push({ ...customSettingQueryMetadata.newObjectFields });
+        // }
+        setManualQueryString(generateQuery());
         setQueryFilters([...filters]);
       }
     } catch (e) {
@@ -186,18 +198,30 @@ const CustomSettingQueryBuilderScreen = ({
   const saveAndProceed = async () => {
     try {
       setIsLoading(true);
-      wizardModel.setData("filterQuery", query);
+      let finalQuery = query;
+      if(currentView === QUERY_BUILDER_VIEWS.MANUAL_QUERY_BUILDER) {
+        finalQuery = manualQueryString;
+      }
+      wizardModel.setData("filterQuery", finalQuery);
       wizardModel.setData("queryFilters", queryFilters);
-      await customSettingMigrationTaskWizardActions.setFilterQuery(
-        getAccessToken,
-        cancelTokenSource,
-        wizardModel,
-        query,
-        queryFilters,
-      );
-      setCurrentScreen(
-        CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN,
-      );
+      const response = await customSettingMigrationTaskWizardActions.validateQuery(
+          getAccessToken,
+          cancelTokenSource,
+          wizardModel,
+          finalQuery,
+        );
+      if (response?.status === 200) {
+        await customSettingMigrationTaskWizardActions.setFilterQuery(
+          getAccessToken,
+          cancelTokenSource,
+          wizardModel,
+          finalQuery,
+          queryFilters,
+        );
+        setCurrentScreen(
+          CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN,
+        );
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         const parsedError = parseError(error);
@@ -213,14 +237,18 @@ const CustomSettingQueryBuilderScreen = ({
   const validateQuery = async () => {
     try {
       setIsValidating(true);
-      wizardModel.setData("filterQuery", query);
+      let finalQuery = query;
+      if(currentView === QUERY_BUILDER_VIEWS.MANUAL_QUERY_BUILDER) {
+        finalQuery = manualQueryString;
+      }
+      wizardModel.setData("filterQuery", finalQuery);
       wizardModel.setData("queryFilters", queryFilters);
       const response =
         await customSettingMigrationTaskWizardActions.validateQuery(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
-          query,
+          finalQuery,
         );
 
       if (isMounted.current === true) {
@@ -244,125 +272,126 @@ const CustomSettingQueryBuilderScreen = ({
     }
   };
 
-  const getBody = () => {
-    if (wizardModel == null) {
-      return (
-        <CenterLoadingIndicator
-          minHeight={"500px"}
-          message={`Loading`}
-        />
-      );
-    }
+  if (wizardModel == null) {
+    return (
+      <CenterLoadingIndicator
+        minHeight={"500px"}
+        message={`Loading`}
+      />
+    );
+  }
 
-    const getAddRuleButton = () => {
+  const getAddRuleButton = () => {
+    if (queryFilters.length < 1) {
       return (
         <Button
           variant="link"
           onClick={handleAddFilter}
         >
-        <span>
-          <IconBase
-            className={"opsera-primary"}
-            icon={faPlus}
-          />
-        </span>
+          <span>
+            <IconBase
+              className={"opsera-primary mr-1"}
+              icon={faPlus}
+            />
+          </span>
+          Add filter to start building Query
         </Button>
       );
-    };
+    }
+  };
 
+  const setCurrentViewFunc = (newValue) => {
+    setQueryFilters([]);
+    setManualQueryString(generateQuery());
+    setCurrentView(newValue);
+  };
+
+  const getQueryBuilderMenuBar = () => {
     return (
-      <div>
-        <div className={"m-3"}>
-          {fieldsList &&
-            fieldsList.length > 0 &&
-            queryFilters &&
-            queryFilters.length > 0 && (
-              <div>
-                {queryFilters.map((filter, index) => (
-                  <FieldQueryComponent
-                    key={index}
-                    index={index}
-                    fields={fieldsList}
-                    operators={operators}
-                    filter={filter}
-                    onFieldChange={handleFieldChange}
-                    onOperatorChange={handleOperatorChange}
-                    onValueChange={handleValueChange}
-                    onRemove={handleRemoveFilter}
-                    onAdd={handleAddFilter}
-                    isRemovable={queryFilters.length > 1}
-                  />
-                ))}
-                <div>
-                  <textarea
-                    value={query}
-                    disabled={true}
-                    className={`form-control`}
-                    rows={10}
-                  />
-                  <div className="d-flex justify-content-between mt-2">
-                    {`SOQL query generated based of filter selection made above.`}
-                    <Button
-                      variant="primary"
-                      size="sm"
-                      className="mr-2"
-                      onClick={validateQuery}
-                      disabled={isValidating}
-                    >
-                      <IconBase
-                        icon={faPlug}
-                        fixedWidth
-                        className="mr-2"
-                        isLoading={isValidating}
+      <CustomSettingQueryBuilderMenuBar
+        currentView={currentView}
+        setCurrentView={setCurrentViewFunc}
+      />
+    );
+  };
+
+  const getQueryBuilderView = () => {
+    switch (currentView) {
+      case QUERY_BUILDER_VIEWS.MANUAL_QUERY_BUILDER:
+        return (
+          <div className={"mt-5 mb-5"}>
+            <textarea
+              value={manualQueryString}
+              onChange={(event) => setManualQueryString(event.target.value)}
+              className={`form-control`}
+              rows={10}
+            />
+            <div className="d-flex justify-content-between mt-2">
+              <InlineWarning
+                warningMessage={"Switching back to filter based Query builder will reset out your manual changes."}
+              />
+              <Button
+                variant="primary"
+                size="sm"
+                className="mr-2 mt-2"
+                onClick={validateQuery}
+                disabled={isValidating}
+              >
+                <IconBase
+                  icon={faPlug}
+                  fixedWidth
+                  className="mr-2"
+                  isLoading={isValidating}
+                />
+                {isValidating ? "Validating" : "Validate Query"}
+              </Button>
+            </div>
+          </div>
+        );
+      case QUERY_BUILDER_VIEWS.FILTER_SELECTION_QUERY_BUILDER:
+        return (
+          <div className={"mt-3 mb-5"}>
+            {getAddRuleButton()}
+            <div className={"m-3"}>
+              {fieldsList &&
+                fieldsList.length > 0 &&
+                queryFilters &&
+                queryFilters.length > 0 && (
+                  <div>
+                    {queryFilters.map((filter, index) => (
+                      <FieldQueryComponent
+                        key={index}
+                        index={index}
+                        fields={fieldsList}
+                        operators={operators}
+                        filter={filter}
+                        onFieldChange={handleFieldChange}
+                        onOperatorChange={handleOperatorChange}
+                        onValueChange={handleValueChange}
+                        onRemove={handleRemoveFilter}
+                        onAdd={handleAddFilter}
+                        isRemovable={queryFilters.length > 1}
                       />
-                      {isValidating ? "Validating" : "Validate Query"}
-                    </Button>
+                    ))}
                   </div>
+                )}
+              <div>
+                <textarea
+                  value={query}
+                  disabled={true}
+                  className={`form-control`}
+                  rows={10}
+                />
+                <div className="d-flex justify-content-between mt-2">
+                  {`SOQL query generated based of filter selection made above.`}
                 </div>
               </div>
-            )}
-        </div>
-        <SaveButtonContainer>
-          <Button
-            variant="secondary"
-            size="sm"
-            className="mr-2"
-            onClick={() => {
-              handleBackButton();
-            }}
-          >
-            <IconBase
-              icon={faArrowLeft}
-              fixedWidth
-              className="mr-2"
-            />
-            Back
-          </Button>
-          <Button
-            className={"mr-2"}
-            size="sm"
-            variant="primary"
-            onClick={saveAndProceed}
-            disabled={isLoading}
-          >
-            <span>
-              <IconBase
-                icon={faSave}
-                isLoading={isLoading}
-                fixedWidth
-                className="mr-2"
-              />
-              {isLoading ? "Saving Query" : "Save and Proceed"}
-            </span>
-          </Button>
-          <CancelButton
-            showUnsavedChangesMessage={false}
-            cancelFunction={handleClose}
-            size={"sm"}
-          />
-        </SaveButtonContainer>
-      </div>
-    );
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
   };
 
   return (
@@ -374,7 +403,49 @@ const CustomSettingQueryBuilderScreen = ({
           )} : Query Builder Screen`}
         />
       </Row>
-      <div className={"my-3"}>{getBody()}</div>
+      <div className={"my-3"}>
+        {getQueryBuilderMenuBar()}
+        {getQueryBuilderView()}
+      </div>
+      <SaveButtonContainer>
+        <Button
+          variant="secondary"
+          size="sm"
+          className="mr-2"
+          onClick={() => {
+            handleBackButton();
+          }}
+        >
+          <IconBase
+            icon={faArrowLeft}
+            fixedWidth
+            className="mr-2"
+          />
+          Back
+        </Button>
+        <Button
+          className={"mr-2"}
+          size="sm"
+          variant="primary"
+          onClick={saveAndProceed}
+          disabled={isLoading}
+        >
+          <span>
+            <IconBase
+              icon={faSave}
+              isLoading={isLoading}
+              fixedWidth
+              className="mr-2"
+            />
+            {isLoading ? "Saving Query" : "Save and Proceed"}
+          </span>
+        </Button>
+        <CancelButton
+          showUnsavedChangesMessage={false}
+          cancelFunction={handleClose}
+          size={"sm"}
+        />
+      </SaveButtonContainer>
     </DetailPanelContainer>
   );
 };

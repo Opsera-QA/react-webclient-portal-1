@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
+import { Row } from "react-bootstrap";
 
-function FieldItemCard({field, selectedFields, setSelectedFields}) {
+function FieldItemCard({ field, selectedFields, setSelectedFields }) {
   const [fieldSelected, setFieldSelected] = useState(false);
 
   const selectUser = () => {
@@ -16,17 +17,82 @@ function FieldItemCard({field, selectedFields, setSelectedFields}) {
       }
     } else {
       if (selectedFields.includes(field)) {
-        let newSelectedUsers = selectedFields.filter(user => user.name !== field.name);
+        let newSelectedUsers = selectedFields.filter(
+          (user) => user.name !== field.name,
+        );
         setSelectedFields([...newSelectedUsers]);
       }
     }
   };
 
   return (
-    <li key={field.name} className={selectedFields.includes(field) ? "p-2 member-list selected" : "p-2 member-list"} onClick={selectUser}>
-      <div className="px-2 justify-content-between d-flex w-100">
-        <Col lg={12} xl={6} className={"no-wrap-inline"}>{field.name}</Col>
-      </div>
+    <li
+      key={field.name}
+      className={
+        selectedFields.includes(field)
+          ? "p-2 member-list selected"
+          : "p-2 member-list"
+      }
+      onClick={selectUser}
+    >
+      <Row className={"mx-0"}>
+        <Col
+          lg={12}
+          xl={12}
+          className={"no-wrap-inline mb-1"}
+        >
+          {field.name}
+        </Col>
+        <Col
+          sm={3}
+          className={
+            selectedFields.includes(field)
+              ? "d-flex w-100"
+              : "d-flex w-100 text-muted"
+          }
+        >
+          <div
+            className={"badge badge-secondary"}
+            style={{ fontSize: "10px", letterSpacing: "0.6px" }}
+          >
+            {field?.type?.toUpperCase()}
+          </div>
+        </Col>
+        <Col
+          sm={3}
+          className={
+            selectedFields.includes(field)
+              ? "d-flex w-100"
+              : "d-flex w-100 text-muted"
+          }
+        >
+          <div
+            className={
+              !field?.nillable ? "badge badge-danger" : "badge badge-success"
+            }
+            style={{ fontSize: "10px", letterSpacing: "0.6px" }}
+          >
+            MANDATORY
+          </div>
+        </Col>
+        <Col
+          sm={3}
+          className={
+            selectedFields.includes(field)
+              ? "d-flex w-100"
+              : "d-flex w-100 text-muted"
+          }
+        >
+          <div
+            className={
+              field?.unique ? "badge badge-danger" : "badge badge-success"
+            }
+            style={{ fontSize: "10px", letterSpacing: "0.6px" }}
+          >
+            UNIQUE
+          </div>
+        </Col>
+      </Row>
     </li>
   );
 }

@@ -104,7 +104,6 @@ function CustomSettingMigrationLogSummaryReportPanel({ activityData }) {
                     />
                   </Col>
                 </Row>
-
               </Col>
               <Col lg={12}>
                 <TextFieldBase dataObject={summaryData} fieldName={"queryFilter"} />
@@ -117,9 +116,6 @@ function CustomSettingMigrationLogSummaryReportPanel({ activityData }) {
               </Col>
               <Col lg={6}>
                 <TextFieldBase dataObject={summaryData} fieldName={"recordsProcessed"} />
-              </Col>
-              <Col lg={6}>
-                <TextFieldBase dataObject={summaryData} fieldName={"recordsSuccessful"} />
               </Col>
               <Col lg={6}>
                 <TextFieldBase dataObject={summaryData} fieldName={"recordsSuccessful"} />
