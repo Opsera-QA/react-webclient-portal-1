@@ -65,7 +65,13 @@ function SearchFilter(
   };
 
   const updateSearchTerm = (newSearchTerm) => {
-    const parsedSearchTerm = DataParsingHelper.parseString(newSearchTerm, "");
+    const parsedSearchTerm = DataParsingHelper.parseString(
+      newSearchTerm,
+      "",
+      undefined,
+      undefined,
+      false,
+    );
     const maxLength = DataParsingHelper.parseInteger(paginationModel?.getMaxLength(fieldName), 25);
     setCurrentSearchTerm(parsedSearchTerm.substring(0, maxLength));
   };
