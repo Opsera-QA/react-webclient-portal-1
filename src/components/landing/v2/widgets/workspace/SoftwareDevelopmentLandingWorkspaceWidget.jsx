@@ -70,68 +70,39 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
     );
   };
 
-  const getBody = () => {
-    if (
-      isLoading !== true
-      && (!Array.isArray(workspaceItems) || workspaceItems.length === 0)
-    ) {
-      return (
-        <>
-          <div className={"py-3 mx-auto"}>
-            <SoftwareDevelopmentSalesforceLandingWidget className={"mx-4"} />
-          </div>
-          <Row>
-            <Col xs={0} sm={0} md={0} lg={2} xl={3} />
-            <Col xs={12} sm={12} md={12} lg={8} xl={6}>
-              <NoRegisteredWorkflowsCard
-                loadDataFunction={loadData}
-              />
-            </Col>
-            <Col xs={0} sm={0} md={0} lg={2} xl={3} />
-          </Row>
-        </>
-      );
-    }
-
-    return (
-      <>
-        <WidgetDataBlockBase
-          heightSize={5}
-          title={
-            isLoading === true
-              ? "Loading Workflows"
-              : `My Workflows`
-          }
-          isLoading={isLoading}
-          centerTitleBarItems={
-            <WorkflowWidgetNavigationBar
-              currentView={currentView}
-              setCurrentView={setCurrentView}
-            />
-          }
-          rightSideTitleBarItems={getRightSideTitleBarItems()}
-          titleBarClassName={"px-3 pt-2"}
-        >
-          <WorkspaceWorkflowSelectionCardView
-            workflowFilterModel={workflowWidgetFilterModel}
-            heightSize={5}
-            workspaceItems={workspaceItems}
-            loadData={loadData}
-            isLoading={isLoading}
-            setSelectedWorkflowItem={setSelectedWorkflowItem}
-            selectedWorkflowItem={undefined}
-            hasMoreItems={hasMoreItems}
-            loadMoreWorkflows={loadMoreWorkflows}
-          />
-        </WidgetDataBlockBase>
-        <SoftwareDevelopmentSocialMediaWidget className={"mt-2"} />
-      </>
-    );
-  };
-
   return (
     <div className={className}>
-      {getBody()}
+      <WidgetDataBlockBase
+        heightSize={5}
+        title={
+          isLoading === true
+            ? "Loading Workflows"
+            : `My Workflows`
+        }
+        isLoading={isLoading}
+        centerTitleBarItems={
+          <WorkflowWidgetNavigationBar
+            currentView={currentView}
+            setCurrentView={setCurrentView}
+          />
+        }
+        rightSideTitleBarItems={getRightSideTitleBarItems()}
+        titleBarClassName={"px-3 pt-2"}
+      >
+        <WorkspaceWorkflowSelectionCardView
+          currentView={currentView}
+          workflowFilterModel={workflowWidgetFilterModel}
+          heightSize={5}
+          workspaceItems={workspaceItems}
+          loadData={loadData}
+          isLoading={isLoading}
+          setSelectedWorkflowItem={setSelectedWorkflowItem}
+          selectedWorkflowItem={undefined}
+          hasMoreItems={hasMoreItems}
+          loadMoreWorkflows={loadMoreWorkflows}
+        />
+      </WidgetDataBlockBase>
+      <SoftwareDevelopmentSocialMediaWidget className={"mt-2"} />
     </div>
   );
 }

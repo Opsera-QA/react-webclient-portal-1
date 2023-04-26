@@ -53,7 +53,7 @@ export default function PipelineCardBase(
       cardFooter={<PipelineCardFooter pipelineModel={pipelineModel} />}
       selectedOption={selectedOption}
       option={option}
-      highlightedBorderColor={themeConstants.COLOR_PALETTE.BLUE}
+      highlightedBorderColor={themeConstants.RESOURCE_COLORS.PIPELINES}
     />
   );
 }
