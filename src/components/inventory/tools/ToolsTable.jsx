@@ -13,7 +13,7 @@ import registryToolMetadata from "@opsera/definitions/constants/registry/tools/r
 import { toolHelper } from "components/inventory/tools/tool.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading, rowClickFunction, }) {
+function ToolsTable({ data, loadData, isLoading, rowClickFunction, }) {
   const history = useHistory();
   const fields = registryToolMetadata.fields;
   const {
@@ -62,8 +62,6 @@ function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading
       data={data}
       isLoading={isLoading}
       onRowSelect={onRowSelect}
-      paginationDto={toolFilterDto}
-      setPaginationDto={setToolFilterDto}
       rowStyling={rowStyling}
       loadData={loadData}
     />
@@ -74,8 +72,6 @@ ToolsTable.propTypes = {
   data: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  toolFilterDto: PropTypes.object,
-  setToolFilterDto: PropTypes.func,
   rowClickFunction: PropTypes.func,
 };
 
