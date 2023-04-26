@@ -52,7 +52,7 @@ const SfdcPipelineWizardGitTasksFileSelector = ({ pipelineWizardModel, setPipeli
     catch (error) {
       if (isMounted?.current === true) {
         console.error("Service Error Pulling File List from Salesforce: " + error);
-        toastContext.showInlineErrorMessage("Service Error Pulling File List from SalefForce: " + error);
+        toastContext.showInlineErrorMessage("Service Error Pulling File List from SalesForce: " + error);
       }
     }
     finally {
