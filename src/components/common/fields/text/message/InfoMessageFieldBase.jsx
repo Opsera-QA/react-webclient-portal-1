@@ -11,8 +11,6 @@ export default function InfoMessageFieldBase(
     className,
     showInformationLabel,
   }) {
-  const parsedMessage = DataParsingHelper.parseString(message);
-
   const getLabel = () => {
     if (showInformationLabel !== false) {
       return (
@@ -24,12 +22,12 @@ export default function InfoMessageFieldBase(
   const getMessage = () => {
     return (
       <div>
-        {getLabel()}{parsedMessage}
+        {getLabel()}{message}
       </div>
     );
   };
 
-  if (!parsedMessage) {
+  if (message == null) {
     return null;
   }
 
