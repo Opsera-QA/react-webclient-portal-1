@@ -33,7 +33,6 @@ export default function ToolSelectionList(
     loadData,
   } = useGetRegistryTools(
     ["name", "owner"],
-    undefined,
     10000,
     false,
   );

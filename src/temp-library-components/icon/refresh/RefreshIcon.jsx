@@ -21,7 +21,7 @@ export default function RefreshIcon(
           <IconBase
             onClickFunction={isLoading === true ? undefined : () => loadDataFunction()}
             icon={faSync}
-            isLoading={isLoading}
+            spinIcon={isLoading}
           />
         </div>
       </TooltipWrapper>

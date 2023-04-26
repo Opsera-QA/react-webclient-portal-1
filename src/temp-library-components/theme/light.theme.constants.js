@@ -8,6 +8,8 @@ lightThemeConstants.COLOR_PALETTE = {
 
   // Blue
   SALESFORCE_BLUE: "#1798c1",
+  BLUE: "#0f3f91",
+  BLUE_ALT: "#40a7ed",
   LIGHT_BLUE: "#67C1E3",
 
   // Purple

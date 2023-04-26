@@ -1,76 +1,73 @@
 import React from "react";
 import PropTypes from "prop-types";
-import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
-import IconTitleBar from "components/common/fields/title/IconTitleBar";
-import DescriptionField from "components/common/fields/text/DescriptionField";
-import CreateAndUpdateDateFieldBase from "components/common/fields/date/CreateAndUpdateDateFieldBase";
 import {
   getLargeVendorIconFromToolIdentifier
 } from "components/common/helpers/icon-helpers";
-import ToolIdentifierLinkButton from "components/common/buttons/admin/tool_identifier/ToolIdentifierLinkButton";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
+import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
+import ToolCardHeader from "temp-library-components/cards/tools/ToolCardHeader";
+import ToolCardBody from "temp-library-components/cards/tools/ToolCardBody";
+import ToolCardFooter from "temp-library-components/cards/tools/ToolCardFooter";
 
-function ToolIdentifierCard({ toolIdentifierModel, isLoading, loadTaskInNewWindow }) {
+function ToolIdentifierCard(
+  {
+    toolIdentifierModel,
+    onClickFunction,
+    tooltip,
+    selectedOption,
+    option,
+  }) {
+  const { themeConstants } = useComponentStateReference();
+
   const getTitleBar = () => {
-    let icon = getLargeVendorIconFromToolIdentifier(toolIdentifierModel?.getData("identifier"));
+    const icon = getLargeVendorIconFromToolIdentifier(toolIdentifierModel?.getData("identifier"));
 
-    if (typeof icon === "string") {
-      icon = (
-        <div className="d-flex w-100 h-100 mt-2 mb-4">
-          <div className="my-auto tool-title-text">{icon}</div>
-        </div>
+    if (hasStringValue(icon) === true) {
+      return (
+        <CardIconTitleBar
+          iconString={icon}
+          title={`${toolIdentifierModel?.getData("name")}`}
+        />
       );
     }
 
     return (
-      <IconTitleBar
-        icon={icon}
+      <CardIconTitleBar
+        formattedIcon={icon}
         title={`${toolIdentifierModel?.getData("name")}`}
-        isLoading={isLoading}
       />
     );
   };
 
-
-  const getDescription = () => {
-    return (
-      <div className="description-height small pl-1">
-      <DescriptionField dataObject={toolIdentifierModel} fieldName={"description"} />
-    </div>
-    );
-  };
-
-  if (isLoading) {
-    return <IconCardContainerBase titleBar={getTitleBar()} isLoading={isLoading} />;
+  if (toolIdentifierModel == null) {
+    return undefined;
   }
 
   return (
-    <IconCardContainerBase
+    <SelectionIconCard
+      className={"h-100"}
+      cardHeader={<ToolCardHeader toolModel={toolIdentifierModel} />}
       titleBar={getTitleBar()}
-      contentBody={getDescription()}
-      isLoading={isLoading}
-      className={"vertical-selection-card"}
-    >
-      <div className="date-and-button">
-        <div className="small pl-1">
-          <CreateAndUpdateDateFieldBase className={"mt-3 mb-1"} model={toolIdentifierModel} />
-        </div>
-        <div>
-          <ToolIdentifierLinkButton
-            toolIdentifierId={toolIdentifierModel?.getData("_id")}
-            className={"w-100 mt-1"}
-            openInNewWindow={loadTaskInNewWindow}
-            variant={"primary"}
-          />
-        </div>
-      </div>
-    </IconCardContainerBase>
+      contentBody={<ToolCardBody toolModel={toolIdentifierModel} />}
+      onClickFunction={onClickFunction}
+      tooltip={tooltip}
+      cardFooter={<ToolCardFooter />}
+      selectedOption={selectedOption}
+      option={option}
+      highlightedBorderColor={themeConstants.COLOR_PALETTE.GREEN}
+    />
   );
 }
 
 ToolIdentifierCard.propTypes = {
   toolIdentifierModel: PropTypes.object,
-  isLoading: PropTypes.bool,
-  loadTaskInNewWindow: PropTypes.bool
+  toolModel: PropTypes.object,
+  onClickFunction: PropTypes.func,
+  tooltip: PropTypes.any,
+  selectedOption: PropTypes.string,
+  option: PropTypes.string,
 };
 
 export default ToolIdentifierCard;

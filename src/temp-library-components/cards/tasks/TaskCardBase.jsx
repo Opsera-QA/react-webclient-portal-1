@@ -42,11 +42,11 @@ export default function TaskCardBase(
       titleBar={getTitleBar()}
       contentBody={<TaskCardBody taskModel={taskModel} />}
       cardFooter={<TaskCardFooter taskModel={taskModel} />}
-      onClickFunction={onClickFunction}
+      onClickFunction={onClickFunction ? () => onClickFunction(taskModel) : undefined}
       tooltip={tooltip}
       selectedOption={selectedOption}
       option={option}
-      highlightedBorderColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
+      highlightedBorderColor={themeConstants.COLOR_PALETTE.BLUE_ALT}
     />
   );
 }
