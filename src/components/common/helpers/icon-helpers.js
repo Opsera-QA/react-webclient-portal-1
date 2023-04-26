@@ -65,7 +65,7 @@ export function getLargeVendorIconFromToolIdentifier(
   }
 
   const imageLink = vendorImageConstants.getVendorImageForToolIdentifier(toolIdentifier);
-  const imageHeight = vendorImageConstants.getRecommendedCardVendorImageHeight(toolIdentifier);
+  const imageHeight = vendorImageConstants.getRecommendedCardVendorImageHeightForToolIdentifier(toolIdentifier);
 
   if (imageLink === vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.OPSERA) {
     return (
@@ -225,7 +225,10 @@ export function getLargeVendorIconComponentFromPipeline (pipeline) {
     );
   }
 
-  const imageHeight = platformImageConstants.getRecommendedCardPlatformImageHeight(imageLink);
+  const imageHeight =
+    vendorImageConstants.isValidVendorImageLink(imageLink) === true
+      ? vendorImageConstants.getRecommendedCardVendorImageHeightForImageLink(imageLink)
+      : platformImageConstants.getRecommendedCardPlatformImageHeight(imageLink);
 
   return (
     <ImageBase

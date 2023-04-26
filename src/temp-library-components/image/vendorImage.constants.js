@@ -231,6 +231,15 @@ vendorImageConstants.TOOL_IDENTIFIER_LOGOS = {
   YAML_GIT_PROCESSOR: vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.OPSERA,
 };
 
+vendorImageConstants.isValidVendorImageLink = (
+  imageLink,
+) => {
+  return constantsHelper.isValueValid(
+    vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS,
+    imageLink,
+  );
+};
+
 vendorImageConstants.getVendorImageForToolIdentifier = (
   toolIdentifier,
 ) => {
@@ -245,7 +254,7 @@ vendorImageConstants.getVendorImageForToolIdentifier = (
   );
 };
 
-vendorImageConstants.getRecommendedCardVendorImageHeight = (
+vendorImageConstants.getRecommendedCardVendorImageHeightForToolIdentifier = (
   toolIdentifier,
 ) => {
   const vendorImageLink = vendorImageConstants.getVendorImageForToolIdentifier(toolIdentifier);
@@ -254,6 +263,12 @@ vendorImageConstants.getRecommendedCardVendorImageHeight = (
     return undefined;
   }
 
+  return vendorImageConstants.getRecommendedCardVendorImageHeightForImageLink(vendorImageLink);
+};
+
+vendorImageConstants.getRecommendedCardVendorImageHeightForImageLink = (
+  vendorImageLink,
+) => {
   const key = constantsHelper.getKeyForValue(
     vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS,
     vendorImageLink,
