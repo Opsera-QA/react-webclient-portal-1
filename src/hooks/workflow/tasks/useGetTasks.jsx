@@ -38,6 +38,8 @@ export default function useGetTasks(
   const getTasks = async (
     newFilterModel = taskFilterModel,
   ) => {
+    setTasks([]);
+
     if (TaskRoleHelper.canGetTasks(userData) !== true) {
       return;
     }
