@@ -87,7 +87,23 @@ export default function SoftwareDevelopmentLandingWelcomeWidget({ className }) {
               <div>Welcome to the Opsera DevOps Platform.</div>
               <div className={"mt-2"}>To get started, review helpful links below or start engaging with your workflows below.</div>
             </div>
-            {getHowToLinks()}
+            <div className={"mt-3"}>
+              <ExternalLink
+                link={EXTERNAL_LINKS.SALESFORCE_RELEASE_MANAGEMENT}
+                label={"Salesforce Release Management"}
+              />
+            </div>
+            <div className={"my-2"}>
+              <ExternalLink
+                link={EXTERNAL_LINKS.SALESFORCE_USER_GUIDE}
+                label={"Salesforce User Guide"}
+              />
+            </div>
+            <div className={"my-2"}>
+              <a className={"externalLink"} onClick={toggleVideosView} href="#">
+                Getting Started Videos
+              </a>
+            </div>
           </div>
           <div className={"d-none d-md-inline ml-3"}>
             <div className={"ml-3"}>

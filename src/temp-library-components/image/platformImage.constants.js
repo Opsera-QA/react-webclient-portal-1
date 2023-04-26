@@ -9,6 +9,7 @@ export const platformImageConstants = {};
 platformImageConstants.PLATFORM_IMAGE_LINKS = {
   ADVANCED_OPTION: `${baseImageBucketUrl}/user_advanced_screen_150x121.png`,
   COLLABORATION: `${publicGraphicsBucketUrl}/team_collab_750x509.png`,
+  COLLABORATION_ALT: `${publicGraphicsBucketUrl}/team_collab_2sm_375x298.png`,
   PIPELINES_GENERAL: `${baseImageBucketUrl}/pipelines_general_96x96.png`,
   SALESFORCE_GENERAL: `${baseImageBucketUrl}/cloud_code_generic_130x92.png`,
   SALESFORCE_GIT_TASK: `${baseImageBucketUrl}/git_user_generic_120x91.png`,
@@ -20,6 +21,7 @@ platformImageConstants.PLATFORM_IMAGE_LINKS = {
 platformImageConstants.PRODUCT_IMAGE_LINK_CARD_HEIGHTS = {
   ADVANCED_OPTION: undefined,
   COLLABORATION: undefined,
+  COLLABORATION_ALT: undefined,
   PIPELINES_GENERAL: undefined,
   SALESFORCE_GENERAL: undefined,
   SALESFORCE_GIT_TASK: undefined,
