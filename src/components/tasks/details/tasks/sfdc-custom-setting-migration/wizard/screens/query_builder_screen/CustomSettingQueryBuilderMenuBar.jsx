@@ -24,17 +24,17 @@ export default function CustomSettingQueryBuilderMenuBar(
     <SubMenuContainer className={"mx-auto"}>
       <SubMenuItem
         className={"px-3"}
-        itemKey={QUERY_BUILDER_VIEWS.MANUAL_QUERY_BUILDER}
-        activeKey={currentView}
-        setActiveKey={handleNavigationItemClick}
-        label={"Manual Query Editor"}
-      />
-      <SubMenuItem
-        className={"px-3"}
         activeKey={currentView}
         setActiveKey={handleNavigationItemClick}
         label={"Query Builder"}
         itemKey={QUERY_BUILDER_VIEWS.FILTER_SELECTION_QUERY_BUILDER}
+      />
+      <SubMenuItem
+        className={"px-3"}
+        itemKey={QUERY_BUILDER_VIEWS.MANUAL_QUERY_BUILDER}
+        activeKey={currentView}
+        setActiveKey={handleNavigationItemClick}
+        label={"Manual Query Editor"}
       />
     </SubMenuContainer>
   );

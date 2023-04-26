@@ -23,6 +23,7 @@ import CustomSettingQueryBuilderMenuBar, {
   QUERY_BUILDER_VIEWS,
 } from "./CustomSettingQueryBuilderMenuBar";
 import axios from "axios";
+import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
 const operators = [
   "=",
@@ -53,8 +54,9 @@ const CustomSettingQueryBuilderScreen = ({
   const [isLoading, setIsLoading] = useState(false);
   const [isValidating, setIsValidating] = useState(false);
   const [currentView, setCurrentView] = useState(
-    QUERY_BUILDER_VIEWS.MANUAL_QUERY_BUILDER,
+    QUERY_BUILDER_VIEWS.FILTER_SELECTION_QUERY_BUILDER,
   );
+  const [manualQueryString, setManualQueryString] = useState("");
 
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
@@ -94,6 +96,7 @@ const CustomSettingQueryBuilderScreen = ({
         // if (filters.length === 0) {
         //   filters.push({ ...customSettingQueryMetadata.newObjectFields });
         // }
+        setManualQueryString(generateQuery());
         setQueryFilters([...filters]);
       }
     } catch (e) {
@@ -195,18 +198,30 @@ const CustomSettingQueryBuilderScreen = ({
   const saveAndProceed = async () => {
     try {
       setIsLoading(true);
-      wizardModel.setData("filterQuery", query);
+      let finalQuery = query;
+      if(currentView === QUERY_BUILDER_VIEWS.MANUAL_QUERY_BUILDER) {
+        finalQuery = manualQueryString;
+      }
+      wizardModel.setData("filterQuery", finalQuery);
       wizardModel.setData("queryFilters", queryFilters);
-      await customSettingMigrationTaskWizardActions.setFilterQuery(
-        getAccessToken,
-        cancelTokenSource,
-        wizardModel,
-        query,
-        queryFilters,
-      );
-      setCurrentScreen(
-        CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN,
-      );
+      const response = await customSettingMigrationTaskWizardActions.validateQuery(
+          getAccessToken,
+          cancelTokenSource,
+          wizardModel,
+          finalQuery,
+        );
+      if (response?.status === 200) {
+        await customSettingMigrationTaskWizardActions.setFilterQuery(
+          getAccessToken,
+          cancelTokenSource,
+          wizardModel,
+          finalQuery,
+          queryFilters,
+        );
+        setCurrentScreen(
+          CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN,
+        );
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         const parsedError = parseError(error);
@@ -222,14 +237,18 @@ const CustomSettingQueryBuilderScreen = ({
   const validateQuery = async () => {
     try {
       setIsValidating(true);
-      wizardModel.setData("filterQuery", query);
+      let finalQuery = query;
+      if(currentView === QUERY_BUILDER_VIEWS.MANUAL_QUERY_BUILDER) {
+        finalQuery = manualQueryString;
+      }
+      wizardModel.setData("filterQuery", finalQuery);
       wizardModel.setData("queryFilters", queryFilters);
       const response =
         await customSettingMigrationTaskWizardActions.validateQuery(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
-          query,
+          finalQuery,
         );
 
       if (isMounted.current === true) {
@@ -281,11 +300,17 @@ const CustomSettingQueryBuilderScreen = ({
     }
   };
 
+  const setCurrentViewFunc = (newValue) => {
+    setQueryFilters([]);
+    setManualQueryString(generateQuery());
+    setCurrentView(newValue);
+  };
+
   const getQueryBuilderMenuBar = () => {
     return (
       <CustomSettingQueryBuilderMenuBar
         currentView={currentView}
-        setCurrentView={setCurrentView}
+        setCurrentView={setCurrentViewFunc}
       />
     );
   };
@@ -294,7 +319,34 @@ const CustomSettingQueryBuilderScreen = ({
     switch (currentView) {
       case QUERY_BUILDER_VIEWS.MANUAL_QUERY_BUILDER:
         return (
-          <div className={"mt-3 mb-5"}>Manual Editor</div>
+          <div className={"mt-5 mb-5"}>
+            <textarea
+              value={manualQueryString}
+              onChange={(event) => setManualQueryString(event.target.value)}
+              className={`form-control`}
+              rows={10}
+            />
+            <div className="d-flex justify-content-between mt-2">
+              <InlineWarning
+                warningMessage={"Switching back to filter based Query builder will wipe out your manual changes."}
+              />
+              <Button
+                variant="primary"
+                size="sm"
+                className="mr-2 mt-2"
+                onClick={validateQuery}
+                disabled={isValidating}
+              >
+                <IconBase
+                  icon={faPlug}
+                  fixedWidth
+                  className="mr-2"
+                  isLoading={isValidating}
+                />
+                {isValidating ? "Validating" : "Validate Query"}
+              </Button>
+            </div>
+          </div>
         );
       case QUERY_BUILDER_VIEWS.FILTER_SELECTION_QUERY_BUILDER:
         return (
@@ -332,21 +384,6 @@ const CustomSettingQueryBuilderScreen = ({
                 />
                 <div className="d-flex justify-content-between mt-2">
                   {`SOQL query generated based of filter selection made above.`}
-                  <Button
-                    variant="primary"
-                    size="sm"
-                    className="mr-2"
-                    onClick={validateQuery}
-                    disabled={isValidating}
-                  >
-                    <IconBase
-                      icon={faPlug}
-                      fixedWidth
-                      className="mr-2"
-                      isLoading={isValidating}
-                    />
-                    {isValidating ? "Validating" : "Validate Query"}
-                  </Button>
                 </div>
               </div>
             </div>
