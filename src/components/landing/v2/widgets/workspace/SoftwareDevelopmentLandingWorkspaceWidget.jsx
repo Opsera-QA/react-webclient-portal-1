@@ -18,6 +18,7 @@ import useGetWorkspaceWorkflowResources from "hooks/workspace/useGetWorkspaceWor
 import WorkspaceWorkflowSelectionCardView
   from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
 import InlineSearchFilter from "components/common/filters/search/InlineSearchFilter";
+import SoftwareDevelopmentSocialMediaWidget from "components/landing/v2/widgets/SoftwareDevelopmentSocialMediaWidget";
 
 export default function SoftwareDevelopmentLandingWorkspaceWidget({ className }) {
   const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
@@ -123,9 +124,7 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
             loadMoreWorkflows={loadMoreWorkflows}
           />
         </WidgetDataBlockBase>
-        <div className={"py-3 mx-auto"}>
-          <SoftwareDevelopmentSalesforceLandingWidget className={"mx-4"}/>
-        </div>
+        <SoftwareDevelopmentSocialMediaWidget className={"mt-2"} />
       </>
     );
   };
