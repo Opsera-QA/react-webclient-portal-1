@@ -328,7 +328,7 @@ const CustomSettingQueryBuilderScreen = ({
             />
             <div className="d-flex justify-content-between mt-2">
               <InlineWarning
-                warningMessage={"Switching back to filter based Query builder will wipe out your manual changes."}
+                warningMessage={"Switching back to filter based Query builder will reset out your manual changes."}
               />
               <Button
                 variant="primary"

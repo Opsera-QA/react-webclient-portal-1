@@ -12,10 +12,9 @@ import { Button, Row } from "react-bootstrap";
 import SaveButtonContainer from "../../../../../../../common/buttons/saving/containers/SaveButtonContainer";
 import FieldPropertiesSelectorView from "./FieldPropertiesSelectorView";
 import EnableEditingIcon from "../../../../../../../common/icons/enable/EnableEditingIcon";
-import MessageFieldBase from "../../../../../../../common/fields/text/MessageFieldBase";
-import DetailPanelContainer from "../../../../../../../common/panels/detail_panel_container/DetailPanelContainer";
 import { getMigrationTypeLabel } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 import H5FieldSubHeader from "../../../../../../../common/fields/subheader/H5FieldSubHeader";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCurrentScreen }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -195,7 +194,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
             size="sm"
             variant="primary"
             onClick={saveAndTriggerFieldsPull}
-            disabled={isLoading || isSaving}
+            disabled={isLoading || isSaving || wizardModel?.getData("selectedCustomSetting").length < 1}
           >
             <span>
               <IconBase
