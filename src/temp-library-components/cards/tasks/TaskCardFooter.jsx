@@ -14,7 +14,7 @@ export default function TaskCardFooter({ taskModel }) {
       case "running":
         return themeConstants.COLOR_PALETTE.GREEN;
       default:
-        return themeConstants.COLOR_PALETTE.SALESFORCE_BLUE;
+        return themeConstants.COLOR_PALETTE.BLUE_ALT;
     }
   };
 
