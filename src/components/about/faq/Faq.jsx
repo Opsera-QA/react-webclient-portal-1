@@ -4,7 +4,7 @@ import FrequentlyAskedQuestionsVerticalTabContainer
   from "components/about/faq/FrequentlyAskedQuestionsVerticalTabContainer";
 import FaqSubNavigationBar from "components/about/faq/FaqSubNavigationBar";
 
-const Faq = () => {
+export default function Faq() {
   return (
     <ScreenContainer
       navigationTabContainer={<FaqSubNavigationBar currentTab={"all"} />}
@@ -14,7 +14,4 @@ const Faq = () => {
       <FrequentlyAskedQuestionsVerticalTabContainer/>
     </ScreenContainer>
   );
-};
-
-
-export default Faq;
+}

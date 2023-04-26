@@ -29,7 +29,9 @@ export const EXTERNAL_LINKS = {
   SALESFORCE_TASK_CREATION: "https://youtu.be/_nYnj8JVs7g",
   SALESFORCE_RELEASE_MANAGEMENT: "https://www.opsera.io/salesforce-devops-platform",
   SALESFORCE_USER_GUIDE: "https://docs.opsera.io/getting-started-with-free-trial",
-  HOW_TO_VIDEO: 'https://www.youtube.com/embed/8oeBwmapAHU'
+  HOW_TO_VIDEO: 'https://www.youtube.com/embed/8oeBwmapAHU',
+  HOW_TO_ARTICLES: "https://docs.opsera.io/readme/how-to",
+  RELEASE_NOTES: "https://docs.opsera.io/opsera-release-updates",
 };
 
 // TODO: Combine with the Free Trial one

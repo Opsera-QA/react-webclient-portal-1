@@ -54,7 +54,7 @@ export default function ToolCardBase(
       cardFooter={<ToolCardFooter />}
       selectedOption={selectedOption}
       option={option}
-      highlightedBorderColor={themeConstants.COLOR_PALETTE.GREEN}
+      highlightedBorderColor={themeConstants.RESOURCE_COLORS.TOOLS}
     />
   );
 }

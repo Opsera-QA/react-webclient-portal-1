@@ -62,8 +62,6 @@ export function getLargeVendorIconFromToolIdentifier(
           iconClassName={"title-fa-icon"}
         />
       );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
-      return getVendorTitle(toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO);
   }
 
   const imageLink = vendorImageConstants.getVendorImageForToolIdentifier(toolIdentifier);
@@ -120,8 +118,8 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
   if (gitBasedSalesforceTasks.includes(taskType)) {
     return (
       <ImageBase
-        height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PRODUCT_IMAGE_LINKS.SALESFORCE_GIT_TASK)}
-        imageSource={platformImageConstants.PRODUCT_IMAGE_LINKS.SALESFORCE_GIT_TASK}
+        height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GIT_TASK)}
+        imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GIT_TASK}
       />
     );
   }
@@ -132,8 +130,8 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
     case TASK_TYPE_CATEGORIES.SALESFORCE:
       return (
         <ImageBase
-          height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PRODUCT_IMAGE_LINKS.SALESFORCE_GENERAL)}
-          imageSource={platformImageConstants.PRODUCT_IMAGE_LINKS.SALESFORCE_GENERAL}
+          height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL)}
+          imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL}
         />
       );
     case TASK_TYPE_CATEGORIES.GIT:
@@ -166,9 +164,9 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
       );
     default:
       return (
-        <IconBase
-          icon={faTasks}
-          iconClassName={"title-fa-icon"}
+        <ImageBase
+          height={100}
+          imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SOFTWARE_DEVELOPMENT_GENERAL}
         />
       );
   }

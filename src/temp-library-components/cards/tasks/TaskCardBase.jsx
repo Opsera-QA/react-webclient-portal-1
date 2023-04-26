@@ -46,7 +46,7 @@ export default function TaskCardBase(
       tooltip={tooltip}
       selectedOption={selectedOption}
       option={option}
-      highlightedBorderColor={themeConstants.COLOR_PALETTE.BLUE_ALT}
+      highlightedBorderColor={themeConstants.RESOURCE_COLORS.TASKS}
     />
   );
 }

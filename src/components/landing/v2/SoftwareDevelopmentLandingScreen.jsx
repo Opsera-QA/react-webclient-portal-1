@@ -12,7 +12,7 @@ export default function SoftwareDevelopmentLandingScreen() {
   return (
     <div className={"max-content-width"}
     >
-      <div className={"my-3"}>
+      <div className={"mt-3 mb-5"}>
         <Row>
           <Col xs={12} sm={12} md={12} lg={12} xl={6} className={"my-3"}>
             <div className={"mr-3 d-xs-none d-sm-none d-md-none d-lg-block"}/>
@@ -23,10 +23,8 @@ export default function SoftwareDevelopmentLandingScreen() {
             <SoftwareDevelopmentLandingAccountStatsWidget />
           </Col>
         </Row>
-        <div className={"py-3"}>
+        <div className={"pt-3"}>
           <SoftwareDevelopmentLandingWorkspaceWidget />
-        </div>
-        <div className={"py-3"}>
         </div>
       </div>
     </div>

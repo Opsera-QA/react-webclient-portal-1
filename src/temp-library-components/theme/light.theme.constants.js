@@ -37,6 +37,7 @@ lightThemeConstants.COLOR_PALETTE = {
   //Green
   LIGHT_MINT: "#95D0D5",
   GREEN: "green",
+  GREEN_ALT: "#31c486",
 
   //Gray
   GRAY: "#6E6C78",
@@ -47,6 +48,12 @@ lightThemeConstants.COLOR_PALETTE = {
 
   // Black
   BLACK: "#000000",
+};
+
+lightThemeConstants.RESOURCE_COLORS = {
+  PIPELINES: lightThemeConstants.COLOR_PALETTE.BLUE,
+  TASKS: lightThemeConstants.COLOR_PALETTE.BLUE_ALT,
+  TOOLS: lightThemeConstants.COLOR_PALETTE.GREEN_ALT,
 };
 
 lightThemeConstants.BORDER_COLORS = {
