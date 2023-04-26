@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { faYoutube } from "@fortawesome/free-brands-svg-icons";
-import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
 import IconBase from "components/common/icons/IconBase";
 import { ExternalLink } from "temp-library-components/link/ExternalLink";
 import FreetrialWizardHelpDocumentation
     from "../../../common/help/documentation/freetrial/FreetrialWizardHelpDocumentation";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {EXTERNAL_LINKS} from "components/header/legacy/HeaderNavBar";
+import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
 
 export default function SoftwareDevelopmentLandingWelcomeWidget({ className }) {
   const {
@@ -116,7 +116,7 @@ export default function SoftwareDevelopmentLandingWelcomeWidget({ className }) {
   };
 
   return (
-    <FreeTrialWidgetDataBlockBase
+    <WidgetDataBlockBase
       title={getWelcomeText()}
       className={className}
       fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
@@ -126,8 +126,8 @@ export default function SoftwareDevelopmentLandingWelcomeWidget({ className }) {
         <div className={"d-flex"}>
           <div>
             <div className={"mb-2"}>
-              <div>Welcome to the Opsera Salesforce trial platform.</div>
-              <div className={"mt-2"}>You can use this 14 day demo to learn more about the Salesforce offerings from Opsera.</div>
+              <div>Welcome to the Opsera DevOps Platform.</div>
+              <div className={"mt-2"}>To get started, review helpful links below or start engaging with your workflows below.</div>
             </div>
             {getHowToLinks()}
           </div>
@@ -139,7 +139,7 @@ export default function SoftwareDevelopmentLandingWelcomeWidget({ className }) {
           {getVideoLink()}
         </div>
       </div>
-    </FreeTrialWidgetDataBlockBase>
+    </WidgetDataBlockBase>
   );
 }
 

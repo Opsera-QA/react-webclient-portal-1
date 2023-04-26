@@ -118,8 +118,8 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
   if (gitBasedSalesforceTasks.includes(taskType)) {
     return (
       <ImageBase
-        height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PRODUCT_IMAGE_LINKS.SALESFORCE_GIT_TASK)}
-        imageSource={platformImageConstants.PRODUCT_IMAGE_LINKS.SALESFORCE_GIT_TASK}
+        height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GIT_TASK)}
+        imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GIT_TASK}
       />
     );
   }
@@ -130,8 +130,8 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
     case TASK_TYPE_CATEGORIES.SALESFORCE:
       return (
         <ImageBase
-          height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PRODUCT_IMAGE_LINKS.SALESFORCE_GENERAL)}
-          imageSource={platformImageConstants.PRODUCT_IMAGE_LINKS.SALESFORCE_GENERAL}
+          height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL)}
+          imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL}
         />
       );
     case TASK_TYPE_CATEGORIES.GIT:
