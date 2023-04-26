@@ -122,7 +122,7 @@ function FilterSelectInputBase(
         valueField={valueField}
         textField={textField}
         filter={filter}
-        className={inline ? `inline-filter-input inline-select-filter` : undefined}
+        className={inline ? `normal-text inline-filter-input inline-select-filter` : undefined}
         groupBy={groupBy}
         value={dataObject?.getData(fieldName)}
         disabled={disabled || busy}

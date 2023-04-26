@@ -42,7 +42,7 @@ function ScreenContainerTitleBar(
   const getTitleActionBar = () => {
     if (titleActionBar) {
       return (
-        <div className={"normal-text"}>
+        <div>
           {titleActionBar}
         </div>
       );
