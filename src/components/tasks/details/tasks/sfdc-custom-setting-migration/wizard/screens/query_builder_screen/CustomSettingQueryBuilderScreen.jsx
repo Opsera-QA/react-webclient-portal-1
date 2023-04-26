@@ -294,7 +294,7 @@ const CustomSettingQueryBuilderScreen = ({
               icon={faPlus}
             />
           </span>
-          Add Filter to start building Query
+          Add filter to start building Query
         </Button>
       );
     }
