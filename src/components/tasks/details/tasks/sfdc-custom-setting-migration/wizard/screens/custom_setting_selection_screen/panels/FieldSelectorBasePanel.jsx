@@ -4,7 +4,6 @@ import { AuthContext } from "contexts/AuthContext";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import CancelButton from "components/common/buttons/CancelButton";
-import StandaloneSaveButton from "components/common/buttons/saving/StandaloneSaveButton";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
@@ -106,7 +105,7 @@ function FieldSelectorBasePanel({
       setShowUnsavedChangesMessage(false);
     } catch (error) {
       console.error(error);
-      toastContext.showLoadingErrorDialog(error);
+      toastContext.showSystemErrorToast(error);
     } finally {
       setIsSaving(false);
     }
@@ -169,6 +168,12 @@ function FieldSelectorBasePanel({
   };
 
   const updateAndProceed = async () => {
+    // check if theres any mandatory fields in unselected options, if so dont allow them to proceed
+    const hasMandatedValue = nonMembers.some(obj => obj.nillable != false);
+    if(hasMandatedValue) {
+      toastContext.showSystemErrorToast("You need to select all mandatory fields to proceed.");
+      return;
+    }
     await updateMembers();
     setCurrentScreen(
       CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.QUERY_BUILDER_SCREEN,
