@@ -13,6 +13,8 @@ import Col from "react-bootstrap/Col";
 import NoRegisteredWorkflowsCard from "components/wizard/free_trial/workflows/NoRegisteredWorkflowsCard";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {WORKFLOW_WIDGET_VIEWS} from "components/landing/v2/widgets/workspace/WorkflowWidgetNavigationBar";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import InfoMessageFieldBase from "components/common/fields/text/message/InfoMessageFieldBase";
 
 export default function WorkspaceWorkflowSelectionCardView(
   {
@@ -66,16 +68,46 @@ export default function WorkspaceWorkflowSelectionCardView(
 
     if (
       isLoading !== true
-      && currentView === WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS
-      && searchKeyword == null
       && (!Array.isArray(workspaceItems) || workspaceItems.length === 0)
     ) {
-      return (
-        <NoRegisteredWorkflowsCard
-          loadDataFunction={loadData}
-          className={"m-3"}
-        />
-      );
+      if (searchKeyword) {
+        return (
+          <CenteredContentWrapper minHeight={"250px"}>
+            <InfoMessageFieldBase
+              message={"No results found for the given search keyword"}
+              showInformationLabel={false}
+            />
+          </CenteredContentWrapper>
+        );
+      }
+
+      switch (currentView){
+        case WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS:
+          return (
+            <NoRegisteredWorkflowsCard
+              loadDataFunction={loadData}
+              className={"m-3"}
+            />
+          );
+        case WORKFLOW_WIDGET_VIEWS.FOLLOWING:
+          return (
+            <CenteredContentWrapper minHeight={"250px"}>
+              <InfoMessageFieldBase
+                message={"You have not subscribed to any Workflows"}
+                showInformationLabel={false}
+              />
+            </CenteredContentWrapper>
+          );
+        case WORKFLOW_WIDGET_VIEWS.RECENT_ACTIVITY:
+          return (
+            <CenteredContentWrapper minHeight={"250px"}>
+              <InfoMessageFieldBase
+                message={"There are no recent Workflow runs"}
+                showInformationLabel={false}
+              />
+            </CenteredContentWrapper>
+          );
+      }
     }
 
     return (
