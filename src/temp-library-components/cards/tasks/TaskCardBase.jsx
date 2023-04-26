@@ -42,7 +42,7 @@ export default function TaskCardBase(
       titleBar={getTitleBar()}
       contentBody={<TaskCardBody taskModel={taskModel} />}
       cardFooter={<TaskCardFooter taskModel={taskModel} />}
-      onClickFunction={onClickFunction}
+      onClickFunction={onClickFunction ? () => onClickFunction(taskModel) : undefined}
       tooltip={tooltip}
       selectedOption={selectedOption}
       option={option}

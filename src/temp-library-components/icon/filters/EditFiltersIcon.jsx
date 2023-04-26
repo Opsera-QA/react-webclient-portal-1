@@ -10,6 +10,7 @@ export default function EditFiltersIcon(
     filterModel,
     filterOverlay,
     className,
+    isLoading,
   }) {
   const { toastContext, } = useComponentStateReference();
 
@@ -28,7 +29,7 @@ export default function EditFiltersIcon(
           <IconBase
             onClickFunction={showEditFilterOverlay}
             icon={faFilter}
-            className={"pointer"}
+            disabled={isLoading}
           />
         </div>
       </TooltipWrapper>
@@ -40,4 +41,5 @@ EditFiltersIcon.propTypes = {
   filterModel: PropTypes.object,
   className: PropTypes.string,
   filterOverlay: PropTypes.any,
+  isLoading: PropTypes.bool,
 };

@@ -54,6 +54,7 @@ function TaskManagement() {
         setFilterModel={setTaskFilterModel}
         className={"ml-2"}
         loadData={loadData}
+        disabled={isLoading}
       />
     );
   };
@@ -112,6 +113,7 @@ function TaskManagement() {
       filterModel={taskFilterModel}
       setFilterModel={setTaskFilterModel}
       titleActionBar={getInlineFilters()}
+      isSoftLoading={isLoading}
     >
       <PaginationContainer
         loadData={loadData}
