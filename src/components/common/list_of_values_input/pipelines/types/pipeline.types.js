@@ -119,13 +119,13 @@ pipelineTypeConstants.getImageLinkForPipelineType = (typeString) => {
     case PIPELINE_TYPES.MACHINE_LEARNING:
       return undefined;
     case PIPELINE_TYPES.SALESFORCE:
-      return platformImageConstants.PRODUCT_IMAGE_LINKS.SALESFORCE_GENERAL;
+      return platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL;
     case PIPELINE_TYPES.SAP_CPQ:
       return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.SAP;
     case PIPELINE_TYPES.SOFTWARE_DEVELOPMENT:
-      return platformImageConstants.PRODUCT_IMAGE_LINKS.SOFTWARE_DEVELOPMENT_GENERAL;
+      return platformImageConstants.PLATFORM_IMAGE_LINKS.SOFTWARE_DEVELOPMENT_GENERAL;
     default:
-      return platformImageConstants.PRODUCT_IMAGE_LINKS.PIPELINES_GENERAL;
+      return platformImageConstants.PLATFORM_IMAGE_LINKS.PIPELINES_GENERAL;
   }
 };
 
@@ -161,7 +161,7 @@ pipelineTypeConstants.getImageLinkForPipeline = (pipeline) => {
   }
 
   if (!imageLink) {
-    return platformImageConstants.PRODUCT_IMAGE_LINKS.PIPELINES_GENERAL;
+    return platformImageConstants.PLATFORM_IMAGE_LINKS.PIPELINES_GENERAL;
   }
 
   return imageLink;
@@ -173,7 +173,7 @@ pipelineTypeConstants.getImageLinkForPipelineStep = (pipelineStep) => {
   const imageLink = vendorImageConstants.getVendorImageForToolIdentifier(toolIdentifier);
 
   if (!toolIdentifier || !imageLink) {
-    return platformImageConstants.PRODUCT_IMAGE_LINKS.PIPELINES_GENERAL;
+    return platformImageConstants.PLATFORM_IMAGE_LINKS.PIPELINES_GENERAL;
   }
 
   return imageLink;

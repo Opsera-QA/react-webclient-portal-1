@@ -69,6 +69,7 @@ vendorImageConstants.VENDOR_LOGO_IMAGE_CARD_HEIGHTS = {
   ANCHOR: 75,
   ANSIBLE: 100,
   APIGEE: undefined,
+  ARGO: 100,
   AQUASEC: 40,
   AWS: 100,
   AZURE: 100,
