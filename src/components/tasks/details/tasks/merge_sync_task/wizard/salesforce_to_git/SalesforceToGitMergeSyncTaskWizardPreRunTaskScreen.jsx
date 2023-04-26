@@ -133,6 +133,19 @@ export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
     );
   };
 
+  const getBranchNameParams = () => {
+    const model = taskModel.getData('configuration');
+    return ({
+      toolId: model.git.toolId,
+      branchName: model.git.targetBranch,
+      repositoryId: model.git.projectId,
+      service: model.git.service,
+      workspace: model.git.service === 'bitbucket' ? model.git.workspace : undefined,
+      isNewBranch: model.git.isNewBranch,
+      upstreamBranch: model.git.upstreamBranch,
+    });
+  };
+
   if (taskModel == null || gitConfigurationModel == null) {
     return null;
   }
@@ -170,6 +183,7 @@ export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
           disabled={
             gitConfigurationModel?.checkCurrentValidity() !== true
           }
+          validateBranchNameParams={getBranchNameParams()}
         />
       </ButtonContainerBase>
     </div>
