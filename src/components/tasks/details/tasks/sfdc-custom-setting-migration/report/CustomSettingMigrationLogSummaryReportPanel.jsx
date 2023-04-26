@@ -104,7 +104,6 @@ function CustomSettingMigrationLogSummaryReportPanel({ activityData }) {
                     />
                   </Col>
                 </Row>
-
               </Col>
               <Col lg={12}>
                 <TextFieldBase dataObject={summaryData} fieldName={"queryFilter"} />
