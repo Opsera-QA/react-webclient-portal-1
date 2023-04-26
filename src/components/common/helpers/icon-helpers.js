@@ -164,9 +164,9 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
       );
     default:
       return (
-        <IconBase
-          icon={faTasks}
-          iconClassName={"title-fa-icon"}
+        <ImageBase
+          height={100}
+          imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SOFTWARE_DEVELOPMENT_GENERAL}
         />
       );
   }
