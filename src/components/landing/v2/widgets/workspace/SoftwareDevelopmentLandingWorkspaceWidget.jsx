@@ -70,46 +70,39 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
     );
   };
 
-  const getBody = () => {
-    return (
-      <>
-        <WidgetDataBlockBase
-          heightSize={5}
-          title={
-            isLoading === true
-              ? "Loading Workflows"
-              : `My Workflows`
-          }
-          isLoading={isLoading}
-          centerTitleBarItems={
-            <WorkflowWidgetNavigationBar
-              currentView={currentView}
-              setCurrentView={setCurrentView}
-            />
-          }
-          rightSideTitleBarItems={getRightSideTitleBarItems()}
-          titleBarClassName={"px-3 pt-2"}
-        >
-          <WorkspaceWorkflowSelectionCardView
-            workflowFilterModel={workflowWidgetFilterModel}
-            heightSize={5}
-            workspaceItems={workspaceItems}
-            loadData={loadData}
-            isLoading={isLoading}
-            setSelectedWorkflowItem={setSelectedWorkflowItem}
-            selectedWorkflowItem={undefined}
-            hasMoreItems={hasMoreItems}
-            loadMoreWorkflows={loadMoreWorkflows}
-          />
-        </WidgetDataBlockBase>
-        <SoftwareDevelopmentSocialMediaWidget className={"mt-2"} />
-      </>
-    );
-  };
-
   return (
     <div className={className}>
-      {getBody()}
+      <WidgetDataBlockBase
+        heightSize={5}
+        title={
+          isLoading === true
+            ? "Loading Workflows"
+            : `My Workflows`
+        }
+        isLoading={isLoading}
+        centerTitleBarItems={
+          <WorkflowWidgetNavigationBar
+            currentView={currentView}
+            setCurrentView={setCurrentView}
+          />
+        }
+        rightSideTitleBarItems={getRightSideTitleBarItems()}
+        titleBarClassName={"px-3 pt-2"}
+      >
+        <WorkspaceWorkflowSelectionCardView
+          currentView={currentView}
+          workflowFilterModel={workflowWidgetFilterModel}
+          heightSize={5}
+          workspaceItems={workspaceItems}
+          loadData={loadData}
+          isLoading={isLoading}
+          setSelectedWorkflowItem={setSelectedWorkflowItem}
+          selectedWorkflowItem={undefined}
+          hasMoreItems={hasMoreItems}
+          loadMoreWorkflows={loadMoreWorkflows}
+        />
+      </WidgetDataBlockBase>
+      <SoftwareDevelopmentSocialMediaWidget className={"mt-2"} />
     </div>
   );
 }

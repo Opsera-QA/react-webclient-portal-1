@@ -12,6 +12,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import NoRegisteredWorkflowsCard from "components/wizard/free_trial/workflows/NoRegisteredWorkflowsCard";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import {WORKFLOW_WIDGET_VIEWS} from "components/landing/v2/widgets/workspace/WorkflowWidgetNavigationBar";
 
 export default function WorkspaceWorkflowSelectionCardView(
   {
@@ -25,6 +26,7 @@ export default function WorkspaceWorkflowSelectionCardView(
     hasTitleBar,
     hasMoreItems,
     loadMoreWorkflows,
+    currentView,
   }) {
   const getWorkspaceItemCard = (workspaceItem) => {
     switch (workspaceItem?.workspaceType) {
@@ -64,7 +66,8 @@ export default function WorkspaceWorkflowSelectionCardView(
 
     if (
       isLoading !== true
-      // && searchKeyword
+      && currentView === WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS
+      && searchKeyword == null
       && (!Array.isArray(workspaceItems) || workspaceItems.length === 0)
     ) {
       return (
@@ -72,15 +75,6 @@ export default function WorkspaceWorkflowSelectionCardView(
           loadDataFunction={loadData}
           className={"m-3"}
         />
-        // <Row className={"my-2"}>
-        //   <Col xs={0} sm={0} md={0} lg={2} xl={3} />
-        //   <Col xs={12} sm={12} md={12} lg={8} xl={6}>
-        //     <NoRegisteredWorkflowsCard
-        //       loadDataFunction={loadData}
-        //     />
-        //   </Col>
-        //   <Col xs={0} sm={0} md={0} lg={2} xl={3} />
-        // </Row>
       );
     }
 
@@ -119,4 +113,5 @@ WorkspaceWorkflowSelectionCardView.propTypes = {
   hasTitleBar: PropTypes.bool,
   hasMoreItems: PropTypes.bool,
   loadMoreWorkflows: PropTypes.func,
+  currentView: PropTypes.string,
 };
