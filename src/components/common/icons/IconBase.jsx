@@ -15,6 +15,7 @@ function IconBase(
     onClickFunction,
     iconTransformProperties,
     spinIcon,
+    disabled,
 
     // TODO: Remove?
     iconTitle,
@@ -28,7 +29,7 @@ function IconBase(
     }
 
     if (onClickFunction != null) {
-      iconClassNames = `${iconClassNames} pointer`;
+      iconClassNames = disabled === true ? `${iconClassNames} not-allowed` : `${iconClassNames} pointer`;
     }
 
     return iconClassNames;
@@ -47,7 +48,7 @@ function IconBase(
     return (
       <FontAwesomeIcon
         style={iconStyling}
-        onClick={onClickFunction}
+        onClick={disabled !== true ? onClickFunction : undefined}
         icon={icon}
         spin={spinIcon}
         size={iconSize}
@@ -83,6 +84,7 @@ IconBase.propTypes = {
   iconTransformProperties: PropTypes.string,
   iconTitle: PropTypes.string,
   iconColor: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 export default React.memo(IconBase);

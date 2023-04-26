@@ -54,13 +54,20 @@ function SearchFilter(
       }
 
       setIsSearching(true);
-      paginationModel.setData(fieldName, searchString);
+      const maxLength = DataParsingHelper.parseInteger(paginationModel?.getMaxLength(fieldName), 25);
+      paginationModel.setData(fieldName, searchString.substring(0, maxLength));
       paginationModel.setData("currentPage", 1);
       await loadData(paginationModel);
     }
     finally {
       setIsSearching(false);
     }
+  };
+
+  const updateSearchTerm = (newSearchTerm) => {
+    const parsedSearchTerm = DataParsingHelper.parseString(newSearchTerm, "");
+    const maxLength = DataParsingHelper.parseInteger(paginationModel?.getMaxLength(fieldName), 25);
+    setCurrentSearchTerm(parsedSearchTerm.substring(0, maxLength));
   };
 
   const handleKeyPress = async (event) => {
@@ -84,7 +91,7 @@ function SearchFilter(
           value={currentSearchTerm}
           className="text-input inline-search-filter inline-filter-input"
           onKeyPress={(event) => handleKeyPress(event)}
-          onChange={e => setCurrentSearchTerm(e.target.value)}
+          onChange={e => updateSearchTerm(e.target.value)}
         />
         <InputGroup.Append>
           <Button className={buttonClassName} disabled={isLoading || disabled} variant={variant} onClick={handleSearch}>

@@ -113,6 +113,7 @@ function ToolInventory() {
       loadDataFunction={loadData}
       filterOverlay={<ToolFilterOverlay loadDataFunction={loadData} toolFilterModel={registryToolFilterModel} />}
       titleActionBar={getInlineFilters()}
+      isSoftLoading={isLoading}
     >
       <PaginationContainer
         loadData={loadData}

@@ -18,8 +18,8 @@ export default function TaskCardView(
   }) {
   const history = useHistory();
 
-  const loadTask = (task) => {
-    const taskLink = taskHelper.getDetailViewLink(task._id);
+  const loadTask = (taskModel) => {
+    const taskLink = taskHelper.getModelDetailViewLink(taskModel);
 
     if (hasStringValue(taskLink) === true) {
       history.push(taskLink);
