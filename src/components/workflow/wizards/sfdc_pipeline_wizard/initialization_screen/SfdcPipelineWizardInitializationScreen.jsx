@@ -50,7 +50,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     };
   }, [pipeline]);
 
-  const getPipelineOrTaskText = () => pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline';
+  const getPipelineOrTaskText = (lowercase) => pipelineWizardModel.getData('fromGitTasks') ? lowercase ? 'task' : 'Task' : lowercase ? 'pipeline' :'Pipeline';
 
   const loadData = async (newPipelineWizardModel, gitTaskData, plan, cancelSource = cancelTokenSource) => {
     try {
@@ -137,7 +137,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     );
     if (stepArrayIndex === -1) {
       setError(
-        `Warning, this ${getPipelineOrTaskText()} is missing the default SFDC Jenkins Step needed. Please edit the workflow and add the SFDC Ant Job setting in order to run this ${getPipelineOrTaskText()}.`
+        `Warning, this ${getPipelineOrTaskText(true)} is missing the default SFDC Jenkins Step needed. Please edit the workflow and add the SFDC Ant Job setting in order to run this ${getPipelineOrTaskText(true)}.`
       );
       return;
     }
@@ -169,7 +169,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     if (stepId == null || sfdcToolId == null) {
       setError(`
         Could not find Salesforce Jenkins step needed to run the Pipeline Wizard. 
-        Please edit the workflow and add the SFDC Ant Job setting in order to run this ${getPipelineOrTaskText()}.
+        Please edit the workflow and add the SFDC Ant Job setting in order to run this ${getPipelineOrTaskText(true)}.
       `);
     }
 
@@ -448,7 +448,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     return (
       <div>
         <div className={"mt-2"}>
-          Would you like to start a manual {getPipelineOrTaskText()} Wizard run or use the XML/File Upload Process?
+          Would you like to start a manual {getPipelineOrTaskText(true)} wizard run or use the XML/File Upload Process?
         </div>
         <div className={"mt-2"}>
           <CustomTabContainer>

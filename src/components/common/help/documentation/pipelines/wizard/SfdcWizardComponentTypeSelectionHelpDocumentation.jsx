@@ -3,7 +3,7 @@ import HelpDocumentationContainer from "components/common/help/HelpDocumentation
 import PropTypes from "prop-types";
 
 function SfdcWizardComponentTypeSelectionHelpDocumentation({closeHelpPanel, pipelineWizardModel}) {
-  const getPipelineOrTaskText = () => pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline';
+  const getPipelineOrTaskText = (lowercase) => pipelineWizardModel.getData('fromGitTasks') ? lowercase ? 'task' : 'Task' : lowercase ? 'pipeline' :'Pipeline';
 
   return (
     <HelpDocumentationContainer
@@ -16,11 +16,11 @@ function SfdcWizardComponentTypeSelectionHelpDocumentation({closeHelpPanel, pipe
       </div>
       <ul>
         <li><b>Component Types</b> - This is a list of Salesforce Metadata component types supported within Opsera.
-          Select which components will be included in this pipeline run. Once the components have been selected, view
+          Select which components will be included in this {getPipelineOrTaskText(true)} run. Once the components have been selected, view
           them in the <b>Selected Component Types</b> table. To deselect, click on the component in this table.
         </li>
         <li><b>Date Range</b> - Only files with components modified between the provided date and range will be included
-          in the pipeline run.
+          in the {getPipelineOrTaskText(true)} run.
         </li>
         <li><b>Namespace Prefix</b> - NamespacePrefix is what identifies a managed package. Every component added to a
           managed package has the namespace prefixed to the component API name. Provide the NamespacePrefix to retrieve

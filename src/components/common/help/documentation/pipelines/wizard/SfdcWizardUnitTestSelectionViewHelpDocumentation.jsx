@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
 
 function SfdcWizardUnitTestSelectionViewHelpDocumentation({closeHelpPanel, pipelineWizardModel}) {
-  const getPipelineOrTaskText = () => pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline';
+  const getPipelineOrTaskText = (lowercase) => pipelineWizardModel.getData('fromGitTasks') ? lowercase ? 'task' : 'Task' : lowercase ? 'pipeline' :'Pipeline';
 
   return (
     <HelpDocumentationContainer
@@ -13,7 +13,7 @@ function SfdcWizardUnitTestSelectionViewHelpDocumentation({closeHelpPanel, pipel
     >
       <div>During the unit testing process, the testing classes must be specified per step. Please select each step
         below and then apply the required testing classes before proceeding. Please note, without this step, the
-        pipeline cannot complete successfully.
+        {getPipelineOrTaskText(true)} cannot complete successfully.
       </div>
       <div>Enable the toggle to Manually Enter Test Classes. Write the values in the given field separated by a comma
         and select Save Test Classes to apply.

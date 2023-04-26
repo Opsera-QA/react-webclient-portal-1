@@ -3,7 +3,7 @@ import HelpDocumentationContainer from "components/common/help/HelpDocumentation
 import PropTypes from "prop-types";
 
 function SfdcWizardFileSelectionHelpDocumentation({closeHelpPanel, pipelineWizardModel}) {
-  const getPipelineOrTaskText = () => pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline';
+  const getPipelineOrTaskText = (lowercase) => pipelineWizardModel.getData('fromGitTasks') ? lowercase ? 'task' : 'Task' : lowercase ? 'pipeline' :'Pipeline';
 
   return (
     <HelpDocumentationContainer
@@ -12,13 +12,13 @@ function SfdcWizardFileSelectionHelpDocumentation({closeHelpPanel, pipelineWizar
       confluenceLink={`https://docs.opsera.io/salesforce/salesforce-wizard-run`}
     >
       <div><b>Note: </b> Salesforce limits retrieval or deployment of up to <b>10,000</b> files at once.</div>
-      <div><b>Rule Filters</b> allow you to select which components will be included or excluded in this pipeline
+      <div><b>Rule Filters</b> allow you to select which components will be included or excluded in this {getPipelineOrTaskText(true)}{' '} 
         run. The rule order is not important. Once Include and Exclude Rules have been set, select <b>Proceed with
           Selected Files</b> to view the final list.
       </div>
       <div>
         <div>
-          <div className={"mt-3"}><b>Include Rules</b> specify what components are included in pipeline run.</div>
+          <div className={"mt-3"}><b>Include Rules</b> specify what components are included in {getPipelineOrTaskText(true)} run.</div>
           <ul>
             <li>If the only selection is a Component in Component Filter, results will include all files of that
               Component type.

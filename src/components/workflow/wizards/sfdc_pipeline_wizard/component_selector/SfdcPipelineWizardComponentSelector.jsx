@@ -26,7 +26,7 @@ const SfdcPipelineWizardComponentSelector = ({ pipelineWizardModel, setPipelineW
     return null;
   }
 
-  const getPipelineOrTaskText = () => pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline';
+  const getPipelineOrTaskText = (lowercase) => pipelineWizardModel.getData('fromGitTasks') ? lowercase ? 'task' : 'Task' : lowercase ? 'pipeline' :'Pipeline';
 
   const backButtonClick = () => {
     let newPipelineWizardModel = {...pipelineWizardModel};
@@ -39,7 +39,7 @@ const SfdcPipelineWizardComponentSelector = ({ pipelineWizardModel, setPipelineW
     <div>
       <div className="h5">Salesforce {getPipelineOrTaskText()} Run: Component Type Selection</div>
       <SfdcPipelineWizardBasicSummary pipelineWizardModel={pipelineWizardModel} />
-      <div className="text-muted">Select which component types to include in this {getPipelineOrTaskText()} run.</div>
+      <div className="text-muted">Select which component types to include in this {getPipelineOrTaskText(true)} run.</div>
       <Row className="my-3">
         <Col sm={12} lg={6}>
           <TextInputBase fieldName={"namespacePrefix"} setDataObject={setPipelineWizardModel} dataObject={pipelineWizardModel} />
