@@ -53,7 +53,7 @@ lightThemeConstants.COLOR_PALETTE = {
 lightThemeConstants.RESOURCE_COLORS = {
   PIPELINES: lightThemeConstants.COLOR_PALETTE.BLUE,
   TASKS: lightThemeConstants.COLOR_PALETTE.BLUE_ALT,
-  TOOLS: lightThemeConstants.COLOR_PALETTE.GREEN_ALT,
+  TOOLS: lightThemeConstants.COLOR_PALETTE.DARK_GRAY,
 };
 
 lightThemeConstants.BORDER_COLORS = {
