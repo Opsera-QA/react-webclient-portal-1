@@ -145,7 +145,7 @@ export default function SoftwareDevelopmentLandingAccountStatsWidget({ className
 
     return (
       <div>
-          Your Opsera workflows are {getWorkflowHealthText()}. You have completed <b>{totalRunCount}</b> {runText} across <b>{pipelineCount}</b> {pipelineText} and <b>{taskCount}</b> {taskText}
+          Your Opsera workflows are {getWorkflowHealthText()}. You have completed <b>{totalRunCount}</b> {runText} across <b>{pipelineCount}</b> {pipelineText} and <b>{taskCount}</b> {taskText}.
       </div>
     );
   };

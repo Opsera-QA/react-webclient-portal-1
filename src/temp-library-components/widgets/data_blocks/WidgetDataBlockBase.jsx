@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import WidgetDataBlockBaseContainer from "temp-library-components/widgets/data_blocks/WidgetDataBlockBaseContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 export default function WidgetDataBlockBase(
   {
@@ -24,6 +25,8 @@ export default function WidgetDataBlockBase(
     themeConstants,
   } = useComponentStateReference();
 
+  console.log("fontColor: " + JSON.stringify(fontColor));
+
   return (
     <WidgetDataBlockBaseContainer
       title={title}
@@ -39,7 +42,7 @@ export default function WidgetDataBlockBase(
       backgroundColor={themeConstants.COLOR_PALETTE.WHITE}
       disabledBackgroundColor={themeConstants.COLOR_PALETTE.BACKGROUND_GRAY}
       borderColor={themeConstants.BORDER_COLORS.GRAY}
-      fontColor={fontColor}
+      fontColor={hasStringValue(fontColor) === true ? fontColor : themeConstants.COLOR_PALETTE.DEEP_PURPLE}
       disabledFontColor={themeConstants.COLOR_PALETTE.DARK_GRAY}
       fontFamily={fontFamily}
       titleBarClassName={titleBarClassName}
