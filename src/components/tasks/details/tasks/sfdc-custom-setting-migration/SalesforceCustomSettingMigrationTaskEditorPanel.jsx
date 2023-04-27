@@ -79,7 +79,7 @@ function SalesforceCustomSettingMigrationTaskEditorPanel({
         />
       </Col>
       {taskConfigurationModel.getData("taskType") !==
-        MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG && (
+      MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG ? (
         <Col lg={12}>
           <SalesforceMergeSyncTaskSalesforceToolSelectInput
             model={salesforceConfigurationModel}
@@ -87,9 +87,9 @@ function SalesforceCustomSettingMigrationTaskEditorPanel({
             fieldName={"sourceToolId"}
           />
         </Col>
-      )}
+      ) : null}
       {taskConfigurationModel.getData("taskType") !==
-        MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV && (
+      MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV ? (
         <Col lg={12}>
           <SalesforceMergeSyncTaskSalesforceToolSelectInput
             model={salesforceConfigurationModel}
@@ -97,9 +97,9 @@ function SalesforceCustomSettingMigrationTaskEditorPanel({
             fieldName={"targetToolId"}
           />
         </Col>
-      )}
+      ) : null}
       {taskConfigurationModel.getData("taskType") !==
-        MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV && (
+      MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV ? (
         <Col lg={12}>
           <SalesforceCustomSettingTaskActionSelectInput
             model={taskConfigurationModel}
@@ -107,7 +107,7 @@ function SalesforceCustomSettingMigrationTaskEditorPanel({
             fieldName={"action"}
           />
         </Col>
-      )}
+      ) : null}
     </Row>
   );
 }
