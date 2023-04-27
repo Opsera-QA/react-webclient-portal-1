@@ -13,6 +13,9 @@ export default function TaskCardFooter({ taskModel }) {
         return themeConstants.COLOR_PALETTE.OPSERA_GOLD;
       case "running":
         return themeConstants.COLOR_PALETTE.GREEN;
+      case "failure":
+      case "failed":
+        return themeConstants.COLOR_PALETTE.DANGER_RED;
       default:
         return themeConstants.RESOURCE_COLORS.TASKS;
     }

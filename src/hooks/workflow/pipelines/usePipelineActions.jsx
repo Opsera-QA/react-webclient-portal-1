@@ -22,6 +22,7 @@ export default function usePipelineActions() {
       search: pipelineFilterModel?.getFilterValue("search"),
       owner: pipelineFilterModel?.getFilterValue("owner"),
       tag: pipelineFilterModel?.getFilterValue("tag"),
+      status: pipelineFilterModel?.getFilterValue("status"),
       active: active,
       fields: fields,
     };

@@ -4,6 +4,7 @@ export const darkThemeConstants = {};
 darkThemeConstants.COLOR_PALETTE = {
   WHITE: "#FFFFFF",
   RED: "#FF0000",
+  DANGER_RED: "#dc3545",
   DANGER_SECONDARY: "#FFAAAA",
 
   // Blue
@@ -53,7 +54,7 @@ darkThemeConstants.COLOR_PALETTE = {
 darkThemeConstants.RESOURCE_COLORS = {
   PIPELINES: darkThemeConstants.COLOR_PALETTE.BLUE,
   TASKS: darkThemeConstants.COLOR_PALETTE.BLUE_ALT,
-  TOOLS: darkThemeConstants.COLOR_PALETTE.GREEN_ALT,
+  TOOLS: darkThemeConstants.COLOR_PALETTE.DARK_GRAY,
 };
 
 darkThemeConstants.BORDER_COLORS = {

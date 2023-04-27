@@ -83,7 +83,7 @@ function TaskDetailView() {
     } else if (isTaskRunning === true && status === "stopped") {
       toastContext.showSystemInformationToast(stoppedMessage, 20);
       setIsTaskRunning(false);
-    } else if (isTaskRunning === true && status === "failed") {
+    } else if (isTaskRunning === true && (status === "failed" || status === "failure")) {
       toastContext.showSystemErrorToast(failedMessage, undefined, 20);
       setIsTaskRunning(false);
     } else if (isTaskRunning === true && status === "success") {
