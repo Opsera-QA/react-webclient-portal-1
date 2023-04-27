@@ -30,7 +30,7 @@ function MergeSyncTaskJiraToolSelectInput(
       fieldName={"jiraToolId"}
       model={model}
       setModel={setModel}
-      setDefaultValueFunction={setDataFunction}
+      setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}      
       disabled={disabled}
    />
