@@ -9,7 +9,6 @@ export const customSettingTaskSalesforceConfigurationMetadata = {
       label: "Salesforce Source Org",
       id: "sourceToolId",
       isRequiredFunction: (model) => {
-        console.log(model.getPersistData());
         return (
           model != null &&
           model.getData("taskType") !==
@@ -21,7 +20,6 @@ export const customSettingTaskSalesforceConfigurationMetadata = {
       label: "Salesforce Target Org",
       id: "targetToolId",
       isRequiredFunction: (model) => {
-        console.log(model.getPersistData());
         return (
           model != null &&
           model.getData("taskType") !==

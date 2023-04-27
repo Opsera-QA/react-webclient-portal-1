@@ -199,12 +199,13 @@ const CustomSettingQueryBuilderScreen = ({
     try {
       setIsLoading(true);
       let finalQuery = query;
-      if(currentView === QUERY_BUILDER_VIEWS.MANUAL_QUERY_BUILDER) {
+      if (currentView === QUERY_BUILDER_VIEWS.MANUAL_QUERY_BUILDER) {
         finalQuery = manualQueryString;
       }
       wizardModel.setData("filterQuery", finalQuery);
       wizardModel.setData("queryFilters", queryFilters);
-      const response = await customSettingMigrationTaskWizardActions.validateQuery(
+      const response =
+        await customSettingMigrationTaskWizardActions.validateQuery(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
@@ -238,7 +239,7 @@ const CustomSettingQueryBuilderScreen = ({
     try {
       setIsValidating(true);
       let finalQuery = query;
-      if(currentView === QUERY_BUILDER_VIEWS.MANUAL_QUERY_BUILDER) {
+      if (currentView === QUERY_BUILDER_VIEWS.MANUAL_QUERY_BUILDER) {
         finalQuery = manualQueryString;
       }
       wizardModel.setData("filterQuery", finalQuery);
@@ -291,16 +292,15 @@ const CustomSettingQueryBuilderScreen = ({
             onClick={handleAddFilter}
             size="sm"
           >
-          <span>
-            <IconBase
-              className={"mr-1"}
-              icon={faPlus}
-            />
-          </span>
+            <span>
+              <IconBase
+                className={"mr-1"}
+                icon={faPlus}
+              />
+            </span>
             Add filter to start building Query
           </Button>
         </div>
-
       );
     }
   };
@@ -333,7 +333,9 @@ const CustomSettingQueryBuilderScreen = ({
             />
             <div className="d-flex justify-content-between mt-2">
               <InlineWarning
-                warningMessage={"Switching back to filter based Query builder will reset out your manual changes."}
+                warningMessage={
+                  "Switching back to filter based Query builder will reset out your manual changes."
+                }
               />
               <Button
                 variant="primary"
@@ -359,27 +361,27 @@ const CustomSettingQueryBuilderScreen = ({
             {getAddRuleButton()}
             <div className={"m-3"}>
               {fieldsList &&
-                fieldsList.length > 0 &&
-                queryFilters &&
-                queryFilters.length > 0 && (
-                  <div>
-                    {queryFilters.map((filter, index) => (
-                      <FieldQueryComponent
-                        key={index}
-                        index={index}
-                        fields={fieldsList}
-                        operators={operators}
-                        filter={filter}
-                        onFieldChange={handleFieldChange}
-                        onOperatorChange={handleOperatorChange}
-                        onValueChange={handleValueChange}
-                        onRemove={handleRemoveFilter}
-                        onAdd={handleAddFilter}
-                        isRemovable={queryFilters.length > 1}
-                      />
-                    ))}
-                  </div>
-                )}
+              fieldsList.length > 0 &&
+              queryFilters &&
+              queryFilters.length > 0 ? (
+                <div>
+                  {queryFilters.map((filter, index) => (
+                    <FieldQueryComponent
+                      key={index}
+                      index={index}
+                      fields={fieldsList}
+                      operators={operators}
+                      filter={filter}
+                      onFieldChange={handleFieldChange}
+                      onOperatorChange={handleOperatorChange}
+                      onValueChange={handleValueChange}
+                      onRemove={handleRemoveFilter}
+                      onAdd={handleAddFilter}
+                      isRemovable={queryFilters.length > 1}
+                    />
+                  ))}
+                </div>
+              ) : null}
               <div>
                 <textarea
                   value={query}
