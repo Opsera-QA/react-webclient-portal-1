@@ -15,6 +15,8 @@ export default function PipelineCardFooter({ pipelineModel }) {
         return themeConstants.COLOR_PALETTE.OPSERA_GOLD;
       case "running":
         return themeConstants.COLOR_PALETTE.GREEN;
+      case "failed":
+        return themeConstants.COLOR_PALETTE.DANGER_SECONDARY;
       default:
         return themeConstants.RESOURCE_COLORS.PIPELINES;
     }
