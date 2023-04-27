@@ -19,6 +19,7 @@ const MergeSyncTaskWizardInitializationScreen = ({
   setCurrentScreen,
   handleClose,
   mergeSyncType,
+  skipConfig,
 }) => {
   const getBody = () => {
     if (wizardModel == null) {
@@ -78,6 +79,7 @@ const MergeSyncTaskWizardInitializationScreen = ({
             wizardModel={wizardModel}
             setWizardModel={setWizardModel}
             setCurrentScreen={setCurrentScreen}
+            skipConfig={skipConfig}
             className={"mr-2"}
           />
           <CancelButton
@@ -111,6 +113,7 @@ MergeSyncTaskWizardInitializationScreen.propTypes = {
   handleClose: PropTypes.func,
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
+  skipConfig: PropTypes.bool,
 };
 
 export default MergeSyncTaskWizardInitializationScreen;
