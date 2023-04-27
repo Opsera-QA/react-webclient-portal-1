@@ -35,7 +35,7 @@ export const insightsLookupDetailsMetadata = {
       id: "endTimestamp",
     },
     {
-      label: "Duration",
+      label: "Duration (mins)",
       id: "difference",
     },
     {
