@@ -194,7 +194,7 @@ const CustomSettingTaskConfirmationScreen = ({
           {wizardModel?.getData("taskType") === MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV ?
             <MessageFieldBase
               className={"mt-2"}
-              message={"Once task completes execution file would be generated and be available to download on task activity report section."}
+              message={"Once task completes execution, file would be generated and be available to download on task activity report section."}
             /> : null
           }
         </div>
