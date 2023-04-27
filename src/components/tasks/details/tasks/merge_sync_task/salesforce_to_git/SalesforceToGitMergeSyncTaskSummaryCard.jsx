@@ -50,6 +50,34 @@ function SalesforceToGitMergeSyncTaskSummaryCard(
     );
   };
 
+  const getJiraFields = () => {
+    if (gitConfigurationModel?.getData("enableJiraIntegration") !== true) {
+      return null;
+    }
+    return (
+      <>
+        <Col xs={6}>
+          <ToolNameField
+            model={gitConfigurationModel}
+            fieldName={"jiraToolId"}
+          />
+        </Col>
+        <Col xs={6}>
+          <TextFieldBase
+            dataObject={gitConfigurationModel}
+            fieldName={"jiraProjectKey"}            
+          />
+        </Col>
+        <Col xs={6}>
+          <TextFieldBase
+            dataObject={gitConfigurationModel}
+            fieldName={"jiraIssueId"}            
+          />
+        </Col>
+      </>
+    );
+  };
+
   return (
     <TaskSummaryCardContainer isLoading={isLoading}>
       <Row>
@@ -77,13 +105,15 @@ function SalesforceToGitMergeSyncTaskSummaryCard(
             fieldName={"repository"}
           />
         </Col>
-        <Col xs={6}>
-          <TextFieldBase
-            dataObject={gitConfigurationModel}
-            fieldName={"workspace"}
-            visible={gitConfigurationModel?.getData("service") === "bitbucket"}
-          />
-        </Col>
+        {gitConfigurationModel?.getData("service") === "bitbucket" && 
+          <Col xs={6}>
+            <TextFieldBase
+              dataObject={gitConfigurationModel}
+              fieldName={"workspace"}
+              visible={gitConfigurationModel?.getData("service") === "bitbucket"}
+            />
+          </Col>
+        }        
         <Col xs={6}>
           <TextFieldBase
             dataObject={gitConfigurationModel}
@@ -103,13 +133,16 @@ function SalesforceToGitMergeSyncTaskSummaryCard(
             fieldName={"includePackageXml"}
           />
         </Col>
-        <Col xs={6}>
-          <TextFieldBase
-            dataObject={salesforceConfigurationModel}
-            fieldName={"sourceBranch"}
-            visible={salesforceConfigurationModel?.getData("packageXmlReferencePath") === true}
-          />
-        </Col>
+        {salesforceConfigurationModel?.getData("packageXmlReferencePath") === true && 
+          <Col xs={6}>
+            <TextFieldBase
+              dataObject={salesforceConfigurationModel}
+              fieldName={"sourceBranch"}
+              visible={salesforceConfigurationModel?.getData("packageXmlReferencePath") === true}
+            />
+          </Col>
+        }        
+        { getJiraFields() }
       </Row>
     </TaskSummaryCardContainer>
   );

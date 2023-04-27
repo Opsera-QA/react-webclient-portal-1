@@ -5,6 +5,7 @@ import TaskSummaryCardContainer from "components/tasks/details/tasks/TaskSummary
 import {Row, Col} from "react-bootstrap";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
 import BooleanField from "components/common/fields/boolean/BooleanField";
+import ArrayToTextField from "components/common/fields/text/ArrayToTextField";
 
 function GitToGitMergeSyncTaskSummaryCard({ taskConfigurationModel, isLoading }) {
   if (isLoading || taskConfigurationModel == null) {
@@ -45,6 +46,34 @@ function GitToGitMergeSyncTaskSummaryCard({ taskConfigurationModel, isLoading })
     );
   };
 
+  const getJiraFields = () => {
+    if (taskConfigurationModel?.getData("isSalesforce") !== true) {
+      return null;
+    }
+    return (
+      <>
+        <Col xs={6}>
+          <ToolNameField
+            model={taskConfigurationModel}
+            fieldName={"jiraToolId"}
+          />
+        </Col>
+        <Col xs={6}>
+          <TextFieldBase
+            dataObject={taskConfigurationModel}
+            fieldName={"jiraProjectKey"}            
+          />
+        </Col>
+        <Col xs={6}>
+          <ArrayToTextField
+            model={taskConfigurationModel}
+            fieldName={"jiraIssueIds"}
+          />
+        </Col>
+      </>
+    );
+  };
+
   return (
     <TaskSummaryCardContainer isLoading={isLoading}>
       <Row>
@@ -72,13 +101,15 @@ function GitToGitMergeSyncTaskSummaryCard({ taskConfigurationModel, isLoading })
             fieldName={"repository"}
           />
         </Col>
-        <Col xs={6}>
-          <TextFieldBase
-            dataObject={taskConfigurationModel}
-            fieldName={"workspace"}
-            visible={taskConfigurationModel?.getData("service") === "bitbucket"}
-          />
-        </Col>
+        {taskConfigurationModel?.getData("service") === "bitbucket" && 
+          <Col xs={6}>
+            <TextFieldBase
+              dataObject={taskConfigurationModel}
+              fieldName={"workspace"}
+              visible={taskConfigurationModel?.getData("service") === "bitbucket"}
+            />
+          </Col>
+        }        
         <Col xs={6}>
           <TextFieldBase
             dataObject={taskConfigurationModel}
@@ -92,6 +123,7 @@ function GitToGitMergeSyncTaskSummaryCard({ taskConfigurationModel, isLoading })
           />
         </Col>
         {getDestinationBranchFields()}
+        {getJiraFields()}
       </Row>
     </TaskSummaryCardContainer>
   );
