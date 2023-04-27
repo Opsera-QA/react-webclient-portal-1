@@ -12,7 +12,7 @@ import {getTaskTypeLabel} from "components/tasks/task.types";
 import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
 import taskActivityMetadata from "@opsera/definitions/constants/tasks/taskActivity.metadata";
 
-export default function TaskActivityLogsTable(
+export default function AllTasksActivityLogsTable(
   {
     taskLogData,
     isLoading,
@@ -24,6 +24,8 @@ export default function TaskActivityLogsTable(
   const columns = useMemo(
     () => [
       // {...getTableTextColumn(fields.find(field => { return field.id === "run_count";}), "cell-center no-wrap-inline", 100,)},
+      getTableTextColumn(getField(fields, "name")),
+      getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), getTaskTypeLabel),
       getTableTextColumn(getField(fields, "log_type")),
       getTableTextColumn(getField(fields, "message")),
       getPipelineActivityStatusColumn(getField(fields, "status")),
@@ -62,7 +64,7 @@ export default function TaskActivityLogsTable(
     </div>
   );
 }
-TaskActivityLogsTable.propTypes = {
+AllTasksActivityLogsTable.propTypes = {
   taskLogData: PropTypes.array,
   isLoading: PropTypes.bool,
   noDataMessage: PropTypes.any,

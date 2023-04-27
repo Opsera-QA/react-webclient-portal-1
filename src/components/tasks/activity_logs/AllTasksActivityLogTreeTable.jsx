@@ -8,6 +8,7 @@ import TaskActivityLogsTable from "components/tasks/activity_logs/TaskActivityLo
 import TaskActivityLogTree from "components/tasks/activity_logs/TaskActivityLogTree";
 import TaskStatusFilter from "components/common/filters/tasks/status/TaskStatusFilter";
 import CustomTable from "components/common/table/CustomTable";
+import AllTasksActivityLogsTable from "./AllTasksActivityLogTable";
 
 export default function AllTasksActivityLogTreeTable(
   {
@@ -49,7 +50,7 @@ export default function AllTasksActivityLogTreeTable(
 
   const getTable = () => {
     return (
-      <TaskActivityLogsTable
+      <AllTasksActivityLogsTable
         isLoading={isLoading}
         taskLogData={taskLogData}
         noDataMessage={getNoDataMessage()}
