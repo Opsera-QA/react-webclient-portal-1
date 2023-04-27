@@ -203,7 +203,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     const result = await sfdcPipelineActions.findExistingRecordV2(getAccessToken, cancelTokenSource, newPipelineWizardModel);
     const existingRecord = result?.data;
 
-    let apiVersion = existingRecord?.apiVersion ? existingRecord?.apiVersion : await getLatestApiVersion(newPipelineWizardModel.getData("sfdcToolId"));
+    let apiVersion = await getLatestApiVersion(newPipelineWizardModel.getData("sfdcToolId"));
     newPipelineWizardModel.setData("apiVersion", apiVersion);
 
     if (existingRecord) {
