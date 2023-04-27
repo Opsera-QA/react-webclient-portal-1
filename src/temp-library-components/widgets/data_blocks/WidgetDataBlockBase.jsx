@@ -25,8 +25,6 @@ export default function WidgetDataBlockBase(
     themeConstants,
   } = useComponentStateReference();
 
-  console.log("fontColor: " + JSON.stringify(fontColor));
-
   return (
     <WidgetDataBlockBaseContainer
       title={title}
