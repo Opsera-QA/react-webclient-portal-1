@@ -89,7 +89,7 @@ function FieldListPanel({selectedNonMembers, setSelectedNonMembers, nonMembers, 
       <div className="content-card-1 content-container scroller">
         <div className="p-2 d-flex content-block-header justify-content-between">
           <div><IconBase icon={faCode} className={"mr-2"}/>Field Properties</div>
-          <div>{nonMembers.length} {nonMembers.length !== 1 ? "classes" : "class"}</div>
+          <div>{nonMembers.length} {nonMembers.length !== 1 ? "Fields" : "Field"}</div>
         </div>
         <ul className="list-group membership-list">
           {formatUsers()}

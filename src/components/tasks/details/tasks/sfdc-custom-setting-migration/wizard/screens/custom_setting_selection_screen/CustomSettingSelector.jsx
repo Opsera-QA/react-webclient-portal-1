@@ -6,14 +6,15 @@ import { AuthContext } from "contexts/AuthContext";
 import { parseError } from "components/common/helpers/error-helpers";
 import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import { faArrowLeft, faArrowRight } from "@fortawesome/pro-light-svg-icons";
+import { faArrowRight } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "../../../../../../../common/icons/IconBase";
-import { Button, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import SaveButtonContainer from "../../../../../../../common/buttons/saving/containers/SaveButtonContainer";
 import FieldPropertiesSelectorView from "./FieldPropertiesSelectorView";
 import EnableEditingIcon from "../../../../../../../common/icons/enable/EnableEditingIcon";
-import { getMigrationTypeLabel } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
+import { getMigrationTypeLabel, MIGRATION_TYPES } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 import H5FieldSubHeader from "../../../../../../../common/fields/subheader/H5FieldSubHeader";
+import ToolNameField from "../../../../../../../common/fields/inventory/ToolNameField";
 
 const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCurrentScreen }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -158,10 +159,35 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
     }
   };
 
+  const getSummaryView = () => {
+    if(enableEdit) {
+      return (
+        <div className={`p-3 message-field info-message-field`}>
+          <div className={"px-3 d-flex"}>
+              <Col xs={6}>
+                <ToolNameField
+                  model={wizardModel}
+                  fieldName={"sourceToolId"}
+                />
+              </Col>
+              <Col xs={6}>
+                <ToolNameField
+                  model={wizardModel}
+                  fieldName={"targetToolId"}
+                  visible={wizardModel?.getData("taskType") === MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG}
+                />
+              </Col>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
+
   const getSelectView = () => {
     if (!enableEdit && wizardModel?.getData("selectedCustomSetting")) {
       return (
-        <div className={"d-flex mx-1 my-3 w-100"}>
+        <div className={"d-flex mx-1 my-1 w-100"}>
           Selected Custom Object :{" "}
           {wizardModel?.getData("selectedCustomSetting")?.componentName}
           <EnableEditingIcon
@@ -175,7 +201,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
     }
 
     return (
-      <>
+      <div className={"mt-3"}>
         <SelectInputBase
           fieldName={"selectedCustomSetting"}
           selectOptions={customSettingsList}
@@ -206,7 +232,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
             </span>
           </Button>
         </SaveButtonContainer>
-      </>
+      </div>
     );
   };
 
@@ -233,6 +259,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
           )} : Custom Setting Selection Screen`}
         />
       </Row>
+      {getSummaryView()}
       {getSelectView()}
       {getFieldSelectionView()}
     </div>

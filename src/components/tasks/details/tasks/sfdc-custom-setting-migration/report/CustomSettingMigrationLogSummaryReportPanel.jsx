@@ -21,6 +21,7 @@ import taskActions from "../../../../task.actions";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
 import axios from "axios";
 import useComponentStateReference from "../../../../../../hooks/useComponentStateReference";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function CustomSettingMigrationLogSummaryReportPanel({ activityData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -123,8 +124,8 @@ function CustomSettingMigrationLogSummaryReportPanel({ activityData }) {
               <Col lg={6}>
                 <TextFieldBase dataObject={summaryData} fieldName={"recordsFailed"} />
               </Col>
-              <Col lg={6}>
-                <TextFieldBase dataObject={summaryData} fieldName={"errorMessage"} visible={summaryData?.getData("errorMessage") != ""}/>
+              <Col lg={12}>
+                <TextFieldBase dataObject={summaryData} fieldName={"errorMessage"} visible={hasStringValue(summaryData?.getData("errorMessage"))}/>
               </Col>
             </Row>
           </SummaryPanelContainer>

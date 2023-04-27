@@ -146,7 +146,7 @@ function SelectedFieldListPanel({
             Selected Fields
           </div>
           <div>
-            {members.length} {members.length !== 1 ? "classes" : "class"}
+            {members.length} {members.length !== 1 ? "Fields" : "Field"}
           </div>
         </div>
         <ul className="list-group membership-list">{formatUsers()}</ul>
