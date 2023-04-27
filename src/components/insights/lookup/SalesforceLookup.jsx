@@ -21,7 +21,6 @@ function SalesforceLookup() {
   const [selectedComponentName, setSelectedComponentName] = useState("");
   const {isMounted, cancelTokenSource, toastContext, getAccessToken} =
     useComponentStateReference();
-  // Divyesha, if you need to adjust initial dates, do it inside the lookup filter model, don't make a use effect for it.
   const [filterModel, setFilterModel] = useState(new LookupFilterModel());
 
   useEffect(() => {
@@ -39,15 +38,11 @@ function SalesforceLookup() {
         return;
       }
 
-      // TODO: This should just use the dates from the input and Node should do any processing on the date if necessary
-      const DATE_STRING_FORMAT = "MM/dd/yyyy";
-      const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
-      const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
       const response = await insightsLookupActions.getComponentNames(
         getAccessToken,
         cancelTokenSource,
-        formattedStartDate,
-        formattedEndDate,
+        startDate,
+        endDate,
         newFilterModel.getData("selectedComponentNames"),
         newFilterModel.getData("selectedComponentFilterData"),
         newFilterModel.getData("pipelineComponentFilterData"),
@@ -101,18 +96,15 @@ function SalesforceLookup() {
         return;
       }
 
-      // TODO: This should just use the dates from the input and Node should do any processing on the date if necessary
-      const DATE_STRING_FORMAT = "MM/dd/yyyy";
-      const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
-      const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
       const response = await insightsLookupActions.searchComponents(
         getAccessToken,
         cancelTokenSource,
-        formattedStartDate,
-        formattedEndDate,
+        startDate,
+        endDate,
         [componentName],
         newFilterModel.getData("selectedComponentFilterData"),
-       //newFilterModel.getData("tasksComponentFilterData"),
+        newFilterModel.getData("pipelineComponentFilterData"),
+        newFilterModel.getData("orgsComponentFilterData"),
       );
 
       const searchResults = insightsLookupActions.generateTransformedResults(

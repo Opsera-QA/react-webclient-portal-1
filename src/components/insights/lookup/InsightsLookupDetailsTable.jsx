@@ -32,18 +32,17 @@ function InsightsLookupDetailsTable({
         width: width,
         template: function (text) {
             let iconCss = "";
-            console.log("text", text);
 
-            if(text === "true"){
+            if(text === "Succeeded"){
                 iconCss = "fa-check-circle green";
             }
-            else if(text === "false"){
+            else if(text === "Failed"){
                 iconCss = "fa-times-circle red";
             }
-            else if(text === "neutral"){
+            else if(text === "N/A"){
                 iconCss = "fa-minus";
             }
-            else if(text === "unit"){
+            else if(text === "Succeeded with Unit Tests"){
                 return `<i class="fal ${("fa-check-circle green")} cell-icon vertical-align-item"></i><i class="fal ${("fa-shield-check green")} cell-icon vertical-align-item"></i>`;
             }
             else{
