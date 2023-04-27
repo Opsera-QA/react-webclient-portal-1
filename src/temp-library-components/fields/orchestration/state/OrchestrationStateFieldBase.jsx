@@ -10,6 +10,8 @@ import SuccessOrchestrationStateFieldBase
   from "temp-library-components/fields/orchestration/state/SuccessOrchestrationStateFieldBase";
 import StoppedOrchestrationStateFieldBase
   from "temp-library-components/fields/orchestration/state/StoppedOrchestrationStateFieldBase";
+import CreatedOrchestrationStateFieldBase
+  from "temp-library-components/fields/orchestration/state/CreatedOrchestrationStateFieldBase";
 
 export default function OrchestrationStateFieldBase(
   {
@@ -42,8 +44,16 @@ export default function OrchestrationStateFieldBase(
         />
       );
     case "success":
+    case "successful":
       return (
         <SuccessOrchestrationStateFieldBase
+          type={type}
+          className={className}
+        />
+      );
+    case "created":
+      return (
+        <CreatedOrchestrationStateFieldBase
           type={type}
           className={className}
         />
