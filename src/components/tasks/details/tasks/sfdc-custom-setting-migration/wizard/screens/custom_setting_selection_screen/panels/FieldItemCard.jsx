@@ -68,7 +68,7 @@ function FieldItemCard({ field, selectedFields, setSelectedFields }) {
         >
           <div
             className={
-              !field?.nillable ? "badge badge-danger" : "badge badge-success"
+              field?.nillable ? "badge badge-danger" : "badge badge-success"
             }
             style={{ fontSize: "10px", letterSpacing: "0.6px" }}
           >

@@ -169,7 +169,7 @@ function FieldSelectorBasePanel({
 
   const updateAndProceed = async () => {
     // check if theres any mandatory fields in unselected options, if so dont allow them to proceed
-    const hasMandatedValue = nonMembers.some(obj => obj.nillable != false);
+    const hasMandatedValue = nonMembers.some(obj => obj.nillable === false);
     if(hasMandatedValue) {
       toastContext.showSystemErrorToast("You need to select all mandatory fields to proceed.");
       return;
