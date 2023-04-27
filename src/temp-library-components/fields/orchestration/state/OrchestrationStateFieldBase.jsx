@@ -20,6 +20,7 @@ export default function OrchestrationStateFieldBase(
   }) {
   switch (orchestrationState) {
     case "failed":
+    case "failure":
       return (
         <FailedOrchestrationStateFieldBase
           type={type}
