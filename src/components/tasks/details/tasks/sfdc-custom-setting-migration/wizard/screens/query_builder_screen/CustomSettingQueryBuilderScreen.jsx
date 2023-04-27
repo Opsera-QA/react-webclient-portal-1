@@ -289,6 +289,7 @@ const CustomSettingQueryBuilderScreen = ({
             variant="outline-primary"
             className={"mr-3"}
             onClick={handleAddFilter}
+            size="sm"
           >
           <span>
             <IconBase
