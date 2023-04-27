@@ -134,6 +134,7 @@ function SalesforceToGitMergeSyncTaskWithJiraTargetBranchInput(
           model={model}
           setModel={setModel}
           sourceBranch={model?.getData("sourceBranch")}
+          disabled={true}
         />
       </Col>
     );

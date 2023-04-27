@@ -65,5 +65,5 @@ gitlabActions.getBranch = async (
     repositoryId: repositoryId,
     branchName: branchName,
   };
-  const apiResp = await baseActions.apiGetCallV3( getAccessToken, cancelTokenSource, apiUrl, queryParameters);
+  return await baseActions.apiGetCallV3( getAccessToken, cancelTokenSource, apiUrl, queryParameters);
 };
