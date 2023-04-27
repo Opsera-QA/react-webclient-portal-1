@@ -228,7 +228,6 @@ export default function SoftwareDevelopmentLandingAccountStatsWidget({ className
         title={getTitleText()}
         heightSize={6}
         isLoading={isLoading}
-        className={"marketingModulesText"}
       >
         {getBody()}
       </WidgetDataBlockBase>
