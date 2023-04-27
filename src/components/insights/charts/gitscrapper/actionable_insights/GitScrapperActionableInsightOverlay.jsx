@@ -6,7 +6,6 @@ import { faTable } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import chartsActions from "components/insights/charts/charts-actions";
-import { useHistory } from "react-router-dom";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
@@ -66,7 +65,8 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperType, kpiConfig
           getAccessToken,
           cancelSource,
           dashboardTags,
-          dashboardOrgs
+          dashboardOrgs,
+          tableFilterDto,
         );
       } else {
         responseRepoScorecardBlockValues = await chartsActions.getGitScraperCleanRepos(
@@ -74,12 +74,13 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperType, kpiConfig
           getAccessToken,
           cancelSource,
           dashboardTags,
-          dashboardOrgs
+          dashboardOrgs,
+          tableFilterDto,
         );
       }
 
       const dataObjectRepoScorecardDataBlocks = responseRepoScorecardBlockValues?.data && responseRepoScorecardBlockValues?.status === 200 ? 
-                                                  responseRepoScorecardBlockValues?.data?.data?.data : [];
+                                                  responseRepoScorecardBlockValues?.data?.data?.data[0]?.data : [];
 
       if (isMounted?.current === true && dataObjectRepoScorecardDataBlocks) {
         setDataScorecardMetrics(dataObjectRepoScorecardDataBlocks);
@@ -87,8 +88,9 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperType, kpiConfig
         let newFilterDto = filterDto;
         newFilterDto.setData(
           "totalCount",
-          responseRepoScorecardBlockValues?.data?.data[0]?.data?.length
+          responseRepoScorecardBlockValues?.data?.data?.data[0]?.count[0]?.count
         );
+        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
         setTableFilterDto({ ...newFilterDto });
       }
     } catch (error) {
