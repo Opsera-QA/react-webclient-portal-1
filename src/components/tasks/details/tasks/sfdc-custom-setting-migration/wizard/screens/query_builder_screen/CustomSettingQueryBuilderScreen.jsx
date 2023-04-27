@@ -284,18 +284,22 @@ const CustomSettingQueryBuilderScreen = ({
   const getAddRuleButton = () => {
     if (queryFilters.length < 1) {
       return (
-        <Button
-          variant="link"
-          onClick={handleAddFilter}
-        >
+        <div className={"d-flex justify-content-end"}>
+          <Button
+            variant="outline-primary"
+            className={"mr-3"}
+            onClick={handleAddFilter}
+          >
           <span>
             <IconBase
-              className={"opsera-primary mr-1"}
+              className={"mr-1"}
               icon={faPlus}
             />
           </span>
-          Add filter to start building Query
-        </Button>
+            Add filter to start building Query
+          </Button>
+        </div>
+
       );
     }
   };

@@ -5,6 +5,7 @@ import {Row, Col} from "react-bootstrap";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
 import TextFieldBase from "../../../../common/fields/text/TextFieldBase";
 import TaskMigrationTypeField from "../../../../common/fields/tasks/TaskMigrationTypeField";
+import { MIGRATION_TYPES } from "./inputs/SalesforceCustomSettingTaskTypeSelectInput";
 
 function SalesforceCustomSettingMigrationTaskSummaryCard(
   {
@@ -34,7 +35,7 @@ function SalesforceCustomSettingMigrationTaskSummaryCard(
           <TextFieldBase
             dataObject={taskConfigDataModel}
             fieldName={"action"}
-            visible={taskConfigDataModel?.getData("taskType") !== "ORG_TO_FILE"}
+            visible={taskConfigDataModel?.getData("taskType") !== MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV}
           />
         </Col>
         <Col xs={6}>
@@ -47,6 +48,7 @@ function SalesforceCustomSettingMigrationTaskSummaryCard(
           <ToolNameField
             model={salesforceConfigurationModel}
             fieldName={"targetToolId"}
+            visible={taskConfigDataModel?.getData("taskType") === MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG}
           />
         </Col>
       </Row>
