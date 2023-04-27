@@ -1,53 +1,32 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, Col } from "react-bootstrap";
-import Row from "react-bootstrap/Row";
-import PipelineCard from "components/workflow/pipelines/PipelineCard";
-import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
+import Model from "core/data_model/model";
+import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
+import {useHistory} from "react-router-dom";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import PipelineCardBase from "temp-library-components/cards/pipelines/PipelineCardBase";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
-import { useHistory } from "react-router-dom";
-import IconBase from "components/common/icons/IconBase";
-import { faSearch } from "@fortawesome/pro-light-svg-icons";
-import modelHelpers from "components/common/model/modelHelpers";
+import {pipelineHelper} from "components/workflow/pipeline.helper";
+import pipelineMetadata from "@opsera/definitions/constants/pipelines/pipeline.metadata";
 
-function PipelineCardView({ pipelines, pipelineFilterModel, loadData, isLoading, subscribedPipelineIds }) {
-  let history = useHistory();
+export default function PipelineCardView({ pipelines, loadData, isLoading }) {
+  const history = useHistory();
 
-  const handleDetailsClick = (pipelineId) => e => {
-    e.preventDefault();
-    history.push(`/workflow/details/${pipelineId}/summary`);
-  };
+  const loadPipeline = (pipeline) => {
+    const pipelineLink = pipelineHelper.getDetailViewLink(pipeline._id);
 
-  const getSelectButton = (pipeline) => {
-    return (
-      <Button
-        variant={"primary"}
-        size={"sm"}
-        className={"w-50"}
-        onClick={handleDetailsClick(pipeline?._id)}>
-        <IconBase icon={faSearch} className={"mr-1"}/>View
-      </Button>
-    );
-  };
-
-  const getCards = () => {
-    if (!Array.isArray(pipelines) || pipelines.length === 0) {
-      return null;
+    if (hasStringValue(pipelineLink) === true) {
+      history.push(pipelineLink);
     }
+  };
 
+  const getPipelineCard = (pipeline) => {
     return (
-      <Row className={"mx-0"}>
-        {pipelines.map((pipeline, idx) => (
-          <Col key={idx} xl={6} md={12} className="p-2">
-            <PipelineCard
-              pipeline={pipeline}
-              subscribedPipelineIds={subscribedPipelineIds}
-              pipelineModel={modelHelpers.parseObjectIntoModel(pipeline, pipelineMetadata)}
-              getSelectButtonFunction={getSelectButton}
-            />
-          </Col>
-        ))}
-      </Row>
+      <PipelineCardBase
+        pipelineModel={new Model({ ...pipeline }, pipelineMetadata, false)}
+        onClickFunction={() => loadPipeline(pipeline)}
+        tooltip={"Click to view Pipeline"}
+      />
     );
   };
 
@@ -55,18 +34,18 @@ function PipelineCardView({ pipelines, pipelineFilterModel, loadData, isLoading,
     <VanitySetCardView
       isLoading={isLoading}
       loadData={loadData}
-      paginationModel={pipelineFilterModel}
-      cards={getCards()}
+      cards={
+        <VerticalCardViewBase
+          data={pipelines}
+          getCardFunction={getPipelineCard}
+        />
+      }
     />
   );
 }
 
 PipelineCardView.propTypes = {
   pipelines: PropTypes.array,
-  pipelineFilterModel: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  subscribedPipelineIds: PropTypes.array,
 };
-
-export default PipelineCardView;

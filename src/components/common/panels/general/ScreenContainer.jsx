@@ -230,7 +230,6 @@ ScreenContainer.propTypes = {
   showBreadcrumbTrail: PropTypes.bool,
   navigationTabContainer: PropTypes.object,
   titleActionBar: PropTypes.object,
-  accessRoleData: PropTypes.object,
   roleRequirement: PropTypes.string,
   helpComponent: PropTypes.object,
   bodyClassName: PropTypes.string,
