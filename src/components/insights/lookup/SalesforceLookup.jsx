@@ -38,11 +38,15 @@ function SalesforceLookup() {
         return;
       }
 
+      const DATE_STRING_FORMAT = "MM/dd/yyyy";
+      const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
+      const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
+
       const response = await insightsLookupActions.getComponentNames(
         getAccessToken,
         cancelTokenSource,
-        startDate,
-        endDate,
+          formattedStartDate,
+          formattedEndDate,
         newFilterModel.getData("selectedComponentNames"),
         newFilterModel.getData("selectedComponentFilterData"),
         newFilterModel.getData("pipelineComponentFilterData"),
@@ -96,11 +100,15 @@ function SalesforceLookup() {
         return;
       }
 
+      const DATE_STRING_FORMAT = "MM/dd/yyyy";
+      const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
+      const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
+
       const response = await insightsLookupActions.searchComponents(
         getAccessToken,
         cancelTokenSource,
-        startDate,
-        endDate,
+          formattedStartDate,
+          formattedEndDate,
         [componentName],
         newFilterModel.getData("selectedComponentFilterData"),
         newFilterModel.getData("pipelineComponentFilterData"),
