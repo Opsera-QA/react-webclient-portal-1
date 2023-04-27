@@ -187,6 +187,7 @@ export default function SoftwareDevelopmentLandingAccountStatsWidget({ className
 
     return (
       <div
+        className={"marketingModulesText"}
         style={{
           minHeight: `calc(${widgetHelper.getWidgetPixelSize(6)} - 43px)`,
           height: `calc(${widgetHelper.getWidgetPixelSize(6)} - 43px)`,
