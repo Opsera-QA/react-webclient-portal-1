@@ -67,7 +67,7 @@ export const TASK_TYPE_LABELS = {
   SALESFORCE_BULK_MIGRATION: "Salesforce Bulk Migration",
   SALESFORCE_TO_GIT_MERGE_SYNC: "Salesforce to Git Merge Sync",
   SALESFORCE_QUICK_DEPLOY: "Salesforce Quick Deploy",
-  SALESFORCE_CUSTOM_SETTING_MIGRATION: "Salesforce Custom Setting Migration",
+  SALESFORCE_CUSTOM_SETTING_MIGRATION: "Salesforce Custom Setting Migration (BETA)",
 
   // Git
   SYNC_GIT_BRANCHES: "Git to Git Sync",

@@ -4,11 +4,11 @@ export const customSettingMigrationTaskWizardMetadata = {
   activeField: "active",
   fields: [
     {
-      label: "Salesforce Source Tool ID",
+      label: "Salesforce Source Org",
       id: "sourceToolId",
     },
     {
-      label: "Salesforce Target Tool ID",
+      label: "Salesforce Destination Org",
       id: "targetToolId",
     },
     {

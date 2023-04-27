@@ -38,59 +38,38 @@ function FieldItemCard({ field, selectedFields, setSelectedFields }) {
       <Row className={"mx-0"}>
         <Col
           lg={12}
-          xl={12}
+          xl={6}
           className={"no-wrap-inline mb-1"}
         >
           {field.name}
         </Col>
         <Col
-          sm={3}
-          className={
-            selectedFields.includes(field)
-              ? "d-flex w-100"
-              : "d-flex w-100 text-muted"
-          }
+          lg={12}
+          xl={6}
+          className={"d-flex mb-1 mt-1 justify-content-end"}
         >
           <div
-            className={"badge badge-secondary"}
+            className={"badge badge-secondary mr-2"}
             style={{ fontSize: "10px", letterSpacing: "0.6px" }}
           >
             {field?.type?.toUpperCase()}
           </div>
-        </Col>
-        <Col
-          sm={3}
-          className={
-            selectedFields.includes(field)
-              ? "d-flex w-100"
-              : "d-flex w-100 text-muted"
-          }
-        >
-          <div
-            className={
-              field?.nillable ? "badge badge-danger" : "badge badge-success"
-            }
-            style={{ fontSize: "10px", letterSpacing: "0.6px" }}
-          >
-            MANDATORY
-          </div>
-        </Col>
-        <Col
-          sm={3}
-          className={
-            selectedFields.includes(field)
-              ? "d-flex w-100"
-              : "d-flex w-100 text-muted"
-          }
-        >
-          <div
-            className={
-              field?.unique ? "badge badge-danger" : "badge badge-success"
-            }
-            style={{ fontSize: "10px", letterSpacing: "0.6px" }}
-          >
-            UNIQUE
-          </div>
+          {field?.unique && (
+            <div
+              className={"badge badge-secondary mr-2"}
+              style={{ fontSize: "10px", letterSpacing: "0.6px" }}
+            >
+              UNIQUE
+            </div>
+          )}
+          {!field?.nillable && (
+            <div
+              className={"badge badge-danger mr-2"}
+              style={{ fontSize: "10px", letterSpacing: "0.6px" }}
+            >
+              MANDATORY
+            </div>
+          )}
         </Col>
       </Row>
     </li>

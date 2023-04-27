@@ -23,6 +23,7 @@ import TextAreaClipboardField from "../../../../../../../common/fields/clipboard
 import TaskMigrationTypeField from "../../../../../../../common/fields/tasks/TaskMigrationTypeField";
 import ToolNameField from "../../../../../../../common/fields/inventory/ToolNameField";
 import axios from "axios";
+import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
 
 const CustomSettingTaskConfirmationScreen = ({
   wizardModel,
@@ -137,7 +138,7 @@ const CustomSettingTaskConfirmationScreen = ({
       return (
         <Col xs={6}>
           <span className={"mb-0 mr-2 text-muted no-wrap-inline"}>
-            Available Storage:
+            Available Storage in Target Org:
           </span>{" "}
           {storageDetails?.Remaining} of {storageDetails?.Max} (in MB){" "}
         </Col>
@@ -158,7 +159,7 @@ const CustomSettingTaskConfirmationScreen = ({
       <div>
         <div className={"m-2"}>
           <Row>
-            <Col xs={6}>
+            <Col xs={12}>
               <TaskMigrationTypeField
                 model={wizardModel}
                 fieldName={"taskType"}
@@ -168,6 +169,13 @@ const CustomSettingTaskConfirmationScreen = ({
               <ToolNameField
                 model={wizardModel}
                 fieldName={"sourceToolId"}
+              />
+            </Col>
+            <Col xs={6}>
+              <ToolNameField
+                model={wizardModel}
+                fieldName={"targetToolId"}
+                visible={wizardModel?.getData("taskType") === MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG}
               />
             </Col>
             <Col xs={12}>
@@ -183,6 +191,12 @@ const CustomSettingTaskConfirmationScreen = ({
             {getCountOfRecords()}
             {getAvailableStorage()}
           </Row>
+          {wizardModel?.getData("taskType") === MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV &&
+            <MessageFieldBase
+              className={"mt-2"}
+              message={"Once task completes execution file would be generated and be available to download on task activity report section."}
+            />
+          }
         </div>
         <SaveButtonContainer>
           <Button
