@@ -32,7 +32,6 @@ function InsightsLookupDetailsTable({
         width: width,
         template: function (text) {
             let iconCss = "";
-            console.log("text", text);
 
             if(text === "Succeeded"){
                 iconCss = "fa-check-circle green";
