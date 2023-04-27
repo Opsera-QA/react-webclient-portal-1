@@ -6,11 +6,12 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import { getSingularOrPluralString } from "components/common/helpers/string-helpers";
-import OpseraInfinityLogoLarge from "components/logo/OpseraInfinityLogoLarge";
 import { widgetHelper } from "temp-library-components/helpers/widgets/widget.helper";
 import {EXTERNAL_LINKS} from "components/header/legacy/HeaderNavBar";
 import { ExternalLink } from "temp-library-components/link/ExternalLink";
 import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
+import {ImageBase} from "@opsera/react-vanity-set";
+import {platformImageConstants} from "temp-library-components/image/platformImage.constants";
 
 // TODO: This needs to be rewritten to be standardized and cleaned up
 export default function SoftwareDevelopmentLandingAccountStatsWidget({ className }) {
@@ -80,7 +81,7 @@ export default function SoftwareDevelopmentLandingAccountStatsWidget({ className
       );
     }
 
-    if (totalCount === 1) {
+    if (totalCount > 0 && totalCount <= 5) {
       return (
         <b className={"yellow"}>
           slightly unhealthy
@@ -88,7 +89,7 @@ export default function SoftwareDevelopmentLandingAccountStatsWidget({ className
       );
     }
 
-    if (totalCount > 1) {
+    if (totalCount > 5) {
       return (
         <b className={"red"}>
           unhealthy
@@ -122,7 +123,7 @@ export default function SoftwareDevelopmentLandingAccountStatsWidget({ className
       return (
         <CenteredContentWrapper>
           <div className={"my-4 marketingModulesTextLarger"}>
-            Get started below to create your first Salesforce Workflow.
+            Get started below to create your first Workflow.
           </div>
         </CenteredContentWrapper>
       );
@@ -192,28 +193,23 @@ export default function SoftwareDevelopmentLandingAccountStatsWidget({ className
         }}
       >
         <div
-          className={"d-flex"}
           style={{
-            minHeight: `calc(${widgetHelper.getWidgetPixelSize(6)} - 95px)`,
-            height: `calc(${widgetHelper.getWidgetPixelSize(6)} - 95px)`,
+            minHeight: `calc(${widgetHelper.getWidgetPixelSize(6)} - 75px)`,
+            height: `calc(${widgetHelper.getWidgetPixelSize(6)} - 75px)`,
           }}
         >
           <div className={"d-flex"}>
             <CenteredContentWrapper>
-              <div className={"m-2"}>
-                <div className={"marketingModulesTextLarger"}>
-                  {getItemCounts()} {getWorkflowHealthStatus()}
-                </div>
+              <div className={"mx-3"}>
+                {getItemCounts()} {getWorkflowHealthStatus()}
               </div>
             </CenteredContentWrapper>
-            <div className={"d-flex"}>
-              <div className={"d-none d-sm-inline"}>
-                <OpseraInfinityLogoLarge
-                  desiredHeight={166}
-                  className={"mt-3"}
-                />
-              </div>
-            </div>
+            <CenteredContentWrapper>
+              <ImageBase
+                imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.COLLABORATION_ALT}
+                height={150}
+              />
+            </CenteredContentWrapper>
           </div>
         </div>
         <div className={"d-flex m-2"}>
