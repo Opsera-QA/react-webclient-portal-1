@@ -176,14 +176,14 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
       case PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
         return (
           <SfdcWizardInitializationHelpDocumentation
-            pipelineWizardModel={pipelineWizardModel}
+            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
             closeHelpPanel={() => setHelpIsShown(false)}
           />
         );
       case PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR:
         return (
           <SfdcWizardComponentTypeSelectionHelpDocumentation
-            pipelineWizardModel={pipelineWizardModel}
+            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
             closeHelpPanel={() => setHelpIsShown(false)}
           />
         );
@@ -193,21 +193,21 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
       case PIPELINE_WIZARD_SCREENS.PROFILE_COMPONENT_SELECTOR:
         return (
           <SfdcWizardFileSelectionHelpDocumentation
-            pipelineWizardModel={pipelineWizardModel}
+            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
             closeHelpPanel={() => setHelpIsShown(false)}
           />
         );
       case PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR:
         return (
           <SfdcWizardUnitTestSelectionViewHelpDocumentation
-            pipelineWizardModel={pipelineWizardModel}
+            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
             closeHelpPanel={() => setHelpIsShown(false)}
           />
         );
       case PIPELINE_WIZARD_SCREENS.XML_VIEWER:
         return (
           <SfdcWizardXmlViewerHelpDocumentation
-            pipelineWizardModel={pipelineWizardModel}
+            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
             closeHelpPanel={() => setHelpIsShown(false)}
           />
         );
