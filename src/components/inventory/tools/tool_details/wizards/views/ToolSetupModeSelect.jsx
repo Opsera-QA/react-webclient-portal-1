@@ -12,6 +12,9 @@ import { faGear, faWandMagicSparkles } from "@fortawesome/pro-light-svg-icons";
 import OpseraInfinityLogo from "../../../../../logo/OpseraInfinityLogo";
 import OverlayWizardButtonContainerBase
   from "../../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import {platformImageConstants} from "../../../../../../temp-library-components/image/platformImage.constants";
+import {ImageBase} from "@opsera/react-vanity-set";
+import SelectionCardColumn from "../../../../../../temp-library-components/cards/SelectionCardColumn";
 
 export const TOOL_CREATION_OPTIONS = {
   WIZARD: "wizard",
@@ -67,14 +70,11 @@ function ToolSetupModeSelect(
         style={{ minHeight: "150px" }}
       >
         <Row
-            xs={3}
-            style={{ verticleAlign: "middle", marginLeft: "10rem", marginRight: "10rem" }}
+            className={"py-3 px-2"}
+            noGutters={true}
+            style={{ alignItems: 'center', justifyContent: 'center' }}
         >
-          <Col
-            xs={12}
-            lg={6}
-            className={"my-3"}
-            style={{ textAlign: "center" }}
+          <SelectionCardColumn
           >
             <SelectionIconCardBase
               selectedOption={setupMode}
@@ -92,17 +92,21 @@ function ToolSetupModeSelect(
                     className={""}
                     title={TOOL_CREATION_OPTION_LABELS.WIZARD}
                     titleClassName={"mx-auto"}
-                    icon={<OpseraInfinityLogo desiredHeight={92} />}
+                    icon={
+                      <ImageBase
+                        height={"96px"}
+                        imageSource={
+                          platformImageConstants.PLATFORM_IMAGE_LINKS
+                            .WIZARD_GENERAL
+                        }
+                      />
+                    }
                   />
                 </div>
               }
             />
-          </Col>
-          <Col
-            xs={12}
-            lg={6}
-            className={"my-3"}
-            style={{ textAlign: "center" }}
+          </SelectionCardColumn>
+          <SelectionCardColumn
           >
             <SelectionIconCardBase
               selectedOption={setupMode}
@@ -115,24 +119,25 @@ function ToolSetupModeSelect(
                 themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE
               }
               titleBar={
-                <div className={"p-1 mt-3"}>
+                <div className={"p-2"}>
                   <IconTitleBar
                     className={""}
                     title={TOOL_CREATION_OPTION_LABELS.ADVANCED}
                     titleClassName={"mx-auto mt-auto"}
                     icon={
-                      <IconBase
-                        icon={faGear}
-                        iconColor={"#1798c1"}
-                        className={"mt-5"}
-                        iconSize={"4x"}
+                      <ImageBase
+                        height={"96px"}
+                        imageSource={
+                          platformImageConstants.PLATFORM_IMAGE_LINKS
+                            .ADVANCED_OPTION
+                        }
                       />
                     }
                   />
                 </div>
               }
             />
-          </Col>
+          </SelectionCardColumn>
         </Row>
       </div>
     </div>
