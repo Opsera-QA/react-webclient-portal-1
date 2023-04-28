@@ -39,10 +39,8 @@ export default function SignificantOperationConfirmationOverlayBase(
   return (
     <CenterOverlayContainer
       closePanel={closePanel}
-      showPanel={true}
       titleText={`Confirm Operation`}
       titleIcon={titleIcon}
-      showToasts={true}
       showCloseButton={false}
       size={size}
     >
