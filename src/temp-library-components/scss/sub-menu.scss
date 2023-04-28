@@ -12,9 +12,9 @@
   margin: 0;
   align-items: center;
   justify-content: center;
-  background: $insights-tab-bg;
-  border: 1px solid $secondary-text-color;
-  padding: 1px;
+  background: white;
+  border: 2px solid $default-border-color;
+  padding: 0;
 }
 
 .sub-menu-container > ul > li {
@@ -23,6 +23,7 @@
   height: 34px;
   align-items: center;
   justify-content: center;
+  padding: 1px;
 }
 
 .sub-menu-container > ul > li div {
@@ -32,7 +33,7 @@
 }
 
 .sub-menu-container > ul > li.active {
-  background: #fff;
+  background: $secondary-text-color;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,7 +41,6 @@
 }
 
 .sub-menu-container ul li.active div {
-  color: $primary-text;
-  font-family: "Lato-Bold";
+  color: white;
   margin: auto;
 }
