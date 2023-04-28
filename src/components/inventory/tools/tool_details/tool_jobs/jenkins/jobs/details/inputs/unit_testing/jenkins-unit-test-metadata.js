@@ -24,6 +24,17 @@ const JenkinsUnitTestJobMetadata = {
         id: "agentLabels",
         formText: "Currently, the only supported Agent Label is Ubuntu Agent",
       },
+      {
+        label: "Use Custom Maven Settings",
+        id: "customMavenSettings"
+      },
+      {
+        label: "Custom Script",
+        id: "scriptId",
+        isRequiredFunction: (model) => {
+          return model?.getData("customMavenSettings") === true;
+        },
+      },
     ],
     newObjectFields: {
       buildType: "",
@@ -31,6 +42,8 @@ const JenkinsUnitTestJobMetadata = {
       gradleTask:"",
       mavenTask:"",
       agentLabels: "",
+      customMavenSettings: false,
+      scriptId: "",
     },
   };
   
