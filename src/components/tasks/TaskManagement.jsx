@@ -17,6 +17,11 @@ import {
 import useComponentStateReference from "hooks/useComponentStateReference";
 import TaskFilterOverlay from "components/tasks/TaskFilterOverlay";
 import NewTaskOverlay from "components/tasks/NewTaskOverlay";
+import useGetPlatformSettingsFeatureFlagByName
+  from "../../hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
+import platformSettingFeatureConstants
+  from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
+import CreateTasksWizard from "./portal_tasks_wizard/CreateTasksWizard";
 
 const tableFields = ["name", "description", "type", "tags", "createdAt", "updatedAt", "active", "status", "run_count", "completion"];
 
@@ -34,17 +39,26 @@ function TaskManagement() {
   const {
     userData,
     toastContext,
+    isMounted
   } = useComponentStateReference();
+  const getPlatformSettingsFeatureFlagByName = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_WIZARDS_TOGGLE);
 
   useEffect(() => {}, []);
 
   const createNewTask = () => {
-    toastContext.showOverlayPanel(
-      // <CreateTasksWizard loadData={loadData} isMounted={isMounted}/>
-      <NewTaskOverlay
-        loadData={loadData}
-      />
-    );
+    if (
+      getPlatformSettingsFeatureFlagByName?.platformSettingsFeatureFlag
+        ?.active === true
+    ) {
+      toastContext.showOverlayPanel(
+        <CreateTasksWizard
+          loadData={loadData}
+          isMounted={isMounted}
+        />,
+      );
+    } else {
+      toastContext.showOverlayPanel(<NewTaskOverlay loadData={loadData} />);
+    }
   };
 
   const getInlineFilters = () => {
