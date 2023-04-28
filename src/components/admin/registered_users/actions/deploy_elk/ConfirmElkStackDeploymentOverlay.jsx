@@ -15,6 +15,7 @@ export default function ConfirmElkStackDeploymentOverlay({ userId }) {
 
       if (statusCode === 200) {
         toastContext.showSuccessDialog("Successfully Deployed ELK Stack");
+        toastContext.clearOverlayPanel();
       } else {
         toastContext.showErrorDialog("Something went wrong deploying ELK stack. View browser logs for more details");
         console.error(response);
