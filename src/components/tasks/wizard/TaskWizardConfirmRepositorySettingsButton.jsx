@@ -27,7 +27,9 @@ export default function TaskWizardConfirmRepositorySettingsButton(
   const updateTask = async () => {
     try {
       setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
-      await taskActions.validateBranchName(getAccessToken, cancelTokenSource, validateBranchNameParams);
+      if(validateBranchNameParams?.service){
+        await taskActions.validateBranchName(getAccessToken, cancelTokenSource, validateBranchNameParams);
+      }
       await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
       setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
       setCurrentScreen(SALESFORCE_ORGANIZATION_TASK_WIZARD_SCREENS.SALESFORCE_TASK_WIZARD);
