@@ -2,12 +2,10 @@ import React from "react";
 import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
 import PropTypes from "prop-types";
 
-function SfdcWizardComponentTypeSelectionHelpDocumentation({closeHelpPanel, pipelineWizardModel}) {
-  const getPipelineOrTaskText = (lowercase) => pipelineWizardModel.getData('fromGitTasks') ? lowercase ? 'task' : 'Task' : lowercase ? 'pipeline' :'Pipeline';
-
+function SfdcWizardComponentTypeSelectionHelpDocumentation({closeHelpPanel, componentType}) {
   return (
     <HelpDocumentationContainer
-      helpTopic={`SalesForce ${getPipelineOrTaskText()} Run: Component Type Selection`}
+      helpTopic={`SalesForce ${componentType} Run: Component Type Selection`}
       closeHelpPanel={closeHelpPanel}
       confluenceLink={`https://docs.opsera.io/salesforce/salesforce-wizard-run`}
     >
@@ -16,11 +14,11 @@ function SfdcWizardComponentTypeSelectionHelpDocumentation({closeHelpPanel, pipe
       </div>
       <ul>
         <li><b>Component Types</b> - This is a list of Salesforce Metadata component types supported within Opsera.
-          Select which components will be included in this {getPipelineOrTaskText(true)} run. Once the components have been selected, view
+          Select which components will be included in this {componentType.toLowerCase()} run. Once the components have been selected, view
           them in the <b>Selected Component Types</b> table. To deselect, click on the component in this table.
         </li>
         <li><b>Date Range</b> - Only files with components modified between the provided date and range will be included
-          in the {getPipelineOrTaskText(true)} run.
+          in the {componentType.toLowerCase()} run.
         </li>
         <li><b>Namespace Prefix</b> - NamespacePrefix is what identifies a managed package. Every component added to a
           managed package has the namespace prefixed to the component API name. Provide the NamespacePrefix to retrieve
@@ -49,7 +47,7 @@ function SfdcWizardComponentTypeSelectionHelpDocumentation({closeHelpPanel, pipe
 
 SfdcWizardComponentTypeSelectionHelpDocumentation.propTypes = {
   closeHelpPanel: PropTypes.func,
-  pipelineWizardModel: PropTypes.object,
+  componentType: PropTypes.string,
 };
 
 export default React.memo(SfdcWizardComponentTypeSelectionHelpDocumentation);
