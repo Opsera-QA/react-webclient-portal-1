@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import {
     getTableTextColumn,
-    getTableDateTimeColumn, getTableBooleanIconColumn, getLookupIcon, getLookupIconColumn, getColumnHeader, getColumnId
+    getTableDateTimeColumn, getColumnHeader, getColumnId
 } from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -32,33 +32,29 @@ function InsightsLookupDetailsTable({
         width: width,
         template: function (text) {
             let iconCss = "";
-            console.log("text", text);
 
-            if(text === "true"){
-                iconCss = "fa-check-circle green";
-            }
-            else if(text === "false"){
-                iconCss = "fa-times-circle red";
-            }
-            else if(text === "neutral"){
-                iconCss = "fa-minus";
-            }
-            else if(text === "unit"){
-                return `<i class="fal ${("fa-check-circle green")} cell-icon vertical-align-item"></i><i class="fal ${("fa-shield-check green")} cell-icon vertical-align-item"></i>`;
-            }
-            else{
-                iconCss = "fa-minus";
-            }
-
-            // const iconCss = text === true ? "fa-check-circle green" : "fa-times-circle red";
-            return (
-                `<i class="fal ${iconCss} cell-icon vertical-align-item"></i>`
-            );
-        },
-        class: className
+                if(text === "Succeeded"){
+                    iconCss = "fa-check-circle green";
+                }
+                else if(text === "Failed"){
+                    iconCss = "fa-times-circle red";
+                }
+                else if(text === "N/A"){
+                    iconCss = "fa-minus";
+                }
+                else if(text === "Succeeded with Unit Tests"){
+                    return `<i class="fal ${("fa-check-circle green")} cell-icon vertical-align-item"></i><i class="fal ${("fa-shield-check green")} cell-icon vertical-align-item"></i>`;
+                }
+                else{
+                    iconCss = "fa-minus";
+                }
+                return (
+                    `<i class="fal ${iconCss} cell-icon vertical-align-item"></i>`
+                );
+            },
+            class: className
+        };
     };
-  };
-
 
     const columns = useMemo(
         () => [

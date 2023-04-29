@@ -98,12 +98,14 @@ insightsLookupActions.getOrgs = async (getAccessToken, cancelTokenSource) => {
 };
 
 insightsLookupActions.searchComponents = async (
-  getAccessToken,
-  cancelTokenSource,
-  startDate,
-  endDate,
-  componentNames,
-  selectedComponentFilterData,
+    getAccessToken,
+    cancelTokenSource,
+    startDate,
+    endDate,
+    componentNames,
+    selectedComponentFilterData,
+    pipelineComponentFilterData,
+    orgsComponentFilterData,
 ) => {
   const apiUrl = `/analytics/sfdc/v1/component`;
   const postBody = {
@@ -111,6 +113,8 @@ insightsLookupActions.searchComponents = async (
     endDate: endDate,
     fullNameArr: componentNames,
     selectedComponentFilterData: selectedComponentFilterData,
+    pipelineComponentFilterData :pipelineComponentFilterData,
+    orgsComponentFilterData: orgsComponentFilterData,
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,

@@ -38,7 +38,6 @@ function Lookup() {
         return;
       }
 
-      // TODO: This should just use the dates from the input and Node should do any processing on the date if necessary
       const DATE_STRING_FORMAT = "MM/dd/yyyy";
       const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
       const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
@@ -100,7 +99,6 @@ function Lookup() {
         return;
       }
 
-      // TODO: This should just use the dates from the input and Node should do any processing on the date if necessary
       const DATE_STRING_FORMAT = "MM/dd/yyyy";
       const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
       const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
@@ -111,7 +109,8 @@ function Lookup() {
           formattedEndDate,
           [componentName],
           newFilterModel.getData("selectedComponentFilterData"),
-          //newFilterModel.getData("tasksComponentFilterData"),
+          newFilterModel.getData("pipelineComponentFilterData"),
+          newFilterModel.getData("orgsComponentFilterData"),
       );
 
       const searchResults = insightsLookupActions.generateTransformedResults(
