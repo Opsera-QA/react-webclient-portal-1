@@ -12,6 +12,7 @@ function VanitySetVerticalTabContainer(
     setFilterModel,
     isLoading,
     supportSearch,
+    supportClientSideSearching,
     loadData,
     metadata,
     width,
@@ -26,21 +27,36 @@ function VanitySetVerticalTabContainer(
     }
   };
 
-  const getSearchBar = () => {
-    return (
-      <div style={{flex: "0 0 auto"}}>
-        <InlineSearchFilter
-          isLoading={isLoading}
-          supportSearch={supportSearch}
-          filterDto={filterModel}
-          setFilterDto={setFilterModel}
-          loadData={loadData}
-          className={loadData != null ? "px-2 pt-2 d-none d-md-block vertical-tab-container-search" : "vertical-tab-container-search"}
-          metadata={metadata}
-        />
-      </div>
-    );
-  };
+    const getSearchBar = () => {
+        if (supportClientSideSearching === true) {
+            return (
+                <div style={{flex: "0 0 auto"}}>
+                    <InlineClientSideSearchFilter
+                        filterModel={filterModel}
+                        setFilterModel={setFilterModel}
+                        isLoading={isLoading}
+                        supportClientSideSearching={supportClientSideSearching}
+                        className={"px-2 d-none d-sm-block"}
+                        inputClassName={"w-100"}
+                    />
+                </div>
+            );
+        }
+
+        return (
+            <div style={{flex: "0 0 auto"}}>
+                <InlineSearchFilter
+                    isLoading={isLoading}
+                    supportSearch={supportSearch}
+                    filterDto={filterModel}
+                    setFilterDto={setFilterModel}
+                    loadData={loadData}
+                    className={loadData != null ? "px-2 pt-2 d-none d-md-block vertical-tab-container-search" : "vertical-tab-container-search"}
+                    metadata={metadata}
+                />
+            </div>
+        );
+    };
 
   return (
     <div
@@ -80,6 +96,7 @@ VanitySetVerticalTabContainer.propTypes = {
   loadData: PropTypes.func,
   metadata: PropTypes.object,
   width: PropTypes.string,
+  supportClientSideSearching: PropTypes.bool,
 };
 
 VanitySetVerticalTabContainer.defaultProps = {
