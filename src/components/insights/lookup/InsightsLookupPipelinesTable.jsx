@@ -66,21 +66,21 @@ const InsightsLookupPipelinesTable = ({ pipelines, componentName, startDate,endD
 
   const onRowSelect = (row) => {
     toastContext.showOverlayPanel(
-      <InsightsLookupPipelineOverlay componentName={componentName} pipeline={row?.original?.pipeline} startDate={startDate} endDate={endDate}/>,
+        <InsightsLookupPipelineOverlay componentName={componentName} pipeline={row?.original?.pipeline} startDate={startDate} endDate={endDate}/>,
     );
   };
 
   const columns = useMemo(
-    () => [
-      getTableTextColumn(getField(fields, "pipeline") ,"force-text-wrap"),
-      getTableTextColumn(getField(fields, "deployments")),
-      getTableTextColumn(getField(fields, "validations_passed")),
-      getTableTextColumn(getField(fields, "validations_failed")),
-      getTableTextColumn(getField(fields, "unit_tests_passed")),
-      getTableTextColumn(getField(fields, "unit_tests_failed")),
-      getTableTextColumn(getField(fields, "last_deploy")),
-    ],
-    [],
+      () => [
+        getTableTextColumn(getField(fields, "pipeline") ,"force-text-wrap"),
+        getTableTextColumn(getField(fields, "deployments")),
+        getTableTextColumn(getField(fields, "validations_passed")),
+        getTableTextColumn(getField(fields, "validations_failed")),
+        getTableTextColumn(getField(fields, "unit_tests_passed")),
+        getTableTextColumn(getField(fields, "unit_tests_failed")),
+        getTableTextColumn(getField(fields, "last_deploy")),
+      ],
+      [],
   );
 
   const getTable = () => {

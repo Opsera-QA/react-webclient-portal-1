@@ -4,15 +4,15 @@ import { dataParsingHelper } from "components/common/helpers/data/dataParsing.he
 export const insightsLookupActions = {};
 
 insightsLookupActions.getComponentNames = async (
-  getAccessToken,
-  cancelTokenSource,
-  startDate,
-  endDate,
-  componentNames,
-  selectedComponentFilterData,
-  pipelineComponentFilterData,
-  orgsComponentFilterData,
-  tableFilterDto,
+    getAccessToken,
+    cancelTokenSource,
+    startDate,
+    endDate,
+    componentNames,
+    selectedComponentFilterData,
+    pipelineComponentFilterData,
+    orgsComponentFilterData,
+    tableFilterDto,
 ) => {
   const apiUrl = `/analytics/sfdc/v1/component/names`;
   const postBody = {
@@ -33,12 +33,12 @@ insightsLookupActions.getComponentNames = async (
 };
 
 insightsLookupActions.getComponentByName = async (
-  getAccessToken,
-  cancelTokenSource,
-  componentName,
-  pipeline,
-  startDate,
-  endDate
+    getAccessToken,
+    cancelTokenSource,
+    componentName,
+    pipeline,
+    startDate,
+    endDate
 ) => {
   const apiUrl = `/analytics/sfdc/v1/component/get-component-by-name`;
   const postBody = {
@@ -98,14 +98,14 @@ insightsLookupActions.getOrgs = async (getAccessToken, cancelTokenSource) => {
 };
 
 insightsLookupActions.searchComponents = async (
-  getAccessToken,
-  cancelTokenSource,
-  startDate,
-  endDate,
-  componentNames,
-  selectedComponentFilterData,
-  pipelineComponentFilterData,
-  orgsComponentFilterData,
+    getAccessToken,
+    cancelTokenSource,
+    startDate,
+    endDate,
+    componentNames,
+    selectedComponentFilterData,
+    pipelineComponentFilterData,
+    orgsComponentFilterData,
 ) => {
   const apiUrl = `/analytics/sfdc/v1/component`;
   const postBody = {

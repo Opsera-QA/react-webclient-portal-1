@@ -46,9 +46,9 @@ const InsightsLookupPipelineOverlay = ({ componentName, pipeline, startDate, end
       const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
 
       const data = await insightsLookupActions.getComponentByName(
-        getAccessToken,
-        cancelTokenSource,
-        componentName,
+          getAccessToken,
+          cancelTokenSource,
+          componentName,
           pipeline,
           formattedStartDate,
           formattedEndDate

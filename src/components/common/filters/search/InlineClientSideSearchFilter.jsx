@@ -68,8 +68,8 @@ InlineClientSideSearchFilter.propTypes = {
 };
 
 InlineClientSideSearchFilter.defaultProps = {
-  fieldName: "search",
-  inputClassName: "text-input inline-client-side-search-input inline-filter-input w-100",
+    fieldName: "search",
+    inputClassName: "text-input inline-client-side-search-input inline-filter-input w-100",
 };
 
 export default InlineClientSideSearchFilter;

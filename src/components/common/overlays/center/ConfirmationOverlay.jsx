@@ -5,6 +5,7 @@ import CloseButton from "components/common/buttons/CloseButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 
 export const CONFIRMATION_OVERLAY_DEFAULT_HEIGHT = "250px";
 
@@ -126,6 +127,7 @@ ConfirmationOverlay.propTypes = {
 ConfirmationOverlay.defaultProps = {
   showCloseButton: true,
   height: CONFIRMATION_OVERLAY_DEFAULT_HEIGHT,
+  titleIcon: faQuestionCircle,
 };
 
 export default ConfirmationOverlay;
