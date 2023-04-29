@@ -242,6 +242,7 @@ function MultiSelectInputBase(
         setDataFunction={updateValue}
         onSearchFunction={supportSearchLookup === true && typeof loadDataFunction === "function" ? onSearchFunction : undefined}
         onClickFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
+        fieldName={fieldName}
       />
       <InfoText
         fieldName={fieldName}

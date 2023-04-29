@@ -195,6 +195,7 @@ function TagManager(
           placeholderText={internalPlaceholderText ? internalPlaceholderText : placeholderText}
           disabled={disabled || isLoading || (getDisabledTags && getDisabledTags(tagOptions))}
           setDataFunction={(tagArray) => setDataFunction ? setDataFunction(field.id, TagParsingHelper.parseTagArray(tagArray)) : validateAndSetData(field.id, TagParsingHelper.parseTagArray(tagArray))}
+          fieldName={fieldName}
         />
       </div>
       <InfoText
