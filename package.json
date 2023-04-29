@@ -16,6 +16,8 @@
     "build:test": "env-cmd -f .env.test react-app-rewired build && mv build build-test",
     "eject": "react-scripts eject",
     "lint": "eslint --fix --ext .js,.jsx .",
+    "format": "npm run prettier -- --write",
+    "prettier": "prettier  \"**/*.+(js|md|ts|css|sass|less|graphql|yml|yaml|scss|json|vue)\"",
     "refresh-internal-libraries": "rm -rf node_modules/@opsera && npm install",
     "start": "PORT=8080 react-app-rewired start",
     "start-analytics-dev-mac": "FAST_REFRESH=false && npm run refresh-internal-libraries && PORT=8080 REACT_APP_ANALYTICS_API_SERVER_URL='https://localhost:5005' react-app-rewired start",
