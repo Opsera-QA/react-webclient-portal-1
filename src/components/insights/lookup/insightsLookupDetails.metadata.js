@@ -11,12 +11,20 @@ export const insightsLookupDetailsMetadata = {
       id: "pipelineName",
     },
     {
-      label: "Job Type",
-      id: "jobType",
+      label: "Org",
+      id: "org",
     },
     {
-      label: "Created By",
-      id: "createdByName",
+      label: "Run Count",
+      id: "runCount",
+    },
+    {
+      label: "Sfdc Tool Id",
+      id: "sfdcToolId",
+    },
+    {
+      label: "Deployed By",
+      id: "customerName",
     },
     {
       label: "Deployment Start",
@@ -25,6 +33,21 @@ export const insightsLookupDetailsMetadata = {
     {
       label: "Deployment End",
       id: "endTimestamp",
+    },
+    {
+      label: "Duration (mins)",
+      id: "difference",
+    },
+    {
+      label: "Validated",
+      id: "validate",
+    },
+    {
+      label: "Deployed",
+      id: "deploy",
+    },{
+      label: "Unit Tested",
+      id: "unitTest",
     },
   ],
   newObjectFields: {
