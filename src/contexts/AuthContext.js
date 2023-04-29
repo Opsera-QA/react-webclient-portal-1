@@ -11,6 +11,7 @@ import useAuthenticationToken from "hooks/general/api/useAuthenticationToken";
 import useGetActivePlatformSettingsRecord from "hooks/platform/useGetActivePlatformSettingsRecord";
 import useGetOrganizationSettingsRecord from "hooks/settings/organization_settings/useGetOrganizationSettingsRecord";
 import useGetConfigurationFeatureFlags from "hooks/platform/feature_flags/useGetConfigurationFeatureFlags";
+import useGetAnalyticsProfileStatus from "hooks/insights/profile/useGetAnalyticsProfileStatus";
 
 // import ClientWebsocket from "core/websocket/client.websocket";
 // const websocketClient = new ClientWebsocket();
@@ -55,6 +56,10 @@ const AuthContextProvider = (
   const {
     featureFlags,
   } = useGetConfigurationFeatureFlags(userData);
+  const {
+    areAnalyticsToolsEnabled,
+  } = useGetAnalyticsProfileStatus(userData);
+
   const userAccessRoles = SiteRoleHelper.getAccessRoles(userData);
 
   useEffect(() => {
@@ -107,6 +112,7 @@ const AuthContextProvider = (
       organizationSettingsRecord: organizationSettingsRecord,
       featureFlags: featureFlags,
       loadUserData: loadUserData,
+      areAnalyticsToolsEnabled: areAnalyticsToolsEnabled,
 
       isPowerUser: userAccessRoles?.PowerUser === true,
       isSiteAdministrator: userAccessRoles?.Administrator === true,

@@ -56,12 +56,14 @@ const dashboardFilterMetadata = {
 };
 
 export class DashboardFilterModel extends FilterModelBase {
-  constructor(getAccessToken) {
+  constructor(setUrlParameters) {
     super(dashboardFilterMetadata);
-    this.getAccessToken = getAccessToken;
-    this.sessionDataKey = sessionHelper.SUPPORTED_SESSION_STORAGE_KEYS.DASHBOARD_FILTER_MODEL_DATA;
-    this.enableUrlUpdatesWithQueryParameters();
-    this.unpackUrlParameters();
+
+    if (setUrlParameters === true) {
+      this.sessionDataKey = sessionHelper.SUPPORTED_SESSION_STORAGE_KEYS.DASHBOARD_FILTER_MODEL_DATA;
+      this.enableUrlUpdatesWithQueryParameters();
+      this.unpackUrlParameters();
+    }
   }
 
   canSearch = () => {
