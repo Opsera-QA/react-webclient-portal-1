@@ -12,6 +12,7 @@ import DashboardVerticalTabContainer from "components/insights/dashboards/views/
 import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DashboardRoleHelper from "@opsera/know-your-role/roles/analytics/dashboards/dashboardRole.helper";
+import KpiIdentifierFilter from "components/common/filters/admin/kpis/kpi_identifier/KpiIdentifierFilter";
 
 function DashboardTableView(
   {
@@ -37,22 +38,20 @@ function DashboardTableView(
     );
   };
 
-  const getDynamicFilter = () => {
-    if (dashboardFilterModel?.getData("type") !== "owner") {
-      return (
+  const getDropdownFilters = () => {
+    return (
+      <>
         <OwnerFilter
           filterModel={dashboardFilterModel}
           setFilterModel={setDashboardFilterModel}
           className={"mb-2"}
+          visible={dashboardFilterModel?.getData("type") !== "owner"}
         />
-      );
-    }
-  };
-
-  const getDropdownFilters = () => {
-    return (
-      <>
-        {getDynamicFilter()}
+        <KpiIdentifierFilter
+          filterModel={dashboardFilterModel}
+          setFilterModel={setDashboardFilterModel}
+          status={"active"}
+        />
         <ActiveFilter
           filterDto={dashboardFilterModel}
           setFilterDto={setDashboardFilterModel}

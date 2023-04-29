@@ -34,6 +34,10 @@ const dashboardFilterMetadata = {
       id: "search",
     },
     {
+      label: "KPI",
+      id: "identifier",
+    },
+    {
       label: "Active Filters",
       id: "activeFilters",
     },
@@ -44,9 +48,10 @@ const dashboardFilterMetadata = {
     sortOption: "name",
     search: "",
     status: "",
+    identifier: "",
     owner: "",
     type: "",
-    activeFilters: []
+    activeFilters: [],
   },
 };
 
@@ -89,6 +94,15 @@ export class DashboardFilterModel extends FilterModelBase {
 
     if (hasStringValue(search) === true) {
       activeFilters.push({filterId: "search", text: `Keywords: ${search}`});
+    }
+
+    const identifier = this.getData("identifier");
+    const kpiName = this.getData("kpiName");
+    console.log("identifier: " + JSON.stringify(identifier));
+    console.log("kpiName: " + JSON.stringify(kpiName));
+
+    if (hasStringValue(identifier) === true && hasStringValue(kpiName) === true) {
+      activeFilters.push({filterId: "identifier", text: `KPI: ${kpiName}`});
     }
 
     const owner = this.getData("owner");
@@ -136,6 +150,15 @@ export class DashboardFilterModel extends FilterModelBase {
     if (hasStringValue(isFavorite) === true) {
       hasUrlParams = true;
       this.setData("isFavorite", isFavorite);
+    }
+
+    const identifier = sessionHelper.getStoredUrlParameter("identifier");
+    const kpiName = sessionHelper.getStoredUrlParameter("kpiName");
+
+    if (hasStringValue(identifier) === true && hasStringValue(kpiName) === true) {
+      hasUrlParams = true;
+      this.setData("identifier", identifier);
+      this.setData("kpiName", kpiName);
     }
 
     if (hasUrlParams !== true) {
