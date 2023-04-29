@@ -4,10 +4,13 @@ export const lightThemeConstants = {};
 lightThemeConstants.COLOR_PALETTE = {
   WHITE: "#FFFFFF",
   RED: "#FF0000",
+  DANGER_RED: "#dc3545",
   DANGER_SECONDARY: "#FFAAAA",
 
   // Blue
   SALESFORCE_BLUE: "#1798c1",
+  BLUE: "#0f3f91",
+  BLUE_ALT: "#40a7ed",
   LIGHT_BLUE: "#67C1E3",
 
   // Purple
@@ -35,6 +38,7 @@ lightThemeConstants.COLOR_PALETTE = {
   //Green
   LIGHT_MINT: "#95D0D5",
   GREEN: "green",
+  GREEN_ALT: "#31c486",
 
   //Gray
   GRAY: "#6E6C78",
@@ -45,6 +49,12 @@ lightThemeConstants.COLOR_PALETTE = {
 
   // Black
   BLACK: "#000000",
+};
+
+lightThemeConstants.RESOURCE_COLORS = {
+  PIPELINES: lightThemeConstants.COLOR_PALETTE.BLUE,
+  TASKS: lightThemeConstants.COLOR_PALETTE.BLUE_ALT,
+  TOOLS: lightThemeConstants.COLOR_PALETTE.DARK_GRAY,
 };
 
 lightThemeConstants.BORDER_COLORS = {

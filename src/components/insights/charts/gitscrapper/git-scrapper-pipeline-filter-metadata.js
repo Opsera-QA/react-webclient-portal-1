@@ -42,9 +42,6 @@ const gitScrapperPipelineFilterMetadata = {
     sortOptions: [
       {text: "Newest", option: ""},
       {text: "Oldest", option: "oldest"},
-      {text: "Project Name", option: "projectName"},
-      {text: "Pipeline Name", option: "pipelineName"},
-      {text: "Language", option: "gitScrapperPrimaryLanguage"}
     ]
   };
   

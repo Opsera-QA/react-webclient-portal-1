@@ -7,7 +7,16 @@ import {
   getProductionTaskTypesForCategory,
 } from "components/tasks/task.types";
 
-function TaskTypeFilter({ filterModel, setFilterModel, setDataFunction, className, fieldName, inline }) {
+function TaskTypeFilter(
+  {
+    filterModel,
+    setFilterModel,
+    setDataFunction,
+    className,
+    fieldName,
+    inline,
+    disabled,
+  }) {
   const { featureFlagHideItemInProd } = useContext(AuthContext);
 
   if (filterModel == null) {
@@ -24,6 +33,7 @@ function TaskTypeFilter({ filterModel, setFilterModel, setDataFunction, classNam
       groupBy={"category"}
       placeholderText={"Select Task Type"}
       dataObject={filterModel}
+      disabled={disabled}
       selectOptions={
         featureFlagHideItemInProd() !== false
           ? getProductionTaskTypesForCategory(filterModel?.getData("category"))
@@ -40,6 +50,7 @@ TaskTypeFilter.propTypes = {
   fieldName: PropTypes.string,
   inline: PropTypes.bool,
   setDataFunction: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 TaskTypeFilter.defaultProps = {

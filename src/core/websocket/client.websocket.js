@@ -98,7 +98,7 @@ export class ClientWebsocket {
 
   isConnected = () => {
     return this.websocketClient?.connected;
-  }
+  };
 
   subscribeToTopic = (topicName, model) => {
     if (this.isConnected() !== true) {

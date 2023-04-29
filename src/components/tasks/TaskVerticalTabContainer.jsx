@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
-import { faTasks, faClipboardListCheck, faUser } from "@fortawesome/pro-light-svg-icons";
+import {faTasks, faClipboardListCheck, faUser, faRss} from "@fortawesome/pro-light-svg-icons";
 import {faAws, faMicrosoft, faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import {faGitAlt} from "@fortawesome/free-brands-svg-icons/faGitAlt";
@@ -92,6 +92,15 @@ function TaskVerticalTabContainer({ isLoading, taskFilterModel, loadData }) {
         disabled={isLoading}
         handleTabClick={handleTabClick}
         activeTab={taskFilterModel?.getData("category")}
+      />
+      <VanitySetVerticalTab
+        icon={faRss}
+        tabText={"Subscriptions"}
+        tabName={"subscribed"}
+        disabled={isLoading}
+        handleTabClick={handleTabClick}
+        activeTab={taskFilterModel?.getData("category")}
+        tooltipText={"View Tasks that you have access to and have subscribed to."}
       />
     </VanitySetVerticalTabContainer>
   );

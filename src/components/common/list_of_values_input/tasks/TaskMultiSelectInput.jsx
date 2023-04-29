@@ -18,7 +18,6 @@ export default function TaskMultiSelectInput(
     tasks,
   } = useGetTasks(
     ["name", "owner"],
-    undefined,
     false,
     10000,
   );

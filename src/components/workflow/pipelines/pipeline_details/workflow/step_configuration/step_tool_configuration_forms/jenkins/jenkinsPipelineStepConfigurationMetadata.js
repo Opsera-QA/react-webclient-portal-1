@@ -28,7 +28,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       // isRequired: true
     },
     {
-      label: "Source Code Management Tool",
+      label: "Account",
       id: "gitCredential",
       // isRequired: true
     },
@@ -181,7 +181,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "inputDetails",
     },
     {
-      label:"Salesforce Org",
+      label:"Salesforce Credentials",
       id:"sfdcToolId",
       // isRequired: true,
     },
@@ -191,7 +191,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       formText:"Note: TestLevel of NoTestRun cannot be used in production organizations"
     },
     {
-      label:"Destination Salesforce Org",
+      label:"Destination Salesforce Credentials",
       id:"sfdcDestToolId",
       // isRequired: true
     },
@@ -293,7 +293,42 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Ignore Warning",
       id: "ignoreWarning"
-    }
+    },
+    {	
+      label:"File Path",
+      id:"filePath",
+      regexDefinitionName: "pathField",
+      maxLength:256,
+    },
+    {
+      label: "Scheme Name",
+      id: "schemeName",
+      regexDefinitionName: "generalText",      
+      maxLength: 100,
+      isRequiredFunction: (model) => {
+        return model?.getData("buildType") === "xcode";
+      },
+    },
+    {
+      label: "Project Workspace",
+      id: "projectWorkspace",
+      regexDefinitionName: "generalText",      
+      maxLength: 500
+    },
+    {
+      label: "Configuration Type",
+      id: "configurationType",
+      isRequiredFunction: (model) => {
+        return model?.getData("buildType") === "xcode";
+      },
+    },
+    {
+      label: "Script Type",
+      id: "scriptType",
+    },
+    {      
+      id: "developerTeamId",
+    },
   ],
   newObjectFields: {
     jobType: "",
@@ -359,6 +394,12 @@ const jenkinsPipelineStepConfigurationMetadata = {
     environmentVariables: [],
     enableQuickDeploy: false,
     ignoreWarning: false,
+    filePath: "",
+    schemeName: "",
+    projectWorkspace: "",
+    configurationType: "",
+    scriptType: "opsera",
+    developerTeamId: "",
   }
 };
 

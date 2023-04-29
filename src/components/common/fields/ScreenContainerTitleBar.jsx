@@ -27,6 +27,7 @@ function ScreenContainerTitleBar(
     loadDataFunction,
     addRecordFunction,
     addRecordButtonCustomText,
+    isSoftLoading,
   }) {
   const {
     currentUrl,
@@ -38,6 +39,16 @@ function ScreenContainerTitleBar(
     }
   };
 
+  const getTitleActionBar = () => {
+    if (titleActionBar) {
+      return (
+        <div>
+          {titleActionBar}
+        </div>
+      );
+    }
+  };
+
   const getRightSideItems = () => {
     return (
       <div className="ml-auto d-flex">
@@ -45,13 +56,13 @@ function ScreenContainerTitleBar(
           className={"ml-2 my-auto text-nowrap"}
           addRecordFunction={addRecordFunction}
           type={filterModel?.getType()}
-          isLoading={isLoading}
+          isLoading={isLoading || isSoftLoading}
           variant={"success"}
           customButtonText={addRecordButtonCustomText}
         />
-        {titleActionBar}
+        {getTitleActionBar()}
         <SearchFilter
-          isLoading={isLoading}
+          isLoading={isLoading || isSoftLoading}
           paginationModel={filterModel}
           searchText={filterModel?.getData("search")}
           loadData={loadDataFunction}
@@ -64,7 +75,7 @@ function ScreenContainerTitleBar(
           supportViewToggle={typeof filterModel?.canToggleView === "function" && filterModel?.canToggleView() === true}
           filterModel={filterModel}
           setFilterModel={setFilterModel}
-          isLoading={isLoading}
+          isLoading={isLoading || isSoftLoading}
           className={"ml-2"}
           variant={"secondary"}
         />
@@ -72,6 +83,7 @@ function ScreenContainerTitleBar(
           filterModel={filterModel}
           filterOverlay={filterOverlay}
           className={"ml-3"}
+          isLoading={isLoading || isSoftLoading}
         />
         <CopyToClipboardIconBase
           className={"ml-3"}
@@ -86,7 +98,7 @@ function ScreenContainerTitleBar(
         />
         <RefreshIcon
           className={"ml-3"}
-          isLoading={isLoading}
+          isLoading={isLoading || isSoftLoading}
           loadDataFunction={loadDataFunction}
         />
         <BetaBadge
@@ -98,13 +110,14 @@ function ScreenContainerTitleBar(
     );
   };
 
-  if (isLoading) {
-    return (<span><IconBase isLoading={isLoading} className={"mr-2"}/>Loading Data</span>);
-  }
-
   return (
     <div className="d-flex">
-      <div><span><IconBase icon={titleIcon} className={"mr-2"}/>{title}</span></div>
+      <div className={"title-text-header-1"}>
+        <span>
+          <IconBase isLoading={isLoading || isSoftLoading} icon={titleIcon} className={"mr-2"}/>
+          {isLoading === true ? "Loading Data" : title}
+        </span>
+      </div>
       {getRightSideItems()}
     </div>
   );
@@ -125,6 +138,7 @@ ScreenContainerTitleBar.propTypes = {
   filterOverlay: PropTypes.any,
   addRecordFunction: PropTypes.func,
   addRecordButtonCustomText: PropTypes.string,
+  isSoftLoading: PropTypes.bool,
 };
 
 export default ScreenContainerTitleBar;

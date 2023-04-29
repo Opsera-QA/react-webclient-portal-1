@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
-import JenkinsBuildJobEditorPanel from "./inputs/build/JenkinsBuildJobEditorPanel";
+import JenkinsBuildJobEditorPanel, {getMetadataForJenkinsJobBuildType} from "./inputs/build/JenkinsBuildJobEditorPanel";
 import JenkinsSfdcJobEditorPanel from "./inputs/sfdc/JenkinsSfdcJobEditorPanel";
 import JenkinsUnitTestingEditorPanel from "./inputs/unit_testing/JenkinsUnitTestingEditorPanel";
 import JenkinsShellScriptEditorPanel from "./inputs/shell_script/JenkinsShellScriptEditorPanel";
@@ -11,8 +11,6 @@ import JenkinsUnitTestJobMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/unit_testing/jenkins-unit-test-metadata";
 import JenkinsDockerPushJobMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/docker_push/jenkins-docker-push-metadata";
-import JenkinsJobsBuildMetadata
-  from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/build/jenkins-jobs-build-metadata";
 import axios from "axios";
 import JenkinsShellScriptJobMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/shell_script/jenkins-shell-script-metadata";
@@ -21,7 +19,7 @@ import JenkinsGenericJobEditorPanel
 import AzureDockerPushJobEditorPanel
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/azure_docker_push/AzureDockerPushJobEditorPanel";
 
-export const getMetadataForJenkinsJobType = (jenkinsJobType) => {
+export const getJenkinsJobConfigurationMetadata = (jenkinsJobType, buildType) => {
   switch (jenkinsJobType) {
     case "SFDC":
       return JenkinsSfdcJobMetadata;
@@ -35,7 +33,7 @@ export const getMetadataForJenkinsJobType = (jenkinsJobType) => {
       return JenkinsShellScriptJobMetadata;
     case "BUILD":
     default:
-      return JenkinsJobsBuildMetadata;
+      return getMetadataForJenkinsJobBuildType(buildType);
   }
 };
 
@@ -67,6 +65,7 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
             autoScalingEnabled={autoScalingEnabled}
+            buildType={jenkinsJobConfigurationModel?.getData("buildType")}
           />
         );
       case "SFDC":

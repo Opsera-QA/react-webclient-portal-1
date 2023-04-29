@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from "react";
+import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {faServer} from "@fortawesome/pro-light-svg-icons";
@@ -10,32 +10,14 @@ import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/t
 import CustomTable from "components/common/table/CustomTable";
 import {siteRoleDefinitionMetadata} from "components/common/fields/access/table/siteRoleDefinition.metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function SiteRoleAccessTable({ roleAccessDefinitions, loadData, isLoading }) {
   const fields = siteRoleDefinitionMetadata?.fields;
-  const [accessRoles, setAccessRoles] = useState(undefined);
-  const isMounted = useRef(false);
   const {
-    accessRoleData,
     isSaasUser,
   } = useComponentStateReference();
-
-  useEffect(() => {
-    if (roleAccessDefinitions && accessRoleData && isSaasUser !== true) {
-      loadAccessRoleData(roleAccessDefinitions).catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
-  }, [roleAccessDefinitions, accessRoleData]);
-
-  const loadAccessRoleData = async (roleAccessDefinitions) => {
-
-    if (accessRoleData) {
-      setAccessRoles([...parseRoleDefinitionsIntoSiteRoleTableRows(roleAccessDefinitions, accessRoleData)]);
-    }
-  };
+  const tableRows = DataParsingHelper.parseArray(parseRoleDefinitionsIntoSiteRoleTableRows(roleAccessDefinitions), []);
 
   const columns = useMemo(
     () => [
@@ -45,13 +27,13 @@ function SiteRoleAccessTable({ roleAccessDefinitions, loadData, isLoading }) {
       getTableBooleanIconColumn(getField(fields, "user"), undefined, 45),
       getTableBooleanIconColumn(getField(fields, "no_access_rules"), undefined, 165),
     ],
-    []
+    [fields]
   );
 
   const getRoleDefinitionTable = () => {
     return (
       <CustomTable
-        data={accessRoles}
+        data={tableRows}
         columns={columns}
         isLoading={isLoading}
         loadData={loadData}

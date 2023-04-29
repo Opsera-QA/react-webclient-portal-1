@@ -37,7 +37,11 @@ const JenkinsBuildJobMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("customMavenSettings") === true;
       },
-    }
+    },
+    {
+      label: "Developer Team",
+      id: "developerTeamId"
+    },
   ],
   newObjectFields: {
     commandLineArgs: "",
@@ -47,6 +51,7 @@ const JenkinsBuildJobMetadata = {
     agentLabels: "",
     customMavenSettings: false,
     scriptId: "",
+    developerTeamId: "",
   },
 };
 

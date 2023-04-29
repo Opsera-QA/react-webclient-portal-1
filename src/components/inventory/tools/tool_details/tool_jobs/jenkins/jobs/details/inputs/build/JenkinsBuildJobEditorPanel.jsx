@@ -14,16 +14,38 @@ import JenkinsJobsPythonAgentLabelSelectInput
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobsPythonAgentLabelSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import ScriptLibrarySelectInput from "components/common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
+import PasswordInput from "components/common/inputs/text/PasswordInput";
+import {
+  jenkinsXcodeBuildJobMetadata
+} from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/build/jenkinsXcodeBuildJob.metadata";
 
-function JenkinsBuildJobEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled }) {
+export const getMetadataForJenkinsJobBuildType = (buildType) => {
+  switch (buildType) {
+    case "xcode":
+      return jenkinsXcodeBuildJobMetadata;
+    default:
+      return JenkinsJobsBuildMetadata;
+  }
+};
+
+function JenkinsBuildJobEditorPanel(
+  {
+    jenkinsJobConfiguration,
+    model,
+    setModel,
+    autoScalingEnabled,
+    buildType,
+  }) {
   useEffect(() => {
-    unpackJobConfiguration();
-  }, [jenkinsJobConfiguration]);
+    const metadata = getMetadataForJenkinsJobBuildType(buildType);
+    const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, metadata);
 
-  const unpackJobConfiguration = () => {
-    const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, JenkinsJobsBuildMetadata);
+    if (buildType) {
+      parsedModel.setData("buildType", buildType);
+    }
+
     setModel({...parsedModel});
-  };
+  }, [jenkinsJobConfiguration, buildType]);
 
   const getDynamicBuildTypeFields = () => {
     switch (model?.getData("buildType")) {
@@ -63,10 +85,32 @@ function JenkinsBuildJobEditorPanel({ jenkinsJobConfiguration, model, setModel, 
             <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"commandLineArgs"}/>
           </Col>
         );
+      case "xcode":
+        return (
+          <>
+            <Col lg={12}>
+              <ScriptLibrarySelectInput
+                fieldName={"scriptId"}
+                model={model}
+                setModel={setModel}
+              />
+            </Col>            
+            <Col lg={12}>
+              <PasswordInput 
+                dataObject={model} 
+                setDataObject={setModel} 
+                fieldName={"developerTeamId"}
+              />
+            </Col>
+          </>          
+        );        
     }
   };
 
   const getAutoScalingField = () => {
+    if (model?.getData("buildType") === "xcode") {
+      return null;
+    }
     if (autoScalingEnabled === true && model) {
       if (model?.getData("buildType") === "python") {
         return (
@@ -115,6 +159,7 @@ JenkinsBuildJobEditorPanel.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   autoScalingEnabled: PropTypes.bool,
+  buildType: PropTypes.string,
 };
 
 export default JenkinsBuildJobEditorPanel;

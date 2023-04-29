@@ -136,7 +136,7 @@ export class ToolFilterModel extends FilterModelBase {
 
   canToggleView = () => {
     return true;
-  }
+  };
 
   getDetailViewLink = (toolId) => {
     return toolHelper.getDetailViewLink(toolId);

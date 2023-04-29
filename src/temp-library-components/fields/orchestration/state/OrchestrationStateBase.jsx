@@ -30,7 +30,7 @@ export default function OrchestrationStateBase(
             spinIcon={statusText === "Running"}
             className={`my-auto mr-1 ${colorClassName}`}
           />
-          <span>{getStatusText()}</span>
+          <div className={"my-auto"}>{getStatusText()}</div>
         </div>
       </TooltipWrapper>
     </span>

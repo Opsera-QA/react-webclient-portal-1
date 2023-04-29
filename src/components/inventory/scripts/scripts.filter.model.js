@@ -42,11 +42,11 @@ export class ScriptsFilterModel extends FilterModelBase {
 
   canSearch = () => {
     return true;
-  }
+  };
 
   showPagination = () => {
     return false;
-  }
+  };
 }
 
 export default ScriptsFilterModel;

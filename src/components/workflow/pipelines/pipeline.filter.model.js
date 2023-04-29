@@ -94,7 +94,7 @@ export class PipelineFilterModel extends FilterModelBase {
 
   canToggleView = () => {
     return true;
-  }
+  };
 
   getActiveFilters = () => {
     const activeFilters = [];

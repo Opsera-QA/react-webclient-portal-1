@@ -3,10 +3,11 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import ToolFilterModel from "components/inventory/tools/tool.filter.model";
 import useRegistryToolActions from "hooks/tools/useRegistryToolActions";
+import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function useGetRegistryTools(
   fields,
-  active,
   pageSize,
   setUrlParameters = false,
   handleErrorFunction,
@@ -19,6 +20,7 @@ export default function useGetRegistryTools(
     setError,
     loadData,
   } = useLoadData();
+  const { userData } = useComponentStateReference();
   const registryToolActions = useRegistryToolActions();
 
   useEffect(() => {
@@ -36,6 +38,12 @@ export default function useGetRegistryTools(
   const getRegistryTools = async (
     newFilterModel = registryToolFilterModel,
   ) => {
+    setRegistryTools([]);
+
+    if (RegistryToolRoleHelper.canGetRegistryTools(userData) !== true) {
+      return;
+    }
+
     const response = await registryToolActions.getRegistryTools(
       newFilterModel,
       fields,
