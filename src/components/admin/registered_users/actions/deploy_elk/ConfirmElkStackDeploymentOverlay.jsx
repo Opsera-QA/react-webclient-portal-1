@@ -12,7 +12,6 @@ import {faCheckCircle} from "@fortawesome/pro-light-svg-icons";
 import {buttonLabelHelper} from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import useApiState, {API_STATES} from "hooks/general/api/useApiState";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
-import {CloseButton} from "react-bootstrap";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import CancelButtonBase from "components/common/buttons/cancel/CancelButtonBase";
 
@@ -52,7 +51,6 @@ export default function ConfirmElkStackDeploymentOverlay({ user }) {
   }
 
   if (organizationAccountOwner) {
-    console.log("returning significant operation overlay");
     return (
       <SignificantOperationConfirmationOverlayBase
         closePanel={closePanel}
