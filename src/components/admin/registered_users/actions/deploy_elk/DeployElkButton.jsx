@@ -5,14 +5,13 @@ import ConfirmElkStackDeploymentOverlay
   from "components/admin/registered_users/actions/deploy_elk/ConfirmElkStackDeploymentOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-export default function DeployElkButton({ userId }) {
+export default function DeployElkButton({ user }) {
   const { toastContext, } = useComponentStateReference();
 
   const launchConfirmationOverlay = () => {
-    console.log("showing overlay panel");
     toastContext.showOverlayPanel(
       <ConfirmElkStackDeploymentOverlay
-        userId={userId}
+        user={user}
       />
     );
   };
@@ -29,5 +28,5 @@ export default function DeployElkButton({ userId }) {
 }
 
 DeployElkButton.propTypes = {
-  userId: PropTypes.string,
+  user: PropTypes.object,
 };

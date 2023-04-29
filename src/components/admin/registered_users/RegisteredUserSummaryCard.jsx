@@ -46,7 +46,7 @@ function RegisteredUserSummaryCard({ registeredUsersData, loadData }) {
             <div className="h-100"><div className="mt-auto h-100">No tools are associated with this user account! Go into the User Settings Tools tab to deploy ELK stack</div></div>
           </Col>
           <Col lg={3}>
-            <DeployElkButton loadData={loadData} userId={registeredUserDto.getData("_id")} />
+            <DeployElkButton loadData={loadData} user={registeredUserDto.getCurrentData()} />
           </Col>
         </Row>
       );

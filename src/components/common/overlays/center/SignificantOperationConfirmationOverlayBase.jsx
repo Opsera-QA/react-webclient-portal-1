@@ -10,7 +10,6 @@ import CancelButton from "components/common/buttons/CancelButton";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import InputContainer from "components/common/inputs/InputContainer";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
-import useApiState from "hooks/general/api/useApiState";
 
 export default function SignificantOperationConfirmationOverlayBase(
   {
@@ -19,18 +18,9 @@ export default function SignificantOperationConfirmationOverlayBase(
     children,
     size,
     handleOperationFunction,
+    apiState,
   }) {
   const [confirmText, setConfirmText] = useState("");
-  const { apiState, apiStateFunctions } = useApiState();
-
-  const performOperationFunction = async () => {
-    try {
-      apiStateFunctions.setBusyState();
-      await handleOperationFunction();
-    } finally {
-      apiStateFunctions.setReadyState();
-    }
-  };
 
   if (handleOperationFunction == null) {
     return null;
@@ -75,12 +65,13 @@ export default function SignificantOperationConfirmationOverlayBase(
                 buttonState={apiState}
                 normalText={"CONFIRM OPERATION"}
                 busyText={`Performing Operation`}
+                errorText={`Failed To Perform Operation!`}
+                successText={`Successfully Performed Operation`}
                 tooltip={cannotBeUndone}
                 icon={faCheckCircle}
                 disabled={confirmText !== "CONFIRM" || apiState === buttonLabelHelper.BUTTON_STATES.BUSY}
                 variant={"secondary"}
-                errorText={`Failed To Perform Operation!`}
-                onClickFunction={performOperationFunction}
+                onClickFunction={handleOperationFunction}
               >
               </VanityButtonBase>
             </ButtonContainerBase>
@@ -97,6 +88,7 @@ SignificantOperationConfirmationOverlayBase.propTypes = {
   size: PropTypes.string,
   children: PropTypes.any,
   handleOperationFunction: PropTypes.func,
+  apiState: PropTypes.string,
 };
 
 SignificantOperationConfirmationOverlayBase.defaultProps = {
