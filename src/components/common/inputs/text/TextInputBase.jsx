@@ -104,6 +104,7 @@ function TextInputBase(
   const getInputBody = () => {
     return (
       <input
+        id={fieldName}
         type={type}
         style={style}
         disabled={disabled}

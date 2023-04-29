@@ -37,7 +37,8 @@ function StandaloneMultiSelectInput(
     manualEntry,
     onSearchFunction,
     onClickFunction,
-    filterOption
+    filterOption,
+    fieldName,
   }) {
   return (
     <div
@@ -60,6 +61,7 @@ function StandaloneMultiSelectInput(
         placeholder={placeholderText}
         disabled={disabled || (manualEntry !== true && (onSearchFunction == null && (!Array.isArray(selectOptions) || selectOptions?.length === 0 || busy)))}
         onChange={setDataFunction}
+        id={fieldName}
       />
     </div>
   );
@@ -96,7 +98,8 @@ StandaloneMultiSelectInput.propTypes = {
   manualEntry: PropTypes.bool,
   onSearchFunction: PropTypes.func,
   onClickFunction: PropTypes.func,
-  filterOption: PropTypes.string
+  filterOption: PropTypes.string,
+  fieldName: PropTypes.string,
 };
 
 StandaloneMultiSelectInput.defaultProps = {
