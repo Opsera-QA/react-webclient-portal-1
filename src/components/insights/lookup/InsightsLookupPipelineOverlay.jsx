@@ -6,8 +6,9 @@ import { insightsLookupActions } from "./insightsLookup.actions";
 import { AuthContext } from "../../../contexts/AuthContext";
 import InsightsLookupDetailsTable from "./InsightsLookupDetailsTable";
 import axios from "axios";
+import {formatDate} from "../../common/helpers/date/date.helpers";
 
-const InsightsLookupPipelineOverlay = ({ componentName }) => {
+const InsightsLookupPipelineOverlay = ({ componentName, pipeline, startDate, endDate }) => {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -40,10 +41,17 @@ const InsightsLookupPipelineOverlay = ({ componentName }) => {
     try {
       setIsLoading(true);
 
+      const DATE_STRING_FORMAT = "MM/dd/yyyy";
+      const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
+      const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
+
       const data = await insightsLookupActions.getComponentByName(
-        getAccessToken,
-        cancelTokenSource,
-        componentName,
+          getAccessToken,
+          cancelTokenSource,
+          componentName,
+          pipeline,
+          formattedStartDate,
+          formattedEndDate
       );
 
       setLookupDetails(data.data.results);
@@ -62,6 +70,10 @@ const InsightsLookupPipelineOverlay = ({ componentName }) => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
   };
+
+  lookupDetails.forEach((temp) => {
+    temp.difference = ((new Date(temp.endTimestamp) - new Date(temp.startTimestamp))/60000).toFixed(2).toString();
+  });
 
   return (
     <CenterOverlayContainer
@@ -82,6 +94,9 @@ const InsightsLookupPipelineOverlay = ({ componentName }) => {
 
 InsightsLookupPipelineOverlay.propTypes = {
   componentName: PropTypes.string,
+  pipeline: PropTypes.string,
+  startDate: PropTypes.string,
+  endDate:PropTypes.string,
 };
 
 export default InsightsLookupPipelineOverlay;
