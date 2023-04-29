@@ -16,7 +16,6 @@ function Insights() {
   const [dashboards, setDashboards] = useState(undefined);
   const [dashboardFilterModel, setDashboardFilterModel] = useState(undefined);
   const [areAnalyticsToolsEnabled, setAreAnalyticsToolsEnabled] = useState(undefined);
-  const [dashboardRoleDefinitions, setDashboardRoleDefinitions] = useState([]);
   const {
     cancelTokenSource,
     getAccessToken,
@@ -68,7 +67,6 @@ function Insights() {
     const dashboards = response?.data?.data;
 
     if (isMounted.current === true && dashboards) {
-      setDashboardRoleDefinitions(response?.data?.roles);
       setDashboards(dashboards);
       filterModel.updateTotalCount(response?.data?.count);
       filterModel.updateActiveFilters();
@@ -105,16 +103,6 @@ function Insights() {
     );
   };
 
-  const getHelpDocumentation = () => {
-    if (isLoading !== true) {
-      return (
-        <InsightsHelpDocumentation
-          dashboardRoleDefinitions={dashboardRoleDefinitions}
-        />
-      );
-    }
-  };
-
   if (!accessRoleData) {
     return (<LoadingDialog size="sm" message="Loading Insights"/>);
   }
@@ -128,9 +116,7 @@ function Insights() {
         configured logs repositories below.
       `}
       breadcrumbDestination={"insights"}
-      helpComponent={
-        getHelpDocumentation()
-      }
+      helpComponent={<InsightsHelpDocumentation />}
     >
       {getInsightsView()}
     </ScreenContainer>
