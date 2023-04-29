@@ -24,6 +24,7 @@ export default function useComponentStateReference() {
     userData,
     backgroundColor,
     loadUserData,
+    areAnalyticsToolsEnabled,
   } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const {
@@ -64,5 +65,6 @@ export default function useComponentStateReference() {
     isAuthenticated: isAuthenticated,
     isPowerUser: isPowerUser,
     domain: domain,
+    areAnalyticsToolsEnabled: areAnalyticsToolsEnabled,
   });
 }

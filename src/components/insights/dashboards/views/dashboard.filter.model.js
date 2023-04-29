@@ -56,12 +56,14 @@ const dashboardFilterMetadata = {
 };
 
 export class DashboardFilterModel extends FilterModelBase {
-  constructor(getAccessToken) {
+  constructor(setUrlParameters) {
     super(dashboardFilterMetadata);
-    this.getAccessToken = getAccessToken;
-    this.sessionDataKey = sessionHelper.SUPPORTED_SESSION_STORAGE_KEYS.DASHBOARD_FILTER_MODEL_DATA;
-    this.enableUrlUpdatesWithQueryParameters();
-    this.unpackUrlParameters();
+
+    if (setUrlParameters === true) {
+      this.sessionDataKey = sessionHelper.SUPPORTED_SESSION_STORAGE_KEYS.DASHBOARD_FILTER_MODEL_DATA;
+      this.enableUrlUpdatesWithQueryParameters();
+      this.unpackUrlParameters();
+    }
   }
 
   canSearch = () => {
@@ -98,8 +100,6 @@ export class DashboardFilterModel extends FilterModelBase {
 
     const identifier = this.getData("identifier");
     const kpiName = this.getData("kpiName");
-    console.log("identifier: " + JSON.stringify(identifier));
-    console.log("kpiName: " + JSON.stringify(kpiName));
 
     if (hasStringValue(identifier) === true && hasStringValue(kpiName) === true) {
       activeFilters.push({filterId: "identifier", text: `KPI: ${kpiName}`});

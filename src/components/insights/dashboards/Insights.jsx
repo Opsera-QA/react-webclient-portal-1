@@ -1,78 +1,43 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import LoadingDialog from "components/common/status_notifications/loading";
-import analyticsActions from "components/settings/analytics/analytics-settings-actions";
-import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import AnalyticsProfileSettings from "components/settings/analytics/activateAnalyticsCard";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import InsightsHelpDocumentation from "../../common/help/documentation/insights/InsightsHelpDocumentation";
-import DashboardTableView
-  from "components/insights/dashboards/views/DashboardTableView";
-import DashboardFilterModel from "components/insights/dashboards/views/dashboard.filter.model";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import useGetDashboards from "hooks/insights/dashboards/useGetDashboards";
+import InsightsFilterOverlay from "components/insights/dashboards/InsightsFilterOverlay";
+import DashboardRoleHelper from "@opsera/know-your-role/roles/analytics/dashboards/dashboardRole.helper";
+import CreateNewDashboardOverlay from "components/insights/dashboards/CreateNewDashboardOverlay";
+import InlineDashboardTypeFilter from "components/common/filters/dashboards/dashboard_type/InlineDashboardTypeFilter";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
+import DashboardsTable from "components/insights/dashboards/views/DashboardsTable";
+import DashboardVerticalTabContainer from "components/insights/dashboards/views/DashboardVerticalTabContainer";
+import PaginationContainer from "components/common/pagination/PaginationContainer";
+import SideBySideViewBase from "components/common/tabs/SideBySideViewBase";
+import {
+  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
+} from "components/common/table/FilterContainer";
 
-function Insights() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [dashboards, setDashboards] = useState(undefined);
-  const [dashboardFilterModel, setDashboardFilterModel] = useState(undefined);
-  const [areAnalyticsToolsEnabled, setAreAnalyticsToolsEnabled] = useState(undefined);
+export default function Insights() {
   const {
-    cancelTokenSource,
-    getAccessToken,
+    areAnalyticsToolsEnabled,
+    userData,
     toastContext,
-    isMounted,
-    accessRoleData,
   } = useComponentStateReference();
+  const {
+    dashboards,
+    dashboardFilterModel,
+    setDashboardFilterModel,
+    loadData,
+    isLoading,
+    error,
+  } = useGetDashboards(
+    undefined,
+    true,
+  );
 
-  useEffect(() => {
-    const newDashboardFilterModel = new DashboardFilterModel(getAccessToken);
-    loadData(newDashboardFilterModel).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-  }, []);
-
-  const loadData = async (filterModel = dashboardFilterModel) => {
-    try {
-      setIsLoading(true);
-      await getProfile(filterModel);
-    } catch (error) {
-      if (isMounted.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const getProfile = async(filterDto = dashboardFilterModel) => {
-    const response = await analyticsActions.areAnalyticsToolsEnabled(getAccessToken, cancelTokenSource);
-    const analyticsAreEnabled = response?.data.areAnalyticsToolsEnabled;
-    setAreAnalyticsToolsEnabled(analyticsAreEnabled);
-
-    if (isMounted.current === true && analyticsAreEnabled === true) {
-      await getDashboards(filterDto);
-    }
-  };
-
-  const getDashboards = async (filterModel = dashboardFilterModel) => {
-    const response = await dashboardsActions.getAllDashboardsV2(
-      getAccessToken,
-      cancelTokenSource,
-      filterModel,
-    );
-    const dashboards = response?.data?.data;
-
-    if (isMounted.current === true && dashboards) {
-      setDashboards(dashboards);
-      filterModel.updateTotalCount(response?.data?.count);
-      filterModel.updateActiveFilters();
-      setDashboardFilterModel({...filterModel});
-    }
-  };
+  useEffect(() => {}, [areAnalyticsToolsEnabled]);
 
   const getInsightsView = () => {
     if (areAnalyticsToolsEnabled == null) {
@@ -86,13 +51,22 @@ function Insights() {
 
     if (areAnalyticsToolsEnabled === true) {
       return (
-        <DashboardTableView
-          isLoading={isLoading}
+        <PaginationContainer
           loadData={loadData}
-          dashboards={dashboards}
-          dashboardFilterModel={dashboardFilterModel}
-          setDashboardFilterModel={setDashboardFilterModel}
-        />
+          isLoading={isLoading}
+          filterDto={dashboardFilterModel}
+          setFilterDto={setDashboardFilterModel}
+          data={dashboards}
+          nextGeneration={true}
+        >
+          <SideBySideViewBase
+            leftSideView={getVerticalTabContainer()}
+            rightSideView={getDashboardsTable()}
+            leftSideMinimumWidth={"200px"}
+            leftSideMaximumWidth={"200px"}
+            minimumHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
+          />
+        </PaginationContainer>
       );
     }
 
@@ -103,9 +77,47 @@ function Insights() {
     );
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm" message="Loading Insights"/>);
-  }
+  const getVerticalTabContainer = () => {
+    return (
+      <DashboardVerticalTabContainer
+        dashboardFilterModel={dashboardFilterModel}
+        loadData={loadData}
+        isLoading={isLoading}
+      />
+    );
+  };
+
+
+  const getDashboardsTable = () => {
+    return (
+      <DashboardsTable
+        dashboards={dashboards}
+        loadData={loadData}
+        isLoading={isLoading}
+      />
+    );
+  };
+
+  const createNewDashboard = () => {
+    toastContext.showOverlayPanel(
+      <CreateNewDashboardOverlay
+        loadData={loadData}
+      />
+    );
+  };
+
+  const getInlineFilters = () => {
+    if (areAnalyticsToolsEnabled === true) {
+      return (
+        <InlineDashboardTypeFilter
+          filterModel={dashboardFilterModel}
+          setFilterModel={setDashboardFilterModel}
+          loadData={loadData}
+          className={"ml-2"}
+        />
+      );
+    }
+  };
 
   return (
     <ScreenContainer
@@ -117,12 +129,16 @@ function Insights() {
       `}
       breadcrumbDestination={"insights"}
       helpComponent={<InsightsHelpDocumentation />}
+      filterModel={dashboardFilterModel}
+      setFilterModel={setDashboardFilterModel}
+      filterOverlay={<InsightsFilterOverlay dashboardFilterModel={dashboardFilterModel} loadDataFunction={loadData} />}
+      loadDataFunction={loadData}
+      isSoftLoading={isLoading}
+      addRecordFunction={areAnalyticsToolsEnabled === true && DashboardRoleHelper.canCreateDashboard(userData) ? createNewDashboard : undefined}
+      titleActionBar={getInlineFilters()}
+      error={error}
     >
       {getInsightsView()}
     </ScreenContainer>
   );
-
 }
-
-
-export default Insights;
