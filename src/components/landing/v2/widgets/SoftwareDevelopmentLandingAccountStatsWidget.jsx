@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import { getSingularOrPluralString } from "components/common/helpers/string-helpers";
-import OpseraInfinityLogoLarge from "components/logo/OpseraInfinityLogoLarge";
 import { widgetHelper } from "temp-library-components/helpers/widgets/widget.helper";
 import {EXTERNAL_LINKS} from "components/header/legacy/HeaderNavBar";
 import { ExternalLink } from "temp-library-components/link/ExternalLink";
+import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
+import {ImageBase} from "@opsera/react-vanity-set";
+import {platformImageConstants} from "temp-library-components/image/platformImage.constants";
 
 // TODO: This needs to be rewritten to be standardized and cleaned up
 export default function SoftwareDevelopmentLandingAccountStatsWidget({ className }) {
@@ -80,7 +81,7 @@ export default function SoftwareDevelopmentLandingAccountStatsWidget({ className
       );
     }
 
-    if (totalCount === 1) {
+    if (totalCount > 0 && totalCount <= 5) {
       return (
         <b className={"yellow"}>
           slightly unhealthy
@@ -88,7 +89,7 @@ export default function SoftwareDevelopmentLandingAccountStatsWidget({ className
       );
     }
 
-    if (totalCount > 1) {
+    if (totalCount > 5) {
       return (
         <b className={"red"}>
           unhealthy
@@ -122,7 +123,7 @@ export default function SoftwareDevelopmentLandingAccountStatsWidget({ className
       return (
         <CenteredContentWrapper>
           <div className={"my-4 marketingModulesTextLarger"}>
-            Get started below to create your first Salesforce Workflow.
+            Get started below to create your first Workflow.
           </div>
         </CenteredContentWrapper>
       );
@@ -144,14 +145,7 @@ export default function SoftwareDevelopmentLandingAccountStatsWidget({ className
 
     return (
       <div>
-        <div>
-          Your Opsera workflows are {getWorkflowHealthText()}
-        </div>
-        <div className={"mt-3"}>
-          <div>
-            You have completed <b>{totalRunCount}</b> {runText} across <b>{pipelineCount}</b> {pipelineText} and <b>{taskCount}</b> {taskText}
-          </div>
-        </div>
+          Your Opsera workflows are {getWorkflowHealthText()}. You have completed <b>{totalRunCount}</b> {runText} across <b>{pipelineCount}</b> {pipelineText} and <b>{taskCount}</b> {taskText}.
       </div>
     );
   };
@@ -182,42 +176,6 @@ export default function SoftwareDevelopmentLandingAccountStatsWidget({ className
     );
   };
 
-  const getExpirationDate = () => {
-    const expiration = DataParsingHelper.parseDate(accountMetrics?.expiration);
-
-    if (!expiration) {
-      return (
-        <div className={"d-flex"}>
-          <div className={"ml-auto mt-auto"}>
-            <div
-              style={{
-                fontSize: "smaller",
-              }}
-            >
-              Your free trial does not expire.
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    const parsedDate = expiration.toISOString().substring(0, 10);
-
-    return (
-      <div className={"d-flex"}>
-        <div className={"ml-auto mt-auto"}>
-          <div
-            style={{
-              fontSize: "smaller",
-            }}
-          >
-            Your free trial will expire on {parsedDate}.
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   const getBody = () => {
     if (isLoading === true) {
       return (
@@ -229,47 +187,35 @@ export default function SoftwareDevelopmentLandingAccountStatsWidget({ className
 
     return (
       <div
+        className={"marketingModulesText"}
         style={{
           minHeight: `calc(${widgetHelper.getWidgetPixelSize(6)} - 43px)`,
           height: `calc(${widgetHelper.getWidgetPixelSize(6)} - 43px)`,
         }}
       >
         <div
-          className={"d-flex"}
           style={{
-            minHeight: `calc(${widgetHelper.getWidgetPixelSize(6)} - 95px)`,
-            height: `calc(${widgetHelper.getWidgetPixelSize(6)} - 95px)`,
+            minHeight: `calc(${widgetHelper.getWidgetPixelSize(6)} - 75px)`,
+            height: `calc(${widgetHelper.getWidgetPixelSize(6)} - 75px)`,
           }}
         >
           <div className={"d-flex"}>
-            <div className={"d-flex"}>
-              <div className={"d-none d-sm-inline"}>
-                <OpseraInfinityLogoLarge
-                  desiredHeight={166}
-                  className={"mt-3"}
-                />
-              </div>
-            </div>
             <CenteredContentWrapper>
-              <div className={"m-2"}>
-                <div className={"marketingModulesTextLarger"}>
-                  {getItemCounts()}
-                </div>
-                <div className={"mt-1 marketingModulesTextLarger"}>
-                  {getWorkflowHealthStatus()}
-                </div>
+              <div className={"mx-3"}>
+                {getItemCounts()} {getWorkflowHealthStatus()}
               </div>
+            </CenteredContentWrapper>
+            <CenteredContentWrapper>
+              <ImageBase
+                imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.COLLABORATION_ALT}
+                height={150}
+              />
             </CenteredContentWrapper>
           </div>
         </div>
         <div className={"d-flex m-2"}>
           <div className={"ml-auto mt-auto"}>
-            <div>
-              {getExpirationDate()}
-            </div>
-            <div>
-              {getEmailLink()}
-            </div>
+            {getEmailLink()}
           </div>
         </div>
       </div>
@@ -279,14 +225,13 @@ export default function SoftwareDevelopmentLandingAccountStatsWidget({ className
 
   return (
     <div className={className}>
-      <FreeTrialWidgetDataBlockBase
+      <WidgetDataBlockBase
         title={getTitleText()}
         heightSize={6}
         isLoading={isLoading}
-        className={"marketingModulesText"}
       >
         {getBody()}
-      </FreeTrialWidgetDataBlockBase>
+      </WidgetDataBlockBase>
     </div>
   );
 }

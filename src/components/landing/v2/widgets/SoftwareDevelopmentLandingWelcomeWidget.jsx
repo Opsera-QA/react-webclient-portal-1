@@ -52,7 +52,6 @@ export default function SoftwareDevelopmentLandingWelcomeWidget({ className }) {
     <WidgetDataBlockBase
       title={getWelcomeText()}
       className={className}
-      fontColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
       heightSize={6}
     >
       <div className={"px-3 pb-3 marketingModulesText"}>

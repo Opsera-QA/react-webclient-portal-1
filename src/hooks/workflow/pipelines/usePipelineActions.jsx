@@ -12,17 +12,17 @@ export default function usePipelineActions() {
     active = true,
  ) => {
     const apiUrl = `/pipelines/v2`;
-    const sortOption = pipelineFilterModel?.getData("sortOption");
+    const type = pipelineFilterModel?.getFilterValue("type");
     const queryParameters = {
-      sort: sortOption?.value,
-      order: sortOption?.order,
+      sort: pipelineFilterModel?.getFilterValue("sortOption"),
       size: pipelineFilterModel?.getData("pageSize"),
       page: pipelineFilterModel?.getData("currentPage"),
-      type: pipelineFilterModel?.getFilterValue("type"),
+      type: type !== "all" ? type : undefined,
       search: pipelineFilterModel?.getFilterValue("search"),
       owner: pipelineFilterModel?.getFilterValue("owner"),
       tag: pipelineFilterModel?.getFilterValue("tag"),
       status: pipelineFilterModel?.getFilterValue("status"),
+      toolIdentifier: pipelineFilterModel?.getFilterValue("tool_identifier"),
       active: active,
       fields: fields,
     };
