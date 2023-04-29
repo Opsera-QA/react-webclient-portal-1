@@ -10,7 +10,6 @@ import InsightsFilterOverlay from "components/insights/dashboards/InsightsFilter
 import DashboardRoleHelper from "@opsera/know-your-role/roles/analytics/dashboards/dashboardRole.helper";
 import CreateNewDashboardOverlay from "components/insights/dashboards/CreateNewDashboardOverlay";
 import InlineDashboardTypeFilter from "components/common/filters/dashboards/dashboard_type/InlineDashboardTypeFilter";
-import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import DashboardsTable from "components/insights/dashboards/views/DashboardsTable";
 import DashboardVerticalTabContainer from "components/insights/dashboards/views/DashboardVerticalTabContainer";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
@@ -71,7 +70,7 @@ export default function Insights() {
     }
 
     return (
-      <div className="mt-1 max-content-width mb-1">
+      <div className={"w-100 mx-3"}>
         <AnalyticsProfileSettings />
       </div>
     );

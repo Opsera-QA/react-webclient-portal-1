@@ -16,9 +16,17 @@ export default function useGetAnalyticsProfileStatus(
   } = useLoadData();
   const analyticsProfileActions = useAnalyticsProfileActions();
 
+  const onErrorFunction = (error) => {
+    if (handleErrorFunction) {
+      handleErrorFunction(error);
+    }
+
+    setAreAnalyticsToolsEnabled(false);
+  };
+
   useEffect(() => {
     if (loadData) {
-      loadData(getAnalyticsProfileStatus, handleErrorFunction).catch(() => {});
+      loadData(getAnalyticsProfileStatus, onErrorFunction).catch(() => {});
     }
   }, [userData]);
 
