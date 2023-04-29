@@ -1,62 +1,41 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
-import KpiActions from "components/admin/kpi_identifiers/kpi.actions";
-import axios from "axios";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
+import useGetKpiIdentifiers from "hooks/insights/kpis/identifiers/useGetKpiIdentifiers";
 
-function KpiIdentifierFilter({ fieldName, filterModel, setFilterModel, setDataFunction, inline, className, textField, valueField, status, policySupport, manualDataEntry}) {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
-  const [kpis, setKpis] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+function KpiIdentifierFilter(
+  {
+    fieldName,
+    filterModel,
+    setFilterModel,
+    setDataFunction,
+    inline,
+    className,
+    textField,
+    valueField,
+    status,
+    policySupport,
+    manualDataEntry,
+  }) {
+  const {
+    kpiIdentifiers,
+    isLoading,
+    error,
+  } = useGetKpiIdentifiers(
+    status,
+    policySupport,
+    manualDataEntry
+  );
 
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+  const handleDataFunction = (fieldName, selectedOption) => {
+    if (setDataFunction) {
+      setDataFunction(fieldName, selectedOption);
+      return;
     }
 
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-      await loadKpis(cancelSource);
-    }
-    catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    }
-    finally {
-      setIsLoading(false);
-    }
-  };
-
-  const loadKpis = async (cancelSource = cancelTokenSource) => {
-    const response = await KpiActions.getAllKpisV2(getAccessToken, cancelSource, status, policySupport, manualDataEntry);
-    const kpis = DataParsingHelper.parseArray(response?.data?.data);
-
-    if (isMounted?.current === true && kpis) {
-      setKpis(kpis);
-    }
+    filterModel.setData(fieldName, selectedOption?.identifier);
+    filterModel.setData("kpiName", selectedOption?.name);
+    setFilterModel({...filterModel});
   };
 
   if (filterModel == null) {
@@ -74,8 +53,9 @@ function KpiIdentifierFilter({ fieldName, filterModel, setFilterModel, setDataFu
       busy={isLoading}
       textField={textField}
       valueField={valueField}
-      selectOptions={kpis}
-      setDataFunction={setDataFunction}
+      selectOptions={kpiIdentifiers}
+      error={error}
+      setDataFunction={handleDataFunction}
     />
   );
 }

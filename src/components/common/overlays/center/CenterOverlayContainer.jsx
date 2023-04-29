@@ -44,6 +44,8 @@ function CenterOverlayContainer(
     size,
     externalHelpPageLink,
     backButtonFunction,
+    minimumHeight,
+    maximumHeight,
   }) {
   const toastContext = useContext(DialogToastContext);
 
@@ -115,6 +117,10 @@ function CenterOverlayContainer(
         >
           <div
             className={`content-card-1 bg-white`}
+            style={{
+              minHeight: minimumHeight,
+              maxHeight: maximumHeight,
+            }}
           >
             <OverlayTitleBar
               handleClose={closePanelFunction}
@@ -155,6 +161,8 @@ CenterOverlayContainer.propTypes = {
   customLoadingMessage: PropTypes.string,
   externalHelpPageLink: PropTypes.string,
   backButtonFunction: PropTypes.func,
+  minimumHeight: PropTypes.string,
+  maximumHeight: PropTypes.string,
 };
 
 CenterOverlayContainer.defaultProps = {

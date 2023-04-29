@@ -20,6 +20,7 @@ dashboardsActions.getAllDashboardsV2 = async(getAccessToken, cancelTokenSource, 
       tool: dashboardFilterModel?.getFilterValue("toolIdentifier"),
       owner: dashboardFilterModel?.getFilterValue("owner"),
       search: dashboardFilterModel?.getFilterValue("search"),
+      kpiIdentifier: dashboardFilterModel?.getFilterValue("identifier"),
       type: dashboardFilterModel?.getFilterValue("type")
     }
   };
