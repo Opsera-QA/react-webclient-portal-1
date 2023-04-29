@@ -70,7 +70,7 @@ export default function Insights() {
     }
 
     return (
-      <div className="mt-1 max-content-width mb-1">
+      <div className={"w-100 mx-3"}>
         <AnalyticsProfileSettings />
       </div>
     );
