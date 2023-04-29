@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Nav} from "react-bootstrap";
 import InlineSearchFilter from "../../filters/search/InlineSearchFilter";
+import InlineClientSideSearchFilter from "components/common/filters/search/InlineClientSideSearchFilter";
 
 function VanitySetVerticalTabContainer(
   {
@@ -27,36 +28,36 @@ function VanitySetVerticalTabContainer(
     }
   };
 
-    const getSearchBar = () => {
-        if (supportClientSideSearching === true) {
-            return (
-                <div style={{flex: "0 0 auto"}}>
-                    <InlineClientSideSearchFilter
-                        filterModel={filterModel}
-                        setFilterModel={setFilterModel}
-                        isLoading={isLoading}
-                        supportClientSideSearching={supportClientSideSearching}
-                        className={"px-2 d-none d-sm-block"}
-                        inputClassName={"w-100"}
-                    />
-                </div>
-            );
-        }
+  const getSearchBar = () => {
+    if (supportClientSideSearching === true) {
+      return (
+        <div style={{flex: "0 0 auto"}}>
+          <InlineClientSideSearchFilter
+            filterModel={filterModel}
+            setFilterModel={setFilterModel}
+            isLoading={isLoading}
+            supportClientSideSearching={supportClientSideSearching}
+            className={"px-2 d-none d-sm-block"}
+            inputClassName={"w-100"}
+          />
+        </div>
+      );
+    }
 
-        return (
-            <div style={{flex: "0 0 auto"}}>
-                <InlineSearchFilter
-                    isLoading={isLoading}
-                    supportSearch={supportSearch}
-                    filterDto={filterModel}
-                    setFilterDto={setFilterModel}
-                    loadData={loadData}
-                    className={loadData != null ? "px-2 pt-2 d-none d-md-block vertical-tab-container-search" : "vertical-tab-container-search"}
-                    metadata={metadata}
-                />
-            </div>
-        );
-    };
+    return (
+      <div style={{flex: "0 0 auto"}}>
+        <InlineSearchFilter
+          isLoading={isLoading}
+          supportSearch={supportSearch}
+          filterDto={filterModel}
+          setFilterDto={setFilterModel}
+          loadData={loadData}
+          className={loadData != null ? "px-2 pt-2 d-none d-md-block vertical-tab-container-search" : "vertical-tab-container-search"}
+          metadata={metadata}
+        />
+      </div>
+    );
+  };
 
   return (
     <div
@@ -67,7 +68,8 @@ function VanitySetVerticalTabContainer(
         maxWidth: width,
       }}
     >
-      <div className={"h-100 w-100"} style={{display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
+      <div className={"h-100 w-100"}
+           style={{display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
         {getTitleBar()}
         {getSearchBar()}
         <Nav variant={"pills"} style={{flex: "1 1 auto", overflow: 'hidden'}} className={"h-100"}>
