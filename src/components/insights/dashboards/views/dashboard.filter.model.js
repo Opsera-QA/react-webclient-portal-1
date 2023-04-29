@@ -98,8 +98,6 @@ export class DashboardFilterModel extends FilterModelBase {
 
     const identifier = this.getData("identifier");
     const kpiName = this.getData("kpiName");
-    console.log("identifier: " + JSON.stringify(identifier));
-    console.log("kpiName: " + JSON.stringify(kpiName));
 
     if (hasStringValue(identifier) === true && hasStringValue(kpiName) === true) {
       activeFilters.push({filterId: "identifier", text: `KPI: ${kpiName}`});
