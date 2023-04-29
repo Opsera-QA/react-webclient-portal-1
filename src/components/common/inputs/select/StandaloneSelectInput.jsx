@@ -23,7 +23,8 @@ function StandaloneSelectInput(
     hasErrorState,
     dropUp,
     onClickFunction,
-    filterOption
+    filterOption,
+    fieldName,
   }) {
   const getPlaceholderText = () => {
     if (!Array.isArray(selectOptions)) {
@@ -57,6 +58,7 @@ function StandaloneSelectInput(
         disabled={disabled || (onSearchFunction == null && (!Array.isArray(selectOptions) || selectOptions?.length === 0 || busy))}
         onSearch={onSearchFunction}
         allowCreate={allowCreate}
+        id={fieldName}
       />
     </div>
   );
@@ -92,7 +94,8 @@ StandaloneSelectInput.propTypes = {
   hasErrorState: PropTypes.bool,
   dropUp: PropTypes.bool,
   onClickFunction: PropTypes.func,
-  filterOption: PropTypes.string
+  filterOption: PropTypes.string,
+  fieldName: PropTypes.string,
 };
 
 StandaloneSelectInput.defaultProps = {
