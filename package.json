@@ -5,6 +5,7 @@
   "scripts": {
     "lint": "eslint --fix --ext .js,.jsx .",
     "format": "npm run prettier -- --write",
+    "prettier": "prettier  \"**/*.+(js|md|ts|css|sass|less|graphql|yml|yaml|scss|json|vue)\"",
     "refresh-internal-libraries": "rm -rf node_modules/@opsera && npm install",
     "update-lock-file": "rm -rf node_modules/@opsera && rm -rf package-lock.json && npm install",
     "start": "PORT=8080 react-app-rewired start",
