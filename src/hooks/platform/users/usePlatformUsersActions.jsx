@@ -9,7 +9,7 @@ export default function usePlatformUsersActions() {
     const queryParameters = {
       emailAddress: expectedEmailAddress,
     };
-    
+
     return await apiService.handleApiGetRequest(
       apiUrl,
     );
