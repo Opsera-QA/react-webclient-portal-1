@@ -119,12 +119,18 @@ userActions.createOpseraAccount = async (cancelTokenSource, registrationDataDto)
 userActions.getLoggedInUser = async (
   token,
   cancelTokenSource,
+  expectedEmailAddress,
   ) => {
   const apiUrl = "/users";
+  const queryParameters = {
+    emailAddress: expectedEmailAddress,
+  };
+
   return await baseActions.customTokenApiGetCallV2(
     token,
     cancelTokenSource,
     apiUrl,
+    queryParameters,
   );
 };
 

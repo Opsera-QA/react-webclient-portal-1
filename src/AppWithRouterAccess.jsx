@@ -25,6 +25,7 @@ const AppWithRouterAccess = () => {
   const authStateLoadingUser = useRef(false);
   const [error, setError] = useState(null);
   const [authenticatedState, setAuthenticatedState] = useState(false);
+  const [expectedEmailAddress, setExpectedEmailAddress] = useState(undefined);
   const [userData, setUserData] = useState(null);
   const history = useHistory();
   const { isPublicPathState } = useLocationReference();
@@ -108,6 +109,7 @@ const AppWithRouterAccess = () => {
       const response = await userActions.getLoggedInUser(
         token,
         cancelTokenSource,
+        expectedEmailAddress,
       );
       setUserData(response?.data);
     } catch (error) {
@@ -198,6 +200,7 @@ const AppWithRouterAccess = () => {
       <AuthContextProvider
         userData={userData}
         loadUserData={reloadUserData}
+        setExpectedEmailAddress={setExpectedEmailAddress}
       >
         {getRoutes()}
       </AuthContextProvider>
