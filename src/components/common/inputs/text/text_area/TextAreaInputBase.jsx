@@ -96,6 +96,7 @@ function TextAreaInputBase(
             onChange={(event) => updateValue(event.target.value)}
             className={getInputClasses()}
             rows={rowCount}
+            id={fieldName}
           />
       </div>
     );
