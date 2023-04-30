@@ -114,6 +114,12 @@ const AppWithRouterAccess = () => {
 
   const loadUsersData = async (token) => {
     try {
+      reactLogger.logDebugMessage(
+        "AppWithRouterAccess",
+        "loadUsersData",
+        "Loading User Data."
+      );
+
       setLoading(true);
       const response = await userActions.getLoggedInUser(
         token,
