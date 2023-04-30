@@ -38,6 +38,7 @@ const AuthContextProvider = (
   {
     userData,
     loadUserData,
+    setExpectedEmailAddress,
     children,
   }) => {
   const history = useHistory();
@@ -113,6 +114,7 @@ const AuthContextProvider = (
       featureFlags: featureFlags,
       loadUserData: loadUserData,
       areAnalyticsToolsEnabled: areAnalyticsToolsEnabled,
+      setExpectedEmailAddress: setExpectedEmailAddress,
 
       isPowerUser: userAccessRoles?.PowerUser === true,
       isSiteAdministrator: userAccessRoles?.Administrator === true,
@@ -132,8 +134,9 @@ const AuthContextProvider = (
 AuthContextProvider.propTypes = {
   userData: PropTypes.object,
   loadUserData: PropTypes.func,
+  setExpectedEmailAddress: PropTypes.func,
   children: PropTypes.any,
 };
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(AuthContextProvider);
 export default AuthContextProvider;

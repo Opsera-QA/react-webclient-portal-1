@@ -17,6 +17,9 @@ import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.he
 //Okta Libraries
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { LoginCallback, Security } from "@okta/okta-react";
+import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useReactLogger from "temp-library-components/hooks/useReactLogger";
 
 const isFreeTrial = false;
 
@@ -25,10 +28,13 @@ const AppWithRouterAccess = () => {
   const authStateLoadingUser = useRef(false);
   const [error, setError] = useState(null);
   const [authenticatedState, setAuthenticatedState] = useState(false);
+  const [expectedEmailAddress, setExpectedEmailAddress] = useState("fake@fake.com");
+  const [storedAuthToken, setStoredAuthToken] = useState(undefined);
   const [userData, setUserData] = useState(null);
   const history = useHistory();
   const { isPublicPathState } = useLocationReference();
   const { cancelTokenSource } = useAxiosCancelToken();
+  const reactLogger = useReactLogger();
 
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
     history.replace(toRelativeUrl(originalUri ? originalUri : "/", window.location.origin));
@@ -82,17 +88,21 @@ const AppWithRouterAccess = () => {
 
 
   authClient?.authStateManager?.subscribe(async authState => {
-    //console.info("Auth State manager subscription event: ", authState);
+    // console.info("Auth State manager subscription event: ", authState);
     setAuthenticatedState(authState.isAuthenticated);
 
     if (!authState.isAuthenticated) {
+      setStoredAuthToken(undefined);
       setUserData(null);
       return;
     }
 
-    if (authState.isAuthenticated && !userData && !error && authStateLoadingUser.current !== true) {
+    const token = DataParsingHelper.safeObjectPropertyParser(authState, "accessToken.accessToken");
+
+    if (ObjectHelper.areObjectsEqualLodash(token, storedAuthToken) !== true && !error && authStateLoadingUser.current !== true) {
+      setStoredAuthToken(token);
       authStateLoadingUser.current = true;
-      await loadUsersData(authState.accessToken["accessToken"]);
+      await loadUsersData(token);
       authStateLoadingUser.current = false;
     }
   });
@@ -108,17 +118,35 @@ const AppWithRouterAccess = () => {
       const response = await userActions.getLoggedInUser(
         token,
         cancelTokenSource,
+        expectedEmailAddress,
       );
-      setUserData(response?.data);
+
+      const newUser = DataParsingHelper.parseObject(response?.data);
+
+      if (ObjectHelper.areObjectsEqualLodash(newUser, userData) !== true) {
+        setUserData(newUser);
+      } else {
+        reactLogger.logDebugMessage(
+          "AppWithRouterAccess",
+          "loadUsersData",
+          "Skipping User state update as it has not changed."
+        );
+      }
     } catch (error) {
       //console.log(error.response.data); //Forbidden
       //console.log(error.response.status); //403
-      if (error.response && error.response.status === 403) {
+      const errorStatus = DataParsingHelper.parseNestedNumber(error, "response.status");
+      if (errorStatus === 403) {
         //this means user doesn't have access so clearing sessiong and logging user out
         let errorMsg = "Access denied when trying to retrieve user details.  This could indicate an expired or revoked token.  Please log back in before proceeding.";
         console.error(errorMsg + "Service Response:" + error.response.data);
         history.push("/logout");
         setError(errorMsg);
+      } else if (errorStatus === 409) {
+        console.error(error);
+        setUserData(undefined);
+        setError(error);
+        history.push("/login");
       } else {
         console.error(error);
         setError(error);
@@ -198,6 +226,7 @@ const AppWithRouterAccess = () => {
       <AuthContextProvider
         userData={userData}
         loadUserData={reloadUserData}
+        setExpectedEmailAddress={setExpectedEmailAddress}
       >
         {getRoutes()}
       </AuthContextProvider>

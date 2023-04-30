@@ -12,6 +12,7 @@ import LoadingIcon from "components/common/icons/LoadingIcon";
 import OktaSignIn from '@okta/okta-signin-widget';
 import LoginWelcomeMessage from "components/login/LoginWelcomeMessage";
 import {apiTokenHelper} from "temp-library-components/helpers/api/token/apiToken.helper";
+import {AuthContext} from "contexts/AuthContext";
 
 const LoginForm = ({ authClient }) => {
   const { oktaAuth } = useOktaAuth();
@@ -26,6 +27,7 @@ const LoginForm = ({ authClient }) => {
   const [federatedIdpEnabled, setFederatedIdpEnabled] = useState(false);
   const [oktaSignInWidget, setOktaSignInWidget] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
+  const { setExpectedEmailAddress } = useContext(AuthContext);
 
   useEffect(() => {
     if (viewType === "domain" && oktaSignInWidget) {
@@ -236,6 +238,8 @@ const LoginForm = ({ authClient }) => {
     const apiUrl = "/users/active-account";
     const params = { "email": lookupAccountEmail, "hostname": window.location.hostname };
     try {
+      setExpectedEmailAddress(lookupAccountEmail);
+
       const response = await axiosApiService().post(apiUrl, params); //this lookup is currently FF in Node
       toastContext.removeAllBanners();
 
