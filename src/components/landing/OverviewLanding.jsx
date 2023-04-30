@@ -17,13 +17,13 @@ function OverviewLanding() {
   const [statsData, setStatsData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [summaryStats, setSummaryStats] = useState([]);
-  const isMounted = useRef(false);
   const {
     accessRoleData,
     getAccessToken,
     toastContext,
     cancelTokenSource,
     userData,
+    isMounted
   } = useComponentStateReference();
 
   useEffect(() => {
