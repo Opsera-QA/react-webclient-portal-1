@@ -10,8 +10,7 @@ ENV GENERATE_SOURCEMAP false
 COPY package.json /usr/src/app/package.json
 COPY package-lock.json /usr/src/app/package-lock.json
 COPY .npmrc /usr/src/app/.npmrc
-RUN npm install
-#RUN npm install --legacy-peer-deps --omit=dev
+RUN npm install --omit=dev
 COPY . /usr/src/app
 RUN npm run build:${build_env}
 RUN mv build* code
