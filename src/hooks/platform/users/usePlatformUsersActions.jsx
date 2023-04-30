@@ -4,6 +4,13 @@ export default function usePlatformUsersActions() {
   const apiService = useApiService();
   const platformUsersActions = {};
 
+  platformUsersActions.getLoggedInUser = async () => {
+    const apiUrl = `/users`;
+    return await apiService.handleApiGetRequest(
+      apiUrl,
+    );
+  };
+
   platformUsersActions.getOrganizationAccountOwnerSsoUsers = async () => {
     const apiUrl = `/users/organization-account-owners`;
     return await apiService.handleApiGetRequest(
