@@ -25,7 +25,6 @@ export default function Routes() {
     history.push('/');
   };
 
-  // Authenticated routes
   if (isAuthenticated !== true && isPublicPathState !== true) {
     return (
       <div className={"w-100 px-3"}>
