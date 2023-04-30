@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 import { faArrowLeft } from "@fortawesome/pro-solid-svg-icons";
 import { useOktaAuth } from "@okta/okta-react";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import PropTypes from "prop-types";
 import userActions from "../user/user-actions";
 import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
@@ -13,9 +12,9 @@ import OktaSignIn from '@okta/okta-signin-widget';
 import LoginWelcomeMessage from "components/login/LoginWelcomeMessage";
 import {apiTokenHelper} from "temp-library-components/helpers/api/token/apiToken.helper";
 import {AuthContext} from "contexts/AuthContext";
+import useAuthenticationToken from "hooks/general/api/useAuthenticationToken";
 
-const LoginForm = ({ authClient }) => {
-  const { oktaAuth } = useOktaAuth();
+const LoginForm = () => {
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -28,6 +27,10 @@ const LoginForm = ({ authClient }) => {
   const [oktaSignInWidget, setOktaSignInWidget] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
   const { setExpectedEmailAddress } = useContext(AuthContext);
+
+  // TODO: OktaAuth and authCLient are the same thing, we need to remove one
+  const { authClient } = useAuthenticationToken();
+  const { oktaAuth } = useOktaAuth();
 
   useEffect(() => {
     if (viewType === "domain" && oktaSignInWidget) {
@@ -486,8 +489,6 @@ const LoginForm = ({ authClient }) => {
   }
 };
 
-LoginForm.propTypes = {
-  authClient: PropTypes.any
-};
+LoginForm.propTypes = {};
 
 export default LoginForm;

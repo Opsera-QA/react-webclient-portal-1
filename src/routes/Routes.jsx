@@ -12,7 +12,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function Routes() {
   const { isPublicPathState } = useLocationReference();
-  const { isAuthenticated, authClient } = useAuthenticationToken();
+  const { isAuthenticated } = useAuthenticationToken();
   const history = useHistory();
   const {
     isOpseraAdministrator,
@@ -31,7 +31,7 @@ export default function Routes() {
       <div className={"w-100 px-3"}>
         <div className={"d-flex flex-row"}>
           <div className={"w-100"}>
-            <LoginForm authClient={authClient} />
+            <LoginForm />
             <Route path='/implicit/callback' render={ (props) => <LoginCallback {...props} onAuthResume={ onAuthResume } /> } />
             <Route path="/logout" exact component={Logout} />
           </div>
@@ -43,9 +43,7 @@ export default function Routes() {
 
   if (isFreeTrial === true && isOpseraAdministrator !== true) {
     return (
-      <FreeTrialAppRoutes
-        authClient={authClient}
-      />
+      <FreeTrialAppRoutes />
     );
   }
 

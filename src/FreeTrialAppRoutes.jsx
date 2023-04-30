@@ -1,6 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
-import {useHistory} from "react-router-dom";
 import {SecureRoute} from "@okta/okta-react";
 import ToolDetailView from "./components/inventory/tools/tool_details/ToolDetailView";
 import PipelineDetailView from "./components/workflow/pipelines/pipeline_details/PipelineDetailView";
@@ -10,15 +8,13 @@ import FreeTrialWorkspace from "components/workspace/trial/FreeTrialWorkspace";
 import FreeTrialInsightsLanding from "components/trial/insights/FreeTrialInsightsLanding";
 import PublicRoutes from "routes/PublicRoutes";
 
-export default function FreeTrialAppRoutes({authClient}) {
-  const history = useHistory();
-
+export default function FreeTrialAppRoutes() {
   return (
     <div className={"w-100 px-3"}>
       <div className={"d-flex flex-row"}>
         {/*{getSideBar()}*/}
         <div className={"w-100 hide-x-overflow"}>
-          <PublicRoutes authClient={authClient}/>
+          <PublicRoutes />
           <SecureRoute path="/inventory/tools/details/:id/:tab?" exact component={ToolDetailView}/>
           <SecureRoute path="/task/details/:id" exact component={TaskDetailView}/>
           <SecureRoute path="/workflow/details/:id/:tab?" exact component={PipelineDetailView}/>
@@ -31,7 +27,4 @@ export default function FreeTrialAppRoutes({authClient}) {
   );
 }
 
-FreeTrialAppRoutes.propTypes = {
-  authClient: PropTypes.object,
-};
-
+FreeTrialAppRoutes.propTypes = {};
