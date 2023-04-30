@@ -135,5 +135,5 @@ AuthContextProvider.propTypes = {
   children: PropTypes.any,
 };
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(AuthContextProvider);
 export default AuthContextProvider;
