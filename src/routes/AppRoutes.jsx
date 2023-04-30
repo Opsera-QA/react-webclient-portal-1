@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
 import { SecureRoute } from "@okta/okta-react";
 import Sidebar from "components/sidebar/Sidebar";
 import Dashboard from "components/dashboard/DashboardHome";
@@ -22,24 +21,33 @@ import BlueprintsRoutes from "routes/BlueprintsRoutes";
 import FreeTrialSettingsRoutes from "routes/FreeTrialSettingsRoutes";
 import FreeTrialAdminToolsRoutes from "routes/FreeTrialAdminToolsRoutes";
 import WorkspaceRoutes from "routes/WorkspaceRoutes";
+import useAuthenticationToken from "hooks/general/api/useAuthenticationToken";
 
-export default function AppRoutes(
-  {
-    authenticatedState,
-    authClient,
-  }) {
+export default function AppRoutes() {
+  const { isAuthenticated } = useAuthenticationToken();
+
   useEffect(() => {
-  }, [authenticatedState]);
+  }, [isAuthenticated]);
 
-  // Authenticated routes
+  if (isAuthenticated !== true) {
+    return (
+      <div className={"w-100 px-3"}>
+        <div className={"d-flex flex-row"}>
+          <div className={"w-100"}>
+            <PublicRoutes />
+          </div>
+        </div>
+        <OpseraFooter />
+      </div>
+    );
+  }
+
   return (
     <div className={"w-100 px-3"}>
       <div className={"d-flex flex-row"}>
         <Sidebar />
         <div className={"w-100"}>
-          <PublicRoutes
-            authClient={authClient}
-          />
+          <PublicRoutes />
           <UserProfileRoutes />
           <ToolchainRoutes />
           <PipelinesRoutes />
@@ -67,7 +75,4 @@ export default function AppRoutes(
   );
 }
 
-AppRoutes.propTypes = {
-  authenticatedState: PropTypes.bool,
-  authClient: PropTypes.object,
-};
+AppRoutes.propTypes = {};
