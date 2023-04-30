@@ -28,7 +28,7 @@ const AppWithRouterAccess = () => {
   const authStateLoadingUser = useRef(false);
   const [error, setError] = useState(null);
   const [authenticatedState, setAuthenticatedState] = useState(false);
-  const [expectedEmailAddress, setExpectedEmailAddress] = useState("fake@fake.com");
+  const [expectedEmailAddress, setExpectedEmailAddress] = useState(undefined);
   const [storedAuthToken, setStoredAuthToken] = useState(undefined);
   const [userData, setUserData] = useState(null);
   const history = useHistory();
