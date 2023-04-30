@@ -12,7 +12,7 @@ COPY package-lock.json /usr/src/app/package-lock.json
 COPY .npmrc /usr/src/app/.npmrc
 #This line is needed when installing different versions for building the project.
 #RUN npm install npm@9.5.0 react-app-rewired@2.2.1 react-scripts@5.0.0 -g --legacy-peer-deps
-RUN npm install --legacy-peer-deps --omit=dev
+RUN npm install
 COPY . /usr/src/app
 RUN npm run build:${build_env}
 RUN mv build* code
