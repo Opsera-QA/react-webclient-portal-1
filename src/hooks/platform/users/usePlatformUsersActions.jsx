@@ -4,8 +4,12 @@ export default function usePlatformUsersActions() {
   const apiService = useApiService();
   const platformUsersActions = {};
 
-  platformUsersActions.getLoggedInUser = async () => {
-    const apiUrl = `/users`;
+  platformUsersActions.getLoggedInUser = async (expectedEmailAddress) => {
+    const apiUrl = "/users";
+    const queryParameters = {
+      emailAddress: expectedEmailAddress,
+    };
+    
     return await apiService.handleApiGetRequest(
       apiUrl,
     );

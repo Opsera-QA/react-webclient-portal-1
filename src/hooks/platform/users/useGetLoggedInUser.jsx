@@ -8,6 +8,7 @@ import useReactLogger from "temp-library-components/hooks/useReactLogger";
 
 // TODO: Don't use this for general userData pull, get that from useComponentStateReference
 export default function useGetLoggedInUser(
+  expectedEmailAddress,
   handleErrorFunction,
 ) {
   const [userData, setUserData] = useState(undefined);
@@ -32,7 +33,7 @@ export default function useGetLoggedInUser(
 
   const getLoggedInUser = async () => {
     try {
-      const response = await platformUsersActions.getLoggedInUser();
+      const response = await platformUsersActions.getLoggedInUser(expectedEmailAddress);
       const newUser = DataParsingHelper.parseObject(response?.data);
 
       if (ObjectHelper.areObjectsEqualLodash(newUser, userData) !== true) {
