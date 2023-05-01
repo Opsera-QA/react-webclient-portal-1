@@ -73,6 +73,14 @@ export class PipelineModel extends ModelBase {
   getPipelineState = () => {
     return pipelineHelper.getPipelineState(this.data);
   };
+
+  getLastRunCompletionTime = () => {
+    return DataParsingHelper.parseDate(this.getData("workflow.last_run.completed"));
+  };
+
+  getRunCount = () => {
+    return DataParsingHelper.parseInteger(this.getData("workflow.run_count"), 0);
+  };
 }
 
 export default PipelineModel;

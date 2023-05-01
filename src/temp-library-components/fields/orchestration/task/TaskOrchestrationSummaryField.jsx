@@ -9,7 +9,7 @@ export default function TaskOrchestrationSummaryField(
     taskModel,
     className,
   }) {
-  const completionTime = DataParsingHelper.parseDate(taskModel?.getData("completion"));
+  const completionTime = taskModel?.getLastRunCompletionTime();
   const status = DataParsingHelper.parseString(taskModel?.getData("status"));
 
   if (!completionTime || !status) {
