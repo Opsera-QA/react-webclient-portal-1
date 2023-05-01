@@ -21,7 +21,7 @@ const getVariant = (status) => {
   }
 };
 
-const getLabel = (status) => {
+const getLabel = (status, completionPercentage) => {
   const parsedStatus = DataParsingHelper.parseString(status, "");
 
   switch (parsedStatus) {
@@ -29,13 +29,13 @@ const getLabel = (status) => {
       return "Awaiting User Response";
     case "failed":
     case "failure":
-      return undefined;
+      return "Failed";
     case "success":
     case "successful":
-      return undefined;
+      return "Successful";
     case "running":
     default:
-      return undefined;
+      return completionPercentage;
   }
 };
 
@@ -47,9 +47,9 @@ export default function WorkflowOrchestrationProgressBarBase(
     className,
   }) {
   const parsedCompletionPercentage = DataParsingHelper.parseNumber(completionPercentage);
-  const parsedStatus = DataParsingHelper.parseString(status);
+  const parsedStatus = DataParsingHelper.parseString(status, "stopped");
 
-  if (parsedStatus === "stopped" || parsedStatus == null || (parsedCompletionPercentage == null && parsedCompletionPercentage !== 0)) {
+  if (parsedStatus === "stopped" || (parsedCompletionPercentage == null && parsedCompletionPercentage !== 0)) {
     return null;
   }
 
@@ -59,7 +59,7 @@ export default function WorkflowOrchestrationProgressBarBase(
       completionPercentage={completionPercentage}
       variant={getVariant(parsedStatus)}
       isInProgress={parsedStatus === "running"}
-      label={getLabel()}
+      label={getLabel(parsedStatus, parsedCompletionPercentage)}
     />
   );
 }
