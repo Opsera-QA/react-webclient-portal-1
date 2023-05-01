@@ -24,6 +24,7 @@ function SelectInputBase(
     setDataFunction,
     busy,
     disabled,
+    defaultValue,
     clearDataFunction,
     showClearValueButton,
     errorMessage, // TODO: deprecate, pass in error instead
@@ -285,6 +286,7 @@ function SelectInputBase(
           textField={externalCacheToolId || externalCacheToolIdentifier ? handleTextFieldFunction : textField}
           groupBy={groupBy}
           value={findCurrentValue()}
+          defaultValue={defaultValue}
           busy={busy || isHandlingCache === true}
           placeholderText={getPlaceholderText()}
           setDataFunction={(newValue) => updateValue(newValue)}
@@ -336,6 +338,7 @@ SelectInputBase.propTypes = {
     PropTypes.array
   ]),
   showClearValueButton: PropTypes.bool,
+  defaultValue: PropTypes.any,
   errorMessage: PropTypes.string,
   getCurrentValue: PropTypes.func,
   showLabel: PropTypes.bool,
