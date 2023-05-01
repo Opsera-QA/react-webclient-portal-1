@@ -71,6 +71,10 @@ export const mergeSyncTaskWizardMetadata = {
       label: "Profiles Components Only",
       id: "isProfiles",
     },
+    {
+      label: "Salesforce API Version",
+      id: "apiVersion"
+    }
   ],
   newObjectFields: {
     selectedComponentTypes: [],
@@ -88,5 +92,6 @@ export const mergeSyncTaskWizardMetadata = {
     runCount: 1,
     type: "",
     isProfiles: false,
+    apiVersion: "",
   }
 };
