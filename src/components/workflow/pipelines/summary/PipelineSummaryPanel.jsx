@@ -25,16 +25,13 @@ import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import OwnerNameField from "components/common/fields/text/general/OwnerNameField";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import InlinePipelineTypeSelectInput from "components/workflow/pipelines/summary/inputs/type/InlinePipelineTypeSelectInput";
 import {Divider} from "temp-library-components/divider/Divider";
-import {ProgressBarBase} from "@opsera/react-vanity-set";
-import {pipelineHelper} from "components/workflow/pipeline.helper";
 import PipelineOrchestrationSummaryField
   from "temp-library-components/fields/orchestration/pipeline/PipelineOrchestrationSummaryField";
 import PipelineOrchestrationProgressBarBase
   from "temp-library-components/fields/orchestration/progress/PipelineOrchestrationProgressBarBase";
+import PipelineModel from "components/workflow/pipeline.model";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -54,7 +51,7 @@ function PipelineSummaryPanel(
   const [editDescription, setEditDescription] = useState(false);
   const [editTags, setEditTags] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
-  const [pipelineModel, setPipelineModel] = useState(new Model(pipeline, pipelineMetadata, false));
+  const [pipelineModel, setPipelineModel] = useState(new PipelineModel(pipeline, false));
   const {
     userData,
     cancelTokenSource,
@@ -85,7 +82,7 @@ function PipelineSummaryPanel(
           break;
       }
 
-      setPipelineModel(new Model({ ...pipeline }, pipelineMetadata, false));
+      setPipelineModel({...new PipelineModel(pipeline, false)});
 
       if (Object.keys(postBody).length > 0) {
         try {
@@ -233,6 +230,9 @@ function PipelineSummaryPanel(
       </>
     );
   };
+
+  console.log("pipelineState: " + JSON.stringify(pipelineModel?.getPipelineState()));
+  console.log("parentWorkflowStatus: " + JSON.stringify(parentWorkflowStatus));
 
   if (pipeline == null || typeof pipeline !== "object" || Object.keys(pipeline).length === 0) {
     return (
