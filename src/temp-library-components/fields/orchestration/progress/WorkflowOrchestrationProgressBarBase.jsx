@@ -35,7 +35,7 @@ const getLabel = (status, completionPercentage) => {
       return "Successful";
     case "running":
     default:
-      return completionPercentage;
+      return `${DataParsingHelper.parseInteger(completionPercentage)}%`;
   }
 };
 
