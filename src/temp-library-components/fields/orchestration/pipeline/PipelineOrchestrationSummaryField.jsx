@@ -20,7 +20,7 @@ export default function PipelineOrchestrationSummaryField(
   return (
     <OrchestrationSummaryFieldBase
       type={"Pipeline"}
-      completed={completed}
+      completionTime={completed}
       status={status}
       className={className}
     />
