@@ -2,10 +2,9 @@ import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
-import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import PipelineDetailsOverview from "components/workflow/pipelines/overview/PipelineDetailsOverview";
+import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 
-export default function WorkflowSummaryOverlay({ pipeline }) {
+export default function WorkflowSummaryOverlay({ workflowModel }) {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -13,24 +12,26 @@ export default function WorkflowSummaryOverlay({ pipeline }) {
     toastContext.clearOverlayPanel();
   };
 
-  if (pipeline == null) {
+  if (workflowModel == null) {
     return null;
   }
 
   return (
-    <FullScreenCenterOverlayContainer
+    <CenterOverlayContainer
       closePanel={closePanel}
-      titleText={`Pipeline Configuration Viewer`}
+      titleText={workflowModel?.getData("name")}
       titleIcon={faDraftingCompass}
       showToasts={true}
+      minimumHeight={"50vh"}
+      maximumHeight={"50vh"}
     >
       <div className={"p-3"}>
-        <PipelineDetailsOverview pipeline={pipeline} />
+        {JSON.stringify(workflowModel)}
       </div>
-    </FullScreenCenterOverlayContainer>
+    </CenterOverlayContainer>
   );
 }
 
 WorkflowSummaryOverlay.propTypes = {
-  pipeline: PropTypes.object
+  workflowModel: PropTypes.object,
 };

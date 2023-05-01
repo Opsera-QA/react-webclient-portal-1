@@ -19,6 +19,7 @@ import WorkspaceWorkflowSelectionCardView
   from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
 import InlineSearchFilter from "components/common/filters/search/InlineSearchFilter";
 import SoftwareDevelopmentSocialMediaWidget from "components/landing/v2/widgets/SoftwareDevelopmentSocialMediaWidget";
+import WorkflowSummaryOverlay from "components/landing/v2/widgets/workspace/WorkflowSummaryOverlay";
 
 export default function SoftwareDevelopmentLandingWorkspaceWidget({ className }) {
   const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
@@ -45,6 +46,15 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
       />
     );
   };
+
+  const launchSummaryOverlay = (workflowItem) => {
+    toastContext.showOverlayPanel(
+      <WorkflowSummaryOverlay
+        workflowModel={workflowItem}
+      />
+    );
+  };
+
 
   const getRightSideTitleBarItems = () => {
     return (
@@ -96,7 +106,7 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
           workspaceItems={workspaceItems}
           loadData={loadData}
           isLoading={isLoading}
-          setSelectedWorkflowItem={setSelectedWorkflowItem}
+          setSelectedWorkflowItem={launchSummaryOverlay}
           selectedWorkflowItem={undefined}
           hasMoreItems={hasMoreItems}
           loadMoreWorkflows={loadMoreWorkflows}
