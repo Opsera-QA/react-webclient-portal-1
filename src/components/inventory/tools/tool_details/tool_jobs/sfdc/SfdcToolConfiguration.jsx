@@ -58,7 +58,7 @@ function SfdcToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       newConfiguration.sfdc_token = await toolsActions.saveKeyPasswordToVault(sfdcConfigurationDto, "sfdc_token", newConfiguration.sfdc_token, tokenVaultKey, getAccessToken, toolData.getData("_id"));
     }
     if (sfdcConfigurationDto?.getData("authType") === "oauth") {
-      const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelTokenSource, toolData.id);
+      const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelTokenSource, toolData?.getData("_id"));
       const tool = response?.data?.data;
       newConfiguration.sfdc_refresh_token = tool?.configuration?.sfdc_refresh_token;
       newConfiguration.sfdc_client_id = {};
@@ -69,7 +69,13 @@ function SfdcToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
 
     const item = { configuration: newConfiguration };
     await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
-    if (setUpMode === "wizard") setCurrentScreen("connection_test");
+    if (setUpMode === "wizard") {
+      if (sfdcConfigurationDto?.getData("authType") === "oauth") {
+        setCurrentScreen("tool_detail");
+      } else {
+        setCurrentScreen("connection_test");
+      }
+    }
   };
 
   const getDynamicFields = () => {
