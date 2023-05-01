@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import ToolchainSidebarNavigationLink from "components/sidebar/links/ToolchainSidebarNavigationLink";
 import PipelinesSidebarNavigationLink from "components/sidebar/links/PipelinesSidebarNavigationLink";
@@ -29,12 +29,13 @@ export default function Sidebar({ hideSideBar }) {
   const { userData } = useComponentStateReference();
   const { isPublicPathState } = useLocationReference();
   const {
-    featureFlagModel,
+    isActive,
   } = useGetOrganizationSettingsFeatureFlagModelByName(featureFlagConstants.FEATURE_FLAG_NAMES.SHOW_INSIGHTS_VNEXT_SIDEBAR_LINK);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(DataParsingHelper.parseBooleanV2(sessionHelper.getCookie(sessionHelper.SUPPORTED_COOKIE_STORAGE_KEYS.COLLAPSE_SIDEBAR), true));
 
+  useEffect(() => {}, [isSidebarCollapsed, hideSideBar, isActive]);
   const getVnextSidebarLink = () => {
-    if (featureFlagModel?.getData("active") === true) {
+    if (isActive === true) {
       return (
         <InnovationLabsNavigationLinks
           isSidebarCollapsed={isSidebarCollapsed}
@@ -48,14 +49,18 @@ export default function Sidebar({ hideSideBar }) {
       return "d-block sidebar-container mx-2";
     }
 
-    if (featureFlagModel?.getData("active") === true) {
+    if (isActive === true) {
       return "temp-sidebar-width d-block sidebar-container";
     }
 
     return "w-20 d-block sidebar-container";
   };
 
-  if (userData == null || hideSideBar === true || isPublicPathState === true) {
+  if (
+    userData == null
+    || hideSideBar === true
+    || isPublicPathState === true
+  ) {
     return null;
   }
 

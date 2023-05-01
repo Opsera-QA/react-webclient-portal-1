@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "../../../overlays/center/help/HelpOverlayBase";
-import PropTypes from "prop-types";
 import AssignedRoleAccessTable from "components/common/fields/access/table/AssignedRoleAccessTable";
 import SiteRoleAccessTable from "components/common/fields/access/table/SiteRoleAccessTable";
+import dashboardRoles from "@opsera/know-your-role/roles/analytics/dashboards/dashboard.roles";
 
-function InsightsHelpDocumentation({dashboardRoleDefinitions}) {
+export default function InsightsHelpDocumentation() {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -44,20 +44,16 @@ function InsightsHelpDocumentation({dashboardRoleDefinitions}) {
     >
       <div className={"my-2"}>
         <AssignedRoleAccessTable
-          roleAccessDefinitions={dashboardRoleDefinitions}
+          roleAccessDefinitions={dashboardRoles}
         />
       </div>
       <div className={"my-2"}>
         <SiteRoleAccessTable
-          roleAccessDefinitions={dashboardRoleDefinitions}
+          roleAccessDefinitions={dashboardRoles}
         />
       </div>
     </HelpOverlayBase>
   );
 }
 
-InsightsHelpDocumentation.propTypes = {
-  dashboardRoleDefinitions: PropTypes.object,
-};
-
-export default React.memo(InsightsHelpDocumentation);
+InsightsHelpDocumentation.propTypes = {};

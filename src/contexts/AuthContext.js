@@ -11,6 +11,7 @@ import useAuthenticationToken from "hooks/general/api/useAuthenticationToken";
 import useGetActivePlatformSettingsRecord from "hooks/platform/useGetActivePlatformSettingsRecord";
 import useGetOrganizationSettingsRecord from "hooks/settings/organization_settings/useGetOrganizationSettingsRecord";
 import useGetConfigurationFeatureFlags from "hooks/platform/feature_flags/useGetConfigurationFeatureFlags";
+import useGetAnalyticsProfileStatus from "hooks/insights/profile/useGetAnalyticsProfileStatus";
 
 // import ClientWebsocket from "core/websocket/client.websocket";
 // const websocketClient = new ClientWebsocket();
@@ -37,6 +38,7 @@ const AuthContextProvider = (
   {
     userData,
     loadUserData,
+    setExpectedEmailAddress,
     children,
   }) => {
   const history = useHistory();
@@ -55,6 +57,10 @@ const AuthContextProvider = (
   const {
     featureFlags,
   } = useGetConfigurationFeatureFlags(userData);
+  const {
+    areAnalyticsToolsEnabled,
+  } = useGetAnalyticsProfileStatus(userData);
+
   const userAccessRoles = SiteRoleHelper.getAccessRoles(userData);
 
   useEffect(() => {
@@ -107,6 +113,8 @@ const AuthContextProvider = (
       organizationSettingsRecord: organizationSettingsRecord,
       featureFlags: featureFlags,
       loadUserData: loadUserData,
+      areAnalyticsToolsEnabled: areAnalyticsToolsEnabled,
+      setExpectedEmailAddress: setExpectedEmailAddress,
 
       isPowerUser: userAccessRoles?.PowerUser === true,
       isSiteAdministrator: userAccessRoles?.Administrator === true,
@@ -126,8 +134,9 @@ const AuthContextProvider = (
 AuthContextProvider.propTypes = {
   userData: PropTypes.object,
   loadUserData: PropTypes.func,
+  setExpectedEmailAddress: PropTypes.func,
   children: PropTypes.any,
 };
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(AuthContextProvider);
 export default AuthContextProvider;
