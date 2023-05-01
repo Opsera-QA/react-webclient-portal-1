@@ -102,7 +102,7 @@ function SfdcToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
         <div className={"py-2"}>
           <Alert
             className={"py-3"}
-            variant={"secondary"}
+            variant={"dark"}
           >
             <IconBase className={"mr-1"} icon={faInfoCircle} />
             The OAuth Connection setup toggle will be available once the tool is
