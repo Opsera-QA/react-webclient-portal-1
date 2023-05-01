@@ -1393,7 +1393,7 @@ div.data-blocks-ellipses {
 /* End filter bar styling */
 
 /* Filter Container Styling */
-.filter-container, .screen-container {
+.filter-container, .screen-container, .overlay-wrapper {
     border-radius: 1rem;
     overflow-x: hidden;
     letter-spacing: .01rem;
@@ -1412,6 +1412,10 @@ div.data-blocks-ellipses {
 .filter-container .content-block-header {
     background-color: #E6E5E3;
     color: #3D3B36;
+}
+
+.content-block-header {
+    overflow-x: hidden;
 }
 
 .filter-container .title-text-header {
@@ -1707,6 +1711,10 @@ div.data-blocks-ellipses {
 
 .info-overlay {
     z-index: 5000;
+}
+
+.overlay-wrapper {
+
 }
 
 .overlay-panel {

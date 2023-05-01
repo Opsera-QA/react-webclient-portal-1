@@ -148,6 +148,10 @@ const sfdcPipelineWizardMetadata = {
       id: "ignoreWarning"
     },
     {
+      label: "Salesforce API Version",
+      id: "apiVersion"
+    },
+    {
       label: "Repository",
       id: "repository",
     },
@@ -205,6 +209,7 @@ const sfdcPipelineWizardMetadata = {
     accountUsername: "",
     isSfdx: false,
     ignoreWarning: false,
+    apiVersion: "",
     workspace: "",
     service: "",
     repository: "",

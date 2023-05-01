@@ -79,7 +79,7 @@ function FullScreenCenterOverlayContainer(
 
   return (
     <div className={`overlay-panel center-overlay-shadow-background`}>
-      <div className={"overlay-margin bg-white"}>
+      <div className={"overlay-margin overlay-wrapper"}>
         <div className={
           showCloseButton === true || buttonContainer != null
             ? "full-screen-center-overlay-with-buttons content-card-1"
@@ -95,7 +95,7 @@ function FullScreenCenterOverlayContainer(
             helpIsShown={helpIsShown}
             setShowHelpPanel={getHelpComponentFunction && getHelpComponentFunction(setHelpIsShown) !== null ? setHelpIsShown : undefined}
           />
-          <div>
+          <div className={"bg-white"}>
             {actionBar}
             <div className={showCloseButton === true || buttonContainer != null ? "full-screen-overlay-panel-body-with-buttons" : "full-screen-overlay-panel-body"}>
               {showToasts && toastContext?.getInlineBanner()}

@@ -118,6 +118,18 @@ export class TaskModel extends ModelBase {
       this.setStateFunction,
     );
   };
+
+  getCompletionPercentage = () => {
+    return taskHelper.getTaskCompletionPercentage(this.getCurrentData());
+  };
+
+  getLastRunCompletionTime = () => {
+    return DataParsingHelper.parseDate(this.getData("completion"));
+  };
+
+  getRunCount = () => {
+    return DataParsingHelper.parseInteger(this.getData("run_count"), 0);
+  };
 }
 
 export default TaskModel;

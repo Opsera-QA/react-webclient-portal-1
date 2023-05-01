@@ -10,7 +10,7 @@ export default function PipelineOrchestrationSummaryField(
     className,
   }) {
   const pipeline = pipelineModel?.getCurrentData();
-  const completed = DataParsingHelper.parseNestedDate(pipeline, "workflow.last_run.completed");
+  const completed = pipelineModel?.getLastRunCompletionTime();
   const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_run.status", "unknown");
 
   if (!completed) {
@@ -20,7 +20,7 @@ export default function PipelineOrchestrationSummaryField(
   return (
     <OrchestrationSummaryFieldBase
       type={"Pipeline"}
-      completed={completed}
+      completionTime={completed}
       status={status}
       className={className}
     />
