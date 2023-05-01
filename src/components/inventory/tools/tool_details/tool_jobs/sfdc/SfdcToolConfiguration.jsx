@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
-import { Row } from "react-bootstrap";
+import {Alert, Row} from "react-bootstrap";
 import modelHelpers from "components/common/model/modelHelpers";
 import sfdcConnectionMetadata from "./sfdc-connection-metadata";
 import ToolConfigurationEditorPanelContainer
@@ -14,6 +14,8 @@ import SFDCBuildTypeSelectInput from "components/common/list_of_values_input/wor
 import SfdcAuthTypeSelectInput from "./inputs/SfdcAuthTypeSelectInput";
 import SfdcOAuthConnectButton from "./inputs/SfdcOAuthConnectButton";
 import axios from "axios";
+import IconBase from "../../../../../common/icons/IconBase";
+import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
 
 function SfdcToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -91,6 +93,26 @@ function SfdcToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
     }
   };
 
+  const getOAuthWizardAlert = () => {
+    if (
+      sfdcConfigurationDto?.getData("authType") === "oauth" &&
+      setUpMode === "wizard"
+    ) {
+      return (
+        <div className={"py-2"}>
+          <Alert
+            className={"py-3"}
+            variant={"secondary"}
+          >
+            <IconBase className={"mr-1"} icon={faInfoCircle} />
+            The OAuth Connection setup toggle will be available once the tool is
+            saved.
+          </Alert>
+        </div>
+      );
+    }
+  };
+
   return (
     <ToolConfigurationEditorPanelContainer
       model={sfdcConfigurationDto}
@@ -113,6 +135,7 @@ function SfdcToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
             toolId={toolData.id}
             visible={sfdcConfigurationDto?.checkCurrentValidity() === true && !sfdcConfigurationDto?.isChanged()}
           />
+          {getOAuthWizardAlert()}
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>
