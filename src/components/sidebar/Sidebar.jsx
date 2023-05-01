@@ -24,7 +24,6 @@ import useGetOrganizationSettingsFeatureFlagModelByName
   from "hooks/settings/organization_settings/feature_flags/useGetOrganizationSettingsFeatureFlagModelByName";
 import featureFlagConstants
   from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
-import useAuthenticationToken from "hooks/general/api/useAuthenticationToken";
 
 export default function Sidebar({ hideSideBar }) {
   const { userData } = useComponentStateReference();
