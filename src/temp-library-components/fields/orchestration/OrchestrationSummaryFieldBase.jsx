@@ -6,7 +6,7 @@ import FieldContainer from "components/common/fields/FieldContainer";
 
 export default function OrchestrationSummaryFieldBase(
   {
-    completed,
+    completionTime,
     status,
     className,
     labelText,
@@ -16,7 +16,7 @@ export default function OrchestrationSummaryFieldBase(
     <FieldContainer className={className}>
       <FieldLabelBase label={labelText} />
       <span>
-        {`The last complete run of this ${type} finished on ${DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(completed))} 
+        {`The last complete run of this ${type} finished on ${DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(completionTime))} 
          with a status of ${status}.`}
       </span>
     </FieldContainer>
@@ -24,7 +24,7 @@ export default function OrchestrationSummaryFieldBase(
 }
 
 OrchestrationSummaryFieldBase.propTypes = {
-  completed: PropTypes.any,
+  completionTime: PropTypes.any,
   status: PropTypes.string,
   className: PropTypes.string,
   labelText: PropTypes.string,

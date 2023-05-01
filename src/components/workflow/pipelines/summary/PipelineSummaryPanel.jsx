@@ -356,7 +356,7 @@ function PipelineSummaryPanel(
           {getDescriptionField()}
           <Col sm={12}>
             <PipelineOrchestrationSummaryField
-              pipeline={pipeline}
+              pipelineModel={pipelineModel}
             />
           </Col>
           <Col sm={12}>

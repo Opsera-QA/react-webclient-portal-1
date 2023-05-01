@@ -2,20 +2,20 @@ import PropTypes from "prop-types";
 import React from "react";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import OrchestrationSummaryFieldBase
-  from "temp-library-components/fields/orchestration/pipeline/OrchestrationSummaryFieldBase";
+  from "temp-library-components/fields/orchestration/OrchestrationSummaryFieldBase";
 
 export default function PipelineOrchestrationSummaryField(
   {
-    pipeline,
+    pipelineModel,
     className,
   }) {
+  const pipeline = pipelineModel?.getCurrentData();
   const completed = DataParsingHelper.parseNestedDate(pipeline, "workflow.last_run.completed");
   const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_run.status", "unknown");
 
   if (!completed) {
     return null;
   }
-
 
   return (
     <OrchestrationSummaryFieldBase
@@ -28,6 +28,6 @@ export default function PipelineOrchestrationSummaryField(
 }
 
 PipelineOrchestrationSummaryField.propTypes = {
-  pipeline: PropTypes.object,
+  pipelineModel: PropTypes.object,
   className: PropTypes.string,
 };
