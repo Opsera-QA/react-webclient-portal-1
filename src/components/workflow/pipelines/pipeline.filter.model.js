@@ -174,6 +174,14 @@ export class PipelineFilterModel extends FilterModelBase {
       this.setData("type", taskType);
     }
 
+    const toolIdentifier = sessionHelper.getStoredUrlParameter("tool_identifier");
+    const toolIdentifierName = sessionHelper.getStoredUrlParameter("tool_identifier_name");
+
+    if (toolIdentifier && toolIdentifierName) {
+      this.setData("tool_identifier", toolIdentifier);
+      this.setData("tool_identifier_name", toolIdentifierName);
+    }
+
     if (hasUrlParams !== true) {
       this.unpackBrowserStorage();
     }
@@ -199,6 +207,14 @@ export class PipelineFilterModel extends FilterModelBase {
 
       if (hasStringValue(type) === true) {
         this.setData("type", type);
+      }
+
+      const toolIdentifier = DataParsingHelper.parseNestedString(parsedBrowserStorage, "tool_identifier");
+      const toolIdentifierName = DataParsingHelper.parseNestedString(parsedBrowserStorage, "tool_identifier_name");
+
+      if (toolIdentifier && toolIdentifierName) {
+        this.setData("tool_identifier", toolIdentifier);
+        this.setData("tool_identifier_name", toolIdentifierName);
       }
     }
   };
