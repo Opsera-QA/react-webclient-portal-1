@@ -13,9 +13,8 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import {WORKFLOW_WIDGET_VIEWS} from "components/landing/v2/widgets/workspace/WorkflowWidgetNavigationBar";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import InfoMessageFieldBase from "components/common/fields/text/message/InfoMessageFieldBase";
-import modelHelpers from "components/common/model/modelHelpers";
-import pipelineMetadata from "@opsera/definitions/constants/pipelines/pipeline.metadata";
 import TaskModel from "components/tasks/task.model";
+import PipelineModel from "components/workflow/pipeline.model";
 
 export default function WorkspaceWorkflowSelectionCardView(
   {
@@ -32,7 +31,7 @@ export default function WorkspaceWorkflowSelectionCardView(
     currentView,
   }) {
   const onPipelineSelectFunction = (workspaceItem) => {
-    setSelectedWorkflowItem(modelHelpers.parseObjectIntoModel(workspaceItem, pipelineMetadata));
+    setSelectedWorkflowItem(new PipelineModel(workspaceItem, false));
   };
 
   const onTaskSelectFunction = (workspaceItem) => {
