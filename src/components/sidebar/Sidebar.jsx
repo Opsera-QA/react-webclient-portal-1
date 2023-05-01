@@ -28,7 +28,6 @@ import useAuthenticationToken from "hooks/general/api/useAuthenticationToken";
 
 export default function Sidebar({ hideSideBar }) {
   const { userData } = useComponentStateReference();
-  const { isAuthenticated } = useAuthenticationToken();
   const { isPublicPathState } = useLocationReference();
   const {
     isActive,
@@ -62,7 +61,6 @@ export default function Sidebar({ hideSideBar }) {
     userData == null
     || hideSideBar === true
     || isPublicPathState === true
-    || isAuthenticated !== true
   ) {
     return null;
   }
