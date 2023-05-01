@@ -70,10 +70,10 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
 
         if (isMounted?.current === true && Object.keys(groups).length) {
           setMetricData(
-            groups.map(({ name, overallMaturityScoreText, previousOverallMaturityScoreText }) => ({
-              name,
-              score: overallMaturityScoreText,
-              previousScore: previousOverallMaturityScoreText
+            groups.map(group => ({
+              ...group,
+              score: group.overallMaturityScoreText,
+              previousScore: group.previousOverallMaturityScoreText,
             }))
           );
         } else {
