@@ -15,6 +15,7 @@ import {
 import doraActions from "../dora/dora.action";
 import SystemDrivenMaturityChart from './SystemDrivenMaturityChart';
 import SystemDrivenMaturityOverlay from "./SystemDrivenMaturityOverlay";
+import { formatMaturityScoreItems } from "./util";
 
 function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiConfiguration, setKpis }) {
   const toastContext = useContext(DialogToastContext);
@@ -69,13 +70,7 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
         const { groups } = response?.data;
 
         if (isMounted?.current === true && Object.keys(groups).length) {
-          setMetricData(
-            groups.map(group => ({
-              ...group,
-              score: group.overallMaturityScoreText,
-              previousScore: group.previousOverallMaturityScoreText,
-            }))
-          );
+          setMetricData(formatMaturityScoreItems(groups));
         } else {
           setMetricData([]);
         }
