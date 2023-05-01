@@ -24,9 +24,11 @@ import useGetOrganizationSettingsFeatureFlagModelByName
   from "hooks/settings/organization_settings/feature_flags/useGetOrganizationSettingsFeatureFlagModelByName";
 import featureFlagConstants
   from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
+import useAuthenticationToken from "hooks/general/api/useAuthenticationToken";
 
 export default function Sidebar({ hideSideBar }) {
   const { userData } = useComponentStateReference();
+  const { isAuthenticated } = useAuthenticationToken();
   const { isPublicPathState } = useLocationReference();
   const {
     isActive,
@@ -56,7 +58,12 @@ export default function Sidebar({ hideSideBar }) {
     return "w-20 d-block sidebar-container";
   };
 
-  if (userData == null || hideSideBar === true || isPublicPathState === true) {
+  if (
+    userData == null
+    || hideSideBar === true
+    || isPublicPathState === true
+    || isAuthenticated !== true
+  ) {
     return null;
   }
 
