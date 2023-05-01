@@ -9,6 +9,14 @@ pipelineHelper.getManagementScreenLink = () => {
   return `/workflow`;
 };
 
+pipelineHelper.getModelDetailViewLink = (pipelineModel) => {
+  if (pipelineModel == null) {
+    return null;
+  }
+
+  return pipelineHelper.getDetailViewLink(pipelineModel?.getMongoDbId());
+};
+
 pipelineHelper.getDetailViewLink = (pipelineId, activeTab = "summary") => {
   if (isMongoDbId(pipelineId) !== true) {
     return null;
