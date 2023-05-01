@@ -209,7 +209,6 @@ const sfdcPipelineWizardMetadata = {
     service: "",
     repository: "",
     sfdcDestToolId: "",
-    apiVersion: "",
   }
 };
 
