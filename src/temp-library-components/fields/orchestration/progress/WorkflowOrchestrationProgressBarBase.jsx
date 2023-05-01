@@ -48,8 +48,10 @@ export default function WorkflowOrchestrationProgressBarBase(
   }) {
   const parsedCompletionPercentage = DataParsingHelper.parseNumber(completionPercentage);
   const parsedStatus = DataParsingHelper.parseString(status);
+  console.log("parsedStatus: " + JSON.stringify(parsedStatus));
+  console.log("parsedCompletionPercentage: " + JSON.stringify(parsedCompletionPercentage));
 
-  if (parsedStatus === "stopped" || parsedStatus == null || (parsedCompletionPercentage && parsedCompletionPercentage !== 0)) {
+  if (parsedStatus === "stopped" || parsedStatus == null || (parsedCompletionPercentage == null && parsedCompletionPercentage !== 0)) {
     return null;
   }
 

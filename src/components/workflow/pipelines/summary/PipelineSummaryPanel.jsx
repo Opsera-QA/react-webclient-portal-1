@@ -58,7 +58,11 @@ function PipelineSummaryPanel(
     toastContext,
   } = useComponentStateReference();
 
-  useEffect(() => {}, [pipeline, parentWorkflowStatus]);
+  useEffect(() => {
+    // if (pipeline) {
+    //   setPipelineModel({...new PipelineModel(pipeline, false)});
+    // }
+  }, [pipeline]);
 
   const handleSavePropertyClick = async (pipelineId, value, type) => {
     if (Object.keys(value).length > 0 && type.length > 0) {
@@ -314,12 +318,12 @@ function PipelineSummaryPanel(
               pipelineRunCount={pipeline?.workflow?.run_count}
             />
           </Col>
-          {/*<Col sm={12}>*/}
-          {/*  <PipelineOrchestrationProgressBarBase*/}
-          {/*    pipelineModel={pipelineModel}*/}
-          {/*    className={"mx-3"}*/}
-          {/*  />*/}
-          {/*</Col>*/}
+          <Col sm={12}>
+            <PipelineOrchestrationProgressBarBase
+              pipelineModel={pipelineModel}
+              className={"mx-3"}
+            />
+          </Col>
         </Row>
       </div>
     </>
