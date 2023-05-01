@@ -9,6 +9,8 @@ import useLocationReference from "hooks/useLocationReference";
 import useAuthenticationToken from "hooks/general/api/useAuthenticationToken";
 import AppRoutes from "routes/AppRoutes";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import Sidebar from "components/sidebar/Sidebar";
+import PublicRoutes from "routes/PublicRoutes";
 
 export default function Routes() {
   const { isPublicPathState } = useLocationReference();
@@ -25,28 +27,39 @@ export default function Routes() {
     history.push('/');
   };
 
-  if (isAuthenticated !== true && isPublicPathState !== true) {
-    return (
-      <div className={"w-100 px-3"}>
-        <div className={"d-flex flex-row"}>
-          <div className={"w-100"}>
-            <LoginForm />
-            <Route path='/implicit/callback' render={ (props) => <LoginCallback {...props} onAuthResume={ onAuthResume } /> } />
-            <Route path="/logout" exact component={Logout} />
-          </div>
-        </div>
-        <OpseraFooter />
-      </div>
-    );
-  }
+  const getBody = () => {
+    if (isAuthenticated !== true && isPublicPathState !== true) {
+      return (
+        <>
+          <LoginForm/>
+          <Route path='/implicit/callback' render={(props) => <LoginCallback {...props} onAuthResume={onAuthResume}/>}/>
+          <Route path="/logout" exact component={Logout}/>
+        </>
+      );
+    }
 
-  if (isFreeTrial === true && isOpseraAdministrator !== true) {
-    return (
-      <FreeTrialAppRoutes />
-    );
-  }
+    if (isFreeTrial === true && isOpseraAdministrator !== true) {
+      return (
+        <FreeTrialAppRoutes />
+      );
+    }
+
+    if (isAuthenticated !== true) {
+      return (<PublicRoutes />);
+    }
+
+    return (<AppRoutes />);
+  };
 
   return (
-    <AppRoutes />
+    <div className={"w-100 px-3"}>
+      <div className={"d-flex flex-row"}>
+        <Sidebar />
+        <div className={"w-100"}>
+          {getBody()}
+        </div>
+      </div>
+      <OpseraFooter />
+    </div>
   );
 }
