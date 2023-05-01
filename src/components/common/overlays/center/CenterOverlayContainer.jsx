@@ -116,7 +116,7 @@ function CenterOverlayContainer(
           size={size}
         >
           <div
-            className={`content-card-1 bg-white`}
+            className={`content-card-1 overlay-wrapper`}
             style={{
               minHeight: minimumHeight,
               maxHeight: maximumHeight,
