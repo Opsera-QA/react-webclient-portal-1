@@ -112,7 +112,7 @@ function ScreenContainerTitleBar(
 
   return (
     <div className="d-flex">
-      <div className={"title-text-header-1"}>
+      <div className={"title-text-header-1 no-wrap-inline"}>
         <span>
           <IconBase isLoading={isLoading || isSoftLoading} icon={titleIcon} className={"mr-2"}/>
           {isLoading === true ? "Loading Data" : title}

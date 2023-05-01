@@ -9,6 +9,14 @@ pipelineHelper.getManagementScreenLink = () => {
   return `/workflow`;
 };
 
+pipelineHelper.getModelDetailViewLink = (pipelineModel) => {
+  if (pipelineModel == null) {
+    return null;
+  }
+
+  return pipelineHelper.getDetailViewLink(pipelineModel?.getMongoDbId());
+};
+
 pipelineHelper.getDetailViewLink = (pipelineId, activeTab = "summary") => {
   if (isMongoDbId(pipelineId) !== true) {
     return null;
@@ -184,4 +192,13 @@ pipelineHelper.getPipelineCompletionPercentage = (pipeline) => {
   const finalStepIndex = isSuccess === true || (isStepRunning !== true && isPaused !== true && isFailed !== true) ? activeStepIndex + 1 : activeStepIndex + 0.25;
 
   return Math.max(finalStepIndex / activeStepCount, 0) * 100;
+};
+
+pipelineHelper.getPipelineState = (pipeline) => {
+  const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status", "stopped");
+  const isPaused =
+    status === "stopped" &&
+    DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused") === true;
+
+  return isPaused === true ? "paused" : status;
 };

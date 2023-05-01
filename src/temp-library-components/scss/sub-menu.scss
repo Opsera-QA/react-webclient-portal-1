@@ -15,6 +15,7 @@
   background: white;
   border: 2px solid $default-border-color;
   padding: 0;
+  box-shadow: rgba($default-border-color, .25) 2px 2px 2px;
 }
 
 .sub-menu-container > ul > li {

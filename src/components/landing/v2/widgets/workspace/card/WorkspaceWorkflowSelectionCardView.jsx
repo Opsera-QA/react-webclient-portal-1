@@ -8,13 +8,13 @@ import WorkflowTaskCard from "components/landing/v2/widgets/workspace/card/Workf
 import { numberHelpers } from "components/common/helpers/number/number.helpers";
 import { widgetHelper } from "temp-library-components/helpers/widgets/widget.helper";
 import { heightHelper } from "temp-library-components/helpers/height/height.helper";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import NoRegisteredWorkflowsCard from "components/wizard/free_trial/workflows/NoRegisteredWorkflowsCard";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {WORKFLOW_WIDGET_VIEWS} from "components/landing/v2/widgets/workspace/WorkflowWidgetNavigationBar";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import InfoMessageFieldBase from "components/common/fields/text/message/InfoMessageFieldBase";
+import TaskModel from "components/tasks/task.model";
+import PipelineModel from "components/workflow/pipeline.model";
 
 export default function WorkspaceWorkflowSelectionCardView(
   {
@@ -30,6 +30,13 @@ export default function WorkspaceWorkflowSelectionCardView(
     loadMoreWorkflows,
     currentView,
   }) {
+  const onPipelineSelectFunction = (workspaceItem) => {
+    setSelectedWorkflowItem(new PipelineModel(workspaceItem, false));
+  };
+
+  const onTaskSelectFunction = (workspaceItem) => {
+    setSelectedWorkflowItem(new TaskModel(workspaceItem, false));
+  };
   const getWorkspaceItemCard = (workspaceItem) => {
     switch (workspaceItem?.workspaceType) {
       case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
@@ -37,14 +44,14 @@ export default function WorkspaceWorkflowSelectionCardView(
           <WorkflowPipelineCard
             pipeline={workspaceItem}
             selectedFlow={selectedWorkflowItem}
-            setSelectedFlow={setSelectedWorkflowItem}
+            setSelectedFlow={onPipelineSelectFunction}
           />
         );
       case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
         return (
           <WorkflowTaskCard
             selectedFlow={selectedWorkflowItem}
-            setSelectedFlow={setSelectedWorkflowItem}
+            setSelectedFlow={onTaskSelectFunction}
             task={workspaceItem}
           />
         );

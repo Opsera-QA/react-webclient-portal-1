@@ -29,3 +29,7 @@ taskHelper.getDetailViewLink = (taskId) => {
   return `/task/details/${taskId}`;
 };
 
+taskHelper.getTaskCompletionPercentage = (task) => {
+  return undefined;
+};
+
