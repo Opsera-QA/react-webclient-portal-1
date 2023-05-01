@@ -65,6 +65,10 @@ export class PipelineModel extends ModelBase {
       this.isNew(),
     );
   };
+
+  getCompletionPercentage = () => {
+    return pipelineHelper.getPipelineCompletionPercentage(this.getCurrentData());
+  };
 }
 
 export default PipelineModel;

@@ -118,6 +118,10 @@ export class TaskModel extends ModelBase {
       this.setStateFunction,
     );
   };
+
+  getCompletionPercentage = () => {
+    return taskHelper.getTaskCompletionPercentage(this.getCurrentData());
+  };
 }
 
 export default TaskModel;
