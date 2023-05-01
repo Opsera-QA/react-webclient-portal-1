@@ -31,6 +31,8 @@ import InlinePipelineTypeSelectInput from "components/workflow/pipelines/summary
 import {Divider} from "temp-library-components/divider/Divider";
 import {ProgressBarBase} from "@opsera/react-vanity-set";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
+import PipelineOrchestrationSummaryField
+  from "temp-library-components/fields/orchestration/pipeline/PipelineOrchestrationSummaryField";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -230,23 +232,6 @@ function PipelineSummaryPanel(
     );
   };
 
-  const getPipelineSummaryField = () => {
-    const completed = DataParsingHelper.parseNestedDate(pipeline, "workflow.last_run.completed");
-
-    if (completed) {
-      const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_run.status");
-
-      return (
-        <Col sm={12} className="py-2">
-          <span className="text-muted mr-1">Summary:</span>
-          Last complete run of pipeline finished on {
-          DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(completed))} with a status
-          of {status}.
-        </Col>
-      );
-    }
-  };
-
   const getProgressBar = () => {
     const completionPercentage = pipelineHelper.getPipelineCompletionPercentage(pipeline);
 
@@ -369,8 +354,11 @@ function PipelineSummaryPanel(
           {getTagField()}
 
           {getDescriptionField()}
-          {getPipelineSummaryField()}
-
+          <Col sm={12}>
+            <PipelineOrchestrationSummaryField
+              pipeline={pipeline}
+            />
+          </Col>
           <Col sm={12}>
             <PipelineDurationMetricsStandaloneField
               pipelineId={pipeline?._id}
