@@ -33,6 +33,8 @@ import {ProgressBarBase} from "@opsera/react-vanity-set";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 import PipelineOrchestrationSummaryField
   from "temp-library-components/fields/orchestration/pipeline/PipelineOrchestrationSummaryField";
+import PipelineOrchestrationProgressBarBase
+  from "temp-library-components/fields/orchestration/progress/PipelineOrchestrationProgressBarBase";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -232,59 +234,6 @@ function PipelineSummaryPanel(
     );
   };
 
-  const getProgressBar = () => {
-    const completionPercentage = pipelineHelper.getPipelineCompletionPercentage(pipeline);
-
-    if (parentWorkflowStatus === "running") {
-      return (
-        <Col sm={12}>
-          <ProgressBarBase
-            className={"mx-3"}
-            completionPercentage={completionPercentage}
-            isInProgress={true}
-          />
-        </Col>
-      );
-    }
-
-    if (parentWorkflowStatus === "paused") {
-      return (
-        <Col sm={12}>
-          <ProgressBarBase
-            className={"mx-3"}
-            completionPercentage={completionPercentage}
-            variant={"warning"}
-            label={"Awaiting User Response"}
-          />
-        </Col>
-      );
-    }
-
-    if (parentWorkflowStatus === "failed") {
-      return (
-        <Col sm={12}>
-          <ProgressBarBase
-            className={"mx-3"}
-            completionPercentage={100}
-            variant={"danger"}
-          />
-        </Col>
-      );
-    }
-
-    if (parentWorkflowStatus === "success") {
-      return (
-        <Col sm={12}>
-          <ProgressBarBase
-            className={"mx-3"}
-            completionPercentage={100}
-            variant={"success"}
-          />
-        </Col>
-      );
-    }
-  };
-
   if (pipeline == null || typeof pipeline !== "object" || Object.keys(pipeline).length === 0) {
     return (
       <InformationDialog
@@ -365,7 +314,12 @@ function PipelineSummaryPanel(
               pipelineRunCount={pipeline?.workflow?.run_count}
             />
           </Col>
-          {/*{getProgressBar()}*/}
+          {/*<Col sm={12}>*/}
+          {/*  <PipelineOrchestrationProgressBarBase*/}
+          {/*    pipelineModel={pipelineModel}*/}
+          {/*    className={"mx-3"}*/}
+          {/*  />*/}
+          {/*</Col>*/}
         </Row>
       </div>
     </>

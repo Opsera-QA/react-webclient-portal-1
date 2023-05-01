@@ -193,3 +193,12 @@ pipelineHelper.getPipelineCompletionPercentage = (pipeline) => {
 
   return Math.max(finalStepIndex / activeStepCount, 0) * 100;
 };
+
+pipelineHelper.getPipelineState = (pipeline) => {
+  const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status", "stopped");
+  const isPaused =
+    status === "stopped" &&
+    DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused") === true;
+
+  return isPaused === true ? "paused" : status;
+};
