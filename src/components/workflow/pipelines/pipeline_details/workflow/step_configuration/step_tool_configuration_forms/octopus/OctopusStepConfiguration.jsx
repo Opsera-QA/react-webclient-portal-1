@@ -19,7 +19,7 @@ import OctopusStepOctopusEnvironmentListInput
 
 // TODO: This needs a refactor. I plan on doing it soon.
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, callbackSaveToVault, closeEditorPanel, pipelineId }) {
-  const { getAccessToken, featureFlagHideItemInProd } = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [octopusStepConfigurationDto, setOctopusStepConfigurationDataDto] = useState(undefined);

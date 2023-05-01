@@ -37,7 +37,7 @@ class rmProvider extends Component {
       token: accessToken,
       user: userInfo
     });
-  }
+  };
 
   componentDidUpdate(prevProps, prevState) {
     const { modalOpen, services, service } = this.state;
@@ -61,7 +61,7 @@ class rmProvider extends Component {
       more: false,
       saving: false,
     });
-  }
+  };
   // services
   handleServiceCheckBoxChange = (service, name, val) => {
     const { services } = this.state;
@@ -75,7 +75,7 @@ class rmProvider extends Component {
     this.setState({
       services,
     });
-  }
+  };
 
   handleServiceChange = ({ target }) => {
     const [service, name] = target.name.split("//");
@@ -90,7 +90,7 @@ class rmProvider extends Component {
         },
       };
     });
-  }
+  };
 
   handleChange = ({ target: { name, value } }) => {
     let error = null;
@@ -106,29 +106,29 @@ class rmProvider extends Component {
       otherServicesShow: null,
       [name]: value,
     });
-  }
+  };
 
   handleNoClick = () => {
     this.setState({
       qtShow: false,
       otherServicesShow: false,
     });
-  }
+  };
 
   handleYesClick = () => {
     this.setState({
       qtShow: false,
       otherServicesShow: true,
     });
-  }
+  };
 
   setAppDetails = (app) => {
     this.setState({ applicationId: app._id, appname: app.name, data: {} });
-  }
+  };
 
   gotoInventory = () => {
     this.props.history.push("/inventory/tools");
-  }
+  };
 
   validate = () => {
     const { services, service } = this.state;
@@ -152,7 +152,7 @@ class rmProvider extends Component {
 
     }
 
-  }
+  };
 
   handleModalSave = ({ service }) => {
     const { services } = this.state;
@@ -164,7 +164,7 @@ class rmProvider extends Component {
       services,
       modalOpen: false,
     });
-  }
+  };
 
   handleModalCancel = ({ service }) => {
     const { services } = this.state;
@@ -174,7 +174,7 @@ class rmProvider extends Component {
       services,
       modalOpen: false,
     });
-  }
+  };
 
   serviceClick = ({ service, category, fields }) => {
     this.setState({
@@ -183,7 +183,7 @@ class rmProvider extends Component {
       modalOpen: true,
       fields,
     });
-  }
+  };
 
   checkBoxChange = (e, service) => {
     const { services } = this.state;
@@ -191,7 +191,7 @@ class rmProvider extends Component {
     this.setState({
       services,
     });
-  }
+  };
 
   render() {
     // console.log(this.state.services)

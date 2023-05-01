@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import { Form, Row, Col, Card } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import defaultSignupFormFields from "components/user/signup/signup-form-fields.js";
 import "components/user/user.css";
 import Model from "core/data_model/model";
@@ -15,6 +15,8 @@ import UsStateSelectInput from "components/common/list_of_values_input/general/U
 import useComponentStateReference from "hooks/useComponentStateReference";
 import AwsCloudProviderRegionSelectInput
   from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
+import WarningMessageFieldBase from "../../common/fields/text/message/WarningMessageFieldBase";
+
 
 function Signup() {
   const history = useHistory();
@@ -31,7 +33,7 @@ function Signup() {
           defaultSignupFormFields.newObjectFields,
           defaultSignupFormFields,
           true,
-          )
+        )
     });
   }, []);
 
@@ -81,6 +83,14 @@ function Signup() {
         <Card>
           <Card.Header as="h5" className="new-user-header">Sign Up For Opsera</Card.Header>
           <Card.Body className="new-user-body-full p-3">
+            <WarningMessageFieldBase
+              showWarningLabel={false}
+              message={<>
+                Use this form if you are a new customer getting started with Opsera.
+                If you are an existing customer wishing to add users to your active Opsera account, view the  <a href="https://docs.opsera.io/role-based-access-pipelines-and-tool-registry/manage-users-and-organization#create-a-new-user" target="_blank" rel="noopener noreferrer"><b>Manage Users Help Documentation</b></a>.
+              </>}
+              className={"mt-2"}
+            />
             <Row>
               <Col md={6}>
                 <TextInputBase fieldName={"firstName"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />

@@ -1,44 +1,32 @@
-import React, {useContext, useState} from 'react';
+import React from 'react';
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
-import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
+import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
+import ConfirmElkStackDeploymentOverlay
+  from "components/admin/registered_users/actions/deploy_elk/ConfirmElkStackDeploymentOverlay";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function DeployElkButton({ userId }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [deployingElk, setDeployingElk] = useState(false);
+export default function DeployElkButton({ user }) {
+  const { toastContext, } = useComponentStateReference();
 
-  const deployElkStack = async () => {
-    try {
-      setDeployingElk(true);
-      const response = await RegisteredUserActions.deployElkStack(userId, getAccessToken);
-      let statusCode = response.status;
-      if (statusCode === 200) {
-        toastContext.showSuccessDialog("Successfully Deployed ELK Stack");
-      }
-      else {
-        toastContext.showErrorDialog("Something went wrong deploying ELK stack. View browser logs for more details");
-        console.error(response);
-        setDeployingElk(false);
-      }
-    } catch (error) {
-      console.error(error);
-      toastContext.showErrorDialog(error.message);
-      setDeployingElk(false);
-    }
+  const launchConfirmationOverlay = () => {
+    toastContext.showOverlayPanel(
+      <ConfirmElkStackDeploymentOverlay
+        user={user}
+      />
+    );
   };
 
   return (
-    <div>
-      <Button className="w-100" variant="secondary" disabled={deployingElk} size="sm" onClick={() => { deployElkStack(); }} >Deploy ELK Stack Now</Button>
-    </div>
+    <VanityButtonBase
+      buttonClassName={"w-100"}
+      variant={"secondary"}
+      buttonSize={"sm"}
+      normalText={"Deploy ELK Stack Now"}
+      onClickFunction={launchConfirmationOverlay}
+    />
   );
 }
 
 DeployElkButton.propTypes = {
-  userId: PropTypes.string,
+  user: PropTypes.object,
 };
-
-export default DeployElkButton;

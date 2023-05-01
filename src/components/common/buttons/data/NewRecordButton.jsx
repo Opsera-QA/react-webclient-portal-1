@@ -21,7 +21,11 @@ function NewRecordButton(
       return customButtonText;
     }
 
-    return (`New ${type}`);
+    if (hasStringValue(type) === true) {
+      return (`New ${type}`);
+    }
+
+    return "Create New";
   };
 
   if (!addRecordFunction) {
@@ -37,8 +41,12 @@ function NewRecordButton(
         onClick={() => {addRecordFunction();}}
         className={"d-flex text-nowrap"}
       >
-        <span className={"d-sm-none"}><IconBase icon={faPlus}/></span>
-        <span className={"d-none d-sm-inline"}><IconBase icon={faPlus} className={"mr-1"}/>{getButtonText()}</span>
+        <span>
+          <IconBase icon={faPlus} />
+          <span className={"d-none d-xs-none d-sm-inline ml-1"}>
+            {getButtonText()}
+          </span>
+        </span>
       </Button>
     </div>
   );

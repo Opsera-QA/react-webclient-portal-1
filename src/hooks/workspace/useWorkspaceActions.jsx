@@ -1,5 +1,6 @@
 import useApiService from "hooks/api/service/useApiService";
 import {workspaceConstants} from "components/workspace/workspace.constants";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function useWorkspaceActions() {
   const apiService = useApiService();
@@ -34,6 +35,119 @@ export default function useWorkspaceActions() {
       apiUrl,
       queryParameters,
     );
+  };
+
+  workspaceActions.getMyWorkspaceWorkflowResources = async (
+    workspaceFilterModel,
+    fields,
+    active,
+  ) => {
+    const apiUrl = `/workspace/workflows`;
+
+    const queryParameters = {
+      sortOption: workspaceFilterModel?.getData("sortOption"),
+      currentPage: workspaceFilterModel?.getData("currentPage"),
+      pageSize: workspaceFilterModel?.getData("pageSize"),
+      toolIdentifier: workspaceFilterModel?.getData("toolIdentifier"),
+      tag: workspaceFilterModel?.getData("tag"),
+      active: active,
+      search: workspaceFilterModel?.getFilterValue("search"),
+      owner: workspaceFilterModel?.getFilterValue("owner"),
+      fields: fields,
+    };
+
+    const type = workspaceFilterModel?.getFilterValue("type");
+
+    if (workspaceConstants.isWorkspaceTypeValid(type) === true) {
+      queryParameters.type = type;
+    }
+
+    return await apiService.handleApiGetRequest(
+      apiUrl,
+      queryParameters,
+    );
+  };
+
+  workspaceActions.getSubscribedWorkflowResources = async (
+    workspaceFilterModel,
+    fields,
+    active,
+  ) => {
+    const apiUrl = `/workspace/workflows/subscribed`;
+
+    const queryParameters = {
+      sortOption: workspaceFilterModel?.getData("sortOption"),
+      currentPage: workspaceFilterModel?.getData("currentPage"),
+      pageSize: workspaceFilterModel?.getData("pageSize"),
+      toolIdentifier: workspaceFilterModel?.getData("toolIdentifier"),
+      tag: workspaceFilterModel?.getData("tag"),
+      active: active,
+      search: workspaceFilterModel?.getFilterValue("search"),
+      owner: workspaceFilterModel?.getFilterValue("owner"),
+      fields: fields,
+    };
+
+    const type = workspaceFilterModel?.getFilterValue("type");
+
+    if (workspaceConstants.isWorkspaceTypeValid(type) === true) {
+      queryParameters.type = type;
+    }
+
+    return await apiService.handleApiGetRequest(
+      apiUrl,
+      queryParameters,
+    );
+  };
+
+  workspaceActions.getRecentWorkflowResources = async (
+    workspaceFilterModel,
+    fields,
+    active,
+  ) => {
+    const apiUrl = `/workspace/workflows/recent`;
+
+    const queryParameters = {
+      sortOption: workspaceFilterModel?.getData("sortOption"),
+      currentPage: workspaceFilterModel?.getData("currentPage"),
+      pageSize: workspaceFilterModel?.getData("pageSize"),
+      toolIdentifier: workspaceFilterModel?.getData("toolIdentifier"),
+      tag: workspaceFilterModel?.getData("tag"),
+      active: active,
+      search: workspaceFilterModel?.getFilterValue("search"),
+      owner: workspaceFilterModel?.getFilterValue("owner"),
+      fields: fields,
+    };
+
+    const type = workspaceFilterModel?.getFilterValue("type");
+
+    if (workspaceConstants.isWorkspaceTypeValid(type) === true) {
+      queryParameters.type = type;
+    }
+
+    return await apiService.handleApiGetRequest(
+      apiUrl,
+      queryParameters,
+    );
+  };
+
+  workspaceActions.getWorkspaceWorkflowResourcesByIds = async (
+    idArray,
+  ) => {
+    const apiUrl = `/workspace/workflows/ids`;
+
+    const queryParameters = {
+      idArray: DataParsingHelper.parseArray(idArray, []),
+    };
+
+    return await apiService.handleApiGetRequest(
+      apiUrl,
+      queryParameters,
+    );
+  };
+
+  workspaceActions.getTagsByWorkspaceUsage = async () => {
+    const apiUrl = `/workspace/usage/tags`;
+    return await apiService.handleApiGetRequest(apiUrl);
   };
 
   return workspaceActions;

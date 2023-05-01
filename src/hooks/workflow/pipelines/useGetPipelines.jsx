@@ -3,6 +3,8 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function useGetPipelines(
   fields,
@@ -20,6 +22,7 @@ export default function useGetPipelines(
     setError,
     loadData,
   } = useLoadData();
+  const { userData } = useComponentStateReference();
   const pipelineActions = usePipelineActions();
 
   useEffect(() => {
@@ -35,6 +38,12 @@ export default function useGetPipelines(
   }, []);
 
   const getPipelines = async (newFilterModel = pipelineFilterModel) => {
+    setPipelines([]);
+
+    if (PipelineRoleHelper.canGetPipelines(userData) !== true) {
+      return;
+    }
+
     const response = await pipelineActions.getPipelines(
       newFilterModel,
       fields,

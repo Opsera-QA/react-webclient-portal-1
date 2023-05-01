@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import CardView from "components/common/card/CardView";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
 import WorkspaceToolCard from "components/workspace/cards/WorkspaceToolCard";
+import VanitySetCardView from "components/common/card/VanitySetCardView";
 
 export default function WorkspaceRegistryCardView(
   {
@@ -19,10 +19,9 @@ export default function WorkspaceRegistryCardView(
   };
 
   return (
-    <CardView
+    <VanitySetCardView
       isLoading={isLoading}
       loadData={loadData}
-      nextGeneration={true}
       cards={
         <VerticalCardViewBase
           data={tools}

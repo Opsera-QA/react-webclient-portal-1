@@ -2,7 +2,7 @@ import React from "react";
 import { SecureRoute } from "@okta/okta-react";
 import Pipeline from "components/pipeline";
 import PipelineCatalogLibrary from "components/workflow/catalog/PipelineCatalogLibrary";
-import Pipelines from "components/workflow/pipelines/Pipelines";
+import PipelineManagement from "components/workflow/pipelines/PipelineManagement";
 import PipelineDetailView from "components/workflow/pipelines/pipeline_details/PipelineDetailView";
 import RoleRestrictedRoute from "temp-library-components/routes/RoleRestrictedRoute";
 import PipelineInstructionsManagement from "components/workflow/instructions/PipelineInstructionsManagement";
@@ -28,8 +28,8 @@ export default function PipelinesRoutes() {
         exact
         component={PlatformPipelineTemplateDetailView}
       />
-      <SecureRoute path="/workflow/" exact component={Pipelines} />
-      <SecureRoute path="/workflow/owner" exact component={Pipelines} />
+      <SecureRoute path="/workflow/" exact component={PipelineManagement} />
+      <SecureRoute path="/workflow/owner" exact component={PipelineManagement} />
       <SecureRoute path="/workflow/details/:id/:tab?" exact component={PipelineDetailView} />
 
       <RoleRestrictedRoute

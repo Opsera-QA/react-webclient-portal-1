@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { faFileImport } from "@fortawesome/pro-light-svg-icons";
 import ButtonBase from "components/common/buttons/ButtonBase";
 import { AuthContext } from "contexts/AuthContext";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ImportDataButton(
   {
@@ -11,9 +12,11 @@ function ImportDataButton(
     isLoading,
     disabled,
   }) {
-  const { isOpseraAdministrator } = useContext(AuthContext);
+  const {
+    isOpseraAdministrator,
+  } = useComponentStateReference();
 
-  if (importDataFunction == null || isOpseraAdministrator() !== true) {
+  if (importDataFunction == null || isOpseraAdministrator !== true) {
     return null;
   }
 

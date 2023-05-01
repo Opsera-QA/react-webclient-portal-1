@@ -32,9 +32,13 @@ function ScreenContainer(
     className,
     hideSubNavigationBlock,
     showActiveFilters,
-    filters,
+    filterOverlay,
     filterModel,
+    setFilterModel,
     loadDataFunction,
+    addRecordFunction,
+    addRecordButtonCustomText,
+    isSoftLoading,
   }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const toastContext = useContext(DialogToastContext);
@@ -79,8 +83,8 @@ function ScreenContainer(
 
     if (hasStringValue(pageDescription) === true) {
       return (
-        <div className={"page-description px-3 mt-1 d-flex"}>
-          <div className={"mt-auto"}>
+        <div className={"px-3 my-2 d-flex"}>
+          <div className={"my-auto"}>
             {pageDescription}
           </div>
         </div>
@@ -89,8 +93,8 @@ function ScreenContainer(
 
     if (hasStringValue(breadcrumbPageDescription) === true) {
       return (
-        <div className={"page-description px-3 mt-1 d-flex"}>
-          <div className={"mt-auto"}>
+        <div className={"px-3 my-2 d-flex"}>
+          <div className={"my-auto"}>
             {breadcrumbPageDescription}
           </div>
         </div>
@@ -142,7 +146,7 @@ function ScreenContainer(
   };
 
   const getActiveFilterDisplayer = () => {
-    if (showActiveFilters !== false && filters != null && filterModel != null) {
+    if (showActiveFilters !== false && filterOverlay != null && filterModel != null) {
       return (
         <ActiveFilterDisplayer
           filterModel={filterModel}
@@ -192,12 +196,16 @@ function ScreenContainer(
               title={breadcrumb?.title}
               isBeta={breadcrumb?.isBeta === true}
               isLoading={isLoading}
+              isSoftLoading={isSoftLoading}
               titleActionBar={titleActionBar}
               helpComponent={helpComponent}
               auditLogType={auditLogType}
               filterModel={filterModel}
-              filters={filters}
+              setFilterModel={setFilterModel}
+              filterOverlay={filterOverlay}
               loadDataFunction={loadDataFunction}
+              addRecordButtonCustomText={addRecordButtonCustomText}
+              addRecordFunction={addRecordFunction}
             />
           </div>
           {getActiveFilterDisplayer()}
@@ -222,7 +230,6 @@ ScreenContainer.propTypes = {
   showBreadcrumbTrail: PropTypes.bool,
   navigationTabContainer: PropTypes.object,
   titleActionBar: PropTypes.object,
-  accessRoleData: PropTypes.object,
   roleRequirement: PropTypes.string,
   helpComponent: PropTypes.object,
   bodyClassName: PropTypes.string,
@@ -231,8 +238,12 @@ ScreenContainer.propTypes = {
   hideSubNavigationBlock: PropTypes.bool,
   showActiveFilters: PropTypes.bool,
   filterModel: PropTypes.object,
+  setFilterModel: PropTypes.func,
   loadDataFunction: PropTypes.func,
-  filters: PropTypes.any,
+  filterOverlay: PropTypes.any,
+  addRecordFunction: PropTypes.func,
+  addRecordButtonCustomText: PropTypes.string,
+  isSoftLoading: PropTypes.bool,
 };
 
 ScreenContainer.defaultProps = {

@@ -48,6 +48,13 @@ export default function PipelineSourceWebhookTriggerDetailsPanel(
         disabled={model.getData("service") === toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS}
         visible={model?.getData("isPrEvent") === true}
       />
+        <BooleanToggleInput
+        className={"my-1"}
+        fieldName={"isMonitored"}
+        dataObject={model}
+        setDataObject={setModel}
+        visible={model?.getData("isPrEvent") === true && model?.getData("isPushEvent") === false}
+      />
     </div>
   );
 }

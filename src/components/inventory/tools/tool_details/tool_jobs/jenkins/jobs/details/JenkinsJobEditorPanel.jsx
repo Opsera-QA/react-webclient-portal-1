@@ -73,12 +73,10 @@ function JenkinsJobEditorPanel({ handleClose, jenkinsJobModel, setJenkinsJobMode
   if (activeTab === "summary") {
     return (
       <JenkinsJobSummaryPanel
-        toolData={toolData}
         jenkinsJobData={jenkinsJobModel}
-        jenkinsJobTypeData={jenkinsJobConfigurationModel}
         setActiveTab={setActiveTab}
-        loadData={loadData}
         handleClose={handleClose}
+        jenkinsJobType={jenkinsJobModel?.getArrayData("type", 0)}
       />
     );
   }

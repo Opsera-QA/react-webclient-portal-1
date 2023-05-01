@@ -39,7 +39,7 @@ function TextInputBase(
   }, [error]);
 
   useEffect(() => {
-    if (hasStringValue(fieldError) === true && dataObject?.isNew() !== true && error == null) {
+    if (hasStringValue(fieldError) === true && dataObject?.isNew() !== true && error == null && dataObject?.isChanged(fieldName)) {
       setErrorMessage(fieldError);
     }
   }, [fieldError]);
@@ -104,6 +104,7 @@ function TextInputBase(
   const getInputBody = () => {
     return (
       <input
+        id={fieldName}
         type={type}
         style={style}
         disabled={disabled}

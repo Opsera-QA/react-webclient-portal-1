@@ -4,28 +4,21 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
 import { faFilter } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import EditFiltersOverlay from "temp-library-components/icon/filters/EditFiltersOverlay";
 
 export default function EditFiltersIcon(
   {
     filterModel,
-    loadDataFunction,
-    filters,
+    filterOverlay,
     className,
+    isLoading,
   }) {
   const { toastContext, } = useComponentStateReference();
 
-  const showEditor = () => {
-    toastContext.showOverlayPanel(
-      <EditFiltersOverlay
-        filterModel={filterModel}
-        filters={filters}
-        loadDataFunction={loadDataFunction}
-      />,
-    );
+  const showEditFilterOverlay = () => {
+    toastContext.showOverlayPanel(filterOverlay);
   };
 
-  if (filters == null || loadDataFunction == null || filterModel == null) {
+  if (filterOverlay == null || filterModel == null) {
     return null;
   }
 
@@ -34,9 +27,9 @@ export default function EditFiltersIcon(
       <TooltipWrapper innerText={"Edit Filters"}>
         <div>
           <IconBase
-            onClickFunction={() => {showEditor();}}
+            onClickFunction={showEditFilterOverlay}
             icon={faFilter}
-            className={"pointer"}
+            disabled={isLoading}
           />
         </div>
       </TooltipWrapper>
@@ -46,7 +39,7 @@ export default function EditFiltersIcon(
 
 EditFiltersIcon.propTypes = {
   filterModel: PropTypes.object,
-  loadDataFunction: PropTypes.func,
   className: PropTypes.string,
-  filters: PropTypes.any,
+  filterOverlay: PropTypes.any,
+  isLoading: PropTypes.bool,
 };

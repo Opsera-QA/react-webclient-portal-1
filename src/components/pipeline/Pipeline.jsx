@@ -12,7 +12,7 @@ import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
 class Pipeline extends React.PureComponent {
-  static contextType = RMContext
+  static contextType = RMContext;
   state = {
     appname: "",
     appnameError: null,
@@ -24,7 +24,7 @@ class Pipeline extends React.PureComponent {
     status: null,
     messages: null,
     editTools: false
-  }
+  };
 
   handleAppNameChange = ({ target: { name, value } }) => {
     let error = null;
@@ -36,7 +36,7 @@ class Pipeline extends React.PureComponent {
       [name]: value,
       appnameError: error,
     });
-  }
+  };
 
   handleTabClick = param => e => {
     // param is the argument you passed to the function
@@ -61,7 +61,7 @@ class Pipeline extends React.PureComponent {
         this.getApiData();
       }
     });
-  }
+  };
 
   async getApiData() {
     const { token, user } = this.context;
@@ -131,14 +131,14 @@ class Pipeline extends React.PureComponent {
       {
         saving: false,
       });
-  }
+  };
 
 
   handleDropdownChange = (e) => {
     this.setState({ key: e.target.value }, () => {
       this.setSelectedApp();
     });
-  }
+  };
 
   setSelectedApp = async () => {
     const { setAppDetails, reset } = this.context;
@@ -152,7 +152,7 @@ class Pipeline extends React.PureComponent {
       tools: tools,
       status: "success"
     });
-  }
+  };
 
   createClick = async (e) => {
     e.preventDefault();
@@ -200,7 +200,7 @@ class Pipeline extends React.PureComponent {
           });
         }
       });
-  }
+  };
 
   renderInput = () => {
     const { appname, appnameError, handleChange } = this.context;
@@ -219,7 +219,7 @@ class Pipeline extends React.PureComponent {
         </Form.Group>
       </Form.Row>
     );
-  }
+  };
   render() {
     const { checkingAppName, appnameError, appname, gotoInventory } = this.context;
     const { error, messages, status, fetching, editTools, dropdownData, savingStatus } = this.state;

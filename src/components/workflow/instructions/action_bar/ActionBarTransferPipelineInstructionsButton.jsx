@@ -20,7 +20,7 @@ function ActionBarTransferPipelineInstructionsButton({ toolModel, loadTool, clas
   const {
     isMounted,
     cancelTokenSource,
-    isSassUser,
+    isSaasUser,
     getAccessToken
   } = useComponentStateReference();
 
@@ -78,7 +78,7 @@ function ActionBarTransferPipelineInstructionsButton({ toolModel, loadTool, clas
     );
   };
 
-  if (isSassUser !== false || toolCopy == null || toolModel?.canTransferRegistryToolOwnership() !== true) {
+  if (isSaasUser !== false || toolCopy == null || toolModel?.canTransferRegistryToolOwnership() !== true) {
     return null;
   }
 

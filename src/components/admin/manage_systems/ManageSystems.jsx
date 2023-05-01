@@ -50,7 +50,7 @@ export default class ManageSystems extends PureComponent {
       applications: user.applications || [],
       application: null,
     });
-  }
+  };
 
   handleChangeValue = (e) => {
     this.setState({
@@ -61,7 +61,7 @@ export default class ManageSystems extends PureComponent {
     this.setState({
       application,
     }, () => { this.setState({ fetching: false }); });
-  }
+  };
 
   orgSearch = async (e) => {
     e.preventDefault();
@@ -95,14 +95,14 @@ export default class ManageSystems extends PureComponent {
     this.setState({
       loading: false,
     });
-  }
+  };
 
   handleChange = ({ target: { value, name } }) => {
     let updater = {
       [name]: value,
     };
     this.setState(updater);
-  }
+  };
   
 
   render() {

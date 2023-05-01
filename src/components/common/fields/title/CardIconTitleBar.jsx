@@ -50,7 +50,7 @@ export default function CardIconTitleBar(
             height: "100px",
           }}
         >
-          <div>
+          <div className={"my-auto"}>
             {formattedIcon}
           </div>
         </div>
@@ -58,11 +58,20 @@ export default function CardIconTitleBar(
     }
 
     return (
-      <IconBase
-        icon={icon}
-        iconSize={iconSize}
-        iconColor={iconColor}
-      />
+      <div
+        className={"d-flex"}
+        style={{
+          height: "100px",
+        }}
+      >
+        <div className={"my-auto"}>
+          <IconBase
+            icon={icon}
+            iconSize={iconSize}
+            iconColor={iconColor}
+          />
+        </div>
+      </div>
     );
   };
 
@@ -106,7 +115,7 @@ export default function CardIconTitleBar(
       return (
         <div className={"d-flex w-100 mt-3"}>
           <div className={titleClassName}>
-            <div className={"icon-card-title"}>
+            <div className={"icon-card-title force-text-wrap"}>
               {parsedTitle}
             </div>
           </div>

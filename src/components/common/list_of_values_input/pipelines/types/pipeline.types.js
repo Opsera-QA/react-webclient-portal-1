@@ -4,6 +4,11 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import constantsHelper from "@opsera/definitions/constants/constants.helper";
+import {getLargeVendorIconFromToolIdentifier} from "components/common/helpers/icon-helpers";
+import {platformImageConstants} from "temp-library-components/image/platformImage.constants";
+import {vendorImageConstants} from "temp-library-components/image/vendorImage.constants";
+import React from "react";
+import toolIdentifierConstants from "@opsera/definitions/constants/tool_identifiers/toolIdentifier.constants";
 
 // TODO: Refactor
 export const pipelineTypeConstants = {};
@@ -46,6 +51,11 @@ export const getPipelineTypeLabel = (pipelineType) => {
     default:
       return "No Pipeline Type Applied";
   }
+};
+
+pipelineTypeConstants.getTypeForPipeline = (pipeline, defaultToSdlc = true) => {
+  const parsedTypes = DataParsingHelper.parseNestedArray(pipeline, "type");
+  return pipelineTypeConstants.getTypeForTypesArray(parsedTypes, defaultToSdlc);
 };
 
 pipelineTypeConstants.getTypeForTypesArray = (pipelineTypes, defaultToSdlc = true) => {
@@ -96,6 +106,77 @@ pipelineTypeConstants.getIconForPipelineType = (typeString) => {
     default:
       return (faDraftingCompass);
   }
+};
+
+pipelineTypeConstants.getImageLinkForPipelineType = (typeString) => {
+  const parsedType = DataParsingHelper.parseString(typeString, "");
+
+  switch (parsedType) {
+    case PIPELINE_TYPES.APIGEE:
+      return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.APIGEE;
+    case PIPELINE_TYPES.INFORMATICA:
+      return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.INFORMATICA;
+    case PIPELINE_TYPES.MACHINE_LEARNING:
+      return undefined;
+    case PIPELINE_TYPES.SALESFORCE:
+      return platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL;
+    case PIPELINE_TYPES.SAP_CPQ:
+      return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.SAP;
+    case PIPELINE_TYPES.SOFTWARE_DEVELOPMENT:
+      return platformImageConstants.PLATFORM_IMAGE_LINKS.PIPELINES_GENERAL;
+    default:
+      return platformImageConstants.PLATFORM_IMAGE_LINKS.PIPELINES_GENERAL;
+  }
+};
+
+
+pipelineTypeConstants.getIconForPipeline = (pipeline) => {
+  const type = pipelineTypeConstants.getTypeForPipeline(pipeline);
+
+  if (hasStringValue(type) !== true) {
+    return (faDraftingCompass);
+  }
+
+  const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
+  const toolIdentifier = DataParsingHelper.parseNestedString(plan[0], "tool.tool_identifier");
+
+  if (type !== PIPELINE_TYPES.SOFTWARE_DEVELOPMENT || !toolIdentifier) {
+    return pipelineTypeConstants.getIconForPipelineType(type);
+  }
+
+  return getLargeVendorIconFromToolIdentifier(
+    toolIdentifier,
+    faDraftingCompass,
+  );
+};
+
+pipelineTypeConstants.getImageLinkForPipeline = (pipeline) => {
+  const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
+  const toolIdentifier = DataParsingHelper.parseNestedString(plan[0], "tool.tool_identifier");
+  const type = pipelineTypeConstants.getTypeForPipeline(pipeline);
+  const imageLink = vendorImageConstants.getVendorImageForToolIdentifier(toolIdentifier);
+
+  if (type !== PIPELINE_TYPES.SOFTWARE_DEVELOPMENT || !toolIdentifier || toolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS) {
+    return pipelineTypeConstants.getImageLinkForPipelineType(type);
+  }
+
+  if (!imageLink) {
+    return platformImageConstants.PLATFORM_IMAGE_LINKS.PIPELINES_GENERAL;
+  }
+
+  return imageLink;
+};
+
+pipelineTypeConstants.getImageLinkForPipelineStep = (pipelineStep) => {
+  const parsedPipelineStep = DataParsingHelper.parseObject(pipelineStep, {});
+  const toolIdentifier = DataParsingHelper.parseNestedString(parsedPipelineStep, "tool.tool_identifier");
+  const imageLink = vendorImageConstants.getVendorImageForToolIdentifier(toolIdentifier);
+
+  if (!toolIdentifier || !imageLink) {
+    return platformImageConstants.PLATFORM_IMAGE_LINKS.PIPELINES_GENERAL;
+  }
+
+  return imageLink;
 };
 
 export const PIPELINE_TYPE_SELECT_OPTIONS = [

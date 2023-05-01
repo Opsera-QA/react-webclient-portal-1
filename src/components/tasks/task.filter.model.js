@@ -63,11 +63,8 @@ const taskFilterMetadata = {
 };
 
 export class TaskFilterModel extends FilterModelBase {
-  constructor(getAccessToken, cancelTokenSource, loadData, useUrlParameters = true) {
+  constructor(useUrlParameters = true) {
     super(taskFilterMetadata);
-    this.getAccessToken = getAccessToken;
-    this.cancelTokenSource = cancelTokenSource;
-    this.loadData = loadData;
 
     if (useUrlParameters !== false) {
       this.sessionDataKey = sessionHelper.SUPPORTED_SESSION_STORAGE_KEYS.TASK_FILTER_MODEL_DATA;
@@ -150,7 +147,7 @@ export class TaskFilterModel extends FilterModelBase {
 
   canToggleView = () => {
     return true;
-  }
+  };
 
   unpackUrlParameters = () => {
     let hasUrlParams = this.unpackCommonUrlParameters();

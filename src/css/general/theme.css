@@ -1292,6 +1292,7 @@ div.data-blocks-ellipses {
     background-color: #F3F3F1;
     border-collapse: collapse;
     border-top: 1px solid #e4e4e4;
+    min-height: 35px;
 }
 
 /* End Pagination Container Styling */
@@ -1337,6 +1338,11 @@ div.data-blocks-ellipses {
     font-size: 1.1rem;
     font-family: 'Inter', sans-serif;
     letter-spacing: .05rem;
+}
+
+.widget-title-text {
+    font-size: 1.15rem;
+    letter-spacing: .1rem;
 }
 
 .filter-body {
@@ -1557,6 +1563,11 @@ div.data-blocks-ellipses {
     resize: none;
 }
 
+.inline-search-filter {
+    border-top-left-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+}
+
 /*Media Queries*/
 @media (max-width: 1024px) {
     .inline-search-filter {
@@ -1586,7 +1597,7 @@ div.data-blocks-ellipses {
     }
 
     .inline-search-filter {
-        min-width: 350px;
+        min-width: 230px;
     }
 
     .stacked-vertical-tab .inline-select-filter {

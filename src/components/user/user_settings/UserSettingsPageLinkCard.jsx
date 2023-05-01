@@ -1,16 +1,19 @@
-import React, {useContext} from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import BreadcrumbPageLinkCard from "components/common/card/link/BreadcrumbPageLinkCard";
-import {AuthContext} from "contexts/AuthContext";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function UserSettingsPageLinkCard({accessRoleData}) {
-  const { isSassUser } = useContext(AuthContext);
+export default function UserSettingsPageLinkCard() {
+  const {
+    isSaasUser,
+    isOpseraAdministrator,
+    isSiteAdministrator,
+    isPowerUser,
+  } = useComponentStateReference();
 
-  if (isSassUser() !== false ||
-    (accessRoleData.Administrator !== true
-    && accessRoleData.OpseraAdministrator !== true
-    && accessRoleData.PowerUser !== true
-    && accessRoleData.SassPowerUser !== true)
+  if (isSaasUser !== false ||
+    (isSiteAdministrator !== true
+    && isOpseraAdministrator !== true
+    && isPowerUser !== true)
   ) {
     return null;
   }
@@ -22,8 +25,4 @@ function UserSettingsPageLinkCard({accessRoleData}) {
   );
 }
 
-UserSettingsPageLinkCard.propTypes = {
-  accessRoleData: PropTypes.object,
-};
-
-export default UserSettingsPageLinkCard;
+UserSettingsPageLinkCard.propTypes = {};

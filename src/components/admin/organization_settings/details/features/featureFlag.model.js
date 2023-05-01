@@ -1,8 +1,9 @@
 import ModelBase from "core/data_model/model.base";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import policyMetadata from "@opsera/definitions/constants/settings/organization-settings/policies/policy.metadata";
 import featureFlagConstants
   from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
+import featureFlagMetadata
+  from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.metadata";
 
 export default class FeatureFlagModel extends ModelBase {
   constructor(
@@ -11,7 +12,7 @@ export default class FeatureFlagModel extends ModelBase {
   ) {
     super(
       data,
-      policyMetadata,
+      featureFlagMetadata,
       newModel,
     );
   }
@@ -33,7 +34,7 @@ export default class FeatureFlagModel extends ModelBase {
 
   getType = () => {
     return "Feature Flag";
-  }
+  };
 }
 
 

@@ -49,6 +49,8 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   GITHUB_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW:
     "github-time-taken-to-complete-merge-request-review",
   GITHUB_TOTAL_COMMITS_BY_PROJECT: "github-total-commits-by-project",
+  GITHUB_MERGE_REQUESTS_BY_MAXIMUM_TIME: "github-merge-request-by-maximum-time",
+  GITHUB_COMMITS_STATISTICS: "github-commit-statistics",
 
   // Gitlab
   GITLAB_COMMITS_BY_AUTHOR: "gitlab-commits-by-author",
@@ -179,6 +181,9 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   //DORA
   DORA_JIRA_GITLAB_ROLLED_UP: "dora-jira-gitlab-rolled-up",
 
+  // SDM
+  SYSTEM_DRIVEN_MATURITY: "system-driven-maturity",
+
   // Coverity
   COVERITY_ISSUES_BY_CATEGORY_TREND: "coverity-issues-by-category-trend",
 
@@ -186,10 +191,9 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   AQUASEC_ISSUES_BY_SEVERITY: "aquasec-issues-by-severity",
 
   //GIT-LOG
-  GIT_LOG_DEVELOPER_360:"git-log-developer-360",
-  GIT_LOG_TOTAL_LINES:"git-log-total-lines",
-  GIT_LOG_COMMIT_TREND:"git-log-commit-trend",
-  
+  GIT_LOG_DEVELOPER_360: "git-log-developer-360",
+  GIT_LOG_TOTAL_LINES: "git-log-total-lines",
+  GIT_LOG_COMMIT_TREND: "git-log-commit-trend",
 };
 
 kpiIdentifierConstants.SUPPORTED_ANALYTICS_DATA_ENTRY_IDENTIFIERS = [

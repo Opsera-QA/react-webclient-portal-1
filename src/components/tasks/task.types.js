@@ -1,6 +1,6 @@
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { faAws, faGitAlt, faMicrosoft, faSalesforce } from "@fortawesome/free-brands-svg-icons";
-import { faClipboardListCheck, faTasks } from "@fortawesome/pro-light-svg-icons";
+import {faClipboardListCheck, faShieldKeyhole, faTasks} from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Rewrite to follow current standards
 export const taskTypeConstants = {};
@@ -8,6 +8,10 @@ export const taskTypeConstants = {};
 taskTypeConstants.getIconForTaskType = (taskType) => {
   if (hasStringValue(taskType) === false) {
     return null;
+  }
+
+  if (taskType === TASK_TYPES.GITSCRAPER) {
+    return faShieldKeyhole;
   }
 
   const category = taskTypeConstants.getTaskCategoryForType(taskType);
@@ -230,6 +234,7 @@ export const isTaskTypeOfCategory = (taskType, category, allowNullCategory = tru
     hasStringValue(category) !== true
     || hasStringValue(taskType) !== true
     || category === "owner"
+    || category === "subscribed"
   ) {
     return true;
   }
@@ -247,7 +252,7 @@ export const isTaskTypeOfCategory = (taskType, category, allowNullCategory = tru
 };
 
 export const getProductionTaskTypesForCategory = (category) => {
-  if (hasStringValue(category) !== true || category === "owner") {
+  if (hasStringValue(category) !== true || category === "owner" || category === "subscribed") {
     return PRODUCTION_TASK_TYPE_SELECT_OPTIONS;
   }
 
@@ -258,7 +263,7 @@ export const getProductionTaskTypesForCategory = (category) => {
 };
 
 export const getNonProductionTaskTypesForCategory = (category) => {
-  if (hasStringValue(category) !== true || category === "owner") {
+  if (hasStringValue(category) !== true || category === "owner" || category === "subscribed") {
     return NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS;
   }
 

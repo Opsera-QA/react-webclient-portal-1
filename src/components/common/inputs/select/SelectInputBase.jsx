@@ -281,6 +281,7 @@ function SelectInputBase(
         <StandaloneSelectInput
           hasErrorState={hasStringValue(getErrorMessage()) === true}
           selectOptions={selectOptions}
+          fieldName={fieldName}
           valueField={valueField}
           textField={externalCacheToolId || externalCacheToolIdentifier ? handleTextFieldFunction : textField}
           groupBy={groupBy}

@@ -16,6 +16,7 @@ import RevokeLdapSiteRoleMembershipButton from "components/common/buttons/ldap/R
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import DeactivateUserButton from "components/common/buttons/user/DeactivateUserButton";
 import ReactivateUserButton from "components/common/buttons/user/ReactivateUserButton";
+import RevokeUserAccessTokensButton from "components/common/buttons/access_tokens/RevokeUserAccessTokensButton";
 
 function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
   const [userLdapModel, setUserLdapModel] = useState(undefined);
@@ -85,6 +86,11 @@ function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
                 className={"ml-3"}
               />
               <RevokeLdapSiteRoleMembershipButton
+                userModel={userData}
+                loadData={loadData}
+                className={"ml-3"}
+              />
+              <RevokeUserAccessTokensButton
                 userModel={userData}
                 loadData={loadData}
                 className={"ml-3"}

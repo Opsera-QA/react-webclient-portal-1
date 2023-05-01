@@ -14,7 +14,7 @@ function TaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled, vi
     isMounted,
     getAccessToken,
     cancelTokenSource,
-    isSassUser,
+    isSaasUser,
     userData,
   } = useComponentStateReference();
 
@@ -49,7 +49,7 @@ function TaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled, vi
     );
   };
 
-  if (canEditRoles == null || isSassUser !== false) {
+  if (canEditRoles == null || isSaasUser !== false) {
     return null;
   }
 

@@ -19,6 +19,8 @@ function SearchFilter(
     isLoading,
     metadata,
     searchText,
+    visible,
+    variant,
   }) {
   const history = useHistory();
   const [currentSearchTerm, setCurrentSearchTerm] = useState("");
@@ -52,7 +54,8 @@ function SearchFilter(
       }
 
       setIsSearching(true);
-      paginationModel.setData(fieldName, searchString);
+      const maxLength = DataParsingHelper.parseInteger(paginationModel?.getMaxLength(fieldName), 25);
+      paginationModel.setData(fieldName, searchString.substring(0, maxLength));
       paginationModel.setData("currentPage", 1);
       await loadData(paginationModel);
     }
@@ -61,13 +64,27 @@ function SearchFilter(
     }
   };
 
+  const updateSearchTerm = (newSearchTerm) => {
+    const parsedSearchTerm = DataParsingHelper.parseString(
+      newSearchTerm,
+      "",
+      undefined,
+      undefined,
+      false,
+    );
+    const maxLength = DataParsingHelper.parseInteger(paginationModel?.getMaxLength(fieldName), 25);
+    setCurrentSearchTerm(parsedSearchTerm.substring(0, maxLength));
+  };
+
   const handleKeyPress = async (event) => {
     if (event.key === 'Enter') {
       await handleSearch();
     }
   };
 
-  if (paginationModel == null || paginationModel.canSearch() === false) {
+  const buttonClassName = variant === "outline-primary" ? "inline-filter-input filter-bg-white" : "inline-filter-input";
+
+  if (visible === false || paginationModel == null || paginationModel.canSearch() === false) {
     return null;
   }
 
@@ -80,10 +97,10 @@ function SearchFilter(
           value={currentSearchTerm}
           className="text-input inline-search-filter inline-filter-input"
           onKeyPress={(event) => handleKeyPress(event)}
-          onChange={e => setCurrentSearchTerm(e.target.value)}
+          onChange={e => updateSearchTerm(e.target.value)}
         />
         <InputGroup.Append>
-          <Button className="inline-filter-input filter-bg-white" disabled={isLoading || disabled} variant="outline-primary" onClick={handleSearch}>
+          <Button className={buttonClassName} disabled={isLoading || disabled} variant={variant} onClick={handleSearch}>
             <IconBase isLoading={isSearching} icon={faSearch} />
           </Button>
         </InputGroup.Append>
@@ -101,10 +118,13 @@ SearchFilter.propTypes = {
   className: PropTypes.string,
   metadata: PropTypes.object,
   searchText: PropTypes.string,
+  visible: PropTypes.bool,
+  variant: PropTypes.string,
 };
 
 SearchFilter.defaultProps = {
   fieldName: "search",
+  variant: "outline-primary",
 };
 
 export default SearchFilter;

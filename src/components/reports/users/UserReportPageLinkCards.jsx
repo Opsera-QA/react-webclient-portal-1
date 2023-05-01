@@ -37,7 +37,7 @@ export default function UserReportPageLinkCards() {
       />
       <ConsolidatedUserReportPageLinkCard
       />
-      {/*<AccessTokenUsageReportPageLinkCard />*/}
+      <AccessTokenUsageReportPageLinkCard />
     </div>
   );
 }

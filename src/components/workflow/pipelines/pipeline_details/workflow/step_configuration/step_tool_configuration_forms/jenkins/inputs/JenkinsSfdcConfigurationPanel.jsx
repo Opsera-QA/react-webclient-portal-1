@@ -36,7 +36,7 @@ function JenkinsSfdcConfigurationPanel({ dataObject, setDataObject }) {
       return (
         <Form.Check
           type="checkbox"
-          label="Compare with destination SFDC Org"
+          label="Deploy from Salesforce Org"
           checked={dataObject.data.isOrgToOrg}
           onChange={(e) => handleSFDCCreatePackageXMLChange(e.target.checked)}
         />
@@ -45,7 +45,7 @@ function JenkinsSfdcConfigurationPanel({ dataObject, setDataObject }) {
   };
 
   const getSfdcCredentialsInput = () => {
-    if (dataObject?.getData("isOrgToOrg")) {
+    if (dataObject?.getData("isOrgToOrg") && dataObject?.getData("job_type") === 'sfdc-ant-profile' ) {
       return (
         <JenkinsStepDestinationSalesforceCredentialsSelectInput
           model={dataObject}

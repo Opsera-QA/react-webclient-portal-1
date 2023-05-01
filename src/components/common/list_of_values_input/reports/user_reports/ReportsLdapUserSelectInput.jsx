@@ -1,10 +1,10 @@
-import React, {useContext} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import {AuthContext} from "contexts/AuthContext";
 import LdapUserSelectInput from "components/common/list_of_values_input/users/LdapUserSelectInput";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ReportsLdapUserSelectInput({ model, setModel }) {
-  const { isSassUser } = useContext(AuthContext);
+  const { isSaasUser } = useComponentStateReference();
 
   const setDataFunction = (fieldName, value) => {
     const newModel = model;
@@ -23,7 +23,7 @@ function ReportsLdapUserSelectInput({ model, setModel }) {
     setModel({...model});
   };
 
-  if (isSassUser() === true) {
+  if (isSaasUser !== false) {
     return null;
   }
 

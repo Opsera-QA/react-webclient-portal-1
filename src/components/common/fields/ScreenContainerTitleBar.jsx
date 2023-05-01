@@ -8,6 +8,9 @@ import CopyToClipboardIconBase from "components/common/icons/link/CopyToClipboar
 import {faLink} from "@fortawesome/pro-light-svg-icons";
 import EditFiltersIcon from "temp-library-components/icon/filters/EditFiltersIcon";
 import RefreshIcon from "temp-library-components/icon/refresh/RefreshIcon";
+import SearchFilter from "components/common/filters/search/SearchFilter";
+import NewRecordButton from "components/common/buttons/data/NewRecordButton";
+import ViewToggle from "components/common/view/ViewToggle";
 
 function ScreenContainerTitleBar(
   {
@@ -18,9 +21,13 @@ function ScreenContainerTitleBar(
     titleActionBar,
     helpComponent,
     isBeta,
-    filters,
+    filterOverlay,
     filterModel,
+    setFilterModel,
     loadDataFunction,
+    addRecordFunction,
+    addRecordButtonCustomText,
+    isSoftLoading,
   }) {
   const {
     currentUrl,
@@ -28,20 +35,55 @@ function ScreenContainerTitleBar(
 
   const getInactiveText = () => {
     if (inactive) {
-      return (<span className="text-white-50 mx-1">{inactive && "Inactive"}</span>);
+      return (<span className="text-white-50 ml-3">{inactive && "Inactive"}</span>);
+    }
+  };
+
+  const getTitleActionBar = () => {
+    if (titleActionBar) {
+      return (
+        <div>
+          {titleActionBar}
+        </div>
+      );
     }
   };
 
   const getRightSideItems = () => {
     return (
       <div className="ml-auto d-flex">
-        {getInactiveText()}
-        {titleActionBar}
+        <NewRecordButton
+          className={"ml-2 my-auto text-nowrap"}
+          addRecordFunction={addRecordFunction}
+          type={filterModel?.getType()}
+          isLoading={isLoading || isSoftLoading}
+          variant={"success"}
+          customButtonText={addRecordButtonCustomText}
+        />
+        {getTitleActionBar()}
+        <SearchFilter
+          isLoading={isLoading || isSoftLoading}
+          paginationModel={filterModel}
+          searchText={filterModel?.getData("search")}
+          loadData={loadDataFunction}
+          className={"ml-3"}
+          metadata={filterModel?.getMetaData()}
+          visible={typeof filterModel?.canSearch === "function" && filterModel?.canSearch() === true}
+          variant={"secondary"}
+        />
+        <ViewToggle
+          supportViewToggle={typeof filterModel?.canToggleView === "function" && filterModel?.canToggleView() === true}
+          filterModel={filterModel}
+          setFilterModel={setFilterModel}
+          isLoading={isLoading || isSoftLoading}
+          className={"ml-2"}
+          variant={"secondary"}
+        />
         <EditFiltersIcon
           filterModel={filterModel}
-          filters={filters}
-          loadDataFunction={loadDataFunction}
+          filterOverlay={filterOverlay}
           className={"ml-3"}
+          isLoading={isLoading || isSoftLoading}
         />
         <CopyToClipboardIconBase
           className={"ml-3"}
@@ -56,24 +98,26 @@ function ScreenContainerTitleBar(
         />
         <RefreshIcon
           className={"ml-3"}
-          isLoading={isLoading}
+          isLoading={isLoading || isSoftLoading}
           loadDataFunction={loadDataFunction}
         />
         <BetaBadge
           isBeta={isBeta}
           className={"mr-1 ml-3 my-auto"}
         />
+        {getInactiveText()}
       </div>
     );
   };
 
-  if (isLoading) {
-    return (<span><IconBase isLoading={isLoading} className={"mr-2"}/>Loading Data</span>);
-  }
-
   return (
     <div className="d-flex">
-      <div><span><IconBase icon={titleIcon} className={"mr-2"}/>{title}</span></div>
+      <div className={"title-text-header-1"}>
+        <span>
+          <IconBase isLoading={isLoading || isSoftLoading} icon={titleIcon} className={"mr-2"}/>
+          {isLoading === true ? "Loading Data" : title}
+        </span>
+      </div>
       {getRightSideItems()}
     </div>
   );
@@ -89,8 +133,12 @@ ScreenContainerTitleBar.propTypes = {
   helpComponent: PropTypes.object,
   isBeta: PropTypes.bool,
   filterModel: PropTypes.object,
+  setFilterModel: PropTypes.func,
   loadDataFunction: PropTypes.func,
-  filters: PropTypes.any,
+  filterOverlay: PropTypes.any,
+  addRecordFunction: PropTypes.func,
+  addRecordButtonCustomText: PropTypes.string,
+  isSoftLoading: PropTypes.bool,
 };
 
 export default ScreenContainerTitleBar;

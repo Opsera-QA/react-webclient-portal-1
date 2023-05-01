@@ -17,11 +17,9 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 import {getAccessRolePermissionMessage} from "components/common/helpers/role-helpers";
+import useAuthenticationToken from "hooks/general/api/useAuthenticationToken";
 
-export default function OpseraHeaderAccountAuthenticationComponent(
-  {
-    hideAuthComponents,
-  }) {
+export default function OpseraHeaderAccountAuthenticationComponent() {
   const { isPublicPathState } = useLocationReference();
   const {
     loginUserContext,
@@ -38,6 +36,8 @@ export default function OpseraHeaderAccountAuthenticationComponent(
     isProductionEnvironment,
     isTestEnvironment,
   } = useComponentStateReference();
+  const { isAuthenticated } = useAuthenticationToken();
+
   // const fullUserName = `${userData?.firstName} ${userData?.lastName} (${userData?.email})`;
   const fullUserName = `${userData?.firstName} ${userData?.lastName}`;
   const history = useHistory();
@@ -129,7 +129,7 @@ export default function OpseraHeaderAccountAuthenticationComponent(
   };
 
   const getUserIconDropdown = () => {
-    if (isPublicPathState === true || hideAuthComponents === true) {
+    if (isPublicPathState === true || isAuthenticated !== true) {
       return null;
     }
 
@@ -265,7 +265,7 @@ export default function OpseraHeaderAccountAuthenticationComponent(
   // TODO: There might be multiple versions of this depending on how we build it--
   //  different areas might have different views. If we only use one version, move this inline
   const getViewTypeDropdown = () => {
-    if (hideAuthComponents === false && accessRoleData) {
+    if (isAuthenticated === true && accessRoleData) {
       return (
         <div className={"mr-5"}>
           <SiteViewModeNavigationSelectInput />
@@ -288,6 +288,4 @@ export default function OpseraHeaderAccountAuthenticationComponent(
   );
 }
 
-OpseraHeaderAccountAuthenticationComponent.propTypes = {
-  hideAuthComponents: PropTypes.bool,
-};
+OpseraHeaderAccountAuthenticationComponent.propTypes = {};

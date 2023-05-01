@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Col, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
 import JenkinsBuildJobSummaryPanel from "./inputs/build/JenkinsBuildJobSummaryPanel";
@@ -7,15 +7,29 @@ import JenkinsUnitTestingJobSummaryPanel from "./inputs/unit_testing/JenkinsUnit
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import CloseButton from "components/common/buttons/CloseButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
+import modelHelpers from "components/common/model/modelHelpers";
+import {
+  getJenkinsJobConfigurationMetadata
+} from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/JenkinsJobSubEditorPanel";
 
-function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobTypeData, setActiveTab, handleClose }) {
+function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobType, setActiveTab, handleClose }) {
+  const [jenkinsJobConfigurationModel, setJenkinsJobConfigurationModel] = useState(null);
+
+  useEffect(() => {
+    const buildType = jenkinsJobData?.getData("configuration.buildType");
+    const jenkinsJobConfiguration = jenkinsJobData?.getData("configuration");
+    const metadata = getJenkinsJobConfigurationMetadata(jenkinsJobType, buildType);
+    const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, metadata);
+    setJenkinsJobConfigurationModel({...parsedModel});
+  }, [jenkinsJobType]);
+
   const getDynamicJobTypeSummaryPanel = () => {
     switch (jenkinsJobData?.getArrayData("type", 0)) {
       case "BUILD":
-        return <JenkinsBuildJobSummaryPanel dataObject={jenkinsJobTypeData} />;
+        return <JenkinsBuildJobSummaryPanel dataObject={jenkinsJobConfigurationModel} />;
       case "UNIT TESTING":
       case "FUNCTIONAL TESTING":
-        return <JenkinsUnitTestingJobSummaryPanel dataObject={jenkinsJobTypeData}/>;
+        return <JenkinsUnitTestingJobSummaryPanel dataObject={jenkinsJobConfigurationModel}/>;
       case "SHELL SCRIPT":
       case "DOCKER PUSH":
       case "COVERITY":
@@ -23,7 +37,7 @@ function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobTypeData, setActiveT
         return (
           <>
             <Col lg={6}>
-              <TextFieldBase dataObject={jenkinsJobTypeData} fieldName={"buildType"}/>
+              <TextFieldBase dataObject={jenkinsJobConfigurationModel} fieldName={"buildType"}/>
             </Col>
           </>
         );
@@ -31,7 +45,7 @@ function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobTypeData, setActiveT
         return (
           <>
             <Col lg={6}>
-              <TextFieldBase dataObject={jenkinsJobTypeData} fieldName={"jobType"}/>
+              <TextFieldBase dataObject={jenkinsJobConfigurationModel} fieldName={"jobType"}/>
             </Col>
           </>
         );
@@ -57,7 +71,7 @@ function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobTypeData, setActiveT
           <TextFieldBase dataObject={jenkinsJobData} fieldName={"description"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={jenkinsJobTypeData} fieldName={"agentLabels"}/>
+          <TextFieldBase dataObject={jenkinsJobConfigurationModel} fieldName={"agentLabels"}/>
         </Col>
         {getDynamicJobTypeSummaryPanel()}
       </Row>
@@ -70,10 +84,8 @@ function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobTypeData, setActiveT
 
 JenkinsJobSummaryPanel.propTypes = {
   jenkinsJobData: PropTypes.object,
-  jenkinsJobTypeData: PropTypes.object,
+  jenkinsJobType: PropTypes.string,
   setActiveTab: PropTypes.func,
-  toolData: PropTypes.object,
-  loadData: PropTypes.func,
   handleClose: PropTypes.func,
 };
 

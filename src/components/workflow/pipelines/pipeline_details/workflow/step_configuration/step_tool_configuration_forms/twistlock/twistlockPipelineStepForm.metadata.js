@@ -2,7 +2,7 @@ const twistlockPipelineStepFormMetadata = {
   type: "Twistlock Tool Configuration",
   fields: [
     {
-      label: "Jenkins Tool Selection",
+      label: "Jenkins Tool",
       id: "toolConfigId",
       isRequired: true
     },

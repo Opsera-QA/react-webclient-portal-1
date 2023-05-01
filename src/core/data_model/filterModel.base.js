@@ -479,20 +479,18 @@ export class FilterModelBase {
     return filter;
   };
 
-  getMaxLength = (field) => {
-    return this.metaData[field].maxLength;
+  getMaxLength = (fieldName) => {
+    const field = this.getFieldById(fieldName);
+    return field?.maxLength;
   };
 
-  getMinLength = (field) => {
-    return this.metaData[field].minLength;
-  };
-
-  getId = (field) => {
-    return this.metaData[field].id;
+  getMinLength = (fieldName) => {
+    const field = this.getFieldById(fieldName);
+    return field?.minLength;
   };
 
   getFields = () => {
-    return this.metaData.fields;
+    return DataParsingHelper.parseNestedArray(this.metaData, "fields", []);
   };
 
   getType = () => {
@@ -500,7 +498,8 @@ export class FilterModelBase {
   };
 
   getFieldById = (id) => {
-    return this.metaData?.fields.find(field => {
+    const fields = this.getFields();
+    return fields.find(field => {
       return field.id === id;
     });
   };
@@ -530,11 +529,11 @@ export class FilterModelBase {
 
   isNew = () => {
     return true;
-  }
+  };
 
   isChanged = () => {
     return false;
-  }
+  };
 }
 
 export default FilterModelBase;

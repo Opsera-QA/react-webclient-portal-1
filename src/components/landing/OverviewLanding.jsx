@@ -1,11 +1,8 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
-import { AuthContext } from "contexts/AuthContext";
+import React, {useEffect, useRef, useState} from "react";
 import { Row, Col } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import MyTagCloud from "components/common/fields/tags/cloud/MyTagCloud";
-import axios from "axios";
 import landingActions from "components/landing/landing.actions";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "../common/status_notifications/loading";
 import OverviewLandingToolchainContentBlock from "components/landing/blocks/OverviewLandingToolchainContentBlock";
 import OverviewLandingDeclarativePipelinesContentBlock
@@ -13,67 +10,38 @@ import OverviewLandingDeclarativePipelinesContentBlock
 import OverviewLandingInsightsContentBlock from "components/landing/blocks/OverviewLandingInsightsContentBlock";
 import { faEnvelope, faQuestion } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
-
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function OverviewLanding() {
-  const contextType = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const history = useHistory();
-  const [userInfo, setUserInfo] = useState({});
   const [statsData, setStatsData] = useState({});
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [summaryStats, setSummaryStats] = useState([]);
   const {
+    accessRoleData,
     getAccessToken,
-    getUserRecord,
-    setAccessRoles,
-    featureFlagHideItemInProd,
-    featureFlagHideItemInTest,
-  } = contextType;
-  let userAccess = {};
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+    toastContext,
+    cancelTokenSource,
+    userData,
+    isMounted
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    getRoles(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const getRoles = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    userAccess = await setAccessRoles(user);
-    if (userAccess) {
-      setAccessRoleData(userAccess);
-    }
-
-    if (process.env.REACT_APP_STACK !== "free-trial") {
-      await loadData(cancelSource);
-    }
-
-    setUserInfo(user);
-  };
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
+      if (process.env.REACT_APP_STACK === "free-trial") {
+        return;
+      }
+
       setIsLoading(true);
-      await loadStats(cancelSource);
+      await loadStats();
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -88,8 +56,8 @@ function OverviewLanding() {
     }
   };
 
-  const loadStats = async (cancelSource = cancelTokenSource) => {
-    const response = await landingActions.getLandingStats(getAccessToken, cancelSource);
+  const loadStats = async () => {
+    const response = await landingActions.getLandingStats(getAccessToken, cancelTokenSource);
     const stats = response?.data;
 
     if (isMounted.current === true && stats) {
@@ -166,8 +134,8 @@ function OverviewLanding() {
   const getWelcomeText = () => {
     let welcomeText = "Welcome Back";
 
-    if (userInfo?.firstName) {
-      welcomeText += ` ${userInfo?.firstName}`;
+    if (userData?.firstName) {
+      welcomeText += ` ${userData?.firstName}`;
     }
 
     return (

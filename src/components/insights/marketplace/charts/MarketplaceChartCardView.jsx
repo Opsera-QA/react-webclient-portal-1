@@ -5,10 +5,13 @@ import CardView from "components/common/card/CardView";
 import InlineInformation from "components/common/status_notifications/inline/InlineInformation";
 import LoadingDialog from "components/common/status_notifications/loading";
 import MarketplaceChartCard from "components/insights/marketplace/charts/MarketplaceChartCard";
+import useGetToolIdentifiers from "components/admin/tools/identifiers/hooks/useGetToolIdentifiers";
 
 function MarketplaceChartCardView({ marketplaceCharts, marketplaceChartFilterModel, setMarketplaceChartFilterModel, loadData, isLoading, dashboardId }) {
+  const toolIdentifiersHook = useGetToolIdentifiers();
+
   const getCards = () => {
-    if (isLoading) {
+    if (isLoading || toolIdentifiersHook.isLoading === true) {
       return <LoadingDialog message={"Loading Marketplace Items"} size={"sm"} />;
     }
 
@@ -19,7 +22,14 @@ function MarketplaceChartCardView({ marketplaceCharts, marketplaceChartFilterMod
     return (
       <CardColumns>
         {marketplaceCharts.map((kpi, index) => {
-          return (<MarketplaceChartCard key={index} kpi={kpi} dashboardId={dashboardId}/>);
+          return (
+            <MarketplaceChartCard
+              key={index}
+              kpi={kpi}
+              dashboardId={dashboardId}
+              toolIdentifiers={toolIdentifiersHook?.toolIdentifiers}
+            />
+          );
         })}
       </CardColumns>
     );

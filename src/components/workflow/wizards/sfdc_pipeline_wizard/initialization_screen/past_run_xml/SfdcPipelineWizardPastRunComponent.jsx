@@ -8,10 +8,10 @@ import axios from "axios";
 import StandalonePackageXmlField from "components/common/fields/pipelines/sfdc/StandalonePackageXmlField";
 import PipelineRunSelectInput
   from "components/common/list_of_values_input/workflow/pipelines/run/PipelineRunSelectInput";
-import SfdcPipelineWizardUploadComponentTypesRadioInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardUploadComponentTypesRadioInput";
 import SfdcPipelineWizardIncludeDependenciesToggle
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
+import SfdcPipelineWizardUploadComponentSummary
+  from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardUploadComponentSummary";
 
 function SfdcPipelineWizardPastRunComponent(
   {
@@ -47,6 +47,7 @@ function SfdcPipelineWizardPastRunComponent(
     newDataObject.setData("isXml", false);
     newDataObject.setData("isCsv", false);
     newDataObject.setData("fromFileUpload", false);
+    newDataObject.setData("modifiedFilesOrigin", (pipelineWizardModel.getData('isOrgToOrg') || pipelineWizardModel.getData("fromGitTasks")) ? "sfdc" : "git");
     setPipelineWizardModel({...newDataObject});
   };
 
@@ -89,7 +90,7 @@ function SfdcPipelineWizardPastRunComponent(
   };
 
   const getDependenciesToggle = () => {
-    if (pipelineWizardModel?.getData("modifiedFilesOrigin") === "git") {
+    if (pipelineWizardModel?.getData("isOrgToOrg") ===  false) {
       return (
         <div>
           <SfdcPipelineWizardIncludeDependenciesToggle
@@ -115,9 +116,8 @@ function SfdcPipelineWizardPastRunComponent(
               />
             </div>
             <div className="my-3">
-              <SfdcPipelineWizardUploadComponentTypesRadioInput
-                pipelineWizardModel={pipelineWizardModel}
-                setPipelineWizardModel={setPipelineWizardModel}
+              <SfdcPipelineWizardUploadComponentSummary
+                pipelineWizardModel={pipelineWizardModel} 
               />
             </div>
             {getDependenciesToggle()}

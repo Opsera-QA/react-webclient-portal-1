@@ -32,7 +32,7 @@ function AzureAcrPushPipelineStepConfigurationHelpDocumentation() {
                 <li><b>Resource</b> - Value found in the Azure portal.</li>
                 <li><b>Azure Registry</b> - Select the container registry to push the images into.</li>
                 <li><b>Use Existing Repository</b> - Toggle on to view and select an existing repository in the Azure Registry to push the images into. Toggle off to create a new repository where the images will be pushed. Then enter a unique name for the new repository.</li>
-               <li><b>Repository Name</b> - Select the name of the repository in the container to push to.</li></ul></li>
+               <li><b>Repository</b> - Select the name of the repository in the container to push to.</li></ul></li>
             <li>Select <b>Save</b> and proceed to setting up the next pipeline steps.</li>
           </ol>
         </div>

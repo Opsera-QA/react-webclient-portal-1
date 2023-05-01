@@ -7,6 +7,7 @@ import StandaloneMultiSelectInput from "components/common/inputs/multi_select/St
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {errorHelpers} from "components/common/helpers/error-helpers";
 import _ from "lodash";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function MultiSelectInputBase(
   {
@@ -81,14 +82,14 @@ function MultiSelectInputBase(
 
   const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
-    const parsedValues = parseValues(valueArray);
+    const parsedValues = DataParsingHelper.parseArray(parseValues(valueArray), []);
 
     if (parsedValues.length > field.maxItems) {
       setErrorMessage("You have reached the maximum allowed number of values. Please remove one to add another.");
       return;
     }
 
-    newDataObject.setData(fieldName, parsedValues);
+    newDataObject.setData(fieldName, [...parsedValues]);
     const errors = newDataObject.isFieldValid(field.id);
     const newErrorMessage = Array.isArray(errors) && errors.length > 0 ? errors[0] : "";
     setErrorMessage(newErrorMessage);
@@ -241,6 +242,7 @@ function MultiSelectInputBase(
         setDataFunction={updateValue}
         onSearchFunction={supportSearchLookup === true && typeof loadDataFunction === "function" ? onSearchFunction : undefined}
         onClickFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
+        fieldName={fieldName}
       />
       <InfoText
         fieldName={fieldName}

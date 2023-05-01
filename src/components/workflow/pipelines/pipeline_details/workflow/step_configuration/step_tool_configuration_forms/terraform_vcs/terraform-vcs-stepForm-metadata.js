@@ -17,7 +17,7 @@ const TerraformVcsStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Workspace Name",
+      label: "Workspace",
       id: "workspaceName",
       isRequired: true
     },

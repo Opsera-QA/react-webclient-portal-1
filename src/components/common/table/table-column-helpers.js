@@ -206,24 +206,18 @@ export const getTaskStatusColumn = (field, className) => {
     accessor: getCustomTableAccessor(field),
     width: 105,
     Cell: function getTaskStatus(row) {
-      const taskStatus = row?.value;
-      if (taskStatus == null || taskStatus === "") {
-        return (
-          <div className="d-flex flex-nowrap">
-            <div>{getPipelineStatusIcon("created")}</div>
-            <div className="ml-1">Created</div>
-          </div>
-        );
-      }
+      const taskStatus = DataParsingHelper.parseString(row?.value, "");
+      const task = getDataObjectFromTableRow(row);
+      const runCount = DataParsingHelper.parseNumber(task.run_count, 0);
 
       return (
-        <div className="d-flex flex-nowrap">
-          <div>{getPipelineStatusIcon(row)}</div>
-          <div className="ml-1">{capitalizeFirstLetter(taskStatus)}</div>
-        </div>
+        <OrchestrationStateFieldBase
+          orchestrationState={runCount === 0 ? "created" : taskStatus}
+          type={"Task"}
+        />
       );
     },
-    class: className ? className : undefined
+    class: className,
   };
 };
 
@@ -322,31 +316,6 @@ export const getTableDateAndTimeUntilValueColumn = (
     },
     class: className,
   };
-};
-
-export const getPipelineStatusIcon = (row) => {
-  switch (row.value) {
-    case "failure":
-    case "failed":
-      return (<IconBase icon={faTimesCircle} className={"cell-icon red my-auto"}/>);
-    case "error":
-      return (<IconBase icon={faExclamationCircle} className={"cell-icon red my-auto"}/>);
-    case "unknown":
-      return (<IconBase icon={faCircle} className={"cell-icon yellow my-auto"}/>);
-    case "rejected":
-      return (<IconBase icon={faStopCircle} className={"cell-icon red my-auto"}/>);
-    case "running":
-    case "processing event":
-      return (<IconBase icon={faPlayCircle} className={"cell-icon green my-auto"}/>);
-    case "queued":
-      return (<IconBase icon={faPauseCircle} className={"cell-icon green my-auto"}/>);
-    case "stopped":
-    case "halted":
-      return (<IconBase icon={faOctagon} className={"cell-icon red my-auto"}/>);
-    case "created":
-    default:
-      return (<IconBase icon={faCheckCircle} className={"cell-icon green my-auto"}/>);
-  }
 };
 
 export const getAssociatedPipelineStatusIcon = (pipelineStatus) => {
@@ -916,6 +885,24 @@ export const getPathDefinition = (field, className, maxLength = 50, overlayWidth
         >
           <span>{truncateString(path, maxLength, true)}</span>
         </TooltipWrapper>
+      );
+    },
+    class: className ? className : undefined
+  };
+};
+
+export const getExternalLinkIconWithTextColumnDefinition = (field, className, maxLength = 50, overlayWidth=200) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    width: 150,
+    Cell: function getPageLink(row){
+      return (
+        <PageLinkIcon
+          pageLink={row?.value?.url}
+          externalLink={true}            
+          pageLinkText={row?.value?.key}
+        />
       );
     },
     class: className ? className : undefined

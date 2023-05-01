@@ -46,11 +46,14 @@ sessionHelper.replaceStoredUrlParameter = (queryParameter, value) => {
 
   const parsedObjectValue = DataParsingHelper.parseObject(value);
   const parsedStringValue = DataParsingHelper.parseString(value);
+  const parsedNumberValue = DataParsingHelper.parseNumber(value);
 
   if (parsedObjectValue) {
     url.searchParams.set(queryParameter, JSON.stringify(parsedObjectValue));
   } else if (parsedStringValue != null) {
     url.searchParams.set(queryParameter, value);
+  } else if (parsedNumberValue != null) {
+    url.searchParams.set(queryParameter, String(value));
   }
 
   sessionHelper.updateUrlWithQueryParameters(url);
@@ -64,11 +67,14 @@ sessionHelper.addStoredUrlParameter = (queryParameter, value) => {
   const url = new URL(window.location.href);
   const parsedObjectValue = DataParsingHelper.parseObject(value);
   const parsedStringValue = DataParsingHelper.parseString(value);
+  const parsedNumberValue = DataParsingHelper.parseNumber(value);
 
   if (parsedObjectValue) {
     url.searchParams.set(queryParameter, JSON.stringify(parsedObjectValue));
   } else if (parsedStringValue != null) {
     url.searchParams.set(queryParameter, value);
+  } else if (parsedNumberValue != null) {
+    url.searchParams.set(queryParameter, String(value));
   } else {
     url.searchParams.delete(queryParameter);
   }
@@ -114,6 +120,7 @@ sessionHelper.clearOutSessionStorage = () => {
 };
 
 sessionHelper.SUPPORTED_COOKIE_STORAGE_KEYS = {
+  LANDING_SCREEN_WORKFLOW_WIDGET_CURRENT_VIEW: "landing_screen_workflow_widget_current_view",
   COLLAPSE_SIDEBAR: "collapse_sidebar",
 };
 

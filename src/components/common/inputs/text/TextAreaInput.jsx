@@ -29,6 +29,7 @@ function TextAreaInput({ fieldName, dataObject, setDataObject, disabled }) {
         value={dataObject.getData(fieldName)} onChange={(event) => validateAndSetData(event.target.value)}
         className="form-control"
         rows={5}
+        id={fieldName}
       />
       <InfoText
         model={dataObject}

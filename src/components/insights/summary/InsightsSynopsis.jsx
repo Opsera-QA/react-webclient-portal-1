@@ -1,9 +1,6 @@
-import React, {useEffect, useState, useContext, useRef} from "react";
-import { AuthContext } from "contexts/AuthContext";
+import React, {useEffect, useState, useRef} from "react";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Model from "core/data_model/model";
-import axios from "axios";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import InsightsSynopsisDetails from "components/insights/summary/InsightsSynopsisDetails";
@@ -17,14 +14,10 @@ import { faCalendar } from "@fortawesome/pro-light-svg-icons";
 import { format, addDays } from "date-fns";
 import { DateRangePicker } from "react-date-range";
 import IconBase from "components/common/icons/IconBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function InsightsSynopsis() {
-  const {getUserRecord, setAccessRoles} = useContext(AuthContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const toastContext = useContext(DialogToastContext);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [dashboardData, setDashboardData] = useState(undefined);
   const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(modelHelpers.getDashboardFilterModel(dashboardData, "tags", dashboardFiltersMetadata));
   const [date, setDate] = useState([
@@ -41,52 +34,35 @@ function InsightsSynopsis() {
   const [calenderActivation, setCalenderActivation] = useState(false);
   const node = useRef();
   const ref = useRef(null);
+  const {
+    cancelTokenSource,
+    accessRoleData,
+    toastContext,
+    isMounted,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
     let newDataObject = new Model({...dashboardMetadata.newObjectFields}, dashboardMetadata, true);
     newDataObject.setData("filters", []); 
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    isMounted.current = true;
-    loadData(newDataObject, source).catch((error) => {
+    loadData(newDataObject).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (newDataObject, cancelSource = cancelTokenSource) => {
+  const loadData = async (newDataObject) => {
     try {
       setIsLoading(true);
-      await getRoles(cancelSource);
       setDashboardData({...newDataObject});
     } catch (error) {
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
-        console.error(error);
       }
     } finally {
       if (isMounted.current === true) {
         setIsLoading(false);
       }
-    }
-  };
-
-  const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-
-    if (isMounted.current === true && userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
     }
   };
 

@@ -10,12 +10,12 @@ const azureAcrPushStepFormMetadata = {
       type: metadataConstants.SUPPORTED_VALUE_TYPES.MONGO_DB_ID,
     },
     {
-      label: "Jenkins Job",
+      label: "Job",
       id: "toolJobName",
       type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
-      label: "Jenkins Job",
+      label: "Job",
       id: "toolJobId",
       isRequired: true,
       type: metadataConstants.SUPPORTED_VALUE_TYPES.MONGO_DB_ID,
@@ -58,7 +58,7 @@ const azureAcrPushStepFormMetadata = {
       type: metadataConstants.SUPPORTED_VALUE_TYPES.BOOLEAN,
     },
     {
-      label: "Repository Name",
+      label: "Repository",
       id: "azureRepoName",
       regexDefinitionName: "azureLabels",
       type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,

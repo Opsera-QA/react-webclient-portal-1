@@ -8,6 +8,7 @@ import IconBase from "components/common/icons/IconBase";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, fieldName, supportSearch, className, isLoading, metadata}) {
   let history = useHistory();
@@ -17,7 +18,15 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
   } = useComponentStateReference();
 
   const validateAndSetData = (value) => {
-    filterDto.setData(fieldName, value);
+    const newSearchText = DataParsingHelper.parseString(
+      value,
+      "",
+      undefined,
+      undefined,
+      false,
+    );
+    const maxLength = DataParsingHelper.parseInteger(filterDto?.getMaxLength(fieldName), 25);
+    filterDto.setData(fieldName, newSearchText.substring(0, maxLength));
 
     // TODO: Setting state on filter model should only be handled in the load data function and this should be removed.
     //  Leaving here for now to prevent unintended side effects

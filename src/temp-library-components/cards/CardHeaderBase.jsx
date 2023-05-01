@@ -19,6 +19,9 @@ export default function CardHeaderBase(
         color: color,
         fontSize: "13px",
         letterSpacing: "0.6px",
+        minHeight: "21px",
+        height: "21px",
+        maxHeight: "21px",
       }}
     >
       {children}

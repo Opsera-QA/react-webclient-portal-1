@@ -1,6 +1,6 @@
 import React from "react";
-import generalFaq from 'markdown/faq/general/general.faq.md';
-import ReactMarkdownWrapper from "components/common/markdown/ReactMarkdownWrapper";
+import generalFaq from '@opsera/react-faq-markdown/src/markdown/faq/general/general.faq.md';
+import {ReactMarkdownWrapper} from "@opsera/react-vanity-set";
 
 const GeneralFrequentlyAskedQuestions = () => {
   return (

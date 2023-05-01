@@ -208,7 +208,7 @@ regexDefinitions.customParameterNameRegex = {
 };
 
 regexDefinitions.localVariableName = {
-  regex: /^opsera-local-[a-z0-9-]*$/,
+  regex: /^opsera-local-[a-z0-9-_]*$/,
   formText: "Name must begin with \"opsera-local-\" and can contain lowercase letters, numbers, underscores, and dashes",
   errorFormText: "Name must begin with \"opsera-local-\" and can contain lowercase letters, numbers, underscores, and dashes",
 };
@@ -296,6 +296,12 @@ regexDefinitions.argoParameterInputRules = {
   regex: /^[A-Za-z0-9'\-,._&+*:()/[\]! ]*$/,
   formText: "Spaces, letters, numbers, underscores, dashes, forward slashes, periods, commas, parentheses, brackets, plus symbols, asterisks, ampersands, and exclamation marks are allowed",
   errorFormText: "Only spaces, letters, numbers, underscores, dashes, forward slashes, periods, commas, parentheses, brackets, plus symbols, asterisks, ampersands, and exclamation marks are allowed",
+};
+
+regexDefinitions.fusionPathField = {
+  regex: /^[A-Za-z0-9\-_;./\\' ]*$/,
+  formText: "Letters, numbers, dashes, slashes, semi-colons, spaces, underscores, single-quotes, and periods are allowed",
+  errorFormText: "Only letters, numbers, dashes, slashes, semi-colons, spaces, underscores, single-quotes, and periods are allowed"
 };
 
 export default regexDefinitions;

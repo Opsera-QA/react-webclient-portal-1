@@ -34,7 +34,6 @@ export default function TaskSelectionList(
     loadData,
   } = useGetTasks(
     ["name", "owner"],
-    undefined,
     false,
     10000,
   );

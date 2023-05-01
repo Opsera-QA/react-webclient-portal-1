@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback} from "react";
 import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
-import InfoContainer from "components/common/containers/InfoContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function FilterSelectInputBase(
   {
@@ -27,6 +27,8 @@ function FilterSelectInputBase(
     showLabel,
     error,
     showClearValueButton,
+    pluralTopic,
+    singularTopic,
   }) {
   const field = dataObject?.getFieldById(fieldName);
 
@@ -69,6 +71,36 @@ function FilterSelectInputBase(
     }
   };
 
+  const getPlaceholderText = useCallback(() => {
+    const parsedPluralTopic = DataParsingHelper.parseString(pluralTopic, "Data");
+
+    if (busy) {
+      return `Loading ${parsedPluralTopic}`;
+    }
+
+    const parsedPlaceholderText = DataParsingHelper.parseString(placeholderText);
+
+    if (parsedPlaceholderText) {
+      return parsedPlaceholderText;
+    }
+
+    if (error) {
+      return `Error Loading ${parsedPluralTopic}!`;
+    }
+
+    if (busy !== true && !Array.isArray(selectOptions) || selectOptions.length === 0) {
+      return `No ${parsedPluralTopic} Found!`;
+    }
+
+    const parsedSingularTopic = DataParsingHelper.parseString(singularTopic);
+
+    if (parsedSingularTopic) {
+      return `Filter by ${parsedPluralTopic}`;
+    }
+
+    return `Select a Filter`;
+  }, [placeholderText, busy, error, selectOptions, singularTopic, pluralTopic]);
+
   if (field == null) {
     console.error(`No Field was Found for ${fieldName}. Please add to the metadata if you would like it to be shown.`);
     return null;
@@ -90,16 +122,17 @@ function FilterSelectInputBase(
         valueField={valueField}
         textField={textField}
         filter={filter}
-        className={inline ? `inline-filter-input inline-select-filter` : undefined}
+        className={inline ? `normal-text inline-filter-input inline-select-filter` : undefined}
         groupBy={groupBy}
         value={dataObject?.getData(fieldName)}
         disabled={disabled || busy}
         busy={busy}
-        placeholderText={placeholderText}
+        placeholderText={getPlaceholderText()}
         setDataFunction={(data) => updateValue(data)}
       />
       <InfoText
         errorMessage={inline !== true ? error : undefined}
+        field={inline !== true ? field : undefined}
       />
     </div>
   );
@@ -125,13 +158,14 @@ FilterSelectInputBase.propTypes = {
   error: PropTypes.any,
   clearDataFunction: PropTypes.func,
   showClearValueButton: PropTypes.bool,
+  pluralTopic: PropTypes.string,
+  singularTopic: PropTypes.string,
 };
 
 FilterSelectInputBase.defaultProps = {
   valueField: "value",
   textField: "text",
   filter: "contains",
-  placeholderText: "Select One",
   className: "my-auto"
 };
 
