@@ -235,9 +235,6 @@ function PipelineSummaryPanel(
     );
   };
 
-  console.log("pipelineState: " + JSON.stringify(pipelineModel?.getPipelineState()));
-  console.log("parentWorkflowStatus: " + JSON.stringify(parentWorkflowStatus));
-
   if (pipeline == null || typeof pipeline !== "object" || Object.keys(pipeline).length === 0) {
     return (
       <InformationDialog
@@ -318,12 +315,12 @@ function PipelineSummaryPanel(
               pipelineRunCount={pipeline?.workflow?.run_count}
             />
           </Col>
-          <Col sm={12}>
-            <PipelineOrchestrationProgressBarBase
-              pipelineModel={pipelineModel}
-              className={"mx-3"}
-            />
-          </Col>
+          {/*<Col sm={12}>*/}
+          {/*  <PipelineOrchestrationProgressBarBase*/}
+          {/*    pipelineModel={pipelineModel}*/}
+          {/*    className={"mx-3"}*/}
+          {/*  />*/}
+          {/*</Col>*/}
         </Row>
       </div>
     </>
