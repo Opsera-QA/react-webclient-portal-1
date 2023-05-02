@@ -158,12 +158,14 @@ function JiraMeanTimeToResolution({
     });
 
     const half = Math.floor(vals.length / 2);
+    let median;
     if (half.length % 2) {
-      return vals[half].toFixed(2);
+      median = vals[half].toFixed(2);
     }
     else{
-      return ((vals[half - 1] + vals[half]) / 2.0).toFixed(2);
+      median = ((vals[half - 1] + vals[half]) / 2.0).toFixed(2);
     }
+    return isNaN(median) ? "0.00" : median ;
   };
 
   const onRowSelect = () => {
