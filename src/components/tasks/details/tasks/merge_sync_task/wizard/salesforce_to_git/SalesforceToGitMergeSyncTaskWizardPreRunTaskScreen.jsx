@@ -26,6 +26,7 @@ import MergeSyncTaskJiraIssueSelectInput
   from "components/tasks/details/tasks/merge_sync_task/inputs/MergeSyncTaskJiraIssueSelectInput";
 import SalesforceToGitMergeSyncTaskWithJiraTargetBranchInput
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskWithJiraTargetBranchInput";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
   {
@@ -106,7 +107,8 @@ export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
   };
 
   const getBranchInputs = () => {
-    if(gitConfigurationModel?.getData("jiraIssueId") !== "" && gitConfigurationModel?.getData("repoId") !== "") {
+    if(hasStringValue(gitConfigurationModel?.getData("jiraIssueId")) === true && 
+    hasStringValue(gitConfigurationModel?.getData("repoId")) === true) {
       return (
         <SalesforceToGitMergeSyncTaskWithJiraTargetBranchInput 
           model={gitConfigurationModel}

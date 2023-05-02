@@ -13,6 +13,7 @@ function MergeSyncTaskJiraToolSelectInput(
     const newModel = {...model};
     newModel.setData("jiraToolId", selectedOption?._id);
     newModel.setDefaultValue("jiraProjectKey");
+    newModel.setDefaultValue("jiraProjectName");
     newModel.setDefaultValue("jiraIssueId");
     newModel.setDefaultValue("jiraIssueIds");
     setModel({...newModel});
@@ -22,6 +23,7 @@ function MergeSyncTaskJiraToolSelectInput(
     const newModel = {...model};
     newModel.setDefaultValue("jiraToolId");
     newModel.setDefaultValue("jiraProjectKey");
+    newModel.setDefaultValue("jiraProjectName");
     newModel.setDefaultValue("jiraIssueId");
     newModel.setDefaultValue("jiraIssueIds");
     setModel({...newModel});
