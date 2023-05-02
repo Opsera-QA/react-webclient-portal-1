@@ -94,10 +94,10 @@ export default function PlatformSettingsDetailView() {
   };
 
   const deletePlatformSettingsRecord = async () => {
-    return await platformSettingsActions.deletePlatformSystemParameter(
+    return await platformSettingsActions.deletePlatformSettingById(
       getAccessToken,
       cancelTokenSource,
-      platformSettingsModel,
+      platformSettingsModel?.getMongoDbId(),
     );
   };
 
