@@ -122,21 +122,23 @@ function CenterOverlayContainer(
               maxHeight: maximumHeight,
             }}
           >
-            <OverlayTitleBar
-              handleClose={closePanelFunction}
-              isLoading={isLoading}
-              titleText={titleText}
-              titleIcon={titleIcon}
-              pageLink={pageLink}
-              externalHelpPageLink={externalHelpPageLink}
-              linkTooltipText={linkTooltipText}
-            />
-            {actionBar}
-            <div className={`bg-white ${bodyClassName}`}>
-              {showToasts && toastContext?.getInlineBanner()}
-              {getBody()}
+            <div className={"bg-white"}>
+              <OverlayTitleBar
+                handleClose={closePanelFunction}
+                isLoading={isLoading}
+                titleText={titleText}
+                titleIcon={titleIcon}
+                pageLink={pageLink}
+                externalHelpPageLink={externalHelpPageLink}
+                linkTooltipText={linkTooltipText}
+              />
+              {actionBar}
+              <div className={`bg-white ${bodyClassName}`}>
+                {showToasts && toastContext?.getInlineBanner()}
+                {getBody()}
+              </div>
+              {getButtonContainer()}
             </div>
-            {getButtonContainer()}
           </div>
         </CenterOverlayContainerWrapper>
       </Row>
