@@ -83,11 +83,11 @@ export default function PlatformSettingsDetailView() {
         </div>
         <div className={"d-flex"}>
           <ActionBarShowJsonButton dataObject={platformSettingsModel} />
-          <ActionBarDeleteButton2
-            relocationPath={"/admin/platform/settings"}
-            dataObject={platformSettingsModel}
-            handleDelete={deletePlatformSettingsRecord}
-          />
+          {/*<ActionBarDeleteButton2*/}
+          {/*  relocationPath={"/admin/platform/settings"}*/}
+          {/*  dataObject={platformSettingsModel}*/}
+          {/*  handleDelete={deletePlatformSettingsRecord}*/}
+          {/*/>*/}
         </div>
       </ActionBarContainer>
     );
