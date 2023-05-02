@@ -92,19 +92,6 @@ export default function SalesforceOrganizationSyncTaskWizardPreRunTaskScreen(
     );
   };
 
-  const getBranchNameParams = () => {
-    const model = taskModel.getData('configuration');
-    return ({
-      toolId: model.gitToolId,
-      branchName: model.defaultBranch,
-      repositoryId: model.projectId,
-      service: model.service,
-      workspace: model.service === 'bitbucket' ? model.workspace : undefined,
-      isNewBranch: model.isNewBranch,
-      upstreamBranch: model.upstreamBranch,
-    });
-  };
-
   if (taskModel == null || taskConfigurationModel == null) {
     return null;
   }
@@ -149,7 +136,6 @@ export default function SalesforceOrganizationSyncTaskWizardPreRunTaskScreen(
           taskModel={taskModel}
           setCurrentScreen={setCurrentScreen}
           disabled={taskConfigurationModel?.checkCurrentValidity() !== true}
-          validateBranchNameParams={getBranchNameParams()}
         />
       </ButtonContainerBase>
     </div>

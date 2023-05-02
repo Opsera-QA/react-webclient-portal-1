@@ -14,7 +14,6 @@ export default function TaskWizardConfirmRepositorySettingsButton(
     taskModel,
     disabled,
     className,
-    validateBranchNameParams,
   }) {
   const [buttonState, setButtonState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
   const {
@@ -24,11 +23,68 @@ export default function TaskWizardConfirmRepositorySettingsButton(
     isMounted,
   } = useComponentStateReference();
 
+  const getValidateBranchNameParams = (type) => {
+    const model = taskModel.getData(`${type === 'sync-sfdc-repo' ? 'configuration' : 'configuration.git'}`);
+
+    if(!model.projectId || !model.service){
+      return Promise.reject('Error in validating branch name');
+    }
+
+    switch(type){
+      case 'SFDC_GIT_COMPARE_SYNC':
+        if((model.isNewBranch && !model.upstreamBranch) || !model.targetBranch || !model.toolId){
+          return Promise.reject('Error in validating branch name');
+        }
+
+        return {
+          toolId: model.toolId,
+          branchName: model.targetBranch,
+          repositoryId: model.projectId,
+          service: model.service,
+          workspace: model.service === 'bitbucket' ? model.workspace : undefined,
+          isNewBranch: model.isNewBranch,
+          upstreamBranch: model.upstreamBranch,
+        };
+      case 'GIT_VS_GIT_SYNC':
+        if((model.isNewBranch && !model.upstreamBranch) || !model.targetBranch || !model.toolId){
+          return Promise.reject('Error in validating branch name');
+        }
+
+        return {
+          toolId: model.toolId,
+          branchName: model.targetBranch,
+          repositoryId: model.projectId,
+          service: model.service,
+          workspace: model.service === 'bitbucket' ? model.workspace : undefined,
+          isNewBranch: model.isNewBranch,
+          upstreamBranch: model.upstreamBranch,
+          sourceBranch: model.sourceBranch,
+        };
+      case 'sync-sfdc-repo':
+        if((model.isNewBranch && !model.upstreamBranch) || !model.defaultBranch || !model.gitToolId){
+          return Promise.reject('Error in validating branch name');
+        }
+
+        return {
+          toolId: model.gitToolId,
+          branchName: model.defaultBranch,
+          repositoryId: model.projectId,
+          service: model.service,
+          workspace: model.service === 'bitbucket' ? model.workspace : undefined,
+          isNewBranch: model.isNewBranch,
+          upstreamBranch: model.upstreamBranch,
+        };
+      default:
+        return Promise.reject('Error in validating branch name');
+    }
+  };
+
   const updateTask = async () => {
     try {
       setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
-      if(validateBranchNameParams?.service){
-        await taskActions.validateBranchName(getAccessToken, cancelTokenSource, validateBranchNameParams);
+      if(['SFDC_GIT_COMPARE_SYNC', 'GIT_VS_GIT_SYNC', 'sync-sfdc-repo'].includes(taskModel.getData('type'))){
+        const params = await getValidateBranchNameParams(taskModel.getData('type'));
+        await taskActions.validateBranchName(getAccessToken, cancelTokenSource, params);
       }
       await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
       setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
@@ -90,10 +146,4 @@ TaskWizardConfirmRepositorySettingsButton.propTypes = {
   taskModel: PropTypes.object,
   disabled: PropTypes.bool,
   className: PropTypes.string,
-  validateBranchNameParams: PropTypes.object,
 };
-
-TaskWizardConfirmRepositorySettingsButton.defaultProps = {
-  validateBranchNameParams: {},
-};
-
