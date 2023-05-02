@@ -113,15 +113,7 @@ function SalesforceToGitMergeSyncTaskSummaryCard(
               visible={gitConfigurationModel?.getData("service") === "bitbucket"}
             />
           </Col>) : null
-        }
-        {gitConfigurationModel?.getData("enableJiraIntegration") !== true ? (
-          <Col xs={6}>
-            <TextFieldBase
-              dataObject={gitConfigurationModel}
-              fieldName={"sourceBranch"}
-            />
-          </Col>
-        ) : null }        
+        }        
         <Col xs={6}>
           <BooleanField
             dataObject={gitConfigurationModel}
