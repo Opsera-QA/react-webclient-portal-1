@@ -116,29 +116,27 @@ function CenterOverlayContainer(
           size={size}
         >
           <div
-            className={`content-card-1 overlay-wrapper`}
+            className={`content-card-1 bg-white overlay-wrapper`}
             style={{
               minHeight: minimumHeight,
               maxHeight: maximumHeight,
             }}
           >
-            <div className={"bg-white"}>
-              <OverlayTitleBar
-                handleClose={closePanelFunction}
-                isLoading={isLoading}
-                titleText={titleText}
-                titleIcon={titleIcon}
-                pageLink={pageLink}
-                externalHelpPageLink={externalHelpPageLink}
-                linkTooltipText={linkTooltipText}
-              />
-              {actionBar}
-              <div className={`bg-white ${bodyClassName}`}>
-                {showToasts && toastContext?.getInlineBanner()}
-                {getBody()}
-              </div>
-              {getButtonContainer()}
+            <OverlayTitleBar
+              handleClose={closePanelFunction}
+              isLoading={isLoading}
+              titleText={titleText}
+              titleIcon={titleIcon}
+              pageLink={pageLink}
+              externalHelpPageLink={externalHelpPageLink}
+              linkTooltipText={linkTooltipText}
+            />
+            {actionBar}
+            <div className={`bg-white ${bodyClassName}`}>
+              {showToasts && toastContext?.getInlineBanner()}
+              {getBody()}
             </div>
+            {getButtonContainer()}
           </div>
         </CenterOverlayContainerWrapper>
       </Row>
