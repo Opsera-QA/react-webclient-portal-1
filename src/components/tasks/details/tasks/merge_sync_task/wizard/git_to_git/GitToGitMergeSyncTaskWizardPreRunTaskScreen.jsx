@@ -133,16 +133,16 @@ export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
       />
       <div>Please select the repository and branch you wish to use for this Salesforce workflow</div>
       <Row>
-        {gitConfigurationModel?.getData("jiraIssueIds") && 
-          <Col lg={12}>
+        {gitConfigurationModel?.getData("jiraIssueIds") && gitConfigurationModel?.getData("jiraIssueIds").length > 0 ?
+          (<Col lg={12}>
             <MergeSyncTaskJiraIssueMultiSelectInput
               model={gitConfigurationModel}
               setModel={setModelFunction}
               jiraToolId={gitConfigurationModel?.getData("jiraToolId")}
               jiraProjectKey={gitConfigurationModel?.getData("jiraProjectKey")}
             />
-          </Col>
-        }              
+          </Col>) : null
+        }
         <Col lg={12}>
           <GitToGitMergeSyncTaskBitbucketWorkspaceSelectInput
             model={gitConfigurationModel}
@@ -155,14 +155,14 @@ export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
             setModel={setModelFunction}
           />
         </Col>
-        {(gitConfigurationModel?.getData("jiraIssueIds") === undefined || gitConfigurationModel?.getData("jiraIssueIds")?.length === 0) && 
-        <Col lg={12}>
+        {(gitConfigurationModel?.getData("jiraIssueIds") === undefined || gitConfigurationModel?.getData("jiraIssueIds")?.length === 0) ? 
+        (<Col lg={12}>
           <GitToGitMergeSyncTaskSourceBranchSelectInput
             model={gitConfigurationModel}
             setModel={setModelFunction}
             targetBranch={gitConfigurationModel?.getData("targetBranch")}
           />
-        </Col>}
+        </Col>) : null}
         <Col lg={12}>
           <GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput
             model={gitConfigurationModel}

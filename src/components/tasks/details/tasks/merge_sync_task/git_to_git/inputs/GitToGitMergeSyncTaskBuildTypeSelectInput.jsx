@@ -4,11 +4,11 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 export const BUILD_TYPES = [
   {
-    text: "SFDX",
+    text: "Salesforce DX(Source Format)",
     value: "sfdx",
   },
   {
-    text: "Ant",
+    text: "Ant(Metadata Format)",
     value: "ant",
   },  
 ];

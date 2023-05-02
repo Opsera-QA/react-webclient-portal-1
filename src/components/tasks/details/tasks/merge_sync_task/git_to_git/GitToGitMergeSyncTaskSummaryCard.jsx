@@ -61,7 +61,7 @@ function GitToGitMergeSyncTaskSummaryCard({ taskConfigurationModel, isLoading })
         <Col xs={6}>
           <TextFieldBase
             dataObject={taskConfigurationModel}
-            fieldName={"jiraProjectKey"}            
+            fieldName={"jiraProjectName"}            
           />
         </Col>
         <Col xs={6}>
@@ -101,21 +101,24 @@ function GitToGitMergeSyncTaskSummaryCard({ taskConfigurationModel, isLoading })
             fieldName={"repository"}
           />
         </Col>
-        {taskConfigurationModel?.getData("service") === "bitbucket" && 
-          <Col xs={6}>
+        {taskConfigurationModel?.getData("service") === "bitbucket" ? 
+          (<Col xs={6}>
             <TextFieldBase
               dataObject={taskConfigurationModel}
               fieldName={"workspace"}
               visible={taskConfigurationModel?.getData("service") === "bitbucket"}
             />
+          </Col>) : null
+        }
+        {taskConfigurationModel?.getData("isSalesforce") !== true ? 
+        (
+          <Col xs={6}>
+            <TextFieldBase
+              dataObject={taskConfigurationModel}
+              fieldName={"sourceBranch"}
+            />
           </Col>
-        }        
-        <Col xs={6}>
-          <TextFieldBase
-            dataObject={taskConfigurationModel}
-            fieldName={"sourceBranch"}
-          />
-        </Col>
+        ) : null }        
         <Col xs={6}>
           <BooleanField
             dataObject={taskConfigurationModel}
