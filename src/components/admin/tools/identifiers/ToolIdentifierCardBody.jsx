@@ -23,7 +23,7 @@ export default function ToolIdentifierCardBody(
         <Col xs={12}>
           <DescriptionField
             dataObject={toolIdentifierModel}
-            characterLimit={100}
+            characterLimit={500}
             className={"dummy"}
           />
         </Col>
