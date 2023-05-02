@@ -106,20 +106,6 @@ export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
     );
   };
 
-  const getBranchNameParams = () => {
-    const model = taskModel.getData('configuration');
-    return ({
-      toolId: model.git.toolId,
-      branchName: model.git.targetBranch,
-      repositoryId: model.git.projectId,
-      service: model.git.service,
-      workspace: model.git.service === 'bitbucket' ? taskModel.getData('configuration').git.workspace : undefined,
-      isNewBranch: model.git.isNewBranch,
-      upstreamBranch: model.git.upstreamBranch,
-      sourceBranch: model.git.sourceBranch,
-    });
-  };
-
   if (taskModel == null || gitConfigurationModel == null) {
     return null;
   }
@@ -175,7 +161,6 @@ export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
           taskModel={taskModel}
           setCurrentScreen={setCurrentScreen}
           disabled={gitConfigurationModel?.checkCurrentValidity() !== true}
-          validateBranchNameParams={getBranchNameParams()}
         />
       </ButtonContainerBase>
     </div>
