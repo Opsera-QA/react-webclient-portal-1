@@ -79,38 +79,34 @@ function FullScreenCenterOverlayContainer(
 
   return (
     <div className={`overlay-panel center-overlay-shadow-background`}>
-      <div className={"overlay-margin overlay-wrapper"}>
-        <div className={"bg-white"}>
-          <div className={
-            showCloseButton === true || buttonContainer != null
-              ? "full-screen-center-overlay-with-buttons content-card-1"
-              : "full-screen-center-overlay content-card-1"
-          }>
-            <OverlayTitleBar
-              handleClose={closePanel}
-              isLoading={isLoading}
-              titleText={titleText}
-              titleIcon={titleIcon}
-              pageLink={pageLink}
-              linkTooltipText={linkTooltipText}
-              helpIsShown={helpIsShown}
-              setShowHelpPanel={getHelpComponentFunction && getHelpComponentFunction(setHelpIsShown) !== null ? setHelpIsShown : undefined}
-            />
-            <div className={"bg-white"}>
-              {actionBar}
-              <div className={showCloseButton === true || buttonContainer != null ? "full-screen-overlay-panel-body-with-buttons" : "full-screen-overlay-panel-body"}>
-                {showToasts && toastContext?.getInlineBanner()}
-                <div className={"bg-white"}>
-                  <div>
-                    {getBody()}
-                  </div>
-                </div>
+      <div className={"overlay-margin bg-white"}>
+        <div className={
+          showCloseButton === true || buttonContainer != null
+            ? "full-screen-center-overlay-with-buttons content-card-1"
+            : "full-screen-center-overlay content-card-1"
+        }>
+          <OverlayTitleBar
+            handleClose={closePanel}
+            isLoading={isLoading}
+            titleText={titleText}
+            titleIcon={titleIcon}
+            pageLink={pageLink}
+            linkTooltipText={linkTooltipText}
+            helpIsShown={helpIsShown}
+            setShowHelpPanel={getHelpComponentFunction && getHelpComponentFunction(setHelpIsShown) !== null ? setHelpIsShown : undefined}
+          />
+          <div>
+            {actionBar}
+            <div className={showCloseButton === true || buttonContainer != null ? "full-screen-overlay-panel-body-with-buttons" : "full-screen-overlay-panel-body"}>
+              {showToasts && toastContext?.getInlineBanner()}
+              <div className={"bg-white"}>
+                {getBody()}
               </div>
             </div>
           </div>
-          <div className={"mt-auto bg-white"}>
-            {getButtons()}
-          </div>
+        </div>
+        <div className={"mt-auto bg-white"}>
+          {getButtons()}
         </div>
       </div>
     </div>
