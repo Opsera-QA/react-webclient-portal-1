@@ -61,7 +61,7 @@ function GitToGitMergeSyncTaskSummaryCard({ taskConfigurationModel, isLoading })
         <Col xs={6}>
           <TextFieldBase
             dataObject={taskConfigurationModel}
-            fieldName={"jiraProjectKey"}            
+            fieldName={"jiraProjectName"}            
           />
         </Col>
         <Col xs={6}>

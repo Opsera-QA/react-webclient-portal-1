@@ -81,6 +81,10 @@ export const mergeSyncTaskGitConfigurationMetadata = {
       label: "Jira Project",
       id: "jiraProjectKey",
     },
+    {      
+      label: "Jira Project Name",
+      id: "jiraProjectName",
+    },
     {
       label: "Jira Ticket",
       id: "jiraIssueId",
@@ -119,6 +123,7 @@ export const mergeSyncTaskGitConfigurationMetadata = {
     jobType: "",
     jiraToolId: "",
     jiraProjectKey: "",
+    jiraProjectName: "",
     jiraIssueId: "",
     jiraIssueIds: undefined,
     buildType: "",
