@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {parseError} from "../../helpers/error-helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import BannerBase from "components/common/status_notifications/banners/BannerBase";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function ErrorBanner({ error, id, removeBanner, prependMessage }) {
   const [messageBody, setMessageBody] = useState(undefined);
@@ -11,8 +12,9 @@ function ErrorBanner({ error, id, removeBanner, prependMessage }) {
   useEffect(() => {
     const messageBody = parseError(error);
     setMessageBody(messageBody);
-    setStatusCode(error && error.response ? error.response.status : null);
 
+    const errorCode = DataParsingHelper.parseNestedInteger(error, "response.status");
+    setStatusCode(errorCode);
   }, [error]);
 
   const reloadSession = function() {
