@@ -36,7 +36,6 @@ export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
     setCurrentScreen,
     className,
   }) {
-
   const [gitConfigurationModel, setGitConfigurationModel] = useState(undefined);
   const { toastContext } = useComponentStateReference();
 
@@ -119,7 +118,7 @@ export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
       />
       <div>Please select the repository and branch you wish to use for this Salesforce workflow</div>
       <Row>
-        {gitConfigurationModel?.getData("jiraIssueIds") && gitConfigurationModel?.getData("jiraIssueIds").length > 0 ?
+        { gitConfigurationModel?.getData("jiraIssueIds") && gitConfigurationModel?.getData("jiraIssueIds").length > 0 ?
           (<Col lg={12}>
             <MergeSyncTaskJiraIssueMultiSelectInput
               model={gitConfigurationModel}
@@ -142,13 +141,14 @@ export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
           />
         </Col>
         {(gitConfigurationModel?.getData("jiraIssueIds") === undefined || gitConfigurationModel?.getData("jiraIssueIds")?.length === 0) ? 
-        (<Col lg={12}>
-          <GitToGitMergeSyncTaskSourceBranchSelectInput
-            model={gitConfigurationModel}
-            setModel={setModelFunction}
-            targetBranch={gitConfigurationModel?.getData("targetBranch")}
-          />
-        </Col>) : null}
+          (<Col lg={12}>
+            <GitToGitMergeSyncTaskSourceBranchSelectInput
+              model={gitConfigurationModel}
+              setModel={setModelFunction}
+              targetBranch={gitConfigurationModel?.getData("targetBranch")}
+            />
+          </Col>) : null
+        }
         <Col lg={12}>
           <GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput
             model={gitConfigurationModel}
