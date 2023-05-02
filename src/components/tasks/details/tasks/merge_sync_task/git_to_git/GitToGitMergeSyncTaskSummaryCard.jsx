@@ -101,15 +101,15 @@ function GitToGitMergeSyncTaskSummaryCard({ taskConfigurationModel, isLoading })
             fieldName={"repository"}
           />
         </Col>
-        {taskConfigurationModel?.getData("service") === "bitbucket" && 
-          <Col xs={6}>
+        {taskConfigurationModel?.getData("service") === "bitbucket" ? 
+          (<Col xs={6}>
             <TextFieldBase
               dataObject={taskConfigurationModel}
               fieldName={"workspace"}
               visible={taskConfigurationModel?.getData("service") === "bitbucket"}
             />
-          </Col>
-        }        
+          </Col>) : null
+        }
         <Col xs={6}>
           <TextFieldBase
             dataObject={taskConfigurationModel}
