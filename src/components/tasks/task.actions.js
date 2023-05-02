@@ -44,11 +44,11 @@ taskActions.getTaskByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
 
 
 
-taskActions.validateBranchName = async (getAccessToken, cancelTokenSource, model) => {
+taskActions.validateBranchName = async (getAccessToken, cancelTokenSource, apiParams) => {
   const apiUrl = '/tasks/validate-branch';
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, {
     params: {
-      ...model,
+      ...apiParams,
     },
   });
 };
