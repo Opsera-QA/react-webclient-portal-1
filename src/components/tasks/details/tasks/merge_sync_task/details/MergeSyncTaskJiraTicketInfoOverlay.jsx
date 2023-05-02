@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CenterOverlayContainer, { CENTER_OVERLAY_SIZES } from "components/common/overlays/center/CenterOverlayContainer";
 import {Row, Col} from "react-bootstrap";
-import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
 
-function MergeSyncTaskJiraTicketInfoOverlay({ selectedTicket }) {
+function MergeSyncTaskJiraTicketInfoOverlay({ model }) {
+
   const toastContext = useContext(DialogToastContext);
 
   const getBody = () => {
@@ -13,25 +14,47 @@ function MergeSyncTaskJiraTicketInfoOverlay({ selectedTicket }) {
       <div className={"m-4"}>
         <Row className="mx-4">
           <Col lg={12}>
-            <StandaloneTextFieldBase label={"Issue Id"} text={selectedTicket.id} />
+            <TextFieldBase
+              dataObject={model}
+              fieldName={"id"}
+            />
           </Col>
           <Col lg={12}>
-            <StandaloneTextFieldBase label={"Issue Key"} text={selectedTicket.key} />
+            <TextFieldBase
+              dataObject={model}
+              fieldName={"key"}
+            />            
           </Col>
           <Col lg={12}>
-            <StandaloneTextFieldBase label={"Issue Type"} text={selectedTicket.issuetype} />
+            <TextFieldBase
+              dataObject={model}
+              fieldName={"issuetype"}
+            />
           </Col>
           <Col lg={12}>
-            <StandaloneTextFieldBase label={"Status"} text={selectedTicket.status} />
+            <TextFieldBase
+              dataObject={model}
+              fieldName={"status"}
+            />            
           </Col>
           <Col lg={12}>
-            <StandaloneTextFieldBase label={"Assignee"} text={selectedTicket.assignee} />
+            <TextFieldBase
+              dataObject={model}
+              fieldName={"assignee"}
+            />            
           </Col>
           <Col lg={12}>
-            <StandaloneTextFieldBase label={"Summary"} text={selectedTicket.summary} />
+            <TextFieldBase
+              dataObject={model}
+              fieldName={"summary"}
+            />            
           </Col>
           <Col lg={12}>
-            <StandaloneTextFieldBase label={"Link"} text={selectedTicket.link} showClipboardButton={true} />
+            <TextFieldBase
+              dataObject={model}
+              fieldName={"link"}
+              showClipboardButton={true}
+            />            
           </Col>
         </Row>        
       </div>
@@ -42,7 +65,7 @@ function MergeSyncTaskJiraTicketInfoOverlay({ selectedTicket }) {
     toastContext.clearInfoOverlayPanel();
   };
 
-  if (!selectedTicket) {
+  if (model === undefined) {
     return null;
   }
 
@@ -61,7 +84,7 @@ function MergeSyncTaskJiraTicketInfoOverlay({ selectedTicket }) {
 }
 
 MergeSyncTaskJiraTicketInfoOverlay.propTypes = {  
-  selectedTicket: PropTypes.object,
+  model: PropTypes.object,
 };
 
 export default MergeSyncTaskJiraTicketInfoOverlay;

@@ -45,7 +45,7 @@ export const mergeSyncTaskGitConfigurationMetadata = {
       label: "Source Branch",
       id: "sourceBranch",
       isRequiredFunction: (model) => {
-        return model?.getData("jobType") === TASK_TYPES.GIT_TO_GIT_MERGE_SYNC && (model?.getData("jiraIssueIds") === undefined || model?.getData("jiraIssueIds")?.length === 0);
+        return model?.getData("jobType") === TASK_TYPES.GIT_TO_GIT_MERGE_SYNC && (model?.getData("jiraIssueIds") === undefined || (Array.isArray(model?.getData("jiraIssueIds")) && model?.getData("jiraIssueIds")?.length === 0));
       },
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
@@ -80,6 +80,10 @@ export const mergeSyncTaskGitConfigurationMetadata = {
     {
       label: "Jira Project",
       id: "jiraProjectKey",
+    },
+    {      
+      label: "Jira Project Name",
+      id: "jiraProjectName",
     },
     {
       label: "Jira Ticket",
@@ -119,6 +123,7 @@ export const mergeSyncTaskGitConfigurationMetadata = {
     jobType: "",
     jiraToolId: "",
     jiraProjectKey: "",
+    jiraProjectName: "",
     jiraIssueId: "",
     jiraIssueIds: undefined,
     buildType: "",

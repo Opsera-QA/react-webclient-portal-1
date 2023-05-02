@@ -65,7 +65,7 @@ function SalesforceToGitMergeSyncTaskSummaryCard(
         <Col xs={6}>
           <TextFieldBase
             dataObject={gitConfigurationModel}
-            fieldName={"jiraProjectKey"}            
+            fieldName={"jiraProjectName"}            
           />
         </Col>
         <Col xs={6}>
@@ -105,21 +105,15 @@ function SalesforceToGitMergeSyncTaskSummaryCard(
             fieldName={"repository"}
           />
         </Col>
-        {gitConfigurationModel?.getData("service") === "bitbucket" && 
-          <Col xs={6}>
+        {gitConfigurationModel?.getData("service") === "bitbucket" ? 
+          (<Col xs={6}>
             <TextFieldBase
               dataObject={gitConfigurationModel}
               fieldName={"workspace"}
               visible={gitConfigurationModel?.getData("service") === "bitbucket"}
             />
-          </Col>
+          </Col>) : null
         }        
-        <Col xs={6}>
-          <TextFieldBase
-            dataObject={gitConfigurationModel}
-            fieldName={"sourceBranch"}
-          />
-        </Col>
         <Col xs={6}>
           <BooleanField
             dataObject={gitConfigurationModel}
@@ -133,14 +127,14 @@ function SalesforceToGitMergeSyncTaskSummaryCard(
             fieldName={"includePackageXml"}
           />
         </Col>
-        {salesforceConfigurationModel?.getData("packageXmlReferencePath") === true && 
-          <Col xs={6}>
+        {salesforceConfigurationModel?.getData("packageXmlReferencePath") === true ? 
+          (<Col xs={6}>
             <TextFieldBase
               dataObject={salesforceConfigurationModel}
               fieldName={"sourceBranch"}
               visible={salesforceConfigurationModel?.getData("packageXmlReferencePath") === true}
             />
-          </Col>
+          </Col>) : null
         }        
         { getJiraFields() }
       </Row>

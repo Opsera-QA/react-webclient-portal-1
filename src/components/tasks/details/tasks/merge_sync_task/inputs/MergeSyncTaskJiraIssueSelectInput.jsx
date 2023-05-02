@@ -7,6 +7,10 @@ import {jiraActions} from "components/common/list_of_values_input/tools/jira/jir
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {faExternalLink} from "@fortawesome/pro-light-svg-icons";
 import MergeSyncTaskJiraTicketInfoOverlay from "../details/MergeSyncTaskJiraTicketInfoOverlay";
+import modelHelpers from "components/common/model/modelHelpers";
+import {
+  mergeSyncTaskJiraTicketMetadata
+} from "components/tasks/details/tasks/merge_sync_task/details/mergeSyncTaskJiraTicket.metadata";
 
 function MergeSyncTaskJiraIssueSelectInput(
   {
@@ -19,11 +23,11 @@ function MergeSyncTaskJiraIssueSelectInput(
 
   const { getAccessToken } = useContext(AuthContext);
   const [issues, setIssues] = useState([]);
-  const [selectedIssue, setSelectedIssue] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [jiraIssueData, setJiraIssueData] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -77,7 +81,11 @@ function MergeSyncTaskJiraIssueSelectInput(
   };
 
   const setDataFunction = (fieldName, selectedOption) => {
-    setSelectedIssue(selectedOption);
+    const newJiraModel = modelHelpers.parseObjectIntoModel(
+      selectedOption,
+      mergeSyncTaskJiraTicketMetadata,
+    );
+    setJiraIssueData({...newJiraModel});
     const newModel = { ...model };
     newModel?.setDefaultValue("targetBranch");
     newModel?.setDefaultValue("isNewBranch");
@@ -87,7 +95,7 @@ function MergeSyncTaskJiraIssueSelectInput(
   };
 
   const clearDataFunction = (fieldName) => {
-    setSelectedIssue(undefined);
+    setJiraIssueData(undefined);
     const newModel = { ...model };
     newModel?.setDefaultValue("targetBranch");
     newModel?.setDefaultValue("isNewBranch");
@@ -101,14 +109,14 @@ function MergeSyncTaskJiraIssueSelectInput(
   };
 
   const getJiraIssueUrl = () => {
-    return selectedIssue ? selectedIssue?.link : null;
+    return jiraIssueData?.getData("link") ? jiraIssueData.getData("link") : null;
   };
 
   const getInfoOverlay = () => {
-    if (selectedIssue) {
+    if (jiraIssueData) {
       return (
         <MergeSyncTaskJiraTicketInfoOverlay
-          selectedTicket={selectedIssue}          
+          model={jiraIssueData}
         />
       );
     }
