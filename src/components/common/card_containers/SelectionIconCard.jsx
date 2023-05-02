@@ -20,7 +20,6 @@ export default function SelectionIconCard(
     option,
     highlightedBorderColor,
     disabled,
-    containerClassName,
   }) {
   const { themeConstants } = useComponentStateReference();
   const [isHovering, setIsHovering] = useState(false);
@@ -53,25 +52,20 @@ export default function SelectionIconCard(
   };
 
   return (
-    <div
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
-      className={containerClassName}
+    <IconCardContainerBaseV2
+      cardHeader={cardHeader}
+      isLoading={isLoading}
+      cardFooter={cardFooter}
+      titleBar={titleBar}
+      contentBody={contentBody}
+      onClickFunction={handleOnClickFunction}
+      className={className}
+      tooltip={tooltip}
+      style={getStyle()}
+      onHoverFunction={setIsHovering}
     >
-      <IconCardContainerBaseV2
-        cardHeader={cardHeader}
-        isLoading={isLoading}
-        cardFooter={cardFooter}
-        titleBar={titleBar}
-        contentBody={contentBody}
-        onClickFunction={handleOnClickFunction}
-        className={className}
-        tooltip={tooltip}
-        style={getStyle()}
-      >
-        {children}
-      </IconCardContainerBaseV2>
-    </div>
+      {children}
+    </IconCardContainerBaseV2>
   );
 }
 
@@ -90,5 +84,4 @@ SelectionIconCard.propTypes = {
   option: PropTypes.string,
   highlightedBorderColor: PropTypes.string,
   disabled: PropTypes.bool,
-  containerClassName: PropTypes.string,
 };

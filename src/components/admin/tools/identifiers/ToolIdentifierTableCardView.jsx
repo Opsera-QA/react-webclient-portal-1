@@ -7,7 +7,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import NewToolIdentifierOverlay from "components/admin/tools/identifiers/NewToolIdentifierOverlay";
 import ToolIdentifierTable from "components/admin/tools/identifiers/ToolIdentifierTable";
 import ToolIdentifierCardView from "components/admin/tools/identifiers/ToolIdentifierCardView";
-import toolIdentifierMetadata from "components/admin/tools/identifiers/toolIdentifier.metadata";
 
 function ToolIdentifierTableCardView(
   {
@@ -23,7 +22,6 @@ function ToolIdentifierTableCardView(
   const getCardView = () => {
     return (
       <ToolIdentifierCardView
-        toolIdentifierMetadata={toolIdentifierMetadata}
         toolIdentifiers={toolIdentifiers}
         isLoading={isLoading}
         loadData={loadData}

@@ -2,15 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
-import ToolIdentifierSelectionCard from "components/admin/tools/identifiers/ToolIdentifierSelectionCard";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
+import ToolIdentifierCard from "components/admin/tools/identifiers/ToolIdentifierCard";
+import toolIdentifierMetadata from "components/admin/tools/identifiers/toolIdentifier.metadata";
 
-function ToolIdentifierSelectionCardView({ toolIdentifiers, loadData, isLoading, toolIdentifierMetadata, setDataFunction }) {
-  const getToolIdentifierSelectionCard = (toolIdentifier) => {
+function ToolIdentifierSelectionCardView({ toolIdentifiers, loadData, isLoading, setDataFunction }) {
+  const getToolIdentifierCard = (toolIdentifier) => {
     return (
-      <ToolIdentifierSelectionCard
+      <ToolIdentifierCard
         toolIdentifierModel={new Model({ ...toolIdentifier }, toolIdentifierMetadata, false)}
-        setDataFunction={setDataFunction}
+        onClickFunction={() => setDataFunction(toolIdentifier)}
       />
     );
   };
@@ -22,7 +23,7 @@ function ToolIdentifierSelectionCardView({ toolIdentifiers, loadData, isLoading,
       cards={
         <VerticalCardViewBase
           data={toolIdentifiers}
-          getCardFunction={getToolIdentifierSelectionCard}
+          getCardFunction={getToolIdentifierCard}
         />
       }
     />
