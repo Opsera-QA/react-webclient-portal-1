@@ -78,6 +78,8 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
     };
   }, []);
 
+  const getPipelineOrTaskText = () => pipelineWizardModel?.getData('fromGitTasks') ? 'Task' : 'Pipeline';
+
   const getBody = () => {
     switch (pipelineWizardScreen) {
       case PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
@@ -174,12 +176,14 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
       case PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
         return (
           <SfdcWizardInitializationHelpDocumentation
+            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
             closeHelpPanel={() => setHelpIsShown(false)}
           />
         );
       case PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR:
         return (
           <SfdcWizardComponentTypeSelectionHelpDocumentation
+            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
             closeHelpPanel={() => setHelpIsShown(false)}
           />
         );
@@ -189,18 +193,21 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
       case PIPELINE_WIZARD_SCREENS.PROFILE_COMPONENT_SELECTOR:
         return (
           <SfdcWizardFileSelectionHelpDocumentation
+            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
             closeHelpPanel={() => setHelpIsShown(false)}
           />
         );
       case PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR:
         return (
           <SfdcWizardUnitTestSelectionViewHelpDocumentation
+            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
             closeHelpPanel={() => setHelpIsShown(false)}
           />
         );
       case PIPELINE_WIZARD_SCREENS.XML_VIEWER:
         return (
           <SfdcWizardXmlViewerHelpDocumentation
+            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
             closeHelpPanel={() => setHelpIsShown(false)}
           />
         );
@@ -235,7 +242,7 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
 
   if (pipelineWizardModel == null) {
     return (
-      <LoadingDialog message={"Initializing SFDC Pipeline Wizard"} size={"sm"} />
+      <LoadingDialog message={`Initializing SFDC ${getPipelineOrTaskText()} Wizard`} size={"sm"} />
     );
   }
 
