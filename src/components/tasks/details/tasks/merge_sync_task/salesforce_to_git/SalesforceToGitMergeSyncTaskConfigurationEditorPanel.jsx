@@ -33,6 +33,16 @@ import SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput";
 import SalesforceToGitMergeSyncTaskIncludePackageXmlToggleInput
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskIncludePackageXmlToggleInput";
+import MergeSyncTaskJiraToolSelectInput 
+  from "components/tasks/details/tasks/merge_sync_task/inputs/MergeSyncTaskJiraToolSelectInput";
+import MergeSyncTaskJiraProjectSelectInput 
+  from "components/tasks/details/tasks/merge_sync_task/inputs/MergeSyncTaskJiraProjectSelectInput";
+import MergeSyncTaskJiraIssueSelectInput 
+  from "components/tasks/details/tasks/merge_sync_task/inputs/MergeSyncTaskJiraIssueSelectInput";
+import SalesforceToGitMergeSyncTaskWithJiraTargetBranchInput
+  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskWithJiraTargetBranchInput";
+import SalesforceMergeSyncTaskEnableJiraToggleInput
+  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceMergeSyncTaskEnableJiraToggleInput";
 
 function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
   {
@@ -112,6 +122,67 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
     );
   };
 
+  const getBranchInputs = () => {
+    if(gitConfigurationModel?.getData("jiraIssueId") !== "" && gitConfigurationModel?.getData("repoId") !== "") {
+      return (
+        <SalesforceToGitMergeSyncTaskWithJiraTargetBranchInput 
+          model={gitConfigurationModel}
+          setModel={setGitModelFunction}
+          service={gitConfigurationModel?.getData("service")}
+          jiraIssueId={gitConfigurationModel?.getData("jiraIssueId")}
+          repositoryId={gitConfigurationModel?.getData("repoId")}
+          toolId={gitConfigurationModel?.getData("toolId")}
+          workspace={gitConfigurationModel?.getData("workspace")}
+        />
+      );
+    }
+
+    return (
+      <>
+        <Col lg={12}>
+          <SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput
+            model={gitConfigurationModel}
+            setModel={setGitModelFunction}
+          />
+        </Col>
+        {getDestinationBranchInputs()}
+      </>
+    );
+  };
+
+  const getJiraInputs = () => {
+
+    if (gitConfigurationModel?.getData("enableJiraIntegration") !== true) {
+      return null;
+    }
+
+    return (
+      <>
+        <Col lg={12}>
+          <MergeSyncTaskJiraToolSelectInput
+            model={gitConfigurationModel}
+            setModel={setGitModelFunction}
+          />
+        </Col>
+        <Col lg={12}>
+          <MergeSyncTaskJiraProjectSelectInput
+            model={gitConfigurationModel}
+            setModel={setGitModelFunction}
+            jiraToolId={gitConfigurationModel?.getData("jiraToolId")}
+          />
+        </Col>
+        <Col lg={12}>
+          <MergeSyncTaskJiraIssueSelectInput
+            model={gitConfigurationModel}
+            setModel={setGitModelFunction}
+            jiraToolId={gitConfigurationModel?.getData("jiraToolId")}
+            jiraProjectKey={gitConfigurationModel?.getData("jiraProjectKey")}
+          />
+        </Col>        
+      </>
+    );
+  };
+
   if (taskModel == null || taskConfigurationModel == null || salesforceConfigurationModel == null) {
     return <LoadingDialog size="sm" />;
   }
@@ -125,6 +196,13 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
           fieldName={"sourceToolId"}
         />
       </Col>
+      <Col lg={12}>
+        <SalesforceMergeSyncTaskEnableJiraToggleInput 
+          model={gitConfigurationModel}
+          setModel={setGitModelFunction}
+        />
+      </Col>
+      {getJiraInputs()}
       <Col lg={12}>
         <SalesforceToGitMergeSyncTaskSourceControlTypeSelectInput
           model={gitConfigurationModel}
@@ -150,13 +228,7 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
           setModel={setGitModelFunction}
         />
       </Col>
-      <Col lg={12}>
-        <SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput
-          model={gitConfigurationModel}
-          setModel={setGitModelFunction}
-        />
-      </Col>
-      {getDestinationBranchInputs()}
+      {getBranchInputs()}            
       <Col lg={12}>
         <SalesforceToGitMergeSyncTaskIncludePackageXmlToggleInput
           model={salesforceConfigurationModel}
