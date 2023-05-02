@@ -10,6 +10,7 @@ import StandaloneTextFieldBase from "components/common/fields/text/standalone/St
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {numberHelpers} from "components/common/helpers/number/number.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function PipelineDurationMetricsStandaloneField({ pipelineId, pipelineRunCount, className }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -66,12 +67,8 @@ function PipelineDurationMetricsStandaloneField({ pipelineId, pipelineRunCount, 
 
   const loadPipelineDurationMetrics = async (cancelSource = cancelTokenSource) => {
     const response = await pipelineActivityLogsActions.getPipelineDurationMetricsV2(getAccessToken, cancelSource, pipelineId);
-    const newMetrics = response?.data;
-
-    if (newMetrics) {
-      setLastRunDurationText(newMetrics?.humanizedLastRunDuration);
-      setLastFiveRunsDurationText(newMetrics?.humanizedLastFiveRunsAverageDuration);
-    }
+    setLastRunDurationText(DataParsingHelper.parseNestedString(response, "data.humanizedLastRunDuration", ""));
+    setLastFiveRunsDurationText(DataParsingHelper.parseNestedString(response, "data.humanizedLastFiveRunsAverageDuration", ""));
   };
 
   const getLastRunDurationText = () => {
