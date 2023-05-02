@@ -22,6 +22,11 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import TaskWizardConfirmRepositorySettingsButton
   from "components/tasks/wizard/TaskWizardConfirmRepositorySettingsButton";
+import MergeSyncTaskJiraIssueSelectInput 
+  from "components/tasks/details/tasks/merge_sync_task/inputs/MergeSyncTaskJiraIssueSelectInput";
+import SalesforceToGitMergeSyncTaskWithJiraTargetBranchInput
+  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskWithJiraTargetBranchInput";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
   {
@@ -66,6 +71,7 @@ export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
               dataObject={gitConfigurationModel}
               setDataObject={setModelFunction}
               fieldName={"targetBranch"}
+              disabled={gitConfigurationModel?.getData("jiraIssueId") !== ""}
             />
           </Col>
         </>
@@ -77,6 +83,7 @@ export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
         <SalesforceToGitMergeSyncTaskTargetBranchSelectInput
           model={gitConfigurationModel}
           setModel={setModelFunction}
+          disabled={gitConfigurationModel?.getData("jiraIssueId") !== ""}
         />
       </Col>
     );
@@ -99,6 +106,35 @@ export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
     );
   };
 
+  const getBranchInputs = () => {
+    if(hasStringValue(gitConfigurationModel?.getData("jiraIssueId")) === true && 
+    hasStringValue(gitConfigurationModel?.getData("repoId")) === true) {
+      return (
+        <SalesforceToGitMergeSyncTaskWithJiraTargetBranchInput 
+          model={gitConfigurationModel}
+          setModel={setModelFunction}
+          service={gitConfigurationModel?.getData("service")}
+          jiraIssueId={gitConfigurationModel?.getData("jiraIssueId")}
+          repositoryId={gitConfigurationModel?.getData("repoId")}
+          toolId={gitConfigurationModel?.getData("toolId")}
+          workspace={gitConfigurationModel?.getData("workspace")}
+        />
+      );
+    }
+
+    return (
+      <>
+        <Col lg={12}>
+          <SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput
+            model={gitConfigurationModel}
+            setModel={setModelFunction}
+          />
+        </Col>
+        {getDestinationBranchInputs()}
+      </>      
+    );
+  };
+
   if (taskModel == null || gitConfigurationModel == null) {
     return null;
   }
@@ -111,19 +147,23 @@ export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
       />
       <div>Please select the repository and branch you wish to use for this Salesforce workflow</div>
       <Row>
+        {gitConfigurationModel?.getData("jiraIssueId") && 
+          <Col lg={12}>
+            <MergeSyncTaskJiraIssueSelectInput
+              model={gitConfigurationModel}
+              setModel={setModelFunction}
+              jiraToolId={gitConfigurationModel?.getData("jiraToolId")}
+              jiraProjectKey={gitConfigurationModel?.getData("jiraProjectKey")}
+            />
+          </Col>
+        }        
         <Col lg={12}>
           <SalesforceToGitMergeSyncTaskRepositorySelectInput
             model={gitConfigurationModel}
             setModel={setModelFunction}
           />
         </Col>
-        <Col lg={12}>
-          <SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput
-            model={gitConfigurationModel}
-            setModel={setModelFunction}
-          />
-        </Col>
-        {getDestinationBranchInputs()}
+        {getBranchInputs()}
       </Row>
       <ButtonContainerBase>
         <TaskWizardConfirmRepositorySettingsButton

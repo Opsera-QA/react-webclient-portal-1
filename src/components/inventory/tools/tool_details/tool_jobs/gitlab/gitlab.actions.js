@@ -52,3 +52,18 @@ gitlabActions.getReviewers = async (getAccessToken, cancelTokenSource, toolId, r
 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
 };
+
+gitlabActions.getBranch = async (
+  getAccessToken,
+  cancelTokenSource,
+  toolId,
+  repositoryId,
+  branchName,
+) => {
+  const apiUrl = `/tools/${toolId}/gitlab/branch`;
+  const queryParameters = {    
+    repositoryId: repositoryId,
+    branchName: branchName,
+  };
+  return await baseActions.apiGetCallV3( getAccessToken, cancelTokenSource, apiUrl, queryParameters);
+};
