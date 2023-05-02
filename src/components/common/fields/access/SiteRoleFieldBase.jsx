@@ -14,7 +14,6 @@ export default function SiteRoleFieldBase(
   {
     showDescription,
     showExternalHelpDocumentationLink,
-    accessRoleData,
     userData,
     className,
   }) {
@@ -22,7 +21,7 @@ export default function SiteRoleFieldBase(
     if (showDescription === true) {
       return (
         <div className={"mt-1 green"}>
-          {getAccessRolePermissionMessageWithoutRole(accessRoleData)}
+          {getAccessRolePermissionMessageWithoutRole(SiteRoleHelper.getAccessRoles(userData))}
         </div>
       // <SuccessMessageFieldBase
       //   className={"mt-1"}
@@ -44,7 +43,7 @@ export default function SiteRoleFieldBase(
     }
   };
 
-  if (accessRoleData == null) {
+  if (userData == null) {
     return null;
   }
 
@@ -66,6 +65,5 @@ SiteRoleFieldBase.propTypes = {
   className: PropTypes.string,
   showDescription: PropTypes.bool,
   showExternalHelpDocumentationLink: PropTypes.bool,
-  accessRoleData: PropTypes.object,
   userData: PropTypes.object,
 };

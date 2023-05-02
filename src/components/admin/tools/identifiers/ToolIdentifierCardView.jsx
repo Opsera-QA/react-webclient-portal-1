@@ -5,8 +5,9 @@ import VanitySetCardView from "components/common/card/VanitySetCardView";
 import ToolIdentifierCard from "components/admin/tools/identifiers/ToolIdentifierCard";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
 import {useHistory} from "react-router-dom";
+import toolIdentifierMetadata from "components/admin/tools/identifiers/toolIdentifier.metadata";
 
-function ToolIdentifierCardView({ toolIdentifiers, toolIdentifierFilterModel, loadData, isLoading, toolIdentifierMetadata }) {
+function ToolIdentifierCardView({ toolIdentifiers, toolIdentifierFilterModel, loadData, isLoading, }) {
   const history = useHistory();
 
   const getToolIdentifierCard = (toolIdentifier) => {
@@ -37,7 +38,6 @@ function ToolIdentifierCardView({ toolIdentifiers, toolIdentifierFilterModel, lo
 ToolIdentifierCardView.propTypes = {
   toolIdentifiers: PropTypes.array,
   toolIdentifierFilterModel: PropTypes.object,
-  toolIdentifierMetadata: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool
 };

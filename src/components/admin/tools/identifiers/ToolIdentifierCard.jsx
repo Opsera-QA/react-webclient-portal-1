@@ -10,6 +10,7 @@ import SelectionIconCard from "components/common/card_containers/SelectionIconCa
 import ToolCardHeader from "temp-library-components/cards/tools/ToolCardHeader";
 import ToolCardBody from "temp-library-components/cards/tools/ToolCardBody";
 import ToolCardFooter from "temp-library-components/cards/tools/ToolCardFooter";
+import ToolIdentifierCardBody from "components/admin/tools/identifiers/ToolIdentifierCardBody";
 
 function ToolIdentifierCard(
   {
@@ -50,7 +51,7 @@ function ToolIdentifierCard(
       className={"h-100"}
       cardHeader={<ToolCardHeader toolModel={toolIdentifierModel} />}
       titleBar={getTitleBar()}
-      contentBody={<ToolCardBody toolModel={toolIdentifierModel} />}
+      contentBody={<ToolIdentifierCardBody toolIdentifierModel={toolIdentifierModel} />}
       onClickFunction={onClickFunction}
       tooltip={tooltip}
       cardFooter={<ToolCardFooter />}
