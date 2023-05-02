@@ -33,6 +33,7 @@ import {ProgressBarBase} from "@opsera/react-vanity-set";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 import PipelineOrchestrationSummaryField
   from "temp-library-components/fields/orchestration/pipeline/PipelineOrchestrationSummaryField";
+import PipelineModel from "components/workflow/pipeline.model";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -52,7 +53,7 @@ function PipelineSummaryPanel(
   const [editDescription, setEditDescription] = useState(false);
   const [editTags, setEditTags] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
-  const [pipelineModel, setPipelineModel] = useState(new Model(pipeline, pipelineMetadata, false));
+  const [pipelineModel, setPipelineModel] = useState(new PipelineModel(pipeline, pipelineMetadata, false));
   const {
     userData,
     cancelTokenSource,
