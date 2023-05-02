@@ -2,16 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
 
-function SfdcWizardUnitTestSelectionViewHelpDocumentation({closeHelpPanel}) {
+function SfdcWizardUnitTestSelectionViewHelpDocumentation({closeHelpPanel, componentType}) {
   return (
     <HelpDocumentationContainer
-      helpTopic={"SalesForce Pipeline Run: Unit Test Selection View"}
+      helpTopic={`SalesForce ${componentType} Run: Unit Test Selection View`}
       closeHelpPanel={closeHelpPanel}
       confluenceLink={`https://docs.opsera.io/salesforce/salesforce-wizard-run`}
     >
       <div>During the unit testing process, the testing classes must be specified per step. Please select each step
         below and then apply the required testing classes before proceeding. Please note, without this step, the
-        pipeline cannot complete successfully.
+        {componentType.toLowerCase()} cannot complete successfully.
       </div>
       <div>Enable the toggle to Manually Enter Test Classes. Write the values in the given field separated by a comma
         and select Save Test Classes to apply.
@@ -37,7 +37,8 @@ function SfdcWizardUnitTestSelectionViewHelpDocumentation({closeHelpPanel}) {
 }
 
 SfdcWizardUnitTestSelectionViewHelpDocumentation.propTypes = {
-  closeHelpPanel: PropTypes.func
+  closeHelpPanel: PropTypes.func,
+  componentType: PropTypes.string,
 };
 
 export default React.memo(SfdcWizardUnitTestSelectionViewHelpDocumentation);

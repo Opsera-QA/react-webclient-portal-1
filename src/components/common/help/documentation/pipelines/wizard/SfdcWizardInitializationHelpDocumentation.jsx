@@ -2,14 +2,14 @@ import React from "react";
 import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
 import PropTypes from "prop-types";
 
-function SfdcWizardInitializationHelpDocumentation({closeHelpPanel}) {
+function SfdcWizardInitializationHelpDocumentation({closeHelpPanel, componentType}) {
   return (
     <HelpDocumentationContainer
-      helpTopic={"SalesForce Pipeline Run: Initialization"}
+      helpTopic={`SalesForce ${componentType} Run: Initialization`}
       closeHelpPanel={closeHelpPanel}
       confluenceLink={`https://docs.opsera.io/salesforce/salesforce-wizard-run`}
     >
-      <b>Manual Pipeline Wizard Run</b>
+      <b>Manual {componentType} Wizard Run</b>
       <ul>
         <li>To continue with any parameters selected within the past 24 hours, select <b>Continue Where The Last Instance Left Off</b>.</li>
         <li>To start a new instance without any previously selected parameters, select <b>Start A New Instance</b></li>
@@ -34,7 +34,8 @@ function SfdcWizardInitializationHelpDocumentation({closeHelpPanel}) {
 }
 
 SfdcWizardInitializationHelpDocumentation.propTypes = {
-  closeHelpPanel: PropTypes.func
+  closeHelpPanel: PropTypes.func,
+  componentType: PropTypes.string,
 };
 
 export default React.memo(SfdcWizardInitializationHelpDocumentation);

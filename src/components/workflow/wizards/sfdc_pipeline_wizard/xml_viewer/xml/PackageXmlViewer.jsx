@@ -6,6 +6,8 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import SalesforcePackageVersionSelectionInput from "./SalesforcePackageVersionSelectionInput";
 
 const PackageXmlViewer = ({isSaving, isLoading, pipelineWizardModel, setPipelineWizardModel}) => {
+  const getPipelineOrTaskText = () => pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline';
+
   const getFormattedPackageXml = () => {
     const xml = pipelineWizardModel?.getData("xml");
 
@@ -49,7 +51,7 @@ const PackageXmlViewer = ({isSaving, isLoading, pipelineWizardModel, setPipeline
 
   return (
     <div className="flex-container-content mt-4">
-      <div className="h5">Salesforce Pipeline Run: XML Viewer</div>
+      <div className="h5">Salesforce {getPipelineOrTaskText()} Run: XML Viewer</div>
       <div className="text-muted mb-2">Please confirm that you want to proceed with this operation.</div>
       {pipelineWizardModel.getData("fromGitTasks") === false &&
         <BooleanToggleInput
