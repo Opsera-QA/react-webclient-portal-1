@@ -1414,10 +1414,6 @@ div.data-blocks-ellipses {
     color: #3D3B36;
 }
 
-.content-block-header {
-    overflow-x: hidden;
-}
-
 .filter-container .title-text-header {
     font-size: 1rem;
 }
@@ -1711,10 +1707,6 @@ div.data-blocks-ellipses {
 
 .info-overlay {
     z-index: 5000;
-}
-
-.overlay-wrapper {
-
 }
 
 .overlay-panel {
