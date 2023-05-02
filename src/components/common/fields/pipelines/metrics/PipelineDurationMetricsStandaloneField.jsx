@@ -11,6 +11,7 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import {numberHelpers} from "components/common/helpers/number/number.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import DateHelper from "@opsera/persephone/helpers/date/date.helper";
 
 function PipelineDurationMetricsStandaloneField({ pipelineId, pipelineRunCount, className }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -67,8 +68,12 @@ function PipelineDurationMetricsStandaloneField({ pipelineId, pipelineRunCount, 
 
   const loadPipelineDurationMetrics = async (cancelSource = cancelTokenSource) => {
     const response = await pipelineActivityLogsActions.getPipelineDurationMetricsV2(getAccessToken, cancelSource, pipelineId);
-    setLastRunDurationText(DataParsingHelper.parseNestedString(response, "data.humanizedLastRunDuration", ""));
-    setLastFiveRunsDurationText(DataParsingHelper.parseNestedString(response, "data.humanizedLastFiveRunsAverageDuration", ""));
+    const lastRunDurationMs = DataParsingHelper.parseNestedInteger(response, "data.data.lastRunDurationInMs");
+    const lastFiveRunsDurationAverageInMs = DataParsingHelper.parseNestedInteger(response, "data.data.lastFiveRunsDurationAverageInMs");
+    // const totalAverageInMs = DataParsingHelper.parseNestedInteger(response, "data.data.totalAverageInMs");
+
+    setLastRunDurationText(DataParsingHelper.parseString(DateHelper.humanizeDurationForMilliseconds(lastRunDurationMs), ""));
+    setLastFiveRunsDurationText(DataParsingHelper.parseString(DateHelper.humanizeDurationForMilliseconds(lastFiveRunsDurationAverageInMs), ""));
   };
 
   const getLastRunDurationText = () => {
