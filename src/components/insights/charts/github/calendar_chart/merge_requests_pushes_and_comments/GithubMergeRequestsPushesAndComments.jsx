@@ -9,6 +9,9 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, gradationalColors } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
+import GithubCommitsActionableInsightOverlay
+  from "../../pie_chart/commits_statistics/actionable_insights/GithubCommitsActionableInsightOverlay";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 function GithubMergeRequestsPushesAndComments({
   kpiConfiguration,
   setKpiConfiguration,
@@ -23,6 +26,7 @@ function GithubMergeRequestsPushesAndComments({
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -82,6 +86,17 @@ function GithubMergeRequestsPushesAndComments({
     }
   };
 
+  const onRowSelect = (node) => {
+    toastContext.showOverlayPanel(
+        <GithubCommitsActionableInsightOverlay
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+            startDate={node?.startDate}
+            endDate={node?.endDate}
+        />,
+    );
+  };
+
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
@@ -93,7 +108,7 @@ function GithubMergeRequestsPushesAndComments({
           data={metrics}
           {...defaultConfig("", "", false, false, "", "", true)}
           {...config(gradationalColors, new Date())}
-          onClick={() => setShowModal(true)}
+          onClick={(node) => onRowSelect(node)}
           tooltip={({ day, value, color }) => (
             <ChartTooltip
               titles={[day]}
