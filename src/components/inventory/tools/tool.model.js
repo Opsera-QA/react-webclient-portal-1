@@ -74,7 +74,7 @@ export default class ToolModel extends ModelBase {
     );
     // toastContext.showDeleteSuccessResultDialog("Tool");
     // setShowDeleteModal(false);
-    history.push("/inventory/tools");
+    this.history.push("/inventory/tools");
   };
 
   canRotateToken = () => {
@@ -216,10 +216,15 @@ export default class ToolModel extends ModelBase {
   };
 
   clone = () => {
-    return new ToolModel(DataParsingHelper.cloneDeep(
+    const newModel =  new ToolModel(DataParsingHelper.cloneDeep(
         { ...this.data }),
       this.isNew(),
     );
+    newModel.getAccessToken = this.getAccessToken;
+    newModel.cancelTokenSource = this.cancelTokenSource;
+    newModel.userData = this.userData;
+    newModel.history = this.history;
+    return newModel;
   };
 }
 

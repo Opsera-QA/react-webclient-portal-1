@@ -66,8 +66,7 @@ function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString 
         </Col>
         <Col lg={12}>
           <SiteRoleFieldBase
-            userData={userData}
-            accessRoleData={SiteRoleHelper.getAccessRoles(userData?.getOriginalData())}
+            userData={userData?.getCurrentData()}
           />
         </Col>
         <Col lg={12}>
