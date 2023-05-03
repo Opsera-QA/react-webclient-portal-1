@@ -2,7 +2,7 @@ import {
     faArrowCircleDown,
     faArrowCircleUp,
     faMinusCircle,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/pro-solid-svg-icons";
 
 export const ISSUE_TYPE = Object.freeze({
     CRITICAL: 'Critical',

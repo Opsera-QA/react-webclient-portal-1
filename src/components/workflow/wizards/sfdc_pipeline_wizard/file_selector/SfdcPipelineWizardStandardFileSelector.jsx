@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef, useContext} from "react";
 import PropTypes from "prop-types";
-import {faCode,} from "@fortawesome/free-solid-svg-icons";
+import {faCode,} from "@fortawesome/pro-solid-svg-icons";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";

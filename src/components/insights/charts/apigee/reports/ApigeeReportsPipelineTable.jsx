@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext, useRef, useMemo} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import axios from "axios";
-import {faCircleInfo} from "@fortawesome/free-solid-svg-icons";
+import {faCircleInfo} from "@fortawesome/pro-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import { apigeeReportsMetadata } from "./apigeeReports-metadata";
 import FilterContainer from "../../../../common/table/FilterContainer";

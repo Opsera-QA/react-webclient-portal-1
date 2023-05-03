@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {Row, Col, Button, Modal } from "react-bootstrap";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {cannotBeUndone} from "../tooltip/popover-text";
-import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import {faSpinner} from "@fortawesome/pro-solid-svg-icons";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
 // TODO: Remove after updating all references to use DestructiveDeleteConfirmationOverlay

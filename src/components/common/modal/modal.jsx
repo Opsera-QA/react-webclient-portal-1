@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCheck } from "@fortawesome/pro-solid-svg-icons";
 import ReactJson from "react-json-view";
 import IconBase from "components/common/icons/IconBase";
 

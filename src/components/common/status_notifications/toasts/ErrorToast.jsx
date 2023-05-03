@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {faTimes} from "@fortawesome/free-solid-svg-icons";
+import {faTimes} from "@fortawesome/pro-solid-svg-icons";
 import {parseError} from "../../helpers/error-helpers";
 import IconBase from "components/common/icons/IconBase";
 import {hasStringValue} from "components/common/helpers/string-helpers";

@@ -13,7 +13,7 @@ import { getTimeDisplay } from "../github_actions-utility";
 import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import LeadTimeAndReleaseDurationActionableInsightOverlay from "../actionable_insights/LeadTimeAndReleaseDurationActionableInsightOverlay";
-import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
+import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/pro-solid-svg-icons";
 
 function LeadTimeAndReleaseTraceabilityDataBlock({
   kpiConfiguration,

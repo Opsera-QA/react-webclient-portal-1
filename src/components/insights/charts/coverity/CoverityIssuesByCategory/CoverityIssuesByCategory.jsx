@@ -10,7 +10,7 @@ import {
   faArrowCircleDown,
   faArrowCircleUp,
   faMinusCircle,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/pro-solid-svg-icons";
 import Model from "../../../../../core/data_model/model";
 import CoverityIssuesByCategoryActionableMetadata from "./actionable_insights/coverity-actionable-insight-metadata";
 // import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";

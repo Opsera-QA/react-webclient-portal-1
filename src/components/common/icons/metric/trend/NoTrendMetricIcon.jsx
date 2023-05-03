@@ -1,6 +1,6 @@
 import React from "react";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
+import { faMinusCircle } from "@fortawesome/pro-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
 function NoTrendMetricIcon() {

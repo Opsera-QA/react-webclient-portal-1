@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {Button, Form, InputGroup} from "react-bootstrap";
-import {faPlus, faTimes} from "@fortawesome/free-solid-svg-icons";
+import {faPlus, faTimes} from "@fortawesome/pro-solid-svg-icons";
 import NewOnboardLdapUserModal from "./NewOnboardLdapUserModal";
 import IconBase from "components/common/icons/IconBase";
 

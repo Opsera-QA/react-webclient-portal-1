@@ -5,7 +5,7 @@ import DataBlockBoxContainer from "../../../../common/metrics/data_blocks/DataBl
 import PropTypes from "prop-types";
 import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import ThreeLinePercentageBlockBase from "../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
-import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
+import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/pro-solid-svg-icons";
 import ThreeLineScoreDataBlock from "../../../../common/metrics/score/ThreeLineScoreDataBlock";
 import LoadingDialog from "../../../../common/status_notifications/loading";
 

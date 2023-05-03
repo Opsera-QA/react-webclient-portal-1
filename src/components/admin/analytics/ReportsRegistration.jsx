@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { Row, Col } from "react-bootstrap";
-import { faCogs, faUserCog } from "@fortawesome/free-solid-svg-icons";
+import { faCogs, faUserCog } from "@fortawesome/pro-solid-svg-icons";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";

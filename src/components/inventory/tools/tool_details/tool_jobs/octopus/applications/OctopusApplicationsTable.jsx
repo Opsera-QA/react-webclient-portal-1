@@ -1,7 +1,7 @@
 import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/pro-solid-svg-icons";
 import { Dropdown } from "react-bootstrap";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";

@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext, useRef, useMemo} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import axios from "axios";
-import { faDiagramSuccessor, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { faDiagramSuccessor, faCircleInfo } from "@fortawesome/pro-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import connectedAssetsActions from "../../connectedAssets.actions";
 import connectedAssetsMetadata from "../../connectedAssets-metadata";
