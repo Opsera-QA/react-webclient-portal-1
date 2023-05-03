@@ -6,22 +6,14 @@ import PropTypes from "prop-types";
 import nunitStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/nunit-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import NUnitStepJenkinsToolSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/inputs/NUnitStepJenkinsToolSelectInput";
-import NUnitStepJenkinsJobSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/inputs/NUnitStepJenkinsJobSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import NUnitJenkinsAccountInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/inputs/NUnitJenkinsAccountInput";
-import NUnitGitRepositoryInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/inputs/NUnitGitRepositoryInput";
-import NUnitGitBranchInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/inputs/NUnitGitBranchInput";
-import NUnitBitbucketWorkspaceInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/inputs/NUnitBitbucketWorkspaceInput";
-import AgentLabelsSelectInput
-  from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
-import WorkspaceDeleteToggleInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nunit/inputs/WorkspaceDeleteToggleInput";
+import StepConfigJenkinsToolInput from "../common/inputs/StepConfigJenkinsToolInput";
+import StepConfigJenkinsJobInput from "../common/inputs/StepConfigJenkinsJobInput";
+import StepConfigJenkinsAccountInput from "../common/inputs/StepConfigJenkinsAccountInput";
+import StepConfigBitbucketWorkspaceInput from "../common/inputs/StepConfigBitbucketWorkspaceInput";
+import StepConfigGitRepositoryInput from "../common/inputs/StepConfigGitRepositoryInput";
+import StepConfigGitBranchInput from "../common/inputs/StepConfigGitBranchInput";
+import StepConfigWorkspaceDeleteToggleInput from "../common/inputs/StepConfigWorkspaceDeleteToggleInput";
 
 function NUnitStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -90,29 +82,17 @@ function NUnitStepConfiguration({ pipelineId, stepTool, stepId, createJob, close
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
-      <NUnitStepJenkinsToolSelectInput
-        model={nunitStepConfigurationDto}
-        setModel={setNUnitStepConfigurationDataDto}
-      />
-      <NUnitStepJenkinsJobSelectInput
-        model={nunitStepConfigurationDto}
-        setModel={setNUnitStepConfigurationDataDto}
-      />
-      <NUnitJenkinsAccountInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} />
-      <NUnitBitbucketWorkspaceInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} />
-      <NUnitGitRepositoryInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} />
-      <NUnitGitBranchInput  dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} />
-      <WorkspaceDeleteToggleInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} fieldName={"workspaceDeleteFlag"}/>
-      {/* <AgentLabelsSelectInput
-        dataObject={nunitStepConfigurationDto}
-        fieldName={"agentLabels"}
-        setDataObject={setNUnitStepConfigurationDataDto}
-      /> */}
+      <StepConfigJenkinsToolInput model={nunitStepConfigurationDto} setModel={setNUnitStepConfigurationDataDto} />
+      <StepConfigJenkinsJobInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} typeFilter={""} />
+      <StepConfigJenkinsAccountInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} />
+      <StepConfigBitbucketWorkspaceInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} />
+      <StepConfigGitRepositoryInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} />
+      <StepConfigGitBranchInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} />
+      <StepConfigWorkspaceDeleteToggleInput dataObject={nunitStepConfigurationDto} setDataObject={setNUnitStepConfigurationDataDto} fieldName={"workspaceDeleteFlag"} />
       <TextInputBase setDataObject={setNUnitStepConfigurationDataDto} dataObject={nunitStepConfigurationDto} fieldName={"solutionFilePath"} />
       <TextInputBase setDataObject={setNUnitStepConfigurationDataDto} dataObject={nunitStepConfigurationDto} fieldName={"solutionFileName"} />
       <TextInputBase setDataObject={setNUnitStepConfigurationDataDto} dataObject={nunitStepConfigurationDto} fieldName={"dllFilePath"} />
       <TextInputBase setDataObject={setNUnitStepConfigurationDataDto} dataObject={nunitStepConfigurationDto} fieldName={"dllFileName"} />
-
     </PipelineStepEditorPanelContainer>
   );
 }
