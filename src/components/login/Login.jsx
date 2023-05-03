@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import LoginForm from "./LoginForm";
 import { useOktaAuth } from "@okta/okta-react";
 
-const Login = ({ issuer, authClient }) => {
+const Login = () => {
   const { authState } = useOktaAuth();
   const history = useHistory();
 
@@ -15,8 +15,7 @@ const Login = ({ issuer, authClient }) => {
     }
   }, [authState.isAuthenticated]);
 
-  return <LoginForm issuer={issuer} authClient={authClient}/>;
-
+  return <LoginForm />;
 };
 
 Login.propTypes = {

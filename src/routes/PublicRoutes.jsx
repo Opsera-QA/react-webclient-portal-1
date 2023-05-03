@@ -13,14 +13,10 @@ import AccountRegistration from "components/user/account_registration/AccountReg
 import AwsAccountRegistration from "components/user/aws_registration/AwsAccountRegistration";
 import Faq from "components/about/faq/Faq";
 import HelpDocumentationScreen from "components/about/help_documentation/HelpDocumentationScreen";
-import PropTypes from "prop-types";
 import FreeTrialRegistration from "components/trial/registration/FreeTrialRegistration";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-export default function PublicRoutes(
-  {
-    authClient,
-  }) {
+export default function PublicRoutes() {
   const {
     isFreeTrial,
   } = useComponentStateReference();
@@ -49,7 +45,7 @@ export default function PublicRoutes(
   return (
     <>
       <Route path="/" exact component={Home} />
-      <Route path="/login" render={() => <LoginForm authClient={authClient} />} />
+      <Route path="/login" render={() => <LoginForm />} />
       <Route path="/implicit/callback" component={LoginCallback} />
       <Route path="/logout" exact component={Logout} />
       <Route path="/faq" exact component={Faq} />
@@ -61,8 +57,3 @@ export default function PublicRoutes(
     </>
   );
 }
-
-PublicRoutes.propTypes = {
-  authClient: PropTypes.object,
-};
-

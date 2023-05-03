@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
 import { SecureRoute } from "@okta/okta-react";
 import AdminTools from "components/admin/AdminTools";
 import RegisteredUsersManagement from "components/admin/registered_users/RegisteredUsersManagement";
@@ -135,12 +134,5 @@ export default function AdminToolsRoutes() {
   );
 }
 
-AdminToolsRoutes.propTypes = {
-  authenticatedState: PropTypes.bool,
-  isPublicPathState: PropTypes.bool,
-  authClient: PropTypes.object,
-  OKTA_CONFIG: PropTypes.object,
-  userData: PropTypes.object,
-  hideSideBar: PropTypes.bool,
-};
+AdminToolsRoutes.propTypes = {};
 

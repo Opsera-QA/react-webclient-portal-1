@@ -6,8 +6,6 @@ import {
   faSave, faTag,
   faTimes,
 } from "@fortawesome/pro-light-svg-icons";
-import Model from "core/data_model/model";
-import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import { AuthContext } from "contexts/AuthContext";
 import InformationDialog from "components/common/status_notifications/info";
 import EditTagModal from "components/workflow/EditTagModal";
@@ -25,12 +23,13 @@ import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import OwnerNameField from "components/common/fields/text/general/OwnerNameField";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import InlinePipelineTypeSelectInput from "components/workflow/pipelines/summary/inputs/type/InlinePipelineTypeSelectInput";
 import {Divider} from "temp-library-components/divider/Divider";
-import {ProgressBarBase} from "@opsera/react-vanity-set";
-import {pipelineHelper} from "components/workflow/pipeline.helper";
+import PipelineOrchestrationSummaryField
+  from "temp-library-components/fields/orchestration/pipeline/PipelineOrchestrationSummaryField";
+import PipelineOrchestrationProgressBarBase
+  from "temp-library-components/fields/orchestration/progress/PipelineOrchestrationProgressBarBase";
+import PipelineModel from "components/workflow/pipeline.model";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -50,14 +49,18 @@ function PipelineSummaryPanel(
   const [editDescription, setEditDescription] = useState(false);
   const [editTags, setEditTags] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
-  const [pipelineModel, setPipelineModel] = useState(new Model(pipeline, pipelineMetadata, false));
+  const [pipelineModel, setPipelineModel] = useState(new PipelineModel(pipeline, false));
   const {
     userData,
     cancelTokenSource,
     toastContext,
   } = useComponentStateReference();
 
-  useEffect(() => {}, [pipeline, parentWorkflowStatus]);
+  useEffect(() => {
+    // if (pipeline) {
+    //   setPipelineModel({...new PipelineModel(pipeline, false)});
+    // }
+  }, [pipeline]);
 
   const handleSavePropertyClick = async (pipelineId, value, type) => {
     if (Object.keys(value).length > 0 && type.length > 0) {
@@ -81,7 +84,7 @@ function PipelineSummaryPanel(
           break;
       }
 
-      setPipelineModel(new Model({ ...pipeline }, pipelineMetadata, false));
+      setPipelineModel({...new PipelineModel(pipeline, false)});
 
       if (Object.keys(postBody).length > 0) {
         try {
@@ -230,76 +233,6 @@ function PipelineSummaryPanel(
     );
   };
 
-  const getPipelineSummaryField = () => {
-    const completed = DataParsingHelper.parseNestedDate(pipeline, "workflow.last_run.completed");
-
-    if (completed) {
-      const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_run.status");
-
-      return (
-        <Col sm={12} className="py-2">
-          <span className="text-muted mr-1">Summary:</span>
-          Last complete run of pipeline finished on {
-          DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(completed))} with a status
-          of {status}.
-        </Col>
-      );
-    }
-  };
-
-  const getProgressBar = () => {
-    const completionPercentage = pipelineHelper.getPipelineCompletionPercentage(pipeline);
-
-    if (parentWorkflowStatus === "running") {
-      return (
-        <Col sm={12}>
-          <ProgressBarBase
-            className={"mx-3"}
-            completionPercentage={completionPercentage}
-            isInProgress={true}
-          />
-        </Col>
-      );
-    }
-
-    if (parentWorkflowStatus === "paused") {
-      return (
-        <Col sm={12}>
-          <ProgressBarBase
-            className={"mx-3"}
-            completionPercentage={completionPercentage}
-            variant={"warning"}
-            label={"Awaiting User Response"}
-          />
-        </Col>
-      );
-    }
-
-    if (parentWorkflowStatus === "failed") {
-      return (
-        <Col sm={12}>
-          <ProgressBarBase
-            className={"mx-3"}
-            completionPercentage={100}
-            variant={"danger"}
-          />
-        </Col>
-      );
-    }
-
-    if (parentWorkflowStatus === "success") {
-      return (
-        <Col sm={12}>
-          <ProgressBarBase
-            className={"mx-3"}
-            completionPercentage={100}
-            variant={"success"}
-          />
-        </Col>
-      );
-    }
-  };
-
   if (pipeline == null || typeof pipeline !== "object" || Object.keys(pipeline).length === 0) {
     return (
       <InformationDialog
@@ -369,15 +302,23 @@ function PipelineSummaryPanel(
           {getTagField()}
 
           {getDescriptionField()}
-          {getPipelineSummaryField()}
-
           <Col sm={12}>
-            <PipelineDurationMetricsStandaloneField
-              pipelineId={pipeline?._id}
-              pipelineRunCount={pipeline?.workflow?.run_count}
+            <PipelineOrchestrationSummaryField
+              pipelineModel={pipelineModel}
             />
           </Col>
-          {/*{getProgressBar()}*/}
+          <Col sm={12}>
+            <PipelineDurationMetricsStandaloneField
+              pipelineId={pipelineModel?.getMongoDbId()}
+              pipelineRunCount={pipelineModel?.getRunCount()}
+            />
+          </Col>
+          {/*<Col sm={12}>*/}
+          {/*  <PipelineOrchestrationProgressBarBase*/}
+          {/*    pipelineModel={pipelineModel}*/}
+          {/*    className={"mx-3"}*/}
+          {/*  />*/}
+          {/*</Col>*/}
         </Row>
       </div>
     </>

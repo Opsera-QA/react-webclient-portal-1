@@ -35,5 +35,10 @@ export default function useTaskActions() {
     return await apiService.handleApiGetRequest(apiUrl);
   };
 
+  taskActions.getTaskRunDurationMetrics = async (taskId) => {
+    const apiUrl = `/tasks/${taskId}/metrics/run-duration`;
+    return await apiService.handleApiGetRequest(apiUrl);
+  };
+
   return taskActions;
 }
