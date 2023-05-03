@@ -4,7 +4,7 @@ export const mergeSyncTaskSalesforceConfigurationMetadata = {
   type: "Merge Sync Task Salesforce Configuration",
   fields: [
     {
-      label: "Salesforce Org",
+      label: "Salesforce Configurator Tool",
       id: "sourceToolId",
       isRequiredFunction: (model) => {
         return model?.getData("jobType") === TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC;
@@ -31,6 +31,18 @@ export const mergeSyncTaskSalesforceConfigurationMetadata = {
         return model?.getData("includePackageXml") === true;
       },
     },
+    {
+      label: "Jira Tool",
+      id: "jiraToolId",
+    },
+    {
+      label: "Jira Project",
+      id: "jiraProjectKey",
+    },
+    {
+      label: "Jira Ticket",
+      id: "jiraIssueId",
+    },
   ],
   newObjectFields: {
     sourceToolId: "",
@@ -38,5 +50,8 @@ export const mergeSyncTaskSalesforceConfigurationMetadata = {
     jobType: "",
     includePackageXml: false,
     packageXmlReferencePath: "",
+    jiraToolId: "",
+    jiraProjectKey: "",
+    jiraIssueId: "",
   }
 };
