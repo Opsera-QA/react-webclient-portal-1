@@ -4,7 +4,7 @@ import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "../../../../common/panels/insights/charts/ChartContainer";
 import PropTypes from "prop-types";
 import ModalLogs from "../../../../common/modal/modalLogs";
-import { faDiagramSuccessor } from "@fortawesome/free-solid-svg-icons";
+import { faDiagramSuccessor } from "@fortawesome/pro-solid-svg-icons";
 import apigeeActions from "../apigee.action";
 import LoadingIcon from "../../../../common/icons/LoadingIcon";
 import {parseError} from "../../../../common/helpers/error-helpers";

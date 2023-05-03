@@ -8,7 +8,7 @@ import SuccessDialog from "../common/status_notifications/SuccessDialog";
 import InfoDialog from "../common/status_notifications/info";
 import { isAlphaNumeric, handleError } from "utils/helpers";
 import { ApiService } from "../../api/apiService";
-import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
+import { faClipboardList } from "@fortawesome/pro-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
 class Pipeline extends React.PureComponent {

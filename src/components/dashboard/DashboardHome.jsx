@@ -11,7 +11,7 @@ import PlanningDashboard from "../../components/dashboard/v2/Planning";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
-import { faCalendar } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar } from "@fortawesome/pro-solid-svg-icons";
 import LoadingView from "../common/status_notifications/loading";
 import AnalyticsProfileSettings from "../settings/analytics/activateAnalyticsCard";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";

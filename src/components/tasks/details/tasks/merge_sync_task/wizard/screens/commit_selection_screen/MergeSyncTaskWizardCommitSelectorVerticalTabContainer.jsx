@@ -13,7 +13,7 @@ import {
   MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
 } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import {faPlus, faMinus, faEdit} from "@fortawesome/free-solid-svg-icons";
+import {faPlus, faMinus, faEdit} from "@fortawesome/pro-solid-svg-icons";
 import IconBase from "../../../../../../../common/icons/IconBase";
 import ToggleThemeIconButton from "components/common/buttons/toggle/ToggleThemeIconButton";
 import ToggleDiffViewIconButton from "components/common/buttons/toggle/ToggleDiffViewIconButton";

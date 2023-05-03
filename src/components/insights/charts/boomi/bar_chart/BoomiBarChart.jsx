@@ -9,7 +9,7 @@ import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
 import { BOOMI_CONSTANTS as dataPointConstants } from "./Boomi_datapoint_identifiers";
-import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
+import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/pro-solid-svg-icons";
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers.js";
 import DataPointVisibilityWrapper from "components/common/metrics/data_points/DataPointVisibilityWrapper.jsx";
 import ChartTooltip from "../../ChartTooltip.jsx";

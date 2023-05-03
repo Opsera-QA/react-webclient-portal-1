@@ -1,5 +1,5 @@
 import {Popover} from "react-bootstrap";
-import {faTimes} from "@fortawesome/free-solid-svg-icons";
+import {faTimes} from "@fortawesome/pro-solid-svg-icons";
 import {Link} from "react-router-dom";
 import React from "react";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";

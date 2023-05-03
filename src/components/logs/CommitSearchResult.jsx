@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Table } from "react-bootstrap";
 import ModalLogs from "components/common/modal/modalLogs";
-import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus } from "@fortawesome/pro-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 

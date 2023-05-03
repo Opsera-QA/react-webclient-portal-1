@@ -10,7 +10,7 @@ import { faSave,
   faExclamationTriangle,
   faTimes,
   faEllipsisH,
-  faTools } from "@fortawesome/free-solid-svg-icons";
+  faTools } from "@fortawesome/pro-solid-svg-icons";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";

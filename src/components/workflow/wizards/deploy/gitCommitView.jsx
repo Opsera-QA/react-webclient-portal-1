@@ -5,7 +5,7 @@ import { Button, Form } from "react-bootstrap";
 import {
   faPlay,
   faArrowLeft,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/pro-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
