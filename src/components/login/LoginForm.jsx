@@ -8,6 +8,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import userActions from "../user/user-actions";
 import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
+import "@okta/okta-signin-widget/dist/css/okta-sign-in.min.css";
 import OktaSignIn from '@okta/okta-signin-widget';
 import LoginWelcomeMessage from "components/login/LoginWelcomeMessage";
 import {apiTokenHelper} from "temp-library-components/helpers/api/token/apiToken.helper";
