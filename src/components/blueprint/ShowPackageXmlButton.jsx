@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import PropTypes from "prop-types";
 import {Button, OverlayTrigger, Tooltip} from "react-bootstrap";
-import {faFileCode} from "@fortawesome/free-solid-svg-icons";
+import {faFileCode} from "@fortawesome/pro-solid-svg-icons";
 import ModalXML from "components/blueprint/modalXML";
 import IconBase from "components/common/icons/IconBase";
 

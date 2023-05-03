@@ -9,7 +9,7 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { getTableTextColumn } from "components/common/table/table-column-helpers";
 import bitbucketMostActiveContributorsMetadata from "components/insights/charts/bitbucket/table/bitbucket_most_active_contributors/bitbucket-most-active-contributors-metadata";
 import { getField } from "components/common/metadata/metadata-helpers";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/pro-solid-svg-icons";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import IconBase from "components/common/icons/IconBase";

@@ -6,7 +6,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisH } from "@fortawesome/pro-solid-svg-icons";
 import Model from "../../../../../core/data_model/model";
 import DeploymentFrequencyInsightsTableMetadata
   from "./deployment-frequency-actionable-metadata.js";

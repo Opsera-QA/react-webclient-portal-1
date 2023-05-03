@@ -1,5 +1,5 @@
 import {Button} from "react-bootstrap";
-import {faPlay} from "@fortawesome/free-solid-svg-icons";
+import {faPlay} from "@fortawesome/pro-solid-svg-icons";
 import React from "react";
 import PropTypes from "prop-types";
 import {useHistory} from "react-router-dom";

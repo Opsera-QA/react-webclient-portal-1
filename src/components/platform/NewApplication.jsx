@@ -13,7 +13,7 @@ import { ApiService } from "api/apiService";
 import ErrorDialog from "components/common/status_notifications/error";
 import SuccessDialog from "components/common/status_notifications/SuccessDialog";
 import { handleError, isAlphaNumeric } from "utils/helpers";
-import { faWrench, faClipboardList } from "@fortawesome/free-solid-svg-icons";
+import { faWrench, faClipboardList } from "@fortawesome/pro-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
 class NewApplication extends React.PureComponent {

@@ -10,7 +10,7 @@ import TabPanelContainer from "components/common/panels/general/TabPanelContaine
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import ApprovalGatesApprovalTab from "./tabs/ApprovalGatesApprovalTab";
-import { faDraftingCompass } from "@fortawesome/free-solid-svg-icons";
+import { faDraftingCompass } from "@fortawesome/pro-solid-svg-icons";
 import ApprovalGatesRejectTab from "./tabs/ApprovalGatesRejectTab";
 import { useHistory } from "react-router-dom";
 

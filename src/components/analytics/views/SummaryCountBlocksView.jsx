@@ -8,7 +8,7 @@ Expecting data in this format:
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { OverlayTrigger, Popover } from "react-bootstrap";
-import { faEllipsisH, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisH, faTimes } from "@fortawesome/pro-solid-svg-icons";
 import DataBlock from "components/common/data_boxes/DataBlock";
 import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
 import IconBase from "components/common/icons/IconBase";

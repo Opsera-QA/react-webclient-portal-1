@@ -10,7 +10,7 @@ import {
   faArrowCircleDown,
   faArrowCircleUp,
   faMinusCircle,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/pro-solid-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import TotalComponentsDeployed from "./data_blocks/TotalComponentsDeployed";
 import AvgComponentsDeployedPerExecution from "./data_blocks/AvgComponentsDeployedPerExecution";

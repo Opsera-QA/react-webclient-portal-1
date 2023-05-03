@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
-import { faTimes, faSync } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faSync } from "@fortawesome/pro-solid-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
 import axios from "axios";

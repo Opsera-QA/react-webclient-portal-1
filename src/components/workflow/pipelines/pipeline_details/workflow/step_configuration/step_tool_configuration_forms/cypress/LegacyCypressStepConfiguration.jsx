@@ -13,7 +13,7 @@ import {
   faSpinner,
   faEllipsisH,
   faTools,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/pro-solid-svg-icons";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import {

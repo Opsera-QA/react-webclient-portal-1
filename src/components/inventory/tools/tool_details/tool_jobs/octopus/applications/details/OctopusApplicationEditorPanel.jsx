@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import Loading from "../../../../../../../common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/pro-solid-svg-icons";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import OctopusActions from "../../octopus-actions";
 import DeleteModal from "components/common/modal/DeleteModal";

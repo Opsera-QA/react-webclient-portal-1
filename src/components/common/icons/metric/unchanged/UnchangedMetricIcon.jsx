@@ -1,6 +1,6 @@
 import React from "react";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import { faPauseCircle } from "@fortawesome/free-solid-svg-icons";
+import { faPauseCircle } from "@fortawesome/pro-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
 function UnchangedMetricIcon() {

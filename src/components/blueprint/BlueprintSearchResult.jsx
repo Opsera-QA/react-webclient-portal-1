@@ -7,7 +7,7 @@ import {
   faTimesCircle,
   faCheckCircle,
   faExclamationCircle,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/pro-solid-svg-icons";
 import Tab from "react-bootstrap/Tab";
 import ReactJson from "@microlink/react-json-view";
 import ExportBlueprintLogButton from "components/common/buttons/export/blueprints/ExportBlueprintLogButton";

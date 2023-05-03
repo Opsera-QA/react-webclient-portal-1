@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useRef, useContext} from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faUsers } from "@fortawesome/pro-solid-svg-icons";
 import {AuthContext} from "../../../../../../contexts/AuthContext";
 import Model from "../../../../../../core/data_model/model";
 import LoadingIcon from "../../../../../common/icons/LoadingIcon";
