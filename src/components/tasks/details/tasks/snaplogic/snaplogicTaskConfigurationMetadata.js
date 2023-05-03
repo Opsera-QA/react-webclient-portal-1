@@ -8,13 +8,13 @@ const snaplogicTaskConfigurationMetadata = {
       regexDefinitionName: "mongoId",
     },
     {
-      label: "Select Account",
+      label: "Account",
       id: "gitToolId",
       isRequired: true,
       regexDefinitionName: "mongoId",
     },
     {
-      label: "SCM Service",
+      label: "Source Code Management Type",
       id: "service",
       isRequired: true,
       maxLength: 10,
