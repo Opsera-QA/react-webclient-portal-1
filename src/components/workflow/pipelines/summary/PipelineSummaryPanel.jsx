@@ -6,8 +6,6 @@ import {
   faSave, faTag,
   faTimes,
 } from "@fortawesome/pro-light-svg-icons";
-import Model from "core/data_model/model";
-import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import { AuthContext } from "contexts/AuthContext";
 import InformationDialog from "components/common/status_notifications/info";
 import EditTagModal from "components/workflow/EditTagModal";
@@ -311,8 +309,8 @@ function PipelineSummaryPanel(
           </Col>
           <Col sm={12}>
             <PipelineDurationMetricsStandaloneField
-              pipelineId={pipeline?._id}
-              pipelineRunCount={pipeline?.workflow?.run_count}
+              pipelineId={pipelineModel?.getMongoDbId()}
+              pipelineRunCount={pipelineModel?.getRunCount()}
             />
           </Col>
           {/*<Col sm={12}>*/}

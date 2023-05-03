@@ -151,8 +151,8 @@ export const fieldValidation = (value, model, field) => {
   }
 
   if (
-    field.matchField != null &&
-    value !== "" &&
+    hasStringValue(field.matchField) === true &&
+    hasStringValue(value) === true &&
     hasStringValue(model?.getData(field.matchField)) === true &&
     value !== model?.getData(field.matchField)
   ) {
@@ -161,7 +161,7 @@ export const fieldValidation = (value, model, field) => {
     );
   }
 
-  if (field.regexValidator != null && value !== "" && !matchesRegex(field.regexValidator, value)) {
+  if (field.regexValidator != null && hasStringValue(value) === true && !matchesRegex(field.regexValidator, value)) {
     errorMessages.push("Does not meet field requirements.");
   }
 
