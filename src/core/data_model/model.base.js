@@ -36,7 +36,6 @@ export default class ModelBase {
     this.setStateFunction = setStateFunction;
     this.loadDataFunction = loadDataFunction;
     this.changeMap = new Map();
-    this.initializeObjectProperties({...metaData});
     this.isLoading = false;
     this.updateAllowed = false;
     this.deleteAllowed = false;
@@ -44,31 +43,6 @@ export default class ModelBase {
     this.roleDefinitions = {};
     this.userData = undefined;
   }
-
-  // TODO: This causes numerous problems and should be removed asap
-  initializeObjectProperties = (metaData) => {
-    const fields = metaData?.fields;
-    if (Array.isArray(fields)) {
-      for (const field of fields) {
-        if (field.id === "data") {
-          continue;
-        }
-
-        let id = field.id;
-
-        Object.defineProperty(this, id, {
-          get: () => {
-            return this.getData(id);
-          },
-          set: (newValue) => {
-            if (this.getData(id) !== newValue) {
-              this.setData(id, newValue);
-            }
-          },
-        });
-      }
-    }
-  };
 
   getValidatedData = () => {
     return DataValidationService.validateAndEncodeFields(

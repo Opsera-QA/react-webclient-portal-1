@@ -20,37 +20,7 @@ export class Model {
     this.newModel = newModel;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
     this.changeMap = new Map();
-    this.loadData();
   }
-
-  loadData = () => {
-    if (this.metaData != null && this.data && this.data instanceof Object) {
-      // console.log("This.metadata: " + JSON.stringify(Object.keys(this.metaData.fields)));
-      // this.id = this.metaData.idProperty;
-      for (const field of this.metaData.fields) {
-        if (field.id === "data") {
-          continue;
-        }
-
-        let id = field.id;
-        this.defineProperty(id);
-      }
-    }
-  };
-
-  defineProperty = (id) => {
-    Object.defineProperty(this, id, {
-      get: () => {
-        return this.getData(id);
-      },
-      set: (newValue) => {
-        if (this.getData(id) !== newValue) {
-          this.propertyChange(id, newValue, this.getData(id));
-          this.data[id] = newValue;
-        }
-      },
-    });
-  };
 
   getValidatedData = () => {
     return DataValidationService.validateAndEncodeFields(

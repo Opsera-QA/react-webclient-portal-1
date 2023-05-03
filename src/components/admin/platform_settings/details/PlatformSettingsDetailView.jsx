@@ -4,16 +4,10 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarShowJsonButton from "components/common/actions/buttons/ActionBarShowJsonButton";
-import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import modelHelpers from "components/common/model/modelHelpers";
-import { platformSystemParameterActions } from "components/admin/system_parameters/platformSystemParameter.actions";
-import PlatformSystemParameterManagementSubNavigationBar
-  from "components/admin/system_parameters/PlatformSystemParameterManagementSubNavigationBar";
-import PlatformSystemParameterDetailPanel
-  from "components/admin/system_parameters/details/PlatformSystemParameterDetailPanel";
 import { platformSettingsActions } from "components/admin/platform_settings/platformSettings.actions";
 import { platformSettingsMetadata } from "components/admin/platform_settings/platformSettings.metadata";
 import PlatformSettingsManagementSubNavigationBar
@@ -94,10 +88,10 @@ export default function PlatformSettingsDetailView() {
   };
 
   const deletePlatformSettingsRecord = async () => {
-    return await platformSettingsActions.deletePlatformSystemParameter(
+    return await platformSettingsActions.deletePlatformSettingById(
       getAccessToken,
       cancelTokenSource,
-      platformSettingsModel,
+      platformSettingsModel?.getMongoDbId(),
     );
   };
 

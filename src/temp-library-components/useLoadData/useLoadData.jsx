@@ -19,6 +19,7 @@ export default function useLoadData() {
         apiStateFunctions.setSuccessState();
       }
     } catch (error) {
+      console.error(error);
       if (handleErrorFunction) {
         handleErrorFunction(error);
       }

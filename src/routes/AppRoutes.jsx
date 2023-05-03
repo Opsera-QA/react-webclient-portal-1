@@ -1,11 +1,8 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import { SecureRoute } from "@okta/okta-react";
-import Sidebar from "components/sidebar/Sidebar";
 import Dashboard from "components/dashboard/DashboardHome";
 import ApiConnector from "components/api_connector/ApiConnector";
 import Update from "components/update/Update";
-import OpseraFooter from "components/footer/OpseraFooter";
 import AdminToolsRoutes from "routes/AdminToolsRoutes";
 import ToolchainRoutes from "routes/ToolchainRoutes";
 import PublicRoutes from "routes/PublicRoutes";
@@ -23,51 +20,32 @@ import FreeTrialSettingsRoutes from "routes/FreeTrialSettingsRoutes";
 import FreeTrialAdminToolsRoutes from "routes/FreeTrialAdminToolsRoutes";
 import WorkspaceRoutes from "routes/WorkspaceRoutes";
 
-export default function AppRoutes(
-  {
-    authenticatedState,
-    authClient,
-  }) {
-  useEffect(() => {
-  }, [authenticatedState]);
-
-  // Authenticated routes
+export default function AppRoutes() {
   return (
-    <div className={"w-100 px-3"}>
-      <div className={"d-flex flex-row"}>
-        <Sidebar />
-        <div className={"w-100"}>
-          <PublicRoutes
-            authClient={authClient}
-          />
-          <UserProfileRoutes />
-          <ToolchainRoutes />
-          <PipelinesRoutes />
-          <InsightsRoutes />
-          <RegistryRoutes />
-          <TasksRoutes />
-          <LogsRoutes />
-          <BlueprintsRoutes />
-          <ReportsRoutes />
-          <NotificationsRoutes />
-          <SettingsRoutes />
-          <FreeTrialSettingsRoutes />
-          <AdminToolsRoutes />
-          <FreeTrialAdminToolsRoutes />
-          <WorkspaceRoutes />
+    <>
+      <PublicRoutes/>
+      <UserProfileRoutes/>
+      <ToolchainRoutes/>
+      <PipelinesRoutes/>
+      <InsightsRoutes/>
+      <RegistryRoutes/>
+      <TasksRoutes/>
+      <LogsRoutes/>
+      <BlueprintsRoutes/>
+      <ReportsRoutes/>
+      <NotificationsRoutes/>
+      <SettingsRoutes/>
+      <FreeTrialSettingsRoutes/>
+      <AdminToolsRoutes/>
+      <FreeTrialAdminToolsRoutes/>
+      <WorkspaceRoutes/>
 
-          {/*TODO: These are legacy routes that should probably be removed*/}
-          <SecureRoute path="/dashboard" component={Dashboard} />
-          <SecureRoute path="/tools/:id?" component={ApiConnector} />
-          <SecureRoute path="/update" component={Update} />
-        </div>
-      </div>
-      <OpseraFooter />
-    </div>
+      {/*TODO: These are legacy routes that should probably be removed*/}
+      <SecureRoute path="/dashboard" component={Dashboard}/>
+      <SecureRoute path="/tools/:id?" component={ApiConnector}/>
+      <SecureRoute path="/update" component={Update}/>
+    </>
   );
 }
 
-AppRoutes.propTypes = {
-  authenticatedState: PropTypes.bool,
-  authClient: PropTypes.object,
-};
+AppRoutes.propTypes = {};

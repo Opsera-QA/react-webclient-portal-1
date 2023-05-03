@@ -1,34 +1,49 @@
 import React, {useState, useRef, useEffect} from "react";
-import { Route, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/status_notifications/loading";
-import AppRoutes from "routes/AppRoutes";
 import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
 import { generateUUID } from "components/common/helpers/string-helpers";
-import FreeTrialAppRoutes from "FreeTrialAppRoutes";
-import LoginForm from "components/login/LoginForm";
-import Logout from "components/login/Logout";
-import OpseraFooter from "components/footer/OpseraFooter";
-import useLocationReference from "hooks/useLocationReference";
 import useAxiosCancelToken from "hooks/useAxiosCancelToken";
 import userActions from "components/user/user-actions";
-import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
 //Okta Libraries
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
-import { LoginCallback, Security } from "@okta/okta-react";
+import { Security } from "@okta/okta-react";
+import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useReactLogger from "temp-library-components/hooks/useReactLogger";
+import Routes from "routes/Routes";
 
 const isFreeTrial = false;
+
+const OKTA_CONFIG = {
+  issuer: process.env.REACT_APP_OKTA_ISSUER,
+  client_id: process.env.REACT_APP_OKTA_CLIENT_ID,
+  redirect_uri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
+};
+
+const authClient = new OktaAuth({
+  issuer: OKTA_CONFIG.issuer,
+  clientId: OKTA_CONFIG.client_id,
+  redirectUri: OKTA_CONFIG.redirect_uri,
+  responseMode: "fragment",
+  tokenManager: {
+    autoRenew: true,
+    expireEarlySeconds: 160,
+  },
+});
 
 const AppWithRouterAccess = () => {
   const [loading, setLoading] = useState(false);
   const authStateLoadingUser = useRef(false);
   const [error, setError] = useState(null);
-  const [authenticatedState, setAuthenticatedState] = useState(false);
+  const [expectedEmailAddress, setExpectedEmailAddress] = useState(undefined);
+  const [storedAuthToken, setStoredAuthToken] = useState(undefined);
   const [userData, setUserData] = useState(null);
   const history = useHistory();
-  const { isPublicPathState } = useLocationReference();
   const { cancelTokenSource } = useAxiosCancelToken();
+  const reactLogger = useReactLogger();
 
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
     history.replace(toRelativeUrl(originalUri ? originalUri : "/", window.location.origin));
@@ -41,23 +56,6 @@ const AppWithRouterAccess = () => {
     //   console.log("app with router access return");
     // };
   }, []);
-
-  const OKTA_CONFIG = {
-    issuer: process.env.REACT_APP_OKTA_ISSUER,
-    client_id: process.env.REACT_APP_OKTA_CLIENT_ID,
-    redirect_uri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
-  };
-
-  const authClient = new OktaAuth({
-    issuer: OKTA_CONFIG.issuer,
-    clientId: OKTA_CONFIG.client_id,
-    redirectUri: OKTA_CONFIG.redirect_uri,
-    responseMode: "fragment",
-    tokenManager: {
-      autoRenew: true,
-      expireEarlySeconds: 160,
-    },
-  });
 
   authClient.start();
 
@@ -82,17 +80,19 @@ const AppWithRouterAccess = () => {
 
 
   authClient?.authStateManager?.subscribe(async authState => {
-    //console.info("Auth State manager subscription event: ", authState);
-    setAuthenticatedState(authState.isAuthenticated);
-
+    // console.info("Auth State manager subscription event: ", authState);
     if (!authState.isAuthenticated) {
+      setStoredAuthToken(undefined);
       setUserData(null);
       return;
     }
 
-    if (authState.isAuthenticated && !userData && !error && authStateLoadingUser.current !== true) {
+    const token = DataParsingHelper.safeObjectPropertyParser(authState, "accessToken.accessToken");
+
+    if (ObjectHelper.areObjectsEqualLodash(token, storedAuthToken) !== true && !error && authStateLoadingUser.current !== true) {
+      setStoredAuthToken(token);
       authStateLoadingUser.current = true;
-      await loadUsersData(authState.accessToken["accessToken"]);
+      await loadUsersData(token);
       authStateLoadingUser.current = false;
     }
   });
@@ -104,21 +104,45 @@ const AppWithRouterAccess = () => {
 
   const loadUsersData = async (token) => {
     try {
+      reactLogger.logDebugMessage(
+        "AppWithRouterAccess",
+        "loadUsersData",
+        "Loading User Data."
+      );
+
       setLoading(true);
       const response = await userActions.getLoggedInUser(
         token,
         cancelTokenSource,
+        expectedEmailAddress,
       );
-      setUserData(response?.data);
+
+      const newUser = DataParsingHelper.parseObject(response?.data);
+
+      if (ObjectHelper.areObjectsEqualLodash(newUser, userData) !== true) {
+        setUserData(newUser);
+      } else {
+        reactLogger.logDebugMessage(
+          "AppWithRouterAccess",
+          "loadUsersData",
+          "Skipping User state update as it has not changed."
+        );
+      }
     } catch (error) {
       //console.log(error.response.data); //Forbidden
       //console.log(error.response.status); //403
-      if (error.response && error.response.status === 403) {
+      const errorStatus = DataParsingHelper.parseNestedNumber(error, "response.status");
+      if (errorStatus === 403) {
         //this means user doesn't have access so clearing sessiong and logging user out
         let errorMsg = "Access denied when trying to retrieve user details.  This could indicate an expired or revoked token.  Please log back in before proceeding.";
         console.error(errorMsg + "Service Response:" + error.response.data);
         history.push("/logout");
         setError(errorMsg);
+      } else if (errorStatus === 409) {
+        console.error(error);
+        setUserData(undefined);
+        setError(error);
+        history.push("/login");
       } else {
         console.error(error);
         setError(error);
@@ -150,44 +174,6 @@ const AppWithRouterAccess = () => {
     }
   };
 
-  const onAuthResume = async () => {
-    history.push('/');
-  };
-
-  const getRoutes = () => {
-    if (!authenticatedState && isPublicPathState !== true) {
-      return (
-        <div className={"w-100 px-3"}>
-          <div className={"d-flex flex-row"}>
-            <div className={"w-100"}>
-              <LoginForm authClient={authClient} />
-              <Route path='/implicit/callback' render={ (props) => <LoginCallback {...props} onAuthResume={ onAuthResume } /> } />
-              <Route path="/logout" exact component={Logout} />
-            </div>
-          </div>
-          <OpseraFooter />
-        </div>
-      );
-    }
-
-    const isOpseraAdministrator = SiteRoleHelper.isOpseraAdministrator(userData);
-
-    if (isFreeTrial === true && isOpseraAdministrator !== true) {
-      return (
-        <FreeTrialAppRoutes
-          authClient={authClient}
-        />
-      );
-    }
-
-    return (
-      <AppRoutes
-        authenticatedState={authenticatedState}
-        authClient={authClient}
-      />
-    );
-  };
-
   if (!userData && loading && !error) {
     return (<LoadingDialog/>);
   }
@@ -198,8 +184,9 @@ const AppWithRouterAccess = () => {
       <AuthContextProvider
         userData={userData}
         loadUserData={reloadUserData}
+        setExpectedEmailAddress={setExpectedEmailAddress}
       >
-        {getRoutes()}
+        <Routes />
       </AuthContextProvider>
     </Security>
   );
