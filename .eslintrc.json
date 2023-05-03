@@ -15,17 +15,11 @@
         "require": "readonly",
         "process": "readonly"
     },
-    "parser": "@babel/eslint-parser",
     "parserOptions": {
-      "requireConfigFile": false,
-      "babelOptions": {
-        "babelrc": false,
-        "configFile": false,
-        "presets": ["@babel/preset-react", "@babel/preset-env"]
-      },
-        "sourceType": "module"
+      "sourceType": "module"
     },
     "plugins": [
+      "react-hooks",
         "react",
         "prettier"
     ],
