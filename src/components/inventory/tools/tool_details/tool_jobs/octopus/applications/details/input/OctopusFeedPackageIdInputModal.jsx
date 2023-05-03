@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faTimes } from "@fortawesome/pro-solid-svg-icons";
 import PropTypes from "prop-types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import { Button } from "react-bootstrap";

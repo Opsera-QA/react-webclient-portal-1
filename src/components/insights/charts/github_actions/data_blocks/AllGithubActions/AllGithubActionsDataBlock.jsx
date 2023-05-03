@@ -15,7 +15,7 @@ import SuccessPercentActionableInsights from "./SuccessPercent/SuccessPercentAct
 import SuccessExecutionsActionableInsights from "./SuccessExecutions/SuccessExecutionsActionableInsights";
 import FailedExecutionsActionableInsights from "./FailedExecutions/FailedExecutionsActionableInsights";
 import ThreeLinePercentageBlockBase from "../../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
-import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
+import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/pro-solid-svg-icons";
 
 function AllGithubActionsDataBlock({
   kpiConfiguration,

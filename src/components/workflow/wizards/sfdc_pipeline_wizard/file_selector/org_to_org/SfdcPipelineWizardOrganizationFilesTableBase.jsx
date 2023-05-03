@@ -6,7 +6,7 @@ import {
 } from "components/common/table/table-column-helpers-v2";
 import sfdcTableConstants from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-table-constants";
 import FilterContainer from "components/common/table/FilterContainer";
-import { faCode } from "@fortawesome/free-solid-svg-icons";
+import { faCode } from "@fortawesome/pro-solid-svg-icons";
 import VanityTable from "components/common/table/VanityTable";
 
 const SfdcPipelineWizardOrganizationFilesTableBase = ({ pipelineWizardModel, loadData, data, isLoading, paginationModel, setPaginationModel, title, filePullCompleted }) => {

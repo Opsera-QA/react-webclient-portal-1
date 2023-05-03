@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Form, Button } from "react-bootstrap";
-import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { faSave } from "@fortawesome/pro-solid-svg-icons";
 import {getMissingRequiredFieldsErrorDialog} from "../../../../../../../common/toasts/toasts";
 import IconBase from "components/common/icons/IconBase";
 

@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {faCheck} from "@fortawesome/free-solid-svg-icons";
+import {faCheck} from "@fortawesome/pro-solid-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import IconBase from "components/common/icons/IconBase";

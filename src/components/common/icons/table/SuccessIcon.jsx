@@ -1,5 +1,5 @@
 import React from "react";
-import { faCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCircle } from "@fortawesome/pro-solid-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
 

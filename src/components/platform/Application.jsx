@@ -12,7 +12,7 @@ import { ApiService } from "api/apiService";
 import ErrorDialog from "components/common/status_notifications/error";
 import SuccessDialog from "components/common/status_notifications/SuccessDialog";
 import { handleError } from "utils/helpers";
-import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
+import { faClipboardList } from "@fortawesome/pro-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import ContainerScan from "./ContainerScan";
 import LoadingDialog from "../common/status_notifications/loading";
