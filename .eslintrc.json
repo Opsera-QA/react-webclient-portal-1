@@ -1,7 +1,6 @@
 {
   "env": {
-    "browser": true,
-    "es6": true
+    "browser": true
   },
   "extends": [
     "eslint:recommended",
@@ -15,6 +14,7 @@
     "process": "readonly"
   },
   "parserOptions": {
+    "ecmaVersion": 2022,
     "sourceType": "module"
   },
   "plugins": [
