@@ -12,7 +12,7 @@ import InfoText from "../../inputs/info_text/InfoText";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import IconBase from "components/common/icons/IconBase";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
-import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
+import JsonFieldBase from "components/common/fields/json/JsonFieldBase";
 
 const SAMPLE_DATA = {
   subnet_list: [
@@ -313,7 +313,7 @@ function ParameterMappingInputBase({
         {
           <div className={"mt-2"}>
             Sample:
-            <StandaloneJsonField
+            <JsonFieldBase
               className={"mt-1 py-1"}
               json={SAMPLE_DATA}
               displayDataTypes={false}

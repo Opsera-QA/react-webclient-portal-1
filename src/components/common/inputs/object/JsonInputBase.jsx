@@ -23,7 +23,7 @@ export default function JsonInputBase(
         disabled={disabled}
         height={height}
         width={width}
-        src={value}
+        json={value}
       />
     );
   }

@@ -113,6 +113,7 @@ function JenkinsStepConfigurationDockerEditorPanel({model, setModel, buildType, 
             className={"my-1 px-2"}
             json={{ Key1: "Value1", Key2: "value2" }}
             displayDataTypes={false}
+            showInContainer={false}
           />
         </div>
       </div>

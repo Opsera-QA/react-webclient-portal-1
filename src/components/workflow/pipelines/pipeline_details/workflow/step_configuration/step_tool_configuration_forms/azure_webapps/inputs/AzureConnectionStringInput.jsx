@@ -346,6 +346,7 @@ function AzureConnectionStringInput({
               className={"mt-1 py-1"}
               json={SAMPLE_DATA}
               displayDataTypes={false}
+              showInContainer={false}
             />
           </div>
         }

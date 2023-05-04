@@ -17,7 +17,7 @@ import ShowSecurityReportButton from "components/blueprint/security_reports/Show
 import ShowPackageXmlButton from "components/blueprint/ShowPackageXmlButton";
 import IconBase from "components/common/icons/IconBase";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
-import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
+import JsonFieldBase from "components/common/fields/json/JsonFieldBase";
 
 
 function BlueprintSearchResult({ logData, closeModal }) {
@@ -106,7 +106,7 @@ function BlueprintSearchResult({ logData, closeModal }) {
                 {getRow("Response Message", makeUpper(item?.current?.message))}
                 <div className={"py-1"}>
                   <div className="text-muted mb-2">API Response</div>
-                  <div><StandaloneJsonField json={item.current.data} displayDataTypes={false}  /></div>
+                  <div><JsonFieldBase json={item.current.data} displayDataTypes={false}  /></div>
                 </div>
               </>
             )}
@@ -124,7 +124,7 @@ function BlueprintSearchResult({ logData, closeModal }) {
     } else {
       return (
         <div className="mt-2">
-          <StandaloneJsonField json={item} displayDataTypes={false} />
+          <JsonFieldBase json={item} displayDataTypes={false} />
         </div>
       );
     }

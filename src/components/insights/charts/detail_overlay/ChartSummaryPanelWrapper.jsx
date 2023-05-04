@@ -221,6 +221,7 @@ function ChartSummaryPanelWrapper({
               enableClipboard={false}
               displayDataTypes={false}
               collapsed={false}
+              showInContainer={false}
             />
           </SummaryPanelContainer>
         );

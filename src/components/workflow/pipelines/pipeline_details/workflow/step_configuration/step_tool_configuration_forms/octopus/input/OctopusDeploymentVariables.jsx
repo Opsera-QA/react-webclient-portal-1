@@ -46,6 +46,7 @@ function OctopusDeploymentVariables({ fieldName, dataObject, setDataObject, disa
                     className={"mt-1"}
                     json={SAMPLE_DATA}
                     displayDataTypes={false}
+                    showInContainer={false}
                   />
                   </div>
                 }
