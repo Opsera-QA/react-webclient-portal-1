@@ -1,7 +1,6 @@
 {
   "env": {
-    "browser": true,
-    "es6": true
+    "browser": true
   },
   "extends": [
     "eslint:recommended",
@@ -13,6 +12,10 @@
     "SharedArrayBuffer": "readonly",
     "require": "readonly",
     "process": "readonly"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module"
   },
   "plugins": [
     "react-hooks",
