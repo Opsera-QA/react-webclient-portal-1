@@ -2,15 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import ReactJson from "react-json-view";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import JsonFieldBase from "components/common/fields/json/JsonFieldBase";
 
 function ChartJsonPanel({ chartModel }) {
   return (
     <SummaryPanelContainer>
       <Row>
         <Col md={12}>
-          <ReactJson src={chartModel} enableClipboard={false} displayDataTypes={false} collapsed={false}/>
+          <JsonFieldBase json={chartModel} enableClipboard={false} displayDataTypes={false} collapsed={false}/>
         </Col>
       </Row>
     </SummaryPanelContainer>

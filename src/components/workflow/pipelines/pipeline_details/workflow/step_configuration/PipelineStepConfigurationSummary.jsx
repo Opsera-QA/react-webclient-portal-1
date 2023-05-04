@@ -5,7 +5,6 @@ import AnchoreIntegratorStepConfigurationSummaryPanel
 import anchoreIntegratorStepConfigurationMetadata
   from "./step_tool_configuration_forms/anchore_integrator/anchore-integrator-step-configuration-metadata";
 import Model from "../../../../../../core/data_model/model";
-import ReactJson from "react-json-view";
 import ChildPipelineStepConfigurationSummaryPanel
   from "../../../../plan/step/child/ChildPipelineStepConfigurationSummaryPanel";
 import {childPipelineStepMetadata}
@@ -262,6 +261,7 @@ import OracleFusionReportMigrationStepFormMetadata
   from "./step_tool_configuration_forms/oracle_fusion_report_migration/oracleFusion-reportMigration-stepForm-metadata";
 import OracleFusionReportMigrationStepConfigurationSummary
   from "./step_tool_configuration_forms/oracle_fusion_report_migration/OracleFusionReportMigrationStepConfigurationSummary";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -829,7 +829,7 @@ function PipelineStepConfigurationSummary({
       default:
         return (
           <SummaryPanelContainer>
-            <ReactJson src={pipelineData?.tool} enableClipboard={false} displayDataTypes={false} collapsed={false}/>
+            <StandaloneJsonField json={pipelineData?.tool} enableClipboard={false} displayDataTypes={false} collapsed={false}/>
           </SummaryPanelContainer>
         );
     }

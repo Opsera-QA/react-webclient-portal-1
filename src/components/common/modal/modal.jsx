@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
 import { faCheck } from "@fortawesome/pro-solid-svg-icons";
-import ReactJson from "react-json-view";
 import IconBase from "components/common/icons/IconBase";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 
 // TODO: Remove or turn into overlay and refactor
 function CustomModalDialog({ header, message, button, size, handleConfirmModal, handleCancelModal, jsonView, jsonMessage }) {
@@ -36,7 +36,7 @@ function CustomModalDialog({ header, message, button, size, handleConfirmModal, 
             {
               displayJson ? 
                 <>  
-                  <ReactJson src={jsonMessage} displayDataTypes={false} />               
+                  <StandaloneJsonField json={jsonMessage} displayDataTypes={false} />
                 </> : 
                 <div style={{ overflowWrap: "break-word" }}>{message}</div>
             }
