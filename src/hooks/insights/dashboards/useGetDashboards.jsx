@@ -13,7 +13,7 @@ export default function useGetDashboards(
   handleErrorFunction,
 ) {
   const [dashboards, setDashboards] = useState(undefined);
-  const [dashboardFilterModel, setDashboardFilterModel] = useState(new DashboardFilterModel());
+  const [dashboardFilterModel, setDashboardFilterModel] = useState(new DashboardFilterModel(setUrlParameters));
   const {
     isLoading,
     error,

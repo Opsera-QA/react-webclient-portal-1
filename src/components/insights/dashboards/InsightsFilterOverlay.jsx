@@ -33,11 +33,11 @@ export default function InsightsFilterOverlay(
         className={"mb-2"}
         visible={dashboardFilterModel?.getData("type") !== "owner"}
       />
-      {/*<KpiIdentifierFilter*/}
-      {/*  filterModel={filterModel}*/}
-      {/*  setFilterModel={setFilterModel}*/}
-      {/*  status={"active"}*/}
-      {/*/>*/}
+      <KpiIdentifierFilter
+        filterModel={filterModel}
+        setFilterModel={setFilterModel}
+        status={"active"}
+      />
       <ActiveFilter
         filterDto={filterModel}
         setFilterDto={setFilterModel}
