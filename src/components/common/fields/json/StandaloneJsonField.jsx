@@ -19,6 +19,7 @@ function StandaloneJsonField(
     isLoading,
     minimumHeight,
     maximumHeight,
+    theme,
   }) {
   const [copiedJson, setCopiedJson] = useState(undefined);
 
@@ -67,6 +68,7 @@ function StandaloneJsonField(
         enableClipboard={enableClipboard}
         displayDataTypes={displayDataTypes}
         collapsed={collapsed}
+        theme={theme}
       />
     </InfoContainer>
   );
@@ -83,6 +85,7 @@ StandaloneJsonField.propTypes = {
   minimumHeight: PropTypes.string,
   maximumHeight: PropTypes.string,
   exportFileName: PropTypes.string,
+  theme: PropTypes.string,
 };
 
 StandaloneJsonField.defaultProps = {

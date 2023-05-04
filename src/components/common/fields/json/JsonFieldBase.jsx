@@ -11,6 +11,7 @@ function JsonFieldBase(
     collapsed,
     enableClipboard,
     displayDataTypes,
+    theme,
   }) {
   const parsedJson = DataParsingHelper.parseJson(json, {});
   const sortedObject = DataParsingHelper.parseObject(ObjectHelper.sortObjectDeeply(parsedJson), {});
@@ -24,6 +25,7 @@ function JsonFieldBase(
         collapsed={collapsed}
         quotesOnKeys={false}
         indentWidth={2}
+        theme={theme}
       />
     </div>
   );
@@ -35,6 +37,7 @@ JsonFieldBase.propTypes = {
   collapsed: PropTypes.bool,
   enableClipboard: PropTypes.bool,
   displayDataTypes: PropTypes.bool,
+  theme: PropTypes.string,
 };
 
 JsonFieldBase.defaultProps = {

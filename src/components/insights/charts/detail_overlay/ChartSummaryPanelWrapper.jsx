@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactJson from "@microlink/react-json-view";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 
 // Bitbucket
@@ -23,6 +22,7 @@ import SonarMaintainabilityRatingPipelinesTable from "components/insights/charts
 import CoverityHighIssuesSummaryPanel from "../coverity/CoverityIssuesByCategory/CoverityHighIssuesSummaryPanel";
 import CoverityMediumIssuesSummaryPanel from "../coverity/CoverityIssuesByCategory/CoverityMediumIssuesSummaryPanel";
 import CoverityLowIssuesSummaryPanel from "../coverity/CoverityIssuesByCategory/CoverityLowIssuesSummaryPanel";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 
 function ChartSummaryPanelWrapper({
   dashboardData,
@@ -216,8 +216,8 @@ function ChartSummaryPanelWrapper({
       default:
         return (
           <SummaryPanelContainer>
-            <ReactJson
-              src={chartModel?.getPersistData()}
+            <StandaloneJsonField
+              json={chartModel?.getPersistData()}
               enableClipboard={false}
               displayDataTypes={false}
               collapsed={false}

@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import { faInfoCircle } from "@fortawesome/pro-light-svg-icons";
 import JsonInput from "../../../../../../../../common/inputs/object/JsonInput";
 import IconBase from "components/common/icons/IconBase";
-import ReactJson from "@microlink/react-json-view";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 
 const SAMPLE_DATA = [
   {
@@ -42,9 +42,9 @@ function OctopusDeploymentVariables({ fieldName, dataObject, setDataObject, disa
                 {
                   <div className={"mt-2"}>
                     Sample:
-                    <ReactJson
+                    <StandaloneJsonField
                     className={"mt-1"}
-                    src={SAMPLE_DATA}
+                    json={SAMPLE_DATA}
                     displayDataTypes={false}
                   />
                   </div>

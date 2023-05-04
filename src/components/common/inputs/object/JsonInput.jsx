@@ -2,12 +2,11 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import locale from "react-json-editor-ajrm/locale/en";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import ReactJson from "@microlink/react-json-view";
-import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import JSONInput from "react-json-editor-ajrm";
 import {objectHelpers} from "components/common/helpers/object/object.helpers";
 import InfoContainer from "components/common/containers/InfoContainer";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 
 // TODO: Rewrite and use json input base as base
 function JsonInput(
@@ -53,13 +52,13 @@ function JsonInput(
   const getBody = () => {
     if (disabled === true) {
       return (
-        <ReactJson
+        <StandaloneJsonField
           theme="light_mitsuketa_tribute"
           locale={locale}
           disabled={disabled}
           height="300px"
           width="100%"
-          src={model.getData(fieldName)}
+          json={model.getData(fieldName)}
         />
       );
     }
