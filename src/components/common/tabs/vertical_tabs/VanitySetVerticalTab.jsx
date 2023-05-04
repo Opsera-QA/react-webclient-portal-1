@@ -18,7 +18,6 @@ function VanitySetVerticalTab(
     tooltipText,
     handleTabClick,
     activeTab,
-    tooltipPlacement,
   }) {
   const getTooltipText = () => {
     if (accessRestricted) {
@@ -49,10 +48,7 @@ function VanitySetVerticalTab(
   }
 
   return (
-    <TooltipWrapper
-      innerText={getTooltipText()}
-      placement={tooltipPlacement}
-    >
+    <TooltipWrapper innerText={getTooltipText()}>
       <Nav.Link
         key={tabName}
         eventKey={tabName}
@@ -83,7 +79,6 @@ VanitySetVerticalTab.propTypes = {
   handleTabClick: PropTypes.func,
   activeTab: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   className: PropTypes.string,
-  tooltipPlacement: PropTypes.string,
 };
 
 export default VanitySetVerticalTab;
