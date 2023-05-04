@@ -62,6 +62,7 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
     newWizardModel.setData("toDate", new Date());
     newWizardModel.setData("taskType", TASK_TYPES.GIT_TO_GIT_MERGE_SYNC);
     newWizardModel.setData("taskId", taskModel?.getMongoDbId());
+    newWizardModel.setData("configuration", taskModel?.getData('configuration'));
 
     const runCount = taskModel?.getData("run_count");
 

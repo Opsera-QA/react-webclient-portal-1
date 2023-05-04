@@ -13,7 +13,7 @@ import {
   SALESFORCE_WIZARD_CONFIGURATION_CONTAINER_HEIGHTS
 } from "../../../../tasks/details/tasks/merge_sync_task/wizard/screens/configuration_screen/SalesforceWizardConfigurationContainer.heights";
 
-const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel }) => {
+const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel, forceLoadData }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +46,7 @@ const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel })
     try {
       setIsLoading(true);
 
-      if (pipelineWizardModel.getData("sfdcToolId")) {
+      if (forceLoadData || pipelineWizardModel.getData("sfdcToolId")) {
         const response = await sfdcPipelineActions.getComponentTypesV2(getAccessToken, cancelSource, pipelineWizardModel);
 
         if (isMounted?.current === true && Array.isArray(response?.data)) {
@@ -165,9 +165,14 @@ const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel })
   );
 };
 
+SfdcComponentListInput.defaultProps = {
+  forceLoadData: false,
+};
+
 SfdcComponentListInput.propTypes = {
   pipelineWizardModel: PropTypes.object,
   setPipelineWizardModel: PropTypes.func,
+  forceLoadData: PropTypes.bool,
 };
 
 export default SfdcComponentListInput;
