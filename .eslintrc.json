@@ -14,9 +14,6 @@
     "require": "readonly",
     "process": "readonly"
   },
-  "parserOptions": {
-    "sourceType": "module"
-  },
   "plugins": [
     "react-hooks",
     "react"
