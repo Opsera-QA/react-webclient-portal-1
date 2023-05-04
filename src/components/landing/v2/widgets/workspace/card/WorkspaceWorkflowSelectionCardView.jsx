@@ -15,6 +15,9 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import InfoMessageFieldBase from "components/common/fields/text/message/InfoMessageFieldBase";
 import TaskModel from "components/tasks/task.model";
 import PipelineModel from "components/workflow/pipeline.model";
+import PipelineWorkflowSummaryOverlay from "components/landing/v2/widgets/workspace/PipelineWorkflowSummaryOverlay";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import TaskWorkflowSummaryOverlay from "components/landing/v2/widgets/workspace/TaskWorkflowSummaryOverlay";
 
 export default function WorkspaceWorkflowSelectionCardView(
   {
@@ -22,35 +25,44 @@ export default function WorkspaceWorkflowSelectionCardView(
     workspaceItems,
     loadData,
     isLoading,
-    selectedWorkflowItem,
-    setSelectedWorkflowItem,
     heightSize,
     hasTitleBar,
     hasMoreItems,
     loadMoreWorkflows,
     currentView,
   }) {
+  const {
+    toastContext,
+  } = useComponentStateReference();
+
   const onPipelineSelectFunction = (workspaceItem) => {
-    setSelectedWorkflowItem(new PipelineModel(workspaceItem, false));
+    toastContext.showOverlayPanel(
+      <PipelineWorkflowSummaryOverlay
+        pipelineModel={new PipelineModel(workspaceItem, false)}
+      />
+    );
   };
 
   const onTaskSelectFunction = (workspaceItem) => {
-    setSelectedWorkflowItem(new TaskModel(workspaceItem, false));
+    toastContext.showOverlayPanel(
+      <TaskWorkflowSummaryOverlay
+        taskModel={new TaskModel(workspaceItem, false)}
+      />
+    );
   };
+
   const getWorkspaceItemCard = (workspaceItem) => {
     switch (workspaceItem?.workspaceType) {
       case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
         return (
           <WorkflowPipelineCard
             pipeline={workspaceItem}
-            selectedFlow={selectedWorkflowItem}
             setSelectedFlow={onPipelineSelectFunction}
           />
         );
       case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
         return (
           <WorkflowTaskCard
-            selectedFlow={selectedWorkflowItem}
             setSelectedFlow={onTaskSelectFunction}
             task={workspaceItem}
           />
@@ -146,8 +158,6 @@ WorkspaceWorkflowSelectionCardView.propTypes = {
   workflowFilterModel: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  selectedWorkflowItem: PropTypes.object,
-  setSelectedWorkflowItem: PropTypes.func,
   heightSize: PropTypes.number,
   hasTitleBar: PropTypes.bool,
   hasMoreItems: PropTypes.bool,

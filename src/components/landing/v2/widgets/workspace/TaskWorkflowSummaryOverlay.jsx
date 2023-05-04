@@ -11,15 +11,17 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import TaskLastRunDateField from "temp-library-components/fields/orchestration/date/TaskLastRunDateField";
-import PipelineLastRunDateField from "temp-library-components/fields/orchestration/date/PipelineLastRunDateField";
+import TaskOrchestrationSummaryField
+  from "temp-library-components/fields/orchestration/task/TaskOrchestrationSummaryField";
+import TaskRunDurationMetricsStandaloneField
+  from "temp-library-components/fields/orchestration/task/metrics/TaskRunDurationMetricsStandaloneField";
 
-// TODO: Should this be two separate panels?
-export default function WorkflowSummaryOverlay({ workflowModel }) {
+export default function TaskWorkflowSummaryOverlay({ taskModel }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
 
   const handleViewDetailsButton = () => {
-    history.push(workflowModel?.getDetailViewLink());
+    history.push(taskModel?.getDetailViewLink());
     closePanel();
   };
 
@@ -28,30 +30,14 @@ export default function WorkflowSummaryOverlay({ workflowModel }) {
     toastContext.clearOverlayPanel();
   };
 
-  const getDateField = () => {
-    if (workflowModel?.getType() === "Task") {
-      return (
-        <TaskLastRunDateField
-          taskModel={workflowModel}
-        />
-      );
-    }
-
-    return (
-      <PipelineLastRunDateField
-        pipelineModel={workflowModel}
-      />
-    );
-  };
-
-  if (workflowModel == null) {
+  if (taskModel == null) {
     return null;
   }
 
   return (
     <CenterOverlayContainer
       closePanel={closePanel}
-      titleText={workflowModel?.getData("name")}
+      titleText={taskModel?.getData("name")}
       titleIcon={faDraftingCompass}
       showToasts={true}
       showCloseButton={false}
@@ -62,17 +48,30 @@ export default function WorkflowSummaryOverlay({ workflowModel }) {
         <Row>
           <Col xs={6}>
             <TextFieldBase
-              dataObject={workflowModel}
+              dataObject={taskModel}
               fieldName={"run_count"}
             />
           </Col>
           <Col xs={6}>
-            {getDateField()}
+            <TaskLastRunDateField
+              taskModel={taskModel}
+            />
           </Col>
           <Col xs={12}>
             <TextFieldBase
-              dataObject={workflowModel}
+              dataObject={taskModel}
               fieldName={"description"}
+            />
+          </Col>
+          <Col xs={12}>
+            <TaskOrchestrationSummaryField
+              taskModel={taskModel}
+            />
+          </Col>
+          <Col xs={12}>
+            <TaskRunDurationMetricsStandaloneField
+              taskRunCount={taskModel?.getRunCount()}
+              taskId={taskModel?.getMongoDbId()}
             />
           </Col>
         </Row>
@@ -92,6 +91,6 @@ export default function WorkflowSummaryOverlay({ workflowModel }) {
   );
 }
 
-WorkflowSummaryOverlay.propTypes = {
-  workflowModel: PropTypes.object,
+TaskWorkflowSummaryOverlay.propTypes = {
+  taskModel: PropTypes.object,
 };
