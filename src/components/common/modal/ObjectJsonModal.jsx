@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
-import ReactJson from "react-json-view";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import LoadingDialog from "components/common/status_notifications/loading";
 
 function ObjectJsonModal({ header, size, jsonData, show, setParentVisibility }) {
@@ -15,7 +15,7 @@ function ObjectJsonModal({ header, size, jsonData, show, setParentVisibility }) 
       return <LoadingDialog message={"Loading Data"} size={"sm"} />;
     }
 
-    return (<ReactJson src={jsonData} displayDataTypes={false}/>);
+    return (<StandaloneJsonField json={jsonData} displayDataTypes={false}/>);
   };
 
   return (

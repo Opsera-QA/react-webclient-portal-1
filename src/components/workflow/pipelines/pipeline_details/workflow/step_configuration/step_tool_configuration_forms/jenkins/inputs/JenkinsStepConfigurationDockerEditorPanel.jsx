@@ -6,11 +6,11 @@ import DockerSecretsInput from "../DockerSecretsInput";
 import _ from "lodash";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import DockerTagTypeSelectionInput from "./DockerTagTypeSelectionInput";
-import ReactJson from "react-json-view";
 import DockerPreviousStepDataInputForm from "./DockerPreviousStepDataInputForm";
 import DockerNameInput from "./DockerNameInput";
 import DockerCommitShaTrimDirectionSelectionInput from "./DockerCommitShaTrimDirectionSelectionInput";
 import NumberPickerInputBase from "components/common/inputs/number/picker/base/NumberPickerInputBase";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 
 function JenkinsStepConfigurationDockerEditorPanel({model, setModel, buildType, plan, stepId}) {
   const [deleteDockerSecrets, setDeleteDockerSecrets] = useState(false);
@@ -108,11 +108,12 @@ function JenkinsStepConfigurationDockerEditorPanel({model, setModel, buildType, 
       <div className={"my-2"}>
         Sample:
         <div>
-          <ReactJson
+          <StandaloneJsonField
             name={false}
             className={"my-1 px-2"}
-            src={{ Key1: "Value1", Key2: "value2" }}
+            json={{ Key1: "Value1", Key2: "value2" }}
             displayDataTypes={false}
+            showInContainer={false}
           />
         </div>
       </div>

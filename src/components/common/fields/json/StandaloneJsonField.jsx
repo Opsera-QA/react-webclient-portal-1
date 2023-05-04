@@ -19,6 +19,8 @@ function StandaloneJsonField(
     isLoading,
     minimumHeight,
     maximumHeight,
+    theme,
+    showInContainer,
   }) {
   const [copiedJson, setCopiedJson] = useState(undefined);
 
@@ -51,6 +53,19 @@ function StandaloneJsonField(
     }
   };
 
+  if (showInContainer === false) {
+    return (
+      <JsonFieldBase
+        className={"m-3"}
+        json={copiedJson}
+        enableClipboard={enableClipboard}
+        displayDataTypes={displayDataTypes}
+        collapsed={collapsed}
+        theme={theme}
+      />
+    );
+  }
+
   return (
     <InfoContainer
       titleIcon={faBracketsCurly}
@@ -67,6 +82,7 @@ function StandaloneJsonField(
         enableClipboard={enableClipboard}
         displayDataTypes={displayDataTypes}
         collapsed={collapsed}
+        theme={theme}
       />
     </InfoContainer>
   );
@@ -83,6 +99,8 @@ StandaloneJsonField.propTypes = {
   minimumHeight: PropTypes.string,
   maximumHeight: PropTypes.string,
   exportFileName: PropTypes.string,
+  theme: PropTypes.string,
+  showInContainer: PropTypes.bool,
 };
 
 StandaloneJsonField.defaultProps = {

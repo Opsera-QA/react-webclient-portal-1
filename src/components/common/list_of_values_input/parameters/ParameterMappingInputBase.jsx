@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { Button, OverlayTrigger, Popover } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { faBracketsCurly, faInfoCircle, faTimes } from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -8,11 +8,11 @@ import { DialogToastContext } from "../../../../contexts/DialogToastContext";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import parametersActions from "../../../inventory/parameters/parameters-actions";
 import axios from "axios";
-import ReactJson from "react-json-view";
 import InfoText from "../../inputs/info_text/InfoText";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import IconBase from "components/common/icons/IconBase";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
+import JsonFieldBase from "components/common/fields/json/JsonFieldBase";
 
 const SAMPLE_DATA = {
   subnet_list: [
@@ -313,9 +313,9 @@ function ParameterMappingInputBase({
         {
           <div className={"mt-2"}>
             Sample:
-            <ReactJson
+            <JsonFieldBase
               className={"mt-1 py-1"}
-              src={SAMPLE_DATA}
+              json={SAMPLE_DATA}
               displayDataTypes={false}
             />
           </div>
