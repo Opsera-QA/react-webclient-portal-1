@@ -24,6 +24,8 @@ import TaskStateField from "temp-library-components/fields/orchestration/state/t
 import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
 import TaskOrchestrationSummaryField
   from "temp-library-components/fields/orchestration/task/TaskOrchestrationSummaryField";
+import TaskRunDurationMetricsStandaloneField
+  from "temp-library-components/fields/orchestration/task/metrics/TaskRunDurationMetricsStandaloneField";
 
 function TaskSummaryPanel(
   {
@@ -199,6 +201,12 @@ function TaskSummaryPanel(
         <Col xs={12}>
           <TaskOrchestrationSummaryField
             taskModel={gitTasksData}
+          />
+        </Col>
+        <Col xs={12}>
+          <TaskRunDurationMetricsStandaloneField
+            taskRunCount={gitTasksData?.getRunCount()}
+            taskId={gitTasksData?.getMongoDbId()}
           />
         </Col>
       </Row>
