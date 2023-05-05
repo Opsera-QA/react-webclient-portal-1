@@ -15,11 +15,23 @@ import PipelineOrchestrationSummaryField
   from "temp-library-components/fields/orchestration/pipeline/PipelineOrchestrationSummaryField";
 import PipelineDurationMetricsStandaloneField
   from "components/common/fields/pipelines/metrics/PipelineDurationMetricsStandaloneField";
+import useGetPipelineModelById from "hooks/workflow/pipelines/model/useGetPipelineModelById";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import ErrorMessageFieldBase from "components/common/fields/text/message/ErrorMessageFieldBase";
+import {errorHelpers} from "components/common/helpers/error-helpers";
 
 // TODO: Should this be two separate panels?
-export default function PipelineWorkflowSummaryOverlay({ pipelineModel }) {
+export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
+  const {
+    pipelineModel,
+    setPipelineModel,
+    error,
+    loadData,
+    isLoading,
+  } = useGetPipelineModelById(pipelineId);
 
   const handleViewDetailsButton = () => {
     history.push(pipelineModel?.getDetailViewLink());
@@ -31,9 +43,58 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineModel }) {
     toastContext.clearOverlayPanel();
   };
 
-  if (pipelineModel == null) {
-    return null;
-  }
+  const getBody = () => {
+    if (isLoading === true) {
+      return (
+        <CenterLoadingIndicator
+          type={"Pipeline"}
+        />
+      );
+    }
+
+    if (error) {
+      return (
+        <CenteredContentWrapper>
+          <ErrorMessageFieldBase
+            message={errorHelpers.parseApiErrorForInfoText("Pipeline", error)}
+          />
+        </CenteredContentWrapper>
+      );
+    }
+
+    return (
+      <Row>
+        <Col xs={6}>
+          <TextFieldBase
+            dataObject={pipelineModel}
+            fieldName={"run_count"}
+          />
+        </Col>
+        <Col xs={6}>
+          <PipelineLastRunDateField
+            pipelineModel={pipelineModel}
+          />
+        </Col>
+        <Col xs={12}>
+          <TextFieldBase
+            dataObject={pipelineModel}
+            fieldName={"description"}
+          />
+        </Col>
+        <Col sm={12}>
+          <PipelineOrchestrationSummaryField
+            pipelineModel={pipelineModel}
+          />
+        </Col>
+        <Col sm={12}>
+          <PipelineDurationMetricsStandaloneField
+            pipelineId={pipelineModel?.getMongoDbId()}
+            pipelineRunCount={pipelineModel?.getRunCount()}
+          />
+        </Col>
+      </Row>
+    );
+  };
 
   return (
     <CenterOverlayContainer
@@ -44,38 +105,10 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineModel }) {
       showCloseButton={false}
       minimumHeight={"50vh"}
       maximumHeight={"50vh"}
+      isLoading={isLoading}
     >
       <div className={"p-3"}>
-        <Row>
-          <Col xs={6}>
-            <TextFieldBase
-              dataObject={pipelineModel}
-              fieldName={"run_count"}
-            />
-          </Col>
-          <Col xs={6}>
-            <PipelineLastRunDateField
-              pipelineModel={pipelineModel}
-            />
-          </Col>
-          <Col xs={12}>
-            <TextFieldBase
-              dataObject={pipelineModel}
-              fieldName={"description"}
-            />
-          </Col>
-          <Col sm={12}>
-            <PipelineOrchestrationSummaryField
-              pipelineModel={pipelineModel}
-            />
-          </Col>
-          <Col sm={12}>
-            <PipelineDurationMetricsStandaloneField
-              pipelineId={pipelineModel?.getMongoDbId()}
-              pipelineRunCount={pipelineModel?.getRunCount()}
-            />
-          </Col>
-        </Row>
+        {getBody()}
         <ButtonContainerBase>
           <VanityButtonBase
             onClickFunction={handleViewDetailsButton}
@@ -93,5 +126,5 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineModel }) {
 }
 
 PipelineWorkflowSummaryOverlay.propTypes = {
-  pipelineModel: PropTypes.object,
+  pipelineId: PropTypes.string,
 };

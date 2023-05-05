@@ -15,10 +15,20 @@ import TaskOrchestrationSummaryField
   from "temp-library-components/fields/orchestration/task/TaskOrchestrationSummaryField";
 import TaskRunDurationMetricsStandaloneField
   from "temp-library-components/fields/orchestration/task/metrics/TaskRunDurationMetricsStandaloneField";
+import useGetTaskModelById from "components/tasks/hooks/useGetTaskModelById";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import ErrorMessageFieldBase from "components/common/fields/text/message/ErrorMessageFieldBase";
+import {errorHelpers} from "components/common/helpers/error-helpers";
 
-export default function TaskWorkflowSummaryOverlay({ taskModel }) {
+export default function TaskWorkflowSummaryOverlay({ taskId }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
+  const {
+    isLoading,
+    taskModel,
+    error,
+  } = useGetTaskModelById(taskId);
 
   const handleViewDetailsButton = () => {
     history.push(taskModel?.getDetailViewLink());
@@ -30,9 +40,58 @@ export default function TaskWorkflowSummaryOverlay({ taskModel }) {
     toastContext.clearOverlayPanel();
   };
 
-  if (taskModel == null) {
-    return null;
-  }
+  const getBody = () => {
+    if (isLoading === true) {
+      return (
+        <CenterLoadingIndicator
+          type={"Pipeline"}
+        />
+      );
+    }
+
+    if (error) {
+      return (
+        <CenteredContentWrapper>
+          <ErrorMessageFieldBase
+            message={errorHelpers.parseApiErrorForInfoText("Pipeline", error)}
+          />
+        </CenteredContentWrapper>
+      );
+    }
+
+    return (
+      <Row>
+        <Col xs={6}>
+          <TextFieldBase
+            dataObject={taskModel}
+            fieldName={"run_count"}
+          />
+        </Col>
+        <Col xs={6}>
+          <TaskLastRunDateField
+            taskModel={taskModel}
+          />
+        </Col>
+        <Col xs={12}>
+          <TextFieldBase
+            dataObject={taskModel}
+            fieldName={"description"}
+          />
+        </Col>
+        <Col xs={12}>
+          <TaskOrchestrationSummaryField
+            taskModel={taskModel}
+          />
+        </Col>
+        <Col xs={12}>
+          <TaskRunDurationMetricsStandaloneField
+            taskRunCount={taskModel?.getRunCount()}
+            taskId={taskModel?.getMongoDbId()}
+          />
+        </Col>
+      </Row>
+    );
+  };
 
   return (
     <CenterOverlayContainer
@@ -45,36 +104,7 @@ export default function TaskWorkflowSummaryOverlay({ taskModel }) {
       maximumHeight={"50vh"}
     >
       <div className={"p-3"}>
-        <Row>
-          <Col xs={6}>
-            <TextFieldBase
-              dataObject={taskModel}
-              fieldName={"run_count"}
-            />
-          </Col>
-          <Col xs={6}>
-            <TaskLastRunDateField
-              taskModel={taskModel}
-            />
-          </Col>
-          <Col xs={12}>
-            <TextFieldBase
-              dataObject={taskModel}
-              fieldName={"description"}
-            />
-          </Col>
-          <Col xs={12}>
-            <TaskOrchestrationSummaryField
-              taskModel={taskModel}
-            />
-          </Col>
-          <Col xs={12}>
-            <TaskRunDurationMetricsStandaloneField
-              taskRunCount={taskModel?.getRunCount()}
-              taskId={taskModel?.getMongoDbId()}
-            />
-          </Col>
-        </Row>
+        {getBody()}
         <ButtonContainerBase>
           <VanityButtonBase
             onClickFunction={handleViewDetailsButton}
@@ -92,5 +122,5 @@ export default function TaskWorkflowSummaryOverlay({ taskModel }) {
 }
 
 TaskWorkflowSummaryOverlay.propTypes = {
-  taskModel: PropTypes.object,
+  taskId: PropTypes.string,
 };
