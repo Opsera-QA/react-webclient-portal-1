@@ -46,8 +46,10 @@ function CenterOverlayContainer(
     backButtonFunction,
     minimumHeight,
     maximumHeight,
+    getHelpComponentFunction,
   }) {
   const toastContext = useContext(DialogToastContext);
+  const [helpIsShown, setHelpIsShown] = useState(false);
 
   useEffect(() => {
     if (showToasts) {
@@ -99,6 +101,14 @@ function CenterOverlayContainer(
           minHeight={OVERLAY_PANEL_MIN_HEIGHT}
           customMessage={customLoadingMessage}
         />
+      );
+    }
+
+    if (helpIsShown === true && getHelpComponentFunction && getHelpComponentFunction(setHelpIsShown)) {
+      return (
+        <div className={"p-2"}>
+          {getHelpComponentFunction(setHelpIsShown)}
+        </div>
       );
     }
 
@@ -163,6 +173,7 @@ CenterOverlayContainer.propTypes = {
   backButtonFunction: PropTypes.func,
   minimumHeight: PropTypes.string,
   maximumHeight: PropTypes.string,
+  getHelpComponentFunction: PropTypes.func,
 };
 
 CenterOverlayContainer.defaultProps = {
