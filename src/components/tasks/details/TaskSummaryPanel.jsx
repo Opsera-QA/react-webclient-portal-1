@@ -22,6 +22,10 @@ import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import TaskStateField from "temp-library-components/fields/orchestration/state/task/TaskStateField";
 import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
+import TaskOrchestrationSummaryField
+  from "temp-library-components/fields/orchestration/task/TaskOrchestrationSummaryField";
+import TaskRunDurationMetricsStandaloneField
+  from "temp-library-components/fields/orchestration/task/metrics/TaskRunDurationMetricsStandaloneField";
 
 function TaskSummaryPanel(
   {
@@ -193,6 +197,17 @@ function TaskSummaryPanel(
         </Col>
         <Col md={12} className={"pt-1"}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"description"} />
+        </Col>
+        <Col xs={12}>
+          <TaskOrchestrationSummaryField
+            taskModel={gitTasksData}
+          />
+        </Col>
+        <Col xs={12}>
+          <TaskRunDurationMetricsStandaloneField
+            taskRunCount={gitTasksData?.getRunCount()}
+            taskId={gitTasksData?.getMongoDbId()}
+          />
         </Col>
       </Row>
       <Row className={"mx-0 w-100 my-2"}>
