@@ -27,7 +27,7 @@ function CopyToClipboardIconBase(
     setCopiedToClipboard(true);
   };
 
-  if (copyString == null || copyString === "") {
+  if (copyString == null || copyString === "" || visible === false) {
     return null;
   }
 
