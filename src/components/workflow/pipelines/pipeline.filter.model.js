@@ -2,6 +2,7 @@ import FilterModelBase from "core/data_model/filterModel.base";
 import sessionHelper from "utils/session.helper";
 import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import {pipelineHelper} from "components/workflow/pipeline.helper";
 
 const pipelineFilterMetadata = {
   type: "Pipeline",
@@ -94,6 +95,10 @@ export class PipelineFilterModel extends FilterModelBase {
 
   canToggleView = () => {
     return true;
+  };
+
+  getDetailViewLink = (pipelineId) => {
+    return pipelineHelper.getDetailViewLink(pipelineId);
   };
 
   getActiveFilters = () => {
