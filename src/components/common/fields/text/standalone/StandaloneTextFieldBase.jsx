@@ -31,7 +31,7 @@ function StandaloneTextFieldBase(
         />
         <span><IconBase className={"mr-2"} isLoading={isBusy} />{text}</span>
         <CopyToClipboardIconBase
-          className={"my-auto ml-auto"}
+          className={"my-auto ml-2"}
           copyString={text}
           visible={showClipboardButton === true}
         />

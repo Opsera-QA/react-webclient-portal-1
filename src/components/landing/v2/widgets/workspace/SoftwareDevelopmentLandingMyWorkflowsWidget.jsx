@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import NoRegisteredWorkflowsCard from "components/wizard/free_trial/workflows/NoRegisteredWorkflowsCard";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
-import SoftwareDevelopmentSalesforceLandingWidget
-  from "components/landing/v2/widgets/SoftwareDevelopmentSalesforceLandingWidget";
 import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
 import CreateWorkspaceResourceWizard from "components/wizard/workspace/CreateWorkspaceResourceWizard";
 import WorkflowWidgetNavigationBar, {
@@ -20,8 +15,7 @@ import WorkspaceWorkflowSelectionCardView
 import InlineSearchFilter from "components/common/filters/search/InlineSearchFilter";
 import SoftwareDevelopmentSocialMediaWidget from "components/landing/v2/widgets/SoftwareDevelopmentSocialMediaWidget";
 
-export default function SoftwareDevelopmentLandingWorkspaceWidget({ className }) {
-  const [selectedWorkflowItem, setSelectedWorkflowItem] = useState(undefined);
+export default function SoftwareDevelopmentLandingMyWorkflowsWidget({ className }) {
   const [currentView, setCurrentView] = useState(DataParsingHelper.parseString(sessionHelper.getCookie(sessionHelper.SUPPORTED_COOKIE_STORAGE_KEYS.LANDING_SCREEN_WORKFLOW_WIDGET_CURRENT_VIEW), WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS));
   const {
     toastContext,
@@ -45,6 +39,7 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
       />
     );
   };
+
 
   const getRightSideTitleBarItems = () => {
     return (
@@ -96,7 +91,6 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
           workspaceItems={workspaceItems}
           loadData={loadData}
           isLoading={isLoading}
-          setSelectedWorkflowItem={setSelectedWorkflowItem}
           selectedWorkflowItem={undefined}
           hasMoreItems={hasMoreItems}
           loadMoreWorkflows={loadMoreWorkflows}
@@ -107,6 +101,6 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
   );
 }
 
-SoftwareDevelopmentLandingWorkspaceWidget.propTypes = {
+SoftwareDevelopmentLandingMyWorkflowsWidget.propTypes = {
   className: PropTypes.string,
 };

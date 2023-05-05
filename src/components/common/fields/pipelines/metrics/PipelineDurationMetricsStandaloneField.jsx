@@ -92,44 +92,25 @@ function PipelineDurationMetricsStandaloneField({ pipelineId, pipelineRunCount, 
     return isLoading ? "" : "No Valid Metrics to Display";
   };
 
-  const getBody = () => {
-    if (pipelineRunCount < 5) {
-      return (
-        <StandaloneTextFieldBase
-          text={getLastRunDurationText()}
-          label={"Last Pipeline Run Duration"}
-          className={"py-2"}
-          isBusy={isLoading}
-        />
-      );
-    }
-
-    return (
-      <>
-        <StandaloneTextFieldBase
-          text={getLastRunDurationText()}
-          label={"Last Pipeline Run Duration"}
-          className={"py-2"}
-          isBusy={isLoading}
-        />
-        <StandaloneTextFieldBase
-          text={getLastFiveRunsDurationText()}
-          label={"Last Five Pipeline Runs Average Duration"}
-          className={"py-2"}
-          isBusy={isLoading}
-        />
-      </>
-    );
-  };
-
-
   if (isMongoDbId(pipelineId) !== true || numberHelpers.isNumberGreaterThan(0, pipelineRunCount) !== true) {
     return null;
   }
 
   return (
     <div className={className}>
-      {getBody()}
+      <StandaloneTextFieldBase
+        text={getLastRunDurationText()}
+        label={"Last Pipeline Run Duration"}
+        className={"py-2"}
+        isBusy={isLoading}
+        visible={pipelineRunCount >= 5}
+      />
+      <StandaloneTextFieldBase
+        text={getLastFiveRunsDurationText()}
+        label={"Last Five Pipeline Runs Average Duration"}
+        className={"py-2"}
+        isBusy={isLoading}
+      />
       <InfoText errorMessage={errorMessage} />
     </div>
   );

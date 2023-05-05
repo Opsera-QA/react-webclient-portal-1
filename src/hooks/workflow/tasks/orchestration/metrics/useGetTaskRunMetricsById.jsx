@@ -32,7 +32,6 @@ export default function useGetTaskRunMetricsById(
     }
 
     const response = await taskActions.getTaskRunDurationMetrics(id,);
-    console.log("response: " + JSON.stringify(response));
     const runDurationMetrics = DataParsingHelper.parseNestedObject(response, "data.data", {});
 
     if (ObjectHelper.areObjectsEqualLodash(taskRunDurationMetrics, runDurationMetrics) !== true) {
