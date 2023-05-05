@@ -1,4 +1,4 @@
-import {faIdCard, faKey, faRss, faUser} from "@fortawesome/pro-light-svg-icons";
+import {faIdCard, faKey, faUser, faStar} from "@fortawesome/pro-light-svg-icons";
 import {userSettingsPaths} from "components/user/user_settings/userSettings.paths";
 
 export const userSettingsTrails = {};
@@ -35,7 +35,7 @@ userSettingsTrails.subscriptions = {
   path: userSettingsPaths.mySubscriptions,
   title: "My Subscriptions",
   linkText: "My Subscriptions",
-  icon: faRss,
+  icon: faStar,
   pageDescription: `
       Review and manage your user profile information as well as platform settings from this page. 
       Please note, profile details are stored in your identity provider, so some changes my not be possible from this portal at this time.

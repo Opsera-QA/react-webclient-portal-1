@@ -4,7 +4,7 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faDraftingCompass, faTag} from "@fortawesome/pro-light-svg-icons";
 import TagSubscriptionsPanel from "components/user/user_settings/subscriptions/TagSubscriptionsPanel";
-import PipelineSubscriptionsPanel from "components/user/user_settings/subscriptions/PipelineSubscriptionsPanel";
+import FollowedPipelinesPanel from "components/user/user_settings/subscriptions/FollowedPipelinesPanel";
 import UserSettingsSubNavigationBar from "components/user/user_settings/UserSettingsSubNavigationBar";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
@@ -38,7 +38,7 @@ function MySubscriptions() {
       case "tags":
         return (<TagSubscriptionsPanel/>);
       case "pipelines":
-        return <PipelineSubscriptionsPanel className={"p-3"}/>;
+        return <FollowedPipelinesPanel className={"p-3"}/>;
       default:
         return null;
     }

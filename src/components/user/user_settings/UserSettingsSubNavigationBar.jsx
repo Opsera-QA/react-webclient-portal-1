@@ -2,7 +2,7 @@ import React from "react";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import PropTypes from "prop-types";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faIdCard, faKey, faRss, faUser} from "@fortawesome/pro-light-svg-icons";
+import {faIdCard, faKey, faUser, faStar} from "@fortawesome/pro-light-svg-icons";
 import {useHistory} from "react-router-dom";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {USER_SETTINGS_PAGES} from "components/user/user_settings/userSettings.paths";
@@ -71,11 +71,11 @@ export default function UserSettingsSubNavigationBar(
          tabText={"Current Access Token"}
          />*/}
       <NavigationTab
-        icon={faRss}
+        icon={faStar}
         tabName={USER_SETTINGS_PAGES.MY_SUBSCRIPTIONS}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
-        tabText={"Subscriptions"}
+        tabText={"Following"}
       />
       {getDynamicTab()}
     </NavigationTabContainer>

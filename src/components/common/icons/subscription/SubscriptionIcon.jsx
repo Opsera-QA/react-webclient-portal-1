@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faRss, faStar} from "@fortawesome/pro-light-svg-icons";
+import {faStar} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 import IconBase from "components/common/icons/IconBase";
 import {faStar as faStarSolid} from "@fortawesome/pro-solid-svg-icons";
