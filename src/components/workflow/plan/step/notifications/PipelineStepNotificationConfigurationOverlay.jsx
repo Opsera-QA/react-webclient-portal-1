@@ -38,22 +38,12 @@ export default function PipelineStepNotificationConfigurationOverlay(
   }
 
   return (
-    <CenterOverlayContainer
-      closePanel={closePanel}
-      showPanel={true}
-      titleText={`Pipeline Step Notification Configuration`}
-      titleIcon={faEnvelope}
-      showToasts={true}
-      showCloseButton={false}
-    >
-      <div className={"p-3"}>
         <PipelineStepNotificationEditorPanel
+          className={"p-3"}
           pipelineId={pipelineId}
           pipelineStep={pipelineStep}
           handleCloseClick={closePanel}
         />
-      </div>
-    </CenterOverlayContainer>
   );
 }
 

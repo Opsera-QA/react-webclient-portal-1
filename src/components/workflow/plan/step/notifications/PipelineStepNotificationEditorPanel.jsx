@@ -24,6 +24,7 @@ import PipelineStepNotificationConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/PipelineStepNotificationConfigurationHelpDocumentation";
 import gChatStepNotificationMetadata 
   from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
+import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 
 function PipelineStepNotificationEditorPanel(
   {
@@ -172,9 +173,11 @@ function PipelineStepNotificationEditorPanel(
   }
 
   return (
-    <OverlayPanelBodyContainer
+    <CenterOverlayContainer
       getHelpComponentFunction={getHelpComponentFunction}
-      hideCloseButton={true}
+      showCloseButton={false}
+      titleText={"Pipeline Step Notifications"}
+      bodyClassName={"p-3"}
     >
       {getTitleBar()}
       <PipelineNotificationTabView
@@ -204,7 +207,7 @@ function PipelineStepNotificationEditorPanel(
           closeEditorCallback={handleCloseClick}
         />
       </SaveButtonContainer>
-    </OverlayPanelBodyContainer>
+    </CenterOverlayContainer>
   );
 }
 
