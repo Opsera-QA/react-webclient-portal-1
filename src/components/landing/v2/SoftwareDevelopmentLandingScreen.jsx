@@ -1,8 +1,8 @@
 import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import SoftwareDevelopmentLandingWorkspaceWidget
-  from "components/landing/v2/widgets/workspace/SoftwareDevelopmentLandingWorkspaceWidget";
+import SoftwareDevelopmentLandingMyWorkflowsWidget
+  from "components/landing/v2/widgets/workspace/SoftwareDevelopmentLandingMyWorkflowsWidget";
 import SoftwareDevelopmentLandingAccountStatsWidget
   from "components/landing/v2/widgets/SoftwareDevelopmentLandingAccountStatsWidget";
 import SoftwareDevelopmentLandingWelcomeWidget
@@ -24,7 +24,7 @@ export default function SoftwareDevelopmentLandingScreen() {
           </Col>
         </Row>
         <div className={"pt-3"}>
-          <SoftwareDevelopmentLandingWorkspaceWidget />
+          <SoftwareDevelopmentLandingMyWorkflowsWidget />
         </div>
       </div>
     </div>

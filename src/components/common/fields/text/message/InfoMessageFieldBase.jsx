@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {faCircleInfo} from "@fortawesome/pro-light-svg-icons";
 
 export default function InfoMessageFieldBase(
