@@ -10,7 +10,6 @@ import {useHistory} from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import TaskLastRunDateField from "temp-library-components/fields/orchestration/date/TaskLastRunDateField";
 import PipelineLastRunDateField from "temp-library-components/fields/orchestration/date/PipelineLastRunDateField";
 import PipelineOrchestrationSummaryField
   from "temp-library-components/fields/orchestration/pipeline/PipelineOrchestrationSummaryField";

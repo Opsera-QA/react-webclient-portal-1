@@ -15,7 +15,7 @@ import WorkspaceWorkflowSelectionCardView
 import InlineSearchFilter from "components/common/filters/search/InlineSearchFilter";
 import SoftwareDevelopmentSocialMediaWidget from "components/landing/v2/widgets/SoftwareDevelopmentSocialMediaWidget";
 
-export default function SoftwareDevelopmentLandingWorkspaceWidget({ className }) {
+export default function SoftwareDevelopmentLandingMyWorkflowsWidget({ className }) {
   const [currentView, setCurrentView] = useState(DataParsingHelper.parseString(sessionHelper.getCookie(sessionHelper.SUPPORTED_COOKIE_STORAGE_KEYS.LANDING_SCREEN_WORKFLOW_WIDGET_CURRENT_VIEW), WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS));
   const {
     toastContext,
@@ -101,6 +101,6 @@ export default function SoftwareDevelopmentLandingWorkspaceWidget({ className })
   );
 }
 
-SoftwareDevelopmentLandingWorkspaceWidget.propTypes = {
+SoftwareDevelopmentLandingMyWorkflowsWidget.propTypes = {
   className: PropTypes.string,
 };
