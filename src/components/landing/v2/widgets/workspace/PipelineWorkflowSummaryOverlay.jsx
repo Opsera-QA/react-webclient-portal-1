@@ -67,7 +67,7 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
         <Col xs={6}>
           <TextFieldBase
             dataObject={pipelineModel}
-            fieldName={"run_count"}
+            fieldName={"workflow.run_count"}
           />
         </Col>
         <Col xs={6}>

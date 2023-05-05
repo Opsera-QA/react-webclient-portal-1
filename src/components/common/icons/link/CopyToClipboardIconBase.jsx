@@ -4,7 +4,17 @@ import {faClipboardCheck, faClipboardList} from "@fortawesome/pro-light-svg-icon
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 import IconBase from "components/common/icons/IconBase";
 
-function CopyToClipboardIconBase({ copyString, className, copyText, copiedText, copyIcon, copiedIcon, size }) {
+function CopyToClipboardIconBase(
+  {
+    copyString,
+    className,
+    copyText,
+    copiedText,
+    copyIcon,
+    copiedIcon,
+    size,
+    visible,
+  }) {
   const [copiedToClipboard, setCopiedToClipboard] = useState(false);
 
   const copyToClipboard = () => {
@@ -43,6 +53,7 @@ CopyToClipboardIconBase.propTypes = {
   copiedText: PropTypes.string,
   copyIcon: PropTypes.object,
   copiedIcon: PropTypes.object,
+  visible: PropTypes.bool,
 };
 
 CopyToClipboardIconBase.defaultProps = {

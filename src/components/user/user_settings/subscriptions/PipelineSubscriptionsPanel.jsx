@@ -13,7 +13,6 @@ import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 import { pipelineSubscriptionActions } from "components/workflow/pipelines/subscriptions/pipelineSubscription.actions";
-import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
 function PipelineSubscriptionsPanel({className}) {
   const toastContext = useContext(DialogToastContext);
