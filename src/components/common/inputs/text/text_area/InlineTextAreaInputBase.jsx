@@ -9,7 +9,6 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import {faPencilAlt, faSave, faTimes} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import FieldLabelBase from "components/common/fields/FieldLabelBase";
 import FieldLabel from "components/common/fields/FieldLabel";
 
 export default function InlineTextAreaInputBase(
