@@ -29,9 +29,9 @@ export default function PipelineDescriptionTextInput(
 
   const handleSaveFunction = async () => {
     const response = await pipelineActions.updatePipelineField(
-      pipelineModel?.getMongoDbId(),
+      modelCopy?.getMongoDbId(),
       fieldName,
-      pipelineModel?.getData(fieldName),
+      modelCopy?.getData(fieldName),
     );
 
     pipelineModel?.setData(fieldName, modelCopy?.getData(fieldName));
