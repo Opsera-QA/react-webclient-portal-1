@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
-import InlineTextInputBase from "components/common/inputs/text/inline/InlineTextInputBase";
+import InlineTextAreaInputBase from "components/common/inputs/text/text_area/InlineTextAreaInputBase";
 
-export default function PipelineNameTextInput(
+export default function PipelineDescriptionTextInput(
   {
     fieldName,
     pipelineModel,
@@ -20,7 +20,7 @@ export default function PipelineNameTextInput(
     userData,
   } = useComponentStateReference();
   const [modelCopy, setModelCopy] = useState(undefined);
-  const canEditPipelineName = PipelineRoleHelper.canEditPipelineName(userData, pipelineModel?.getOriginalData());
+  const canUpdatePipeline = PipelineRoleHelper.canUpdatePipeline(userData, pipelineModel?.getOriginalData());
   const pipelineActions = usePipelineActions();
 
   useEffect(() => {
@@ -47,12 +47,12 @@ export default function PipelineNameTextInput(
   }
 
   return (
-    <InlineTextInputBase
+    <InlineTextAreaInputBase
       model={modelCopy}
       setModel={setModelCopy}
       fieldName={fieldName}
       disabled={
-        canEditPipelineName !== true
+        canUpdatePipeline !== true
           || workflowStatus === "running"
           || disabled
       }
@@ -60,12 +60,11 @@ export default function PipelineNameTextInput(
       className={className}
       handleSaveFunction={handleSaveFunction}
       fieldClassName={fieldClassName}
-      showFieldLabel={false}
     />
   );
 }
 
-PipelineNameTextInput.propTypes = {
+PipelineDescriptionTextInput.propTypes = {
   fieldName: PropTypes.string,
   pipelineModel: PropTypes.object,
   setPipelineModel: PropTypes.func,
@@ -76,6 +75,6 @@ PipelineNameTextInput.propTypes = {
   fieldClassName: PropTypes.string,
 };
 
-PipelineNameTextInput.defaultProps = {
-  fieldName: "name",
+PipelineDescriptionTextInput.defaultProps = {
+  fieldName: "description",
 };
