@@ -27,7 +27,6 @@ export default function PipelineNameTextInput(
     setModelCopy(pipelineModel?.clone());
   }, []);
 
-
   const handleSaveFunction = async () => {
     const response = await pipelineActions.updatePipelineField(
       pipelineModel?.getMongoDbId(),
@@ -41,6 +40,10 @@ export default function PipelineNameTextInput(
     return response;
   };
 
+  if (modelCopy == null) {
+    return null;
+  }
+
   return (
     <InlineTextInputBase
       model={modelCopy}
@@ -50,7 +53,6 @@ export default function PipelineNameTextInput(
         canEditPipelineName !== true
           || workflowStatus === "running"
           || disabled
-          || modelCopy?.isChanged(fieldName) !== true
       }
       visible={visible}
       className={className}

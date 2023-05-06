@@ -139,9 +139,9 @@ export default function InlineTextInputBase(
   };
 
   const handleSave = async () => {
-    const isModelValid = model?.isModelValid();
+    const isFieldValid = model?.isPotentialFieldValid(fieldName);
 
-    if (isModelValid !== true) {
+    if (isFieldValid !== true) {
       const errors = model.getErrors();
       toastContext.showFormValidationErrorDialog(errors && errors.length > 0 ? errors[0] : undefined);
       return false;
@@ -160,7 +160,7 @@ export default function InlineTextInputBase(
   };
 
   const getSaveIcon = () => {
-    if (inEditMode === true && model?.isFieldValid(fieldName) == null) {
+    if (inEditMode === true && model?.isPotentialFieldValid(fieldName) === true && model?.isChanged(fieldName) === true) {
       return (
         <IconBase
           icon={faSave}
