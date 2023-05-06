@@ -1,5 +1,6 @@
-import {faIdCard, faKey, faUser, faStar} from "@fortawesome/pro-light-svg-icons";
+import {faIdCard, faKey, faUser} from "@fortawesome/pro-light-svg-icons";
 import {userSettingsPaths} from "components/user/user_settings/userSettings.paths";
+import {faStar} from "@fortawesome/pro-solid-svg-icons";
 
 export const userSettingsTrails = {};
 
@@ -33,8 +34,8 @@ userSettingsTrails.subscriptions = {
   parent: "userProfile",
   name: "subscriptions",
   path: userSettingsPaths.mySubscriptions,
-  title: "Followed Resources",
-  linkText: "Followed Resources",
+  title: "Following",
+  linkText: "Following",
   icon: faStar,
 };
 
