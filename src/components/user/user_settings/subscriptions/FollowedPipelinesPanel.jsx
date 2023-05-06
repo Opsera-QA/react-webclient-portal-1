@@ -21,6 +21,7 @@ export default function FollowedPipelinesPanel({className}) {
       <PipelineCardView
         pipelines={pipelines}
         isLoading={isLoading}
+        noDataMessage={"You are not currently following any Pipelines"}
       />
     </div>
   );
