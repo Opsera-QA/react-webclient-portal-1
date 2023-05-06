@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
-import InlineTagManager from "components/common/inputs/tags/InlineTagManager";
+import InlineTagManagerInput from "components/common/inputs/tags/InlineTagManagerInput";
 import tagTypeConstants from "@opsera/definitions/constants/settings/tags/tagType.constants";
 
 export default function PipelineTagManagerInput(
@@ -48,7 +48,7 @@ export default function PipelineTagManagerInput(
   }
 
   return (
-    <InlineTagManager
+    <InlineTagManagerInput
       model={modelCopy}
       setModel={setModelCopy}
       fieldName={fieldName}

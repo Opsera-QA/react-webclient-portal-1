@@ -21,7 +21,7 @@ import CustomBadge from "components/common/badges/CustomBadge";
 import {faTag} from "@fortawesome/pro-light-svg-icons";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 
-export default function InlineTagManager(
+export default function InlineTagManagerInput(
   {
     fieldName,
     type,
@@ -30,7 +30,7 @@ export default function InlineTagManager(
     disabled,
     setDataFunction,
     allowCreate,
-    inline,
+    showInputLabel,
     allowedTypes,
     excludeTypes,
     getDisabledTags,
@@ -221,7 +221,7 @@ export default function InlineTagManager(
     return (
       <InputContainer className={className} fieldName={fieldName}>
         <InputLabel
-          showLabel={inline !== true}
+          showLabel={showInputLabel !== false}
           model={model}
           field={field}
           hasError={hasStringValue(errorMessage) === true}
@@ -230,25 +230,23 @@ export default function InlineTagManager(
           isLoading={isLoading}
         />
         <div className={"d-flex w-100"}>
-          <div className={"custom-multiselect-input"}>
-            <StandaloneMultiSelectInput
-              hasErrorState={hasStringValue(errorMessage)}
-              hasWarningState={hasWarningState()}
-              selectOptions={[...tagOptions]}
-              textField={(tag) => `${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`}
-              allowCreate={hasStringValue(type) === true ? allowCreate : undefined}
-              groupBy={(tag) => capitalizeFirstLetter(tag?.type, " ", "Undefined Type")}
-              className={inline ? `inline-filter-input inline-select-filter` : undefined}
-              busy={isLoading}
-              manualEntry={true}
-              createOptionFunction={(value) => handleCreate(value)}
-              value={[...model?.getArrayData(fieldName)]}
-              placeholderText={internalPlaceholderText ? internalPlaceholderText : placeholderText}
-              disabled={disabled || isLoading || (getDisabledTags && getDisabledTags(tagOptions))}
-              setDataFunction={(tagArray) => setDataFunction ? setDataFunction(field.id, TagParsingHelper.parseTagArray(tagArray)) : validateAndSetData(field.id, TagParsingHelper.parseTagArray(tagArray))}
-              fieldName={fieldName}
-            />
-          </div>
+          <StandaloneMultiSelectInput
+            hasErrorState={hasStringValue(errorMessage)}
+            hasWarningState={hasWarningState()}
+            selectOptions={[...tagOptions]}
+            textField={(tag) => `${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`}
+            allowCreate={hasStringValue(type) === true ? allowCreate : undefined}
+            groupBy={(tag) => capitalizeFirstLetter(tag?.type, " ", "Undefined Type")}
+            className={"d-flex w-100"}
+            busy={isLoading}
+            manualEntry={true}
+            createOptionFunction={(value) => handleCreate(value)}
+            value={[...model?.getArrayData(fieldName)]}
+            placeholderText={internalPlaceholderText ? internalPlaceholderText : placeholderText}
+            disabled={disabled || isSaving || isLoading || (getDisabledTags && getDisabledTags(tagOptions))}
+            setDataFunction={(tagArray) => setDataFunction ? setDataFunction(field.id, TagParsingHelper.parseTagArray(tagArray)) : validateAndSetData(field.id, TagParsingHelper.parseTagArray(tagArray))}
+            fieldName={fieldName}
+          />
           <InlineInputSaveIcon
             isSaving={isSaving}
             handleSaveFunction={handleSave}
@@ -293,7 +291,7 @@ export default function InlineTagManager(
   );
 }
 
-InlineTagManager.propTypes = {
+InlineTagManagerInput.propTypes = {
   setModel: PropTypes.func,
   fieldName: PropTypes.string,
   model: PropTypes.object,
@@ -301,7 +299,7 @@ InlineTagManager.propTypes = {
   setDataFunction: PropTypes.func,
   allowCreate: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   disabled: PropTypes.bool,
-  inline: PropTypes.bool,
+  showInputLabel: PropTypes.bool,
   allowedTypes: PropTypes.array,
   getDisabledTags: PropTypes.func,
   placeholderText: PropTypes.string,
@@ -313,7 +311,7 @@ InlineTagManager.propTypes = {
   showFieldLabel: PropTypes.bool,
 };
 
-InlineTagManager.defaultProps = {
+InlineTagManagerInput.defaultProps = {
   allowCreate: "onFilter",
   fieldName: "tags",
   inline: false,
