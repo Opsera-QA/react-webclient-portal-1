@@ -249,7 +249,6 @@ export default function InlineTextInputBase(
     if (showFieldLabel !== false && inEditMode !== true) {
       return (
         <FieldLabel
-          showLabel={showFieldLabel}
           field={field}
           fieldName={fieldName}
         />
