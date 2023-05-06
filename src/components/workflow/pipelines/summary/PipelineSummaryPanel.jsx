@@ -1,10 +1,9 @@
 import React, {useContext, useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import { Row, Col, Form } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import {
   faPencilAlt,
-  faSave, faTag,
-  faTimes,
+  faTag,
 } from "@fortawesome/pro-light-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import InformationDialog from "components/common/status_notifications/info";
@@ -32,13 +31,6 @@ import PipelineOrchestrationProgressBarBase
 import PipelineModel from "components/workflow/pipeline.model";
 import PipelineDescriptionTextInput from "components/workflow/pipelines/summary/inputs/PipelineDescriptionTextInput";
 
-const INITIAL_FORM_DATA = {
-  name: "",
-  project: { name: "", project_id: "" },
-  description: "",
-  type: [],
-};
-
 // TODO: This class needs to be reworked with new components and also to cleanup
 function PipelineSummaryPanel(
   {
@@ -48,7 +40,6 @@ function PipelineSummaryPanel(
   }) {
   const contextType = useContext(AuthContext);
   const [editTags, setEditTags] = useState(false);
-  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [pipelineModel, setPipelineModel] = useState(new PipelineModel(pipeline, false));
   const {
     userData,
@@ -87,7 +78,6 @@ function PipelineSummaryPanel(
             pipelineId,
             pipeline,
           );
-          setFormData(INITIAL_FORM_DATA);
           toastContext.showUpdateSuccessResultDialog("Pipeline");
           await fetchPlan();
         } catch (error) {
@@ -151,22 +141,6 @@ function PipelineSummaryPanel(
         </div>
       </Col>
     );
-  };
-
-  const getSchedulerField = () => {
-    const pipelineTypes = pipeline?.type;
-    // TODO: Move canEditPipelineSchedule inside field. Left it out for now.
-    if (!Array.isArray(pipelineTypes) || (!pipelineTypes.includes("informatica") && !pipelineTypes.includes("sfdc"))) {
-      return (
-        <Col sm={12} md={6}>
-          <PipelineSchedulerField
-            pipelineModel={pipelineModel}
-            updatedAt={pipelineModel?.getData("updatedAt")}
-            canEditPipelineSchedule={PipelineRoleHelper.canEditPipelineAttributes(userData, pipeline) && parentWorkflowStatus !== "running"}
-          />
-        </Col>
-      );
-    }
   };
 
   if (pipeline == null || typeof pipeline !== "object" || Object.keys(pipeline).length === 0) {
@@ -234,7 +208,13 @@ function PipelineSummaryPanel(
               workflowStatus={parentWorkflowStatus}
             />
           </Col>
-          {getSchedulerField()}
+          <Col sm={12} md={6}>
+            <PipelineSchedulerField
+              pipelineModel={pipelineModel}
+              updatedAt={pipelineModel?.getData("updatedAt")}
+              canEditPipelineSchedule={PipelineRoleHelper.canEditPipelineAttributes(userData, pipeline) && parentWorkflowStatus !== "running"}
+            />
+          </Col>
           {getTagField()}
 
           <Col xs={12}>
