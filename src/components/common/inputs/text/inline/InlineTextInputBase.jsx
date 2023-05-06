@@ -232,7 +232,6 @@ export default function InlineTextInputBase(
       return (
         <InputLabel
           model={model}
-          showLabel={showInputLabel}
           field={field}
           linkTooltipText={linkTooltipText}
           detailViewLink={detailViewLink}
