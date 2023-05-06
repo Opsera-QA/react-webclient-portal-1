@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import VanityPaginationContainer from "components/common/pagination/v2/VanityPaginationContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import InfoMessageFieldBase from "components/common/fields/text/message/InfoMessageFieldBase";
 
 function VanitySetCardView(
   {
@@ -16,7 +17,10 @@ function VanitySetCardView(
     if (!isLoading && cards == null) {
       return (
         <CenteredContentWrapper minHeight={minHeight}>
-          {noDataMessage}
+          <InfoMessageFieldBase
+            message={noDataMessage}
+            showInformationLabel={false}
+          />
         </CenteredContentWrapper>
       );
     }
@@ -51,7 +55,7 @@ VanitySetCardView.propTypes = {
   isLoading: PropTypes.bool,
   paginationModel: PropTypes.object,
   loadData: PropTypes.func,
-  noDataMessage: PropTypes.string,
+  noDataMessage: PropTypes.any,
   minHeight: PropTypes.string,
 };
 

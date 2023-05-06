@@ -13,7 +13,7 @@ import FollowingVerticalTabContainer from "components/user/user_settings/subscri
 import userSubscriptionConstants from "@opsera/definitions/constants/subscriptions/userSubscription.constants";
 
 function Following() {
-  const [activeTab, setActiveTab] = useState(userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.TAG);
+  const [activeTab, setActiveTab] = useState(userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.DASHBOARD);
 
   const getCurrentView = () => {
     switch (activeTab) {
