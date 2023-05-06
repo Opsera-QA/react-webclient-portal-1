@@ -93,6 +93,7 @@ export default function Insights() {
         dashboards={dashboards}
         loadData={loadData}
         isLoading={isLoading}
+        error={error}
       />
     );
   };
