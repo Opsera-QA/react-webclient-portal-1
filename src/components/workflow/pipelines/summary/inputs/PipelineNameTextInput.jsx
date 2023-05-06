@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
@@ -19,23 +19,39 @@ export default function PipelineNameTextInput(
   const {
     userData,
   } = useComponentStateReference();
+  const [modelCopy, setModelCopy] = useState(undefined);
+  const canEditPipelineName = PipelineRoleHelper.canEditPipelineName(userData, pipelineModel?.getOriginalData());
   const pipelineActions = usePipelineActions();
 
-  // TODO: Do a targeted update route instead of passing the whole pipeline
+  useEffect(() => {
+    setModelCopy(pipelineModel?.clone());
+  }, []);
+
+
   const handleSaveFunction = async () => {
-    return await pipelineActions.updatePipelineField(
+    const response = await pipelineActions.updatePipelineField(
       pipelineModel?.getMongoDbId(),
       "name",
-      pipelineModel?.getData("name"),
+      pipelineModel?.getData(fieldName),
     );
+
+    pipelineModel?.setData(fieldName, modelCopy?.getData(fieldName));
+    setPipelineModel({...pipelineModel});
+
+    return response;
   };
 
   return (
     <InlineTextInputBase
-      model={pipelineModel}
-      setModel={setPipelineModel}
+      model={modelCopy}
+      setModel={setModelCopy}
       fieldName={fieldName}
-      disabled={PipelineRoleHelper.canEditPipelineName(userData, pipelineModel?.getOriginalData()) !== true || workflowStatus === "running" || disabled}
+      disabled={
+        canEditPipelineName !== true
+          || workflowStatus === "running"
+          || disabled
+          || modelCopy?.isChanged(fieldName) !== true
+      }
       visible={visible}
       className={className}
       handleSaveFunction={handleSaveFunction}
