@@ -30,6 +30,7 @@ import PipelineOrchestrationSummaryField
 import PipelineOrchestrationProgressBarBase
   from "temp-library-components/fields/orchestration/progress/PipelineOrchestrationProgressBarBase";
 import PipelineModel from "components/workflow/pipeline.model";
+import PipelineDescriptionTextInput from "components/workflow/pipelines/summary/inputs/PipelineDescriptionTextInput";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -301,7 +302,13 @@ function PipelineSummaryPanel(
           {getSchedulerField()}
           {getTagField()}
 
-          {getDescriptionField()}
+          <Col xs={12}>
+            <PipelineDescriptionTextInput
+              pipelineModel={pipelineModel}
+              setPipelineModel={setPipelineModel}
+              workflowStatus={parentWorkflowStatus}
+            />
+          </Col>
           <Col sm={12}>
             <PipelineOrchestrationSummaryField
               pipelineModel={pipelineModel}

@@ -10,13 +10,12 @@ import {faPencilAlt, faSave, faTimes} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-export default function InlineTextInputBase(
+export default function InlineTextAreaInputBase(
   {
     fieldName,
     model,
     setModel,
     disabled,
-    type,
     showLabel,
     inputClasses,
     linkTooltipText,
@@ -34,6 +33,7 @@ export default function InlineTextInputBase(
     helpTooltipText,
     handleSaveFunction,
     fieldClassName,
+    rowCount,
   }) {
   const field = model?.getFieldById(fieldName);
   const [errorMessage, setErrorMessage] = useState("");
@@ -107,15 +107,16 @@ export default function InlineTextInputBase(
 
   const getInputBody = () => {
     return (
-      <input
-        type={type}
-        style={style}
+      <textarea
         disabled={disabled}
-        name={name}
-        value={model.getData(fieldName)}
+        value={model?.getData(fieldName)}
         onChange={(event) => updateValue(event.target.value)}
         className={getInputClasses()}
+        rows={rowCount}
+        id={fieldName}
+        style={style}
         autoComplete={"off"}
+        name={name}
       />
     );
   };
@@ -261,8 +262,7 @@ export default function InlineTextInputBase(
   );
 }
 
-InlineTextInputBase.propTypes = {
-  type: PropTypes.string,
+InlineTextAreaInputBase.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -288,4 +288,9 @@ InlineTextInputBase.propTypes = {
   helpTooltipText: PropTypes.string,
   handleSaveFunction: PropTypes.func,
   fieldClassName: PropTypes.string,
+  rowCount: PropTypes.number,
+};
+
+InlineTextAreaInputBase.defaultProps = {
+  rowCount: 5,
 };
