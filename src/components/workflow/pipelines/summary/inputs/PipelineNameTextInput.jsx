@@ -36,6 +36,7 @@ export default function PipelineNameTextInput(
 
     pipelineModel?.setData(fieldName, modelCopy?.getData(fieldName));
     setPipelineModel({...pipelineModel});
+    pipelineModel?.clearChangeMap();
     setModelCopy({...pipelineModel?.clone()});
 
     return response;
