@@ -30,6 +30,7 @@ import PipelineOrchestrationSummaryField
 import PipelineOrchestrationProgressBarBase
   from "temp-library-components/fields/orchestration/progress/PipelineOrchestrationProgressBarBase";
 import PipelineModel from "components/workflow/pipeline.model";
+import PipelineDescriptionTextInput from "components/workflow/pipelines/summary/inputs/PipelineDescriptionTextInput";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -46,7 +47,6 @@ function PipelineSummaryPanel(
     fetchPlan,
   }) {
   const contextType = useContext(AuthContext);
-  const [editDescription, setEditDescription] = useState(false);
   const [editTags, setEditTags] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [pipelineModel, setPipelineModel] = useState(new PipelineModel(pipeline, false));
@@ -68,13 +68,6 @@ function PipelineSummaryPanel(
       let postBody = {};
 
       switch (type) {
-        case "description":
-          pipeline.description = value.description;
-          postBody = {
-            "description": value.description,
-          };
-          setEditDescription(false);
-          break;
         case "tags":
           pipeline.tags = value;
           postBody = {
@@ -106,26 +99,10 @@ function PipelineSummaryPanel(
 
   const handleEditPropertyClick = (type) => {
     switch (type) {
-      case "description":
-        setEditDescription(true);
-        setFormData({ ...formData, description: pipeline.description });
-        break;
       case "tags":
         setEditTags(true);
         break;
     }
-  };
-
-  const getSaveIcon = (field) => {
-    return (
-      <IconBase
-        icon={faSave}
-        className={"text-muted pointer"}
-        iconSize={"sm"}
-        onClickFunction={() => {
-          handleSavePropertyClick(pipeline._id, formData, field);
-        }} />
-    );
   };
 
   const getEditIcon = (field) => {
@@ -136,18 +113,6 @@ function PipelineSummaryPanel(
         iconSize={"sm"}
         onClickFunction={() => {
           handleEditPropertyClick(field);
-        }} />
-    );
-  };
-
-  const getCancelIcon = (cancelFunction) => {
-    return (
-      <IconBase
-        icon={faTimes}
-        className={"text-muted ml-3 pointer"}
-        iconSize={"sm"}
-        onClickFunction={() => {
-          cancelFunction(false);
         }} />
     );
   };
@@ -202,35 +167,6 @@ function PipelineSummaryPanel(
         </Col>
       );
     }
-  };
-
-  const getDescriptionField = () => {
-    if (editDescription === true) {
-      return (
-        <>
-          <Col xs={11}>
-            <Form.Control maxLength="2000" as="textarea" type="text" placeholder=""
-                          value={formData.description || ""}
-                          onChange={e => setFormData({ ...formData, description: e.target.value })} /></Col>
-          <Col xs={1} className="my-auto">
-            {getSaveIcon("description")}
-            {getCancelIcon(setEditDescription)}
-          </Col>
-        </>
-      );
-    }
-
-    return (
-      <>
-        <Col sm={12} className="py-2">
-          <span className="text-muted mr-1">Notes:</span>{pipeline.description}
-          {PipelineRoleHelper.canEditPipelineAttributes(userData, pipeline)
-          && parentWorkflowStatus !== "running"
-            ? getEditIcon("description")
-            : null}
-        </Col>
-      </>
-    );
   };
 
   if (pipeline == null || typeof pipeline !== "object" || Object.keys(pipeline).length === 0) {
@@ -301,7 +237,13 @@ function PipelineSummaryPanel(
           {getSchedulerField()}
           {getTagField()}
 
-          {getDescriptionField()}
+          <Col xs={12}>
+            <PipelineDescriptionTextInput
+              pipelineModel={pipelineModel}
+              setPipelineModel={setPipelineModel}
+              workflowStatus={parentWorkflowStatus}
+            />
+          </Col>
           <Col sm={12}>
             <PipelineOrchestrationSummaryField
               pipelineModel={pipelineModel}
