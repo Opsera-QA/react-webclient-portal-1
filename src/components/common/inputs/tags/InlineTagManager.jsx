@@ -13,13 +13,20 @@ import useGetCustomerTags from "hooks/settings/tags/useGetCustomerTags";
 import TagParsingHelper from "@opsera/persephone/helpers/data/tags/tagParsing.helper";
 import {errorHelpers} from "components/common/helpers/error-helpers";
 import useTagActions from "hooks/settings/tags/useTagActions";
+import InlineInputSaveIcon from "temp-library-components/icon/inputs/InlineInputSaveIcon";
+import InlineInputCancelIcon from "temp-library-components/icon/inputs/InlineInputCancelIcon";
+import FieldLabel from "components/common/fields/FieldLabel";
+import InlineInputEditIcon from "temp-library-components/icon/inputs/InlineInputEditIcon";
+import CustomBadge from "components/common/badges/CustomBadge";
+import {faTag} from "@fortawesome/pro-light-svg-icons";
+import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 
 export default function InlineTagManager(
   {
     fieldName,
     type,
-    dataObject,
-    setDataObject,
+    model,
+    setModel,
     disabled,
     setDataFunction,
     allowCreate,
@@ -28,13 +35,20 @@ export default function InlineTagManager(
     excludeTypes,
     getDisabledTags,
     placeholderText,
+    className,
+    fieldClassName,
+    handleSaveFunction,
+    visible,
+    showFieldLabel,
   }) {
   const toastContext = useContext(DialogToastContext);
-  const field = dataObject?.getFieldById(fieldName);
+  const field = model?.getFieldById(fieldName);
   const [tagOptions, setTagOptions] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [internalErrorMessage, setInternalErrorMessage] = useState("");
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
+  const [inEditMode, setInEditMode] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const {
     customerTags,
     error,
@@ -72,7 +86,7 @@ export default function InlineTagManager(
           currentOptions.push(tagOption);
         }
       } else {
-        if (!dataObject.getArrayData(fieldName).some(item => item.type === tagOption.type && item.value === tagOption.value)) {
+        if (!model.getArrayData(fieldName).some(item => item.type === tagOption.type && item.value === tagOption.value)) {
           currentOptions.push(tagOption);
         }
       }
@@ -82,7 +96,7 @@ export default function InlineTagManager(
   };
 
   const validateAndSetData = (fieldName, value) => {
-    const errors = fieldValidation(value, dataObject, field);
+    const errors = fieldValidation(value, model, field);
 
     if (Array.isArray(errors) && errors.length > 0) {
       setErrorMessage(errors[0]);
@@ -90,8 +104,8 @@ export default function InlineTagManager(
     }
 
     setErrorMessage("");
-    dataObject.setData(fieldName, value);
-    setDataObject({...dataObject});
+    model.setData(fieldName, value);
+    setModel({...model});
   };
 
   const getExistingTag = (newTag) => {
@@ -99,12 +113,12 @@ export default function InlineTagManager(
   };
 
   const tagAlreadySelected = (newTag) => {
-    const currentValues = dataObject.getArrayData(fieldName);
+    const currentValues = model.getArrayData(fieldName);
     return currentValues != null && currentValues.length !== 0 && currentValues.find(tag => tag.type === type && tag.value === newTag) != null;
   };
 
   const handleCreate = async (newValue) => {
-    const currentValues = dataObject.getData(fieldName);
+    const currentValues = model.getData(fieldName);
     newValue = newValue.trim();
     newValue = newValue.replaceAll(' ', '-');
     newValue = newValue.replace(/[^A-Za-z0-9-.]/gi, '');
@@ -136,6 +150,32 @@ export default function InlineTagManager(
     }
   };
 
+  const handleCancelFunction = () => {
+    validateAndSetData(fieldName, model?.getOriginalValue(fieldName));
+    setInEditMode(false);
+  };
+
+  const handleSave = async () => {
+    const isFieldValid = model?.isPotentialFieldValid(fieldName);
+
+    if (isFieldValid !== true) {
+      const errors = model.getErrors();
+      toastContext.showFormValidationErrorDialog(errors && errors.length > 0 ? errors[0] : undefined);
+      return false;
+    }
+
+    try {
+      setIsSaving(true);
+      await handleSaveFunction();
+      toastContext.showUpdateSuccessResultDialog(model?.getType());
+      setInEditMode(false);
+    } catch (error) {
+      toastContext.showUpdateFailureResultDialog(model?.getType(), error);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const getErrorMessage = () => {
     if (hasStringValue(internalErrorMessage) === true) {
       return internalErrorMessage;
@@ -147,61 +187,116 @@ export default function InlineTagManager(
   };
 
   const hasWarningState = () => {
-    return field.noItemsWarning && dataObject?.getArrayData(fieldName)?.length === 0;
+    return field.noItemsWarning && model?.getArrayData(fieldName)?.length === 0;
+  };
+
+  const getTagDisplayer = () => {
+    const tags = TagParsingHelper.parseTagArray(model?.getArrayData(fieldName), []);
+
+    return (
+      <CustomBadgeContainer>
+        {tags.map((item, index) => {
+          if (typeof item !== "string")
+            return (
+              <CustomBadge
+                badgeText={<span><span className="mr-1">{item.type}:</span>{item.value}</span>}
+                icon={faTag}
+                key={index}
+              />
+            );
+        })}
+      </CustomBadgeContainer>
+    );
   };
 
   if (type == null && allowCreate !== false) {
     return (<div className="danger-red">Error for tag manager input: You forgot to wire up type!</div>);
   }
 
-  if (field == null) {
+  if (field == null || visible === false || handleSaveFunction == null) {
     return null;
   }
 
-  return (
-    <InputContainer fieldName={fieldName}>
-      <InputLabel
-        showLabel={inline !== true}
-        model={dataObject}
-        field={field}
-        hasError={hasStringValue(errorMessage) === true}
-        hasWarningState={hasWarningState()}
-        disabled={disabled}
-        isLoading={isLoading}
-      />
-      <div className={"custom-multiselect-input"}>
-        <StandaloneMultiSelectInput
-          hasErrorState={hasStringValue(errorMessage)}
+  if (inEditMode === true) {
+    return (
+      <InputContainer className={className} fieldName={fieldName}>
+        <InputLabel
+          showLabel={inline !== true}
+          model={model}
+          field={field}
+          hasError={hasStringValue(errorMessage) === true}
           hasWarningState={hasWarningState()}
-          selectOptions={[...tagOptions]}
-          textField={(tag) => `${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`}
-          allowCreate={hasStringValue(type) === true ? allowCreate : undefined}
-          groupBy={(tag) => capitalizeFirstLetter(tag?.type, " ", "Undefined Type")}
-          className={inline ? `inline-filter-input inline-select-filter` : undefined}
-          busy={isLoading}
-          manualEntry={true}
-          createOptionFunction={(value) => handleCreate(value)}
-          value={[...dataObject?.getArrayData(fieldName)]}
-          placeholderText={internalPlaceholderText ? internalPlaceholderText : placeholderText}
-          disabled={disabled || isLoading || (getDisabledTags && getDisabledTags(tagOptions))}
-          setDataFunction={(tagArray) => setDataFunction ? setDataFunction(field.id, TagParsingHelper.parseTagArray(tagArray)) : validateAndSetData(field.id, TagParsingHelper.parseTagArray(tagArray))}
+          disabled={disabled}
+          isLoading={isLoading}
+        />
+        <div className={"d-flex w-100"}>
+          <div className={"custom-multiselect-input"}>
+            <StandaloneMultiSelectInput
+              hasErrorState={hasStringValue(errorMessage)}
+              hasWarningState={hasWarningState()}
+              selectOptions={[...tagOptions]}
+              textField={(tag) => `${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`}
+              allowCreate={hasStringValue(type) === true ? allowCreate : undefined}
+              groupBy={(tag) => capitalizeFirstLetter(tag?.type, " ", "Undefined Type")}
+              className={inline ? `inline-filter-input inline-select-filter` : undefined}
+              busy={isLoading}
+              manualEntry={true}
+              createOptionFunction={(value) => handleCreate(value)}
+              value={[...model?.getArrayData(fieldName)]}
+              placeholderText={internalPlaceholderText ? internalPlaceholderText : placeholderText}
+              disabled={disabled || isLoading || (getDisabledTags && getDisabledTags(tagOptions))}
+              setDataFunction={(tagArray) => setDataFunction ? setDataFunction(field.id, TagParsingHelper.parseTagArray(tagArray)) : validateAndSetData(field.id, TagParsingHelper.parseTagArray(tagArray))}
+              fieldName={fieldName}
+            />
+          </div>
+          <InlineInputSaveIcon
+            isSaving={isSaving}
+            handleSaveFunction={handleSave}
+            visible={inEditMode === true && model?.isPotentialFieldValid(model?.getData(fieldName), fieldName) === true && model?.isChanged(fieldName) === true}
+            disabled={disabled}
+          />
+          <InlineInputCancelIcon
+            isSaving={isSaving}
+            handleCancelFunction={handleCancelFunction}
+            visible={isSaving !== true && inEditMode === true}
+            disabled={disabled}
+          />
+        </div>
+        <InfoText
+          model={model}
           fieldName={fieldName}
+          field={field}
+          errorMessage={getErrorMessage()}
+        />
+      </InputContainer>
+    );
+  }
+
+  return (
+    <InputContainer className={className} fieldName={fieldName}>
+      <div className={"d-flex w-100"}>
+        <FieldLabel
+          field={field}
+          fieldName={fieldName}
+          showLabel={showFieldLabel !== false}
+        />
+        <div className={fieldClassName}>
+          {getTagDisplayer()}
+        </div>
+        <InlineInputEditIcon
+          visible={disabled !== true && inEditMode === false}
+          disabled={disabled}
+          handleEditFunction={() => setInEditMode(true)}
         />
       </div>
-      <InfoText
-        fieldName={fieldName}
-        model={dataObject}
-        field={field}
-        errorMessage={getErrorMessage()}
-      />
     </InputContainer>
   );
 }
 
 InlineTagManager.propTypes = {
-  setDataObject: PropTypes.func,
+  setModel: PropTypes.func,
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
+  model: PropTypes.object,
   type: PropTypes.string,
   setDataFunction: PropTypes.func,
   allowCreate: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
@@ -211,6 +306,11 @@ InlineTagManager.propTypes = {
   getDisabledTags: PropTypes.func,
   placeholderText: PropTypes.string,
   excludeTypes: PropTypes.array,
+  className: PropTypes.string,
+  fieldClassName: PropTypes.string,
+  handleSaveFunction: PropTypes.func,
+  visible: PropTypes.bool,
+  showFieldLabel: PropTypes.bool,
 };
 
 InlineTagManager.defaultProps = {
