@@ -11,6 +11,7 @@ import {
 import SideBySideViewBase from "components/common/tabs/SideBySideViewBase";
 import FollowingVerticalTabContainer from "components/user/user_settings/subscriptions/FollowingVerticalTabContainer";
 import userSubscriptionConstants from "@opsera/definitions/constants/subscriptions/userSubscription.constants";
+import FollowedTasksPanel from "components/user/user_settings/subscriptions/FollowedTasksPanel";
 
 function Following() {
   const [activeTab, setActiveTab] = useState(userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.DASHBOARD);
@@ -18,13 +19,28 @@ function Following() {
   const getCurrentView = () => {
     switch (activeTab) {
       case userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.TAG:
-        return (<TagSubscriptionsPanel/>);
+        return (
+          <TagSubscriptionsPanel
+          />
+        );
       case userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.PIPELINE:
-        return <FollowedPipelinesPanel className={"p-3"}/>;
+        return (
+          <FollowedPipelinesPanel
+            className={"p-3"}
+          />
+        );
       case userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.DASHBOARD:
-        return <FollowedPipelinesPanel className={"p-3"}/>;
+        return (
+          <FollowedPipelinesPanel
+            className={"p-3"}
+          />
+        );
       case userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.TASK:
-        return <FollowedPipelinesPanel className={"p-3"}/>;
+        return (
+          <FollowedTasksPanel
+            className={"p-3"}
+          />
+        );
       default:
         return null;
     }

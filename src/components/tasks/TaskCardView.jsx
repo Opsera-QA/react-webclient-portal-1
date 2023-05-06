@@ -15,6 +15,7 @@ export default function TaskCardView(
     loadData,
     isLoading,
     containerHeight,
+    noDataMessage,
   }) {
   const history = useHistory();
 
@@ -40,11 +41,13 @@ export default function TaskCardView(
     <VanitySetCardView
       isLoading={isLoading}
       loadData={loadData}
+      noDataMessage={noDataMessage}
       cards={
         <VerticalCardViewBase
           getCardFunction={getTaskCard}
           data={taskData}
           minHeight={containerHeight}
+          noDataMessage={noDataMessage}
         />
       }
     />
@@ -56,4 +59,5 @@ TaskCardView.propTypes = {
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   containerHeight: PropTypes.string,
+  noDataMessage: PropTypes.any,
 };
