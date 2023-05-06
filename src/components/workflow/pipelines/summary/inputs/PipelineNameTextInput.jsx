@@ -60,6 +60,7 @@ export default function PipelineNameTextInput(
       className={className}
       handleSaveFunction={handleSaveFunction}
       fieldClassName={fieldClassName}
+      showFieldLabel={false}
     />
   );
 }

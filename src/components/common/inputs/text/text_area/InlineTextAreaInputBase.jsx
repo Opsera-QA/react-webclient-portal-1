@@ -9,6 +9,8 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import {faPencilAlt, faSave, faTimes} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import FieldLabelBase from "components/common/fields/FieldLabelBase";
+import FieldLabel from "components/common/fields/FieldLabel";
 
 export default function InlineTextAreaInputBase(
   {
@@ -16,7 +18,8 @@ export default function InlineTextAreaInputBase(
     model,
     setModel,
     disabled,
-    showLabel,
+    showInputLabel,
+    showFieldLabel,
     inputClasses,
     linkTooltipText,
     detailViewLink,
@@ -226,12 +229,12 @@ export default function InlineTextAreaInputBase(
     );
   };
 
-  const getLabel = () => {
-    if (showLabel !== false && inEditMode === true) {
+  const getInputLabel = () => {
+    if (showInputLabel !== false && inEditMode === true) {
       return (
         <InputLabel
           model={model}
-          showLabel={showLabel}
+          showLabel={showInputLabel}
           field={field}
           linkTooltipText={linkTooltipText}
           detailViewLink={detailViewLink}
@@ -244,14 +247,27 @@ export default function InlineTextAreaInputBase(
     }
   };
 
+  const getFieldLabel = () => {
+    if (showFieldLabel !== false && inEditMode !== true) {
+      return (
+        <FieldLabel
+          showLabel={showFieldLabel}
+          field={field}
+          fieldName={fieldName}
+        />
+      );
+    }
+  };
+
   if (field == null || visible === false || handleSaveFunction == null) {
     return null;
   }
 
   return (
     <InputContainer className={className} fieldName={fieldName}>
-      {getLabel()}
+      {getInputLabel()}
       <div className={"d-flex w-100"}>
+        {getFieldLabel()}
         {getInput()}
         {getEditIcon()}
         {getSaveIcon()}
@@ -269,7 +285,8 @@ InlineTextAreaInputBase.propTypes = {
   inputPopover: PropTypes.object,
   inputClasses: PropTypes.string,
   disabled: PropTypes.bool,
-  showLabel: PropTypes.bool,
+  showInputLabel: PropTypes.bool,
+  showFieldLabel: PropTypes.bool,
   linkTooltipText: PropTypes.string,
   detailViewLink: PropTypes.string,
   infoOverlay: PropTypes.any,
