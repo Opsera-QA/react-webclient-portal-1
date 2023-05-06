@@ -14,7 +14,7 @@ import TagParsingHelper from "@opsera/persephone/helpers/data/tags/tagParsing.he
 import {errorHelpers} from "components/common/helpers/error-helpers";
 import useTagActions from "hooks/settings/tags/useTagActions";
 
-function TagManager(
+export default function InlineTagManager(
   {
     fieldName,
     type,
@@ -43,7 +43,7 @@ function TagManager(
   const tagActions = useTagActions();
 
   useEffect(() => {
-      loadTagOptions(customerTags);
+    loadTagOptions(customerTags);
   }, [customerTags]);
 
   useEffect(() => {
@@ -74,7 +74,7 @@ function TagManager(
       } else {
         if (!dataObject.getArrayData(fieldName).some(item => item.type === tagOption.type && item.value === tagOption.value)) {
           currentOptions.push(tagOption);
-        }     
+        }
       }
     });
 
@@ -198,7 +198,7 @@ function TagManager(
   );
 }
 
-TagManager.propTypes = {
+InlineTagManager.propTypes = {
   setDataObject: PropTypes.func,
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
@@ -213,11 +213,9 @@ TagManager.propTypes = {
   excludeTypes: PropTypes.array,
 };
 
-TagManager.defaultProps = {
+InlineTagManager.defaultProps = {
   allowCreate: "onFilter",
   fieldName: "tags",
   inline: false,
   placeholderText: "Select Tags"
 };
-
-export default TagManager;

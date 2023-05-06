@@ -7,7 +7,6 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import InformationDialog from "components/common/status_notifications/info";
-import EditTagModal from "components/workflow/EditTagModal";
 import pipelineActions from "components/workflow/pipeline-actions";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
@@ -132,11 +131,13 @@ function PipelineSummaryPanel(
         </div>
 
         {editTags &&
-        <EditTagModal data={pipeline.tags} visible={editTags} onHide={() => {
-          setEditTags(false);
-        }} onClick={(tags) => {
-          handleSavePropertyClick(pipeline._id, tags, "tags");
-        }} />}
+        // <EditTagModal data={pipeline.tags} visible={editTags} onHide={() => {
+        //   setEditTags(false);
+        // }} onClick={(tags) => {
+        //   handleSavePropertyClick(pipeline._id, tags, "tags");
+        // }} />
+          undefined
+        }
 
         </div>
       </Col>
