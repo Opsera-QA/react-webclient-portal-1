@@ -11,6 +11,7 @@ export default function useGetPipelines(
   active,
   setUrlParameters = false,
   pageSize,
+  isSubscribed,
   handleErrorFunction,
 ) {
   const [pipelines, setPipelines] = useState([]);
@@ -30,6 +31,10 @@ export default function useGetPipelines(
 
     if (pageSize) {
       pipelineFilterModel.setData("pageSize", pageSize);
+    }
+
+    if (isSubscribed === true) {
+      pipelineFilterModel.setData("type", "subscribed");
     }
 
     if (loadData) {
