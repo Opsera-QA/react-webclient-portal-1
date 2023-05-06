@@ -163,7 +163,7 @@ export default function InlineTextAreaInputBase(
   };
 
   const getSaveIcon = () => {
-    if (inEditMode === true && model?.isPotentialFieldValid(fieldName) === true && model?.isChanged(fieldName) === true) {
+    if (inEditMode === true && model?.isPotentialFieldValid(model?.getData(fieldName), fieldName) === true && model?.isChanged(fieldName) === true) {
       return (
         <IconBase
           icon={faSave}
