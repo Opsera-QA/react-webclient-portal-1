@@ -21,6 +21,7 @@ export default function FollowedTasksPanel({className}) {
         taskData={tasks}
         isLoading={isLoading}
         noDataMessage={"You are not currently following any Tasks"}
+        error={error}
       />
     </div>
   );

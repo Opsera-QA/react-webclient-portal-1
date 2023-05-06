@@ -26,20 +26,16 @@ function Following() {
       case userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.PIPELINE:
         return (
           <FollowedPipelinesPanel
-            className={"p-3"}
           />
         );
       case userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.DASHBOARD:
         return (
           <FollowedPipelinesPanel
-            className={"p-3"}
           />
         );
       case userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.TASK:
         return (
-          <FollowedTasksPanel
-            className={"p-3"}
-          />
+          <FollowedTasksPanel />
         );
       default:
         return null;

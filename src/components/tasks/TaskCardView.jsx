@@ -16,6 +16,7 @@ export default function TaskCardView(
     isLoading,
     containerHeight,
     noDataMessage,
+    error,
   }) {
   const history = useHistory();
 
@@ -42,6 +43,7 @@ export default function TaskCardView(
       isLoading={isLoading}
       loadData={loadData}
       noDataMessage={noDataMessage}
+      error={error}
       cards={
         <VerticalCardViewBase
           getCardFunction={getTaskCard}
@@ -60,4 +62,5 @@ TaskCardView.propTypes = {
   isLoading: PropTypes.bool,
   containerHeight: PropTypes.string,
   noDataMessage: PropTypes.any,
+  error: PropTypes.any,
 };

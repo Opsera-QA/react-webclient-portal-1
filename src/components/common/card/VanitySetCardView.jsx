@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import VanityPaginationContainer from "components/common/pagination/v2/VanityPaginationContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import InfoMessageFieldBase from "components/common/fields/text/message/InfoMessageFieldBase";
+import Error from "components/common/status_notifications/error";
+import ErrorMessageFieldBase from "components/common/fields/text/message/ErrorMessageFieldBase";
 
 function VanitySetCardView(
   {
@@ -12,6 +14,7 @@ function VanitySetCardView(
     loadData,
     noDataMessage,
     minHeight,
+    error,
   }) {
   const getBody = () => {
     if (!isLoading && cards == null) {
@@ -20,6 +23,16 @@ function VanitySetCardView(
           <InfoMessageFieldBase
             message={noDataMessage}
             showInformationLabel={false}
+          />
+        </CenteredContentWrapper>
+      );
+    }
+
+    if (!isLoading && error && (!Array.isArray(cards) || cards.length === 0)) {
+      return (
+        <CenteredContentWrapper minHeight={minHeight}>
+          <ErrorMessageFieldBase
+            message={error}
           />
         </CenteredContentWrapper>
       );
@@ -57,6 +70,7 @@ VanitySetCardView.propTypes = {
   loadData: PropTypes.func,
   noDataMessage: PropTypes.any,
   minHeight: PropTypes.string,
+  error: PropTypes.any,
 };
 
 VanitySetCardView.defaultProps = {

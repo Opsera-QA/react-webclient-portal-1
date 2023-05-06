@@ -43,6 +43,7 @@ export default function PipelineCardView(
       noDataMessage={noDataMessage}
       cards={
         <VerticalCardViewBase
+          isLoading={isLoading}
           data={pipelines}
           getCardFunction={getPipelineCard}
           noDataMessage={noDataMessage}
