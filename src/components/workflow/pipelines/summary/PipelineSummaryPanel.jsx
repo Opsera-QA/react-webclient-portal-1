@@ -1,20 +1,9 @@
 import React, {useContext, useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import { Row, Col, Form } from "react-bootstrap";
-import {
-  faPencilAlt,
-  faSave, faTag,
-  faTimes,
-} from "@fortawesome/pro-light-svg-icons";
-import { AuthContext } from "contexts/AuthContext";
+import { Row, Col } from "react-bootstrap";
 import InformationDialog from "components/common/status_notifications/info";
-import EditTagModal from "components/workflow/EditTagModal";
-import pipelineActions from "components/workflow/pipeline-actions";
-import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
-import CustomBadge from "components/common/badges/CustomBadge";
 import PipelineDurationMetricsStandaloneField
   from "components/common/fields/pipelines/metrics/PipelineDurationMetricsStandaloneField";
-import IconBase from "components/common/icons/IconBase";
 import PipelineSchedulerField from "components/workflow/pipelines/summary/fields/PipelineSchedulerField";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
@@ -31,13 +20,7 @@ import PipelineOrchestrationProgressBarBase
   from "temp-library-components/fields/orchestration/progress/PipelineOrchestrationProgressBarBase";
 import PipelineModel from "components/workflow/pipeline.model";
 import PipelineDescriptionTextInput from "components/workflow/pipelines/summary/inputs/PipelineDescriptionTextInput";
-
-const INITIAL_FORM_DATA = {
-  name: "",
-  project: { name: "", project_id: "" },
-  description: "",
-  type: [],
-};
+import PipelineTagManagerInput from "components/workflow/pipelines/summary/inputs/PipelineTagManagerInput";
 
 // TODO: This class needs to be reworked with new components and also to cleanup
 function PipelineSummaryPanel(
@@ -46,14 +29,9 @@ function PipelineSummaryPanel(
     parentWorkflowStatus,
     fetchPlan,
   }) {
-  const contextType = useContext(AuthContext);
-  const [editTags, setEditTags] = useState(false);
-  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [pipelineModel, setPipelineModel] = useState(new PipelineModel(pipeline, false));
   const {
     userData,
-    cancelTokenSource,
-    toastContext,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -61,113 +39,6 @@ function PipelineSummaryPanel(
     //   setPipelineModel({...new PipelineModel(pipeline, false)});
     // }
   }, [pipeline]);
-
-  const handleSavePropertyClick = async (pipelineId, value, type) => {
-    if (Object.keys(value).length > 0 && type.length > 0) {
-      const { getAccessToken } = contextType;
-      let postBody = {};
-
-      switch (type) {
-        case "tags":
-          pipeline.tags = value;
-          postBody = {
-            "tags": pipeline.tags,
-          };
-          setEditTags(false);
-          break;
-      }
-
-      setPipelineModel({...new PipelineModel(pipeline, false)});
-
-      if (Object.keys(postBody).length > 0) {
-        try {
-          await pipelineActions.updatePipelineV2(
-            getAccessToken,
-            cancelTokenSource,
-            pipelineId,
-            pipeline,
-          );
-          setFormData(INITIAL_FORM_DATA);
-          toastContext.showUpdateSuccessResultDialog("Pipeline");
-          await fetchPlan();
-        } catch (error) {
-          toastContext.showErrorDialog(error);
-        }
-      }
-    }
-  };
-
-  const handleEditPropertyClick = (type) => {
-    switch (type) {
-      case "tags":
-        setEditTags(true);
-        break;
-    }
-  };
-
-  const getEditIcon = (field) => {
-    return (
-      <IconBase
-        icon={faPencilAlt}
-        className={"ml-2 text-muted pointer"}
-        iconSize={"sm"}
-        onClickFunction={() => {
-          handleEditPropertyClick(field);
-        }} />
-    );
-  };
-
-  const getTagField = () => {
-    return (
-      <Col xs={12} className={"d-flex"}>
-        <div className={"text-muted my-2 mr-1"}>Tags:</div>
-        <div className={"my-auto d-flex"}>
-
-
-        {!editTags && pipeline.tags &&
-        <CustomBadgeContainer>
-          {pipeline.tags.map((item, idx) => {
-            if (typeof item !== "string")
-              return (
-                <CustomBadge badgeText={<span><span className="mr-1">{item.type}:</span>{item.value}</span>}
-                             icon={faTag}
-                             key={idx}
-                />
-              );
-          })}
-        </CustomBadgeContainer>
-        }
-        <div className={"mt-1"}>
-          {PipelineRoleHelper.canEditPipelineTags(userData, pipeline) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
-        </div>
-
-        {editTags &&
-        <EditTagModal data={pipeline.tags} visible={editTags} onHide={() => {
-          setEditTags(false);
-        }} onClick={(tags) => {
-          handleSavePropertyClick(pipeline._id, tags, "tags");
-        }} />}
-
-        </div>
-      </Col>
-    );
-  };
-
-  const getSchedulerField = () => {
-    const pipelineTypes = pipeline?.type;
-    // TODO: Move canEditPipelineSchedule inside field. Left it out for now.
-    if (!Array.isArray(pipelineTypes) || (!pipelineTypes.includes("informatica") && !pipelineTypes.includes("sfdc"))) {
-      return (
-        <Col sm={12} md={6}>
-          <PipelineSchedulerField
-            pipelineModel={pipelineModel}
-            updatedAt={pipelineModel?.getData("updatedAt")}
-            canEditPipelineSchedule={PipelineRoleHelper.canEditPipelineAttributes(userData, pipeline) && parentWorkflowStatus !== "running"}
-          />
-        </Col>
-      );
-    }
-  };
 
   if (pipeline == null || typeof pipeline !== "object" || Object.keys(pipeline).length === 0) {
     return (
@@ -234,9 +105,20 @@ function PipelineSummaryPanel(
               workflowStatus={parentWorkflowStatus}
             />
           </Col>
-          {getSchedulerField()}
-          {getTagField()}
-
+          <Col sm={12} md={6}>
+            <PipelineSchedulerField
+              pipelineModel={pipelineModel}
+              updatedAt={pipelineModel?.getData("updatedAt")}
+              canEditPipelineSchedule={PipelineRoleHelper.canEditPipelineAttributes(userData, pipeline) && parentWorkflowStatus !== "running"}
+            />
+          </Col>
+          <Col xs={12}>
+            <PipelineTagManagerInput
+              pipelineModel={pipelineModel}
+              setPipelineModel={setPipelineModel}
+              workflowStatus={parentWorkflowStatus}
+            />
+          </Col>
           <Col xs={12}>
             <PipelineDescriptionTextInput
               pipelineModel={pipelineModel}

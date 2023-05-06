@@ -6,10 +6,11 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import {parseError} from "components/common/helpers/error-helpers";
 import {InputGroup} from "react-bootstrap";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import {faPencilAlt, faSave, faTimes} from "@fortawesome/pro-light-svg-icons";
-import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import FieldLabel from "components/common/fields/FieldLabel";
+import InlineInputSaveIcon from "temp-library-components/icon/inputs/InlineInputSaveIcon";
+import InlineInputCancelIcon from "temp-library-components/icon/inputs/InlineInputCancelIcon";
+import InlineInputEditIcon from "temp-library-components/icon/inputs/InlineInputEditIcon";
 
 export default function InlineTextInputBase(
   {
@@ -127,19 +128,6 @@ export default function InlineTextInputBase(
     setInEditMode(false);
   };
 
-  const getEditIcon = () => {
-    if (disabled !== true && inEditMode === false) {
-      return (
-        <IconBase
-          icon={faPencilAlt}
-          iconSize={"sm"}
-          className={"ml-2 my-auto text-muted pointer"}
-          onClickFunction={() => setInEditMode(true)}
-        />
-      );
-    }
-  };
-
   const handleSave = async () => {
     const isFieldValid = model?.isPotentialFieldValid(fieldName);
 
@@ -161,53 +149,7 @@ export default function InlineTextInputBase(
     }
   };
 
-  const getSaveIcon = () => {
-    if (inEditMode === true && model?.isPotentialFieldValid(model?.getData(fieldName), fieldName) === true && model?.isChanged(fieldName) === true) {
-      return (
-        <IconBase
-          icon={faSave}
-          className={"ml-2 my-auto text-muted pointer"}
-          iconSize={"sm"}
-          isLoading={isSaving}
-          onClickFunction={handleSave}
-        />
-      );
-    }
-  };
-
-  const getCancelIcon = () => {
-    if (isSaving !== true && inEditMode === true) {
-      return (
-        <IconBase
-          icon={faTimes}
-          className={"text-muted my-auto ml-3 pointer"}
-          iconSize={"sm"}
-          onClickFunction={handleCancelFunction}
-        />
-      );
-    }
-  };
-
-  const getFormTextField = () => {
-    if (inEditMode === true) {
-      return (
-        <InfoText
-          model={model}
-          fieldName={fieldName}
-          field={field}
-          errorMessage={errorMessage}
-        />
-      );
-    }
-  };
-
   const getInput = () => {
-    if (inEditMode !== true) {
-      return (
-        <div className={fieldClassName}>{model?.getData(fieldName)}</div>
-      );
-    }
-
     if (rightSideInputButton != null) {
       return (
         <InputGroup className={"w-100 flex-nowrap text-input-with-button"}>
@@ -227,9 +169,13 @@ export default function InlineTextInputBase(
     );
   };
 
-  const getInputLabel = () => {
-    if (showInputLabel !== false && inEditMode === true) {
-      return (
+  if (field == null || visible === false || handleSaveFunction == null) {
+    return null;
+  }
+
+  if (inEditMode === true) {
+    return (
+      <InputContainer className={className} fieldName={fieldName}>
         <InputLabel
           model={model}
           field={field}
@@ -239,37 +185,50 @@ export default function InlineTextInputBase(
           inputHelpOverlay={inputHelpOverlay}
           hasError={hasStringValue(errorMessage) === true}
           helpTooltipText={helpTooltipText}
+          showLabel={showInputLabel !== false}
         />
-      );
-    }
-  };
-
-  const getFieldLabel = () => {
-    if (showFieldLabel !== false && inEditMode !== true) {
-      return (
-        <FieldLabel
-          field={field}
+        <div className={"d-flex w-100"}>
+          {getInput()}
+          <InlineInputSaveIcon
+            isSaving={isSaving}
+            handleSaveFunction={handleSave}
+            visible={inEditMode === true && model?.isPotentialFieldValid(model?.getData(fieldName), fieldName) === true && model?.isChanged(fieldName) === true}
+            disabled={disabled}
+          />
+          <InlineInputCancelIcon
+            isSaving={isSaving}
+            handleCancelFunction={handleCancelFunction}
+            visible={isSaving !== true && inEditMode === true}
+            disabled={disabled}
+          />
+        </div>
+        <InfoText
+          model={model}
           fieldName={fieldName}
+          field={field}
+          errorMessage={errorMessage}
         />
-      );
-    }
-  };
-
-  if (field == null || visible === false || handleSaveFunction == null) {
-    return null;
+      </InputContainer>
+    );
   }
 
   return (
     <InputContainer className={className} fieldName={fieldName}>
-      {getInputLabel()}
       <div className={"d-flex w-100"}>
-        {getFieldLabel()}
-        {getInput()}
-        {getEditIcon()}
-        {getSaveIcon()}
-        {getCancelIcon()}
+        <FieldLabel
+          field={field}
+          fieldName={fieldName}
+          showLabel={showFieldLabel !== false}
+        />
+        <div className={fieldClassName}>
+          {model?.getData(fieldName)}
+        </div>
+        <InlineInputEditIcon
+          visible={disabled !== true && inEditMode === false}
+          disabled={disabled}
+          handleEditFunction={() => setInEditMode(true)}
+        />
       </div>
-      {getFormTextField()}
     </InputContainer>
   );
 }

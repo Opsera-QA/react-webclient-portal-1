@@ -1,10 +1,8 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import tagMetadata from "components/settings/tags/tag.metadata";
 import Model from "core/data_model/model";
-import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
@@ -14,7 +12,7 @@ import {fieldValidation} from "core/data_model/modelValidation";
 import useGetCustomerTags from "hooks/settings/tags/useGetCustomerTags";
 import TagParsingHelper from "@opsera/persephone/helpers/data/tags/tagParsing.helper";
 import {errorHelpers} from "components/common/helpers/error-helpers";
-import useAxiosCancelToken from "hooks/useAxiosCancelToken";
+import useTagActions from "hooks/settings/tags/useTagActions";
 
 function TagManager(
   {
@@ -31,7 +29,6 @@ function TagManager(
     getDisabledTags,
     placeholderText,
   }) {
-  const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const field = dataObject?.getFieldById(fieldName);
   const [tagOptions, setTagOptions] = useState([]);
@@ -42,9 +39,8 @@ function TagManager(
     customerTags,
     error,
     isLoading,
-    loadData,
   } = useGetCustomerTags();
-  const { cancelTokenSource } = useAxiosCancelToken();
+  const tagActions = useTagActions();
 
   useEffect(() => {
       loadTagOptions(customerTags);
@@ -59,15 +55,6 @@ function TagManager(
       setInternalErrorMessage(errorHelpers.parseApiErrorForInfoText("Tags", error));
     }
   }, [error]);
-
-  const saveNewTag = async (newTagDto) => {
-    try {
-      await adminTagsActions.createTagV2(getAccessToken, cancelTokenSource, newTagDto);
-    }
-    catch (error) {
-      toastContext.showCreateFailureResultDialog("Tag");
-    }
-  };
 
   const loadTagOptions = (tags) => {
     let currentOptions = [];
@@ -112,16 +99,19 @@ function TagManager(
   };
 
   const tagAlreadySelected = (newTag) => {
-    let currentValues = dataObject.getData(fieldName);
+    const currentValues = dataObject.getArrayData(fieldName);
     return currentValues != null && currentValues.length !== 0 && currentValues.find(tag => tag.type === type && tag.value === newTag) != null;
   };
 
   const handleCreate = async (newValue) => {
-    let currentValues = dataObject.getData(fieldName);
-    let existingTag = getExistingTag(newValue);
+    const currentValues = dataObject.getData(fieldName);
+    newValue = newValue.trim();
+    newValue = newValue.replaceAll(' ', '-');
+    newValue = newValue.replace(/[^A-Za-z0-9-.]/gi, '');
+    newValue = newValue.toLowerCase();
+    const existingTag = getExistingTag(newValue);
 
-    if (existingTag != null)
-    {
+    if (existingTag != null) {
       let tagSelected = tagAlreadySelected(newValue);
       if (!tagSelected) {
         currentValues.push(existingTag);
@@ -130,20 +120,20 @@ function TagManager(
       return;
     }
 
-    newValue = newValue.trim();
-    newValue = newValue.replaceAll(' ', '-');
-    newValue = newValue.replace(/[^A-Za-z0-9-.]/gi, '');
-    newValue = newValue.toLowerCase();
-
-    let currentOptions = [...tagOptions];
-    let newTag = {type: type, value: newValue, active: true, configuration: {}};
-    let newTagOption = {type: type, value: newValue};
-    let newTagDto = new Model(newTag, tagMetadata, true);
-    await saveNewTag(newTagDto);
-    currentValues.push(newTagOption);
-    currentOptions.push(newTagOption);
-    setTagOptions(currentOptions);
-    validateAndSetData(fieldName, currentValues);
+    try {
+      const currentOptions = [...tagOptions];
+      const newTag = {type: type, value: newValue, active: true, configuration: {}};
+      const newTagOption = {type: type, value: newValue};
+      const newTagDto = new Model(newTag, tagMetadata, true);
+      await tagActions.createTag(newTagDto);
+      currentValues.push(newTagOption);
+      currentOptions.push(newTagOption);
+      setTagOptions([...currentOptions]);
+      validateAndSetData(fieldName, currentValues);
+    }
+    catch (error) {
+      toastContext.showCreateFailureResultDialog("Tag", error);
+    }
   };
 
   const getErrorMessage = () => {
