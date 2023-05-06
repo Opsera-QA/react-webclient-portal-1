@@ -23,9 +23,10 @@ export default function PipelineNameTextInput(
 
   // TODO: Do a targeted update route instead of passing the whole pipeline
   const handleSaveFunction = async () => {
-    return await pipelineActions.updatePipeline(
+    return await pipelineActions.updatePipelineField(
       pipelineModel?.getMongoDbId(),
-      pipelineModel?.getPersistData(),
+      "name",
+      pipelineModel?.getData("name"),
     );
   };
 
