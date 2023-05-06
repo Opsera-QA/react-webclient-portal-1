@@ -67,6 +67,22 @@ export default function usePipelineActions() {
     return await apiService.handleApiGetRequest(apiUrl, queryParameters);
   };
 
+  pipelineActions.updatePipelineField = async (
+    pipelineId,
+    fieldName,
+    newValue,
+  ) => {
+    const apiUrl = `/workflow/pipelines/${pipelineId}`;
+    const postBody = {
+      fieldName: fieldName,
+      value: newValue,
+    };
+    return await apiService.handleApiPatchRequest(
+      apiUrl,
+      postBody,
+    );
+  };
+
   pipelineActions.updatePipelineActionRoles = async (
     pipelineId,
     roles,
