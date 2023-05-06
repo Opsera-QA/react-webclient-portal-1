@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import TagSubscriptionsPanel from "components/user/user_settings/subscriptions/TagSubscriptionsPanel";
+import FollowedTagsPanel from "components/user/user_settings/subscriptions/FollowedTagsPanel";
 import FollowedPipelinesPanel from "components/user/user_settings/subscriptions/FollowedPipelinesPanel";
 import UserSettingsSubNavigationBar from "components/user/user_settings/UserSettingsSubNavigationBar";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
@@ -31,7 +31,7 @@ export default function Following() {
         );
       case userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.TAG:
         return (
-          <TagSubscriptionsPanel
+          <FollowedTagsPanel
           />
         );
       case userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.TASK:
