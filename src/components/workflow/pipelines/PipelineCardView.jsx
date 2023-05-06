@@ -15,6 +15,7 @@ export default function PipelineCardView(
     loadData,
     isLoading,
     noDataMessage,
+    error,
   }) {
   const history = useHistory();
 
@@ -41,6 +42,7 @@ export default function PipelineCardView(
       isLoading={isLoading}
       loadData={loadData}
       noDataMessage={noDataMessage}
+      error={error}
       cards={
         <VerticalCardViewBase
           isLoading={isLoading}
@@ -58,4 +60,5 @@ PipelineCardView.propTypes = {
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   noDataMessage: PropTypes.any,
+  error: PropTypes.any,
 };

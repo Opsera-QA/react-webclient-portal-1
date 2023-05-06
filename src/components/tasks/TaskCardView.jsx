@@ -50,6 +50,7 @@ export default function TaskCardView(
           data={taskData}
           minHeight={containerHeight}
           noDataMessage={noDataMessage}
+          isLoading={isLoading}
         />
       }
     />
