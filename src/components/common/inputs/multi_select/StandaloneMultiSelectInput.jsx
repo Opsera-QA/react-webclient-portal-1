@@ -42,7 +42,7 @@ function StandaloneMultiSelectInput(
   }) {
   return (
     <div
-      className={"custom-multiselect-input"}
+      className={"custom-multiselect-input w-100"}
       onClick={onClickFunction}
     >
       <Multiselect
