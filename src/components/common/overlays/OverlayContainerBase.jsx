@@ -7,7 +7,7 @@ export default function OverlayContainerBase(
   }) {
 
   return (
-    <div className={`overlay-panel center-overlay-shadow-background`}>
+    <div className={`overlay-panel center-overlay-shadow-background d-flex`}>
       {children}
     </div>
   );

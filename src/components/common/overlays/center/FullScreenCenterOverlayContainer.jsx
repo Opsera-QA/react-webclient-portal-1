@@ -6,7 +6,6 @@ import CloseButton from "components/common/buttons/CloseButton";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
-import OverlayContainerBase from "components/common/overlays/OverlayContainerBase";
 
 function FullScreenCenterOverlayContainer(
   {
@@ -78,7 +77,7 @@ function FullScreenCenterOverlayContainer(
   };
 
   return (
-    <OverlayContainerBase>
+    <div className={`overlay-panel center-overlay-shadow-background`}>
       <div className={"overlay-margin bg-white"}>
         <div className={
           showCloseButton === true || buttonContainer != null
@@ -109,7 +108,7 @@ function FullScreenCenterOverlayContainer(
           {getButtons()}
         </div>
       </div>
-    </OverlayContainerBase>
+    </div>
   );
 }
 
