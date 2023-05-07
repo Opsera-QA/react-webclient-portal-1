@@ -147,7 +147,7 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
         </Col>
         <Col xs={12}>
           <WidgetDataBlockBase className={"mt-2"}>
-            <div className={"p-2"}>
+            <div className={"p-3"}>
               <H5FieldSubHeader subheaderText={pipelineModel?.getLabel("description")} />
               <div>{pipelineModel?.getData("description")}</div>
             </div>
