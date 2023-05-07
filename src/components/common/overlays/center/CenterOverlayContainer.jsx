@@ -8,6 +8,7 @@ import Row from "react-bootstrap/Row";
 import CenterOverlayContainerWrapper from "components/common/overlays/center/CenterOverlayContainerWrapper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
+import OverlayContainerBase from "components/common/overlays/OverlayContainerBase";
 
 export const CENTER_OVERLAY_SIZES = {
   FULL_WIDTH: "full_width", // TODO: Remove?
@@ -117,7 +118,7 @@ function CenterOverlayContainer(
   };
 
   return (
-    <div className={`overlay-panel center-overlay-shadow-background`}>
+    <OverlayContainerBase>
       <Row
         style={{
           margin: "10px",
@@ -152,7 +153,7 @@ function CenterOverlayContainer(
           </div>
         </CenterOverlayContainerWrapper>
       </Row>
-    </div>
+    </OverlayContainerBase>
   );
 }
 
