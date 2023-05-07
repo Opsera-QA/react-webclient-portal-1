@@ -21,6 +21,7 @@ import ErrorMessageFieldBase from "components/common/fields/text/message/ErrorMe
 import {errorHelpers} from "components/common/helpers/error-helpers";
 import PipelineCardBase from "temp-library-components/cards/pipelines/PipelineCardBase";
 import useGetPollingPipelineModelById from "hooks/workflow/pipelines/useGetPollingPipelineModelById";
+import OverlayContainer from "components/common/overlays/OverlayContainer";
 
 // TODO: Should this be two separate panels?
 export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
@@ -64,15 +65,9 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
     return (
       <Row>
         <Col xs={12}>
-          <Row>
-            <Col xs={4} />
-            <Col xs={4}>
-              <PipelineCardBase
-                pipelineModel={pipelineModel}
-              />
-            </Col>
-            <Col xs={4} />
-          </Row>
+          <PipelineCardBase
+            pipelineModel={pipelineModel}
+          />
         </Col>
         <Col xs={6}>
           <TextFieldBase
@@ -107,18 +102,17 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
   };
 
   return (
-    <CenterOverlayContainer
+    <OverlayContainer
       closePanel={closePanel}
       titleText={pipelineModel?.getData("name")}
       titleIcon={faDraftingCompass}
       showToasts={true}
       showCloseButton={false}
-      minimumHeight={"50vh"}
-      maximumHeight={"50vh"}
       isLoading={isLoading && pipelineModel == null}
       softLoading={isLoading}
+      minimumHeight={"560px"}
     >
-      <div className={"p-3"}>
+      <div className={"px-3 pb-3"}>
         {getBody()}
         <ButtonContainerBase>
           <VanityButtonBase
@@ -132,7 +126,7 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
           />
         </ButtonContainerBase>
       </div>
-    </CenterOverlayContainer>
+    </OverlayContainer>
   );
 }
 
