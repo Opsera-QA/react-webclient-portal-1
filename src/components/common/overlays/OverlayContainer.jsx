@@ -8,6 +8,8 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 import OverlayContainerBase from "components/common/overlays/OverlayContainerBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import {heightHelper} from "temp-library-components/helpers/height/height.helper";
 
 export default function OverlayContainer(
   {
@@ -15,7 +17,6 @@ export default function OverlayContainer(
     actionBar,
     titleText,
     titleIcon,
-    bodyClassName,
     closePanel,
     isLoading,
     showToasts,
@@ -33,7 +34,6 @@ export default function OverlayContainer(
   }) {
   const [helpIsShown, setHelpIsShown] = useState(false);
   const {
-    themeConstants,
     toastContext,
   } = useComponentStateReference();
 
@@ -83,12 +83,12 @@ export default function OverlayContainer(
   const getBody = () => {
     if (isLoading) {
       return (
-        <div className={"d-flex w-100 p-3"}>
+        <CenteredContentWrapper>
           <CenterLoadingIndicator
-            minHeight={minimumHeight}
+            minHeight={heightHelper.subtractTitleBarHeightForCssHeight(minimumHeight)}
             customMessage={customLoadingMessage}
           />
-        </div>
+        </CenteredContentWrapper>
       );
     }
 
@@ -105,16 +105,13 @@ export default function OverlayContainer(
 
   return (
     <OverlayContainerBase>
-      <Row
-        style={{
-          margin: "auto",
-        }}
-      >
+      <Row className={"m-auto d-flex"}>
         <div
-          className={`bg-white overlay-wrapper overlay-container`}
+          className={`bg-white overlay-wrapper overlay-container w-100`}
           style={{
             minHeight: minimumHeight,
             maxHeight: maximumHeight,
+            minWidth: "calc(100vw - 140px)",
             marginLeft: "70px",
             marginRight: "70px",
           }}
@@ -144,7 +141,6 @@ export default function OverlayContainer(
 OverlayContainer.propTypes = {
   children: PropTypes.any,
   titleText: PropTypes.string,
-  bodyClassName: PropTypes.string,
   titleIcon: PropTypes.object,
   closePanel: PropTypes.func,
   isLoading: PropTypes.bool,
