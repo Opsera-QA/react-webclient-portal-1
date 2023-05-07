@@ -169,18 +169,10 @@ pre {
 
 /* Summary Card Styling */
 .vertical-selection-card {
-    min-width: 200px;
-    width: 240px;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
-    border-radius: 1rem;
-    overflow: hidden;
-}
-
-.vertical-selection-card-v2 {
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
 }
 
-.vertical-selection-card-v2:hover {
+.vertical-selection-card:hover {
     opacity: 1 !important;
 }
 
@@ -189,104 +181,14 @@ pre {
     border-radius: 1rem;
 }
 
-.vertical-selection-card:hover {
-    /*box-shadow: 0 0 40px rgba(46, 25, 86, .25);*/
-}
-
 /*TODO: Combine with the above when fully leaning into free trial styling*/
 .vertical-selection-card-temp:hover {
     box-shadow: 5px 5px 2px rgba(46, 25, 86, .15);
     opacity: 1 !important;
 }
 
-.vertical-selection-card .title-icon {
-    height: 92px;
-    max-width: 100%;
-}
 
-.vertical-selection-card .title-fa-icon {
-    font-size: 75px;
-    margin-top: 15px;
-}
-
-.title-fa-icon {
-    font-size: 75px;
-}
-
-.icon-image {
-    background-color: white;
-    border-radius: 0.25rem;
-    padding-left: .5rem;
-    padding-right: .5rem;
-}
-
-.vertical-selection-card .small-title-icon {
-    margin-top: 30px;
-}
-
-.vertical-selection-card .jira-icon {
-    margin-top: 15%;
-    margin-left: 10%;
-    max-width: 75%;
-}
-
-.vertical-selection-card .sonarqube-icon {
-    margin-top: 30px;
-    max-width: 98%;
-}
-
-.vertical-selection-card .junit-icon {
-    margin-top: 10px;
-    margin-left: 15px;
-    max-width: 75%;
-}
-
-.vertical-selection-card .xunit-icon {
-    margin-top: 25px;
-    margin-left: 15px;
-    max-width: 80%;
-}
-
-.vertical-selection-card .teamcity-icon {
-    margin-top: 10px;
-    margin-left: 25px;
-    max-width: 65%;
-}
-
-.vertical-selection-card .twistlock-icon {
-    margin-top: 20px;
-    max-width: 98%;
-}
-
-.vertical-selection-card .slack-icon {
-    margin-top: 30px;
-    max-width: 98%;
-}
-
-.vertical-selection-card .selenium-icon {
-    margin-top: 20px;
-    max-width: 98%;
-}
-
-.vertical-selection-card .jenkins-icon {
-    margin-top: 10px;
-}
-
-.vertical-selection-card .bitbucket-icon {
-    margin-top: 10px;
-}
-
-.vertical-selection-card .wrench {
-    opacity: .8;
-}
-
-.vertical-selection-card .icon-card-title, .vertical-selection-card-v2 .icon-card-title {
-    font-size: 13px;
-    color: #3D3B36;
-    font-weight: bold;
-}
-
-.vertical-selection-card-v2 .icon-card-title {
+.vertical-selection-card .icon-card-title {
     font-size: 13px;
     color: #3D3B36;
     font-weight: bold;
@@ -296,20 +198,10 @@ pre {
 }
 
 .vertical-selection-card .description-height {
-    min-height: 50px;
-    height: 100%;
-    /*max-height: 90px;*/
-}
-
-.vertical-selection-card-v2 .description-height {
     min-height: 70px;
     height: 70px;
     max-height: 70px;
     /*max-height: 90px;*/
-}
-
-.vertical-selection-card .date-and-button {
-    min-height: 69px;
 }
 
 .tool-title-text {
@@ -318,7 +210,6 @@ pre {
     font-weight: 300;
     white-space: nowrap;
 }
-
 /* End Summary Card Styling */
 
 
