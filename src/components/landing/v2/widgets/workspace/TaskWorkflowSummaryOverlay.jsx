@@ -15,13 +15,12 @@ import TaskOrchestrationSummaryField
   from "temp-library-components/fields/orchestration/task/TaskOrchestrationSummaryField";
 import TaskRunDurationMetricsStandaloneField
   from "temp-library-components/fields/orchestration/task/metrics/TaskRunDurationMetricsStandaloneField";
-import useGetTaskModelById from "components/tasks/hooks/useGetTaskModelById";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import ErrorMessageFieldBase from "components/common/fields/text/message/ErrorMessageFieldBase";
 import {errorHelpers} from "components/common/helpers/error-helpers";
-import PipelineCardBase from "temp-library-components/cards/pipelines/PipelineCardBase";
 import TaskCardBase from "temp-library-components/cards/tasks/TaskCardBase";
+import useGetPollingTaskModelById from "hooks/workflow/tasks/useGetPollingTaskModelById";
 
 export default function TaskWorkflowSummaryOverlay({ taskId }) {
   const toastContext = useContext(DialogToastContext);
@@ -30,7 +29,7 @@ export default function TaskWorkflowSummaryOverlay({ taskId }) {
     isLoading,
     taskModel,
     error,
-  } = useGetTaskModelById(taskId);
+  } = useGetPollingTaskModelById(taskId);
 
   const handleViewDetailsButton = () => {
     history.push(taskModel?.getDetailViewLink());
