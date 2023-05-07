@@ -1711,6 +1711,10 @@ div.data-blocks-ellipses {
     z-index: 5000;
 }
 
+.card {
+    border: none;
+}
+
 .overlay-panel {
     position: fixed;
     overflow-x: hidden;
