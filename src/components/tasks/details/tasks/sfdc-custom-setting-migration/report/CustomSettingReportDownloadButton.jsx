@@ -9,6 +9,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import customSettingMigrationTaskWizardActions from "../wizard/customSettingMigrationTaskWizard.actions";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 import { parseError } from "../../../../../common/helpers/error-helpers";
+import { convertFutureDateToDhmsFromNowString } from "../../../../../common/helpers/date/date.helpers";
 
 function CustomSettingReportDownloadButton({
   taskId,
@@ -112,7 +113,7 @@ function CustomSettingReportDownloadButton({
   return (
     <ButtonTooltip
       trigger={["hover", "focus"]}
-      innerText={calculateTimeDiff(expiryDate)}
+      innerText={convertFutureDateToDhmsFromNowString(expiryDate)}
     >
       <div className={className}>
         <Button

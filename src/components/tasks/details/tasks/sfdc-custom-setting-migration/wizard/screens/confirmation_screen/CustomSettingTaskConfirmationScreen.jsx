@@ -8,7 +8,7 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import { Button, Col, Row } from "react-bootstrap";
 import IconBase from "../../../../../../../common/icons/IconBase";
-import { faArrowLeft, faCheck } from "@fortawesome/pro-solid-svg-icons";
+import {faArrowLeft, faCheck} from "@fortawesome/pro-light-svg-icons";
 import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
 import DetailPanelContainer from "../../../../../../../common/panels/detail_panel_container/DetailPanelContainer";
 import {
@@ -175,10 +175,7 @@ const CustomSettingTaskConfirmationScreen = ({
               <ToolNameField
                 model={wizardModel}
                 fieldName={"targetToolId"}
-                visible={
-                  wizardModel?.getData("taskType") ===
-                  MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG
-                }
+                visible={wizardModel?.getData("taskType") === MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG}
               />
             </Col>
             <Col xs={12}>
@@ -194,15 +191,12 @@ const CustomSettingTaskConfirmationScreen = ({
             {getCountOfRecords()}
             {getAvailableStorage()}
           </Row>
-          {wizardModel?.getData("taskType") ===
-          MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV ? (
+          {wizardModel?.getData("taskType") === MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV ?
             <MessageFieldBase
               className={"mt-2"}
-              message={
-                "Once task completes execution, file would be generated and be available to download on task activity report section."
-              }
-            />
-          ) : null}
+              message={"Once task completes execution, file would be generated and be available to download on task activity report section."}
+            /> : null
+          }
         </div>
         <SaveButtonContainer>
           <Button
