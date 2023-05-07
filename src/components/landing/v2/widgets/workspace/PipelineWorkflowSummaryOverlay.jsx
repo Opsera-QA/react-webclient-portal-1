@@ -22,6 +22,8 @@ import {errorHelpers} from "components/common/helpers/error-helpers";
 import PipelineCardBase from "temp-library-components/cards/pipelines/PipelineCardBase";
 import useGetPollingPipelineModelById from "hooks/workflow/pipelines/useGetPollingPipelineModelById";
 import OverlayContainer from "components/common/overlays/OverlayContainer";
+import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
+import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
 
 // TODO: Should this be two separate panels?
 export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
@@ -69,11 +71,14 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
             pipelineModel={pipelineModel}
           />
         </Col>
-        <Col xs={6}>
-          <TextFieldBase
-            dataObject={pipelineModel}
-            fieldName={"workflow.run_count"}
-          />
+        <Col xs={3}>
+          <WidgetDataBlockBase className={"mt-2"}>
+            <TwoLineScoreDataBlock
+              score={pipelineModel?.getRunCount()}
+              subtitle={"Runs"}
+              className={"p-2"}
+            />
+          </WidgetDataBlockBase>
         </Col>
         <Col xs={6}>
           <PipelineLastRunDateField
