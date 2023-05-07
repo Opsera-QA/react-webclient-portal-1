@@ -24,6 +24,9 @@ import useGetPollingPipelineModelById from "hooks/workflow/pipelines/useGetPolli
 import OverlayContainer from "components/common/overlays/OverlayContainer";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
+import useGetPipelineDurationMetrics from "hooks/workflow/pipelines/metrics/useGetPipelineDurationMetrics";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import TwoLineDataBlockBase from "components/common/metrics/data_blocks/base/TwoLineDataBlockBase";
 
 // TODO: Should this be two separate panels?
 export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
@@ -34,6 +37,12 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
     error,
     isLoading,
   } = useGetPollingPipelineModelById(pipelineId);
+  const {
+    lastFiveRunsDurationText,
+    lastRunDurationText,
+    totalAverageDurationText,
+    loadData,
+  } = useGetPipelineDurationMetrics(pipelineId, pipelineModel?.getRunCount());
 
   const handleViewDetailsButton = () => {
     history.push(pipelineModel?.getDetailViewLink());
@@ -43,6 +52,54 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
+  };
+
+  const getLastRunDuration = () => {
+    if (hasStringValue(lastRunDurationText) === true) {
+      return (
+        <Col xs={3}>
+          <WidgetDataBlockBase className={"mt-2"}>
+            <TwoLineDataBlockBase
+              title={lastRunDurationText}
+              subtitle={"Last Run Duration"}
+              className={"p-2"}
+            />
+          </WidgetDataBlockBase>
+        </Col>
+      );
+    }
+  };
+
+  const getLastFiveRunAverageDuration = () => {
+    if (hasStringValue(lastFiveRunsDurationText) === true) {
+      return (
+        <Col xs={3}>
+          <WidgetDataBlockBase className={"mt-2"}>
+            <TwoLineDataBlockBase
+              title={lastFiveRunsDurationText}
+              subtitle={"Last 5 Runs Average Duration"}
+              className={"p-2"}
+            />
+          </WidgetDataBlockBase>
+        </Col>
+      );
+    }
+  };
+
+  const getTotalRunAverageDuration = () => {
+    if (hasStringValue(totalAverageDurationText) === true) {
+      return (
+        <Col xs={3}>
+          <WidgetDataBlockBase className={"mt-2"}>
+            <TwoLineDataBlockBase
+              title={totalAverageDurationText}
+              subtitle={"Average Run Duration"}
+              className={"p-2"}
+            />
+          </WidgetDataBlockBase>
+        </Col>
+      );
+    }
   };
 
   const getBody = () => {
@@ -80,6 +137,9 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
             />
           </WidgetDataBlockBase>
         </Col>
+        {getLastRunDuration()}
+        {getLastFiveRunAverageDuration()}
+        {getTotalRunAverageDuration()}
         <Col xs={6}>
           <PipelineLastRunDateField
             pipelineModel={pipelineModel}
