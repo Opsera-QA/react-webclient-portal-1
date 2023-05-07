@@ -122,7 +122,7 @@ export default function SoftwareDevelopmentLandingAccountStatsWidget({ className
     if (totalCount === 0) {
       return (
         <CenteredContentWrapper>
-          <div className={"my-4 marketingModulesTextLarger"}>
+          <div className={"my-4"}>
             Get started below to create your first Workflow.
           </div>
         </CenteredContentWrapper>
@@ -132,7 +132,7 @@ export default function SoftwareDevelopmentLandingAccountStatsWidget({ className
     if (totalRunCount === 0) {
       return (
         <CenteredContentWrapper>
-          <div className={"my-4 marketingModulesTextLarger"}>
+          <div className={"my-4"}>
             Select a workflow below and hit run to get started.
           </div>
         </CenteredContentWrapper>
