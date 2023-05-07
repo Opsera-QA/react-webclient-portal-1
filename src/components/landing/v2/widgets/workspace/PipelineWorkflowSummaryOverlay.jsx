@@ -43,7 +43,7 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
   };
 
   const getBody = () => {
-    if (isLoading === true) {
+    if (isLoading === true && pipelineModel == null) {
       return (
         <CenterLoadingIndicator
           type={"Pipeline"}
@@ -115,7 +115,8 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
       showCloseButton={false}
       minimumHeight={"50vh"}
       maximumHeight={"50vh"}
-      isLoading={isLoading}
+      isLoading={isLoading && pipelineModel == null}
+      softLoading={isLoading}
     >
       <div className={"p-3"}>
         {getBody()}

@@ -47,6 +47,7 @@ function CenterOverlayContainer(
     minimumHeight,
     maximumHeight,
     getHelpComponentFunction,
+    softLoading,
   }) {
   const toastContext = useContext(DialogToastContext);
   const [helpIsShown, setHelpIsShown] = useState(false);
@@ -140,6 +141,7 @@ function CenterOverlayContainer(
               pageLink={pageLink}
               externalHelpPageLink={externalHelpPageLink}
               linkTooltipText={linkTooltipText}
+              softLoading={softLoading}
             />
             {actionBar}
             <div className={`bg-white ${bodyClassName}`}>
@@ -164,6 +166,7 @@ CenterOverlayContainer.propTypes = {
   showToasts: PropTypes.bool,
   actionBar: PropTypes.object,
   showCloseButton: PropTypes.bool,
+  softLoading: PropTypes.bool,
   buttonContainer: PropTypes.object,
   pageLink: PropTypes.string,
   linkTooltipText: PropTypes.string,
