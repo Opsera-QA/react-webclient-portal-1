@@ -20,6 +20,8 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import ErrorMessageFieldBase from "components/common/fields/text/message/ErrorMessageFieldBase";
 import {errorHelpers} from "components/common/helpers/error-helpers";
+import PipelineCardBase from "temp-library-components/cards/pipelines/PipelineCardBase";
+import TaskCardBase from "temp-library-components/cards/tasks/TaskCardBase";
 
 export default function TaskWorkflowSummaryOverlay({ taskId }) {
   const toastContext = useContext(DialogToastContext);
@@ -61,6 +63,17 @@ export default function TaskWorkflowSummaryOverlay({ taskId }) {
 
     return (
       <Row>
+        <Col xs={12}>
+          <Row>
+            <Col xs={4} />
+            <Col xs={4}>
+              <TaskCardBase
+                taskModel={taskModel}
+              />
+            </Col>
+            <Col xs={4} />
+          </Row>
+        </Col>
         <Col xs={6}>
           <TextFieldBase
             dataObject={taskModel}

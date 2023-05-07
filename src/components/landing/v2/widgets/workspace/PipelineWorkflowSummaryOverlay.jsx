@@ -20,6 +20,7 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import ErrorMessageFieldBase from "components/common/fields/text/message/ErrorMessageFieldBase";
 import {errorHelpers} from "components/common/helpers/error-helpers";
+import PipelineCardBase from "temp-library-components/cards/pipelines/PipelineCardBase";
 
 // TODO: Should this be two separate panels?
 export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
@@ -64,6 +65,17 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
 
     return (
       <Row>
+        <Col xs={12}>
+          <Row>
+            <Col xs={4} />
+            <Col xs={4}>
+              <PipelineCardBase
+                pipelineModel={pipelineModel}
+              />
+            </Col>
+            <Col xs={4} />
+          </Row>
+        </Col>
         <Col xs={6}>
           <TextFieldBase
             dataObject={pipelineModel}
