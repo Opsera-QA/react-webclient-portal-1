@@ -30,7 +30,7 @@ export default function useGetPipelineDurationMetrics(
     if (loadData && isMongoDbId(pipelineId) && numberHelpers.isNumberGreaterThan(0, pipelineRunCount) === true) {
       loadData(getPipelineDurationMetrics, handleErrorFunction).catch(() => {});
     }
-  }, []);
+  }, [pipelineId, pipelineRunCount]);
 
   const getPipelineDurationMetrics = async () => {
     const response = await pipelineActivityLogActions.getPipelineDurationMetrics(pipelineId);

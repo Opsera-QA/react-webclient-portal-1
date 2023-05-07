@@ -27,6 +27,7 @@ import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/Wid
 import useGetPipelineDurationMetrics from "hooks/workflow/pipelines/metrics/useGetPipelineDurationMetrics";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import TwoLineDataBlockBase from "components/common/metrics/data_blocks/base/TwoLineDataBlockBase";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
 // TODO: Should this be two separate panels?
 export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
@@ -138,7 +139,6 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
           </WidgetDataBlockBase>
         </Col>
         {getLastRunDuration()}
-        {getLastFiveRunAverageDuration()}
         {getTotalRunAverageDuration()}
         <Col xs={6}>
           <PipelineLastRunDateField
@@ -146,20 +146,16 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
           />
         </Col>
         <Col xs={12}>
-          <TextFieldBase
-            dataObject={pipelineModel}
-            fieldName={"description"}
-          />
+          <WidgetDataBlockBase className={"mt-2"}>
+            <div className={"p-2"}>
+              <H5FieldSubHeader subheaderText={pipelineModel?.getLabel("description")} />
+              <div>{pipelineModel?.getData("description")}</div>
+            </div>
+          </WidgetDataBlockBase>
         </Col>
         <Col sm={12}>
           <PipelineOrchestrationSummaryField
             pipelineModel={pipelineModel}
-          />
-        </Col>
-        <Col sm={12}>
-          <PipelineDurationMetricsStandaloneField
-            pipelineId={pipelineModel?.getMongoDbId()}
-            pipelineRunCount={pipelineModel?.getRunCount()}
           />
         </Col>
       </Row>
