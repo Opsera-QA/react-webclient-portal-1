@@ -15,12 +15,12 @@ import PipelineOrchestrationSummaryField
   from "temp-library-components/fields/orchestration/pipeline/PipelineOrchestrationSummaryField";
 import PipelineDurationMetricsStandaloneField
   from "components/common/fields/pipelines/metrics/PipelineDurationMetricsStandaloneField";
-import useGetPipelineModelById from "hooks/workflow/pipelines/model/useGetPipelineModelById";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import ErrorMessageFieldBase from "components/common/fields/text/message/ErrorMessageFieldBase";
 import {errorHelpers} from "components/common/helpers/error-helpers";
 import PipelineCardBase from "temp-library-components/cards/pipelines/PipelineCardBase";
+import useGetPollingPipelineModelById from "hooks/workflow/pipelines/useGetPollingPipelineModelById";
 
 // TODO: Should this be two separate panels?
 export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
@@ -28,11 +28,9 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
   const history = useHistory();
   const {
     pipelineModel,
-    setPipelineModel,
     error,
-    loadData,
     isLoading,
-  } = useGetPipelineModelById(pipelineId);
+  } = useGetPollingPipelineModelById(pipelineId);
 
   const handleViewDetailsButton = () => {
     history.push(pipelineModel?.getDetailViewLink());
