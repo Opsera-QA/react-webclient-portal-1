@@ -52,17 +52,12 @@ function PipelineSummaryPanel(
     <>
       <div className={"mx-3 mb-3 mt-2"}>
         <Row>
-          <Col xs={12}>
-            <PipelineRoleAccessInput
-              loadData={fetchPlan}
-              pipelineModel={pipelineModel}
-              setPipelineModel={setPipelineModel}
-              disabled={parentWorkflowStatus === "running"}
-            />
-          </Col>
-          <div className={"d-flex my-1 mx-3 w-100"}>
-            <Divider className={"w-100"} />
-          </div>
+          <PipelineRoleAccessInput
+            loadData={fetchPlan}
+            pipelineModel={pipelineModel}
+            setPipelineModel={setPipelineModel}
+            disabled={parentWorkflowStatus === "running"}
+          />
           <Col sm={12} md={6}>
             <OwnerNameField
               model={pipelineModel}
