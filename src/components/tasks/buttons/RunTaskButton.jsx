@@ -58,7 +58,6 @@ function RunTaskButton(
     toastContext,
   } = useComponentStateReference();
   const history = useHistory();
-  console.log(taskModel);
 
   useEffect(() => {
     if (status !== "stopped") {
