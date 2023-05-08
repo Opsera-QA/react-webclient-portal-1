@@ -94,7 +94,8 @@ export default function InlineTagManagerInput(
   };
 
   const validateAndSetData = (fieldName, value) => {
-    const errors = fieldValidation(value, model, field);
+    const parsedTags = TagParsingHelper.parseTagArray(value);
+    const errors = fieldValidation(parsedTags, model, field);
 
     if (Array.isArray(errors) && errors.length > 0) {
       setErrorMessage(errors[0]);
@@ -102,7 +103,7 @@ export default function InlineTagManagerInput(
     }
 
     setErrorMessage("");
-    model.setData(fieldName, value);
+    model.setData(fieldName, parsedTags);
     setModel({...model});
   };
 

@@ -82,9 +82,8 @@ function TagManager(
   };
 
   const validateAndSetData = (fieldName, value) => {
-    const errors = fieldValidation(value, dataObject, field);
-
-    console.log("value: " + JSON.stringify(value));
+    const parsedTags = TagParsingHelper.parseTagArray(value);
+    const errors = fieldValidation(parsedTags, dataObject, field);
 
     if (Array.isArray(errors) && errors.length > 0) {
       setErrorMessage(errors[0]);
@@ -92,10 +91,9 @@ function TagManager(
     }
 
     setErrorMessage("");
-    dataObject.setData(fieldName, value);
+    dataObject.setData(fieldName, parsedTags);
     setDataObject({...dataObject});
   };
-
   const getExistingTag = (newTag) => {
     return tagOptions.find(tag => tag.type === type && tag.value === newTag);
   };
