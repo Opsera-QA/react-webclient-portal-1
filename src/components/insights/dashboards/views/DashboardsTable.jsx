@@ -11,7 +11,13 @@ import {
 import {getField} from "components/common/metadata/metadata-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-function DashboardsTable({dashboards, loadData, isLoading}) {
+function DashboardsTable(
+  {
+    dashboards,
+    loadData,
+    isLoading,
+    error,
+  }) {
   const history = useHistory();
   const fields = dashboardMetadata.fields;
   const {
@@ -49,6 +55,7 @@ function DashboardsTable({dashboards, loadData, isLoading}) {
       onRowSelect={onRowSelect}
       isLoading={isLoading}
       loadData={loadData}
+      error={error}
     />
   );
 }
@@ -57,6 +64,7 @@ DashboardsTable.propTypes = {
   dashboards: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
+  error: PropTypes.any,
 };
 
 export default DashboardsTable;

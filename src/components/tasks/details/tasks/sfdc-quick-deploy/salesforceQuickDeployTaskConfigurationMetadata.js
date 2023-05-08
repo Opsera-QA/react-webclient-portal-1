@@ -2,7 +2,7 @@ const salesforceQuickDeployTaskConfigurationMetadata = {
   type: "Salesforce Quick Deploy Task Configuration",
   fields: [
     {
-      label: "Salesforce Account",
+      label: "Salesforce Configurator Tool",
       id: "sfdcToolId",
       isRequired: true,
       maxLength: 24,

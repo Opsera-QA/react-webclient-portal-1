@@ -4,7 +4,7 @@ import MyUserRecord from "components/user/user_settings/user_record/MyUserRecord
 import RoleRestrictedRoute from "temp-library-components/routes/RoleRestrictedRoute";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import MyAccessTokens from "components/user/user_settings/access_tokens/MyAccessTokens";
-import MySubscriptions from "components/user/user_settings/subscriptions/MySubscriptions";
+import Following from "components/user/user_settings/subscriptions/Following";
 import {USER_SETTINGS_PAGES} from "components/user/user_settings/userSettings.paths";
 import AccessTokenDetailView from "components/user/user_settings/access_tokens/details/AccessTokenDetailView";
 
@@ -44,7 +44,7 @@ export default function UserProfileRoutes() {
       <RoleRestrictedRoute
         path={`/user/${USER_SETTINGS_PAGES.MY_SUBSCRIPTIONS}`}
         exact={true}
-        component={MySubscriptions}
+        component={Following}
         roleRequirement={ROLE_LEVELS.USERS_AND_SASS}
       />
     </>

@@ -2,7 +2,7 @@ const sfdxCertGenTaskConfigurationMetadata = {
   type: "SFDX Certificate Generation Task Configuration",
   fields: [
     {
-      label: "Select Jenkins Tool",
+      label: "Jenkins Tool",
       id: "toolConfigId",
       isRequired: true,
       maxLength: 24,

@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import { axiosApiServiceMultiGet } from "api/apiService";
 import { AuthContext } from "contexts/AuthContext";
 import Modal from "components/common/modal/modal";
-import ReactJson from "@microlink/react-json-view";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
 import Model from "core/data_model/model";

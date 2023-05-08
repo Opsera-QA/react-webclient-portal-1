@@ -12,7 +12,7 @@ import BadgeBase from "components/common/badges/BadgeBase";
 import { Col, Row } from "react-bootstrap";
 import SonarRatingsLeadershipCodeCoverageBlockContainer from "components/insights/charts/sonar/sonar_leadership/data_blocks/SonarRatingsLeadershipCodeCoverageBlockContainer";
 import SonarCoverageActionableTable from "./SonarCoverageActionableTable";
-import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
+import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/pro-solid-svg-icons";
 
 function SonarRatingLeadershipMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);

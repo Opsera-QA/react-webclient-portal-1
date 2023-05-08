@@ -10,7 +10,7 @@ import { line } from "d3-shape";
 import { defaultConfig, getColor, assignStandardColors } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 import { Col, Row } from "react-bootstrap";
-import { faMinus, faCircle } from "@fortawesome/pro-solid-svg-icons";
+import { faMinus, faCircle, faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/pro-solid-svg-icons";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import JiraBugsCompletedDataBlock from "../../data_blocks/JiraBugsCompletedDataBlock";
 import JiraIssuesCompletedDataBlock from "../../data_blocks/JiraIssuesCompletedDataBlock";
@@ -18,7 +18,6 @@ import JiraMeanLeadTimeDataBlock from "../../data_blocks/JiraMeanLeadTimeDataBlo
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import JiraLeadTimeChartHelpDocumentation from "components/common/help/documentation/insights/charts/JiraLeadTimeChartHelpDocumentation";
 import IconBase from "components/common/icons/IconBase";
-import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
 
 function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);

@@ -1,6 +1,7 @@
 import FilterModelBase from "core/data_model/filterModel.base";
 import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
 import sessionHelper from "utils/session.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const dashboardFilterMetadata = {
   type: "Dashboard",
@@ -180,6 +181,14 @@ export class DashboardFilterModel extends FilterModelBase {
 
       if (hasStringValue(type) === true) {
         this.setData("type", type);
+      }
+
+      const identifier = DataParsingHelper.parseString(parsedBrowserStorage?.identifier);
+      const kpiName = DataParsingHelper.parseString(parsedBrowserStorage?.kpiName);
+
+      if (identifier && kpiName) {
+        this.setData("identifier", identifier);
+        this.setData("kpiName", kpiName);
       }
 
       const isFavorite = parsedBrowserStorage?.isFavorite;

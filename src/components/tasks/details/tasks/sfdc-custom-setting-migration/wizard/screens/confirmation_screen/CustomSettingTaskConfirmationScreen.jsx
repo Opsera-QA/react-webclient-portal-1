@@ -8,7 +8,7 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import { Button, Col, Row } from "react-bootstrap";
 import IconBase from "../../../../../../../common/icons/IconBase";
-import { faArrowLeft, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faCheck } from "@fortawesome/pro-solid-svg-icons";
 import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
 import DetailPanelContainer from "../../../../../../../common/panels/detail_panel_container/DetailPanelContainer";
 import {

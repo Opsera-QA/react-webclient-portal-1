@@ -4,7 +4,7 @@ import {
   faArrowCircleDown,
   faArrowCircleUp,
   faMinusCircle,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/pro-solid-svg-icons";
 import moment from "moment";
 import { METRIC_QUALITY_LEVELS } from "../../common/metrics/text/MetricTextBase";
 

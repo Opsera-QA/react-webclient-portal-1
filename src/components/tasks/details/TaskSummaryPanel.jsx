@@ -24,6 +24,10 @@ import TaskStateField from "temp-library-components/fields/orchestration/state/t
 import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
 import TaskOrchestrationSummaryField
   from "temp-library-components/fields/orchestration/task/TaskOrchestrationSummaryField";
+import TaskRunDurationMetricsStandaloneField
+  from "temp-library-components/fields/orchestration/task/metrics/TaskRunDurationMetricsStandaloneField";
+import tagTypeConstants from "@opsera/definitions/constants/settings/tags/tagType.constants";
+import TaskTagManagerInput from "components/tasks/details/inputs/TaskTagManagerInput";
 
 function TaskSummaryPanel(
   {
@@ -184,13 +188,10 @@ function TaskSummaryPanel(
         {getSchedulerField()}
         {getDynamicField()}
         <Col md={12} className={"pt-1"}>
-          <TagsInlineOverlayInputBase
-            type={"task"}
-            model={gitTasksData}
-            fieldName={"tags"}
-            saveDataFunction={updateRecord}
-            tags={gitTasksData?.getData("tags")}
-            disabled={TaskRoleHelper.canUpdateTask(userData, gitTasksData?.getPersistData()) !== true}
+          <TaskTagManagerInput
+            taskModel={gitTasksData}
+            setTaskModel={setGitTasksData}
+            workflowStatus={status}
           />
         </Col>
         <Col md={12} className={"pt-1"}>
@@ -199,6 +200,12 @@ function TaskSummaryPanel(
         <Col xs={12}>
           <TaskOrchestrationSummaryField
             taskModel={gitTasksData}
+          />
+        </Col>
+        <Col xs={12}>
+          <TaskRunDurationMetricsStandaloneField
+            taskRunCount={gitTasksData?.getRunCount()}
+            taskId={gitTasksData?.getMongoDbId()}
           />
         </Col>
       </Row>

@@ -728,6 +728,9 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             closeEditorPanel={closeEditorPanel}
+            pipelineId={pipeline?.id}
+            pipelineStep={pipelineStep}
+            pipeline={pipeline}
           />
         );
       case "cypress":

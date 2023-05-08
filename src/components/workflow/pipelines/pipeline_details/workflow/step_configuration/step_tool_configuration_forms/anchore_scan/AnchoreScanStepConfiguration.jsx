@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import {Form, Button, Row} from "react-bootstrap";
-import { faSave, faSpinner, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { faSave, faSpinner, faExclamationCircle } from "@fortawesome/pro-solid-svg-icons";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";

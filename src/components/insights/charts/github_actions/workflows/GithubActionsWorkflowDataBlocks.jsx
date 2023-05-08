@@ -17,7 +17,7 @@ import {
   faArrowCircleDown,
   faArrowCircleUp,
   faMinusCircle,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/pro-solid-svg-icons";
 import ThreeLinePercentageBlockBase from "../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
 import { getTimeDisplay } from "components/insights/charts/github_actions/github_actions-utility";
 import { AuthContext } from "../../../../../contexts/AuthContext";

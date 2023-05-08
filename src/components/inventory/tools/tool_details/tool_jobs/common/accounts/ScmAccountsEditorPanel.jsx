@@ -19,7 +19,7 @@ import ScmTwoFactorToggle
 import axios from "axios";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import DeleteModal from "components/common/modal/DeleteModal";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/pro-solid-svg-icons";
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
 import scmCreateAccountMetadata from "./scm-create-account-metadata";
 

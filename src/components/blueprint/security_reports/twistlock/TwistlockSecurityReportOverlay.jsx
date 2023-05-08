@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import Card from "react-bootstrap/Card";
-import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faCaretUp, faCaretDown } from "@fortawesome/pro-solid-svg-icons";
 
 import CardGroup from "react-bootstrap/CardGroup";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";

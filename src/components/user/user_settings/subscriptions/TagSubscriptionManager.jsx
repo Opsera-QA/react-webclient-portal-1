@@ -17,9 +17,9 @@ function TagSubscriptionManager({loadData, isMounted}) {
   };
 
   return (
-    <CenterOverlayContainer titleIcon={faTag}  closePanel={closePanel} titleText={"Tag Subscription Manager"} showPanel={true}>
-      <div className={"p-3"}>
-        <div className="mb-4">Click a Tag to manage subscription status.</div>
+    <CenterOverlayContainer titleIcon={faTag}  closePanel={closePanel} titleText={"Followed Tag Manager"} showPanel={true}>
+      <div className={"pt-2 pb-3 px-3"}>
+        <div className="mb-4">Click a Tag to follow or unfollow it.</div>
         <AllTagsCloud />
       </div>
     </CenterOverlayContainer>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
-import { faTimes, faSpinner, faSync } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faSpinner, faSync } from "@fortawesome/pro-solid-svg-icons";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import IconBase from "components/common/icons/IconBase";
 

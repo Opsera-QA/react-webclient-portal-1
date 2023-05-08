@@ -7,7 +7,7 @@ import ErrorDialog from "../../common/status_notifications/error";
 import { Alert } from "react-bootstrap";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import Modal from "../../common/modal/modal";
-import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus } from "@fortawesome/pro-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
 const FILTER = "success";

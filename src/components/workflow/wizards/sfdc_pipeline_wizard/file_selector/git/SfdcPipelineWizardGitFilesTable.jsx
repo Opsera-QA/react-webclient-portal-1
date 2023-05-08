@@ -6,7 +6,7 @@ import {
 } from "components/common/table/table-column-helpers-v2";
 import sfdcTableConstants from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-table-constants";
 import FilterContainer from "components/common/table/FilterContainer";
-import { faCode } from "@fortawesome/free-solid-svg-icons";
+import { faCode } from "@fortawesome/pro-solid-svg-icons";
 import InlineSfdcComponentTypesFilter from "components/common/filters/sfdc/sfdc_component/InlineSfdcComponentTypesFilter";
 import VanityTable from "components/common/table/VanityTable";
 import {getField} from "components/common/metadata/metadata-helpers";

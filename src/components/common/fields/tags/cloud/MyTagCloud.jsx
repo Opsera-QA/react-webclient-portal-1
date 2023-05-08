@@ -133,13 +133,13 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
 
   const getBody = () => {
     if (isLoading) {
-      return (<div><LoadingIcon className={"mr-2 my-auto"} />Loading subscriptions</div>);
+      return (<div><LoadingIcon className={"mr-2 my-auto"} />Loading followed Tags</div>);
     }
 
     if (Array.isArray(tags) && tags.length > 0) {
       return (
         <div>
-          <div className={"mb-3"}>You are currently subscribed to <strong>{tags.length}</strong> tags.</div>
+          <div className={"mb-3"}>You are currently following <strong>{tags.length}</strong> {getSingularOrPluralString(tags.length, "tag", "tags")}.</div>
           <TagsCloudBase tagsWithUsage={tags} onTagClick={showTagUsage} getTooltip={getTooltip} />
         </div>);
     }
@@ -148,7 +148,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
       return(
         <span>
           <IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
-          You are not currently subscribed to any tags
+          You are not currently following any tags
         </span>
       );
     }
@@ -159,7 +159,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
       <div className="mb-1 item-field">
         {getBody()}
         {!isLoading && <Button variant="outline-secondary" size="sm" onClick={() => {showTagSubscriptionManager();}}>
-          <IconBase icon={faTag} className={"mr-1"}/> Tag Subscriptions</Button> }
+          <IconBase icon={faTag} className={"mr-1"}/>Followed Tag Manager</Button> }
       </div>
     </div>
   );

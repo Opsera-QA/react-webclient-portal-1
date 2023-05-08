@@ -4,7 +4,7 @@ import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import {
   faTrash,
   faQuestion, faCalendarDay, faShareAlt, faCog, faRedo, faUnlink, faExclamation, faFlag
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/pro-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
 // TODO: Wire up functions

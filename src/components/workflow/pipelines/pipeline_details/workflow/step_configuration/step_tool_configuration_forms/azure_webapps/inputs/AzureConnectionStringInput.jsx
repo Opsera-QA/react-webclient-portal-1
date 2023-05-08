@@ -8,11 +8,11 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import parametersActions from "components/inventory/parameters/parameters-actions";
 import axios from "axios";
-import ReactJson from "@microlink/react-json-view";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import IconBase from "components/common/icons/IconBase";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 
 const SAMPLE_DATA = {
   subnet_list: [
@@ -342,10 +342,11 @@ function AzureConnectionStringInput({
         {
           <div className={"mt-2"}>
             Sample:
-            <ReactJson
+            <StandaloneJsonField
               className={"mt-1 py-1"}
-              src={SAMPLE_DATA}
+              json={SAMPLE_DATA}
               displayDataTypes={false}
+              showInContainer={false}
             />
           </div>
         }

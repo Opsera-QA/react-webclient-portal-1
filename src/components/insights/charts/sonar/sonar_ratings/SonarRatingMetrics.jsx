@@ -14,7 +14,7 @@ import VanityMetricContainer from "components/common/panels/insights/charts/Vani
 import BadgeBase from "components/common/badges/BadgeBase";
 import { Col, Row } from "react-bootstrap";
 import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
-import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
+import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/pro-solid-svg-icons";
 import SonarRatingsCodeCoverageBlockContainer
   from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsCodeCoverageBlockContainer";
 

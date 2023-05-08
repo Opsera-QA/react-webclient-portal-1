@@ -7,37 +7,24 @@ import axios from "axios";
 import { Col, Row } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import {
-    METRIC_THEME_CHART_PALETTE_COLORS,
-    METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY
-} from "components/common/helpers/metrics/metricTheme.helpers";
-import {faArrowCircleDown, faArrowCircleUp, faCircleMinus, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
+import {faArrowCircleDown, faArrowCircleUp, faCircleMinus, faMinusCircle} from "@fortawesome/pro-solid-svg-icons";
 import ChartTooltip from "../../ChartTooltip.jsx";
 import {
     adjustBarWidth,
     assignStandardColors, assignStandardLineColors,
     defaultConfig,
-    getColor,
     spaceOutServiceNowCountBySeverityLegend,
 } from "../../charts-views.js";
 import { DialogToastContext } from "contexts/DialogToastContext.js";
 import { ResponsiveLine } from "@nivo/line";
-import chartsActions from "../../charts-actions";
-import BoomiChartHelpDocumentation
-    from "../../../../common/help/documentation/insights/charts/BoomiChartHelpDocumentation";
 import SalesforceCodeAnalyserCategoryDataBlock from "./data_blocks/SalesforceCodeAnalyserCategoryDataBlock";
 import SalesforceCodeAnalyserRuleDataBlock from "./data_blocks/SalesforceCodeAnalyserRuleDataBlock";
-import IconBase from "../../../../common/icons/IconBase";
-import {faSquare} from "@fortawesome/pro-solid-svg-icons";
-import GitlabDeploymentFreqActionableMasterTab
-    from "../../gitlab/deployment_frequency/actionable_insights/tabs/GitlabDeploymentFreqActionableMasterTab";
 import SalesforceCodeAnalyserCategoryActionableOverlay
     from "./actionable_insights/SalesforceCodeAnalyserCategoryActionableOverlay";
 import SalesforceCodeAnalyserRuleActionableOverlay
     from "./actionable_insights/SalesforceCodeAnalyserRuleActionableOverlay";
 import SalesforceCodeAnalyserPipelineActionableOverlay
     from "./actionable_insights/SalesforceCodeAnalyserPipelineActionableOverlay";
-import aquasecActions from "../../aquasec_security_insights/aquasec.action";
 import codeAnalyserActions from "./codeanalyser.action";
 
 function SalesforceCodeAnalyserChart({
