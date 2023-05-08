@@ -70,6 +70,10 @@ dashboardTypeConstants.DASHBOARD_TYPE_FILTER_SELECT_OPTIONS = [
     value: dashboardTypeConstants.DASHBOARD_TYPES.PIPELINES,
   },
   {
+    text: "Followed Dashboards",
+    value: "subscribed",
+  },
+  {
     text: dashboardTypeConstants.DASHBOARD_TYPE_LABELS.PLANNING,
     value: dashboardTypeConstants.DASHBOARD_TYPES.PLANNING,
   },
