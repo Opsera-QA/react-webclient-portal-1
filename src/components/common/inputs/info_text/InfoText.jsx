@@ -4,6 +4,8 @@ import regexDefinitions from "utils/regexDefinitions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
 import {faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
+import {errorHelpers} from "components/common/helpers/error-helpers";
+import ErrorParsingHelper from "@opsera/persephone/helpers/error/errorParsing.helper";
 
 function InfoText(
   {
@@ -16,10 +18,12 @@ function InfoText(
     model,
     fieldName,
   }) {
-  if (hasStringValue(errorMessage) === true) {
+  const parsedErrorMessage = ErrorParsingHelper.parseErrorMessage(errorMessage, "");
+
+  if (hasStringValue(parsedErrorMessage) === true) {
     return (
       <small className={"danger-red form-text"}>
-        <div>{errorMessage}</div>
+        <div>{parsedErrorMessage}</div>
       </small>
     );
   }
