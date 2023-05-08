@@ -1,4 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
+import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {faPlay} from "@fortawesome/pro-light-svg-icons";
@@ -46,13 +47,15 @@ function RunTaskButton(
     status,
     runCount,
     style,
-      connectionFailure
+    routeToWorkflow
   }) {
   const [isStarting, setIsStarting] = useState(false);
   const {
     isMounted,
     toastContext,
   } = useComponentStateReference();
+  const history = useHistory();
+  console.log(taskModel);
 
   useEffect(() => {
     if (status !== "stopped") {
@@ -70,7 +73,7 @@ function RunTaskButton(
     if (!actionAllowed) {
       return "Your Access Role Level Prevents Running Tasks";
     }
-    if (connectionFailure) {
+    if (disable) {
       return "Running of the Task is disabled until configuration and connection information is fixed.";
     }
     return null;
@@ -88,12 +91,20 @@ function RunTaskButton(
       );
     }
 
+    const launchWorkflow = () => {
+      if (routeToWorkflow) {
+        handleClose();
+        history.push(`/task/details/${taskModel?.getData("_id")}`);
+      }
+    };
+
     return (
       <Button
         variant={"success"}
         style={style}
         disabled={status === "running" || disable || isStarting || actionAllowed !== true}
         onClick={() => {
+          launchWorkflow();
           showTaskRunOverlay();
         }}
       >
@@ -199,7 +210,12 @@ RunTaskButton.propTypes = {
   status: PropTypes.string,
   runCount: PropTypes.number,
   style: PropTypes.object,
-  connectionFailure: PropTypes.bool
+  routeToWorkflow: PropTypes.bool
 };
+
+RunTaskButton.defaultProps = {
+  routeToWorkflow: false
+};
+
 
 export default RunTaskButton;

@@ -22,7 +22,7 @@ export default function CreateSalesforceWorkflowWizardEditorInput({
   const { getAccessToken, cancelTokenSource, isMounted, toastContext } =
     useComponentStateReference();
   const [taskData, setTaskData] = useState(
-    modelHelpers.parseObjectIntoModel(task, tasksMetadata),
+    modelHelpers.parseObjectIntoNewModelBase(task, tasksMetadata, true),
   );
 
   useEffect(() => {
@@ -38,9 +38,10 @@ export default function CreateSalesforceWorkflowWizardEditorInput({
   const updateTask = async () => {
     try {
       setInitializationState(apiRequestHelper.API_REQUEST_STATES.BUSY);
-      const newTaskTemplateModel = modelHelpers.parseObjectIntoModel(
+      const newTaskTemplateModel = modelHelpers.parseObjectIntoNewModelBase(
         task,
         tasksMetadata,
+          true
       );
       await taskActions.updateGitTaskV2(
         getAccessToken,

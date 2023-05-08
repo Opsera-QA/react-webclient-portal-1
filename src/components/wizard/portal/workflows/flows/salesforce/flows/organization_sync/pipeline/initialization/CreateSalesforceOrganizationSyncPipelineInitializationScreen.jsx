@@ -13,6 +13,7 @@ import {
 } from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
 import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import {getTaskTypeLabel} from "../../../../../../../../../tasks/task.types";
 
 export default function CreateSalesforceOrganizationSyncPipelineInitializationScreen(
   {
@@ -49,7 +50,7 @@ export default function CreateSalesforceOrganizationSyncPipelineInitializationSc
   return (
     <CreateWorkflowWizardPipelineInitializationScreen
       setPipelineFunction={setPipelineFunction}
-      type={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
+      type={getTaskTypeLabel(flow)}
       templateIdentifier={pipelineTemplateIdentifierConstants.PIPELINE_TEMPLATE_IDENTIFIERS.FREE_TRIAL_ORGANIZATION_SYNC_PIPELINE}
     />
   );

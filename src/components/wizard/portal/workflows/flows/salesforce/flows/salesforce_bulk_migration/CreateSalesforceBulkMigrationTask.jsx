@@ -15,6 +15,7 @@ import CreateWorkflowWizardTestJenkinsTool from "../../../tools/jenkins/CreateWo
 import CreateSalesforceBulkMigrationTaskInitializationScreen from "./CreateSalesforceBulkMigrationTaskInitializationScreen";
 import CreateSalesforceWizardTestSalesforceSourceToolConnectionScreen from "../organization_sync/task/tools/salesforce/connection/CreateSalesforceWizardTestSalesforceSourceToolConnectionScreen";
 import CreateSalesforceBulkMigrationInputFields from "./CreateSalesforceBulkMigrationInputFields";
+import { getTaskTypeLabel } from "components/tasks/task.types";
 
 export const CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS = {
   REGISTER_GIT_ACCOUNT_SCREEN: "create_git_tool_screen",
@@ -226,8 +227,8 @@ export default function CreateSalesforceBulkMigrationTask({
         return (
           <CreateWorkflowWizardTaskCompletionScreen
             task={task}
-            workflowType={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(
-              flow,
+            workflowType={getTaskTypeLabel(
+                flow,
             )}
             flow={flow}
             setButtonContainer={setButtonContainer}
