@@ -131,6 +131,7 @@ function PipelineManagement() {
         loadData={loadData}
         pipelines={pipelines}
         subscribedPipelineIds={subscribedPipelineIds}
+        error={error}
       />
     );
   };
@@ -142,6 +143,7 @@ function PipelineManagement() {
         pipelines={pipelines}
         loadData={loadData}
         onRowClickFunction={onRowSelect}
+        error={error}
       />
     );
   };
@@ -180,9 +182,7 @@ function PipelineManagement() {
       isSoftLoading={isLoading}
       filterModel={pipelineFilterModel}
       setFilterModel={setPipelineFilterModel}
-      helpComponent={
-        <PipelinesHelpDocumentation/>
-      }
+      helpComponent={<PipelinesHelpDocumentation/>}
     >
       {getPipelinesBody()}
     </ScreenContainer>

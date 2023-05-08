@@ -22,11 +22,16 @@ function OverlayTitleBar(
     externalHelpPageLink,
     setShowHelpPanel,
     helpIsShown,
+    softLoading,
   }) {
   const getTitleIcon = () => {
     if (titleIcon) {
       return (
-        <IconBase icon={titleIcon} className={"mr-1"}/>
+        <IconBase
+          icon={titleIcon}
+          className={"mr-1"}
+          isLoading={isLoading || softLoading}
+        />
       );
     }
   };
@@ -105,6 +110,7 @@ OverlayTitleBar.propTypes = {
   externalHelpPageLink: PropTypes.string,
   setShowHelpPanel: PropTypes.func,
   helpIsShown: PropTypes.bool,
+  softLoading: PropTypes.bool,
 };
 
 export default OverlayTitleBar;

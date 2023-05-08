@@ -1394,7 +1394,7 @@ div.data-blocks-ellipses {
 
 /* Filter Container Styling */
 .filter-container,
-    /*.overlay-wrapper, */
+.overlay-wrapper,
 .screen-container {
     border-radius: 1rem;
     overflow-x: hidden;

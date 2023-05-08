@@ -87,7 +87,6 @@
     "axios": "^0.26.1",
     "bootstrap": "^4.6.2",
     "buffer": "^6.0.3",
-    "core-js": "^3.30.1",
     "crypto-browserify": "^3.12.0",
     "date-fns": "^2.29.3",
     "diff-match-patch": "^1.0.5",
@@ -112,7 +111,7 @@
     "react-json-editor-ajrm": "2.5.14",
     "react-lineto": "^3.3.0",
     "react-router-bootstrap": "^0.25.0",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "^5.3.4",
     "react-scripts": "^5.0.1",
     "react-select": "^5.7.2",
     "react-syntax-highlighter": "^15.5.0",
@@ -131,8 +130,6 @@
   },
   "devDependencies": {
     "eslint": "^8.39.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.8.8",
     "prop-types": "^15.8.1"

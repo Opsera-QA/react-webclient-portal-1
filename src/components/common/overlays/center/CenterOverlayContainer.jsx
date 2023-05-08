@@ -47,6 +47,7 @@ function CenterOverlayContainer(
     minimumHeight,
     maximumHeight,
     getHelpComponentFunction,
+    softLoading,
   }) {
   const toastContext = useContext(DialogToastContext);
   const [helpIsShown, setHelpIsShown] = useState(false);
@@ -126,7 +127,7 @@ function CenterOverlayContainer(
           size={size}
         >
           <div
-            className={`content-card-1 bg-white overlay-wrapper`}
+            className={`content-card-1 bg-white`}
             style={{
               minHeight: minimumHeight,
               maxHeight: maximumHeight,
@@ -141,6 +142,7 @@ function CenterOverlayContainer(
               externalHelpPageLink={externalHelpPageLink}
               linkTooltipText={linkTooltipText}
               setShowHelpPanel={getHelpComponentFunction && getHelpComponentFunction(setHelpIsShown) !== null ? setHelpIsShown : undefined}
+              softLoading={softLoading}
             />
             {actionBar}
             <div className={`bg-white ${bodyClassName}`}>
@@ -165,6 +167,7 @@ CenterOverlayContainer.propTypes = {
   showToasts: PropTypes.bool,
   actionBar: PropTypes.object,
   showCloseButton: PropTypes.bool,
+  softLoading: PropTypes.bool,
   buttonContainer: PropTypes.object,
   pageLink: PropTypes.string,
   linkTooltipText: PropTypes.string,

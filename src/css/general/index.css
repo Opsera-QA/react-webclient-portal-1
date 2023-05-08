@@ -896,51 +896,30 @@ a:hover, .active, .link-text:hover {
     word-break: keep-all;
 }
 
+.console-text, .console-text-invert, .console-text-invert-modal, .jsonBlockText {
+    line-height: 1.25em !important;
+    font: 1em Inter, monospace;
+    white-space: pre-wrap; /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+    padding: 10px;
+}
+
 .console-text {
     background-color: black;
     background-image: radial-gradient(
-            rgb(56, 75, 112, 0.75), black 120%
+          rgb(56, 75, 112, 0.5), black 120%
     );
-    padding: 10px;
     color: white;
-    font: .8em Inconsolata, monospace;
-    white-space: pre-wrap; /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-    white-space: -pre-wrap; /* Opera 4-6 */
-    white-space: -o-pre-wrap; /* Opera 7 */
-    word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
 
 .console-text-invert {
-    padding: 10px;
     color: black;
-    font: .8em Inconsolata, monospace;
-    white-space: pre-wrap; /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-    white-space: -pre-wrap; /* Opera 4-6 */
-    white-space: -o-pre-wrap; /* Opera 7 */
-    word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
 
 .console-text-invert-modal {
-    padding: 10px;
     color: black;
-    font: .95em Inconsolata, monospace;
-    white-space: pre-wrap; /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-    white-space: -pre-wrap; /* Opera 4-6 */
-    white-space: -o-pre-wrap; /* Opera 7 */
-    word-wrap: break-word; /* Internet Explorer 5.5+ */
-}
-
-.json-block-text {
-    padding: 10px;
-    font: Inconsolata, monospace;
-    white-space: pre-wrap; /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-    white-space: -pre-wrap; /* Opera 4-6 */
-    white-space: -o-pre-wrap; /* Opera 7 */
-    word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
 
 /*  Modal Style Changes */
