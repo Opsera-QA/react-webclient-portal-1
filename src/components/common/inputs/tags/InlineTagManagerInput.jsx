@@ -86,9 +86,7 @@ export default function InlineTagManagerInput(
           currentOptions.push(tagOption);
         }
       } else {
-        if (!model.getArrayData(fieldName).some(item => item.type === tagOption.type && item.value === tagOption.value)) {
-          currentOptions.push(tagOption);
-        }
+        currentOptions.push(tagOption);
       }
     });
 
@@ -209,6 +207,14 @@ export default function InlineTagManagerInput(
     );
   };
 
+  const getFilteredTags = () => {
+    const currentData = model?.getArrayData(fieldName);
+
+    return tagOptions.filter((tag) => {
+      return currentData.find((currentDataTag) => currentDataTag.type === tag.type && currentDataTag.value === tag.value) == null;
+    });
+  };
+
   if (type == null && allowCreate !== false) {
     return (<div className="danger-red">Error for tag manager input: You forgot to wire up type!</div>);
   }
@@ -233,7 +239,7 @@ export default function InlineTagManagerInput(
           <StandaloneMultiSelectInput
             hasErrorState={hasStringValue(errorMessage)}
             hasWarningState={hasWarningState()}
-            selectOptions={[...tagOptions]}
+            selectOptions={[...getFilteredTags()]}
             textField={(tag) => `${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`}
             allowCreate={hasStringValue(type) === true ? allowCreate : undefined}
             groupBy={(tag) => capitalizeFirstLetter(tag?.type, " ", "Undefined Type")}

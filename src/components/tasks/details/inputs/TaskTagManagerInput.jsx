@@ -1,16 +1,16 @@
 import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
-import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 import InlineTagManagerInput from "components/common/inputs/tags/InlineTagManagerInput";
 import tagTypeConstants from "@opsera/definitions/constants/settings/tags/tagType.constants";
+import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
+import useTaskActions from "hooks/workflow/tasks/useTaskActions";
 
 export default function TaskTagManagerInput(
   {
     fieldName,
-    pipelineModel,
-    setPipelineModel,
+    taskModel,
+    setTaskModel,
     workflowStatus,
     visible,
     disabled,
@@ -21,24 +21,24 @@ export default function TaskTagManagerInput(
     userData,
   } = useComponentStateReference();
   const [modelCopy, setModelCopy] = useState(undefined);
-  const canEditPipelineTags = PipelineRoleHelper.canEditPipelineTags(userData, pipelineModel?.getOriginalData());
-  const pipelineActions = usePipelineActions();
+  const canEditPipelineTags = TaskRoleHelper.canUpdateTask(userData, taskModel?.getOriginalData());
+  const taskActions = useTaskActions();
 
   useEffect(() => {
-    setModelCopy(pipelineModel?.clone());
+    setModelCopy(taskModel?.clone());
   }, []);
 
   const handleSaveFunction = async () => {
-    const response = await pipelineActions.updatePipelineField(
+    const response = await taskActions.updateTaskField(
       modelCopy?.getMongoDbId(),
       fieldName,
       modelCopy?.getData(fieldName),
     );
 
-    pipelineModel?.setData(fieldName, modelCopy?.getData(fieldName));
-    setPipelineModel({...pipelineModel});
-    pipelineModel?.clearChangeMap();
-    setModelCopy({...pipelineModel?.clone()});
+    taskModel?.setData(fieldName, modelCopy?.getData(fieldName));
+    setTaskModel({...taskModel});
+    taskModel?.clearChangeMap();
+    setModelCopy({...taskModel?.clone()});
 
     return response;
   };
@@ -68,8 +68,8 @@ export default function TaskTagManagerInput(
 
 TaskTagManagerInput.propTypes = {
   fieldName: PropTypes.string,
-  pipelineModel: PropTypes.object,
-  setPipelineModel: PropTypes.func,
+  taskModel: PropTypes.object,
+  setTaskModel: PropTypes.func,
   visible: PropTypes.bool,
   disabled: PropTypes.bool,
   className: PropTypes.string,

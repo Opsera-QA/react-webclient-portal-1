@@ -84,6 +84,8 @@ function TagManager(
   const validateAndSetData = (fieldName, value) => {
     const errors = fieldValidation(value, dataObject, field);
 
+    console.log("value: " + JSON.stringify(value));
+
     if (Array.isArray(errors) && errors.length > 0) {
       setErrorMessage(errors[0]);
       return;
@@ -150,6 +152,14 @@ function TagManager(
     return field.noItemsWarning && dataObject?.getArrayData(fieldName)?.length === 0;
   };
 
+  const getFilteredTags = () => {
+    const currentData = dataObject?.getArrayData(fieldName);
+
+    return tagOptions.filter((tag) => {
+      return currentData.find((currentDataTag) => currentDataTag.type === tag.type && currentDataTag.value === tag.value) == null;
+    });
+  };
+
   if (type == null && allowCreate !== false) {
     return (<div className="danger-red">Error for tag manager input: You forgot to wire up type!</div>);
   }
@@ -173,7 +183,7 @@ function TagManager(
         <StandaloneMultiSelectInput
           hasErrorState={hasStringValue(errorMessage)}
           hasWarningState={hasWarningState()}
-          selectOptions={[...tagOptions]}
+          selectOptions={[...getFilteredTags()]}
           textField={(tag) => `${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`}
           allowCreate={hasStringValue(type) === true ? allowCreate : undefined}
           groupBy={(tag) => capitalizeFirstLetter(tag?.type, " ", "Undefined Type")}
