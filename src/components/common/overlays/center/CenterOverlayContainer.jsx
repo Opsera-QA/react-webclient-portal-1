@@ -141,6 +141,7 @@ function CenterOverlayContainer(
               pageLink={pageLink}
               externalHelpPageLink={externalHelpPageLink}
               linkTooltipText={linkTooltipText}
+              setShowHelpPanel={getHelpComponentFunction && getHelpComponentFunction(setHelpIsShown) !== null ? setHelpIsShown : undefined}
               softLoading={softLoading}
             />
             {actionBar}

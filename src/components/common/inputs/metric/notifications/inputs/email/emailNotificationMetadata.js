@@ -13,8 +13,8 @@ const emailNotificationMetadata = {
       minItems: 1,
       isRequired: true,
       isEmailArray: true,
-      maxItems: 5,
-      formText: "You can select up to five Email Addresses to receive notifications",
+      maxItems: 10,
+      formText: "You can select up to ten Email Addresses to receive notifications",
     },
     {
       label: "Email Notifications",
