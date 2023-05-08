@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
@@ -18,22 +18,6 @@ function PipelineDurationMetricsStandaloneField({ pipelineId, pipelineRunCount, 
 
   useEffect(() => {}, [pipelineId, pipelineRunCount]);
 
-  const getLastRunDurationText = () => {
-    if (hasStringValue(lastRunDurationText) === true) {
-      return lastRunDurationText;
-    }
-
-    return isLoading ? "" : "No Valid Metrics to Display";
-  };
-
-  const getLastFiveRunsDurationText = () => {
-    if (hasStringValue(lastFiveRunsDurationText) === true) {
-      return lastFiveRunsDurationText;
-    }
-
-    return isLoading ? "" : "No Valid Metrics to Display";
-  };
-
   if (isMongoDbId(pipelineId) !== true || numberHelpers.isNumberGreaterThan(0, pipelineRunCount) !== true) {
     return null;
   }
@@ -41,18 +25,18 @@ function PipelineDurationMetricsStandaloneField({ pipelineId, pipelineRunCount, 
   return (
     <div className={className}>
       <StandaloneTextFieldBase
-        text={getLastRunDurationText()}
+        text={lastRunDurationText}
         label={"Last Pipeline Run Duration"}
         className={"py-2"}
         isBusy={isLoading}
-        visible={pipelineRunCount >= 5}
+        visible={hasStringValue(lastRunDurationText) === true}
       />
       <StandaloneTextFieldBase
-        text={getLastFiveRunsDurationText()}
+        text={lastFiveRunsDurationText}
         label={"Last Five Pipeline Runs Average Duration"}
         className={"py-2"}
         isBusy={isLoading}
-        visible={lastFiveRunsDurationText !== null}
+        visible={pipelineRunCount >= 5 && hasStringValue(lastFiveRunsDurationText) === true}
       />
       <InfoText errorMessage={error} />
     </div>
