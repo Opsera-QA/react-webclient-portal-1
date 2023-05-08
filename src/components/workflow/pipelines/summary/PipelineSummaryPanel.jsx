@@ -13,11 +13,8 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import OwnerNameField from "components/common/fields/text/general/OwnerNameField";
 import InlinePipelineTypeSelectInput from "components/workflow/pipelines/summary/inputs/type/InlinePipelineTypeSelectInput";
-import {Divider} from "temp-library-components/divider/Divider";
 import PipelineOrchestrationSummaryField
   from "temp-library-components/fields/orchestration/pipeline/PipelineOrchestrationSummaryField";
-import PipelineOrchestrationProgressBarBase
-  from "temp-library-components/fields/orchestration/progress/PipelineOrchestrationProgressBarBase";
 import PipelineModel from "components/workflow/pipeline.model";
 import PipelineDescriptionTextInput from "components/workflow/pipelines/summary/inputs/PipelineDescriptionTextInput";
 import PipelineTagManagerInput from "components/workflow/pipelines/summary/inputs/PipelineTagManagerInput";
