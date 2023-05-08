@@ -109,6 +109,15 @@ SalesforceTaskHelper.configureSalesforceToGitMergeSyncTask = (
     );
   }
 
+  if (isMongoDbId(salesforceToolId) !== true) {
+    throw ReactLoggingHandler.logErrorMessage(
+      "salesforceTaskWizard",
+      "configureSalesforceToGitMergeSyncTask",
+      "Cannot configure Salesforce to Git Merge Sync Task:",
+      "The Salesforce Tool ID was invalid",
+    );
+  }
+
   let updatedTask = SalesforceTaskHelper.updateSfdcToolIdForSalesforceTask(task, salesforceToolId, flow);
   updatedTask = SalesforceTaskHelper.updateGitToolIdForSalesforceTask(updatedTask, gitToolId, gitToolOption, flow);
   return updatedTask;

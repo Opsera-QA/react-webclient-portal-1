@@ -10,6 +10,7 @@ import {
 } from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/task/CreateSalesforceOrganizationSyncTaskWizard";
 import { taskTemplateIdentifierConstants } from "components/admin/task_templates/taskTemplateIdentifier.constants";
 import { SalesforceTaskHelper } from "components/tasks/salesforceTask.helper";
+import {getTaskTypeLabel} from "../../../../../../../tasks/task.types";
 
 export default function CreateSalesforceQuickDeployTaskInitializationScreen(
     {
@@ -32,7 +33,7 @@ export default function CreateSalesforceQuickDeployTaskInitializationScreen(
     return (
         <CreateWorkflowWizardTaskInitializationScreen
             setTaskFunction={setTaskFunction}
-            type={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
+            type={getTaskTypeLabel(flow)}
             templateIdentifier={taskTemplateIdentifierConstants.TASK_TEMPLATE_IDENTIFIERS.SALESFORCE_QUICK_DEPLOY}
             setButtonContainer={setButtonContainer}
         />
