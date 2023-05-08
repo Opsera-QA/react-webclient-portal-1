@@ -40,5 +40,22 @@ export default function useTaskActions() {
     return await apiService.handleApiGetRequest(apiUrl);
   };
 
+  taskActions.updateTaskField = async (
+    taskId,
+    fieldName,
+    newValue,
+  ) => {
+    const apiUrl = `/tasks/${taskId}`;
+    const postBody = {
+      fieldName: fieldName,
+      value: newValue,
+    };
+    return await apiService.handleApiPatchRequest(
+      apiUrl,
+      postBody,
+    );
+  };
+
+
   return taskActions;
 }

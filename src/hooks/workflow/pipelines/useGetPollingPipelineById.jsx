@@ -1,5 +1,4 @@
 import useGetPipelineById from "hooks/workflow/pipelines/useGetPipelineById";
-import usePollingInterval from "hooks/general/usePollingInterval";
 import useGetPollingPipelineOrchestrationStatusById
   from "hooks/workflow/pipelines/orchestration/useGetPollingPipelineOrchestrationStatusById";
 import {useEffect} from "react";

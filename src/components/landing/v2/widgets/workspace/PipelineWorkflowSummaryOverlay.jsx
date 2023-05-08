@@ -15,11 +15,19 @@ import PipelineOrchestrationSummaryField
   from "temp-library-components/fields/orchestration/pipeline/PipelineOrchestrationSummaryField";
 import PipelineDurationMetricsStandaloneField
   from "components/common/fields/pipelines/metrics/PipelineDurationMetricsStandaloneField";
-import useGetPipelineModelById from "hooks/workflow/pipelines/model/useGetPipelineModelById";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import ErrorMessageFieldBase from "components/common/fields/text/message/ErrorMessageFieldBase";
 import {errorHelpers} from "components/common/helpers/error-helpers";
+import PipelineCardBase from "temp-library-components/cards/pipelines/PipelineCardBase";
+import useGetPollingPipelineModelById from "hooks/workflow/pipelines/useGetPollingPipelineModelById";
+import OverlayContainer from "components/common/overlays/OverlayContainer";
+import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
+import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
+import useGetPipelineDurationMetrics from "hooks/workflow/pipelines/metrics/useGetPipelineDurationMetrics";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import TwoLineDataBlockBase from "components/common/metrics/data_blocks/base/TwoLineDataBlockBase";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
 // TODO: Should this be two separate panels?
 export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
@@ -27,11 +35,15 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
   const history = useHistory();
   const {
     pipelineModel,
-    setPipelineModel,
     error,
-    loadData,
     isLoading,
-  } = useGetPipelineModelById(pipelineId);
+  } = useGetPollingPipelineModelById(pipelineId);
+  const {
+    lastFiveRunsDurationText,
+    lastRunDurationText,
+    totalAverageDurationText,
+    loadData,
+  } = useGetPipelineDurationMetrics(pipelineId, pipelineModel?.getRunCount());
 
   const handleViewDetailsButton = () => {
     history.push(pipelineModel?.getDetailViewLink());
@@ -43,8 +55,56 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
     toastContext.clearOverlayPanel();
   };
 
+  const getLastRunDuration = () => {
+    if (hasStringValue(lastRunDurationText) === true) {
+      return (
+        <Col xs={3}>
+          <WidgetDataBlockBase className={"mt-2"}>
+            <TwoLineDataBlockBase
+              title={lastRunDurationText}
+              subtitle={"Last Run Duration"}
+              className={"p-2"}
+            />
+          </WidgetDataBlockBase>
+        </Col>
+      );
+    }
+  };
+
+  const getLastFiveRunAverageDuration = () => {
+    if (hasStringValue(lastFiveRunsDurationText) === true) {
+      return (
+        <Col xs={3}>
+          <WidgetDataBlockBase className={"mt-2"}>
+            <TwoLineDataBlockBase
+              title={lastFiveRunsDurationText}
+              subtitle={"Last 5 Runs Average Duration"}
+              className={"p-2"}
+            />
+          </WidgetDataBlockBase>
+        </Col>
+      );
+    }
+  };
+
+  const getTotalRunAverageDuration = () => {
+    if (hasStringValue(totalAverageDurationText) === true) {
+      return (
+        <Col xs={3}>
+          <WidgetDataBlockBase className={"mt-2"}>
+            <TwoLineDataBlockBase
+              title={totalAverageDurationText}
+              subtitle={"Average Run Duration"}
+              className={"p-2"}
+            />
+          </WidgetDataBlockBase>
+        </Col>
+      );
+    }
+  };
+
   const getBody = () => {
-    if (isLoading === true) {
+    if (isLoading === true && pipelineModel == null) {
       return (
         <CenterLoadingIndicator
           type={"Pipeline"}
@@ -64,32 +124,38 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
 
     return (
       <Row>
-        <Col xs={6}>
-          <TextFieldBase
-            dataObject={pipelineModel}
-            fieldName={"workflow.run_count"}
+        <Col xs={12}>
+          <PipelineCardBase
+            pipelineModel={pipelineModel}
           />
         </Col>
+        <Col xs={3}>
+          <WidgetDataBlockBase className={"mt-2"}>
+            <TwoLineScoreDataBlock
+              score={pipelineModel?.getRunCount()}
+              subtitle={"Runs"}
+              className={"p-2"}
+            />
+          </WidgetDataBlockBase>
+        </Col>
+        {getLastRunDuration()}
+        {getTotalRunAverageDuration()}
         <Col xs={6}>
           <PipelineLastRunDateField
             pipelineModel={pipelineModel}
           />
         </Col>
         <Col xs={12}>
-          <TextFieldBase
-            dataObject={pipelineModel}
-            fieldName={"description"}
-          />
+          <WidgetDataBlockBase className={"mt-2"}>
+            <div className={"p-3"}>
+              <H5FieldSubHeader subheaderText={pipelineModel?.getLabel("description")} />
+              <div>{pipelineModel?.getData("description")}</div>
+            </div>
+          </WidgetDataBlockBase>
         </Col>
         <Col sm={12}>
           <PipelineOrchestrationSummaryField
             pipelineModel={pipelineModel}
-          />
-        </Col>
-        <Col sm={12}>
-          <PipelineDurationMetricsStandaloneField
-            pipelineId={pipelineModel?.getMongoDbId()}
-            pipelineRunCount={pipelineModel?.getRunCount()}
           />
         </Col>
       </Row>
@@ -97,17 +163,17 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
   };
 
   return (
-    <CenterOverlayContainer
+    <OverlayContainer
       closePanel={closePanel}
       titleText={pipelineModel?.getData("name")}
       titleIcon={faDraftingCompass}
       showToasts={true}
       showCloseButton={false}
-      minimumHeight={"50vh"}
-      maximumHeight={"50vh"}
-      isLoading={isLoading}
+      isLoading={isLoading && pipelineModel == null}
+      softLoading={isLoading}
+      minimumHeight={"560px"}
     >
-      <div className={"p-3"}>
+      <div className={"px-3 pb-3"}>
         {getBody()}
         <ButtonContainerBase>
           <VanityButtonBase
@@ -121,7 +187,7 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
           />
         </ButtonContainerBase>
       </div>
-    </CenterOverlayContainer>
+    </OverlayContainer>
   );
 }
 
