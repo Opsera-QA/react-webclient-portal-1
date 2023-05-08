@@ -13,12 +13,16 @@ import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import IconBase from "components/common/icons/IconBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import ButtonBase from "components/common/buttons/ButtonBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import PipelineStepNotificationConfigurationOverlay from "components/workflow/plan/step/notifications/PipelineStepNotificationConfigurationOverlay";
 
-function ApprovalGateStepConfiguration({ stepTool, parentCallback, closeEditorPanel }) {
+function ApprovalGateStepConfiguration({ stepTool, parentCallback, closeEditorPanel, pipelineStep, pipeline }) {
   const contextType = useContext(AuthContext);
   const [thresholdData, setThresholdData] = useState(undefined);
   const [approvalGateData, setApprovalGateData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
+  const {toastContext} = useComponentStateReference();
 
   useEffect(() => {
     setIsLoading(true);
@@ -58,6 +62,16 @@ function ApprovalGateStepConfiguration({ stepTool, parentCallback, closeEditorPa
     return <></>;
   }
 
+  const editStepNotificationConfiguration = async () => {
+    toastContext.showOverlayPanel(
+      <PipelineStepNotificationConfigurationOverlay
+        pipeline={pipeline}
+        pipelineId={pipeline?._id}
+        pipelineStep={pipelineStep}
+      />
+    );
+  };
+
   return (
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
@@ -67,7 +81,7 @@ function ApprovalGateStepConfiguration({ stepTool, parentCallback, closeEditorPa
     >
       <div>An Approval Gate in an Opsera Pipeline will halt the running pipeline and notify the configured
         user in order to allow the pipeline to proceed. Approval notification follows the rules defined for overall step notification. <b>Only Site Administrators and the pipeline&apos;s assigned Owner, Administrator and Manager roles (assigned via Access Rules) are permitted to perform this action</b>.
-        <div className="my-3">Use the notification icon (<IconBase icon={faEnvelope}/>) to enable the various channels to use.</div>
+        <ButtonBase className={"mt-2 mb-2"} icon={faEnvelope} buttonText={"Configure Notification Rules"} onClickFunction={editStepNotificationConfiguration} tooltipText={"To configure the notification rues click here."} />
       </div>
       <BooleanToggleInput
         fieldName={"sendCustomMessage"}
@@ -93,7 +107,9 @@ function ApprovalGateStepConfiguration({ stepTool, parentCallback, closeEditorPa
 ApprovalGateStepConfiguration.propTypes = {
   stepTool: PropTypes.object,
   parentCallback: PropTypes.func,
-  closeEditorPanel: PropTypes.func
+  closeEditorPanel: PropTypes.func,
+  pipelineStep: PropTypes.object,
+  pipeline: PropTypes.object,
 };
 
 export default ApprovalGateStepConfiguration;
