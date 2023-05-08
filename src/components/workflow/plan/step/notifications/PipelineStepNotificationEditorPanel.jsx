@@ -173,12 +173,7 @@ function PipelineStepNotificationEditorPanel(
   }
 
   return (
-    <CenterOverlayContainer
-      getHelpComponentFunction={getHelpComponentFunction}
-      showCloseButton={false}
-      titleText={"Pipeline Step Notifications"}
-      bodyClassName={"p-3"}
-    >
+    <div>
       {getTitleBar()}
       <PipelineNotificationTabView
         slackNotificationModel={slackNotificationModel}
@@ -207,7 +202,7 @@ function PipelineStepNotificationEditorPanel(
           closeEditorCallback={handleCloseClick}
         />
       </SaveButtonContainer>
-    </CenterOverlayContainer>
+    </div>
   );
 }
 
