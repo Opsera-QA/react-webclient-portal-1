@@ -6,6 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import { defaultConfig, getColorByData } from '../../../../charts/charts-views';
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 function GitCustodianTopRepositoriesChart({ dashboardData, data }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -45,6 +46,14 @@ function GitCustodianTopRepositoriesChart({ dashboardData, data }) {
     }
   };
 
+  const getTooltip = (point) => {
+    return (
+      <div className="custom-bar-tooltip" key={point.datum.id}>
+        <span><span className="tooltip-color-box" style={{backgroundColor: point.datum.color}}></span>{`${point.datum.label}: `}<strong>{point.datum.value}</strong> issues</span>
+      </div>
+    );
+  };
+
   const getChartBody = () => {
     if (!Array.isArray(data) || data.length === 0) {
       return (
@@ -63,11 +72,12 @@ function GitCustodianTopRepositoriesChart({ dashboardData, data }) {
       <div className="new-chart p-0" style={{ height: "200px", position: "relative" }}>
         <ResponsivePie
           data={data.filter(d => d.value != 0)}
+          tooltip={getTooltip}
           {...defaultConfig()}
           {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
         />
-        <div style={{ position: "absolute", top: "40%", marginLeft: "51.5%"}}>
-          <span>{total}</span>
+        <div style={{ position: "absolute", top: "40%", marginLeft: "50.5%"}}>
+          <TooltipWrapper innerText={"Open Issues"}><span>{total}</span></TooltipWrapper>
         </div>
       </div>
     );
