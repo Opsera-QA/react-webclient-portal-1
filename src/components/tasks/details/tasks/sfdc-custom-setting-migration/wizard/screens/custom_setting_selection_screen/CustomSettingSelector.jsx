@@ -12,12 +12,21 @@ import { Button, Col, Row } from "react-bootstrap";
 import SaveButtonContainer from "../../../../../../../common/buttons/saving/containers/SaveButtonContainer";
 import FieldPropertiesSelectorView from "./FieldPropertiesSelectorView";
 import EnableEditingIcon from "../../../../../../../common/icons/enable/EnableEditingIcon";
-import { getMigrationTypeLabel, MIGRATION_TYPES } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
+import {
+  getMigrationTypeLabel,
+  MIGRATION_TYPES,
+} from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 import H5FieldSubHeader from "../../../../../../../common/fields/subheader/H5FieldSubHeader";
 import ToolNameField from "../../../../../../../common/fields/inventory/ToolNameField";
 import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
 
-const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCurrentScreen, taskType }) => {
+const CustomSettingSelector = ({
+  wizardModel,
+  setWizardModel,
+  handleClose,
+  setCurrentScreen,
+  taskType,
+}) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -147,7 +156,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
         wizardModel,
         wizardModel?.getData("selectedCustomSetting")?.componentName,
       );
-      if(taskType === MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
+      if (taskType === MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
         setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.UPLOAD_SCREEN);
         return;
       }
@@ -166,23 +175,32 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
   };
 
   const getSummaryView = () => {
-    if(enableEdit) {
+    if (enableEdit) {
       return (
         <div className={`p-3 message-field info-message-field`}>
           <div className={"px-3 d-flex"}>
-              <Col xs={6}>
-                <ToolNameField
-                  model={wizardModel}
-                  fieldName={"sourceToolId"}
-                />
-              </Col>
-              <Col xs={6}>
-                <ToolNameField
-                  model={wizardModel}
-                  fieldName={"targetToolId"}
-                  visible={wizardModel?.getData("taskType") === MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG}
-                />
-              </Col>
+            <Col xs={6}>
+              <ToolNameField
+                model={wizardModel}
+                fieldName={"targetToolId"}
+                visible={
+                  wizardModel?.getData("taskType") ===
+                  MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG ||
+                  wizardModel?.getData("taskType") ===
+                  MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG
+                }
+              />
+            </Col>
+            <Col xs={6}>
+              <ToolNameField
+                model={wizardModel}
+                fieldName={"sourceToolId"}
+                visible={
+                  wizardModel?.getData("taskType") !==
+                  MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG
+                }
+              />
+            </Col>
           </div>
         </div>
       );
@@ -225,7 +243,11 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
             size="sm"
             variant="primary"
             onClick={saveAndTriggerFieldsPull}
-            disabled={isLoading || isSaving || wizardModel?.getData("selectedCustomSetting").length < 1}
+            disabled={
+              isLoading ||
+              isSaving ||
+              wizardModel?.getData("selectedCustomSetting").length < 1
+            }
           >
             <span>
               <IconBase
@@ -243,8 +265,8 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
   };
 
   const getFieldSelectionView = () => {
-    if(!enableEdit) {
-      return(
+    if (!enableEdit) {
+      return (
         <FieldPropertiesSelectorView
           wizardModel={wizardModel}
           setWizardModel={setWizardModel}

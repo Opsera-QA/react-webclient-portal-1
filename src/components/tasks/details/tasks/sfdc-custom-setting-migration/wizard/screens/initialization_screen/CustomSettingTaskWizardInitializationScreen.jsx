@@ -56,6 +56,7 @@ const CustomSettingTaskWizardInitializationScreen = ({
             wizardModel={wizardModel}
             setWizardModel={setWizardModel}
             setCurrentScreen={setCurrentScreen}
+            taskType={taskType}
             className={"mr-2"}
           />
           <CancelButton

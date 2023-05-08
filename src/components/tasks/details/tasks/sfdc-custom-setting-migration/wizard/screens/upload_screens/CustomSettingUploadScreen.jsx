@@ -13,6 +13,7 @@ import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
 import { getMigrationTypeLabel } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
+import CustomSettingFileUploadComponent from "./CustomSettingFileUploadComponent";
 
 const CustomSettingUploadScreen = ({
   wizardModel,
@@ -50,7 +51,10 @@ const CustomSettingUploadScreen = ({
             )} : Custom Setting File Upload Screen`}
           />
         </Row>
-        <div className={"m-3"}>Upload Screen</div>
+        <CustomSettingFileUploadComponent
+          wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
+        />
       </div>
     );
   };
