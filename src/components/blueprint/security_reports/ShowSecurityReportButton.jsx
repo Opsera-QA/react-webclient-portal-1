@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {faFileCode} from "@fortawesome/free-solid-svg-icons";
+import {faFileCode} from "@fortawesome/pro-solid-svg-icons";
 import AnchoreSecurityReportOverlay from "components/blueprint/security_reports/anchore/AnchoreSecurityReportOverlay";
 import TwistlockSecurityReportOverlay from "components/blueprint/security_reports/twistlock/TwistlockSecurityReportOverlay";
 import AquasecSecurityReportOverlay from "components/blueprint/security_reports/aquasec/AquasecSecurityReportOverlay";

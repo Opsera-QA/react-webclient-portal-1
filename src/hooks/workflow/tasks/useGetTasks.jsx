@@ -10,6 +10,7 @@ export default function useGetTasks(
   fields,
   setUrlParameters = false,
   pageSize,
+  isSubscribed,
   handleErrorFunction,
 ) {
   const [tasks, setTasks] = useState([]);
@@ -28,6 +29,10 @@ export default function useGetTasks(
 
     if (pageSize) {
       taskFilterModel.setData("pageSize", pageSize);
+    }
+
+    if (isSubscribed === true) {
+      taskFilterModel.setData("type", "subscribed");
     }
 
     if (loadData) {

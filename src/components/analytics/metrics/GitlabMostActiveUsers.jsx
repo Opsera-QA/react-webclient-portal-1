@@ -5,7 +5,7 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
 import CustomTable from "../../common/table/CustomTable";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/pro-solid-svg-icons";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 

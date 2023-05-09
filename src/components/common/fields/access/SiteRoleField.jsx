@@ -11,17 +11,15 @@ export default function SiteRoleField(
   }) {
   const {
     userData,
-    accessRoleData,
   } = useComponentStateReference();
 
-  if (accessRoleData == null) {
+  if (userData == null) {
     return null;
   }
 
   return (
    <SiteRoleFieldBase
     className={className}
-    accessRoleData={accessRoleData}
     userData={userData}
     showDescription={showDescription}
     showExternalHelpDocumentationLink={showExternalHelpDocumentationLink}

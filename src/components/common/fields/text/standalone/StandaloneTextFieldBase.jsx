@@ -4,6 +4,8 @@ import FieldContainer from "components/common/fields/FieldContainer";
 import CopyToClipboardIcon from "components/common/icons/CopyToClipboardIcon";
 import IconBase from "components/common/icons/IconBase";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import CopyToClipboardIconBase from "components/common/icons/link/CopyToClipboardIconBase";
+import FieldLabelBase from "components/common/fields/FieldLabelBase";
 
 function StandaloneTextFieldBase(
   {
@@ -14,19 +16,25 @@ function StandaloneTextFieldBase(
     isBusy,
     infoMessage,
     errorMessage,
+    visible,
   }) {
-  const getClipboardButton = () => {
-    if (showClipboardButton === true) {
-      return (<CopyToClipboardIcon className={"my-auto ml-auto"} copyString={text} />);
-    }
-  };
+  if (visible === false) {
+    return null;
+  }
 
   return (
     <FieldContainer className={className}>
       <div className={"w-100 d-flex"}>
-        <label className={"mb-0 mr-2 text-muted"}><span>{label}:</span></label>
+        <FieldLabelBase
+          label={label}
+          // isLoading={isBusy}
+        />
         <span><IconBase className={"mr-2"} isLoading={isBusy} />{text}</span>
-        {getClipboardButton()}
+        <CopyToClipboardIconBase
+          className={"my-auto ml-2"}
+          copyString={text}
+          visible={showClipboardButton === true}
+        />
       </div>
       <InfoText
         infoMessage={infoMessage}
@@ -44,6 +52,7 @@ StandaloneTextFieldBase.propTypes = {
   isBusy: PropTypes.bool,
   infoMessage: PropTypes.string,
   errorMessage: PropTypes.func,
+  visible: PropTypes.bool,
 };
 
 export default StandaloneTextFieldBase;

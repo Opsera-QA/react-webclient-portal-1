@@ -179,6 +179,13 @@ export default function CreateWorkflowWizardCreateGithubToolEditorPanel({
             <>
               <Col sm={12}>
                 <VanitySetTextInputBase
+                  fieldName={"url"}
+                  model={gitToolModel}
+                  setModel={setGitToolModel}
+                />
+              </Col>
+              <Col sm={12}>
+                <VanitySetTextInputBase
                   fieldName={"accountUsername"}
                   model={gitToolModel}
                   setModel={setGitToolModel}

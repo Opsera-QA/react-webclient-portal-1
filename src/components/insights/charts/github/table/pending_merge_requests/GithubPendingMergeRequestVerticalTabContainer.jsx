@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import IconBase from "../../../../../common/icons/IconBase";
-import {faDatabase} from "@fortawesome/free-solid-svg-icons";
+import {faDatabase} from "@fortawesome/pro-solid-svg-icons";
 import PaginationContainer from "../../../../../common/pagination/PaginationContainer";
 import chartsActions from "../../../charts-actions";
 import {AuthContext} from "../../../../../../contexts/AuthContext";

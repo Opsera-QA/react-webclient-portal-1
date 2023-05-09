@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {faSave} from "@fortawesome/free-solid-svg-icons";
+import {faSave} from "@fortawesome/pro-solid-svg-icons";
 import {persistNewRecord} from "./saving-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";

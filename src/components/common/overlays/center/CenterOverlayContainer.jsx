@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import OverlayTitleBar from "components/common/overlays/OverlayTitleBar";
@@ -46,8 +46,11 @@ function CenterOverlayContainer(
     backButtonFunction,
     minimumHeight,
     maximumHeight,
+    getHelpComponentFunction,
+    softLoading,
   }) {
   const toastContext = useContext(DialogToastContext);
+  const [helpIsShown, setHelpIsShown] = useState(false);
 
   useEffect(() => {
     if (showToasts) {
@@ -102,6 +105,14 @@ function CenterOverlayContainer(
       );
     }
 
+    if (helpIsShown === true && getHelpComponentFunction && getHelpComponentFunction(setHelpIsShown)) {
+      return (
+        <div className={"p-2"}>
+          {getHelpComponentFunction(setHelpIsShown)}
+        </div>
+      );
+    }
+
     return children;
   };
 
@@ -116,7 +127,7 @@ function CenterOverlayContainer(
           size={size}
         >
           <div
-            className={`content-card-1 bg-white overlay-wrapper`}
+            className={`content-card-1 bg-white`}
             style={{
               minHeight: minimumHeight,
               maxHeight: maximumHeight,
@@ -130,6 +141,8 @@ function CenterOverlayContainer(
               pageLink={pageLink}
               externalHelpPageLink={externalHelpPageLink}
               linkTooltipText={linkTooltipText}
+              setShowHelpPanel={getHelpComponentFunction && getHelpComponentFunction(setHelpIsShown) !== null ? setHelpIsShown : undefined}
+              softLoading={softLoading}
             />
             {actionBar}
             <div className={`bg-white ${bodyClassName}`}>
@@ -154,6 +167,7 @@ CenterOverlayContainer.propTypes = {
   showToasts: PropTypes.bool,
   actionBar: PropTypes.object,
   showCloseButton: PropTypes.bool,
+  softLoading: PropTypes.bool,
   buttonContainer: PropTypes.object,
   pageLink: PropTypes.string,
   linkTooltipText: PropTypes.string,
@@ -163,6 +177,7 @@ CenterOverlayContainer.propTypes = {
   backButtonFunction: PropTypes.func,
   minimumHeight: PropTypes.string,
   maximumHeight: PropTypes.string,
+  getHelpComponentFunction: PropTypes.func,
 };
 
 CenterOverlayContainer.defaultProps = {

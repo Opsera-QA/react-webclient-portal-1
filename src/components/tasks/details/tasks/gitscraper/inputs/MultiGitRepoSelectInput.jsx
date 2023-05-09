@@ -8,10 +8,10 @@ import { DialogToastContext } from "../../../../contexts/DialogToastContext";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import parametersActions from "../../../inventory/parameters/parameters-actions";
 import axios from "axios";
-import ReactJson from "@microlink/react-json-view";
 import InfoText from "../../inputs/info_text/InfoText";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import IconBase from "components/common/icons/IconBase";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 
 const SAMPLE_DATA = {
   subnet_list: [
@@ -321,9 +321,9 @@ function MultiGitRepoSelectInput({
                 {
                   <div className={"mt-2"}>
                     Sample:
-                    <ReactJson
+                    <StandaloneJsonField
                       className={"mt-1 py-1"}
-                      src={SAMPLE_DATA}
+                      json={SAMPLE_DATA}
                       displayDataTypes={false}
                     />
                   </div>

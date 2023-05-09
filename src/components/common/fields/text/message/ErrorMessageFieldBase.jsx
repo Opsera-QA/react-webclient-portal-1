@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {faCircleExclamation} from "@fortawesome/pro-light-svg-icons";
 
 export default function ErrorMessageFieldBase(
@@ -11,8 +10,6 @@ export default function ErrorMessageFieldBase(
     className,
     showErrorLabel,
   }) {
-  const parsedMessage = DataParsingHelper.parseString(message);
-
   const getLabel = () => {
     if (showErrorLabel !== false) {
       return (
@@ -24,12 +21,12 @@ export default function ErrorMessageFieldBase(
   const getMessage = () => {
     return (
       <div>
-        {getLabel()}{parsedMessage}
+        {getLabel()}{message}
       </div>
     );
   };
 
-  if (!parsedMessage) {
+  if (message == null) {
     return null;
   }
 
@@ -46,7 +43,7 @@ export default function ErrorMessageFieldBase(
 
 ErrorMessageFieldBase.propTypes = {
   label: PropTypes.string,
-  message: PropTypes.string,
+  message: PropTypes.any,
   className: PropTypes.string,
   showErrorLabel: PropTypes.bool,
 };

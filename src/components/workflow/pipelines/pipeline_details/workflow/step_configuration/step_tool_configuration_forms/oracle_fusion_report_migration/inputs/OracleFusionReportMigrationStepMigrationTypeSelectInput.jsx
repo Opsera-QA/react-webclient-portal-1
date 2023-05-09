@@ -11,6 +11,14 @@ export const MIGRATION_TYPES = [
     name: "Artifactory To Instance",
     value: "artifactory_to_instance",
   },
+  {
+    name: "Pull Reports",
+    value: "pull_reports",
+  },
+  {
+    name: "Push Reports",
+    value: "push_reports",
+  },
 ];
 
 function OracleFusionReportMigrationStepMigrationTypeSelectInput({model, setModel, isLoading, disabled}) {

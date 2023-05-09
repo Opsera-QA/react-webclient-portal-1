@@ -4,9 +4,9 @@ import Row from "react-bootstrap/Row";
 import SelectionCardColumn from "temp-library-components/cards/SelectionCardColumn";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
-import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import Col from "react-bootstrap/Col";
 import LoadMoreItemsButton from "temp-library-components/button/load/LoadMoreItemsButton";
+import InfoMessageFieldBase from "components/common/fields/text/message/InfoMessageFieldBase";
 
 export default function VerticalCardViewBase(
   {
@@ -27,7 +27,10 @@ export default function VerticalCardViewBase(
 
     return (
       <CenteredContentWrapper minHeight={minHeight}>
-        {noDataMessage}
+        <InfoMessageFieldBase
+          message={noDataMessage}
+          showInformationLabel={false}
+        />
       </CenteredContentWrapper>
     );
   }

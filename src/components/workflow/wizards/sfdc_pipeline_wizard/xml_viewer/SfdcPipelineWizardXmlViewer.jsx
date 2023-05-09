@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {faCheck, faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+import {faCheck, faArrowLeft} from "@fortawesome/pro-solid-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";

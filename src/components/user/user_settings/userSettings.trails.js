@@ -1,5 +1,6 @@
-import {faIdCard, faKey, faRss, faUser} from "@fortawesome/pro-light-svg-icons";
+import {faIdCard, faKey, faUser} from "@fortawesome/pro-light-svg-icons";
 import {userSettingsPaths} from "components/user/user_settings/userSettings.paths";
+import {faStar} from "@fortawesome/pro-solid-svg-icons";
 
 export const userSettingsTrails = {};
 
@@ -33,13 +34,9 @@ userSettingsTrails.subscriptions = {
   parent: "userProfile",
   name: "subscriptions",
   path: userSettingsPaths.mySubscriptions,
-  title: "My Subscriptions",
-  linkText: "My Subscriptions",
-  icon: faRss,
-  pageDescription: `
-      Review and manage your user profile information as well as platform settings from this page. 
-      Please note, profile details are stored in your identity provider, so some changes my not be possible from this portal at this time.
-    `,
+  title: "Following",
+  linkText: "Following",
+  icon: faStar,
 };
 
 userSettingsTrails.myAccessTokens = {

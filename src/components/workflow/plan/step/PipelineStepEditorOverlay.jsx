@@ -42,6 +42,7 @@ function PipelineStepEditorOverlay(
           pipelineStepId={pipelineStep?._id}
           reloadParentPipeline={loadPipeline}
           closeEditorPanel={closePanel}
+          pipelineStep={pipelineStep}
         />
       </div>
     </FullScreenCenterOverlayContainer>

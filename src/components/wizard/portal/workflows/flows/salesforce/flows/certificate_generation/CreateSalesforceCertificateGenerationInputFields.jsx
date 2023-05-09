@@ -34,12 +34,13 @@ function CreateSalesforceCertificateGenerationInputFields({
   onSuccessFunction,
 }) {
   const [taskConfigurationModel, setTaskConfigurationModel] = useState(
-    modelHelpers.parseObjectIntoModel(
+    modelHelpers.parseObjectIntoNewModelBase(
       taskModel?.configuration,
       sfdxCertGenTaskConfigurationMetadata,
+        true
     ),
   );
-  const [parentConfig, setParentConfig] =    useState(modelHelpers.parseObjectIntoModel(taskModel, tasksMetadata));
+  const [parentConfig, setParentConfig] =    useState(modelHelpers.parseObjectIntoNewModelBase(taskModel, tasksMetadata, true));
 
 
   useEffect(() => {

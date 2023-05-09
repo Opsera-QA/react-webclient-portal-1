@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {faTimes} from "@fortawesome/free-solid-svg-icons";
+import {faTimes} from "@fortawesome/pro-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
 function WarningToast({ warningMessage, removeToast, autoCloseLength, id }) {

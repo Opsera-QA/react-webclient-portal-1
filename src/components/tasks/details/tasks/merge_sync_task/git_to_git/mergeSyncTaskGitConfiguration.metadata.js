@@ -4,13 +4,13 @@ export const mergeSyncTaskGitConfigurationMetadata = {
   type: "Git to Git Merge Sync Task Configuration",
   fields: [
     {
-      label: "Source Control Management Type",
+      label: "Source Code Management Type",
       id: "service",
       isRequired: true,
       lowercase: true,
     },
     {
-      label: "Git Account",
+      label: "Account",
       id: "toolId",
       isRequired: true,
       maxLength: 24,

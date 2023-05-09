@@ -10,10 +10,11 @@ export default function useGetDashboards(
   fields,
   setUrlParameters = false,
   pageSize,
+  isSubscribed,
   handleErrorFunction,
 ) {
   const [dashboards, setDashboards] = useState(undefined);
-  const [dashboardFilterModel, setDashboardFilterModel] = useState(new DashboardFilterModel());
+  const [dashboardFilterModel, setDashboardFilterModel] = useState(new DashboardFilterModel(setUrlParameters));
   const {
     isLoading,
     error,
@@ -27,7 +28,11 @@ export default function useGetDashboards(
     setDashboards([]);
 
     if (pageSize) {
-      DashboardFilterModel.setData("pageSize", pageSize);
+      dashboardFilterModel.setData("pageSize", pageSize);
+    }
+
+    if (isSubscribed === true) {
+      dashboardFilterModel.setData("type", "subscribed");
     }
 
     if (loadData && areAnalyticsToolsEnabled === true) {

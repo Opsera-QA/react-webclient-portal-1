@@ -21,6 +21,7 @@ export default function IconCardContainerBaseV2(
     tooltip,
     tooltipPosition,
     disabled,
+    onHoverFunction,
   }) {
   const { themeConstants } = useComponentStateReference();
 
@@ -50,10 +51,10 @@ export default function IconCardContainerBaseV2(
 
   const getClassName = () => {
     if (hasStringValue(className) === true) {
-      return `${className} card h-100 vertical-selection-card-v2`;
+      return `${className} card h-100 vertical-selection-card`;
     }
 
-    return `card h-100 vertical-selection-card-v2`;
+    return `card h-100 vertical-selection-card`;
   };
 
   const getStyle = () => {
@@ -86,6 +87,8 @@ export default function IconCardContainerBaseV2(
         className={getClassName()}
         style={getStyle()}
         onClick={handleOnClickFunction}
+        onMouseEnter={() => onHoverFunction ? onHoverFunction(true) : undefined}
+        onMouseLeave={() => onHoverFunction ? onHoverFunction(false) : undefined}
       >
         {cardHeader}
         <Card.Title className="mb-0 px-2">
@@ -112,4 +115,5 @@ IconCardContainerBaseV2.propTypes = {
   tooltip: PropTypes.any,
   tooltipPosition: PropTypes.string,
   disabled: PropTypes.bool,
+  onHoverFunction: PropTypes.func,
 };

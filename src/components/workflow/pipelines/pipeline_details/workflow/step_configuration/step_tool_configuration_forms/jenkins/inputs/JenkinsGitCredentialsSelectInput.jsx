@@ -2,7 +2,7 @@ import React,{ useEffect,useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { faExclamationCircle } from "@fortawesome/pro-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
 const excludeArr = ["SFDC VALIDATE PACKAGE XML", "SFDC UNIT TESTING", "SFDC DEPLOY", "SFDC DATA TRANSFORM"];

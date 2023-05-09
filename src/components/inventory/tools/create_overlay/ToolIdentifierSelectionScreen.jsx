@@ -5,7 +5,6 @@ import {faTools, faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import ToolIdentifierSelectionCardView from "components/admin/tools/identifiers/ToolIdentifierSelectionCardView";
 import toolIdentifierMetadata from "components/admin/tools/identifiers/toolIdentifier.metadata";
-import ToolFilterModel from "components/inventory/tools/tool.filter.model";
 import TableCardView from "components/common/table/TableCardView";
 import {hasStringValue, stringIncludesValue} from "components/common/helpers/string-helpers";
 import ToolIdentifierSelectionTable from "components/admin/tools/identifiers/ToolIdentifierSelectionTable";
@@ -13,7 +12,6 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import {CreateToolFilterModel} from "components/inventory/tools/create_overlay/createTool.filter.model";
 import OverlayWizardButtonContainerBase
   from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
-import VanityButtonBase from "../../../../temp-library-components/button/VanityButtonBase";
 
 function ToolIdentifierSelectionScreen(
   {
@@ -115,7 +113,6 @@ function ToolIdentifierSelectionScreen(
         <ToolIdentifierSelectionCardView
           toolIdentifiers={getFilteredData()}
           setDataFunction={setDataFunction}
-          toolIdentifierMetadata={toolIdentifierMetadata}
           isLoading={isLoading}
           loadData={loadData}
         />

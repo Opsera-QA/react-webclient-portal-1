@@ -19,6 +19,7 @@ function PipelinesTableBase(
     setPaginationModel,
     loadData,
     onRowClickFunction,
+    error,
   }) {
   const fields = pipelineMetadata.fields;
   const {
@@ -55,6 +56,7 @@ function PipelinesTableBase(
       setPaginationDto={setPaginationModel}
       data={pipelines}
       isLoading={isLoading}
+      error={error}
     />
   );
 }
@@ -66,6 +68,7 @@ PipelinesTableBase.propTypes = {
   paginationModel: PropTypes.object,
   loadData: PropTypes.func,
   onRowClickFunction: PropTypes.func,
+  error: PropTypes.any,
 };
 
 export default PipelinesTableBase;

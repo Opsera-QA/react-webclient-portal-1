@@ -11,8 +11,8 @@ function GitCustodianTaskHelpDocumentation({closeHelpPanel}) {
       <ol>
         <li>Select <b>{getTaskTypeLabel(TASK_TYPES.GITSCRAPER)}</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:
           <ul style={{listStyleType: "none"}}>
-            <li><b>Source Code Management Tool Type</b> - Select a source control management tool (SCM) identifier. Choose from Gitlab, Github or Bitbucket.</li>
-            <li><b>Source Code Management Tool</b> - Select the respective Source Code Management Tool containing the repository to run a scan against.</li>
+            <li><b>Source Code Management Tool Type</b> - Select a source code management tool (SCM) identifier. Choose from Gitlab, Github or Bitbucket.</li>
+            <li><b>Source Code Management Tool</b> - Select the respective source code management Tool containing the repository to run a scan against.</li>
             <li><b>Bitbucket Workspace</b> (Bitbucket) - Select the respective Bitbucket workspace where repositories are located.</li>
             <li><b>Maximum Allows Secrets Threshold </b> - Select the maximum allowed secrets the scan can contain without receiving a failure status.</li>
             <li><b>Exclude Certain Secrets from Scan</b>:
