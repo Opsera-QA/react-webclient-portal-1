@@ -112,7 +112,6 @@ function CustomSettingFileUploadComponent({
 
   const validateFile = (file) => {
     const validSize = 10000000; //10MB
-    console.log(file.size);
     if (file.size < 1 || file.size > validSize) {
       return false;
     }
