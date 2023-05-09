@@ -159,9 +159,7 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
           <WidgetDataBlockBase className={"mt-2"}>
             <div className={"p-3"}>
               <div className={"mx-auto"}>
-                <div className={"font-inter-light-300 light-gray-text-secondary metric-block-footer-text"}>
-                  {"Last Run Summary"}
-                </div>
+                <VanityLabelBase label={"Last Run Summary"} />
               </div>
               <div>{orchestrationHelper.getLastRunSummaryForPipelineModel(pipelineModel)}</div>
             </div>
