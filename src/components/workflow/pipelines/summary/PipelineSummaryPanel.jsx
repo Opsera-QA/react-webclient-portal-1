@@ -19,7 +19,6 @@ import PipelineModel from "components/workflow/pipeline.model";
 import PipelineDescriptionTextInput from "components/workflow/pipelines/summary/inputs/PipelineDescriptionTextInput";
 import PipelineTagManagerInput from "components/workflow/pipelines/summary/inputs/PipelineTagManagerInput";
 
-// TODO: This class needs to be reworked with new components and also to cleanup
 function PipelineSummaryPanel(
   {
     pipeline,
