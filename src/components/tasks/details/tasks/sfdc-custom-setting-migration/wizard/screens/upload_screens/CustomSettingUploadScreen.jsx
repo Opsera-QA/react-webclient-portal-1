@@ -31,6 +31,18 @@ const CustomSettingUploadScreen = ({
   const [isUploaded, setIsUploaded] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const { cancelTokenSource } = useAxiosCancelToken();
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   const handleBackButton = () => {
     setCurrentScreen(
@@ -48,10 +60,14 @@ const CustomSettingUploadScreen = ({
       );
       setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.MAPPING_SCREEN);
     } catch (error) {
-      const parsedError = parseError(error);
-      toastContext.showInlineErrorMessage(parsedError);
+      if (isMounted?.current === true) {
+        const parsedError = parseError(error);
+        toastContext.showInlineErrorMessage(parsedError);
+      }
     } finally {
-      setIsSaving(false);
+      if (isMounted?.current === true) {
+        setIsSaving(false);
+      }
     }
   };
   const getBody = () => {

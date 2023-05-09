@@ -17,6 +17,7 @@ import {
 import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
 import { parseError } from "../../../../../../../common/helpers/error-helpers";
 import useAxiosCancelToken from "../../../../../../../../hooks/useAxiosCancelToken";
+import axios from "axios";
 
 const CustomSettingCsvFieldMappingScreen = ({
   wizardModel,
@@ -27,10 +28,62 @@ const CustomSettingCsvFieldMappingScreen = ({
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
+  const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [fieldsPropertiesList, setFieldsPropertiesList] = useState([]);
+  const [mappedData, setMappedData] = useState([]);
 
   const { cancelTokenSource } = useAxiosCancelToken();
   const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+      console.log("load data");
+      const response =
+        await customSettingMigrationTaskWizardActions.pullFieldList(
+          getAccessToken,
+          cancelSource,
+          wizardModel,
+        );
+      const errorMessage = response?.data?.data?.errorMessage;
+      const fieldList = response?.data?.data?.fieldList;
+
+      console.log(fieldList);
+      if (isMounted?.current === true) {
+        if (errorMessage) {
+          const parsedError = parseError(errorMessage);
+          toastContext.showInlineErrorMessage(
+            `Service Error Fetching Fields: ${parsedError}`,
+          );
+        }
+
+        if (Array.isArray(fieldList)) {
+          setFieldsPropertiesList(fieldList);
+        }
+      }
+    }
+    catch (error) {
+      console.error(error);
+      toastContext.showInlineErrorMessage(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleBackButton = () => {
     setCurrentScreen(
@@ -79,6 +132,11 @@ const CustomSettingCsvFieldMappingScreen = ({
             )} : Custom Setting Field Mapping Screen`}
           />
         </Row>
+        {fieldsPropertiesList && fieldsPropertiesList.length > 1 &&
+          <Row>
+
+          </Row>
+        }
       </div>
     );
   };
