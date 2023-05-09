@@ -27,6 +27,7 @@ import CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase
 import {
   CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES
 } from "components/wizard/portal/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
+import {getTaskTypeLabel} from "../../../../../../../../tasks/task.types";
 
 export const CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS = {
   REGISTER_SOURCE_GIT_ACCOUNT_SCREEN: "create_git_tool_screen",
@@ -188,7 +189,7 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
         return (
           <CreateWorkflowWizardPipelineCompletionScreen
             pipeline={pipeline}
-            workflowType={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
+            workflowType={getTaskTypeLabel(flow)}
             setButtonContainer={setButtonContainer}
           />
         );
