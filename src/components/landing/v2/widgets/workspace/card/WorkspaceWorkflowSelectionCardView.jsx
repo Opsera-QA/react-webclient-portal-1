@@ -13,8 +13,6 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import {WORKFLOW_WIDGET_VIEWS} from "components/landing/v2/widgets/workspace/WorkflowWidgetNavigationBar";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import InfoMessageFieldBase from "components/common/fields/text/message/InfoMessageFieldBase";
-import TaskModel from "components/tasks/task.model";
-import PipelineModel from "components/workflow/pipeline.model";
 import PipelineWorkflowSummaryOverlay from "components/landing/v2/widgets/workspace/PipelineWorkflowSummaryOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import TaskWorkflowSummaryOverlay from "components/landing/v2/widgets/workspace/TaskWorkflowSummaryOverlay";
@@ -35,18 +33,18 @@ export default function WorkspaceWorkflowSelectionCardView(
     toastContext,
   } = useComponentStateReference();
 
-  const onPipelineSelectFunction = (workspaceItem) => {
+  const onPipelineSelectFunction = (pipeline) => {
     toastContext.showOverlayPanel(
       <PipelineWorkflowSummaryOverlay
-        pipelineModel={new PipelineModel(workspaceItem, false)}
+        pipelineId={pipeline?._id}
       />
     );
   };
 
-  const onTaskSelectFunction = (workspaceItem) => {
+  const onTaskSelectFunction = (task) => {
     toastContext.showOverlayPanel(
       <TaskWorkflowSummaryOverlay
-        taskModel={new TaskModel(workspaceItem, false)}
+        taskId={task?._id}
       />
     );
   };
