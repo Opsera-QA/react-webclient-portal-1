@@ -1,43 +1,42 @@
-import React, {useRef, useState, useEffect, useMemo} from 'react';
-import PropTypes from 'prop-types';
+import React, { useRef, useState, useEffect, useMemo, useContext } from "react";
+import PropTypes from "prop-types";
 import ErrorDialog from "components/common/status_notifications/error";
-import {csvStringToObj} from "components/common/helpers/string-helpers";
-import 'components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/fileupload.css';
-import {Button} from 'react-bootstrap';
-import { getTableTextColumn } from "components/common/table/table-column-helpers-v2";
-import { getField } from "components/common/metadata/metadata-helpers";
-import PipelineWizardFileUploadMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/pipeline-wizard-file-upload-metadata.js";
-import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
-import SfdcPipelineWizardSubmitFileTypeButton
-  from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardSubmitFileTypeButton";
-import CancelButton from "components/common/buttons/CancelButton";
+import { csvStringToObj } from "components/common/helpers/string-helpers";
+import "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/fileupload.css";
+import { Button } from "react-bootstrap";
 import ExternalPageLink from "components/common/links/ExternalPageLink";
-import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import FilterContainer from "components/common/table/FilterContainer";
-import VanityTable from "components/common/table/VanityTable";
 import _ from "lodash";
-import PackageXmlFieldBase from "components/common/fields/code/PackageXmlFieldBase";
-import SfdcPipelineWizardIncludeDependenciesToggle
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
-import SfdcPipelineWizardTranslationToggleInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardTranslationToggleInput";
-import SfdcPipelineWizardUploadComponentSummary
-  from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardUploadComponentSummary";
+import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
+import { AuthContext } from "../../../../../../../../contexts/AuthContext";
+import useAxiosCancelToken from "../../../../../../../../hooks/useAxiosCancelToken";
+import { getNodeDataMigrationFileAxiosInstance } from "../../../../../../../../api/nodeDataMigrationFileApi.service";
+import { ProgressBarBase } from "@opsera/react-vanity-set";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import { parseError } from "../../../../../../../common/helpers/error-helpers";
+import InlineErrorText from "../../../../../../../common/status_notifications/inline/InlineErrorText";
 
-function CustomSettingFileUploadComponent({ wizardModel, setWizardModel, setPipelineWizardScreen, handleClose }) {
+function CustomSettingFileUploadComponent({
+  wizardModel,
+  setWizardModel,
+  setPipelineWizardScreen,
+  handleClose,
+}) {
+  const { getAccessToken } = useContext(AuthContext);
+  const { cancelTokenSource } = useAxiosCancelToken();
   const fileInputRef = useRef();
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [validFiles, setValidFiles] = useState([]);
   const [unsupportedFiles, setUnsupportedFiles] = useState([]);
   const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [save, setSave] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
   const [csvData, setCsvData] = useState([]);
+  const [uploadPercentage, setUploadPercentage] = useState(0);
 
   useEffect(() => {
     resetStoredFileContents();
     let filteredArr = selectedFiles.reduce((acc, current) => {
-      const x = acc.find(item => item.name === current.name);
+      const x = acc.find((item) => item.name === current.name);
       if (!x) {
         return acc.concat([current]);
       } else {
@@ -45,17 +44,14 @@ function CustomSettingFileUploadComponent({ wizardModel, setWizardModel, setPipe
       }
     }, []);
     setValidFiles([...filteredArr]);
-
   }, [selectedFiles]);
 
   const resetStoredFileContents = () => {
-    let newDataObject = {...wizardModel};
-    newDataObject.setData("xmlFileContent", "");
+    let newDataObject = { ...wizardModel };
+    setUploadPercentage(0);
     newDataObject.setData("csvFileContent", []);
-    newDataObject.setData("isXml", false);
-    newDataObject.setData("isCsv", false);
     setCsvData([]);
-    setWizardModel({...newDataObject});
+    setWizardModel({ ...newDataObject });
   };
 
   const preventDefault = (e) => {
@@ -96,30 +92,29 @@ function CustomSettingFileUploadComponent({ wizardModel, setWizardModel, setPipe
   const handleFiles = (files) => {
     setError(false);
 
-
     resetStoredFileContents();
     setSelectedFiles([]);
-    setErrorMessage('');
+    setErrorMessage("");
     setUnsupportedFiles([]);
 
     for (let i = 0; i < files.length; i++) {
       if (validateFile(files[i])) {
         setSelectedFiles([files[i]]);
       } else {
-        files[i]['invalid'] = true;
+        files[i]["invalid"] = true;
         setSelectedFiles([files[i]]);
 
-        setErrorMessage('File size not permitted');
+        setErrorMessage("File size not permitted");
         setUnsupportedFiles([files[i]]);
       }
     }
   };
 
   const validateFile = (file) => {
-    let newDataObject = {...wizardModel};
+    let newDataObject = { ...wizardModel };
     newDataObject.setData("isXml", file?.type === "text/xml");
     newDataObject.setData("isCsv", file?.type !== "text/xml");
-    setWizardModel({...newDataObject});
+    setWizardModel({ ...newDataObject });
 
     const validSize = 10000000; // 500KB
     if (file.size > validSize) {
@@ -131,60 +126,36 @@ function CustomSettingFileUploadComponent({ wizardModel, setWizardModel, setPipe
 
   const fileSize = (size) => {
     if (size === 0) {
-      return '0 Bytes';
+      return "0 Bytes";
     }
     const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
     const i = Math.floor(Math.log(size) / Math.log(k));
-    return parseFloat((size / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    return parseFloat((size / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
 
   const fileType = (fileName) => {
-    return fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length).toUpperCase() || fileName;
+    return (
+      fileName
+        .substring(fileName.lastIndexOf(".") + 1, fileName.length)
+        .toUpperCase() || fileName
+    );
   };
 
   const removeFile = () => {
     setError(false);
     resetStoredFileContents();
     setSelectedFiles([]);
-    setErrorMessage('');
+    setErrorMessage("");
     setUnsupportedFiles([]);
 
-    let newDataObject = {...wizardModel};
+    let newDataObject = { ...wizardModel };
     newDataObject.setData("isXml", false);
     newDataObject.setData("isCsv", false);
-    setWizardModel({...newDataObject});
+    setWizardModel({ ...newDataObject });
   };
 
-
-  const validateCSVObj = (obj) => {
-    setSave(true);
-
-    let csvKeys = obj.length > 0 ? Object.keys(obj[0]) : [];
-    let csvobj = obj.length > 0 ? obj : [];
-    // let validationKeys = ["commitAction", "componentType", "componentName"];
-    //
-    // let validKeys = validationKeys.every((val) => csvKeys.includes(val));
-
-    // if (!validKeys) {
-    //   // setError("Invalid CSV Provided!");
-    //   let files = selectedFiles;
-    //   files[0]['invalid'] = true;
-    //   setUnsupportedFiles(files);
-    //   setErrorMessage('Invalid CSV Headers!');
-    //   setSave(false);
-    //   return;
-    // }
-    // setCsvContent(obj);
-    let newDataObject = {...wizardModel};
-    newDataObject.setData("csvFileContent", csvobj);
-    setCsvData(_.cloneDeep(csvobj));
-    setWizardModel({...newDataObject});
-    setSave(false);
-  };
-
-
-  const validateFiles = async () => {
+  const uploadFile = async () => {
     // read the csv file and send string to node
     const file = validFiles[0];
     const reader = new FileReader();
@@ -194,43 +165,84 @@ function CustomSettingFileUploadComponent({ wizardModel, setWizardModel, setPipe
       let processedObj = csvStringToObj(dataString);
       // console.log(processedObj);
       if (processedObj) {
-        validateCSVObj(processedObj);
-      }
+        try {
+          setIsUploading(true);
+          let newDataObject = { ...wizardModel };
+          newDataObject.setData("csvFileContent", processedObj);
+          setCsvData(_.cloneDeep(processedObj));
+          setWizardModel({ ...newDataObject });
 
+          // TODO : Make a call to upload file
+
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("taskId", wizardModel?.getData("taskId"));
+          formData.append("runCount", wizardModel?.getData("runCount"));
+          formData.append(
+            "selectedCustomObj",
+            wizardModel?.getData("selectedCustomSetting")?.componentName,
+          );
+
+          const customHeaders = {
+            contentType: "multipart/form-data",
+          };
+          const accessToken = await getAccessToken();
+          await getNodeDataMigrationFileAxiosInstance(
+            accessToken,
+            undefined,
+            customHeaders,
+          ).post("/tasks/custom-setting-migration-task/uploadfile", formData, {
+            onUploadProgress: (p) => {
+              const percentageCompleted = Math.round(
+                (p.loaded * 100) / p.total,
+              );
+              setUploadPercentage(percentageCompleted);
+              // console.log("percentage completed ", percentageCompleted);
+            },
+          });
+        } catch (e) {
+          const parsedError = parseError(e);
+          setError(true);
+          setErrorMessage(parsedError);
+        } finally {
+          setIsUploading(false);
+        }
+      }
     };
     reader.readAsBinaryString(file);
   };
 
-  const buttonContainer = () => {
-    return (
-      <SaveButtonContainer>
-
-        <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
-      </SaveButtonContainer>
-    );
-  };
-
   const getTable = () => {
-    return (
-      <>
-        {JSON.stringify(csvData, null, 4)}
-      </>
-    );
+    return <>{JSON.stringify(csvData, null, 4)}</>;
   };
 
   const getCsvView = () => {
-    if (wizardModel.getData("csvFileContent") && wizardModel.getData("csvFileContent").length > 0) {
+    if (
+      wizardModel.getData("csvFileContent") &&
+      wizardModel.getData("csvFileContent").length > 0
+    ) {
       return (
         <>
           <div>
-            <FilterContainer
-              title={"CSV File Content"}
-              titleIcon={faSalesforce}
-              body={getTable()}
-              showBorder={false}
+            {/*<FilterContainer*/}
+            {/*  title={"CSV File Content"}*/}
+            {/*  titleIcon={faSalesforce}*/}
+            {/*  body={getTable()}*/}
+            {/*  showBorder={false}*/}
+            {/*/>*/}
+            <ProgressBarBase
+              className={"mt-3"}
+              completionPercentage={uploadPercentage}
+              variant={error ? "danger" : "success"}
+              isInProgress={isUploading}
+              label={`${DataParsingHelper.parseInteger(uploadPercentage)}%`}
             />
+            {error ? (
+              <>
+                <InlineErrorText error={errorMessage} />
+              </>
+            ) : null}
           </div>
-          {buttonContainer()}
         </>
       );
     }
@@ -239,59 +251,94 @@ function CustomSettingFileUploadComponent({ wizardModel, setWizardModel, setPipe
   const getFileUploadBody = () => {
     if (wizardModel?.getData("csvFileContent")?.length === 0) {
       return (
-        <div className="drop-container"
-             onDragOver={dragOver}
-             onDragEnter={dragEnter}
-             onDragLeave={dragLeave}
-             onDrop={fileDrop}
-             onClick={fileInputClicked}
+        <div
+          className="drop-container"
+          onDragOver={dragOver}
+          onDragEnter={dragEnter}
+          onDragLeave={dragLeave}
+          onDrop={fileDrop}
+          onClick={fileInputClicked}
         >
           <div className="drop-message">
-            <div className="upload-icon"><i className="fa fa-upload" aria-hidden="true" /></div>
+            <div className="upload-icon">
+              <i
+                className="fa fa-upload"
+                aria-hidden="true"
+              />
+            </div>
             Drop files here or click to select file
           </div>
           <input
             ref={fileInputRef}
             className="file-input"
-            disabled={save}
+            disabled={isUploading}
             type="file"
             accept=".csv"
             onChange={filesSelected}
-            onClick={ e => e.target.value = null}
+            onClick={(e) => (e.target.value = null)}
           />
         </div>
       );
     }
   };
 
+  console.log(uploadPercentage);
+
   const getFilesBody = () => {
     if (Array.isArray(validFiles) && validFiles.length > 0) {
       return (
         <div>
-          {validFiles.map((data, i) =>
-            <div className="d-flex my-2" key={i}>
-              <div className={"badge badge-opsera mr-2 d-flex"}><div className={"h-100 file-type-badge"}>{fileType(data?.name)}</div></div>
-              <div className={`file-name ${data.invalid ? 'file-error' : ''}`}>{data.name}</div>
+          {validFiles.map((data, i) => (
+            <div
+              className="d-flex my-2"
+              key={i}
+            >
+              <div className={"badge badge-opsera mr-2 d-flex"}>
+                <div className={"h-100 file-type-badge"}>
+                  {fileType(data?.name)}
+                </div>
+              </div>
+              <div className={`file-name ${data.invalid ? "file-error" : ""}`}>
+                {data.name}
+              </div>
               <div className="file-size ml-2">({fileSize(data.size)})</div>
-              {data.invalid && <span className='file-error-message'>({errorMessage})</span>}
-              <div className="ml-3 danger-red pointer fa fa-trash my-auto" onClick={() => removeFile()} />
+              {data.invalid && (
+                <span className="file-error-message">({errorMessage})</span>
+              )}
+              <div
+                className="ml-3 danger-red pointer fa fa-trash my-auto"
+                onClick={() => removeFile()}
+              />
             </div>
-          )}
+          ))}
         </div>
       );
     }
   };
 
   const getValidateButton = () => {
-    if (unsupportedFiles?.length === 0 && validFiles?.length && wizardModel?.getData("csvFileContent")?.length === 0) {
+    if (
+      unsupportedFiles?.length === 0 &&
+      validFiles?.length &&
+      wizardModel?.getData("csvFileContent")?.length === 0
+    ) {
       return (
-        <Button variant="primary" className={"mt-3"} onClick={() => validateFiles()}>Process File</Button>
+        <Button
+          variant="primary"
+          className={"mt-3"}
+          onClick={() => uploadFile()}
+        >
+          Upload File
+        </Button>
       );
     }
   };
 
   const getBody = () => {
-    if (wizardModel?.getData("recordId") && wizardModel?.getData("recordId").length > 0) {
+    if (
+      wizardModel?.getData("recordId") &&
+      wizardModel?.getData("recordId").length > 0
+    ) {
       return (
         <div>
           <div className="my-4 w-100">
@@ -309,7 +356,7 @@ function CustomSettingFileUploadComponent({ wizardModel, setWizardModel, setPipe
     if (error) {
       return (
         <div className="mt-3">
-          <ErrorDialog error={error}/>
+          <ErrorDialog error={error} />
         </div>
       );
     }
@@ -319,15 +366,14 @@ function CustomSettingFileUploadComponent({ wizardModel, setWizardModel, setPipe
     return (
       <div className="my-2">
         <div>The file must match these requirements:</div>
-        <div>4. The maximum number of components supported is 10,000</div>
-        <div>5. Upload file can be of .csv extension only (single file is allowed) </div>
-        <div>6. The maximum file size supported is 10MB</div>
+        <div>1. The maximum number of components supported is 10,000</div>
+        <div>
+          2. Upload file can be of .csv extension only (single file is allowed){" "}
+        </div>
+        <div>3. The maximum file size supported is 10MB</div>
       </div>
     );
   };
-
-  console.log(wizardModel.getPersistData());
-  console.log(csvData);
 
   return (
     <div>
@@ -336,15 +382,15 @@ function CustomSettingFileUploadComponent({ wizardModel, setWizardModel, setPipe
       </div>
       <div>
         <ExternalPageLink
-          linkText={"Please click here to view detailed Help Documentation for the File Upload process."}
+          linkText={
+            "Please click here to view detailed Help Documentation for the File Upload process."
+          }
           link={`https://opsera.atlassian.net/l/c/6eQ9BMAw`}
         />
       </div>
       {getHelpText()}
       {getErrorDialog()}
-      <div className={"file-display-container"}>
-        {getBody()}
-      </div>
+      <div className={"file-display-container"}>{getBody()}</div>
     </div>
   );
 }
@@ -352,9 +398,8 @@ function CustomSettingFileUploadComponent({ wizardModel, setWizardModel, setPipe
 CustomSettingFileUploadComponent.propTypes = {
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
-  setPipelineWizardScreen : PropTypes.func,
-  handleClose : PropTypes.func,
+  setPipelineWizardScreen: PropTypes.func,
+  handleClose: PropTypes.func,
 };
 
 export default CustomSettingFileUploadComponent;
-

@@ -1,9 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import CancelButton from "components/common/buttons/CancelButton";
-import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
-import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import { Button, Row } from "react-bootstrap";
@@ -12,8 +10,11 @@ import { faArrowLeft, faArrowRight } from "@fortawesome/pro-light-svg-icons";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
-import { getMigrationTypeLabel } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
+import { getMigrationTypeLabel, MIGRATION_TYPES } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 import CustomSettingFileUploadComponent from "./CustomSettingFileUploadComponent";
+import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
+import { parseError } from "../../../../../../../common/helpers/error-helpers";
+import useAxiosCancelToken from "../../../../../../../../hooks/useAxiosCancelToken";
 
 const CustomSettingUploadScreen = ({
   wizardModel,
@@ -24,13 +25,37 @@ const CustomSettingUploadScreen = ({
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isUploaded, setIsUploaded] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+
+  const { cancelTokenSource } = useAxiosCancelToken();
+  const isMounted = useRef(false);
 
   const handleBackButton = () => {
     setCurrentScreen(
       CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN,
     );
+  };
+
+  const saveAndMoveToNextScreen = async () => {
+    try {
+      setIsSaving(true);
+      await customSettingMigrationTaskWizardActions.setCsvFieldsList(
+        getAccessToken,
+        cancelTokenSource,
+        wizardModel,
+      );
+      setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.MAPPING_SCREEN);
+    } catch (error) {
+      if (isMounted?.current === true) {
+        const parsedError = parseError(error);
+        toastContext.showInlineErrorMessage(parsedError);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsSaving(false);
+      }
+    }
   };
   const getBody = () => {
     if (wizardModel == null) {
@@ -85,7 +110,7 @@ const CustomSettingUploadScreen = ({
           onClick={()=> {
             console.log("clicked next");
           }}
-          disabled={isLoading || isSaving || wizardModel?.getData("selectedCustomSetting").length < 1}
+          disabled={!isUploaded || isSaving || wizardModel?.getData("csvFields").length < 1}
         >
             <span>
               <IconBase

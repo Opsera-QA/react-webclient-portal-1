@@ -246,4 +246,22 @@ customSettingMigrationTaskWizardActions.downloadCustomSettingsReport = async (ge
   );
 };
 
+customSettingMigrationTaskWizardActions.setCsvFieldsList = async (
+  getAccessToken,
+  cancelTokenSource,
+  wizardModel,
+) => {
+  const apiUrl = `/tasks/custom-setting-migration-task/wizard/${wizardModel?.getData("recordId")}/csv-fields-list`;
+  const postBody = {
+    selectedObject: wizardModel?.getData("csvFields"),
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 export default customSettingMigrationTaskWizardActions;

@@ -1,6 +1,7 @@
 import {axiosApiService} from "api/apiService";
 import {nodeAnalyticsApiService} from "api/nodeAnalyticsApi.service";
 import { apiServiceV2 } from "api/apiServiceV2";
+import { nodeDataMigrationFileApiService } from "../api/nodeDataMigrationFileApi.service";
 
 const baseActions = {};
 
@@ -142,6 +143,14 @@ baseActions.handleNodeAnalyticsApiPostRequest = async (getAccessToken, sourceTok
 
 baseActions.handleNodeAnalyticsApiGetRequest = async (getAccessToken, sourceToken, apiUrl, urlParams = {}) => {
   return await nodeAnalyticsApiService.handleNodeAnalyticsApiGetCall(getAccessToken, sourceToken, apiUrl, urlParams);
+};
+
+baseActions.handleNodeDataMigrationFileApiPostRequest = async (getAccessToken, sourceToken, apiUrl, postBody = {}) => {
+  return await nodeDataMigrationFileApiService.handleNodeDataMigrationFileApiPostCall(getAccessToken, sourceToken, apiUrl, postBody);
+};
+
+baseActions.handleNodeDataMigrationFileApiGetRequest = async (getAccessToken, sourceToken, apiUrl, urlParams = {}) => {
+  return await nodeDataMigrationFileApiService.handleNodeDataMigrationFileApiGetCall(getAccessToken, sourceToken, apiUrl, urlParams);
 };
 
 export default baseActions;
