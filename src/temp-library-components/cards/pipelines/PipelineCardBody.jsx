@@ -7,8 +7,9 @@ import DateHelper from "@opsera/persephone/helpers/date/date.helper";
 import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import IconBase from "components/common/icons/IconBase";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import {faStar} from "@fortawesome/pro-light-svg-icons";
+import {faStar} from "@fortawesome/pro-solid-svg-icons";
 import {lightThemeConstants} from "temp-library-components/theme/light.theme.constants";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
 
 const getLastRunDetails = (pipelineModel) => {
   const runCount = DataParsingHelper.parseInteger(pipelineModel?.getData("workflow.run_count"), 0);
@@ -46,10 +47,11 @@ const getLastRunDetails = (pipelineModel) => {
 const getIcon = (isSalesforce, isSubscribed) => {
   if (isSubscribed === true) {
     return (
-      <IconBase
+      <OverlayIconBase
         icon={faStar}
         iconColor={lightThemeConstants.COLOR_PALETTE.OPSERA_GOLD}
-        iconSize={"3x"}
+        iconSize={"2x"}
+        overlayBody={"You are following this Pipeline"}
       />
     );
   }
@@ -76,9 +78,9 @@ const getIcon = (isSalesforce, isSubscribed) => {
 export default function PipelineCardBody(
   {
     pipelineModel,
-    isSubscribed,
   }) {
   const isSalesforce = pipelineTypeConstants.isSalesforcePipeline(pipelineModel?.getOriginalData());
+  const isSubscribed = pipelineModel?.getData("isSubscribed") === true;
 
   if (pipelineModel == null) {
     return undefined;
@@ -88,7 +90,13 @@ export default function PipelineCardBody(
     <div className={"mb-1"}>
       <Row className={"small"}>
         <Col xs={12}>
-          <div className={"w-100 d-flex mt-2"}>
+          <div
+            className={"w-100 d-flex mt-2"}
+            style={{
+              minHeight: "39px",
+              maxHeight: "39px",
+            }}
+          >
             <div className={"mt-auto"}>{getLastRunDetails(pipelineModel)}</div>
             <div className={"ml-auto mt-auto"}>{getIcon(isSalesforce, isSubscribed)}</div>
           </div>
@@ -100,5 +108,4 @@ export default function PipelineCardBody(
 
 PipelineCardBody.propTypes = {
   pipelineModel: PropTypes.object,
-  isSubscribed: PropTypes.string,
 };
