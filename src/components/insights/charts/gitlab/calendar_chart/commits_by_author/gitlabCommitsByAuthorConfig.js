@@ -7,7 +7,7 @@ export default (users) => ({
   indexBy: "date",
   forceSquare: true,
   cellOpacity: 1,
-  cellShape: "circle",
+  cellComponent: "circle",
   hoverTarget: "cell",
   cellHoverOtherOpacity: .25,
   margin: {
