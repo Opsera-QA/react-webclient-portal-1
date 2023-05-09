@@ -30,6 +30,8 @@ import TwoLineDataBlockBase from "components/common/metrics/data_blocks/base/Two
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import {orchestrationHelper} from "temp-library-components/helpers/orchestration/orchestration.helper";
 import {VanityLabelBase} from "temp-library-components/label/VanityLabelBase";
+import VanityTextField from "temp-library-components/fields/text/VanityTextField";
+import VanityTextFieldBase from "temp-library-components/fields/text/VanityTextFieldBase";
 
 // TODO: Should this be two separate panels?
 export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
@@ -126,11 +128,11 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
 
     return (
       <Row>
-        <Col xs={12}>
-          <PipelineCardBase
-            pipelineModel={pipelineModel}
-          />
-        </Col>
+        {/*<Col xs={12}>*/}
+        {/*  <PipelineCardBase*/}
+        {/*    pipelineModel={pipelineModel}*/}
+        {/*  />*/}
+        {/*</Col>*/}
         <Col xs={3}>
           <WidgetDataBlockBase className={"mt-2"}>
             <TwoLineScoreDataBlock
@@ -150,18 +152,21 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
         <Col xs={12}>
           <WidgetDataBlockBase className={"mt-2"}>
             <div className={"p-3"}>
-              <VanityLabelBase label={pipelineModel?.getLabel("description")} />
-              <div>{pipelineModel?.getData("description")}</div>
-            </div>
-          </WidgetDataBlockBase>
-        </Col>
-        <Col sm={12}>
-          <WidgetDataBlockBase className={"mt-2"}>
-            <div className={"p-3"}>
-              <div className={"mx-auto"}>
-                <VanityLabelBase label={"Last Run Summary"} />
-              </div>
-              <div>{orchestrationHelper.getLastRunSummaryForPipelineModel(pipelineModel)}</div>
+              <VanityTextField
+                model={pipelineModel}
+                fieldName={"description"}
+              />
+        {/*    </div>*/}
+        {/*  </WidgetDataBlockBase>*/}
+        {/*</Col>*/}
+        {/*<Col sm={12}>*/}
+        {/*  <WidgetDataBlockBase className={"mt-2"}>*/}
+        {/*    <div className={"p-3"}>*/}
+
+              <VanityTextFieldBase
+                label={"Last Run Summary"}
+                text={orchestrationHelper.getLastRunSummaryForPipelineModel(pipelineModel)}
+              />
             </div>
           </WidgetDataBlockBase>
         </Col>
