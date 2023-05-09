@@ -32,7 +32,12 @@ function PipelineSummaryPanel(
 
   useEffect(() => {
     // if (pipeline) {
-    //   setPipelineModel({...new PipelineModel(pipeline, false)});
+    //   if (pipelineModel) {
+    //     pipelineModel?.replaceOriginalData(pipeline);
+    //     setPipelineModel({...pipelineModel});
+    //   } else {
+    //     setPipelineModel({...new PipelineModel(pipeline, false)});
+    //   }
     // }
   }, [pipeline]);
 
