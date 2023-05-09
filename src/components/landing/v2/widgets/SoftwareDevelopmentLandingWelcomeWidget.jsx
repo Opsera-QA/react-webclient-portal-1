@@ -68,9 +68,10 @@ export default function SoftwareDevelopmentLandingWelcomeWidget({ className }) {
               />
             </div>
             <div className={"my-2"}>
-              <Link to={"/faq"}>
-                <span className={"externalLink"}>Frequently Asked Questions</span>
-              </Link>
+              <ExternalLink
+                link={EXTERNAL_LINKS.FREQUENTLY_ASKED_QUESTIONS}
+                label={"Frequently Asked Questions"}
+              />
             </div>
             <div className={"my-2"}>
               <ExternalLink

@@ -55,13 +55,13 @@ export default function WorkspaceWorkflowSelectionCardView(
         return (
           <WorkflowPipelineCard
             pipeline={workspaceItem}
-            setSelectedFlow={onPipelineSelectFunction}
+            // setSelectedFlow={onPipelineSelectFunction}
           />
         );
       case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
         return (
           <WorkflowTaskCard
-            setSelectedFlow={onTaskSelectFunction}
+            // setSelectedFlow={onTaskSelectFunction}
             task={workspaceItem}
           />
         );

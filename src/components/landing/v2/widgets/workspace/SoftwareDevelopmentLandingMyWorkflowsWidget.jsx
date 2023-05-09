@@ -69,11 +69,7 @@ export default function SoftwareDevelopmentLandingMyWorkflowsWidget({ className 
     <div className={className}>
       <WidgetDataBlockBase
         heightSize={5}
-        title={
-          isLoading === true
-            ? "Loading Workflows"
-            : `My Workflows`
-        }
+        title={`My Workflows`}
         isLoading={isLoading}
         centerTitleBarItems={
           <WorkflowWidgetNavigationBar

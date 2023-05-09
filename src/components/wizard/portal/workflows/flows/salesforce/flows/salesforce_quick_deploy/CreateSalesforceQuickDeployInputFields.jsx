@@ -21,12 +21,13 @@ function CreateSalesforceQuickDeployInputFields({
   onSuccessFunction,
 }) {
   const [taskConfigurationModel, setTaskConfigurationModel] = useState(
-    modelHelpers.parseObjectIntoModel(
+    modelHelpers.parseObjectIntoNewModelBase(
       taskModel?.configuration,
       salesforceQuickDeployTaskConfigurationMetadata,
+        true
     ),
   );
-  const [parentConfig, setParentConfig] =    useState(modelHelpers.parseObjectIntoModel(taskModel, tasksMetadata));
+  const [parentConfig, setParentConfig] =    useState(modelHelpers.parseObjectIntoNewModelBase(taskModel, tasksMetadata, true));
 
   useEffect(() => {
     if (setButtonContainer) {

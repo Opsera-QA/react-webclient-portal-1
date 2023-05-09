@@ -10,6 +10,7 @@ taskTemplateIdentifierConstants.TASK_TEMPLATE_IDENTIFIERS = {
   SYNC_SALESFORCE_BRANCH_STRUCTURE: "sync-branch-structure",
   SALESFORCE_QUICK_DEPLOY: "sfdc_quick_deploy",
   SALESFORCE_BULK_MIGRATION: "sfdc-bulk-migration",
+  SALESFORCE_TO_GIT_MERGE_SYNC_TASK: "salesforce-to-git-merge-sync-task",
 };
 
 taskTemplateIdentifierConstants.TASK_TEMPLATE_IDENTIFIER_LABELS = {
@@ -20,6 +21,8 @@ taskTemplateIdentifierConstants.TASK_TEMPLATE_IDENTIFIER_LABELS = {
   SYNC_SALESFORCE_BRANCH_STRUCTURE: "Salesforce Branch Structuring",
   SALESFORCE_QUICK_DEPLOY: "Salesforce Quick Deploy",
   SALESFORCE_BULK_MIGRATION: "Salesforce Bulk Migration",
+  SALESFORCE_TO_GIT_MERGE_SYNC_TASK: "Salesforce to Git Merge Sync Task",
+
 };
 
 taskTemplateIdentifierConstants.getLabelForTaskTemplateIdentifier = (workspaceIdentifier) => {
