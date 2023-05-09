@@ -43,10 +43,10 @@ const OracleFusionReportMigrationStepFormMetadata = {
       maxLength: 1024,
     },
     {
-      label: "Artifact Step ID",
+      label: "Pull Reports Step ID",
       id: "artifactStepId",
       isRequiredFunction: (model) => {
-        return model?.getData("migrationType") === "artifactory_to_instance";
+        return model?.getData("migrationType") === "push_reports";
       },
     },
     {
