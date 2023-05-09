@@ -29,7 +29,7 @@ export default (users, colorScheme) => ({
   ],
   margin: {
     top: 10,
-    right: 80,
+    right: 40,
     bottom: 60,
     left: 40
   },
