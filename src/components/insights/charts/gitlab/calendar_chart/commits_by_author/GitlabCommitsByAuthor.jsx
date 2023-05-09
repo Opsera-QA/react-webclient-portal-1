@@ -81,16 +81,17 @@ function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
-  return (
-    <div className="new-chart mb-3" style={{height: METRIC_CHART_STANDARD_HEIGHT}}>
-          <ResponsiveHeatMap
-            data={metrics}
-            {...defaultConfig("Date", "", true, true, "yearMonthDate", "cutoffString")}
-            {...config(users)}
-            onClick={onChartClick}
-          />
+
+    return (
+      <div className="new-chart mb-3" style={{height: METRIC_CHART_STANDARD_HEIGHT}}>
+        <ResponsiveHeatMap
+          data={metrics}
+          {...defaultConfig("Date", "", true, true, "yearMonthDate", "cutoffString")}
+          {...config(users)}
+          onClick={onChartClick}
+        />
       </div>
-  );
+    );
   };
 
   return (
