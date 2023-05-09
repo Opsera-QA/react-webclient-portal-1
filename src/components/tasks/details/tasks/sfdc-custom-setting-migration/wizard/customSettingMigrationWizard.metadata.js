@@ -28,6 +28,14 @@ export const customSettingMigrationTaskWizardMetadata = {
       id: "selectedCustomSetting",
     },
     {
+      label: "Field Properties",
+      id: "fieldList",
+    },
+    {
+      label: "CSV Field Properties",
+      id: "csvFields",
+    },
+    {
       label: "Selected Field Properties",
       id: "selectedFieldList",
     },
@@ -37,7 +45,11 @@ export const customSettingMigrationTaskWizardMetadata = {
     },
     {
       label: "Query",
-      id: "filterQuery"
+      id: "filterQuery",
+    },
+    {
+      label: "Field Mappings",
+      id: "fieldMapping",
     }
   ],
   newObjectFields: {
@@ -49,8 +61,11 @@ export const customSettingMigrationTaskWizardMetadata = {
     type: "",
     taskType: "",
     selectedCustomSetting: "",
+    fieldList: [],
     selectedFieldList: [],
     queryFilters: [],
     filterQuery: "",
+    fieldMapping: [],
+    csvFields: [],
   }
 };

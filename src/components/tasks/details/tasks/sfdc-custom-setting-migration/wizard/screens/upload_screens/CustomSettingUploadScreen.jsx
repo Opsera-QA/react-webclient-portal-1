@@ -79,6 +79,8 @@ const CustomSettingUploadScreen = ({
         <CustomSettingFileUploadComponent
           wizardModel={wizardModel}
           setWizardModel={setWizardModel}
+          setIsUploaded={setIsUploaded}
+          isUploaded={isUploaded}
         />
       </div>
     );

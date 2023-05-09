@@ -18,8 +18,8 @@ import InlineErrorText from "../../../../../../../common/status_notifications/in
 function CustomSettingFileUploadComponent({
   wizardModel,
   setWizardModel,
-  setPipelineWizardScreen,
-  handleClose,
+  isUploaded,
+  setIsUploaded,
 }) {
   const { getAccessToken } = useContext(AuthContext);
   const { cancelTokenSource } = useAxiosCancelToken();
@@ -111,13 +111,9 @@ function CustomSettingFileUploadComponent({
   };
 
   const validateFile = (file) => {
-    let newDataObject = { ...wizardModel };
-    newDataObject.setData("isXml", file?.type === "text/xml");
-    newDataObject.setData("isCsv", file?.type !== "text/xml");
-    setWizardModel({ ...newDataObject });
-
-    const validSize = 10000000; // 500KB
-    if (file.size > validSize) {
+    const validSize = 10000000; //10MB
+    console.log(file.size);
+    if (file.size < 1 || file.size > validSize) {
       return false;
     }
 
@@ -144,14 +140,13 @@ function CustomSettingFileUploadComponent({
 
   const removeFile = () => {
     setError(false);
+    setIsUploaded(false);
     resetStoredFileContents();
     setSelectedFiles([]);
     setErrorMessage("");
     setUnsupportedFiles([]);
 
     let newDataObject = { ...wizardModel };
-    newDataObject.setData("isXml", false);
-    newDataObject.setData("isCsv", false);
     setWizardModel({ ...newDataObject });
   };
 
@@ -162,12 +157,15 @@ function CustomSettingFileUploadComponent({
     reader.onload = async (evt) => {
       /* Parse data */
       const dataString = evt.target.result;
+      const rows = dataString.split("\n");
+      const csvHeaders = rows[0].split(",");
       let processedObj = csvStringToObj(dataString);
       // console.log(processedObj);
-      if (processedObj) {
+      if (processedObj && csvHeaders.length > 0) {
         try {
           setIsUploading(true);
           let newDataObject = { ...wizardModel };
+          newDataObject.setData("csvFields", csvHeaders);
           newDataObject.setData("csvFileContent", processedObj);
           setCsvData(_.cloneDeep(processedObj));
           setWizardModel({ ...newDataObject });
@@ -187,7 +185,7 @@ function CustomSettingFileUploadComponent({
             contentType: "multipart/form-data",
           };
           const accessToken = await getAccessToken();
-          await getNodeDataMigrationFileAxiosInstance(
+          const uploadResponse = await getNodeDataMigrationFileAxiosInstance(
             accessToken,
             undefined,
             customHeaders,
@@ -200,6 +198,9 @@ function CustomSettingFileUploadComponent({
               // console.log("percentage completed ", percentageCompleted);
             },
           });
+          if(uploadResponse?.status === 200) {
+            setIsUploaded(true);
+          }
         } catch (e) {
           const parsedError = parseError(e);
           setError(true);
@@ -281,9 +282,6 @@ function CustomSettingFileUploadComponent({
       );
     }
   };
-
-  console.log(uploadPercentage);
-
   const getFilesBody = () => {
     if (Array.isArray(validFiles) && validFiles.length > 0) {
       return (
@@ -398,8 +396,8 @@ function CustomSettingFileUploadComponent({
 CustomSettingFileUploadComponent.propTypes = {
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
-  setPipelineWizardScreen: PropTypes.func,
-  handleClose: PropTypes.func,
+  isUploaded: PropTypes.bool,
+  setIsUploaded: PropTypes.func,
 };
 
 export default CustomSettingFileUploadComponent;
