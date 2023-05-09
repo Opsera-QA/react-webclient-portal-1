@@ -4,7 +4,6 @@ import Row from "react-bootstrap/Row";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import {Col} from "react-bootstrap";
-import DateHelper from "@opsera/persephone/helpers/date/date.helper";
 
 const getLastRunDetails = (pipelineModel) => {
   const runCount = DataParsingHelper.parseInteger(pipelineModel?.getData("workflow.run_count"), 0);
@@ -14,7 +13,7 @@ const getLastRunDetails = (pipelineModel) => {
     return (
       <div className={"d-flex"}>
         <div className={"text-muted m-auto"}>
-          {/*{`This Pipeline has not been run yet`}*/}&nbsp;
+          {`This Pipeline has not been run yet`}
         </div>
       </div>
     );
@@ -23,8 +22,8 @@ const getLastRunDetails = (pipelineModel) => {
   if (lastRunCompletionDate != null) {
     return (
       <div className={"d-flex text-muted"}>
-        <div>
-          Last run {DateHelper.formatDistanceToNow(lastRunCompletionDate, undefined, false, true)}
+        <div className={"mx-auto"}>
+          {DateFormatHelper.formatDateAsTimestampWithoutSeconds(lastRunCompletionDate)}
         </div>
       </div>
     );
@@ -33,19 +32,25 @@ const getLastRunDetails = (pipelineModel) => {
   return (
     <div className={"d-flex"}>
       <div className={"text-muted m-auto"}>
-        {/*{`No metrics captured for last run`}*/}&nbsp;
+        {`No metrics captured for last run`}
       </div>
     </div>
   );
 };
 
 const getLastRunEntry = (pipelineModel) => {
+  const runCount = DataParsingHelper.parseInteger(pipelineModel?.getData("workflow.run_count"), 0);
+  const lastRunColor =
+    runCount > 0
+      ? ""
+      : "white";
+
   return (
     <Col xs={12}>
       <div className={"mt-2"}>
         <div className={"d-flex"}>
           <div className={"mx-auto"}>
-            <span>&nbsp;</span>
+            <span style={{color: lastRunColor}}>Last Run</span>
           </div>
         </div>
         {getLastRunDetails(pipelineModel)}
@@ -54,7 +59,7 @@ const getLastRunEntry = (pipelineModel) => {
   );
 };
 
-export default function PipelineCardBody(
+export default function PipelineCardBodyTemp(
   {
     pipelineModel,
   }) {
@@ -73,6 +78,6 @@ export default function PipelineCardBody(
   );
 }
 
-PipelineCardBody.propTypes = {
+PipelineCardBodyTemp.propTypes = {
   pipelineModel: PropTypes.object,
 };
