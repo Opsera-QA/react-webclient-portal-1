@@ -29,7 +29,6 @@ function PipelineSummaryPanel(
   const [pipelineModel, setPipelineModel] = useState(new PipelineModel(pipeline, false));
   const {
     userData,
-    isSaasUser,
   } = useComponentStateReference();
 
   useEffect(() => {
