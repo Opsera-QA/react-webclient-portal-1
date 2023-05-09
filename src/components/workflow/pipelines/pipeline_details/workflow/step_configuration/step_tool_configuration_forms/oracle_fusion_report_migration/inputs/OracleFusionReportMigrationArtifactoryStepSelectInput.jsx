@@ -16,7 +16,7 @@ function OracleFusionReportMigrationArtifactoryStepSelectInput({
 }) {
   const [packageList, setPackageList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select Artifactory Step");
+  const [placeholder, setPlaceholder] = useState("Select Pull Reports Step");
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
@@ -26,7 +26,7 @@ function OracleFusionReportMigrationArtifactoryStepSelectInput({
   const loadData = async () => {
     try {
       setIsLoading(true);
-      setPlaceholder("Select Artifactory Step");
+      setPlaceholder("Select Pull Reports Step");
       setErrorMessage("");
       await fetchArtifactoryStepDetails();
     } catch (error) {
@@ -38,8 +38,8 @@ function OracleFusionReportMigrationArtifactoryStepSelectInput({
 
   const fetchArtifactoryStepDetails = async () => {    
     try {
-      if (plan && stepId) {        
-        const packageSteps = getArtifactorySteps(plan, stepId, [toolIdentifierConstants.TOOL_IDENTIFIERS.NEXUS, toolIdentifierConstants.TOOL_IDENTIFIERS.COMMAND_LINE]);
+      if (plan && stepId) {
+        const packageSteps = getArtifactorySteps(plan, stepId, [toolIdentifierConstants.TOOL_IDENTIFIERS.ORACLE_FUSION_REPORT_MIGRATION]).filter(step => step?.tool?.configuration?.migrationType === "pull_reports");        
         if (packageSteps.length === 0) {
           let newModel = { ...model };
           newModel.setData("artifactStepId", "");
@@ -47,11 +47,11 @@ function OracleFusionReportMigrationArtifactoryStepSelectInput({
         }
         setPackageList(packageSteps);
         if (packageSteps.length === 0) {
-          setPlaceholder("No Artifactory Steps Configured");
+          setPlaceholder("No Pull Reports Steps Configured");
         }
       }
     } catch (error) {
-      setPlaceholder("No Artifactory Steps Configured");
+      setPlaceholder("No Pull Reports Steps Configured");
       setErrorMessage(error);
     }
   };
