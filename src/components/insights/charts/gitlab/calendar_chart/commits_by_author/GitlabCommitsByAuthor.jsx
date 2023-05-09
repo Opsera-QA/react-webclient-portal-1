@@ -87,7 +87,7 @@ function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
         <ResponsiveHeatMap
           data={metrics}
           {...defaultConfig("Date", "", true, true, "yearMonthDate", "cutoffString")}
-          {...config(users)}
+          {...config(users, "purple_orange")}
           onClick={onChartClick}
         />
       </div>
