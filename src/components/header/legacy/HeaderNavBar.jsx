@@ -20,6 +20,7 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 export const EXTERNAL_LINKS = {
   FREE_TRIAL_KNOWLEDGE_BASE: `https://docs.opsera.io/getting-started-with-free-trial`,
   FREE_TRIAL_REQUEST_HELP: "https://opsera.atlassian.net/servicedesk/customer/portal/2/group/10/create/32",
+  FREQUENTLY_ASKED_QUESTIONS: `https://docs.opsera.io/readme/faqs`,
   KNOWLEDGE_BASE: `https://docs.opsera.io/`,
   REQUEST_HELP_LINK: `https://opsera.atlassian.net/wiki/x/AQBYAw`,
   SUPPORT_EMAIL: "mailto:support@opsera.io",
