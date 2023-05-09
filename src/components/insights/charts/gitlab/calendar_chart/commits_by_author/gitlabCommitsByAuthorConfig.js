@@ -1,8 +1,8 @@
-export default (users) => ({
+export default (users, colorScheme) => ({
   keys: users,
   colors: {
     type: "sequential",
-    scheme: "purple_orange",
+    scheme: colorScheme,
   },
   indexBy: "date",
   forceSquare: true,
