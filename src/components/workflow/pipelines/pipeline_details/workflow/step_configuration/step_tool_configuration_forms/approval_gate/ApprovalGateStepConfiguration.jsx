@@ -81,7 +81,7 @@ function ApprovalGateStepConfiguration({ stepTool, parentCallback, closeEditorPa
     >
       <div>An Approval Gate in an Opsera Pipeline will halt the running pipeline and notify the configured
         user in order to allow the pipeline to proceed. Approval notification follows the rules defined for overall step notification. <b>Only Site Administrators and the pipeline&apos;s assigned Owner, Administrator and Manager roles (assigned via Access Rules) are permitted to perform this action</b>.
-        <ButtonBase className={"mt-2 mb-2"} icon={faEnvelope} buttonText={"Configure Notification Rules"} onClickFunction={editStepNotificationConfiguration} tooltipText={"To configure the notification rues click here."} />
+        <ButtonBase className={"mt-2 mb-2"} icon={faEnvelope} buttonText={"Configure Notification Rules"} onClickFunction={editStepNotificationConfiguration} tooltipText={"To configure the notification rules click here."} />
       </div>
       <BooleanToggleInput
         fieldName={"sendCustomMessage"}
