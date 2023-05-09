@@ -14,12 +14,11 @@ import {
   getMigrationTypeLabel,
   MIGRATION_TYPES,
 } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
-import CustomSettingFileUploadComponent from "./CustomSettingFileUploadComponent";
 import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
 import { parseError } from "../../../../../../../common/helpers/error-helpers";
 import useAxiosCancelToken from "../../../../../../../../hooks/useAxiosCancelToken";
 
-const CustomSettingUploadScreen = ({
+const CustomSettingCsvFieldMappingScreen = ({
   wizardModel,
   setWizardModel,
   setCurrentScreen,
@@ -28,30 +27,37 @@ const CustomSettingUploadScreen = ({
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [isUploaded, setIsUploaded] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+
   const { cancelTokenSource } = useAxiosCancelToken();
+  const isMounted = useRef(false);
 
   const handleBackButton = () => {
     setCurrentScreen(
-      CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN,
+      CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.UPLOAD_SCREEN,
     );
   };
 
   const saveAndMoveToNextScreen = async () => {
     try {
       setIsSaving(true);
-      await customSettingMigrationTaskWizardActions.setCsvFieldsList(
-        getAccessToken,
-        cancelTokenSource,
-        wizardModel,
+      // await customSettingMigrationTaskWizardActions.setCsvFieldsList(
+      //   getAccessToken,
+      //   cancelTokenSource,
+      //   wizardModel,
+      // );
+      setCurrentScreen(
+        CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.QUERY_BUILDER_SCREEN,
       );
-      setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.MAPPING_SCREEN);
     } catch (error) {
-      const parsedError = parseError(error);
-      toastContext.showInlineErrorMessage(parsedError);
+      if (isMounted?.current === true) {
+        const parsedError = parseError(error);
+        toastContext.showInlineErrorMessage(parsedError);
+      }
     } finally {
-      setIsSaving(false);
+      if (isMounted?.current === true) {
+        setIsSaving(false);
+      }
     }
   };
   const getBody = () => {
@@ -70,15 +76,9 @@ const CustomSettingUploadScreen = ({
           <H5FieldSubHeader
             subheaderText={`${getMigrationTypeLabel(
               wizardModel?.getData("taskType"),
-            )} : Custom Setting File Upload Screen`}
+            )} : Custom Setting Field Mapping Screen`}
           />
         </Row>
-        <CustomSettingFileUploadComponent
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setIsUploaded={setIsUploaded}
-          isUploaded={isUploaded}
-        />
       </div>
     );
   };
@@ -107,11 +107,7 @@ const CustomSettingUploadScreen = ({
           size="sm"
           variant="primary"
           onClick={saveAndMoveToNextScreen}
-          disabled={
-            !isUploaded ||
-            isSaving ||
-            wizardModel?.getData("csvFields").length < 1
-          }
+          disabled={isSaving}
         >
           <span>
             <IconBase
@@ -133,7 +129,7 @@ const CustomSettingUploadScreen = ({
   );
 };
 
-CustomSettingUploadScreen.propTypes = {
+CustomSettingCsvFieldMappingScreen.propTypes = {
   taskType: PropTypes.string,
   setCurrentScreen: PropTypes.func,
   handleClose: PropTypes.func,
@@ -141,4 +137,4 @@ CustomSettingUploadScreen.propTypes = {
   setWizardModel: PropTypes.func,
 };
 
-export default CustomSettingUploadScreen;
+export default CustomSettingCsvFieldMappingScreen;
