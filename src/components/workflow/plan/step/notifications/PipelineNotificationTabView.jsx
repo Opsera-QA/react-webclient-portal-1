@@ -37,6 +37,7 @@ function PipelineNotificationTabView(
     pipelineStep
   }) {
   const [activeTab, setTabSelection] = useState("email");
+  
   const getCurrentView = () => {
     switch (activeTab) {
       case "email":
