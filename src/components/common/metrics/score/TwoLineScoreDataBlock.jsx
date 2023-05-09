@@ -41,4 +41,4 @@ TwoLineScoreDataBlock.propTypes = {
   dataPoint: PropTypes.object,
 };
 
-export default TwoLineScoreDataBlock;
+export default TwoLineScoreDataBlock;TwoLineScoreDataBlock

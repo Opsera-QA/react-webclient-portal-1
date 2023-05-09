@@ -62,7 +62,7 @@ primary analytics font*/
     letter-spacing: 1px;
 }
 
-.metric-block-footer-text {
+.metric-block-footer-text, .vanity-label {
     font-size: .85rem;
     letter-spacing: 1px;
 }

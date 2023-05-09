@@ -28,6 +28,8 @@ import useGetPipelineDurationMetrics from "hooks/workflow/pipelines/metrics/useG
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import TwoLineDataBlockBase from "components/common/metrics/data_blocks/base/TwoLineDataBlockBase";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import {orchestrationHelper} from "temp-library-components/helpers/orchestration/orchestration.helper";
+import {VanityLabelBase} from "temp-library-components/label/VanityLabelBase";
 
 // TODO: Should this be two separate panels?
 export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
@@ -148,15 +150,22 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
         <Col xs={12}>
           <WidgetDataBlockBase className={"mt-2"}>
             <div className={"p-3"}>
-              <H5FieldSubHeader subheaderText={pipelineModel?.getLabel("description")} />
+              <VanityLabelBase label={pipelineModel?.getLabel("description")} />
               <div>{pipelineModel?.getData("description")}</div>
             </div>
           </WidgetDataBlockBase>
         </Col>
         <Col sm={12}>
-          <PipelineOrchestrationSummaryField
-            pipelineModel={pipelineModel}
-          />
+          <WidgetDataBlockBase className={"mt-2"}>
+            <div className={"p-3"}>
+              <div className={"mx-auto"}>
+                <div className={"font-inter-light-300 light-gray-text-secondary metric-block-footer-text"}>
+                  {"Last Run Summary"}
+                </div>
+              </div>
+              <div>{orchestrationHelper.getLastRunSummaryForPipelineModel(pipelineModel)}</div>
+            </div>
+          </WidgetDataBlockBase>
         </Col>
       </Row>
     );
