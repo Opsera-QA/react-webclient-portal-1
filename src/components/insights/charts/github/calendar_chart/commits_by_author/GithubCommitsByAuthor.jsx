@@ -7,7 +7,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, gradationalColors } from "../../../charts-views";
+import { defaultConfig } from "../../../charts-views";
 function GithubCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -86,7 +86,7 @@ function GithubCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
         <ResponsiveHeatMap
           data={metrics}
           {...defaultConfig("Date", "", true, true, "yearMonthDate", "cutoffString")}
-          {...config(users, gradationalColors)}
+          {...config(users, "greys")}
           onClick={() => setShowModal(true)}
         />
       </div>
