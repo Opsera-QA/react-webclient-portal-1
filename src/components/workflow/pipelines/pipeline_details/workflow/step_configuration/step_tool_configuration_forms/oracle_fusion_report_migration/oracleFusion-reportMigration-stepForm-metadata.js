@@ -30,6 +30,7 @@ const OracleFusionReportMigrationStepFormMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("migrationType") === "instance_to_instance";
       },
+      maxItems: 10,
     },
     {
       label: "Target Tool ID",
@@ -101,7 +102,7 @@ const OracleFusionReportMigrationStepFormMetadata = {
       label: "Nexus Tool",
       id: "nexusToolConfigId",
       isRequiredFunction: (model) => {
-        return model?.getData("migrationType") === "push_reports";
+        return ((model?.getData("migrationType") === "artifactory_to_instance" || model?.getData("migrationType") === "push_reports") && model?.getData("artifactoryType") === "nexus");
       },
     },
     {
@@ -110,7 +111,7 @@ const OracleFusionReportMigrationStepFormMetadata = {
       regexDefinitionName: "generalText",
       maxLength: 50,
       isRequiredFunction: (model) => {
-        return model?.getData("migrationType") === "push_reports";
+        return ((model?.getData("migrationType") === "artifactory_to_instance" || model?.getData("migrationType") === "push_reports") && model?.getData("artifactoryType") === "nexus");
       },
     },
     {
@@ -120,9 +121,24 @@ const OracleFusionReportMigrationStepFormMetadata = {
       label: "Repository",
       id: "repositoryName",
       isRequiredFunction: (model) => {
-        return model?.getData("migrationType") === "push_reports";
+        return ((model?.getData("migrationType") === "artifactory_to_instance" || model?.getData("migrationType") === "push_reports") && model?.getData("artifactoryType") === "nexus");
       },
     },
+    {
+      label: "Artifactory Type",
+      id: "artifactoryType",
+      isRequiredFunction: (model) => {
+        return model?.getData("migrationType") === "artifactory_to_instance" || model?.getData("migrationType") === "push_reports";
+      },
+    },
+    {
+      label: "Reports List",
+      id: "reportArtifactList",
+      isRequiredFunction: (model) => {
+        return model?.getData("migrationType") === "artifactory_to_instance";
+      },
+      maxItems: 10,
+    }
   ],
   newObjectFields: {
     migrationType: "",
@@ -143,6 +159,8 @@ const OracleFusionReportMigrationStepFormMetadata = {
     groupName: "",
     repositoryGroup : "maven2",
     repositoryName: "",
+    artifactoryType: "",
+    reportArtifactList: [],
   }
 };
 

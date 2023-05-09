@@ -4,6 +4,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import nexusStepActions from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nexus/nexus-step-actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function OracleFusionReportMigrationNexusRepoGroupSelectInput({visible, model, setModel, disabled, nexusToolConfigId, repositoryName}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -23,7 +24,7 @@ function OracleFusionReportMigrationNexusRepoGroupSelectInput({visible, model, s
     isMounted.current = true;
 
     setNexusGroupsList([]);
-    if (nexusToolConfigId != null && nexusToolConfigId !== "" && repositoryName != null && repositoryName !== "") {
+    if (hasStringValue(nexusToolConfigId) && hasStringValue(repositoryName)) {
       loadGroups(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;

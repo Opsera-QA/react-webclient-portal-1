@@ -5,6 +5,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import nexusStepActions from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nexus/nexus-step-actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 const REPOSITORY_FORMAT = "maven2";
 
@@ -26,7 +27,7 @@ function OracleFusionReportMigrationNexusRepoSelectInput({visible, model, setMod
     isMounted.current = true;
 
     setNexusRepositoriesList([]);
-    if (nexusToolConfigId != null && nexusToolConfigId !== "") {
+    if (hasStringValue(nexusToolConfigId)) {
       loadRepos(nexusToolConfigId, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
