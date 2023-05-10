@@ -30,6 +30,21 @@ function OracleFusionReportMigrationStepMigrationTypeSelectInput({model, setMode
     newModel.setDefaultValue("sourceInstancePath");
     newModel.setDefaultValue("sourceInstanceReports");
     newModel.setDefaultValue("artifactStepId");
+    newModel.setDefaultValue("targetInstanceToolId");
+    newModel.setDefaultValue("targetInstancePath");
+    newModel.setDefaultValue("service");
+    newModel.setDefaultValue("repoId");
+    newModel.setDefaultValue("repository");
+    newModel.setDefaultValue("gitBranch");
+    newModel.setDefaultValue("sshUrl");
+    newModel.setDefaultValue("gitUrl");
+    newModel.setDefaultValue("gitCommitId");
+    newModel.setDefaultValue("nexusToolConfigId");
+    newModel.setDefaultValue("useExistingGroupName");
+    newModel.setDefaultValue("groupName");
+    newModel.setDefaultValue("repositoryName");
+    newModel.setDefaultValue("artifactoryType");
+    newModel.setDefaultValue("reportArtifactList");
     setModel({...newModel});
   };
 
