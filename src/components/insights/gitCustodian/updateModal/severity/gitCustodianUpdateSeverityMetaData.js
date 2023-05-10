@@ -1,5 +1,5 @@
 const GitCustodianUpdateSeverityMetaData = {
-  type: "Git Custodian Severity",
+  type: "Git Custodian Update Severity",
   fields: [
     {
       label: "Severity",

@@ -11,6 +11,7 @@ import { defaultConfig, getColorByData } from '../../../../charts/charts-views';
 import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 import ThreeLineIconDataBlockBase from "../../../../../common/metrics/icon/ThreeLineIconDataBlockBase";
 import TwoLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/TwoLineDataBlockBase";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 function GitCustodianTotalRepositoriesChart({ dashboardData, data }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -82,8 +83,8 @@ function GitCustodianTotalRepositoriesChart({ dashboardData, data }) {
           {...defaultConfig()}
           {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
         />
-        <div style={{ position: "absolute", top: "40%", marginLeft: "52.5%"}}>
-          <span>{totalRepo}</span>
+        <div style={{ position: "absolute", top: "40%", marginLeft: "51%"}}>
+          <TooltipWrapper innerText={"Total No of Repositories"}><span>{totalRepo}</span></TooltipWrapper>
         </div>
       </div>
       // <div className="new-chart p-0" style={{ height: "200px", position: "relative" }}>

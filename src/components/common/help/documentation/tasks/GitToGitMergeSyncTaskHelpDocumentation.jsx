@@ -11,6 +11,7 @@ function GitToGitMergeSyncTaskHelpDocumentation({closeHelpPanel}) {
       <ol>
         <li>Select <b>{getTaskTypeLabel(TASK_TYPES.GIT_TO_GIT_MERGE_SYNC)}</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:
           <ul style={{listStyleType: "none"}}>
+            <li><b>Enable Jira Integration</b> - To automatically retrieve data from the task and update a Jira ticket with the relevant information, enable the toggle and provide <b>Jira Tool</b>, <b>Jira Project</b>, and <b>Jira Ticket</b>.</li>
             <li><b>Source Code Management Type</b> - Choose whether a Bitbucket, GitHub, or GitLab repository contains the branch of the merge.</li>
             <li><b>Account</b> - Select the configured SCM tool.</li>
             <li><b>Repository</b> - Select the repository containing the git merge change.</li>

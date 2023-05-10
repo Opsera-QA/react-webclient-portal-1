@@ -21,7 +21,7 @@ function CloudProviderAzureApplicationSelect({fieldName, model, setModel}) {
         newModel.setDefaultValue("namespace");
         setModel({...newModel});
     };
- 
+
     return (
         <RoleRestrictedRegistryToolApplicationSelectInput
             fieldName={fieldName}

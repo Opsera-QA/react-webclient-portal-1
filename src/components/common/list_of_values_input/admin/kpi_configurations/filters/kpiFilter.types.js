@@ -352,6 +352,11 @@ export const KPI_FILTER_SELECT_OPTIONS = [
     value: [],
   },
   {
+    type: KPI_FILTER_TYPES.GITLAB_EXCLUDED_USERS,
+    text: KPI_FILTER_TYPE_LABELS.GITLAB_EXCLUDED_USERS,
+    value: [],
+  },
+  {
     type: KPI_FILTER_TYPES.GITLAB_BRANCH,
     text: KPI_FILTER_TYPE_LABELS.GITLAB_BRANCH,
     value: [],
@@ -359,6 +364,21 @@ export const KPI_FILTER_SELECT_OPTIONS = [
   {
     type: KPI_FILTER_TYPES.GITLAB_EXCLUDED_USERS,
     text: KPI_FILTER_TYPE_LABELS.GITLAB_EXCLUDED_USERS,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.GITLOG_AUTHORS,
+    text: KPI_FILTER_TYPE_LABELS.GITLOG_AUTHORS,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.GITLOG_BRANCHES,
+    text: KPI_FILTER_TYPE_LABELS.GITLOG_BRANCHES,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.GITLOG_REPOSITORIES,
+    text: KPI_FILTER_TYPE_LABELS.GITLOG_REPOSITORIES,
     value: [],
   },
   {

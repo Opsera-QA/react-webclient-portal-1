@@ -20,6 +20,7 @@ import PipelineWorkflowStepToolIdentifierField
   from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowStepToolIdentifierField";
 import ParallelProcessorPipelineStepWorkflowItemBody
   from "components/workflow/plan/step/parallel_processor/ParallelProcessorPipelineStepWorkflowItemBody";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 // TODO: Use the workflow item step field instead of hardcoding these for consistency,
 //  wire up fields based on the tool identifier (pull through metadata based on dynamic field type set)

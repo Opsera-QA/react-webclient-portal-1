@@ -323,7 +323,7 @@ function KpiSettingsForm({
     "sonar-codesmells-metric-scorecard",
     "sonar-vulnerabilities-metric-scorecard",
     "sonar-reliability-remediation-agg-by-time",
-    "coverity-issues-by-category-trend",
+    kpiIdentifierConstants.KPI_IDENTIFIERS.COVERITY_ISSUES_BY_CATEGORY_TREND,
     "salesforce-duration-by-stage",
     "build-deployment-statistics",
     "sdlc-duration-statistics",

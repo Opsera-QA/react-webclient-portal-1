@@ -8,6 +8,7 @@ import { getResultFromKpiConfiguration } from "../charts-helpers";
 import doraActions from "../dora/dora.action";
 import { MaturityScoreItemType } from './maturityScoreItemType';
 import SystemDrivenMaturityTimelineChart from './SystemDrivenMaturityTimelineChart';
+import { formatForSDMTimelineChart } from './util';
 
 function SystemDrivenMaturityProjectsTab ({ kpiConfiguration, dashboardData, orgTag }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -62,19 +63,19 @@ function SystemDrivenMaturityProjectsTab ({ kpiConfiguration, dashboardData, org
         setMaturityChartData([
           {
             id: 'LTFC',
-            data: ltfc.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
+            data: formatForSDMTimelineChart(ltfc),
           },
           {
             id: 'DF',
-            data: df.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
+            data: formatForSDMTimelineChart(df),
           },
           {
             id: 'MTTR',
-            data: mttr.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
+            data: formatForSDMTimelineChart(mttr),
           },
           {
             id: 'CFR',
-            data: cfr.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
+            data: formatForSDMTimelineChart(cfr),
           }
         ]);
       } else {

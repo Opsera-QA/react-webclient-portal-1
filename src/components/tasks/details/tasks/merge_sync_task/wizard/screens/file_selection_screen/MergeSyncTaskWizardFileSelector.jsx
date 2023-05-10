@@ -21,6 +21,7 @@ import MergeSyncTaskFileSelectionRulesInputContainer
 import { TASK_TYPES } from "components/tasks/task.types";
 import SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable";
+import MergeSyncTaskRulesInputContainerBase from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/rules/SalesforceToGitFilter/MergeSyncTaskRulesInputContainerBase";
 
 const MergeSyncTaskWizardFileSelector = ({
   wizardModel,
@@ -173,14 +174,29 @@ const MergeSyncTaskWizardFileSelector = ({
   return (
     <div>
       <div className={"mb-2"}>
-        <MergeSyncTaskFileSelectionRulesInputContainer
-          isLoading={isLoading}
-          filePullCompleted={filePullCompleted}
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          fieldName={"fileSelectionRules"}
-          fileList={sourceCommitList}
-        />
+        {wizardModel.getData('taskType') === 'SFDC_GIT_COMPARE_SYNC'
+          ?
+            <div className={"my-4"}>
+              <MergeSyncTaskRulesInputContainerBase
+                wizardModel={wizardModel}
+                setWizardModel={setWizardModel}
+                fieldName={"fileSelectionRules"}
+                fetchAttribute={"sfdcCommitList"}
+                modifiedFiles={sourceCommitList}
+                isLoading={isLoading}
+                filePullCompleted={filePullCompleted}
+              />
+            </div>   
+        : 
+          <MergeSyncTaskFileSelectionRulesInputContainer
+              isLoading={isLoading}
+              filePullCompleted={filePullCompleted}
+              wizardModel={wizardModel}
+              setWizardModel={setWizardModel}
+              fieldName={"fileSelectionRules"}
+              fileList={sourceCommitList}
+            />
+        }
       </div>
       {getCommitListTable()}
       <SaveButtonContainer>

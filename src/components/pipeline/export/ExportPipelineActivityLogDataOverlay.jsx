@@ -23,7 +23,7 @@ function ExportPipelineActivityLogDataOverlay({ activityLogData, isLoading}) {
         item.action,
         item.message,
         item.status,
-        DateFormatHelper.formatDate(new Date(item.createdAt)),
+        DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(item.createdAt)),
       ]);
     });
   };

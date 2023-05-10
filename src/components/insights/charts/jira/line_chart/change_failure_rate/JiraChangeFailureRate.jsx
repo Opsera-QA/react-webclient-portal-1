@@ -216,106 +216,106 @@ function JiraChangeFailureRate({
       ? metricData?.prevChangeFailureRate + ` %`
       : "NA";
     return (
-        <div
-            className="new-chart m-3 p-0"
-            style={{ minHeight: "500px", display: "flex" }}
-        >
-          <Row className={"w-100"}>
-            <JiraChangeFailureRateMaturityBlock
-                maturityScore={getMaturityScoreText(maturityScore)}
-                maturityColor={maturityColor}
-                iconOverlayBody={constants.MATURITY_TOOL_TIP[maturityScore]}
-                onClick={onRowSelect}
-            />
-            <Row
-                xl={4}
-                lg={4}
-                md={4}
-                className={`mb-2 ml-3 py-2 d-flex justify-content-center ${maturityColor}`}
+      <div
+        className="new-chart m-3 p-0"
+        style={{ minHeight: "500px", display: "flex" }}
+      >
+        <Row className={"w-100"}>
+          <JiraChangeFailureRateMaturityBlock
+            maturityScore={getMaturityScoreText(maturityScore)}
+            maturityColor={maturityColor}
+            iconOverlayBody={constants.MATURITY_TOOL_TIP[maturityScore]}
+            onClick={onRowSelect}
+          />
+          <Row
+            xl={4}
+            lg={4}
+            md={4}
+            className={`mb-2 ml-3 py-2 d-flex justify-content-center ${maturityColor}`}
+          >
+            <Col
+              md={12}
+              className={"pl-2 pr-1"}
             >
-              <Col
-                  md={12}
-                  className={"pl-2 pr-1"}
-              >
-                <JiraChangeFailureRateDataBlock
-                    value={jiraResolutionNames}
-                    prevValue={""}
-                    topText={"Selected Failure Status"}
-                    bottomText={""}
-                />
-              </Col>
-              <Col
-                  md={12}
-                  className={"px-1"}
-              >
-                <JiraChangeFailureRateTrendDataBlock
-                    value={changeFailureRateDisplay}
-                    prevValue={prevChangeFailureRateDisplay}
-                    trend={getReverseTrend(
-                        changeFailureRate,
-                        metricData?.prevChangeFailureRate,
-                    )}
-                    getTrendIcon={getReverseTrendIcon}
-                    topText={"Change Failure Rate"}
-                    bottomText={"Prev CFR: "}
-                    dataPoint={changeFailureRateDataPoint}
-                    dataPointValue={changeFailureRate}
-                />
-              </Col>
-              <Col
-                  md={12}
-                  className={"px-1"}
-              >
-                <JiraChangeFailureRateTrendDataBlock
-                    value={getMedian(chartData, metricData?.total)}
-                    prevValue={getMedian(prevChartData, metricData?.prevTotal) + "%"}
-                    trend={getReverseTrend(
-                        getMedian(chartData),
-                        getMedian(prevChartData),
-                    )}
-                    getTrendIcon={getReverseTrendIcon}
-                    topText={"Median Change Failure Rate"}
-                    bottomText={"Prev Median: "}
-                />
-              </Col>
-              <Col
-                  md={12}
-                  className={"pl-1 pr-2"}
-              >
-                <JiraChangeFailureRateDataBlock
-                    value={metricData?.totalFailure}
-                    prevValue={metricData?.prevTotalFailure}
-                    topText={`Changes Failed`}
-                    bottomText={`Prev Changes Failed: `}
-                />
-              </Col>
-            </Row>
-            <Col md={12}>
-              <div className={"d-flex md-2"}>
-                <div className={"mr-4"}>
-                  <b>Total Changes:</b> {metricData?.total}
-                </div>
-              </div>
+              <JiraChangeFailureRateDataBlock
+                value={jiraResolutionNames}
+                prevValue={""}
+                topText={"Selected Failure Status"}
+                bottomText={""}
+              />
             </Col>
             <Col
-                md={12}
-                className={"my-2 p-0 d-flex flex-column align-items-end"}
+              md={12}
+              className={"px-1"}
             >
-              <JiraChangeFailureRateLineChartContainer chartData={chartData} />
+              <JiraChangeFailureRateTrendDataBlock
+                value={changeFailureRateDisplay}
+                prevValue={prevChangeFailureRateDisplay}
+                trend={getReverseTrend(
+                  changeFailureRate,
+                  metricData?.prevChangeFailureRate,
+                )}
+                getTrendIcon={getReverseTrendIcon}
+                topText={"Change Failure Rate"}
+                bottomText={"Prev CFR: "}
+                dataPoint={changeFailureRateDataPoint}
+                dataPointValue={changeFailureRate}
+              />
             </Col>
             <Col
-                md={12}
-                className={"my-2 p-0"}
+              md={12}
+              className={"px-1"}
             >
-              <BadgeBase
-                  className={"mx-2"}
-                  badgeText={
-                    "Note: Results fetched are based on UTC timezone of selected dates"
-                  }
+              <JiraChangeFailureRateTrendDataBlock
+                  value={getMedian(chartData, metricData?.total)}
+                  prevValue={getMedian(prevChartData, metricData?.prevTotal) + "%"}
+                  trend={getReverseTrend(
+                      getMedian(chartData),
+                      getMedian(prevChartData),
+                  )}
+                  getTrendIcon={getReverseTrendIcon}
+                  topText={"Median Change Failure Rate"}
+                  bottomText={"Prev Median: "}
+              />
+            </Col>
+            <Col
+              md={12}
+              className={"pl-1 pr-2"}
+            >
+              <JiraChangeFailureRateDataBlock
+                value={metricData?.totalFailure}
+                prevValue={metricData?.prevTotalFailure}
+                topText={`Changes Failed`}
+                bottomText={`Prev Changes Failed: `}
               />
             </Col>
           </Row>
-        </div>
+          <Col md={12}>
+            <div className={"d-flex md-2"}>
+              <div className={"mr-4"}>
+                <b>Total Changes:</b> {metricData?.total}
+              </div>
+            </div>
+          </Col>
+          <Col
+            md={12}
+            className={"my-2 p-0 d-flex flex-column align-items-end"}
+          >
+            <JiraChangeFailureRateLineChartContainer chartData={chartData} />
+          </Col>
+          <Col
+            md={12}
+            className={"my-2 p-0"}
+          >
+            <BadgeBase
+              className={"mx-2"}
+              badgeText={
+                "Note: Results fetched are based on UTC timezone of selected dates"
+              }
+            />
+          </Col>
+        </Row>
+      </div>
     );
   };
 

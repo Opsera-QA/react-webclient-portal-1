@@ -45,6 +45,14 @@ function GitCustodianTopAuthorsChart({ dashboardData, data }) {
     }
   };
 
+  const getTooltip = (point) => {    
+    return (
+      <div className="custom-bar-tooltip" key={point.indexValue}>
+        <span>{`${point.data._id}: `}<strong>{point.value}</strong> issues</span>
+      </div>
+    );
+  };
+
   const getBody = () => {
     if (!Array.isArray(data) || data.length === 0) {
       return (
@@ -58,7 +66,8 @@ function GitCustodianTopAuthorsChart({ dashboardData, data }) {
       <div className="new-chart p-0" style={{ height: "200px" }}>
         <ResponsiveBar
           data={data}
-          {...defaultConfig("Author", "Count",
+          tooltip={getTooltip}
+          {...defaultConfig("Author", "Issue Count",
             true, false, "cutoffString", "values", true)}
           {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
           {...adjustBarWidth(data, false)}

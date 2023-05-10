@@ -19,7 +19,6 @@ import PipelineModel from "components/workflow/pipeline.model";
 import PipelineDescriptionTextInput from "components/workflow/pipelines/summary/inputs/PipelineDescriptionTextInput";
 import PipelineTagManagerInput from "components/workflow/pipelines/summary/inputs/PipelineTagManagerInput";
 
-// TODO: This class needs to be reworked with new components and also to cleanup
 function PipelineSummaryPanel(
   {
     pipeline,
@@ -29,12 +28,16 @@ function PipelineSummaryPanel(
   const [pipelineModel, setPipelineModel] = useState(new PipelineModel(pipeline, false));
   const {
     userData,
-    isSaasUser,
   } = useComponentStateReference();
 
   useEffect(() => {
     // if (pipeline) {
-    //   setPipelineModel({...new PipelineModel(pipeline, false)});
+    //   if (pipelineModel) {
+    //     pipelineModel?.replaceOriginalData(pipeline);
+    //     setPipelineModel({...pipelineModel});
+    //   } else {
+    //     setPipelineModel({...new PipelineModel(pipeline, false)});
+    //   }
     // }
   }, [pipeline]);
 

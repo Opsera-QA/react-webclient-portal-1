@@ -289,6 +289,7 @@ export default class ModelBase {
 
     if (parsedNewOriginalData && ObjectHelper.areObjectsEqualLodash(this.originalData, parsedNewOriginalData) !== true) {
       this.originalData = parsedNewOriginalData;
+      this.replaceData(parsedNewOriginalData);
     }
   };
 
@@ -358,23 +359,31 @@ export default class ModelBase {
   };
 
   replaceData = (newData) => {
-    this.data = DataParsingHelper.parseObject(newData, {});
+    const parsedNewData = DataParsingHelper.parseObject(newData);
+
+    if (parsedNewData && ObjectHelper.areObjectsEqualLodash(this.data, parsedNewData) !== true) {
+      const changedFieldNames = DataParsingHelper.parseArray(this.changeMap?.keys(), []);
+      changedFieldNames.forEach((fieldName) => {
+        parsedNewData[fieldName] = this.changeMap.get(fieldName);
+      });
+      this.data = {...parsedNewData};
+    }
   };
 
   updateState = () => {
-    if (this.setStateFunction) {
+    if (typeof this.setStateFunction === "function") {
       this.setStateFunction({...this});
     }
   };
 
   unselectModel = () => {
-    if (this.setStateFunction) {
+    if (typeof this.setStateFunction === "function") {
       this.setStateFunction(undefined);
     }
   };
 
   setSetStateFunction = (setStateFunction) => {
-    if (setStateFunction) {
+    if (typeof setStateFunction === "function") {
       this.setStateFunction = setStateFunction;
     }
   };
@@ -538,7 +547,7 @@ export default class ModelBase {
   };
 
   canEditAccessRoles = () => {
-    return this.canUpdate() === true;
+    return this.canUpdate() === true && this.editAccessRolesAllowed === true;
   };
 
   canTransferOwnership = () => {

@@ -12,11 +12,12 @@ import {DialogToastContext} from "../../../../../../contexts/DialogToastContext"
 import SalesforceCodeAnalyserRuleActionableTwoOverlay
     from "./actionable_insights2/SalesforceCodeAnalyserRuleActionableTwoOverlay";
 
-function SalesforceCodeAnalyserPipelineActionableTable({ data, isLoading, loadData, filterModel, setFilterModel, tableTitleIcon,total }) {
+function SalesforceCodeAnalyserPipelineActionableTable({ data, isLoading, loadData, filterModel, setFilterModel, tableTitleIcon, total }) {
     const fields = SalesforceCodeAnalyserActionableMetadata.fields;
     const tableTitle = "Pipeline Report";
     const noDataMessage = "No data available";
     const toastContext = useContext(DialogToastContext);
+
 
     const columns = useMemo(
         () => [

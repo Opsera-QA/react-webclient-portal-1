@@ -23,6 +23,7 @@ function OverlayTitleBar(
     setShowHelpPanel,
     helpIsShown,
     softLoading,
+    titleActionBar,
   }) {
   const getTitleIcon = () => {
     if (titleIcon) {
@@ -64,6 +65,7 @@ function OverlayTitleBar(
         <div className={"d-flex justify-content-between my-auto w-100"}>
           <div><span><LoadingIcon className="mr-2"/>Loading Data</span></div>
           <div className={"d-flex"}>
+            {titleActionBar}
             {getHelpIcon()}
             <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
             <CloseIcon handleCloseFunction={handleClose} />
@@ -77,6 +79,7 @@ function OverlayTitleBar(
     return (
       <Row className={"title-text-header-1 w-100 p-2 mx-0 bg-white d-flex"}>
         <div className={"ml-auto dark-grey d-flex my-auto"}>
+          {titleActionBar}
           {getHelpIcon()}
           <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
           <CloseIcon handleCloseFunction={handleClose} />
@@ -90,6 +93,7 @@ function OverlayTitleBar(
       <div className={"d-flex justify-content-between my-auto w-100"}>
         <div><span>{getTitleIcon()}{titleText}</span></div>
         <div className={"d-flex"}>
+          {titleActionBar}
           {getHelpIcon()}
           <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
           <CloseIcon handleCloseFunction={handleClose} />
@@ -111,6 +115,7 @@ OverlayTitleBar.propTypes = {
   setShowHelpPanel: PropTypes.func,
   helpIsShown: PropTypes.bool,
   softLoading: PropTypes.bool,
+  titleActionBar: PropTypes.any,
 };
 
 export default OverlayTitleBar;

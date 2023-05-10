@@ -1,4 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
+import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {faPlay} from "@fortawesome/pro-light-svg-icons";
@@ -20,6 +21,8 @@ import SalesforceBranchStructureTaskInitializationOverlay
   from "components/tasks/details/tasks/sfdc-branch-structure/run/SalesforceBranchStructureTaskInitializationOverlay";
 import GitToGitSyncTaskInitializationOverlay
   from "components/tasks/details/tasks/branch-to-branch/run/GitToGitSyncTaskInitializationOverlay";
+import SalesforceCustomSettingMigrationTaskWizardOverlay
+  from "../details/tasks/sfdc-custom-setting-migration/wizard/SalesforceCustomSettingMigrationTaskWizardOverlay";
 
 const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_GIT_BRANCHES,
@@ -29,6 +32,7 @@ const ALLOWED_TASK_TYPES = [
   TASK_TYPES.GIT_TO_GIT_MERGE_SYNC,
   TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC,
   TASK_TYPES.SALESFORCE_QUICK_DEPLOY,
+  TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION,
   TASK_TYPES.GITSCRAPER,
   TASK_TYPES.SNAPLOGIC_TASK,
 ];
@@ -45,12 +49,15 @@ function RunTaskButton(
     taskType,
     status,
     runCount,
+    style,
+    routeToWorkflow
   }) {
   const [isStarting, setIsStarting] = useState(false);
   const {
     isMounted,
     toastContext,
   } = useComponentStateReference();
+  const history = useHistory();
 
   useEffect(() => {
     if (status !== "stopped") {
@@ -62,6 +69,16 @@ function RunTaskButton(
     toastContext.clearOverlayPanel();
     // TODO: This should be passed to modal
     setIsStarting(true);
+  };
+
+  const getToolTip = () => {
+    if (!actionAllowed) {
+      return "Your Access Role Level Prevents Running Tasks";
+    }
+    if (disable) {
+      return "Running of the Task is disabled until configuration and connection information is fixed.";
+    }
+    return null;
   };
 
   const getButton = () => {
@@ -76,15 +93,24 @@ function RunTaskButton(
       );
     }
 
+    const launchWorkflow = () => {
+      if (routeToWorkflow) {
+        handleClose();
+        history.push(`/task/details/${taskModel?.getData("_id")}`);
+      }
+    };
+
     return (
       <Button
         variant={"success"}
+        style={style}
         disabled={status === "running" || disable || isStarting || actionAllowed !== true}
         onClick={() => {
+          launchWorkflow();
           showTaskRunOverlay();
         }}
       >
-        <TooltipWrapper innerText={actionAllowed !== true ? "Your Access Role Level Prevents Running Tasks" : null}>
+        <TooltipWrapper innerText={getToolTip()}>
           {taskModel?.getData("status") === "running" ?
             (<span><IconBase isLoading={true} className={"mr-2"}/>Running Task</span>)
             : (<span><IconBase icon={faPlay} className={"mr-2"} fixedWidth/>Run Task</span>)}
@@ -151,6 +177,20 @@ function RunTaskButton(
           taskModel={taskModel}
         />
       );
+    }  else if (taskModel?.getData("type") === TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION) {
+      try{
+        setIsStarting(true);
+        handleClose();
+        toastContext.showOverlayPanel(
+          <SalesforceCustomSettingMigrationTaskWizardOverlay
+            taskModel={taskModel}
+          />
+        );
+      } catch (error) {
+        if (isMounted?.current === true) {
+          toastContext.showLoadingErrorDialog(error);
+        }
+      } 
     } else {
       toastContext.showOverlayPanel(
         <RunTaskOverlay
@@ -185,6 +225,13 @@ RunTaskButton.propTypes = {
   taskType: PropTypes.string,
   status: PropTypes.string,
   runCount: PropTypes.number,
+  style: PropTypes.object,
+  routeToWorkflow: PropTypes.bool
 };
+
+RunTaskButton.defaultProps = {
+  routeToWorkflow: false
+};
+
 
 export default RunTaskButton;

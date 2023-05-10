@@ -86,4 +86,8 @@ VanitySetVerticalTab.propTypes = {
   tooltipPlacement: PropTypes.string,
 };
 
+VanitySetVerticalTab.defaultProps = {
+  tooltipPlacement: "right",
+};
+
 export default VanitySetVerticalTab;

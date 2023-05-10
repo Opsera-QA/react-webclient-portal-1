@@ -11,7 +11,7 @@ function SfdxQuickDeployTaskHelpDocumentation({closeHelpPanel}) {
       <ol>
         <li>Select <b>{getTaskTypeLabel(TASK_TYPES.SALESFORCE_QUICK_DEPLOY)}</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:
           <ul style={{listStyleType: "none"}}>
-            <li><b>Salesforce Account</b> - Select the Salesforce tool used in the SFDX/ANT pipeline that provided the Deploy Key.</li>
+            <li><b>Salesforce Configurator Tool</b> - Select the Salesforce tool used in the SFDX/ANT pipeline that provided the Deploy Key.</li>
             <li><b>Salesforce Deploy Key</b> - Provide the Deploy Key found in the SFDX/ANT Pipeline Logs Report.</li>
           </ul></li>
         <li>Select <b>Create</b> to save. </li>

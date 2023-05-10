@@ -7,7 +7,6 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
-import AccessTokenLogPanel from "components/user/user_settings/access_tokens/details/logs/AccessTokenLogPanel";
 import Model from "core/data_model/model";
 import accessTokenFilterMetadata from "components/user/user_settings/access_tokens/access-token-filter-metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";

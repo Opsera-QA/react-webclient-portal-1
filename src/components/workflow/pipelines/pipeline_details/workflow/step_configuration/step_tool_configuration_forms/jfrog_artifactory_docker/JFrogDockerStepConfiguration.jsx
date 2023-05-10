@@ -86,6 +86,7 @@ function JFrogDockerStepConfiguration({ pipelineId, stepTool, stepId, createJob,
     }
   };
 
+
   const getSubFolderInput = () => {
     if (jfrogStepConfigurationDto.getData("useRepositorySubFolderName") === true) {
       return (

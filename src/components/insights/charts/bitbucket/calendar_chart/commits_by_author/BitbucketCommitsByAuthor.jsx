@@ -7,7 +7,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, gradationalColors, newChartColors } from '../../../charts-views';
+import { defaultConfig } from '../../../charts-views';
 
 function BitbucketCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -17,7 +17,6 @@ function BitbucketCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashb
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     if (cancelTokenSource) cancelTokenSource.cancel();
@@ -51,12 +50,6 @@ function BitbucketCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashb
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
-        let usersList = dataObject && dataObject.length > 0 ? Object.keys(dataObject[0]) : [];
-
-        if (usersList) {
-          usersList = usersList.filter((value) => value !== "date");
-          setUsers(usersList);
-        }
       }
 
     } catch (error) {
@@ -77,7 +70,7 @@ function BitbucketCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashb
         <ResponsiveHeatMap
           data={metrics}
           {...defaultConfig("Date", "", true, true, "yearMonthDate", "cutoffString")}
-          {...config(users, gradationalColors, newChartColors)}
+          {...config("greys")}
           onClick={() => setShowModal(true)}
         />
       </div>

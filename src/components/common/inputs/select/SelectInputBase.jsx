@@ -55,6 +55,7 @@ function SelectInputBase(
     externalCacheToolIdentifier,
     supportSearchLookup,
     noDataText,
+    customLabel,
   }) {
   const field = dataObject?.getFieldById(fieldName);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
@@ -276,6 +277,7 @@ function SelectInputBase(
         loadDataFunction={loadDataFunction}
         disabled={disabled}
         isLoading={busy}
+        customLabel={customLabel}
       />
       <div className={"d-flex"}>
         <StandaloneSelectInput
@@ -367,6 +369,7 @@ SelectInputBase.propTypes = {
   externalCacheToolIdentifier: PropTypes.string,
   supportSearchLookup: PropTypes.bool,
   noDataText: PropTypes.string,
+  customLabel: PropTypes.string,
 };
 
 SelectInputBase.defaultProps = {

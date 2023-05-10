@@ -118,7 +118,7 @@ export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
       />
       <div>Please select the repository and branch you wish to use for this Salesforce workflow</div>
       <Row>
-        { gitConfigurationModel?.getData("jiraIssueIds") && gitConfigurationModel?.getData("jiraIssueIds").length > 0 ?
+        { gitConfigurationModel?.getData("isSalesforce") === true ?
           (<Col lg={12}>
             <MergeSyncTaskJiraIssueMultiSelectInput
               model={gitConfigurationModel}

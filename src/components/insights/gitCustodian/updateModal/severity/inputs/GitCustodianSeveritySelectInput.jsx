@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 const SEVERITY = [
-  "Critical",
-  "High",
   "Low",
   "Medium",
+  "High",
+  "Critical",
 ];
 
 function GitCustodianSeveritySelectInput({ model, setModel, disabled }) {

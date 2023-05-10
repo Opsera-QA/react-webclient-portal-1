@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import NumberPicker from "react-widgets/NumberPicker";
+import H5FieldSubHeader from "../../../../fields/subheader/H5FieldSubHeader";
 
 export const formatTypes = {
   percent: '%'

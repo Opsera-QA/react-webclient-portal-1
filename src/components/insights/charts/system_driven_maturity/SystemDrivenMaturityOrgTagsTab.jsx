@@ -9,6 +9,7 @@ import doraActions from "../dora/dora.action";
 import { MaturityScoreItemType } from './maturityScoreItemType';
 import SystemDrivenMaturityTimelineChart from './SystemDrivenMaturityTimelineChart';
 import SystemDrivenMaturityChart from './SystemDrivenMaturityChart';
+import { formatForSDMTimelineChart, formatMaturityScoreItems } from './util';
 
 function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, group, onSelect }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -61,13 +62,7 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
 
       if (isMounted?.current === true) {
         if (orgTags?.length) {
-          setMetricData(
-            orgTags.map(({ name, overallMaturityScoreText, previousOverallMaturityScoreText }) => ({
-              name,
-              score: overallMaturityScoreText,
-              previousScore: previousOverallMaturityScoreText
-            }))
-          ); 
+          setMetricData(formatMaturityScoreItems(orgTags)); 
         }
 
         if (chartData) {
@@ -75,19 +70,19 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
           setMaturityChartData([
             {
               id: 'LTFC',
-              data: ltfc.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
+              data: formatForSDMTimelineChart(ltfc),
             },
             {
               id: 'DF',
-              data: df.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
+              data: formatForSDMTimelineChart(df),
             },
             {
               id: 'MTTR',
-              data: mttr.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
+              data: formatForSDMTimelineChart(mttr),
             },
             {
               id: 'CFR',
-              data: cfr.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
+              data: formatForSDMTimelineChart(cfr),
             }
           ]);
         }

@@ -16,6 +16,7 @@ function IconBase(
     iconTransformProperties,
     spinIcon,
     disabled,
+    iconFontSize,
 
     // TODO: Remove?
     iconTitle,
@@ -66,7 +67,12 @@ function IconBase(
   }
 
   return (
-    <span className={className}>
+    <span
+      className={className}
+      style={{
+        fontSize: iconFontSize,
+      }}
+    >
       {getIcon()}
     </span>
   );
@@ -85,6 +91,7 @@ IconBase.propTypes = {
   iconTitle: PropTypes.string,
   iconColor: PropTypes.string,
   disabled: PropTypes.bool,
+  iconFontSize: PropTypes.string,
 };
 
 export default React.memo(IconBase);
