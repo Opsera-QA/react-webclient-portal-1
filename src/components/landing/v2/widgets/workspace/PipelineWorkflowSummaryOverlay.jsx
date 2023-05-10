@@ -208,15 +208,13 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
                 <Col xs={2} md={3} lg={4} xl={4} />
               </Row>
             </Col>
-            <Col xs={6}>
-              <PipelineLastRunDateField
-                pipelineModel={pipelineModel}
-              />
-            </Col>
             <Col xs={12}>
               {/*<WidgetDataBlockBase className={"mt-2"}>*/}
               {getRunMetrics()}
               <div className={"p-3"}>
+                <PipelineLastRunDateField
+                  pipelineModel={pipelineModel}
+                />
                 <VanityTextField
                   model={pipelineModel}
                   fieldName={"description"}
