@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
+import GithubCommitsVerticalTabContainer
+    from "../../../pie_chart/commits_statistics/actionable_insights/GithubCommitsVerticalTabContainer";
 import GithubMergeRequestsPushesCommentsActionableTableOverlay
     from "./GithubMergeRequestsPushesCommentsActionableTableOverlay";
 
@@ -11,8 +13,7 @@ function GithubMergeRequestsPushesCommentsVerticalTabContainer({
                                                      dashboardData,
                                                      kpiConfiguration,
                                                      icon,
-                                                    startDate,
-                                                    endDate
+                                                    date,
                                                  }) {
     const getTabContentContainer = () => {
         return (
@@ -20,15 +21,14 @@ function GithubMergeRequestsPushesCommentsVerticalTabContainer({
                 {highestMergesMetric.map((item, index) => (
                     <VanitySetTabView
                         key={index}
-                        tabKey={item}
+                        tabKey={item.id}
                     >
                         <GithubMergeRequestsPushesCommentsActionableTableOverlay
-                            projectName={item}
+                            projectName={item.id}
                             dashboardData={dashboardData}
                             kpiConfiguration={kpiConfiguration}
                             icon={icon}
-                            startDate={startDate}
-                            endDate={endDate}
+                            date={date}
                         />
                     </VanitySetTabView>
                 ))}
@@ -41,7 +41,14 @@ function GithubMergeRequestsPushesCommentsVerticalTabContainer({
             title={`Github Event Name`}
             defaultActiveKey={
                 highestMergesMetric &&
-                highestMergesMetric
+                Array.isArray(highestMergesMetric) &&
+                highestMergesMetric[0]?.id &&
+                highestMergesMetric[0]?.id
+            }
+            verticalTabContainer={
+                <GithubCommitsVerticalTabContainer
+                    highestMergesMetric={highestMergesMetric}
+                />
             }
             currentView={getTabContentContainer()}
         />
@@ -52,8 +59,7 @@ GithubMergeRequestsPushesCommentsVerticalTabContainer.propTypes = {
     dashboardData: PropTypes.object,
     kpiConfiguration: PropTypes.object,
     icon: PropTypes.object,
-    startDate : PropTypes.string,
-    endDate : PropTypes.string,
+    date : PropTypes.string,
 
 };
 export default GithubMergeRequestsPushesCommentsVerticalTabContainer;

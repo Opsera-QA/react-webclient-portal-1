@@ -12,14 +12,16 @@ import FullScreenCenterOverlayContainer
     from "../../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import GithubMergeRequestsPushesCommentsVerticalTabContainer
     from "./GithubMergeRequestsPushesCommentsVerticalTabContainer";
+import {DialogToastContext} from "../../../../../../../contexts/DialogToastContext";
 
-function GithubMergeRequestsPushesCommentsActionableOverlay({ dashboardData, kpiConfiguration, startDate, endDate }) {
+function GithubMergeRequestsPushesCommentsActionableOverlay({ dashboardData, kpiConfiguration, date }) {
     const [isLoading, setIsLoading] = useState(false);
     const isMounted = useRef(false);
     const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
     const [error, setError] = useState(undefined);
     const [metrics, setMetrics] = useState([]);
     const { getAccessToken } = useContext(AuthContext);
+    const toastContext = useContext(DialogToastContext);
 
     useEffect(() => {
         if (cancelTokenSource) {
@@ -59,22 +61,26 @@ function GithubMergeRequestsPushesCommentsActionableOverlay({ dashboardData, kpi
             null,
             dashboardOrgs,
             null,
-            startDate,
-            endDate,
+            date,
         );
         let dataObject = response?.data
-            ? response?.data?.data[0]?.githubMergeReqAndPushActionableVerticalContainer?.data[0]?.data
+            ? response?.data?.data[0]
             : [];
         if (isMounted?.current === true && dataObject) {
             setMetrics(dataObject);
         }
     };
 
+    const closePanel = () => {
+        toastContext.removeInlineMessage();
+        toastContext.clearOverlayPanel();
+    };
+
     return (
         <FullScreenCenterOverlayContainer
             closePanel={closePanel}
             showPanel={true}
-            titleText={"Github Total Commits"}
+            titleText={date + ": Github Merge Request, Pushes, Comments Actionable Report"}
             showToasts={true}
             titleIcon={faTable}
             // isLoading={isLoading}
@@ -86,17 +92,15 @@ function GithubMergeRequestsPushesCommentsActionableOverlay({ dashboardData, kpi
                     dashboardData={dashboardData}
                     kpiConfiguration={kpiConfiguration}
                     icon={faCodeMerge}
-                    startDate={startDate}
-                    endDate={endDate}
+                    date={date}
                 />
             </div>
         </FullScreenCenterOverlayContainer>
     );
 }
 GithubMergeRequestsPushesCommentsActionableOverlay.propTypes = {
-    startDate: PropTypes.string,
+    date: PropTypes.string,
     dashboardData: PropTypes.object,
     kpiConfiguration: PropTypes.object,
-    endDate: PropTypes.object
 };
 export default GithubMergeRequestsPushesCommentsActionableOverlay;

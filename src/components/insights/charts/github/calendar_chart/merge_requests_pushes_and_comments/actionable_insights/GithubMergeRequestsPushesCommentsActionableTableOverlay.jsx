@@ -7,7 +7,7 @@ import { AuthContext } from "contexts/AuthContext";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import GithubMergeRequestsPushesCommentsActionableTable from "./GithubMergeRequestsPushesCommentsActionableTable";
 
-function GithubMergeRequestsPushesCommentsActionableTableOverlay({ dashboardData, kpiConfiguration, projectName, startDate, endDate }) {
+function GithubMergeRequestsPushesCommentsActionableTableOverlay({ dashboardData, kpiConfiguration, projectName, date }) {
     const [isLoading, setIsLoading] = useState(false);
     const isMounted = useRef(false);
     const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -43,7 +43,23 @@ function GithubMergeRequestsPushesCommentsActionableTableOverlay({ dashboardData
         };
     }, [JSON.stringify(dashboardData)]);
 
-    const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
+    const loadData = async () => {
+        try {
+            setIsLoading(true);
+            await loadOpenData();
+        } catch (error) {
+            if (isMounted?.current === true) {
+                console.error(error);
+                setError(error);
+            }
+        } finally {
+            if (isMounted?.current === true) {
+                setIsLoading(false);
+            }
+        }
+    };
+
+    const loadOpenData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
         setIsLoading(true);
         let dashboardTags =
             dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
@@ -60,8 +76,8 @@ function GithubMergeRequestsPushesCommentsActionableTableOverlay({ dashboardData
             null,
             dashboardOrgs,
             null,
-            startDate,
-            endDate,
+            date,
+            null,
             null,
             null,
             null,
@@ -69,10 +85,10 @@ function GithubMergeRequestsPushesCommentsActionableTableOverlay({ dashboardData
             projectName
         );
         let dataObject = response?.data
-            ? response?.data?.data[0]?.githubTotalCountOfMergeReqAndPushPerDay?.data[0]?.data
+            ? response?.data?.data[0][0]?.data
             : [];
         let dataCount = response?.data
-            ? response?.data?.data[0]?.githubTotalCountOfMergeReqAndPushPerDay?.data[0]?.count[0]?.count : 0;
+            ? response?.data?.data[0][0]?.count[0]?.count : 0;
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", dataCount);
         setFilterModel({ ...newFilterDto });
@@ -89,6 +105,7 @@ function GithubMergeRequestsPushesCommentsActionableTableOverlay({ dashboardData
                 loadData={loadData}
                 filterModel={filterModel}
                 setFilterModel={setFilterModel}
+                projectName={projectName}
             />
         </div>
     );
@@ -98,7 +115,6 @@ GithubMergeRequestsPushesCommentsActionableTableOverlay.propTypes = {
     dashboardData: PropTypes.object,
     kpiConfiguration: PropTypes.object,
     icon: PropTypes.object,
-    startDate: PropTypes.string,
-    endDate: PropTypes.string
+    date: PropTypes.string,
 };
 export default GithubMergeRequestsPushesCommentsActionableTableOverlay;

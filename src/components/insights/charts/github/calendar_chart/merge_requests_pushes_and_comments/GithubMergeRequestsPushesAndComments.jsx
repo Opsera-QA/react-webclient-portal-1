@@ -9,9 +9,9 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, gradationalColors } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
-import GithubCommitsActionableInsightOverlay
-  from "../../pie_chart/commits_statistics/actionable_insights/GithubCommitsActionableInsightOverlay";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import GithubMergeRequestsPushesCommentsActionableOverlay
+  from "./actionable_insights/GithubMergeRequestsPushedCommentsActionableOverlay";
 function GithubMergeRequestsPushesAndComments({
   kpiConfiguration,
   setKpiConfiguration,
@@ -88,11 +88,10 @@ function GithubMergeRequestsPushesAndComments({
 
   const onRowSelect = (node) => {
     toastContext.showOverlayPanel(
-        <GithubCommitsActionableInsightOverlay
+        <GithubMergeRequestsPushesCommentsActionableOverlay
             kpiConfiguration={kpiConfiguration}
             dashboardData={dashboardData}
-            startDate={node?.startDate}
-            endDate={node?.endDate}
+            date={node?.day.toString()}
         />,
     );
   };

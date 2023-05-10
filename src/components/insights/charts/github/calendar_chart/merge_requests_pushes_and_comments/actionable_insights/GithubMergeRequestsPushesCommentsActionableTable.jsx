@@ -7,9 +7,9 @@ import CustomTable from "components/common/table/CustomTable";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import GithubMergesPushesCommentsActionableMetadata from "./github-merges-pushes-comments-actionable-metadata";
 
-function GithubMergeRequestsPushesCommentsActionableTable({ data, isLoading, loadData, filterModel, setFilterModel, title }) {
+function GithubMergeRequestsPushesCommentsActionableTable({ data, isLoading, loadData, filterModel, setFilterModel, projectName }) {
     const fields = GithubMergesPushesCommentsActionableMetadata.fields;
-    const tableTitle = "Github Merge Request, Pushes, Comments Actionable Report";
+    const tableTitle = "Insights Table: " +projectName;
     const noDataMessage = "No report is currently unavailable at this time";
 
 
@@ -26,12 +26,22 @@ function GithubMergeRequestsPushesCommentsActionableTable({ data, isLoading, loa
         []
     );
 
+    const pullRequestColumns = useMemo(
+        () => [
+            getTableTextColumn(getField(fields, "elasticId"), "elasticId"),
+            getTableTextColumn(getField(fields, "repositoryName"), "repositoryName"),
+            getTableDateTimeColumn(getField(fields, "repositoryCreatedAt"), "repositoryCreatedAt"),
+            getTableTextColumn(getField(fields, "repositoryUrl"), "repositoryUrl"),
+        ],
+        []
+    );
+
     const getTable = () => {
         return (
             <CustomTable
                 isLoading={isLoading}
                 loadData={loadData}
-                columns={columns}
+                columns={projectName === "pull_request" ? pullRequestColumns : columns}
                 data={data}
                 noDataMessage={noDataMessage}
                 paginationDto={filterModel}
@@ -60,7 +70,7 @@ GithubMergeRequestsPushesCommentsActionableTable.propTypes = {
     loadData: PropTypes.func,
     filterModel: PropTypes.object,
     setFilterModel: PropTypes.func,
-    title: PropTypes.string,
+    projectName: PropTypes.string,
 };
 
 export default GithubMergeRequestsPushesCommentsActionableTable;
