@@ -4,7 +4,7 @@ import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySet
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import { faFileCode } from "@fortawesome/pro-light-svg-icons";
 
-function QuickDeployVerticalTabContainer({ activeTab, handleTabClick, highestMergesMetrics }) {
+function GithubMergesPushesVerticalTabContainer({ activeTab, handleTabClick, highestMergesMetrics }) {
     return (
         <VanitySetVerticalTabContainer className={"h-100"}>
             {highestMergesMetrics.map((item, index) => {
@@ -15,7 +15,7 @@ function QuickDeployVerticalTabContainer({ activeTab, handleTabClick, highestMer
                         handleTabClick={handleTabClick}
                         icon={faFileCode}
                         tabText={item}
-                        tabName={`${index}`}
+                        tabName={item}
                     />
                 );
             })}
@@ -23,9 +23,9 @@ function QuickDeployVerticalTabContainer({ activeTab, handleTabClick, highestMer
     );
 }
 
-QuickDeployVerticalTabContainer.propTypes = {
+GithubMergesPushesVerticalTabContainer.propTypes = {
     highestMergesMetrics: PropTypes.array,
     handleTabClick: PropTypes.func,
     activeTab: PropTypes.string,
 };
-export default QuickDeployVerticalTabContainer;
+export default GithubMergesPushesVerticalTabContainer;

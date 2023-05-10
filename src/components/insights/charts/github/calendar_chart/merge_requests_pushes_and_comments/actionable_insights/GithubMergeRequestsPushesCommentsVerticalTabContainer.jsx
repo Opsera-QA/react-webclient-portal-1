@@ -8,6 +8,7 @@ import VanitySetTabView from "../../../../../../common/tabs/vertical_tabs/Vanity
 import GithubCommitsVerticalTabContainer
     from "../../../pie_chart/commits_statistics/actionable_insights/GithubCommitsVerticalTabContainer";
 import QuickDeployVerticalTabContainer from "../../../../quick-deploy-statistics/QuickDeployVerticalTabContainer";
+import GithubMergesPushesVerticalTabContainer from "./GithubMergesPushesVerticalTabContainer";
 
 function GithubMergeRequestsPushesCommentsVerticalTabContainer({
                                                      highestMergesMetric,
@@ -49,7 +50,7 @@ function GithubMergeRequestsPushesCommentsVerticalTabContainer({
             title={`Github Open Pull Requests`}
             currentView={getTabContentContainer()}
             verticalTabContainer={
-                <QuickDeployVerticalTabContainer
+                <GithubMergesPushesVerticalTabContainer
                     highestMergesMetrics={highestMergesMetric}
                     activeTab={activeTab}
                     handleTabClick={setActiveTab}
