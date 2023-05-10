@@ -106,6 +106,10 @@ const OracleFusionReportMigrationStepFormMetadata = {
       },
     },
     {
+      label: "Use Existing Group Name",
+      id: "useExistingGroupName",
+    },
+    {
       label: "Group Name",
       id: "groupName",
       regexDefinitionName: "generalText",
@@ -156,6 +160,7 @@ const OracleFusionReportMigrationStepFormMetadata = {
     gitUrl: "",
     gitCommitId: "",
     nexusToolConfigId: "",
+    useExistingGroupName: false,
     groupName: "",
     repositoryGroup : "maven2",
     repositoryName: "",

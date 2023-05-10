@@ -20,6 +20,12 @@ export default function MonacoEditorCodeDiffInputBase({
   originalEditable,
 }) {
 
+  loader.config({
+    paths: {
+      vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.38.0/min/vs',
+    },
+  });
+
   const handleEditorMount = (editor) => {
     const modifiedEditor = editor.getModifiedEditor();
     const originalEditor = editor.getOriginalEditor();

@@ -20,7 +20,6 @@ function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [users, setUsers] = useState([]);
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -50,9 +49,6 @@ function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "gitlabTotalCommitsByUserAndDate", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.gitlabTotalCommitsByUserAndDate?.data : [];
-      var usersList = dataObject && dataObject.length > 0 ? Object.keys(dataObject[0]) : [];
-      usersList = usersList.filter((value) => value != "date");
-      setUsers(usersList);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -81,16 +77,17 @@ function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
-  return (
-    <div className="new-chart mb-3" style={{height: METRIC_CHART_STANDARD_HEIGHT}}>
-          <ResponsiveHeatMap
-            data={metrics}
-            {...defaultConfig("Date", "", true, true, "yearMonthDate", "cutoffString")}
-            {...config(users)}
-            onClick={onChartClick}
-          />
+
+    return (
+      <div className="new-chart mb-3" style={{height: METRIC_CHART_STANDARD_HEIGHT}}>
+        <ResponsiveHeatMap
+          data={metrics}
+          {...defaultConfig("Date", "", true, true, "yearMonthDate", "cutoffString")}
+          {...config("purple_orange")}
+          onClick={onChartClick}
+        />
       </div>
-  );
+    );
   };
 
   return (

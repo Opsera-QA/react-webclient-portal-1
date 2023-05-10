@@ -57,7 +57,7 @@ const OracleFusionReportMigrationStandaloneArtifactVersionSelectInput = ({ value
   const loadVersions = async (cancelSource = cancelTokenSource) => {
     const response = await nexusStepActions.getNexusArtifactVersions(getAccessToken, cancelSource, toolId, repositoryName, groupName, artifactName);
     if(Array.isArray(response?.data?.data)){
-      setVersions(response?.data?.data);
+      setVersions(["latest", ...response?.data?.data]);
     }
   };
 

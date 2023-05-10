@@ -20,6 +20,7 @@ import OracleFusionReportMigrationNexusRepoGroupSelectInput from "./inputs/Oracl
 import OracleFusionReportMigrationArtifactoryStepSelectInput from "./inputs/OracleFusionReportMigrationArtifactoryStepSelectInput";
 import OracleFusionReportMigrationStepArtifactoryTypeSelectInput from "./inputs/OracleFusionReportMigrationStepArtifactoryTypeSelectInput";
 import OracleFusionReportMigrationReportsInput from "./inputs/OracleFusionReportMigrationReportsInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function OracleFusionReportMigrationStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -111,12 +112,26 @@ function OracleFusionReportMigrationStepConfiguration({ pipelineId, stepTool, pl
           model={oracleFusionReportMigrationStepConfigurationModel}
           setModel={setOracleFusionReportMigrationStepConfigurationModel} 
         />
-        <OracleFusionReportMigrationNexusRepoGroupSelectInput           
-          model={oracleFusionReportMigrationStepConfigurationModel}
-          setModel={setOracleFusionReportMigrationStepConfigurationModel}
-          nexusToolConfigId={oracleFusionReportMigrationStepConfigurationModel.getData("nexusToolConfigId")}
-          repositoryName={oracleFusionReportMigrationStepConfigurationModel.getData("repositoryName")}
-        />        
+        <BooleanToggleInput 
+          fieldName={"useExistingGroupName"}
+          dataObject={oracleFusionReportMigrationStepConfigurationModel}
+          setDataObject={setOracleFusionReportMigrationStepConfigurationModel}
+        />
+        { oracleFusionReportMigrationStepConfigurationModel?.getData("useExistingGroupName") === true ? (
+          <OracleFusionReportMigrationNexusRepoGroupSelectInput           
+            model={oracleFusionReportMigrationStepConfigurationModel}
+            setModel={setOracleFusionReportMigrationStepConfigurationModel}
+            nexusToolConfigId={oracleFusionReportMigrationStepConfigurationModel.getData("nexusToolConfigId")}
+            repositoryName={oracleFusionReportMigrationStepConfigurationModel.getData("repositoryName")}
+          />
+        ) : (
+          <TextInputBase 
+            dataObject={oracleFusionReportMigrationStepConfigurationModel}
+            setDataObject={setOracleFusionReportMigrationStepConfigurationModel}
+            fieldName={"groupName"}
+          />
+        ) }
+                
       </>
     );  
   };

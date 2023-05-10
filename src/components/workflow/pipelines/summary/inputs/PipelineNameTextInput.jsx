@@ -24,8 +24,10 @@ export default function PipelineNameTextInput(
   const pipelineActions = usePipelineActions();
 
   useEffect(() => {
-    setModelCopy(pipelineModel?.clone());
-  }, []);
+    if (modelCopy == null) {
+      setModelCopy(pipelineModel?.clone());
+    }
+  }, [pipelineModel]);
 
   const handleSaveFunction = async () => {
     const response = await pipelineActions.updatePipelineField(

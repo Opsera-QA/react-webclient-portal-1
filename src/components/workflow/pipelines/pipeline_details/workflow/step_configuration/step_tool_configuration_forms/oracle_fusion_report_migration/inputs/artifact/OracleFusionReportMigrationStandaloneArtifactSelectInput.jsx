@@ -8,7 +8,7 @@ import nexusStepActions
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
-const OracleFusionReportMigrationStandaloneArtifactSelectInput = ({ value,  disabled, setDataFunction, toolId, repositoryName, groupName }) => {
+const OracleFusionReportMigrationStandaloneArtifactSelectInput = ({ value,  disabled, setDataFunction, toolId, repositoryName, groupName, selectedArtifacts }) => {
   
   const [artifacts, setArtifacts] = useState([]);
   const toastContext = useContext(DialogToastContext);
@@ -62,7 +62,7 @@ const OracleFusionReportMigrationStandaloneArtifactSelectInput = ({ value,  disa
 
   return (
     <StandaloneSelectInput
-      selectOptions={artifacts}
+      selectOptions={artifacts.filter(artifact => !selectedArtifacts.includes(artifact))}
       value={value}
       busy={isLoading}
       placeholderText="Select Artifact"
@@ -78,6 +78,7 @@ OracleFusionReportMigrationStandaloneArtifactSelectInput.propTypes = {
   value: PropTypes.string,  
   disabled: PropTypes.bool,
   setDataFunction: PropTypes.func,
+  selectedArtifacts: PropTypes.array,
 };
 
 export default OracleFusionReportMigrationStandaloneArtifactSelectInput;

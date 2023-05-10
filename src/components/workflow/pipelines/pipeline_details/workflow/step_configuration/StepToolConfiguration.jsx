@@ -1499,7 +1499,7 @@ function StepToolConfiguration({
             parentCallback={callbackFunction}
             closeEditorPanel={closeEditorPanel}
           />
-        );
+        );     
       case toolIdentifierConstants.TOOL_IDENTIFIERS.ORACLE_FUSION_REPORT_MIGRATION:
         return (
           <OracleFusionReportMigrationStepConfiguration
@@ -1510,7 +1510,7 @@ function StepToolConfiguration({
             parentCallback={callbackFunction}
             closeEditorPanel={closeEditorPanel}
           />
-        );        
+        );           
     }
   };
 
