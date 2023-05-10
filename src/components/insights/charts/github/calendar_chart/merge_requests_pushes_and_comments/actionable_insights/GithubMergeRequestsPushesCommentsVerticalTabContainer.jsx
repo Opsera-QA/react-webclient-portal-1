@@ -3,8 +3,11 @@ import PropTypes from "prop-types";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import GithubMergeRequestsPushesCommentsActionableTableOverlay
     from "./GithubMergeRequestsPushesCommentsActionableTableOverlay";
+import VanitySetTabViewContainer from "../../../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
+import VanitySetTabView from "../../../../../../common/tabs/vertical_tabs/VanitySetTabView";
+import GithubCommitsVerticalTabContainer
+    from "../../../pie_chart/commits_statistics/actionable_insights/GithubCommitsVerticalTabContainer";
 import QuickDeployVerticalTabContainer from "../../../../quick-deploy-statistics/QuickDeployVerticalTabContainer";
-import {hasStringValue} from "../../../../../../common/helpers/string-helpers";
 
 function GithubMergeRequestsPushesCommentsVerticalTabContainer({
                                                      highestMergesMetric,
@@ -17,44 +20,41 @@ function GithubMergeRequestsPushesCommentsVerticalTabContainer({
 
     useEffect(() => {
         if (Array.isArray(highestMergesMetric) && highestMergesMetric.length > 0) {
-            setActiveTab(`0`);
+            setActiveTab(highestMergesMetric[0]);
         }
     }, [highestMergesMetric]);
 
-    const getCurrentView = () => {
-        if (hasStringValue(activeTab) === true) {
-            const component = highestMergesMetric[activeTab];
-
-            if (component) {
-                return (
-                    <GithubMergeRequestsPushesCommentsActionableTableOverlay
-                        projectName={component}
-                        dashboardData={dashboardData}
-                        kpiConfiguration={kpiConfiguration}
-                        icon={icon}
-                        date={date}
-                    />
-                );
-            }
-        }
-    };
-
-    const getVerticalTabContainer = () => {
+    const getTabContentContainer = () => {
         return (
-            <QuickDeployVerticalTabContainer
-                highestMergesMetrics={highestMergesMetric}
-                activeTab={activeTab}
-                handleTabClick={setActiveTab}
-            />
+            <VanitySetTabViewContainer>
+                {highestMergesMetric.map((item, index) => (
+                    <VanitySetTabView
+                        key={index}
+                        tabKey={item}
+                    >
+                        <GithubMergeRequestsPushesCommentsActionableTableOverlay
+                            projectName={item}
+                            dashboardData={dashboardData}
+                            kpiConfiguration={kpiConfiguration}
+                            icon={icon}
+                            date={date}
+                        />
+                    </VanitySetTabView>
+                ))}
+            </VanitySetTabViewContainer>
         );
     };
-
     return (
         <VanitySetTabAndViewContainer
-            title={`Github Event Names`}
-            verticalTabContainer={getVerticalTabContainer()}
-            currentView={getCurrentView()}
-            tabColumnSize={3}
+            title={`Github Open Pull Requests`}
+            currentView={getTabContentContainer()}
+            verticalTabContainer={
+                <QuickDeployVerticalTabContainer
+                    highestMergesMetrics={highestMergesMetric}
+                    activeTab={activeTab}
+                    handleTabClick={setActiveTab}
+                />
+            }
         />
     );
 }

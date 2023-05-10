@@ -67,7 +67,7 @@ function GithubMergeRequestsPushesCommentsActionableTableOverlay({ dashboardData
         let dashboardOrgs =
             dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
                 ?.value;
-        const response = await githubActions.githubMergeReqAndPushActionableVerticalContainer(
+        const response = await githubActions.githubMergeReqAndPushActionableTable(
             getAccessToken,
             cancelSource,
             kpiConfiguration,
@@ -78,10 +78,10 @@ function GithubMergeRequestsPushesCommentsActionableTableOverlay({ dashboardData
             projectName
         );
         let dataObject = response?.data
-            ? response?.data?.data[0][0]?.data
+            ? response?.data?.data?.data[0]?.data
             : [];
         let dataCount = response?.data
-            ? response?.data?.data[0][0]?.count[0]?.count : 0;
+            ? response?.data?.data?.data[0]?.count[0]?.count : 0;
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", dataCount);
         setFilterModel({ ...newFilterDto });

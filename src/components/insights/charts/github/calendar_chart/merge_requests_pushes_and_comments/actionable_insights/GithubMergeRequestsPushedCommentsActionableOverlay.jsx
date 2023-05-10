@@ -61,7 +61,7 @@ function GithubMergeRequestsPushesCommentsActionableOverlay({ dashboardData, kpi
             date
         );
         let dataObject = response?.data
-            ? response?.data?.data[0]?.data
+            ? response?.data?.data
             : [];
         if (isMounted?.current === true && dataObject) {
             setMetrics(dataObject);
