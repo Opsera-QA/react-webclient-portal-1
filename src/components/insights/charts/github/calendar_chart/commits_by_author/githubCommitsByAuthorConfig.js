@@ -20,5 +20,6 @@ export default (colorScheme) => ({
     right: 40,
     bottom: 60,
     left: 40
-  }
+  },
+  labelTextColor: "#ffffff"
 });
