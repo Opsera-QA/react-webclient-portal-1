@@ -20,6 +20,9 @@ import useAxiosCancelToken from "../../../../../../../../hooks/useAxiosCancelTok
 import axios from "axios";
 import Col from "react-bootstrap/Col";
 import SelectInputBase from "../../../../../../../common/inputs/select/SelectInputBase";
+import Model from "../../../../../../../../core/data_model/model";
+import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
+import { customSettingMappingMetadata } from "./customSettingMapping.metadata";
 
 const CustomSettingCsvFieldMappingScreen = ({
   wizardModel,
@@ -34,7 +37,21 @@ const CustomSettingCsvFieldMappingScreen = ({
   const [isSaving, setIsSaving] = useState(false);
   const [filePullCompleted, setFilePullCompleted] = useState(false);
   const [fieldsPropertiesList, setFieldsPropertiesList] = useState([]);
+  const [localMappedData, setLocalMappedData] = useState(
+    new Model({}, customSettingMappingMetadata, false),
+  );
   const [mappedData, setMappedData] = useState([]);
+
+  // [
+  //   {
+  //     "sourceField": "Name",
+  //     "targetField": "Name"
+  //   },
+  //   {
+  //     "sourceField": "First_Name__c",
+  //     "targetField": "FirstName__c"
+  //   }
+  // ]
 
   const { cancelTokenSource } = useAxiosCancelToken();
   const isMounted = useRef(false);
@@ -62,9 +79,20 @@ const CustomSettingCsvFieldMappingScreen = ({
     };
   }, []);
 
+  // useEffect(() => {
+  //   let newDataObject = {...wizardModel};
+  //   newDataObject.setData("fieldMapping", mappedData);
+  //   setWizardModel({...newDataObject});
+  // }, [mappedData]);
+
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+
+      let currentData = wizardModel?.getData("fieldMapping");
+      let items =
+        Array.isArray(currentData) && currentData.length > 0 ? currentData : [];
+      setMappedData([...items]);
       await handleFieldPropertiesListPolling(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
@@ -123,7 +151,23 @@ const CustomSettingCsvFieldMappingScreen = ({
       }
 
       if (Array.isArray(fieldList)) {
+        let mappedResult = fieldList.map((field) => ({
+          sourceField: field.name,
+          targetField: "",
+          nillable: field.nillable,
+          type: field.type,
+          unique: field.unique,
+        }));
+        console.log(mappedResult);
+
+        setMappedData(mappedResult);
+
         setFieldsPropertiesList(fieldList);
+
+        let newDataObject = { ...wizardModel };
+        newDataObject.setData("selectedFieldList", fieldList);
+        setWizardModel({ ...newDataObject });
+
         setIsLoading(false);
         setFilePullCompleted(true);
       }
@@ -133,9 +177,7 @@ const CustomSettingCsvFieldMappingScreen = ({
   };
 
   const handleBackButton = () => {
-    setCurrentScreen(
-      CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.UPLOAD_SCREEN,
-    );
+    setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.UPLOAD_SCREEN);
   };
 
   const saveAndMoveToNextScreen = async () => {
@@ -160,6 +202,11 @@ const CustomSettingCsvFieldMappingScreen = ({
       }
     }
   };
+
+  const setCsvFieldData = (selectedOption, idx) => {
+    console.log(selectedOption, idx);
+  };
+
   const getBody = () => {
     if (wizardModel == null || isLoading) {
       return (
@@ -179,26 +226,96 @@ const CustomSettingCsvFieldMappingScreen = ({
             )} : Custom Setting Field Mapping Screen`}
           />
         </Row>
-        {fieldsPropertiesList && fieldsPropertiesList.length > 1 &&
-          <Row className="d-flex mx-1 justify-content-between">
-            <Col sm={12} className={"px-0"}>
-              <Row className={"mx-0"}>
+        {mappedData &&
+          mappedData.length > 1 &&
+          mappedData.map((field, index) => {
+            return (
+              <Row
+                className="d-flex mx-1 justify-content-between"
+                key={index}
+              >
                 <Col
-                  xs={6}
-                  className={"pr-1 pl-0"}
+                  sm={12}
+                  className={"px-0"}
                 >
-                  Selection for fields
-                </Col>
-                <Col
-                  xs={6}
-                  className={"pr-1 pl-0"}
-                >
-                  Selection for fields
+                  <Row className={"mx-0"}>
+                    <Col
+                      xs={6}
+                      className={"pr-1 mt-3 pl-0"}
+                    >
+                      <Row className={"mx-0"}>
+                        <Col
+                          lg={6}
+                          xl={6}
+                          className={"no-wrap-inline mb-1"}
+                        >
+                          {field?.sourceField}
+                        </Col>
+                        <Col
+                          lg={6}
+                          xl={6}
+                          className={"d-flex mb-1 mt-1 justify-content-end"}
+                        >
+                          <div
+                            className={"badge badge-secondary mr-2"}
+                            style={{ fontSize: "10px", letterSpacing: "0.6px" }}
+                          >
+                            {field?.type?.toUpperCase()}
+                          </div>
+                          {field?.unique ? (
+                            <div
+                              className={"badge badge-secondary mr-2"}
+                              style={{
+                                fontSize: "10px",
+                                letterSpacing: "0.6px",
+                              }}
+                            >
+                              UNIQUE
+                            </div>
+                          ) : null}
+                          {!field?.nillable ? (
+                            <div
+                              className={"badge badge-danger mr-2"}
+                              style={{
+                                fontSize: "10px",
+                                letterSpacing: "0.6px",
+                              }}
+                            >
+                              MANDATORY
+                            </div>
+                          ) : null}
+                        </Col>
+                      </Row>
+                      {/*<SelectInputBase*/}
+                      {/*  selectOptions={fieldsPropertiesList}*/}
+                      {/*  fieldName={"targetField"}*/}
+                      {/*  defaultValue={mappedData[index]?.sourceField}*/}
+                      {/*  dataObject={localMappedData}*/}
+                      {/*  setDataObject={setLocalMappedData}*/}
+                      {/*  disabled={true}*/}
+                      {/*  showLabel={false}*/}
+                      {/*/>*/}
+                    </Col>
+                    <Col
+                      xs={6}
+                      className={"pr-1 pl-0"}
+                    >
+                      <SelectInputBase
+                        selectOptions={wizardModel?.getData("csvFields")}
+                        fieldName={"targetField"}
+                        dataObject={localMappedData}
+                        setDataObject={setLocalMappedData}
+                        setDataFunction={(newValue) =>
+                          setCsvFieldData(newValue, index)
+                        }
+                        showLabel={false}
+                      />
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
-            </Col>
-          </Row>
-        }
+            );
+          })}
       </div>
     );
   };
