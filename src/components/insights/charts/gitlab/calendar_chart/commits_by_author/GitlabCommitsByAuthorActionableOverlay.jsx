@@ -7,46 +7,60 @@ import {getField} from "../../../../../common/metadata/metadata-helpers";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer
   from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
-import CustomTable from "../../../../../common/table/CustomTable";
-import FilterContainer from "../../../../../common/table/FilterContainer";
+import CustomTable from "components/common/table/CustomTable";
+import FilterContainer from "components/common/table/FilterContainer";
+
+const NO_DATA_MESSAGE = "No data available";
 
 function GitlabCommitsBytAuthorActionableModal({ metrics }) {
   const toastContext = useContext(DialogToastContext);
 
-  const noDataMessage = "No data available";
-
+  /**
+   * given the data format:
+   *
+   * [
+   *  {
+   *    id: "2023-04-26", // date
+   *    data: [
+   *      {
+   *        "x": "Suriya Prakash",
+   *        "y": 6
+   *      },
+   *      ...
+   *    ]
+   *  },
+   *  ...
+   * ]
+   * 
+   * Output:
+   * [
+   *  {
+   *    id: "date",
+   *    label: "Date",
+   *  },
+   *  {
+   *    id: "Suriya Prakash",
+   *    label: "Suriya Prakash",
+   *  },
+   *  ...
+   * ]
+   */
   const addFields = () => {
-    //the metrics value is an array of objects which consist of author names and date
-    //example: [{ "Noah Champoux":65, "Phanisri Adusumilli":1, "date":"2022-08-24" },
-    // { "Noah Champoux":50, "Phanisri Adusumilli":4, "date":"2022-08-23" }]
-    try {
-      //we extract each author as a new field from metrics
-      //sample output: [{ label: 'Date', id: 'date'},
-      // { label: 'Phanisri Adusumilli', id: 'Phanisri Adusumilli'},
-      // { label: 'Noah Champoux', id: 'Noah Champoux'}]
-      const fields = [];
-      metrics.forEach(metric => {
-        Object.keys(metric).forEach(author => {
-          const found = fields.some(field => field.id === author);
-          if(!found) {
-            if(author === 'date') {
-              fields.push({
-                label: 'Date',
-                id: author
-              });
-            } else {
-              fields.push({
-                label: author,
-                id: author
-              });
-            }
-          }
-        });
-      });
-      return fields;
-    } catch (error) {
-        console.error(error);
+    if (!Array.isArray(metrics) || metrics.length === 0) {
+      return {};
     }
+
+    return [
+      {
+        id: 'date',
+        label: 'Date'
+      },
+      // add each x value from data
+      ...metrics[0].data.map(({ x }) => ({
+        id: x,
+        label: x
+      }))
+    ];
   };
 
   const fields = addFields();
@@ -71,13 +85,28 @@ function GitlabCommitsBytAuthorActionableModal({ metrics }) {
     toastContext.clearInfoOverlayPanel();
   };
 
+  const convertData = () => {
+    return metrics.map(({ id, data }) => {
+      const newData = {
+        date: id,
+      };
+
+      data.map(({ x, y}) => {
+        newData[x] = y;
+      });
+
+      return newData;
+    });
+  };
+
+  const data = convertData();
 
   const getBody = () => {
     return (
       <FilterContainer
         title={'Total Commits Per Author By Date'}
         body={getTable()}
-        metadata={metrics}
+        metadata={data}
       />
     );
   };
@@ -86,9 +115,9 @@ function GitlabCommitsBytAuthorActionableModal({ metrics }) {
     return (
       <CustomTable
         columns={columns}
-        data={metrics}
-        noDataMessage={noDataMessage}
-        className={'no-wrap '}
+        data={data}
+        noDataMessage={NO_DATA_MESSAGE}
+        className={'no-wrap'}
       />
     );
   };
