@@ -11,6 +11,10 @@ const GithubCommitsActionableMetadata = {
       id: "collaboratorName",
     },
     {
+      label: "MR Id",
+      id: "mergeRequestsId"
+    },
+    {
       label: "Request created at",
       id: "createdAt",
     },
@@ -19,8 +23,8 @@ const GithubCommitsActionableMetadata = {
       id: "totalCommits",
     },
     {
-      label: "Contributor Name",
-      id: "contributorName",
+      label: "Reviewer Name",
+      id: "reviewerName",
     },
     {
       label: "Commit Message",
