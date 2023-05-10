@@ -24,6 +24,7 @@ function OracleFusionReportMigrationReportsInput({
   const [field] = useState(model.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [properties, setProperties] = useState([]);
+  const [selectedArtifacts, setSelectedArtifacts] = useState([]);
   const [artifactName, setArtifactName] = useState("");
   const [version, setVersion] = useState("");
   const toastContext = useContext(DialogToastContext);
@@ -65,7 +66,8 @@ function OracleFusionReportMigrationReportsInput({
       setIsLoading(true);
       let currentData = model?.getData(fieldName);
       let items = Array.isArray(currentData) && currentData.length > 0 ? currentData : [];
-      setProperties([...items]);      
+      setProperties([...items]);
+      setSelectedArtifacts(items.map(item => item["artifactName"]));
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -78,6 +80,7 @@ function OracleFusionReportMigrationReportsInput({
 
   const validateAndSetData = (newPropertyList) => {
     setProperties([...newPropertyList]);
+    setSelectedArtifacts(newPropertyList.map(item => item["artifactName"]));
     let newModel = { ...model };
 
     if (newPropertyList.length > field.maxItems) {
@@ -130,6 +133,7 @@ function OracleFusionReportMigrationReportsInput({
         version,        
       },
     ]);
+    setSelectedArtifacts([...selectedArtifacts, artifactName]);
     setVersion("");
     setArtifactName("");
   };
@@ -141,17 +145,23 @@ function OracleFusionReportMigrationReportsInput({
     validateAndSetData(newPropertyList);
   };
 
+  const handleArtifactSelection = (data) => {
+    setArtifactName(data);
+    setVersion("");
+  };
+
   const getInputRow = () => {
     return (
       <div className="p-2">
         <Row>
           <Col sm={6}>
             <OracleFusionReportMigrationStandaloneArtifactSelectInput              
-              setDataFunction={setArtifactName}
+              setDataFunction={handleArtifactSelection}
               value={artifactName}
               toolId={model.getData("nexusToolConfigId")}
               repositoryName={model.getData("repositoryName")}
               groupName={model.getData("groupName")}
+              selectedArtifacts={selectedArtifacts}
             />            
           </Col>
           <Col sm={6}>
