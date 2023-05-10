@@ -224,14 +224,26 @@ const CustomSettingCsvFieldMappingScreen = ({
             subheaderText={`${getMigrationTypeLabel(
               wizardModel?.getData("taskType"),
             )} : Custom Setting Field Mapping Screen`}
-          />
+          />git
         </Row>
+        <div className="d-flex justify-content-center page-description mt-3">
+          <Col sm={12}>
+            <Row>
+              <Col sm={6} className={"pl-2 pr-0 py-2"}>
+                <span className="text-muted">Custom Object Fields</span>
+              </Col>
+              <Col sm={6} className={"pl-2 pr-0 py-2"}>
+                <span className="text-muted">CSV fields</span>
+              </Col>
+            </Row>
+          </Col>
+        </div>
         {mappedData &&
           mappedData.length > 1 &&
           mappedData.map((field, index) => {
             return (
               <Row
-                className="d-flex mx-1 justify-content-between"
+                className="d-flex mx-1 justify-content-between mt-2"
                 key={index}
               >
                 <Col
@@ -249,7 +261,7 @@ const CustomSettingCsvFieldMappingScreen = ({
                           xl={6}
                           className={"no-wrap-inline mb-1"}
                         >
-                          {field?.sourceField}
+                          <span style={{fontWeight: 500}}>{field?.sourceField}</span>
                         </Col>
                         <Col
                           lg={6}
