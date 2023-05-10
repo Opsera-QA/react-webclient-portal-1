@@ -56,6 +56,7 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
     lastRunDurationText,
     totalAverageDurationText,
     loadData,
+    isLoading: isLoadingMetrics,
   } = useGetPipelineDurationMetrics(pipelineId, pipelineModel?.getRunCount());
 
   const handleViewDetailsButton = () => {
@@ -71,8 +72,8 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
   const getLastRunDuration = () => {
     if (hasStringValue(lastRunDurationText) === true) {
       return (
-        <WidgetDataBlockBase className={"mt-2 mx-2"}>
-          <div className={"p-2"}>
+        // <WidgetDataBlockBase className={"mt-2 mx-2"}>
+          <div className={"p-2 mr-4"}>
             <div className={"mx-auto"}>
               <VanityFocusTextBase
                 text={lastRunDurationText}
@@ -84,7 +85,7 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
               />
             </div>
           </div>
-        </WidgetDataBlockBase>
+        // </WidgetDataBlockBase>
       );
     }
   };
@@ -113,7 +114,7 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
   const getTotalRunAverageDuration = () => {
     if (hasStringValue(totalAverageDurationText) === true) {
       return (
-        <WidgetDataBlockBase className={"mt-2 mx-2"}>
+        // <WidgetDataBlockBase className={"mt-2 mx-2"}>
           <div className={"p-2"}>
             <div className={"mx-auto"}>
               <VanityFocusTextBase
@@ -126,17 +127,56 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
               />
             </div>
           </div>
-        </WidgetDataBlockBase>
+        // </WidgetDataBlockBase>
       );
     }
   };
 
+  const getRunMetrics = () => {
+    return (
+      <CenteredContentWrapper>
+        <WidgetDataBlockBase className={"mt-2 mx-2"}>
+          <div className={"d-flex p-3"}>
+            <div className={"p-2 mr-4"}>
+              <div className={"mx-auto"}>
+                <VanityFocusTextBase
+                  text={pipelineModel?.getRunCount()}
+                />
+              </div>
+              <div className={"mx-auto"}>
+                <VanityLabelBase
+                  label={"Runs"}
+                />
+              </div>
+            </div>
+            {getLastRunDuration()}
+            {getTotalRunAverageDuration()}
+          </div>
+        </WidgetDataBlockBase>
+      </CenteredContentWrapper>
+    );
+  };
+
+  const getCloseButton = () => {
+    return (
+      <CloseButton
+        closeEditorCallback={closePanel}
+        size={"sm"}
+      />
+    );
+  };
+
   const getBody = () => {
-    if (isLoading === true && pipelineModel == null) {
+    if ((isLoading === true && pipelineModel == null) || isLoadingMetrics === true) {
       return (
-        <CenterLoadingIndicator
-          type={"Pipeline"}
-        />
+        <>
+          <CenterLoadingIndicator
+            type={"Pipeline"}
+          />
+          <ButtonContainerBase className={"p-2"}>
+            {getCloseButton()}
+          </ButtonContainerBase>
+        </>
       );
     }
 
@@ -146,79 +186,73 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
           <ErrorMessageFieldBase
             message={errorHelpers.parseApiErrorForInfoText("Pipeline", error)}
           />
+          <ButtonContainerBase className={"p-2"}>
+            {getCloseButton()}
+          </ButtonContainerBase>
         </CenteredContentWrapper>
       );
     }
 
     return (
-      <Row>
-        {/*<Col xs={12}>*/}
-        {/*  <PipelineCardBase*/}
-        {/*    pipelineModel={pipelineModel}*/}
-        {/*  />*/}
-        {/*</Col>*/}
-        <Col xs={6}>
-          <PipelineLastRunDateField
-            pipelineModel={pipelineModel}
-          />
-        </Col>
-        <Col xs={12}>
-          <WidgetDataBlockBase className={"mt-2"}>
-            <div className={"d-flex justify-content-between"}>
-              <WidgetDataBlockBase className={"mt-2 mx-2"}>
-                <div className={"p-2"}>
-                  <div className={"mx-auto"}>
-                    <VanityFocusTextBase
-                      text={pipelineModel?.getRunCount()}
-                    />
-                  </div>
-                  <div className={"mx-auto"}>
-                    <VanityLabelBase
-                      label={"Runs"}
-                    />
-                  </div>
-                </div>
-              </WidgetDataBlockBase>
-              {getLastRunDuration()}
-              {getTotalRunAverageDuration()}
-            </div>
-            <div className={"p-3"}>
-              <VanityTextField
-                model={pipelineModel}
-                fieldName={"description"}
-              />
-        {/*    </div>*/}
-        {/*  </WidgetDataBlockBase>*/}
-        {/*</Col>*/}
-        {/*<Col sm={12}>*/}
-        {/*  <WidgetDataBlockBase className={"mt-2"}>*/}
-        {/*    <div className={"p-3"}>*/}
-
-              <VanityTextFieldBase
-                label={"Last Run Summary"}
-                text={orchestrationHelper.getLastRunSummaryForPipelineModel(pipelineModel)}
-              />
-            </div>
-            <CenteredContentWrapper>
-              <div className={"my-3"}>
-                <PipelineActionControls
-                  pipeline={pipelineModel?.getCurrentData()}
-                  isLoading={isLoading}
-                  workflowStatus={status}
-                  runCount={runCount}
-                  isQueued={isQueued}
-                  fetchData={loadData}
-                />
-              </div>
-            </CenteredContentWrapper>
-            <div>
-              <PipelineOrchestrationProgressBarBase
+      <>
+        <div className={"px-2"}>
+          <Row>
+            {/*<Col xs={12}>*/}
+            {/*  <PipelineCardBase*/}
+            {/*    pipelineModel={pipelineModel}*/}
+            {/*  />*/}
+            {/*</Col>*/}
+            <Col xs={6}>
+              <PipelineLastRunDateField
                 pipelineModel={pipelineModel}
               />
-            </div>
-          </WidgetDataBlockBase>
-        </Col>
-      </Row>
+            </Col>
+            <Col xs={12}>
+              {/*<WidgetDataBlockBase className={"mt-2"}>*/}
+              {getRunMetrics()}
+              <div className={"p-3"}>
+                <VanityTextField
+                  model={pipelineModel}
+                  fieldName={"description"}
+                />
+                {/*    </div>*/}
+                {/*  </WidgetDataBlockBase>*/}
+                {/*</Col>*/}
+                {/*<Col sm={12}>*/}
+                {/*  <WidgetDataBlockBase className={"mt-2"}>*/}
+                {/*    <div className={"p-3"}>*/}
+
+                <VanityTextFieldBase
+                  label={"Last Run Summary"}
+                  text={orchestrationHelper.getLastRunSummaryForPipelineModel(pipelineModel)}
+                />
+              </div>
+            </Col>
+            <Col xs={12}>
+              <div className={"d-flex justify-content-between w-100 my-3"}>
+                <div style={{minWidth: "76px"}} />
+                <div>
+                  <PipelineActionControls
+                    pipeline={pipelineModel?.getCurrentData()}
+                    isLoading={isLoading}
+                    workflowStatus={status}
+                    runCount={runCount}
+                    isQueued={isQueued}
+                    fetchData={loadData}
+                  />
+                </div>
+                <div style={{maxWidth: "76px"}}>
+                  {getCloseButton()}
+                </div>
+              </div>
+              {/*</WidgetDataBlockBase>*/}
+            </Col>
+          </Row>
+        </div>
+        <PipelineOrchestrationProgressBarBase
+          pipelineModel={pipelineModel}
+        />
+      </>
     );
   };
 
@@ -244,22 +278,10 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
       showCloseButton={false}
       isLoading={isLoading && pipelineModel == null}
       softLoading={isLoading}
-      minimumHeight={"560px"}
       titleActionBar={getTitleActionBar()}
     >
-      <div className={"px-3 pb-3"}>
+      <div>
         {getBody()}
-        <ButtonContainerBase>
-          <VanityButtonBase
-            onClickFunction={handleViewDetailsButton}
-            normalText={"View Details"}
-            icon={faSearch}
-          />
-          <CloseButton
-            className={"ml-2"}
-            closeEditorCallback={closePanel}
-          />
-        </ButtonContainerBase>
       </div>
     </OverlayContainer>
   );
