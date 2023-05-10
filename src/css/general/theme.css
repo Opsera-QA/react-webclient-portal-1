@@ -1401,6 +1401,10 @@ div.data-blocks-ellipses {
     letter-spacing: .01rem;
 }
 
+.overlay-wrapper {
+    border: 1px solid #B1AEA7;
+}
+
 .container-border {
     border: 1px solid #DFDFDF;
     border-collapse: collapse;
