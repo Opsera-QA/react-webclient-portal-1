@@ -53,11 +53,10 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
       setIsLoading(true);
       const dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
-      const selectedDeploymentStages = getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
       const jiraResolutionNames = getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names');
       const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
 
-      if (selectedDeploymentStages && jiraResolutionNames?.length && useDashboardTags && dashboardOrgs?.length) {
+      if (useDashboardTags && dashboardOrgs?.length) {
         const response = await doraActions.systemDrivenMaturityGroups({
           getAccessToken,
           cancelSource,
@@ -98,14 +97,12 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
   };
 
   const getChartBody = () => {
-    const selectedDeploymentStages = getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
-    const jiraResolutionNames = getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names');
     const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
     const dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
-    if (!selectedDeploymentStages || !jiraResolutionNames?.length || !useDashboardTags || !dashboardOrgs?.length) {
+    if (!useDashboardTags || !dashboardOrgs?.length) {
       return (
         <Container className="text-center">
-          <InfoDialog message="Missing Required Filters. Dashboard Organization tags, Deployment Stages, and Jira Resolution Names are mandatory" />
+          <InfoDialog message="Missing Required Filters. Dashboard Organization tags are mandatory" />
         </Container>
       );
     }
