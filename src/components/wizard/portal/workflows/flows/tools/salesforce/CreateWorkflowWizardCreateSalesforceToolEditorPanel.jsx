@@ -10,6 +10,7 @@ import { toolIdentifierConstants } from "components/admin/tools/identifiers/tool
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import {
   faArrowRight,
+  faInfoCircle,
   faTriangleExclamation,
 } from "@fortawesome/pro-light-svg-icons";
 import CreateWorkflowWizardRegisterToolHeaderText from "components/wizard/portal/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
@@ -24,6 +25,11 @@ import modelHelpers from "../../../../../../common/model/modelHelpers";
 import wizardPortalMetadata from "../../../wizardPortalMetadata";
 import BooleanToggleInput from "../../../../../../common/inputs/boolean/BooleanToggleInput";
 import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
+import { Alert } from "react-bootstrap";
+import IconBase from "../../../../../../common/icons/IconBase";
+import {ImageBase} from "@opsera/react-vanity-set";
+import {vendorImageConstants} from "../../../../../../../temp-library-components/image/vendorImage.constants";
+import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 
 export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel({
   className,
@@ -103,9 +109,7 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel({
   };
 
   const canCreateTool = () => {
-    return RegistryToolRoleHelper.canCreateRegistryTool(
-        userData,
-    );
+    return RegistryToolRoleHelper.canCreateRegistryTool(userData);
   };
 
   if (salesforceToolModel == null) {
@@ -124,6 +128,82 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel({
           />
         </Col>
       );
+    }
+  };
+
+  const editorInputs = () => {
+    if (
+      canCreateTool() &&
+      (wizardMetadata?.getData("newTool") || salesforceToolId)
+    ) {
+      if (
+        salesforceToolModel?.getData("authType") === "oauth" &&
+        salesforceToolId
+      ) {
+        return (
+            <Col sm={12} className={"py-2"}>
+            <Alert
+              className={"py-3"}
+              variant={"dark"}
+            >
+              <IconBase
+                className={"mr-1"}
+                icon={faInfoCircle}
+              />
+              This tool was set up using the <strong>OAuth</strong>{" "}
+              Authentication Method. In order to edit tool settings visit the
+              tool in the Opsera Tool Registry Tab.
+            </Alert>
+          </Col>
+        );
+      } else {
+        return (
+          <>
+            <Col sm={12}>
+              <TextInputBase
+                dataObject={salesforceToolModel}
+                setDataObject={setSalesforceToolModel}
+                fieldName={"toolURL"}
+              />
+            </Col>
+            <Col sm={12}>
+              <TextInputBase
+                dataObject={salesforceToolModel}
+                setDataObject={setSalesforceToolModel}
+                fieldName={"accountUsername"}
+              />
+            </Col>
+            <Col sm={12}>
+              <VaultTextInput
+                dataObject={salesforceToolModel}
+                setDataObject={setSalesforceToolModel}
+                fieldName={"sfdc_password"}
+              />
+            </Col>
+            <Col sm={12}>
+              <VaultTextInput
+                dataObject={salesforceToolModel}
+                setDataObject={setSalesforceToolModel}
+                fieldName={"sfdc_client_id"}
+              />
+            </Col>
+            <Col sm={12}>
+              <VaultTextInput
+                dataObject={salesforceToolModel}
+                setDataObject={setSalesforceToolModel}
+                fieldName={"sfdc_client_secret"}
+              />
+            </Col>
+            <Col sm={12}>
+              <VaultTextInput
+                dataObject={salesforceToolModel}
+                setDataObject={setSalesforceToolModel}
+                fieldName={"sfdc_token"}
+              />
+            </Col>
+          </>
+        );
+      }
     }
   };
 
@@ -169,59 +249,7 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel({
             />
           </Col>
           {createNewToolToggle()}
-          {(canCreateTool() && (wizardMetadata?.getData("newTool") || salesforceToolId)) && (
-            <>
-              <Col sm={12}>
-                <TextInputBase
-                  dataObject={salesforceToolModel}
-                  setDataObject={setSalesforceToolModel}
-                  fieldName={"toolURL"}
-                />
-              </Col>
-              <Col sm={12}>
-                <TextInputBase
-                  dataObject={salesforceToolModel}
-                  setDataObject={setSalesforceToolModel}
-                  fieldName={"accountUsername"}
-                />
-              </Col>
-              <Col sm={12}>
-                <VaultTextInput
-                  dataObject={salesforceToolModel}
-                  setDataObject={setSalesforceToolModel}
-                  fieldName={"sfdc_password"}
-                />
-              </Col>
-              <Col sm={12}>
-                <VaultTextInput
-                  dataObject={salesforceToolModel}
-                  setDataObject={setSalesforceToolModel}
-                  fieldName={"sfdc_client_id"}
-                />
-              </Col>
-              <Col sm={12}>
-                <VaultTextInput
-                  dataObject={salesforceToolModel}
-                  setDataObject={setSalesforceToolModel}
-                  fieldName={"sfdc_client_secret"}
-                />
-              </Col>
-              <Col sm={12}>
-                <VaultTextInput
-                  dataObject={salesforceToolModel}
-                  setDataObject={setSalesforceToolModel}
-                  fieldName={"sfdc_token"}
-                />
-              </Col>
-              {/*<Col sm={12}>*/}
-              {/*<SFDCBuildTypeSelectInput*/}
-              {/*  dataObject={salesforceToolModel}*/}
-              {/*  setDataObject={setSalesforceToolModel}*/}
-              {/*  fieldName={"buildType"}*/}
-              {/*/>*/}
-              {/*</Col>*/}
-            </>
-          )}
+          {editorInputs()}
         </Row>
       </CreateWorkflowWizardRegisterAccountContainer>
     </div>

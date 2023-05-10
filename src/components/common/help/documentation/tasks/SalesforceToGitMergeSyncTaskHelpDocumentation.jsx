@@ -11,8 +11,8 @@ function SalesforceToGitMergeSyncTaskHelpDocumentation({closeHelpPanel}) {
       <ol>
         <li>Select <b>{getTaskTypeLabel(TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC)}</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:
           <ul style={{listStyleType: "none"}}>
-            <li><b>Salesforce Org</b> - Select the Salesforce organization from where the components will be merged to Target Branch.</li>
-            <li><b>Enable Jira Integration</b> - Enable the option to automatically update task information into your Jira Tickets. Once enabled, provide <b>Jira Tool</b>, <b>Jira Project</b>, and <b>Jira Ticket</b> from the drop-downs.</li>
+            <li><b>Salesforce Source Branch Tool</b> - Select the Salesforce Org from where the components will be merged to Target Branch.</li>
+            <li><b>Enable Jira Integration</b> - To automatically retrieve data from the task and update a Jira ticket with the relevant information, enable the toggle and provide <b>Jira Tool</b>, <b>Jira Project</b>, and <b>Jira Ticket</b>.</li>
             <li><b>Source Code Management Type</b> - Choose whether a Bitbucket, GitHub, or GitLab repository contains the branch of the merge.</li>
             <li><b>Account</b> - Select the configured SCM tool.</li>
             <li><b>Repository</b> - Select the repository containing the git merge change.</li>

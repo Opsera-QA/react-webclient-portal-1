@@ -11,6 +11,7 @@ import CreateSalesforceQuickDeployTaskInitializationScreen from "./CreateSalesfo
 import CreateSalesforceBulkMigrationInputFields
   from "../salesforce_bulk_migration/CreateSalesforceBulkMigrationInputFields";
 import CreateSalesforceQuickDeployInputFields from "./CreateSalesforceQuickDeployInputFields";
+import { getTaskTypeLabel } from "components/tasks/task.types";
 
 export const CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS = {
   REGISTER_GIT_ACCOUNT_SCREEN: "create_git_tool_screen",
@@ -116,8 +117,8 @@ export default function CreateSalesforceQuickDeployTask({
         return (
           <CreateWorkflowWizardTaskCompletionScreen
             task={task}
-            workflowType={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(
-              flow,
+            workflowType={getTaskTypeLabel(
+                flow,
             )}
             flow={flow}
             setButtonContainer={setButtonContainer}

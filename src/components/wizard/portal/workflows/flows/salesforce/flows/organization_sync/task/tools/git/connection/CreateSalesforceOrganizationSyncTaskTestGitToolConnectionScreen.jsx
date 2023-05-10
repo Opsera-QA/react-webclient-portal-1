@@ -48,5 +48,5 @@ CreateSalesforceOrganizationSyncTaskTestGitToolConnectionScreen.propTypes = {
   setCurrentScreen: PropTypes.func,
   setButtonContainer: PropTypes.func,
   flow: PropTypes.string,
-  setConnectionFailure: PropTypes.bool,
+  setConnectionFailure: PropTypes.func,
 };

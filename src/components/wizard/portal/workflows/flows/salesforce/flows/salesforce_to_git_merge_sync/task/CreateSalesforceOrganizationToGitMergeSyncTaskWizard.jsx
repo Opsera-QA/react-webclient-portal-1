@@ -12,6 +12,7 @@ import CreateSalesforceOrganizationToGitMergeSyncTaskWizardTestSalesforceSourceT
 import { CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES } from "components/wizard/portal/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
 import { CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS } from "../../salesforce_quick_deploy/CreateSalesforceQuickDeployTask";
 import SalesforceToGitMergeSyncInputFields from "./cards/SalesforceToGitMergeSyncInputFields";
+import { getTaskTypeLabel } from "components/tasks/task.types";
 
 export const CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS =
   {
@@ -156,8 +157,8 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizard({
         return (
           <CreateWorkflowWizardTaskCompletionScreen
             task={task}
-            workflowType={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(
-              flow,
+            workflowType={getTaskTypeLabel(
+                flow,
             )}
             flow={flow}
             setButtonContainer={setButtonContainer}

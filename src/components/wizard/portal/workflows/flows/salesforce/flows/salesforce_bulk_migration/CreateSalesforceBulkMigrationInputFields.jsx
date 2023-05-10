@@ -30,8 +30,8 @@ function CreateSalesforceBulkMigrationInputFields({
   onSuccessFunction,
 }) {
   const [taskConfigurationModel, setTaskConfigurationModel] =
-    useState(modelHelpers.parseObjectIntoModel(taskModel?.configuration, salesforceBulkMigrationTaskConfigurationMetadata));
-  const [parentConfig, setParentConfig] =    useState(modelHelpers.parseObjectIntoModel(taskModel, tasksMetadata));
+    useState(modelHelpers.parseObjectIntoNewModelBase(taskModel?.configuration, salesforceBulkMigrationTaskConfigurationMetadata, true));
+  const [parentConfig, setParentConfig] =    useState(modelHelpers.parseObjectIntoNewModelBase(taskModel, tasksMetadata, true));
 
   useEffect(() => {
     if (setButtonContainer) {

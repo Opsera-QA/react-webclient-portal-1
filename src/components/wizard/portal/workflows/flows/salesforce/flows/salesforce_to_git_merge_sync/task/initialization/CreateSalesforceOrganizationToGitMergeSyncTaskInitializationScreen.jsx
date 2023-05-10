@@ -12,6 +12,7 @@ import {
   CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS
 } from "../CreateSalesforceOrganizationToGitMergeSyncTaskWizard";
 import { SalesforceTaskHelper } from "components/tasks/salesforceTask.helper";
+import {getTaskTypeLabel} from "../../../../../../../../../tasks/task.types";
 
 export default function CreateSalesforceOrganizationToGitMergeSyncTaskInitializationScreen(
   {
@@ -25,9 +26,9 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskInitializa
   }) {
 
   const setTaskFunction = (task) => {
-    const updatedTask = SalesforceTaskHelper.configureSalesforceToGitMergeSyncTask(
+      const updatedTask = SalesforceTaskHelper.configureSalesforceToGitMergeSyncTask(
       task,
-      flow,
+      salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC,
       salesforceToolId,
       gitToolId,
       gitToolOption
@@ -39,8 +40,8 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskInitializa
   return (
     <CreateWorkflowWizardTaskInitializationScreen
       setTaskFunction={setTaskFunction}
-      type={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
-      templateIdentifier={taskTemplateIdentifierConstants.TASK_TEMPLATE_IDENTIFIERS.FREE_TRIAL_SALESFORCE_TO_GIT_MERGE_SYNC_TASK}
+      type={getTaskTypeLabel(flow)}
+      templateIdentifier={taskTemplateIdentifierConstants.TASK_TEMPLATE_IDENTIFIERS.SALESFORCE_TO_GIT_MERGE_SYNC_TASK}
       setButtonContainer={setButtonContainer}
     />
   );
