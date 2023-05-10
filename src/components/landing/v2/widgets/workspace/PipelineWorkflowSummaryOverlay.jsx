@@ -172,17 +172,6 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
               {getLastRunDuration()}
               {getTotalRunAverageDuration()}
             </div>
-            <CenteredContentWrapper>
-              <PipelineActionControls
-                pipeline={pipelineModel?.getCurrentData()}
-                isLoading={isLoading}
-                workflowStatus={status}
-                runCount={runCount}
-                isQueued={isQueued}
-                fetchData={loadData}
-              />
-            </CenteredContentWrapper>
-
             <div className={"p-3"}>
               <VanityTextField
                 model={pipelineModel}
@@ -200,6 +189,18 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
                 text={orchestrationHelper.getLastRunSummaryForPipelineModel(pipelineModel)}
               />
             </div>
+            <CenteredContentWrapper>
+              <div className={"my-3"}>
+                <PipelineActionControls
+                  pipeline={pipelineModel?.getCurrentData()}
+                  isLoading={isLoading}
+                  workflowStatus={status}
+                  runCount={runCount}
+                  isQueued={isQueued}
+                  fetchData={loadData}
+                />
+              </div>
+            </CenteredContentWrapper>
             <div>
               <PipelineOrchestrationProgressBarBase
                 pipelineModel={pipelineModel}
