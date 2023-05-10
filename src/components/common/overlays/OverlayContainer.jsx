@@ -31,6 +31,7 @@ export default function OverlayContainer(
     maximumHeight,
     getHelpComponentFunction,
     softLoading,
+    titleActionBar,
   }) {
   const [helpIsShown, setHelpIsShown] = useState(false);
   const {
@@ -125,6 +126,7 @@ export default function OverlayContainer(
             externalHelpPageLink={externalHelpPageLink}
             linkTooltipText={linkTooltipText}
             softLoading={softLoading}
+            titleActionBar={titleActionBar}
           />
           {actionBar}
           <div className={`bg-white w-100`}>
@@ -158,4 +160,5 @@ OverlayContainer.propTypes = {
   minimumHeight: PropTypes.string,
   maximumHeight: PropTypes.string,
   getHelpComponentFunction: PropTypes.func,
+  titleActionBar: PropTypes.any,
 };

@@ -20,6 +20,7 @@ import PipelineNameTextInput from "components/workflow/pipelines/summary/inputs/
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import PipelinePausedWarningMessage from "components/workflow/pipelines/PipelinePausedWarningMessage";
+import PipelineModel from "components/workflow/pipeline.model";
 
 const refreshInterval = 15000;
 const pausedMessage = "This Pipeline has been paused. Please check the activity logs for details.";

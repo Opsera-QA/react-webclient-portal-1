@@ -476,6 +476,10 @@ function PipelineActionControls(
     }
   };
 
+  if (pipeline == null) {
+    return null;
+  }
+
   // TODO: Make base button components for these in the future
   //  and wire up the functions inside those components to clean up PipelineActionControls
   return (
