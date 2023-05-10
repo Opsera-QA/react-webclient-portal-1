@@ -117,10 +117,17 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
 
   if (gitBasedSalesforceTasks.includes(taskType)) {
     return (
-      <ImageBase
-        height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GIT_TASK)}
-        imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GIT_TASK}
+      <IconBase
+        className={"d-flex h-100"}
+        imageClassName={"my-auto"}
+        icon={faSalesforce}
+        iconStyling={{color: "#0D80D8"}}
+        iconFontSize={"75px"}
       />
+      // <ImageBase
+      //   height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GIT_TASK)}
+      //   imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GIT_TASK}
+      // />
     );
   }
 
@@ -129,10 +136,17 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
   switch (category) {
     case TASK_TYPE_CATEGORIES.SALESFORCE:
       return (
-        <ImageBase
-          height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL)}
-          imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL}
+        <IconBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          icon={faSalesforce}
+          iconStyling={{color: "#0D80D8"}}
+          iconFontSize={"75px"}
         />
+        // <ImageBase
+        //   height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL)}
+        //   imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL}
+        // />
       );
     case TASK_TYPE_CATEGORIES.GIT:
       return (
@@ -169,33 +183,6 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
           imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SOFTWARE_DEVELOPMENT_GENERAL}
         />
       );
-  }
-}
-
-export function getLargeVendorIconFromTaskType (taskType) {
-  if (taskType == null) {
-    return <></>;
-  }
-
-  if (taskType === TASK_TYPES.GITSCRAPER) {
-    return faShieldKeyhole;
-  }
-
-  const category = taskTypeConstants.getTaskCategoryForType(taskType);
-
-  switch (category) {
-    case TASK_TYPE_CATEGORIES.SALESFORCE:
-      return faSalesforce;
-    case TASK_TYPE_CATEGORIES.GIT:
-      return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GIT;
-    case TASK_TYPE_CATEGORIES.AWS:
-      return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AWS;
-    case TASK_TYPE_CATEGORIES.COMPLIANCE:
-      return faClipboardListCheck;
-    case TASK_TYPE_CATEGORIES.AZURE:
-      return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AZURE;
-    default:
-      return faTasks;
   }
 }
 
