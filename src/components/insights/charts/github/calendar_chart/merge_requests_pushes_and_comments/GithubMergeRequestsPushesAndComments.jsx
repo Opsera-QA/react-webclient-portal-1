@@ -87,13 +87,15 @@ function GithubMergeRequestsPushesAndComments({
   };
 
   const onRowSelect = (node) => {
-    toastContext.showOverlayPanel(
-        <GithubMergeRequestsPushesCommentsActionableOverlay
-            kpiConfiguration={kpiConfiguration}
-            dashboardData={dashboardData}
-            date={node?.day.toString()}
-        />,
-    );
+    if(node?.value) {
+      toastContext.showOverlayPanel(
+          <GithubMergeRequestsPushesCommentsActionableOverlay
+              kpiConfiguration={kpiConfiguration}
+              dashboardData={dashboardData}
+              date={node?.day.toString()}
+          />,
+      );
+    }
   };
 
   const getChartBody = () => {

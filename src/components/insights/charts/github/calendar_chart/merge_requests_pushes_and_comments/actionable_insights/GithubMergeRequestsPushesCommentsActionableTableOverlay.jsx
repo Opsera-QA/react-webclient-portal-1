@@ -6,6 +6,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { AuthContext } from "contexts/AuthContext";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import GithubMergeRequestsPushesCommentsActionableTable from "./GithubMergeRequestsPushesCommentsActionableTable";
+import githubActions from "../../../github.action";
 
 function GithubMergeRequestsPushesCommentsActionableTableOverlay({ dashboardData, kpiConfiguration, projectName, date }) {
     const [isLoading, setIsLoading] = useState(false);
@@ -66,22 +67,14 @@ function GithubMergeRequestsPushesCommentsActionableTableOverlay({ dashboardData
         let dashboardOrgs =
             dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
                 ?.value;
-        const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+        const response = await githubActions.githubMergeReqAndPushActionableVerticalContainer(
             getAccessToken,
             cancelSource,
-            "githubMergeReqAndPushActionableTable",
             kpiConfiguration,
             dashboardTags,
-            filterDto,
-            null,
             dashboardOrgs,
-            null,
+            filterDto,
             date,
-            null,
-            null,
-            null,
-            null,
-            null,
             projectName
         );
         let dataObject = response?.data

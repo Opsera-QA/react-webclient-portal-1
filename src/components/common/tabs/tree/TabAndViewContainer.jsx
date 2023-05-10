@@ -50,6 +50,8 @@ function TabAndViewContainer(
     });
   };
 
+  console.log("default", defaultActiveKey);
+
   return (
     <Tab.Container defaultActiveKey={defaultActiveKey}>
       <Row className={bodyClassName} style={getContainerStylingObject()}>

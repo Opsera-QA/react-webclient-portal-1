@@ -13,6 +13,7 @@ import FullScreenCenterOverlayContainer
 import GithubMergeRequestsPushesCommentsVerticalTabContainer
     from "./GithubMergeRequestsPushesCommentsVerticalTabContainer";
 import {DialogToastContext} from "../../../../../../../contexts/DialogToastContext";
+import githubActions from "../../../github.action";
 
 function GithubMergeRequestsPushesCommentsActionableOverlay({ dashboardData, kpiConfiguration, date }) {
     const [isLoading, setIsLoading] = useState(false);
@@ -51,20 +52,16 @@ function GithubMergeRequestsPushesCommentsActionableOverlay({ dashboardData, kpi
         let dashboardOrgs =
             dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
                 ?.value;
-        const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+        const response = await githubActions.githubMergeReqAndPushActionableVerticalContainer(
             getAccessToken,
             cancelSource,
-            "githubMergeReqAndPushActionableVerticalContainer",
             kpiConfiguration,
             dashboardTags,
-            null,
-            null,
             dashboardOrgs,
-            null,
-            date,
+            date
         );
         let dataObject = response?.data
-            ? response?.data?.data[0]
+            ? response?.data?.data[0]?.data
             : [];
         if (isMounted?.current === true && dataObject) {
             setMetrics(dataObject);

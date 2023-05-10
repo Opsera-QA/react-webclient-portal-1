@@ -14,7 +14,7 @@ function GithubMergeRequestsPushesCommentsActionableTable({ data, isLoading, loa
 
 
 
-    const columns = useMemo(
+    const createColumns = useMemo(
         () => [
             getTableTextColumn(getField(fields, "branch"), "branch"),
             getTableTextColumn(getField(fields, "elasticId"), "elasticId"),
@@ -28,9 +28,27 @@ function GithubMergeRequestsPushesCommentsActionableTable({ data, isLoading, loa
 
     const pullRequestColumns = useMemo(
         () => [
-            getTableTextColumn(getField(fields, "elasticId"), "elasticId"),
+            getTableTextColumn(getField(fields, "mrUserName"), "mrUserName"),
+            getTableTextColumn(getField(fields, "mrAction"), "mrAction"),
+            getTableTextColumn(getField(fields, "mrProjectName"), "mrProjectName"),
+            getTableTextColumn(getField(fields, "projectId"), "projectId"),
+            getTableTextColumn(getField(fields, "sourceBranch"), "sourceBranch"),
+            getTableTextColumn(getField(fields, "targetBranch"), "targetBranch"),
+            getTableDateTimeColumn(getField(fields, "createdAt"), "createdAt"),
             getTableTextColumn(getField(fields, "repositoryName"), "repositoryName"),
-            getTableDateTimeColumn(getField(fields, "repositoryCreatedAt"), "repositoryCreatedAt"),
+            getTableTextColumn(getField(fields, "repositoryUrl"), "repositoryUrl"),
+        ],
+        []
+    );
+
+    const pushColumns = useMemo(
+        () => [
+            getTableTextColumn(getField(fields, "branch"), "branch"),
+            getTableTextColumn(getField(fields, "projectName"), "projectName"),
+            getTableTextColumn(getField(fields, "projectId"), "projectId"),
+            getTableTextColumn(getField(fields, "userName"), "userName"),
+            getTableTextColumn(getField(fields, "repositoryName"), "repositoryName"),
+            getTableDateTimeColumn(getField(fields, "commitTimeStamp"), "commitTimeStamp"),
             getTableTextColumn(getField(fields, "repositoryUrl"), "repositoryUrl"),
         ],
         []
@@ -41,7 +59,7 @@ function GithubMergeRequestsPushesCommentsActionableTable({ data, isLoading, loa
             <CustomTable
                 isLoading={isLoading}
                 loadData={loadData}
-                columns={projectName === "pull_request" ? pullRequestColumns : columns}
+                columns={projectName === "create" ? createColumns : projectName === "push" ? pushColumns : pullRequestColumns}
                 data={data}
                 noDataMessage={noDataMessage}
                 paginationDto={filterModel}

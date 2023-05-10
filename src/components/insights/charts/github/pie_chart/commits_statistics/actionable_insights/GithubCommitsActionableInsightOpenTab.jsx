@@ -32,15 +32,17 @@ function GithubCommitsActionableInsightOpenTab({
     );
   };
 
+  console.log("open", highestMergesMetric);
+
   return (
     <VanitySetTabAndViewContainer
       title={`Github Open Pull Requests`}
-      defaultActiveKey={
-        highestMergesMetric &&
+       defaultActiveKey={
+         highestMergesMetric &&
         Array.isArray(highestMergesMetric) &&
         highestMergesMetric[0]?.id &&
-        highestMergesMetric[0]?.id
-      }
+         highestMergesMetric[0]?.id
+       }
       verticalTabContainer={
         <GithubCommitsVerticalTabContainer
           highestMergesMetric={highestMergesMetric}

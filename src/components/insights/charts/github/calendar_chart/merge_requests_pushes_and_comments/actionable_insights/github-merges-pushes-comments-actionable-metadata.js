@@ -19,12 +19,48 @@ const GithubMergesPushesCommentsActionableMetadata = {
             id: "userName",
         },
         {
+            label: "MR User Name",
+            id: "mrUserName",
+        },
+        {
             label: "Repository Url",
             id: "repositoryUrl",
         },
         {
             label: "Repository Created At",
             id: "repositoryCreatedAt",
+        },
+        {
+            label: "MR Action",
+            id: "mrAction",
+        },
+        {
+            label: "MR ProjectName",
+            id: "mrProjectName",
+        },
+        {
+            label: "Project Id",
+            id: "projectId",
+        },
+        {
+            label: "Source Branch",
+            id: "sourceBranch",
+        },
+        {
+            label: "Target Branch",
+            id: "targetBranch",
+        },
+        {
+            label: "Created At",
+            id: "createdAt",
+        },
+        {
+            label: "Project Name",
+            id: "projectName",
+        },
+        {
+            label: "Commit Timestamp",
+            id: "commitTimeStamp",
         },
     ],
     newObjectFields: {},
