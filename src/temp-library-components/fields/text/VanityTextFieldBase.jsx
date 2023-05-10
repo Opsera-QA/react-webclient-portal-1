@@ -3,7 +3,17 @@ import PropType from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import {VanityLabelBase} from "temp-library-components/label/VanityLabelBase";
 
-export default function VanityTextFieldBase({ label, text, className }) {
+export default function VanityTextFieldBase(
+  {
+    label,
+    text,
+    className,
+    requireValue,
+  }) {
+  if (requireValue && !text) {
+    return null;
+  }
+
   return (
     <FieldContainer className={className}>
       <VanityLabelBase label={label} />
@@ -16,4 +26,5 @@ VanityTextFieldBase.propTypes = {
   label: PropType.any,
   text: PropType.string,
   className: PropType.string,
+  requireValue: PropType.bool,
 };
