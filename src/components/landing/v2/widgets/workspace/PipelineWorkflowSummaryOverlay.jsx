@@ -35,6 +35,9 @@ import VanityTextFieldBase from "temp-library-components/fields/text/VanityTextF
 import PipelineOrchestrationProgressBarBase
   from "temp-library-components/fields/orchestration/progress/PipelineOrchestrationProgressBarBase";
 import PipelineActionControls from "components/workflow/pipelines/action_controls/PipelineActionControls";
+import PipelineLinkButton from "components/common/buttons/pipeline/PipelineLinkButton";
+import ViewPipelineButton from "temp-library-components/button/pipeline/ViewPipelineButton";
+import {VanityFocusTextBase} from "temp-library-components/label/VanityFocusTextBase";
 
 // TODO: Should this be two separate panels?
 export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
@@ -69,11 +72,18 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
     if (hasStringValue(lastRunDurationText) === true) {
       return (
         <WidgetDataBlockBase className={"mt-2 mx-2"}>
-          <TwoLineDataBlockBase
-            title={lastRunDurationText}
-            subtitle={"Last Run Duration"}
-            className={"p-2"}
-          />
+          <div className={"p-2"}>
+            <div className={"mx-auto"}>
+              <VanityFocusTextBase
+                text={lastRunDurationText}
+              />
+            </div>
+            <div className={"mx-auto"}>
+              <VanityLabelBase
+                label={"Last Run Duration"}
+              />
+            </div>
+          </div>
         </WidgetDataBlockBase>
       );
     }
@@ -83,11 +93,18 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
     if (hasStringValue(lastFiveRunsDurationText) === true) {
       return (
         <WidgetDataBlockBase className={"mt-2 mx-2"}>
-          <TwoLineDataBlockBase
-            title={lastFiveRunsDurationText}
-            subtitle={"Last 5 Runs Average Duration"}
-            className={"p-2"}
-          />
+          <div className={"p-2"}>
+            <div className={"mx-auto"}>
+              <VanityFocusTextBase
+                text={lastFiveRunsDurationText}
+              />
+            </div>
+            <div className={"mx-auto"}>
+              <VanityLabelBase
+                label={"Last 5 Runs Average Duration"}
+              />
+            </div>
+          </div>
         </WidgetDataBlockBase>
       );
     }
@@ -97,11 +114,18 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
     if (hasStringValue(totalAverageDurationText) === true) {
       return (
         <WidgetDataBlockBase className={"mt-2 mx-2"}>
-          <TwoLineDataBlockBase
-            title={totalAverageDurationText}
-            subtitle={"Average Run Duration"}
-            className={"p-2"}
-          />
+          <div className={"p-2"}>
+            <div className={"mx-auto"}>
+              <VanityFocusTextBase
+                text={totalAverageDurationText}
+              />
+            </div>
+            <div className={"mx-auto"}>
+              <VanityLabelBase
+                label={"Average Run Duration"}
+              />
+            </div>
+          </div>
         </WidgetDataBlockBase>
       );
     }
@@ -133,27 +157,6 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
         {/*    pipelineModel={pipelineModel}*/}
         {/*  />*/}
         {/*</Col>*/}
-        <div className={"d-flex"}>
-          {/*<TwoLineScoreDataBlock*/}
-          {/*  score={pipelineModel?.getRunCount()}*/}
-          {/*  subtitle={"Runs"}*/}
-          {/*  className={"p-2"}*/}
-          {/*/>*/}
-          {/*<div*/}
-          {/*  style={{*/}
-          {/*    minWidth: "200px",*/}
-          {/*    maxWidth: "200px",*/}
-          {/*  }}*/}
-          {/*>*/}
-          {/*  <WidgetDataBlockBase className={"mt-2"}>*/}
-          {/*    <TwoLineScoreDataBlock*/}
-          {/*      score={pipelineModel?.getRunCount()}*/}
-          {/*      subtitle={"Runs"}*/}
-          {/*      className={"p-2"}*/}
-          {/*    />*/}
-          {/*  </WidgetDataBlockBase>*/}
-          {/*</div>*/}
-        </div>
         <Col xs={6}>
           <PipelineLastRunDateField
             pipelineModel={pipelineModel}
@@ -163,11 +166,18 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
           <WidgetDataBlockBase className={"mt-2"}>
             <div className={"d-flex justify-content-between"}>
               <WidgetDataBlockBase className={"mt-2 mx-2"}>
-                <TwoLineScoreDataBlock
-                  score={pipelineModel?.getRunCount()}
-                  subtitle={"Runs"}
-                  className={"p-2"}
-                />
+                <div className={"p-2"}>
+                  <div className={"mx-auto"}>
+                    <VanityFocusTextBase
+                      text={pipelineModel?.getRunCount()}
+                    />
+                  </div>
+                  <div className={"mx-auto"}>
+                    <VanityLabelBase
+                      label={"Runs"}
+                    />
+                  </div>
+                </div>
               </WidgetDataBlockBase>
               {getLastRunDuration()}
               {getTotalRunAverageDuration()}
@@ -212,6 +222,19 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
     );
   };
 
+  const getTitleActionBar = () => {
+    return (
+      <>
+        <ViewPipelineButton
+          pipelineId={pipelineId}
+          buttonText={"Advanced"}
+          buttonSize={"sm"}
+          className={"my-auto"}
+        />
+      </>
+    );
+  };
+
   return (
     <OverlayContainer
       closePanel={closePanel}
@@ -222,7 +245,7 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
       isLoading={isLoading && pipelineModel == null}
       softLoading={isLoading}
       minimumHeight={"560px"}
-      // titleActionBar={<div>Advanced</div>}
+      titleActionBar={getTitleActionBar()}
     >
       <div className={"px-3 pb-3"}>
         {getBody()}
