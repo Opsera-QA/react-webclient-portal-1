@@ -8,7 +8,6 @@ import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SystemDrivenMaturityHelpDocumentation from "components/common/help/documentation/insights/charts/SystemDrivenMaturityHelpDocumentation";
 import {
-  getDeploymentStageFromKpiConfiguration,
   getResultFromKpiConfiguration,
   getUseDashboardTagsFromKpiConfiguration
 } from "../charts-helpers";
@@ -16,6 +15,9 @@ import doraActions from "../dora/dora.action";
 import SystemDrivenMaturityChart from './SystemDrivenMaturityChart';
 import SystemDrivenMaturityOverlay from "./SystemDrivenMaturityOverlay";
 import { formatMaturityScoreItems } from "./util";
+import IconBase from "../../../common/icons/IconBase";
+import {faCircle} from "@fortawesome/pro-solid-svg-icons";
+import { Col, Row } from "react-bootstrap";
 
 function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiConfiguration, setKpis }) {
   const toastContext = useContext(DialogToastContext);
@@ -92,7 +94,52 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
         group={group}
+        getLegends = {getLegends}
       />
+    );
+  };
+
+  const getLegends = (items) => {
+    if (!(items && items.length)) {
+      return null;
+    }
+    return (
+      <div
+        className={"mr-2 mt-2"}
+        style={{ float: "right", fontSize: "15px" }}
+      >
+        <IconBase
+          className={"ml-2"}
+          icon={faCircle}
+          iconColor={"green"}
+          iconSize={"lg"}
+        />
+        Improved Maturity Score
+        <div className="row" />
+        <IconBase
+          className={"ml-2"}
+          icon={faCircle}
+          iconColor={"red"}
+          iconSize={"lg"}
+        />
+        Dropped Maturity Score
+        <div className="row" />
+        <IconBase
+          className={"ml-2"}
+          icon={faCircle}
+          iconColor={"orange"}
+          iconSize={"lg"}
+        />
+        No Changes to Maturity Score
+        <div className="grey" />
+        <IconBase
+          className={"ml-2"}
+          icon={faCircle}
+          iconColor={"grey"}
+          iconSize={"lg"}
+        />
+        Previous Maturity Score
+      </div>
     );
   };
 
@@ -109,7 +156,14 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
 
     return (
       <Container className="p-3" style={{fontSize: '2rem'}}>
-        <SystemDrivenMaturityChart items={metricData} onRowSelect={onRowSelect} />
+        <Row>
+          <Col xs={9} sm={9} md={9} lg={9} xl={9}>
+            <SystemDrivenMaturityChart items={metricData} onRowSelect={onRowSelect} />
+          </Col>
+          <Col xs={3} sm={3} md={3} lg={3} xl={3}>
+            {getLegends(metricData)}
+          </Col>
+        </Row>
       </Container>
     );
   };
