@@ -142,6 +142,7 @@ function CenterOverlayContainer(
               externalHelpPageLink={externalHelpPageLink}
               linkTooltipText={linkTooltipText}
               softLoading={softLoading}
+              setShowHelpPanel={getHelpComponentFunction && getHelpComponentFunction(setHelpIsShown) !== null ? setHelpIsShown : undefined}
             />
             {actionBar}
             <div className={`bg-white ${bodyClassName}`}>

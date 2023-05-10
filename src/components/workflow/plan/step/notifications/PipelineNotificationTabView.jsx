@@ -37,7 +37,7 @@ function PipelineNotificationTabView(
     pipelineStep
   }) {
   const [activeTab, setTabSelection] = useState("email");
-
+  
   const getCurrentView = () => {
     switch (activeTab) {
       case "email":
@@ -93,6 +93,12 @@ function PipelineNotificationTabView(
           <PipelineNotificationVerticalTabContainer
             handleTabClickFunction={setTabSelection}
             activeTab={activeTab}
+            slackEnabled={slackNotificationModel?.getData("enabled")}
+            teamsEnabled={teamsNotificationModel?.getData("enabled")}
+            jiraEnabled={jiraNotificationModel?.getData("enabled")}
+            serviceNowEnabled={serviceNowNotificationModel?.getData("enabled")}
+            emailEnabled={emailNotificationModel?.getData("enabled")}
+            gChatEnabled={gChatNotificationModel?.getData("enabled")}
           />
         </Col>
         <Col sm={10} className={"px-0 full-height-overlay-container-with-buttons-and-title-body"}>
