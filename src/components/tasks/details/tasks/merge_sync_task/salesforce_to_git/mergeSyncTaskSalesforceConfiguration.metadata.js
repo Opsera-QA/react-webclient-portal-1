@@ -31,18 +31,6 @@ export const mergeSyncTaskSalesforceConfigurationMetadata = {
         return model?.getData("includePackageXml") === true;
       },
     },
-    {
-      label: "Jira Tool",
-      id: "jiraToolId",
-    },
-    {
-      label: "Jira Project",
-      id: "jiraProjectKey",
-    },
-    {
-      label: "Jira Ticket",
-      id: "jiraIssueId",
-    },
   ],
   newObjectFields: {
     sourceToolId: "",
@@ -50,8 +38,5 @@ export const mergeSyncTaskSalesforceConfigurationMetadata = {
     jobType: "",
     includePackageXml: false,
     packageXmlReferencePath: "",
-    jiraToolId: "",
-    jiraProjectKey: "",
-    jiraIssueId: "",
   }
 };
