@@ -17,7 +17,6 @@ function BitbucketCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashb
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     if (cancelTokenSource) cancelTokenSource.cancel();
@@ -51,12 +50,6 @@ function BitbucketCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashb
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
-        let usersList = dataObject && dataObject.length > 0 ? Object.keys(dataObject[0]) : [];
-
-        if (usersList) {
-          usersList = usersList.filter((value) => value !== "date");
-          setUsers(usersList);
-        }
       }
 
     } catch (error) {

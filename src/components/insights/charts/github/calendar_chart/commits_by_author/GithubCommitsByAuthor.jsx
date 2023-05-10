@@ -16,7 +16,6 @@ function GithubCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -58,9 +57,6 @@ function GithubCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
         dashboardOrgs
       );
       let dataObject = response?.data ? response?.data?.data[0]?.githubTotalCommitsByUserAndDate?.data : [];
-      var usersList = dataObject && dataObject.length > 0 ? Object.keys(dataObject[0]) : [];
-      usersList = usersList.filter((value) => value != "date");
-      setUsers(usersList);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
