@@ -197,11 +197,17 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
       <>
         <div className={"px-2"}>
           <Row>
-            {/*<Col xs={12}>*/}
-            {/*  <PipelineCardBase*/}
-            {/*    pipelineModel={pipelineModel}*/}
-            {/*  />*/}
-            {/*</Col>*/}
+            <Col xs={12}>
+              <Row>
+                <Col xs={2} md={3} lg={4} xl={4} />
+                <Col xs={8} md={6} lg={4} xl={4}>
+                  <PipelineCardBase
+                    pipelineModel={pipelineModel}
+                  />
+                </Col>
+                <Col xs={2} md={3} lg={4} xl={4} />
+              </Row>
+            </Col>
             <Col xs={6}>
               <PipelineLastRunDateField
                 pipelineModel={pipelineModel}
@@ -232,14 +238,15 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
               <div className={"d-flex justify-content-between w-100 my-3"}>
                 <div style={{minWidth: "76px"}} />
                 <div>
-                  <PipelineActionControls
-                    pipeline={pipelineModel?.getCurrentData()}
-                    isLoading={isLoading}
-                    workflowStatus={status}
-                    runCount={runCount}
-                    isQueued={isQueued}
-                    fetchData={loadData}
-                  />
+                  {getTitleActionBar()}
+                  {/*<PipelineActionControls*/}
+                  {/*  pipeline={pipelineModel?.getCurrentData()}*/}
+                  {/*  isLoading={isLoading}*/}
+                  {/*  workflowStatus={status}*/}
+                  {/*  runCount={runCount}*/}
+                  {/*  isQueued={isQueued}*/}
+                  {/*  fetchData={loadData}*/}
+                  {/*/>*/}
                 </div>
                 <div style={{maxWidth: "76px"}}>
                   {getCloseButton()}
@@ -278,7 +285,6 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
       showCloseButton={false}
       isLoading={isLoading && pipelineModel == null}
       softLoading={isLoading}
-      titleActionBar={getTitleActionBar()}
     >
       <div>
         {getBody()}
