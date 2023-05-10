@@ -48,7 +48,7 @@ export function getLargeVendorIconFromToolIdentifier(
         <IconBase
           icon={faOctopusDeploy}
           iconStyling={{color: "#0D80D8"}}
-          iconClassName={"title-fa-icon"}
+          iconFontSize={"75px"}
         />
       );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
@@ -59,7 +59,7 @@ export function getLargeVendorIconFromToolIdentifier(
           imageClassName={"my-auto"}
           icon={faSalesforce}
           iconStyling={{color: "#0D80D8"}}
-          iconClassName={"title-fa-icon"}
+          iconFontSize={"75px"}
         />
       );
   }
@@ -91,7 +91,7 @@ export function getLargeVendorIconFromToolIdentifier(
   return (
     <IconBase
       icon={defaultIcon}
-      iconClassName={"title-fa-icon wrench"}
+      iconClassName={"wrench"}
     />
   );
 }
