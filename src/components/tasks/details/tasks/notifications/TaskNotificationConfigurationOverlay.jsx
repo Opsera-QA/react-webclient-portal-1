@@ -5,6 +5,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import TaskNotificationEditorPanel from "components/tasks/details/tasks/notifications/TaskNotificationEditorPanel";
+import TaskNotificationConfigurationHelpDocumentation from "components/common/help/documentation/tasks/TaskNotificationConfigurationHelpDocumentation";
 
 function TaskNotificationConfigurationOverlay(
   {
@@ -23,6 +24,14 @@ function TaskNotificationConfigurationOverlay(
     return null;
   }
 
+  const getHelpComponentFunction = (setHelpIsShown) => {
+    return (
+      <TaskNotificationConfigurationHelpDocumentation
+        closeHelpPanel={() => setHelpIsShown(false)}
+        />
+    );
+  };
+
   return (
     <CenterOverlayContainer
       closePanel={closePanel}
@@ -31,6 +40,7 @@ function TaskNotificationConfigurationOverlay(
       titleIcon={faEnvelope}
       showToasts={true}
       showCloseButton={false}
+      getHelpComponentFunction={getHelpComponentFunction}
     >
       <div className={"px-3 pb-3"}>
         <TaskNotificationEditorPanel
