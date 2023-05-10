@@ -106,7 +106,7 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
     return (
       <div
         className={"mr-2 mt-2"}
-        style={{ float: "right", fontSize: "15px" }}
+        style={{ float: "right", fontSize: "10px", fontWeight: 500 }}
       >
         <IconBase
           className={"ml-2"}
