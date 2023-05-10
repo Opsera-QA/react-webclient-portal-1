@@ -165,21 +165,12 @@ function TaskNotificationEditorPanel(
     );
   };
 
-  const getHelpComponentFunction = (setHelpIsShown) => {
-    return (
-      <TaskNotificationConfigurationHelpDocumentation
-        closeHelpPanel={() => setHelpIsShown(false)}
-        />
-    );
-  };
-
   if (isLoading) {
     return <LoadingDialog message={"Loading Notification Configuration"} size={"sm"} />;
   }
 
   return (
     <OverlayPanelBodyContainer
-      getHelpComponentFunction={getHelpComponentFunction}
       hideCloseButton={true}
     >
       {getTitleBar()}
