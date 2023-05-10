@@ -86,7 +86,7 @@ function GithubCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
         <ResponsiveHeatMap
           data={metrics}
           {...defaultConfig("Date", "", true, true, "yearMonthDate", "cutoffString")}
-          {...config(users, "greys")}
+          {...config("greys")}
           onClick={() => setShowModal(true)}
         />
       </div>
