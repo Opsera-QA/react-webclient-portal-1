@@ -12,7 +12,7 @@ import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigr
 import FieldQueryComponent from "./FieldQueryComponent";
 import customSettingQueryMetadata from "./custom-setting-query-metadata";
 import DetailPanelContainer from "../../../../../../../common/panels/detail_panel_container/DetailPanelContainer";
-import { getMigrationTypeLabel } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
+import { getMigrationTypeLabel, MIGRATION_TYPES } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 import { faArrowLeft, faPlug, faPlus, faSave } from "@fortawesome/pro-light-svg-icons";
 import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
 import { parseError } from "../../../../../../../common/helpers/error-helpers";
@@ -189,6 +189,10 @@ const CustomSettingQueryBuilderScreen = ({
 
   const query = useMemo(() => generateQuery(), [queryFilters]);
   const handleBackButton = () => {
+    if (taskType === MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
+      setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.MAPPING_SCREEN);
+      return;
+    }
     setCurrentScreen(
       CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN,
     );

@@ -21,7 +21,6 @@ import axios from "axios";
 import Col from "react-bootstrap/Col";
 import SelectInputBase from "../../../../../../../common/inputs/select/SelectInputBase";
 import Model from "../../../../../../../../core/data_model/model";
-import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 import { customSettingMappingMetadata } from "./customSettingMapping.metadata";
 
 const CustomSettingCsvFieldMappingScreen = ({
@@ -41,17 +40,6 @@ const CustomSettingCsvFieldMappingScreen = ({
     new Model({}, customSettingMappingMetadata, false),
   );
   const [mappedData, setMappedData] = useState([]);
-
-  // [
-  //   {
-  //     "sourceField": "Name",
-  //     "targetField": "Name"
-  //   },
-  //   {
-  //     "sourceField": "First_Name__c",
-  //     "targetField": "FirstName__c"
-  //   }
-  // ]
 
   const { cancelTokenSource } = useAxiosCancelToken();
   const isMounted = useRef(false);
@@ -88,11 +76,6 @@ const CustomSettingCsvFieldMappingScreen = ({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-
-      let currentData = wizardModel?.getData("fieldMapping");
-      let items =
-        Array.isArray(currentData) && currentData.length > 0 ? currentData : [];
-      setMappedData([...items]);
       await handleFieldPropertiesListPolling(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
@@ -158,10 +141,14 @@ const CustomSettingCsvFieldMappingScreen = ({
           type: field.type,
           unique: field.unique,
         }));
-        console.log(mappedResult);
+        // console.log(mappedResult);
 
-        setMappedData(mappedResult);
-
+        let currentMappingData = wizardModel?.getData("fieldMapping");
+        let mappedItems =
+          Array.isArray(currentMappingData) && currentMappingData.length > 0
+            ? currentMappingData
+            : mappedResult;
+        setMappedData([...mappedItems]);
         setFieldsPropertiesList(fieldList);
 
         let newDataObject = { ...wizardModel };
@@ -183,11 +170,20 @@ const CustomSettingCsvFieldMappingScreen = ({
   const saveAndMoveToNextScreen = async () => {
     try {
       setIsSaving(true);
-      // await customSettingMigrationTaskWizardActions.setCsvFieldsList(
-      //   getAccessToken,
-      //   cancelTokenSource,
-      //   wizardModel,
-      // );
+      wizardModel.setData("queryFilters", []);
+      wizardModel.setData("fieldMapping", mappedData);
+      wizardModel.setData("filterQuery", "");
+      await customSettingMigrationTaskWizardActions.updateSelectedFields(
+        getAccessToken,
+        null,
+        wizardModel,
+        fieldsPropertiesList,
+      );
+      await customSettingMigrationTaskWizardActions.setFieldMappings(
+        getAccessToken,
+        null,
+        wizardModel,
+      );
       setCurrentScreen(
         CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.QUERY_BUILDER_SCREEN,
       );
@@ -203,8 +199,19 @@ const CustomSettingCsvFieldMappingScreen = ({
     }
   };
 
-  const setCsvFieldData = (selectedOption, idx) => {
-    console.log(selectedOption, idx);
+  const setCsvFieldData = (selectedOption, index) => {
+    setMappedData((prevMappings) => {
+      const newMapping = [...prevMappings];
+      newMapping[index].targetField = selectedOption;
+      return newMapping;
+    });
+  };
+
+  const validateMappingData = () => {
+    if (isSaving || mappedData.length < 1) return false;
+    return mappedData
+      .filter((item) => !item.nillable)
+      .every((item) => item["targetField"].length > 1);
   };
 
   const getBody = () => {
@@ -224,22 +231,27 @@ const CustomSettingCsvFieldMappingScreen = ({
             subheaderText={`${getMigrationTypeLabel(
               wizardModel?.getData("taskType"),
             )} : Custom Setting Field Mapping Screen`}
-          />git
+          />
         </Row>
         <div className="d-flex justify-content-center page-description mt-3">
           <Col sm={12}>
             <Row>
-              <Col sm={6} className={"pl-2 pr-0 py-2"}>
+              <Col
+                sm={6}
+                className={"pl-2 pr-0 py-2"}
+              >
                 <span className="text-muted">Custom Object Fields</span>
               </Col>
-              <Col sm={6} className={"pl-2 pr-0 py-2"}>
+              <Col
+                sm={6}
+                className={"pl-2 pr-0 py-2"}
+              >
                 <span className="text-muted">CSV fields</span>
               </Col>
             </Row>
           </Col>
         </div>
-        {mappedData &&
-          mappedData.length > 1 &&
+        {mappedData && mappedData.length > 1 ? (
           mappedData.map((field, index) => {
             return (
               <Row
@@ -261,7 +273,9 @@ const CustomSettingCsvFieldMappingScreen = ({
                           xl={6}
                           className={"no-wrap-inline mb-1"}
                         >
-                          <span style={{fontWeight: 500}}>{field?.sourceField}</span>
+                          <span style={{ fontWeight: 500 }}>
+                            {field?.sourceField}
+                          </span>
                         </Col>
                         <Col
                           lg={6}
@@ -298,15 +312,6 @@ const CustomSettingCsvFieldMappingScreen = ({
                           ) : null}
                         </Col>
                       </Row>
-                      {/*<SelectInputBase*/}
-                      {/*  selectOptions={fieldsPropertiesList}*/}
-                      {/*  fieldName={"targetField"}*/}
-                      {/*  defaultValue={mappedData[index]?.sourceField}*/}
-                      {/*  dataObject={localMappedData}*/}
-                      {/*  setDataObject={setLocalMappedData}*/}
-                      {/*  disabled={true}*/}
-                      {/*  showLabel={false}*/}
-                      {/*/>*/}
                     </Col>
                     <Col
                       xs={6}
@@ -315,9 +320,10 @@ const CustomSettingCsvFieldMappingScreen = ({
                       <SelectInputBase
                         selectOptions={wizardModel?.getData("csvFields")}
                         fieldName={"targetField"}
+                        defaultValue={field.targetField}
                         dataObject={localMappedData}
                         setDataObject={setLocalMappedData}
-                        setDataFunction={(newValue) =>
+                        setDataFunction={(field, newValue) =>
                           setCsvFieldData(newValue, index)
                         }
                         showLabel={false}
@@ -327,7 +333,10 @@ const CustomSettingCsvFieldMappingScreen = ({
                 </Col>
               </Row>
             );
-          })}
+          })
+        ) : (
+          <div>No Fields Found!</div>
+        )}
       </div>
     );
   };
@@ -356,7 +365,7 @@ const CustomSettingCsvFieldMappingScreen = ({
           size="sm"
           variant="primary"
           onClick={saveAndMoveToNextScreen}
-          disabled={isSaving}
+          disabled={!validateMappingData()}
         >
           <span>
             <IconBase

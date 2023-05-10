@@ -264,4 +264,22 @@ customSettingMigrationTaskWizardActions.setCsvFieldsList = async (
   );
 };
 
+customSettingMigrationTaskWizardActions.setFieldMappings = async (
+  getAccessToken,
+  cancelTokenSource,
+  wizardModel,
+) => {
+  const apiUrl = `/tasks/custom-setting-migration-task/wizard/${wizardModel?.getData("recordId")}/set-fields-mappings`;
+  const postBody = {
+    fieldMapping: wizardModel?.getData("fieldMapping"),
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 export default customSettingMigrationTaskWizardActions;
