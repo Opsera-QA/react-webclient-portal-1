@@ -45,7 +45,7 @@ function FieldListPanel({selectedNonMembers, setSelectedNonMembers, nonMembers, 
 
   const formatUser = (user, index) => {
     return (
-      <div key={user} className={index % 2 === 0 ? "even-row" : "odd-row"}>
+      <div key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
         <FieldItemCard
           selectedFields={selectedNonMembers}
           setSelectedFields={setSelectedNonMembers}

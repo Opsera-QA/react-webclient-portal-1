@@ -129,7 +129,7 @@ function FieldSelectorBasePanel({
 
   const getSearchBar = () => {
     return (
-      <div className="membership-search d-flex mx-auto my-3">
+      <div className="membership-search d-flex mx-auto my-3" style={{ width: "97%"}} >
         <IconBase
           icon={faSearch}
           iconClassName={"mr-2 opsera-dark-purple h-100"}
