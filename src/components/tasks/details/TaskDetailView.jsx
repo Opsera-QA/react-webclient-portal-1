@@ -64,6 +64,7 @@ function TaskDetailView() {
     status,
     runCount,
     updatedAt,
+    taskStartTime,
   } = useGetPollingTaskOrchestrationStatusById(id, 15000);
 
   useEffect(() => {
@@ -169,6 +170,7 @@ function TaskDetailView() {
           accessRoleData={accessRoleData}
           loadData={loadData}
           runTask={location?.state?.runTask}
+          taskStartTime={taskStartTime}
           status={status}
           runCount={runCount}
         />
