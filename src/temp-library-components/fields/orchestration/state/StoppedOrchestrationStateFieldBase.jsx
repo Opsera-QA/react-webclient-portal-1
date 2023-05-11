@@ -7,6 +7,7 @@ export default function StoppedOrchestrationStateFieldBase(
   {
     type,
     className,
+    showStatusText,
   }) {
   return (
     <OrchestrationStateBase
@@ -14,6 +15,7 @@ export default function StoppedOrchestrationStateFieldBase(
       icon={faStop}
       statusText={"Stopped"}
       className={className}
+      showStatusText={showStatusText}
     />
   );
 }
@@ -21,4 +23,5 @@ export default function StoppedOrchestrationStateFieldBase(
 StoppedOrchestrationStateFieldBase.propTypes = {
   type: PropTypes.string,
   className: PropTypes.string,
+  showStatusText: PropTypes.bool,
 };

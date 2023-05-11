@@ -1,12 +1,13 @@
 import React from "react";
 import {faTimesCircle} from "@fortawesome/pro-light-svg-icons";
 import OrchestrationStateBase from "temp-library-components/fields/orchestration/state/OrchestrationStateBase";
-import PropType from "prop-types";
+import PropTypes from "prop-types";
 
 export default function FailedOrchestrationStateFieldBase(
   {
     type,
     className,
+    showStatusText,
   }) {
   return (
     <OrchestrationStateBase
@@ -15,11 +16,13 @@ export default function FailedOrchestrationStateFieldBase(
       icon={faTimesCircle}
       statusText={"Failed"}
       className={className}
+      showStatusText={showStatusText}
     />
   );
 }
 
 FailedOrchestrationStateFieldBase.propTypes = {
-  type: PropType.string,
-  className: PropType.string,
+  type: PropTypes.string,
+  className: PropTypes.string,
+  showStatusText: PropTypes.bool,
 };

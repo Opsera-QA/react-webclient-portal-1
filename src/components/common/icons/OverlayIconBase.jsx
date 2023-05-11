@@ -21,6 +21,7 @@ function OverlayIconBase(
     overlayPlacement,
     visible,
     overlayWidth,
+    iconFontSize,
   }) {
   if (icon == null || visible === false) {
     return null;
@@ -47,6 +48,7 @@ function OverlayIconBase(
           iconClassName={iconClassName}
           iconTitle={iconTitle}
           iconColor={iconColor}
+          iconFontSize={iconFontSize}
         />
       </div>
     </TooltipWrapper>
@@ -70,6 +72,7 @@ OverlayIconBase.propTypes = {
   overlayPlacement: PropTypes.string,
   visible: PropTypes.bool,
   overlayWidth: PropTypes.string,
+  iconFontSize: PropTypes.string,
 };
 
 export default React.memo(OverlayIconBase);

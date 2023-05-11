@@ -198,6 +198,18 @@ export function getLargeVendorIconComponentFromPipeline (pipeline) {
     );
   }
 
+  if (type === PIPELINE_TYPES.SALESFORCE) {
+    return (
+      <IconBase
+        className={"d-flex h-100"}
+        imageClassName={"my-auto"}
+        icon={faSalesforce}
+        iconStyling={{color: "#0D80D8"}}
+        iconFontSize={"75px"}
+      />
+    );
+  }
+
   const imageLink = pipelineTypeConstants.getImageLinkForPipeline(
     pipeline,
   );
