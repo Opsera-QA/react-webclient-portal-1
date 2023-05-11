@@ -216,7 +216,7 @@ function FieldSelectorBasePanel({
       <DetailPanelContainer>
         <Row className="mx-2">
           <div>
-            <h6>Select Field Properties to proceed with Query Generation</h6>
+            <h5>Select Field Properties to proceed with Query Generation</h5>
           </div>
         </Row>
         <Row className="mx-2">
