@@ -9,7 +9,7 @@ import {lightThemeConstants} from "temp-library-components/theme/light.theme.con
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 
-export default function PipelineCardHeaderTemp(
+export default function PreferredPipelineCardHeader(
   {
     pipelineModel,
   }) {
@@ -24,7 +24,7 @@ export default function PipelineCardHeaderTemp(
           orchestrationState={orchestrationState}
           type={"Pipeline"}
           showStoppedState={false}
-          // className={"ml-auto"}
+          className={"ml-auto"}
         />
       );
     }
@@ -33,7 +33,7 @@ export default function PipelineCardHeaderTemp(
   const getSubscribedIcon = () => {
     if (isSubscribed === true) {
       return (
-        <div className={"d-flex ml-auto"}>
+        <div className={"d-flex"}>
           <OverlayIconBase
             icon={faStar}
             iconSize={"lg"}
@@ -43,7 +43,7 @@ export default function PipelineCardHeaderTemp(
             iconStyling={{ paddingBottom: "1px" }}
             iconClassName={"ml-auto"}
           />
-          {/*<div className={"ml-1"}>Following</div>*/}
+          <div className={"ml-1"}>Following</div>
         </div>
       );
     }
@@ -53,29 +53,28 @@ export default function PipelineCardHeaderTemp(
     <CardHeaderBase>
       <div className={"w-100 d-flex justify-content-between px-2 py-1 small"}>
         <div
-          // style={{
-          //   minWidth: "90px",
-          //   maxWidth: "90px",
-          // }}
+          style={{
+            minWidth: "90px",
+            maxWidth: "90px",
+          }}
         >
-          {getOrchestrationStateFieldBase()}
+          <span>{runCount} Runs</span>
         </div>
-        {/*{getSubscribedIcon()}*/}
+        {getSubscribedIcon()}
         <div
-          // style={{
-          //   minWidth: "90px",
-          //   maxWidth: "90px",
-          // }}
+          style={{
+            minWidth: "90px",
+            maxWidth: "90px",
+          }}
           className={"d-flex"}
         >
-          {/*{getOrchestrationStateFieldBase()}*/}
-          {getSubscribedIcon()}
+          {getOrchestrationStateFieldBase()}
         </div>
       </div>
     </CardHeaderBase>
   );
 }
 
-PipelineCardHeaderTemp.propTypes = {
+PreferredPipelineCardHeader.propTypes = {
   pipelineModel: PropTypes.object,
 };

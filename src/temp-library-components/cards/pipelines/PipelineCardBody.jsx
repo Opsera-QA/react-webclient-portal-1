@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import Row from "react-bootstrap/Row";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {Col} from "react-bootstrap";
 import {orchestrationHelper} from "temp-library-components/helpers/orchestration/orchestration.helper";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
@@ -9,7 +10,10 @@ export default function PipelineCardBody(
   {
     pipelineModel,
   }) {
-  if (pipelineModel == null) {
+  const orchestrationState = pipelineHelper.getPipelineModelOrchestrationState(pipelineModel);
+  const runCount = DataParsingHelper.parseInteger(pipelineModel?.getData("workflow.run_count"), 0);
+
+  if (pipelineModel == null || orchestrationState == null) {
     return undefined;
   }
 
@@ -24,8 +28,13 @@ export default function PipelineCardBody(
               maxHeight: "39px",
             }}
           >
-            <div className={"mt-auto mx-auto"}>
-              {orchestrationHelper.getLastRunCardSummary(pipelineHelper.getLastRunCompletionTime(pipelineModel?.getOriginalData()), pipelineHelper.getPipelineModelOrchestrationState(pipelineModel))}
+            <div className={"mt-auto w-100 d-flex justify-content-between"}>
+              <div>
+                {orchestrationHelper.getLastRunCardSummary(pipelineHelper.getLastRunCompletionTime(pipelineModel?.getOriginalData()), pipelineHelper.getPipelineModelOrchestrationState(pipelineModel))}
+              </div>
+              <div>
+                <span>{runCount} Runs</span>
+              </div>
             </div>
           </div>
         </Col>
