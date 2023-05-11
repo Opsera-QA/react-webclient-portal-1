@@ -17,8 +17,6 @@ import Model from "core/data_model/model";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import PipelineActionControls from "components/workflow/pipelines/action_controls/PipelineActionControls";
 import PipelineNameTextInput from "components/workflow/pipelines/summary/inputs/PipelineNameTextInput";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import PipelinePausedWarningMessage from "components/workflow/pipelines/PipelinePausedWarningMessage";
 
 const refreshInterval = 15000;

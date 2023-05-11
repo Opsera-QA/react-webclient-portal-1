@@ -878,6 +878,10 @@ a:hover, .active, .link-text:hover {
     border-color: #dc3545;
 }
 
+.anchored-content {
+    box-shadow: 0 0 10px rgba(25, 137, 249, 1);
+}
+
 .code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
@@ -903,7 +907,7 @@ a:hover, .active, .link-text:hover {
 
 .console-text, .console-text-invert, .console-text-invert-modal, .jsonBlockText {
     line-height: 1.25em !important;
-    font: .9em Inter, monospace;
+    font: 1em Inter, monospace;
     white-space: pre-wrap; /* Since CSS 2.1 */
     white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
     white-space: -o-pre-wrap; /* Opera 7 */
