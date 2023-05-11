@@ -1,13 +1,14 @@
 import PropTypes from "prop-types";
 import React from "react";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
-import {faTasks, faClipboardListCheck, faUser, faRss} from "@fortawesome/pro-light-svg-icons";
+import {faTasks, faClipboardListCheck, faUser} from "@fortawesome/pro-light-svg-icons";
 import {faAws, faMicrosoft, faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import {faGitAlt} from "@fortawesome/free-brands-svg-icons/faGitAlt";
 import { isTaskTypeOfCategory } from "components/tasks/task.types";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import FollowingVerticalTab from "temp-library-components/tabs/FollowingVerticalTab";
 
 function TaskVerticalTabContainer({ isLoading, taskFilterModel, loadData }) {
   const {
@@ -93,14 +94,11 @@ function TaskVerticalTabContainer({ isLoading, taskFilterModel, loadData }) {
         handleTabClick={handleTabClick}
         activeTab={taskFilterModel?.getData("category")}
       />
-      <VanitySetVerticalTab
-        icon={faRss}
-        tabText={"Subscriptions"}
-        tabName={"subscribed"}
-        disabled={isLoading}
-        handleTabClick={handleTabClick}
-        activeTab={taskFilterModel?.getData("category")}
-        tooltipText={"View Tasks that you have access to and have subscribed to."}
+      <FollowingVerticalTab
+        isLoading={isLoading}
+        handleTabClickFunction={handleTabClick}
+        activeTab={taskFilterModel?.getData("type")}
+        pluralResourceType={"Tasks"}
       />
     </VanitySetVerticalTabContainer>
   );
