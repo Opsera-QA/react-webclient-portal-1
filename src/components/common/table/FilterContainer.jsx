@@ -135,6 +135,7 @@ function FilterContainer({
   return (
     <div className={className}>
       <div
+        id={anchor}
         className={`filter-container container-border ${anchorClassName}`}
       >
         <div className={isFreeTrial === true ? "w-100" : "w-100 filter-title-bar"}>
