@@ -53,19 +53,19 @@ export default function PipelineCardHeaderTemp(
     <CardHeaderBase>
       <div className={"w-100 d-flex justify-content-between px-2 py-1 small"}>
         <div
-          style={{
-            minWidth: "90px",
-            maxWidth: "90px",
-          }}
+          // style={{
+          //   minWidth: "90px",
+          //   maxWidth: "90px",
+          // }}
         >
-          <span>{runCount} Runs</span>
+          {getOrchestrationStateFieldBase()}
         </div>
         {/*{getSubscribedIcon()}*/}
         <div
-          style={{
-            minWidth: "90px",
-            maxWidth: "90px",
-          }}
+          // style={{
+          //   minWidth: "90px",
+          //   maxWidth: "90px",
+          // }}
           className={"d-flex"}
         >
           {/*{getOrchestrationStateFieldBase()}*/}
