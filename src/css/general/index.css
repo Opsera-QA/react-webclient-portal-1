@@ -903,7 +903,7 @@ a:hover, .active, .link-text:hover {
 
 .console-text, .console-text-invert, .console-text-invert-modal, .jsonBlockText {
     line-height: 1.25em !important;
-    font: 1em Inter, monospace;
+    font: .9em Inter, monospace;
     white-space: pre-wrap; /* Since CSS 2.1 */
     white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
     white-space: -o-pre-wrap; /* Opera 7 */
