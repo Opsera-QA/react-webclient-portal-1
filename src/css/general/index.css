@@ -878,6 +878,11 @@ a:hover, .active, .link-text:hover {
     border-color: #dc3545;
 }
 
+.anchored-content {
+    box-shadow: 0 0 10px rgba(53, 47, 84, 0.5);
+    border: 1px solid #86819C;
+}
+
 .code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
