@@ -75,6 +75,16 @@ pipelineHelper.getPipelineStatus = (pipeline) => {
   return status;
 };
 
+pipelineHelper.getPipelineModelOrchestrationState = (pipelineModel) => {
+  const state = pipelineModel?.getData("state");
+  const lastRunState = pipelineModel?.getData("workflow.last_run.status");
+  return state === "paused" || state === "running" || lastRunState == null ? state : lastRunState;
+};
+
+pipelineHelper.getLastRunCompletionTime = (pipeline) => {
+  return DataParsingHelper.parseNestedDate(pipeline, "workflow.last_run.completed");
+};
+
 pipelineHelper.getStepIndexFromPipeline = (pipeline, stepId) => {
   const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan");
   return pipelineHelper.getStepIndexFromPlan(plan, stepId);

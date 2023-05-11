@@ -9,7 +9,7 @@ import {lightThemeConstants} from "temp-library-components/theme/light.theme.con
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 
-export default function PipelineCardHeader(
+export default function PipelineCardHeaderTemp(
   {
     pipelineModel,
   }) {
@@ -24,7 +24,7 @@ export default function PipelineCardHeader(
           orchestrationState={orchestrationState}
           type={"Pipeline"}
           showStoppedState={false}
-          className={"ml-auto"}
+          // className={"ml-auto"}
         />
       );
     }
@@ -33,7 +33,7 @@ export default function PipelineCardHeader(
   const getSubscribedIcon = () => {
     if (isSubscribed === true) {
       return (
-        <div className={"d-flex"}>
+        <div className={"d-flex ml-auto"}>
           <OverlayIconBase
             icon={faStar}
             iconSize={"lg"}
@@ -43,7 +43,7 @@ export default function PipelineCardHeader(
             iconStyling={{ paddingBottom: "1px" }}
             iconClassName={"ml-auto"}
           />
-          <div className={"ml-1"}>Following</div>
+          {/*<div className={"ml-1"}>Following</div>*/}
         </div>
       );
     }
@@ -60,7 +60,7 @@ export default function PipelineCardHeader(
         >
           <span>{runCount} Runs</span>
         </div>
-        {getSubscribedIcon()}
+        {/*{getSubscribedIcon()}*/}
         <div
           style={{
             minWidth: "90px",
@@ -68,13 +68,14 @@ export default function PipelineCardHeader(
           }}
           className={"d-flex"}
         >
-          {getOrchestrationStateFieldBase()}
+          {/*{getOrchestrationStateFieldBase()}*/}
+          {getSubscribedIcon()}
         </div>
       </div>
     </CardHeaderBase>
   );
 }
 
-PipelineCardHeader.propTypes = {
+PipelineCardHeaderTemp.propTypes = {
   pipelineModel: PropTypes.object,
 };

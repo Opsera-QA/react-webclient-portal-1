@@ -28,7 +28,9 @@ orchestrationHelper.getLastRunCardSummary = (
   const parsedStatus = DataParsingHelper.parseString(status);
 
   if (parsedCompletionTime && parsedStatus) {
-    return `The last run ${parsedStatus} ${DateHelper.formatDistanceToNow(parsedCompletionTime, undefined, false, true)}`;
+    const statusVerb = orchestrationHelper.getStatusLabelVerb(status);
+
+    return `The last run ${statusVerb} ${DateHelper.formatDistanceToNow(parsedCompletionTime, undefined, false, true)}`;
   }
 };
 
@@ -54,6 +56,27 @@ orchestrationHelper.getStatusLabel = (status) => {
     case "success":
     case "successful":
       return "successful";
+    case "created":
+      return "created";
+    default:
+      return "stopped";
+  }
+};
+
+orchestrationHelper.getStatusLabelVerb = (status) => {
+  const parsedStatus = DataParsingHelper.parseString(status, "");
+
+  switch (parsedStatus) {
+    case "failed":
+    case "failure":
+      return "failed";
+    case "running":
+      return "ran";
+    case "paused":
+      return "paused";
+    case "success":
+    case "successful":
+      return "succeeded";
     case "created":
       return "created";
     default:
