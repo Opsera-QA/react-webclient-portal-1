@@ -39,7 +39,7 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
       regexDefinitionName: "alphabetic",
     },    
     {
-      label: "Account",
+      label: "Git Account",
       id: "gitCredential",
       isRequired: true,
       maxLength: 50,
