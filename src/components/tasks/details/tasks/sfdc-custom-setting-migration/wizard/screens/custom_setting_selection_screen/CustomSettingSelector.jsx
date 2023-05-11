@@ -21,7 +21,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-  const [enableEdit, setEnableEdit] = useState(true);
+  const [enableEdit, setEnableEdit] = useState(wizardModel?.getData("customSettingEditMode"));
   const [customSettingsList, setCustomSettingsList] = useState([]);
   const [filePullCompleted, setFilePullCompleted] = useState(false);
   const isMounted = useRef(false);
@@ -50,6 +50,10 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
       stopPolling();
     };
   }, []);
+
+  useEffect(()=>{
+    wizardModel?.setData("customSettingEditMode", enableEdit);
+  }, [enableEdit]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {

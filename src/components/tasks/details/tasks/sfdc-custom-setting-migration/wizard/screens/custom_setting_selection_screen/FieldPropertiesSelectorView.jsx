@@ -13,7 +13,7 @@ const FieldPropertiesSelectorView = ({ wizardModel, setWizardModel, handleClose,
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [fieldsPropertiesList, setFieldsPropertiesList] = useState([]);
-  const [selectedFields, setSelectedFields] = useState([]);
+  const [selectedFields, setSelectedFields] = useState(wizardModel?.getData("selectedFieldList"));
   const [filePullCompleted, setFilePullCompleted] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -104,6 +104,7 @@ const FieldPropertiesSelectorView = ({ wizardModel, setWizardModel, handleClose,
 
       if (Array.isArray(fieldList)) {
         setFieldsPropertiesList(fieldList);
+        wizardModel?.setData("fieldList", fieldList);
         setIsLoading(false);
         setFilePullCompleted(true);
       }
