@@ -10,7 +10,6 @@ export default function TaskCardBody(
     taskModel,
   }) {
   const runCount = DataParsingHelper.parseInteger(taskModel?.getData("run_count"), 0);
-  console.log("status: " + JSON.stringify(taskModel?.getData("status")));
 
   if (taskModel == null) {
     return undefined;
