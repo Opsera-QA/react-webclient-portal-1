@@ -47,11 +47,6 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
     isLoading: isLoadingMetrics,
   } = useGetPipelineDurationMetrics(pipelineId, pipelineModel?.getRunCount());
 
-  const handleViewDetailsButton = () => {
-    history.push(pipelineModel?.getDetailViewLink());
-    closePanel();
-  };
-
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
@@ -60,20 +55,27 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
   const getLastRunDuration = () => {
     if (hasStringValue(lastRunDurationText) === true) {
       return (
-        // <WidgetDataBlockBase className={"mt-2 mx-2"}>
-          <div className={"p-2 mr-4"}>
-            <div className={"mx-auto"}>
-              <VanityFocusTextBase
-                text={lastRunDurationText}
-              />
+        <div
+          style={{
+            minWidth: "340px",
+            maxWidth: "340px",
+          }}
+        >
+          <WidgetDataBlockBase className={"mb-2"}>
+            <div className={"p-2 mr-4"}>
+              <div className={"mx-auto"}>
+                <VanityFocusTextBase
+                  text={lastRunDurationText}
+                />
+              </div>
+              <div className={"mx-auto"}>
+                <VanityLabelBase
+                  label={"Last Run Duration"}
+                />
+              </div>
             </div>
-            <div className={"mx-auto"}>
-              <VanityLabelBase
-                label={"Last Run Duration"}
-              />
-            </div>
-          </div>
-        // </WidgetDataBlockBase>
+          </WidgetDataBlockBase>
+        </div>
       );
     }
   };
@@ -81,20 +83,27 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
   const getLastFiveRunAverageDuration = () => {
     if (hasStringValue(lastFiveRunsDurationText) === true) {
       return (
-        <WidgetDataBlockBase className={"mt-2 mx-2"}>
-          <div className={"p-2"}>
-            <div className={"mx-auto"}>
-              <VanityFocusTextBase
-                text={lastFiveRunsDurationText}
-              />
+        <div
+          style={{
+            minWidth: "340px",
+            maxWidth: "340px",
+          }}
+        >
+          <WidgetDataBlockBase className={"mb-2"}>
+            <div className={"p-2"}>
+              <div className={"mx-auto"}>
+                <VanityFocusTextBase
+                  text={lastFiveRunsDurationText}
+                />
+              </div>
+              <div className={"mx-auto"}>
+                <VanityLabelBase
+                  label={"Last 5 Runs Average Duration"}
+                />
+              </div>
             </div>
-            <div className={"mx-auto"}>
-              <VanityLabelBase
-                label={"Last 5 Runs Average Duration"}
-              />
-            </div>
-          </div>
-        </WidgetDataBlockBase>
+          </WidgetDataBlockBase>
+        </div>
       );
     }
   };
@@ -102,20 +111,27 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
   const getTotalRunAverageDuration = () => {
     if (hasStringValue(totalAverageDurationText) === true) {
       return (
-        // <WidgetDataBlockBase className={"mt-2 mx-2"}>
-          <div className={"p-2"}>
-            <div className={"mx-auto"}>
-              <VanityFocusTextBase
-                text={totalAverageDurationText}
-              />
+        <div
+          style={{
+            minWidth: "340px",
+            maxWidth: "340px",
+          }}
+        >
+          <WidgetDataBlockBase className={"mb-2"}>
+            <div className={"p-2"}>
+              <div className={"mx-auto"}>
+                <VanityFocusTextBase
+                  text={totalAverageDurationText}
+                />
+              </div>
+              <div className={"mx-auto"}>
+                <VanityLabelBase
+                  label={"Average Run Duration"}
+                />
+              </div>
             </div>
-            <div className={"mx-auto"}>
-              <VanityLabelBase
-                label={"Average Run Duration"}
-              />
-            </div>
-          </div>
-        // </WidgetDataBlockBase>
+          </WidgetDataBlockBase>
+        </div>
       );
     }
   };
@@ -148,12 +164,8 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
   const getRunMetricsV2 = () => {
     return (
       <>
-        <WidgetDataBlockBase className={"mb-2"}>
-          {getLastRunDuration()}
-        </WidgetDataBlockBase>
-        <WidgetDataBlockBase className={"mb-2"}>
-          {getTotalRunAverageDuration()}
-        </WidgetDataBlockBase>
+        {getLastRunDuration()}
+        {getTotalRunAverageDuration()}
       </>
     );
   };
@@ -212,13 +224,7 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
                       pipelineModel={pipelineModel}
                     />
                   </div>
-                  <div
-                    className={"ml-2"}
-                    style={{
-                      minWidth: "340px",
-                      maxWidth: "340px",
-                    }}
-                  >
+                  <div className={"ml-2"}>
                     {getRunMetricsV2()}
                   </div>
                 </div>
