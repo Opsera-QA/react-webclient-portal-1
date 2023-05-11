@@ -15,6 +15,7 @@ import EnableEditingIcon from "../../../../../../../common/icons/enable/EnableEd
 import { getMigrationTypeLabel, MIGRATION_TYPES } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 import H5FieldSubHeader from "../../../../../../../common/fields/subheader/H5FieldSubHeader";
 import ToolNameField from "../../../../../../../common/fields/inventory/ToolNameField";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCurrentScreen }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -189,6 +190,10 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
     }
     return null;
   };
+
+  if (isLoading) {
+    return (<LoadingDialog size="sm"/>);
+  }
 
   const getSelectView = () => {
     if (!enableEdit && wizardModel?.getData("selectedCustomSetting")) {
