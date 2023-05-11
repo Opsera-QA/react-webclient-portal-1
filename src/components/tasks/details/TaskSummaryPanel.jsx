@@ -28,6 +28,8 @@ import TaskRunDurationMetricsStandaloneField
   from "temp-library-components/fields/orchestration/task/metrics/TaskRunDurationMetricsStandaloneField";
 import tagTypeConstants from "@opsera/definitions/constants/settings/tags/tagType.constants";
 import TaskTagManagerInput from "components/tasks/details/inputs/TaskTagManagerInput";
+import TaskOrchestrationProgressBarBase
+  from "temp-library-components/fields/orchestration/progress/TaskOrchestrationProgressBarBase";
 
 function TaskSummaryPanel(
   {
@@ -37,6 +39,7 @@ function TaskSummaryPanel(
     loadData,
     status,
     runCount,
+    taskStartTime,
   }) {
   const {
     cancelTokenSource,
@@ -216,6 +219,12 @@ function TaskSummaryPanel(
           </div>
         </div>
       </Row>
+      {/*<Col xs={12}>*/}
+      {/*  <TaskOrchestrationProgressBarBase*/}
+      {/*    taskModel={gitTasksData}*/}
+      {/*    taskStartTime={taskStartTime}*/}
+      {/*  />*/}
+      {/*</Col>*/}
       <div className="px-3 mt-3">
         <TaskConfigurationSummaryPanel taskModel={gitTasksData} />
       </div>
@@ -230,6 +239,7 @@ TaskSummaryPanel.propTypes = {
   loadData: PropTypes.func,
   status: PropTypes.string,
   runCount: PropTypes.number,
+  taskStartTime: PropTypes.number,
 };
 
 export default TaskSummaryPanel;

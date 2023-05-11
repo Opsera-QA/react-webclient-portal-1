@@ -23,8 +23,6 @@ export default function TaskOrchestrationProgressBarBase(
     lastFiveRunsDurationAverage
   );
 
-  console.log("taskStartTime: " + JSON.stringify(taskStartTime));
-  console.log("taskCompletionPercentage: " + JSON.stringify(taskCompletionPercentage));
   if (taskModel == null || !taskCompletionPercentage) {
     return null;
   }
