@@ -15,13 +15,14 @@ import EnableEditingIcon from "../../../../../../../common/icons/enable/EnableEd
 import { getMigrationTypeLabel, MIGRATION_TYPES } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 import H5FieldSubHeader from "../../../../../../../common/fields/subheader/H5FieldSubHeader";
 import ToolNameField from "../../../../../../../common/fields/inventory/ToolNameField";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCurrentScreen }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-  const [enableEdit, setEnableEdit] = useState(true);
+  const [enableEdit, setEnableEdit] = useState(wizardModel?.getData("customSettingEditMode"));
   const [customSettingsList, setCustomSettingsList] = useState([]);
   const [filePullCompleted, setFilePullCompleted] = useState(false);
   const isMounted = useRef(false);
@@ -50,6 +51,10 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
       stopPolling();
     };
   }, []);
+
+  useEffect(()=>{
+    wizardModel?.setData("customSettingEditMode", enableEdit);
+  }, [enableEdit]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -168,12 +173,14 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
                 <ToolNameField
                   model={wizardModel}
                   fieldName={"sourceToolId"}
+                  loadToolInNewWindow={true}
                 />
               </Col>
               <Col xs={6}>
                 <ToolNameField
                   model={wizardModel}
                   fieldName={"targetToolId"}
+                  loadToolInNewWindow={true}
                   visible={wizardModel?.getData("taskType") === MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG}
                 />
               </Col>
@@ -184,17 +191,21 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
     return null;
   };
 
+  if (isLoading) {
+    return (<LoadingDialog size="sm"/>);
+  }
+
   const getSelectView = () => {
     if (!enableEdit && wizardModel?.getData("selectedCustomSetting")) {
       return (
         <div className={"d-flex mx-1 my-1 w-100"}>
-          Selected Custom Object :{" "}
-          {wizardModel?.getData("selectedCustomSetting")?.componentName}
+          <h5 style={{ fontWeight: 400}}>Selected Custom Object :</h5>{" "}
+          <span className="ml-2" style={{ fontSize: "1rem", fontWeight: 400, color: "#CF940C"}}>{wizardModel?.getData("selectedCustomSetting")?.componentName}</span>
           <EnableEditingIcon
             enableEditingFunction={() => {
               setEnableEdit(true);
             }}
-            className={"ml-2 my-auto"}
+            className={"ml-2 my-1"}
           />
         </div>
       );

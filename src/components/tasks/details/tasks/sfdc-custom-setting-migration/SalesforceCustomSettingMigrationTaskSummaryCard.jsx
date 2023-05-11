@@ -42,12 +42,14 @@ function SalesforceCustomSettingMigrationTaskSummaryCard(
           <ToolNameField
             model={salesforceConfigurationModel}
             fieldName={"sourceToolId"}
+            loadToolInNewWindow={true}
           />
         </Col>
         <Col xs={6}>
           <ToolNameField
             model={salesforceConfigurationModel}
             fieldName={"targetToolId"}
+            loadToolInNewWindow={true}
             visible={taskConfigDataModel?.getData("taskType") === MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG}
           />
         </Col>

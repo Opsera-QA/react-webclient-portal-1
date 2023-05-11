@@ -24,6 +24,7 @@ import TaskMigrationTypeField from "../../../../../../../common/fields/tasks/Tas
 import ToolNameField from "../../../../../../../common/fields/inventory/ToolNameField";
 import axios from "axios";
 import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
+import WarningMessageFieldBase from "components/common/fields/text/message/WarningMessageFieldBase";
 
 const CustomSettingTaskConfirmationScreen = ({
   wizardModel,
@@ -193,8 +194,14 @@ const CustomSettingTaskConfirmationScreen = ({
           </Row>
           {wizardModel?.getData("taskType") === MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV ?
             <MessageFieldBase
-              className={"mt-2"}
-              message={"Once task completes execution, file would be generated and be available to download on task activity report section."}
+              className={"mt-3"}
+              message={"Upon completion of the task execution, a file will be generated and made available for download in the task activity report section."}
+            /> : null
+          }
+          {taskType !== MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG && recordCount < 1 ?
+            <WarningMessageFieldBase
+              className={"mt-3"}
+              message={"Our system has not identified any records according to the parameters specified in your query. Please review and update your query criteria and try again."}
             /> : null
           }
         </div>
@@ -218,7 +225,7 @@ const CustomSettingTaskConfirmationScreen = ({
             variant="success"
             size="sm"
             onClick={triggerTask}
-            disabled={isStarting}
+            disabled={isStarting || (taskType !== MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG && recordCount < 1)}
             className="mr-2"
           >
             <IconBase
