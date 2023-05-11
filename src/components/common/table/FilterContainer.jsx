@@ -9,6 +9,7 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import ErrorMessageFieldBase from "components/common/fields/text/message/ErrorMessageFieldBase";
 import ErrorLoadingDataField from "components/common/fields/text/message/ErrorLoadingDataField";
 import sessionHelper from "utils/session.helper";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 const TITLE_BAR_HEIGHT = "46px";
 const screenContainerMargin = "30px";
@@ -50,7 +51,7 @@ function FilterContainer({
   type,
   anchor,
 }) {
-  const isAnchored = sessionHelper.getUrlAnchor() === anchor;
+  const isAnchored = hasStringValue(anchor) === true && sessionHelper.getUrlAnchor() === anchor;
   const anchorClassName = isAnchored === true ? "anchored-content" : "";
 
   const getFilterBar = () => {
