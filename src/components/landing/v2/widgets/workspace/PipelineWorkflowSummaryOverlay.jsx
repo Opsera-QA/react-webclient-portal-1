@@ -26,6 +26,7 @@ import PipelineOrchestrationProgressBarBase
   from "temp-library-components/fields/orchestration/progress/PipelineOrchestrationProgressBarBase";
 import ViewPipelineButton from "temp-library-components/button/pipeline/ViewPipelineButton";
 import {VanityFocusTextBase} from "temp-library-components/label/VanityFocusTextBase";
+import ViewPipelineLogsButton from "temp-library-components/button/pipeline/ViewPipelineLogsButton";
 
 // TODO: Should this be two separate panels?
 export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
@@ -250,7 +251,7 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
               <div className={"d-flex justify-content-between w-100 my-3"}>
                 <div style={{minWidth: "76px"}} />
                 <div>
-                  {getTitleActionBar()}
+                  {getButtons()}
                   {/*<PipelineActionControls*/}
                   {/*  pipeline={pipelineModel?.getCurrentData()}*/}
                   {/*  isLoading={isLoading}*/}
@@ -274,16 +275,22 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
     );
   };
 
-  const getTitleActionBar = () => {
+  const getButtons = () => {
     return (
-      <>
+      <div className={"d-flex"}>
         <ViewPipelineButton
           pipelineId={pipelineId}
           buttonText={"Advanced"}
           buttonSize={"sm"}
-          className={"my-auto"}
+          className={"my-auto mr-2"}
+          variant={"link"}
         />
-      </>
+        <ViewPipelineLogsButton
+          pipelineId={pipelineId}
+          buttonSize={"sm"}
+          variant={"link"}
+        />
+      </div>
     );
   };
 

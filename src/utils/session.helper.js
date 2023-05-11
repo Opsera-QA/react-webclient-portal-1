@@ -8,6 +8,15 @@ sessionHelper.getUrlSearchParameters = () => {
   return url?.searchParams;
 };
 
+sessionHelper.getUrlAnchor = () => {
+  const url = DataParsingHelper.parseString(window.location.href, "");
+  const lastIndex = url.lastIndexOf("#");
+
+  if (lastIndex !== -1) {
+    return url.substring(lastIndex + 1);
+  }
+};
+
 sessionHelper.getUrlParameterEntries = () => {
   const urlSearchParams = sessionHelper.getUrlSearchParameters();
   return urlSearchParams?.entries();

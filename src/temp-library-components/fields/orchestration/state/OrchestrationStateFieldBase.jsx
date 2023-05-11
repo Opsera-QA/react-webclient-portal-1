@@ -19,6 +19,7 @@ export default function OrchestrationStateFieldBase(
     showStoppedState,
     type,
     className,
+    showStatusText,
   }) {
   switch (orchestrationState) {
     case "failed":
@@ -27,6 +28,7 @@ export default function OrchestrationStateFieldBase(
         <FailedOrchestrationStateFieldBase
           type={type}
           className={className}
+          showStatusText={showStatusText}
         />
       );
     case "running":
@@ -34,6 +36,7 @@ export default function OrchestrationStateFieldBase(
         <RunningOrchestrationStateFieldBase
           type={type}
           className={className}
+          showStatusText={showStatusText}
         />
       );
     case "paused":
@@ -41,6 +44,7 @@ export default function OrchestrationStateFieldBase(
         <PausedOrchestrationStateFieldBase
           type={type}
           className={className}
+          showStatusText={showStatusText}
         />
       );
     case "success":
@@ -49,6 +53,7 @@ export default function OrchestrationStateFieldBase(
         <SuccessOrchestrationStateFieldBase
           type={type}
           className={className}
+          showStatusText={showStatusText}
         />
       );
     case "created":
@@ -56,6 +61,7 @@ export default function OrchestrationStateFieldBase(
         <CreatedOrchestrationStateFieldBase
           type={type}
           className={className}
+          showStatusText={showStatusText}
         />
       );
     default:
@@ -67,6 +73,7 @@ export default function OrchestrationStateFieldBase(
         <StoppedOrchestrationStateFieldBase
           type={type}
           className={className}
+          showStatusText={showStatusText}
         />
       );
   }
@@ -77,4 +84,5 @@ OrchestrationStateFieldBase.propTypes = {
   type: PropTypes.string,
   className: PropTypes.string,
   showStoppedState: PropTypes.bool,
+  showStatusText: PropTypes.bool,
 };

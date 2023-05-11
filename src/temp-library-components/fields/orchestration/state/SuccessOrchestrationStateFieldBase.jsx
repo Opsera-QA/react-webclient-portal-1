@@ -7,14 +7,16 @@ export default function SuccessOrchestrationStateFieldBase(
   {
     type,
     className,
+    showStatusText,
   }) {
   return (
     <OrchestrationStateBase
       colorClassName={"green"}
       innerText={`The most recent run of this ${type} was successful.`}
       icon={faCheckCircle}
-      statusText={"Successful"}
+      statusText={"Success"}
       className={className}
+      showStatusText={showStatusText}
     />
   );
 }
@@ -22,4 +24,5 @@ export default function SuccessOrchestrationStateFieldBase(
 SuccessOrchestrationStateFieldBase.propTypes = {
   type: PropTypes.string,
   className: PropTypes.string,
+  showStatusText: PropTypes.bool,
 };

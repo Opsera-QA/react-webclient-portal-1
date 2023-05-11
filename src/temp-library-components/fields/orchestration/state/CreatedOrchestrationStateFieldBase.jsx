@@ -7,6 +7,7 @@ export default function CreatedOrchestrationStateFieldBase(
   {
     type,
     className,
+    showStatusText,
   }) {
   return (
     <OrchestrationStateBase
@@ -15,6 +16,7 @@ export default function CreatedOrchestrationStateFieldBase(
       icon={faCheckCircle}
       statusText={"Created"}
       className={className}
+      showStatusText={showStatusText}
     />
   );
 }
@@ -22,4 +24,5 @@ export default function CreatedOrchestrationStateFieldBase(
 CreatedOrchestrationStateFieldBase.propTypes = {
   type: PropTypes.string,
   className: PropTypes.string,
+  showStatusText: PropTypes.bool,
 };

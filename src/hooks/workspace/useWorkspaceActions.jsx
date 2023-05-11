@@ -65,6 +65,7 @@ export default function useWorkspaceActions() {
     return await apiService.handleApiGetRequest(
       apiUrl,
       queryParameters,
+      true,
     );
   };
 
@@ -96,6 +97,7 @@ export default function useWorkspaceActions() {
     return await apiService.handleApiGetRequest(
       apiUrl,
       queryParameters,
+      true,
     );
   };
 
@@ -127,6 +129,7 @@ export default function useWorkspaceActions() {
     return await apiService.handleApiGetRequest(
       apiUrl,
       queryParameters,
+      true,
     );
   };
 
