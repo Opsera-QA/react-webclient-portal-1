@@ -24,7 +24,7 @@ export default function PipelineCardHeader(
           orchestrationState={orchestrationState}
           type={"Pipeline"}
           showStoppedState={false}
-          className={"ml-auto"}
+          // className={"ml-auto"}
         />
       );
     }
@@ -33,7 +33,7 @@ export default function PipelineCardHeader(
   const getSubscribedIcon = () => {
     if (isSubscribed === true) {
       return (
-        <div className={"d-flex"}>
+        <div className={"d-flex ml-auto"}>
           <OverlayIconBase
             icon={faStar}
             iconSize={"lg"}
@@ -43,7 +43,6 @@ export default function PipelineCardHeader(
             iconStyling={{ paddingBottom: "1px" }}
             iconClassName={"ml-auto"}
           />
-          <div className={"ml-1"}>Following</div>
         </div>
       );
     }
@@ -52,23 +51,11 @@ export default function PipelineCardHeader(
   return (
     <CardHeaderBase>
       <div className={"w-100 d-flex justify-content-between px-2 py-1 small"}>
-        <div
-          style={{
-            minWidth: "90px",
-            maxWidth: "90px",
-          }}
-        >
-          <span>{runCount} Runs</span>
-        </div>
-        {getSubscribedIcon()}
-        <div
-          style={{
-            minWidth: "90px",
-            maxWidth: "90px",
-          }}
-          className={"d-flex"}
-        >
+        <div>
           {getOrchestrationStateFieldBase()}
+        </div>
+        <div className={"d-flex"}>
+          {getSubscribedIcon()}
         </div>
       </div>
     </CardHeaderBase>
