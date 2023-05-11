@@ -190,13 +190,13 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
     if (!enableEdit && wizardModel?.getData("selectedCustomSetting")) {
       return (
         <div className={"d-flex mx-1 my-1 w-100"}>
-          Selected Custom Object :{" "}
-          {wizardModel?.getData("selectedCustomSetting")?.componentName}
+          <h5>Selected Custom Object :</h5>{" "}
+          <span className="ml-2" style={{ fontSize: "1rem", fontWeight: 500}}>{wizardModel?.getData("selectedCustomSetting")?.componentName}</span>
           <EnableEditingIcon
             enableEditingFunction={() => {
               setEnableEdit(true);
             }}
-            className={"ml-2 my-auto"}
+            className={"ml-2 mb-1 my-auto"}
           />
         </div>
       );
