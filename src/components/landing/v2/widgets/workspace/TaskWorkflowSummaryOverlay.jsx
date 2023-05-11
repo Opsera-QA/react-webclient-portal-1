@@ -21,6 +21,8 @@ import ErrorMessageFieldBase from "components/common/fields/text/message/ErrorMe
 import {errorHelpers} from "components/common/helpers/error-helpers";
 import TaskCardBase from "temp-library-components/cards/tasks/TaskCardBase";
 import useGetPollingTaskModelById from "hooks/workflow/tasks/useGetPollingTaskModelById";
+import TaskOrchestrationProgressBarBase
+  from "temp-library-components/fields/orchestration/progress/TaskOrchestrationProgressBarBase";
 
 export default function TaskWorkflowSummaryOverlay({ taskId }) {
   const toastContext = useContext(DialogToastContext);
@@ -29,6 +31,7 @@ export default function TaskWorkflowSummaryOverlay({ taskId }) {
     isLoading,
     taskModel,
     error,
+    taskStartTime,
   } = useGetPollingTaskModelById(taskId);
 
   const handleViewDetailsButton = () => {
@@ -101,6 +104,12 @@ export default function TaskWorkflowSummaryOverlay({ taskId }) {
             taskId={taskModel?.getMongoDbId()}
           />
         </Col>
+        {/*<Col xs={12}>*/}
+        {/*  <TaskOrchestrationProgressBarBase*/}
+        {/*    taskModel={taskModel}*/}
+        {/*    taskStartTime={taskStartTime}*/}
+        {/*  />*/}
+        {/*</Col>*/}
       </Row>
     );
   };

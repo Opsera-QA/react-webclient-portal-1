@@ -65,9 +65,7 @@ orchestrationHelper.getTaskCompletionPercentage = (
 
   const now = new Date().getTime();
   const timeDifference = now - parsedTaskStartTime;
-  console.log("timeDifference", timeDifference);
   const percentage = (timeDifference / highestAverage) * 100;
-  console.log("percentage", percentage);
 
   return Math.max(Math.min(percentage, 90), 5);
 };

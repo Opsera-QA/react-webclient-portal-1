@@ -23,6 +23,7 @@ function TaskDetailPanel(
     runTask,
     status,
     runCount,
+    taskStartTime,
   }) {
   const {featureFlagHideItemInProd} = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState(runTask ? "settings" : "summary");
@@ -99,6 +100,7 @@ function TaskDetailPanel(
             loadData={loadData}
             status={status}
             runCount={runCount}
+            taskStartTime={taskStartTime}
           />
         );
       case "settings":
@@ -155,6 +157,7 @@ TaskDetailPanel.propTypes = {
   runTask: PropTypes.bool,
   status: PropTypes.string,
   runCount: PropTypes.number,
+  taskStartTime: PropTypes.string,
 };
 
 export default TaskDetailPanel;
