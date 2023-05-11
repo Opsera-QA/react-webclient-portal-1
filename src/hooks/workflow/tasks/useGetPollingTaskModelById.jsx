@@ -18,6 +18,7 @@ export default function useGetPollingTaskModelById(
     status,
     updatedAt,
     runCount,
+    taskStartTime,
   } = useGetPollingTaskById(id, handleErrorFunction);
 
   useEffect(() => {
@@ -36,5 +37,6 @@ export default function useGetPollingTaskModelById(
     status: status,
     updatedAt: updatedAt,
     runCount: runCount,
+    taskStartTime: taskStartTime,
   });
 }

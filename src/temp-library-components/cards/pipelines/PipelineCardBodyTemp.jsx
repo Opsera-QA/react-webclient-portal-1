@@ -85,6 +85,7 @@ export default function PipelineCardBodyTemp(
     pipelineModel,
   }) {
   const orchestrationState = pipelineHelper.getPipelineModelOrchestrationState(pipelineModel);
+  const runCount = DataParsingHelper.parseInteger(pipelineModel?.getData("workflow.run_count"), 0);
 
   if (pipelineModel == null || orchestrationState == null) {
     return undefined;
@@ -101,14 +102,19 @@ export default function PipelineCardBodyTemp(
               maxHeight: "39px",
             }}
           >
-            <div className={"mt-auto mx-auto d-flex"}>
-              <OrchestrationStateFieldBase
-                showStatusText={false}
-                showStoppedState={false}
-                type={"Pipeline"}
-                orchestrationState={orchestrationState}
-              />
-              {orchestrationHelper.getLastRunCardSummary(pipelineHelper.getLastRunCompletionTime(pipelineModel?.getOriginalData()), pipelineHelper.getPipelineModelOrchestrationState(pipelineModel))}
+            <div className={"mt-auto w-100 d-flex justify-content-between"}>
+              {/*<OrchestrationStateFieldBase*/}
+              {/*  showStatusText={false}*/}
+              {/*  showStoppedState={false}*/}
+              {/*  type={"Pipeline"}*/}
+              {/*  orchestrationState={orchestrationState}*/}
+              {/*/>*/}
+              <div>
+                {orchestrationHelper.getLastRunCardSummary(pipelineHelper.getLastRunCompletionTime(pipelineModel?.getOriginalData()), pipelineHelper.getPipelineModelOrchestrationState(pipelineModel))}
+              </div>
+              <div>
+                <span>{runCount} Runs</span>
+              </div>
             </div>
           </div>
         </Col>
