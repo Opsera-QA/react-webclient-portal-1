@@ -196,7 +196,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
             enableEditingFunction={() => {
               setEnableEdit(true);
             }}
-            className={"ml-2 mb-1 my-auto"}
+            className={"ml-2 my-1"}
           />
         </div>
       );

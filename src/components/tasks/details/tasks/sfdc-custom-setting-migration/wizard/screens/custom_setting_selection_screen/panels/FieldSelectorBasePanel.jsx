@@ -110,17 +110,6 @@ function FieldSelectorBasePanel({
     }
   };
 
-  // console.log(wizardModel?.getPersistData());
-  const getWarningMessage = () => {
-    if (showUnsavedChangesMessage) {
-      return (
-        <InlineWarning
-          warningMessage={"You must hit save before changes will take effect"}
-        />
-      );
-    }
-  };
-
   const updateSearchText = (value) => {
     setSelectedNonMembers([]);
     setSelectedMembers([]);
@@ -227,14 +216,13 @@ function FieldSelectorBasePanel({
       <DetailPanelContainer>
         <Row className="mx-2">
           <div>
-            <h5>Select Field Properties to proceed with Query Generation</h5>
+            <h6>Select Field Properties to proceed with Query Generation</h6>
           </div>
         </Row>
         <Row className="mx-2">
           <div>
             Select field properties below by adding items from the left column
-            into the right or removing from the right column. Changes must be
-            saved before being complete.
+            into the right or removing from the right column.
           </div>
         </Row>
         {getBody()}
