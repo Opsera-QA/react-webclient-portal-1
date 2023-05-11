@@ -42,6 +42,36 @@ orchestrationHelper.getLastRunSummaryForPipelineModel = (pipelineModel) => {
   return orchestrationHelper.getLastRunSummary("Pipeline", completed, status);
 };
 
+orchestrationHelper.getTaskCompletionPercentage = (
+  taskStartTime,
+  totalAverageDuration,
+  lastRunDuration,
+  lastFiveRunsDurationAverage,
+) => {
+  const parsedTaskStartTime = DataParsingHelper.parseDate(taskStartTime);
+
+  if (!parsedTaskStartTime) {
+    return;
+  }
+
+  const parsedTotalAverageDuration = DataParsingHelper.parseInteger(totalAverageDuration, 0);
+  const parsedLastRunDuration = DataParsingHelper.parseInteger(lastRunDuration, 0);
+  const parsedLastFiveRunsDurationAverage = DataParsingHelper.parseInteger(lastFiveRunsDurationAverage, 0);
+  const highestAverage = Math.max(parsedLastFiveRunsDurationAverage, parsedLastRunDuration, parsedTotalAverageDuration);
+
+  if (!highestAverage) {
+    return;
+  }
+
+  const now = new Date().getTime();
+  const timeDifference = now - parsedTaskStartTime;
+  console.log("timeDifference", timeDifference);
+  const percentage = (timeDifference / highestAverage) * 100;
+  console.log("percentage", percentage);
+
+  return Math.max(Math.min(percentage, 90), 5);
+};
+
 orchestrationHelper.getStatusLabel = (status) => {
   const parsedStatus = DataParsingHelper.parseString(status, "");
 

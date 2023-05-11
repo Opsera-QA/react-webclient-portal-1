@@ -13,6 +13,9 @@ export default function useGetTaskRunMetricsById(
   const [lastRunDurationText, setLastRunDurationText] = useState("");
   const [lastFiveRunsDurationText, setLastFiveRunsDurationText] = useState("");
   const [totalAverageDurationText, setTotalAverageDurationText] = useState("");
+  const [lastRunDuration, setLastRunDuration] = useState(undefined);
+  const [lastFiveRunsDurationAverage, setLastFiveRunsDurationAverage] = useState(undefined);
+  const [totalAverageDuration, setTotalAverageDuration] = useState(undefined);
   const {
     isLoading,
     error,
@@ -40,7 +43,9 @@ export default function useGetTaskRunMetricsById(
     const lastRunDurationMs = DataParsingHelper.parseNestedInteger(response, "data.data.lastRunDurationInMs");
     const lastFiveRunsDurationAverageInMs = DataParsingHelper.parseNestedInteger(response, "data.data.lastFiveRunsDurationAverageInMs");
     const totalAverageInMs = DataParsingHelper.parseNestedInteger(response, "data.data.totalAverageInMs");
-
+    setLastRunDuration(lastRunDurationMs);
+    setLastFiveRunsDurationAverage(lastFiveRunsDurationAverageInMs);
+    setTotalAverageDuration(totalAverageInMs);
     setLastRunDurationText(DataParsingHelper.parseString(DateHelper.humanizeDurationForMilliseconds(lastRunDurationMs), ""));
     setLastFiveRunsDurationText(DataParsingHelper.parseString(DateHelper.humanizeDurationForMilliseconds(lastFiveRunsDurationAverageInMs), ""));
     setTotalAverageDurationText(DataParsingHelper.parseString(DateHelper.humanizeDurationForMilliseconds(totalAverageInMs), ""));
@@ -50,6 +55,9 @@ export default function useGetTaskRunMetricsById(
     lastRunDurationText: lastRunDurationText,
     lastFiveRunsDurationText: lastFiveRunsDurationText,
     totalAverageDurationText: totalAverageDurationText,
+    lastRunDuration: lastRunDuration,
+    lastFiveRunsDurationAverage: lastFiveRunsDurationAverage,
+    totalAverageDuration: totalAverageDuration,
     loadData: () => loadData(getTaskRunMetricsById, handleErrorFunction),
     isLoading: isLoading,
     error: error,

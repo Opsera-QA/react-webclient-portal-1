@@ -19,6 +19,7 @@ export default function useGetPollingTaskById(
     status,
     runCount,
     updatedAt,
+    taskStartTime,
   } = useGetPollingTaskOrchestrationStatusById(id, 15000, error, task != null);
 
   useEffect(() => {
@@ -36,5 +37,6 @@ export default function useGetPollingTaskById(
     status: status,
     updatedAt: updatedAt,
     runCount: runCount,
+    taskStartTime: taskStartTime,
   });
 }
