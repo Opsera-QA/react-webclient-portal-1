@@ -88,8 +88,8 @@ export function getLargeVendorIconFromToolIdentifier(
       <ImageBase
         className={"d-flex h-100"}
         imageClassName={"my-auto"}
-        height={imageHeight}
-        imageSource={scaledImageHeight}
+        height={scaledImageHeight}
+        imageSource={imageLink}
       />
     );
   }
