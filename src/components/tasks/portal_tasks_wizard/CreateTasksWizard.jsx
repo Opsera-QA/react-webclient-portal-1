@@ -78,7 +78,9 @@ export default function CreateTasksWizard({ loadData, backButtonFunction }) {
   }, [currentScreen, taskModel?.getData("tool_identifier")]);
 
   const closeOverlayFunction = () => {
-    loadData();
+    if (loadData) {
+      loadData();
+    }
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
   };
