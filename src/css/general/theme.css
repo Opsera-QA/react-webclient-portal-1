@@ -1393,16 +1393,16 @@ div.data-blocks-ellipses {
 /* End filter bar styling */
 
 /* Filter Container Styling */
+.standard-border-radius {
+    border-radius: 1rem;
+}
+
 .filter-container,
 .overlay-wrapper,
 .screen-container {
     border-radius: 1rem;
     overflow-x: hidden;
     letter-spacing: .01rem;
-}
-
-.overlay-wrapper {
-    border: 1px solid #B1AEA7;
 }
 
 .container-border {

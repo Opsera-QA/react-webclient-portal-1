@@ -10,9 +10,8 @@ import { MaturityScoreItemType } from './maturityScoreItemType';
 import SystemDrivenMaturityTimelineChart from './SystemDrivenMaturityTimelineChart';
 import SystemDrivenMaturityChart from './SystemDrivenMaturityChart';
 import { formatForSDMTimelineChart, formatMaturityScoreItems } from './util';
-import {Col, Row} from "react-bootstrap";
 
-function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, group, onSelect, getLegends }) {
+function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, group, onSelect }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metricData, setMetricData] = useState(null);
@@ -124,15 +123,7 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
         <SystemDrivenMaturityTimelineChart data={maturityChartData} />
       </div>
       <div style={{ fontSize: '2rem' }}>
-        <Row>
-          <Col xs={9} sm={9} md={9} lg={9} xl={9}>
-            <SystemDrivenMaturityChart items={metricData} onRowSelect={onSelect} />
-          </Col>
-          <Col xs={3} sm={3} md={3} lg={3} xl={3}>
-            {getLegends(metricData)}
-          </Col>
-        </Row>
-
+        <SystemDrivenMaturityChart items={metricData} onRowSelect={onSelect} />
       </div>
     </Container>
   );
@@ -142,8 +133,7 @@ SystemDrivenMaturityOrgTagsTab.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   group: MaturityScoreItemType,
-  onSelect: PropTypes.func,
-  getLegends: PropTypes.func,
+  onSelect: PropTypes.func
 };
 
 export default SystemDrivenMaturityOrgTagsTab;

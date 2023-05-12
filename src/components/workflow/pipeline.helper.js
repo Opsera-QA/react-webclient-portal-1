@@ -212,3 +212,24 @@ pipelineHelper.getPipelineState = (pipeline) => {
 
   return isPaused === true ? "paused" : status;
 };
+
+pipelineHelper.getPipelineColor = (pipelineModel, themeConstants) => {
+  if (pipelineModel == null) {
+    return themeConstants.RESOURCE_COLORS.PIPELINES;
+  }
+
+  const state = pipelineModel?.getData("state");
+  const lastRunState = pipelineModel?.getData("workflow.last_run.status");
+  const orchestrationState = state === "paused" || state === "running" || lastRunState == null ? state : lastRunState;
+
+  switch (orchestrationState) {
+    case "paused":
+      return themeConstants.COLOR_PALETTE.WARNING;
+    case "running":
+      return themeConstants.COLOR_PALETTE.GREEN;
+    // case "failed":
+    //   return themeConstants.COLOR_PALETTE.DANGER_RED;
+    default:
+      return themeConstants.RESOURCE_COLORS.PIPELINES;
+  }
+};
