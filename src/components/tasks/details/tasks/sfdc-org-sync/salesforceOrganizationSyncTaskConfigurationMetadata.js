@@ -39,7 +39,7 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
       regexDefinitionName: "alphabetic",
     },    
     {
-      label: "Account",
+      label: "Git Account",
       id: "gitCredential",
       isRequired: true,
       maxLength: 50,
@@ -93,7 +93,7 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
       regexDefinitionName: "gitBranchName",
     },
     {
-      label: "Salesforce Account",
+      label: "Salesforce Configurator Tool",
       id: "sfdcToolId",
       isRequired: true,
       maxLength: 24,

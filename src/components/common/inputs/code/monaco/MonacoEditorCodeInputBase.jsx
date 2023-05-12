@@ -19,6 +19,12 @@ export default function MonacoEditorCodeInputBase({
     markers.forEach((marker) => console.log("onValidate:", marker.message));
   }
 
+  loader.config({
+    paths: {
+      vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.38.0/min/vs',
+    },
+  });
+
   return (
     <Editor
       language={mode}
