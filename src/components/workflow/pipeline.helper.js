@@ -224,7 +224,7 @@ pipelineHelper.getPipelineColor = (pipelineModel, themeConstants) => {
 
   switch (orchestrationState) {
     case "paused":
-      return themeConstants.COLOR_PALETTE.OPSERA_GOLD;
+      return themeConstants.COLOR_PALETTE.WARNING;
     case "running":
       return themeConstants.COLOR_PALETTE.GREEN;
     // case "failed":

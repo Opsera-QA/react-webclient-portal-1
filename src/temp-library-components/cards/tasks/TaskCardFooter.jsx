@@ -10,7 +10,7 @@ export default function TaskCardFooter({ taskModel }) {
   const getColor = () => {
     switch (state) {
       case "paused":
-        return themeConstants.COLOR_PALETTE.OPSERA_GOLD;
+        return themeConstants.COLOR_PALETTE.WARNING;
       case "running":
         return themeConstants.COLOR_PALETTE.GREEN;
       // case "failure":
