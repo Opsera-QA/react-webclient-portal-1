@@ -24,6 +24,7 @@ function GithubContributorsCommitsActionableInsightTable({
     () => [
       getTableTextColumn(getField(fields, "reviewerName"), "reviewerName"),
       getTableTextColumn(getField(fields, "totalCommits"), "totalCommits"),
+      getTableTextColumn(getField(fields, "contributorName"), "contributorName")
     ],
     []
   );

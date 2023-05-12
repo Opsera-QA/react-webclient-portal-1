@@ -18,7 +18,8 @@ function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filter
       getTableTextColumn(getField(fields, "collaboratorName"), "collaboratorName"),
       getTableDateTimeColumn(getField(fields, "createdAt"), "createdAt"),
       getTableTextColumn(getField(fields, "mergeRequestTitle"), "mergeRequestTitle"),
-      getTableDateTimeColumn(getField(fields, "closedAt"), "closedAt")
+      getTableDateTimeColumn(getField(fields, "closedAt"), "closedAt"),
+      getTableTextColumn(getField(fields, "mergeRequestsId"),"mergeRequestsId")
     ],
     []
   );
@@ -27,6 +28,7 @@ function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filter
       getTableTextColumn(getField(fields, "collaboratorName"), "collaboratorName"),
       getTableDateTimeColumn(getField(fields, "createdAt"), "createdAt"),
       getTableTextColumn(getField(fields, "mergeRequestTitle"), "mergeRequestTitle"),
+      getTableTextColumn(getField(fields, "mergeRequestsId"),"mergeRequestsId")
     ],
     []
   );
