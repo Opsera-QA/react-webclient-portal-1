@@ -170,12 +170,14 @@ const CustomSettingTaskConfirmationScreen = ({
               <ToolNameField
                 model={wizardModel}
                 fieldName={"sourceToolId"}
+                loadToolInNewWindow={true}
               />
             </Col>
             <Col xs={6}>
               <ToolNameField
                 model={wizardModel}
                 fieldName={"targetToolId"}
+                loadToolInNewWindow={true}
                 visible={wizardModel?.getData("taskType") === MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG}
               />
             </Col>
