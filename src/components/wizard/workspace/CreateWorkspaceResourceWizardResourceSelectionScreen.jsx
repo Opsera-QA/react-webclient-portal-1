@@ -15,6 +15,9 @@ import WorkspaceResourceOptionCardBase, {
 import {CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS} from "components/wizard/workspace/CreateWorkspaceResourceWizard";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import ExternalPageLink from "components/common/links/ExternalPageLink";
+import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
+import {EXTERNAL_LINKS} from "components/header/legacy/HeaderNavBar";
 
 export default function CreateWorkspaceResourceWizardResourceSelectionScreen(
   {
@@ -36,11 +39,26 @@ export default function CreateWorkspaceResourceWizardResourceSelectionScreen(
     }
   };
 
+  const getButtonContainer = () => {
+    return (
+      <>
+        <div className={"mb-1 mx-3"}>
+          <ExternalPageLink
+            link={EXTERNAL_LINKS.FREQUENTLY_ASKED_QUESTIONS}
+            icon={faQuestionCircle}
+            linkText={"Frequently Asked Questions"}
+          />
+        </div>
+        <OverlayWizardButtonContainerBase />
+      </>
+    );
+  };
+
   return (
     <CenterOverlayContainer
       titleText={"Create a New Workspace Resource"}
       showCloseButton={false}
-      buttonContainer={<OverlayWizardButtonContainerBase />}
+      buttonContainer={getButtonContainer()}
     >
       <div className={"m-4"}>
         <CenteredContentWrapper>
