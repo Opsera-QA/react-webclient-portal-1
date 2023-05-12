@@ -21,7 +21,7 @@ export const REGISTRY_WIZARD_SCREENS = {
   TASK_DETAIL: "task_detail",
 };
 
-export default function CreateTasksWizard({ loadData, isMounted }) {
+export default function CreateTasksWizard({ loadData }) {
   const [currentScreen, setCurrentScreen] = useState(
     REGISTRY_WIZARD_SCREENS.MODE_SELECT,
   );
@@ -78,7 +78,7 @@ export default function CreateTasksWizard({ loadData, isMounted }) {
   }, [currentScreen, taskModel?.getData("tool_identifier")]);
 
   const closeOverlayFunction = () => {
-    if (isMounted?.current === true) {
+    if (loadData) {
       loadData();
     }
     toastContext.removeInlineMessage();
@@ -157,5 +157,4 @@ export default function CreateTasksWizard({ loadData, isMounted }) {
 
 CreateTasksWizard.propTypes = {
   loadData: PropTypes.func,
-  isMounted: PropTypes.object,
 };
