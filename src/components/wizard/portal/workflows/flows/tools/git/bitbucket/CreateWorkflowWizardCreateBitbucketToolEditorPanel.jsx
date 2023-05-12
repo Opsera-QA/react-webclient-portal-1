@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import VanitySetTextInputBase from "temp-library-components/inputs/VanitySetTextInputBase";
 import Col from "react-bootstrap/Col";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import Row from "react-bootstrap/Row";
-import CreateFreeTrialGitlabToolButton from "components/wizard/portal/workflows/flows/tools/git/gitlab/CreateFreeTrialGitlabToolButton";
-import GitlabTwoFactorAuthenticationBooleanToggleInput from "components/inventory/tools/tool_details/tool_jobs/gitlab/GitlabTwoFactorAuthenticationBooleanToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import CreateSalesforceWorkflowWizardSelectToolInputBase from "components/wizard/portal/workflows/flows/salesforce/CreateSalesforceWorkflowWizardSelectToolInputBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
@@ -16,7 +13,6 @@ import {
   faTriangleExclamation,
 } from "@fortawesome/pro-light-svg-icons";
 import CreateWorkflowWizardRegisterToolHeaderText from "components/wizard/portal/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
-import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import VanityButtonBase from "../../../../../../../../temp-library-components/button/VanityButtonBase";
 import CreateBitbucketToolButton from "./CreateBitbucketToolButton";
 import VaultTextAreaInput from "../../../../../../../common/inputs/text/VaultTextAreaInput";
@@ -27,6 +23,8 @@ import wizardPortalMetadata from "../../../../wizardPortalMetadata";
 import BooleanToggleInput from "../../../../../../../common/inputs/boolean/BooleanToggleInput";
 import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
 import useComponentStateReference from "../../../../../../../../hooks/useComponentStateReference";
+import bitbucketConnectionMetadata
+  from "../../../../../../../inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket-connection-metadata";
 
 const bitBucketApiTypeArray = [
   {
@@ -70,6 +68,15 @@ export default function CreateWorkflowWizardCreateBitbucketToolEditorPanel({
       );
     }
   }, [gitToolModel, currentToolCount, connectionFailure]);
+
+  useEffect(() => {
+    if (gitToolModel.getData("apiType") === "server") {
+      gitToolModel.setMetaDataFields(bitbucketConnectionMetadata.fieldsAlt);
+    }
+    if (gitToolModel.getData("apiType") === "cloud") {
+      gitToolModel.setMetaDataFields(bitbucketConnectionMetadata.fields);
+    }
+  }, [gitToolModel?.getData("apiType")]);
 
   const getButtons = () => {
     if (connectionFailure) {

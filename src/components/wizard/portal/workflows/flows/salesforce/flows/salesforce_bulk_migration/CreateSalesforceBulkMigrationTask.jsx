@@ -39,7 +39,7 @@ export default function CreateSalesforceBulkMigrationTask({
   handleClose,
 }) {
   const [currentScreen, setCurrentScreen] = useState(
-    CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_SCREEN,
+    CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_SALESFORCE_ACCOUNT_SCREEN,
   );
   const [task, setTask] = useState(undefined);
   const [gitToolModel, setGitToolModel] = useState(undefined);
@@ -59,46 +59,46 @@ export default function CreateSalesforceBulkMigrationTask({
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
-      case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_SCREEN:
-        return (
-          <CreateWorkflowWizardCreateGitToolScreenBase
-            gitToolModel={gitToolModel}
-            setGitToolModel={setGitToolModel}
-            onSuccessFunction={() =>
-              setCurrentScreen(
-                CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN,
-              )
-            }
-            setGitToolId={setGitToolId}
-            gitToolOption={gitToolOption}
-            setGitToolOption={setGitToolOption}
-            gitToolId={gitToolId}
-            className={"m-3"}
-            setButtonContainer={setButtonContainer}
-            backButtonFunction={backButtonFunction}
-            toolType={CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES.SOURCE}
-            connectionFailure={connectionFailure}
-            setConnectionFailure={setConnectionFailure}
-            onSkipConnectionTestFunction={() => {
-              setConnectionFailure(false);
-              setConnectionFailureCount(connectionFailure + 1);
-              setCurrentScreen(
-                CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_SALESFORCE_ACCOUNT_SCREEN,
-              );
-            }}
-          />
-        );
-      case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN:
-        return (
-          <CreateSalesforceOrganizationSyncTaskTestGitToolConnectionScreen
-            setCurrentScreen={setCurrentScreen}
-            gitToolId={gitToolId}
-            gitToolOption={gitToolOption}
-            flow={flow}
-            setButtonContainer={setButtonContainer}
-            setConnectionFailure={setConnectionFailure}
-          />
-        );
+      // case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_SCREEN:
+      //   return (
+      //     <CreateWorkflowWizardCreateGitToolScreenBase
+      //       gitToolModel={gitToolModel}
+      //       setGitToolModel={setGitToolModel}
+      //       onSuccessFunction={() =>
+      //         setCurrentScreen(
+      //           CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN,
+      //         )
+      //       }
+      //       setGitToolId={setGitToolId}
+      //       gitToolOption={gitToolOption}
+      //       setGitToolOption={setGitToolOption}
+      //       gitToolId={gitToolId}
+      //       className={"m-3"}
+      //       setButtonContainer={setButtonContainer}
+      //       backButtonFunction={backButtonFunction}
+      //       toolType={CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES.SOURCE}
+      //       connectionFailure={connectionFailure}
+      //       setConnectionFailure={setConnectionFailure}
+      //       onSkipConnectionTestFunction={() => {
+      //         setConnectionFailure(false);
+      //         setConnectionFailureCount(connectionFailure + 1);
+      //         setCurrentScreen(
+      //           CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_SALESFORCE_ACCOUNT_SCREEN,
+      //         );
+      //       }}
+      //     />
+      //   );
+      // case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_GIT_TOOL_CONNECTION_SCREEN:
+      //   return (
+      //     <CreateSalesforceOrganizationSyncTaskTestGitToolConnectionScreen
+      //       setCurrentScreen={setCurrentScreen}
+      //       gitToolId={gitToolId}
+      //       gitToolOption={gitToolOption}
+      //       flow={flow}
+      //       setButtonContainer={setButtonContainer}
+      //       setConnectionFailure={setConnectionFailure}
+      //     />
+      //   );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_SALESFORCE_ACCOUNT_SCREEN:
         return (
           <CreateWorkflowWizardCreateSalesforceToolEditorPanel
@@ -114,11 +114,7 @@ export default function CreateSalesforceBulkMigrationTask({
             toolType={CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES.SOURCE}
             className={"m-3"}
             setButtonContainer={setButtonContainer}
-            backButtonFunction={() =>
-              setCurrentScreen(
-                CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_SCREEN,
-              )
-            }
+            backButtonFunction={backButtonFunction}
             connectionFailure={connectionFailure}
             setConnectionFailure={setConnectionFailure}
             setCurrentScreen={setCurrentScreen}
@@ -157,7 +153,7 @@ export default function CreateSalesforceBulkMigrationTask({
             setButtonContainer={setButtonContainer}
             backButtonFunction={() =>
               setCurrentScreen(
-                CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_SCREEN,
+                CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_SALESFORCE_ACCOUNT_SCREEN,
               )
             }
             connectionFailure={connectionFailure}
@@ -192,24 +188,25 @@ export default function CreateSalesforceBulkMigrationTask({
             gitToolOption={gitToolOption}
             salesforceToolId={salesforceSourceToolId}
             jenkinsToolId={jenkinsSourceToolId}
+            gitToolModel={gitToolModel}
           />
         );
-      case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_IN_JENKINS_SCREEN:
-        return (
-          <CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase
-            gitToolId={gitToolId}
-            gitToolOption={gitToolOption}
-            onSuccessFunction={() =>
-              setCurrentScreen(
-                CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.EDIT_WORKFLOW_INPUT,
-              )
-            }
-            onFailureFunction={() => {}}
-            jenkinsToolId={jenkinsSourceToolId}
-            className={"m-3"}
-            setButtonContainer={setButtonContainer}
-          />
-        );
+      // case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_IN_JENKINS_SCREEN:
+      //   return (
+      //     <CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase
+      //       gitToolId={gitToolId}
+      //       gitToolOption={gitToolOption}
+      //       onSuccessFunction={() =>
+      //         setCurrentScreen(
+      //           CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.EDIT_WORKFLOW_INPUT,
+      //         )
+      //       }
+      //       onFailureFunction={() => {}}
+      //       jenkinsToolId={jenkinsSourceToolId}
+      //       className={"m-3"}
+      //       setButtonContainer={setButtonContainer}
+      //     />
+      //   );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.EDIT_WORKFLOW_INPUT:
         return (
             <CreateSalesforceBulkMigrationInputFields

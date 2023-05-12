@@ -85,15 +85,6 @@ export default function CreateTasksWizard({ loadData, isMounted }) {
     toastContext.clearOverlayPanel();
   };
 
-  const backButtonFunction = () => {
-    if (currentScreen === "task_select") {
-      setCurrentScreen(REGISTRY_WIZARD_SCREENS.MODE_SELECT);
-    }
-    if (currentScreen === "connection_test") {
-      setCurrentScreen(REGISTRY_WIZARD_SCREENS.CONNECTION_INFO);
-    }
-  };
-
   const routeToDetailView = () => {
     closeOverlayFunction();
     history.push(`/inventory/tools/details/${taskModel?.getData("_id")}`);
@@ -112,6 +103,7 @@ export default function CreateTasksWizard({ loadData, isMounted }) {
       <WizardTaskConfigurationRouter
         flow={taskType}
         setButtonContainer={setButtonContainer}
+        backButtonFunction={() => {setCurrentScreen(REGISTRY_WIZARD_SCREENS.TASK_SELECT);}}
         handleClose={closeOverlayFunction}
       />
     );
@@ -138,6 +130,8 @@ export default function CreateTasksWizard({ loadData, isMounted }) {
             selectedFlow={setUpMode}
             setSelectedFlow={setTaskType}
             setCurrentScreen={setCurrentScreen}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={() => {setCurrentScreen(REGISTRY_WIZARD_SCREENS.MODE_SELECT);}}
           />
         );
     }

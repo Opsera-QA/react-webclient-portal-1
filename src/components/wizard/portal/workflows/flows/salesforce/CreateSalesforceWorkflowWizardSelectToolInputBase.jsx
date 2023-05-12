@@ -131,6 +131,8 @@ export default function CreateSalesforceWorkflowWizardSelectToolInputBase(
 
   const setDataFunction = (selectedOption) => {
     const newModel = model?.getNewInstance(selectedOption?.configuration, false);
+    newModel.setData("accountUsername",selectedOption?.configuration?.accountUsername);
+    newModel.setData("sfdcToolName", selectedOption?.name);
     setToolId(selectedOption?._id);
     setModel({ ...newModel });
   };
@@ -138,6 +140,8 @@ export default function CreateSalesforceWorkflowWizardSelectToolInputBase(
   const clearDataFunction = (selectedOption) => {
     const newModel = model?.getNewInstance(selectedOption?.configuration, false);
     setToolId("");
+    newModel.setDefaultValue("accountUsername");
+    newModel.setDefaultValue("sfdcToolName");
     setModel({ ...newModel });
   };
 
@@ -148,7 +152,7 @@ export default function CreateSalesforceWorkflowWizardSelectToolInputBase(
     }
 
     const toolName = tool?.name;
-    const accountName = tool?.configuration?.accountUsername;
+    const accountName = tool?.configuration?.jUserId;
 
     return (`${toolName} (${accountName})`);
   };

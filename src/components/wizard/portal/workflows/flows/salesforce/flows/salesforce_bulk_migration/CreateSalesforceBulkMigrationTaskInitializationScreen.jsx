@@ -22,7 +22,8 @@ export default function CreateSalesforceBulkMigrationTaskInitializationScreen(
         gitToolOption,
         flow,
         setButtonContainer,
-        jenkinsToolId
+        jenkinsToolId,
+        gitToolModel
     }) {
     const setTaskFunction = (task) => {
         const updatedTask = SalesforceTaskHelper.configureSalesforceBulkMigrationTask(
@@ -31,10 +32,11 @@ export default function CreateSalesforceBulkMigrationTaskInitializationScreen(
             salesforceToolId,
             gitToolId,
             gitToolOption,
-            jenkinsToolId
+            jenkinsToolId,
+            gitToolModel
         );
         setTask({...updatedTask});
-        setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_IN_JENKINS_SCREEN);
+        setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.EDIT_WORKFLOW_INPUT);
     };
 
     return (
@@ -56,5 +58,6 @@ CreateSalesforceBulkMigrationTaskInitializationScreen.propTypes = {
     gitToolId: PropTypes.string,
     gitToolOption: PropTypes.string,
     jenkinsToolId: PropTypes.string,
+    gitToolModel: PropTypes.object
 };
 

@@ -63,11 +63,7 @@ export default function CreateSalesforceQuickDeployTask({
             toolType={CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES.SOURCE}
             className={"m-3"}
             setButtonContainer={setButtonContainer}
-            backButtonFunction={() =>
-              setCurrentScreen(
-                CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_SALESFORCE_ACCOUNT_SCREEN,
-              )
-            }
+            backButtonFunction={backButtonFunction}
             connectionFailure={connectionFailure}
             setConnectionFailure={setConnectionFailure}
             setCurrentScreen={setCurrentScreen}
@@ -98,6 +94,7 @@ export default function CreateSalesforceQuickDeployTask({
             setCurrentScreen={setCurrentScreen}
             setButtonContainer={setButtonContainer}
             salesforceToolId={salesforceSourceToolId}
+            sourceSalesforceToolModel={sourceSalesforceToolModel}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.EDIT_WORKFLOW_INPUT:

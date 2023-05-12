@@ -30,35 +30,35 @@ SalesforceTaskHelper.configureSalesforceOrganizationSyncTask = (
     );
   }
 
-  if (isMongoDbId(gitToolId) !== true) {
+  if (isMongoDbId(salesforceToolId) !== true) {
     throw ReactLoggingHandler.logErrorMessage(
       "salesforceTaskWizard",
       "configureSalesforceOrganizationSyncTask",
       "Cannot configure Organization Sync Task:",
-      "Invalid Git Tool ID given",
+      "Invalid Salesforce Tool ID given",
     );
   }
 
-  if (hasStringValue(gitToolOption) === false) {
+  if (isMongoDbId(jenkinsToolId) !== true) {
     throw ReactLoggingHandler.logErrorMessage(
-      "salesforceTaskWizard",
-      "configureSalesforceOrganizationSyncTask",
-      "Cannot configure Organization Sync Task:",
-      "Did not include the Git Service name",
+        "salesforceTaskWizard",
+        "configureSalesforceOrganizationSyncTask",
+        "Cannot configure Organization Sync Task:",
+        "Invalid Jenkins Tool ID given",
     );
   }
-
-  if (isMongoDbId(gitToolId) !== true) {
-    throw ReactLoggingHandler.logErrorMessage(
-      "salesforceTaskWizard",
-      "configureSalesforceOrganizationSyncTask",
-      "Cannot configure Organization Sync Task:",
-      "The Git Tool ID was invalid",
-    );
-  }
+  //
+  // if (isMongoDbId(gitToolId) !== true) {
+  //   throw ReactLoggingHandler.logErrorMessage(
+  //     "salesforceTaskWizard",
+  //     "configureSalesforceOrganizationSyncTask",
+  //     "Cannot configure Organization Sync Task:",
+  //     "The Git Tool ID was invalid",
+  //   );
+  // }
 
   let updatedTask = SalesforceTaskHelper.updateSfdcToolIdForSalesforceTask(task, salesforceToolId, flow);
-  updatedTask = SalesforceTaskHelper.updateGitToolIdForSalesforceTask(updatedTask, gitToolId, gitToolOption, flow);
+  // updatedTask = SalesforceTaskHelper.updateGitToolIdForSalesforceTask(updatedTask, gitToolId, gitToolOption, flow, gitToolModel);
   updatedTask = SalesforceTaskHelper.updateJenkinsToolIdForSalesforceTask(updatedTask, jenkinsToolId, flow);
   return updatedTask;
 };
@@ -227,35 +227,36 @@ SalesforceTaskHelper.configureSalesforceBulkMigrationTask = (
     );
   }
 
-  if (isMongoDbId(gitToolId) !== true) {
+  if (isMongoDbId(jenkinsToolId) !== true) {
     throw ReactLoggingHandler.logErrorMessage(
         "salesforceTaskWizard",
         "configureSalesforceOrganizationSyncTask",
         "Cannot configure Organization Sync Task:",
-        "Invalid Git Tool ID given",
+        "Invalid Jenkins Tool ID given",
     );
   }
 
-  if (hasStringValue(gitToolOption) === false) {
-    throw ReactLoggingHandler.logErrorMessage(
-        "salesforceTaskWizard",
-        "configureSalesforceOrganizationSyncTask",
-        "Cannot configure Organization Sync Task:",
-        "Did not include the Git Service name",
-    );
-  }
+  // if (hasStringValue(gitToolOption) === false) {
+  //   throw ReactLoggingHandler.logErrorMessage(
+  //       "salesforceTaskWizard",
+  //       "configureSalesforceOrganizationSyncTask",
+  //       "Cannot configure Organization Sync Task:",
+  //       "Did not include the Git Service name",
+  //   );
+  // }
 
-  if (isMongoDbId(gitToolId) !== true) {
+  if (isMongoDbId(salesforceToolId) !== true) {
     throw ReactLoggingHandler.logErrorMessage(
         "salesforceTaskWizard",
         "configureSalesforceOrganizationSyncTask",
         "Cannot configure Organization Sync Task:",
-        "The Git Tool ID was invalid",
+        "The Salesforce Tool ID was invalid",
     );
   }
 
   let updatedTask = SalesforceTaskHelper.updateSfdcToolIdForSalesforceTask(task, salesforceToolId, flow);
-  updatedTask = SalesforceTaskHelper.updateGitToolIdForSalesforceTask(updatedTask, gitToolId, gitToolOption, flow);
+  // updatedTask = SalesforceTaskHelper.updateGitToolIdForSalesforceTask(updatedTask, gitToolId, gitToolOption, flow,
+  //     gitToolModel);
   updatedTask = SalesforceTaskHelper.updateJenkinsToolIdForSalesforceTask(updatedTask, jenkinsToolId, flow);
   return updatedTask;
 };
@@ -265,6 +266,7 @@ SalesforceTaskHelper.configureSalesforceQuickDeployTask = (
     task,
     flow,
     salesforceToolId,
+    sourceSalesforceToolModel
 ) => {
   const parsedTask = DataParsingHelper.parseObject(task);
 
@@ -286,11 +288,12 @@ SalesforceTaskHelper.configureSalesforceQuickDeployTask = (
     );
   }
 
-  let updatedTask = SalesforceTaskHelper.updateSfdcToolIdForSalesforceTask(task, salesforceToolId, flow);
+  let updatedTask = SalesforceTaskHelper.updateSfdcToolIdForSalesforceTask(task, salesforceToolId, flow, sourceSalesforceToolModel);
   return updatedTask;
 };
 
-SalesforceTaskHelper.updateGitToolIdForSalesforceTask = (task, gitToolId, service, flow) => {
+SalesforceTaskHelper.updateGitToolIdForSalesforceTask = (task, gitToolId, service, flow, gitToolModel) => {
+  console.log(gitToolModel);
   if (isMongoDbId(gitToolId) !== true) {
     throw "Invalid Git Tool ID given";
   }
@@ -308,7 +311,7 @@ SalesforceTaskHelper.updateGitToolIdForSalesforceTask = (task, gitToolId, servic
       return updatedTask;
     case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK:
       updatedTask.configuration.gitToolId = gitToolId;
-      updatedTask.configuration.gitCredential = gitToolId;
+      updatedTask.configuration.gitCredential = gitToolModel?.getData("name") ? gitToolModel?.getData("name") : gitToolId;
       updatedTask.configuration.service = service;
       updatedTask.tool_identifier = service;
       return updatedTask;
@@ -316,7 +319,9 @@ SalesforceTaskHelper.updateGitToolIdForSalesforceTask = (task, gitToolId, servic
     case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
     case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
       updatedTask.configuration.gitToolId = gitToolId;
-      updatedTask.configuration.gitCredential = gitToolId;
+      updatedTask.configuration.gitCredential = gitToolModel?.getData("name")
+        ? gitToolModel?.getData("name")
+        : gitToolId;
       updatedTask.configuration.service = service;
       updatedTask.tool_identifier = service;
       return updatedTask;
@@ -325,7 +330,7 @@ SalesforceTaskHelper.updateGitToolIdForSalesforceTask = (task, gitToolId, servic
   }
 };
 
-SalesforceTaskHelper.updateSfdcToolIdForSalesforceTask = (task, salesforceToolId, flow) => {
+SalesforceTaskHelper.updateSfdcToolIdForSalesforceTask = (task, salesforceToolId, flow, sourceSalesforceToolModel) => {
   if (isMongoDbId(salesforceToolId) !== true) {
     throw "Invalid Salesforce Tool ID given";
   }
@@ -339,10 +344,14 @@ SalesforceTaskHelper.updateSfdcToolIdForSalesforceTask = (task, salesforceToolId
     case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK:
       updatedTask.configuration.sfdcToolId = salesforceToolId;
       return updatedTask;
+    case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
+      updatedTask.configuration.sfdcToolId = salesforceToolId;
+      updatedTask.configuration.accountUsername = sourceSalesforceToolModel?.getData("accountUsername");
+      updatedTask.configuration.sfdcToolName = sourceSalesforceToolModel?.getData("sfdcToolName");
+      return updatedTask;
     case TASK_TYPES.SYNC_SALESFORCE_REPO:
     case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
     case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
-    case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
       updatedTask.configuration.sfdcToolId = salesforceToolId;
       return updatedTask;
     default:
