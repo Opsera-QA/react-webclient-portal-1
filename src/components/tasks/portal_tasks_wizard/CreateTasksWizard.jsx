@@ -21,7 +21,7 @@ export const REGISTRY_WIZARD_SCREENS = {
   TASK_DETAIL: "task_detail",
 };
 
-export default function CreateTasksWizard({ loadData, isMounted }) {
+export default function CreateTasksWizard({ loadData, backButtonFunction }) {
   const [currentScreen, setCurrentScreen] = useState(
     REGISTRY_WIZARD_SCREENS.MODE_SELECT,
   );
@@ -120,6 +120,7 @@ export default function CreateTasksWizard({ loadData, isMounted }) {
             setSetupMode={setSetupMode}
             setupMode={setUpMode}
             className={"py-5"}
+            backButtonFunction={backButtonFunction}
           />
         );
       case REGISTRY_WIZARD_SCREENS.TASK_CONFIGURATION:
@@ -151,5 +152,5 @@ export default function CreateTasksWizard({ loadData, isMounted }) {
 
 CreateTasksWizard.propTypes = {
   loadData: PropTypes.func,
-  isMounted: PropTypes.object,
+  backButtonFunction: PropTypes.func
 };

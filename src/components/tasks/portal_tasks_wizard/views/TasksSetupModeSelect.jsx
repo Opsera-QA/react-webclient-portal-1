@@ -30,12 +30,13 @@ function TasksSetupModeSelect({
   setCurrentScreen,
   setButtonContainer,
   REGISTRY_WIZARD_SCREENS,
+    backButtonFunction
 }) {
   const { themeConstants } = useComponentStateReference();
 
   useEffect(() => {
     if (setButtonContainer && setCurrentScreen) {
-      setButtonContainer(<OverlayWizardButtonContainerBase />);
+      setButtonContainer(<OverlayWizardButtonContainerBase backButtonFunction={backButtonFunction}/>);
     }
   }, []);
 
@@ -151,6 +152,7 @@ TasksSetupModeSelect.propTypes = {
   setCurrentScreen: PropTypes.func,
   setButtonContainer: PropTypes.func,
   REGISTRY_WIZARD_SCREENS: PropTypes.object,
+  backButtonFunction: PropTypes.func
 };
 
 export default TasksSetupModeSelect;
