@@ -27,6 +27,7 @@ import PipelineOrchestrationProgressBarBase
 import ViewPipelineButton from "temp-library-components/button/pipeline/ViewPipelineButton";
 import {VanityFocusTextBase} from "temp-library-components/label/VanityFocusTextBase";
 import ViewPipelineLogsButton from "temp-library-components/button/pipeline/ViewPipelineLogsButton";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 // TODO: Should this be two separate panels?
 export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
@@ -249,21 +250,25 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
             </Col>
             <Col xs={12}>
               <div className={"d-flex justify-content-between w-100 my-3"}>
-                <div style={{minWidth: "76px"}} />
-                <div>
-                  {getButtons()}
-                  {/*<PipelineActionControls*/}
-                  {/*  pipeline={pipelineModel?.getCurrentData()}*/}
-                  {/*  isLoading={isLoading}*/}
-                  {/*  workflowStatus={status}*/}
-                  {/*  runCount={runCount}*/}
-                  {/*  isQueued={isQueued}*/}
-                  {/*  fetchData={loadData}*/}
-                  {/*/>*/}
-                </div>
-                <div style={{maxWidth: "76px"}}>
-                  {getCloseButton()}
-                </div>
+                <div/>
+                {/*<PipelineActionControls*/}
+                {/*  pipeline={pipelineModel?.getCurrentData()}*/}
+                {/*  isLoading={isLoading}*/}
+                {/*  workflowStatus={status}*/}
+                {/*  runCount={runCount}*/}
+                {/*  isQueued={isQueued}*/}
+                {/*  fetchData={loadData}*/}
+                {/*/>*/}
+                {/*</div>*/}
+                <ViewPipelineButton
+                  pipelineId={pipelineId}
+                  buttonText={"Advanced"}
+                />
+                <div/>
+                <ViewPipelineLogsButton
+                  pipelineId={pipelineId}
+                />
+                <div/>
               </div>
             </Col>
           </Row>
@@ -275,29 +280,25 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
     );
   };
 
-  const getButtons = () => {
-    return (
-      <div className={"d-flex"}>
-        <ViewPipelineButton
-          pipelineId={pipelineId}
-          buttonText={"Advanced"}
-          buttonSize={"sm"}
-          className={"my-auto mr-2"}
-          variant={"link"}
-        />
-        <ViewPipelineLogsButton
-          pipelineId={pipelineId}
-          buttonSize={"sm"}
-          variant={"link"}
-        />
-      </div>
-    );
+  const getTitleText = () => {
+    if (pipelineModel) {
+      const name = pipelineModel?.getData("name");
+      const runCount = pipelineModel?.getRunCount();
+
+      if (runCount === 0) {
+        return `${name}: No Runs`;
+      }
+
+      return `${pipelineModel?.getData("name")}: Run ${pipelineModel?.getRunCount()}`;
+    }
+
+    return "";
   };
 
   return (
     <OverlayContainer
       closePanel={closePanel}
-      titleText={pipelineModel?.getData("name")}
+      titleText={getTitleText()}
       titleIcon={faDraftingCompass}
       showToasts={true}
       showCloseButton={false}

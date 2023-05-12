@@ -33,7 +33,6 @@ export default function ViewPipelineLogsButton(
       normalText={buttonText}
       variant={variant}
       buttonSize={buttonSize}
-      buttonClassName={"py-0 my-auto"}
       className={className}
       icon={faClipboardList}
     />
