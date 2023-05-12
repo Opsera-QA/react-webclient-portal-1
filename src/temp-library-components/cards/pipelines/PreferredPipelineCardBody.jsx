@@ -5,7 +5,7 @@ import {Col} from "react-bootstrap";
 import {orchestrationHelper} from "temp-library-components/helpers/orchestration/orchestration.helper";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 
-export default function AltPipelineCardBody(
+export default function PreferredPipelineCardBody(
   {
     pipelineModel,
   }) {
@@ -34,6 +34,6 @@ export default function AltPipelineCardBody(
   );
 }
 
-AltPipelineCardBody.propTypes = {
+PreferredPipelineCardBody.propTypes = {
   pipelineModel: PropTypes.object,
 };
