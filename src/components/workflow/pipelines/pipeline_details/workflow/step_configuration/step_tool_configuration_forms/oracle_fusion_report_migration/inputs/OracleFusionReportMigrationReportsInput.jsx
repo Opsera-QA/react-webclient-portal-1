@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { Button, OverlayTrigger, Popover } from "react-bootstrap";
-import { faHandshake, faInfoCircle, faTimes } from "@fortawesome/pro-light-svg-icons";
+import { Button } from "react-bootstrap";
+import { faHandshake, faTimes } from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -10,6 +10,7 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import IconBase from "components/common/icons/IconBase";
 import OracleFusionReportMigrationStandaloneArtifactSelectInput from "./artifact/OracleFusionReportMigrationStandaloneArtifactSelectInput";
 import OracleFusionReportMigrationStandaloneArtifactVersionSelectInput from "./artifact/OracleFusionReportMigrationStandaloneArtifactVersionSelectInput";
+import InfoOverlayIcon from "components/common/icons/info/InfoOverlayIcon";
 
 function OracleFusionReportMigrationReportsInput({
   model,
@@ -275,28 +276,15 @@ function OracleFusionReportMigrationReportsInput({
 
   const getHelpText = () => {
     return (
-      <OverlayTrigger
-        trigger="click"
-        rootClose
-        placement="left"
-        overlay={
-          <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
-            <Popover.Title as="h3">Custom Parameter Mapping</Popover.Title>
-            <Popover.Content>
-              <div className="text-muted mb-2">
-                This functionality helps users map artifact and artifact versions <br /><br />
-              </div>
-            </Popover.Content>
-          </Popover>
-        }
-      >
-        <IconBase
-          icon={faInfoCircle}
-          className={"fa-pull-right pointer pr-2 mt-1 pl-0"}
-          onClickFunction={() => document.body.click()}
-        />
-      </OverlayTrigger>
-    );
+      <InfoOverlayIcon 
+        infoOverlay={"This functionality helps users map artifact and artifact versions"}
+        title={"Artifact Mapping"}
+        className={"mb-2"}
+        overlayPlacement={"left"}
+        overlayHeight={"100px"}
+        overlayWidth={"500px"}
+      />
+    ); 
   };
 
   const getTitleBar = () => {
