@@ -96,7 +96,10 @@ const OracleFusionReportMigrationStepFormMetadata = {
     },
     {
       label: "GIT Commit Id",
-      id: "gitCommitId",      
+      id: "gitCommitId",
+      minLength: 40,
+      maxLength: 40,      
+      regexDefinitionName: "alphanumeric",
     },
     {
       label: "Nexus Tool",
