@@ -22,10 +22,20 @@ orchestrationHelper.getLastRunSummary = (
 
 orchestrationHelper.getLastRunCardSummary = (
   completionTime,
-  status
+  status,
+  type,
 ) => {
   const parsedCompletionTime = DataParsingHelper.parseDate(completionTime);
   const parsedStatus = DataParsingHelper.parseString(status);
+  const parsedType = DataParsingHelper.parseString(type, "Workflow");
+
+  if (parsedStatus === "running") {
+    return `This ${parsedType} is currently running`;
+  }
+
+  if (parsedStatus === "paused") {
+    return `This ${parsedType} is awaiting user action`;
+  }
 
   if (parsedCompletionTime && parsedStatus) {
     const statusVerb = orchestrationHelper.getStatusLabelVerb(status);

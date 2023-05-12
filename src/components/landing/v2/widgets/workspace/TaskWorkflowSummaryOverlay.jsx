@@ -98,7 +98,7 @@ export default function TaskWorkflowSummaryOverlay({ taskId }) {
                   {icon}
                 </div>
                 <div className={"font-larger my-auto"}>
-                  {orchestrationHelper.getLastRunCardSummary(taskModel?.getData("completion"), taskModel?.getData("status"))}
+                  {orchestrationHelper.getLastRunSummary("Task", taskModel?.getData("completion"), taskModel?.getData("status"))}
                 </div>
               </div>
             </Col>
