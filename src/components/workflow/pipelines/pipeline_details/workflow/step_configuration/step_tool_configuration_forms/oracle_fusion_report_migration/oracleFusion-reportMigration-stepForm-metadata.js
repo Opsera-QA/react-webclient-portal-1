@@ -156,6 +156,7 @@ const OracleFusionReportMigrationStepFormMetadata = {
     targetInstancePath: "",
     artifactStepId: "",
     service: "github",
+    gitToolId: "",
     repoId: "",
     repository: "",
     gitBranch: "",
