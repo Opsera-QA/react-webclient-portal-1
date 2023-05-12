@@ -36,7 +36,7 @@ export const salesforceBulkMigrationTaskConfigurationMetadata = {
       regexDefinitionName: "alphabetic",
     },
     {
-      label: "Account",
+      label: "Git Account",
       id: "gitCredential",
       isRequired: true,
       maxLength: 50,
@@ -91,7 +91,7 @@ export const salesforceBulkMigrationTaskConfigurationMetadata = {
       regexDefinitionName: "gitBranchName",
     },
     {
-      label: "Salesforce Account",
+      label: "Salesforce Configurator Tool",
       id: "sfdcToolId",
       isRequired: true,
       maxLength: 24,

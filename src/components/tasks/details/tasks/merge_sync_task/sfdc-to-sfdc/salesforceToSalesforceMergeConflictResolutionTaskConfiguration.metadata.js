@@ -2,7 +2,7 @@ export const salesforceToSalesforceMergeConflictResolutionTaskConfigurationMetad
   type: "Salesforce to Salesforce Merge Conflict Resolution Task Configuration",
   fields: [
     {
-      label: "Source Control Management Type",
+      label: "Source Code Management Type",
       id: "service",
       isRequired: true,
       lowercase: true,

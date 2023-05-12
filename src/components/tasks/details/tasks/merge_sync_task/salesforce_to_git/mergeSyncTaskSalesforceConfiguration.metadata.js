@@ -4,7 +4,7 @@ export const mergeSyncTaskSalesforceConfigurationMetadata = {
   type: "Merge Sync Task Salesforce Configuration",
   fields: [
     {
-      label: "Salesforce Org",
+      label: "Salesforce Configurator Tool",
       id: "sourceToolId",
       isRequiredFunction: (model) => {
         return model?.getData("jobType") === TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC;
