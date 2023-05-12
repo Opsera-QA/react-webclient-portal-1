@@ -25,7 +25,6 @@ export default function MonacoEditorCodeInputBase({
     },
   });
 
-
   return (
     <Editor
       language={mode}
