@@ -2,14 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import {useHistory} from "react-router-dom";
-import {pipelineHelper} from "components/workflow/pipeline.helper";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {faSearchPlus} from "@fortawesome/pro-light-svg-icons";
+import {taskHelper} from "components/tasks/task.helper";
 
-export default function ViewPipelineButton(
+export default function ViewTaskButton(
   {
-    pipelineId,
+    taskId,
     buttonText,
     buttonSize,
     variant,
@@ -19,11 +19,11 @@ export default function ViewPipelineButton(
   const { toastContext } = useComponentStateReference();
 
   const handleLoadFunction = async () => {
-    history.push(pipelineHelper.getDetailViewLink(pipelineId));
+    history.push(taskHelper.getDetailViewLink(taskId));
     toastContext.clearOverlayPanel();
   };
 
-  if (isMongoDbId(pipelineId) == null) {
+  if (isMongoDbId(taskId) == null) {
     return null;
   }
 
@@ -39,14 +39,14 @@ export default function ViewPipelineButton(
   );
 }
 
-ViewPipelineButton.propTypes = {
-  pipelineId: PropTypes.string,
+ViewTaskButton.propTypes = {
+  taskId: PropTypes.string,
   buttonText: PropTypes.string,
   variant: PropTypes.string,
   buttonSize: PropTypes.string,
   className: PropTypes.string,
 };
 
-ViewPipelineButton.defaultProps = {
-  buttonText: "View Pipeline",
+ViewTaskButton.defaultProps = {
+  buttonText: "View Task",
 };

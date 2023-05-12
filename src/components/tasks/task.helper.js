@@ -1,5 +1,6 @@
 import React from "react";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import {pipelineHelper} from "components/workflow/pipeline.helper";
 
 export const taskHelper = {};
 
@@ -33,3 +34,16 @@ taskHelper.getTaskCompletionPercentage = (task) => {
   return undefined;
 };
 
+taskHelper.getTaskColor = (state, themeConstants) => {
+  switch (state) {
+    case "paused":
+      return themeConstants.COLOR_PALETTE.WARNING;
+    case "running":
+      return themeConstants.COLOR_PALETTE.GREEN;
+    // case "failure":
+    // case "failed":
+    //   return themeConstants.COLOR_PALETTE.DANGER_RED;
+    default:
+      return themeConstants.RESOURCE_COLORS.TASKS;
+  }
+};

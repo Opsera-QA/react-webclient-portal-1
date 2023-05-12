@@ -5,9 +5,9 @@ import {useHistory} from "react-router-dom";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {faSearchPlus} from "@fortawesome/pro-light-svg-icons";
+import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
 
-export default function ViewPipelineButton(
+export default function ViewTaskLogsButton(
   {
     pipelineId,
     buttonText,
@@ -19,7 +19,7 @@ export default function ViewPipelineButton(
   const { toastContext } = useComponentStateReference();
 
   const handleLoadFunction = async () => {
-    history.push(pipelineHelper.getDetailViewLink(pipelineId));
+    history.push(`${pipelineHelper.getDetailViewLink(pipelineId)}#logs`);
     toastContext.clearOverlayPanel();
   };
 
@@ -34,12 +34,12 @@ export default function ViewPipelineButton(
       variant={variant}
       buttonSize={buttonSize}
       className={className}
-      icon={faSearchPlus}
+      icon={faClipboardList}
     />
   );
 }
 
-ViewPipelineButton.propTypes = {
+ViewTaskLogsButton.propTypes = {
   pipelineId: PropTypes.string,
   buttonText: PropTypes.string,
   variant: PropTypes.string,
@@ -47,6 +47,6 @@ ViewPipelineButton.propTypes = {
   className: PropTypes.string,
 };
 
-ViewPipelineButton.defaultProps = {
-  buttonText: "View Pipeline",
+ViewTaskLogsButton.defaultProps = {
+  buttonText: "View Logs",
 };
