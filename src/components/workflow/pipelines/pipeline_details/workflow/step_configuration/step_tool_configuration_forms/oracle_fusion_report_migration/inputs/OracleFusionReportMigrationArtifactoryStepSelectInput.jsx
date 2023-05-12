@@ -39,7 +39,7 @@ function OracleFusionReportMigrationArtifactoryStepSelectInput({
   const fetchArtifactoryStepDetails = async () => {    
     try {
       if (plan && stepId) {
-        const packageSteps = getArtifactorySteps(plan, stepId, [toolIdentifierConstants.TOOL_IDENTIFIERS.ORACLE_FUSION_REPORT_MIGRATION]).filter(step => step?.tool?.configuration?.migrationType === "pull_reports");        
+        const packageSteps = getArtifactorySteps(plan, stepId, [toolIdentifierConstants.TOOL_IDENTIFIERS.ORACLE_FUSION_REPORT_MIGRATION], false).filter(step => step?.tool?.configuration?.migrationType === "pull_reports");        
         if (packageSteps.length === 0) {
           let newModel = { ...model };
           newModel.setData("artifactStepId", "");
