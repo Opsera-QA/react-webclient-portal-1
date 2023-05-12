@@ -25,7 +25,7 @@ export default function PreferredPipelineCardBody(
             }}
           >
             <div className={"mt-auto mx-auto"}>
-              {orchestrationHelper.getLastRunCardSummary(pipelineHelper.getLastRunCompletionTime(pipelineModel?.getOriginalData()), pipelineHelper.getPipelineModelOrchestrationState(pipelineModel))}
+              {orchestrationHelper.getLastRunCardSummary(pipelineHelper.getLastRunCompletionTime(pipelineModel?.getOriginalData()), pipelineHelper.getPipelineModelOrchestrationState(pipelineModel), "Pipeline")}
             </div>
           </div>
         </Col>
