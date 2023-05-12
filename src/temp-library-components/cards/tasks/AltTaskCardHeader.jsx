@@ -5,7 +5,7 @@ import OrchestrationStateFieldBase
   from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-export default function PreferredTaskCardHeader(
+export default function AltTaskCardHeader(
   {
     taskModel,
   }) {
@@ -39,6 +39,6 @@ export default function PreferredTaskCardHeader(
   );
 }
 
-PreferredTaskCardHeader.propTypes = {
+AltTaskCardHeader.propTypes = {
   taskModel: PropTypes.object,
 };

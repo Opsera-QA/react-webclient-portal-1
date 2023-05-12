@@ -9,7 +9,7 @@ import {lightThemeConstants} from "temp-library-components/theme/light.theme.con
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 
-export default function PreferredPipelineCardHeader(
+export default function AltPipelineCardHeader(
   {
     pipelineModel,
   }) {
@@ -75,6 +75,6 @@ export default function PreferredPipelineCardHeader(
   );
 }
 
-PreferredPipelineCardHeader.propTypes = {
+AltPipelineCardHeader.propTypes = {
   pipelineModel: PropTypes.object,
 };
