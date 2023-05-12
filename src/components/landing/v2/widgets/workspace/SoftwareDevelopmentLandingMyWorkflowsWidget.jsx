@@ -49,7 +49,7 @@ export default function SoftwareDevelopmentLandingMyWorkflowsWidget({ className 
           type={""}
           isLoading={isLoading}
           variant={"success"}
-          customButtonText={"Create New"}
+          customButtonText={"New"}
           // size={"1x"}
           className={"my-auto"}
         />

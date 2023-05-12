@@ -66,7 +66,7 @@ export default function CreateWorkspaceResourceWizardResourceSelectionScreen(
             <div className={"d-md-block d-lg-block d-xl-none mt-4"} />
             <WorkspaceResourceOptionCardBase
               option={WORKSPACE_RESOURCE_TYPES.TOOL}
-              description={"Set up a new Tool"}
+              description={"Set up a new Tool Registry Item"}
               onClickFunction={handleFlowSelectionButton}
             />
           </Col>

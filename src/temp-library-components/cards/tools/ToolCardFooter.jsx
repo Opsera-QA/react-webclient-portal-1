@@ -9,7 +9,7 @@ export default function ToolCardFooter() {
     <CardFooterBase
       backgroundColor={themeConstants.RESOURCE_COLORS.TOOLS}
       color={themeConstants.COLOR_PALETTE.WHITE}
-      text={"Tool"}
+      text={"Tool Registry"}
     />
   );
 }
