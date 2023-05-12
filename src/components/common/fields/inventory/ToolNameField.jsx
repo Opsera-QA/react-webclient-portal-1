@@ -11,10 +11,11 @@ function ToolNameField(
     className,
     handleClose,
     loadToolInNewWindow,
+    visible,
   }) {
   const field = model?.getFieldById(fieldName);
 
-  if (field == null) {
+  if (field == null || visible === false ) {
     return null;
   }
 
@@ -35,7 +36,8 @@ ToolNameField.propTypes = {
   fieldName: PropTypes.string,
   className: PropTypes.string,
   handleClose: PropTypes.func,
-  loadToolInNewWindow: PropTypes.boolean,
+  loadToolInNewWindow: PropTypes.bool,
+  visible: PropTypes.bool,
 };
 
 ToolNameField.defaultProps = {
