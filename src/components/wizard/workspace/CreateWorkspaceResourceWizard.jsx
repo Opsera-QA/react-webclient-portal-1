@@ -41,13 +41,14 @@ export default function CreateWorkspaceResourceWizard({ loadDataFunction }) {
           />
         );
       case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TASK_SCREEN:
-        // if (isActive === true) {
-        //   return (
-            // <CreateTasksWizard
-            //   loadData={loadDataFunction}
-            // />
-          // );
-        // }
+        if (isActive === true) {
+          return (
+            <CreateTasksWizard
+              loadData={loadDataFunction}
+              backButtonFunction={backButtonFunction}
+            />
+          );
+        }
 
         return (
           <NewTaskOverlay
