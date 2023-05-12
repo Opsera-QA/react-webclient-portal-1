@@ -190,14 +190,8 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
                 <div className={"standard-border-radius mr-3"}>
                   {icon}
                 </div>
-                <div>
-                  {/*TODO: Make bigger font size*/}
-                  <VanityTextFieldBase
-                    label={orchestrationHelper.getLastRunSummaryForPipelineModel(pipelineModel)}
-                    requireValue={true}
-                    showLabel={false}
-                    className={"font-larger"}
-                  />
+                <div className={"font-larger"}>
+                  {orchestrationHelper.getLastRunSummaryForPipelineModel(pipelineModel)}
                 </div>
               </div>
             </Col>
