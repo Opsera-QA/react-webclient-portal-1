@@ -28,7 +28,7 @@ export default function TaskCardBody(
           >
             <div className={"mt-auto w-100 d-flex justify-content-between"}>
               <div>
-                {orchestrationHelper.getLastRunCardSummary(taskModel?.getData("completion"), taskModel?.getData("status"))}
+                {orchestrationHelper.getLastRunCardSummary(taskModel?.getData("completion"), taskModel?.getData("status"), "Task")}
               </div>
               <div>
                 <span>{runCount} Runs</span>

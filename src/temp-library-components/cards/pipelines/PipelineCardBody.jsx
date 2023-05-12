@@ -30,7 +30,7 @@ export default function PipelineCardBody(
           >
             <div className={"mt-auto w-100 d-flex justify-content-between"}>
               <div>
-                {orchestrationHelper.getLastRunCardSummary(pipelineHelper.getLastRunCompletionTime(pipelineModel?.getOriginalData()), pipelineHelper.getPipelineModelOrchestrationState(pipelineModel))}
+                {orchestrationHelper.getLastRunCardSummary(pipelineHelper.getLastRunCompletionTime(pipelineModel?.getOriginalData()), pipelineHelper.getPipelineModelOrchestrationState(pipelineModel), "Pipeline")}
               </div>
               <div>
                 <span>{runCount} Runs</span>
