@@ -15,6 +15,7 @@ import {
 import doraActions from "../dora/dora.action";
 import SystemDrivenMaturityChart from './SystemDrivenMaturityChart';
 import SystemDrivenMaturityOverlay from "./SystemDrivenMaturityOverlay";
+import { formatMaturityScoreItems } from "./util";
 
 function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiConfiguration, setKpis }) {
   const toastContext = useContext(DialogToastContext);
@@ -69,13 +70,7 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
         const { groups } = response?.data;
 
         if (isMounted?.current === true && Object.keys(groups).length) {
-          setMetricData(
-            groups.map(({ name, overallMaturityScoreText, previousOverallMaturityScoreText }) => ({
-              name,
-              score: overallMaturityScoreText,
-              previousScore: previousOverallMaturityScoreText
-            }))
-          );
+          setMetricData(formatMaturityScoreItems(groups));
         } else {
           setMetricData([]);
         }
@@ -109,7 +104,7 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
     const dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
     if (!selectedDeploymentStages || !jiraResolutionNames?.length || !useDashboardTags || !dashboardOrgs?.length) {
       return (
-        <Container>
+        <Container className="text-center">
           <InfoDialog message="Missing Required Filters. Dashboard Organization tags, Deployment Stages, and Jira Resolution Names are mandatory" />
         </Container>
       );
