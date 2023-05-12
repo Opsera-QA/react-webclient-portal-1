@@ -48,5 +48,5 @@ ViewPipelineLogsButton.propTypes = {
 };
 
 ViewPipelineLogsButton.defaultProps = {
-  buttonText: "View Pipeline Logs",
+  buttonText: "View Logs",
 };

@@ -1,10 +1,13 @@
 import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
+import {DialogToastContext} from "contexts/DialogToastContext";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import CloseButton from "components/common/buttons/CloseButton";
+import {useHistory} from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import PipelineLastRunDateField from "temp-library-components/fields/orchestration/date/PipelineLastRunDateField";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import ErrorMessageFieldBase from "components/common/fields/text/message/ErrorMessageFieldBase";
@@ -24,13 +27,12 @@ import PipelineOrchestrationProgressBarBase
 import ViewPipelineButton from "temp-library-components/button/pipeline/ViewPipelineButton";
 import {VanityFocusTextBase} from "temp-library-components/label/VanityFocusTextBase";
 import ViewPipelineLogsButton from "temp-library-components/button/pipeline/ViewPipelineLogsButton";
-import {PlacementHelperDiv} from "@opsera/react-vanity-set";
-import useComponentStateReference from "hooks/useComponentStateReference";
-import {pipelineHelper} from "components/workflow/pipeline.helper";
-import PipelineFooter from "components/landing/v2/widgets/workspace/PipelineFooter";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 // TODO: Should this be two separate panels?
-export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
+export default function PipelineWorkflowSummaryOverlayTake1({ pipelineId }) {
+  const toastContext = useContext(DialogToastContext);
+  const history = useHistory();
   const {
     pipelineModel,
     error,
@@ -46,10 +48,6 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
     loadData,
     isLoading: isLoadingMetrics,
   } = useGetPipelineDurationMetrics(pipelineId, pipelineModel?.getRunCount());
-  const {
-    toastContext,
-    themeConstants,
-  } = useComponentStateReference();
 
   const closePanel = () => {
     toastContext.removeInlineMessage();
@@ -64,7 +62,6 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
             minWidth: "340px",
             maxWidth: "340px",
           }}
-          className={"mx-3"}
         >
           <WidgetDataBlockBase className={"mb-2"}>
             <div className={"p-2 mr-4"}>
@@ -93,7 +90,6 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
             minWidth: "340px",
             maxWidth: "340px",
           }}
-          className={"mx-3"}
         >
           <WidgetDataBlockBase className={"mb-2"}>
             <div className={"p-2"}>
@@ -122,7 +118,6 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
             minWidth: "340px",
             maxWidth: "340px",
           }}
-          className={"mx-3"}
         >
           <WidgetDataBlockBase className={"mb-2"}>
             <div className={"p-2"}>
@@ -142,6 +137,41 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
       );
     }
   };
+
+  const getRunMetrics = () => {
+    return (
+      <CenteredContentWrapper>
+        <WidgetDataBlockBase className={"mt-2 mx-2"}>
+          <div className={"d-flex p-3"}>
+            <div className={"p-2 mr-4"}>
+              <div className={"mx-auto"}>
+                <VanityFocusTextBase
+                  text={pipelineModel?.getRunCount()}
+                />
+              </div>
+              <div className={"mx-auto"}>
+                <VanityLabelBase
+                  label={"Runs"}
+                />
+              </div>
+            </div>
+            {getLastRunDuration()}
+            {getTotalRunAverageDuration()}
+          </div>
+        </WidgetDataBlockBase>
+      </CenteredContentWrapper>
+    );
+  };
+
+  const getRunMetricsV2 = () => {
+    return (
+      <>
+        {getLastRunDuration()}
+        {getTotalRunAverageDuration()}
+      </>
+    );
+  };
+
 
   const getCloseButton = () => {
     return (
@@ -196,37 +226,31 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
                       pipelineModel={pipelineModel}
                     />
                   </div>
-                  <div className={"p-3"}>
-                    {/*TODO: Make bigger font size*/}
-                    <VanityTextFieldBase
-                      text={orchestrationHelper.getLastRunSummaryForPipelineModel(pipelineModel)}
-                      requireValue={true}
-                      showLabel={false}
-                      className={"larger"}
-                    />
+                  <div className={"ml-2"}>
+                    {getRunMetricsV2()}
                   </div>
                 </div>
               </CenteredContentWrapper>
             </Col>
             <Col xs={12}>
               <div className={"p-3"}>
+                <PipelineLastRunDateField
+                  pipelineModel={pipelineModel}
+                />
                 <VanityTextField
                   model={pipelineModel}
                   fieldName={"description"}
                 />
-              </div>
-            </Col>
-            <Col xs={12}>
-              <div className={"d-flex w-100 justify-content-between"}>
-                {getLastRunDuration()}
-                {getTotalRunAverageDuration()}
+                <VanityTextFieldBase
+                  label={"Last Run Summary"}
+                  text={orchestrationHelper.getLastRunSummaryForPipelineModel(pipelineModel)}
+                  requireValue={true}
+                />
               </div>
             </Col>
             <Col xs={12}>
               <div className={"d-flex justify-content-between w-100 my-3"}>
-                <PlacementHelperDiv
-                  width={"150px"}
-                />
+                <div/>
                 {/*<PipelineActionControls*/}
                 {/*  pipeline={pipelineModel?.getCurrentData()}*/}
                 {/*  isLoading={isLoading}*/}
@@ -235,36 +259,23 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
                 {/*  isQueued={isQueued}*/}
                 {/*  fetchData={loadData}*/}
                 {/*/>*/}
-                {/*
-                <PlacementHelperDiv
-                  width={"190px"}
-                />*/}
+                {/*</div>*/}
                 <ViewPipelineButton
                   pipelineId={pipelineId}
+                  buttonText={"Advanced"}
                 />
-                <PlacementHelperDiv
-                  width={"150px"}
+                <div/>
+                <ViewPipelineLogsButton
+                  pipelineId={pipelineId}
                 />
-
-                <PlacementHelperDiv
-                  width={"150px"}
-                >
-                  <ViewPipelineLogsButton
-                    pipelineId={pipelineId}
-                  />
-                </PlacementHelperDiv>
-                <PlacementHelperDiv
-                  width={"150px"}
-                />
+                <div/>
               </div>
-            </Col>
-            <Col xs={12}>
-              <PipelineOrchestrationProgressBarBase
-                pipelineModel={pipelineModel}
-              />
             </Col>
           </Row>
         </div>
+        <PipelineOrchestrationProgressBarBase
+          pipelineModel={pipelineModel}
+        />
       </>
     );
   };
@@ -293,9 +304,6 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
       showCloseButton={false}
       isLoading={isLoading && pipelineModel == null}
       softLoading={isLoading}
-      minimumWidth={"800px"}
-      maximumWidth={"800px"}
-      footer={<PipelineFooter pipelineModel={pipelineModel} />}
     >
       <div>
         {getBody()}
@@ -304,6 +312,6 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
   );
 }
 
-PipelineWorkflowSummaryOverlay.propTypes = {
+PipelineWorkflowSummaryOverlayTake1.propTypes = {
   pipelineId: PropTypes.string,
 };
