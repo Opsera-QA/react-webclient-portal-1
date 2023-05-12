@@ -214,6 +214,10 @@ pipelineHelper.getPipelineState = (pipeline) => {
 };
 
 pipelineHelper.getPipelineColor = (pipelineModel, themeConstants) => {
+  if (pipelineModel == null) {
+    return themeConstants.RESOURCE_COLORS.PIPELINES;
+  }
+
   const state = pipelineModel?.getData("state");
   const lastRunState = pipelineModel?.getData("workflow.last_run.status");
   const orchestrationState = state === "paused" || state === "running" || lastRunState == null ? state : lastRunState;

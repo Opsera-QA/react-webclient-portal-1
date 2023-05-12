@@ -7,10 +7,6 @@ import {pipelineHelper} from "components/workflow/pipeline.helper";
 export default function PipelineCardFooter({ pipelineModel }) {
   const { themeConstants } = useComponentStateReference();
 
-  if (pipelineModel == null) {
-    return null;
-  }
-
   return (
     <CardFooterBase
       backgroundColor={pipelineHelper.getPipelineColor(pipelineModel, themeConstants)}

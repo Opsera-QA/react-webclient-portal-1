@@ -8,10 +8,6 @@ export default function PipelineFooter({ pipelineModel }) {
   const { themeConstants } = useComponentStateReference();
   const color = pipelineHelper.getPipelineColor(pipelineModel, themeConstants);
 
-  if (pipelineModel == null) {
-    return null;
-  }
-
   return (
     <div
       style={{
