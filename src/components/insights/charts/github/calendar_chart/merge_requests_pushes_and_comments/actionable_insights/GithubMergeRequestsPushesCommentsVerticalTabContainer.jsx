@@ -47,7 +47,7 @@ function GithubMergeRequestsPushesCommentsVerticalTabContainer({
     };
     return (
         <VanitySetTabAndViewContainer
-            title={`Github Open Pull Requests`}
+            title={`Github Event Name`}
             currentView={getTabContentContainer()}
             verticalTabContainer={
                 <GithubMergesPushesVerticalTabContainer
