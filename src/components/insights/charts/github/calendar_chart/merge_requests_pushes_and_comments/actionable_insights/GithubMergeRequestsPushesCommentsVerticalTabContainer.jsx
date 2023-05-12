@@ -56,6 +56,7 @@ function GithubMergeRequestsPushesCommentsVerticalTabContainer({
                     handleTabClick={setActiveTab}
                 />
             }
+            maximumHeight={"h-200"}
         />
     );
 }
