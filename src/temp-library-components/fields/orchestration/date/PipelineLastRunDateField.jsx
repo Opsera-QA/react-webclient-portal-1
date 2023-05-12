@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import DateTimeField from "components/common/fields/date/DateTimeField";
-import DateFieldBase from "components/common/fields/date/DateFieldBase";
+import VanityDateField from "temp-library-components/fields/date/VanityDateField";
+import VanityDateTimeField from "temp-library-components/fields/date/VanityDateTimeField";
 
 export default function PipelineLastRunDateField(
   {
@@ -17,17 +17,17 @@ export default function PipelineLastRunDateField(
 
   if (lastRunDate) {
     return (
-      <DateTimeField
-        dataObject={pipelineModel}
-        fieldName={"workflow.completed"}
+      <VanityDateTimeField
+        model={pipelineModel}
+        fieldName={"workflow.last_run.completed"}
         className={className}
       />
     );
   }
 
   return (
-    <DateFieldBase
-      dataObject={pipelineModel}
+    <VanityDateField
+      model={pipelineModel}
       fieldName={"createdAt"}
       className={className}
     />

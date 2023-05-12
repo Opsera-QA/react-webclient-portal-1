@@ -10,8 +10,8 @@ import {
   faBanBug,
   faMemoCircleCheck,
   faDisplayMedical,
-  faRss,
 } from "@fortawesome/pro-light-svg-icons";
+import FollowingVerticalTab from "temp-library-components/tabs/FollowingVerticalTab";
 
 function DashboardVerticalTabContainer({ isLoading, dashboardFilterModel, loadData }) {
   const handleTabClick = (tab) => {
@@ -82,13 +82,11 @@ function DashboardVerticalTabContainer({ isLoading, dashboardFilterModel, loadDa
         handleTabClick={handleTabClick}
         activeTab={dashboardFilterModel?.getData("type")}
       />
-      <VanitySetVerticalTab
-        icon={faRss}
-        tabText={"Subscriptions"}
-        tabName={"subscribed"}
-        disabled={isLoading}
-        handleTabClick={handleTabClick}
+      <FollowingVerticalTab
+        isLoading={isLoading}
+        handleTabClickFunction={handleTabClick}
         activeTab={dashboardFilterModel?.getData("type")}
+        pluralResourceType={"Dashboards"}
       />
     </VanitySetVerticalTabContainer>
   );

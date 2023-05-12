@@ -110,17 +110,6 @@ function FieldSelectorBasePanel({
     }
   };
 
-  // console.log(wizardModel?.getPersistData());
-  const getWarningMessage = () => {
-    if (showUnsavedChangesMessage) {
-      return (
-        <InlineWarning
-          warningMessage={"You must hit save before changes will take effect"}
-        />
-      );
-    }
-  };
-
   const updateSearchText = (value) => {
     setSelectedNonMembers([]);
     setSelectedMembers([]);
@@ -129,7 +118,7 @@ function FieldSelectorBasePanel({
 
   const getSearchBar = () => {
     return (
-      <div className="membership-search d-flex mx-auto my-3">
+      <div className="membership-search d-flex mx-auto my-3" style={{ width: "97%"}} >
         <IconBase
           icon={faSearch}
           iconClassName={"mr-2 opsera-dark-purple h-100"}
@@ -233,8 +222,7 @@ function FieldSelectorBasePanel({
         <Row className="mx-2">
           <div>
             Select field properties below by adding items from the left column
-            into the right or removing from the right column. Changes must be
-            saved before being complete.
+            into the right or removing from the right column.
           </div>
         </Row>
         {getBody()}

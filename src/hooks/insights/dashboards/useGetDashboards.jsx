@@ -10,6 +10,7 @@ export default function useGetDashboards(
   fields,
   setUrlParameters = false,
   pageSize,
+  isSubscribed,
   handleErrorFunction,
 ) {
   const [dashboards, setDashboards] = useState(undefined);
@@ -27,7 +28,11 @@ export default function useGetDashboards(
     setDashboards([]);
 
     if (pageSize) {
-      DashboardFilterModel.setData("pageSize", pageSize);
+      dashboardFilterModel.setData("pageSize", pageSize);
+    }
+
+    if (isSubscribed === true) {
+      dashboardFilterModel.setData("type", "subscribed");
     }
 
     if (loadData && areAnalyticsToolsEnabled === true) {

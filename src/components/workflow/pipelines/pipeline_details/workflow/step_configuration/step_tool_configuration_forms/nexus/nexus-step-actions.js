@@ -31,4 +31,31 @@ nexusStepActions.getNexusRepositoriesListV2 = async (toolID, getAccessToken, can
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+nexusStepActions.getNexusRepositoryGroups = async (getAccessToken, cancelTokenSource, toolId, repositoryName) => {
+  const apiUrl = `tools/${toolId}/nexus/repository/groups`;
+  const queryParameters = {
+    repositoryName: repositoryName,
+  };  
+  return baseActions.apiGetCallV3(getAccessToken, cancelTokenSource, apiUrl, queryParameters);
+};
+
+nexusStepActions.getNexusRepositoryArtifacts = async (getAccessToken, cancelTokenSource, toolId, repositoryName, groupName) => {
+  const apiUrl = `tools/${toolId}/nexus/repository/artifacts`;
+  const queryParameters = {
+    repositoryName: repositoryName,
+    groupName: groupName,
+  };  
+  return baseActions.apiGetCallV3(getAccessToken, cancelTokenSource, apiUrl, queryParameters);
+};
+
+nexusStepActions.getNexusArtifactVersions = async (getAccessToken, cancelTokenSource, toolId, repositoryName, groupName, artifactName) => {
+  const apiUrl = `tools/${toolId}/nexus/repository/artifacts/versions`;
+  const queryParameters = {
+    repositoryName: repositoryName,
+    groupName: groupName,
+    artifactName: artifactName,
+  };  
+  return baseActions.apiGetCallV3(getAccessToken, cancelTokenSource, apiUrl, queryParameters);
+};
+
 export default nexusStepActions;

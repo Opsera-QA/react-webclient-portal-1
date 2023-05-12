@@ -18,6 +18,7 @@ import Col from "react-bootstrap/Col";
 import RunTaskButton from "../../../../../../tasks/buttons/RunTaskButton";
 import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 import TooltipWrapper from "../../../../../../common/tooltip/TooltipWrapper";
+import OpseraInfinityLogo from "../../../../../../logo/OpseraInfinityLogo";
 
 const HEIGHT = "700px";
 
@@ -34,8 +35,9 @@ export default function CreateWorkflowWizardTaskCompletionScreen({
   const { getAccessToken, cancelTokenSource, isMounted, toastContext, userData } =
     useComponentStateReference();
   const [taskData, setTaskData] = useState(
-    modelHelpers.parseObjectIntoModel(task, tasksMetadata),
+    modelHelpers.parseObjectIntoModelBase(task, tasksMetadata),
   );
+  console.log(taskData);
 
   useEffect(() => {
     if (setButtonContainer) {
@@ -96,7 +98,7 @@ export default function CreateWorkflowWizardTaskCompletionScreen({
                   "d-flex align-items-center justify-content-center mt-3 mb-5"
                 }
               >
-                <OpseraInfinityLogoLarge scale={0.4} />
+                <OpseraInfinityLogo scale={0.4} />
               </Col>
               <br />
               <Col
@@ -149,7 +151,8 @@ export default function CreateWorkflowWizardTaskCompletionScreen({
                         taskModel={taskData}
                         setTaskModel={setTaskData}
                         status={status}
-                        // disable={connectionFailure > 0}
+                        routeToWorkflow={true}
+                        disable={connectionFailure > 0}
                         actionAllowed={TaskRoleHelper.canRunTask(userData, taskData?.getPersistData())}
                         taskType={taskData?.getData("type")}
                         style={{width: "160px"}}

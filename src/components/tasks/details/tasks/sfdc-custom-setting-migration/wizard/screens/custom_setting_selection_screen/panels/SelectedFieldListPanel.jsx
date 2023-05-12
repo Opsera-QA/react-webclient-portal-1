@@ -58,7 +58,7 @@ function SelectedFieldListPanel({
   const formatUser = (user, index) => {
     return (
       <div
-        key={user}
+        key={index}
         className={index % 2 === 0 ? "even-row" : "odd-row"}
       >
         <FieldItemCard

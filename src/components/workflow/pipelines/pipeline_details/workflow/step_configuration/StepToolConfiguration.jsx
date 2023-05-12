@@ -728,6 +728,9 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             closeEditorPanel={closeEditorPanel}
+            pipelineId={pipeline?.id}
+            pipelineStep={pipelineStep}
+            pipeline={pipeline}
           />
         );
       case "cypress":
@@ -1496,7 +1499,7 @@ function StepToolConfiguration({
             parentCallback={callbackFunction}
             closeEditorPanel={closeEditorPanel}
           />
-        );
+        );     
       case toolIdentifierConstants.TOOL_IDENTIFIERS.ORACLE_FUSION_REPORT_MIGRATION:
         return (
           <OracleFusionReportMigrationStepConfiguration
@@ -1507,7 +1510,7 @@ function StepToolConfiguration({
             parentCallback={callbackFunction}
             closeEditorPanel={closeEditorPanel}
           />
-        );        
+        );           
     }
   };
 

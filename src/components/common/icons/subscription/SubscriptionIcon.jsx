@@ -1,14 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faRss} from "@fortawesome/pro-light-svg-icons";
+import {faStar} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 import IconBase from "components/common/icons/IconBase";
+import {faStar as faStarSolid} from "@fortawesome/pro-solid-svg-icons";
 
 function SubscriptionIconBase({ handleSubscription, isSubscribed, showText, className, isLoading }) {
 
   const getHelpText = () => {
     if (showText) {
-      return <span className="ml-1">{isSubscribed === true ? "Subscribed" : "Not Subscribed"}</span>;
+      return <span className="ml-1">{isSubscribed === true ? "Following" : "Not Following"}</span>;
     }
   };
 
@@ -16,7 +17,7 @@ function SubscriptionIconBase({ handleSubscription, isSubscribed, showText, clas
     let classNames = "pointer";
 
     if (isSubscribed === true) {
-      classNames += " success-button-color";
+      classNames += " opsera-yellow";
     }
 
     return classNames;
@@ -29,12 +30,12 @@ function SubscriptionIconBase({ handleSubscription, isSubscribed, showText, clas
   return (
     <div className={className}>
       <div className={getClassNames()} onClick={() => {handleSubscription();}}>
-        <ButtonTooltip innerText={isSubscribed === true ? "Click to Unsubscribe" : "Click to Subscribe"}>
+        <ButtonTooltip innerText={isSubscribed === true ? "Click to Unfollow" : "Click to Follow"}>
           <span>
             <IconBase
               isLoading={isLoading}
               className={"my-auto"}
-              icon={faRss}
+              icon={isSubscribed === true ? faStarSolid : faStar}
               iconSize={"lg"}
             />
             {getHelpText()}

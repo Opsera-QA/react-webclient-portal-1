@@ -8,6 +8,8 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import ErrorMessageFieldBase from "components/common/fields/text/message/ErrorMessageFieldBase";
 import ErrorLoadingDataField from "components/common/fields/text/message/ErrorLoadingDataField";
+import sessionHelper from "utils/session.helper";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 const TITLE_BAR_HEIGHT = "46px";
 const screenContainerMargin = "30px";
@@ -47,7 +49,11 @@ function FilterContainer({
   error,
   // TODO: Remove after filters are used everywhere
   type,
+  anchor,
 }) {
+  const isAnchored = hasStringValue(anchor) === true && sessionHelper.getUrlAnchor() === anchor;
+  const anchorClassName = isAnchored === true ? "anchored-content" : "";
+
   const getFilterBar = () => {
     return (
       <FilterBar
@@ -130,7 +136,8 @@ function FilterContainer({
   return (
     <div className={className}>
       <div
-        className={"filter-container container-border"}
+        id={anchor}
+        className={`filter-container container-border ${anchorClassName}`}
       >
         <div className={isFreeTrial === true ? "w-100" : "w-100 filter-title-bar"}>
           <div className={
@@ -192,6 +199,7 @@ FilterContainer.propTypes = {
   hideActiveFilterDisplayer: PropTypes.bool,
   addRecordButtonCustomText: PropTypes.string,
   error: PropTypes.any,
+  anchor: PropTypes.string,
 };
 
 FilterContainer.defaultProps = {

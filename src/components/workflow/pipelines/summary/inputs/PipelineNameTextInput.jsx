@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
@@ -19,26 +19,50 @@ export default function PipelineNameTextInput(
   const {
     userData,
   } = useComponentStateReference();
+  const [modelCopy, setModelCopy] = useState(undefined);
+  const canEditPipelineName = PipelineRoleHelper.canEditPipelineName(userData, pipelineModel?.getOriginalData());
   const pipelineActions = usePipelineActions();
 
-  // TODO: Do a targeted update route instead of passing the whole pipeline
+  useEffect(() => {
+    if (modelCopy == null) {
+      setModelCopy(pipelineModel?.clone());
+    }
+  }, [pipelineModel]);
+
   const handleSaveFunction = async () => {
-    return await pipelineActions.updatePipeline(
-      pipelineModel?.getMongoDbId(),
-      pipelineModel?.getPersistData(),
+    const response = await pipelineActions.updatePipelineField(
+      modelCopy?.getMongoDbId(),
+      fieldName,
+      modelCopy?.getData(fieldName),
     );
+
+    pipelineModel?.setData(fieldName, modelCopy?.getData(fieldName));
+    setPipelineModel({...pipelineModel});
+    pipelineModel?.clearChangeMap();
+    setModelCopy({...pipelineModel?.clone()});
+
+    return response;
   };
+
+  if (modelCopy == null) {
+    return null;
+  }
 
   return (
     <InlineTextInputBase
-      model={pipelineModel}
-      setModel={setPipelineModel}
+      model={modelCopy}
+      setModel={setModelCopy}
       fieldName={fieldName}
-      disabled={PipelineRoleHelper.canEditPipelineName(userData, pipelineModel?.getOriginalData()) !== true || workflowStatus === "running" || disabled}
+      disabled={
+        canEditPipelineName !== true
+          || workflowStatus === "running"
+          || disabled
+      }
       visible={visible}
       className={className}
       handleSaveFunction={handleSaveFunction}
       fieldClassName={fieldClassName}
+      showFieldLabel={false}
     />
   );
 }
@@ -48,7 +72,6 @@ PipelineNameTextInput.propTypes = {
   pipelineModel: PropTypes.object,
   setPipelineModel: PropTypes.func,
   visible: PropTypes.bool,
-  loadData: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string,
   workflowStatus: PropTypes.string,

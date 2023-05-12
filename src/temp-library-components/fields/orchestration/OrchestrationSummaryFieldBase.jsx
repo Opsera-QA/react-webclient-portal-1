@@ -3,6 +3,7 @@ import React from "react";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import FieldLabelBase from "components/common/fields/FieldLabelBase";
 import FieldContainer from "components/common/fields/FieldContainer";
+import {orchestrationHelper} from "temp-library-components/helpers/orchestration/orchestration.helper";
 
 export default function OrchestrationSummaryFieldBase(
   {
@@ -16,8 +17,7 @@ export default function OrchestrationSummaryFieldBase(
     <FieldContainer className={className}>
       <FieldLabelBase label={labelText} />
       <span>
-        {`The last complete run of this ${type} finished on ${DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(completionTime))} 
-         with a status of ${status}.`}
+        {orchestrationHelper.getLastRunSummary(type, completionTime, status)}
       </span>
     </FieldContainer>
   );

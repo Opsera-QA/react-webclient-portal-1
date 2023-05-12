@@ -289,6 +289,7 @@ export default class ModelBase {
 
     if (parsedNewOriginalData && ObjectHelper.areObjectsEqualLodash(this.originalData, parsedNewOriginalData) !== true) {
       this.originalData = parsedNewOriginalData;
+      this.replaceData(parsedNewOriginalData);
     }
   };
 
@@ -344,9 +345,9 @@ export default class ModelBase {
     return this.newModel;
   };
 
-  isChanged = (field) => {
-    if (field) {
-      return this.changeMap.has(field);
+  isChanged = (fieldName) => {
+    if (fieldName) {
+      return this.changeMap.has(fieldName);
     }
 
     return this.dataState !== DataState.LOADED;
@@ -358,7 +359,15 @@ export default class ModelBase {
   };
 
   replaceData = (newData) => {
-    this.data = DataParsingHelper.parseObject(newData, {});
+    const parsedNewData = DataParsingHelper.parseObject(newData);
+
+    if (parsedNewData && ObjectHelper.areObjectsEqualLodash(this.data, parsedNewData) !== true) {
+      const changedFieldNames = DataParsingHelper.parseArray(this.changeMap?.keys(), []);
+      changedFieldNames.forEach((fieldName) => {
+        parsedNewData[fieldName] = this.changeMap.get(fieldName);
+      });
+      this.data = {...parsedNewData};
+    }
   };
 
   updateState = () => {

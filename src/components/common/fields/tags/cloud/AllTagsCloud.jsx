@@ -102,7 +102,7 @@ function AllTagsCloud() {
     const tag = tagWithUsage?.tag;
     const pipelineCount = tagWithUsage?.pipeline_usage_count;
     const toolCount = tagWithUsage?.tool_usage_count;
-    const subscribeMessage = subscribedTagIds.includes(tag._id) ? "Click to Unsubscribe" : "Click to Subscribe";
+    const subscribeMessage = subscribedTagIds.includes(tag._id) ? "Click to Unfollow" : "Click to Follow";
 
     return (
       <div>

@@ -38,6 +38,14 @@ export const customSettingMigrationTaskWizardMetadata = {
     {
       label: "Query",
       id: "filterQuery"
+    },
+    {
+      label: "Field List",
+      id: "fieldList"
+    },
+    {
+      label: "Custom Setting Edit Mode",
+      id: "customSettingEditMode"
     }
   ],
   newObjectFields: {
@@ -52,5 +60,7 @@ export const customSettingMigrationTaskWizardMetadata = {
     selectedFieldList: [],
     queryFilters: [],
     filterQuery: "",
+    fieldList: [],
+    customSettingEditMode: true,
   }
 };

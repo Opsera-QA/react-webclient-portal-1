@@ -48,7 +48,7 @@ const getAxiosInstance = (token, cancelToken) => {
 
 export default function useApiService() {
   const { getAccessToken } = useAuthenticationToken();
-  const { cancelTokenSource } = useAxiosCancelToken();
+  const { cancelTokenSource, getNewCancelToken } = useAxiosCancelToken();
 
   const apiService = {};
 
@@ -65,12 +65,13 @@ export default function useApiService() {
     }
   };
 
-  apiService.handleApiGetRequest = async (apiUrl, urlParams) => {
+  apiService.handleApiGetRequest = async (apiUrl, urlParams, refreshCancelToken) => {
     const accessToken = await getAccessToken();
     const parsedUrlParams = DataParsingHelper.parseObject(urlParams, {});
+    const source = refreshCancelToken === true ? getNewCancelToken() : cancelTokenSource;
 
     try {
-      return await getAxiosInstance(accessToken, cancelTokenSource?.token)
+      return await getAxiosInstance(accessToken, source?.token)
         .get(
           apiUrl,
           { params: parsedUrlParams, }
@@ -85,11 +86,13 @@ export default function useApiService() {
     }
   };
 
-  apiService.handleCustomTokenApiGetRequest = async (customToken, apiUrl, urlParams) => {
+  apiService.handleCustomTokenApiGetRequest = async (customToken, apiUrl, urlParams, refreshCancelToken) => {
     try {
+      const source = refreshCancelToken === true ? getNewCancelToken() : cancelTokenSource;
+
       return await getAxiosInstance(
         customToken,
-        cancelTokenSource?.token,
+        source?.token,
       ).get(
         apiUrl,
         {
@@ -105,11 +108,12 @@ export default function useApiService() {
     }
   };
 
-  apiService.handleApiPostRequest = async (apiUrl, postBody) => {
+  apiService.handleApiPostRequest = async (apiUrl, postBody, refreshCancelToken) => {
     const accessToken = await getAccessToken();
+    const source = refreshCancelToken === true ? getNewCancelToken() : cancelTokenSource;
 
     try {
-      return await getAxiosInstance(accessToken, cancelTokenSource?.token).post(apiUrl, postBody);
+      return await getAxiosInstance(accessToken, source?.token).post(apiUrl, postBody);
     }
     catch (error) {
       const parsedError = parseAxiosError(error);
@@ -120,9 +124,11 @@ export default function useApiService() {
     }
   };
 
-  apiService.handleCustomTokenApiPostRequest = async (customToken, apiUrl, postBody) => {
+  apiService.handleCustomTokenApiPostRequest = async (customToken, apiUrl, postBody, refreshCancelToken) => {
     try {
-      return await getAxiosInstance(customToken, cancelTokenSource?.token).post(apiUrl, postBody);
+      const source = refreshCancelToken === true ? getNewCancelToken() : cancelTokenSource;
+
+      return await getAxiosInstance(customToken, source?.token).post(apiUrl, postBody);
     }
     catch (error) {
       const parsedError = parseAxiosError(error);
@@ -133,11 +139,12 @@ export default function useApiService() {
     }
   };
 
-  apiService.handleApiPutRequest = async (apiUrl, postBody) => {
+  apiService.handleApiPutRequest = async (apiUrl, postBody, refreshCancelToken) => {
     const accessToken = await getAccessToken();
+    const source = refreshCancelToken === true ? getNewCancelToken() : cancelTokenSource;
 
     try {
-      return await getAxiosInstance(accessToken, cancelTokenSource?.token).put(apiUrl, postBody);
+      return await getAxiosInstance(accessToken, source?.token).put(apiUrl, postBody);
     }
     catch (error) {
       const parsedError = parseAxiosError(error);
@@ -148,11 +155,12 @@ export default function useApiService() {
     }
   };
 
-  apiService.handleApiPatchRequest = async (apiUrl, postBody) => {
+  apiService.handleApiPatchRequest = async (apiUrl, postBody, refreshCancelToken) => {
     const accessToken = await getAccessToken();
+    const source = refreshCancelToken === true ? getNewCancelToken() : cancelTokenSource;
 
     try {
-      return await getAxiosInstance(accessToken, cancelTokenSource?.token).patch(apiUrl, postBody);
+      return await getAxiosInstance(accessToken, source?.token).patch(apiUrl, postBody);
     }
     catch (error) {
       const parsedError = parseAxiosError(error);
@@ -163,11 +171,12 @@ export default function useApiService() {
     }
   };
 
-  apiService.handleApiDeleteRequest = async (apiUrl) => {
+  apiService.handleApiDeleteRequest = async (apiUrl, refreshCancelToken) => {
     const accessToken = await getAccessToken();
+    const source = refreshCancelToken === true ? getNewCancelToken() : cancelTokenSource;
 
     try {
-      return await getAxiosInstance(accessToken, cancelTokenSource?.token).delete(apiUrl);
+      return await getAxiosInstance(accessToken, source?.token).delete(apiUrl);
     }
     catch (error) {
       const parsedError = parseAxiosError(error);
