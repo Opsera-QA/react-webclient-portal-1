@@ -188,7 +188,7 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
         <div className={"px-2"}>
           <Row>
             <Col xs={12}>
-              <div className={"d-flex px-2"}>
+              <div className={"d-flex px-3"}>
                 <div className={"standard-border-radius mr-3"}>
                   {icon}
                 </div>
