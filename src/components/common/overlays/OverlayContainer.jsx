@@ -10,6 +10,7 @@ import OverlayContainerBase from "components/common/overlays/OverlayContainerBas
 import useComponentStateReference from "hooks/useComponentStateReference";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import {heightHelper} from "temp-library-components/helpers/height/height.helper";
+import Col from "react-bootstrap/Col";
 
 export default function OverlayContainer(
   {
@@ -32,6 +33,9 @@ export default function OverlayContainer(
     getHelpComponentFunction,
     softLoading,
     titleActionBar,
+    minimumWidth,
+    maximumWidth,
+    footer,
   }) {
   const [helpIsShown, setHelpIsShown] = useState(false);
   const {
@@ -106,34 +110,36 @@ export default function OverlayContainer(
 
   return (
     <OverlayContainerBase>
-      <Row className={"m-auto d-flex"}>
-        <div
-          className={`bg-white overlay-wrapper overlay-container w-100`}
-          style={{
-            minHeight: minimumHeight,
-            maxHeight: maximumHeight,
-            minWidth: "calc(100vw - 140px)",
-            marginLeft: "70px",
-            marginRight: "70px",
-          }}
-        >
-          <OverlayTitleBar
-            handleClose={closePanelFunction}
-            isLoading={isLoading}
-            titleText={titleText}
-            titleIcon={titleIcon}
-            pageLink={pageLink}
-            externalHelpPageLink={externalHelpPageLink}
-            linkTooltipText={linkTooltipText}
-            softLoading={softLoading}
-            titleActionBar={titleActionBar}
-          />
-          {actionBar}
-          <div className={`bg-white w-100`}>
-            {showToasts && toastContext?.getInlineBanner()}
-            {getBody()}
+      <Row className={"m-auto overlay-wrapper"}>
+        <div>
+          <div
+            className={"bg-white w-100"}
+            style={{
+              minHeight: minimumHeight,
+              maxHeight: maximumHeight,
+              minWidth: minimumWidth,
+              maxWidth: maximumWidth,
+            }}
+          >
+            <OverlayTitleBar
+              handleClose={closePanelFunction}
+              isLoading={isLoading}
+              titleText={titleText}
+              titleIcon={titleIcon}
+              pageLink={pageLink}
+              externalHelpPageLink={externalHelpPageLink}
+              linkTooltipText={linkTooltipText}
+              softLoading={softLoading}
+              titleActionBar={titleActionBar}
+            />
+            {actionBar}
+            <div className={`bg-white w-100`}>
+              {showToasts && toastContext?.getInlineBanner()}
+              {getBody()}
+            </div>
+            {getButtonContainer()}
           </div>
-          {getButtonContainer()}
+          {footer}
         </div>
       </Row>
     </OverlayContainerBase>
@@ -159,6 +165,13 @@ OverlayContainer.propTypes = {
   backButtonFunction: PropTypes.func,
   minimumHeight: PropTypes.string,
   maximumHeight: PropTypes.string,
+  minimumWidth: PropTypes.string,
+  maximumWidth: PropTypes.string,
   getHelpComponentFunction: PropTypes.func,
   titleActionBar: PropTypes.any,
+  footer: PropTypes.any,
+};
+
+OverlayContainer.defaultProps = {
+  minimumWidth: "calc(100vw - 140px)",
 };

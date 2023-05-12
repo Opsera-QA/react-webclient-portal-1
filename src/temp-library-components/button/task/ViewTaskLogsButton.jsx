@@ -7,7 +7,7 @@ import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
 
-export default function ViewPipelineLogsButton(
+export default function ViewTaskLogsButton(
   {
     pipelineId,
     buttonText,
@@ -39,7 +39,7 @@ export default function ViewPipelineLogsButton(
   );
 }
 
-ViewPipelineLogsButton.propTypes = {
+ViewTaskLogsButton.propTypes = {
   pipelineId: PropTypes.string,
   buttonText: PropTypes.string,
   variant: PropTypes.string,
@@ -47,6 +47,6 @@ ViewPipelineLogsButton.propTypes = {
   className: PropTypes.string,
 };
 
-ViewPipelineLogsButton.defaultProps = {
+ViewTaskLogsButton.defaultProps = {
   buttonText: "View Logs",
 };

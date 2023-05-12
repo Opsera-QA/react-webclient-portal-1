@@ -2,14 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import {useHistory} from "react-router-dom";
-import {pipelineHelper} from "components/workflow/pipeline.helper";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
+import {faSearchPlus} from "@fortawesome/pro-light-svg-icons";
+import {taskHelper} from "components/tasks/task.helper";
 
-export default function ViewPipelineLogsButton(
+export default function ViewTaskButton(
   {
-    pipelineId,
+    taskId,
     buttonText,
     buttonSize,
     variant,
@@ -19,11 +19,11 @@ export default function ViewPipelineLogsButton(
   const { toastContext } = useComponentStateReference();
 
   const handleLoadFunction = async () => {
-    history.push(`${pipelineHelper.getDetailViewLink(pipelineId)}#logs`);
+    history.push(taskHelper.getDetailViewLink(taskId));
     toastContext.clearOverlayPanel();
   };
 
-  if (isMongoDbId(pipelineId) == null) {
+  if (isMongoDbId(taskId) == null) {
     return null;
   }
 
@@ -34,19 +34,19 @@ export default function ViewPipelineLogsButton(
       variant={variant}
       buttonSize={buttonSize}
       className={className}
-      icon={faClipboardList}
+      icon={faSearchPlus}
     />
   );
 }
 
-ViewPipelineLogsButton.propTypes = {
-  pipelineId: PropTypes.string,
+ViewTaskButton.propTypes = {
+  taskId: PropTypes.string,
   buttonText: PropTypes.string,
   variant: PropTypes.string,
   buttonSize: PropTypes.string,
   className: PropTypes.string,
 };
 
-ViewPipelineLogsButton.defaultProps = {
-  buttonText: "View Logs",
+ViewTaskButton.defaultProps = {
+  buttonText: "View Task",
 };
