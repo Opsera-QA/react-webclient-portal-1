@@ -20,6 +20,8 @@ import SalesforceBranchStructureTaskInitializationOverlay
   from "components/tasks/details/tasks/sfdc-branch-structure/run/SalesforceBranchStructureTaskInitializationOverlay";
 import GitToGitSyncTaskInitializationOverlay
   from "components/tasks/details/tasks/branch-to-branch/run/GitToGitSyncTaskInitializationOverlay";
+import SalesforceCustomSettingMigrationTaskWizardOverlay
+  from "../details/tasks/sfdc-custom-setting-migration/wizard/SalesforceCustomSettingMigrationTaskWizardOverlay";
 
 const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_GIT_BRANCHES,
@@ -29,6 +31,7 @@ const ALLOWED_TASK_TYPES = [
   TASK_TYPES.GIT_TO_GIT_MERGE_SYNC,
   TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC,
   TASK_TYPES.SALESFORCE_QUICK_DEPLOY,
+  TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION,
   TASK_TYPES.GITSCRAPER,
   TASK_TYPES.SNAPLOGIC_TASK,
 ];
@@ -151,6 +154,20 @@ function RunTaskButton(
           taskModel={taskModel}
         />
       );
+    }  else if (taskModel?.getData("type") === TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION) {
+      try{
+        setIsStarting(true);
+        handleClose();
+        toastContext.showOverlayPanel(
+          <SalesforceCustomSettingMigrationTaskWizardOverlay
+            taskModel={taskModel}
+          />
+        );
+      } catch (error) {
+        if (isMounted?.current === true) {
+          toastContext.showLoadingErrorDialog(error);
+        }
+      }
     } else {
       toastContext.showOverlayPanel(
         <RunTaskOverlay
