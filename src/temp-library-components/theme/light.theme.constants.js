@@ -30,9 +30,7 @@ lightThemeConstants.COLOR_PALETTE = {
   GOLD: "#FFBE3F",
   OPSERA_GOLD: "#CF940C",
   GOLD_HIGHLIGHT: "#CF940C",
-
-  // Amber
-  AMBER: "#CF940C",
+  WARNING: "#ffc107",
 
   // Orange
   ORANGE: "#FA7245",

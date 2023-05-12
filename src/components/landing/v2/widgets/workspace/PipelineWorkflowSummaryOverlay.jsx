@@ -29,6 +29,8 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 import PipelineFooter from "components/landing/v2/widgets/workspace/PipelineFooter";
 import {getLargeVendorIconComponentFromPipeline} from "components/common/helpers/icon-helpers";
+import TextAreaClipboardField from "components/common/fields/clipboard/TextAreaClipboardField";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
 
 // TODO: Should this be two separate panels?
 export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
@@ -197,8 +199,8 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
             </Col>
             <Col xs={12}>
               <div className={"p-3"}>
-                <VanityTextField
-                  model={pipelineModel}
+                <TextFieldBase
+                  dataObject={pipelineModel}
                   fieldName={"description"}
                 />
               </div>
@@ -245,11 +247,6 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
                 />
               </div>
             </Col>
-            <Col xs={12}>
-              <PipelineOrchestrationProgressBarBase
-                pipelineModel={pipelineModel}
-              />
-            </Col>
           </Row>
         </div>
       </>
@@ -286,6 +283,10 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
     >
       <div>
         {getBody()}
+        <PipelineOrchestrationProgressBarBase
+          pipelineModel={pipelineModel}
+          className={"mt-2 flat-progress-bar"}
+        />
       </div>
     </OverlayContainer>
   );
