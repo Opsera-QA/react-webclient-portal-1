@@ -1396,13 +1396,9 @@ div.data-blocks-ellipses {
 .filter-container,
 .overlay-wrapper,
 .screen-container {
-    border-radius: 1rem;
+    border-radius: 1em;
     overflow-x: hidden;
-    letter-spacing: .01rem;
-}
-
-.overlay-wrapper {
-    border: 1px solid #B1AEA7;
+    letter-spacing: .01em;
 }
 
 .container-border {
