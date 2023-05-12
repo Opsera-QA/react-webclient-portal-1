@@ -8,13 +8,16 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import IconBase from "../../../../../common/icons/IconBase";
-import { faGear, faWandMagicSparkles } from "@fortawesome/pro-light-svg-icons";
+import {faGear, faQuestionCircle, faWandMagicSparkles} from "@fortawesome/pro-light-svg-icons";
 import OpseraInfinityLogo from "../../../../../logo/OpseraInfinityLogo";
 import OverlayWizardButtonContainerBase
   from "../../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import {platformImageConstants} from "../../../../../../temp-library-components/image/platformImage.constants";
 import {ImageBase} from "@opsera/react-vanity-set";
 import SelectionCardColumn from "../../../../../../temp-library-components/cards/SelectionCardColumn";
+import InfoMessageFieldBase from "components/common/fields/text/message/InfoMessageFieldBase";
+import ExternalPageLink from "components/common/links/ExternalPageLink";
+import {EXTERNAL_LINKS} from "components/header/legacy/HeaderNavBar";
 
 export const TOOL_CREATION_OPTIONS = {
   WIZARD: "wizard",
@@ -23,7 +26,7 @@ export const TOOL_CREATION_OPTIONS = {
 
 export const TOOL_CREATION_OPTION_LABELS = {
   WIZARD: "Tool Creation Wizard",
-  ADVANCED: "Advanced Settings",
+  ADVANCED: "Advanced Settings*",
 };
 
 function ToolSetupModeSelect(
@@ -40,9 +43,17 @@ function ToolSetupModeSelect(
   useEffect(() => {
     if (setButtonContainer && setCurrentScreen) {
       setButtonContainer(
+        <>
+          <div className={"mb-1 mx-3"}>
+            <InfoMessageFieldBase
+              showInformationLabel={false}
+              message={"* Advanced Settings is the classic create view"}
+            />
+          </div>
           <OverlayWizardButtonContainerBase
             backButtonFunction={backButtonFunction}
           />
+        </>
       );
     }
   }, []);
