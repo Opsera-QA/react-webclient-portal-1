@@ -28,6 +28,7 @@ import {PlacementHelperDiv} from "@opsera/react-vanity-set";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 import PipelineFooter from "components/landing/v2/widgets/workspace/PipelineFooter";
+import {getLargeVendorIconComponentFromPipeline} from "components/common/helpers/icon-helpers";
 
 // TODO: Should this be two separate panels?
 export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
@@ -50,6 +51,7 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
     toastContext,
     themeConstants,
   } = useComponentStateReference();
+  const icon = getLargeVendorIconComponentFromPipeline(pipelineModel?.getCurrentData());
 
   const closePanel = () => {
     toastContext.removeInlineMessage();
@@ -184,29 +186,20 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
         <div className={"px-2"}>
           <Row>
             <Col xs={12}>
-              <CenteredContentWrapper>
-                <div className={"d-flex"}>
-                  <div
-                    style={{
-                      minWidth: "340px",
-                      maxWidth: "340px",
-                    }}
-                  >
-                    <PipelineCardBase
-                      pipelineModel={pipelineModel}
-                    />
-                  </div>
-                  <div className={"p-3"}>
-                    {/*TODO: Make bigger font size*/}
-                    <VanityTextFieldBase
-                      text={orchestrationHelper.getLastRunSummaryForPipelineModel(pipelineModel)}
-                      requireValue={true}
-                      showLabel={false}
-                      className={"larger"}
-                    />
-                  </div>
+              <div className={"d-flex px-2"}>
+                <div className={"standard-border-radius mr-3"}>
+                  {icon}
                 </div>
-              </CenteredContentWrapper>
+                <div>
+                  {/*TODO: Make bigger font size*/}
+                  <VanityTextFieldBase
+                    label={orchestrationHelper.getLastRunSummaryForPipelineModel(pipelineModel)}
+                    requireValue={true}
+                    showLabel={false}
+                    className={"font-larger"}
+                  />
+                </div>
+              </div>
             </Col>
             <Col xs={12}>
               <div className={"p-3"}>

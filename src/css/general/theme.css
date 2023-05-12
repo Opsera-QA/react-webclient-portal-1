@@ -1393,6 +1393,10 @@ div.data-blocks-ellipses {
 /* End filter bar styling */
 
 /* Filter Container Styling */
+.standard-border-radius {
+    border-radius: 1rem;
+}
+
 .filter-container,
 .overlay-wrapper,
 .screen-container {
