@@ -190,7 +190,7 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
                 <div className={"standard-border-radius mr-3"}>
                   {icon}
                 </div>
-                <div className={"font-larger"}>
+                <div className={"font-larger my-auto"}>
                   {orchestrationHelper.getLastRunSummaryForPipelineModel(pipelineModel)}
                 </div>
               </div>
@@ -204,7 +204,7 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
               </div>
             </Col>
             <Col xs={12}>
-              <div className={"d-flex w-100 justify-content-between"}>
+              <div className={"d-flex w-100 justify-content-between my-3"}>
                 {getLastRunDuration()}
                 {getTotalRunAverageDuration()}
               </div>
