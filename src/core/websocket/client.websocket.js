@@ -91,7 +91,7 @@ export class ClientWebsocket {
     console.log("received live message: " + JSON.stringify(liveMessage));
     this.subscriptions.forEach((subscription) => {
       if (subscription.topic === liveMessage.topic) {
-        subscription.model.handleLiveMessage(liveMessage);
+        // subscription.model.handleLiveMessage(liveMessage);
       }
     });
   };

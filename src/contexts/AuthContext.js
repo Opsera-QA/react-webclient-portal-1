@@ -103,7 +103,7 @@ const AuthContextProvider = (
       setViewMode: setViewMode,
       theme: theme,
       setTheme: setTheme,
-      // websocketClient: websocketClient,
+      websocketClient: websocketClient,
       userData: userData,
       backgroundColor: backgroundColor,
       setBackgroundColor: setBackgroundColor,
