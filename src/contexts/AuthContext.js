@@ -13,8 +13,8 @@ import useGetOrganizationSettingsRecord from "hooks/settings/organization_settin
 import useGetConfigurationFeatureFlags from "hooks/platform/feature_flags/useGetConfigurationFeatureFlags";
 import useGetAnalyticsProfileStatus from "hooks/insights/profile/useGetAnalyticsProfileStatus";
 
-// import ClientWebsocket from "core/websocket/client.websocket";
-// const websocketClient = new ClientWebsocket();
+import ClientWebsocket from "core/websocket/client.websocket";
+const websocketClient = new ClientWebsocket();
 
 // TODO: Move
 export const getFreeTrialUserExpirationDate = (userData) => {
@@ -65,11 +65,10 @@ const AuthContextProvider = (
 
   useEffect(() => {
     if (userData) {
-      // websocketClient?.initializeWebsocket(userData);
+      websocketClient?.initializeWebsocket(userData);
+    } else {
+      websocketClient?.closeWebsocket();
     }
-    // else {
-    //   websocketClient?.closeWebsocket();
-    // }
   }, [userData]);
 
   const logoutUserContext = async () => {
