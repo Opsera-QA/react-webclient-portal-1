@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "react-app-rewired build",
+    "build": "env-cmd -f .env.development react-app-rewired build",
     "build:freetrial": "env-cmd -f .env.freetrial react-app-rewired build && mv build build-freetrial",
     "build:honeywell": "env-cmd -f .env.honeywell react-app-rewired build && mv build build-honeywell",
     "build:honeywell-sandbox": "env-cmd -f .env.honeywell-sandbox react-app-rewired build && mv build build-honeywell-sandbox",
