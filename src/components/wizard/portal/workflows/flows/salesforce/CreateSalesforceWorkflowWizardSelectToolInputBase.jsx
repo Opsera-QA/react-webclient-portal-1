@@ -7,6 +7,7 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import InputContainer from "components/common/inputs/InputContainer";
 import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
+import {toolIdentifierConstants} from "../../../../../admin/tools/identifiers/toolIdentifier.constants";
 
 export default function CreateSalesforceWorkflowWizardSelectToolInputBase(
   {
@@ -152,7 +153,10 @@ export default function CreateSalesforceWorkflowWizardSelectToolInputBase(
     }
 
     const toolName = tool?.name;
-    const accountName = tool?.configuration?.jUserId;
+    const accountName =
+      toolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS
+        ? tool?.configuration?.jUserId
+        : tool?.configuration?.accountUsername;
 
     return (`${toolName} (${accountName})`);
   };
