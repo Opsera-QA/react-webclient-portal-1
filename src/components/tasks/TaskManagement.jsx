@@ -53,7 +53,6 @@ function TaskManagement() {
       toastContext.showOverlayPanel(
         <CreateTasksWizard
           loadData={loadData}
-          isMounted={isMounted}
         />,
       );
     } else {

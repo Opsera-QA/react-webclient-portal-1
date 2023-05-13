@@ -9,6 +9,7 @@ import useGetPlatformSettingsFeatureFlagByName from "hooks/platform/settings/use
 import platformSettingFeatureConstants
   from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
 import CreateToolRegistryWizard from "components/inventory/tools/tool_details/wizards/CreateToolRegistryWizard";
+import CreateTasksWizard from "../../tasks/portal_tasks_wizard/CreateTasksWizard";
 
 export const CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS = {
   RESOURCE_SELECTION_SCREEN: "resource_selection_screen",
