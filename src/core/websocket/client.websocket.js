@@ -1,7 +1,7 @@
-import {LIVE_MESSAGE_TOPICS} from "core/websocket/constants/liveMessage.constants";
-import {WebsocketHelper} from "core/websocket/helper/websocket.helper";
 import io from 'socket.io-client';
 import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
+import WebsocketLiveUpdateHelper from "@opsera/definitions/constants/websocket/helpers/websocketLiveUpdate.helper";
+import LiveMessageConstants from "@opsera/definitions/constants/websocket/constants/liveMessage.constants";
 
 export const WEBSOCKET_STATE = {
   CONNECTING: 0,
@@ -106,7 +106,7 @@ export class ClientWebsocket {
       return;
     }
 
-    if (LIVE_MESSAGE_TOPICS[topicName] == null) {
+    if (LiveMessageConstants.LIVE_MESSAGE_TOPICS[topicName] == null) {
       console.error(`Cannot attempt to subscribe to an invalid topic: [${topicName}]`);
       return;
     }
@@ -122,7 +122,7 @@ export class ClientWebsocket {
       model: model,
     };
 
-    const subscriptionRequest = WebsocketHelper.generateLiveMessageForSubscriptionRequest(topicName);
+    const subscriptionRequest = WebsocketLiveUpdateHelper.generateLiveMessageForSubscriptionRequest(topicName);
     console.log(`subscribing to topic: [${topicName}]`);
     this.websocketClient.emit("subscriptionRequest", subscriptionRequest);
 
@@ -135,13 +135,13 @@ export class ClientWebsocket {
       return;
     }
 
-    if (LIVE_MESSAGE_TOPICS[topicName] == null) {
+    if (LiveMessageConstants.LIVE_MESSAGE_TOPICS[topicName] == null) {
       console.error(`Cannot attempt to unsubscribe from an invalid topic: [${topicName}]`);
       return;
     }
 
     console.log(`unsubscribing from topic: [${topicName}]`);
-    const unsubscriptionRequest = WebsocketHelper.generateLiveMessageForUnsubscriptionRequest(topicName);
+    const unsubscriptionRequest = WebsocketLiveUpdateHelper.generateLiveMessageForUnsubscriptionRequest(topicName);
     const currentSubscriptions = [...this.subscriptions];
     const subscriptionIndex = currentSubscriptions.findIndex((subscription) => subscription.topic === topicName);
 
