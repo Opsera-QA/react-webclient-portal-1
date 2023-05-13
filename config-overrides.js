@@ -1,8 +1,7 @@
 const webpack = require("webpack");
 
 module.exports = function override(config) {
-  const fallback = config.resolve.fallback || {};
-  Object.assign(fallback, {
+  config.resolve.fallback = {
     "crypto": require.resolve("crypto-browserify"),
     "stream": require.resolve("stream-browserify"),
     "assert": require.resolve("assert"),
@@ -11,14 +10,7 @@ module.exports = function override(config) {
     "os": require.resolve("os-browserify"),
     "process/browser": require.resolve('process/browser'),
     "url": require.resolve("url"),
-  });
-  config.resolve.fallback = fallback;
-  config.module.rules.push({
-    test: /\.m?js/,
-    resolve: {
-      fullySpecified: false,
-    },
-  });
+  };
   config.ignoreWarnings = [/Failed to parse source map/];
   config.plugins = (config.plugins || []).concat([
     new webpack.ProvidePlugin({
