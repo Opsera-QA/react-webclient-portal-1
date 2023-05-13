@@ -3,7 +3,7 @@
     "browser": true
   },
   "extends": ["react-app", "plugin:prettier/recommended"],
-  "globals-temp": {
+  "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly",
     "require": "readonly",
