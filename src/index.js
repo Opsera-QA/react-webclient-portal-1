@@ -1,7 +1,8 @@
 import React from "react";
 import App from "./App";
+import ReactDOM from "react-dom";
 import reportWebVitals from "reportWebVitals";
-import { createRoot } from 'react-dom/client';
+// import { createRoot } from 'react-dom/client';
 
 if (typeof window["TextEncoder"] !== "function") {
   console.log("Using text-encoding shim");
@@ -34,9 +35,10 @@ if (browserNotSupported) {
   Chromium Edge browser (released January 2020).  Please return with one of those browsers to ensure a secure experience.</div>";
   document.body.innerHTML = uiMessage;
 } else {
-  const container = document.getElementById('root');
-  const root = createRoot(container);
-  root.render(<App />);
+  ReactDOM.render(<App />, document.getElementById("root"));
+  // const container = document.getElementById('root');
+  // const root = createRoot(container);
+  // root.render(<App />);
 }
 
 // If you want to start measuring performance in your app, pass a function
