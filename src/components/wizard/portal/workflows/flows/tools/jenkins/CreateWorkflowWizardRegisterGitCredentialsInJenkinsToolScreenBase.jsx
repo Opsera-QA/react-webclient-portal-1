@@ -10,6 +10,7 @@ import jenkinsAccountActions
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import toolsActions from "../../../../../../inventory/tools/tools-actions";
 
 export default function CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase(
   {
@@ -46,23 +47,25 @@ export default function CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolS
   const createAccount = async () => {
     try {
       setStatus(buttonLabelHelper.BUTTON_STATES.BUSY);
+      const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelTokenSource, gitToolId);
+      const gitToolData = response?.data?.data;
       const jenkinsAccount = {
         toolId: jenkinsToolId,
         service: gitToolOption,
         credentailsToolId: gitToolId,
-        credentialsId: gitToolId,
+        credentialsId: gitToolData?.name ? gitToolData?.name : gitToolId,
         credentialsDescription: gitToolId,
       };
       const newAccountModel = modelHelpers.parseObjectIntoModel(
         jenkinsAccount,
         jenkinsToolAccountMetadata,
       );
-      // await jenkinsAccountActions.createJenkinsAccountV2(
-      //   getAccessToken,
-      //   cancelTokenSource,
-      //   jenkinsToolId,
-      //   newAccountModel,
-      // );
+      await jenkinsAccountActions.createJenkinsAccountV2(
+        getAccessToken,
+        cancelTokenSource,
+        jenkinsToolId,
+        newAccountModel,
+      );
       setStatus(buttonLabelHelper.BUTTON_STATES.SUCCESS);
       onSuccessFunction();
     } catch (error) {

@@ -21,6 +21,8 @@ import salesforceOrganizationSyncTaskConfigurationMetadata from "../../../../../
 import SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
   from "../../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput";
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
+import SalesforceOrganizationSyncTaskJenkinsAccountSelectInput
+  from "../../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsAccountSelectInput";
 
 function CreateSalesforceOrganizationSyncInputFields({
   taskModel,
@@ -54,6 +56,7 @@ function CreateSalesforceOrganizationSyncInputFields({
     newDataObject.configuration = taskConfigurationModel.getPersistData();
     newDataObject.name = parentConfig?.getData("name");
     newDataObject.description = parentConfig?.getData("description");
+    newDataObject.tool_identifier = parentConfig?.getData("tool_identifier");
     setTaskModel(newDataObject);
     onSuccessFunction();
   };
@@ -119,6 +122,13 @@ function CreateSalesforceOrganizationSyncInputFields({
         </Col>
         <Col lg={12}>
           <TextInputBase dataObject={parentConfig} setDataObject={setParentConfig} fieldName={"description"} />
+        </Col>
+        <Col lg={12}>
+          <SalesforceOrganizationSyncTaskJenkinsAccountSelectInput
+              model={taskConfigurationModel}
+              setModel={setTaskConfigurationModel}
+              taskModel={parentConfig}
+          />
         </Col>
         <Col lg={12}>
           <SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput

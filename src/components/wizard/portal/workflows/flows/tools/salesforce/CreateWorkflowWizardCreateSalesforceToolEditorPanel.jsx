@@ -30,6 +30,8 @@ import IconBase from "../../../../../../common/icons/IconBase";
 import {ImageBase} from "@opsera/react-vanity-set";
 import {vendorImageConstants} from "../../../../../../../temp-library-components/image/vendorImage.constants";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
+import SFDCBuildTypeSelectInput
+  from "../../../../../../common/list_of_values_input/workflow/pipelines/SFDCBuildTypeSelectInput";
 
 export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel({
   className,
@@ -200,6 +202,9 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel({
                 setDataObject={setSalesforceToolModel}
                 fieldName={"sfdc_token"}
               />
+            </Col>
+            <Col sm={12}>
+              <SFDCBuildTypeSelectInput dataObject={salesforceToolModel} setDataObject={setSalesforceToolModel} fieldName={"buildType"} />
             </Col>
           </>
         );

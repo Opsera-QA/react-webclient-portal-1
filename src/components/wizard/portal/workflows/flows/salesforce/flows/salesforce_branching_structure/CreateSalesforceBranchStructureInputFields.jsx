@@ -17,6 +17,8 @@ import AgentLabelsSelectInput from "../../../../../../../common/list_of_values_i
 import SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
   from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput";
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
+import SalesforceOrganizationSyncTaskBranchTypeSelectInput
+  from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBranchTypeSelectInput";
 
 function CreateSalesforceBranchStructureInputFields({
   taskModel,
@@ -101,6 +103,11 @@ function CreateSalesforceBranchStructureInputFields({
         </Col>
         <Col lg={12}>
           <TextInputBase dataObject={parentConfig} setDataObject={setParentConfig} fieldName={"description"} />
+        </Col>
+        <Col lg={12}>
+          <SalesforceOrganizationSyncTaskBranchTypeSelectInput
+              dataObject={taskConfigurationModel}
+              setDataObject={setTaskConfigurationModel} />
         </Col>
         <Col lg={12}>
           <SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput

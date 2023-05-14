@@ -159,7 +159,7 @@ export default function CreateBranchingStructureTask({
             setButtonContainer={setButtonContainer}
             backButtonFunction={() =>
               setCurrentScreen(
-                CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_SCREEN,
+                CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_SALESFORCE_ACCOUNT_SCREEN,
               )
             }
             connectionFailure={connectionFailure}
@@ -196,22 +196,22 @@ export default function CreateBranchingStructureTask({
             jenkinsToolId={jenkinsSourceToolId}
           />
         );
-      case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_IN_JENKINS_SCREEN:
-        return (
-          <CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase
-            gitToolId={gitToolId}
-            gitToolOption={gitToolOption}
-            onSuccessFunction={() =>
-              setCurrentScreen(
-                CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.EDIT_WORKFLOW_INPUT,
-              )
-            }
-            onFailureFunction={() => {}}
-            jenkinsToolId={jenkinsSourceToolId}
-            className={"m-3"}
-            setButtonContainer={setButtonContainer}
-          />
-        );
+      // case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_IN_JENKINS_SCREEN:
+      //   return (
+      //     <CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase
+      //       gitToolId={gitToolId}
+      //       gitToolOption={gitToolOption}
+      //       onSuccessFunction={() =>
+      //         setCurrentScreen(
+      //           CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.EDIT_WORKFLOW_INPUT,
+      //         )
+      //       }
+      //       onFailureFunction={() => {}}
+      //       jenkinsToolId={jenkinsSourceToolId}
+      //       className={"m-3"}
+      //       setButtonContainer={setButtonContainer}
+      //     />
+      //   );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.EDIT_WORKFLOW_INPUT:
         return (
             <CreateSalesforceBranchStructureInputFields

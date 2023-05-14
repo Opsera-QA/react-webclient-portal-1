@@ -34,7 +34,7 @@ export default function CreateSalesforceBranchingStructureTaskInitializationScre
             jenkinsToolId
         );
         setTask({...updatedTask});
-        setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_IN_JENKINS_SCREEN);
+        setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.EDIT_WORKFLOW_INPUT);
     };
 
     return (

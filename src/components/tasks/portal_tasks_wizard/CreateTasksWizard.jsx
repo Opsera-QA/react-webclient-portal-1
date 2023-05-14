@@ -21,7 +21,7 @@ export const REGISTRY_WIZARD_SCREENS = {
   TASK_DETAIL: "task_detail",
 };
 
-export default function CreateTasksWizard({ loadData }) {
+export default function CreateTasksWizard({ loadData, backButtonFunction }) {
   const [currentScreen, setCurrentScreen] = useState(
     REGISTRY_WIZARD_SCREENS.MODE_SELECT,
   );
@@ -85,15 +85,6 @@ export default function CreateTasksWizard({ loadData }) {
     toastContext.clearOverlayPanel();
   };
 
-  const backButtonFunction = () => {
-    if (currentScreen === "task_select") {
-      setCurrentScreen(REGISTRY_WIZARD_SCREENS.MODE_SELECT);
-    }
-    if (currentScreen === "connection_test") {
-      setCurrentScreen(REGISTRY_WIZARD_SCREENS.CONNECTION_INFO);
-    }
-  };
-
   const routeToDetailView = () => {
     closeOverlayFunction();
     history.push(`/inventory/tools/details/${taskModel?.getData("_id")}`);
@@ -112,6 +103,7 @@ export default function CreateTasksWizard({ loadData }) {
       <WizardTaskConfigurationRouter
         flow={taskType}
         setButtonContainer={setButtonContainer}
+        backButtonFunction={() => {setCurrentScreen(REGISTRY_WIZARD_SCREENS.TASK_SELECT);}}
         handleClose={closeOverlayFunction}
       />
     );
@@ -128,6 +120,7 @@ export default function CreateTasksWizard({ loadData }) {
             setSetupMode={setSetupMode}
             setupMode={setUpMode}
             className={"py-5"}
+            backButtonFunction={backButtonFunction}
           />
         );
       case REGISTRY_WIZARD_SCREENS.TASK_CONFIGURATION:
@@ -138,6 +131,8 @@ export default function CreateTasksWizard({ loadData }) {
             selectedFlow={setUpMode}
             setSelectedFlow={setTaskType}
             setCurrentScreen={setCurrentScreen}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={() => {setCurrentScreen(REGISTRY_WIZARD_SCREENS.MODE_SELECT);}}
           />
         );
     }
@@ -157,4 +152,5 @@ export default function CreateTasksWizard({ loadData }) {
 
 CreateTasksWizard.propTypes = {
   loadData: PropTypes.func,
+  backButtonFunction: PropTypes.func
 };

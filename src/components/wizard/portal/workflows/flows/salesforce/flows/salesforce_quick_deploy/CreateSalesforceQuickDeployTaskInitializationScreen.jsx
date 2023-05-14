@@ -11,6 +11,7 @@ import {
 import { taskTemplateIdentifierConstants } from "components/admin/task_templates/taskTemplateIdentifier.constants";
 import { SalesforceTaskHelper } from "components/tasks/salesforceTask.helper";
 import {getTaskTypeLabel} from "../../../../../../../tasks/task.types";
+import toolsActions from "../../../../../../../inventory/tools/tools-actions";
 
 export default function CreateSalesforceQuickDeployTaskInitializationScreen(
     {
@@ -18,13 +19,15 @@ export default function CreateSalesforceQuickDeployTaskInitializationScreen(
         setCurrentScreen,
         salesforceToolId,
         flow,
-        setButtonContainer
+        setButtonContainer,
+        sourceSalesforceToolModel
     }) {
-    const setTaskFunction = (task) => {
+    const setTaskFunction = async (task) => {
         const updatedTask = SalesforceTaskHelper.configureSalesforceQuickDeployTask(
             task,
             flow,
-            salesforceToolId
+            salesforceToolId,
+            sourceSalesforceToolModel
         );
         setTask({...updatedTask});
         setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.EDIT_WORKFLOW_INPUT);
@@ -45,6 +48,7 @@ CreateSalesforceQuickDeployTaskInitializationScreen.propTypes = {
     flow: PropTypes.string,
     setCurrentScreen: PropTypes.func,
     setButtonContainer: PropTypes.func,
+    sourceSalesforceToolModel: PropTypes.object,
     salesforceToolId: PropTypes.string
 };
 

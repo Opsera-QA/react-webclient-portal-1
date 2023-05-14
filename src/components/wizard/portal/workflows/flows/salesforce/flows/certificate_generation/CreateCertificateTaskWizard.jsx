@@ -74,6 +74,7 @@ export default function CreateCertificateTaskWizard({
                 CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN,
               );
             }}
+            backButtonFunction={backButtonFunction}
           />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_JENKINS_ACCOUNT_SCREEN:

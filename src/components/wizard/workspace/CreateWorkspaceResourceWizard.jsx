@@ -46,6 +46,7 @@ export default function CreateWorkspaceResourceWizard({ loadDataFunction }) {
           return (
             <CreateTasksWizard
               loadData={loadDataFunction}
+              backButtonFunction={backButtonFunction}
             />
           );
         }
