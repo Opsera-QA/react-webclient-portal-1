@@ -192,30 +192,6 @@ taskActions.checkECSStatus = async (postBody, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
-taskActions.generateCert = async (getAccessToken, id) => {
-  const postBody= {"taskId" : id};
-  const apiUrl = `/tasks/generatecert`;
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
-taskActions.getCert = async (getAccessToken, id, cancelTokenSource) => {
-  const postBody= {"taskId" : id};
-  const apiUrl = `/tasks/getcert`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-taskActions.getPrivateKey = async (getAccessToken, id, cancelTokenSource) => {
-  const postBody= {"taskId" : id};
-  const apiUrl = `/tasks/getprivatekey`;
-  return await baseActions.apiPostCall(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-taskActions.syncCertToJenkins = async (getAccessToken, gitTasksDataDto, cancelTokenSource) => {
-  const postBody= {"taskId" : gitTasksDataDto.getData("_id"), "jenkinsId": gitTasksDataDto.getData("jenkinsIds")};
-  const apiUrl = `/tasks/synchcert`;
-  return await baseActions.apiPostCall(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
 taskActions.logClusterCancellation = async (getAccessToken, cancelTokenSource, gitTasksDataDto) => {
   const apiUrl = `/tools/aws/v2/cancel/ecs`;
   let postBody = {
