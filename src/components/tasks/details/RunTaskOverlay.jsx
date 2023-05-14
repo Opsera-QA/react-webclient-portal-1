@@ -7,7 +7,6 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import CloseButton from "components/common/buttons/CloseButton";
 import TriggerTaskRunButton from "components/tasks/buttons/run_task/TriggerTaskRunButton";
 import ec2ClusterCreationTaskConfigurationMetadata from "components/tasks/details/tasks/ecs-cluster-creation/ecs-creation-git-task-configuration";
-import sfdxCertGenTaskConfigurationMetadata from "components/tasks/details/tasks/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
 import ec2ServiceCreationTaskConfigurationMetadata from "components/tasks/details/tasks/ecs-service-creation/ecs-service-creation-git-task-configuration";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 import {TASK_TYPES} from "components/tasks/task.types";
@@ -62,12 +61,6 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
         configurationData = modelHelpers.parseObjectIntoModel(
           configuration,
           salesforceQuickDeployTaskConfigurationMetadata,
-        );
-        break;
-      case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-        configurationData = modelHelpers.parseObjectIntoModel(
-          configuration,
-          sfdxCertGenTaskConfigurationMetadata,
         );
         break;
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:

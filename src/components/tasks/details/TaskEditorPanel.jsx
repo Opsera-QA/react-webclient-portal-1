@@ -120,8 +120,6 @@ function TaskEditorPanel({ taskData, handleClose, backButtonFunction }) {
         return <SfdxQuickDeployTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
       case TASK_TYPES.GITSCRAPER:
         return <GitCustodianTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-      case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-        break;
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
         break;
       case TASK_TYPES.SNAPLOGIC_TASK:
