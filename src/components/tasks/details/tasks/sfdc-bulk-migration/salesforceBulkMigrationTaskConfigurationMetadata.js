@@ -100,7 +100,6 @@ export const salesforceBulkMigrationTaskConfigurationMetadata = {
     {
       label: "Salesforce Account",
       id: "sfdcToolName",
-      isRequired: true,
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
     },

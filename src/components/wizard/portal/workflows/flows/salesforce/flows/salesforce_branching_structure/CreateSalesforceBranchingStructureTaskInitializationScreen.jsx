@@ -22,7 +22,8 @@ export default function CreateSalesforceBranchingStructureTaskInitializationScre
         gitToolOption,
         flow,
         setButtonContainer,
-        jenkinsToolId
+        jenkinsToolId,
+        sourceSalesforceToolModel
     }) {
     const setTaskFunction = (task) => {
         const updatedTask = SalesforceTaskHelper.configureSalesforceBranchingStructureTask(
@@ -31,7 +32,8 @@ export default function CreateSalesforceBranchingStructureTaskInitializationScre
             salesforceToolId,
             gitToolId,
             gitToolOption,
-            jenkinsToolId
+            jenkinsToolId,
+            sourceSalesforceToolModel
         );
         setTask({...updatedTask});
         setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.EDIT_WORKFLOW_INPUT);
@@ -56,5 +58,6 @@ CreateSalesforceBranchingStructureTaskInitializationScreen.propTypes = {
     gitToolId: PropTypes.string,
     gitToolOption: PropTypes.string,
     jenkinsToolId: PropTypes.string,
+    sourceSalesforceToolModel: PropTypes.object
 };
 

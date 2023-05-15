@@ -20,7 +20,8 @@ export default function CreateSalesforceOrganizationSyncTaskInitializationScreen
     flow,
     setButtonContainer,
     jenkinsToolId,
-    gitToolModel
+    gitToolModel,
+    sourceSalesforceToolModel
   }) {
   const setTaskFunction = (task) => {
     const updatedTask = SalesforceTaskHelper.configureSalesforceOrganizationSyncTask(
@@ -30,7 +31,8 @@ export default function CreateSalesforceOrganizationSyncTaskInitializationScreen
       gitToolId,
       gitToolOption,
       jenkinsToolId,
-      gitToolModel
+      gitToolModel,
+      sourceSalesforceToolModel
     );
     setTask({...updatedTask});
     setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.EDIT_WORKFLOW_INPUT);
@@ -55,6 +57,7 @@ CreateSalesforceOrganizationSyncTaskInitializationScreen.propTypes = {
   gitToolId: PropTypes.string,
   gitToolOption: PropTypes.string,
   jenkinsToolId: PropTypes.string,
-  gitToolModel: PropTypes.object
+  gitToolModel: PropTypes.object,
+  sourceSalesforceToolModel: PropTypes.object
 };
 
