@@ -4,7 +4,7 @@ import WebsocketLiveUpdateHelper from "@opsera/definitions/constants/websocket/h
 import LiveMessageConstants from "@opsera/definitions/constants/websocket/constants/liveMessage.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {ReactLoggingHandler} from "temp-library-components/handler/reactLogging.handler";
-const websocketEnabled = process.env.REACT_APP_WEBSOCKET_ENABLED;
+const websocketEnabled = DataParsingHelper.parseBooleanV2(process.env.REACT_APP_WEBSOCKET_ENABLED);
 
 export const WEBSOCKET_STATE = {
   CONNECTING: 0,
@@ -111,7 +111,7 @@ export class ClientWebsocket {
       ReactLoggingHandler.logDebugMessage(
         "clientWebsocket",
         "closeWebsocket",
-        "closing websocket",
+        "Closing Websocket",
       );
       this.websocketClient?.close();
       this.websocketClient = null;
@@ -187,13 +187,6 @@ export class ClientWebsocket {
       liveUpdateHandlerFunction: liveUpdateHandlerFunction,
     };
 
-    const subscriptionRequest = WebsocketLiveUpdateHelper.generateLiveMessageForSubscriptionRequest(topicName);
-    ReactLoggingHandler.logDebugMessage(
-      "clientWebsocket",
-      "subscribeToTopic",
-      `subscribing to topic: [${topicName}]`,
-    );
-
     this.subscriptions.push(newSubscription);
 
     if (this.isConnected() !== true) {
@@ -205,6 +198,13 @@ export class ClientWebsocket {
       return;
     }
 
+    ReactLoggingHandler.logDebugMessage(
+      "clientWebsocket",
+      "subscribeToTopic",
+      `subscribing to topic: [${topicName}]`,
+    );
+
+    const subscriptionRequest = WebsocketLiveUpdateHelper.generateLiveMessageForSubscriptionRequest(topicName);
     this.websocketClient.emit("subscriptionRequest", subscriptionRequest);
   };
 
