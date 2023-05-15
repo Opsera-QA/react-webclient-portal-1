@@ -1,51 +1,39 @@
 import React from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
-import salesforceOrganizationSyncTaskConfigurationMetadata
-  from "components/tasks/details/tasks/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
+import salesforceOrganizationSyncTaskConfigurationMetadata from "components/tasks/details/tasks/sfdc-org-sync/salesforceOrganizationSyncTaskConfigurationMetadata";
 import SFDCBranchStructuringTaskTypeSummaryCard from "./tasks/sfdc-branch-structure/SFDCBranchStructuringTaskTypeSummaryCard";
-import sfdcGitBranchTaskConfigurationMetadata
-  from "components/tasks/details/tasks/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
+import sfdcGitBranchTaskConfigurationMetadata from "components/tasks/details/tasks/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
 import branchToBranchGitTaskConfigurationMetadata from "components/tasks/details/tasks/branch-to-branch/branch-to-branch-git-task-configuration";
 import GitToGitSyncTaskTypeSummaryCard from "components/tasks/details/tasks/branch-to-branch/GitToGitSyncTaskTypeSummaryCard";
 import ECSCreationTaskTypeSummaryCard from "./tasks/ecs-cluster-creation/ECSCreationTaskTypeSummaryCard";
-import ec2ClusterCreationTaskConfigurationMetadata
-  from "./tasks/ecs-cluster-creation/ecs-creation-git-task-configuration";
-import ECSServiceCreationTaskTypeSummaryCard
-  from "./tasks/ecs-service-creation/ECSServiceCreationTaskTypeSummaryCard";
-import ec2ServiceCreationTaskConfigurationMetadata
-  from "./tasks/ecs-service-creation/ecs-service-creation-git-task-configuration";
+import ec2ClusterCreationTaskConfigurationMetadata from "./tasks/ecs-cluster-creation/ecs-creation-git-task-configuration";
+import ECSServiceCreationTaskTypeSummaryCard from "./tasks/ecs-service-creation/ECSServiceCreationTaskTypeSummaryCard";
+import ec2ServiceCreationTaskConfigurationMetadata from "./tasks/ecs-service-creation/ecs-service-creation-git-task-configuration";
 import AwsLambdaTaskTypeSummaryCard from "./tasks/aws-lambda-creation/AwsLambdaSummaryPanel";
-import awsLambdaFunctionTaskConfigurationMetadata
-  from "./tasks/aws-lambda-creation/aws-lambda-metadata";
+import awsLambdaFunctionTaskConfigurationMetadata from "./tasks/aws-lambda-creation/aws-lambda-metadata";
 import AzureClusterSummaryPanel from "./tasks/azure-cluster-creation/AzureClusterSummaryPanel";
-import azureAksClusterTaskConfigurationMetadata
-  from "./tasks/azure-cluster-creation/azure-cluster-metadata";
-import {TASK_TYPES} from "components/tasks/task.types";
+import azureAksClusterTaskConfigurationMetadata from "./tasks/azure-cluster-creation/azure-cluster-metadata";
+import { TASK_TYPES } from "components/tasks/task.types";
 import modelHelpers from "components/common/model/modelHelpers";
-import SalesforceOrganizationSyncTaskTypeSummaryCard
-  from "components/tasks/details/tasks/sfdc-org-sync/SalesforceOrganizationSyncTaskTypeSummaryCard";
-import SalesforceBulkMigrationTaskTypeSummaryCard
-  from "components/tasks/details/tasks/sfdc-bulk-migration/SalesforceBulkMigrationTaskTypeSummaryCard";
-import {salesforceBulkMigrationTaskConfigurationMetadata} from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
-import SalesforceQuickDeployTaskTypeSummaryCard
-    from "components/tasks/details/tasks/sfdc-quick-deploy/SalesforceQuickDeployTaskTypeSummaryCard";
-import GitToGitMergeSyncTaskSummaryCard
-  from "components/tasks/details/tasks/merge_sync_task/git_to_git/GitToGitMergeSyncTaskSummaryCard";
-import {
-  mergeSyncTaskGitConfigurationMetadata
-} from "components/tasks/details/tasks/merge_sync_task/git_to_git/mergeSyncTaskGitConfiguration.metadata";
-import SalesforceToGitMergeSyncTaskSummaryCard
-  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/SalesforceToGitMergeSyncTaskSummaryCard";
-import {
-  mergeSyncTaskSalesforceConfigurationMetadata
-} from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/mergeSyncTaskSalesforceConfiguration.metadata";
+import SalesforceOrganizationSyncTaskTypeSummaryCard from "components/tasks/details/tasks/sfdc-org-sync/SalesforceOrganizationSyncTaskTypeSummaryCard";
+import SalesforceBulkMigrationTaskTypeSummaryCard from "components/tasks/details/tasks/sfdc-bulk-migration/SalesforceBulkMigrationTaskTypeSummaryCard";
+import { salesforceBulkMigrationTaskConfigurationMetadata } from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
+import SalesforceQuickDeployTaskTypeSummaryCard from "components/tasks/details/tasks/sfdc-quick-deploy/SalesforceQuickDeployTaskTypeSummaryCard";
+import GitToGitMergeSyncTaskSummaryCard from "components/tasks/details/tasks/merge_sync_task/git_to_git/GitToGitMergeSyncTaskSummaryCard";
+import { mergeSyncTaskGitConfigurationMetadata } from "components/tasks/details/tasks/merge_sync_task/git_to_git/mergeSyncTaskGitConfiguration.metadata";
+import SalesforceToGitMergeSyncTaskSummaryCard from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/SalesforceToGitMergeSyncTaskSummaryCard";
+import { mergeSyncTaskSalesforceConfigurationMetadata } from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/mergeSyncTaskSalesforceConfiguration.metadata";
 import SnaplogicTaskSummaryCard from "./tasks/snaplogic/SnaplogicTaskSummaryCard";
 import snaplogicTaskConfigurationMetadata from "./tasks/snaplogic/snaplogicTaskConfigurationMetadata";
 import GitscraperSummaryPanel from "./tasks/gitscraper/GitscraperSummaryPanel";
 import gitscraperTaskConfigurationMetadata from "./tasks/gitscraper/gitscraper-metadata";
-import salesforceQuickDeployTaskConfigurationMetadata
-  from "./tasks/sfdc-quick-deploy/salesforceQuickDeployTaskConfigurationMetadata";
+import salesforceQuickDeployTaskConfigurationMetadata from "./tasks/sfdc-quick-deploy/salesforceQuickDeployTaskConfigurationMetadata";
+import SalesforceCustomSettingMigrationTaskSummaryCard
+  from "./tasks/sfdc-custom-setting-migration/SalesforceCustomSettingMigrationTaskSummaryCard";
+import salesforceCustomSettingMigrationTaskMetadata, {
+  customSettingTaskSalesforceConfigurationMetadata
+} from "./tasks/sfdc-custom-setting-migration/salesforceCustomSettingMigrationTaskMetadata";
 
 function TaskConfigurationSummaryPanel({ taskModel }) {
   const getTaskTypeSummaryPanel = () => {
@@ -133,10 +121,10 @@ function TaskConfigurationSummaryPanel({ taskModel }) {
       case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
         return (
           <SalesforceQuickDeployTaskTypeSummaryCard
-              tasksData={taskModel}
-              taskConfigurationData={modelHelpers.parseObjectIntoModel(
+            tasksData={taskModel}
+            taskConfigurationData={modelHelpers.parseObjectIntoModel(
               taskModel?.getData("configuration"),
-                salesforceQuickDeployTaskConfigurationMetadata,
+              salesforceQuickDeployTaskConfigurationMetadata,
             )}
           />
         );
@@ -174,27 +162,36 @@ function TaskConfigurationSummaryPanel({ taskModel }) {
       case TASK_TYPES.GITSCRAPER:
         return (
           <GitscraperSummaryPanel
-            gitTaskConfigurationData={
-              modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), gitscraperTaskConfigurationMetadata)
-            }
+            gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              gitscraperTaskConfigurationMetadata,
+            )}
             gitTasksData={taskModel}
           />
         );
-  
+      case TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION:
+        return (
+          <SalesforceCustomSettingMigrationTaskSummaryCard
+            taskConfigDataModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              salesforceCustomSettingMigrationTaskMetadata,
+            )}
+            salesforceConfigurationModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration")?.sfdc,
+              customSettingTaskSalesforceConfigurationMetadata,
+            )}
+          />
+        );
       default:
         return <div>No type associated with this Task</div>;
     }
   };
 
   if (taskModel == null) {
-    return (<LoadingDialog size="sm"/>);
+    return <LoadingDialog size="sm" />;
   }
 
-  return (
-    <div>
-      {getTaskTypeSummaryPanel()}
-    </div>
-  );
+  return <div>{getTaskTypeSummaryPanel()}</div>;
 }
 
 TaskConfigurationSummaryPanel.propTypes = {
