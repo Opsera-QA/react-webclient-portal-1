@@ -16,10 +16,10 @@ export default (colorScheme) => ({
     },
   ],
   margin: {
-    top: 10,
-    right: 40,
-    bottom: 60,
-    left: 40
+    top: 0,
+    right: 80,
+    bottom: 80,
+    left: 100
   },
   labelTextColor: "#ffffff"
 });
