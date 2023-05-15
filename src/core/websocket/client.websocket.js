@@ -156,16 +156,6 @@ export class ClientWebsocket {
   };
 
   subscribeToTopic = (topicName, liveUpdateHandlerFunction) => {
-    if (this.isConnected() !== true) {
-      ReactLoggingHandler.logErrorMessage(
-        "clientWebsocket",
-        "subscribeToTopic",
-        undefined,
-        `Websocket is not connected so cannot subscribe to topic [${topicName}].`,
-      );
-      return;
-    }
-
     if (LiveMessageConstants.LIVE_MESSAGE_TOPICS[topicName] == null) {
       ReactLoggingHandler.logErrorMessage(
         "clientWebsocket",
@@ -203,10 +193,19 @@ export class ClientWebsocket {
       "subscribeToTopic",
       `subscribing to topic: [${topicName}]`,
     );
-    this.websocketClient.emit("subscriptionRequest", subscriptionRequest);
-
 
     this.subscriptions.push(newSubscription);
+
+    if (this.isConnected() !== true) {
+      ReactLoggingHandler.logInfoMessage(
+        "clientWebsocket",
+        "subscribeToTopic",
+        `Websocket is not connected so cannot subscribe to topic [${topicName}]`,
+      );
+      return;
+    }
+
+    this.websocketClient.emit("subscriptionRequest", subscriptionRequest);
   };
 
   unsubscribeFromTopic = (topicName) => {
