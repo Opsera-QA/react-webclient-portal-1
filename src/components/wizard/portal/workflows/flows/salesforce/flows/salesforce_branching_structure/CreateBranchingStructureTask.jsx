@@ -190,6 +190,7 @@ export default function CreateBranchingStructureTask({
             gitToolOption={gitToolOption}
             salesforceToolId={salesforceSourceToolId}
             jenkinsToolId={jenkinsSourceToolId}
+            sourceSalesforceToolModel={sourceSalesforceToolModel}
           />
         );
       // case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_IN_JENKINS_SCREEN:
