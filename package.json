@@ -39,9 +39,6 @@
       "last 1 safari version"
     ]
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "dependencies": {
     "@editorjs/checklist": "^1.5.0",
     "@editorjs/code": "^2.8.0",

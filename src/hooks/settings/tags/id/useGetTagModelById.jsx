@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import tagMetadata from "components/settings/tags/tag.metadata";
 import useGetTagById from "hooks/settings/tags/id/useGetTagById";
 import modelHelpers from "components/common/model/modelHelpers";
+import {websocketLiveUpdateHelper} from "core/websocket/websocket.helper";
 
 export default function useGetTagModelById(tagId, handleErrorFunction) {
   const [tagModel, setTagModel] = useState(undefined);
@@ -13,11 +14,17 @@ export default function useGetTagModelById(tagId, handleErrorFunction) {
     loadData,
   } = useGetTagById(tagId, handleErrorFunction);
 
-  useEffect(() => {
-    setTagModel(undefined);
+  const getTagModel = (tag) => {
+    return modelHelpers.parseObjectIntoModel(tag, tagMetadata);
+  };
 
-    if (tag) {
-      setTagModel({...modelHelpers.parseObjectIntoModel(tag, tagMetadata)});
+  useEffect(() => {
+    console.log("updating tag: " + JSON.stringify(tag));
+
+    if (!tag) {
+      setTagModel(undefined);
+    } else {
+      websocketLiveUpdateHelper.handleModelLiveUpdate(tagModel, setTagModel, getTagModel, tag);
     }
   }, [tag]);
 

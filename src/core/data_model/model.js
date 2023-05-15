@@ -20,6 +20,7 @@ export class Model {
     this.newModel = newModel;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
     this.changeMap = new Map();
+    this.changedFields = [];
   }
 
   getValidatedData = () => {
@@ -69,7 +70,7 @@ export class Model {
   };
 
   setData = (fieldName, newValue) => {
-    this.propertyChange(fieldName, newValue, this.getData(fieldName));
+    this.propertyChange(fieldName, newValue);
     this.data = DataParsingHelper.safeObjectPropertySetter(this.data, fieldName, newValue);
   };
 
@@ -204,30 +205,41 @@ export class Model {
     return modelValidation.getFieldWarning(fieldName, this);
   };
 
-  propertyChange = (id, newValue, oldValue) => {
-    if (!this.changeMap.has(id)) {
-      // console.log("Field added to change map: " + id);
-      // console.log("oldValue: " + JSON.stringify(oldValue));
-      // console.log("newValue: " + JSON.stringify(newValue));
-      this.changeMap.set(id, oldValue);
+  propertyChange = (fieldName, newValue) => {
+    const originalValue = this.getOriginalValue(fieldName);
+
+    if (originalValue === newValue) {
+      if (this.changedFields.includes(fieldName)) {
+        this.changedFields = this.changeMap.filter((item) => item !== fieldName);
+
+        if (this.dataState === DataState.CHANGED && this.changedFields.length === 0) {
+          this.dataState = DataState.LOADED;
+        }
+      }
+
+      // if (this.changeMap.has(fieldName)) {
+      //   this.changeMap.delete(fieldName);
+      //
+      //   if (this.dataState === DataState.CHANGED && this.changeMap.size === 0) {
+      //     this.dataState = DataState.LOADED;
+      //   }
+      // }
+    } else {
+      if (this.changedFields.includes(fieldName) !== true) {
+        this.changedFields.push(fieldName);
+      }
+      this.changeMap.set(fieldName, originalValue);
+      console.log("this.changedFields: " + JSON.stringify(this.changedFields));
 
       if (this.dataState !== DataState.NEW) {
         this.dataState = DataState.CHANGED;
-      }
-    }
-    else if (this.changeMap.get(id) === newValue
-         || (this.changeMap.get(id) === null && newValue === null)) {
-      // console.log("Fieldname removed from change map: " + id);
-      this.changeMap.delete(id);
-
-      if (this.changeMap.size === 0 && this.dataState === DataState.CHANGED) {
-        this.dataState  = DataState.LOADED;
       }
     }
   };
 
   clearChangeMap = () => {
     this.dataState = DataState.LOADED;
+    this.changedFields = [];
     this.changeMap = new Map();
   };
 
@@ -240,11 +252,34 @@ export class Model {
     return this.originalData;
   };
 
+  replaceData = (newData) => {
+    const parsedNewData = DataParsingHelper.parseObject(newData);
+
+    if (parsedNewData) {
+      let newDataWithDefaults = {...this.getNewObjectFields(), ...parsedNewData};
+
+      if (ObjectHelper.areObjectsEqualLodash(this.data, newDataWithDefaults) !== true) {
+        const changedFieldNames = DataParsingHelper.parseArray(this.changedFields, []);
+        console.log("changedFieldNames: " + JSON.stringify(this.changedFields));
+        changedFieldNames.forEach((fieldName) => {
+          newDataWithDefaults = DataParsingHelper.safeObjectPropertySetter(newDataWithDefaults, fieldName, this.getData(fieldName));
+        });
+        this.data = {...newDataWithDefaults};
+      }
+    }
+  };
+
   replaceOriginalData = (newOriginalData) => {
     const parsedNewOriginalData = DataParsingHelper.parseObject(newOriginalData);
 
-    if (parsedNewOriginalData && ObjectHelper.areObjectsEqualLodash(this.originalData, parsedNewOriginalData) !== true) {
-      this.originalData = parsedNewOriginalData;
+    if (parsedNewOriginalData) {
+      const newDataWithDefaults = {...this.getNewObjectFields(), ...parsedNewOriginalData};
+
+      if (ObjectHelper.areObjectsEqualLodash(this.originalData, newDataWithDefaults) !== true) {
+        this.originalData = newDataWithDefaults;
+        this.replaceData(parsedNewOriginalData);
+        return true;
+      }
     }
   };
 
@@ -289,9 +324,7 @@ export class Model {
   };
 
   resetData = () => {
-    this.changeMap.forEach((value, key) => {
-      this.data[key] = value;
-    });
+    this.data = this.originalData;
     this.clearChangeMap();
   };
 

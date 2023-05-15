@@ -287,9 +287,14 @@ export default class ModelBase {
   replaceOriginalData = (newOriginalData) => {
     const parsedNewOriginalData = DataParsingHelper.parseObject(newOriginalData);
 
-    if (parsedNewOriginalData && ObjectHelper.areObjectsEqualLodash(this.originalData, parsedNewOriginalData) !== true) {
-      this.originalData = parsedNewOriginalData;
-      this.replaceData(parsedNewOriginalData);
+    if (parsedNewOriginalData) {
+      const newDataWithDefaults = {...this.getNewObjectFields(), ...parsedNewOriginalData};
+
+      if (ObjectHelper.areObjectsEqualLodash(this.originalData, newDataWithDefaults) !== true) {
+        this.originalData = newDataWithDefaults;
+        this.replaceData(parsedNewOriginalData);
+        return true;
+      }
     }
   };
 
@@ -361,12 +366,16 @@ export default class ModelBase {
   replaceData = (newData) => {
     const parsedNewData = DataParsingHelper.parseObject(newData);
 
-    if (parsedNewData && ObjectHelper.areObjectsEqualLodash(this.data, parsedNewData) !== true) {
-      const changedFieldNames = DataParsingHelper.parseArray(this.changeMap?.keys(), []);
-      changedFieldNames.forEach((fieldName) => {
-        parsedNewData[fieldName] = this.changeMap.get(fieldName);
-      });
-      this.data = {...parsedNewData};
+    if (parsedNewData) {
+      const newDataWithDefaults = {...this.getNewObjectFields(), ...parsedNewData};
+
+      if (ObjectHelper.areObjectsEqualLodash(this.data, newDataWithDefaults) !== true) {
+        const changedFieldNames = DataParsingHelper.parseArray(this.changeMap?.keys(), []);
+        changedFieldNames.forEach((fieldName) => {
+          newDataWithDefaults[fieldName] = this.changeMap.get(fieldName);
+        });
+        this.data = {...newDataWithDefaults};
+      }
     }
   };
 

@@ -2,6 +2,7 @@ import io from 'socket.io-client';
 import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
 import WebsocketLiveUpdateHelper from "@opsera/definitions/constants/websocket/helpers/websocketLiveUpdate.helper";
 import LiveMessageConstants from "@opsera/definitions/constants/websocket/constants/liveMessage.constants";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export const WEBSOCKET_STATE = {
   CONNECTING: 0,
@@ -90,8 +91,9 @@ export class ClientWebsocket {
   handleLiveMessage = (liveMessage) => {
     console.log("received live message: " + JSON.stringify(liveMessage));
     this.subscriptions.forEach((subscription) => {
-      if (subscription.topic === liveMessage.topic) {
-        // subscription.model.handleLiveMessage(liveMessage);
+      if (subscription.topic === liveMessage.topic && typeof subscription.liveUpdateHandlerFunction === "function") {
+        const data = DataParsingHelper.parseNestedObject(liveMessage, "message.data");
+        subscription.liveUpdateHandlerFunction(liveMessage.type, data);
       }
     });
   };
@@ -100,7 +102,7 @@ export class ClientWebsocket {
     return this.websocketClient?.connected;
   };
 
-  subscribeToTopic = (topicName, model) => {
+  subscribeToTopic = (topicName, liveUpdateHandlerFunction) => {
     if (this.isConnected() !== true) {
       console.error(`Websocket is not connected so cannot subscribe to topic [${topicName}].`);
       return;
@@ -117,9 +119,14 @@ export class ClientWebsocket {
       return;
     }
 
+    if (typeof liveUpdateHandlerFunction !== "function") {
+      console.error(`Cannot attempt to subscribe with an invalid live update handler function.`);
+      return;
+    }
+
     const newSubscription = {
       topic: topicName,
-      model: model,
+      liveUpdateHandlerFunction: liveUpdateHandlerFunction,
     };
 
     const subscriptionRequest = WebsocketLiveUpdateHelper.generateLiveMessageForSubscriptionRequest(topicName);
