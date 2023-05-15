@@ -4,6 +4,7 @@ import WebsocketLiveUpdateHelper from "@opsera/definitions/constants/websocket/h
 import LiveMessageConstants from "@opsera/definitions/constants/websocket/constants/liveMessage.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {ReactLoggingHandler} from "temp-library-components/handler/reactLogging.handler";
+const websocketEnabled = process.env.REACT_APP_WEBSOCKET_ENABLED;
 
 export const WEBSOCKET_STATE = {
   CONNECTING: 0,
@@ -40,6 +41,10 @@ export class ClientWebsocket {
 
   // TODO: Check if logged in
   initializeWebsocket = (userData) => {
+    if (websocketEnabled !== true || userData == null) {
+      return;
+    }
+
     if (this.websocketClient != null) {
       ReactLoggingHandler.logDebugMessage(
         "clientWebsocket",
