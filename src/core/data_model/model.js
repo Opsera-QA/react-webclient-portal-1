@@ -19,7 +19,6 @@ export class Model {
     this.originalData = DataParsingHelper.cloneDeep(this.data);
     this.newModel = newModel;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
-    this.changeMap = new Map();
     this.changedFields = [];
   }
 
@@ -210,26 +209,16 @@ export class Model {
 
     if (originalValue === newValue) {
       if (this.changedFields.includes(fieldName)) {
-        this.changedFields = this.changeMap.filter((item) => item !== fieldName);
+        this.changedFields = this.changedFields.filter((item) => item !== fieldName);
 
         if (this.dataState === DataState.CHANGED && this.changedFields.length === 0) {
           this.dataState = DataState.LOADED;
         }
       }
-
-      // if (this.changeMap.has(fieldName)) {
-      //   this.changeMap.delete(fieldName);
-      //
-      //   if (this.dataState === DataState.CHANGED && this.changeMap.size === 0) {
-      //     this.dataState = DataState.LOADED;
-      //   }
-      // }
     } else {
       if (this.changedFields.includes(fieldName) !== true) {
         this.changedFields.push(fieldName);
       }
-      this.changeMap.set(fieldName, originalValue);
-      console.log("this.changedFields: " + JSON.stringify(this.changedFields));
 
       if (this.dataState !== DataState.NEW) {
         this.dataState = DataState.CHANGED;
@@ -240,7 +229,6 @@ export class Model {
   clearChangeMap = () => {
     this.dataState = DataState.LOADED;
     this.changedFields = [];
-    this.changeMap = new Map();
   };
 
   // TODO: Only send changemap for updates after getting everything else working
@@ -260,7 +248,6 @@ export class Model {
 
       if (ObjectHelper.areObjectsEqualLodash(this.data, newDataWithDefaults) !== true) {
         const changedFieldNames = DataParsingHelper.parseArray(this.changedFields, []);
-        console.log("changedFieldNames: " + JSON.stringify(this.changedFields));
         changedFieldNames.forEach((fieldName) => {
           newDataWithDefaults = DataParsingHelper.safeObjectPropertySetter(newDataWithDefaults, fieldName, this.getData(fieldName));
         });
@@ -317,7 +304,7 @@ export class Model {
 
   isChanged = (fieldName) => {
     if (fieldName) {
-      return this.changeMap.has(fieldName);
+      return this.getChangedFields().includes(fieldName);
     }
 
     return this.dataState !== DataState.LOADED;
@@ -328,13 +315,17 @@ export class Model {
     this.clearChangeMap();
   };
 
-  getChangeMap = () => {
-    return this.changeMap;
+  getChangedFields = () => {
+    return DataParsingHelper.parseArray(this.changedFields, []);
   };
 
   getOriginalValue = (fieldName) => {
-    const originalValue = this.changeMap.get(fieldName);
-    return originalValue ? originalValue : this.data[fieldName];
+    if (hasStringValue(fieldName) !== true) {
+      console.error("No field name was given, so returning null");
+      return null;
+    }
+
+    return DataParsingHelper.safeObjectPropertyParser(this.originalData, fieldName);
   };
 
   isDeleted = () => {
