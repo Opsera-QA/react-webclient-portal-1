@@ -82,30 +82,6 @@ export default function TaskTypeSelect({
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />
         </SelectionCardColumn>
-        {/*<SelectionCardColumn>*/}
-        {/*  <TaskCardBase*/}
-        {/*    option={TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION}*/}
-        {/*    handleFlowSelection={handleFlowSelection}*/}
-        {/*    selectedFlow={selectedFlow}*/}
-        {/*    icon={*/}
-        {/*        <IconTitleBar*/}
-        {/*            icon={*/}
-        {/*                <ImageBase
-                        height={"96px"}
-                        imageSource={
-                          platformImageConstants.PLATFORM_IMAGE_LINKS
-                            .SALESFORCE_GIT_TASK
-                        }
-                      />*/}
-        {/*            }*/}
-        {/*            title={TASK_TYPE_LABELS.SALESFORCE_CERTIFICATE_GENERATION}*/}
-        {/*            titleClassName={"mx-auto"}*/}
-        {/*            subTitleClassName={"mx-auto"}*/}
-        {/*        />*/}
-        {/*    }*/}
-        {/*    workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}*/}
-        {/*  />*/}
-        {/*</SelectionCardColumn>*/}
         <SelectionCardColumn>
           <TaskCardBase
             option={TASK_TYPES.SALESFORCE_QUICK_DEPLOY}
