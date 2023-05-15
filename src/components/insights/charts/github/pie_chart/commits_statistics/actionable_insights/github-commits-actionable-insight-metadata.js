@@ -42,6 +42,10 @@ const GithubCommitsActionableMetadata = {
       label: "Contributor Name",
       id: "contributorName",
     },
+    {
+      label: "MR Url",
+      id: "mergeRequestUrl",
+    }
   ],
   newObjectFields: {},
 };
