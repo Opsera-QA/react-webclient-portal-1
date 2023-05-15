@@ -368,7 +368,6 @@ SalesforceTaskHelper.updateJenkinsToolIdForSalesforceTask = (task, jenkinsToolId
 
   switch (flow) {
     case TASK_TYPES.SYNC_SALESFORCE_REPO:
-    case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
     case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
     case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
       updatedTask.configuration.toolConfigId = jenkinsToolId;

@@ -141,12 +141,6 @@ taskActions.getLovTasksListV2 = async (getAccessToken, cancelTokenSource, type, 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-taskActions.doesCertificateGenerationTaskExist = async (getAccessToken, cancelTokenSource) => {
-  const apiUrl = `/tasks/certificate-generation-task-exists`;
-
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
 taskActions.getGitTaskAccessForUserEmail = async (getAccessToken, cancelTokenSource, taskFilterModel, email) => {
   const sortOption = taskFilterModel?.getData("sortOption");
   const apiUrl = `/tasks/user/${email}`;

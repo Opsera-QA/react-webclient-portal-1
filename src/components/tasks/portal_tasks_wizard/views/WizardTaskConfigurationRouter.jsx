@@ -2,7 +2,6 @@ import React, {useEffect} from "react";
 import CreateSalesforceOrganizationSyncTaskWizard from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/task/CreateSalesforceOrganizationSyncTaskWizard";
 import * as PropType from "prop-types";
 import { TASK_TYPES } from "../../task.types";
-import CreateCertificateTaskWizard from "../../../wizard/portal/workflows/flows/salesforce/flows/certificate_generation/CreateCertificateTaskWizard";
 import CreateBranchingStructureTask from "../../../wizard/portal/workflows/flows/salesforce/flows/salesforce_branching_structure/CreateBranchingStructureTask";
 import CreateSalesforceBulkMigrationTask from "../../../wizard/portal/workflows/flows/salesforce/flows/salesforce_bulk_migration/CreateSalesforceBulkMigrationTask";
 import CreateSalesforceQuickDeployTask from "../../../wizard/portal/workflows/flows/salesforce/flows/salesforce_quick_deploy/CreateSalesforceQuickDeployTask";
@@ -19,15 +18,6 @@ export default function WizardTaskConfigurationRouter({
 }) {
   const getCurrentScreen = () => {
     switch (flow) {
-      case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION: //TOOLS REQ - JENKINS
-        return (
-          <CreateCertificateTaskWizard
-            flow={flow}
-            setButtonContainer={setButtonContainer}
-            backButtonFunction={backButtonFunction}
-            handleClose={handleClose}
-          />
-        );
       case TASK_TYPES.SALESFORCE_QUICK_DEPLOY: //TOOLS REQ - SALESFORCE ACC
         return (
           <CreateSalesforceQuickDeployTask
