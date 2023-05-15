@@ -33,7 +33,7 @@ export const getWebsocketStateLabel = (state) => {
   }
 };
 
-export class ClientWebsocket {
+export default class ClientWebsocket {
 
   constructor() {
     this.subscriptions = [];
@@ -133,12 +133,18 @@ export class ClientWebsocket {
       "handleLiveMessage",
       `Received live message:  ${JSON.stringify(liveMessage, undefined, 2)}`,
     );
-    this.subscriptions.forEach((subscription) => {
-      if (subscription.topic === liveMessage.topic && typeof subscription.liveUpdateHandlerFunction === "function") {
-        const data = DataParsingHelper.parseNestedObject(liveMessage, "message.data");
-        subscription.liveUpdateHandlerFunction(liveMessage.type, data);
-      }
-    });
+
+    // TODO: Add check for valid live update message
+    const parsedLiveMessage = DataParsingHelper.parseObject(liveMessage);
+
+    if (parsedLiveMessage) {
+      this.subscriptions.forEach((subscription) => {
+        if (subscription.topic === parsedLiveMessage.topic && typeof subscription.liveUpdateHandlerFunction === "function") {
+          const message = DataParsingHelper.parseNestedObject(parsedLiveMessage, "message");
+          subscription.liveUpdateHandlerFunction(parsedLiveMessage.type, message);
+        }
+      });
+    }
   };
 
   isConnected = () => {
@@ -217,6 +223,7 @@ export class ClientWebsocket {
     this.websocketClient.emit("subscriptionRequest", subscriptionRequest);
   };
 
+  // TODO: Determine if topics are automatically unsubscribed during connection interruption
   unsubscribeFromTopic = (topicName) => {
     if (this.isConnected() !== true) {
       return;
@@ -249,5 +256,3 @@ export class ClientWebsocket {
     this.websocketClient.emit("unsubscriptionRequest", unsubscriptionRequest);
   };
 }
-
-export default ClientWebsocket;

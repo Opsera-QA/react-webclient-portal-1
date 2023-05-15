@@ -7,8 +7,13 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import LiveMessageConstants from "@opsera/definitions/constants/websocket/constants/liveMessage.constants";
 import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
 import {websocketLiveUpdateHelper} from "core/websocket/websocket.helper";
+import useItemSubscription from "core/websocket/hooks/useItemSubscription";
+import {useHistory} from "react-router-dom";
+import {accountSettingsTrails} from "components/settings/accountSettings.trails";
 
 export default function useGetTagById(tagId, handleErrorFunction) {
+  const {toastContext} = useComponentStateReference();
+  const history = useHistory();
   const tagActions = useTagActions();
   const [tag, setTag] = useState(undefined);
   const {
@@ -17,7 +22,22 @@ export default function useGetTagById(tagId, handleErrorFunction) {
     setError,
     loadData,
   } = useLoadData();
-  const {websocketClient} = useComponentStateReference();
+
+  const onUpdateFunction = (newTag) => {
+    websocketLiveUpdateHelper.handleSingleObjectLiveUpdate(tag, newTag, setTag);
+  };
+
+  const onDeleteFunction = (tagId) => {
+    toastContext.showSystemInformationToast("The Tag has been deleted.");
+    history.push(`/${accountSettingsTrails.tagManagement.path}`);
+  };
+
+  // useItemSubscription(
+  //   LiveMessageConstants.LIVE_MESSAGE_TOPICS.TAGS,
+  //   tagId,
+  //   onUpdateFunction,
+  //   onDeleteFunction,
+  // );
 
   useEffect(() => {
     setTag(undefined);
@@ -27,20 +47,12 @@ export default function useGetTagById(tagId, handleErrorFunction) {
     }
   }, [tagId]);
 
-  const updateTagState = (type, newTag) => {
-    console.log("got new update type: " + JSON.stringify(type));
-    console.log("got new update: " + JSON.stringify(newTag));
-    websocketLiveUpdateHelper.handleSingleObjectLiveUpdate(tag, newTag, setTag);
-  };
-
   const getCustomerTags = async () => {
     setTag(undefined);
 
     if (isMongoDbId(tagId) !== true) {
       return;
     }
-
-    websocketClient.subscribeToTopic(LiveMessageConstants.LIVE_MESSAGE_TOPICS.TAGS, updateTagState);
 
     const response = await tagActions.getTagById(tagId);
     const tag = DataParsingHelper.parseNestedObject(response, "data.data");
