@@ -173,35 +173,25 @@ SalesforceTaskHelper.configureSalesforceBranchingStructureTask = (
     );
   }
 
-  if (isMongoDbId(gitToolId) !== true) {
+  if (isMongoDbId(salesforceToolId) !== true) {
     throw ReactLoggingHandler.logErrorMessage(
         "salesforceTaskWizard",
         "configureSalesforceOrganizationSyncTask",
         "Cannot configure Organization Sync Task:",
-        "Invalid Git Tool ID given",
+        "Invalid Salesforce Tool ID given",
     );
   }
 
-  if (hasStringValue(gitToolOption) === false) {
+  if (isMongoDbId(jenkinsToolId) !== true) {
     throw ReactLoggingHandler.logErrorMessage(
         "salesforceTaskWizard",
         "configureSalesforceOrganizationSyncTask",
         "Cannot configure Organization Sync Task:",
-        "Did not include the Git Service name",
-    );
-  }
-
-  if (isMongoDbId(gitToolId) !== true) {
-    throw ReactLoggingHandler.logErrorMessage(
-        "salesforceTaskWizard",
-        "configureSalesforceOrganizationSyncTask",
-        "Cannot configure Organization Sync Task:",
-        "The Git Tool ID was invalid",
+        "The Jenkins Tool ID was invalid",
     );
   }
 
   let updatedTask = SalesforceTaskHelper.updateSfdcToolIdForSalesforceTask(task, salesforceToolId, flow);
-  updatedTask = SalesforceTaskHelper.updateGitToolIdForSalesforceTask(updatedTask, gitToolId, gitToolOption, flow);
   updatedTask = SalesforceTaskHelper.updateJenkinsToolIdForSalesforceTask(updatedTask, jenkinsToolId, flow);
   return updatedTask;
 };

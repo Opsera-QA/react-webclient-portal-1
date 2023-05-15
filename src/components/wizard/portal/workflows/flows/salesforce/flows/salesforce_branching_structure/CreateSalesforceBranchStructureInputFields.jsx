@@ -19,6 +19,8 @@ import SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 import SalesforceOrganizationSyncTaskBranchTypeSelectInput
   from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBranchTypeSelectInput";
+import SalesforceOrganizationSyncTaskJenkinsAccountSelectInput
+  from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsAccountSelectInput";
 
 function CreateSalesforceBranchStructureInputFields({
   taskModel,
@@ -108,6 +110,13 @@ function CreateSalesforceBranchStructureInputFields({
           <SalesforceOrganizationSyncTaskBranchTypeSelectInput
               dataObject={taskConfigurationModel}
               setDataObject={setTaskConfigurationModel} />
+        </Col>
+        <Col lg={12}>
+          <SalesforceOrganizationSyncTaskJenkinsAccountSelectInput
+              model={taskConfigurationModel}
+              setModel={setTaskConfigurationModel}
+              taskModel={parentConfig}
+          />
         </Col>
         <Col lg={12}>
           <SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
