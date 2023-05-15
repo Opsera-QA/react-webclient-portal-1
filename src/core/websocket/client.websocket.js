@@ -3,6 +3,7 @@ import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
 import WebsocketLiveUpdateHelper from "@opsera/definitions/constants/websocket/helpers/websocketLiveUpdate.helper";
 import LiveMessageConstants from "@opsera/definitions/constants/websocket/constants/liveMessage.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import {ReactLoggingHandler} from "temp-library-components/handler/reactLogging.handler";
 
 export const WEBSOCKET_STATE = {
   CONNECTING: 0,
@@ -40,7 +41,11 @@ export class ClientWebsocket {
   // TODO: Check if logged in
   initializeWebsocket = (userData) => {
     if (this.websocketClient != null) {
-      console.log("websocket already initialized");
+      ReactLoggingHandler.logDebugMessage(
+        "clientWebsocket",
+        "initializeWebsocket",
+        `websocket already initialized`,
+      );
       return;
     }
 
@@ -52,15 +57,28 @@ export class ClientWebsocket {
       newClient.connect();
 
       newClient.on("connect", () => {
-        console.log(`WebSocket Client Connected: ${newClient.id}`);
-        this.websocketClient.emit("userData", userData);
+        ReactLoggingHandler.logDebugMessage(
+          "clientWebsocket",
+          "initializeWebsocket",
+          `WebSocket Client Connected: ${newClient.id}`,
+        );
+        // this.websocketClient.emit("userData", userData);
       });
 
       newClient.on("disconnect", () => {
-        console.log("Websocket Disconnected");
+        ReactLoggingHandler.logDebugMessage(
+          "clientWebsocket",
+          "initializeWebsocket",
+          `WebSocket Client Disconnected`,
+        );
       });
 
       newClient.on("logger", (message) => {
+        ReactLoggingHandler.logInfoMessage(
+          "clientWebsocket",
+          "initializeWebsocket",
+          `Received log message: ${JSON.stringify(message, undefined, 2)}`,
+        );
         console.log(message);
       });
 
@@ -71,8 +89,12 @@ export class ClientWebsocket {
       this.websocketClient = newClient;
     }
     catch (error) {
-      console.log("Could not connect to websocket");
-      console.error(error);
+      ReactLoggingHandler.logErrorMessage(
+        "clientWebsocket",
+        "initializeWebsocket",
+        `Could not connect to websocket:`,
+        error,
+      );
     }
   };
 
@@ -82,14 +104,22 @@ export class ClientWebsocket {
 
   closeWebsocket = () => {
     if (this.isConnected() === true) {
-      console.log("closing websocket");
+      ReactLoggingHandler.logDebugMessage(
+        "clientWebsocket",
+        "closeWebsocket",
+        "closing websocket",
+      );
       this.websocketClient?.close();
       this.websocketClient = null;
     }
   };
 
   handleLiveMessage = (liveMessage) => {
-    console.log("received live message: " + JSON.stringify(liveMessage));
+    ReactLoggingHandler.logDebugMessage(
+      "clientWebsocket",
+      "handleLiveMessage",
+      `Received live message:  ${JSON.stringify(liveMessage, undefined, 2)}`,
+    );
     this.subscriptions.forEach((subscription) => {
       if (subscription.topic === liveMessage.topic && typeof subscription.liveUpdateHandlerFunction === "function") {
         const data = DataParsingHelper.parseNestedObject(liveMessage, "message.data");
@@ -104,12 +134,22 @@ export class ClientWebsocket {
 
   subscribeToTopic = (topicName, liveUpdateHandlerFunction) => {
     if (this.isConnected() !== true) {
-      console.error(`Websocket is not connected so cannot subscribe to topic [${topicName}].`);
+      ReactLoggingHandler.logErrorMessage(
+        "clientWebsocket",
+        "subscribeToTopic",
+        undefined,
+        `Websocket is not connected so cannot subscribe to topic [${topicName}].`,
+      );
       return;
     }
 
     if (LiveMessageConstants.LIVE_MESSAGE_TOPICS[topicName] == null) {
-      console.error(`Cannot attempt to subscribe to an invalid topic: [${topicName}]`);
+      ReactLoggingHandler.logErrorMessage(
+        "clientWebsocket",
+        "subscribeToTopic",
+        undefined,
+        `Cannot attempt to subscribe to an invalid topic: [${topicName}]`,
+      );
       return;
     }
 
@@ -120,7 +160,12 @@ export class ClientWebsocket {
     }
 
     if (typeof liveUpdateHandlerFunction !== "function") {
-      console.error(`Cannot attempt to subscribe with an invalid live update handler function.`);
+      ReactLoggingHandler.logErrorMessage(
+        "clientWebsocket",
+        "subscribeToTopic",
+        undefined,
+        `Cannot attempt to subscribe with an invalid live update handler function.`,
+      );
       return;
     }
 
@@ -130,7 +175,11 @@ export class ClientWebsocket {
     };
 
     const subscriptionRequest = WebsocketLiveUpdateHelper.generateLiveMessageForSubscriptionRequest(topicName);
-    console.log(`subscribing to topic: [${topicName}]`);
+    ReactLoggingHandler.logDebugMessage(
+      "clientWebsocket",
+      "subscribeToTopic",
+      `subscribing to topic: [${topicName}]`,
+    );
     this.websocketClient.emit("subscriptionRequest", subscriptionRequest);
 
 
@@ -143,11 +192,20 @@ export class ClientWebsocket {
     }
 
     if (LiveMessageConstants.LIVE_MESSAGE_TOPICS[topicName] == null) {
-      console.error(`Cannot attempt to unsubscribe from an invalid topic: [${topicName}]`);
+      ReactLoggingHandler.logErrorMessage(
+        "clientWebsocket",
+        "subscribeToTopic",
+        undefined,
+        `Cannot attempt to unsubscribe from an invalid topic: [${topicName}]`
+      );
       return;
     }
 
-    console.log(`unsubscribing from topic: [${topicName}]`);
+    ReactLoggingHandler.logDebugMessage(
+      "clientWebsocket",
+      "subscribeToTopic",
+      `unsubscribing from topic: [${topicName}]`,
+    );
     const unsubscriptionRequest = WebsocketLiveUpdateHelper.generateLiveMessageForUnsubscriptionRequest(topicName);
     const currentSubscriptions = [...this.subscriptions];
     const subscriptionIndex = currentSubscriptions.findIndex((subscription) => subscription.topic === topicName);
