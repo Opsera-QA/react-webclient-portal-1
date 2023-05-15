@@ -53,19 +53,20 @@ export class ClientWebsocket {
 
     try {
       const websocketUrl = NODE_API_ORCHESTRATOR_SERVER_URL;
-      const newClient = io(websocketUrl);
-      newClient.connect();
+      this.websocketClient = io(websocketUrl);
+      this.websocketClient.connect();
 
-      newClient.on("connect", () => {
+      this.websocketClient.on("connect", () => {
         ReactLoggingHandler.logDebugMessage(
           "clientWebsocket",
           "initializeWebsocket",
-          `WebSocket Client Connected: ${newClient.id}`,
+          `WebSocket Client Connected: ${this.websocketClient.id}`,
         );
-        // this.websocketClient.emit("userData", userData);
+        this.resubscribe();
+        this.websocketClient.emit("userData", userData);
       });
 
-      newClient.on("disconnect", () => {
+      this.websocketClient.on("disconnect", () => {
         ReactLoggingHandler.logDebugMessage(
           "clientWebsocket",
           "initializeWebsocket",
@@ -73,7 +74,7 @@ export class ClientWebsocket {
         );
       });
 
-      newClient.on("logger", (message) => {
+      this.websocketClient.on("logger", (message) => {
         ReactLoggingHandler.logInfoMessage(
           "clientWebsocket",
           "initializeWebsocket",
@@ -82,11 +83,9 @@ export class ClientWebsocket {
         console.log(message);
       });
 
-      newClient.on("liveMessage", (liveMessage) => {
+      this.websocketClient.on("liveMessage", (liveMessage) => {
         this.handleLiveMessage(liveMessage);
       });
-
-      this.websocketClient = newClient;
     }
     catch (error) {
       ReactLoggingHandler.logErrorMessage(
@@ -130,6 +129,25 @@ export class ClientWebsocket {
 
   isConnected = () => {
     return this.websocketClient?.connected;
+  };
+
+  resubscribe = () => {
+    if (this.isConnected() !== true) {
+      return;
+    }
+
+    const parsedSubscriptions = DataParsingHelper.parseArray(this.subscriptions, []);
+
+    parsedSubscriptions.forEach((subscription) => {
+      const topicName = subscription.topic;
+      const subscriptionRequest = WebsocketLiveUpdateHelper.generateLiveMessageForSubscriptionRequest(topicName);
+      ReactLoggingHandler.logDebugMessage(
+        "clientWebsocket",
+        "subscribeToTopic",
+        `subscribing to topic: [${topicName}]`,
+      );
+      this.websocketClient.emit("subscriptionRequest", subscriptionRequest);
+    });
   };
 
   subscribeToTopic = (topicName, liveUpdateHandlerFunction) => {
