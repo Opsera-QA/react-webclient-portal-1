@@ -32,21 +32,23 @@ export default function ExportAnchoreSecurityReportPanel({
       margin: { left: 2, right: 2 },
       head: [
         [
-          "Vulnerability",
-          "Package Name",
           "Severity",
-          "CVSS Exploitability Score",
-          "CVSS Impact Score",
-          "Vulnerability URL",
+          "Vulnerability",
+          "URL",
+          "Package Name",
+          "Package Type",
+          "Package Version",
+          "Package",
         ],
       ],
       body: anchoreSecurityReportData.map((item) => [
-        item.vulnerability,
-        item.package_name,
         item.severity,
-        item.cvss_exploitability_score,
-        item.cvss_impact_score,
+        item.vuln,
         item.url,
+        item.packageName,
+        item.packageType,
+        item.packageVersion,
+        item.pkg,
       ]),
     });
 
@@ -56,20 +58,22 @@ export default function ExportAnchoreSecurityReportPanel({
   const getCsvData = () => {
     return [
       [
-        "Vulnerability",
-        "Package Name",
         "Severity",
-        "CVSS Exploitability Score",
-        "CVSS Impact Score",
-        "Vulnerability URL",
+        "Vulnerability",
+        "URL",
+        "Package Name",
+        "Package Type",
+        "Package Version",
+        "Package",
       ],
       ...anchoreSecurityReportData.map((item) => [
-        item.vulnerability,
-        item.package_name,
         item.severity,
-        item.cvss_exploitability_score,
-        item.cvss_impact_score,
+        item.vuln,
         item.url,
+        item.packageName,
+        item.packageType,
+        item.packageVersion,
+        item.pkg,
       ]),
     ];
   };
