@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useTagActions from "hooks/settings/tags/useTagActions";
-import LiveMessageConstants from "@opsera/definitions/constants/websocket/constants/liveMessage.constants";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
 
@@ -29,7 +28,7 @@ export default function useGetCustomerTags(handleErrorFunction) {
     setCustomerTags([]);
     const response = await tagActions.getAllTagsV2(false);
     setCustomerTags(DataParsingHelper.parseArray(response?.data?.data, []));
-    // websocketClient.subscribeToTopic(LiveMessageConstants.LIVE_MESSAGE_TOPICS.TAGS);
+    // websocketClient.subscribeToTopic(liveMessageTopicConstants.LIVE_MESSAGE_TOPICS.TAGS);
   };
 
   return ({

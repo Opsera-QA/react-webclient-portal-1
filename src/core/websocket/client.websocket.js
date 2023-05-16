@@ -4,6 +4,9 @@ import WebsocketLiveUpdateHelper from "@opsera/definitions/constants/websocket/h
 import LiveMessageConstants from "@opsera/definitions/constants/websocket/constants/liveMessage.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {ReactLoggingHandler} from "temp-library-components/handler/reactLogging.handler";
+import websocketEventNameConstants
+  from "@opsera/definitions/constants/websocket/constants/websocketEventName.constants";
+import LiveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessage.constants";
 const websocketEnabled = DataParsingHelper.parseBooleanV2(process.env.REACT_APP_WEBSOCKET_ENABLED);
 
 export const WEBSOCKET_STATE = {
@@ -88,7 +91,7 @@ export default class ClientWebsocket {
         );
       });
 
-      this.websocketClient.on("logger", (message) => {
+      this.websocketClient.on(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.LOGGER, (message) => {
         ReactLoggingHandler.logInfoMessage(
           "clientWebsocket",
           "initializeWebsocket",
@@ -97,7 +100,7 @@ export default class ClientWebsocket {
         console.log(message);
       });
 
-      this.websocketClient.on("liveMessage", (liveMessage) => {
+      this.websocketClient.on(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.LIVE_MESSAGE, (liveMessage) => {
         this.handleLiveMessage(liveMessage);
       });
     }
@@ -166,12 +169,12 @@ export default class ClientWebsocket {
         "subscribeToTopic",
         `subscribing to topic: [${topicName}]`,
       );
-      this.websocketClient.emit("subscriptionRequest", subscriptionRequest);
+      this.websocketClient.emit(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST, subscriptionRequest);
     });
   };
 
   subscribeToTopic = (topicName, liveUpdateHandlerFunction) => {
-    if (LiveMessageConstants.LIVE_MESSAGE_TOPICS[topicName] == null) {
+    if (LiveMessageTopicConstants.LIVE_MESSAGE_TOPICS[topicName] == null) {
       ReactLoggingHandler.logErrorMessage(
         "clientWebsocket",
         "subscribeToTopic",
@@ -220,7 +223,7 @@ export default class ClientWebsocket {
     );
 
     const subscriptionRequest = WebsocketLiveUpdateHelper.generateLiveMessageForSubscriptionRequest(topicName);
-    this.websocketClient.emit("subscriptionRequest", subscriptionRequest);
+    this.websocketClient.emit(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST, subscriptionRequest);
   };
 
   // TODO: Determine if topics are automatically unsubscribed during connection interruption
@@ -229,7 +232,7 @@ export default class ClientWebsocket {
       return;
     }
 
-    if (LiveMessageConstants.LIVE_MESSAGE_TOPICS[topicName] == null) {
+    if (LiveMessageTopicConstants.LIVE_MESSAGE_TOPICS[topicName] == null) {
       ReactLoggingHandler.logErrorMessage(
         "clientWebsocket",
         "subscribeToTopic",
@@ -253,6 +256,6 @@ export default class ClientWebsocket {
       this.subscriptions = currentSubscriptions;
     }
 
-    this.websocketClient.emit("unsubscriptionRequest", unsubscriptionRequest);
+    this.websocketClient.emit(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.UNSUBSCRIPTION_REQUEST, unsubscriptionRequest);
   };
 }

@@ -2,8 +2,8 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import {useEffect} from "react";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import LiveMessageConstants from "@opsera/definitions/constants/websocket/constants/liveMessage.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import liveMessageTypeConstants from "@opsera/definitions/constants/websocket/constants/liveMessageType.constants";
 
 export default function useItemSubscription(
   topicName,
@@ -18,9 +18,9 @@ export default function useItemSubscription(
     const parsedObjectId = DataParsingHelper.parseNestedMongoDbId(liveMessageData, "_id");
 
     if (parsedObjectId === recordId) {
-      if (type === LiveMessageConstants.LIVE_MESSAGE_TYPES.UPDATED_RECORD) {
+      if (type === liveMessageTypeConstants.LIVE_MESSAGE_TYPES.UPDATED_RECORD) {
         onUpdateFunction(liveMessageData.data);
-      } else if (type === LiveMessageConstants.LIVE_MESSAGE_TYPES.DELETED_RECORD) {
+      } else if (type === liveMessageTypeConstants.LIVE_MESSAGE_TYPES.DELETED_RECORD) {
         onDeleteFunction(parsedObjectId);
       }
     }
