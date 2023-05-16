@@ -5,7 +5,6 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import {ReactLoggingHandler} from "temp-library-components/handler/reactLogging.handler";
 import websocketEventNameConstants
   from "@opsera/definitions/constants/websocket/constants/websocketEventName.constants";
-import LiveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessage.constants";
 const websocketEnabled = DataParsingHelper.parseBooleanV2(process.env.REACT_APP_WEBSOCKET_ENABLED);
 
 export const WEBSOCKET_STATE = {
