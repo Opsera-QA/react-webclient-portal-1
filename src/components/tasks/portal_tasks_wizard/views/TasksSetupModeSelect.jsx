@@ -21,8 +21,8 @@ export const TOOL_CREATION_OPTIONS = {
 };
 
 export const TASKS_CREATION_OPTION_LABELS = {
-  WIZARD: "Tasks Creation Wizard",
-  ADVANCED: "Advanced Settings",
+  WIZARD: "Salesforce Tasks Wizard",
+  ADVANCED: "SDLC Tasks Classic View",
 };
 
 function TasksSetupModeSelect({
@@ -62,7 +62,7 @@ function TasksSetupModeSelect({
         <H5FieldSubHeader
           className={"mb-3 mx-3"}
           subheaderText={
-            "Pick between the new Opsera Task Creation Wizard or the legacy advanced settings view to setup your tasks."
+            "Pick between the new Opsera Salesforce Task Creation Wizard or the SDLC Tasks Classic View view to setup your tasks."
           }
         />
       </CenteredContentWrapper>
