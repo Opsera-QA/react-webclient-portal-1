@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -7,8 +7,9 @@ import InlinePipelineTypeFilter from "components/common/filters/admin/templates/
 import CustomerPipelineTemplateCardView from "components/workflow/catalog/private/CustomerPipelineTemplateCardView";
 import useGetCustomerPipelineTemplates from "hooks/workflow/catalog/customer/useGetCustomerPipelineTemplates";
 import CustomerTagFilter from "components/common/filters/tags/tag/CustomerTagFilter";
+import wizardHelper from "components/workflow/wizards/updated_pipeline_wizard/helpers/wizard-helpers";
 
-export default function CustomerPipelineTemplateCatalog({activeTemplates, selectTemplateFunction}) {
+export default function CustomerPipelineTemplateCatalog({activeTemplates, selectTemplateFunction, setupMode}) {
   const {
     pipelineTemplates,
     pipelineTemplateFilterModel,
@@ -17,13 +18,27 @@ export default function CustomerPipelineTemplateCatalog({activeTemplates, select
     loadData,
     error,
   } = useGetCustomerPipelineTemplates();
+  const [templates, setTemplates] = useState(pipelineTemplates);
+
+  // TODO - Update template route and move to node
+  useEffect(() => {
+    if (setupMode && pipelineTemplates?.length > 0) {
+      wizardHelper.filterTemplateByCategory(
+          pipelineTemplates,
+          setupMode,
+          setTemplates,
+          setPipelineTemplateFilterModel,
+          pipelineTemplateFilterModel,
+      );
+    }
+  }, [pipelineTemplates]);
 
   const getPipelineCardView = () => {
     return (
       <CustomerPipelineTemplateCardView
         isLoading={isLoading}
         loadData={loadData}
-        pipelineTemplates={pipelineTemplates}
+        pipelineTemplates={templates}
         pipelineTemplateFilterModel={pipelineTemplateFilterModel}
         setPipelineTemplateFilterModel={setPipelineTemplateFilterModel}
         activeTemplates={activeTemplates}
@@ -82,4 +97,5 @@ export default function CustomerPipelineTemplateCatalog({activeTemplates, select
 CustomerPipelineTemplateCatalog.propTypes = {
   activeTemplates: PropTypes.array,
   selectTemplateFunction: PropTypes.func,
+  setupMode: PropTypes.string
 };

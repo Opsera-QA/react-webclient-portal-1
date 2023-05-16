@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetPolicyModelByName from "hooks/settings/organization_settings/policies/useGetPolicyModelByName";
@@ -17,6 +17,7 @@ export default function PipelineTemplateSelectionScreen(
     setSelectedPlatformTemplate,
     setSelectedCustomerTemplate,
     className,
+    setupMode
   }) {
   const [activeTemplates, setActiveTemplates] = useState([]);
   const [activeTab, setActiveTab] = useState("all");
@@ -67,6 +68,7 @@ export default function PipelineTemplateSelectionScreen(
         <OpseraPipelineMarketplace
           activeTemplates={activeTemplates}
           selectTemplateFunction={setSelectedPlatformTemplate}
+          setupMode={setupMode}
         />
       );
     }
@@ -78,6 +80,7 @@ export default function PipelineTemplateSelectionScreen(
           <CustomerPipelineTemplateCatalog
             activeTemplates={activeTemplates}
             selectTemplateFunction={setSelectedCustomerTemplate}
+            setupMode={setupMode}
           />
         );
     }
@@ -113,7 +116,7 @@ export default function PipelineTemplateSelectionScreen(
 
   return (
     <div className={className}>
-      <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()}/>
+      <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
     </div>
   );
 }
@@ -122,4 +125,5 @@ PipelineTemplateSelectionScreen.propTypes = {
   setSelectedPlatformTemplate: PropTypes.func,
   setSelectedCustomerTemplate: PropTypes.func,
   className: PropTypes.string,
+  setupMode: PropTypes.string,
 };
