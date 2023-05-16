@@ -71,11 +71,8 @@ export default function CreateSalesforceWorkflowWizardSelectToolInputBase(
   };
 
   const loadTools = async (cancelSource = cancelTokenSource) => {
-    const response = await toolsActions.getToolsOwnedByUser(
-      getAccessToken,
-      cancelSource,
-      toolIdentifier,
-    );
+    const response = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, cancelSource, toolIdentifier);
+
     const newTools = response?.data?.data;
     const toolCount = response?.data?.count;
 
