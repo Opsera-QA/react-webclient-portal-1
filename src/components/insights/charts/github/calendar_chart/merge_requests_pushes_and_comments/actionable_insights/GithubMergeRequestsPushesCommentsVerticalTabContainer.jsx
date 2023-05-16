@@ -55,6 +55,9 @@ function GithubMergeRequestsPushesCommentsVerticalTabContainer({
             />
         );
     }
+    else {
+        return null;
+    }
 }
 GithubMergeRequestsPushesCommentsVerticalTabContainer.propTypes = {
     highestMergesMetric: PropTypes.array,
