@@ -16,8 +16,9 @@ import { getMigrationTypeLabel, MIGRATION_TYPES } from "../../../inputs/Salesfor
 import H5FieldSubHeader from "../../../../../../../common/fields/subheader/H5FieldSubHeader";
 import ToolNameField from "../../../../../../../common/fields/inventory/ToolNameField";
 import LoadingDialog from "components/common/status_notifications/loading";
+import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
 
-const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCurrentScreen }) => {
+const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCurrentScreen, taskType }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -151,6 +152,10 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
         wizardModel,
         wizardModel?.getData("selectedCustomSetting")?.componentName,
       );
+      if(taskType === MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
+        setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.UPLOAD_SCREEN);
+        return;
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         const parsedError = parseError(error);
@@ -282,6 +287,7 @@ CustomSettingSelector.propTypes = {
   setWizardModel: PropTypes.func,
   setCurrentScreen: PropTypes.func,
   handleClose: PropTypes.func,
+  taskType: PropTypes.string,
 };
 
 export default CustomSettingSelector;

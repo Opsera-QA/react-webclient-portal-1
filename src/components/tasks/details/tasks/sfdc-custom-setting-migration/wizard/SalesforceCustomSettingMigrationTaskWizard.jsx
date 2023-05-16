@@ -17,6 +17,7 @@ import CustomSettingTaskWizardConfigScreen
   from "./screens/custom_setting_selection_screen/CustomSettingTaskWizardConfigScreen";
 import CustomSettingQueryBuilderScreen from "./screens/query_builder_screen/CustomSettingQueryBuilderScreen";
 import CustomSettingTaskConfirmationScreen from "./screens/confirmation_screen/CustomSettingTaskConfirmationScreen";
+import CustomSettingUploadScreen from "./screens/upload_screens/CustomSettingUploadScreen";
 
 const SalesforceCustomSettingMigrationTaskWizard = ({ handleClose, taskModel }) => {
   const toastContext = useContext(DialogToastContext);
@@ -88,6 +89,16 @@ const SalesforceCustomSettingMigrationTaskWizard = ({ handleClose, taskModel }) 
       case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN:
         return (
           <CustomSettingTaskWizardConfigScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+            taskType={wizardModel?.getData("taskType")}
+          />
+        );
+      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.UPLOAD_SCREEN:
+        return (
+          <CustomSettingUploadScreen
             wizardModel={wizardModel}
             setWizardModel={setWizardModel}
             setCurrentScreen={setCurrentScreen}
