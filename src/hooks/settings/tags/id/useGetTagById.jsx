@@ -31,12 +31,12 @@ export default function useGetTagById(tagId, handleErrorFunction) {
     history.push(`/${accountSettingsTrails.tagManagement.path}`);
   };
 
-  // useItemSubscription(
-  //   liveMessageTopicConstants.LIVE_MESSAGE_TOPICS.TAGS,
-  //   tagId,
-  //   onUpdateFunction,
-  //   onDeleteFunction,
-  // );
+  useItemSubscription(
+    liveMessageTopicConstants.LIVE_MESSAGE_TOPICS.TAGS,
+    tagId,
+    onUpdateFunction,
+    onDeleteFunction,
+  );
 
   useEffect(() => {
     setTag(undefined);
