@@ -2,6 +2,7 @@ import ErrorParsingHelper from "@opsera/persephone/helpers/error/errorParsing.he
 
 export const ReactLoggingHandler = {};
 const LOG_ORIGIN_METADATA = false;
+const isProductionEnvironment = String(process.env.REACT_APP_ENVIRONMENT) !== "development" && String(process.env.REACT_APP_ENVIRONMENT) !== "test";
 
 ReactLoggingHandler.logApiErrorMessage = (
   originComponentName,
@@ -48,6 +49,10 @@ ReactLoggingHandler.logDebugMessage = (
   functionName,
   debugMessage,
 ) => {
+  // if (isProductionEnvironment) {
+  //   return;
+  // }
+
   const originText = LOG_ORIGIN_METADATA === true ? `[${originComponentName}.${functionName}] ` : "";
   console.debug(`${originText}${String(debugMessage)}`);
 };

@@ -4,7 +4,10 @@ import WebsocketLiveUpdateHelper from "@opsera/definitions/constants/websocket/h
 import LiveMessageConstants from "@opsera/definitions/constants/websocket/constants/liveMessage.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {ReactLoggingHandler} from "temp-library-components/handler/reactLogging.handler";
-const websocketEnabled = process.env.REACT_APP_WEBSOCKET_ENABLED;
+import websocketEventNameConstants
+  from "@opsera/definitions/constants/websocket/constants/websocketEventName.constants";
+import LiveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessage.constants";
+const websocketEnabled = DataParsingHelper.parseBooleanV2(process.env.REACT_APP_WEBSOCKET_ENABLED);
 
 export const WEBSOCKET_STATE = {
   CONNECTING: 0,
@@ -33,7 +36,7 @@ export const getWebsocketStateLabel = (state) => {
   }
 };
 
-export class ClientWebsocket {
+export default class ClientWebsocket {
 
   constructor() {
     this.subscriptions = [];
@@ -71,6 +74,15 @@ export class ClientWebsocket {
         this.websocketClient.emit("userData", userData);
       });
 
+      // this.websocketClient.on("connect_error", (error) => {
+      //   ReactLoggingHandler.logErrorMessage(
+      //     "clientWebsocket",
+      //     "initializeWebsocket",
+      //     `Error with websocket:`,
+      //     error,
+      //   );
+      // });
+
       this.websocketClient.on("disconnect", () => {
         ReactLoggingHandler.logDebugMessage(
           "clientWebsocket",
@@ -79,7 +91,7 @@ export class ClientWebsocket {
         );
       });
 
-      this.websocketClient.on("logger", (message) => {
+      this.websocketClient.on(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.LOGGER, (message) => {
         ReactLoggingHandler.logInfoMessage(
           "clientWebsocket",
           "initializeWebsocket",
@@ -88,7 +100,7 @@ export class ClientWebsocket {
         console.log(message);
       });
 
-      this.websocketClient.on("liveMessage", (liveMessage) => {
+      this.websocketClient.on(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.LIVE_MESSAGE, (liveMessage) => {
         this.handleLiveMessage(liveMessage);
       });
     }
@@ -111,7 +123,7 @@ export class ClientWebsocket {
       ReactLoggingHandler.logDebugMessage(
         "clientWebsocket",
         "closeWebsocket",
-        "closing websocket",
+        "Closing Websocket",
       );
       this.websocketClient?.close();
       this.websocketClient = null;
@@ -124,12 +136,18 @@ export class ClientWebsocket {
       "handleLiveMessage",
       `Received live message:  ${JSON.stringify(liveMessage, undefined, 2)}`,
     );
-    this.subscriptions.forEach((subscription) => {
-      if (subscription.topic === liveMessage.topic && typeof subscription.liveUpdateHandlerFunction === "function") {
-        const data = DataParsingHelper.parseNestedObject(liveMessage, "message.data");
-        subscription.liveUpdateHandlerFunction(liveMessage.type, data);
-      }
-    });
+
+    // TODO: Add check for valid live update message
+    const parsedLiveMessage = DataParsingHelper.parseObject(liveMessage);
+
+    if (parsedLiveMessage) {
+      this.subscriptions.forEach((subscription) => {
+        if (subscription.topic === parsedLiveMessage.topic && typeof subscription.liveUpdateHandlerFunction === "function") {
+          const message = DataParsingHelper.parseNestedObject(parsedLiveMessage, "message");
+          subscription.liveUpdateHandlerFunction(parsedLiveMessage.type, message);
+        }
+      });
+    }
   };
 
   isConnected = () => {
@@ -151,22 +169,12 @@ export class ClientWebsocket {
         "subscribeToTopic",
         `subscribing to topic: [${topicName}]`,
       );
-      this.websocketClient.emit("subscriptionRequest", subscriptionRequest);
+      this.websocketClient.emit(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST, subscriptionRequest);
     });
   };
 
   subscribeToTopic = (topicName, liveUpdateHandlerFunction) => {
-    if (this.isConnected() !== true) {
-      ReactLoggingHandler.logErrorMessage(
-        "clientWebsocket",
-        "subscribeToTopic",
-        undefined,
-        `Websocket is not connected so cannot subscribe to topic [${topicName}].`,
-      );
-      return;
-    }
-
-    if (LiveMessageConstants.LIVE_MESSAGE_TOPICS[topicName] == null) {
+    if (LiveMessageTopicConstants.LIVE_MESSAGE_TOPICS[topicName] == null) {
       ReactLoggingHandler.logErrorMessage(
         "clientWebsocket",
         "subscribeToTopic",
@@ -197,24 +205,34 @@ export class ClientWebsocket {
       liveUpdateHandlerFunction: liveUpdateHandlerFunction,
     };
 
-    const subscriptionRequest = WebsocketLiveUpdateHelper.generateLiveMessageForSubscriptionRequest(topicName);
+    this.subscriptions.push(newSubscription);
+
+    if (this.isConnected() !== true) {
+      ReactLoggingHandler.logInfoMessage(
+        "clientWebsocket",
+        "subscribeToTopic",
+        `Websocket is not connected so cannot subscribe to topic [${topicName}]`,
+      );
+      return;
+    }
+
     ReactLoggingHandler.logDebugMessage(
       "clientWebsocket",
       "subscribeToTopic",
       `subscribing to topic: [${topicName}]`,
     );
-    this.websocketClient.emit("subscriptionRequest", subscriptionRequest);
 
-
-    this.subscriptions.push(newSubscription);
+    const subscriptionRequest = WebsocketLiveUpdateHelper.generateLiveMessageForSubscriptionRequest(topicName);
+    this.websocketClient.emit(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST, subscriptionRequest);
   };
 
+  // TODO: Determine if topics are automatically unsubscribed during connection interruption
   unsubscribeFromTopic = (topicName) => {
     if (this.isConnected() !== true) {
       return;
     }
 
-    if (LiveMessageConstants.LIVE_MESSAGE_TOPICS[topicName] == null) {
+    if (LiveMessageTopicConstants.LIVE_MESSAGE_TOPICS[topicName] == null) {
       ReactLoggingHandler.logErrorMessage(
         "clientWebsocket",
         "subscribeToTopic",
@@ -238,8 +256,6 @@ export class ClientWebsocket {
       this.subscriptions = currentSubscriptions;
     }
 
-    this.websocketClient.emit("unsubscriptionRequest", unsubscriptionRequest);
+    this.websocketClient.emit(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.UNSUBSCRIPTION_REQUEST, unsubscriptionRequest);
   };
 }
-
-export default ClientWebsocket;

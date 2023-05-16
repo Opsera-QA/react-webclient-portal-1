@@ -7,8 +7,6 @@ import CreateSalesforceBulkMigrationTask from "../../../wizard/portal/workflows/
 import CreateSalesforceQuickDeployTask from "../../../wizard/portal/workflows/flows/salesforce/flows/salesforce_quick_deploy/CreateSalesforceQuickDeployTask";
 import CreateSalesforceOrganizationToGitMergeSyncTaskWizard
   from "../../../wizard/portal/workflows/flows/salesforce/flows/salesforce_to_git_merge_sync/task/CreateSalesforceOrganizationToGitMergeSyncTaskWizard";
-import OverlayWizardButtonContainerBase
-  from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 
 export default function WizardTaskConfigurationRouter({
   flow,
