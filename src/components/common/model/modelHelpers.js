@@ -136,4 +136,18 @@ modelHelpers.isDataValid = (data, metadata) => {
   return modelHelpers.parseObjectIntoModel(data, metadata)?.checkCurrentValidity() === true;
 };
 
+modelHelpers.parseObjectIntoNewModelBase = (object, metaData, newModel) => {
+  if (metaData == null) {
+    return null;
+  }
+
+  const clonedMetadata =dataParsingHelper.cloneDeep(metaData);
+
+  if (object == null || Object.entries(object).length === 0) {
+    return new ModelBase({...clonedMetadata.newObjectFields}, clonedMetadata, true);
+  }
+
+  return new ModelBase(object, clonedMetadata, newModel);
+};
+
 export default modelHelpers;
