@@ -8,6 +8,8 @@ import GitCustodianRoleHelper from "@opsera/know-your-role/roles/compliance/git_
 import useGetPlatformSettingsFeatureFlagByName from "hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
 import platformSettingFeatureConstants
   from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
+import sessionHelper from "utils/session.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const HEADER_NAVIGATION_SCREENS = {
   HOME: "home",
@@ -49,6 +51,8 @@ export default function LandingHeaderNavigationBar() {
   } = useComponentStateReference();
   const {isActive} = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_TOP_NAVIGATION_BAR);
   const nextGenerationWorkspace = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_WORKSPACE);
+  const fromWorkspaceUrlParameter = sessionHelper.getStoredUrlParameter("fromWorkspace");
+  const fromWorkspace = DataParsingHelper.parseBooleanV2(fromWorkspaceUrlParameter);
 
   useEffect(() => {}, [currentPath]);
 
@@ -97,7 +101,7 @@ export default function LandingHeaderNavigationBar() {
         />
         <SubMenuItem
           className={"px-3"}
-          activeKey={getActiveScreen(currentPath)}
+          activeKey={fromWorkspace === true ? HEADER_NAVIGATION_SCREENS.WORKSPACE : getActiveScreen(currentPath)}
           setActiveKey={handleScreenClick}
           label={"Workspace"}
           itemKey={HEADER_NAVIGATION_SCREENS.WORKSPACE}

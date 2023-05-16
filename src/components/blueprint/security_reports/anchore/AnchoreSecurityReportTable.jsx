@@ -4,7 +4,7 @@ import { faBug } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import ClientSidePaginationMakeupTable from "components/common/table/makeup/ClientSidePaginationMakeupTable";
 import {
-  getExternalLinkIconColumnDefinition,
+  getGitCustodianExternalLinkIconColumnDefinition,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -24,41 +24,26 @@ function AnchoreSecurityReportTable({ anchoreSecurityVulnerabilities }) {
         desc: true,
       },
       {
-        id: "cvss_base",
+        id: "packageType",
         desc: true,
       },
       {
-        id: "cvss_exploitability_score",
-        desc: true,
-      },
-      {
-        id: "cvss_impact_score",
+        id: "pkg",
         desc: true,
       },
     ],
   };
 
   const columns = useMemo(
-    () => [
-      getTableTextColumn(getField(fields, "vulnerability"), "no-wrap-inline"),
-      getTableTextColumn(getField(fields, "package_name")),
+    () => [      
       getTableTextColumn(getField(fields, "severity")),
-      getTableTextColumn(
-        getField(fields, "cvss_base"),
-        "console-text-invert-modal",
-      ),
-      getTableTextColumn(
-        getField(fields, "cvss_exploitability_score"),
-        "console-text-invert-modal",
-      ),
-      getTableTextColumn(
-        getField(fields, "cvss_impact_score"),
-        "console-text-invert-modal",
-      ),
-      getExternalLinkIconColumnDefinition(
-        getField(fields, "url"),
+      getGitCustodianExternalLinkIconColumnDefinition(
+        getField(fields, "vulnLink"),
         "Open Vulnerability Details in New Window",
       ),
+      getTableTextColumn(getField(fields, "packageType")),
+      getTableTextColumn(getField(fields, "packageVersion")),
+      getTableTextColumn(getField(fields, "pkg")),      
     ],
     [],
   );

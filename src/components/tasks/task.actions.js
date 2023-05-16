@@ -64,7 +64,7 @@ taskActions.createTaskV2 = async (getAccessToken, cancelTokenSource, taskModel) 
 
 taskActions.updateGitTaskV2 = async (getAccessToken, cancelTokenSource, taskModel) => {
   const apiUrl = `/tasks/${taskModel.getData("_id")}/update`;
-  const postBody = {
+  let postBody = {
     ...taskModel.getPersistData()
   };
 

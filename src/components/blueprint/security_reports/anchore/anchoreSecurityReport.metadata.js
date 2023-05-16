@@ -2,42 +2,46 @@ const anchoreSecurityReportMetadata = {
   type: "Anchore Security Report",
   fields: [
     {
-      label: "Vulnerability",
-      id: "vulnerability",
-    },
-    {
-      label: "Package Name",
-      id: "package_name",
-    },
-    {
       label: "Severity",
       id: "severity",
     },
     {
-      label: "CVSS Base",
-      id: "cvss_base",
+      label: "Vulnerability",
+      id: "vuln",
     },
     {
-      label: "CVSS Exploitability Score",
-      id: "cvss_exploitability_score",
-    },
-    {
-      label: "CVSS Impact Score",
-      id: "cvss_impact_score",
-    },
-    {
-      label: "Vulnerability URL",
+      label: "URL",
       id: "url",
+    },    
+    {
+      label: "Package Name",
+      id: "packageName",
+    },
+    {
+      label: "Package Type",
+      id: "packageType",
+    },
+    {
+      label: "Package Version",
+      id: "packageVersion",
+    },
+    {
+      label: "Package",
+      id: "pkg",
+    },
+    {
+      label: "Vulnerability",
+      id: "vulnLink",
     },
   ],
   newObjectFields: {
-    vulnerability: "",
-    package_name: "",
     severity: "",
+    vuln: "",
     url: "",
-    cvss_exploitability_score: "",
-    cvss_impact_score: "",
-    cvss_base: "",
+    packageType: "",
+    packageVersion: "",
+    pkg: "",
+    vulnLink: {}
   }
 };
 

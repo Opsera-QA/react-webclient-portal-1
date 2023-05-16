@@ -33,7 +33,6 @@ export default function ViewPipelineButton(
       normalText={buttonText}
       variant={variant}
       buttonSize={buttonSize}
-      buttonClassName={"py-0 my-auto"}
       className={className}
       icon={faSearchPlus}
     />
@@ -50,5 +49,4 @@ ViewPipelineButton.propTypes = {
 
 ViewPipelineButton.defaultProps = {
   buttonText: "View Pipeline",
-  // variant: "link",
 };

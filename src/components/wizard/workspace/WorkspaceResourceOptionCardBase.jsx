@@ -17,7 +17,7 @@ export const WORKSPACE_RESOURCE_TYPES = {
 export const WORKSPACE_RESOURCE_TYPE_LABELS = {
   PIPELINE: "Pipeline",
   TASK: "Task",
-  TOOL: "Tool",
+  TOOL: "Tool Registry",
 };
 
 export default function WorkspaceResourceOptionCardBase(

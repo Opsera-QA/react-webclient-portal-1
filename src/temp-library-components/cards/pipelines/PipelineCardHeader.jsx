@@ -4,15 +4,18 @@ import PropTypes from "prop-types";
 import OrchestrationStateFieldBase
   from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import {faStar} from "@fortawesome/pro-solid-svg-icons";
+import {lightThemeConstants} from "temp-library-components/theme/light.theme.constants";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
+import {pipelineHelper} from "components/workflow/pipeline.helper";
 
 export default function PipelineCardHeader(
   {
     pipelineModel,
   }) {
-  const state = pipelineModel?.getData("state");
-  const lastRunState = pipelineModel?.getData("workflow.last_run.status");
-  const orchestrationState = state === "paused" || state === "running" || lastRunState == null ? state : lastRunState;
+  const orchestrationState = pipelineHelper.getPipelineModelOrchestrationState(pipelineModel);
   const runCount = DataParsingHelper.parseInteger(pipelineModel?.getData("workflow.run_count"), 0);
+  const isSubscribed = pipelineModel?.getData("isSubscribed");
 
   const getOrchestrationStateFieldBase = () => {
     if (runCount > 0) {
@@ -21,19 +24,38 @@ export default function PipelineCardHeader(
           orchestrationState={orchestrationState}
           type={"Pipeline"}
           showStoppedState={false}
+          // className={"ml-auto"}
         />
+      );
+    }
+  };
+
+  const getSubscribedIcon = () => {
+    if (isSubscribed === true) {
+      return (
+        <div className={"d-flex ml-auto"}>
+          <OverlayIconBase
+            icon={faStar}
+            iconSize={"lg"}
+            iconColor={lightThemeConstants.COLOR_PALETTE.OPSERA_GOLD}
+            overlayBody={"You are following this Pipeline"}
+            visible={isSubscribed === true}
+            iconStyling={{ paddingBottom: "1px" }}
+            iconClassName={"ml-auto"}
+          />
+        </div>
       );
     }
   };
 
   return (
     <CardHeaderBase>
-      <div className={"w-100 d-flex justify-content-between px-2 pt-1 small"}>
-        <div>
-          <span>{runCount} Runs</span>
-        </div>
+      <div className={"w-100 d-flex justify-content-between px-2 py-1 small"}>
         <div>
           {getOrchestrationStateFieldBase()}
+        </div>
+        <div className={"d-flex"}>
+          {getSubscribedIcon()}
         </div>
       </div>
     </CardHeaderBase>

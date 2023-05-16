@@ -1,5 +1,5 @@
 import React from "react";
-import PropType from "prop-types";
+import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import {VanityLabelBase} from "temp-library-components/label/VanityLabelBase";
 
@@ -9,6 +9,7 @@ export default function VanityTextFieldBase(
     text,
     className,
     requireValue,
+    showLabel,
   }) {
   if (requireValue && !text) {
     return null;
@@ -16,15 +17,19 @@ export default function VanityTextFieldBase(
 
   return (
     <FieldContainer className={className}>
-      <VanityLabelBase label={label} />
+      <VanityLabelBase
+        label={label}
+        visible={showLabel}
+      />
       <div>{text}</div>
     </FieldContainer>
   );
 }
 
 VanityTextFieldBase.propTypes = {
-  label: PropType.any,
-  text: PropType.string,
-  className: PropType.string,
-  requireValue: PropType.bool,
+  label: PropTypes.any,
+  text: PropTypes.string,
+  className: PropTypes.string,
+  requireValue: PropTypes.bool,
+  showLabel: PropTypes.bool,
 };
