@@ -27,30 +27,30 @@ export default function CreateJenkinsToolButton(
         const configuration = jenkinsToolModel?.getPersistData();
 
         const jAuthToken = `${toolId}-${toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS}-jAuthToken`;
-        configuration.sfdc_client_id = await toolsActions.saveToolValueToVaultV2(
+        configuration.jAuthToken = await toolsActions.saveToolValueToVaultV2(
             getAccessToken,
             cancelTokenSource,
             toolId,
             jAuthToken,
-            configuration?.sfdc_client_id,
+            configuration?.jAuthToken,
         );
 
         const jPassword = `${toolId}-${toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS}-jPassword`;
-        configuration.sfdc_client_secret = await toolsActions.saveToolValueToVaultV2(
+        configuration.jPassword = await toolsActions.saveToolValueToVaultV2(
             getAccessToken,
             cancelTokenSource,
             toolId,
             jPassword,
-            configuration?.sfdc_client_secret,
+            configuration?.jPassword,
         );
 
         const proxyPassword = `${toolId}-${toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS}-proxyPassword`;
-        configuration.sfdc_password = await toolsActions.saveToolValueToVaultV2(
+        configuration.proxyPassword = await toolsActions.saveToolValueToVaultV2(
             getAccessToken,
             cancelTokenSource,
             toolId,
             proxyPassword,
-            configuration?.sfdc_password,
+            configuration?.proxyPassword,
         );
 
         return await toolsActions.updateToolConnectionDetails(
