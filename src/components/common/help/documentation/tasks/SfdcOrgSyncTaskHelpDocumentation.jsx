@@ -12,8 +12,8 @@ function SfdcOrgSyncTaskHelpDocumentation({closeHelpPanel}) {
         <li>Select <b>{getTaskTypeLabel(TASK_TYPES.SYNC_SALESFORCE_REPO)}</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:
           <ul style={{listStyleType: "none"}}>
             <li><b>Jenkins Tool</b> - Select an established Jenkins tool from the Tool Registry.</li>
-            <li><b>Salesforce Account</b> - Select an established Salesforce tool from Tool Registry.</li>
-            <li><b>Account</b> - Select the configured SCM account that has previously been added in the selected Jenkins tool in the Accounts tab.</li>
+            <li><b>Salesforce Configurator Tool</b> - Select an established Salesforce tool from Tool Registry.</li>
+            <li><b>Git Account</b> - Select the configured source code management account that has previously been added in the selected Jenkins tool in the Accounts tab.</li>
             <li><b>Workspace/Project</b> - Select the workspace or project in the SCM account. </li>
             <li><b>Repository</b> - Select a Repository from the SCM account. </li>
             <li><b>Branch</b> - Select a branch where the changes will be merged. To create a new branch, toggle <b>Create a new branch</b> on and create a new branch name and select an upstream branch as parent branch. Existing and modified files will be pushed onto this parent branch. </li>
