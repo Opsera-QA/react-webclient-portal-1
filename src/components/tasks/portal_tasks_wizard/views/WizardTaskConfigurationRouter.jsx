@@ -2,14 +2,11 @@ import React, {useEffect} from "react";
 import CreateSalesforceOrganizationSyncTaskWizard from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/task/CreateSalesforceOrganizationSyncTaskWizard";
 import * as PropType from "prop-types";
 import { TASK_TYPES } from "../../task.types";
-import CreateCertificateTaskWizard from "../../../wizard/portal/workflows/flows/salesforce/flows/certificate_generation/CreateCertificateTaskWizard";
 import CreateBranchingStructureTask from "../../../wizard/portal/workflows/flows/salesforce/flows/salesforce_branching_structure/CreateBranchingStructureTask";
 import CreateSalesforceBulkMigrationTask from "../../../wizard/portal/workflows/flows/salesforce/flows/salesforce_bulk_migration/CreateSalesforceBulkMigrationTask";
 import CreateSalesforceQuickDeployTask from "../../../wizard/portal/workflows/flows/salesforce/flows/salesforce_quick_deploy/CreateSalesforceQuickDeployTask";
 import CreateSalesforceOrganizationToGitMergeSyncTaskWizard
   from "../../../wizard/portal/workflows/flows/salesforce/flows/salesforce_to_git_merge_sync/task/CreateSalesforceOrganizationToGitMergeSyncTaskWizard";
-import OverlayWizardButtonContainerBase
-  from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 
 export default function WizardTaskConfigurationRouter({
   flow,
@@ -19,15 +16,6 @@ export default function WizardTaskConfigurationRouter({
 }) {
   const getCurrentScreen = () => {
     switch (flow) {
-      case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION: //TOOLS REQ - JENKINS
-        return (
-          <CreateCertificateTaskWizard
-            flow={flow}
-            setButtonContainer={setButtonContainer}
-            backButtonFunction={backButtonFunction}
-            handleClose={handleClose}
-          />
-        );
       case TASK_TYPES.SALESFORCE_QUICK_DEPLOY: //TOOLS REQ - SALESFORCE ACC
         return (
           <CreateSalesforceQuickDeployTask

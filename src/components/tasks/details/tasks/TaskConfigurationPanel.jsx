@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SFDXCertGenTaskTypeConfigurationPanel from "./sfdx-cert-gen/SFDXCertGenTaskTypeConfigurationPanel";
 import SFDCBranchStructuringTaskTypeConfigurationPanel from "./sfdc-branch-structure/SFDCBranchStructuringTaskTypeConfigurationPanel";
 import GitToGitSyncTaskConfigurationEditorPanel from "components/tasks/details/tasks/branch-to-branch/GitToGitSyncTaskConfigurationEditorPanel";
 import Ec2ClusterCreationTaskConfigurationPanel from "components/tasks/details/tasks/ecs-cluster-creation/Ec2ClusterCreationTaskConfigurationPanel";
@@ -40,14 +39,6 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
             taskModel={taskModel}
             setTaskConfigurationModel={setTaskConfigurationModel}
             taskConfigurationModel={taskConfigurationModel}
-          />
-        );
-      case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-        return (
-          <SFDXCertGenTaskTypeConfigurationPanel
-            gitTasksDataDto={taskModel}
-            setGitTasksConfigurationData={setTaskConfigurationModel}
-            gitTasksConfigurationData={taskConfigurationModel}
           />
         );
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:

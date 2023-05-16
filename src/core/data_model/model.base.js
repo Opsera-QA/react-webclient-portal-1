@@ -35,7 +35,6 @@ export default class ModelBase {
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
     this.setStateFunction = setStateFunction;
     this.loadDataFunction = loadDataFunction;
-    this.changeMap = new Map();
     this.isLoading = false;
     this.updateAllowed = false;
     this.deleteAllowed = false;
@@ -72,10 +71,8 @@ export default class ModelBase {
   };
 
   setData = (fieldName, newValue, addToChangeMap = true, refreshState = false) => {
-    const oldValue = this.getData(fieldName);
-
     if (addToChangeMap !== false) {
-      this.propertyChange(fieldName, newValue, oldValue);
+      this.propertyChange(fieldName, newValue);
     }
 
     this.data = DataParsingHelper.safeObjectPropertySetter(this.data, fieldName, newValue);
@@ -245,33 +242,31 @@ export default class ModelBase {
     return modelValidation.getFieldWarning(fieldName, this);
   };
 
-  propertyChange = (id, newValue, oldValue) => {
-    let newChangeMap = new Map(this.changeMap);
-    if (!newChangeMap.has(id)) {
-      // console.log("Field added to change map: " + id);
-      // console.log("oldValue: " + JSON.stringify(oldValue));
-      // console.log("newValue: " + JSON.stringify(newValue));
-      newChangeMap.set(id, oldValue);
+  propertyChange = (fieldName, newValue) => {
+    const originalValue = this.getOriginalValue(fieldName);
+
+    if (originalValue === newValue) {
+      if (this.changedFields.includes(fieldName)) {
+        this.changedFields = this.changedFields.filter((item) => item !== fieldName);
+
+        if (this.dataState === DataState.CHANGED && this.changedFields.length === 0) {
+          this.dataState = DataState.LOADED;
+        }
+      }
+    } else {
+      if (this.changedFields.includes(fieldName) !== true) {
+        this.changedFields.push(fieldName);
+      }
 
       if (this.dataState !== DataState.NEW) {
         this.dataState = DataState.CHANGED;
       }
     }
-    else if (newChangeMap.get(id) === newValue
-         || (newChangeMap.get(id) === null && newValue === null)) {
-      newChangeMap.delete(id);
-
-      if (newChangeMap.size === 0 && this.dataState === DataState.CHANGED) {
-        this.dataState  = DataState.LOADED;
-      }
-    }
-
-    this.changeMap = newChangeMap;
   };
 
   clearChangeMap = () => {
     this.dataState = DataState.LOADED;
-    this.changeMap = new Map();
+    this.changedFields = [];
   };
 
   // TODO: Only send changemap for updates after getting everything else working
@@ -282,15 +277,6 @@ export default class ModelBase {
 
   getOriginalData = () => {
     return this.originalData;
-  };
-
-  replaceOriginalData = (newOriginalData) => {
-    const parsedNewOriginalData = DataParsingHelper.parseObject(newOriginalData);
-
-    if (parsedNewOriginalData && ObjectHelper.areObjectsEqualLodash(this.originalData, parsedNewOriginalData) !== true) {
-      this.originalData = parsedNewOriginalData;
-      this.replaceData(parsedNewOriginalData);
-    }
   };
 
   getCurrentData = () => {
@@ -345,9 +331,13 @@ export default class ModelBase {
     return this.newModel;
   };
 
+  getChangedFields = () => {
+    return DataParsingHelper.parseArray(this.changedFields, []);
+  };
+
   isChanged = (fieldName) => {
     if (fieldName) {
-      return this.changeMap.has(fieldName);
+      return this.getChangedFields().includes(fieldName);
     }
 
     return this.dataState !== DataState.LOADED;
@@ -361,12 +351,30 @@ export default class ModelBase {
   replaceData = (newData) => {
     const parsedNewData = DataParsingHelper.parseObject(newData);
 
-    if (parsedNewData && ObjectHelper.areObjectsEqualLodash(this.data, parsedNewData) !== true) {
-      const changedFieldNames = DataParsingHelper.parseArray(this.changeMap?.keys(), []);
-      changedFieldNames.forEach((fieldName) => {
-        parsedNewData[fieldName] = this.changeMap.get(fieldName);
-      });
-      this.data = {...parsedNewData};
+    if (parsedNewData) {
+      let newDataWithDefaults = {...this.getNewObjectFields(), ...parsedNewData};
+
+      if (ObjectHelper.areObjectsEqualLodash(this.data, newDataWithDefaults) !== true) {
+        const changedFieldNames = DataParsingHelper.parseArray(this.changedFields, []);
+        changedFieldNames.forEach((fieldName) => {
+          newDataWithDefaults = DataParsingHelper.safeObjectPropertySetter(newDataWithDefaults, fieldName, this.getData(fieldName));
+        });
+        this.data = {...newDataWithDefaults};
+      }
+    }
+  };
+
+  replaceOriginalData = (newOriginalData) => {
+    const parsedNewOriginalData = DataParsingHelper.parseObject(newOriginalData);
+
+    if (parsedNewOriginalData) {
+      const newDataWithDefaults = {...this.getNewObjectFields(), ...parsedNewOriginalData};
+
+      if (ObjectHelper.areObjectsEqualLodash(this.originalData, newDataWithDefaults) !== true) {
+        this.originalData = newDataWithDefaults;
+        this.replaceData(parsedNewOriginalData);
+        return true;
+      }
     }
   };
 
@@ -392,25 +400,13 @@ export default class ModelBase {
     return this.setStateFunction;
   };
 
-  getChangeMap = () => {
-    return this.changeMap;
-  };
-
-  // TODO: This is the new getPersistData. It needs to replace the other one.
-  getChangedProperties = () => {
-    this.trimStrings();
-    const changedProperties = {};
-
-    this.changeMap.forEach((value, key) => {
-      changedProperties[key] = this.data[key];
-    });
-
-    return changedProperties;
-  };
-
   getOriginalValue = (fieldName) => {
-    const originalValue = this.changeMap.get(fieldName);
-    return originalValue ? originalValue : this.data[fieldName];
+    if (hasStringValue(fieldName) !== true) {
+      console.error("No field name was given, so returning null");
+      return null;
+    }
+
+    return DataParsingHelper.safeObjectPropertyParser(this.originalData, fieldName);
   };
 
   isDeleted = () => {
