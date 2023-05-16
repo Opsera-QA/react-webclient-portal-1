@@ -214,6 +214,7 @@ function ToolConnectionPanel({ toolData, setToolData, setUpMode, setCurrentScree
       case toolIdentifierConstants.TOOL_IDENTIFIERS.ORACLE_FUSION:
         return <OracleFusionToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       default:
+        if (setUpMode === "wizard") setCurrentScreen("tool_detail");
         return <div className="text-center p-5 text-muted mt-5">Connection configuration is not currently available for this tool.</div>;
     }
   };
