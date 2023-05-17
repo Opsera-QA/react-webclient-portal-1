@@ -40,7 +40,8 @@ export default class ClientWebsocket {
     this.subscriptions = [];
   }
 
-  // TODO: Check if logged in
+  // TODO: We should probably send and parse token rather than user object.
+  //  Sending user object for now but planning on enhancing the security as more websocket work gets done.
   initializeWebsocket = (userData) => {
     if (websocketEnabled !== true || userData == null) {
       return;
@@ -55,11 +56,9 @@ export default class ClientWebsocket {
       return;
     }
 
-    this.user = userData;
-
     try {
       const websocketUrl = NODE_API_ORCHESTRATOR_SERVER_URL;
-      this.websocketClient = io(websocketUrl);
+      this.websocketClient = io(websocketUrl, { query: userData});
       this.websocketClient.connect();
 
       this.websocketClient.on("connect", () => {
@@ -69,7 +68,6 @@ export default class ClientWebsocket {
           `WebSocket Client Connected: ${this.websocketClient.id}`,
         );
         this.resubscribe();
-        this.websocketClient.emit("userData", userData);
       });
 
       // this.websocketClient.on("connect_error", (error) => {
