@@ -40,7 +40,6 @@ function AnsibleToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setAnsibleConfigurationDto}
       persistRecord={saveAnsibleToolConfiguration}
       toolData={toolData}
-      // toolConnectionCheckName={"Ansible"}
     >
       <Row>
         <Col sm={12}>

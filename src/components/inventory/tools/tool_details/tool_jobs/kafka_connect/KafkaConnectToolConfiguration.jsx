@@ -10,6 +10,8 @@ import {AuthContext} from "contexts/AuthContext";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function KafkaConnectToolConfiguration({ toolData , setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -38,7 +40,7 @@ function KafkaConnectToolConfiguration({ toolData , setUpMode, setCurrentScreen 
       setModel={setKafkaConnectConfigurationDto}
       persistRecord={saveKafkaConnectToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"kafka_connect"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.KAFKA_CONNECT}
       setUpMode={setUpMode}
     >
       <Row>

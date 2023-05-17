@@ -10,6 +10,8 @@ import {AuthContext} from "contexts/AuthContext";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import toolsActions from "components/inventory/tools/tools-actions";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function GithubToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -62,7 +64,7 @@ function GithubToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setGithubConfigurationDto}
       persistRecord={saveGithubToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"Github"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.GITHUB}
       setUpMode={setUpMode}
     >
       <Col sm={12}>

@@ -8,6 +8,8 @@ import { useHistory } from "react-router-dom";
 import VanityButtonBase from "../../../../../../temp-library-components/button/VanityButtonBase";
 import { faTriangleExclamation } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "../../../../../../hooks/useComponentStateReference";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 export default function ToolConnectionCheck({
   setCurrentScreen,
@@ -58,7 +60,7 @@ export default function ToolConnectionCheck({
       onSuccessFunction={onSuccessFunction}
       toolId={toolData?.getData("_id")}
       onFailureFunction={onFailureFunction}
-      toolName={capitalizeFirstLetter(toolData?.getData("tool_identifier"))}
+      toolName={toolIdentifierConnectionCheckConstants.getToolConnectionCheckNameForToolIdentifier(toolData?.getData("tool_identifier"))}
       title={`${capitalizeFirstLetter(
         toolData?.getData("tool_identifier"),
       )} Account Connection Test`}

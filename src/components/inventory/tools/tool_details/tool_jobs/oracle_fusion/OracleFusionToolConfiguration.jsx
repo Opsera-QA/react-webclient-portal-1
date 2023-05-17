@@ -11,6 +11,8 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import axios from "axios";
 import OracleFusionMetadata from "./oracleFusion-tool-metadata";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 const OracleFusionToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -67,7 +69,7 @@ const OracleFusionToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }
       setModel={setOracleFusionConfigurationModel}
       persistRecord={saveOracleFusionToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={toolIdentifierConstants.TOOL_IDENTIFIERS.ORACLE_FUSION}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.ORACLE_FUSION}
       setUpMode={setUpMode}
     >
       <Row>

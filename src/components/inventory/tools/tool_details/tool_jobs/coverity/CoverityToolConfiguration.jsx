@@ -10,6 +10,8 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import FileReaderInputBase from "components/common/inputs/file/FileReaderInputBase";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function CoverityToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -41,7 +43,7 @@ function CoverityToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setCoverityConfigurationDto}
       persistRecord={saveCoverityConfigurationDto}
       toolData={toolData}
-      toolConnectionCheckName={"coverity"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.COVERITY}
       setUpMode={setUpMode}
     >
       <Row>
