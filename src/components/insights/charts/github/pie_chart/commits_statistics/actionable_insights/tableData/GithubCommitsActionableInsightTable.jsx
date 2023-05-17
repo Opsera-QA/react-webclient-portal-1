@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import GithubCommitsActionableMetadata from "../github-commits-actionable-insight-metadata";
-import { getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
+import { getTableDateTimeColumn, getTableTextColumn, getExternalLinkIconColumnDefinition} from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 
@@ -19,7 +19,11 @@ function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filter
       getTableDateTimeColumn(getField(fields, "createdAt"), "createdAt"),
       getTableTextColumn(getField(fields, "mergeRequestTitle"), "mergeRequestTitle"),
       getTableDateTimeColumn(getField(fields, "closedAt"), "closedAt"),
-      getTableTextColumn(getField(fields, "mergeRequestsId"),"mergeRequestsId")
+      getTableTextColumn(getField(fields, "mergeRequestsId"),"mergeRequestsId"),
+      getExternalLinkIconColumnDefinition(
+        getField(fields, "mergeRequestUrl"),
+        "",
+      ),
     ],
     []
   );
@@ -28,7 +32,8 @@ function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filter
       getTableTextColumn(getField(fields, "collaboratorName"), "collaboratorName"),
       getTableDateTimeColumn(getField(fields, "createdAt"), "createdAt"),
       getTableTextColumn(getField(fields, "mergeRequestTitle"), "mergeRequestTitle"),
-      getTableTextColumn(getField(fields, "mergeRequestsId"),"mergeRequestsId")
+      getTableTextColumn(getField(fields, "mergeRequestsId"),"mergeRequestsId"),
+      getExternalLinkIconColumnDefinition(getField(fields, "mergeRequestUrl"),"",),
     ],
     []
   );
@@ -38,7 +43,10 @@ function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filter
       getTableTextColumn(getField(fields, "collaboratorName"), "collaboratorName"),
       getTableDateTimeColumn(getField(fields, "createdAt"), "createdAt"),
       getTableTextColumn(getField(fields, "mergeRequestTitle"), "mergeRequestTitle"),
-      getTableDateTimeColumn(getField(fields, "closedAt"), "closedAt")
+      getTableDateTimeColumn(getField(fields, "closedAt"), "closedAt"),
+      getTableTextColumn(getField(fields, "mergeRequestsId"),"mergeRequestsId"),
+      getExternalLinkIconColumnDefinition(
+        getField(fields, "mergeRequestUrl"),"",),
     ],
     []
   );
