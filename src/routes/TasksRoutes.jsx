@@ -9,7 +9,7 @@ export default function TasksRoutes() {
     <>
       <SecureRoute path="/task" exact component={TaskManagement} />
       <SecureRoute path="/task/activity" exact component={TaskAllActivityPanel} />
-      <SecureRoute path="/task/details/:id" exact component={TaskDetailView} />
+      <SecureRoute path="/task/details/:id/:tab?" exact component={TaskDetailView} />
     </>
   );
 }

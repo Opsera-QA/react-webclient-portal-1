@@ -10,6 +10,19 @@ import TaskSummaryPanel
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import TaskActivityPanel from "components/tasks/activity_logs/TaskActivityPanel";
 import { AuthContext } from "contexts/AuthContext";
+import {useParams} from "react-router-dom";
+
+const getActiveTab = (runTask, tab) => {
+  if (tab === "logs") {
+    return "logs";
+  }
+
+  if (runTask) {
+    return "settings";
+  }
+
+  return "summary";
+};
 
 function TaskDetailPanel(
   {
@@ -23,7 +36,8 @@ function TaskDetailPanel(
     taskStartTime,
   }) {
   const {featureFlagHideItemInProd} = useContext(AuthContext);
-  const [activeTab, setActiveTab] = useState(runTask ? "settings" : "summary");
+  const { tab } = useParams();
+  const [activeTab, setActiveTab] = useState(getActiveTab(runTask, tab));
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
