@@ -14,6 +14,8 @@ import JenkinsProxyToggle from "components/inventory/tools/tool_details/tool_job
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import RotateJenkinsKeyButton from "components/common/buttons/inventory/RotateJenkinsKeyButton";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function JenkinsToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -80,7 +82,7 @@ function JenkinsToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setJenkinsConfigurationDto}
       persistRecord={saveJenkinsToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"Jenkins"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.JENKINS}
       setUpMode={setUpMode}
     >
       <Row>

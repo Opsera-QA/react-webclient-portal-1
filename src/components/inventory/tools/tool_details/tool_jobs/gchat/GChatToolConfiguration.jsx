@@ -9,6 +9,8 @@ import {AuthContext} from "contexts/AuthContext";
 import ToolConfigurationEditorPanelContainer
   from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function GChatToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -43,7 +45,7 @@ function GChatToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setGChatConfigurationDto}
       persistRecord={saveGChatToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"gchat"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.GCHAT}
       setUpMode={setUpMode}
     >
       <Row>

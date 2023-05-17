@@ -10,6 +10,8 @@ import ToolConfigurationEditorPanelContainer
   from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function ServiceNowToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -43,7 +45,7 @@ function ServiceNowToolConfiguration({ toolData, setUpMode, setCurrentScreen }) 
       setModel={setServiceNowConfigurationDto}
       persistRecord={saveServiceNowToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"servicenow"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.SERVICE_NOW}
       setUpMode={setUpMode}
     >
       <Row>

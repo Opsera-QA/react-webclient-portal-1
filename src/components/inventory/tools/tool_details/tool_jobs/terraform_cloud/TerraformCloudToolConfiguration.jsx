@@ -12,6 +12,8 @@ import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "../../../../../common/inputs/text/TextInputBase";
 import axios from "axios";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function TerraformCloudToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -56,7 +58,7 @@ function TerraformCloudToolConfiguration({ toolData, setUpMode, setCurrentScreen
       model={terraformCloudConfigurationDto}
       setModel={setTerraformCloudConfigurationDto}
       persistRecord={saveTerraformCloudToolConfiguration}
-      toolConnectionCheckName={"customer_terraform"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.TERRAFORM_CLOUD}
       toolData={toolData}
       setUpMode={setUpMode}
     >

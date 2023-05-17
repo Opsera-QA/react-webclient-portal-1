@@ -9,6 +9,8 @@ import {AuthContext} from "contexts/AuthContext";
 import ToolConfigurationEditorPanelContainer
   from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function TeamsToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -44,7 +46,7 @@ function TeamsToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setTeamsConfigurationDto}
       persistRecord={saveTeamsToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"Teams"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.TEAMS}
       setUpMode={setUpMode}
     >
       <Row>

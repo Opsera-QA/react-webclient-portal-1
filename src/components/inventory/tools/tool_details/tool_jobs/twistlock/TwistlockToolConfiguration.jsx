@@ -10,6 +10,8 @@ import {AuthContext} from "contexts/AuthContext";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function TwistlockToolConfiguration({ toolData , setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -38,7 +40,7 @@ function TwistlockToolConfiguration({ toolData , setUpMode, setCurrentScreen }) 
       setModel={setTwistlockConfigurationDto}
       persistRecord={saveTwistlockToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"twistlock"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.TWISTLOCK}
       setUpMode={setUpMode}
     >
       <Row>

@@ -10,6 +10,8 @@ import ToolConfigurationEditorPanelContainer
   from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function OctopusToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -38,7 +40,7 @@ function OctopusToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setOctopusConfigurationDto}
       persistRecord={saveOctopusToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"Octopus"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.OCTOPUS}
       setUpMode={setUpMode}
     >
       <Row>

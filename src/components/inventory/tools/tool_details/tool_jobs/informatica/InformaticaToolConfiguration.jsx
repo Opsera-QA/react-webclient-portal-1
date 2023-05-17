@@ -11,6 +11,8 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import InformaticaRegionSelectInput from "components/common/list_of_values_input/tools/informatica/InformaticaRegionSelectInput";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function InformaticaToolConfiguration({ toolData , setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -39,7 +41,7 @@ function InformaticaToolConfiguration({ toolData , setUpMode, setCurrentScreen }
       setModel={setInformaticaConfigurationDto}
       persistRecord={saveInformaticaToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"informatica"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.INFORMATICA}
       setUpMode={setUpMode}
     >
       <Row>

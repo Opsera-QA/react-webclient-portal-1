@@ -11,6 +11,8 @@ import Col from "react-bootstrap/Col";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import SonarEditionSelectInput from "components/common/list_of_values_input/tools/code_scan/SonarEditionSelectInput";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function SonarToolConfiguration( { toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -39,7 +41,7 @@ function SonarToolConfiguration( { toolData, setUpMode, setCurrentScreen }) {
       setModel={setSonarConfigurationDto}
       persistRecord={saveSonarToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"Sonarqube"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.SONAR}
       setUpMode={setUpMode}
     >
       <Row>
