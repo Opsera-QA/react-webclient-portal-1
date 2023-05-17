@@ -1,12 +1,11 @@
 import io from 'socket.io-client';
 import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
 import WebsocketLiveUpdateHelper from "@opsera/definitions/constants/websocket/helpers/websocketLiveUpdate.helper";
-import LiveMessageConstants from "@opsera/definitions/constants/websocket/constants/liveMessage.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {ReactLoggingHandler} from "temp-library-components/handler/reactLogging.handler";
 import websocketEventNameConstants
   from "@opsera/definitions/constants/websocket/constants/websocketEventName.constants";
-import LiveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessage.constants";
+import liveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessageTopic.constants";
 const websocketEnabled = DataParsingHelper.parseBooleanV2(process.env.REACT_APP_WEBSOCKET_ENABLED);
 
 export const WEBSOCKET_STATE = {
@@ -42,7 +41,8 @@ export default class ClientWebsocket {
     this.subscriptions = [];
   }
 
-  // TODO: Check if logged in
+  // TODO: We should probably send and parse token rather than user object.
+  //  Sending user object for now but planning on enhancing the security as more websocket work gets done.
   initializeWebsocket = (userData) => {
     if (websocketEnabled !== true || userData == null) {
       return;
@@ -57,11 +57,15 @@ export default class ClientWebsocket {
       return;
     }
 
-    this.user = userData;
-
     try {
       const websocketUrl = NODE_API_ORCHESTRATOR_SERVER_URL;
-      this.websocketClient = io(websocketUrl);
+      const query = {
+        query: {
+          userObject: userData,
+        }
+      };
+
+      this.websocketClient = io(websocketUrl, query);
       this.websocketClient.connect();
 
       this.websocketClient.on("connect", () => {
@@ -71,7 +75,6 @@ export default class ClientWebsocket {
           `WebSocket Client Connected: ${this.websocketClient.id}`,
         );
         this.resubscribe();
-        this.websocketClient.emit("userData", userData);
       });
 
       // this.websocketClient.on("connect_error", (error) => {
@@ -174,7 +177,7 @@ export default class ClientWebsocket {
   };
 
   subscribeToTopic = (topicName, liveUpdateHandlerFunction) => {
-    if (LiveMessageTopicConstants.LIVE_MESSAGE_TOPICS[topicName] == null) {
+    if (liveMessageTopicConstants.isLiveMessageTopicValid(topicName) !== true) {
       ReactLoggingHandler.logErrorMessage(
         "clientWebsocket",
         "subscribeToTopic",
@@ -232,7 +235,7 @@ export default class ClientWebsocket {
       return;
     }
 
-    if (LiveMessageTopicConstants.LIVE_MESSAGE_TOPICS[topicName] == null) {
+    if (liveMessageTopicConstants.isLiveMessageTopicValid(topicName) !== true) {
       ReactLoggingHandler.logErrorMessage(
         "clientWebsocket",
         "subscribeToTopic",
