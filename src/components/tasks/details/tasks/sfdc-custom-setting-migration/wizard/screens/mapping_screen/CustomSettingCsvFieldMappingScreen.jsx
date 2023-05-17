@@ -22,6 +22,7 @@ import Col from "react-bootstrap/Col";
 import SelectInputBase from "../../../../../../../common/inputs/select/SelectInputBase";
 import Model from "../../../../../../../../core/data_model/model";
 import { customSettingMappingMetadata } from "./customSettingMapping.metadata";
+import { hasStringValue } from "../../../../../../../common/helpers/string-helpers";
 
 const CustomSettingCsvFieldMappingScreen = ({
   wizardModel,
@@ -135,8 +136,8 @@ const CustomSettingCsvFieldMappingScreen = ({
 
       if (Array.isArray(fieldList)) {
         let mappedResult = fieldList.map((field) => ({
-          sourceField: field.name,
-          targetField: "",
+          targetField: field.name,
+          sourceField: "",
           nillable: field.nillable,
           type: field.type,
           unique: field.unique,
@@ -173,11 +174,21 @@ const CustomSettingCsvFieldMappingScreen = ({
       wizardModel.setData("queryFilters", []);
       wizardModel.setData("fieldMapping", mappedData);
       wizardModel.setData("filterQuery", "");
+
+      let finalSelectedFields = fieldsPropertiesList.filter(field => {
+        return mappedData.some(obj => obj.targetField === field.name && hasStringValue(obj.sourceField));
+      });
+
+      setFieldsPropertiesList(finalSelectedFields);
+      let newDataObject = { ...wizardModel };
+      newDataObject.setData("selectedFieldList", finalSelectedFields);
+      setWizardModel({ ...newDataObject });
+
       await customSettingMigrationTaskWizardActions.updateSelectedFields(
         getAccessToken,
         null,
         wizardModel,
-        fieldsPropertiesList,
+        finalSelectedFields,
       );
       await customSettingMigrationTaskWizardActions.setFieldMappings(
         getAccessToken,
@@ -202,7 +213,7 @@ const CustomSettingCsvFieldMappingScreen = ({
   const setCsvFieldData = (selectedOption, index) => {
     setMappedData((prevMappings) => {
       const newMapping = [...prevMappings];
-      newMapping[index].targetField = selectedOption;
+      newMapping[index].sourceField = selectedOption;
       return newMapping;
     });
   };
@@ -211,7 +222,7 @@ const CustomSettingCsvFieldMappingScreen = ({
     if (isSaving || mappedData.length < 1) return false;
     return mappedData
       .filter((item) => !item.nillable)
-      .every((item) => item["targetField"].length > 1);
+      .every((item) => item["sourceField"].length > 1);
   };
 
   const getBody = () => {
@@ -225,14 +236,7 @@ const CustomSettingCsvFieldMappingScreen = ({
     }
 
     return (
-      <div>
-        <Row className="mx-1">
-          <H5FieldSubHeader
-            subheaderText={`${getMigrationTypeLabel(
-              wizardModel?.getData("taskType"),
-            )} : Custom Setting Field Mapping Screen`}
-          />
-        </Row>
+      <div className={"filter-container container-border mt-3"}>
         <div className="d-flex justify-content-center page-description mt-3">
           <Col sm={12}>
             <Row>
@@ -251,44 +255,38 @@ const CustomSettingCsvFieldMappingScreen = ({
             </Row>
           </Col>
         </div>
-        {mappedData && mappedData.length > 1 ? (
-          mappedData.map((field, index) => {
-            return (
-              <Row
-                className="d-flex mx-1 justify-content-between mt-2"
-                key={index}
-              >
-                <Col
-                  sm={12}
-                  className={"px-0"}
+        <div className={"m-3"}>
+          {mappedData && mappedData.length > 1 ? (
+            mappedData.map((field, index) => {
+              return (
+                <Row
+                  className="d-flex mx-1 justify-content-between mt-2"
+                  key={index}
                 >
-                  <Row className={"mx-0"}>
-                    <Col
-                      xs={6}
-                      className={"pr-1 mt-3 pl-0"}
-                    >
-                      <Row className={"mx-0"}>
-                        <Col
-                          lg={6}
-                          xl={6}
-                          className={"no-wrap-inline mb-1"}
-                        >
-                          <span style={{ fontWeight: 500 }}>
-                            {field?.sourceField}
-                          </span>
-                        </Col>
-                        <Col
-                          lg={6}
-                          xl={6}
-                          className={"d-flex mb-1 mt-1 justify-content-end"}
-                        >
-                          <div
-                            className={"badge badge-secondary mr-2"}
-                            style={{ fontSize: "10px", letterSpacing: "0.6px" }}
+                  <Col
+                    sm={12}
+                    className={"px-0"}
+                  >
+                    <Row className={"mx-0"}>
+                      <Col
+                        xs={6}
+                        className={"pr-1 mt-3 pl-0"}
+                      >
+                        <Row className={"mx-0"}>
+                          <Col
+                            lg={6}
+                            xl={6}
+                            className={"no-wrap-inline mb-1"}
                           >
-                            {field?.type?.toUpperCase()}
-                          </div>
-                          {field?.unique ? (
+                            <span style={{ fontWeight: 500 }}>
+                              {field?.targetField}
+                            </span>
+                          </Col>
+                          <Col
+                            lg={6}
+                            xl={6}
+                            className={"d-flex mb-1 mt-1 justify-content-end"}
+                          >
                             <div
                               className={"badge badge-secondary mr-2"}
                               style={{
@@ -296,54 +294,74 @@ const CustomSettingCsvFieldMappingScreen = ({
                                 letterSpacing: "0.6px",
                               }}
                             >
-                              UNIQUE
+                              {field?.type?.toUpperCase()}
                             </div>
-                          ) : null}
-                          {!field?.nillable ? (
-                            <div
-                              className={"badge badge-danger mr-2"}
-                              style={{
-                                fontSize: "10px",
-                                letterSpacing: "0.6px",
-                              }}
-                            >
-                              MANDATORY
-                            </div>
-                          ) : null}
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col
-                      xs={6}
-                      className={"pr-1 pl-0"}
-                    >
-                      <SelectInputBase
-                        selectOptions={wizardModel?.getData("csvFields")}
-                        fieldName={"targetField"}
-                        defaultValue={field.targetField}
-                        dataObject={localMappedData}
-                        setDataObject={setLocalMappedData}
-                        setDataFunction={(field, newValue) =>
-                          setCsvFieldData(newValue, index)
-                        }
-                        showLabel={false}
-                      />
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-            );
-          })
-        ) : (
-          <div>No Fields Found!</div>
-        )}
+                            {field?.unique ? (
+                              <div
+                                className={"badge badge-secondary mr-2"}
+                                style={{
+                                  fontSize: "10px",
+                                  letterSpacing: "0.6px",
+                                }}
+                              >
+                                UNIQUE
+                              </div>
+                            ) : null}
+                            {!field?.nillable ? (
+                              <div
+                                className={"badge badge-danger mr-2"}
+                                style={{
+                                  fontSize: "10px",
+                                  letterSpacing: "0.6px",
+                                }}
+                              >
+                                MANDATORY
+                              </div>
+                            ) : null}
+                          </Col>
+                        </Row>
+                      </Col>
+                      <Col
+                        xs={6}
+                        className={"pr-1 pl-0"}
+                      >
+                        <SelectInputBase
+                          selectOptions={wizardModel?.getData("csvFields")}
+                          fieldName={"sourceField"}
+                          defaultValue={field.sourceField}
+                          dataObject={localMappedData}
+                          setDataObject={setLocalMappedData}
+                          setDataFunction={(field, newValue) =>
+                            setCsvFieldData(newValue, index)
+                          }
+                          showLabel={false}
+                        />
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              );
+            })
+          ) : (
+            <div>No Fields Found!</div>
+          )}
+        </div>
       </div>
     );
   };
 
   return (
     <div>
-      <div className={"my-3"}>{getBody()}</div>
+      <div className={"my-3"}>
+        <Row className="mx-1">
+          <H5FieldSubHeader
+            subheaderText={`${getMigrationTypeLabel(
+              wizardModel?.getData("taskType"),
+            )} : Custom Setting Field Mapping Screen`}
+          />
+        </Row>
+        {getBody()}
+      </div>
       <SaveButtonContainer>
         <Button
           variant="secondary"
