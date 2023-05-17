@@ -10,6 +10,8 @@ import ToolConfigurationEditorPanelContainer
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function NexusToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -37,7 +39,7 @@ function NexusToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setNexusConfigurationDto}
       persistRecord={saveNexusToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"Nexus"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.NEXUS}
       setUpMode={setUpMode}
     >
       <Row>

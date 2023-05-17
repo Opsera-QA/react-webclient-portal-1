@@ -10,6 +10,8 @@ import {AuthContext} from "contexts/AuthContext";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "../../../../../common/inputs/text/TextInputBase";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function SapCpqToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -37,7 +39,7 @@ function SapCpqToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setSapCpqConfigurationDto}
       persistRecord={saveSapToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"sap-cpq"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.SAP_CPQ}
       setUpMode={setUpMode}
     >
       <Row>

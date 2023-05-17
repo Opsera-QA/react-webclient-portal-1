@@ -10,6 +10,8 @@ import ToolConfigurationEditorPanelContainer
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function JFrogToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -37,7 +39,7 @@ function JFrogToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setJFrogToolConfigurationModel}
       persistRecord={saveJFrogToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"jfrog"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.JFROG_ARTIFACTORY_DOCKER}
       setUpMode={setUpMode}
     >
       <Row>

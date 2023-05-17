@@ -38,7 +38,6 @@ function GcpToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setGCPConfigurationDto}
       persistRecord={savegcpConfigurationDto}
       toolData={toolData}
-      // toolConnectionCheckName={"gcp_account"} //commented to hide tool connection check button which will go in the next iteration
     >
       <Row>
         <Col sm={12}>          

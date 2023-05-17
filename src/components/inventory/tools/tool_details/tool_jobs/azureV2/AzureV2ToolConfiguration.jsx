@@ -35,7 +35,6 @@ function AzureV2ToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setAzureConfigurationDto}
       persistRecord={saveAzureToolConfiguration}
       toolData={toolData}
-      // toolConnectionCheckName={"azure"}
     >
       <Row>
         <Col sm={12}>

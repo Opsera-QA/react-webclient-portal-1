@@ -11,6 +11,8 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import WarningDialog from "../../../../../common/status_notifications/WarningDialog";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function HashicorpVaultToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -61,7 +63,7 @@ function HashicorpVaultToolConfiguration({ toolData, setUpMode, setCurrentScreen
       setModel={setHashicorpVaultConfigurationDto}
       persistRecord={saveHashicorpVaultToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"vault"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.HASHICORP_VAULT}
       setUpMode={setUpMode}
     >
       <Row>

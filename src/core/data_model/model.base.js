@@ -41,6 +41,7 @@ export default class ModelBase {
     this.editAccessRolesAllowed = false;
     this.roleDefinitions = {};
     this.userData = undefined;
+    this.changedFields = [];
   }
 
   getValidatedData = () => {

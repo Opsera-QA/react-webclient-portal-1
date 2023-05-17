@@ -10,6 +10,8 @@ import {AuthContext} from "contexts/AuthContext";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "../../../../../common/inputs/text/TextInputBase";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function AzureToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -42,7 +44,7 @@ function AzureToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setAzureConfigurationDto}
       persistRecord={saveAzureToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"azure"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.AZURE}
       setUpMode={setUpMode}
     >
       <Row>
