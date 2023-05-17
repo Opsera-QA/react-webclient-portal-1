@@ -52,6 +52,7 @@
     "no-useless-escape": "error",
     "no-empty-pattern": "error",
     "no-fallthrough": "error",
+    "no-unsafe-optional-chaining": "off",
     "react-hooks/exhaustive-deps": "off"
   }
 }
