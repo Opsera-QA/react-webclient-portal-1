@@ -58,7 +58,13 @@ export default class ClientWebsocket {
 
     try {
       const websocketUrl = NODE_API_ORCHESTRATOR_SERVER_URL;
-      this.websocketClient = io(websocketUrl, { query: userData});
+      const query = {
+        query: {
+          userObject: userData,
+        }
+      };
+
+      this.websocketClient = io(websocketUrl, query);
       this.websocketClient.connect();
 
       this.websocketClient.on("connect", () => {
