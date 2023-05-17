@@ -17,6 +17,7 @@ const registeredUsersFilterMetadata = {
     {
       label: "Search",
       id: "search",
+      maxLength: 100,
     },
     {
       label: "Active Filters",
