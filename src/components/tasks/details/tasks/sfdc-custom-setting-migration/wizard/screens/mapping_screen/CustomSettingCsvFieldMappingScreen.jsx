@@ -165,7 +165,8 @@ const CustomSettingCsvFieldMappingScreen = ({
   };
 
   const handleBackButton = () => {
-    setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.UPLOAD_SCREEN);
+    // setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.UPLOAD_SCREEN);
+    setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN);
   };
 
   const saveAndMoveToNextScreen = async () => {

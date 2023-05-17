@@ -404,7 +404,7 @@ const CustomSettingQueryBuilderScreen = ({
                   <Col sm={3} className={"custom-select-input my-2"}>
                     <InputLabel
                       model={wizardModel}
-                      field={"limit"}
+                      field={wizardModel?.getFieldById("limit")}
                       showLabel={true}
                       className={"mt-1 mr-2"}
                       disabled={isLoading}

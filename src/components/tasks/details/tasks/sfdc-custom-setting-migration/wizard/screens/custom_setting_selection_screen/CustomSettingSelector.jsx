@@ -20,6 +20,7 @@ import H5FieldSubHeader from "../../../../../../../common/fields/subheader/H5Fie
 import ToolNameField from "../../../../../../../common/fields/inventory/ToolNameField";
 import LoadingDialog from "components/common/status_notifications/loading";
 import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
+import CustomSettingUploadScreen from "../upload_screens/CustomSettingUploadScreen";
 
 const CustomSettingSelector = ({
   wizardModel,
@@ -163,10 +164,10 @@ const CustomSettingSelector = ({
         wizardModel,
         wizardModel?.getData("selectedCustomSetting")?.componentName,
       );
-      if (taskType === MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
-        setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.UPLOAD_SCREEN);
-        return;
-      }
+      // if (taskType === MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
+      //   setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.UPLOAD_SCREEN);
+      //   return;
+      // }
     } catch (error) {
       if (isMounted?.current === true) {
         const parsedError = parseError(error);
@@ -289,8 +290,19 @@ const CustomSettingSelector = ({
     );
   };
 
-  const getFieldSelectionView = () => {
+  const getDynamicView = () => {
     if (!enableEdit) {
+      if(taskType === MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
+        return (
+          <CustomSettingUploadScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+            taskType={wizardModel?.getData("taskType")}
+          />
+        );
+      }
       return (
         <FieldPropertiesSelectorView
           wizardModel={wizardModel}
@@ -314,7 +326,7 @@ const CustomSettingSelector = ({
       </Row>
       {getSummaryView()}
       {getSelectView()}
-      {getFieldSelectionView()}
+      {getDynamicView()}
     </div>
   );
 };
