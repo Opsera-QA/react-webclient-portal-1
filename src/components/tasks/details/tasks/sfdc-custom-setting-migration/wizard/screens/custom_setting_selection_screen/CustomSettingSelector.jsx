@@ -174,19 +174,28 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
       return (
         <div className={`p-3 message-field info-message-field`}>
           <div className={"px-3 d-flex"}>
+            <Col xs={6}>
+              <ToolNameField
+                model={wizardModel}
+                fieldName={"targetToolId"}
+                loadToolInNewWindow={true}
+                visible={
+                  wizardModel?.getData("taskType") ===
+                  MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG ||
+                  wizardModel?.getData("taskType") ===
+                  MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG
+                }
+              />
+            </Col>
               <Col xs={6}>
                 <ToolNameField
                   model={wizardModel}
                   fieldName={"sourceToolId"}
                   loadToolInNewWindow={true}
-                />
-              </Col>
-              <Col xs={6}>
-                <ToolNameField
-                  model={wizardModel}
-                  fieldName={"targetToolId"}
-                  loadToolInNewWindow={true}
-                  visible={wizardModel?.getData("taskType") === MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG}
+                  visible={
+                    wizardModel?.getData("taskType") !==
+                    MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG
+                  }
                 />
               </Col>
           </div>
@@ -235,7 +244,11 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
             size="sm"
             variant="primary"
             onClick={saveAndTriggerFieldsPull}
-            disabled={isLoading || isSaving || wizardModel?.getData("selectedCustomSetting").length < 1}
+            disabled={
+              isLoading ||
+              isSaving ||
+              wizardModel?.getData("selectedCustomSetting").length < 1
+            }
           >
             <span>
               <IconBase

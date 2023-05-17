@@ -8,11 +8,13 @@ import axios from "axios";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
 import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
+import { MIGRATION_TYPES } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 
 function CustomSettingTaskWizardCreateNewRecordButton({
   wizardModel,
   setWizardModel,
   setCurrentScreen,
+                                                        taskType,
   size,
   className,
   disabled,
@@ -54,12 +56,16 @@ function CustomSettingTaskWizardCreateNewRecordButton({
       if (isMounted?.current === true && newRecord != null) {
         wizardModel?.setData("recordId", newRecord._id);
         setWizardModel({ ...wizardModel });
+        const sfdcToolId =
+          taskType === MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG
+            ? wizardModel?.getData("targetToolId")
+            : wizardModel?.getData("sourceToolId");
         await customSettingMigrationTaskWizardActions.triggerCustomSettingsPull(
           getAccessToken,
           cancelTokenSource,
           wizardModel?.getData("taskId"),
           wizardModel?.getData("runCount"),
-          wizardModel?.getData("sourceToolId"),
+          sfdcToolId,
           newRecord._id,
         );
         setCurrentScreen(
@@ -117,6 +123,7 @@ CustomSettingTaskWizardCreateNewRecordButton.propTypes = {
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
   setCurrentScreen: PropTypes.func,
+  taskType: PropTypes.string,
   disabled: PropTypes.bool,
   icon: PropTypes.object,
   size: PropTypes.string,
