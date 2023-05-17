@@ -5,6 +5,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import {ReactLoggingHandler} from "temp-library-components/handler/reactLogging.handler";
 import websocketEventNameConstants
   from "@opsera/definitions/constants/websocket/constants/websocketEventName.constants";
+import liveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessageTopic.constants";
 const websocketEnabled = DataParsingHelper.parseBooleanV2(process.env.REACT_APP_WEBSOCKET_ENABLED);
 
 export const WEBSOCKET_STATE = {
@@ -176,7 +177,7 @@ export default class ClientWebsocket {
   };
 
   subscribeToTopic = (topicName, liveUpdateHandlerFunction) => {
-    if (LiveMessageTopicConstants.LIVE_MESSAGE_TOPICS[topicName] == null) {
+    if (liveMessageTopicConstants.isLiveMessageTopicValid(topicName) !== true) {
       ReactLoggingHandler.logErrorMessage(
         "clientWebsocket",
         "subscribeToTopic",
@@ -234,7 +235,7 @@ export default class ClientWebsocket {
       return;
     }
 
-    if (LiveMessageTopicConstants.LIVE_MESSAGE_TOPICS[topicName] == null) {
+    if (liveMessageTopicConstants.isLiveMessageTopicValid(topicName) !== true) {
       ReactLoggingHandler.logErrorMessage(
         "clientWebsocket",
         "subscribeToTopic",
