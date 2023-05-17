@@ -6,10 +6,7 @@ import InlinePipelineTypeFilter from "components/common/filters/admin/templates/
 import PlatformPipelineTemplateCardView from "components/workflow/catalog/platform/PlatformPipelineTemplateCardView";
 import useGetPlatformPipelineTemplates from "hooks/workflow/catalog/platform/useGetPlatformPipelineTemplates";
 import PlatformTagFilter from "components/common/filters/tags/tag/PlatformTagFilter";
-import OverlayWizardButtonContainerBase
-  from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
-import {ACCESS_ROLE_TYPES} from "../../../common/inputs/roles/StandaloneRoleAccessTypeInput";
-import wizardHelper from "components/workflow/wizards/updated_pipeline_wizard/helpers/wizard-helpers";
+import {wizardsHelper} from "components/workflow/wizards/updated_pipeline_wizard/helpers/wizard-helpers";
 
 export default function OpseraPipelineMarketplace({activeTemplates, selectTemplateFunction, setupMode }) {
   const {
@@ -25,7 +22,7 @@ export default function OpseraPipelineMarketplace({activeTemplates, selectTempla
   // TODO - Update template route and move to node
   useEffect(() => {
     if (setupMode && pipelineTemplates?.length > 0) {
-      wizardHelper.filterTemplateByCategory(
+      wizardsHelper.filterTemplateByCategory(
           pipelineTemplates,
           setupMode,
           setTemplates,
