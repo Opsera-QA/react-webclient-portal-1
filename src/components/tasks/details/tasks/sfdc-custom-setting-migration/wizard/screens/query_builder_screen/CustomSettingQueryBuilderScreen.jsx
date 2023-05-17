@@ -24,6 +24,7 @@ import axios from "axios";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 import Col from "react-bootstrap/Col";
 import StandaloneSelectInput from "../../../../../../../common/inputs/select/StandaloneSelectInput";
+import InputLabel from "../../../../../../../common/inputs/info_text/InputLabel";
 
 const operators = [
   "=",
@@ -335,7 +336,7 @@ const CustomSettingQueryBuilderScreen = ({
             <textarea
               value={manualQueryString}
               onChange={(event) => setManualQueryString(event.target.value)}
-              className={`form-control`}
+              className={`form-control container-border`}
               rows={10}
             />
             <div className="d-flex justify-content-between mt-2">
@@ -400,9 +401,16 @@ const CustomSettingQueryBuilderScreen = ({
                   {`SOQL query generated based of filter selection made above.`}
                 </div>
                 <Row>
-                  <Col sm={3}>
+                  <Col sm={3} className={"custom-select-input my-2"}>
+                    <InputLabel
+                      model={wizardModel}
+                      field={"limit"}
+                      showLabel={true}
+                      className={"mt-1 mr-2"}
+                      disabled={isLoading}
+                      isLoading={isLoading}
+                    />
                     <StandaloneSelectInput
-                      className={"custom-select-input my-2"}
                       fieldName={"limit"}
                       dataObject={wizardModel}
                       setDataObject={setWizardModel}
