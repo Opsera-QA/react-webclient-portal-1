@@ -353,11 +353,10 @@ function CustomSettingFileUploadComponent({
     return (
       <div className="my-2">
         <div>The file must match these requirements:</div>
-        <div>1. The maximum number of components supported is 10,000</div>
         <div>
-          2. Upload file can be of .csv extension only (single file is allowed){" "}
+          1. Upload file can be of .csv extension only (single file is allowed){" "}
         </div>
-        <div>3. The maximum file size supported is 10MB</div>
+        <div>2. The maximum file size supported is 10MB</div>
       </div>
     );
   };
@@ -372,7 +371,7 @@ function CustomSettingFileUploadComponent({
           linkText={
             "Please click here to view detailed Help Documentation for the File Upload process."
           }
-          link={`https://opsera.atlassian.net/l/c/6eQ9BMAw`}
+          link={`https://docs.opsera.io/salesforce/custom-setting-data-migration`}
         />
       </div>
       {getHelpText()}

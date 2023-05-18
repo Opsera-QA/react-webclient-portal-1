@@ -187,11 +187,11 @@ const CustomSettingQueryBuilderScreen = ({
       ?.map((ele) => ele.name)
       .join(", ")} FROM ${
       wizardModel?.getData("selectedCustomSetting")?.componentName
-    }${whereClause ? ` WHERE ${whereClause}` : ""} LIMIT ${limit}`;
+    }${whereClause ? ` WHERE ${whereClause}` : ""}`;
     return query;
   };
 
-  const query = useMemo(() => generateQuery(), [queryFilters, limit]);
+  const query = useMemo(() => generateQuery(), [queryFilters]);
   const handleBackButton = () => {
     if (taskType === MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
       setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.MAPPING_SCREEN);
@@ -400,27 +400,27 @@ const CustomSettingQueryBuilderScreen = ({
                 <div className="d-flex justify-content-between mt-2">
                   {`SOQL query generated based of filter selection made above.`}
                 </div>
-                <Row>
-                  <Col sm={3} className={"custom-select-input my-2"}>
-                    <InputLabel
-                      model={wizardModel}
-                      field={wizardModel?.getFieldById("limit")}
-                      showLabel={true}
-                      className={"mt-1 mr-2"}
-                      disabled={isLoading}
-                      isLoading={isLoading}
-                    />
-                    <StandaloneSelectInput
-                      fieldName={"limit"}
-                      dataObject={wizardModel}
-                      setDataObject={setWizardModel}
-                      value={limit}
-                      setDataFunction={(selectedOption)=> { console.log(selectedOption); setLimit(selectedOption);}}
-                      selectOptions={limits}
-                      dropUp={true}
-                    />
-                  </Col>
-                </Row>
+                {/*<Row>*/}
+                {/*  <Col sm={3} className={"custom-select-input my-2"}>*/}
+                {/*    <InputLabel*/}
+                {/*      model={wizardModel}*/}
+                {/*      field={wizardModel?.getFieldById("limit")}*/}
+                {/*      showLabel={true}*/}
+                {/*      className={"mt-1 mr-2"}*/}
+                {/*      disabled={isLoading}*/}
+                {/*      isLoading={isLoading}*/}
+                {/*    />*/}
+                {/*    <StandaloneSelectInput*/}
+                {/*      fieldName={"limit"}*/}
+                {/*      dataObject={wizardModel}*/}
+                {/*      setDataObject={setWizardModel}*/}
+                {/*      value={limit}*/}
+                {/*      setDataFunction={(selectedOption)=> { console.log(selectedOption); setLimit(selectedOption);}}*/}
+                {/*      selectOptions={limits}*/}
+                {/*      dropUp={true}*/}
+                {/*    />*/}
+                {/*  </Col>*/}
+                {/*</Row>*/}
               </div>
             </div>
           </div>

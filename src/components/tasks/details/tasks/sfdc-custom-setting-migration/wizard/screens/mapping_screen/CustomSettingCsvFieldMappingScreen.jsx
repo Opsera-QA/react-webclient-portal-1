@@ -245,7 +245,7 @@ const CustomSettingCsvFieldMappingScreen = ({
                 sm={6}
                 className={"pl-2 pr-0 py-2"}
               >
-                <span className="text-muted">Custom Object Fields</span>
+                <span className="text-muted ml-4">Custom Object Fields</span>
               </Col>
               <Col
                 sm={6}
@@ -258,7 +258,7 @@ const CustomSettingCsvFieldMappingScreen = ({
         </div>
         <div className={"m-3"}>
           {mappedData && mappedData.length > 1 ? (
-            mappedData.map((field, index) => {
+            mappedData.map((field, index,{ length }) => {
               return (
                 <Row
                   className="d-flex mx-1 justify-content-between mt-2"
@@ -336,6 +336,7 @@ const CustomSettingCsvFieldMappingScreen = ({
                             setCsvFieldData(newValue, index)
                           }
                           showLabel={false}
+                          dropUp={index+1 > Math.floor(length/2) ? true : false}
                         />
                       </Col>
                     </Row>
