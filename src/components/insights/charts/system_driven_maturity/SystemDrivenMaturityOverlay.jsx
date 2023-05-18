@@ -14,7 +14,7 @@ const OVERLAY_TABS = {
   PROJECTS: 'projects'
 };
 
-function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, group }) {
+function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, group, getLegends, orgData }) {
   const toastContext = useContext(DialogToastContext);
   const [activeTab, setActiveTab] = useState(OVERLAY_TABS.ORG_TAGS);
   const [selectedOrgTag, setSelectedOrgTag] = useState(null);
@@ -55,6 +55,8 @@ function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, group }
           dashboardData={dashboardData}
           group={group}
           onSelect={onSelectOrgTag}
+          getLegends={getLegends}
+          orgData={orgData}
         />
       );
     }
@@ -102,7 +104,9 @@ function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, group }
 SystemDrivenMaturityOverlay.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  group: MaturityScoreItemType
+  group: MaturityScoreItemType,
+  getLegends: PropTypes.func,
+  orgData: PropTypes.object
 };
 
 export default SystemDrivenMaturityOverlay;
