@@ -25,6 +25,7 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metricData, setMetricData] = useState(null);
+  const [organizationData, setOrganizationData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -69,11 +70,13 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
         });
 
         const { groups } = response?.data;
-
+        const { orgsData } = response?.data;
         if (isMounted?.current === true && Object.keys(groups).length) {
           setMetricData(formatMaturityScoreItems(groups));
+          setOrganizationData(orgsData);
         } else {
           setMetricData([]);
+          setOrganizationData([]);
         }
       }
     } catch (error) {
@@ -89,11 +92,22 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
   };
 
   const onRowSelect = group => {
+    const orgData = {
+      orgTags: [],
+      chartData: []
+    };
+    organizationData?.map(org => {
+      if(org?.groupName === group?.name){
+        orgData.orgTags.push(org?.orgTags);
+        orgData.chartData.push(org?.chartData);
+      }
+    });
     toastContext.showOverlayPanel(
       <SystemDrivenMaturityOverlay
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
         group={group}
+        orgData={orgData}
         getLegends = {getLegends}
       />
     );

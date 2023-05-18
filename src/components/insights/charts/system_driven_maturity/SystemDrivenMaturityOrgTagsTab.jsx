@@ -12,7 +12,7 @@ import SystemDrivenMaturityChart from './SystemDrivenMaturityChart';
 import { formatForSDMTimelineChart, formatMaturityScoreItems } from './util';
 import {Col, Row} from "react-bootstrap";
 
-function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, group, onSelect, getLegends }) {
+function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, group, onSelect, getLegends, orgData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metricData, setMetricData] = useState(null);
@@ -59,7 +59,9 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
         group
       });
 
-      const { orgTags, chartData } = response?.data;
+      const { chartData } = response?.data;
+      // TODO:  THIS HAS TO BE DONE FOR CHART DATA AS WELL, CHART DATA IS NOT COMBINED FOR ALL THE ORGS
+      const { orgTags } = orgData;
 
       if (isMounted?.current === true) {
         if (orgTags?.length) {
@@ -144,6 +146,7 @@ SystemDrivenMaturityOrgTagsTab.propTypes = {
   group: MaturityScoreItemType,
   onSelect: PropTypes.func,
   getLegends: PropTypes.func,
+  orgData: PropTypes.object
 };
 
 export default SystemDrivenMaturityOrgTagsTab;
