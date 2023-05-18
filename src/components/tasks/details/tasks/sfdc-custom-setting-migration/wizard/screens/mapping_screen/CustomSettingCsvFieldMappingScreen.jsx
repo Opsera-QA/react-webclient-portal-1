@@ -275,7 +275,7 @@ const CustomSettingCsvFieldMappingScreen = ({
                 sm={6}
                 className={"pl-2 pr-0 py-2"}
               >
-                <h6 className="text-muted">CSV fields</h6>
+                <h6 className="text-muted">CSV Fields</h6>
               </Col>
             </Row>
           </Col>
