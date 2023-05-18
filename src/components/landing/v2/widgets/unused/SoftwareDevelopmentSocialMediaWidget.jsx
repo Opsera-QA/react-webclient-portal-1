@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { faLinkedin, faYoutube, faTwitter, faFacebook } from "@fortawesome/free-brands-svg-icons";
-import IconBase from "../../../common/icons/IconBase";
+import IconBase from "components/common/icons/IconBase";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 

@@ -9,26 +9,26 @@ import WorkflowWidgetNavigationBar, {
 } from "components/landing/v2/widgets/workspace/WorkflowWidgetNavigationBar";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import sessionHelper from "utils/session.helper";
-import useGetWorkspaceWorkflowResources from "hooks/workspace/useGetWorkspaceWorkflowResources";
 import WorkspaceWorkflowSelectionCardView
   from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
 import InlineSearchFilter from "components/common/filters/search/InlineSearchFilter";
-import SoftwareDevelopmentSocialMediaWidget from "components/landing/v2/widgets/SoftwareDevelopmentSocialMediaWidget";
+import SoftwareDevelopmentSocialMediaWidget from "components/landing/v2/widgets/unused/SoftwareDevelopmentSocialMediaWidget";
+import useGetSalesforceWorkflowResources from "hooks/landing/salesforce/useGetSalesforceWorkflowResources";
 
-export default function SoftwareDevelopmentLandingMyWorkflowsWidget({ className }) {
+export default function SalesforceLandingMyWorkflowsWidget({ className }) {
   const [currentView, setCurrentView] = useState(DataParsingHelper.parseString(sessionHelper.getCookie(sessionHelper.SUPPORTED_COOKIE_STORAGE_KEYS.LANDING_SCREEN_WORKFLOW_WIDGET_CURRENT_VIEW), WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS));
   const {
     toastContext,
   } = useComponentStateReference();
   const {
-    workspaceItems,
+    workflows,
     isLoading,
     workflowWidgetFilterModel,
     setWorkflowWidgetFilterModel,
     loadData,
     loadMoreWorkflows,
     hasMoreItems,
-  } = useGetWorkspaceWorkflowResources(currentView);
+  } = useGetSalesforceWorkflowResources(currentView);
 
   useEffect(() => {}, []);
 
@@ -44,15 +44,15 @@ export default function SoftwareDevelopmentLandingMyWorkflowsWidget({ className 
   const getRightSideTitleBarItems = () => {
     return (
       <>
-        <NewRecordButton
-          addRecordFunction={createWorkspaceItem}
-          type={""}
-          isLoading={isLoading}
-          variant={"success"}
-          customButtonText={"New"}
-          // size={"1x"}
-          className={"my-auto"}
-        />
+        {/*<NewRecordButton*/}
+        {/*  addRecordFunction={createWorkspaceItem}*/}
+        {/*  type={""}*/}
+        {/*  isLoading={isLoading}*/}
+        {/*  variant={"success"}*/}
+        {/*  customButtonText={"New"}*/}
+        {/*  // size={"1x"}*/}
+        {/*  className={"my-auto"}*/}
+        {/*/>*/}
         <InlineSearchFilter
           filterDto={workflowWidgetFilterModel}
           setFilterDto={setWorkflowWidgetFilterModel}
@@ -84,7 +84,7 @@ export default function SoftwareDevelopmentLandingMyWorkflowsWidget({ className 
           currentView={currentView}
           workflowFilterModel={workflowWidgetFilterModel}
           heightSize={5}
-          workspaceItems={workspaceItems}
+          workflows={workflows}
           loadData={loadData}
           isLoading={isLoading}
           selectedWorkflowItem={undefined}
@@ -97,6 +97,6 @@ export default function SoftwareDevelopmentLandingMyWorkflowsWidget({ className 
   );
 }
 
-SoftwareDevelopmentLandingMyWorkflowsWidget.propTypes = {
+SalesforceLandingMyWorkflowsWidget.propTypes = {
   className: PropTypes.string,
 };
