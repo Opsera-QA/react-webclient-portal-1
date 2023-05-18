@@ -180,9 +180,17 @@ const CustomSettingCsvFieldMappingScreen = ({
         return mappedData.some(obj => obj.targetField === field.name && hasStringValue(obj.sourceField));
       });
 
-      setFieldsPropertiesList(finalSelectedFields);
       let newDataObject = { ...wizardModel };
       newDataObject.setData("selectedFieldList", finalSelectedFields);
+
+      const query = `SELECT ${finalSelectedFields
+        ?.map((ele) => ele.name)
+        .join(", ")} FROM ${
+        wizardModel?.getData("selectedCustomSetting")?.componentName
+      }`;
+
+      console.log(query);
+      newDataObject.setData("filterQuery", query);
       setWizardModel({ ...newDataObject });
 
       await customSettingMigrationTaskWizardActions.updateSelectedFields(
@@ -196,9 +204,25 @@ const CustomSettingCsvFieldMappingScreen = ({
         null,
         wizardModel,
       );
-      setCurrentScreen(
-        CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.QUERY_BUILDER_SCREEN,
-      );
+      const response =
+        await customSettingMigrationTaskWizardActions.validateQuery(
+          getAccessToken,
+          null,
+          wizardModel,
+          query,
+        );
+      if (response?.status === 200) {
+        await customSettingMigrationTaskWizardActions.setFilterQuery(
+          getAccessToken,
+          null,
+          wizardModel,
+          query,
+          [],
+        );
+        setCurrentScreen(
+          CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN,
+        );
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         const parsedError = parseError(error);

@@ -363,9 +363,6 @@ function CustomSettingFileUploadComponent({
 
   return (
     <div>
-      <div className="my-2">
-        Select components using a CSV file to use for deployment.
-      </div>
       <div>
         <ExternalPageLink
           linkText={
