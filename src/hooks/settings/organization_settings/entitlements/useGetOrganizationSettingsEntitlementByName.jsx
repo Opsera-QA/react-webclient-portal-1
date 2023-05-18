@@ -14,7 +14,6 @@ export default function useGetOrganizationSettingsEntitlementByName(
 
     if (hasStringValue(name) === true) {
       const entitlements = DataParsingHelper.parseNestedObject(organizationSettingsRecord, "entitlements", []);
-      console.log("entitlements: " + JSON.stringify(entitlements));
       const foundEntitlement = DataParsingHelper.parseObject(entitlements.find((entitlement) => entitlement?.name === name));
 
       if (foundEntitlement) {
