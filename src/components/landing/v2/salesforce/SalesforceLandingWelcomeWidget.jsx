@@ -1,24 +1,16 @@
-import React, {useContext} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import { faYoutube } from "@fortawesome/free-brands-svg-icons";
-import IconBase from "components/common/icons/IconBase";
 import { ExternalLink } from "temp-library-components/link/ExternalLink";
-import FreetrialWizardHelpDocumentation
-    from "components/common/help/documentation/freetrial/FreetrialWizardHelpDocumentation";
-import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
-import {EXTERNAL_LINKS} from "components/header/legacy/HeaderNavBar";
+import {EXTERNAL_LINKS} from "assets/links/externalLinks";
 import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
 import {platformImageConstants} from "temp-library-components/image/platformImage.constants";
 import {ImageBase} from "@opsera/react-vanity-set";
-import {Link} from "react-router-dom";
 
 export default function SalesforceLandingWelcomeWidget({ className }) {
   const {
-    themeConstants,
     userData,
-    toastContext,
   } = useComponentStateReference();
 
   const getWelcomeText = () => {
@@ -30,22 +22,6 @@ export default function SalesforceLandingWelcomeWidget({ className }) {
         {welcomeText}
       </div>
     );
-  };
-
-  const closePanel = () => {
-      toastContext.clearOverlayPanel();
-  };
-
-  const toggleVideosView = () => {
-      toastContext.showOverlayPanel(
-          <CenterOverlayContainer
-              closePanel={closePanel}
-              titleText={"Getting Started Videos"}
-              // titleIcon={titleIcon}
-          >
-              <FreetrialWizardHelpDocumentation/>
-          </CenterOverlayContainer>
-      );
   };
 
   return (
@@ -63,20 +39,20 @@ export default function SalesforceLandingWelcomeWidget({ className }) {
             </div>
             <div className={"mt-3"}>
               <ExternalLink
-                link={EXTERNAL_LINKS.FREQUENTLY_ASKED_QUESTIONS}
+                link={EXTERNAL_LINKS.SALESFORCE_DOCUMENTATION}
+                label={"Salesforce Documentation"}
+              />
+            </div>
+            <div className={"my-2"}>
+              <ExternalLink
+                link={EXTERNAL_LINKS.SALESFORCE_FREQUENTLY_ASKED_QUESTIONS}
                 label={"Frequently Asked Questions"}
               />
             </div>
             <div className={"my-2"}>
               <ExternalLink
-                link={EXTERNAL_LINKS.KNOWLEDGE_BASE}
-                label={"Getting Started"}
-              />
-            </div>
-            <div className={"my-2"}>
-              <ExternalLink
-                link={EXTERNAL_LINKS.HOW_TO_ARTICLES}
-                label={"How To"}
+                link={EXTERNAL_LINKS.CONFIGURING_SALESFORCE_PIPELINES}
+                label={"Configuring Salesforce Pipelines"}
               />
             </div>
             <div className={"my-2"}>

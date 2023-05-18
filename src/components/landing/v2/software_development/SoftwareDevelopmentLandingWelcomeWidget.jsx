@@ -1,24 +1,16 @@
-import React, {useContext} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import { faYoutube } from "@fortawesome/free-brands-svg-icons";
-import IconBase from "components/common/icons/IconBase";
 import { ExternalLink } from "temp-library-components/link/ExternalLink";
-import FreetrialWizardHelpDocumentation
-    from "components/common/help/documentation/freetrial/FreetrialWizardHelpDocumentation";
-import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
-import {EXTERNAL_LINKS} from "components/header/legacy/HeaderNavBar";
+import {EXTERNAL_LINKS} from "assets/links/externalLinks";
 import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
 import {platformImageConstants} from "temp-library-components/image/platformImage.constants";
 import {ImageBase} from "@opsera/react-vanity-set";
-import {Link} from "react-router-dom";
 
 export default function SoftwareDevelopmentLandingWelcomeWidget({ className }) {
   const {
-    themeConstants,
     userData,
-    toastContext,
   } = useComponentStateReference();
 
   const getWelcomeText = () => {
@@ -30,22 +22,6 @@ export default function SoftwareDevelopmentLandingWelcomeWidget({ className }) {
         {welcomeText}
       </div>
     );
-  };
-
-  const closePanel = () => {
-      toastContext.clearOverlayPanel();
-  };
-
-  const toggleVideosView = () => {
-      toastContext.showOverlayPanel(
-          <CenterOverlayContainer
-              closePanel={closePanel}
-              titleText={"Getting Started Videos"}
-              // titleIcon={titleIcon}
-          >
-              <FreetrialWizardHelpDocumentation/>
-          </CenterOverlayContainer>
-      );
   };
 
   return (
