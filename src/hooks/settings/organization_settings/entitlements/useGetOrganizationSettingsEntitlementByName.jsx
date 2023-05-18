@@ -7,25 +7,26 @@ export default function useGetOrganizationSettingsEntitlementByName(
   name,
 ) {
   const [organizationSettingsEntitlement, setOrganizationSettingsEntitlement] = useState(undefined);
-  const { platformSettingsRecord, isLoadingPlatformSettingsRecord } = useContext(AuthContext);
+  const { organizationSettingsRecord, isLoadingOrganizationSettingsRecord } = useContext(AuthContext);
 
   useEffect(() => {
     setOrganizationSettingsEntitlement(undefined);
 
     if (hasStringValue(name) === true) {
-      const entitlements = DataParsingHelper.parseNestedObject(platformSettingsRecord, "entitlements", []);
+      const entitlements = DataParsingHelper.parseNestedObject(organizationSettingsRecord, "entitlements", []);
+      console.log("entitlements: " + JSON.stringify(entitlements));
       const foundEntitlement = DataParsingHelper.parseObject(entitlements.find((entitlement) => entitlement?.name === name));
 
       if (foundEntitlement) {
         setOrganizationSettingsEntitlement({...foundEntitlement});
       }
     }
-  }, [name, platformSettingsRecord]);
+  }, [name, organizationSettingsRecord]);
 
   return ({
     organizationSettingsEntitlement: organizationSettingsEntitlement,
     setOrganizationSettingsEntitlement: setOrganizationSettingsEntitlement,
-    isLoading: isLoadingPlatformSettingsRecord,
+    isLoading: isLoadingOrganizationSettingsRecord,
     isActive: organizationSettingsEntitlement?.active === true,
   });
 }

@@ -51,9 +51,7 @@ const AuthContextProvider = (
     getIsAuthenticated,
   } = useAuthenticationToken();
   const getActivePlatformSettingsRecordHook = useGetActivePlatformSettingsRecord(userData);
-  const {
-    organizationSettingsRecord,
-  } = useGetOrganizationSettingsRecord(userData);
+  const getOrganizationSettingsRecordHook = useGetOrganizationSettingsRecord(userData);
   const {
     featureFlags,
   } = useGetConfigurationFeatureFlags(userData);
@@ -109,7 +107,8 @@ const AuthContextProvider = (
       setBackgroundColor: setBackgroundColor,
       platformSettingsRecord: getActivePlatformSettingsRecordHook.platformSettingsRecord,
       isLoadingPlatformSettingsRecord: getActivePlatformSettingsRecordHook.isLoading,
-      organizationSettingsRecord: organizationSettingsRecord,
+      organizationSettingsRecord: getOrganizationSettingsRecordHook.organizationSettingsRecord,
+      isLoadingOrganizationSettingsRecord: getOrganizationSettingsRecordHook.isLoading,
       featureFlags: featureFlags,
       loadUserData: loadUserData,
       areAnalyticsToolsEnabled: areAnalyticsToolsEnabled,
