@@ -3,29 +3,29 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {AuthContext} from "contexts/AuthContext";
 
-export default function useGetPlatformSettingsEntitlementByName(
+export default function useGetOrganizationSettingsEntitlementByName(
   name,
 ) {
-  const [platformSettingsEntitlement, setPlatformSettingsEntitlement] = useState(undefined);
+  const [organizationSettingsEntitlement, setOrganizationSettingsEntitlement] = useState(undefined);
   const { platformSettingsRecord, isLoadingPlatformSettingsRecord } = useContext(AuthContext);
 
   useEffect(() => {
-    setPlatformSettingsEntitlement(undefined);
+    setOrganizationSettingsEntitlement(undefined);
 
     if (hasStringValue(name) === true) {
       const entitlements = DataParsingHelper.parseNestedObject(platformSettingsRecord, "entitlements", []);
       const foundEntitlement = DataParsingHelper.parseObject(entitlements.find((entitlement) => entitlement?.name === name));
 
       if (foundEntitlement) {
-        setPlatformSettingsEntitlement({...foundEntitlement});
+        setOrganizationSettingsEntitlement({...foundEntitlement});
       }
     }
   }, [name, platformSettingsRecord]);
 
   return ({
-    platformSettingsEntitlement: platformSettingsEntitlement,
-    setPlatformSettingsEntitlement: setPlatformSettingsEntitlement,
+    organizationSettingsEntitlement: organizationSettingsEntitlement,
+    setOrganizationSettingsEntitlement: setOrganizationSettingsEntitlement,
     isLoading: isLoadingPlatformSettingsRecord,
-    isActive: platformSettingsEntitlement?.active === true,
+    isActive: organizationSettingsEntitlement?.active === true,
   });
 }

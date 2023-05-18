@@ -44,7 +44,6 @@ export default function PublicRoutes() {
 
   return (
     <>
-      <Route path="/" exact component={Home} />
       <Route path="/login" render={() => <LoginForm />} />
       <Route path="/implicit/callback" component={LoginCallback} />
       <Route path="/logout" exact component={Logout} />
