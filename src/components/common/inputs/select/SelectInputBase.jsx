@@ -56,6 +56,7 @@ function SelectInputBase(
     supportSearchLookup,
     noDataText,
     customLabel,
+    dropUp,
   }) {
   const field = dataObject?.getFieldById(fieldName);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
@@ -296,6 +297,7 @@ function SelectInputBase(
           onSearchFunction={supportSearchLookup === true && typeof loadDataFunction === "function" ? onSearchFunction : undefined}
           onClickFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
           noDataText={noDataText}
+          dropUp={dropUp}
         />
         <NewRecordButton
           addRecordFunction={handleCreateFunction}
@@ -370,11 +372,13 @@ SelectInputBase.propTypes = {
   supportSearchLookup: PropTypes.bool,
   noDataText: PropTypes.string,
   customLabel: PropTypes.string,
+  dropUp: PropTypes.bool,
 };
 
 SelectInputBase.defaultProps = {
   showClearValueButton: true,
   className: "custom-select-input my-2",
+  dropUp: false,
 };
 
 export default SelectInputBase;
