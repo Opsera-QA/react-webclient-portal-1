@@ -24,6 +24,7 @@ import useGetOrganizationSettingsFeatureFlagModelByName
   from "hooks/settings/organization_settings/feature_flags/useGetOrganizationSettingsFeatureFlagModelByName";
 import featureFlagConstants
   from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
+import AIMLSidebarNavigationLink from "./links/AIMLSidebarNavigationLink";
 
 export default function Sidebar({ hideSideBar }) {
   const { userData } = useComponentStateReference();
@@ -86,7 +87,9 @@ export default function Sidebar({ hideSideBar }) {
         <InsightsSidebarNavigationLink
           isSidebarCollapsed={isSidebarCollapsed}
         />
-
+        <AIMLSidebarNavigationLink
+            isSidebarCollapsed={isSidebarCollapsed}
+        />
         {getVnextSidebarLink()}
         <SidebarSubheaderText
           isSidebarCollapsed={isSidebarCollapsed}
