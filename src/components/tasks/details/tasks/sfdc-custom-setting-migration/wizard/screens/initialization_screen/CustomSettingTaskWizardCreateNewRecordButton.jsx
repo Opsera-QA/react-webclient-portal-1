@@ -14,7 +14,7 @@ function CustomSettingTaskWizardCreateNewRecordButton({
   wizardModel,
   setWizardModel,
   setCurrentScreen,
-                                                        taskType,
+  taskType,
   size,
   className,
   disabled,
