@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
-import useWorkspaceActions from "hooks/workspace/useWorkspaceActions";
-import WorkspaceFilterModel from "components/workspace/views/workspace.filter.model";
 import {WORKFLOW_WIDGET_VIEWS} from "components/landing/v2/widgets/workspace/WorkflowWidgetNavigationBar";
 import WorkflowWidgetFilterModel from "hooks/workspace/workflowWidget.filter.model";
+import useSalesforceLandingActions from "hooks/landing/salesforce/useSalesforceLandingActions";
 
-export default function useGetWorkspaceWorkflowResources(
+export default function useGetSalesforceWorkflowResources(
   currentView,
   fields,
   handleErrorFunction,
 ) {
-  const [workspaceItems, setWorkspaceItems] = useState([]);
-  const [workspaceItemIds, setWorkspaceItemIds] = useState([]);
+  const [workflows, setWorkflows] = useState([]);
+  const [workflowItemIds, setWorkflowItemIds] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [workflowWidgetFilterModel, setWorkflowWidgetFilterModel] = useState(new WorkflowWidgetFilterModel());
   const {
@@ -21,32 +20,32 @@ export default function useGetWorkspaceWorkflowResources(
     setError,
     loadData,
   } = useLoadData();
-  const workspaceActions = useWorkspaceActions();
+  const salesforceLandingActions = useSalesforceLandingActions();
 
   useEffect(() => {
-    setWorkspaceItems([]);
+    setWorkflows([]);
 
     if (loadData && currentView) {
-      loadData(getWorkspaceWorkflowResources, handleErrorFunction).catch(() => {});
+      loadData(getSalesforceLandingWorkflowResources, handleErrorFunction).catch(() => {});
     }
   }, [currentView]);
 
-  const getWorkspaceWorkflowResources = async (
+  const getSalesforceLandingWorkflowResources = async (
     newFilterModel = workflowWidgetFilterModel,
   ) => {
-    setWorkspaceItems([]);
+    setWorkflows([]);
     let response;
 
     switch (currentView) {
       case WORKFLOW_WIDGET_VIEWS.FOLLOWING:
-        response = await workspaceActions.getSubscribedWorkflowResources(
+        response = await salesforceLandingActions.getSubscribedWorkflowResources(
           newFilterModel,
           fields,
           newFilterModel?.getData("active"),
         );
         break;
       case WORKFLOW_WIDGET_VIEWS.RECENT_ACTIVITY:
-        response = await workspaceActions.getRecentWorkflowResources(
+        response = await salesforceLandingActions.getRecentWorkflowResources(
           newFilterModel,
           fields,
           newFilterModel?.getData("active"),
@@ -54,7 +53,7 @@ export default function useGetWorkspaceWorkflowResources(
         break;
       case WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS:
       default:
-        response = await workspaceActions.getMyWorkspaceWorkflowResources(
+        response = await salesforceLandingActions.getMyWorkspaceWorkflowResources(
           newFilterModel,
           fields,
           newFilterModel?.getData("active"),
@@ -64,33 +63,33 @@ export default function useGetWorkspaceWorkflowResources(
 
     const items = DataParsingHelper.parseNestedArray(response, "data.data", []);
     const ids = DataParsingHelper.parseNestedArray(response, "data.sortedIds", []);
-    setWorkspaceItemIds([...ids]);
-    setWorkspaceItems([...items]);
+    setWorkflowItemIds([...ids]);
+    setWorkflows([...items]);
     newFilterModel.updateTotalCount(DataParsingHelper.parseNestedInteger(response, "data.count", 0));
     newFilterModel.updateActiveFilters();
     setWorkflowWidgetFilterModel({...newFilterModel});
   };
 
-  const hasMoreItems = currentPage * 12 < workspaceItemIds.length;
+  const hasMoreItems = currentPage * 12 < workflowItemIds.length;
 
   const loadMoreWorkflows = async () => {
     const startIndex = currentPage * 12;
-    const idArray = workspaceItemIds.slice(startIndex, startIndex + 12);
+    const idArray = workflowItemIds.slice(startIndex, startIndex + 12);
 
-    const response = await workspaceActions.getWorkspaceWorkflowResourcesByIds(
+    const response = await salesforceLandingActions.getWorkspaceWorkflowResourcesByIds(
       idArray,
     );
     const items = DataParsingHelper.parseNestedArray(response, "data.data", []);
-    setWorkspaceItems([...workspaceItems, ...items]);
+    setWorkflows([...workflows, ...items]);
     setCurrentPage(currentPage + 1);
   };
 
   return ({
-    workspaceItems: workspaceItems,
-    setWorkspaceItems: setWorkspaceItems,
+    workflows: workflows,
+    setWorkflows: setWorkflows,
     workflowWidgetFilterModel: workflowWidgetFilterModel,
     setWorkflowWidgetFilterModel: setWorkflowWidgetFilterModel,
-    loadData: async (newFilterModel) => loadData(async () => getWorkspaceWorkflowResources(newFilterModel), handleErrorFunction),
+    loadData: async (newFilterModel) => loadData(async () => getSalesforceLandingWorkflowResources(newFilterModel), handleErrorFunction),
     loadMoreWorkflows: loadMoreWorkflows,
     hasMoreItems: hasMoreItems,
     isLoading: isLoading,

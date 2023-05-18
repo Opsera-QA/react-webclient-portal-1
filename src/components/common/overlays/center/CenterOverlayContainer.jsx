@@ -146,7 +146,7 @@ function CenterOverlayContainer(
             />
             {actionBar}
             <div className={`bg-white ${bodyClassName}`}>
-              {showToasts && toastContext?.getInlineBanner()}
+              {showToasts !== false && toastContext?.getInlineBanner()}
               {getBody()}
             </div>
             {getButtonContainer()}

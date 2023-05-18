@@ -20,7 +20,7 @@ import TaskWorkflowSummaryOverlay from "components/landing/v2/widgets/workspace/
 export default function WorkspaceWorkflowSelectionCardView(
   {
     workflowFilterModel,
-    workspaceItems,
+    workflows,
     loadData,
     isLoading,
     heightSize,
@@ -85,7 +85,7 @@ export default function WorkspaceWorkflowSelectionCardView(
 
     if (
       isLoading !== true
-      && (!Array.isArray(workspaceItems) || workspaceItems.length === 0)
+      && (!Array.isArray(workflows) || workflows.length === 0)
     ) {
       if (searchKeyword) {
         return (
@@ -130,7 +130,7 @@ export default function WorkspaceWorkflowSelectionCardView(
     return (
       <VerticalCardViewBase
         getCardFunction={getWorkspaceItemCard}
-        data={workspaceItems}
+        data={workflows}
         isLoading={isLoading}
         hasMoreItems={hasMoreItems}
         loadMoreItems={loadMoreWorkflows}
@@ -152,7 +152,7 @@ export default function WorkspaceWorkflowSelectionCardView(
 }
 
 WorkspaceWorkflowSelectionCardView.propTypes = {
-  workspaceItems: PropTypes.array,
+  workflows: PropTypes.array,
   workflowFilterModel: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,

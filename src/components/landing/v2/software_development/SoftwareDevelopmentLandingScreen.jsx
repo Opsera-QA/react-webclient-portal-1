@@ -2,11 +2,11 @@ import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SoftwareDevelopmentLandingMyWorkflowsWidget
-  from "components/landing/v2/widgets/workspace/SoftwareDevelopmentLandingMyWorkflowsWidget";
+  from "components/landing/v2/software_development/SoftwareDevelopmentLandingMyWorkflowsWidget";
 import SoftwareDevelopmentLandingAccountStatsWidget
-  from "components/landing/v2/widgets/SoftwareDevelopmentLandingAccountStatsWidget";
+  from "components/landing/v2/software_development/SoftwareDevelopmentLandingAccountStatsWidget";
 import SoftwareDevelopmentLandingWelcomeWidget
-  from "components/landing/v2/widgets/SoftwareDevelopmentLandingWelcomeWidget";
+  from "components/landing/v2/software_development/SoftwareDevelopmentLandingWelcomeWidget";
 
 export default function SoftwareDevelopmentLandingScreen() {
   return (

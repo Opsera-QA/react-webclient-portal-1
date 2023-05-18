@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { faLinkedin, faYoutube, faTwitter, faFacebook } from "@fortawesome/free-brands-svg-icons";
-import IconBase from "../../../common/icons/IconBase";
+import IconBase from "components/common/icons/IconBase";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";

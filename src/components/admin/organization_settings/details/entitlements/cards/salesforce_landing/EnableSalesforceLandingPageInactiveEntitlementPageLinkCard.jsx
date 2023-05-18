@@ -7,7 +7,7 @@ import entitlementConstants
 import OrganizationSettingsEntitlementActivationConfirmationOverlay
   from "components/admin/organization_settings/details/entitlements/inactive/OrganizationSettingsEntitlementActivationConfirmationOverlay";
 
-export default function OrganizationSettingsInactiveTestEntitlementPageLinkCard(
+export default function EnableSalesforceLandingPageInactiveEntitlementPageLinkCard(
   {
     organizationDomain,
     organizationAccountId,
@@ -19,7 +19,7 @@ export default function OrganizationSettingsInactiveTestEntitlementPageLinkCard(
   const launchActivationConfirmationOverlay = () => {
     toastContext.showOverlayPanel(
       <OrganizationSettingsEntitlementActivationConfirmationOverlay
-        entitlementName={entitlementConstants.ENTITLEMENT_NAMES.TEST_ENTITLEMENT}
+        entitlementName={entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_LANDING_SCREEN}
         organizationDomain={organizationDomain}
         organizationAccountName={organizationAccountId}
       />
@@ -29,15 +29,15 @@ export default function OrganizationSettingsInactiveTestEntitlementPageLinkCard(
   const getBody = () => {
     return (
       <div>
-        <div className={"mb-2"}>The {entitlementConstants.ENTITLEMENT_NAME_LABELS.TEST_ENTITLEMENT} Feature Flag is an optional Feature Flag that Opsera Administrators Administrators can enable.</div>
-        <div className={"mb-2"}>This Entitlement does nothing but is used to test the CRUD functionality of Entitlements</div>
+        <div className={"mb-2"}>The {entitlementConstants.ENTITLEMENT_NAME_LABELS.ENABLE_SALESFORCE_LANDING_SCREEN} Feature Flag is an optional Feature Flag that Opsera Administrators Administrators can enable.</div>
+        <div className={"mb-2"}>This Entitlement will enable the Salesforce Landing Screen</div>
       </div>
     );
   };
 
   const title = (
     <div className={"d-flex justify-content-between"}>
-      <div>{entitlementConstants.ENTITLEMENT_NAME_LABELS.TEST_ENTITLEMENT}</div>
+      <div>{entitlementConstants.ENTITLEMENT_NAME_LABELS.ENABLE_SALESFORCE_LANDING_SCREEN}</div>
     </div>
   );
 
@@ -52,7 +52,7 @@ export default function OrganizationSettingsInactiveTestEntitlementPageLinkCard(
   );
 }
 
-OrganizationSettingsInactiveTestEntitlementPageLinkCard.propTypes = {
+EnableSalesforceLandingPageInactiveEntitlementPageLinkCard.propTypes = {
   organizationDomain: PropType.string,
   organizationAccountId: PropType.string,
 };
