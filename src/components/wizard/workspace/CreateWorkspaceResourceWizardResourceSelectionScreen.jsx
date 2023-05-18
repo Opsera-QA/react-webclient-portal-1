@@ -17,7 +17,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import ExternalPageLink from "components/common/links/ExternalPageLink";
 import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
-import {EXTERNAL_LINKS} from "components/header/legacy/HeaderNavBar";
+import {EXTERNAL_LINKS} from "assets/links/externalLinks";
 
 export default function CreateWorkspaceResourceWizardResourceSelectionScreen(
   {

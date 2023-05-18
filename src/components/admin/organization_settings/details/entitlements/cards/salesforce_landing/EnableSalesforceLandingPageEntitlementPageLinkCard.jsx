@@ -2,10 +2,10 @@ import React from "react";
 import PropType from "prop-types";
 import OrganizationSettingsEntitlementPageLinkCardBase
   from "components/admin/organization_settings/details/entitlements/OrganizationSettingsEntitlementPageLinkCardBase";
-import OrganizationSettingsInactiveTestEntitlementPageLinkCard
-  from "components/admin/organization_settings/details/entitlements/cards/test/OrganizationSettingsInactiveTestEntitlementPageLinkCard";
+import EnableSalesforceLandingPageInactiveEntitlementPageLinkCard
+  from "components/admin/organization_settings/details/entitlements/cards/salesforce_landing/EnableSalesforceLandingPageInactiveEntitlementPageLinkCard";
 
-export default function OrganizationSettingsEntitlementTestPageLinkCard(
+export default function EnableSalesforceLandingPageEntitlementPageLinkCard(
   {
     entitlement,
     organizationDomain,
@@ -13,7 +13,7 @@ export default function OrganizationSettingsEntitlementTestPageLinkCard(
   }) {
   if (entitlement == null) {
     return (
-      <OrganizationSettingsInactiveTestEntitlementPageLinkCard
+      <EnableSalesforceLandingPageInactiveEntitlementPageLinkCard
         organizationDomain={organizationDomain}
         organizationAccountId={organizationAccountId}
       />
@@ -29,7 +29,7 @@ export default function OrganizationSettingsEntitlementTestPageLinkCard(
   );
 }
 
-OrganizationSettingsEntitlementTestPageLinkCard.propTypes = {
+EnableSalesforceLandingPageEntitlementPageLinkCard.propTypes = {
   entitlement: PropType.object,
   organizationDomain: PropType.string,
   organizationAccountId: PropType.string,

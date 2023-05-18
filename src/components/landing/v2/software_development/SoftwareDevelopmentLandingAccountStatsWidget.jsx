@@ -7,7 +7,7 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import { getSingularOrPluralString } from "components/common/helpers/string-helpers";
 import { widgetHelper } from "temp-library-components/helpers/widgets/widget.helper";
-import {EXTERNAL_LINKS} from "components/header/legacy/HeaderNavBar";
+import {EXTERNAL_LINKS} from "assets/links/externalLinks";
 import { ExternalLink } from "temp-library-components/link/ExternalLink";
 import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
 import {ImageBase} from "@opsera/react-vanity-set";

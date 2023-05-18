@@ -9,7 +9,7 @@ import { ExternalLink } from "temp-library-components/link/ExternalLink";
 import FreetrialWizardHelpDocumentation
     from "../../../common/help/documentation/freetrial/FreetrialWizardHelpDocumentation";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
-import {EXTERNAL_LINKS} from "components/header/legacy/HeaderNavBar";
+import {EXTERNAL_LINKS} from "assets/links/externalLinks";
 
 export default function WelcomeWidget({ className }) {
   const {

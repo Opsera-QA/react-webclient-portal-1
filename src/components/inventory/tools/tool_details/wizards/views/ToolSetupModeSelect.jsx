@@ -17,7 +17,7 @@ import {ImageBase} from "@opsera/react-vanity-set";
 import SelectionCardColumn from "../../../../../../temp-library-components/cards/SelectionCardColumn";
 import InfoMessageFieldBase from "components/common/fields/text/message/InfoMessageFieldBase";
 import ExternalPageLink from "components/common/links/ExternalPageLink";
-import {EXTERNAL_LINKS} from "components/header/legacy/HeaderNavBar";
+import {EXTERNAL_LINKS} from "assets/links/externalLinks";
 
 export const TOOL_CREATION_OPTIONS = {
   WIZARD: "wizard",
