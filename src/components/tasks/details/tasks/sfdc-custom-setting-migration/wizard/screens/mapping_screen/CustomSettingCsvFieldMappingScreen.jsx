@@ -189,7 +189,7 @@ const CustomSettingCsvFieldMappingScreen = ({
         wizardModel?.getData("selectedCustomSetting")?.componentName
       }`;
 
-      console.log(query);
+      // console.log(query);
       newDataObject.setData("filterQuery", query);
       setWizardModel({ ...newDataObject });
 
