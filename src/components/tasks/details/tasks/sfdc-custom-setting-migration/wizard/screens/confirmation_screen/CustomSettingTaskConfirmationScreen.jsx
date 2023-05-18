@@ -96,6 +96,10 @@ const CustomSettingTaskConfirmationScreen = ({
   };
 
   const handleBackButton = () => {
+    if (taskType === MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
+      setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.MAPPING_SCREEN);
+      return;
+    }
     setCurrentScreen(
       CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.QUERY_BUILDER_SCREEN,
     );
