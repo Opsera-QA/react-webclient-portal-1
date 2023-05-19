@@ -61,12 +61,12 @@ const initialState = {
   ],
 };
 
-const InsightsLookupPipelinesTable = ({ pipelines, componentName, startDate,endDate }) => {
+const InsightsLookupPipelinesTable = ({ pipelines, componentName, startDate,endDate, orgs }) => {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect = (row) => {
     toastContext.showOverlayPanel(
-        <InsightsLookupPipelineOverlay componentName={componentName} pipeline={row?.original?.pipeline} startDate={startDate} endDate={endDate}/>,
+        <InsightsLookupPipelineOverlay componentName={componentName} pipeline={row?.original?.pipeline} startDate={startDate} endDate={endDate} orgs={orgs}/>,
     );
   };
 
@@ -109,6 +109,7 @@ InsightsLookupPipelinesTable.propTypes = {
   componentName: PropTypes.string,
   startDate: PropTypes.string,
   endDate: PropTypes.string,
+  orgs: PropTypes.array
 };
 
 export default InsightsLookupPipelinesTable;

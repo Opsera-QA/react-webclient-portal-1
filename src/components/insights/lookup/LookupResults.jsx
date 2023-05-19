@@ -95,6 +95,7 @@ function LookupResults(
                         componentName={selectedComponentName}
                         startDate={filterModel?.getData("startDate")}
                         endDate={filterModel?.getData("endDate")}
+                        orgs={filterModel?.getData("orgsComponentFilterData")}
                     />
                 </div>
             );
