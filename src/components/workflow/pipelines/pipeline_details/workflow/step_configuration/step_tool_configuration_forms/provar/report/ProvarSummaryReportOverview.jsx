@@ -19,7 +19,16 @@ function ProvarReportSummaryOverview({ provarResultsModel }) {
 
     return (
         <Row className={"my-3"}>
-            <Col lg={12}><H4FieldSubHeader subheaderText={"Execution Overview"}/></Col>
+          <Col lg={12}>
+            <Row>
+              <Col lg={8}>
+                <H4FieldSubHeader subheaderText={"Execution Overview"}/>
+              </Col>
+              <Col lg={4}>
+
+              </Col>
+            </Row>
+          </Col>
             <Col lg={6}>
                 <TextFieldBase dataObject={provarResultsModel} fieldName={"name"} />
             </Col>
