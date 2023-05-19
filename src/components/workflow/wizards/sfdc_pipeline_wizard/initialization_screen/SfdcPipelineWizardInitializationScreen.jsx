@@ -20,6 +20,7 @@ import SfdcPipelineWizardFileUploadComponent
 import SfdcPipelineWizardPastRunComponent
   from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardPastRunComponent";
 const DataParsingHelper = require("@opsera/persephone/helpers/data/dataParsing.helper");
+import { parseError } from "../../../../common/helpers/error-helpers";
 
 const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, pipeline, gitTaskData, setError }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -92,9 +93,10 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
       if (apiVersions && apiVersions.length > 0) return apiVersions[0];
       return "";
     } catch (error) {
-      console.error(error);
+      const parsedError = parseError(error);
+      console.error(parsedError);
       setError(
-        `Could not get default API version for Salesforce ${getPipelineOrTaskText()}`,
+        `Could not get default API version for Salesforce ${getPipelineOrTaskText()} : ${parsedError}`,
       );
       return "";
     }
