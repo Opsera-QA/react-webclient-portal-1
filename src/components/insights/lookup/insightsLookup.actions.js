@@ -38,7 +38,8 @@ insightsLookupActions.getComponentByName = async (
     componentName,
     pipeline,
     startDate,
-    endDate
+    endDate,
+    orgs
 ) => {
   const apiUrl = `/analytics/sfdc/v1/component/get-component-by-name`;
   const postBody = {
@@ -46,6 +47,7 @@ insightsLookupActions.getComponentByName = async (
     pipeline:pipeline,
     startDate: startDate,
     endDate: endDate,
+    orgs: orgs
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,
