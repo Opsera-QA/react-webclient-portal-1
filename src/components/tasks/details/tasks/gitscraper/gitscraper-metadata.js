@@ -31,6 +31,30 @@ const gitscraperTaskConfigurationMetadata = {
       id: "secretsException",
     },
     {
+      label: "Enable Email Scan",
+      id: "scanEmail",
+    },
+    {
+      label: "Domains to be excluded from scan",
+      id: "excludeDomains",
+    },
+    {
+      label: "Set Custom Entropy",
+      id: "customEntropy",
+    },
+    {
+      label: "Custom Entropy",
+      id: "entropy",
+    },
+    {
+      label: "Advanced Options",
+      id: "advancedOptions",
+    },
+    {
+      label: "Repository & Branch Mappings",
+      id: "repositoryBranchMappings",
+    },
+    {
       label: "Scan all Repositories",
       id: "scanAll",
     },
@@ -76,6 +100,12 @@ const gitscraperTaskConfigurationMetadata = {
       threshold: 0,
       excludeSecrets: [],
       secretsException: false,
+      scanEmail: false,
+      excludeDomains: [],
+      customEntropy: false,
+      entropy: 3.5,
+      advancedOptions: false,
+      repositoryBranchMappings: [],
       scanAll: false,
       scanOnlyBranch: false,
       gitBranch: "",
