@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import AdminToolsSubNavigationBar from "components/admin/AdminToolsSubNavigationBar";
 import AdminToolsPageLinkCards from "components/admin/AdminToolsPageLinkCards";
-import AdministrationToolsHelpDocumentation
-    from "../common/help/documentation/admin_tools/AdministrationToolsHelpDocumentation";
 import FreeTrialAdminToolsPageLinkCards from "components/admin/FreeTrialAdminToolsPageLinkCards";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import AIToolsSubNavigationBar from "./AIToolsSubNavigationBar";
+import AIToolsHelpDocumentation from "../common/help/documentation/ai_ml/AIToolsHelpDocumentaiton";
 
 function AITools() {
     const {
@@ -17,7 +16,7 @@ function AITools() {
     useEffect(() => {}, []);
 
     const getHelpComponent = () => {
-        return (<AdministrationToolsHelpDocumentation/>);
+        return (<AIToolsHelpDocumentation />);
     };
 
     if (isOpseraAdministrator !== true) {
@@ -26,14 +25,14 @@ function AITools() {
 
     return (
         <ScreenContainer
-            breadcrumbDestination={"admin"}
-            pageDescription={"Listed below are administration tools for the platform."}
+            breadcrumbDestination={"ai"}
+            pageDescription={"Opsera ML Engine"}
             helpComponent={getHelpComponent()}
-            navigationTabContainer={<AdminToolsSubNavigationBar activeTab={"adminTools"} />}
+            navigationTabContainer={<AIToolsSubNavigationBar activeTab={"aiTools"} />}
         >
-            <AdminToolsPageLinkCards
-                accessRoleData={accessRoleData}
-            />
+            {/*<AdminToolsPageLinkCards*/}
+            {/*    accessRoleData={accessRoleData}*/}
+            {/*/>*/}
             <FreeTrialAdminToolsPageLinkCards />
         </ScreenContainer>
     );
