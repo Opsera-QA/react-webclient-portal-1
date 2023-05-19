@@ -14,6 +14,9 @@ import RepoSelectionView from "./inputs/RepoSelectionView";
 import GitScraperBitbucketWorkspaceSelectInput from "./inputs/GitScraperBitbucketWorkspaceSelectInput";
 import BooleanToggleInput from "../../../../common/inputs/boolean/BooleanToggleInput";
 import GitCustodianBranchSelectInput from "./inputs/GitCustodianBranchSelectInput";
+import GitCustodianCustomEntropyInput from "./inputs/GitCustodianCustomEntropyInput";
+import GitCustodianEmailScanInput from "./inputs/GitCustodianEmailScanInput";
+import GitCustodianRepoAndBranchMappingInput from "./inputs/GitCustodianRepoAndBranchMappingInput";
 
 function GitScraperConfigurationPanel({
   gitTasksDataDto,
@@ -31,6 +34,69 @@ function GitScraperConfigurationPanel({
       gitscraperTaskConfigurationMetadata,
     );
     setGitTasksConfigurationData({ ...configurationData });
+  };
+
+  const getRepoSelectionFields = () => {
+    if (gitTasksConfigurationData?.getData("advancedOptions") === true ) {
+      return null;
+    }
+    return (
+      <>
+        <Col lg={12}>
+          <BooleanToggleInput
+            setDataObject={setGitTasksConfigurationData}
+            dataObject={gitTasksConfigurationData}
+            fieldName={"scanAll"}
+          />
+        </Col>
+        <Col lg={12}>
+          <BooleanToggleInput
+            setDataObject={setGitTasksConfigurationData}
+            dataObject={gitTasksConfigurationData}
+            fieldName={"scanOnlyBranch"}
+          />
+        </Col>
+        <Col lg={12}>
+          <GitCustodianBranchSelectInput 
+            setModel={setGitTasksConfigurationData}
+            model={gitTasksConfigurationData}
+            fieldName={"gitBranch"}
+          />
+        </Col>
+        {gitTasksConfigurationData?.getData("scanAll") !== true ? (
+          <Col lg={12}>
+            <RepoSelectionView
+              dataObject={gitTasksConfigurationData}
+              setDataObject={setGitTasksConfigurationData}
+              service={gitTasksConfigurationData?.getData("service")}
+              gitToolId={gitTasksConfigurationData?.getData("gitToolId")}
+              workspace={gitTasksConfigurationData?.getData("workspace")}
+              disabled={
+                gitTasksConfigurationData?.getData("service")?.length === 0 ||
+                gitTasksConfigurationData?.getData("gitToolId")?.length === 0
+              }
+            />
+          </Col>
+        ) : null }
+      </>
+    );
+  };
+
+  const getAdvancedOptionsFields = () => {
+    if (gitTasksConfigurationData?.getData("advancedOptions") !== true ) {
+      return null;
+    }
+    return (
+      <Col lg={12}>
+        <GitCustodianRepoAndBranchMappingInput 
+          model={gitTasksConfigurationData}
+          setModel={setGitTasksConfigurationData}
+          fieldName={"repositoryBranchMappings"}
+          type={"Repository Mappings"}
+          allowIncompleteItems={false}
+        />
+      </Col>      
+    );
   };
 
   if (gitTasksDataDto == null || gitTasksConfigurationData == null) {
@@ -83,41 +149,28 @@ function GitScraperConfigurationPanel({
         />
       </Col>
       <Col lg={12}>
-        <BooleanToggleInput
-          setDataObject={setGitTasksConfigurationData}
-          dataObject={gitTasksConfigurationData}
-          fieldName={"scanAll"}
-        />
-      </Col>
-      <Col lg={12}>
-        <BooleanToggleInput
-          setDataObject={setGitTasksConfigurationData}
-          dataObject={gitTasksConfigurationData}
-          fieldName={"scanOnlyBranch"}
-        />
-      </Col>
-      <Col lg={12}>
-        <GitCustodianBranchSelectInput 
-          setModel={setGitTasksConfigurationData}
+        <GitCustodianEmailScanInput
           model={gitTasksConfigurationData}
-          fieldName={"gitBranch"}
+          setModel={setGitTasksConfigurationData}
+          fieldName={"scanEmail"}
         />
       </Col>
-      {!gitTasksConfigurationData?.getData("scanAll") && (
-        <Col lg={12}>
-          <RepoSelectionView
-            dataObject={gitTasksConfigurationData}
-            setDataObject={setGitTasksConfigurationData}
-            service={gitTasksConfigurationData?.getData("service")}
-            gitToolId={gitTasksConfigurationData?.getData("gitToolId")}
-            workspace={gitTasksConfigurationData?.getData("workspace")}
-            disabled={
-              gitTasksConfigurationData?.getData("service")?.length === 0 ||
-              gitTasksConfigurationData?.getData("gitToolId")?.length === 0
-            }
-          />
-        </Col>
-      )}
+      <Col lg={12}>
+        <GitCustodianCustomEntropyInput
+          model={gitTasksConfigurationData}
+          setModel={setGitTasksConfigurationData}
+          fieldName={"customEntropy"}
+        />
+      </Col>
+      <Col lg={12}>
+        <BooleanToggleInput
+          setDataObject={setGitTasksConfigurationData}
+          dataObject={gitTasksConfigurationData}
+          fieldName={"advancedOptions"}
+        />
+      </Col>
+      {getRepoSelectionFields()}
+      {getAdvancedOptionsFields()}
     </Row>
   );
 }
