@@ -44,7 +44,7 @@ const GitCustodianStandaloneRepositorySelectInput = ({ value,  disabled, setData
       source.cancel();
       isMounted.current = false;
     };
-  }, [service, gitToolId, workspace]);
+  }, [service, gitToolId, workspace, searchTerm]);
 
   const loadData = async (cancelSource) => {
     try {
@@ -172,6 +172,10 @@ const GitCustodianStandaloneRepositorySelectInput = ({ value,  disabled, setData
     }
   };
 
+  const lazyLoadSearchFunction = (newSearchTerm) => {
+    setSearchTerm(newSearchTerm);
+  };
+
   return (
     <StandaloneSelectInput
       selectOptions={repositories.filter(repo => !selectedRepositories.includes(repo.repository))}
@@ -181,6 +185,7 @@ const GitCustodianStandaloneRepositorySelectInput = ({ value,  disabled, setData
       setDataFunction={(data) => setDataFunction(data)}
       valueField={"repository"}
       textField={"repository"}
+      onSearchFunction={lazyLoadSearchFunction}
     />
   );
 };
