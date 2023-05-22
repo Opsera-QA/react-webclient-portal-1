@@ -153,8 +153,6 @@ function SlackToolConfiguration({ toolData, setUpMode, setCurrentScreen, setButt
         <div className="h5">Slack Configured!</div>
         <div>Your Slack token is connected to this tool and ready for use in the pipelines. If you would like to replace this tool, add to Slack with a different account. </div>
         <div className="pt-2">{getSlackButton()}</div>
-        <div></div>
-        <div></div>
         <WarningMessageFieldBase
           showWarningLabel={false}
           message={<>
