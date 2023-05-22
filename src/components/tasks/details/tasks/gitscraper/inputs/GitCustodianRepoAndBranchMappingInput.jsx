@@ -28,7 +28,7 @@ function GitCustodianRepoAndBranchMappingInput({
   const [selectedRepositories, setSelectedRepositories] = useState([]);
   const [repositoryName, setRepositoryName] = useState("");
   const [repository, setRepository] = useState(undefined);  
-  const [branch, setBranch] = useState("");
+  const [gitBranch, setGitBranch] = useState("");
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
@@ -96,7 +96,7 @@ function GitCustodianRepoAndBranchMappingInput({
       newPropertyList.map((property) => {
         if (
           allowIncompleteItems !== true ||
-          property["branch"] === "" ||
+          property["gitBranch"] === "" ||
           property["repositoryName"] === ""
         ) {
           return;
@@ -112,7 +112,7 @@ function GitCustodianRepoAndBranchMappingInput({
   const addProperty = () => {
     setErrorMessage("");
 
-    if (repositoryName == "" || branch == "") {
+    if (repositoryName == "" || gitBranch == "") {
       setErrorMessage("Repository and Branch are mandatory");
       return;
     }
@@ -132,11 +132,11 @@ function GitCustodianRepoAndBranchMappingInput({
       ...properties,
       {        
         ...repository,
-        branch,        
+        gitBranch,        
       },
     ]);
     setSelectedRepositories([...selectedRepositories, repositoryName]);
-    setBranch("");
+    setGitBranch("");
     setRepositoryName("");
     setRepository(undefined);
   };
@@ -151,7 +151,7 @@ function GitCustodianRepoAndBranchMappingInput({
   const handleRepositorySelection = (data) => {
     setRepositoryName(data.repository);
     setRepository(data);
-    setBranch("");
+    setGitBranch("");
   };
 
   const getInputRow = () => {
@@ -168,12 +168,13 @@ function GitCustodianRepoAndBranchMappingInput({
                   gitToolId={model?.getData("gitToolId")}
                   workspace={model?.getData("workspace")}
                   selectedRepositories={selectedRepositories}
+                  setErrorMessage={setErrorMessage}
                 />            
               </Col>
               <Col sm={6}>
                 <GitCustodianStandaloneBranchSelectInput              
-                  setDataFunction={setBranch}
-                  value={branch}              
+                  setDataFunction={setGitBranch}
+                  value={gitBranch}              
                 />            
               </Col>
             </Row>
@@ -185,8 +186,8 @@ function GitCustodianRepoAndBranchMappingInput({
               variant="success"
               disabled={
                 !allowIncompleteItems &&
-                (!branch ||
-                  branch.length === 0 ||                  
+                (!gitBranch ||
+                  gitBranch.length === 0 ||                  
                   !repositoryName ||
                   repositoryName.length === 0)
               }
@@ -214,7 +215,7 @@ function GitCustodianRepoAndBranchMappingInput({
               {property["repository"]}
             </Col>
             <Col sm={6} className={"pl-2 pr-0 force-text-wrap"}>
-              {property["branch"]}
+              {property["gitBranch"]}
             </Col>
           </Row>
         </Col>

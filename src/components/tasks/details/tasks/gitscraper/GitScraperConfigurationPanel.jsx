@@ -17,6 +17,7 @@ import GitCustodianBranchSelectInput from "./inputs/GitCustodianBranchSelectInpu
 import GitCustodianCustomEntropyInput from "./inputs/GitCustodianCustomEntropyInput";
 import GitCustodianEmailScanInput from "./inputs/GitCustodianEmailScanInput";
 import GitCustodianRepoAndBranchMappingInput from "./inputs/GitCustodianRepoAndBranchMappingInput";
+import GitCustodianAdvancedOptionsInput from "./inputs/GitCustodianAdvancedOptionsInput";
 
 function GitScraperConfigurationPanel({
   gitTasksDataDto,
@@ -91,7 +92,7 @@ function GitScraperConfigurationPanel({
         <GitCustodianRepoAndBranchMappingInput 
           model={gitTasksConfigurationData}
           setModel={setGitTasksConfigurationData}
-          fieldName={"repositoryBranchMappings"}
+          fieldName={"reposToScan"}
           type={"Repository Mappings"}
           allowIncompleteItems={false}
         />
@@ -163,9 +164,9 @@ function GitScraperConfigurationPanel({
         />
       </Col>
       <Col lg={12}>
-        <BooleanToggleInput
-          setDataObject={setGitTasksConfigurationData}
-          dataObject={gitTasksConfigurationData}
+        <GitCustodianAdvancedOptionsInput 
+          setModel={setGitTasksConfigurationData}
+          model={gitTasksConfigurationData}
           fieldName={"advancedOptions"}
         />
       </Col>

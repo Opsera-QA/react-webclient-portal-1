@@ -12,7 +12,7 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { parseError } from "components/common/helpers/error-helpers";
 
-const GitCustodianStandaloneRepositorySelectInput = ({ value,  disabled, setDataFunction, service, gitToolId, workspace, selectedRepositories }) => {
+const GitCustodianStandaloneRepositorySelectInput = ({ value,  disabled, setDataFunction, service, gitToolId, workspace, selectedRepositories, setErrorMessage }) => {
   
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -49,6 +49,7 @@ const GitCustodianStandaloneRepositorySelectInput = ({ value,  disabled, setData
   const loadData = async (cancelSource) => {
     try {
       setError(undefined);
+      setErrorMessage("");
       setIsLoading(true);
 
       switch (service) {
@@ -64,7 +65,8 @@ const GitCustodianStandaloneRepositorySelectInput = ({ value,  disabled, setData
     } catch (error) {
       if (isMounted?.current === true) {
         const parsedError = parseError(error);
-        setError(parsedError);        
+        setError(parsedError);
+        setErrorMessage(parsedError);
       }
     } finally {
       setIsLoading(false);
@@ -186,6 +188,7 @@ const GitCustodianStandaloneRepositorySelectInput = ({ value,  disabled, setData
       valueField={"repository"}
       textField={"repository"}
       onSearchFunction={lazyLoadSearchFunction}
+      hasErrorState={hasStringValue(error) === true}
     />
   );
 };
@@ -198,6 +201,7 @@ GitCustodianStandaloneRepositorySelectInput.propTypes = {
   disabled: PropTypes.bool,
   setDataFunction: PropTypes.func,
   selectedRepositories: PropTypes.array,
+  setErrorMessage: PropTypes.func,
 };
 
 export default GitCustodianStandaloneRepositorySelectInput;

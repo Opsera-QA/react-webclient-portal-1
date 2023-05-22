@@ -37,6 +37,7 @@ const gitscraperTaskConfigurationMetadata = {
     {
       label: "Domains to be excluded from scan",
       id: "excludeDomains",
+      regexDefinitionName: "domainField"
     },
     {
       label: "Set Custom Entropy",
@@ -49,11 +50,7 @@ const gitscraperTaskConfigurationMetadata = {
     {
       label: "Advanced Options",
       id: "advancedOptions",
-    },
-    {
-      label: "Repository & Branch Mappings",
-      id: "repositoryBranchMappings",
-    },
+    },    
     {
       label: "Scan all Repositories",
       id: "scanAll",
@@ -105,7 +102,6 @@ const gitscraperTaskConfigurationMetadata = {
       customEntropy: false,
       entropy: 3.5,
       advancedOptions: false,
-      repositoryBranchMappings: [],
       scanAll: false,
       scanOnlyBranch: false,
       gitBranch: "",
