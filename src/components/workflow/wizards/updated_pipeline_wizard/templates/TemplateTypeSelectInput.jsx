@@ -43,12 +43,8 @@ function TemplateTypeSelectInput({
   backButtonFunction,
 }) {
   const {
-    getAccessToken,
-    cancelTokenSource,
     themeConstants,
-    toastContext
   } = useComponentStateReference();
-  const history = useHistory();
 
   useEffect(() => {
     if (setButtonContainer && setCurrentScreen) {
@@ -63,21 +59,6 @@ function TemplateTypeSelectInput({
   const setDataFunction = (newValue) => {
     setSetupMode(newValue);
     setCurrentScreen("template_select");
-  };
-
-  const createBlankPipeline = async () => {
-    setCurrentScreen("loading_screen");
-    const response = await platformPipelineTemplateCatalogActions.deployPlatformTemplateByIdentifier(
-        getAccessToken,
-        cancelTokenSource,
-        pipelineTemplateIdentifierConstants.PIPELINE_TEMPLATE_IDENTIFIERS.BLANK_PIPELINE_TEMPLATE,
-    );
-    const newPipelineId = response?.data?._id;
-    toastContext.removeInlineMessage();
-    toastContext.clearOverlayPanel();
-    if (isMongoDbId(newPipelineId) === true) {
-      history.push(pipelineHelper.getDetailViewLink(newPipelineId));
-    }
   };
 
   return (
@@ -168,7 +149,7 @@ function TemplateTypeSelectInput({
             selectedOption={setupMode}
             tooltip={"Start from scratch with a blank Opsera Pipeline Template"}
             option={TOOL_CREATION_OPTIONS.BLANK}
-            onClickFunction={createBlankPipeline}
+            onClickFunction={() => setCurrentScreen("blank_pipeline")}
             highlightedBorderColor={
               themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE
             }
