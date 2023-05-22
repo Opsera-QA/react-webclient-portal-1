@@ -21,40 +21,48 @@ export default function CreateFreeTrialGithubToolButton(
   const {
     getAccessToken,
     cancelTokenSource,
+    isMounted,
+    toastContext
   } = useComponentStateReference();
 
   const saveConnectionDetails = async (toolId) => {
-    const configuration = gitToolModel?.getPersistData();
-    configuration.accountPassword = await toolsActions.saveSimpleVaultPasswordToVaultV2(
-      getAccessToken,
-      cancelTokenSource,
-      toolId,
-      toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
-      configuration?.accountPassword,
-    );
-    configuration.secretPrivateKey = await toolsActions.saveThreePartToolPasswordToVaultV3(
-      getAccessToken,
-      cancelTokenSource,
-      toolId,
-      toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
-      "secretPrivateKey",
-      configuration?.secretPrivateKey,
+    try {
+      const configuration = gitToolModel?.getPersistData();
+      configuration.accountPassword = await toolsActions.saveSimpleVaultPasswordToVaultV2(
+          getAccessToken,
+          cancelTokenSource,
+          toolId,
+          toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
+          configuration?.accountPassword,
       );
-    configuration.secretAccessTokenKey = await toolsActions.saveThreePartToolPasswordToVaultV3(
-      getAccessToken,
-      cancelTokenSource,
-      toolId,
-      toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
-      "secretAccessTokenKey",
-      configuration?.secretAccessTokenKey,
-    );
+      configuration.secretPrivateKey = await toolsActions.saveThreePartToolPasswordToVaultV3(
+          getAccessToken,
+          cancelTokenSource,
+          toolId,
+          toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
+          "secretPrivateKey",
+          configuration?.secretPrivateKey,
+      );
+      configuration.secretAccessTokenKey = await toolsActions.saveThreePartToolPasswordToVaultV3(
+          getAccessToken,
+          cancelTokenSource,
+          toolId,
+          toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
+          "secretAccessTokenKey",
+          configuration?.secretAccessTokenKey,
+      );
 
-    return await toolsActions.updateToolConnectionDetails(
-      getAccessToken,
-      cancelTokenSource,
-      toolId,
-      configuration,
-    );
+      return await toolsActions.updateToolConnectionDetails(
+          getAccessToken,
+          cancelTokenSource,
+          toolId,
+          configuration,
+      );
+    } catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showInlineErrorMessage(error, "Error Saving Github Tool Details:");
+      }
+    }
   };
 
   const handleGitToolCreation = async () => {

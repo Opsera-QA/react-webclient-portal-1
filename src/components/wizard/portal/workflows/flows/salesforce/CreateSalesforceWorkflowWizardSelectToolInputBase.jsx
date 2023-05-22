@@ -8,6 +8,7 @@ import StandaloneSelectInput from "components/common/inputs/select/StandaloneSel
 import InputContainer from "components/common/inputs/InputContainer";
 import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
 import {toolIdentifierConstants} from "../../../../../admin/tools/identifiers/toolIdentifier.constants";
+import useComponentStateReference from "../../../../../../hooks/useComponentStateReference";
 
 export default function CreateSalesforceWorkflowWizardSelectToolInputBase(
   {
@@ -29,6 +30,7 @@ export default function CreateSalesforceWorkflowWizardSelectToolInputBase(
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const { toastContext } = useComponentStateReference();
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -62,6 +64,7 @@ export default function CreateSalesforceWorkflowWizardSelectToolInputBase(
     } catch (error) {
       if (isMounted?.current === true) {
         setError(error);
+        toastContext.showLoadingErrorDialog(error);
       }
     } finally {
       if (isMounted?.current === true) {
