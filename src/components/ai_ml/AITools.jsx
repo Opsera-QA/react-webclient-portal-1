@@ -30,9 +30,9 @@ function AITools() {
             helpComponent={getHelpComponent()}
             navigationTabContainer={<AIToolsSubNavigationBar activeTab={"aiTools"} />}
         >
-            {/*<AdminToolsPageLinkCards*/}
+`            {/*<AdminToolsPageLinkCards*/}
             {/*    accessRoleData={accessRoleData}*/}
-            {/*/>*/}
+            {/*/>`*/}
             <FreeTrialAdminToolsPageLinkCards />
         </ScreenContainer>
     );
