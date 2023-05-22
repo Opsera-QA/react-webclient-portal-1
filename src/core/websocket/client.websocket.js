@@ -62,6 +62,9 @@ export default class ClientWebsocket {
       const query = {
         query: {
           userObject: userData,
+        },
+        cors: {
+          transports: ['websocket', 'polling'],
         }
       };
 

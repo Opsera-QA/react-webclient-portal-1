@@ -19,8 +19,6 @@ export default function useGetTagModelById(tagId, handleErrorFunction) {
   };
 
   useEffect(() => {
-    console.log("updating tag: " + JSON.stringify(tag));
-
     if (!tag) {
       setTagModel(undefined);
     } else {
