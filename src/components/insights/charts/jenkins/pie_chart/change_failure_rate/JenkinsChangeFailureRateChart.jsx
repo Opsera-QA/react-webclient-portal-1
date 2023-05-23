@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
-import { ResponsivePie } from "@nivo/pie";
-import config from "./jenkinsChangeFailureRateChartConfig";
 import ModalLogs from "components/common/modal/modalLogs";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
@@ -20,7 +18,6 @@ import JenkinsChangeFailureTotalRunsDataBlock from "./data_blocks/JenkinsChangeF
 import JenkinsChangeFailureTotalFailuresDataBlock from "./data_blocks/JenkinsChangeFailureTotalFailuresDataBlock";
 import JenkinsChangeFailureRateActionableOverlay from "./actionable_insights/JenkinsChangeFailureRateActionableOverlay";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
-import {METRIC_THEME_CHART_PALETTE_COLORS} from "../../../../../common/helpers/metrics/metricTheme.helpers";
 import InfoDialog from "../../../../../common/status_notifications/info";
 
 
@@ -143,11 +140,6 @@ function JenkinsChangeFailureRateChart({ kpiConfiguration, setKpiConfiguration, 
                         Change Failure Rate
                     </div>
                 </div>
-                {/*<ResponsivePie*/}
-                {/*    data={metrics}*/}
-                {/*    {...defaultConfig("", "", false, false, "", "", true)}*/}
-                {/*    {...config(METRIC_THEME_CHART_PALETTE_COLORS)}*/}
-                {/*/>*/}
                 {metrics.length == 0 ||
                 typeof metrics[0].failureRate !== "number" ? (
                     <div
