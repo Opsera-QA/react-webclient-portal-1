@@ -1866,10 +1866,11 @@ div.data-blocks-ellipses {
 }
 
 .avatar {
-    background: #46376F;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border: 2px solid #46376F;
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
 
 .message {

@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import Col from "react-bootstrap/Col";
 import Model from "../../core/data_model/model";
 import chatbotModel from "./chatbot-model";
-import TextInputBase from "../common/inputs/text/TextInputBase";
-import { faMagnifyingGlassArrowRight } from "@fortawesome/pro-light-svg-icons";
+import { faUser} from "@fortawesome/pro-solid-svg-icons";
 import ButtonBase from "../common/buttons/ButtonBase";
 import {Row} from "react-bootstrap";
 import OpseraInfinityLogo from "../logo/OpseraInfinityLogo";
+import IconBase from "../common/icons/IconBase";
 
 function ChatLogContainer() {
   const [chatModel, setChatModel] = useState(
@@ -21,7 +21,7 @@ function ChatLogContainer() {
         <Col lg={12}>
           <div className="chat-message">
             <div className="chat-message-center">
-              <div className="avatar"></div>
+              <div className="avatar"><IconBase icon={faUser} /></div>
               <div className="message">Hello World</div>
             </div>
           </div>
@@ -29,11 +29,10 @@ function ChatLogContainer() {
         <Col lg={12}>
           <div className="chat-message opsera-ai">
             <div className="chat-message-center">
-              <div>
                 <OpseraInfinityLogo
-                  desiredHeight={"30px"}
+                  desiredHeight={"25px"}
                   imageClassName={"my-auto"}
-              /></div>
+              />
               <div className="message">This is Opsera AIThis is Opsera AIThis is Opsera AIThis is Opsera AIThis is Opsera AIThis is Opsera AIThis is Opsera AIThis is Opsera AIThis is Opsera AIThis is Opsera AIThis is Opsera AIThis is Opsera AIThis is Opsera AIThis is Opsera AIThis is Opsera AIThis is Opsera AIThis is Opsera AIThis is Opsera AIThis is Opsera AIThis is Opsera AIThis is Opsera AI</div>
             </div>
           </div>
