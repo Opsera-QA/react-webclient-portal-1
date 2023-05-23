@@ -60,12 +60,9 @@ export default class ClientWebsocket {
     try {
       const websocketUrl = NODE_API_ORCHESTRATOR_SERVER_URL;
       const query = {
-        query: {
+        auth: {
           userObject: userData,
         },
-        cors: {
-          transports: ['websocket', 'polling'],
-        }
       };
 
       this.websocketClient = io(websocketUrl, query);
@@ -81,6 +78,15 @@ export default class ClientWebsocket {
       });
 
       this.websocketClient.on("connect_error", (error) => {
+        ReactLoggingHandler.logErrorMessage(
+          "clientWebsocket",
+          "initializeWebsocket",
+          `Error with websocket:`,
+          error,
+        );
+      });
+
+      this.websocketClient.on("error", (error) => {
         ReactLoggingHandler.logErrorMessage(
           "clientWebsocket",
           "initializeWebsocket",
