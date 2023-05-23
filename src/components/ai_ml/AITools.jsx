@@ -5,37 +5,34 @@ import FreeTrialAdminToolsPageLinkCards from "components/admin/FreeTrialAdminToo
 import useComponentStateReference from "hooks/useComponentStateReference";
 import AIToolsSubNavigationBar from "./AIToolsSubNavigationBar";
 import AIToolsHelpDocumentation from "../common/help/documentation/ai_ml/AIToolsHelpDocumentaiton";
+import OpseraAIInputBox from "./OpseraAIInputBox";
+import ChatLogContainer from "./ChatLogContainer";
 
 function AITools() {
-    const {
-        accessRoleData,
-        toastContext,
-        isOpseraAdministrator,
-    } = useComponentStateReference();
+  const { accessRoleData, toastContext, isOpseraAdministrator } =
+    useComponentStateReference();
 
-    useEffect(() => {}, []);
+  useEffect(() => {}, []);
 
-    const getHelpComponent = () => {
-        return (<AIToolsHelpDocumentation />);
-    };
+  const getHelpComponent = () => {
+    return <AIToolsHelpDocumentation />;
+  };
 
-    if (isOpseraAdministrator !== true) {
-        return null;
-    }
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
 
-    return (
-        <ScreenContainer
-            breadcrumbDestination={"ai"}
-            pageDescription={"Opsera ML Engine"}
-            helpComponent={getHelpComponent()}
-            navigationTabContainer={<AIToolsSubNavigationBar activeTab={"aiTools"} />}
-        >
-`            {/*<AdminToolsPageLinkCards*/}
-            {/*    accessRoleData={accessRoleData}*/}
-            {/*/>`*/}
-            <FreeTrialAdminToolsPageLinkCards />
-        </ScreenContainer>
-    );
+  return (
+    <ScreenContainer
+      breadcrumbDestination={"ai"}
+      helpComponent={getHelpComponent()}
+      className="chatbox"
+      navigationTabContainer={<AIToolsSubNavigationBar activeTab={"aiTools"} />}
+    >
+      <ChatLogContainer />
+      <OpseraAIInputBox />
+    </ScreenContainer>
+  );
 }
 
 export default AITools;

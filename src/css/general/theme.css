@@ -1819,4 +1819,62 @@ div.data-blocks-ellipses {
     border-color: #7F74B9 !important;
 }
 
+.chatbox {
+    position: relative;
+}
+
+.chat-input-holder {
+    padding: 12px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-bottom: .6rem;
+}
+
+.chat-input-textarea {
+    width: 100%;
+    border-radius: 1rem;
+    border: none;
+    margin-right: 24px;
+    outline: none;
+    padding: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.chat-log {
+    padding: 24px;
+    text-align: left;
+    display: flex;
+    width: 100%;
+}
+
+.chat-message.opsera-ai {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 1rem;
+}
+
+.chat-message-center {
+    padding: 12px;
+    padding-left: 24px;
+    padding-right: 24px;
+    /*max-width: 480px;*/
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+}
+
+.avatar {
+    background: #46376F;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.message {
+    padding-left: 40px;
+    padding-right: 40px
+}
+
 /* End Page Link Card Styling */
