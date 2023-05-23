@@ -80,14 +80,14 @@ export default class ClientWebsocket {
         this.resubscribe();
       });
 
-      // this.websocketClient.on("connect_error", (error) => {
-      //   ReactLoggingHandler.logErrorMessage(
-      //     "clientWebsocket",
-      //     "initializeWebsocket",
-      //     `Error with websocket:`,
-      //     error,
-      //   );
-      // });
+      this.websocketClient.on("connect_error", (error) => {
+        ReactLoggingHandler.logErrorMessage(
+          "clientWebsocket",
+          "initializeWebsocket",
+          `Error with websocket:`,
+          error,
+        );
+      });
 
       this.websocketClient.on("disconnect", () => {
         ReactLoggingHandler.logDebugMessage(
