@@ -60,12 +60,9 @@ export default class ClientWebsocket {
     try {
       const websocketUrl = NODE_API_ORCHESTRATOR_SERVER_URL;
       const query = {
-        query: {
+        auth: {
           userObject: userData,
         },
-        cors: {
-          transports: ['websocket', 'polling'],
-        }
       };
 
       this.websocketClient = io(websocketUrl, query);
