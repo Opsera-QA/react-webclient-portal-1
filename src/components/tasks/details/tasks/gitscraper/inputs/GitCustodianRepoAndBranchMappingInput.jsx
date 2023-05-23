@@ -27,6 +27,7 @@ function GitCustodianRepoAndBranchMappingInput({
   const [properties, setProperties] = useState([]);
   const [selectedRepositories, setSelectedRepositories] = useState([]);
   const [repositoryName, setRepositoryName] = useState("");
+  const [repositoryId, setRepositoryId] = useState("");
   const [repository, setRepository] = useState(undefined);  
   const [gitBranch, setGitBranch] = useState("");
   const toastContext = useContext(DialogToastContext);
@@ -138,6 +139,7 @@ function GitCustodianRepoAndBranchMappingInput({
     setSelectedRepositories([...selectedRepositories, repositoryName]);
     setGitBranch("");
     setRepositoryName("");
+    setRepositoryId("");
     setRepository(undefined);
   };
 
@@ -150,6 +152,7 @@ function GitCustodianRepoAndBranchMappingInput({
 
   const handleRepositorySelection = (data) => {
     setRepositoryName(data.repository);
+    setRepositoryId(data.repoId);
     setRepository(data);
     setGitBranch("");
   };
@@ -174,7 +177,12 @@ function GitCustodianRepoAndBranchMappingInput({
               <Col sm={6}>
                 <GitCustodianStandaloneBranchSelectInput              
                   setDataFunction={setGitBranch}
-                  value={gitBranch}              
+                  value={gitBranch}
+                  service={model?.getData("service")}
+                  gitToolId={model?.getData("gitToolId")}
+                  workspace={model?.getData("workspace")}
+                  repositoryId={repositoryId}
+                  setErrorMessage={setErrorMessage}
                 />            
               </Col>
             </Row>
