@@ -70,7 +70,6 @@ function GitlabTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
       }
     }
   };
-  console.log("pie metrics", metrics);
 
   const onChartClick = () => {
     toastContext.showInfoOverlayPanel(
