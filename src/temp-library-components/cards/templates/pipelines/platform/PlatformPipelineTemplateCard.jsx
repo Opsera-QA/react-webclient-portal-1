@@ -9,13 +9,12 @@ import SelectionIconCard from "components/common/card_containers/SelectionIconCa
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 import {getLargeVendorIconComponentFromPipeline} from "components/common/helpers/icon-helpers";
 import PipelineTemplateCardHeader from "temp-library-components/cards/templates/pipelines/PipelineTemplateCardHeader";
-import CustomerPipelineTemplateCardBody
-  from "temp-library-components/cards/templates/pipelines/customer/CustomerPipelineTemplateCardBody";
-import {pipelineHelper} from "components/workflow/pipeline.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import PlatformPipelineTemplateCardBody
+  from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCardBody";
 
 // TODO: Rewrite to use model
-export default function CustomerPipelineTemplateCard(
+export default function PlatformPipelineTemplateCard(
   {
     pipelineTemplateModel,
     onClickFunction,
@@ -64,7 +63,7 @@ export default function CustomerPipelineTemplateCard(
       cardHeader={<PipelineTemplateCardHeader />}
       titleBar={getTitleBar()}
       contentBody={
-        <CustomerPipelineTemplateCardBody
+        <PlatformPipelineTemplateCardBody
           template={template}
           selectTemplateFunction={selectTemplateFunction}
           disabled={disabled}
@@ -78,7 +77,7 @@ export default function CustomerPipelineTemplateCard(
   );
 }
 
-CustomerPipelineTemplateCard.propTypes = {
+PlatformPipelineTemplateCard.propTypes = {
   pipelineTemplateModel: PropTypes.object,
   onClickFunction: PropTypes.func,
   tooltip: PropTypes.any,

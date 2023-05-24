@@ -40,6 +40,7 @@ export default function CreatePlatformPipelineButton(
       // icon={faPlus}
       disabled={disabled}
       onClickFunction={launchConfirmationOverlay}
+      buttonClassName={"w-100"}
       variant={"success"}
       normalText={"Create Pipeline"}
       tooltip={"Create a new Pipeline from this Template"}
