@@ -8,6 +8,7 @@ import IconBase from "components/common/icons/IconBase";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import ClearSearchFilterButton from "temp-library-components/button/clear/ClearSearchFilterButton";
 
 function SearchFilter(
   {
@@ -90,18 +91,40 @@ function SearchFilter(
 
   return (
     <div className={className}>
-      <InputGroup size="sm" className={"flex-nowrap"}>
+      <InputGroup size={"sm"} className={"flex-nowrap"}>
+        <InputGroup.Prepend>
+          <ClearSearchFilterButton
+            fieldName={fieldName}
+            disabled={isLoading || disabled}
+            paginationModel={paginationModel}
+            loadDataFunction={loadData}
+            setCurrentSearchTerm={setCurrentSearchTerm}
+            variant={variant}
+            buttonSize={"sm"}
+            buttonClassName={buttonClassName}
+            className={buttonClassName}
+            currentSearchTerm={currentSearchTerm}
+          />
+        </InputGroup.Prepend>
         <input
           disabled={disabled || isLoading}
-          placeholder="Search"
+          placeholder={"Search"}
           value={currentSearchTerm}
-          className="text-input inline-search-filter inline-filter-input"
+          className={"text-input inline-search-filter inline-filter-input"}
           onKeyPress={(event) => handleKeyPress(event)}
           onChange={e => updateSearchTerm(e.target.value)}
         />
         <InputGroup.Append>
-          <Button className={buttonClassName} disabled={isLoading || disabled} variant={variant} onClick={handleSearch}>
-            <IconBase isLoading={isSearching} icon={faSearch} />
+          <Button
+            className={buttonClassName}
+            disabled={isLoading || disabled}
+            variant={variant}
+            onClick={handleSearch}
+          >
+            <IconBase
+              isLoading={isSearching}
+              icon={faSearch}
+            />
           </Button>
         </InputGroup.Append>
       </InputGroup>
