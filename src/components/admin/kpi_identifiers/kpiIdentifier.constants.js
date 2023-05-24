@@ -79,6 +79,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   JENKINS_DEPLOYMENT_COUNTS: "jenkins-deployments-counts",
   JENKINS_RECENT_BUILD_STATUS: "jenkins-recent-build-status",
   JENKINS_STATUS_BY_JOB_NAME: "jenkins-status-by-job-name",
+  JENKINS_CHANGE_FAILURE_RATE_V2: "jenkins-change-failure-rate-v2",
 
   // Jira
   JIRA_HEALTH_BY_SPRINT: "jira-health-by-sprint",
