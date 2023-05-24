@@ -28,6 +28,8 @@ import OrchestrationLastRunDurationDataBlock
 import OrchestrationAverageRunDurationDataBlock
   from "temp-library-components/fields/orchestration/metrics/OrchestrationAverageRunDurationDataBlock";
 import useGetTaskRunMetricsById from "hooks/workflow/tasks/orchestration/metrics/useGetTaskRunMetricsById";
+import OrchestrationNoRunsDataBlock
+  from "temp-library-components/fields/orchestration/metrics/OrchestrationNoRunsDataBlock";
 
 // TODO: Should this be two separate panels?
 export default function TaskWorkflowSummaryOverlay({ taskId }) {
@@ -60,6 +62,40 @@ export default function TaskWorkflowSummaryOverlay({ taskId }) {
       />
     );
   };
+
+  const getMetrics = () => {
+    if (taskModel?.getRunCount() === 0) {
+      return (
+        <Col xs={12}>
+          <CenteredContentWrapper>
+            <OrchestrationNoRunsDataBlock
+              type={"Task"}
+              className={"my-3"}
+              width={"400px"}
+            />
+          </CenteredContentWrapper>
+        </Col>
+      );
+    }
+
+    return (
+      <Col xs={12}>
+        <div className={"d-flex w-100 justify-content-between my-3"}>
+          <OrchestrationLastRunDurationDataBlock
+            lastRunDurationText={lastRunDurationText}
+            width={"340px"}
+            className={"mx-3"}
+          />
+          <OrchestrationAverageRunDurationDataBlock
+            averageRunDurationText={totalAverageDurationText}
+            width={"340px"}
+            className={"mx-3"}
+          />
+        </div>
+      </Col>
+    );
+  };
+
 
   const getBody = () => {
     if ((isLoading === true && taskModel == null) || isLoadingMetrics === true) {
@@ -110,20 +146,7 @@ export default function TaskWorkflowSummaryOverlay({ taskId }) {
                 />
               </div>
             </Col>
-            <Col xs={12}>
-              <div className={"d-flex w-100 justify-content-between my-3"}>
-                <OrchestrationLastRunDurationDataBlock
-                  lastRunDurationText={lastRunDurationText}
-                  width={"340px"}
-                  className={"mx-3"}
-                />
-                <OrchestrationAverageRunDurationDataBlock
-                  averageRunDurationText={totalAverageDurationText}
-                  width={"340px"}
-                  className={"mx-3"}
-                />
-              </div>
-            </Col>
+            {getMetrics()}
             <Col xs={12}>
               <div className={"d-flex justify-content-between w-100 my-3"}>
                 <PlacementHelperDiv

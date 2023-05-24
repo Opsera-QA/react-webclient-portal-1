@@ -26,6 +26,8 @@ import OrchestrationLastRunDurationDataBlock
   from "temp-library-components/fields/orchestration/metrics/OrchestrationLastRunDurationDataBlock";
 import OrchestrationAverageRunDurationDataBlock
   from "temp-library-components/fields/orchestration/metrics/OrchestrationAverageRunDurationDataBlock";
+import OrchestrationNoRunsDataBlock
+  from "temp-library-components/fields/orchestration/metrics/OrchestrationNoRunsDataBlock";
 
 // TODO: Should this be two separate panels?
 export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
@@ -55,6 +57,39 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
         closeEditorCallback={closePanel}
         size={"sm"}
       />
+    );
+  };
+
+  const getMetrics = () => {
+    if (pipelineModel?.getRunCount() === 0) {
+      return (
+        <Col xs={12}>
+          <CenteredContentWrapper>
+            <OrchestrationNoRunsDataBlock
+              type={"Pipeline"}
+              className={"my-3"}
+              width={"400px"}
+            />
+          </CenteredContentWrapper>
+        </Col>
+      );
+    }
+
+    return (
+      <Col xs={12}>
+        <div className={"d-flex w-100 justify-content-between my-3"}>
+          <OrchestrationLastRunDurationDataBlock
+            lastRunDurationText={lastRunDurationText}
+            width={"340px"}
+            className={"mx-3"}
+          />
+          <OrchestrationAverageRunDurationDataBlock
+            averageRunDurationText={totalAverageDurationText}
+            width={"340px"}
+            className={"mx-3"}
+          />
+        </div>
+      </Col>
     );
   };
 
@@ -107,20 +142,7 @@ export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {
                 />
               </div>
             </Col>
-            <Col xs={12}>
-              <div className={"d-flex w-100 justify-content-between my-3"}>
-                <OrchestrationLastRunDurationDataBlock
-                  lastRunDurationText={lastRunDurationText}
-                  width={"340px"}
-                  className={"mx-3"}
-                />
-                <OrchestrationAverageRunDurationDataBlock
-                  averageRunDurationText={totalAverageDurationText}
-                  width={"340px"}
-                  className={"mx-3"}
-                />
-              </div>
-            </Col>
+            {getMetrics()}
             <Col xs={12}>
               <div className={"d-flex justify-content-between w-100 my-3"}>
                 <PlacementHelperDiv
