@@ -80,9 +80,18 @@ function ChatBotParentContainer() {
     setConnectionState(response?.data?.connectionStatus == 200 ? true : false);
   };
 
-  if (isLoading) {
-    return <CenterLoadingIndicator />;
-  }
+  const sendMessage = async (message) => {
+    setIsLoading(true);
+    setMessages([
+      ...messages,
+      {
+        user: "user",
+        message:
+            message
+      },
+    ]);
+    setIsLoading(false);
+  };
 
   return (
     <>
@@ -98,7 +107,7 @@ function ChatBotParentContainer() {
           </div>
         </div>
         <div>
-          <OpseraAIInputBox />
+          <OpseraAIInputBox isLoading={isLoading} disabled={disable} sendMessage={sendMessage}/>
         </div>
       </div>
     </>

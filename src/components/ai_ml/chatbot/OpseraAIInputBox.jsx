@@ -5,13 +5,21 @@ import chatbotModel from "./chatbot-model";
 import TextInputBase from "../../common/inputs/text/TextInputBase";
 import { faMagnifyingGlassArrowRight } from "@fortawesome/pro-light-svg-icons";
 import ButtonBase from "../../common/buttons/ButtonBase";
+import PropTypes from "prop-types";
 
-function OpseraAIInputBox() {
+function OpseraAIInputBox({sendMessage, isLoading, disabled}) {
   const [chatModel, setChatModel] = useState(
     new Model({ ...chatbotModel.newObjectFields }, chatbotModel, true),
   );
 
   useEffect(() => {}, []);
+
+  const processMessage = () => {
+      sendMessage(chatModel?.getData("question"));
+      let newModel = chatModel;
+      newModel.setDefaultValue("question");
+      setChatModel({...newModel});
+  }
 
   return (
     <div className="chat-input-holder">
@@ -25,8 +33,8 @@ function OpseraAIInputBox() {
           setDataObject={setChatModel}
           rightSideInputButton={
             <ButtonBase
-              // size={"sm"}
-              onClickFunction={() => console.log("hello")}
+              disabled={(!chatModel?.getData("question") || chatModel?.getData("question")?.length === 0)}
+              onClickFunction={processMessage}
               variant={"primary"}
               isLoading={false}
               icon={faMagnifyingGlassArrowRight}
@@ -37,5 +45,11 @@ function OpseraAIInputBox() {
     </div>
   );
 }
+
+OpseraAIInputBox.propTypes = {
+    sendMessage: PropTypes.func,
+    isLoading: PropTypes.bool,
+    disabled: PropTypes.bool,
+};
 
 export default OpseraAIInputBox;
