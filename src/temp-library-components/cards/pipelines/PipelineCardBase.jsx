@@ -11,7 +11,6 @@ import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 import {getLargeVendorIconComponentFromPipeline} from "components/common/helpers/icon-helpers";
 import PipelineCardBody from "temp-library-components/cards/pipelines/PipelineCardBody";
 
-// TODO: Rewrite
 export default function PipelineCardBase(
   {
     pipelineModel,

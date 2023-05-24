@@ -8,6 +8,7 @@ export default function ButtonTooltip(
     placement,
     children,
     trigger,
+    buttonClassName,
   }) {
   if (innerText == null) {
     return children;
@@ -19,6 +20,7 @@ export default function ButtonTooltip(
       trigger={trigger}
       innerText={innerText}
       wrapInDiv={true}
+      className={buttonClassName}
     >
       {children}
     </TooltipWrapper>
@@ -29,7 +31,8 @@ ButtonTooltip.propTypes = {
   innerText: PropTypes.string,
   children: PropTypes.any,
   placement: PropTypes.string,
-  trigger: PropTypes.array
+  trigger: PropTypes.array,
+  buttonClassName: PropTypes.string,
 };
 
 ButtonTooltip.defaultProps = {
