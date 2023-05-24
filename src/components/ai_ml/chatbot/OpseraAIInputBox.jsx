@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import Col from "react-bootstrap/Col";
-import Model from "../../core/data_model/model";
+import Model from "../../../core/data_model/model";
 import chatbotModel from "./chatbot-model";
-import TextInputBase from "../common/inputs/text/TextInputBase";
+import TextInputBase from "../../common/inputs/text/TextInputBase";
 import { faMagnifyingGlassArrowRight } from "@fortawesome/pro-light-svg-icons";
-import ButtonBase from "../common/buttons/ButtonBase";
+import ButtonBase from "../../common/buttons/ButtonBase";
 
 function OpseraAIInputBox() {
   const [chatModel, setChatModel] = useState(

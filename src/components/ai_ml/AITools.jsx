@@ -5,8 +5,9 @@ import FreeTrialAdminToolsPageLinkCards from "components/admin/FreeTrialAdminToo
 import useComponentStateReference from "hooks/useComponentStateReference";
 import AIToolsSubNavigationBar from "./AIToolsSubNavigationBar";
 import AIToolsHelpDocumentation from "../common/help/documentation/ai_ml/AIToolsHelpDocumentaiton";
-import OpseraAIInputBox from "./OpseraAIInputBox";
-import ChatLogContainer from "./ChatLogContainer";
+import OpseraAIInputBox from "./chatbot/OpseraAIInputBox";
+import ChatLogContainer from "./chatbot/ChatLogContainer";
+import ChatBotParentContainer from "./chatbot/ChatBotParentContainer";
 
 function AITools() {
   const { accessRoleData, toastContext, isOpseraAdministrator } =
@@ -29,8 +30,7 @@ function AITools() {
       className="chatbox"
       navigationTabContainer={<AIToolsSubNavigationBar activeTab={"aiTools"} />}
     >
-      <ChatLogContainer />
-      <OpseraAIInputBox />
+      <ChatBotParentContainer />
     </ScreenContainer>
   );
 }
