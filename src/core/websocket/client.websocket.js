@@ -59,13 +59,14 @@ export default class ClientWebsocket {
 
     try {
       const websocketUrl = NODE_API_ORCHESTRATOR_SERVER_URL;
-      const query = {
+      const options = {
         auth: {
           userObject: userData,
         },
+        withCredentials: true,
       };
 
-      this.websocketClient = io(websocketUrl, query);
+      this.websocketClient = io(websocketUrl, options);
       this.websocketClient.connect();
 
       this.websocketClient.on("connect", () => {
