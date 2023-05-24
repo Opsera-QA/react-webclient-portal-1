@@ -5,6 +5,11 @@ const GitCustodianUpdateStatusMetaData = {
       label: "Status",
       id: "status",
       isRequired: true,
+    },
+    {
+      label:"Comments",
+      id:"comment",
+      isRequired: false,
     },   
     {
       label: "Issues",
@@ -15,12 +20,15 @@ const GitCustodianUpdateStatusMetaData = {
       id: "issuesList",
       isRequired: true,
       minItems: 1,
-    },    
+    },
+        
   ],
   newObjectFields: {
     status: "",
+    comment:"",
     issues: [],
     issuesList: [],
+    
   }
 };
 

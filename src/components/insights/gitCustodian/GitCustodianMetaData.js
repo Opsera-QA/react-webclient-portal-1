@@ -34,6 +34,10 @@ const GitCustodianMetaData = {
     {
       label: "Main Branch",
       id: "mainBranch"
+    },
+    {
+      lable:"Comments",
+      id:"comment"
     }
   ],
   getActiveFilters(filterDto) {
@@ -59,6 +63,7 @@ const GitCustodianMetaData = {
      roles: [],
      owner: "",
      owner_name: "",
+     comment:""
    }
 };
 
