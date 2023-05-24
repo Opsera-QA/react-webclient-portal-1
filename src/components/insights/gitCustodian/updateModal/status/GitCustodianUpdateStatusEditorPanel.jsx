@@ -8,7 +8,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import modelHelpers from "components/common/model/modelHelpers";
 import GitCustodianSelectedIssuesTable from "components/insights/gitCustodian/modal/GitCustodianSelectedIssuesTable";
 import GitCustodianStatusSelectInput from "./inputs/GitCustodianStatusSelectInput";
-
+import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 function GitCustodianUpdateStatusEditorPanel({
   handleClose,
   selectedIssues,
@@ -41,7 +41,7 @@ function GitCustodianUpdateStatusEditorPanel({
     setDataModel({ ...newModel });
   };
 
-  const updateStatus = async () => {    
+  const updateStatus = async () => {
     const response = await chartsActions.updateGitCustodianVulnerabilityStatus(getAccessToken, cancelTokenSource, dataModel.getPersistData());
     setSelectedIssues([]);
     handleClose();
@@ -66,11 +66,21 @@ function GitCustodianUpdateStatusEditorPanel({
       <div className={"px-2"}>
         <Row>
           <Col md={12}>
-            <GitCustodianStatusSelectInput 
+            <GitCustodianStatusSelectInput
               model={dataModel}
               setModel={setDataModel}
             />
+
           </Col>
+          <Col md={12}>
+            <TextAreaInputBase
+              fieldName={"comment"}
+             model={dataModel}
+             setModel={setDataModel}
+
+            />
+          </Col>
+
           <Col md={12}>
             <GitCustodianSelectedIssuesTable
               selectedIssues={selectedIssues}
