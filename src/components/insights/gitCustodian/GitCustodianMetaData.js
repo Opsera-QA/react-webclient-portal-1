@@ -36,7 +36,7 @@ const GitCustodianMetaData = {
       id: "mainBranch"
     },
     {
-      lable:"Comments",
+      label:"Comments",
       id:"comment"
     }
   ],
