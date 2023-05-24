@@ -14,6 +14,7 @@ import WorkspaceWorkflowSelectionCardView
 import InlineSearchFilter from "components/common/filters/search/InlineSearchFilter";
 import SoftwareDevelopmentSocialMediaWidget from "components/landing/v2/widgets/unused/SoftwareDevelopmentSocialMediaWidget";
 import useGetSalesforceWorkflowResources from "hooks/landing/salesforce/useGetSalesforceWorkflowResources";
+import SearchFilter from "components/common/filters/search/SearchFilter";
 
 export default function SalesforceLandingMyWorkflowsWidget({ className }) {
   const [currentView, setCurrentView] = useState(DataParsingHelper.parseString(sessionHelper.getCookie(sessionHelper.SUPPORTED_COOKIE_STORAGE_KEYS.LANDING_SCREEN_WORKFLOW_WIDGET_CURRENT_VIEW), WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS));
@@ -24,7 +25,6 @@ export default function SalesforceLandingMyWorkflowsWidget({ className }) {
     workflows,
     isLoading,
     workflowWidgetFilterModel,
-    setWorkflowWidgetFilterModel,
     loadData,
     loadMoreWorkflows,
     hasMoreItems,
@@ -40,7 +40,6 @@ export default function SalesforceLandingMyWorkflowsWidget({ className }) {
     );
   };
 
-
   const getRightSideTitleBarItems = () => {
     return (
       <>
@@ -53,13 +52,12 @@ export default function SalesforceLandingMyWorkflowsWidget({ className }) {
         {/*  // size={"1x"}*/}
         {/*  className={"my-auto"}*/}
         {/*/>*/}
-        <InlineSearchFilter
-          filterDto={workflowWidgetFilterModel}
-          setFilterDto={setWorkflowWidgetFilterModel}
+        <SearchFilter
+          paginationModel={workflowWidgetFilterModel}
           isLoading={isLoading}
           className={"ml-3 my-auto"}
-          supportSearch={workflowWidgetFilterModel?.canSearch()}
           loadData={loadData}
+          searchText={workflowWidgetFilterModel?.getData("search")}
         />
       </>
     );

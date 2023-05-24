@@ -1390,6 +1390,11 @@ div.data-blocks-ellipses {
     margin-top: 4px;
 }
 
+.input-group-prepend .btn {
+    border-radius: 0.2rem 0 0 0.2rem;
+    margin-bottom: 1px;
+}
+
 /* End filter bar styling */
 
 /* Filter Container Styling */
@@ -1567,11 +1572,6 @@ div.data-blocks-ellipses {
 
 .no-resize {
     resize: none;
-}
-
-.inline-search-filter {
-    border-top-left-radius: .25rem;
-    border-bottom-left-radius: .25rem;
 }
 
 /*Media Queries*/
