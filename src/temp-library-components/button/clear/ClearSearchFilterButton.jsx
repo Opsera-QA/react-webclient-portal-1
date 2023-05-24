@@ -37,7 +37,11 @@ export default function ClearSearchFilterButton(
     }
   };
 
-  if ((loadDataFunction == null && clientSide !== true) || paginationModel == null) {
+  if (
+    (loadDataFunction == null && clientSide !== true)
+    || paginationModel == null
+    || (currentSearchValue == null && hasStringValue(currentSearchTerm) !== true)
+  ) {
     return null;
   }
 
