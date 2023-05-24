@@ -8,7 +8,7 @@ import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-import { defaultConfig, mainColor, failColor, mainPurple, warningColor,
+import { defaultConfig, mainColor,colorPalette1, failColor, mainPurple, warningColor,
          adjustBarWidth } from "../../insights/charts/charts-views";
 import ChartTooltip from "../../insights/charts/ChartTooltip";
 
@@ -101,7 +101,7 @@ function JenkinsStatusByJobNameBarChar({ persona, date }) {
               layout="horizontal"
               colors={(bar) => {
                 switch (bar.id) {
-                  case "Successful": return mainColor;
+                  case "Successful": return colorPalette1;
                   case "Failed": return failColor;
                   case "Aborted": return mainPurple;
                   default: return warningColor;

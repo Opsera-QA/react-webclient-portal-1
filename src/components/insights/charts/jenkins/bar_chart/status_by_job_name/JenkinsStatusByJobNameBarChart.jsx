@@ -7,7 +7,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, mainColor, failColor, mainPurple, warningColor,
+import { defaultConfig, mainColor, failColor, mainPurple, warningColor,colorPalette1,
          adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 
@@ -76,7 +76,7 @@ function JenkinsStatusByJobNameBarChart({ kpiConfiguration, setKpiConfiguration,
           data={metrics}
           {...defaultConfig("Build Tag", "Number of Builds", 
                       true, true, "cutoffString", "wholeNumbers")}
-          {...config(mainColor, failColor, mainPurple, warningColor)}
+          {...config(colorPalette1, failColor, mainPurple, warningColor)}
           {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}
           tooltip={({ indexValue, color, value, id }) => <ChartTooltip 

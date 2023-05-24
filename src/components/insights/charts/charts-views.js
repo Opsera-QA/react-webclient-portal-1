@@ -48,7 +48,7 @@ export const assignStandardColors = (data, uniColor = false) => {
   // Set uniColor to true if the chart expects only one legend regardless of the number of data
   if (Array.isArray(data)) {
     data.forEach((data, i) => {
-      data.color = uniColor ? mainColor : standardColors[i];
+      data.color = uniColor ? colorPalette1 : standardColors[i];
     });
   }
 };
