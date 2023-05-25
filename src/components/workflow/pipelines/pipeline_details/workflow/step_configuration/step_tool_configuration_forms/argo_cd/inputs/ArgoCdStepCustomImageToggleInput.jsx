@@ -17,6 +17,8 @@ function ArgoCdStepCustomImageToggleInput({ model, setModel, disabled }) {
     newModel.setDefaultValue("azureRepoName");
     newModel.setDefaultValue("repositoryTag");
     newModel.setDefaultValue("imageUrl");
+    newModel.setDefaultValue("dockerStepID");
+    newModel.setDefaultValue("dockerStepType");
     setModel({ ...newModel });
   };
 
