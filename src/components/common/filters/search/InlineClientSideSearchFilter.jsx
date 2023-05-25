@@ -4,6 +4,7 @@ import {Button, InputGroup} from "react-bootstrap";
 import {faSearch} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import ClearSearchFilterButton from "temp-library-components/button/clear/ClearSearchFilterButton";
 
 function InlineClientSideSearchFilter(
   {
@@ -32,6 +33,19 @@ function InlineClientSideSearchFilter(
   return (
     <div className={className}>
       <InputGroup size={"sm"} className={"flex-nowrap"}>
+        <InputGroup.Prepend>
+          <ClearSearchFilterButton
+            fieldName={fieldName}
+            disabled={isLoading || disabled}
+            paginationModel={filterModel}
+            clientSide={true}
+            setCurrentSearchTerm={validateAndSetData}
+            buttonSize={"sm"}
+            variant={isFreeTrial === true ? "secondary" : "outline-primary"}
+            buttonClassName={"inline-filter-input"}
+            currentSearchTerm={filterModel?.getData(fieldName)}
+          />
+        </InputGroup.Prepend>
         <input
           disabled={disabled || isLoading}
           placeholder={"Search"}
