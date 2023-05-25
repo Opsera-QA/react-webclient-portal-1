@@ -45,7 +45,7 @@ function ServiceNowPipelineStepConfigurationSummaryPanel({ serviceNowPipelineDat
           <TextFieldBase dataObject={serviceNowPipelineDataObject} fieldName={"changeRequestState"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={serviceNowPipelineDataObject} fieldName={"assignmentGroupId"}/>
+          <TextFieldBase dataObject={serviceNowPipelineDataObject} fieldName={"assignmentGroupName"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={serviceNowPipelineDataObject} fieldName={"changeRequestDescription"}/>
