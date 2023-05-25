@@ -37,6 +37,7 @@ export default function CreateCustomerPipelineButton(
   return (
     <VanityButtonBase
       className={className}
+      buttonClassName={"w-100"}
       // icon={faPlus}
       disabled={disabled}
       onClickFunction={launchConfirmationOverlay}

@@ -70,7 +70,6 @@ function GitCustodianUpdateStatusEditorPanel({
               model={dataModel}
               setModel={setDataModel}
             />
-
           </Col>
           <Col md={12}>
             <TextAreaInputBase

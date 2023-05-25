@@ -15,6 +15,5 @@ export default function useGithubActions() {
     return await apiService.handleApiGetRequest(apiUrl, queryParameters);
   };
 
-
   return githubActions;
 }

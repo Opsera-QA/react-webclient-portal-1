@@ -190,6 +190,7 @@ import AquasecIssuesBySeverity from "./aquasec_security_insights/AquasecIssuesBy
 import GitLogDeveloper360 from "./gitlog/commit_activities/GitLogDeveloper360";
 import SalesforceCodeAnalyserChart from "./sfdc/salesforce_code_analyser/SalesforceCodeAnalyserChart";
 import SystemDrivenMaturity from "./system_driven_maturity/SystemDrivenMaturity";
+import JenkinsChangeFailureRateChart from "./jenkins/pie_chart/change_failure_rate/JenkinsChangeFailureRateChart";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({
@@ -517,6 +518,22 @@ function ChartView({
               index={index}
             />
           </Col>
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.JENKINS_CHANGE_FAILURE_RATE_V2:
+        return (
+            <Col
+                xl={6}
+                md={12}
+                className="p-2"
+            >
+              <JenkinsChangeFailureRateChart
+                  kpiConfiguration={kpiConfig}
+                  setKpiConfiguration={setKpiConfig}
+                  dashboardData={dashboardData}
+                  setKpis={setKpis}
+                  index={index}
+              />
+            </Col>
         );
 
       // Jira KPIs

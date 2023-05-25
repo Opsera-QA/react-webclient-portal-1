@@ -8,12 +8,12 @@ import VanitySetTabView from "../../../../../../common/tabs/vertical_tabs/Vanity
 import GithubMergesPushesVerticalTabContainer from "./GithubMergesPushesVerticalTabContainer";
 
 function GithubMergeRequestsPushesCommentsVerticalTabContainer({
-                                                                   highestMergesMetric,
-                                                                   dashboardData,
-                                                                   kpiConfiguration,
-                                                                   icon,
-                                                                   date,
-                                                               }) {
+                                                     highestMergesMetric,
+                                                     dashboardData,
+                                                     kpiConfiguration,
+                                                     icon,
+                                                    date,
+                                                 }) {
     const getTabContentContainer = () => {
         return (
             <VanitySetTabViewContainer>
@@ -54,9 +54,6 @@ function GithubMergeRequestsPushesCommentsVerticalTabContainer({
                 maximumHeight={"h-200"}
             />
         );
-    }
-    else {
-        return null;
     }
 }
 GithubMergeRequestsPushesCommentsVerticalTabContainer.propTypes = {

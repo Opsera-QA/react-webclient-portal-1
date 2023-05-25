@@ -27,6 +27,7 @@ function ScriptLibrarySelectInput(
     language,
     showInlineScriptViewer,
     showViewScriptOverlayIcon,
+    customLabel,
   }) {
   let toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -145,6 +146,7 @@ function ScriptLibrarySelectInput(
         singularTopic={"Script"}
         pluralTopic={"Scripts"}
         error={error}
+        customLabel={customLabel}
       />
       {getNoScriptsMessage()}
       {getInfoText()}
@@ -165,6 +167,7 @@ ScriptLibrarySelectInput.propTypes = {
   language: PropTypes.string,
   showInlineScriptViewer: PropTypes.bool,
   showViewScriptOverlayIcon: PropTypes.bool,
+  customLabel: PropTypes.string,
 };
 
 ScriptLibrarySelectInput.defaultProps = {

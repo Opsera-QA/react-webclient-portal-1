@@ -20,6 +20,7 @@ import {
   FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
 } from "components/common/table/FilterContainer";
 import {useHistory} from "react-router-dom";
+import CreateNewPipelineWizard from "../wizards/updated_pipeline_wizard/CreateNewPipelineWizard";
 
 const pipelineFields = [
   "type",
@@ -47,7 +48,7 @@ function PipelineManagement() {
     true,
     true,
   );
-  const { userData, } = useComponentStateReference();
+  const { userData, toastContext } = useComponentStateReference();
   const history = useHistory();
 
   useEffect(() => {}, []);
@@ -117,7 +118,10 @@ function PipelineManagement() {
   };
 
   const addPipeline = () => {
-    history.push(`/workflow/catalog/library`);
+    // history.push(`/workflow/catalog/library`);
+    toastContext.showOverlayPanel(
+        <CreateNewPipelineWizard loadData={loadData}/>
+    );
   };
 
   const onRowSelect = (rowData) => {

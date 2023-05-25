@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import NumberPicker from "react-widgets/NumberPicker";
+import H5FieldSubHeader from "../../../../fields/subheader/H5FieldSubHeader";
 
 export const formatTypes = {
   percent: '%'
@@ -16,7 +17,8 @@ function StandaloneNumberPickerInput(
     defaultValue,
     minimum,
     maximum,
-    handleKeyPressFunction
+    handleKeyPressFunction,
+    incrementValue,
   }) {
 
   if (setDataFunction == null) {
@@ -35,6 +37,7 @@ function StandaloneNumberPickerInput(
       min={typeof minimum === "number" ? minimum : undefined}
       max={typeof maximum === "number" ? maximum : undefined}
       format={formatType && formatTypes[formatType] != null ? formatTypes[formatType] : undefined}
+      step={incrementValue}
     />
   );
 }
@@ -49,6 +52,7 @@ StandaloneNumberPickerInput.propTypes = {
   minimum: PropTypes.number,
   maximum: PropTypes.number,
   handleKeyPressFunction: PropTypes.func,
+  incrementValue: PropTypes.number,
 };
 
 StandaloneNumberPickerInput.defaultProps = {

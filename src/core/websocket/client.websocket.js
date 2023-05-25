@@ -59,13 +59,14 @@ export default class ClientWebsocket {
 
     try {
       const websocketUrl = NODE_API_ORCHESTRATOR_SERVER_URL;
-      const query = {
-        query: {
+      const options = {
+        auth: {
           userObject: userData,
-        }
+        },
+        withCredentials: true,
       };
 
-      this.websocketClient = io(websocketUrl, query);
+      this.websocketClient = io(websocketUrl, options);
       this.websocketClient.connect();
 
       this.websocketClient.on("connect", () => {
@@ -77,14 +78,23 @@ export default class ClientWebsocket {
         this.resubscribe();
       });
 
-      // this.websocketClient.on("connect_error", (error) => {
-      //   ReactLoggingHandler.logErrorMessage(
-      //     "clientWebsocket",
-      //     "initializeWebsocket",
-      //     `Error with websocket:`,
-      //     error,
-      //   );
-      // });
+      this.websocketClient.on("connect_error", (error) => {
+        ReactLoggingHandler.logErrorMessage(
+          "clientWebsocket",
+          "initializeWebsocket",
+          `Error with websocket:`,
+          error,
+        );
+      });
+
+      this.websocketClient.on("error", (error) => {
+        ReactLoggingHandler.logErrorMessage(
+          "clientWebsocket",
+          "initializeWebsocket",
+          `Error with websocket:`,
+          error,
+        );
+      });
 
       this.websocketClient.on("disconnect", () => {
         ReactLoggingHandler.logDebugMessage(

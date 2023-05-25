@@ -28,7 +28,7 @@ function ToolRepositoriesPanel({ toolData }) {
     }
   };
 
-  return (
+  return (    
     <DetailPanelContainer>
     <div className="h6">Managed Repositories Creation</div>
     <MessageFieldBase message={`Manage custom repository configurations.

@@ -12,17 +12,30 @@ import { Button, Col, Row } from "react-bootstrap";
 import SaveButtonContainer from "../../../../../../../common/buttons/saving/containers/SaveButtonContainer";
 import FieldPropertiesSelectorView from "./FieldPropertiesSelectorView";
 import EnableEditingIcon from "../../../../../../../common/icons/enable/EnableEditingIcon";
-import { getMigrationTypeLabel, MIGRATION_TYPES } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
+import {
+  getMigrationTypeLabel,
+  MIGRATION_TYPES,
+} from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 import H5FieldSubHeader from "../../../../../../../common/fields/subheader/H5FieldSubHeader";
 import ToolNameField from "../../../../../../../common/fields/inventory/ToolNameField";
 import LoadingDialog from "components/common/status_notifications/loading";
+import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
+import CustomSettingUploadScreen from "../upload_screens/CustomSettingUploadScreen";
 
-const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCurrentScreen }) => {
+const CustomSettingSelector = ({
+  wizardModel,
+  setWizardModel,
+  handleClose,
+  setCurrentScreen,
+  taskType,
+}) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-  const [enableEdit, setEnableEdit] = useState(wizardModel?.getData("customSettingEditMode"));
+  const [enableEdit, setEnableEdit] = useState(
+    wizardModel?.getData("customSettingEditMode"),
+  );
   const [customSettingsList, setCustomSettingsList] = useState([]);
   const [filePullCompleted, setFilePullCompleted] = useState(false);
   const isMounted = useRef(false);
@@ -52,7 +65,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
     };
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     wizardModel?.setData("customSettingEditMode", enableEdit);
   }, [enableEdit]);
 
@@ -151,6 +164,10 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
         wizardModel,
         wizardModel?.getData("selectedCustomSetting")?.componentName,
       );
+      // if (taskType === MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
+      //   setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.UPLOAD_SCREEN);
+      //   return;
+      // }
     } catch (error) {
       if (isMounted?.current === true) {
         const parsedError = parseError(error);
@@ -165,25 +182,42 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
   };
 
   const getSummaryView = () => {
-    if(enableEdit) {
+    if (enableEdit) {
       return (
         <div className={`p-3 message-field info-message-field`}>
           <div className={"px-3 d-flex"}>
+            {wizardModel?.getData("taskType") !==
+            MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG ? (
               <Col xs={6}>
                 <ToolNameField
                   model={wizardModel}
                   fieldName={"sourceToolId"}
                   loadToolInNewWindow={true}
+                  visible={
+                    wizardModel?.getData("taskType") !==
+                    MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG
+                  }
                 />
               </Col>
+            ) : null}
+            {wizardModel?.getData("taskType") ===
+              MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG ||
+            wizardModel?.getData("taskType") ===
+              MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG ? (
               <Col xs={6}>
                 <ToolNameField
                   model={wizardModel}
                   fieldName={"targetToolId"}
                   loadToolInNewWindow={true}
-                  visible={wizardModel?.getData("taskType") === MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG}
+                  visible={
+                    wizardModel?.getData("taskType") ===
+                      MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG ||
+                    wizardModel?.getData("taskType") ===
+                      MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG
+                  }
                 />
               </Col>
+            ) : null}
           </div>
         </div>
       );
@@ -192,15 +226,20 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
   };
 
   if (isLoading) {
-    return (<LoadingDialog size="sm"/>);
+    return <LoadingDialog size="sm" />;
   }
 
   const getSelectView = () => {
     if (!enableEdit && wizardModel?.getData("selectedCustomSetting")) {
       return (
         <div className={"d-flex mx-1 my-1 w-100"}>
-          <h5 style={{ fontWeight: 400}}>Selected Custom Object :</h5>{" "}
-          <span className="ml-2" style={{ fontSize: "1rem", fontWeight: 400, color: "#CF940C"}}>{wizardModel?.getData("selectedCustomSetting")?.componentName}</span>
+          <h5 style={{ fontWeight: 400 }}>Selected Custom Object :</h5>{" "}
+          <span
+            className="ml-2"
+            style={{ fontSize: "1rem", fontWeight: 400, color: "#CF940C" }}
+          >
+            {wizardModel?.getData("selectedCustomSetting")?.componentName}
+          </span>
           <EnableEditingIcon
             enableEditingFunction={() => {
               setEnableEdit(true);
@@ -230,7 +269,11 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
             size="sm"
             variant="primary"
             onClick={saveAndTriggerFieldsPull}
-            disabled={isLoading || isSaving || wizardModel?.getData("selectedCustomSetting").length < 1}
+            disabled={
+              isLoading ||
+              isSaving ||
+              wizardModel?.getData("selectedCustomSetting").length < 1
+            }
           >
             <span>
               <IconBase
@@ -247,9 +290,20 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
     );
   };
 
-  const getFieldSelectionView = () => {
-    if(!enableEdit) {
-      return(
+  const getDynamicView = () => {
+    if (!enableEdit) {
+      if(taskType === MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
+        return (
+          <CustomSettingUploadScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+            taskType={wizardModel?.getData("taskType")}
+          />
+        );
+      }
+      return (
         <FieldPropertiesSelectorView
           wizardModel={wizardModel}
           setWizardModel={setWizardModel}
@@ -272,7 +326,7 @@ const CustomSettingSelector = ({ wizardModel, setWizardModel, handleClose, setCu
       </Row>
       {getSummaryView()}
       {getSelectView()}
-      {getFieldSelectionView()}
+      {getDynamicView()}
     </div>
   );
 };
@@ -282,6 +336,7 @@ CustomSettingSelector.propTypes = {
   setWizardModel: PropTypes.func,
   setCurrentScreen: PropTypes.func,
   handleClose: PropTypes.func,
+  taskType: PropTypes.string,
 };
 
 export default CustomSettingSelector;

@@ -107,6 +107,10 @@ const MergeSyncTaskWizardInitializationScreen = ({
   );
 };
 
+MergeSyncTaskWizardInitializationScreen.defaultProps = {
+  skipConfig: false,
+};
+
 MergeSyncTaskWizardInitializationScreen.propTypes = {
   mergeSyncType: PropTypes.string,
   setCurrentScreen: PropTypes.func,

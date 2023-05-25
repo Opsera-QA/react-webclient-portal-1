@@ -38,7 +38,7 @@ const InformaticaIdqStepFormMetadata = {
       lowercase: true,
     },    
     {
-      label: "Source Code Management Tool",
+      label: "Account",
       id: "gitToolId",
       isRequiredFunction: (model) => {
         return model?.getData("jobType") === "export";

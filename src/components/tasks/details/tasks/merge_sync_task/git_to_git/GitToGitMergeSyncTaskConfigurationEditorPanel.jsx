@@ -192,7 +192,7 @@ function GitToGitMergeSyncTaskConfigurationEditorPanel({
           setModel={setModelFunction}
         />
       </Col>
-      {getDestinationBranchInputs()}
+      {getDestinationBranchInputs()}      
     </Row>
   );
 }

@@ -9,7 +9,7 @@ function GitToGitMergeSyncTaskSourceBranchSelectInput({
   disabled,
   targetBranch,
 }) {
-  const setDataFunction = (fieldName, selectedOption) => {
+    const setDataFunction = (fieldName, selectedOption) => {
     const newModel = { ...model };
     newModel.setData("sourceBranch", selectedOption);
     setModel({ ...model });

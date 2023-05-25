@@ -10,7 +10,7 @@ export default function useSoftwareDevelopmentLandingActions() {
     fields,
     active,
   ) => {
-    const apiUrl = `/workspace/workflows`;
+    const apiUrl = `/landing/software-development/workflows`;
 
     const queryParameters = {
       sortOption: workspaceFilterModel?.getData("sortOption"),
@@ -36,7 +36,7 @@ export default function useSoftwareDevelopmentLandingActions() {
     fields,
     active,
   ) => {
-    const apiUrl = `/workspace/workflows/subscribed`;
+    const apiUrl = `/landing/software-development/workflows/subscribed`;
 
     const queryParameters = {
       sortOption: workspaceFilterModel?.getData("sortOption"),
@@ -62,7 +62,7 @@ export default function useSoftwareDevelopmentLandingActions() {
     fields,
     active,
   ) => {
-    const apiUrl = `/workspace/workflows/recent`;
+    const apiUrl = `/landing/software-development/workflows/recent`;
 
     const queryParameters = {
       sortOption: workspaceFilterModel?.getData("sortOption"),
@@ -86,7 +86,7 @@ export default function useSoftwareDevelopmentLandingActions() {
   softwareDevelopmentLandingActions.getWorkspaceWorkflowResourcesByIds = async (
     idArray,
   ) => {
-    const apiUrl = `/workspace/workflows/ids`;
+    const apiUrl = `/landing/software-development/workflows/ids`;
 
     const queryParameters = {
       idArray: DataParsingHelper.parseArray(idArray, []),

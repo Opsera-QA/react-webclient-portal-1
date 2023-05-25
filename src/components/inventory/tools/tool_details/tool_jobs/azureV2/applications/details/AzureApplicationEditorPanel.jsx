@@ -80,7 +80,6 @@ function AzureApplicationEditorPanel({ azureApplicationData, toolData, applicati
       newConfiguration.clientId, `${vaultKeyPrefix}-clientId`, getAccessToken, toolData?.getData("_id"));
     newConfiguration.clientSecret = await toolsActions.saveKeyPasswordToVault(azureApplicationModel, "clientSecret", 
       newConfiguration.clientSecret, `${vaultKeyPrefix}-clientSecret`, getAccessToken, toolData?.getData("_id"));
-
     return await azureActions.updateAzureCredential(getAccessToken, cancelTokenSource, toolData?.getData("_id"), applicationId, newConfiguration);
   };
 

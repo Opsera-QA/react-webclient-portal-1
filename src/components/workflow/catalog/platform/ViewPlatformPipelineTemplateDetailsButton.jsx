@@ -31,6 +31,7 @@ export default function ViewPlatformPipelineTemplateDetailsButton(
       variant={"outline-secondary"}
       icon={faSearch}
       onClickFunction={showPipelineDetails}
+      buttonClassName={"w-100"}
     />
   );
 }

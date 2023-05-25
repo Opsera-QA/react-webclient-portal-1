@@ -10,8 +10,8 @@ export default function useGetGithubRepositories(
   handleErrorFunction,
 ) {
   const [githubRepositories, setGithubRepositories] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const {
-    isLoading,
     error,
     setError,
     loadData,
@@ -31,12 +31,17 @@ export default function useGetGithubRepositories(
       return;
     }
 
+    setIsLoading(true);
     const response = await githubActions.getGithubRepositories(
       toolId,
       searchTerm,
     );
-    const repositories = DataParsingHelper.parseNestedArray(response, "data.data", []);
+    const repositories = await DataParsingHelper.parseNestedArray(response, "data.data", []);
     setGithubRepositories([...repositories]);
+
+    if (response) {
+      setIsLoading(false);
+    }
   };
 
   return ({

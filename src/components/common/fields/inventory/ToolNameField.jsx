@@ -36,7 +36,7 @@ ToolNameField.propTypes = {
   fieldName: PropTypes.string,
   className: PropTypes.string,
   handleClose: PropTypes.func,
-  loadToolInNewWindow: PropTypes.bool,
+  loadToolInNewWindow: PropTypes.boolean,
   visible: PropTypes.bool,
 };
 

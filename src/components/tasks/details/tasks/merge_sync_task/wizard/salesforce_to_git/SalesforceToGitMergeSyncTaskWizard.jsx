@@ -28,6 +28,7 @@ import { TASK_TYPES } from "components/tasks/task.types";
 import sfdcPipelineActions from "../../../../../../workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { AuthContext } from "../../../../../../../contexts/AuthContext";
+import { parseError } from "../../../../../../common/helpers/error-helpers";
 
 const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
   const toastContext = useContext(DialogToastContext);
@@ -76,8 +77,9 @@ const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
       );
       if (apiVersions && apiVersions.length > 0) return apiVersions[0];
       return "";
-    } catch (error) {
-      console.error(error);
+    } catch (error) { 
+      const parsedError = parseError(error);
+      console.error(parsedError);
       return "";
     }
   };

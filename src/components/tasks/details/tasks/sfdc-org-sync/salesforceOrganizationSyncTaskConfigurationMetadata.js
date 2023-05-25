@@ -46,7 +46,7 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
     {
-      label: "Git Account",
+      label: "Account",
       id: "gitToolId",
       isRequired: true,
       maxLength: 24,

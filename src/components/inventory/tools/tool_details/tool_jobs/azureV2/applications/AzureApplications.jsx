@@ -16,7 +16,7 @@ function AzureApplications({ toolData, loadData, toolApplications }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const { getAccessToken } = useContext(AuthContext);  
 
-  useEffect(() => {
+  useEffect(() => {    
     if(cancelTokenSource) {
       cancelTokenSource.cancel();
     }

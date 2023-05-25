@@ -190,7 +190,7 @@ function RunTaskButton(
         if (isMounted?.current === true) {
           toastContext.showLoadingErrorDialog(error);
         }
-      }
+      } 
     } else {
       toastContext.showOverlayPanel(
         <RunTaskOverlay

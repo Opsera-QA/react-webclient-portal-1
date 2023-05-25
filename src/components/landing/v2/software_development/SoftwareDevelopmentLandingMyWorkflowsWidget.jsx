@@ -12,8 +12,8 @@ import sessionHelper from "utils/session.helper";
 import useGetSoftwareDevelopmentWorkflowResources from "hooks/landing/software_development/useGetSoftwareDevelopmentWorkflowResources";
 import WorkspaceWorkflowSelectionCardView
   from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
-import InlineSearchFilter from "components/common/filters/search/InlineSearchFilter";
 import SoftwareDevelopmentSocialMediaWidget from "components/landing/v2/widgets/unused/SoftwareDevelopmentSocialMediaWidget";
+import SearchFilter from "components/common/filters/search/SearchFilter";
 
 export default function SoftwareDevelopmentLandingMyWorkflowsWidget({ className }) {
   const [currentView, setCurrentView] = useState(DataParsingHelper.parseString(sessionHelper.getCookie(sessionHelper.SUPPORTED_COOKIE_STORAGE_KEYS.LANDING_SCREEN_WORKFLOW_WIDGET_CURRENT_VIEW), WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS));
@@ -24,7 +24,6 @@ export default function SoftwareDevelopmentLandingMyWorkflowsWidget({ className 
     workflows,
     isLoading,
     workflowWidgetFilterModel,
-    setWorkflowWidgetFilterModel,
     loadData,
     loadMoreWorkflows,
     hasMoreItems,
@@ -53,13 +52,12 @@ export default function SoftwareDevelopmentLandingMyWorkflowsWidget({ className 
           // size={"1x"}
           className={"my-auto"}
         />
-        <InlineSearchFilter
-          filterDto={workflowWidgetFilterModel}
-          setFilterDto={setWorkflowWidgetFilterModel}
+        <SearchFilter
+          paginationModel={workflowWidgetFilterModel}
           isLoading={isLoading}
           className={"ml-3 my-auto"}
-          supportSearch={workflowWidgetFilterModel?.canSearch()}
           loadData={loadData}
+          searchText={workflowWidgetFilterModel?.getData("search")}
         />
       </>
     );

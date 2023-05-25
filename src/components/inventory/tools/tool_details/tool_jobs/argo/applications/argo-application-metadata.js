@@ -53,14 +53,11 @@ const argoApplicationsMetadata = {
       label: "Target Revision",
       id: "branch",
       isRequired: true,
-      maxLength: 28,
-      regexDefinitionName: "generalText",
     },
     {
       label: "Git URL",
       id: "repoUrl",
       isRequired: true,
-      maxLength: 256,
     },
     {
       label: "Type",
@@ -137,7 +134,7 @@ const argoApplicationsMetadata = {
       label: "Namespace",
       id: "namespace",
       isRequired: true,
-      maxLength: 28,
+      maxLength: 64,
       regexDefinitionName: "domainField",
     },
     // {

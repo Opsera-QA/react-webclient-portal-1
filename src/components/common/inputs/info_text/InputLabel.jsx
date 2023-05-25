@@ -35,6 +35,7 @@ function InputLabel(
     isLoading,
     ellipsisOnClickFunction,
     selectAllFunction,
+    customLabel,
   }) {
   const getInputHelpIcon = () => {
     if (inputHelpOverlay != null) {
@@ -85,7 +86,7 @@ function InputLabel(
           "";
     return (
       <label className={className}>
-        <span>{field?.label}{getRequiredAsterisk()}</span>
+        <span>{hasStringValue(customLabel) ? customLabel : field?.label}{getRequiredAsterisk()}</span>
       </label>
     );
   };
@@ -169,6 +170,7 @@ InputLabel.propTypes = {
   ellipsisOnClickFunction: PropTypes.func,
   selectAllFunction: PropTypes.func,
   hasWarningState: PropTypes.bool,
+  customLabel: PropTypes.string,
 };
 
 export default InputLabel;

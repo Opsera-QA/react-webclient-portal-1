@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faOctagon} from "@fortawesome/pro-light-svg-icons";
@@ -6,8 +6,9 @@ import InlinePipelineTypeFilter from "components/common/filters/admin/templates/
 import PlatformPipelineTemplateCardView from "components/workflow/catalog/platform/PlatformPipelineTemplateCardView";
 import useGetPlatformPipelineTemplates from "hooks/workflow/catalog/platform/useGetPlatformPipelineTemplates";
 import PlatformTagFilter from "components/common/filters/tags/tag/PlatformTagFilter";
+import {wizardsHelper} from "components/workflow/wizards/updated_pipeline_wizard/helpers/wizard-helpers";
 
-export default function OpseraPipelineMarketplace({activeTemplates, selectTemplateFunction, }) {
+export default function OpseraPipelineMarketplace({activeTemplates, selectTemplateFunction, setupMode }) {
   const {
     pipelineTemplates,
     pipelineTemplateFilterModel,
@@ -16,13 +17,27 @@ export default function OpseraPipelineMarketplace({activeTemplates, selectTempla
     loadData,
     error,
   } = useGetPlatformPipelineTemplates();
+  const [templates, setTemplates] = useState(pipelineTemplates);
+
+  // TODO - Update template route and move to node
+  useEffect(() => {
+    if (setupMode && pipelineTemplates?.length > 0) {
+      wizardsHelper.filterTemplateByCategory(
+          pipelineTemplates,
+          setupMode,
+          setTemplates,
+          setPipelineTemplateFilterModel,
+          pipelineTemplateFilterModel,
+      );
+    }
+  }, [pipelineTemplates]);
 
   const getPipelineCardView = () => {
     return (
       <PlatformPipelineTemplateCardView
         isLoading={isLoading}
         loadData={loadData}
-        pipelineTemplates={pipelineTemplates}
+        pipelineTemplates={templates}
         pipelineTemplateFilterModel={pipelineTemplateFilterModel}
         setPipelineTemplateFilterModel={setPipelineTemplateFilterModel}
         activeTemplates={activeTemplates}
@@ -54,7 +69,7 @@ export default function OpseraPipelineMarketplace({activeTemplates, selectTempla
   };
 
   return (
-    <div style={{minWidth: "660px"}}>
+    <div style={{ minWidth: "660px" }}>
       <div className={"p-2"}>
         {`
            These are publicly available pipeline templates provided by Opsera. All users have access to them.
@@ -80,4 +95,5 @@ export default function OpseraPipelineMarketplace({activeTemplates, selectTempla
 OpseraPipelineMarketplace.propTypes = {
   activeTemplates: PropTypes.array,
   selectTemplateFunction: PropTypes.func,
+  setupMode: PropTypes.string
 };

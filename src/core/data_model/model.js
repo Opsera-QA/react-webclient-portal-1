@@ -28,6 +28,7 @@ export class Model {
       this.metaData,
     );
   };
+
   getData = (fieldName) => {
     if (hasStringValue(fieldName) !== true) {
       console.error("No field name was given, so returning null");
