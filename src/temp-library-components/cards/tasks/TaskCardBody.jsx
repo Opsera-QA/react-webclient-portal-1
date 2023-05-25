@@ -30,7 +30,7 @@ export default function TaskCardBody(
               <div>
                 {orchestrationHelper.getLastRunCardSummary(taskModel?.getData("completion"), taskModel?.getData("status"), "Task")}
               </div>
-              <div>
+              <div className={"ml-1"}>
                 <span>{runCount} Runs</span>
               </div>
             </div>
