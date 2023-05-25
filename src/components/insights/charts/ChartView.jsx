@@ -23,6 +23,7 @@ import JenkinsDeploymentFrequencyLineChart from "./jenkins/line_chart/deployment
 import JenkinsChangeFailureRate from "./jenkins/JenkinsChangeFailureRate";
 import JenkinsDeploymentsCountsBarChart from "./jenkins/bar_chart/deployments_counts/JenkinsDeploymentsCountsBarChart";
 import JenkinsRecentPipelineStatus from "components/insights/charts/jenkins/table/recent_pipeline_status/JenkinsRecentBuildStatusTable";
+import JenkinsChangeFailureRateChart from "./jenkins/pie_chart/change_failure_rate/JenkinsChangeFailureRateChart";
 
 // Jira KPIs
 import JiraIssuesByPriorityBarChart from "./jira/bar_chart/issues_by_priority/JiraIssuesByPriorityBarChart";
@@ -517,6 +518,22 @@ function ChartView({
               index={index}
             />
           </Col>
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.JENKINS_CHANGE_FAILURE_RATE_V2:
+        return (
+            <Col
+                xl={6}
+                md={12}
+                className="p-2"
+            >
+              <JenkinsChangeFailureRateChart
+                  kpiConfiguration={kpiConfig}
+                  setKpiConfiguration={setKpiConfig}
+                  dashboardData={dashboardData}
+                  setKpis={setKpis}
+                  index={index}
+              />
+            </Col>
         );
 
       // Jira KPIs
