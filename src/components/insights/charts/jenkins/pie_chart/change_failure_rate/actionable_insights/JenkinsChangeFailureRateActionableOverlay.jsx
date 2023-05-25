@@ -114,15 +114,15 @@ function JenkinsChangeFailureRateActionableOverlay({ kpiConfiguration, dashboard
             linkTooltipText={"View Full Blueprint"}
         >
             <div className={"p-3"}>
-                {getDateRange()}
-                <JenkinsChangeFailureRateActionableTable
-                    isLoading={isLoading}
-                    data={actionableData}
-                    filterModel={filterModel}
-                    setFilterModel={setFilterModel}
-                    loadData={loadData}
-                />
-            </div>
+            {getDateRange()}
+            <JenkinsChangeFailureRateActionableTable
+                isLoading={isLoading}
+                data={actionableData}
+                filterModel={filterModel}
+                setFilterModel={setFilterModel}
+                loadData={loadData}
+            />
+        </div>
         </FullScreenCenterOverlayContainer>
     );
 }

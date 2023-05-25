@@ -23,6 +23,7 @@ import JenkinsDeploymentFrequencyLineChart from "./jenkins/line_chart/deployment
 import JenkinsChangeFailureRate from "./jenkins/JenkinsChangeFailureRate";
 import JenkinsDeploymentsCountsBarChart from "./jenkins/bar_chart/deployments_counts/JenkinsDeploymentsCountsBarChart";
 import JenkinsRecentPipelineStatus from "components/insights/charts/jenkins/table/recent_pipeline_status/JenkinsRecentBuildStatusTable";
+import JenkinsChangeFailureRateChart from "./jenkins/pie_chart/change_failure_rate/JenkinsChangeFailureRateChart";
 
 // Jira KPIs
 import JiraIssuesByPriorityBarChart from "./jira/bar_chart/issues_by_priority/JiraIssuesByPriorityBarChart";
