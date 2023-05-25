@@ -8,7 +8,7 @@ import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-import { defaultConfig, mainColor,colorPalette1, failColor, mainPurple, warningColor,
+import { defaultConfig,colorPalette1, failColor, mainPurple, warningColor,
          adjustBarWidth } from "../../insights/charts/charts-views";
 import ChartTooltip from "../../insights/charts/ChartTooltip";
 
