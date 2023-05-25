@@ -11,6 +11,8 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import axios from "axios";
 import BlackduckMetadata from "./blackduck-tool-metadata";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 const BlackduckToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -67,7 +69,7 @@ const BlackduckToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) =
       setModel={setBlackDuckConfigurationModel}
       persistRecord={saveBlackduckToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.BLACKDUCK}
       setUpMode={setUpMode}
     >
       <Row>

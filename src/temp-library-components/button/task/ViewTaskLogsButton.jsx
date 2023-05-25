@@ -6,10 +6,11 @@ import {pipelineHelper} from "components/workflow/pipeline.helper";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
+import {taskHelper} from "components/tasks/task.helper";
 
 export default function ViewTaskLogsButton(
   {
-    pipelineId,
+    taskId,
     buttonText,
     buttonSize,
     variant,
@@ -19,11 +20,11 @@ export default function ViewTaskLogsButton(
   const { toastContext } = useComponentStateReference();
 
   const handleLoadFunction = async () => {
-    history.push(`${pipelineHelper.getDetailViewLink(pipelineId)}#logs`);
+    history.push(`${taskHelper.getDetailViewLink(taskId)}/logs`);
     toastContext.clearOverlayPanel();
   };
 
-  if (isMongoDbId(pipelineId) == null) {
+  if (isMongoDbId(taskId) !== true) {
     return null;
   }
 
@@ -40,7 +41,7 @@ export default function ViewTaskLogsButton(
 }
 
 ViewTaskLogsButton.propTypes = {
-  pipelineId: PropTypes.string,
+  taskId: PropTypes.string,
   buttonText: PropTypes.string,
   variant: PropTypes.string,
   buttonSize: PropTypes.string,

@@ -1,6 +1,6 @@
-import {LIVE_MESSAGE_TYPES} from "core/websocket/constants/liveMessage.constants";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import liveMessageTypeConstants from "@opsera/definitions/constants/websocket/constants/liveMessageType.constants";
 
 export class ListModelBase {
   constructor(authContext, setStateFunction) {
@@ -88,13 +88,13 @@ export class ListModelBase {
     const type = liveMessage.type;
 
     switch (type) {
-      case LIVE_MESSAGE_TYPES.NEW_RECORD:
+      case liveMessageTypeConstants.LIVE_MESSAGE_TYPES.NEW_RECORD:
         this.handleNewRecordLiveMessage(liveMessage);
         break;
-      case LIVE_MESSAGE_TYPES.UPDATED_RECORD:
+      case liveMessageTypeConstants.LIVE_MESSAGE_TYPES.UPDATED_RECORD:
         this.handleUpdateRecordLiveMessage(liveMessage);
         break;
-      case LIVE_MESSAGE_TYPES.DELETED_RECORD:
+      case liveMessageTypeConstants.LIVE_MESSAGE_TYPES.DELETED_RECORD:
         this.handleDeleteRecordLiveMessage(liveMessage);
         break;
       default:

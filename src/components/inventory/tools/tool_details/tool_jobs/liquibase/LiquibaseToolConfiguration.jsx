@@ -13,6 +13,8 @@ import LiquibaseMetadata from "./liquibase-tool-metadata";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import LiquibaseDatabaseTypeSelectInput from "./inputs/LiquibaseDatabaseTypeSelectInput";
 import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 const LiquibaseToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -90,7 +92,7 @@ const LiquibaseToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) =
       setModel={setLiquibaseConfigurationModel}
       persistRecord={saveLiquibaseToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.LIQUIBASE}
       setUpMode={setUpMode}
     >
       <Row>

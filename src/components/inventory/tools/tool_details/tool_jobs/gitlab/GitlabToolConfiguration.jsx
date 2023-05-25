@@ -11,6 +11,8 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function GitlabToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -63,7 +65,7 @@ function GitlabToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setGitlabConfigurationDto}
       persistRecord={saveGitlabToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"Gitlab"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.GITLAB}
       setUpMode={setUpMode}
     >
       <Col sm={12}>

@@ -16,6 +16,8 @@ import SfdcOAuthConnectButton from "./inputs/SfdcOAuthConnectButton";
 import axios from "axios";
 import IconBase from "../../../../../common/icons/IconBase";
 import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function SfdcToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -119,7 +121,7 @@ function SfdcToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setSfdcConfigurationDto}
       persistRecord={saveSfdcToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"Sfdc"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.SFDC_CONFIGURATOR}
       setUpMode={setUpMode}
     >
       <Row>

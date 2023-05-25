@@ -35,7 +35,6 @@ taskTypeConstants.getIconForTaskType = (taskType) => {
 export const TASK_TYPES = {
   // Salesforce
   SYNC_SALESFORCE_REPO: "sync-sfdc-repo",
-  SALESFORCE_CERTIFICATE_GENERATION: "sfdc-cert-gen",
   SYNC_SALESFORCE_BRANCH_STRUCTURE: "sync-branch-structure",
   SALESFORCE_BULK_MIGRATION: "sfdc-bulk-migration",
   SALESFORCE_TO_GIT_MERGE_SYNC: "SFDC_GIT_COMPARE_SYNC",
@@ -62,7 +61,6 @@ export const TASK_TYPES = {
 export const TASK_TYPE_LABELS = {
   // Salesforce
   SYNC_SALESFORCE_REPO: "Salesforce Organization Sync",
-  SALESFORCE_CERTIFICATE_GENERATION: "Salesforce DX Certificate Generation",
   SYNC_SALESFORCE_BRANCH_STRUCTURE: "Salesforce Branch Structuring",
   SALESFORCE_BULK_MIGRATION: "Salesforce Bulk Migration",
   SALESFORCE_TO_GIT_MERGE_SYNC: "Salesforce to Git Merge Sync",
@@ -91,8 +89,6 @@ export const getTaskTypeLabel = (taskType) => {
     // Salesforce
     case TASK_TYPES.SYNC_SALESFORCE_REPO:
       return TASK_TYPE_LABELS.SYNC_SALESFORCE_REPO;
-    case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-      return TASK_TYPE_LABELS.SALESFORCE_CERTIFICATE_GENERATION;
     case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
       return TASK_TYPE_LABELS.SYNC_SALESFORCE_BRANCH_STRUCTURE;
     case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
@@ -208,11 +204,6 @@ export const NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS = [
   {
     text: TASK_TYPE_LABELS.SALESFORCE_BULK_MIGRATION,
     value: TASK_TYPES.SALESFORCE_BULK_MIGRATION,
-    category: "Salesforce",
-  },
-  {
-    text: TASK_TYPE_LABELS.SALESFORCE_CERTIFICATE_GENERATION,
-    value: TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION,
     category: "Salesforce",
   },
   { text: TASK_TYPE_LABELS.SYNC_SALESFORCE_REPO, value: TASK_TYPES.SYNC_SALESFORCE_REPO, category: "Salesforce" },

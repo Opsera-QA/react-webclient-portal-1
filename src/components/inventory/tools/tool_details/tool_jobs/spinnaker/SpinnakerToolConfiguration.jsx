@@ -9,6 +9,8 @@ import spinnakerConnectionMetadata from "./spinnaker-connection-metadata";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function SpinnakerToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -35,7 +37,7 @@ function SpinnakerToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setSpinnakerConfigurationDto}
       persistRecord={saveSpinnakerToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"Spinnaker"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.SPINNAKER}
       setUpMode={setUpMode}
     >
       <Row>

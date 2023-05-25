@@ -35,7 +35,6 @@ function JiraToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setJiraConfigurationDto}
       persistRecord={saveJiraToolConfiguration}
       toolData={toolData}
-      // toolConnectionCheckName={"Jira"}
       leftSideButtons={
         <InstallJiraAppButton
           toolId={toolData?.getMongoDbId()}

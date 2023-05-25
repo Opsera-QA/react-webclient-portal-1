@@ -11,6 +11,8 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function AquasecToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -39,7 +41,7 @@ function AquasecToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setAquasecConfigurationModel}
       persistRecord={saveAquasecToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.AQUASEC}
       setUpMode={setUpMode}
     >
       <Row>

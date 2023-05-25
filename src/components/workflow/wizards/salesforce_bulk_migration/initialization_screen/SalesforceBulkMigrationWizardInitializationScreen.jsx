@@ -19,6 +19,7 @@ import SalesforcePackageVersionSelectionInput
   from "../../sfdc_pipeline_wizard/xml_viewer/xml/SalesforcePackageVersionSelectionInput";
 import sfdcPipelineActions from "../../sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import { parseError } from "../../../../common/helpers/error-helpers";
 
 const SalesforceBulkMigrationWizardInitializationScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, taskModel, setError }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -79,9 +80,10 @@ const SalesforceBulkMigrationWizardInitializationScreen = ({ pipelineWizardModel
       if (apiVersions && apiVersions.length > 0) return apiVersions[0];
       return "";
     } catch (error) {
-      console.error(error);
+      const parsedError = parseError(error);
+      console.error(parsedError);
       setError(
-        "Could not get default API version for Salesforce Bulk Migration Wizard",
+        `Could not get default API version for Salesforce Bulk Migration Wizard: ${parsedError}`,
       );
       return "";
     }

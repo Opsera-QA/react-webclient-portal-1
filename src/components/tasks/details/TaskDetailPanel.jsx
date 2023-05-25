@@ -8,11 +8,21 @@ import {faTable, faKey, faComputerClassic} from "@fortawesome/pro-light-svg-icon
 import TaskSummaryPanel
   from "components/tasks/details/TaskSummaryPanel";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
-import CertManagementPanel from "./tasks/sfdx-cert-gen/CertManagementPanel";
 import TaskActivityPanel from "components/tasks/activity_logs/TaskActivityPanel";
-import {TASK_TYPES} from "components/tasks/task.types";
-import TaskAuditLogPanel from "components/tasks/details/audit/TaskAuditLogPanel";
 import { AuthContext } from "contexts/AuthContext";
+import {useParams} from "react-router-dom";
+
+const getActiveTab = (runTask, tab) => {
+  if (tab === "logs") {
+    return "logs";
+  }
+
+  if (runTask) {
+    return "settings";
+  }
+
+  return "summary";
+};
 
 function TaskDetailPanel(
   {
@@ -26,7 +36,8 @@ function TaskDetailPanel(
     taskStartTime,
   }) {
   const {featureFlagHideItemInProd} = useContext(AuthContext);
-  const [activeTab, setActiveTab] = useState(runTask ? "settings" : "summary");
+  const { tab } = useParams();
+  const [activeTab, setActiveTab] = useState(getActiveTab(runTask, tab));
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
@@ -36,22 +47,6 @@ function TaskDetailPanel(
   const toggleSummaryPanel = () => {
     setActiveTab("summary");
     loadData();
-  };
-
-  const getDynamicTabs = () => {
-    switch (gitTasksData?.getData("type")) {
-      case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-      return (
-        <CustomTab
-          icon={faKey}
-          tabName={"cert"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          tabText={"Certificate Management"}
-        />
-      );
-      default: return <></>;
-    }
   };
 
   const getFeatureFlaggedTab = () => {
@@ -75,7 +70,6 @@ function TaskDetailPanel(
           handleTabClick={handleTabClick}
           activeTab={activeTab}
         />
-        {getDynamicTabs()}
         <CustomTab
           icon={faTable}
           tabName={"logs"}
@@ -120,14 +114,6 @@ function TaskDetailPanel(
             taskId={gitTasksData?.getMongoDbId()}
             taskRunCount={runCount}
             status={status}
-          />
-        );
-      case "cert":
-        return (
-          <CertManagementPanel
-            gitTasksData={gitTasksData}
-            setGitTasksData={setGitTasksData}
-            loadData={loadData}
           />
         );
       // case "audit-logs":

@@ -645,6 +645,7 @@ function StepToolConfiguration({
             createJob={createTwistlockJob}
             setToast={setToast}
             setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );
       case "aws-deploy":

@@ -11,6 +11,8 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import AwsCloudProviderRegionSelectInput
   from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function AwsToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -40,7 +42,7 @@ function AwsToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setAwsConfigurationDto}
       persistRecord={saveAwsToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"aws"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.AWS_ACCOUNT}
       setUpMode={setUpMode}
     >
       <Row>

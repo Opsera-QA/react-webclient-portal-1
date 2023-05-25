@@ -13,6 +13,8 @@ import FortifyMetadata from "./fortify-tool-metadata";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import FortifyScanToolSelectInput from "./inputs/FortifyScanToolSelectInput";
 import FortifyPortalSelectInput from "./inputs/FortifyPortalSelectInput";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 const FortifyToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -179,7 +181,7 @@ const FortifyToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) => 
       setModel={setFortifyConfigurationModel}
       persistRecord={saveFortifyToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.FORTIFY}
       setUpMode={setUpMode}
     >
       <Row>

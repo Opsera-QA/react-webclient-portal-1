@@ -19,11 +19,13 @@ import BlueprintsRoutes from "routes/BlueprintsRoutes";
 import FreeTrialSettingsRoutes from "routes/FreeTrialSettingsRoutes";
 import FreeTrialAdminToolsRoutes from "routes/FreeTrialAdminToolsRoutes";
 import WorkspaceRoutes from "routes/WorkspaceRoutes";
+import LandingRoutes from "routes/LandingRoutes";
 
 export default function AppRoutes() {
   return (
     <>
       <PublicRoutes/>
+      <LandingRoutes/>
       <UserProfileRoutes/>
       <ToolchainRoutes/>
       <PipelinesRoutes/>

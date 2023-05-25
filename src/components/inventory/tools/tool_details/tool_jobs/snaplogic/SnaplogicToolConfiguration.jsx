@@ -11,6 +11,8 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import axios from "axios";
 import SnaplogicMetadata from "./snaplogic-tool-metadata";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 const SnaplogicToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -77,7 +79,7 @@ const SnaplogicToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) =
       setModel={setSnaplogicConfigurationModel}
       persistRecord={saveSnaplogicToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.SNAPLOGIC}
       setUpMode={setUpMode}
     >
       <Row>

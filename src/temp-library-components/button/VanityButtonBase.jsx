@@ -66,6 +66,7 @@ export default function VanityButtonBase(
     <div className={className}>
       <ButtonTooltip
         innerText={tooltip}
+        buttonClassName={buttonClassName}
       >
         <Button
           disabled={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY || disabled === true}

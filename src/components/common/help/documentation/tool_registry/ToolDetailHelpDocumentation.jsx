@@ -352,8 +352,8 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SLACK:
         return (
           <div>
-            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
-            <div>For more information on how to register the <b>Slack</b> tool, view the <a href="https://docs.opsera.io/tool-registry/slack-tool-registration" target="_blank" rel="noreferrer"><b>Slack Tool Registration Help Documentation</b>.</a></div>
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs. For more information on how to register the <b>Slack</b> tool, view the <a href="https://docs.opsera.io/tool-registry/slack-tool-registration" target="_blank" rel="noreferrer"><b>Slack Tool Registration Help Documentation</b>.</a></div>
+            <div className={"mt-2"}><i><b>Notifications</b> - To receive a notification within a specific Slack channel, you must connect Opsera app to the channel. For instructions, view <a href="https://docs.opsera.io/tool-registry/slack-tool-registration#add-opsera-app-to-slack-channel" target="_blank" rel="noopener noreferrer"><b>Add Opsera App to Slack Channel Help Documentation</b></a></i>.</div>
           </div>
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SONAR:

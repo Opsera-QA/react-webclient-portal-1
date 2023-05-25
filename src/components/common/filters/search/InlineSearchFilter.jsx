@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {Button, InputGroup} from "react-bootstrap";
 import {faSearch} from "@fortawesome/pro-light-svg-icons";
@@ -9,31 +9,31 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import ClearSearchFilterButton from "temp-library-components/button/clear/ClearSearchFilterButton";
 
-function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, fieldName, supportSearch, className, isLoading, metadata}) {
-  let history = useHistory();
+function InlineSearchFilter(
+  {
+    filterDto,
+    setFilterDto,
+    loadData,
+    disabled,
+    fieldName,
+    supportSearch,
+    className,
+    isLoading,
+    metadata,
+    searchText,
+  }) {
+  const history = useHistory();
+  const [currentSearchTerm, setCurrentSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const {
     isFreeTrial,
   } = useComponentStateReference();
 
-  const validateAndSetData = (value) => {
-    const newSearchText = DataParsingHelper.parseString(
-      value,
-      "",
-      undefined,
-      undefined,
-      false,
-    );
-    const maxLength = DataParsingHelper.parseInteger(filterDto?.getMaxLength(fieldName), 25);
-    filterDto.setData(fieldName, newSearchText.substring(0, maxLength));
-
-    // TODO: Setting state on filter model should only be handled in the load data function and this should be removed.
-    //  Leaving here for now to prevent unintended side effects
-    if (setFilterDto) {
-      setFilterDto({...filterDto});
-    }
-  };
+  useEffect(() => {
+    setCurrentSearchTerm(DataParsingHelper.parseString(searchText, ""));
+  }, [searchText]);
 
   const handleSearch = async () => {
     try {
@@ -75,6 +75,26 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
     }
   };
 
+  const updateSearchTerm = (newSearchTerm) => {
+    const parsedSearchTerm = DataParsingHelper.parseString(
+      newSearchTerm,
+      "",
+      undefined,
+      undefined,
+      false,
+    );
+    const maxLength = DataParsingHelper.parseInteger(filterDto?.getMaxLength(fieldName), 25);
+    const finalSearchTerm = parsedSearchTerm.substring(0, maxLength);
+    setCurrentSearchTerm(finalSearchTerm);
+
+    // TODO: Setting state on filter model should only be handled in the load data function and this should be removed.
+    //  Leaving here for now to prevent unintended side effects
+    if (setFilterDto) {
+      filterDto?.setData(fieldName, finalSearchTerm);
+      setFilterDto({...filterDto});
+    }
+  };
+
   const handleKeyPress = async (event) => {
     if (event.key === 'Enter') {
       await handleSearch();
@@ -91,13 +111,27 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
         size={"sm"}
         className={"flex-nowrap"}
       >
+        <InputGroup.Prepend>
+          <ClearSearchFilterButton
+            fieldName={fieldName}
+            disabled={isLoading}
+            paginationModel={filterDto}
+            loadDataFunction={loadData}
+            setCurrentSearchTerm={setCurrentSearchTerm}
+            variant={isFreeTrial === true ? "secondary" : "outline-primary"}
+            className={"inline-filter-input"}
+            buttonClassName={"inline-filter-input"}
+            currentSearchTerm={currentSearchTerm}
+            buttonSize={"sm"}
+          />
+        </InputGroup.Prepend>
         <input
           disabled={disabled || isLoading}
           placeholder={"Search"}
-          value={filterDto?.getData(fieldName) || ""}
+          value={currentSearchTerm}
           className={"text-input inline-search-filter inline-filter-input"}
           onKeyPress={(event) => handleKeyPress(event)}
-          onChange={e => validateAndSetData(e.target.value)}
+          onChange={e => updateSearchTerm(e.target.value)}
         />
         <InputGroup.Append>
           <Button
@@ -126,7 +160,8 @@ InlineSearchFilter.propTypes = {
   supportSearch: PropTypes.bool,
   isLoading: PropTypes.bool,
   className: PropTypes.string,
-  metadata: PropTypes.object
+  metadata: PropTypes.object,
+  searchText: PropTypes.string,
 };
 
 InlineSearchFilter.defaultProps = {

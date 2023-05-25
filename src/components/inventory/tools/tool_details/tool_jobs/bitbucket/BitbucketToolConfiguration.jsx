@@ -12,6 +12,8 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 const bitBucketApiTypeArray = [
   {
@@ -76,7 +78,7 @@ function BitbucketToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setBitbucketConfigurationDto}
       persistRecord={saveBitbucketToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"Bitbucket"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.BITBUCKET}
       setUpMode={setUpMode}
     >
       <Col sm={12}>

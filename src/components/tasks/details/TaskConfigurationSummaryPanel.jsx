@@ -6,8 +6,6 @@ import SFDCBranchStructuringTaskTypeSummaryCard from "./tasks/sfdc-branch-struct
 import sfdcGitBranchTaskConfigurationMetadata from "components/tasks/details/tasks/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
 import branchToBranchGitTaskConfigurationMetadata from "components/tasks/details/tasks/branch-to-branch/branch-to-branch-git-task-configuration";
 import GitToGitSyncTaskTypeSummaryCard from "components/tasks/details/tasks/branch-to-branch/GitToGitSyncTaskTypeSummaryCard";
-import sfdxCertGenTaskConfigurationMetadata from "components/tasks/details/tasks/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
-import SFDXCertGenTaskTypeSummaryCard from "./tasks/sfdx-cert-gen/SFDXCertGenTaskTypeSummaryCard";
 import ECSCreationTaskTypeSummaryCard from "./tasks/ecs-cluster-creation/ECSCreationTaskTypeSummaryCard";
 import ec2ClusterCreationTaskConfigurationMetadata from "./tasks/ecs-cluster-creation/ecs-creation-git-task-configuration";
 import ECSServiceCreationTaskTypeSummaryCard from "./tasks/ecs-service-creation/ECSServiceCreationTaskTypeSummaryCard";
@@ -76,16 +74,6 @@ function TaskConfigurationSummaryPanel({ taskModel }) {
             gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
               taskModel?.getData("configuration"),
               branchToBranchGitTaskConfigurationMetadata,
-            )}
-            gitTasksData={taskModel}
-          />
-        );
-      case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-        return (
-          <SFDXCertGenTaskTypeSummaryCard
-            gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
-              taskModel?.getData("configuration"),
-              sfdxCertGenTaskConfigurationMetadata,
             )}
             gitTasksData={taskModel}
           />

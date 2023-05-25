@@ -62,13 +62,6 @@ export class TaskModel extends ModelBase {
     );
   };
 
-  canDeleteAdminTask = () => {
-    return TaskRoleHelper.canDeleteAdminTask(
-      this.userData,
-      this.data,
-    );
-  };
-
   canRunTask = () => {
     return TaskRoleHelper.canRunTask(
       this.userData,
@@ -78,20 +71,6 @@ export class TaskModel extends ModelBase {
 
   canStopTask = () => {
     return TaskRoleHelper.canStopTask(
-      this.userData,
-      this.data,
-    );
-  };
-
-  canCreateCertificateTask = () => {
-    return TaskRoleHelper.canCreateCertificateTask(
-      this.userData,
-      this.data,
-    );
-  };
-
-  canGenerateSalesforceCertificate = () => {
-    return TaskRoleHelper.canGenerateSalesforceCertificate(
       this.userData,
       this.data,
     );

@@ -143,3 +143,17 @@
   background: #000;
   margin: 35px auto;
 }
+
+.custom-bar-tooltip {
+  padding: 0.2rem 0.5rem;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+  background-color: #fff;
+}
+
+.custom-bar-tooltip .tooltip-color-box {
+  height: 10px;
+  width: 10px;
+  display: inline-block;
+  margin-right: 0.3rem;
+}

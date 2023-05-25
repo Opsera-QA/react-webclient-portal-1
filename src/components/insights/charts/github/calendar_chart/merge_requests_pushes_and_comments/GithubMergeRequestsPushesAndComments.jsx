@@ -9,6 +9,9 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, gradationalColors } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import GithubMergeRequestsPushesCommentsActionableOverlay
+    from "./actionable_insights/GithubMergeRequestsPushedCommentsActionableOverlay";
 function GithubMergeRequestsPushesAndComments({
   kpiConfiguration,
   setKpiConfiguration,
@@ -23,6 +26,7 @@ function GithubMergeRequestsPushesAndComments({
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -82,30 +86,42 @@ function GithubMergeRequestsPushesAndComments({
     }
   };
 
-  const getChartBody = () => {
-    if (!Array.isArray(metrics) || metrics.length === 0) {
-      return null;
-    }
+    const onRowSelect = (node) => {
+        if(node?.value) {
+            toastContext.showOverlayPanel(
+                <GithubMergeRequestsPushesCommentsActionableOverlay
+                    kpiConfiguration={kpiConfiguration}
+                    dashboardData={dashboardData}
+                    date={node?.day.toString()}
+                />,
+            );
+        }
+    };
 
-    return (
-      <div className="new-chart mb-3" style={{ height: "300px" }}>
-        <ResponsiveCalendar
-          data={metrics}
-          {...defaultConfig("", "", false, false, "", "", true)}
-          {...config(gradationalColors, new Date())}
-          onClick={() => setShowModal(true)}
-          tooltip={({ day, value, color }) => (
-            <ChartTooltip
-              titles={[day]}
-              values={[`${value !== "undefined" ? value : 0} ${value > 1 ? "contributions" : "contribution(s)"}`]}
-              style={false}
-              color={color}
-            />
-          )}
-        />
-      </div>
-    );
-  };
+    const getChartBody = () => {
+        if (!Array.isArray(metrics) || metrics.length === 0) {
+            return null;
+        }
+
+        return (
+            <div className="new-chart mb-3" style={{ height: "300px" }}>
+                <ResponsiveCalendar
+                    data={metrics}
+                    {...defaultConfig("", "", false, false, "", "", true)}
+                    {...config(gradationalColors, new Date())}
+                    onClick={(node) => onRowSelect(node)}
+                    tooltip={({ day, value, color }) => (
+                        <ChartTooltip
+                            titles={[day]}
+                            values={[`${value !== "undefined" ? value : 0} ${value > 1 ? "contributions" : "contribution(s)"}`]}
+                            style={false}
+                            color={color}
+                        />
+                    )}
+                />
+            </div>
+        );
+    };
 
   return (
     <div>

@@ -145,8 +145,6 @@ function TaskDetailView() {
       case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
         return <SfdxQuickDeployTaskDetailsHelpDocumentation/>;
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
-      case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-      case TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION:
       default:
         return null;
     }

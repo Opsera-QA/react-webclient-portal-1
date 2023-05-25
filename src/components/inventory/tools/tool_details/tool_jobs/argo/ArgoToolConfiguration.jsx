@@ -12,6 +12,8 @@ import ToolConfigurationEditorPanelContainer
   from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
 import ArgoToolSecretTokenToggleInput from "./ArgoToolSecretTokenToggleInput";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function ArgoToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -52,7 +54,7 @@ function ArgoToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       setModel={setArgoConfigurationDto}
       persistRecord={saveArgoToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"Argocd"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.ARGO}
       setUpMode={setUpMode}
     >
       <Row>

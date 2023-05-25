@@ -15,6 +15,8 @@ import {
 } from "components/inventory/tools/details/identifiers/apigee/apigeeToolConnection.metadata";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import ApigeeVersionSelectInput from "components/common/list_of_values_input/tools/apigee/ApigeeVersionSelectInput";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function ApigeeToolConnectionEditorPanel({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -72,7 +74,7 @@ function ApigeeToolConnectionEditorPanel({ toolData, setUpMode, setCurrentScreen
       setModel={setApigeeConfigurationModel}
       persistRecord={saveApigeeToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.APIGEE}
       setUpMode={setUpMode}
     >
       <Row>

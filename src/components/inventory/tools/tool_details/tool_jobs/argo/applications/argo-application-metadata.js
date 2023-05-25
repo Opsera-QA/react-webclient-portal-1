@@ -137,7 +137,7 @@ const argoApplicationsMetadata = {
       label: "Namespace",
       id: "namespace",
       isRequired: true,
-      maxLength: 28,
+      maxLength: 64,
       regexDefinitionName: "domainField",
     },
     // {

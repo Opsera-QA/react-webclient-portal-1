@@ -12,6 +12,8 @@ import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function AzureDevopsToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -59,7 +61,7 @@ function AzureDevopsToolConfiguration({ toolData, setUpMode, setCurrentScreen })
       persistRecord={saveAzureDevopsToolConfiguration}
       toolData={toolData}
       setUpMode={setUpMode}
-      toolConnectionCheckName={toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.AZURE_DEVOPS}
     >
       <Row>
         <Col sm={12}>
