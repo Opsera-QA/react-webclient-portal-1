@@ -10,6 +10,7 @@ const GitCustodianUpdateStatusMetaData = {
       label:"Comments",
       id:"comment",
       isRequired: false,
+      regexDefinitionName: "expandedTextAndSymbolsWithSpaces",
     },   
     {
       label: "Issues",

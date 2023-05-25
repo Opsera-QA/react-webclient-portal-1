@@ -74,10 +74,10 @@ function GitCustodianUpdateStatusEditorPanel({
           </Col>
           <Col md={12}>
             <TextAreaInputBase
-              fieldName={"comment"}
+             fieldName={"comment"}
              model={dataModel}
              setModel={setDataModel}
-
+             useInfoContainer={false}
             />
           </Col>
 
