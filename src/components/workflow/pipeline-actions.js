@@ -437,4 +437,21 @@ pipelineActions.createTerraformPipelineV2 = async (getAccessToken, cancelTokenSo
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+pipelineActions.downloadReport = async (getAccessToken, cancelTokenSource, pipelineId, stepId, runCount, expiryDate) => {
+  const postBody = {
+    pipelineId: pipelineId,
+    stepId: stepId,
+    runCount: runCount,
+    expiryDate: expiryDate
+  };
+
+  const apiUrl = `/pipelines/download-report`;
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 export default pipelineActions;

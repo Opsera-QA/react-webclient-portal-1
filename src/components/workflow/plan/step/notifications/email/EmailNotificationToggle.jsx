@@ -7,7 +7,7 @@ function EmailNotificationToggle({ fieldName, model, setModel, disabled }) {
   const setDataFunction = (fieldName, newValue) => {
     const newModel = {...model};
     newModel.setData(fieldName, newValue);
-    newModel.setData("addresses", []);
+    // newModel.setData("addresses", []);
     newModel.setData("address", undefined);
     setModel({...newModel});
   };
