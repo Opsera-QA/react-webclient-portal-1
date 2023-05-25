@@ -13,6 +13,7 @@ import {metricHelpers} from "../../../../../metric.helpers";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 import FullScreenCenterOverlayContainer
     from "../../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
+import jenkinsActions from "../../../jenkins.action";
 
 function JenkinsChangeFailureRateActionableOverlay({ kpiConfiguration, dashboardData }) {
     const { getAccessToken } = useContext(AuthContext);
@@ -59,26 +60,22 @@ function JenkinsChangeFailureRateActionableOverlay({ kpiConfiguration, dashboard
             let dashboardTags = dashboardMetricFilter?.tags;
             let dashboardOrgs = dashboardMetricFilter?.organizations;
 
-            const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+            const response = await jenkinsActions.jenkinsChangeFailureRateActionableInsights(
                 getAccessToken,
                 cancelSource,
-                "jenkinsChangeFailureRateActionableInsights",
                 kpiConfiguration,
                 dashboardTags,
                 filterDto,
-                undefined,
                 dashboardOrgs,
             );
 
-            console.log("actionable response", response);
-
-            const metrics = response?.data ? response?.data?.data[0][0].data : [];
+            const metrics = response?.data ? response?.data?.data[0].data : [];
 
             if (isMounted?.current === true && Array.isArray(metrics)) {
                 setActionableData(metrics);
 
                 let newFilterDto = filterDto;
-                newFilterDto.setData("totalCount", response?.data?.data[0][0].count[0]?.count);
+                newFilterDto.setData("totalCount", response?.data?.data[0].count[0]?.count);
                 setFilterModel({ ...newFilterDto });
             }
         } catch (error) {

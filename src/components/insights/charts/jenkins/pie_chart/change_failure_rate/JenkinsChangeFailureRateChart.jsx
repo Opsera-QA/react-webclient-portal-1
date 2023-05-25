@@ -19,6 +19,7 @@ import JenkinsChangeFailureTotalFailuresDataBlock from "./data_blocks/JenkinsCha
 import JenkinsChangeFailureRateActionableOverlay from "./actionable_insights/JenkinsChangeFailureRateActionableOverlay";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import InfoDialog from "../../../../../common/status_notifications/info";
+import jenkinsActions from "../../jenkins.action";
 
 
 function JenkinsChangeFailureRateChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -60,18 +61,14 @@ function JenkinsChangeFailureRateChart({ kpiConfiguration, setKpiConfiguration, 
             let dashboardOrgs =
                 dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
                     ?.value;
-            const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+            const response = await jenkinsActions.jenkinsChangeFailureRate(
                 getAccessToken,
                 cancelSource,
-                "jenkinsChangeFailureRate",
                 kpiConfiguration,
                 dashboardTags,
-                null,
-                null,
-                dashboardOrgs
+                dashboardOrgs,
             );
-            console.log("response", response);
-            let dataObject = response?.data ? response?.data?.data[0] : [];
+            let dataObject = response?.data ? response?.data?.data : [];
             assignStandardColors(dataObject);
             shortenPieChartLegend(dataObject);
 
@@ -89,7 +86,6 @@ function JenkinsChangeFailureRateChart({ kpiConfiguration, setKpiConfiguration, 
             }
         }
     };
-     console.log("metrics", metrics);
 
     const onRowSelect = () => {
         toastContext.showOverlayPanel(
@@ -151,7 +147,7 @@ function JenkinsChangeFailureRateChart({ kpiConfiguration, setKpiConfiguration, 
                 ) : (
                     <div
                         className="circle"
-                        style={{ backgroundColor: metrics && metrics[0].failureRate < 50 ? failColor : goalSuccessColor }}
+                        style={{ backgroundColor: metrics && metrics[0].failureRate > 15 ? failColor : goalSuccessColor }}
                     >
                         {metrics && metrics[0].failureRate.toFixed(2) + "%"}
                     </div>
