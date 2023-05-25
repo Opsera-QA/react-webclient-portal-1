@@ -148,7 +148,7 @@ function JenkinsChangeFailureRateChart({ kpiConfiguration, setKpiConfiguration, 
                             ) : (
                                 <div
                                     className="circle"
-                                    style={{ backgroundColor: metrics && metrics[0].failureRate < 50 ? failColor : goalSuccessColor }}
+                                    style={{ backgroundColor: metrics && metrics[0].failureRate > 15 ? failColor : goalSuccessColor }}
                                 >
                                     {metrics && metrics[0].failureRate.toFixed(2) + "%"}
                                 </div>
