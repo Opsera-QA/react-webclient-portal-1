@@ -369,7 +369,7 @@ const CustomSettingCsvFieldMappingScreen = ({
               );
             })
           ) : (
-            <div>No Fields Found!</div>
+            <div className={"ml-3"}>No Fields Found!</div>
           )}
         </div>
       </div>
