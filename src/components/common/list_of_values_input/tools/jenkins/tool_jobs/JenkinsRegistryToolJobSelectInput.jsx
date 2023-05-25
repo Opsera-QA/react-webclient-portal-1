@@ -74,30 +74,25 @@ function JenkinsRegistryToolJobSelectInput(
     // TODO: Make route that actually just returns jobs
     const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, jenkinsToolId);
     const jenkinsJobs = response?.data?.data?.jobs;
-    console.log(jenkinsJobs);
     const existingJobSelection = model?.getData(fieldName);
 
     if (Array.isArray(jenkinsJobs) && jenkinsJobs.length > 0) {
       if (typeFilter) {
         let filteredJobs = jenkinsJobs.filter((job) => {return job.type[0] === typeFilter;});
-        // console.log(filteredJobs)
 
         if(buildType){
           console.log(buildType)
           switch(buildType){
             case "dotnet":
               let buildTypeDotNetJobs = filteredJobs.filter((job) => job?.configuration?.buildType === "dotnet")
-              console.log("buildTypeDotNetJobs",buildTypeDotNetJobs)
               setJenkinsJobs(buildTypeDotNetJobs)
               break;
             case "msbuild":
               let buildTypeMSBuildJobs = filteredJobs.filter((job) => job?.configuration?.buildType === "msbuild")
-              console.log("buildTypeMSBuildJobs",buildTypeMSBuildJobs)
               setJenkinsJobs(buildTypeMSBuildJobs)
               break;
             default:
               let otherThanDotNetMSbuildJobs = filteredJobs.filter((job) => job?.configuration?.buildType !== "msbuild" && job?.configuration?.buildType !== "dotnet")
-              console.log("otherThanDotNetMSbuildJobs",otherThanDotNetMSbuildJobs)
               setJenkinsJobs(otherThanDotNetMSbuildJobs)
           }
         }
