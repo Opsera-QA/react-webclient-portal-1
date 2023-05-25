@@ -97,6 +97,9 @@ export const ArgoCdStepConfigurationMetadata = {
     {
       label: "Repository Tag",
       id: "repositoryTag",
+      isRequiredFunction: (model) => {
+        return model?.getData("customImageTag") === true;
+      },
       // isRequired: true,
     },
     {
@@ -141,6 +144,61 @@ export const ArgoCdStepConfigurationMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("kustomizeFlag") === true;
       },
+    },
+    {
+      label: "Use Custom Image",
+      id: "customImageTag"
+    },
+    {
+      label: "Platform",
+      id: "platform",
+      isRequiredFunction: (model) => {
+        return model?.getData("customImageTag") === true;
+      },
+    },
+    {
+      label: "Azure Tool",
+      id: "azureToolConfigId",
+      isRequiredFunction: (model) => {
+        return model?.getData("customImageTag") === true;
+      },
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.MONGO_DB_ID,
+    },
+    {
+      label: "Azure Credential",
+      id: "azureCredentialId",      
+      isRequiredFunction: (model) => {
+        return model?.getData("customImageTag") === true;
+      },
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.MONGO_DB_ID,
+    },
+    {
+      label: "Resource",
+      id: "resource",
+      isRequiredFunction: (model) => {
+        return model?.getData("customImageTag") === true;
+      },
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
+    },
+    {
+      label: "Azure Registry",
+      id: "azureRegistryName",
+      isRequiredFunction: (model) => {
+        return model?.getData("customImageTag") === true;
+      },
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
+    },
+    {
+      label: "Repository",
+      id: "azureRepoName",
+      isRequiredFunction: (model) => {
+        return model?.getData("customImageTag") === true;
+      },
+      regexDefinitionName: "azureLabels",
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
+    },
+    {
+      id: "acrLoginUrl",
     }
   ],
   newObjectFields: {
@@ -171,6 +229,14 @@ export const ArgoCdStepConfigurationMetadata = {
     isBlueGreenDeployment: false,
     dockerStepType: "",
     customParameterId: "",
-    imageReference: ""
+    imageReference: "",
+    customImageTag: false,
+    platform: "",
+    azureToolConfigId: "",
+    azureCredentialId: "",
+    resource: "https://management.azure.com",
+    azureRegistryName: "",
+    azureRepoName: "",
+    acrLoginUrl: "",
   },
 };
