@@ -15,13 +15,21 @@ import IconBase from "components/common/icons/IconBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import ProvarReportView
     from "./ProvarReportView";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import pipelineActions from "../../../../../../../pipeline-actions";
+import useComponentStateReference from "../../../../../../../../../hooks/useComponentStateReference";
 
 function ProvarLogSummaryReportPanel({ pipelineTaskData }) {
     const [provarReportModel, setProvarReportModel] = useState(undefined);
     const [provarObj, setProvarObj] = useState(undefined);
+    const [pipeline, setPipeline] = useState(undefined);
     const [isLoading, setIsLoading] = useState(false);
-    const isMounted = useRef(false);
-
+    const {
+        getAccessToken,
+        toastContext,
+        isMounted,
+        cancelTokenSource,
+    } = useComponentStateReference();
     useEffect(() => {
         isMounted.current = true;
 
@@ -38,9 +46,24 @@ function ProvarLogSummaryReportPanel({ pipelineTaskData }) {
 
     const initializeData = async () => {
         try {
-            const jobDetails = pipelineTaskData?.api_response?.testResult;
+            setIsLoading(true);
+            const jobDetails = DataParsingHelper.parseNestedObject(pipelineTaskData, "api_response.testResult");
             const deployObj = Object.keys(jobDetails)?.length > 0 ? jobDetails.testCase : undefined;
+            if(jobDetails) {
+                jobDetails.pipelineId = DataParsingHelper.parseNestedMongoDbId(pipelineTaskData, "api_response.pipelineId");
+                jobDetails.stepId = DataParsingHelper.parseNestedMongoDbId(pipelineTaskData, "api_response.stepId");
+                jobDetails.runCount = DataParsingHelper.parseNestedInteger(pipelineTaskData, "api_response.runCount");
+                jobDetails.hasDowloadableReport = DataParsingHelper.parseNestedBoolean(pipelineTaskData, "api_response.hasDowloadableReport");
+                jobDetails.expirationTime = DataParsingHelper.parseNestedString(pipelineTaskData, "api_response.expirationTime");
+            }
             setProvarObj(deployObj);
+            const response = await pipelineActions.getPipelineByIdV2(
+              getAccessToken,
+              cancelTokenSource,
+              DataParsingHelper.parseNestedMongoDbId(pipelineTaskData, "api_response.pipelineId"),
+            );
+            const newPipeline = response?.data?.data;
+            setPipeline({...newPipeline});
             if (jobDetails != null) {
                 setProvarReportModel(new Model(jobDetails, provarSummaryLogResultMetadata, false));
             }
@@ -64,6 +87,7 @@ function ProvarLogSummaryReportPanel({ pipelineTaskData }) {
                     <SummaryPanelContainer className={"mx-3 mt-3"}>
                         <ProvarReportSummaryOverview
                             provarResultsModel={provarReportModel}
+                            pipeline={pipeline}
                         />
                         <ProvarReportView
                             provarObj={provarObj}
