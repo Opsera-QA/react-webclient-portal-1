@@ -21,6 +21,7 @@ function DotNetStepJenkinsJobSelectInput({model, setModel, disabled}) {
       fieldName={"toolJobId"}
       jenkinsToolId={model?.getData("toolConfigId")}
       typeFilter={"BUILD"}
+      buildType={"msbuild"}
       model={model}
       setModel={setModel}
       setDataFunction={setDataFunction}
