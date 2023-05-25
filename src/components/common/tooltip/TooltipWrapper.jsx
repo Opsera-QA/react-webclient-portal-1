@@ -83,7 +83,7 @@ export default function TooltipWrapper(
   const getBody = () => {
     if (wrapInDiv === true) {
       return (
-        <div className={"tooltip-wrapper w-100"}>
+        <div className={"tooltip-wrapper d-flex"}>
           {children}
         </div>
       );
