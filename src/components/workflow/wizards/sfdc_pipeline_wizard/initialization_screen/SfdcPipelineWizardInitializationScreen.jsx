@@ -21,7 +21,6 @@ import SfdcPipelineWizardPastRunComponent
   from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardPastRunComponent";
 import { parseError } from "../../../../common/helpers/error-helpers";
 const DataParsingHelper = require("@opsera/persephone/helpers/data/dataParsing.helper");
-import { parseError } from "../../../../common/helpers/error-helpers";
 
 const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, pipeline, gitTaskData, setError }) => {
   const { getAccessToken } = useContext(AuthContext);
