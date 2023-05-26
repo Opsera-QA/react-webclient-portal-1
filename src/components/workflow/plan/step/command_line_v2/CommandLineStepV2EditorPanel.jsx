@@ -5,36 +5,37 @@ import PropTypes from "prop-types";
 import commandLineStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/commandline-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import CommandLineStepJenkinsToolSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineStepJenkinsToolSelectInput";
 import CommandLineStepJenkinsJobSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineStepJenkinsJobSelectInput";
+  from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepJenkinsJobSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import CommandLineJenkinsAccountInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineJenkinsAccountInput";
+  from "components/workflow/plan/step/command_line_v2/inputs/CommandLineJenkinsAccountInput";
 import CommandLineGitRepositoryInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineGitRepositoryInput";
+  from "components/workflow/plan/step/command_line_v2/inputs/CommandLineGitRepositoryInput";
 import CommandLineGitBranchInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineGitBranchInput";
+  from "components/workflow/plan/step/command_line_v2/inputs/CommandLineGitBranchInput";
 import CommandLineBitbucketWorkspaceInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineBitbucketWorkspaceInput";
+  from "components/workflow/plan/step/command_line_v2/inputs/CommandLineBitbucketWorkspaceInput";
 import CommandLineDependencyTypeInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineDependencyTypeInput";
+  from "components/workflow/plan/step/command_line_v2/inputs/CommandLineDependencyTypeInput";
 import CommandLineSourceScriptToggleInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineSourceScriptToggleInput";
-import WorkspaceDeleteToggleInput from "./inputs/WorkspaceDeleteToggleInput";
+  from "components/workflow/plan/step/command_line_v2/inputs/CommandLineSourceScriptToggleInput";
 import StepConfigTerraformStepSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/common/inputs/StepConfigTerraformStepSelectInput";
 import { faHandshake } from "@fortawesome/pro-light-svg-icons";
 import ParameterSelectListInputBase
   from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
-import StepConfigUseTerraformOutput from "../common/inputs/StepConfigUseTerraformOutput";
-import CommandLineSonarScannerToggleInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineSonarScannerToggleInput";
+import CommandLineSonarScannerToggleInput from "components/workflow/plan/step/command_line_v2/inputs/CommandLineSonarScannerToggleInput";
 import RoleRestrictedSonarToolSelectInput
   from "components/common/list_of_values_input/tools/sonar/tool/RoleRestrictedSonarToolSelectInput";
-import CommandLineSonarCustomParametersToggle from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineSonarCustomParametersToggle";
+import CommandLineSonarCustomParametersToggle from "components/workflow/plan/step/command_line_v2/inputs/CommandLineSonarCustomParametersToggle";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import PipelineStepParameterInputBase
   from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBase";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import CommandLineStepJenkinsToolSelectInput
+  from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepJenkinsToolSelectInput";
+import StepConfigUseTerraformOutput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/common/inputs/StepConfigUseTerraformOutput";
 
 function CommandLineStepV2EditorPanel({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -160,14 +161,24 @@ function CommandLineStepV2EditorPanel({ pipelineId, stepTool, stepId, createJob,
       <CommandLineBitbucketWorkspaceInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
       <CommandLineGitRepositoryInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
       <CommandLineGitBranchInput  dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
-      <WorkspaceDeleteToggleInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"workspaceDeleteFlag"} />
+      <BooleanToggleInput
+        dataObject={commandLineStepConfigurationDto}
+        setDataObject={setCommandLineStepConfigurationDataDto}
+        fieldName={"workspaceDeleteFlag"}
+      />
       {/* <AgentLabelsSelectInput
         dataObject={commandLineStepConfigurationDto}
         fieldName={"agentLabels"}
         setDataObject={setCommandLineStepConfigurationDataDto}
       /> */}
       <CommandLineSourceScriptToggleInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"sourceScript"}/>
-      <StepConfigUseTerraformOutput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>
+      <StepConfigUseTerraformOutput
+        dataObject={commandLineStepConfigurationDto}
+        setDataObject={setCommandLineStepConfigurationDataDto}
+        fieldName={"useTerraformOutput"}
+        plan={plan}
+        stepId={stepId}
+      />
       {getTerraformSelect()}
       {getDynamicFields()}
       <PipelineStepParameterInputBase

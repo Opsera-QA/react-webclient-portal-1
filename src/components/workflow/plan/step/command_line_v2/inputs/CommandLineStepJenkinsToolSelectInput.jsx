@@ -5,23 +5,22 @@ import RoleRestrictedJenkinsToolSelectInput
 
 function CommandLineStepJenkinsToolSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
-    let newModel = {...model};
-    newModel.setData("toolConfigId", selectedOption?._id);
-    newModel.setData("toolName",selectedOption?.name);
-    newModel.setData("toolJobName", "");
-    newModel.setData("toolJobId", "");
-    newModel.setData("jobType", "");
-    newModel.setData("type", "");
-    newModel.setData("gitToolId", "");
-    newModel.setData("gitUrl", "");
-    newModel.setData("sshUrl", "");
-    newModel.setData("gitCredential", "");
-    newModel.setData("repository", "");
-    newModel.setData("repoId", "");
-    newModel.setData("gitBranch", "");
-    newModel.setData("workspace", "");
-    newModel.setData("autoScaleEnable", selectedOption?.configuration?.autoScaleEnable || false);
-    setModel({...newModel});
+    model.setData("toolConfigId", selectedOption?._id);
+    model.setData("toolName",selectedOption?.name);
+    model.setData("toolJobName", "");
+    model.setData("toolJobId", "");
+    model.setData("jobType", "");
+    model.setData("type", "");
+    model.setData("gitToolId", "");
+    model.setData("gitUrl", "");
+    model.setData("sshUrl", "");
+    model.setData("gitCredential", "");
+    model.setData("repository", "");
+    model.setData("repoId", "");
+    model.setData("gitBranch", "");
+    model.setData("workspace", "");
+    model.setData("autoScaleEnable", selectedOption?.configuration?.autoScaleEnable || false);
+    setModel({...model});
   };
 
   return (
