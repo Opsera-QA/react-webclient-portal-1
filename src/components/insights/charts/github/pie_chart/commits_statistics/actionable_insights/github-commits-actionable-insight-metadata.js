@@ -34,6 +34,18 @@ const GithubCommitsActionableMetadata = {
       label: "Closed at",
       id: "closedAt",
     },
+    {
+      label: "MR Id",
+      id: "mergeRequestsId",
+    },
+    {
+      label: "Contributor Name",
+      id: "contributorName",
+    },
+    {
+      label: "MR Url",
+      id: "mergeRequestUrl",
+    }
   ],
   newObjectFields: {},
 };
