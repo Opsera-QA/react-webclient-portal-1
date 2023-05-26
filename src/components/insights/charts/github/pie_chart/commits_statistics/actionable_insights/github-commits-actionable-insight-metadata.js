@@ -19,8 +19,8 @@ const GithubCommitsActionableMetadata = {
       id: "totalCommits",
     },
     {
-      label: "Contributor Name",
-      id: "contributorName",
+      label: "Reviewer Name",
+      id: "reviewerName",
     },
     {
       label: "Commit Message",
