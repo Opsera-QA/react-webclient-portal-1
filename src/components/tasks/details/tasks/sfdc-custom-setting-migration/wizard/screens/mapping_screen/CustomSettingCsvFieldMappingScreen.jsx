@@ -166,7 +166,9 @@ const CustomSettingCsvFieldMappingScreen = ({
 
   const handleBackButton = () => {
     // setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.UPLOAD_SCREEN);
-    setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN);
+    setCurrentScreen(
+      CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN,
+    );
   };
 
   const saveAndMoveToNextScreen = async () => {
@@ -176,8 +178,11 @@ const CustomSettingCsvFieldMappingScreen = ({
       wizardModel.setData("fieldMapping", mappedData);
       wizardModel.setData("filterQuery", "");
 
-      let finalSelectedFields = fieldsPropertiesList.filter(field => {
-        return mappedData.some(obj => obj.targetField === field.name && hasStringValue(obj.sourceField));
+      let finalSelectedFields = fieldsPropertiesList.filter((field) => {
+        return mappedData.some(
+          (obj) =>
+            obj.targetField === field.name && hasStringValue(obj.sourceField),
+        );
       });
 
       let newDataObject = { ...wizardModel };
@@ -189,7 +194,7 @@ const CustomSettingCsvFieldMappingScreen = ({
         wizardModel?.getData("selectedCustomSetting")?.componentName
       }`;
 
-      console.log(query);
+      // console.log(query);
       newDataObject.setData("filterQuery", query);
       setWizardModel({ ...newDataObject });
 
@@ -261,7 +266,12 @@ const CustomSettingCsvFieldMappingScreen = ({
     }
 
     return (
-      <div className={"filter-container container-border mt-3"}>
+      <div
+        className={"filter-container container-border mt-3"}
+        style={{
+          minHeight: "calc(100vh - 500px)",
+        }}
+      >
         <div className="d-flex justify-content-center page-description mt-3">
           <Col sm={12}>
             <Row>
@@ -282,7 +292,7 @@ const CustomSettingCsvFieldMappingScreen = ({
         </div>
         <div className={"m-3"}>
           {mappedData && mappedData.length > 1 ? (
-            mappedData.map((field, index,{ length }) => {
+            mappedData.map((field, index, { length }) => {
               return (
                 <Row
                   className="d-flex mx-1 justify-content-between mt-2"
@@ -360,7 +370,11 @@ const CustomSettingCsvFieldMappingScreen = ({
                             setCsvFieldData(newValue, index)
                           }
                           showLabel={false}
-                          dropUp={index+1 > Math.floor(length/2) ? true : false}
+                          dropUp={
+                            length > 6 && index + 1 > Math.floor(length / 2)
+                              ? true
+                              : false
+                          }
                         />
                       </Col>
                     </Row>
