@@ -6,9 +6,9 @@ import SidebarSubheaderText from "components/sidebar/SidebarSubheaderText";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const getVnextLink = () => {
-//   const nodeUrl = DataParsingHelper.parseString(`https://api.opsera-dev.opsera.io`, "");
-//   const parsedUrl = nodeUrl.substring(nodeUrl.indexOf(".") + 1);
-return `https://${REACT_APP_OPSERA_CLIENT_ROOT_URL}/vnext`;
+  const nodeUrl = DataParsingHelper.parseString(`https://api.opsera-dev.opsera.io`, "");
+  const parsedUrl = nodeUrl.substring(nodeUrl.indexOf(".") + 1);
+  return `https://vnext.${parsedUrl}`;
 };
 
 export default function InnovationLabsNavigationLinks({ isSidebarCollapsed, }) {
