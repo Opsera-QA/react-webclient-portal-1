@@ -52,11 +52,11 @@ function JiraChangeFailureRateEditorPanel({
         setMetricFilterModel={setMetricFilterModel}
         metricModel={metricModel}
       />
-      <MetricJiraServiceComponentsFilterInput
+      {/*<MetricJiraServiceComponentsFilterInput
         metricFilterModel={metricFilterModel}
         setMetricFilterModel={setMetricFilterModel}
         metricModel={metricModel}
-      />
+      />*/ }
       <MetricJiraResolutionNamesFilterInput
         metricFilterModel={metricFilterModel}
         setMetricFilterModel={setMetricFilterModel}
@@ -67,11 +67,11 @@ function JiraChangeFailureRateEditorPanel({
         setMetricFilterModel={setMetricFilterModel}
         metricModel={metricModel}
       />
-      <MetricJiraTeamNamesFilterInput
-        metricFilterModel={metricFilterModel}
-        setMetricFilterModel={setMetricFilterModel}
-        metricModel={metricModel}
-      />
+      {/* <MetricJiraTeamNamesFilterInput
+        //metricFilterModel={metricFilterModel}
+        //setMetricFilterModel={setMetricFilterModel}
+        //metricModel={metricModel}
+      /> */}
       <MetricDateRangeFilterInput
         metricModel={metricModel}
         metricFilterModel={metricFilterModel}

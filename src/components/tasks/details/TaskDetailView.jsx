@@ -64,6 +64,7 @@ function TaskDetailView() {
     status,
     runCount,
     updatedAt,
+    taskStartTime,
   } = useGetPollingTaskOrchestrationStatusById(id, 15000);
 
   useEffect(() => {
@@ -144,7 +145,6 @@ function TaskDetailView() {
       case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
         return <SfdxQuickDeployTaskDetailsHelpDocumentation/>;
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
-      case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
       default:
         return null;
     }
@@ -169,6 +169,7 @@ function TaskDetailView() {
           accessRoleData={accessRoleData}
           loadData={loadData}
           runTask={location?.state?.runTask}
+          taskStartTime={taskStartTime}
           status={status}
           runCount={runCount}
         />

@@ -16,7 +16,8 @@ function StandaloneNumberPickerInput(
     defaultValue,
     minimum,
     maximum,
-    handleKeyPressFunction
+    handleKeyPressFunction,
+    incrementValue,
   }) {
 
   if (setDataFunction == null) {
@@ -35,6 +36,7 @@ function StandaloneNumberPickerInput(
       min={typeof minimum === "number" ? minimum : undefined}
       max={typeof maximum === "number" ? maximum : undefined}
       format={formatType && formatTypes[formatType] != null ? formatTypes[formatType] : undefined}
+      step={incrementValue}
     />
   );
 }
@@ -49,6 +51,7 @@ StandaloneNumberPickerInput.propTypes = {
   minimum: PropTypes.number,
   maximum: PropTypes.number,
   handleKeyPressFunction: PropTypes.func,
+  incrementValue: PropTypes.number,
 };
 
 StandaloneNumberPickerInput.defaultProps = {

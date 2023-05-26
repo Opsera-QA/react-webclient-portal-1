@@ -5,6 +5,8 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
+import {Divider} from "temp-library-components/divider/Divider";
+import Col from "react-bootstrap/Col";
 
 export default function PipelineRoleAccessInput(
   {
@@ -42,15 +44,22 @@ export default function PipelineRoleAccessInput(
   const canEdit = PipelineRoleHelper.canEditAccessRoles(userData, pipelineModel?.getCurrentData()) && disabled !== true;
 
   return (
-    <RoleAccessInlineInputBase
-      className={className}
-      fieldName={fieldName}
-      model={pipelineModel}
-      disabled={canEdit !== true}
-      saveData={saveData}
-      visible={visible}
-      lostAccessRerouteRoute={pipelineHelper.getManagementScreenLink()}
-    />
+    <>
+      <Col xs={12}>
+        <RoleAccessInlineInputBase
+          className={className}
+          fieldName={fieldName}
+          model={pipelineModel}
+          disabled={canEdit !== true}
+          saveData={saveData}
+          visible={visible}
+          lostAccessRerouteRoute={pipelineHelper.getManagementScreenLink()}
+        />
+      </Col>
+      <div className={"d-flex my-1 mx-3 w-100"}>
+        <Divider className={"w-100"} />
+      </div>
+    </>
   );
 }
 

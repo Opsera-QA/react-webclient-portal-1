@@ -9,6 +9,8 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
+import toolIdentifierConnectionCheckConstants
+  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function MongodbRealmToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -37,7 +39,7 @@ function MongodbRealmToolConfiguration({ toolData, setUpMode, setCurrentScreen }
       setModel={setMongodbRealmConfigurationDto}
       persistRecord={saveMongodbRealmToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"mongodb_realm"}
+      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.MONGODB_REALM}
       setUpMode={setUpMode}
     >
       <Row>

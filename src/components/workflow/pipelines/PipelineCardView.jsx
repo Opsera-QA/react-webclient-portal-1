@@ -9,7 +9,14 @@ import VanitySetCardView from "components/common/card/VanitySetCardView";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 import pipelineMetadata from "@opsera/definitions/constants/pipelines/pipeline.metadata";
 
-export default function PipelineCardView({ pipelines, loadData, isLoading }) {
+export default function PipelineCardView(
+  {
+    pipelines,
+    loadData,
+    isLoading,
+    noDataMessage,
+    error,
+  }) {
   const history = useHistory();
 
   const loadPipeline = (pipeline) => {
@@ -34,10 +41,14 @@ export default function PipelineCardView({ pipelines, loadData, isLoading }) {
     <VanitySetCardView
       isLoading={isLoading}
       loadData={loadData}
+      noDataMessage={noDataMessage}
+      error={error}
       cards={
         <VerticalCardViewBase
+          isLoading={isLoading}
           data={pipelines}
           getCardFunction={getPipelineCard}
+          noDataMessage={noDataMessage}
         />
       }
     />
@@ -48,4 +59,6 @@ PipelineCardView.propTypes = {
   pipelines: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
+  noDataMessage: PropTypes.any,
+  error: PropTypes.any,
 };

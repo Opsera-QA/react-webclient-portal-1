@@ -265,6 +265,7 @@ function PipelineActivityLogTreeTable(
         titleIcon={showFilterContainerIcon !== false ? faClipboardList : undefined}
         body={getPipelineActivityTable()}
         supportSearch={true}
+        anchor={"logs"}
         exportButton={
           <ExportPipelineActivityLogButton
             className={"ml-2"}

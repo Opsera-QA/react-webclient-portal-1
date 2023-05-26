@@ -13,8 +13,6 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import {WORKFLOW_WIDGET_VIEWS} from "components/landing/v2/widgets/workspace/WorkflowWidgetNavigationBar";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import InfoMessageFieldBase from "components/common/fields/text/message/InfoMessageFieldBase";
-import TaskModel from "components/tasks/task.model";
-import PipelineModel from "components/workflow/pipeline.model";
 import PipelineWorkflowSummaryOverlay from "components/landing/v2/widgets/workspace/PipelineWorkflowSummaryOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import TaskWorkflowSummaryOverlay from "components/landing/v2/widgets/workspace/TaskWorkflowSummaryOverlay";
@@ -22,7 +20,7 @@ import TaskWorkflowSummaryOverlay from "components/landing/v2/widgets/workspace/
 export default function WorkspaceWorkflowSelectionCardView(
   {
     workflowFilterModel,
-    workspaceItems,
+    workflows,
     loadData,
     isLoading,
     heightSize,
@@ -35,18 +33,18 @@ export default function WorkspaceWorkflowSelectionCardView(
     toastContext,
   } = useComponentStateReference();
 
-  const onPipelineSelectFunction = (workspaceItem) => {
+  const onPipelineSelectFunction = (pipeline) => {
     toastContext.showOverlayPanel(
       <PipelineWorkflowSummaryOverlay
-        pipelineModel={new PipelineModel(workspaceItem, false)}
+        pipelineId={pipeline?._id}
       />
     );
   };
 
-  const onTaskSelectFunction = (workspaceItem) => {
+  const onTaskSelectFunction = (task) => {
     toastContext.showOverlayPanel(
       <TaskWorkflowSummaryOverlay
-        taskModel={new TaskModel(workspaceItem, false)}
+        taskId={task?._id}
       />
     );
   };
@@ -57,13 +55,13 @@ export default function WorkspaceWorkflowSelectionCardView(
         return (
           <WorkflowPipelineCard
             pipeline={workspaceItem}
-            // setSelectedFlow={onPipelineSelectFunction}
+            setSelectedFlow={onPipelineSelectFunction}
           />
         );
       case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
         return (
           <WorkflowTaskCard
-            // setSelectedFlow={onTaskSelectFunction}
+            setSelectedFlow={onTaskSelectFunction}
             task={workspaceItem}
           />
         );
@@ -87,7 +85,7 @@ export default function WorkspaceWorkflowSelectionCardView(
 
     if (
       isLoading !== true
-      && (!Array.isArray(workspaceItems) || workspaceItems.length === 0)
+      && (!Array.isArray(workflows) || workflows.length === 0)
     ) {
       if (searchKeyword) {
         return (
@@ -132,7 +130,7 @@ export default function WorkspaceWorkflowSelectionCardView(
     return (
       <VerticalCardViewBase
         getCardFunction={getWorkspaceItemCard}
-        data={workspaceItems}
+        data={workflows}
         isLoading={isLoading}
         hasMoreItems={hasMoreItems}
         loadMoreItems={loadMoreWorkflows}
@@ -154,7 +152,7 @@ export default function WorkspaceWorkflowSelectionCardView(
 }
 
 WorkspaceWorkflowSelectionCardView.propTypes = {
-  workspaceItems: PropTypes.array,
+  workflows: PropTypes.array,
   workflowFilterModel: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,

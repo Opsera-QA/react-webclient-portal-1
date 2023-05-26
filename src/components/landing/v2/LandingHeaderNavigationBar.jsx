@@ -8,12 +8,19 @@ import GitCustodianRoleHelper from "@opsera/know-your-role/roles/compliance/git_
 import useGetPlatformSettingsFeatureFlagByName from "hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
 import platformSettingFeatureConstants
   from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
+import sessionHelper from "utils/session.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import entitlementConstants
+  from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
+import useGetOrganizationSettingsEntitlementByName
+  from "hooks/settings/organization_settings/entitlements/useGetOrganizationSettingsEntitlementByName";
 
 const HEADER_NAVIGATION_SCREENS = {
   HOME: "home",
   WORKSPACE: "workspace",
   UNIFIED_INSIGHTS: "insights",
   GIT_CUSTODIAN: "gitCustodian",
+  SALESFORCE_LANDING: "salesforceLanding",
 };
 
 const getActiveScreen = (currentPath) => {
@@ -23,6 +30,10 @@ const getActiveScreen = (currentPath) => {
 
   if (currentPath?.startsWith("/workspace")) {
     return HEADER_NAVIGATION_SCREENS.WORKSPACE;
+  }
+
+  if (currentPath?.startsWith("/salesforce")) {
+    return HEADER_NAVIGATION_SCREENS.SALESFORCE_LANDING;
   }
 
   // if (currentPath?.startsWith("/unified-insights")) {
@@ -49,6 +60,9 @@ export default function LandingHeaderNavigationBar() {
   } = useComponentStateReference();
   const {isActive} = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_TOP_NAVIGATION_BAR);
   const nextGenerationWorkspace = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_WORKSPACE);
+  const salesforceLandingPageEntitlement = useGetOrganizationSettingsEntitlementByName(entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_LANDING_SCREEN);
+  const fromWorkspaceUrlParameter = sessionHelper.getStoredUrlParameter("fromWorkspace");
+  const fromWorkspace = DataParsingHelper.parseBooleanV2(fromWorkspaceUrlParameter);
 
   useEffect(() => {}, [currentPath]);
 
@@ -62,6 +76,14 @@ export default function LandingHeaderNavigationBar() {
       case HEADER_NAVIGATION_SCREENS.WORKSPACE:
         if (currentPath !== "/workspace") {
           history.push("/workspace");
+        }
+        break;
+      case HEADER_NAVIGATION_SCREENS.SALESFORCE_LANDING:
+        // if (currentPath !== "/unified-insights") {
+        //   history.push("/unified-insights");
+        // }
+        if (currentPath !== "/salesforce") {
+          history.push("/salesforce");
         }
         break;
       case HEADER_NAVIGATION_SCREENS.UNIFIED_INSIGHTS:
@@ -97,12 +119,21 @@ export default function LandingHeaderNavigationBar() {
         />
         <SubMenuItem
           className={"px-3"}
-          activeKey={getActiveScreen(currentPath)}
+          activeKey={fromWorkspace === true ? HEADER_NAVIGATION_SCREENS.WORKSPACE : getActiveScreen(currentPath)}
           setActiveKey={handleScreenClick}
           label={"Workspace"}
           itemKey={HEADER_NAVIGATION_SCREENS.WORKSPACE}
           disabled={currentPath?.startsWith("/workspace") === true}
           visible={nextGenerationWorkspace?.platformSettingsFeatureFlag?.active === true}
+        />
+        <SubMenuItem
+          className={"px-3"}
+          activeKey={getActiveScreen(currentPath)}
+          setActiveKey={handleScreenClick}
+          label={<div>Salesforce</div>}
+          itemKey={HEADER_NAVIGATION_SCREENS.SALESFORCE_LANDING}
+          disabled={currentPath?.startsWith("/salesforce") === true}
+          visible={salesforceLandingPageEntitlement.isActive === true}
         />
         <SubMenuItem
           className={"px-3"}

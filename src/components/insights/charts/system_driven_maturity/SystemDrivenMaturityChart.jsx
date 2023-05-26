@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { OverlayTrigger, Popover } from "react-bootstrap";
 import {
   MATURITY_SCORE_TEXT,
   MATURITY_SCORE_VALUE
@@ -40,7 +41,40 @@ SystemDrivenMaturityChart.propTypes = {
   onRowSelect: PropTypes.func
 };
 
-const Icon = ({ color, onSelect }) => {
+const determineColor = (maturity, score, previous) => {
+  if (score === previous && score === maturity) {
+    return 'orange';
+  }
+
+  if (score === maturity) {
+    // determine if new score is greater or lower than previous
+    return MATURITY_SCORE_VALUE[score] > MATURITY_SCORE_VALUE[previous] ? 'green' : 'red';
+  }
+
+  if (previous === maturity) {
+    return 'grey';
+  }
+  
+  // no color, no icon
+  return null;
+};
+
+const Icon = ({ maturity, item, onSelect }) => {
+  if (!maturity) {
+    return null;
+  }
+
+  const {
+    score,
+    previousScore,
+    deploymentFrequencyMaturityScoreText,
+    leadTimeForChangesMaturityScoreText,
+    changeFailureRateMaturityScoreText,
+    meanTimeToResolutionMaturityScoreText,
+  } = item;
+
+  const color = determineColor(maturity, score, previousScore);
+
   if (!color) {
     return null;
   }
@@ -58,45 +92,53 @@ const Icon = ({ color, onSelect }) => {
     ...(isClickable && { cursor: 'pointer' })
   };
 
-  return <i style={style} className="fa-solid fa-circle" onClick={onClickHandler} ></i>;
+  const icon = <i style={style} className="fa-solid fa-circle" onClick={onClickHandler} ></i>;
+
+  if (isClickable) {
+    return (
+      <OverlayTrigger
+        rootClose
+        placement="left"
+        overlay={
+          <Popover
+            id="popover-basic"
+            style={{ maxWidth: "500px" }}
+          >
+            <Popover.Content>
+              <div className='text-muted'>
+                <div className="mb-2">
+                  Deployment Frequency: {deploymentFrequencyMaturityScoreText}
+                </div>
+                <div className="mb-2">
+                  Lead Time For Changes: {leadTimeForChangesMaturityScoreText}
+                </div>
+                <div className="mb-2">
+                  Change Failure Rate: {changeFailureRateMaturityScoreText}
+                </div>
+                <div className=" mb-2">
+                  Mean Time To Resolution: {meanTimeToResolutionMaturityScoreText}
+                </div>
+              </div>
+            </Popover.Content>
+          </Popover>
+        }
+      >
+        {icon}
+      </OverlayTrigger>
+    );
+  }
+
+  return icon;
 };
 
 Icon.propTypes = {
-  color: PropTypes.oneOf(['grey', 'green', 'red', 'orange']),
+  maturity: PropTypes.oneOf(Object.values(MATURITY_SCORE_TEXT)).isRequired,
+  item: MaturityScoreItemType,
   onSelect: PropTypes.func
 };
 
-const determineColor = (maturity, score, previous) => {
-  const color = {
-    [maturity]: ''
-  };
-
-  if (score === previous && score === maturity) {
-    color[maturity] = 'orange';
-    return color;
-  }
-
-  if (score === maturity) {
-    // determine if new score is greater or lower than previous
-    color[maturity] = MATURITY_SCORE_VALUE[score] > MATURITY_SCORE_VALUE[previous] ? 'green' : 'red';
-    return color;
-  }
-
-  if (previous === maturity) {
-    color[maturity] = 'grey';
-    return color;
-  }
-};
-
 const MaturityScoreRow = ({ item, onRowSelect }) => {
-  const { name, score, previousScore } = item;
-
-  const icons = {
-    ...determineColor(MATURITY_SCORE_TEXT.LOW, score, previousScore),
-    ...determineColor(MATURITY_SCORE_TEXT.MEDIUM, score, previousScore),
-    ...determineColor(MATURITY_SCORE_TEXT.HIGH, score, previousScore),
-    ...determineColor(MATURITY_SCORE_TEXT.ELITE, score, previousScore),
-  };
+  const { name } = item;
 
   const onClickHandler = () => {
     if (onRowSelect) {
@@ -108,16 +150,16 @@ const MaturityScoreRow = ({ item, onRowSelect }) => {
     <tr className='d-flex'>
       <td className="py-2 text-left" style={{ flex: 4 }}>{name}</td>
       <td className="py-2" style={{ flex: 1 }}>
-        <Icon color={icons[MATURITY_SCORE_TEXT.LOW]} onSelect={onClickHandler} />
+        <Icon maturity={MATURITY_SCORE_TEXT.LOW} item={item} onSelect={onClickHandler} />
       </td>
       <td className="py-2" style={{ flex: 1 }}>
-        <Icon color={icons[MATURITY_SCORE_TEXT.MEDIUM]} onSelect={onClickHandler} />
+        <Icon maturity={MATURITY_SCORE_TEXT.MEDIUM} item={item} onSelect={onClickHandler} />
       </td>
       <td className="py-2" style={{ flex: 1 }}>
-        <Icon color={icons[MATURITY_SCORE_TEXT.HIGH]} onSelect={onClickHandler} />
+        <Icon maturity={MATURITY_SCORE_TEXT.HIGH} item={item} onSelect={onClickHandler} />
       </td>
       <td className="py-2" style={{ flex: 1 }}>
-        <Icon color={icons[MATURITY_SCORE_TEXT.ELITE]} onSelect={onClickHandler} />
+        <Icon maturity={MATURITY_SCORE_TEXT.ELITE} item={item} onSelect={onClickHandler} />
       </td>
     </tr>
   );

@@ -2,14 +2,20 @@ import { useEffect, useState } from "react";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
-import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
 import useTaskActions from "hooks/workflow/tasks/useTaskActions";
+import DateHelper from "@opsera/persephone/helpers/date/date.helper";
 
 export default function useGetTaskRunMetricsById(
   id,
+  taskRunCount,
   handleErrorFunction,
 ) {
-  const [taskRunDurationMetrics, setTaskRunDurationMetrics] = useState({});
+  const [lastRunDurationText, setLastRunDurationText] = useState("");
+  const [lastFiveRunsDurationText, setLastFiveRunsDurationText] = useState("");
+  const [totalAverageDurationText, setTotalAverageDurationText] = useState("");
+  const [lastRunDuration, setLastRunDuration] = useState(undefined);
+  const [lastFiveRunsDurationAverage, setLastFiveRunsDurationAverage] = useState(undefined);
+  const [totalAverageDuration, setTotalAverageDuration] = useState(undefined);
   const {
     isLoading,
     error,
@@ -19,32 +25,40 @@ export default function useGetTaskRunMetricsById(
   const taskActions = useTaskActions();
 
   useEffect(() => {
-    setTaskRunDurationMetrics({});
+    setLastRunDurationText("");
+    setLastFiveRunsDurationText("");
+    setTotalAverageDurationText("");
 
     if (isMongoDbId(id) === true && loadData) {
-      loadData(getOrchestrationStatus, handleErrorFunction).catch(() => {});
+      loadData(getTaskRunMetricsById, handleErrorFunction).catch(() => {});
     }
-  }, [id]);
+  }, [id, taskRunCount]);
 
-  const getOrchestrationStatus = async () => {
+  const getTaskRunMetricsById = async () => {
     if (isMongoDbId(id) !== true) {
       return;
     }
 
     const response = await taskActions.getTaskRunDurationMetrics(id,);
-    console.log("response: " + JSON.stringify(response));
-    const runDurationMetrics = DataParsingHelper.parseNestedObject(response, "data.data", {});
-
-    if (ObjectHelper.areObjectsEqualLodash(taskRunDurationMetrics, runDurationMetrics) !== true) {
-      setTaskRunDurationMetrics({...runDurationMetrics});
-    }
+    const lastRunDurationMs = DataParsingHelper.parseNestedInteger(response, "data.data.lastRunDurationInMs");
+    const lastFiveRunsDurationAverageInMs = DataParsingHelper.parseNestedInteger(response, "data.data.lastFiveRunsDurationAverageInMs");
+    const totalAverageInMs = DataParsingHelper.parseNestedInteger(response, "data.data.totalAverageInMs");
+    setLastRunDuration(lastRunDurationMs);
+    setLastFiveRunsDurationAverage(lastFiveRunsDurationAverageInMs);
+    setTotalAverageDuration(totalAverageInMs);
+    setLastRunDurationText(DataParsingHelper.parseString(DateHelper.humanizeDurationForMilliseconds(lastRunDurationMs, false), ""));
+    setLastFiveRunsDurationText(DataParsingHelper.parseString(DateHelper.humanizeDurationForMilliseconds(lastFiveRunsDurationAverageInMs, false), ""));
+    setTotalAverageDurationText(DataParsingHelper.parseString(DateHelper.humanizeDurationForMilliseconds(totalAverageInMs, false), ""));
   };
 
   return ({
-    lastRunDurationInMs: taskRunDurationMetrics?.lastRunDurationInMs,
-    totalAverageDurationInMs: taskRunDurationMetrics?.totalAverageDurationInMs,
-    lastFiveRunsDurationAverageInMs: taskRunDurationMetrics?.lastFiveRunsDurationAverageInMs,
-    loadData: () => loadData(getOrchestrationStatus, handleErrorFunction),
+    lastRunDurationText: lastRunDurationText,
+    lastFiveRunsDurationText: lastFiveRunsDurationText,
+    totalAverageDurationText: totalAverageDurationText,
+    lastRunDuration: lastRunDuration,
+    lastFiveRunsDurationAverage: lastFiveRunsDurationAverage,
+    totalAverageDuration: totalAverageDuration,
+    loadData: () => loadData(getTaskRunMetricsById, handleErrorFunction),
     isLoading: isLoading,
     error: error,
     setError: setError,

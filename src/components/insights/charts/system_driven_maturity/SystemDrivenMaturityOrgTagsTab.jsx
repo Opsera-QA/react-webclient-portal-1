@@ -9,8 +9,10 @@ import doraActions from "../dora/dora.action";
 import { MaturityScoreItemType } from './maturityScoreItemType';
 import SystemDrivenMaturityTimelineChart from './SystemDrivenMaturityTimelineChart';
 import SystemDrivenMaturityChart from './SystemDrivenMaturityChart';
+import { formatForSDMTimelineChart, formatMaturityScoreItems } from './util';
+import {Col, Row} from "react-bootstrap";
 
-function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, group, onSelect }) {
+function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, group, onSelect, getLegends, orgData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metricData, setMetricData] = useState(null);
@@ -57,17 +59,13 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
         group
       });
 
-      const { orgTags, chartData } = response?.data;
+      const { chartData } = response?.data;
+      // TODO:  THIS HAS TO BE DONE FOR CHART DATA AS WELL, CHART DATA IS NOT COMBINED FOR ALL THE ORGS
+      const { orgTags } = orgData;
 
       if (isMounted?.current === true) {
         if (orgTags?.length) {
-          setMetricData(
-            orgTags.map(({ name, overallMaturityScoreText, previousOverallMaturityScoreText }) => ({
-              name,
-              score: overallMaturityScoreText,
-              previousScore: previousOverallMaturityScoreText
-            }))
-          ); 
+          setMetricData(formatMaturityScoreItems(orgTags)); 
         }
 
         if (chartData) {
@@ -75,19 +73,19 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
           setMaturityChartData([
             {
               id: 'LTFC',
-              data: ltfc.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
+              data: formatForSDMTimelineChart(ltfc),
             },
             {
               id: 'DF',
-              data: df.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
+              data: formatForSDMTimelineChart(df),
             },
             {
               id: 'MTTR',
-              data: mttr.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
+              data: formatForSDMTimelineChart(mttr),
             },
             {
               id: 'CFR',
-              data: cfr.map(({ x, sdmScore, sdmScoreText, range }) => ({ x, y: sdmScore, sdmScoreText, range })),
+              data: formatForSDMTimelineChart(cfr),
             }
           ]);
         }
@@ -128,7 +126,15 @@ function SystemDrivenMaturityOrgTagsTab ({ kpiConfiguration, dashboardData, grou
         <SystemDrivenMaturityTimelineChart data={maturityChartData} />
       </div>
       <div style={{ fontSize: '2rem' }}>
-        <SystemDrivenMaturityChart items={metricData} onRowSelect={onSelect} />
+        <Row>
+          <Col xs={9} sm={9} md={9} lg={9} xl={9}>
+            <SystemDrivenMaturityChart items={metricData} onRowSelect={onSelect} />
+          </Col>
+          <Col xs={3} sm={3} md={3} lg={3} xl={3}>
+            {getLegends(metricData)}
+          </Col>
+        </Row>
+
       </div>
     </Container>
   );
@@ -138,7 +144,9 @@ SystemDrivenMaturityOrgTagsTab.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   group: MaturityScoreItemType,
-  onSelect: PropTypes.func
+  onSelect: PropTypes.func,
+  getLegends: PropTypes.func,
+  orgData: PropTypes.object
 };
 
 export default SystemDrivenMaturityOrgTagsTab;

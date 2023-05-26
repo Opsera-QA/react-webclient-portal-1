@@ -29,6 +29,7 @@ const pipelineFields = [
   "workflow.last_step",
   "workflow.run_count",
   "workflow.last_run",
+  "workflow.plan.tool.tool_identifier",
   "createdAt",
   "updatedAt",
 ];
@@ -131,6 +132,7 @@ function PipelineManagement() {
         loadData={loadData}
         pipelines={pipelines}
         subscribedPipelineIds={subscribedPipelineIds}
+        error={error}
       />
     );
   };
@@ -142,6 +144,7 @@ function PipelineManagement() {
         pipelines={pipelines}
         loadData={loadData}
         onRowClickFunction={onRowSelect}
+        error={error}
       />
     );
   };
@@ -180,9 +183,7 @@ function PipelineManagement() {
       isSoftLoading={isLoading}
       filterModel={pipelineFilterModel}
       setFilterModel={setPipelineFilterModel}
-      helpComponent={
-        <PipelinesHelpDocumentation/>
-      }
+      helpComponent={<PipelinesHelpDocumentation/>}
     >
       {getPipelinesBody()}
     </ScreenContainer>

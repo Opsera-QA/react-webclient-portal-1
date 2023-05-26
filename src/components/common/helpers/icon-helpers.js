@@ -37,10 +37,13 @@ export const getToolIdentifiersWithMissingImages = () => {
 export function getLargeVendorIconFromToolIdentifier(
   toolIdentifier,
   defaultIcon = faWrench,
+  scaleFactor = 1,
 ) {
   if (toolIdentifier == null) {
     return <></>;
   }
+
+  const iconFontSize = `${75 * scaleFactor}px`;
 
   switch (toolIdentifier) {
     case toolIdentifierConstants.TOOL_IDENTIFIERS.OCTOPUS:
@@ -48,7 +51,7 @@ export function getLargeVendorIconFromToolIdentifier(
         <IconBase
           icon={faOctopusDeploy}
           iconStyling={{color: "#0D80D8"}}
-          iconClassName={"title-fa-icon"}
+          iconFontSize={iconFontSize}
         />
       );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
@@ -59,7 +62,7 @@ export function getLargeVendorIconFromToolIdentifier(
           imageClassName={"my-auto"}
           icon={faSalesforce}
           iconStyling={{color: "#0D80D8"}}
-          iconClassName={"title-fa-icon"}
+          iconFontSize={iconFontSize}
         />
       );
   }
@@ -68,9 +71,11 @@ export function getLargeVendorIconFromToolIdentifier(
   const imageHeight = vendorImageConstants.getRecommendedCardVendorImageHeightForToolIdentifier(toolIdentifier);
 
   if (imageLink === vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.OPSERA) {
+    const imageSize = 100 * scaleFactor;
+
     return (
       <OpseraInfinityLogo
-        desiredHeight={100}
+        desiredHeight={imageSize}
         className={"d-flex h-100"}
         imageClassName={"my-auto"}
       />
@@ -78,11 +83,12 @@ export function getLargeVendorIconFromToolIdentifier(
   }
 
   if (imageLink) {
+    const scaledImageHeight = imageHeight ? imageHeight * scaleFactor : imageHeight;
     return (
       <ImageBase
         className={"d-flex h-100"}
         imageClassName={"my-auto"}
-        height={imageHeight}
+        height={scaledImageHeight}
         imageSource={imageLink}
       />
     );
@@ -91,21 +97,23 @@ export function getLargeVendorIconFromToolIdentifier(
   return (
     <IconBase
       icon={defaultIcon}
-      iconClassName={"title-fa-icon wrench"}
+      iconFontSize={iconFontSize}
     />
   );
 }
 
-export function getLargeVendorIconComponentFromTaskType (taskType) {
+export function getLargeVendorIconComponentFromTaskType (taskType, scaleFactor = 1) {
   if (taskType == null) {
     return <></>;
   }
+
+  const iconFontSize = `${75 * scaleFactor}px`;
 
   if (taskType === TASK_TYPES.GITSCRAPER) {
     return (
       <IconBase
         icon={faShieldKeyhole}
-        iconClassName={"title-fa-icon"}
+        iconFontSize={iconFontSize}
       />
     );
   }
@@ -117,34 +125,49 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
 
   if (gitBasedSalesforceTasks.includes(taskType)) {
     return (
-      <ImageBase
-        height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GIT_TASK)}
-        imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GIT_TASK}
+      <IconBase
+        className={"d-flex h-100"}
+        imageClassName={"my-auto"}
+        icon={faSalesforce}
+        iconStyling={{color: "#0D80D8"}}
+        iconFontSize={iconFontSize}
       />
+      // <ImageBase
+      //   height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GIT_TASK)}
+      //   imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GIT_TASK}
+      // />
     );
   }
 
+  const scaledImageHeight = 100 * scaleFactor;
   const category = taskTypeConstants.getTaskCategoryForType(taskType);
 
   switch (category) {
     case TASK_TYPE_CATEGORIES.SALESFORCE:
       return (
-        <ImageBase
-          height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL)}
-          imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL}
+        <IconBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          icon={faSalesforce}
+          iconStyling={{color: "#0D80D8"}}
+          iconFontSize={iconFontSize}
         />
+        // <ImageBase
+        //   height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL)}
+        //   imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL}
+        // />
       );
     case TASK_TYPE_CATEGORIES.GIT:
       return (
         <ImageBase
-          height={100}
+          height={scaledImageHeight}
           imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GIT}
         />
       );
     case TASK_TYPE_CATEGORIES.AWS:
       return (
         <ImageBase
-          height={100}
+          height={scaledImageHeight}
           imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AWS}
         />
       );
@@ -152,61 +175,47 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
       return (
         <IconBase
           icon={faClipboardListCheck}
-          iconClassName={"title-fa-icon"}
+          iconFontSize={`${iconFontSize}px`}
         />
       );
     case TASK_TYPE_CATEGORIES.AZURE:
       return (
         <ImageBase
-          height={100}
+          height={scaledImageHeight}
           imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AZURE}
         />
       );
     default:
       return (
         <ImageBase
-          height={100}
+          height={scaledImageHeight}
           imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SOFTWARE_DEVELOPMENT_GENERAL}
         />
       );
   }
 }
 
-export function getLargeVendorIconFromTaskType (taskType) {
-  if (taskType == null) {
-    return <></>;
-  }
-
-  if (taskType === TASK_TYPES.GITSCRAPER) {
-    return faShieldKeyhole;
-  }
-
-  const category = taskTypeConstants.getTaskCategoryForType(taskType);
-
-  switch (category) {
-    case TASK_TYPE_CATEGORIES.SALESFORCE:
-      return faSalesforce;
-    case TASK_TYPE_CATEGORIES.GIT:
-      return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GIT;
-    case TASK_TYPE_CATEGORIES.AWS:
-      return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AWS;
-    case TASK_TYPE_CATEGORIES.COMPLIANCE:
-      return faClipboardListCheck;
-    case TASK_TYPE_CATEGORIES.AZURE:
-      return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AZURE;
-    default:
-      return faTasks;
-  }
-}
-
-export function getLargeVendorIconComponentFromPipeline (pipeline) {
+export function getLargeVendorIconComponentFromPipeline (pipeline, scaleFactor = 1) {
   const type = pipelineTypeConstants.getTypeForPipeline(pipeline, false);
+  const iconFontSize = `${75 * scaleFactor}px`;
 
   if (type === PIPELINE_TYPES.MACHINE_LEARNING) {
     return (
       <IconBase
         icon={faMicrochip}
-        iconClassName={"title-fa-icon"}
+        iconFontSize={iconFontSize}
+      />
+    );
+  }
+
+  if (type === PIPELINE_TYPES.SALESFORCE) {
+    return (
+      <IconBase
+        className={"d-flex h-100"}
+        imageClassName={"my-auto"}
+        icon={faSalesforce}
+        iconStyling={{color: "#0D80D8"}}
+        iconFontSize={iconFontSize}
       />
     );
   }
@@ -216,9 +225,11 @@ export function getLargeVendorIconComponentFromPipeline (pipeline) {
   );
 
   if (imageLink === vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.OPSERA) {
+    const imageSize = 100 * scaleFactor;
+
     return (
       <OpseraInfinityLogo
-        desiredHeight={100}
+        desiredHeight={imageSize}
         className={"d-flex h-100"}
         imageClassName={"my-auto"}
       />
@@ -230,69 +241,12 @@ export function getLargeVendorIconComponentFromPipeline (pipeline) {
       ? vendorImageConstants.getRecommendedCardVendorImageHeightForImageLink(imageLink)
       : platformImageConstants.getRecommendedCardPlatformImageHeight(imageLink);
 
+  const scaledImageHeight = imageHeight ? imageHeight * scaleFactor : imageHeight;
+
   return (
     <ImageBase
-      height={imageHeight}
+      height={scaledImageHeight}
       imageSource={imageLink}
     />
   );
-}
-
-export function getVendorTitle (toolIdentifier) {
-  if (toolIdentifier == null) {
-    return "";
-  }
-
-  switch (toolIdentifier) {
-    case "jira":
-      return "Jira";
-    case "aws_account":
-      return "AWS";
-    case "elastic-beanstalk":
-      return "Elastic Beanstalk";
-    case "bitbucket":
-      return "BitBucket";
-    case "docker-push":
-      return "Docker";
-    case "github":
-      return "Github";
-    case "gitlab":
-      return "Gitlab";
-    case "azure":
-      return "Azure";
-    case "octopus":
-      return "Octopus Deploy";
-    case "sfdc":
-      return "Salesforce";
-    case "slack":
-      return "Slack";
-    case "jenkins":
-      return "Jenkins";
-    case "teams":
-      return "Teams";
-    case "terraform":
-      return "Terraform";
-    case "gcp-deploy":
-      return "Google Cloud Platform";
-    case "junit":
-      return "JUnit";
-    case "selenium":
-      return "Selenium";
-    case "anchor":
-      return "Anchor";
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
-      return "Argo CD";
-    case "sonar":
-      return "SonarQube";
-    case "spinnaker":
-      return "Spinnaker";
-    case "xunit":
-      return "xUnit";
-    case "teamcity":
-      return "TeamCity";
-    case "twistlock":
-      return "Twistlock";
-    default:
-      return "";
-  }
 }

@@ -6,7 +6,9 @@ import { scheduledTaskActions } from "components/common/fields/scheduler/schedul
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import SchedulerFieldBase from "components/common/fields/scheduler/SchedulerFieldBase";
-import { PIPELINE_TYPES } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
+import {
+  PIPELINE_TYPES,
+} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 function PipelineSchedulerField(
@@ -18,12 +20,12 @@ function PipelineSchedulerField(
   }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [pipelineTypes, setPipelineTypes] = useState([]);
   const [taskCount, setTaskCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const pipelineTypes = pipelineModel?.getArrayData("type");
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -52,10 +54,8 @@ function PipelineSchedulerField(
     try {
       setIsLoading(true);
       setError(undefined);
-      const types = pipelineModel?.getArrayData("type");
-      setPipelineTypes(types);
 
-      if (Array.isArray(types) && !pipelineTypes.includes("informatica") && !pipelineTypes.includes("sfdc")) {
+      if (Array.isArray(pipelineTypes) && !pipelineTypes.includes("informatica") && !pipelineTypes.includes("sfdc")) {
         await getScheduledTasksCount(cancelSource);
       }
     } catch (error) {

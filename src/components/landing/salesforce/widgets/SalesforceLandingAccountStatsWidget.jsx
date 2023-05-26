@@ -9,7 +9,7 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import { getSingularOrPluralString } from "components/common/helpers/string-helpers";
 import OpseraInfinityLogoLarge from "components/logo/OpseraInfinityLogoLarge";
 import { widgetHelper } from "temp-library-components/helpers/widgets/widget.helper";
-import {EXTERNAL_LINKS} from "components/header/legacy/HeaderNavBar";
+import {EXTERNAL_LINKS} from "assets/links/externalLinks";
 import { ExternalLink } from "temp-library-components/link/ExternalLink";
 
 // TODO: This needs to be rewritten to be standardized and cleaned up
@@ -121,7 +121,7 @@ export default function SalesforceLandingAccountStatsWidget({ className }) {
     if (totalCount === 0) {
       return (
         <CenteredContentWrapper>
-          <div className={"my-4 marketingModulesTextLarger"}>
+          <div className={"my-4"}>
             Get started below to create your first Salesforce Workflow.
           </div>
         </CenteredContentWrapper>
@@ -131,7 +131,7 @@ export default function SalesforceLandingAccountStatsWidget({ className }) {
     if (totalRunCount === 0) {
       return (
         <CenteredContentWrapper>
-          <div className={"my-4 marketingModulesTextLarger"}>
+          <div className={"my-4"}>
             Select a workflow below and hit run to get started.
           </div>
         </CenteredContentWrapper>
@@ -252,10 +252,10 @@ export default function SalesforceLandingAccountStatsWidget({ className }) {
             </div>
             <CenteredContentWrapper>
               <div className={"m-2"}>
-                <div className={"marketingModulesTextLarger"}>
+                <div className={""}>
                   {getItemCounts()}
                 </div>
-                <div className={"mt-1 marketingModulesTextLarger"}>
+                <div className={"mt-1"}>
                   {getWorkflowHealthStatus()}
                 </div>
               </div>

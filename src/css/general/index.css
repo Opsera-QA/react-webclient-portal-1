@@ -62,7 +62,12 @@ primary analytics font*/
     letter-spacing: 1px;
 }
 
-.metric-block-footer-text {
+.vanity-focus-text {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.metric-block-footer-text, .vanity-label {
     font-size: .85rem;
     letter-spacing: 1px;
 }
@@ -465,6 +470,10 @@ a:hover, .active, .link-text:hover {
 
 .col-header-text {
     font-weight: bold;
+    font-size: larger;
+}
+
+.font-larger {
     font-size: larger;
 }
 
@@ -873,6 +882,10 @@ a:hover, .active, .link-text:hover {
     border-color: #dc3545;
 }
 
+.anchored-content {
+    box-shadow: 0 0 10px rgba(25, 137, 249, 1);
+}
+
 .code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
@@ -896,51 +909,30 @@ a:hover, .active, .link-text:hover {
     word-break: keep-all;
 }
 
+.console-text, .console-text-invert, .console-text-invert-modal, .jsonBlockText {
+    line-height: 1.25em !important;
+    font: 1em Inter, monospace;
+    white-space: pre-wrap; /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+    padding: 10px;
+}
+
 .console-text {
     background-color: black;
     background-image: radial-gradient(
-            rgb(56, 75, 112, 0.75), black 120%
+          rgb(56, 75, 112, 0.5), black 120%
     );
-    padding: 10px;
     color: white;
-    font: .8em Inconsolata, monospace;
-    white-space: pre-wrap; /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-    white-space: -pre-wrap; /* Opera 4-6 */
-    white-space: -o-pre-wrap; /* Opera 7 */
-    word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
 
 .console-text-invert {
-    padding: 10px;
     color: black;
-    font: .8em Inconsolata, monospace;
-    white-space: pre-wrap; /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-    white-space: -pre-wrap; /* Opera 4-6 */
-    white-space: -o-pre-wrap; /* Opera 7 */
-    word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
 
 .console-text-invert-modal {
-    padding: 10px;
     color: black;
-    font: .95em Inconsolata, monospace;
-    white-space: pre-wrap; /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-    white-space: -pre-wrap; /* Opera 4-6 */
-    white-space: -o-pre-wrap; /* Opera 7 */
-    word-wrap: break-word; /* Internet Explorer 5.5+ */
-}
-
-.json-block-text {
-    padding: 10px;
-    font: Inconsolata, monospace;
-    white-space: pre-wrap; /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-    white-space: -pre-wrap; /* Opera 4-6 */
-    white-space: -o-pre-wrap; /* Opera 7 */
-    word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
 
 /*  Modal Style Changes */

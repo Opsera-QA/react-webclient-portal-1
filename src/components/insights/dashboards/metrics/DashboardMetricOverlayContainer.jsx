@@ -51,6 +51,8 @@ import GithubMostActiveContributorsEditorPanel from "../../charts/github/table/m
 import GithubPendingMergeRequestsEditorPanel from "../../charts/github/table/pending_merge_requests/GithubPendingMergeRequestsEditorPanel";
 import GithubRecentMergeRequestsEditorPanel from "../../charts/github/table/recent_merge_requests/GithubRecentMergeRequestsEditorPanel";
 import GithubCommitsStatisticsEditorPanel from "../../charts/github/pie_chart/commits_statistics/GithubCommitsStatisticsEditorPanel";
+import JenkinsChangeFailureRateEditorPanel
+  from "../../charts/jenkins/pie_chart/change_failure_rate/JenkinsChangeFailureRateEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer({
@@ -524,6 +526,16 @@ function DashboardMetricOverlayContainer({
             unpackedFilterData={unpackedFilterData}
             kpiConfiguration={kpiConfiguration}
           />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.JENKINS_CHANGE_FAILURE_RATE_V2:
+        return (
+            <JenkinsChangeFailureRateEditorPanel
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+                unpackedFilterData={unpackedFilterData}
+                kpiConfiguration={kpiConfiguration}
+            />
         );
     }
   };

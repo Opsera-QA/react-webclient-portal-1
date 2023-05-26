@@ -75,6 +75,11 @@ pipelineTypeConstants.getTypeForTypesArray = (pipelineTypes, defaultToSdlc = tru
   return parsedTypes[0];
 };
 
+pipelineTypeConstants.isSalesforcePipeline = (pipeline) => {
+  const type = pipelineTypeConstants.getTypeForPipeline(pipeline);
+  return type === pipelineTypeConstants.PIPELINE_TYPES.SALESFORCE;
+};
+
 pipelineTypeConstants.getLabelForPipelineTypeArray = (pipelineTypes) => {
   const primaryPipelineType = pipelineTypeConstants.getTypeForTypesArray(pipelineTypes);
   return getPipelineTypeLabel(primaryPipelineType);

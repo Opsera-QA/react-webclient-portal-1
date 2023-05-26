@@ -53,6 +53,7 @@ const ServiceNowPipelineStepConfigurationMetadata = {
       },
     },
     {
+      label:"Assignment Group Name",
       id: "assignmentGroupName",
     },
     {

@@ -51,10 +51,10 @@ export default function IconCardContainerBaseV2(
 
   const getClassName = () => {
     if (hasStringValue(className) === true) {
-      return `${className} card h-100 vertical-selection-card-v2`;
+      return `${className} card h-100 vertical-selection-card`;
     }
 
-    return `card h-100 vertical-selection-card-v2`;
+    return `card h-100 vertical-selection-card`;
   };
 
   const getStyle = () => {

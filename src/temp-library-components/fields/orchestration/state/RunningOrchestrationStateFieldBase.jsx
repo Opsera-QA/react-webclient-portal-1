@@ -7,6 +7,7 @@ export default function RunningOrchestrationStateFieldBase(
   {
     type,
     className,
+    showStatusText,
   }) {
   return (
     <OrchestrationStateBase
@@ -15,6 +16,7 @@ export default function RunningOrchestrationStateFieldBase(
       icon={faSpinner}
       statusText={"Running"}
       className={className}
+      showStatusText={showStatusText}
     />
   );
 }
@@ -22,4 +24,5 @@ export default function RunningOrchestrationStateFieldBase(
 RunningOrchestrationStateFieldBase.propTypes = {
   type: PropTypes.string,
   className: PropTypes.string,
+  showStatusText: PropTypes.bool,
 };

@@ -1,16 +1,14 @@
 import React, { useContext } from "react";
-import PropTypes from "prop-types";
 import { Button, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import sessionHelper from "utils/session.helper";
 import userActions from "components/user/user-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { AuthContext } from "contexts/AuthContext";
 import {Link, useHistory} from "react-router-dom";
-import IconBase from "components/common/icons/IconBase";
 import { faUserCircle } from "@fortawesome/pro-light-svg-icons";
 import SiteViewModeNavigationSelectInput from "components/header/view_modes/SiteViewModeNavigationSelectInput";
 import OpseraHeaderSettingsLink from "components/header/OpseraHeaderSettingsLink";
-import {EXTERNAL_LINKS} from "components/header/legacy/HeaderNavBar";
+import {EXTERNAL_LINKS} from "assets/links/externalLinks";
 import useLocationReference from "hooks/useLocationReference";
 import {USER_SETTINGS_PAGES} from "components/user/user_settings/userSettings.paths";
 import {hasStringValue} from "components/common/helpers/string-helpers";

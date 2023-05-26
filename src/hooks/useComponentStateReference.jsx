@@ -25,6 +25,7 @@ export default function useComponentStateReference() {
     backgroundColor,
     loadUserData,
     areAnalyticsToolsEnabled,
+    websocketClient,
   } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const {
@@ -66,5 +67,6 @@ export default function useComponentStateReference() {
     isPowerUser: isPowerUser,
     domain: domain,
     areAnalyticsToolsEnabled: areAnalyticsToolsEnabled,
+    websocketClient: websocketClient,
   });
 }

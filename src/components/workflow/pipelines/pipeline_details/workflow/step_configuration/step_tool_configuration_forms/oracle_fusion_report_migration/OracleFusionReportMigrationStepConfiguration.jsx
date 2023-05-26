@@ -9,8 +9,18 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import OracleFusionReportMigrationStepMigrationTypeSelectInput from "./inputs/OracleFusionReportMigrationStepMigrationTypeSelectInput";
 import OracleFusionReportMigrationSourceToolSelectInput from "./inputs/OracleFusionReportMigrationSourceToolSelectInput";
 import OracleFusionReportMigrationTargetToolSelectInput from "./inputs/OracleFusionReportMigrationTargetToolSelectInput";
-import OracleFusionReportMigrationArtifactoryStepSelectInput from "./inputs/OracleFusionReportMigrationArtifactoryStepSelectInput";
 import OracleFusionReportMigrationSourceReportsMultiSelectInput from "./inputs/OracleFusionReportMigrationSourceReportsMultiSelectInput";
+import OracleFusionReportMigrationScmToolTypeSelectInput from "./inputs/OracleFusionReportMigrationScmToolTypeSelectInput";
+import OracleFusionReportMigrationScmToolSelectInput from "./inputs/OracleFusionReportMigrationScmToolSelectInput";
+import OracleFusionReportMigrationGitRepositoryInput from "./inputs/OracleFusionReportMigrationGitRepositoryInput";
+import OracleFusionReportMigrationGitBranchInput from "./inputs/OracleFusionReportMigrationGitBranchInput";
+import OracleFusionReportMigrationNexusToolSelectInput from "./inputs/OracleFusionReportMigrationNexusToolSelectInput";
+import OracleFusionReportMigrationNexusRepoSelectInput from "./inputs/OracleFusionReportMigrationNexusRepoSelectInput";
+import OracleFusionReportMigrationNexusRepoGroupSelectInput from "./inputs/OracleFusionReportMigrationNexusRepoGroupSelectInput";
+import OracleFusionReportMigrationArtifactoryStepSelectInput from "./inputs/OracleFusionReportMigrationArtifactoryStepSelectInput";
+import OracleFusionReportMigrationStepArtifactoryTypeSelectInput from "./inputs/OracleFusionReportMigrationStepArtifactoryTypeSelectInput";
+import OracleFusionReportMigrationReportsInput from "./inputs/OracleFusionReportMigrationReportsInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function OracleFusionReportMigrationStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -52,41 +62,188 @@ function OracleFusionReportMigrationStepConfiguration({ pipelineId, stepTool, pl
     await parentCallback(item);
   };
 
-  const getSourceInstanceFields = () => {
-    if (oracleFusionReportMigrationStepConfigurationModel?.getData("migrationType") === "instance_to_instance"){
-      return (
-        <>
-          <OracleFusionReportMigrationSourceToolSelectInput 
+  const getPullReportsFields = () => {
+    if (oracleFusionReportMigrationStepConfigurationModel?.getData("migrationType") !== "pull_reports"){
+      return null;
+    }
+    return (
+      <>
+        <OracleFusionReportMigrationSourceToolSelectInput 
+          model={oracleFusionReportMigrationStepConfigurationModel}
+          setModel={setOracleFusionReportMigrationStepConfigurationModel}
+        />
+        <OracleFusionReportMigrationScmToolTypeSelectInput 
+          model={oracleFusionReportMigrationStepConfigurationModel}
+          setModel={setOracleFusionReportMigrationStepConfigurationModel}
+        />
+        <OracleFusionReportMigrationScmToolSelectInput 
+          model={oracleFusionReportMigrationStepConfigurationModel}
+          setModel={setOracleFusionReportMigrationStepConfigurationModel}
+        />
+        <OracleFusionReportMigrationGitRepositoryInput 
+          model={oracleFusionReportMigrationStepConfigurationModel}
+          setModel={setOracleFusionReportMigrationStepConfigurationModel}
+        />
+        <OracleFusionReportMigrationGitBranchInput 
+          model={oracleFusionReportMigrationStepConfigurationModel}
+          setModel={setOracleFusionReportMigrationStepConfigurationModel}
+        />
+        <TextInputBase 
+          dataObject={oracleFusionReportMigrationStepConfigurationModel}
+          setDataObject={setOracleFusionReportMigrationStepConfigurationModel}
+          fieldName={"gitCommitId"}
+        />
+      </>
+    );
+  };
+
+  const getNexusPushReportsFields = () => {
+    if (oracleFusionReportMigrationStepConfigurationModel?.getData("artifactoryType") !== "nexus"){
+      return null;
+    }
+    return (
+      <>
+        <OracleFusionReportMigrationNexusToolSelectInput 
+          model={oracleFusionReportMigrationStepConfigurationModel}
+          setModel={setOracleFusionReportMigrationStepConfigurationModel}
+        />
+        <OracleFusionReportMigrationNexusRepoSelectInput
+          nexusToolConfigId={oracleFusionReportMigrationStepConfigurationModel.getData("nexusToolConfigId")}
+          model={oracleFusionReportMigrationStepConfigurationModel}
+          setModel={setOracleFusionReportMigrationStepConfigurationModel} 
+        />
+        <BooleanToggleInput 
+          fieldName={"useExistingGroupName"}
+          dataObject={oracleFusionReportMigrationStepConfigurationModel}
+          setDataObject={setOracleFusionReportMigrationStepConfigurationModel}
+        />
+        { oracleFusionReportMigrationStepConfigurationModel?.getData("useExistingGroupName") === true ? (
+          <OracleFusionReportMigrationNexusRepoGroupSelectInput           
             model={oracleFusionReportMigrationStepConfigurationModel}
             setModel={setOracleFusionReportMigrationStepConfigurationModel}
+            nexusToolConfigId={oracleFusionReportMigrationStepConfigurationModel.getData("nexusToolConfigId")}
+            repositoryName={oracleFusionReportMigrationStepConfigurationModel.getData("repositoryName")}
           />
+        ) : (
           <TextInputBase 
             dataObject={oracleFusionReportMigrationStepConfigurationModel}
             setDataObject={setOracleFusionReportMigrationStepConfigurationModel}
-            fieldName={"sourceInstancePath"}
+            fieldName={"groupName"}
           />
-          <OracleFusionReportMigrationSourceReportsMultiSelectInput 
-            model={oracleFusionReportMigrationStepConfigurationModel}
-            setModel={setOracleFusionReportMigrationStepConfigurationModel}
-            sourceToolId={oracleFusionReportMigrationStepConfigurationModel?.getData("sourceInstanceToolId")}
-            sourceFolder={oracleFusionReportMigrationStepConfigurationModel?.getData("sourceInstancePath")}
-          />
-        </>
-      );
-    }
+        ) }
+                
+      </>
+    );  
   };
 
-  const getArtifactoryFields = () => {
-    if (oracleFusionReportMigrationStepConfigurationModel?.getData("migrationType") === "artifactory_to_instance"){
-      return (
+  const getPushReportsFields = () => {
+    if (oracleFusionReportMigrationStepConfigurationModel?.getData("migrationType") !== "push_reports"){
+      return null;
+    }
+    return (
+      <>
+        <OracleFusionReportMigrationStepArtifactoryTypeSelectInput 
+          model={oracleFusionReportMigrationStepConfigurationModel}
+          setModel={setOracleFusionReportMigrationStepConfigurationModel}
+        />
+        {getNexusPushReportsFields()}
         <OracleFusionReportMigrationArtifactoryStepSelectInput 
           model={oracleFusionReportMigrationStepConfigurationModel}
           setModel={setOracleFusionReportMigrationStepConfigurationModel}
           plan={plan}
           stepId={stepId}
         />
-      );
+      </>
+    );    
+  };
+
+  const getSourceInstanceFields = () => {
+    if (oracleFusionReportMigrationStepConfigurationModel?.getData("migrationType") !== "instance_to_instance"){
+      return null;
     }
+    return (
+      <>
+        <OracleFusionReportMigrationSourceToolSelectInput 
+          model={oracleFusionReportMigrationStepConfigurationModel}
+          setModel={setOracleFusionReportMigrationStepConfigurationModel}
+        />
+        <TextInputBase 
+          dataObject={oracleFusionReportMigrationStepConfigurationModel}
+          setDataObject={setOracleFusionReportMigrationStepConfigurationModel}
+          fieldName={"sourceInstancePath"}
+        />
+        <OracleFusionReportMigrationSourceReportsMultiSelectInput 
+          model={oracleFusionReportMigrationStepConfigurationModel}
+          setModel={setOracleFusionReportMigrationStepConfigurationModel}
+          sourceToolId={oracleFusionReportMigrationStepConfigurationModel?.getData("sourceInstanceToolId")}
+          sourceFolder={oracleFusionReportMigrationStepConfigurationModel?.getData("sourceInstancePath")}
+        />
+        <OracleFusionReportMigrationTargetToolSelectInput 
+          model={oracleFusionReportMigrationStepConfigurationModel}
+          setModel={setOracleFusionReportMigrationStepConfigurationModel}
+        />
+        <TextInputBase 
+          dataObject={oracleFusionReportMigrationStepConfigurationModel}
+          setDataObject={setOracleFusionReportMigrationStepConfigurationModel}
+          fieldName={"targetInstancePath"}
+        />
+      </>
+    );
+  };
+
+  const getNexusSteps = () => {
+    if (oracleFusionReportMigrationStepConfigurationModel?.getData("artifactoryType") !== "nexus"){
+      return null;
+    }
+    return (
+      <>
+        <OracleFusionReportMigrationNexusToolSelectInput 
+          model={oracleFusionReportMigrationStepConfigurationModel}
+          setModel={setOracleFusionReportMigrationStepConfigurationModel}
+        />
+        <OracleFusionReportMigrationNexusRepoSelectInput
+          nexusToolConfigId={oracleFusionReportMigrationStepConfigurationModel.getData("nexusToolConfigId")}
+          model={oracleFusionReportMigrationStepConfigurationModel}
+          setModel={setOracleFusionReportMigrationStepConfigurationModel} 
+        />
+        <OracleFusionReportMigrationNexusRepoGroupSelectInput           
+          model={oracleFusionReportMigrationStepConfigurationModel}
+          setModel={setOracleFusionReportMigrationStepConfigurationModel}
+          nexusToolConfigId={oracleFusionReportMigrationStepConfigurationModel.getData("nexusToolConfigId")}
+          repositoryName={oracleFusionReportMigrationStepConfigurationModel.getData("repositoryName")}
+        />
+        <OracleFusionReportMigrationReportsInput
+          model={oracleFusionReportMigrationStepConfigurationModel}
+          setModel={setOracleFusionReportMigrationStepConfigurationModel}
+          fieldName={"reportArtifactList"}
+          type={"Report List"}
+        />
+      </>
+    );
+  };
+
+  const getArtifactoryInstanceFields = () => {
+    if (oracleFusionReportMigrationStepConfigurationModel?.getData("migrationType") !== "artifactory_to_instance"){
+      return null;
+    }
+    return (
+      <>
+        <OracleFusionReportMigrationStepArtifactoryTypeSelectInput 
+          model={oracleFusionReportMigrationStepConfigurationModel}
+          setModel={setOracleFusionReportMigrationStepConfigurationModel}
+        />
+        {getNexusSteps()}
+        <OracleFusionReportMigrationTargetToolSelectInput 
+          model={oracleFusionReportMigrationStepConfigurationModel}
+          setModel={setOracleFusionReportMigrationStepConfigurationModel}
+        />
+        <TextInputBase 
+          dataObject={oracleFusionReportMigrationStepConfigurationModel}
+          setDataObject={setOracleFusionReportMigrationStepConfigurationModel}
+          fieldName={"targetInstancePath"}
+        />
+      </>
+    );
   };
 
   if (isLoading || oracleFusionReportMigrationStepConfigurationModel == null) {
@@ -104,17 +261,10 @@ function OracleFusionReportMigrationStepConfiguration({ pipelineId, stepTool, pl
         model={oracleFusionReportMigrationStepConfigurationModel}
         setModel={setOracleFusionReportMigrationStepConfigurationModel}
       />
-      {getSourceInstanceFields()}      
-      <OracleFusionReportMigrationTargetToolSelectInput 
-        model={oracleFusionReportMigrationStepConfigurationModel}
-        setModel={setOracleFusionReportMigrationStepConfigurationModel}
-      />
-      <TextInputBase 
-        dataObject={oracleFusionReportMigrationStepConfigurationModel}
-        setDataObject={setOracleFusionReportMigrationStepConfigurationModel}
-        fieldName={"targetInstancePath"}
-      />
-      {getArtifactoryFields()}
+      {getArtifactoryInstanceFields()}
+      {getSourceInstanceFields()}
+      {getPullReportsFields()}
+      {getPushReportsFields()}
     </PipelineStepEditorPanelContainer>
   );
 }

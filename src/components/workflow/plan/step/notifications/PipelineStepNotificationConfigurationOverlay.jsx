@@ -9,6 +9,7 @@ import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineR
 import useComponentStateReference from "hooks/useComponentStateReference";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 import AccessDeniedOverlayBase from "components/common/overlays/center/denied/AccessDeniedOverlayBase";
+import PipelineStepNotificationConfigurationHelpDocumentation from "components/common/help/documentation/pipelines/step_configuration/PipelineStepNotificationConfigurationHelpDocumentation";
 
 export default function PipelineStepNotificationConfigurationOverlay(
   {
@@ -37,6 +38,14 @@ export default function PipelineStepNotificationConfigurationOverlay(
     );
   }
 
+  const getHelpComponentFunction = (setHelpIsShown) => {
+    return (
+      <PipelineStepNotificationConfigurationHelpDocumentation
+        closeHelpPanel={() => setHelpIsShown(false)}
+        />
+    );
+  };
+
   return (
     <CenterOverlayContainer
       closePanel={closePanel}
@@ -45,9 +54,11 @@ export default function PipelineStepNotificationConfigurationOverlay(
       titleIcon={faEnvelope}
       showToasts={true}
       showCloseButton={false}
+      getHelpComponentFunction={getHelpComponentFunction}
     >
       <div className={"p-3"}>
         <PipelineStepNotificationEditorPanel
+          className={"p-3"}
           pipelineId={pipelineId}
           pipelineStep={pipelineStep}
           handleCloseClick={closePanel}

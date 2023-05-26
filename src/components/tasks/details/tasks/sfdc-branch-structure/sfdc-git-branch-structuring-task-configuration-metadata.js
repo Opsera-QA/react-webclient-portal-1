@@ -11,7 +11,7 @@ const sfdcGitBranchTaskConfigurationMetadata = {
     {
       label: "Jenkins Tool Name",
       id: "toolName",
-      isRequired: true,
+      // isRequired: true,
       maxLength: 250,
       regexDefinitionName: "generalTextWithSpacesSlash",
     },  
@@ -39,7 +39,7 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       lowercase: true,
     },    
     {
-      label: "Account",
+      label: "Git Account",
       id: "gitCredential",
       isRequired: true,
       maxLength: 50,
@@ -107,7 +107,7 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
     {
-      label: "Salesforce Tool",
+      label: "Salesforce Configurator Tool",
       id: "sfdcToolId",
       isRequired: true,
       maxLength: 24,

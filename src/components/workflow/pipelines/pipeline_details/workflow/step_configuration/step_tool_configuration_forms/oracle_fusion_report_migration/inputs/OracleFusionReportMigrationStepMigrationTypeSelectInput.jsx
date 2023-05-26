@@ -11,6 +11,14 @@ export const MIGRATION_TYPES = [
     name: "Artifactory To Instance",
     value: "artifactory_to_instance",
   },
+  {
+    name: "Pull Reports",
+    value: "pull_reports",
+  },
+  {
+    name: "Push Reports",
+    value: "push_reports",
+  },
 ];
 
 function OracleFusionReportMigrationStepMigrationTypeSelectInput({model, setModel, isLoading, disabled}) {
@@ -22,6 +30,21 @@ function OracleFusionReportMigrationStepMigrationTypeSelectInput({model, setMode
     newModel.setDefaultValue("sourceInstancePath");
     newModel.setDefaultValue("sourceInstanceReports");
     newModel.setDefaultValue("artifactStepId");
+    newModel.setDefaultValue("targetInstanceToolId");
+    newModel.setDefaultValue("targetInstancePath");
+    newModel.setDefaultValue("service");
+    newModel.setDefaultValue("repoId");
+    newModel.setDefaultValue("repository");
+    newModel.setDefaultValue("gitBranch");
+    newModel.setDefaultValue("sshUrl");
+    newModel.setDefaultValue("gitUrl");
+    newModel.setDefaultValue("gitCommitId");
+    newModel.setDefaultValue("nexusToolConfigId");
+    newModel.setDefaultValue("useExistingGroupName");
+    newModel.setDefaultValue("groupName");
+    newModel.setDefaultValue("repositoryName");
+    newModel.setDefaultValue("artifactoryType");
+    newModel.setDefaultValue("reportArtifactList");
     setModel({...newModel});
   };
 

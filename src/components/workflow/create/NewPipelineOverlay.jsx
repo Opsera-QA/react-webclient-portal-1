@@ -15,6 +15,7 @@ import pipelineMetadata from "@opsera/definitions/constants/pipelines/pipeline.m
 import DeployPlatformPipelineOverlay from "components/workflow/catalog/platform/deploy/DeployPlatformPipelineOverlay";
 import DeployCustomerPipelineOverlay from "components/workflow/catalog/private/deploy/DeployCustomerPipelineOverlay";
 import PipelineTemplateSelectionScreen from "components/workflow/create/PipelineTemplateSelectionScreen";
+import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 
 export default function NewPipelineOverlay(
   {
@@ -149,8 +150,8 @@ export default function NewPipelineOverlay(
     <CreateCenterPanel
       objectType={pipelineMetadata?.type}
       loadData={loadData}
-      showCloseButton={true}
-      backButtonFunction={backButtonFunction}
+      showCloseButton={false}
+      buttonContainer={<OverlayWizardButtonContainerBase backButtonFunction={backButtonFunction} />}
     >
       {getBody()}
     </CreateCenterPanel>

@@ -41,7 +41,7 @@ export default function SelectionIconCard(
       opacity: selectedOption != null && selectedOption !== option ? ".75" : undefined,
       overflow: "hidden",
       backgroundColor: disabled === true ? themeConstants.COLOR_PALETTE.BACKGROUND_GRAY : undefined,
-      color: disabled === true ? themeConstants.COLOR_PALETTE.DARK_GRAY : undefined,
+      color: disabled === true ? themeConstants.COLOR_PALETTE.DARK_GRAY : themeConstants.COLOR_PALETTE.BLACK,
     });
   };
 

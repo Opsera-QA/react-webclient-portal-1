@@ -25,9 +25,6 @@ export default function CenterLoadingIndicator(
     >
       <div className={"mb-4"}>
         <div
-          // style={{
-          //   marginTop: "-120px",
-          // }}
           className={"d-flex"}
         >
           <div className={"mx-auto"}>

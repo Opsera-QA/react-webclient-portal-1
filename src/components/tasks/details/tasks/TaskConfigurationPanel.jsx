@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SFDXCertGenTaskTypeConfigurationPanel from "./sfdx-cert-gen/SFDXCertGenTaskTypeConfigurationPanel";
 import SFDCBranchStructuringTaskTypeConfigurationPanel from "./sfdc-branch-structure/SFDCBranchStructuringTaskTypeConfigurationPanel";
 import GitToGitSyncTaskConfigurationEditorPanel from "components/tasks/details/tasks/branch-to-branch/GitToGitSyncTaskConfigurationEditorPanel";
 import Ec2ClusterCreationTaskConfigurationPanel from "components/tasks/details/tasks/ecs-cluster-creation/Ec2ClusterCreationTaskConfigurationPanel";
@@ -20,6 +19,8 @@ import SalesforceQuickDeployTaskConfigurationEditorPanel
   from "components/tasks/details/tasks/sfdc-quick-deploy/SalesforceQuickDeployTaskConfigurationEditorPanel";
 import SnaplogicTaskConfigurationEditorPanel from "./snaplogic/SnaplogicTaskConfigurationEditorPanel";
 import GitScraperConfigurationPanel from "./gitscraper/GitScraperConfigurationPanel";
+import SalesforceCustomSettingMigrationTaskEditorPanel
+  from "./sfdc-custom-setting-migration/SalesforceCustomSettingMigrationTaskEditorPanel";
 
 function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationModel, setTaskConfigurationModel, taskType }) {
   const getConfigurationPanel = () => {
@@ -38,14 +39,6 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
             taskModel={taskModel}
             setTaskConfigurationModel={setTaskConfigurationModel}
             taskConfigurationModel={taskConfigurationModel}
-          />
-        );
-      case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-        return (
-          <SFDXCertGenTaskTypeConfigurationPanel
-            gitTasksDataDto={taskModel}
-            setGitTasksConfigurationData={setTaskConfigurationModel}
-            gitTasksConfigurationData={taskConfigurationModel}
           />
         );
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
@@ -134,6 +127,14 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
             gitTasksConfigurationData={taskConfigurationModel}
             setGitTasksConfigurationData={setTaskConfigurationModel}
             gitTasksDataDto={taskModel}
+          />
+        );
+      case TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION:
+        return (
+          <SalesforceCustomSettingMigrationTaskEditorPanel
+            taskModel={taskModel}
+            setTaskConfigurationModel={setTaskConfigurationModel}
+            taskConfigurationModel={taskConfigurationModel}
           />
         );
       default:

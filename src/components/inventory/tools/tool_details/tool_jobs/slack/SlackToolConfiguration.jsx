@@ -12,6 +12,7 @@ import OverlayWizardButtonContainerBase
   from "../../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import VanityButtonBase from "../../../../../../temp-library-components/button/VanityButtonBase";
 import {faArrowRight} from "@fortawesome/pro-light-svg-icons";
+import WarningMessageFieldBase from "../../../../../common/fields/text/message/WarningMessageFieldBase";
 
 function SlackToolConfiguration({ toolData, setUpMode, setCurrentScreen, setButtonContainer, handleClose  }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -150,9 +151,16 @@ function SlackToolConfiguration({ toolData, setUpMode, setCurrentScreen, setButt
     return (
       <div className="m-3">
         <div className="h5">Slack Configured!</div>
-        <div>Your Slack token is connected to this tool and ready for use in the pipelines.</div>
-        <div>If you would like to replace it, add to Slack with a different account.</div>
+        <div>Your Slack token is connected to this tool and ready for use in the pipelines. If you would like to replace this tool, add to Slack with a different account. </div>
         <div className="pt-2">{getSlackButton()}</div>
+        <WarningMessageFieldBase
+          showWarningLabel={false}
+          message={<>
+            <div>To receive a notification within a specific Slack channel, you must connect Opsera app to the channel.</div>
+            <div>For instructions, view <a href="https://docs.opsera.io/tool-registry/slack-tool-registration#add-opsera-app-to-slack-channel" target="_blank" rel="noopener noreferrer"><b>Add Opsera App to Slack Channel Help Documentation</b></a>.</div>
+          </>}
+          className={"mt-2"}
+        />
       </div>
     );
   }

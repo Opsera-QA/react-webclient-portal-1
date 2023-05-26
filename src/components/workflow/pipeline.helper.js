@@ -75,6 +75,16 @@ pipelineHelper.getPipelineStatus = (pipeline) => {
   return status;
 };
 
+pipelineHelper.getPipelineModelOrchestrationState = (pipelineModel) => {
+  const state = pipelineModel?.getData("state");
+  const lastRunState = pipelineModel?.getData("workflow.last_run.status");
+  return state === "paused" || state === "running" || lastRunState == null ? state : lastRunState;
+};
+
+pipelineHelper.getLastRunCompletionTime = (pipeline) => {
+  return DataParsingHelper.parseNestedDate(pipeline, "workflow.last_run.completed");
+};
+
 pipelineHelper.getStepIndexFromPipeline = (pipeline, stepId) => {
   const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan");
   return pipelineHelper.getStepIndexFromPlan(plan, stepId);
@@ -201,4 +211,25 @@ pipelineHelper.getPipelineState = (pipeline) => {
     DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused") === true;
 
   return isPaused === true ? "paused" : status;
+};
+
+pipelineHelper.getPipelineColor = (pipelineModel, themeConstants) => {
+  if (pipelineModel == null) {
+    return themeConstants.RESOURCE_COLORS.PIPELINES;
+  }
+
+  const state = pipelineModel?.getData("state");
+  const lastRunState = pipelineModel?.getData("workflow.last_run.status");
+  const orchestrationState = state === "paused" || state === "running" || lastRunState == null ? state : lastRunState;
+
+  switch (orchestrationState) {
+    case "paused":
+      return themeConstants.COLOR_PALETTE.WARNING;
+    case "running":
+      return themeConstants.COLOR_PALETTE.GREEN;
+    // case "failed":
+    //   return themeConstants.COLOR_PALETTE.DANGER_RED;
+    default:
+      return themeConstants.RESOURCE_COLORS.PIPELINES;
+  }
 };

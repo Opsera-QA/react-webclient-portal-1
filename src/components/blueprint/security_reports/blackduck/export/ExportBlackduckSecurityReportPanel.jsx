@@ -6,12 +6,12 @@ import ExportDataPanel from "components/common/modal/export_data/ExportDataPanel
 export default function ExportBlackduckSecurityReportPanel({
   showExportPanel,
   setShowExportPanel,
-  blackduckData,
+  blackduckSecurityReportData,
   isLoading,
 }) {
   const getRawData = () => {
-    const rawData = Array.isArray(blackduckData)
-      ? blackduckData?.map((item) => JSON.stringify(item))
+    const rawData = Array.isArray(blackduckSecurityReportData)
+      ? blackduckSecurityReportData?.map((item) => JSON.stringify(item))
       : "export failure";
     return new Blob([rawData], { type: "text/plain" });
   };
@@ -30,7 +30,7 @@ export default function ExportBlackduckSecurityReportPanel({
       headStyles: { fontSize: 8, minCellWidth: 19, fillColor: [54, 46, 84] },
       margin: { left: 2, right: 2 },
       head: [["Category", "Critical", "High", "Medium", "Low", "Ok", "Unknown"]],
-      body: blackduckData.map((item) => [
+      body: blackduckSecurityReportData.map((item) => [
         item.category,
         item.critical,
         item.high,
@@ -47,7 +47,7 @@ export default function ExportBlackduckSecurityReportPanel({
   const getCsvData = () => {
     return [
       ["Category", "Critical", "High", "Medium", "Low", "Ok", "Unknown"],
-      ...blackduckData.map((item) => [
+      ...blackduckSecurityReportData.map((item) => [
         item.category,
         item.critical,
         item.high,
@@ -59,7 +59,7 @@ export default function ExportBlackduckSecurityReportPanel({
     ];
   };
 
-  if (blackduckData == null || !Array.isArray(blackduckData)) {
+  if (blackduckSecurityReportData == null || !Array.isArray(blackduckSecurityReportData)) {
     return null;
   }
 
@@ -77,6 +77,6 @@ export default function ExportBlackduckSecurityReportPanel({
 ExportBlackduckSecurityReportPanel.propTypes = {
   showExportPanel: PropTypes.bool,
   setShowExportPanel: PropTypes.func,
-  blackduckData: PropTypes.any,
+  blackduckSecurityReportData: PropTypes.any,
   isLoading: PropTypes.bool,
 };

@@ -5,6 +5,7 @@ import FieldTitleBar from "components/common/fields/FieldTitleBar";
 import InputContainer from "components/common/inputs/InputContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
+import InfoContainer from "components/common/containers/InfoContainer";
 
 function StandaloneInlineActiveLogTerminal({logs, title, errorMessage, className, isLoading, noDataMessage}) {
   const isMounted = useRef(false);
@@ -82,14 +83,18 @@ function StandaloneInlineActiveLogTerminal({logs, title, errorMessage, className
 
   return (
     <InputContainer className={className}>
-      <div className="object-properties-input">
-        <div className="content-container">
-          <FieldTitleBar customTitle={title} icon={faComputerClassic} isLoading={isLoading} />
-          <div className={"console-text"} style={{height: "500px", maxHeight: "500px", overflowY: "auto"}}>
-            {getBody()}
-          </div>
+      <InfoContainer
+        titleIcon={faComputerClassic}
+        minimumHeight={"500px"}
+        maximumHeight={"500px"}
+        overflowY={"auto"}
+        isLoading={isLoading}
+        titleText={title}
+      >
+        <div className={"console-text"} style={{minHeight: "498px"}}>
+          {getBody()}
         </div>
-      </div>
+      </InfoContainer>
     </InputContainer>
   );
 }

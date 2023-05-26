@@ -12,7 +12,7 @@ function FilterTitleBar(
   }) {
   return (
     <div className={"d-flex w-100 justify-content-between filter-title-bar"}>
-      <div className={"my-auto mr-2 filter-title-text text-nowrap"}>
+      <div className={"my-auto mr-2 filter-title-text text-nowrap"} id={title}>
         <span className={"d-flex"}>
           <IconBase icon={titleIcon} isLoading={isLoading || isPolling} className={"mr-2 d-none d-lg-block"} />
           {title}

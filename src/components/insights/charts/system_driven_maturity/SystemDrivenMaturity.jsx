@@ -8,13 +8,16 @@ import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SystemDrivenMaturityHelpDocumentation from "components/common/help/documentation/insights/charts/SystemDrivenMaturityHelpDocumentation";
 import {
-  getDeploymentStageFromKpiConfiguration,
   getResultFromKpiConfiguration,
   getUseDashboardTagsFromKpiConfiguration
 } from "../charts-helpers";
 import doraActions from "../dora/dora.action";
 import SystemDrivenMaturityChart from './SystemDrivenMaturityChart';
 import SystemDrivenMaturityOverlay from "./SystemDrivenMaturityOverlay";
+import { formatMaturityScoreItems } from "./util";
+import IconBase from "../../../common/icons/IconBase";
+import {faCircle} from "@fortawesome/pro-solid-svg-icons";
+import { Col, Row } from "react-bootstrap";
 
 function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiConfiguration, setKpis }) {
   const toastContext = useContext(DialogToastContext);
@@ -22,6 +25,7 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metricData, setMetricData] = useState(null);
+  const [organizationData, setOrganizationData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -52,11 +56,10 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
       setIsLoading(true);
       const dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
-      const selectedDeploymentStages = getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
       const jiraResolutionNames = getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names');
       const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
 
-      if (selectedDeploymentStages && jiraResolutionNames?.length && useDashboardTags && dashboardOrgs?.length) {
+      if (useDashboardTags && dashboardOrgs?.length) {
         const response = await doraActions.systemDrivenMaturityGroups({
           getAccessToken,
           cancelSource,
@@ -67,17 +70,13 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
         });
 
         const { groups } = response?.data;
-
+        const { orgsData } = response?.data;
         if (isMounted?.current === true && Object.keys(groups).length) {
-          setMetricData(
-            groups.map(({ name, overallMaturityScoreText, previousOverallMaturityScoreText }) => ({
-              name,
-              score: overallMaturityScoreText,
-              previousScore: previousOverallMaturityScoreText
-            }))
-          );
+          setMetricData(formatMaturityScoreItems(groups));
+          setOrganizationData(orgsData);
         } else {
           setMetricData([]);
+          setOrganizationData([]);
         }
       }
     } catch (error) {
@@ -93,31 +92,92 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
   };
 
   const onRowSelect = group => {
+    const orgData = {
+      orgTags: [],
+      chartData: []
+    };
+    organizationData?.map(org => {
+      if(org?.groupName === group?.name){
+        orgData.orgTags.push(org?.orgTags);
+        orgData.chartData.push(org?.chartData);
+      }
+    });
     toastContext.showOverlayPanel(
       <SystemDrivenMaturityOverlay
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
         group={group}
+        orgData={orgData}
+        getLegends = {getLegends}
       />
     );
   };
 
+  const getLegends = (items) => {
+    if (!(items && items.length)) {
+      return null;
+    }
+    return (
+      <div
+        className={"mr-2 mt-2"}
+        style={{ float: "right", fontSize: "10px", fontWeight: 500 }}
+      >
+        <IconBase
+          className={"ml-2"}
+          icon={faCircle}
+          iconColor={"green"}
+          iconSize={"lg"}
+        />
+        Improved Maturity Score
+        <div className="row" />
+        <IconBase
+          className={"ml-2"}
+          icon={faCircle}
+          iconColor={"red"}
+          iconSize={"lg"}
+        />
+        Dropped Maturity Score
+        <div className="row" />
+        <IconBase
+          className={"ml-2"}
+          icon={faCircle}
+          iconColor={"orange"}
+          iconSize={"lg"}
+        />
+        No Changes to Maturity Score
+        <div className="grey" />
+        <IconBase
+          className={"ml-2"}
+          icon={faCircle}
+          iconColor={"grey"}
+          iconSize={"lg"}
+        />
+        Previous Maturity Score
+      </div>
+    );
+  };
+
   const getChartBody = () => {
-    const selectedDeploymentStages = getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
-    const jiraResolutionNames = getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names');
     const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
     const dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
-    if (!selectedDeploymentStages || !jiraResolutionNames?.length || !useDashboardTags || !dashboardOrgs?.length) {
+    if (!useDashboardTags || !dashboardOrgs?.length) {
       return (
-        <Container>
-          <InfoDialog message="Missing Required Filters. Dashboard Organization tags, Deployment Stages, and Jira Resolution Names are mandatory" />
+        <Container className="text-center">
+          <InfoDialog message="Missing Required Filters. Dashboard Organization tags are mandatory" />
         </Container>
       );
     }
 
     return (
       <Container className="p-3" style={{fontSize: '2rem'}}>
-        <SystemDrivenMaturityChart items={metricData} onRowSelect={onRowSelect} />
+        <Row>
+          <Col xs={9} sm={9} md={9} lg={9} xl={9}>
+            <SystemDrivenMaturityChart items={metricData} onRowSelect={onRowSelect} />
+          </Col>
+          <Col xs={3} sm={3} md={3} lg={3} xl={3}>
+            {getLegends(metricData)}
+          </Col>
+        </Row>
       </Container>
     );
   };

@@ -16,6 +16,8 @@ function IconBase(
     iconTransformProperties,
     spinIcon,
     disabled,
+    iconFontSize,
+    visible,
 
     // TODO: Remove?
     iconTitle,
@@ -61,12 +63,17 @@ function IconBase(
     );
   };
 
-  if (icon == null && isLoading !== true) {
+  if ((icon == null && isLoading !== true) || visible === false) {
     return null;
   }
 
   return (
-    <span className={className}>
+    <span
+      className={className}
+      style={{
+        fontSize: iconFontSize,
+      }}
+    >
       {getIcon()}
     </span>
   );
@@ -85,6 +92,8 @@ IconBase.propTypes = {
   iconTitle: PropTypes.string,
   iconColor: PropTypes.string,
   disabled: PropTypes.bool,
+  iconFontSize: PropTypes.string,
+  visible: PropTypes.bool,
 };
 
 export default React.memo(IconBase);

@@ -10,14 +10,15 @@ export default function useGetPollingTaskModelById(
   const [taskModel, setTaskModel] = useState(undefined);
   const { getNewTaskModel } = useGetTaskModel();
   const {
-    task: task,
-    loadData: loadData,
-    isLoading: isLoading,
-    error: error,
-    setError: setError,
-    status: status,
-    updatedAt: updatedAt,
-    runCount: runCount,
+    task,
+    loadData,
+    isLoading,
+    error,
+    setError,
+    status,
+    updatedAt,
+    runCount,
+    taskStartTime,
   } = useGetPollingTaskById(id, handleErrorFunction);
 
   useEffect(() => {
@@ -36,5 +37,6 @@ export default function useGetPollingTaskModelById(
     status: status,
     updatedAt: updatedAt,
     runCount: runCount,
+    taskStartTime: taskStartTime,
   });
 }

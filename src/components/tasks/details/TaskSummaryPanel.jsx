@@ -22,6 +22,14 @@ import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import TaskStateField from "temp-library-components/fields/orchestration/state/task/TaskStateField";
 import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
+import TaskOrchestrationSummaryField
+  from "temp-library-components/fields/orchestration/task/TaskOrchestrationSummaryField";
+import TaskRunDurationMetricsStandaloneField
+  from "temp-library-components/fields/orchestration/task/metrics/TaskRunDurationMetricsStandaloneField";
+import tagTypeConstants from "@opsera/definitions/constants/settings/tags/tagType.constants";
+import TaskTagManagerInput from "components/tasks/details/inputs/TaskTagManagerInput";
+import TaskOrchestrationProgressBarBase
+  from "temp-library-components/fields/orchestration/progress/TaskOrchestrationProgressBarBase";
 
 function TaskSummaryPanel(
   {
@@ -31,6 +39,7 @@ function TaskSummaryPanel(
     loadData,
     status,
     runCount,
+    taskStartTime,
   }) {
   const {
     cancelTokenSource,
@@ -182,17 +191,25 @@ function TaskSummaryPanel(
         {getSchedulerField()}
         {getDynamicField()}
         <Col md={12} className={"pt-1"}>
-          <TagsInlineOverlayInputBase
-            type={"task"}
-            model={gitTasksData}
-            fieldName={"tags"}
-            saveDataFunction={updateRecord}
-            tags={gitTasksData?.getData("tags")}
-            disabled={TaskRoleHelper.canUpdateTask(userData, gitTasksData?.getPersistData()) !== true}
+          <TaskTagManagerInput
+            taskModel={gitTasksData}
+            setTaskModel={setGitTasksData}
+            workflowStatus={status}
           />
         </Col>
         <Col md={12} className={"pt-1"}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"description"} />
+        </Col>
+        <Col xs={12}>
+          <TaskOrchestrationSummaryField
+            taskModel={gitTasksData}
+          />
+        </Col>
+        <Col xs={12}>
+          <TaskRunDurationMetricsStandaloneField
+            taskRunCount={gitTasksData?.getRunCount()}
+            taskId={gitTasksData?.getMongoDbId()}
+          />
         </Col>
       </Row>
       <Row className={"mx-0 w-100 my-2"}>
@@ -202,6 +219,12 @@ function TaskSummaryPanel(
           </div>
         </div>
       </Row>
+      {/*<Col xs={12}>*/}
+      {/*  <TaskOrchestrationProgressBarBase*/}
+      {/*    taskModel={gitTasksData}*/}
+      {/*    taskStartTime={taskStartTime}*/}
+      {/*  />*/}
+      {/*</Col>*/}
       <div className="px-3 mt-3">
         <TaskConfigurationSummaryPanel taskModel={gitTasksData} />
       </div>
@@ -216,6 +239,7 @@ TaskSummaryPanel.propTypes = {
   loadData: PropTypes.func,
   status: PropTypes.string,
   runCount: PropTypes.number,
+  taskStartTime: PropTypes.number,
 };
 
 export default TaskSummaryPanel;
