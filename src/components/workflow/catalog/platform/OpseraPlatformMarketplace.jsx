@@ -29,6 +29,8 @@ export default function OpseraPipelineMarketplace({activeTemplates, selectTempla
           setPipelineTemplateFilterModel,
           pipelineTemplateFilterModel,
       );
+    } else {
+      setTemplates(pipelineTemplates);
     }
   }, [pipelineTemplates]);
 

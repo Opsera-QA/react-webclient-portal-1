@@ -29,6 +29,8 @@ export default function CustomerPipelineTemplateCatalog({activeTemplates, select
           setPipelineTemplateFilterModel,
           pipelineTemplateFilterModel,
       );
+    } else {
+      setTemplates(pipelineTemplates);
     }
   }, [pipelineTemplates]);
 

@@ -58,6 +58,10 @@ function CustomSettingMigrationLogSummaryReportPanel({ activityData }) {
   const initializeData = async () => {
     try {
       let reportObject = activityData?.api_response?.summary;
+      if(!reportObject) {
+        setSummaryData(null);
+        return;
+      }
       setRunCount(activityData?.run_count);
       setTaskId(activityData?.task_id);
       const task = await taskActions.getTaskByIdV2(getAccessToken, cancelTokenSource, activityData?.task_id);
@@ -84,6 +88,16 @@ function CustomSettingMigrationLogSummaryReportPanel({ activityData }) {
     }
     return TaskRoleHelper.canRunTask(userData, task);
   };
+
+
+  if (summaryData == null) {
+    return (
+      <div className={"mt-3"}>
+        <IconBase className={"mr-2"} icon={faCheckCircle} />
+        There was no proper report captured with this execution.
+      </div>
+    );
+  }
 
   const getTabContentContainer = () => {
     return (

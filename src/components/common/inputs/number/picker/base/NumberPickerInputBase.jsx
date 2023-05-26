@@ -6,6 +6,7 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneNumberPickerInput from "components/common/inputs/number/picker/base/StandaloneNumberPickerInput";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { numberHelpers } from "components/common/helpers/number/number.helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function NumberPickerInputBase(
   {
@@ -23,8 +24,10 @@ function NumberPickerInputBase(
     inputHelpOverlay,
     infoOverlay,
     helpTooltipText,
+    incrementValue,
+    defaultValue,
   }) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
   const [errorMessage, setErrorMessage] = useState("");
 
   const validateAndSetData = (newValue) => {
@@ -34,11 +37,13 @@ function NumberPickerInputBase(
   };
 
   const updateValue = (newValue) => {
+    const parsedNewValue = newValue !== null && numberHelpers.hasNumberValue(newValue) === true ? newValue : defaultValue;
+
     if (setDataFunction) {
-      setDataFunction(field?.id, newValue);
+      setDataFunction(field?.id, parsedNewValue);
     }
     else {
-      validateAndSetData(newValue);
+      validateAndSetData(parsedNewValue);
     }
   };
 
@@ -65,6 +70,8 @@ function NumberPickerInputBase(
         minimum={typeof minimum === "number" ? minimum : field?.minNumber}
         maximum={typeof maximum === "number" ? maximum : field?.maxNumber}
         formatType={formatType}
+        incrementValue={incrementValue}
+        defaultValue={defaultValue}
       />
       <InfoText
         model={dataObject}
@@ -92,6 +99,8 @@ NumberPickerInputBase.propTypes = {
   inputHelpOverlay: PropTypes.any,
   infoOverlay: PropTypes.any,
   helpTooltipText: PropTypes.string,
+  incrementValue: PropTypes.number,
+  defaultValue: PropTypes.number,
 };
 
 export default NumberPickerInputBase;

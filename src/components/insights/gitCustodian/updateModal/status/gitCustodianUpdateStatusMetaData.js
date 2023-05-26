@@ -5,6 +5,12 @@ const GitCustodianUpdateStatusMetaData = {
       label: "Status",
       id: "status",
       isRequired: true,
+    },
+    {
+      label:"Comments",
+      id:"comment",
+      isRequired: false,
+      regexDefinitionName: "expandedTextAndSymbolsWithSpaces",
     },   
     {
       label: "Issues",
@@ -19,6 +25,7 @@ const GitCustodianUpdateStatusMetaData = {
   ],
   newObjectFields: {
     status: "",
+    comment:"",
     issues: [],
     issuesList: [],
   }

@@ -77,7 +77,7 @@ const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
       );
       if (apiVersions && apiVersions.length > 0) return apiVersions[0];
       return "";
-    } catch (error) { 
+    } catch (error) {
       const parsedError = parseError(error);
       console.error(parsedError);
       return "";

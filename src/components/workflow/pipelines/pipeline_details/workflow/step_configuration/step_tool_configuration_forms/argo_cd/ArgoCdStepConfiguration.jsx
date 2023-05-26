@@ -33,6 +33,9 @@ import ArgoBlueGreenDeploymentHelpDocumentation
 import ArgoCdStepKustomizeBooleanInput from "./inputs/ArgoCdStepKustomizeBooleanInput";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
 import ArgoClusterSelectInput from "components/common/list_of_values_input/tools/argo_cd/cluster/ArgoClusterSelectInput";
+import ArgoCdStepCustomImageToggleInput from "./inputs/ArgoCdStepCustomImageToggleInput";
+import ArgoCdStepPlatformSelectInput from "./inputs/ArgoCdStepPlatformSelectInput";
+import AzureCustomImageDetailsSubForm from "./subforms/AzureCustomImageDetailsSubForm";
 
 function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEditorPanel, pipelineId }) {
   const toastContext = useContext(DialogToastContext);
@@ -97,6 +100,9 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
   };
 
   const getRollbackInputs = () => {
+    if (argoCdModel?.getData("customImageTag") === true) {
+      return null;
+    }
     return (
       <>
         <BooleanToggleInput
@@ -210,6 +216,55 @@ const getKustomizationInputFields = () => {
   );
 };
 
+const getPlatformSpecificInputFields = () => {
+  if (hasStringValue(argoCdModel?.getData("platform")) !== true) {
+    return null;
+  }
+  switch (argoCdModel?.getData("platform")) {
+    case "azure":
+      return (
+        <AzureCustomImageDetailsSubForm 
+          model={argoCdModel}
+          setModel={setArgoCdModel}
+        />
+      );
+    default:
+      return null;
+  }
+};
+
+const getCustomImageFields = () => {
+  if (argoCdModel?.getData("customImageTag") !== true) {
+    return null;
+  }
+  return (
+    <>
+      <ArgoCdStepPlatformSelectInput 
+        model={argoCdModel}
+        setModel={setArgoCdModel}
+      />
+      {getPlatformSpecificInputFields()}
+    </>    
+  );
+};
+
+const getPipelineStepSelectField = () => {
+  if (argoCdModel?.getData("customImageTag") === true) {
+    return null;
+  }
+  return (
+    <ArgoCdStepPipelineStepSelectInput
+      model={argoCdModel}
+      setModel={setArgoCdModel}
+      stepId={stepId}
+      plan={plan}
+      disabled={
+        hasStringValue(argoCdModel?.getData("applicationName")) !== true
+      }
+    />
+  );
+};
+
   if (isLoading || argoCdModel === undefined) {
     return <LoadingDialog size="sm"/>;
   }
@@ -230,15 +285,12 @@ const getKustomizationInputFields = () => {
         setModel={setArgoCdModel}
         argoToolId={argoCdModel.getData("toolConfigId")}
       />
-      <ArgoCdStepPipelineStepSelectInput
+      <ArgoCdStepCustomImageToggleInput 
         model={argoCdModel}
         setModel={setArgoCdModel}
-        stepId={stepId}
-        plan={plan}
-        disabled={
-          hasStringValue(argoCdModel?.getData("applicationName")) !== true
-        }
       />
+      {getCustomImageFields()}
+      {getPipelineStepSelectField()}      
       {getCommandLineSpecificInput()}
       {getSCMInputs()}
       {getKustomizationInputFields()}

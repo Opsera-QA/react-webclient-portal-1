@@ -9,7 +9,7 @@ function BoomiChartHelpDocumentation({closeHelpPanel}) {
             helpTopic={"Boomi Pipeline Executions"}
         >
             <div>
-                <div className={"mb-2"}>This chart reflects the number of Boomi components deployed, its frequency and success percentage.</div>
+                <div className={"mb-2"}>This chart reflects the number of Boomi components deployed, its frequency and success percentage. For more information view the <a href="https://docs.opsera.io/insights/kpi/boomi-pipeline-executions-kpi" target="_blank" rel="noreferrer"><b>Boomi KPI Help Documentation</b>.</a></div>
                 <div>
                     <ul style={{listStyleType: "none"}}>
                         <li><b>Base KPI:</b></li>

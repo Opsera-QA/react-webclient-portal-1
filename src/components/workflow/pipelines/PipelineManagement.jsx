@@ -30,6 +30,7 @@ const pipelineFields = [
   "workflow.last_step",
   "workflow.run_count",
   "workflow.last_run",
+  "workflow.plan.tool.tool_identifier",
   "createdAt",
   "updatedAt",
 ];

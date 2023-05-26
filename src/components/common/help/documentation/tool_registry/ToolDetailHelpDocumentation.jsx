@@ -277,6 +277,7 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
           <div>
             <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
             <div>For more information on how to register the <b>Google Chat</b> tool, view the <a href="https://docs.opsera.io/tool-registry/google-chat-tool-registration" target="_blank" rel="noreferrer"><b>Google Chat Tool Registration Help Documentation</b>.</a></div>
+            <div className={"mt-2"}><i><b>Notifications</b> - To receive a notification within Google Chat, view <a href="https://docs.opsera.io/notifications/pipeline-notifications#configure-google-chat-notification" target="_blank" rel="noopener noreferrer"><b>Google Chat Notifications Help Documentation</b></a></i>.</div>
           </div>
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA:
@@ -298,6 +299,7 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
           <div>
             <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
             <div>For more information on how to register the <b>Jira</b> tool, view the <a href="https://docs.opsera.io/tool-registry/jira-tool-registration" target="_blank" rel="noreferrer"><b>Jira Tool Registration Help Documentation</b>.</a></div>
+            <div className={"mt-2"}><i><b>Notifications</b> - To receive a notification within a specific Jira ticket, view <a href="https://docs.opsera.io/notifications/pipeline-notifications#configure-jira-notifications" target="_blank" rel="noopener noreferrer"><b>Configure JIRA Notifications Help Documentation</b></a></i>.</div>
           </div>
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.TEAMS:
@@ -305,6 +307,7 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
           <div>
             <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
             <div>For more information on how to register the <b>Teams</b> tool, view the <a href="https://docs.opsera.io/tool-registry/microsoft-teams-tool-registration" target="_blank" rel="noreferrer"><b>Microsoft Teams Tool Registration Help Documentation</b>.</a></div>
+            <div className={"mt-2"}><i><b>Notifications</b> - To receive a notification within Microsoft Teams, view <a href="https://docs.opsera.io/notifications/pipeline-notifications#configure-microsoft-teams-notifications" target="_blank" rel="noopener noreferrer"><b>Configure Microsoft Teams Notifications Help Documentation</b></a></i>.</div>
           </div>
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.OCTOPUS:
@@ -340,6 +343,7 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
           <div>
             <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
             <div>For more information on how to register the <b>ServiceNow</b> tool, view the <a href="https://docs.opsera.io/tool-registry/servicenow-tool-registration" target="_blank" rel="noreferrer"><b>ServiceNow Tool Registration Help Documentation</b>.</a></div>
+            <div className={"mt-2"}><i><b>Notifications</b> - To receive a notification within ServiceNow, view <a href="https://docs.opsera.io/notifications/pipeline-notifications#configure-servicenow-notification" target="_blank" rel="noopener noreferrer"><b>Configure ServiceNow Notifications Help Documentation</b></a></i>.</div>
           </div>
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR:
@@ -352,8 +356,8 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SLACK:
         return (
           <div>
-            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
-            <div>For more information on how to register the <b>Slack</b> tool, view the <a href="https://docs.opsera.io/tool-registry/slack-tool-registration" target="_blank" rel="noreferrer"><b>Slack Tool Registration Help Documentation</b>.</a></div>
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs. For more information on how to register the <b>Slack</b> tool, view the <a href="https://docs.opsera.io/tool-registry/slack-tool-registration" target="_blank" rel="noreferrer"><b>Slack Tool Registration Help Documentation</b>.</a></div>
+            <div className={"mt-2"}><i><b>Notifications</b> - To receive a notification within a specific Slack channel, you must connect Opsera app to the channel. For instructions, view <a href="https://docs.opsera.io/tool-registry/slack-tool-registration#add-opsera-app-to-slack-channel" target="_blank" rel="noopener noreferrer"><b>Add Opsera App to Slack Channel Help Documentation</b></a></i>.</div>
           </div>
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SONAR:
