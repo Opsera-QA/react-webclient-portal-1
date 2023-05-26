@@ -13,7 +13,7 @@
     "require": "readonly",
     "process": "readonly"
   },
-  "parser": "@babel/eslint-parser",
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 2022,
     "sourceType": "module",
