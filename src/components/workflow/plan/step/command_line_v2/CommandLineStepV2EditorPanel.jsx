@@ -37,12 +37,20 @@ import CommandLineStepJenkinsToolSelectInput
 import StepConfigUseTerraformOutput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/common/inputs/StepConfigUseTerraformOutput";
 
-function CommandLineStepV2EditorPanel({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan }) {
+// TODO: This is largely just copied from the V1 step and needs to be rewritten
+function CommandLineStepV2EditorPanel(
+  {
+    pipelineId,
+    stepTool,
+    stepId,
+    createJob,
+    closeEditorPanel,
+    plan,
+  }) {
   const [isLoading, setIsLoading] = useState(false);
   const [commandLineStepConfigurationDto, setCommandLineStepConfigurationDataDto] = useState(undefined);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
-
 
   useEffect(() => {
     loadData();
