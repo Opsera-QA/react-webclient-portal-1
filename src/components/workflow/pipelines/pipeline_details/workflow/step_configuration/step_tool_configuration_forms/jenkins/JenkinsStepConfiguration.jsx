@@ -204,6 +204,7 @@ function JenkinsStepConfiguration({
         <JenkinsStepToolJobSelectInput
           model={jenkinsStepConfigurationDto}
           setModel={setJenkinsStepConfigurationDto}
+          toolIdentifier={stepTool?.tool_identifier}
           jenkinsToolId={jenkinsStepConfigurationDto?.getData("toolConfigId")}
           jobType={jenkinsStepConfigurationDto?.getData("job_type")}
           toolJobType={jenkinsStepConfigurationDto?.getData("toolJobType")}
