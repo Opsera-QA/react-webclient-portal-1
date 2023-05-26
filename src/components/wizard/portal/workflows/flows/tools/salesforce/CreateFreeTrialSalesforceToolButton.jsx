@@ -21,54 +21,62 @@ export default function CreateFreeTrialSalesforceToolButton(
   const {
     getAccessToken,
     cancelTokenSource,
+    isMounted,
+    toastContext
   } = useComponentStateReference();
 
   const saveConnectionDetails = async (toolId) => {
-    const configuration = salesforceToolModel?.getPersistData();
+    try {
+      const configuration = salesforceToolModel?.getPersistData();
 
-    const clientIdVaultKey = `${toolId}-${toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR}-client_id`;
-    configuration.sfdc_client_id = await toolsActions.saveToolValueToVaultV2(
-      getAccessToken,
-      cancelTokenSource,
-      toolId,
-      clientIdVaultKey,
-      configuration?.sfdc_client_id,
-    );
+      const clientIdVaultKey = `${toolId}-${toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR}-client_id`;
+      configuration.sfdc_client_id = await toolsActions.saveToolValueToVaultV2(
+          getAccessToken,
+          cancelTokenSource,
+          toolId,
+          clientIdVaultKey,
+          configuration?.sfdc_client_id,
+      );
 
-    const clientSecretVaultKey = `${toolId}-${toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR}-client_secret`;
-    configuration.sfdc_client_secret = await toolsActions.saveToolValueToVaultV2(
-      getAccessToken,
-      cancelTokenSource,
-      toolId,
-      clientSecretVaultKey,
-      configuration?.sfdc_client_secret,
-    );
+      const clientSecretVaultKey = `${toolId}-${toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR}-client_secret`;
+      configuration.sfdc_client_secret = await toolsActions.saveToolValueToVaultV2(
+          getAccessToken,
+          cancelTokenSource,
+          toolId,
+          clientSecretVaultKey,
+          configuration?.sfdc_client_secret,
+      );
 
-    const passwordVaultKey = `${toolId}-${toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR}-password`;
-    configuration.sfdc_password = await toolsActions.saveToolValueToVaultV2(
-      getAccessToken,
-      cancelTokenSource,
-      toolId,
-      passwordVaultKey,
-      configuration?.sfdc_password,
-    );
+      const passwordVaultKey = `${toolId}-${toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR}-password`;
+      configuration.sfdc_password = await toolsActions.saveToolValueToVaultV2(
+          getAccessToken,
+          cancelTokenSource,
+          toolId,
+          passwordVaultKey,
+          configuration?.sfdc_password,
+      );
 
-    const tokenVaultKey = `${toolId}-${toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR}-token`;
-    configuration.sfdc_token = await toolsActions.saveToolValueToVaultV2(
-      getAccessToken,
-      cancelTokenSource,
-      toolId,
-      tokenVaultKey,
-      configuration?.sfdc_token,
-    );
-    configuration.buildType = "sfdx"; // by default make it to have sfdx
+      const tokenVaultKey = `${toolId}-${toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR}-token`;
+      configuration.sfdc_token = await toolsActions.saveToolValueToVaultV2(
+          getAccessToken,
+          cancelTokenSource,
+          toolId,
+          tokenVaultKey,
+          configuration?.sfdc_token,
+      );
+      configuration.buildType = "sfdx"; // by default make it to have sfdx
 
-    return await toolsActions.updateToolConnectionDetails(
-      getAccessToken,
-      cancelTokenSource,
-      toolId,
-      configuration,
-    );
+      return await toolsActions.updateToolConnectionDetails(
+          getAccessToken,
+          cancelTokenSource,
+          toolId,
+          configuration,
+      );
+    } catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showInlineErrorMessage(error, "Error Saving Salesforce Tool Details:");
+      }
+    }
   };
 
   const handleToolCreation = async () => {

@@ -9,7 +9,8 @@ import useGetPlatformSettingsFeatureFlagByName from "hooks/platform/settings/use
 import platformSettingFeatureConstants
   from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
 import CreateToolRegistryWizard from "components/inventory/tools/tool_details/wizards/CreateToolRegistryWizard";
-import CreateTasksWizard from "../../tasks/portal_tasks_wizard/CreateTasksWizard";
+import CreateTasksWizard from "components/tasks/portal_tasks_wizard/CreateTasksWizard";
+import CreateNewPipelineWizard from "../../workflow/wizards/updated_pipeline_wizard/CreateNewPipelineWizard";
 
 export const CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS = {
   RESOURCE_SELECTION_SCREEN: "resource_selection_screen",
@@ -35,11 +36,17 @@ export default function CreateWorkspaceResourceWizard({ loadDataFunction }) {
           />
         );
       case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_PIPELINE_SCREEN:
+        if (isActive === true) {
+          return (
+              <CreateNewPipelineWizard loadData={loadDataFunction} backButtonFunction={backButtonFunction}/>
+          );
+        }
+
         return (
-          <NewPipelineOverlay
-            backButtonFunction={backButtonFunction}
-            loadData={loadDataFunction}
-          />
+            <NewPipelineOverlay
+                backButtonFunction={backButtonFunction}
+                loadData={loadDataFunction}
+            />
         );
       case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TASK_SCREEN:
         if (isActive === true) {

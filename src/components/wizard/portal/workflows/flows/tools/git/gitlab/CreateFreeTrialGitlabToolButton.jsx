@@ -21,40 +21,54 @@ export default function CreateFreeTrialGitlabToolButton(
   const {
     getAccessToken,
     cancelTokenSource,
+    isMounted,
+    toastContext
   } = useComponentStateReference();
 
   const saveConnectionDetails = async (toolId) => {
-    const configuration = gitToolModel?.getPersistData();
-    configuration.accountPassword = await toolsActions.saveSimpleVaultPasswordToVaultV2(
-      getAccessToken,
-      cancelTokenSource,
-      toolId,
-      toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB,
-      configuration?.accountPassword,
-    );
-    configuration.secretPrivateKey = await toolsActions.saveThreePartToolPasswordToVaultV3(
-      getAccessToken,
-      cancelTokenSource,
-      toolId,
-      toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB,
-      "secretPrivateKey",
-      configuration?.secretPrivateKey,
-      );
-    configuration.secretAccessTokenKey = await toolsActions.saveThreePartToolPasswordToVaultV3(
-      getAccessToken,
-      cancelTokenSource,
-      toolId,
-      toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB,
-      "secretAccessTokenKey",
-      configuration?.secretAccessTokenKey,
-    );
+    try {
+      const configuration = gitToolModel?.getPersistData();
+      configuration.accountPassword =
+        await toolsActions.saveSimpleVaultPasswordToVaultV2(
+          getAccessToken,
+          cancelTokenSource,
+          toolId,
+          toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB,
+          configuration?.accountPassword,
+        );
+      configuration.secretPrivateKey =
+        await toolsActions.saveThreePartToolPasswordToVaultV3(
+          getAccessToken,
+          cancelTokenSource,
+          toolId,
+          toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB,
+          "secretPrivateKey",
+          configuration?.secretPrivateKey,
+        );
+      configuration.secretAccessTokenKey =
+        await toolsActions.saveThreePartToolPasswordToVaultV3(
+          getAccessToken,
+          cancelTokenSource,
+          toolId,
+          toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB,
+          "secretAccessTokenKey",
+          configuration?.secretAccessTokenKey,
+        );
 
-    return await toolsActions.updateToolConnectionDetails(
-      getAccessToken,
-      cancelTokenSource,
-      toolId,
-      configuration,
-    );
+      return await toolsActions.updateToolConnectionDetails(
+        getAccessToken,
+        cancelTokenSource,
+        toolId,
+        configuration,
+      );
+    } catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showInlineErrorMessage(
+          error,
+          "Error Saving Gitlab Tool Details",
+        );
+      }
+    }
   };
 
   const handleGitToolCreation = async () => {
