@@ -171,6 +171,7 @@ const GitCustodianStandaloneBranchSelectInput = ({ value,  disabled, setDataFunc
       textField={"name"}
       onSearchFunction={lazyLoadSearchFunction}
       hasErrorState={hasStringValue(error) === true}
+      disabled={disabled}
     />
   );
 };
