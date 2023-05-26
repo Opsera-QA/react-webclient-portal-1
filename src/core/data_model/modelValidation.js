@@ -191,6 +191,26 @@ export const fieldValidation = (value, model, field) => {
     }
   }
 
+  if (field.regexDefinitionName != null && Array.isArray(value)) {
+    const definitionName = field.regexDefinitionName;
+    const regexDefinition = regexDefinitions[definitionName];
+    const regex = regexDefinition?.regex;
+    const errorFormText = regexDefinition?.errorFormText;
+    if (regex !== null) {
+      for (let item of value) {
+        if (!matchesRegex(regex, item)) {
+          if (errorFormText == null) {
+            console.error(`No Regex Error Form Text Assigned To Definition [${field.regexDefinitionName}]! Returning default error.`);
+            errorMessages.push("Does not meet field requirements.");
+          } else {
+            errorMessages.push(`${field.label} validation error! ${errorFormText}`);
+          }
+          break;
+        }
+      }
+    }
+  }
+
   if (value && typeof field.isValidFunction === "function" && field.isValidFunction(value) !== true) {
     errorMessages.push(
         `${model.getLabel(field.id)} is invalid.`

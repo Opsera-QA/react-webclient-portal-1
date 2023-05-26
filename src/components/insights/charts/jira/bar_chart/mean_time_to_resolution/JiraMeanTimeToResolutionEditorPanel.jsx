@@ -50,7 +50,7 @@ function JiraMeanTimeToResolutionEditorPanel(
         setMetricFilterModel={setMetricFilterModel}
         metricModel={metricModel}
       />
-      <MetricJiraServiceComponentsFilterInput
+      {/*<MetricJiraServiceComponentsFilterInput
         metricFilterModel={metricFilterModel}
         setMetricFilterModel={setMetricFilterModel}
         metricModel={metricModel}
@@ -59,7 +59,7 @@ function JiraMeanTimeToResolutionEditorPanel(
         metricFilterModel={metricFilterModel}
         setMetricFilterModel={setMetricFilterModel}
         metricModel={metricModel}
-      />
+  />*/}
       <MetricDateRangeFilterInput
         metricModel={metricModel}
         metricFilterModel={metricFilterModel}

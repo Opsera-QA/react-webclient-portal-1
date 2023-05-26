@@ -26,7 +26,7 @@ function ArgoCdStepSourceControlManagementToolIdentifierSelectInput({ fieldName,
       setModel={setModel}
       setDataObject={setModel}
       setDataFunction={setDataFunction}
-      disabled={disabled || isMongoDbId(model?.getData("dockerStepID")) !== true}
+      disabled={disabled || (isMongoDbId(model?.getData("dockerStepID")) !== true && model?.getData("customImageTag") !== true)}
     />
   );
 }
