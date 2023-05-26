@@ -241,9 +241,9 @@ function ToastContextProvider({children, navBar}) {
     showInformationToast(informationMessage, autoCloseLengthInSeconds, notificationTypes.FORM);
   };
 
-  const showInformationToast = (informationMessage, autoCloseLengthInSeconds, notificationType = notificationTypes.UNKNOWN) => {
+  const showInformationToast = (informationMessage, autoCloseLengthInSeconds, notificationType = notificationTypes.UNKNOWN, itemLink) => {
     let id = generateUUID();
-    let informationToast = getInformationToast(informationMessage, id, autoCloseLengthInSeconds);
+    let informationToast = getInformationToast(informationMessage, id, autoCloseLengthInSeconds, itemLink);
     addToast(informationToast, id, notificationType);
   };
 
@@ -499,13 +499,14 @@ function ToastContextProvider({children, navBar}) {
     );
   };
 
-  const getInformationToast = (message, id, autoCloseLengthInSeconds) => {
+  const getInformationToast = (message, id, autoCloseLengthInSeconds, itemLink) => {
     return (
       <InformationToast
         informationMessage={message}
         id={id}
         removeToast={removeToast}
         autoCloseLength={autoCloseLengthInSeconds}
+        link={itemLink}
       />
     );
   };

@@ -1,7 +1,6 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useEffect} from "react";
 import Model from "core/data_model/model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import tagFilterMetadata from "components/settings/tags/tag-filter-metadata";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import TagsTable from "components/settings/tags/TagsTable";
@@ -12,7 +11,6 @@ import TagRoleHelper from "@opsera/know-your-role/roles/settings/tags/tagRole.he
 function TagManagement() {
   const [isLoading, setIsLoading] = useState(true);
   const [tagList, setTagList] = useState([]);
-  const toastContext = useContext(DialogToastContext);
   const [tagFilterDto, setTagFilterDto] = useState(new Model({...tagFilterMetadata.newObjectFields}, tagFilterMetadata, false));
   const {
     userData,
@@ -20,9 +18,11 @@ function TagManagement() {
     getAccessToken,
     cancelTokenSource,
     isMounted,
+    toastContext,
   } = useComponentStateReference();
 
   useEffect(() => {
+    toastContext.showInformationToast("Test", undefined, undefined, "/workflow?activeFilters=&sortOption=last-updated&pageSize=25&currentPage=1&viewType=card");
     loadData(tagFilterDto).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
