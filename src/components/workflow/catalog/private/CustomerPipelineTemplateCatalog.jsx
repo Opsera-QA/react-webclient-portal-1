@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faOctagon} from "@fortawesome/pro-light-svg-icons";
 import InlinePipelineTypeFilter from "components/common/filters/admin/templates/pipeline_type/InlinePipelineTypeFilter";
 import CustomerPipelineTemplateCardView from "components/workflow/catalog/private/CustomerPipelineTemplateCardView";
 import useGetCustomerPipelineTemplates from "hooks/workflow/catalog/customer/useGetCustomerPipelineTemplates";
 import CustomerTagFilter from "components/common/filters/tags/tag/CustomerTagFilter";
-import wizardHelper from "components/workflow/wizards/updated_pipeline_wizard/helpers/wizard-helpers";
+import {wizardsHelper} from "components/workflow/wizards/updated_pipeline_wizard/helpers/wizard-helpers";
 
 export default function CustomerPipelineTemplateCatalog({activeTemplates, selectTemplateFunction, setupMode}) {
   const {
@@ -23,7 +22,7 @@ export default function CustomerPipelineTemplateCatalog({activeTemplates, select
   // TODO - Update template route and move to node
   useEffect(() => {
     if (setupMode && pipelineTemplates?.length > 0) {
-      wizardHelper.filterTemplateByCategory(
+      wizardsHelper.filterTemplateByCategory(
           pipelineTemplates,
           setupMode,
           setTemplates,

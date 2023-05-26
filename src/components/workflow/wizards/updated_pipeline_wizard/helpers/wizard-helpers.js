@@ -1,4 +1,4 @@
-const wizardsHelper = {};
+export const wizardsHelper = {};
 
 wizardsHelper.filterTemplateByCategory = (
   pipelineTemplates,
@@ -26,5 +26,3 @@ wizardsHelper.filterTemplateByCategory = (
   newFilterModel.setData("totalCount", filteredTemplates.length);
   setPipelineTemplateFilterModel({ ...newFilterModel });
 };
-
-module.exports = wizardsHelper;
