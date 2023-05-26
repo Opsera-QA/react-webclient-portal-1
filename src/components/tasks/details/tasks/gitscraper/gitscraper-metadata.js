@@ -37,7 +37,7 @@ const gitscraperTaskConfigurationMetadata = {
     {
       label: "Domains to be excluded from scan",
       id: "excludeDomains",
-      regexDefinitionName: "domainField"
+      regexDefinitionName: "domainFieldWithExtension",
     },
     {
       label: "Set Custom Entropy",
