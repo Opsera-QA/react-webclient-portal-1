@@ -2,18 +2,27 @@
   "env": {
     "browser": true
   },
-  "extends": ["react-app", "plugin:prettier/recommended"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly",
     "require": "readonly",
     "process": "readonly"
   },
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
     "ecmaVersion": 2022,
-    "sourceType": "module"
+    "sourceType": "module",
+    "requireConfigFile": false
   },
-  "plugins": ["react-hooks"],
+  "plugins": [
+    "react-hooks",
+    "react"
+  ],
   "rules": {
     "semi": [
       "error",
