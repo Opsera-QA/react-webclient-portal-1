@@ -5,13 +5,12 @@ import JenkinsRegistryToolJobSelectInput
 
 function CommandLineStepJenkinsJobSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
-    let newModel = {...model};
-    newModel.setData("toolJobName", selectedOption.name);
-    newModel.setData("toolJobId", selectedOption._id);
-    newModel.setData("jobType", selectedOption.type[0]);
-    newModel.setData("agentLabels", selectedOption.configuration?.agentLabels || "");    
-    newModel.setData("buildType", selectedOption.configuration?.buildType || "");
-    setModel({...newModel});
+    model.setData("toolJobName", selectedOption.name);
+    model.setData("toolJobId", selectedOption._id);
+    model.setData("jobType", selectedOption.type[0]);
+    model.setData("agentLabels", selectedOption.configuration?.agentLabels || "");
+    model.setData("buildType", selectedOption.configuration?.buildType || "");
+    setModel({...model});
   };
 
   return (
