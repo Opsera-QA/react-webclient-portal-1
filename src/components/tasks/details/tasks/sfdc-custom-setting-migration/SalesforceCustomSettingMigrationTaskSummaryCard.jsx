@@ -40,7 +40,7 @@ function SalesforceCustomSettingMigrationTaskSummaryCard({
           />
         </Col>
         {taskConfigDataModel?.getData("taskType") !==
-          MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG && (
+          MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG ? (
           <Col xs={6}>
             <ToolNameField
               model={salesforceConfigurationModel}
@@ -52,9 +52,9 @@ function SalesforceCustomSettingMigrationTaskSummaryCard({
               }
             />
           </Col>
-        )}
+        ) : null}
         {taskConfigDataModel?.getData("taskType") !==
-          MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV && (
+          MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV ? (
           <Col xs={6}>
             <ToolNameField
               model={salesforceConfigurationModel}
@@ -66,7 +66,7 @@ function SalesforceCustomSettingMigrationTaskSummaryCard({
               }
             />
           </Col>
-        )}
+        ) : null }
       </Row>
     </TaskSummaryCardContainer>
   );
