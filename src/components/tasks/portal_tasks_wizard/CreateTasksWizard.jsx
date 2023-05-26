@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import TasksSetupModeSelect from "./views/TasksSetupModeSelect";
 import useGetNewTaskModel from "../hooks/useGetNewTaskModel";
 import { capitalizeFirstLetter } from "../../common/helpers/string-helpers";
-import NewTaskOverlay from "../NewTaskOverlay";
 import TaskEditorPanel from "../details/TaskEditorPanel";
 import TaskTypeSelect from "./views/TaskTypeSelect";
 import WizardTaskConfigurationRouter from "./views/WizardTaskConfigurationRouter";
@@ -142,6 +141,7 @@ export default function CreateTasksWizard({ loadData, backButtonFunction }) {
     <CenterOverlayContainer
       closePanel={closeOverlayFunction}
       titleText={overlayTitle}
+      showToasts={true}
       buttonContainer={buttonContainer}
       showCloseButton={false}
     >

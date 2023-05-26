@@ -21,44 +21,52 @@ export default function CreateJenkinsToolButton(
     const {
         getAccessToken,
         cancelTokenSource,
+        isMounted,
+        toastContext
     } = useComponentStateReference();
 
     const saveConnectionDetails = async (toolId) => {
-        const configuration = jenkinsToolModel?.getPersistData();
+        try {
+            const configuration = jenkinsToolModel?.getPersistData();
 
-        const jAuthToken = `${toolId}-${toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS}-jAuthToken`;
-        configuration.jAuthToken = await toolsActions.saveToolValueToVaultV2(
-            getAccessToken,
-            cancelTokenSource,
-            toolId,
-            jAuthToken,
-            configuration?.jAuthToken,
-        );
+            const jAuthToken = `${toolId}-${toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS}-jAuthToken`;
+            configuration.jAuthToken = await toolsActions.saveToolValueToVaultV2(
+                getAccessToken,
+                cancelTokenSource,
+                toolId,
+                jAuthToken,
+                configuration?.jAuthToken,
+            );
 
-        const jPassword = `${toolId}-${toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS}-jPassword`;
-        configuration.jPassword = await toolsActions.saveToolValueToVaultV2(
-            getAccessToken,
-            cancelTokenSource,
-            toolId,
-            jPassword,
-            configuration?.jPassword,
-        );
+            const jPassword = `${toolId}-${toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS}-jPassword`;
+            configuration.jPassword = await toolsActions.saveToolValueToVaultV2(
+                getAccessToken,
+                cancelTokenSource,
+                toolId,
+                jPassword,
+                configuration?.jPassword,
+            );
 
-        const proxyPassword = `${toolId}-${toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS}-proxyPassword`;
-        configuration.proxyPassword = await toolsActions.saveToolValueToVaultV2(
-            getAccessToken,
-            cancelTokenSource,
-            toolId,
-            proxyPassword,
-            configuration?.proxyPassword,
-        );
+            const proxyPassword = `${toolId}-${toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS}-proxyPassword`;
+            configuration.proxyPassword = await toolsActions.saveToolValueToVaultV2(
+                getAccessToken,
+                cancelTokenSource,
+                toolId,
+                proxyPassword,
+                configuration?.proxyPassword,
+            );
 
-        return await toolsActions.updateToolConnectionDetails(
-            getAccessToken,
-            cancelTokenSource,
-            toolId,
-            configuration,
-        );
+            return await toolsActions.updateToolConnectionDetails(
+                getAccessToken,
+                cancelTokenSource,
+                toolId,
+                configuration,
+            );
+        } catch (error) {
+            if (isMounted?.current === true) {
+                toastContext.showInlineErrorMessage(error, "Error Saving Jenkins Tool Details:");
+            }
+        }
     };
 
     const handleToolCreation = async () => {

@@ -4,6 +4,7 @@ export const pipelineTemplateIdentifierConstants = {};
 
 pipelineTemplateIdentifierConstants.PIPELINE_TEMPLATE_IDENTIFIERS = {
   FREE_TRIAL_ORGANIZATION_SYNC_PIPELINE: "free-trial-organization-sync-pipeline",
+  BLANK_PIPELINE_TEMPLATE: "blank_pipeline_template"
 };
 
 pipelineTemplateIdentifierConstants.PIPELINE_TEMPLATE_IDENTIFIER_LABELS = {
