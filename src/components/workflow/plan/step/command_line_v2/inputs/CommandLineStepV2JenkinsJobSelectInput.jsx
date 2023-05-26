@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import JenkinsRegistryToolJobSelectInput
   from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 
-function CommandLineStepJenkinsJobSelectInput({model, setModel, disabled}) {
+function CommandLineStepV2JenkinsJobSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     model.setData("toolJobName", selectedOption.name);
     model.setData("toolJobId", selectedOption._id);
@@ -27,10 +27,10 @@ function CommandLineStepJenkinsJobSelectInput({model, setModel, disabled}) {
   );
 }
 
-CommandLineStepJenkinsJobSelectInput.propTypes = {
+CommandLineStepV2JenkinsJobSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default CommandLineStepJenkinsJobSelectInput;
+export default CommandLineStepV2JenkinsJobSelectInput;

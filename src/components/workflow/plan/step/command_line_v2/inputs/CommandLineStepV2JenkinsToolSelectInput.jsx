@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import RoleRestrictedJenkinsToolSelectInput
   from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
 
-function CommandLineStepJenkinsToolSelectInput({model, setModel, disabled}) {
+function CommandLineStepV2JenkinsToolSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     model.setData("toolConfigId", selectedOption?._id);
     model.setData("toolName",selectedOption?.name);
@@ -35,10 +35,10 @@ function CommandLineStepJenkinsToolSelectInput({model, setModel, disabled}) {
   );
 }
 
-CommandLineStepJenkinsToolSelectInput.propTypes = {
+CommandLineStepV2JenkinsToolSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default CommandLineStepJenkinsToolSelectInput;
+export default CommandLineStepV2JenkinsToolSelectInput;

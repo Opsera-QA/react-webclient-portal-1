@@ -4,7 +4,7 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import CommandLineParameterSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineParameterSelectInput";
 
-function CommandLineSonarCustomParametersToggle({model, setModel, fieldName, disabled}) {
+function CommandLineStepV2SonarCustomParametersToggle({model, setModel, fieldName, disabled}) {
 
   const setDataFunction = () => {
     let newDataObject = model;
@@ -43,15 +43,15 @@ function CommandLineSonarCustomParametersToggle({model, setModel, fieldName, dis
   );
 }
 
-CommandLineSonarCustomParametersToggle.propTypes = {
+CommandLineStepV2SonarCustomParametersToggle.propTypes = {
   model: PropTypes.object,
   fieldName: PropTypes.string,
   setModel: PropTypes.func,
   disabled: PropTypes.bool
 };
 
-CommandLineSonarCustomParametersToggle.defaultProps = {
+CommandLineStepV2SonarCustomParametersToggle.defaultProps = {
   fieldName: "saveSonarParameters"
 };
 
-export default CommandLineSonarCustomParametersToggle;
+export default CommandLineStepV2SonarCustomParametersToggle;

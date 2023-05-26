@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import RepositorySelectInput from "components/common/list_of_values_input/tools/repositories/RepositorySelectInput";
 
-function CommandLineGitRepositoryInput({dataObject, setDataObject, disabled}) {
+function CommandLineStepV2GitRepositoryInput({dataObject, setDataObject, disabled}) {
   const setRepository = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
     const repoId = selectedOption?._id || selectedOption?.id || selectedOption?.repositoryId || "";
@@ -30,10 +30,10 @@ function CommandLineGitRepositoryInput({dataObject, setDataObject, disabled}) {
   );
 }
 
-CommandLineGitRepositoryInput.propTypes = {
+CommandLineStepV2GitRepositoryInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default CommandLineGitRepositoryInput;
+export default CommandLineStepV2GitRepositoryInput;

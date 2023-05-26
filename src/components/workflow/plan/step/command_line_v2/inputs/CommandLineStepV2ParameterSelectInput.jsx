@@ -4,7 +4,7 @@ import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 import ParameterMappingInputBase
   from "../../../../../../../../common/list_of_values_input/parameters/ParameterMappingInputBase";
 
-function CommandLineParameterSelectInput({ dataObject, setDataObject, disabled, fieldName}) {
+function CommandLineStepV2ParameterSelectInput({ dataObject, setDataObject, disabled, fieldName}) {
 
   return (
     <ParameterMappingInputBase
@@ -20,7 +20,7 @@ function CommandLineParameterSelectInput({ dataObject, setDataObject, disabled, 
   );
 }
 
-CommandLineParameterSelectInput.propTypes = {
+CommandLineStepV2ParameterSelectInput.propTypes = {
   dataObject: PropTypes.object,
   fieldName: PropTypes.string,
   setDataObject: PropTypes.func,
@@ -29,8 +29,8 @@ CommandLineParameterSelectInput.propTypes = {
 };
 
 
-CommandLineParameterSelectInput.defaultProps = {
+CommandLineStepV2ParameterSelectInput.defaultProps = {
   fieldName: "sonarCustomParameters"
 };
 
-export default CommandLineParameterSelectInput;
+export default CommandLineStepV2ParameterSelectInput;

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function CommandLineSonarScannerToggleInput({dataObject, setDataObject, fieldName, disabled}) {
+function CommandLineStepV2SonarScannerToggleInput({dataObject, setDataObject, fieldName, disabled}) {
   const setDataFunction = (fieldName, value) => {
     let newDataObject = dataObject;
     let sonarFlag = !dataObject.getData(fieldName);
@@ -25,11 +25,11 @@ function CommandLineSonarScannerToggleInput({dataObject, setDataObject, fieldNam
   );
 }
 
-CommandLineSonarScannerToggleInput.propTypes = {
+CommandLineStepV2SonarScannerToggleInput.propTypes = {
   dataObject: PropTypes.object,
   fieldName: PropTypes.string,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool
 };
 
-export default CommandLineSonarScannerToggleInput;
+export default CommandLineStepV2SonarScannerToggleInput;

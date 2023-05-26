@@ -4,7 +4,7 @@ import commandLineStepV2Metadata from "components/workflow/plan/step/command_lin
 import InputContainer from "components/common/inputs/InputContainer";
 import {Form} from "react-bootstrap";
 
-function CommandLineSourceScriptToggleInput({dataObject, setDataObject, fieldName, disabled}) {
+function CommandLineStepV2SourceScriptToggleInput({dataObject, setDataObject, fieldName, disabled}) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
 
   const triggerAuthenticationChange = () => {
@@ -31,11 +31,11 @@ function CommandLineSourceScriptToggleInput({dataObject, setDataObject, fieldNam
   );
 }
 
-CommandLineSourceScriptToggleInput.propTypes = {
+CommandLineStepV2SourceScriptToggleInput.propTypes = {
   dataObject: PropTypes.object,
   fieldName: PropTypes.string,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool
 };
 
-export default CommandLineSourceScriptToggleInput;
+export default CommandLineStepV2SourceScriptToggleInput;

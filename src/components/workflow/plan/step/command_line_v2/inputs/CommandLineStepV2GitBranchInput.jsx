@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 
-function CommandLineGitBranchInput({dataObject, setDataObject, disabled}) {
+function CommandLineStepV2GitBranchInput({dataObject, setDataObject, disabled}) {
   const setBranch = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
     // newDataObject.setData("branch", selectedOption);
@@ -24,10 +24,10 @@ function CommandLineGitBranchInput({dataObject, setDataObject, disabled}) {
   );
 }
 
-CommandLineGitBranchInput.propTypes = {
+CommandLineStepV2GitBranchInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default CommandLineGitBranchInput;
+export default CommandLineStepV2GitBranchInput;

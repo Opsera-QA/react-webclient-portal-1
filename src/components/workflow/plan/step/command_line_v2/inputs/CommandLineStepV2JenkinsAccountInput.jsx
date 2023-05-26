@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedJenkinsAccountSelectInput from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsAccountSelectInput";
 
-function CommandLineJenkinsAccountInput({dataObject, setDataObject, disabled, className}) {
+function CommandLineStepV2JenkinsAccountInput({dataObject, setDataObject, disabled, className}) {
   const setJenkinsAccount = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
     newDataObject.setData("gitCredential", selectedOption.gitCredential);
@@ -33,11 +33,11 @@ function CommandLineJenkinsAccountInput({dataObject, setDataObject, disabled, cl
   );
 }
 
-CommandLineJenkinsAccountInput.propTypes = {
+CommandLineStepV2JenkinsAccountInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string
 };
 
-export default CommandLineJenkinsAccountInput;
+export default CommandLineStepV2JenkinsAccountInput;

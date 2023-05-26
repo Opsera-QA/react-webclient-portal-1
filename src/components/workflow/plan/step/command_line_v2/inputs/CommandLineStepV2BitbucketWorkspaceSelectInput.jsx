@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import BitbucketWorkspaceInput from "components/common/list_of_values_input/tools/bitbucket/workspaces/BitbucketWorkspaceInput";
 
-function CommandLineBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
+function CommandLineStepV2BitbucketWorkspaceSelectInput({dataObject, setDataObject, disabled}) {
   const setWorkspace = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
     newDataObject.setData("workspace", selectedOption.key);
@@ -27,10 +27,10 @@ function CommandLineBitbucketWorkspaceInput({dataObject, setDataObject, disabled
   );
 }
 
-CommandLineBitbucketWorkspaceInput.propTypes = {
+CommandLineStepV2BitbucketWorkspaceSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default CommandLineBitbucketWorkspaceInput;
+export default CommandLineStepV2BitbucketWorkspaceSelectInput;
