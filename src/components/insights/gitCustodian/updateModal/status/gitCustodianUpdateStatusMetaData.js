@@ -7,11 +7,11 @@ const GitCustodianUpdateStatusMetaData = {
       isRequired: true,
     },
     {
-      label: "Comments",
-      id: "comment",
+      label:"Comments",
+      id:"comment",
       isRequired: false,
       regexDefinitionName: "expandedTextAndSymbolsWithSpaces",
-    },
+    },   
     {
       label: "Issues",
       id: "issues",
@@ -21,15 +21,13 @@ const GitCustodianUpdateStatusMetaData = {
       id: "issuesList",
       isRequired: true,
       minItems: 1,
-    },
-
+    },    
   ],
   newObjectFields: {
     status: "",
-    comment: "",
+    comment:"",
     issues: [],
     issuesList: [],
-
   }
 };
 

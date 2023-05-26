@@ -63,7 +63,7 @@ const GitCustodianMetaData = {
      roles: [],
      owner: "",
      owner_name: "",
-     comment:""
+     comment:"",
    }
 };
 

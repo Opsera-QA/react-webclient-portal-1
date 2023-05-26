@@ -79,7 +79,6 @@ function GitCustodianUpdateStatusEditorPanel({
               useInfoContainer={false}
             />
           </Col>
-
           <Col md={12}>
             <GitCustodianSelectedIssuesTable
               selectedIssues={selectedIssues}

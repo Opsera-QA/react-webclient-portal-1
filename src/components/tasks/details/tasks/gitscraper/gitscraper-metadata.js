@@ -50,7 +50,7 @@ const gitscraperTaskConfigurationMetadata = {
     {
       label: "Advanced Options",
       id: "advancedOptions",
-    },    
+    },
     {
       label: "Scan all Repositories",
       id: "scanAll",
