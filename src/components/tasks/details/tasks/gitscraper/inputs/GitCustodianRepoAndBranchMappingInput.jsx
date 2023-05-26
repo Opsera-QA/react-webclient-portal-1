@@ -11,6 +11,7 @@ import IconBase from "components/common/icons/IconBase";
 import GitCustodianStandaloneRepositorySelectInput from "./mapping/GitCustodianStandaloneRepositorySelectInput";
 import GitCustodianStandaloneBranchSelectInput from "./mapping/GitCustodianStandaloneBranchSelectInput";
 import InfoOverlayIcon from "components/common/icons/info/InfoOverlayIcon";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function GitCustodianRepoAndBranchMappingInput({
   model,
@@ -183,6 +184,7 @@ function GitCustodianRepoAndBranchMappingInput({
                   workspace={model?.getData("workspace")}
                   repositoryId={repositoryId}
                   setErrorMessage={setErrorMessage}
+                  disabled={hasStringValue(repositoryName) !== true}
                 />            
               </Col>
             </Row>
