@@ -144,6 +144,12 @@ regexDefinitions.domainField = {
   errorFormText: "This field must begin and end with an alphanumeric character. Alphanumeric and Dashes are allowed otherwise.",
 };
 
+regexDefinitions.domainFieldWithExtension = {
+  regex: /^[A-Za-z0-9\-]*\.[A-Za-z]{2,}$/,
+  formText: "This field must begin with alphanumeric characters followed by a dot and should end with alphabets. Dashes are allowed otherwise.",
+  errorFormText: "This field must begin with alphanumeric characters followed by a dot and should end with alphabets. Dashes are allowed otherwise.",
+};
+
 regexDefinitions.mongoId = {
   regex: /^[0-9a-fA-F]{24}$/,
   formText: "This field must be an ID",
