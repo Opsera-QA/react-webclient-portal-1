@@ -43,30 +43,27 @@ function InformationToast(
       <div className="ml-auto">
         <IconBase
           icon={faTimes}
-          className="pointer information-toast-close-button"
+          className={"pointer information-toast-close-button"}
           onClickFunction={() => { clearToast(); }}
         />
       </div>
     );
   };
 
-  const viewItem = () => {
-
-  };
-
   const getItemLinkButton = () => {
     if (hasStringValue(link) === true) {
       return (
-        <div>
-          <div>
+        <div className={"d-flex"}>
+          <div className={"mr-3"}>
             <Link to={link}>View Item</Link>
           </div>
-          <div>
+          <div className={"d-flex"}>
             <CopyToClipboardIconBase
               copyText={"Copy Link"}
               copiedText={"Copied Link"}
               copyString={`${process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL}${link}`}
             />
+            <span className={"ml-2"}>Copy Link</span>
           </div>
         </div>
       );
@@ -74,11 +71,16 @@ function InformationToast(
   };
 
   return (
-    <div className="information-toast d-flex p-2" role="alert" aria-live="assertive" aria-atomic="true">
-      <div>
+    <div
+      className={"information-toast p-2"}
+      role={"alert"}
+      aria-live={"assertive"}
+      aria-atomic={"true"}
+    >
+      <div className={"d-flex w-100"}>
         {messageBody}
+        {getCloseButton()}
       </div>
-      {getCloseButton()}
       {getItemLinkButton()}
     </div>
   );
