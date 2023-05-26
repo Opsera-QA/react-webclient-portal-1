@@ -39,7 +39,6 @@ import StepConfigUseTerraformOutput
 
 function CommandLineStepV2EditorPanel({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [jobType, setJobType] = useState("");
   const [commandLineStepConfigurationDto, setCommandLineStepConfigurationDataDto] = useState(undefined);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
@@ -51,7 +50,7 @@ function CommandLineStepV2EditorPanel({ pipelineId, stepTool, stepId, createJob,
 
   const loadData = async () => {
     setIsLoading(true);
-    let { threshold, job_type } = stepTool;
+    let { threshold } = stepTool;
     let commandLineConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, commandLineStepFormMetadata);
 
     if (commandLineConfigurationData.getData("sourceScript") === true) {
@@ -59,10 +58,6 @@ function CommandLineStepV2EditorPanel({ pipelineId, stepTool, stepId, createJob,
     }
 
     setCommandLineStepConfigurationDataDto(commandLineConfigurationData);
-
-    if (job_type) {
-      setJobType(job_type);
-    }
 
     if (threshold) {
       setThresholdType(threshold?.type);
