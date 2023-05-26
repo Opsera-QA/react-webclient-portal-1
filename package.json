@@ -122,8 +122,8 @@
     "stream-http": "^3.2.0",
     "text-encoding": "^0.7.0",
     "url": "^0.11.0",
-    "websocket": "^1.0.34",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "websocket": "^1.0.34"
   },
   "devDependencies": {
     "eslint": "^8.39.0",
