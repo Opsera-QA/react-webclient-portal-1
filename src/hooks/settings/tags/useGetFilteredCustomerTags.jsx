@@ -4,12 +4,11 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import useTagActions from "hooks/settings/tags/useTagActions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import liveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessageTopic.constants";
-import Model from "core/data_model/model";
-import tagFilterMetadata from "components/settings/tags/tag-filter-metadata";
+import {TagFilterModel} from "components/settings/tags/tag.filter.model";
 
 export default function useGetFilteredCustomerTags(handleErrorFunction) {
   const tagActions = useTagActions();
-  const [tagFilterModel, setTagFilterModel] = useState(new Model({...tagFilterMetadata.newObjectFields}, tagFilterMetadata, false));
+  const [tagFilterModel, setTagFilterModel] = useState(new TagFilterModel());
   const [customerTags, setCustomerTags] = useState([]);
   const {
     isLoading,
