@@ -84,10 +84,6 @@ export class TagFilterModel extends FilterModelBase {
     return true;
   };
 
-  canToggleView = () => {
-    return true;
-  };
-
   getDetailViewLink = (toolId) => {
     return toolHelper.getDetailViewLink(toolId);
   };

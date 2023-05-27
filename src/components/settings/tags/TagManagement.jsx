@@ -8,6 +8,7 @@ import InlineTagTypeFilter from "components/common/filters/tags/tag_type/InlineT
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 import TagFilterOverlay from "components/settings/tags/TagFilterOverlay";
+import PaginationContainer from "components/common/pagination/PaginationContainer";
 
 export default function TagManagement() {
   const {
@@ -51,14 +52,21 @@ export default function TagManagement() {
       filterModel={tagFilterModel}
       setFilterModel={setTagFilterModel}
     >
-      <TagsTable
+      <PaginationContainer
         loadData={loadData}
         isLoading={isLoading}
+        filterDto={tagFilterModel}
+        setFilterDto={setTagFilterModel}
         data={customerTags}
-        tagFilterDto={tagFilterModel}
-        setTagFilterDto={setTagFilterModel}
-        error={error}
-      />
+        nextGeneration={true}
+      >
+        <TagsTable
+          loadData={loadData}
+          isLoading={isLoading}
+          data={customerTags}
+          error={error}
+        />
+      </PaginationContainer>
     </ScreenContainer>
   );
 }
