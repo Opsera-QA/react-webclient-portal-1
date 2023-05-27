@@ -20,7 +20,7 @@ export default function useItemListSubscriptionHelper(
     } else if (type === liveMessageTypeConstants.LIVE_MESSAGE_TYPES.UPDATED_RECORD) {
       onUpdateFunction(liveMessageData.data);
     } else if (type === liveMessageTypeConstants.LIVE_MESSAGE_TYPES.DELETED_RECORD) {
-      onDeleteFunction(liveMessageData._id);
+      onDeleteFunction(liveMessageData.data);
     }
   };
 
