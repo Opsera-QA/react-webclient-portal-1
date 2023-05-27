@@ -51,6 +51,7 @@ export default function TagManagement() {
       titleActionBar={getInlineFilters()}
       filterModel={tagFilterModel}
       setFilterModel={setTagFilterModel}
+      loadDataFunction={loadData}
     >
       <PaginationContainer
         loadData={loadData}

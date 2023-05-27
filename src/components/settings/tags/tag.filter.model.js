@@ -38,7 +38,7 @@ const tagFilterMetadata = {
   newObjectFields: {
     pageSize: 50,
     currentPage: 1,
-    sortOption: {text: "Sort: Type", value: "type"},
+    sortOption: {text: "Type", value: "type"},
     search: "",
     activeFilters: [],
   },
