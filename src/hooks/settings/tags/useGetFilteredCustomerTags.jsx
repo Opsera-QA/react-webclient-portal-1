@@ -71,6 +71,12 @@ export default function useGetFilteredCustomerTags(handleErrorFunction) {
           15,
           undefined,
         );
+      } else {
+        toastContext.showInformationToast(
+          `The Tag [${tagId}] has been deleted`,
+          15,
+          undefined,
+        );
       }
     }
   };
