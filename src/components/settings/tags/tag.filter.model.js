@@ -45,8 +45,8 @@ const tagFilterMetadata = {
 };
 
 export class TagFilterModel extends FilterModelBase {
-  constructor(useUrlParameters = true) {
-    super(toolFilterMetadata);
+  constructor() {
+    super(tagFilterMetadata);
   }
 
   canSearch = () => {
