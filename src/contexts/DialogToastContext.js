@@ -189,8 +189,8 @@ function ToastContextProvider({children, navBar}) {
     addToast(warningToast, id, notificationType);
   };
 
-  const showSystemSuccessToast = (successMessage, autoCloseLengthInSeconds) => {
-    showSuccessToast(successMessage, autoCloseLengthInSeconds, notificationTypes.SYSTEM);
+  const showSystemSuccessToast = (successMessage, autoCloseLengthInSeconds, itemLink) => {
+    showSuccessToast(successMessage, autoCloseLengthInSeconds, notificationTypes.SYSTEM, itemLink);
   };
 
   const showFormSuccessToast = (successMessage, autoCloseLengthInSeconds) => {
@@ -198,9 +198,9 @@ function ToastContextProvider({children, navBar}) {
     showSuccessToast(successMessage, autoCloseLengthInSeconds, notificationTypes.FORM);
   };
 
-  const showSuccessToast = (successMessage, autoCloseLengthInSeconds = 10, notificationType = notificationTypes.UNKNOWN) => {
+  const showSuccessToast = (successMessage, autoCloseLengthInSeconds = 10, notificationType = notificationTypes.UNKNOWN, itemLink) => {
     let id = generateUUID();
-    let successToast = getSuccessToast(successMessage, id, autoCloseLengthInSeconds);
+    let successToast = getSuccessToast(successMessage, id, autoCloseLengthInSeconds, itemLink);
     addToast(successToast, id, notificationType);
   };
 
@@ -424,13 +424,14 @@ function ToastContextProvider({children, navBar}) {
     );
   };
 
-  const getSuccessToast = (message, id, autoCloseLengthInSeconds = 10) => {
+  const getSuccessToast = (message, id, autoCloseLengthInSeconds = 10, itemLink) => {
     return (
       <SuccessToast
         successMessage={message}
         id={id}
         removeToast={removeToast}
         autoCloseLength={autoCloseLengthInSeconds}
+        link={itemLink}
       />
     );
   };

@@ -1500,13 +1500,8 @@ div.data-blocks-ellipses {
 }
 
 .success-toast {
-    background-color: #FFF;
-    color: #000000;
     border: 2px solid green;
     border-left: 8px solid green;
-    padding: 2px;
-    z-index: 3000;
-    width: 775px;
 }
 
 .error-toast {
