@@ -5,7 +5,7 @@ import useTagActions from "hooks/settings/tags/useTagActions";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {websocketLiveUpdateHelper} from "core/websocket/websocket.helper";
-import useItemSubscription from "core/websocket/hooks/useItemSubscription";
+import useItemSubscriptionHelper from "core/websocket/hooks/useItemSubscriptionHelper";
 import {useHistory} from "react-router-dom";
 import {accountSettingsTrails} from "components/settings/accountSettings.trails";
 import liveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessageTopic.constants";
@@ -31,7 +31,7 @@ export default function useGetTagById(tagId, handleErrorFunction) {
     history.push(`/${accountSettingsTrails.tagManagement.path}`);
   };
 
-  useItemSubscription(
+  useItemSubscriptionHelper(
     liveMessageTopicConstants.LIVE_MESSAGE_TOPICS.TAGS,
     tagId,
     onUpdateFunction,

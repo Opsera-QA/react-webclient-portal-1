@@ -5,7 +5,7 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import liveMessageTypeConstants from "@opsera/definitions/constants/websocket/constants/liveMessageType.constants";
 
-export default function useItemSubscription(
+export default function useItemSubscriptionHelper(
   topicName,
   recordId,
   onUpdateFunction,

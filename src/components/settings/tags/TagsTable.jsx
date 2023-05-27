@@ -21,7 +21,16 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 import tagTypeConstants from "@opsera/definitions/constants/settings/tags/tagType.constants";
 
-function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, isMounted }) {
+function TagsTable(
+  {
+    data,
+    loadData,
+    isLoading,
+    tagFilterDto,
+    setTagFilterDto,
+    isMounted,
+    error,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   const fields = tagMetadata.fields;
@@ -76,6 +85,7 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, i
         loadData={loadData}
         paginationDto={tagFilterDto}
         setPaginationDto={setTagFilterDto}
+        error={error}
       />
     );
   };
@@ -106,7 +116,8 @@ TagsTable.propTypes = {
   tagFilterDto: PropTypes.object,
   activeTagFilterDto: PropTypes.object,
   setTagFilterDto: PropTypes.func,
-  isMounted: PropTypes.object
+  isMounted: PropTypes.object,
+  error: PropTypes.any,
 };
 
 export default TagsTable;
