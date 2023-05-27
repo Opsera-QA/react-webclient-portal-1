@@ -72,7 +72,7 @@ function InformationToast(
 
   return (
     <div
-      className={"information-toast p-2"}
+      className={"opsera-toast information-toast p-2"}
       role={"alert"}
       aria-live={"assertive"}
       aria-atomic={"true"}
