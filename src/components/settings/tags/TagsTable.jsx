@@ -12,6 +12,9 @@ import {
 import {getField} from "components/common/metadata/metadata-helpers";
 import tagTypeConstants from "@opsera/definitions/constants/settings/tags/tagType.constants";
 import {tagHelper} from "components/settings/tags/tag.helper";
+import {
+  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
+} from "components/common/table/FilterContainer";
 
 export default function TagsTable(
   {
@@ -50,6 +53,7 @@ export default function TagsTable(
       isLoading={isLoading}
       loadData={loadData}
       error={error}
+      tableHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
     />
   );
 }

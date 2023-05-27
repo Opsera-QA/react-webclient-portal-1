@@ -5,6 +5,8 @@ import useTagActions from "hooks/settings/tags/useTagActions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import liveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessageTopic.constants";
 import {TagFilterModel} from "components/settings/tags/tag.filter.model";
+import useItemListSubscriptionHelper from "core/websocket/hooks/useItemListSubscriptionHelper";
+import {tagHelper} from "components/settings/tags/tag.helper";
 
 export default function useGetFilteredCustomerTags(handleErrorFunction) {
   const tagActions = useTagActions();
@@ -16,7 +18,68 @@ export default function useGetFilteredCustomerTags(handleErrorFunction) {
     setError,
     loadData,
   } = useLoadData();
-  const {websocketClient} = useComponentStateReference();
+  const {toastContext} = useComponentStateReference();
+
+  const onCreateFunction = (newTag) => {
+    const parsedTag = DataParsingHelper.parseObject(newTag);
+
+    if (parsedTag) {
+      const tagIndex = customerTags.findIndex((tag) => tag._id === parsedTag._id);
+
+      if (tagIndex === -1) {
+        toastContext.showInformationToast(
+          `A new Tag has been created: [${parsedTag.type}: ${parsedTag.value}]`,
+          15,
+          undefined,
+          tagHelper.getDetailViewLink(parsedTag._id),
+        );
+      }
+    }
+  };
+
+  const onUpdateFunction = (updatedTag) => {
+    const parsedTag = DataParsingHelper.parseObject(updatedTag);
+
+    if (parsedTag) {
+      const tagIndex = customerTags.findIndex((tag) => tag._id === parsedTag._id);
+
+      if (tagIndex !== -1) {
+        const foundTag = customerTags[tagIndex];
+        customerTags[tagIndex] = parsedTag;
+        setCustomerTags([...customerTags]);
+        toastContext.showInformationToast(
+          `The Tag [${foundTag.type}: ${foundTag.value}] has been updated`,
+          15,
+          undefined,
+          tagHelper.getDetailViewLink(parsedTag._id),
+        );
+      }
+    }
+  };
+
+  const onDeleteFunction = (tagId) => {
+    const parsedTagMongoDbId = DataParsingHelper.parseMongoDbId(tagId);
+
+    if (parsedTagMongoDbId) {
+      const foundTag = customerTags.find((tag) => tag._id === parsedTagMongoDbId);
+
+      if (foundTag) {
+        const updatedTags = customerTags.filter((tag) => tag._id !== parsedTagMongoDbId);
+        setCustomerTags([...updatedTags]);
+        toastContext.showInformationToast(
+          `The Tag [${foundTag.type}: ${foundTag.value}] has been deleted`,
+          15,
+          undefined,
+        );
+      }
+    }
+  };
+  useItemListSubscriptionHelper(
+    liveMessageTopicConstants.LIVE_MESSAGE_TOPICS.TAGS,
+    onCreateFunction,
+    onUpdateFunction,
+    onDeleteFunction,
+  );
 
   useEffect(() => {
     setCustomerTags([]);
@@ -36,7 +99,6 @@ export default function useGetFilteredCustomerTags(handleErrorFunction) {
     filterModel.setData("totalCount", response?.data?.count);
     filterModel.setData("activeFilters", filterModel?.getActiveFilters());
     setTagFilterModel({...filterModel});
-    websocketClient.subscribeToTopic(liveMessageTopicConstants.LIVE_MESSAGE_TOPICS.TAGS);
   };
 
   return ({

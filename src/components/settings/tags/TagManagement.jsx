@@ -9,6 +9,10 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 import TagFilterOverlay from "components/settings/tags/TagFilterOverlay";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
+import TableCardView from "components/common/table/TableCardView";
+import {
+  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
+} from "components/common/table/FilterContainer";
 
 export default function TagManagement() {
   const {
@@ -42,6 +46,17 @@ export default function TagManagement() {
     );
   };
 
+  const getTableView = () => {
+    return (
+      <TagsTable
+        loadData={loadData}
+        isLoading={isLoading}
+        data={customerTags}
+        error={error}
+      />
+    );
+  };
+
   return (
     <ScreenContainer
       breadcrumbDestination={"tagManagement"}
@@ -61,11 +76,13 @@ export default function TagManagement() {
         data={customerTags}
         nextGeneration={true}
       >
-        <TagsTable
-          loadData={loadData}
+        <TableCardView
+          filterModel={tagFilterModel}
           isLoading={isLoading}
           data={customerTags}
-          error={error}
+          cardView={getTableView()}
+          tableView={getTableView()}
+          tableHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
         />
       </PaginationContainer>
     </ScreenContainer>
