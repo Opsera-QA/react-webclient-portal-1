@@ -8,6 +8,8 @@ import websocketEventNameConstants
 import liveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessageTopic.constants";
 import WebsocketSubscriptionRequestHelper
   from "@opsera/definitions/constants/websocket/helpers/websocketSubscriptionRequest.helper";
+import websocketSubscriptionTypeConstants
+  from "@opsera/definitions/constants/websocket/constants/websocketSubscriptionType.constants";
 const websocketEnabled = DataParsingHelper.parseBooleanV2(process.env.REACT_APP_WEBSOCKET_ENABLED);
 
 export const WEBSOCKET_STATE = {
@@ -223,6 +225,7 @@ export default class ClientWebsocket {
 
     const foundIndex = this.subscriptions.indexOf((subscription) => subscription?.topic === topicName);
     const newSubscription = {
+      type: websocketSubscriptionTypeConstants.WEBSOCKET_SUBSCRIPTION_TYPES.ITEM_SUBSCRIPTION,
       topic: topicName,
       objectId: parsedObjectId,
       liveUpdateHandlerFunction: liveUpdateHandlerFunction,
@@ -308,7 +311,7 @@ export default class ClientWebsocket {
       `subscribing to topic: [${topicName}]`,
     );
 
-    const subscriptionRequest = WebsocketLiveUpdateHelper.generateLiveMessageForSubscriptionRequest(topicName);
+    const subscriptionRequest = WebsocketSubscriptionRequestHelper.generateLiveMessageForCollectionSubscriptionRequest(topicName);
     this.websocketClient.emit(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST, subscriptionRequest);
   };
 
