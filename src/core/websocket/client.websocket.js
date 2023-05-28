@@ -359,7 +359,7 @@ export default class ClientWebsocket {
       "unsubscribeFromTopic",
       `unsubscribing from topic: [${topicName}]`,
     );
-    const unsubscriptionRequest = WebsocketLiveUpdateHelper.generateLiveMessageForUnsubscriptionRequest(topicName);
+    const unsubscriptionRequest = WebsocketSubscriptionRequestHelper.generateLiveMessageForUnsubscriptionRequest(topicName);
     const currentSubscriptions = [...this.subscriptions];
     const subscriptionIndex = currentSubscriptions.findIndex((subscription) => subscription.topic === topicName);
 
