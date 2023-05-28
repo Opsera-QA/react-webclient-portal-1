@@ -181,8 +181,8 @@ export default class ClientWebsocket {
       const subscriptionRequest = WebsocketLiveUpdateHelper.generateLiveMessageForSubscriptionRequest(topicName);
       ReactLoggingHandler.logDebugMessage(
         "clientWebsocket",
-        "subscribeToTopic",
-        `subscribing to topic: [${topicName}]`,
+        "resubscribe",
+        `resubscribing to topic: [${topicName}]`,
       );
       this.websocketClient.emit(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST, subscriptionRequest);
     });
@@ -192,7 +192,7 @@ export default class ClientWebsocket {
     if (liveMessageTopicConstants.isLiveMessageTopicValid(topicName) !== true) {
       ReactLoggingHandler.logErrorMessage(
         "clientWebsocket",
-        "subscribeToTopic",
+        "subscribeToItemUpdates",
         undefined,
         `Cannot attempt to subscribe to an invalid topic: [${topicName}]`,
       );
@@ -204,7 +204,7 @@ export default class ClientWebsocket {
     if (!parsedObjectId) {
       ReactLoggingHandler.logErrorMessage(
         "clientWebsocket",
-        "subscribeToTopic",
+        "subscribeToItemUpdates",
         undefined,
         `Cannot attempt to subscribe to an item with an invalid ID`,
       );
@@ -214,7 +214,7 @@ export default class ClientWebsocket {
     if (typeof liveUpdateHandlerFunction !== "function") {
       ReactLoggingHandler.logErrorMessage(
         "clientWebsocket",
-        "subscribeToTopic",
+        "subscribeToItemUpdates",
         undefined,
         `Cannot attempt to subscribe with an invalid live update handler function.`,
       );
@@ -243,7 +243,7 @@ export default class ClientWebsocket {
     if (this.isConnected() !== true) {
       ReactLoggingHandler.logInfoMessage(
         "clientWebsocket",
-        "subscribeToTopic",
+        "subscribeToItemUpdates",
         `Websocket is not connected so cannot subscribe to topic [${topicName}]`,
       );
       return;
@@ -251,7 +251,7 @@ export default class ClientWebsocket {
 
     ReactLoggingHandler.logDebugMessage(
       "clientWebsocket",
-      "subscribeToTopic",
+      "subscribeToItemUpdates",
       `subscribing to topic: [${topicName}]`,
     );
 
@@ -259,11 +259,11 @@ export default class ClientWebsocket {
     this.websocketClient.emit(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST, subscriptionRequest);
   };
 
-  subscribeToTopic = (topicName, liveUpdateHandlerFunction) => {
+  subscribeToCollectionUpdates = (topicName, liveUpdateHandlerFunction) => {
     if (liveMessageTopicConstants.isLiveMessageTopicValid(topicName) !== true) {
       ReactLoggingHandler.logErrorMessage(
         "clientWebsocket",
-        "subscribeToTopic",
+        "subscribeToCollectionUpdates",
         undefined,
         `Cannot attempt to subscribe to an invalid topic: [${topicName}]`,
       );
@@ -279,7 +279,7 @@ export default class ClientWebsocket {
     if (typeof liveUpdateHandlerFunction !== "function") {
       ReactLoggingHandler.logErrorMessage(
         "clientWebsocket",
-        "subscribeToTopic",
+        "subscribeToCollectionUpdates",
         undefined,
         `Cannot attempt to subscribe with an invalid live update handler function.`,
       );
@@ -296,7 +296,7 @@ export default class ClientWebsocket {
     if (this.isConnected() !== true) {
       ReactLoggingHandler.logInfoMessage(
         "clientWebsocket",
-        "subscribeToTopic",
+        "subscribeToCollectionUpdates",
         `Websocket is not connected so cannot subscribe to topic [${topicName}]`,
       );
       return;
@@ -304,7 +304,7 @@ export default class ClientWebsocket {
 
     ReactLoggingHandler.logDebugMessage(
       "clientWebsocket",
-      "subscribeToTopic",
+      "subscribeToCollectionUpdates",
       `subscribing to topic: [${topicName}]`,
     );
 
@@ -321,7 +321,7 @@ export default class ClientWebsocket {
     if (liveMessageTopicConstants.isLiveMessageTopicValid(topicName) !== true) {
       ReactLoggingHandler.logErrorMessage(
         "clientWebsocket",
-        "subscribeToTopic",
+        "unsubscribeFromTopic",
         undefined,
         `Cannot attempt to unsubscribe from an invalid topic: [${topicName}]`
       );
@@ -330,7 +330,7 @@ export default class ClientWebsocket {
 
     ReactLoggingHandler.logDebugMessage(
       "clientWebsocket",
-      "subscribeToTopic",
+      "unsubscribeFromTopic",
       `unsubscribing from topic: [${topicName}]`,
     );
     const unsubscriptionRequest = WebsocketLiveUpdateHelper.generateLiveMessageForUnsubscriptionRequest(topicName);

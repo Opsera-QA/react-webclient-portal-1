@@ -26,7 +26,7 @@ export default function useCollectionSubscriptionHelper(
 
   useEffect(() => {
     if (hasStringValue(topicName) === true) {
-      websocketClient?.subscribeToTopic(topicName, handleLiveUpdateFunction);
+      websocketClient?.subscribeToCollectionUpdates(topicName, handleLiveUpdateFunction);
     }
 
     return () => {
