@@ -3,7 +3,7 @@ import {useEffect} from "react";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import liveMessageTypeConstants from "@opsera/definitions/constants/websocket/constants/liveMessageType.constants";
 
-export default function useItemListSubscriptionHelper(
+export default function useCollectionSubscriptionHelper(
   topicName,
   onCreateFunction,
   onUpdateFunction,

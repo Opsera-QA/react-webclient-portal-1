@@ -27,7 +27,7 @@ export default function useItemSubscriptionHelper(
 
   useEffect(() => {
     if (isMongoDbId(recordId) === true && hasStringValue(topicName) === true) {
-      websocketClient?.subscribeToTopic(topicName, handleLiveUpdateFunction);
+      websocketClient?.subscribeToItemUpdates(topicName, recordId, handleLiveUpdateFunction);
     }
 
     return () => {

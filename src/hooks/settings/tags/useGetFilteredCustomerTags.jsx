@@ -5,7 +5,7 @@ import useTagActions from "hooks/settings/tags/useTagActions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import liveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessageTopic.constants";
 import {TagFilterModel} from "components/settings/tags/tag.filter.model";
-import useItemListSubscriptionHelper from "core/websocket/hooks/useItemListSubscriptionHelper";
+import useCollectionSubscriptionHelper from "core/websocket/hooks/useCollectionSubscriptionHelper";
 import {tagHelper} from "components/settings/tags/tag.helper";
 
 export default function useGetFilteredCustomerTags(handleErrorFunction) {
@@ -72,7 +72,7 @@ export default function useGetFilteredCustomerTags(handleErrorFunction) {
     }
   };
 
-  useItemListSubscriptionHelper(
+  useCollectionSubscriptionHelper(
     liveMessageTopicConstants.LIVE_MESSAGE_TOPICS.TAGS,
     onCreateFunction,
     onUpdateFunction,
