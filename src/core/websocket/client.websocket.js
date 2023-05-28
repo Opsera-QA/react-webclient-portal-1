@@ -6,6 +6,8 @@ import {ReactLoggingHandler} from "temp-library-components/handler/reactLogging.
 import websocketEventNameConstants
   from "@opsera/definitions/constants/websocket/constants/websocketEventName.constants";
 import liveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessageTopic.constants";
+import WebsocketSubscriptionRequestHelper
+  from "@opsera/definitions/constants/websocket/helpers/websocketSubscriptionRequest.helper";
 const websocketEnabled = DataParsingHelper.parseBooleanV2(process.env.REACT_APP_WEBSOCKET_ENABLED);
 
 export const WEBSOCKET_STATE = {
@@ -184,6 +186,77 @@ export default class ClientWebsocket {
       );
       this.websocketClient.emit(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST, subscriptionRequest);
     });
+  };
+
+  subscribeToItemUpdates = (topicName, objectId, liveUpdateHandlerFunction) => {
+    if (liveMessageTopicConstants.isLiveMessageTopicValid(topicName) !== true) {
+      ReactLoggingHandler.logErrorMessage(
+        "clientWebsocket",
+        "subscribeToTopic",
+        undefined,
+        `Cannot attempt to subscribe to an invalid topic: [${topicName}]`,
+      );
+      return;
+    }
+
+    const parsedObjectId = DataParsingHelper.parseMongoDbId(objectId);
+
+    if (!parsedObjectId) {
+      ReactLoggingHandler.logErrorMessage(
+        "clientWebsocket",
+        "subscribeToTopic",
+        undefined,
+        `Cannot attempt to subscribe to an item with an invalid ID`,
+      );
+      return;
+    }
+
+    if (typeof liveUpdateHandlerFunction !== "function") {
+      ReactLoggingHandler.logErrorMessage(
+        "clientWebsocket",
+        "subscribeToTopic",
+        undefined,
+        `Cannot attempt to subscribe with an invalid live update handler function.`,
+      );
+      return;
+    }
+
+    const foundIndex = this.subscriptions.indexOf((subscription) => subscription?.topic === topicName);
+    const newSubscription = {
+      topic: topicName,
+      objectId: parsedObjectId,
+      liveUpdateHandlerFunction: liveUpdateHandlerFunction,
+    };
+
+    if (foundIndex !== -1) {
+      const foundSubscription = this.subscriptions[foundIndex];
+
+      if (foundSubscription.objectId === parsedObjectId) {
+        return;
+      }
+
+      this.subscriptions[foundIndex] = newSubscription;
+    } else {
+      this.subscriptions.push(newSubscription);
+    }
+
+    if (this.isConnected() !== true) {
+      ReactLoggingHandler.logInfoMessage(
+        "clientWebsocket",
+        "subscribeToTopic",
+        `Websocket is not connected so cannot subscribe to topic [${topicName}]`,
+      );
+      return;
+    }
+
+    ReactLoggingHandler.logDebugMessage(
+      "clientWebsocket",
+      "subscribeToTopic",
+      `subscribing to topic: [${topicName}]`,
+    );
+
+    const subscriptionRequest = WebsocketSubscriptionRequestHelper.generateLiveMessageForItemSubscriptionRequest(topicName, parsedObjectId);
+    this.websocketClient.emit(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST, subscriptionRequest);
   };
 
   subscribeToTopic = (topicName, liveUpdateHandlerFunction) => {
