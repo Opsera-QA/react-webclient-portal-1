@@ -57,29 +57,21 @@ export default function useGetFilteredCustomerTags(handleErrorFunction) {
     }
   };
 
-  const onDeleteFunction = (tagId) => {
-    const parsedTagMongoDbId = DataParsingHelper.parseMongoDbId(tagId);
+  const onDeleteFunction = (deletedTag) => {
+    const parsedTag = DataParsingHelper.parseObject(deletedTag);
 
-    if (parsedTagMongoDbId) {
-      const foundTag = customerTags.find((tag) => tag._id === parsedTagMongoDbId);
-
-      if (foundTag) {
-        const updatedTags = customerTags.filter((tag) => tag._id !== parsedTagMongoDbId);
-        setCustomerTags([...updatedTags]);
-        toastContext.showInformationToast(
-          `The Tag [${foundTag.type}: ${foundTag.value}] has been deleted`,
-          15,
-          undefined,
-        );
-      } else {
-        toastContext.showInformationToast(
-          `The Tag [${tagId}] has been deleted`,
-          15,
-          undefined,
-        );
-      }
+    if (parsedTag) {
+      const parsedTagMongoDbId = DataParsingHelper.parseMongoDbId(parsedTag, "_id");
+      const updatedTags = customerTags.filter((tag) => tag._id !== parsedTagMongoDbId);
+      setCustomerTags([...updatedTags]);
+      toastContext.showInformationToast(
+        `The Tag [${parsedTag.type}: ${parsedTag.value}] has been deleted`,
+        15,
+        undefined,
+      );
     }
   };
+
   useItemListSubscriptionHelper(
     liveMessageTopicConstants.LIVE_MESSAGE_TOPICS.TAGS,
     onCreateFunction,
