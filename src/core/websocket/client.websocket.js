@@ -131,10 +131,6 @@ export default class ClientWebsocket {
     }
   };
 
-  getWebsocketClientInstance = () => {
-    return this.websocketClient;
-  };
-
   closeWebsocket = () => {
     if (this.isConnected() === true) {
       ReactLoggingHandler.logDebugMessage(
@@ -180,13 +176,39 @@ export default class ClientWebsocket {
 
     parsedSubscriptions.forEach((subscription) => {
       const topicName = subscription.topic;
-      const subscriptionRequest = WebsocketLiveUpdateHelper.generateLiveMessageForSubscriptionRequest(topicName);
-      ReactLoggingHandler.logDebugMessage(
-        "clientWebsocket",
-        "resubscribe",
-        `resubscribing to topic: [${topicName}]`,
-      );
-      this.websocketClient.emit(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST, subscriptionRequest);
+      const subscriptionType = subscription.type;
+      const objectId = subscription.objectId;
+
+      switch (subscriptionType) {
+        case websocketSubscriptionTypeConstants.WEBSOCKET_SUBSCRIPTION_TYPES.ITEM_SUBSCRIPTION:
+          ReactLoggingHandler.logDebugMessage(
+            "clientWebsocket",
+            "resubscribe",
+            `resubscribing to topic: [${topicName}] for item [${objectId}]`,
+          );
+          this.websocketClient.emit(
+            websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST,
+            WebsocketSubscriptionRequestHelper.generateLiveMessageForItemSubscriptionRequest(topicName, objectId),
+          );
+          break;
+        case websocketSubscriptionTypeConstants.WEBSOCKET_SUBSCRIPTION_TYPES.COLLECTION_SUBSCRIPTION:
+          ReactLoggingHandler.logDebugMessage(
+            "clientWebsocket",
+            "resubscribe",
+            `resubscribing to topic: [${topicName}].`,
+          );
+          this.websocketClient.emit(
+            websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST,
+            WebsocketSubscriptionRequestHelper.generateLiveMessageForCollectionSubscriptionRequest(topicName),
+          );
+          break;
+        default:
+          ReactLoggingHandler.logWarningMessage(
+            "clientWebsocket",
+            "resubscribe",
+            `Cannot resubscribe to unknown subscription type [${JSON.stringify(subscriptionType)}].`,
+          );
+      }
     });
   };
 
@@ -290,6 +312,7 @@ export default class ClientWebsocket {
     }
 
     const newSubscription = {
+      type: websocketSubscriptionTypeConstants.WEBSOCKET_SUBSCRIPTION_TYPES.COLLECTION_SUBSCRIPTION,
       topic: topicName,
       liveUpdateHandlerFunction: liveUpdateHandlerFunction,
     };
