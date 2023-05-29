@@ -2,8 +2,19 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {faTimes} from "@fortawesome/pro-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import CopyToClipboardIconBase from "components/common/icons/link/CopyToClipboardIconBase";
+import {Link} from "react-router-dom";
+import ToastLinkBar from "components/common/status_notifications/toasts/ToastLinkBar";
 
-function InformationToast({ informationMessage, removeToast, autoCloseLength, id }) {
+function InformationToast(
+  {
+    informationMessage,
+    removeToast,
+    autoCloseLength,
+    id,
+    link,
+  }) {
   const [messageBody, setMessageBody] = useState("");
   const [autoCloseTimer, setAutoCloseTimer] = useState(undefined);
 
@@ -33,7 +44,7 @@ function InformationToast({ informationMessage, removeToast, autoCloseLength, id
       <div className="ml-auto">
         <IconBase
           icon={faTimes}
-          className="pointer information-toast-close-button"
+          className={"pointer information-toast-close-button"}
           onClickFunction={() => { clearToast(); }}
         />
       </div>
@@ -41,11 +52,17 @@ function InformationToast({ informationMessage, removeToast, autoCloseLength, id
   };
 
   return (
-    <div className="information-toast d-flex p-2" role="alert" aria-live="assertive" aria-atomic="true">
-      <div>
+    <div
+      className={"opsera-toast information-toast p-2"}
+      role={"alert"}
+      aria-live={"assertive"}
+      aria-atomic={"true"}
+    >
+      <div className={"d-flex w-100"}>
         {messageBody}
+        {getCloseButton()}
       </div>
-      {getCloseButton()}
+      <ToastLinkBar link={link} />
     </div>
   );
 }
@@ -54,7 +71,8 @@ InformationToast.propTypes = {
   informationMessage: PropTypes.string,
   removeToast: PropTypes.func,
   id: PropTypes.string,
-  autoCloseLength: PropTypes.number
+  autoCloseLength: PropTypes.number,
+  link: PropTypes.string,
 };
 
 export default InformationToast;

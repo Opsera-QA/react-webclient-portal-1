@@ -7,12 +7,12 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import {CENTER_OVERLAY_SIZES} from "components/common/overlays/center/CenterOverlayContainer";
 
-function NewTagOverlay({ loadData, isMounted }) {
+export default function NewTagOverlay({ loadData }) {
   const toastContext = useContext(DialogToastContext);
   const [tagData, setTagData] = useState(new Model({...tagMetadata.newObjectFields}, tagMetadata, true));
 
   const closePanel = () => {
-    if (isMounted?.current === true) {
+    if (loadData) {
       loadData();
     }
 
@@ -37,10 +37,5 @@ function NewTagOverlay({ loadData, isMounted }) {
 }
  
 NewTagOverlay.propTypes = {
-  isMounted: PropTypes.object,
   loadData: PropTypes.func,
 };
-
-export default NewTagOverlay;
-
-

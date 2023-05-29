@@ -5,12 +5,16 @@ import useTagActions from "hooks/settings/tags/useTagActions";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {websocketLiveUpdateHelper} from "core/websocket/websocket.helper";
-import useItemSubscription from "core/websocket/hooks/useItemSubscription";
+import useItemSubscriptionHelper from "core/websocket/hooks/useItemSubscriptionHelper";
 import {useHistory} from "react-router-dom";
-import {accountSettingsTrails} from "components/settings/accountSettings.trails";
 import liveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessageTopic.constants";
+import {tagHelper} from "components/settings/tags/tag.helper";
 
-export default function useGetTagById(tagId, handleErrorFunction) {
+export default function useGetTagById(
+  tagId,
+  handleErrorFunction,
+  rerouteOnDeletion,
+  ) {
   const {toastContext} = useComponentStateReference();
   const history = useHistory();
   const tagActions = useTagActions();
@@ -26,12 +30,19 @@ export default function useGetTagById(tagId, handleErrorFunction) {
     websocketLiveUpdateHelper.handleSingleObjectLiveUpdate(tag, newTag, setTag);
   };
 
-  const onDeleteFunction = (tagId) => {
-    toastContext.showSystemInformationToast("The Tag has been deleted.");
-    history.push(`/${accountSettingsTrails.tagManagement.path}`);
+  const onDeleteFunction = (deletedTag) => {
+    const parsedTagId = DataParsingHelper.parseNestedMongoDbId(deletedTag, "_id");
+
+    if (parsedTagId === tagId) {
+      toastContext.showSystemInformationToast("The Tag has been deleted.");
+
+      if (rerouteOnDeletion !== false) {
+        history.push(tagHelper.getManagementScreenLink());
+      }
+    }
   };
 
-  useItemSubscription(
+  useItemSubscriptionHelper(
     liveMessageTopicConstants.LIVE_MESSAGE_TOPICS.TAGS,
     tagId,
     onUpdateFunction,

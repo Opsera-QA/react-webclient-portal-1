@@ -13,8 +13,12 @@ function Toaster({toasts}) {
   }
 
   return (
-    <div aria-live="polite" aria-atomic="true" className="toast-wrapper">
-      <div className="toast-container">
+    <div
+      aria-live={"polite"}
+      aria-atomic={"true"}
+      className={"toast-wrapper"}
+    >
+      <div className={"toast-container"}>
         {currentToasts.map((toast, index) => {
           return (
             <div key={index} className={index > 0 ? "mt-1" : ""}>
