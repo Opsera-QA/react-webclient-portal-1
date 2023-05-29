@@ -21,7 +21,9 @@ export default function InnovationLabsNavigationLinks({ isSidebarCollapsed }) {
         label={"Insights 2.0 (Beta)"}
         icon={faChartArea}
         isSidebarCollapsed={isSidebarCollapsed}
-        onClick={() => (window.location.href = "/vnext")}
+        onClick={() =>
+          (window.location.href = "/vnext/insights/marketplace-dashboard")
+        }
         // isExternalLink={true}
       />
     </>
