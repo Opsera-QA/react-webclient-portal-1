@@ -30,6 +30,11 @@ const nodeDependencies = [
     dependencyType: "nodejs",
     version: "19.3",
   },
+  {
+    name: "Node Version 20.2.0",
+    dependencyType: "nodejs",
+    version: "20.2.0",
+  },
 ];
 
 const gradleDependencies = [
@@ -57,6 +62,51 @@ const gradleDependencies = [
     name: "Java openJDK Version 11",
     dependencyType: "java",
     version: "11",
+  },
+  {
+    name: "Java openJDK Version 12",
+    dependencyType: "java",
+    version: "12",
+  },
+  {
+    name: "Java openJDK Version 13",
+    dependencyType: "java",
+    version: "13",
+  },
+  {
+    name: "Java openJDK Version 14",
+    dependencyType: "java",
+    version: "14",
+  },
+  {
+    name: "Java openJDK Version 15",
+    dependencyType: "java",
+    version: "15",
+  },
+  {
+    name: "Java openJDK Version 16",
+    dependencyType: "java",
+    version: "16",
+  },
+  {
+    name: "Java openJDK Version 17",
+    dependencyType: "java",
+    version: "17",
+  },
+  {
+    name: "Java openJDK Version 18",
+    dependencyType: "java",
+    version: "18",
+  },
+  {
+    name: "Java openJDK Version 19",
+    dependencyType: "java",
+    version: "19",
+  },
+  {
+    name: "Java openJDK Version 20",
+    dependencyType: "java",
+    version: "20",
   },
   {
     name: "Gradle 6.x",
@@ -100,6 +150,51 @@ const jenkinsDependencies = [
     name: "Java openJDK Version 11",
     dependencyType: "java",
     version: "11",
+  },
+  {
+    name: "Java openJDK Version 12",
+    dependencyType: "java",
+    version: "12",
+  },
+  {
+    name: "Java openJDK Version 13",
+    dependencyType: "java",
+    version: "13",
+  },
+  {
+    name: "Java openJDK Version 14",
+    dependencyType: "java",
+    version: "14",
+  },
+  {
+    name: "Java openJDK Version 15",
+    dependencyType: "java",
+    version: "15",
+  },
+  {
+    name: "Java openJDK Version 16",
+    dependencyType: "java",
+    version: "16",
+  },
+  {
+    name: "Java openJDK Version 17",
+    dependencyType: "java",
+    version: "17",
+  },
+  {
+    name: "Java openJDK Version 18",
+    dependencyType: "java",
+    version: "18",
+  },
+  {
+    name: "Java openJDK Version 19",
+    dependencyType: "java",
+    version: "19",
+  },
+  {
+    name: "Java openJDK Version 20",
+    dependencyType: "java",
+    version: "20",
   },
   {
     name: "Maven Version 3.0.5",
