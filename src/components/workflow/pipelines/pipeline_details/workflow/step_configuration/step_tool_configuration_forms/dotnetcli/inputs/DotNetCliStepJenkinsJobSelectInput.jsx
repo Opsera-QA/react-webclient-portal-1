@@ -20,7 +20,6 @@ function DotNetCliStepJenkinsJobSelectInput({dataObject, setDataObject, disabled
     <JenkinsRegistryToolJobSelectInput
       fieldName={"toolJobId"}
       jenkinsToolId={dataObject?.getData("toolConfigId")}
-      typeFilter={"BUILD"}
       buildType={toolIdentifier}
       configurationRequired={true}
       model={dataObject}

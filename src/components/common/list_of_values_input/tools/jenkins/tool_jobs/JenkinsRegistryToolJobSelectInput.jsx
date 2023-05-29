@@ -82,19 +82,6 @@ function JenkinsRegistryToolJobSelectInput(
         let filteredJobs = jenkinsJobs.filter((job) => { return job.type[0] === typeFilter; });
         setJenkinsJobs(filteredJobs);
 
-        if (buildType) {
-          switch (buildType) {
-            case toolIdentifierConstants.TOOL_IDENTIFIERS.DOT_NET:
-              let buildTypeDotNetJobs = filteredJobs.filter((job) => job?.configuration?.buildType === "dotnet");
-              setJenkinsJobs(buildTypeDotNetJobs);
-              break;
-            case toolIdentifierConstants.TOOL_IDENTIFIERS.DOT_NET_CLI:
-              let buildTypeMSBuildJobs = filteredJobs.filter((job) => job?.configuration?.buildType === "msbuild");
-              setJenkinsJobs(buildTypeMSBuildJobs);
-              break;
-          }
-        }
-
         if (Array.isArray(filteredJobs) && existingJobSelection != null && existingJobSelection !== "") {
           // TODO: We should probably pass in valueField and check based on that.
           const existingJob = jenkinsJobs.find((x) => x._id === existingJobSelection);
@@ -107,10 +94,7 @@ function JenkinsRegistryToolJobSelectInput(
         }
       } else {
         setJenkinsJobs(jenkinsJobs);
-        if (buildType) {
-          let otherThanDotNetMSbuildJobs = jenkinsJobs.filter((job) => job?.configuration?.buildType !== "msbuild" && job?.configuration?.buildType !== "dotnet");
-          setJenkinsJobs(otherThanDotNetMSbuildJobs);
-        }
+
         if (existingJobSelection != null && existingJobSelection !== "") {
           const existingJob = jenkinsJobs.find((x) => x._id === existingJobSelection);
           if (existingJob == null) {
@@ -118,6 +102,23 @@ function JenkinsRegistryToolJobSelectInput(
               "Preselected job is no longer available. It may have been deleted. Please select another job from the list or recreate the job in Tool Registry."
             );
           }
+        }
+      }
+
+      if (buildType) {
+        switch (buildType) {
+          case toolIdentifierConstants.TOOL_IDENTIFIERS.DOT_NET:
+            let buildTypeDotNetJobs = jenkinsJobs.filter((job) => job?.configuration?.buildType === "dotnet");
+            setJenkinsJobs(buildTypeDotNetJobs);
+            break;
+          case toolIdentifierConstants.TOOL_IDENTIFIERS.DOT_NET_CLI:
+            let buildTypeMSBuildJobs = jenkinsJobs.filter((job) => job?.configuration?.buildType === "msbuild");
+            setJenkinsJobs(buildTypeMSBuildJobs);
+            break;
+          case toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS:
+            let otherThanDotNetMSbuildJobs = jenkinsJobs.filter((job) => job?.configuration?.buildType !== "msbuild" && job?.configuration?.buildType !== "dotnet");
+            setJenkinsJobs(otherThanDotNetMSbuildJobs);
+            break;
         }
       }
     }
