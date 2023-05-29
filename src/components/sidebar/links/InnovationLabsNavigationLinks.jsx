@@ -6,7 +6,7 @@ import SidebarSubheaderText from "components/sidebar/SidebarSubheaderText";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const getVnextLink = () => {
-  return "/vnext";
+  return "/vnext/insights/marketplace-dashboard";
 };
 
 export default function InnovationLabsNavigationLinks({ isSidebarCollapsed }) {
