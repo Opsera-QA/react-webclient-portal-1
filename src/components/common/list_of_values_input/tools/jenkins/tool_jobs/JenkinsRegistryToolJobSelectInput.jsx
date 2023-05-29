@@ -1,15 +1,15 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import toolsActions from "components/inventory/tools/tools-actions";
-import {Link} from "react-router-dom";
-import {getJenkinsJobTypeLabelForValue} from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobTypeSelectInput";
+import { Link } from "react-router-dom";
+import { getJenkinsJobTypeLabelForValue } from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobTypeSelectInput";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import {faTools} from "@fortawesome/pro-light-svg-icons";
-import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants.js";
+import { faTools } from "@fortawesome/pro-light-svg-icons";
+import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants.js";
 
 function JenkinsRegistryToolJobSelectInput(
   {
@@ -75,25 +75,25 @@ function JenkinsRegistryToolJobSelectInput(
     // TODO: Make route that actually just returns jobs
     const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, jenkinsToolId);
     const jenkinsJobs = response?.data?.data?.jobs;
-    console.log(jenkinsJobs);
     const existingJobSelection = model?.getData(fieldName);
 
     if (Array.isArray(jenkinsJobs) && jenkinsJobs.length > 0) {
       if (typeFilter) {
-        let filteredJobs = jenkinsJobs.filter((job) => {return job.type[0] === typeFilter;});
+        let filteredJobs = jenkinsJobs.filter((job) => { return job.type[0] === typeFilter; });
+        setJenkinsJobs(filteredJobs);
 
-        if(buildType){
-          switch(buildType){
+        if (buildType) {
+          switch (buildType) {
             case toolIdentifierConstants.TOOL_IDENTIFIERS.DOT_NET:
-              let buildTypeDotNetJobs = filteredJobs.filter((job) => job?.configuration?.buildType === "dotnet")
-              setJenkinsJobs(buildTypeDotNetJobs)
+              let buildTypeDotNetJobs = filteredJobs.filter((job) => job?.configuration?.buildType === "dotnet");
+              setJenkinsJobs(buildTypeDotNetJobs);
               break;
             case toolIdentifierConstants.TOOL_IDENTIFIERS.DOT_NET_CLI:
-              let buildTypeMSBuildJobs = filteredJobs.filter((job) => job?.configuration?.buildType === "msbuild")
-              setJenkinsJobs(buildTypeMSBuildJobs)
+              let buildTypeMSBuildJobs = filteredJobs.filter((job) => job?.configuration?.buildType === "msbuild");
+              setJenkinsJobs(buildTypeMSBuildJobs);
               break;
-            }
           }
+        }
 
         if (Array.isArray(filteredJobs) && existingJobSelection != null && existingJobSelection !== "") {
           // TODO: We should probably pass in valueField and check based on that.
@@ -105,12 +105,11 @@ function JenkinsRegistryToolJobSelectInput(
             );
           }
         }
-        // setJenkinsJobs(filteredJobs);
       } else {
         setJenkinsJobs(jenkinsJobs);
-        if(buildType){
-          let otherThanDotNetMSbuildJobs = jenkinsJobs.filter((job) => job?.configuration?.buildType !== "msbuild" && job?.configuration?.buildType !== "dotnet")
-          setJenkinsJobs(otherThanDotNetMSbuildJobs)
+        if (buildType) {
+          let otherThanDotNetMSbuildJobs = jenkinsJobs.filter((job) => job?.configuration?.buildType !== "msbuild" && job?.configuration?.buildType !== "dotnet");
+          setJenkinsJobs(otherThanDotNetMSbuildJobs);
         }
         if (existingJobSelection != null && existingJobSelection !== "") {
           const existingJob = jenkinsJobs.find((x) => x._id === existingJobSelection);

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import JenkinsRegistryToolJobSelectInput
   from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 
-function JenkinsStepToolJobSelectInput({ fieldName, model, setModel, disabled, jenkinsToolId, toolJobType, jobType,toolIdentifier }) {
+function JenkinsStepToolJobSelectInput({ fieldName, model, setModel, disabled, jenkinsToolId, toolJobType, jobType, toolIdentifier }) {
   // TODO: We need to rework this
   useEffect(() => {
     if (Array.isArray(toolJobType) && toolJobType.includes("SFDC")) {
