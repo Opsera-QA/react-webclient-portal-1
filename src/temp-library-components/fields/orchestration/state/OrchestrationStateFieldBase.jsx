@@ -22,6 +22,7 @@ export default function OrchestrationStateFieldBase(
     showStatusText,
   }) {
   switch (orchestrationState) {
+    case "FAILED":
     case "failed":
     case "failure":
       return (
@@ -47,6 +48,7 @@ export default function OrchestrationStateFieldBase(
           showStatusText={showStatusText}
         />
       );
+    case "SUCCESS":
     case "success":
     case "successful":
       return (
