@@ -27,6 +27,8 @@ export default function useGetFilteredCustomerTags(handleErrorFunction) {
       const tagIndex = customerTags.findIndex((tag) => tag._id === parsedTag._id);
 
       if (tagIndex === -1) {
+        customerTags.push(parsedTag);
+        setCustomerTags([...customerTags]);
         toastContext.showInformationToast(
           `A new Tag has been created: [${parsedTag.type}: ${parsedTag.value}]`,
           15,
