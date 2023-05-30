@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import JenkinsRegistryToolJobSelectInput
   from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 
-function DotNetCliStepJenkinsJobSelectInput({dataObject, setDataObject, disabled}) {
+function DotNetCliStepJenkinsJobSelectInput({dataObject, setDataObject, disabled, toolIdentifier}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
     newDataObject.setData("toolJobName", selectedOption.name);
@@ -20,7 +20,7 @@ function DotNetCliStepJenkinsJobSelectInput({dataObject, setDataObject, disabled
     <JenkinsRegistryToolJobSelectInput
       fieldName={"toolJobId"}
       jenkinsToolId={dataObject?.getData("toolConfigId")}
-      typeFilter={"BUILD"}
+      buildType={toolIdentifier}
       configurationRequired={true}
       model={dataObject}
       setModel={setDataObject}
@@ -34,6 +34,7 @@ DotNetCliStepJenkinsJobSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
+  toolIdentifier: PropTypes.string
 };
 
 export default DotNetCliStepJenkinsJobSelectInput;
