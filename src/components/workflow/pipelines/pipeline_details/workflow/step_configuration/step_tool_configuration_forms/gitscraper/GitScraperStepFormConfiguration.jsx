@@ -12,8 +12,10 @@ import GitScraperGitRepositorySelectInput from "./inputs/GitScraperGitRepository
 import GitScraperGitBranchSelectInput from "./inputs/GitScraperGitBranchSelectInput";
 import GitScraperStepFormMetadata from "./gitscraper-step-metadata";
 import GitIgnoreToggleInput from "./inputs/GitIgnoreToggleInput";
+import GitCustodianEmailScanInput from "components/tasks/details/tasks/gitscraper/inputs/GitCustodianEmailScanInput";
+import GitCustodianCustomEntropyInput from "components/tasks/details/tasks/gitscraper/inputs/GitCustodianCustomEntropyInput";
 
-function GitscraperStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback,plan }) {
+function GitscraperStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback, plan }) {
   const [isLoading, setIsLoading] = useState(true);
   const [jobType, setJobType] = useState("");
   const [gitscraperStepConfigurationModel, setGitscraperStepConfigurationModel] = useState(undefined);
@@ -109,12 +111,24 @@ function GitscraperStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
         model={gitscraperStepConfigurationModel}
         setModel={setGitscraperStepConfigurationModel}
         fieldName={"secretsException"}
-        />
+      />
       <GitIgnoreToggleInput
         model={gitscraperStepConfigurationModel}
         setModel={setGitscraperStepConfigurationModel}
         fieldName={"filesException"}
-        />
+      />
+
+      <GitCustodianEmailScanInput
+        model={gitscraperStepConfigurationModel}
+        setModel={setGitscraperStepConfigurationModel}
+        fieldName={"scanEmail"}
+      />
+      <GitCustodianCustomEntropyInput
+        model={gitscraperStepConfigurationModel}
+        setModel={setGitscraperStepConfigurationModel}
+        fieldName={"customEntropy"}
+      />
+
     </PipelineStepEditorPanelContainer>
   );
 }
@@ -126,7 +140,7 @@ GitscraperStepConfiguration.propTypes = {
   stepTool: PropTypes.object,
   closeEditorPanel: PropTypes.func,
   parentCallback: PropTypes.func,
-  plan:PropTypes.array
+  plan: PropTypes.array
 };
 
 export default GitscraperStepConfiguration;
