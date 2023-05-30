@@ -1,14 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import accesssTokenExpirationLengthConstants from "@opsera/definitions/constants/access_tokens/accessTokenExpirationLength.constants"
 
-const expirationLengths = [
-  {text: "1 Day", value: "1d"},
-  {text: "1 Week", value: "1w"},
-  {text: "1 Month", value: "1mo"},
-  {text: "2 Months", value: "2mo"},
-  {text: "3 Months", value: "3mo"},
-];
+const selectOptions = accesssTokenExpirationLengthConstants.EXPIRATION_LENGTH_SELECT_OPTIONS
 
 function AccessTokenExpirationSelectInput({ fieldName, dataObject, setDataObject, disabled}) {
   return (
@@ -16,7 +11,7 @@ function AccessTokenExpirationSelectInput({ fieldName, dataObject, setDataObject
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      selectOptions={expirationLengths}
+      selectOptions={selectOptions}
       valueField={"value"}
       showClearValueButton={false}
       textField={"text"}
