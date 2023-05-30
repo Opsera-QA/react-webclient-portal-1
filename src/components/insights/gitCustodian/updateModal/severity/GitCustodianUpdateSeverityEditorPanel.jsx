@@ -8,6 +8,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import modelHelpers from "components/common/model/modelHelpers";
 import GitCustodianSelectedIssuesTable from "components/insights/gitCustodian/modal/GitCustodianSelectedIssuesTable";
 import GitCustodianSeveritySelectInput from "./inputs/GitCustodianSeveritySelectInput";
+import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 
 function GitCustodianUpdateSeverityEditorPanel({
   handleClose,
@@ -41,7 +42,7 @@ function GitCustodianUpdateSeverityEditorPanel({
     setDataModel({ ...newModel });
   };
 
-  const updateSeverity = async () => {    
+  const updateSeverity = async () => {
     const response = await chartsActions.updateGitCustodianVulnerabilitySeverity(getAccessToken, cancelTokenSource, dataModel.getPersistData());
     setSelectedIssues([]);
     handleClose();
@@ -66,9 +67,17 @@ function GitCustodianUpdateSeverityEditorPanel({
       <div className={"px-2"}>
         <Row>
           <Col md={12}>
-            <GitCustodianSeveritySelectInput 
+            <GitCustodianSeveritySelectInput
               model={dataModel}
               setModel={setDataModel}
+            />
+          </Col>
+          <Col md={12}>
+            <TextAreaInputBase
+              fieldName={"comment"}
+              model={dataModel}
+              setModel={setDataModel}
+              useInfoContainer={false}
             />
           </Col>
           <Col md={12}>
