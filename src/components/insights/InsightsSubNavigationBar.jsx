@@ -15,6 +15,7 @@ import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import GitCustodianRoleHelper from "@opsera/know-your-role/roles/compliance/git_custodian/gitCustodianRole.helper";
+import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 
 function InsightsSubNavigationBar({currentTab}) {
   const { featureFlagHideItemInProd } = useContext(AuthContext);
@@ -32,6 +33,9 @@ function InsightsSubNavigationBar({currentTab}) {
       /*case "analytics":
         history.push(`/insights/analytics`);
         return;*/
+      case "salesforce":
+        history.push(`/insights/salesforce`);
+        return;
       case "lookup":
         history.push(`/insights/lookup`);
         return;
@@ -115,11 +119,11 @@ function InsightsSubNavigationBar({currentTab}) {
         tabText={"Marketplace"}
       />
       <NavigationTab
-        icon={faMagnifyingGlass}
-        tabName={"lookup"}
+        icon={faSalesforce}
+        tabName={"salesforce"}
         handleTabClick={handleTabClick}
         activeTab={currentTab}
-        tabText={"Salesforce Lookup"}
+        tabText={"Salesforce"}
         isBeta={true}
       />
       {/*<NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleTabClick} activeTab={currentTab} tabText={"Analytics"} />*/}

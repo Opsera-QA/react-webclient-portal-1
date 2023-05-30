@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import { insightsLookupActions } from "components/insights/lookup/insightsLookup.actions";
+import { insightsLookupActions } from "components/insights/salesforce/lookup/insightsLookup.actions";
 
 function AnalyticsSalesforceComponentNameMultiSelectInput(
   {

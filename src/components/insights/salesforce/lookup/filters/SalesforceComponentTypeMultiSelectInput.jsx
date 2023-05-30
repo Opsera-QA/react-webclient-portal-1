@@ -2,26 +2,27 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {formatDate} from "../../../common/helpers/date/date.helpers";
-import {insightsLookupActions} from "../insightsLookup.actions";
+import {insightsLookupActions} from "components/insights/salesforce/lookup/insightsLookup.actions";
+import {capitalizeFirstLetter} from "../../../../common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-function SalesforceComponentNameMultiSelectInput(
+function SalesforceComponentTypeMultiSelectInput(
     {
         fieldName,
         model,
         setModel,
+        disabled,
+        formatDataFunction,
         textField,
         valueField,
-        placeholderText,
-        projects,
-        startDate,
-        endDate
+        setDataFunction,
+        clearDataFunction,
+        className,
     }) {
     const [salesforceComponentNames, setSalesforceComponentNames] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(undefined);
-    const {isMounted, cancelTokenSource, getAccessToken} =
-        useComponentStateReference();
+    const {isMounted, cancelTokenSource, getAccessToken} = useComponentStateReference();
 
     useEffect(() => {
         setSalesforceComponentNames([]);
@@ -31,10 +32,7 @@ function SalesforceComponentNameMultiSelectInput(
                 throw error;
             }
         });
-    }, [projects, startDate, endDate]);
-
-    const disabled = model.getArrayData('selectedComponentFilterData').length === 0;
-    if(disabled){ model?.setData("selectedComponentNames", []);}
+    }, []);
 
     const loadData = async () => {
         try {
@@ -52,64 +50,59 @@ function SalesforceComponentNameMultiSelectInput(
         }
     };
 
-    const loadComponentNames = async (newFilterModel = model) => {
-        const DATE_STRING_FORMAT = "MM/dd/yyyy";
-        const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
-        const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
-        const response = await insightsLookupActions.getComponentNames(
+    const loadComponentNames = async () => {
+        const componentTypeResponse = await insightsLookupActions.getComponentTypes(
             getAccessToken,
             cancelTokenSource,
-            formattedStartDate,
-            formattedEndDate,
-            [],
-            projects,
-            [],
-            [],
-            newFilterModel
         );
-        const names = response?.data?.data?.componentNames;
 
-        if (isMounted?.current === true && Array.isArray(names)) {
-            setSalesforceComponentNames(names);
-        }
+        const types = DataParsingHelper.parseNestedArray(componentTypeResponse, "data.data", []);
+        setSalesforceComponentNames([...types]);
     };
 
     return (
         <MultiSelectInputBase
+            className={className}
+            setDataFunction={setDataFunction}
             fieldName={fieldName}
             dataObject={model}
             setDataObject={setModel}
             selectOptions={salesforceComponentNames}
+            formatDataFunction={formatDataFunction}
+            clearDataFunction={clearDataFunction}
+            // groupBy={(filterOption) =>
+            //   capitalizeFirstLetter(filterOption?.type, " ", "Undefined Type")
+            // }
+            textField={(data) =>
+                capitalizeFirstLetter(data["type"]) +
+                ": " +
+                capitalizeFirstLetter(data["name"])
+            }
             busy={isLoading}
             valueField={valueField}
+            disabled={disabled}
             error={error}
-            textField={textField}
-            placeholderText={placeholderText}
-            disabled={disabled || isLoading}
             pluralTopic={"Filters"}
         />
     );
 }
 
-SalesforceComponentNameMultiSelectInput.propTypes = {
+SalesforceComponentTypeMultiSelectInput.propTypes = {
     className: PropTypes.string,
     fieldName: PropTypes.string,
     model: PropTypes.object,
     setModel: PropTypes.func,
+    disabled: PropTypes.bool,
     textField: PropTypes.string,
     valueField: PropTypes.string,
     formatDataFunction: PropTypes.func,
     setDataFunction: PropTypes.func,
     clearDataFunction: PropTypes.func,
-    data: PropTypes.any,
-    projects: PropTypes.any,
-    placeholderText: PropTypes.string,
-    startDate: PropTypes.string,
-    endDate: PropTypes.string,
 };
 
-SalesforceComponentNameMultiSelectInput.defaultProps = {
+SalesforceComponentTypeMultiSelectInput.defaultProps = {
     textField: "name",
+    valueField: "id",
 };
 
-export default SalesforceComponentNameMultiSelectInput;
+export default SalesforceComponentTypeMultiSelectInput;

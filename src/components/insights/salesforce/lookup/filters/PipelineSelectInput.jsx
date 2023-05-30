@@ -2,11 +2,10 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {insightsLookupActions} from "components/insights/lookup/insightsLookup.actions";
-import {capitalizeFirstLetter} from "../../../common/helpers/string-helpers";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import {insightsLookupActions} from "components/insights/salesforce/lookup/insightsLookup.actions";
+import {capitalizeFirstLetter} from "../../../../common/helpers/string-helpers";
 
-function SalesforceComponentTypeMultiSelectInput(
+function PipelineSelectInput(
     {
         fieldName,
         model,
@@ -22,7 +21,8 @@ function SalesforceComponentTypeMultiSelectInput(
     const [salesforceComponentNames, setSalesforceComponentNames] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(undefined);
-    const {isMounted, cancelTokenSource, getAccessToken} = useComponentStateReference();
+    const {isMounted, cancelTokenSource, getAccessToken} =
+        useComponentStateReference();
 
     useEffect(() => {
         setSalesforceComponentNames([]);
@@ -51,13 +51,21 @@ function SalesforceComponentTypeMultiSelectInput(
     };
 
     const loadComponentNames = async () => {
-        const componentTypeResponse = await insightsLookupActions.getComponentTypes(
+        const pipelinesResponse = await insightsLookupActions.getPipelines(
             getAccessToken,
             cancelTokenSource,
         );
 
-        const types = DataParsingHelper.parseNestedArray(componentTypeResponse, "data.data", []);
-        setSalesforceComponentNames([...types]);
+        const pipelines = pipelinesResponse?.data?.results;
+
+        if (
+            isMounted?.current === true &&
+            Array.isArray(pipelines) &&
+            Array.isArray(pipelines)
+        ) {
+            const resultArray = [...pipelines];
+            setSalesforceComponentNames(resultArray);
+        }
     };
 
     return (
@@ -71,7 +79,7 @@ function SalesforceComponentTypeMultiSelectInput(
             formatDataFunction={formatDataFunction}
             clearDataFunction={clearDataFunction}
             // groupBy={(filterOption) =>
-            //   capitalizeFirstLetter(filterOption?.type, " ", "Undefined Type")
+            //     capitalizeFirstLetter(filterOption?.type, " ", "Undefined Type")
             // }
             textField={(data) =>
                 capitalizeFirstLetter(data["type"]) +
@@ -87,7 +95,7 @@ function SalesforceComponentTypeMultiSelectInput(
     );
 }
 
-SalesforceComponentTypeMultiSelectInput.propTypes = {
+PipelineSelectInput.propTypes = {
     className: PropTypes.string,
     fieldName: PropTypes.string,
     model: PropTypes.object,
@@ -100,9 +108,8 @@ SalesforceComponentTypeMultiSelectInput.propTypes = {
     clearDataFunction: PropTypes.func,
 };
 
-SalesforceComponentTypeMultiSelectInput.defaultProps = {
+PipelineSelectInput.defaultProps = {
     textField: "name",
-    valueField: "id",
 };
 
-export default SalesforceComponentTypeMultiSelectInput;
+export default PipelineSelectInput;

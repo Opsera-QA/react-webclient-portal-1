@@ -6,7 +6,7 @@ import { getTableTextColumn } from "components/common/table/table-column-helpers
 import MakeupTableBase from "components/common/table/makeup/MakeupTableBase";
 import { faBug } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
-import { DialogToastContext } from "../../../contexts/DialogToastContext";
+import { DialogToastContext } from "../../../../contexts/DialogToastContext";
 
 const fields = [
   {
