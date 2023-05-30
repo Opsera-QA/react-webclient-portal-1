@@ -4,6 +4,7 @@ import Analytics from "components/analytics/Analytics";
 import Insights from "components/insights/dashboards/Insights";
 import DashboardDetailView from "components/insights/dashboards/dashboard_details/DashboardDetailView";
 import Marketplace from "components/insights/marketplace/Marketplace";
+import SalesforceInsights from "components/insights/salesforce/SalesforceInsights";
 import Lookup from "components/insights/salesforce/lookup/Lookup";
 import Release360 from "components/insights/release_360/Release360";
 import InsightsSynopsis from "components/insights/summary/InsightsSynopsis";
@@ -21,7 +22,7 @@ export default function InsightsRoutes() {
       <SecureRoute path="/insights" exact component={Insights} />
       <SecureRoute path="/insights/dashboards/:id/:tab?" exact component={DashboardDetailView} />
       <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace} />
-      <SecureRoute path="/insights/salesforce" exact component={Lookup} />
+      <SecureRoute path="/insights/salesforce" exact component={SalesforceInsights} />
       <SecureRoute path="/insights/salesforce/lookup" exact component={Lookup} />
       <SecureRoute path="/insights/release360" exact component={Release360} />
       <SecureRoute path="/insights/synopsis" component={InsightsSynopsis} />

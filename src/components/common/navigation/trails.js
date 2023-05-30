@@ -138,7 +138,7 @@ export const breadcrumbs = {
     parent: "insights",
     name: "salesforce",
     path: paths.salesforce,
-    title: "Salesforce",
+    title: "Salesforce Insights",
     linkText: "Salesforce",
     icon: faSalesforce,
     isBeta: true,
