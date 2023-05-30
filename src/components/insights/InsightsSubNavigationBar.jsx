@@ -123,7 +123,7 @@ function InsightsSubNavigationBar({currentTab}) {
         tabName={"salesforce"}
         handleTabClick={handleTabClick}
         activeTab={currentTab}
-        tabText={"Salesforce"}
+        tabText={"Salesforce Insights"}
         isBeta={true}
       />
       {/*<NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleTabClick} activeTab={currentTab} tabText={"Analytics"} />*/}
