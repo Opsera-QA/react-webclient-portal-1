@@ -80,7 +80,6 @@ function JenkinsRegistryToolJobSelectInput(
     if (Array.isArray(jenkinsJobs) && jenkinsJobs.length > 0) {
       if (typeFilter) {
         let filteredJobs = jenkinsJobs.filter((job) => { return job.type[0] === typeFilter; });
-        setJenkinsJobs(filteredJobs);
 
         if (Array.isArray(filteredJobs) && existingJobSelection != null && existingJobSelection !== "") {
           // TODO: We should probably pass in valueField and check based on that.
@@ -92,6 +91,8 @@ function JenkinsRegistryToolJobSelectInput(
             );
           }
         }
+        
+        setJenkinsJobs(filteredJobs);
       } else {
         setJenkinsJobs(jenkinsJobs);
 
