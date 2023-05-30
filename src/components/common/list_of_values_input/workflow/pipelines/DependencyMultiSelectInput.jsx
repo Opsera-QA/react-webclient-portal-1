@@ -340,6 +340,7 @@ function DependencyMultiSelectInput({
   setDataObject,
   setDataFunction,
   clearDataFunction,
+  disabled
 }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -407,8 +408,8 @@ function DependencyMultiSelectInput({
       (dependency) => dependency.dependencyType,
     );
     const filteredArr = itemArray.filter(
-        (dependency) =>
-            !selectedDependencyTypes.includes(dependency.dependencyType),
+      (dependency) =>
+        !selectedDependencyTypes.includes(dependency.dependencyType),
     );
     return [...filteredArr, ...currentData];
   };
@@ -446,6 +447,7 @@ function DependencyMultiSelectInput({
       groupBy={"dependencyType"}
       // valueField={"version"}
       textField={"name"}
+      disabled={disabled}
     />
   );
 }
@@ -457,6 +459,7 @@ DependencyMultiSelectInput.propTypes = {
   setDataObject: PropTypes.func,
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default DependencyMultiSelectInput;
