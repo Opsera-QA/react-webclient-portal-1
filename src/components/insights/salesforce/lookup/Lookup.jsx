@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from "react";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import SalesforceLookUpHelpDocumentation
-  from "../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation";
+  from "../../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {insightsLookupActions} from "components/insights/lookup/insightsLookup.actions";
-import LookupResults from "components/insights/lookup/LookupResults";
+import {insightsLookupActions} from "components/insights/salesforce/lookup/insightsLookup.actions";
+import LookupResults from "components/insights/salesforce/lookup/LookupResults";
 import {formatDate} from "components/common/helpers/date/date.helpers";
 import LookupFilterModel from "./lookup.filter.model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import SalesforceLookupFilters from "components/insights/lookup/SalesforceLookupFilters";
+import SalesforceLookupFilters from "components/insights/salesforce/lookup/SalesforceLookupFilters";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";

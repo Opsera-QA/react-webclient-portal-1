@@ -36,6 +36,7 @@ import {accountSettingsTrails} from "components/settings/accountSettings.trails"
 import {adminToolsTrails} from "components/admin/adminTools.trails";
 import {reportsTrails} from "components/reports/reports.trails";
 import {workspaceTrails} from "components/workspace/workspace.trails";
+import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
 export const breadcrumbs = {
@@ -133,8 +134,17 @@ export const breadcrumbs = {
     linkText: "Dashboard Details",
     icon: faChartNetwork
   },
-  lookup: {
+  salesforce: {
     parent: "insights",
+    name: "salesforce",
+    path: paths.salesforce,
+    title: "Salesforce",
+    linkText: "Salesforce",
+    icon: faSalesforce,
+    isBeta: true,
+  },
+  lookup: {
+    parent: "salesforce",
     name: "lookup",
     path: paths.lookup,
     title: "Salesforce Lookup",

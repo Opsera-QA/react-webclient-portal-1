@@ -7,9 +7,9 @@ import {
 import VanityTable from "components/common/table/VanityTable";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { insightsLookupDetailsMetadata } from "./insightsLookupDetails.metadata";
-import FilterContainer from "../../common/table/FilterContainer";
+import FilterContainer from "../../../common/table/FilterContainer";
 import { faCalendarAlt } from "@fortawesome/pro-light-svg-icons";
-import { screenContainerHeights } from "../../common/panels/general/screenContainer.heights";
+import { screenContainerHeights } from "../../../common/panels/general/screenContainer.heights";
 import ExportInsightsLookupDetailsPanel from "./export/ExportInsightsLookupDetailsPanel";
 import ExportInsightsLookupDetailsButton from "./export/ExportInsightsLookupDetailsButton";
 
