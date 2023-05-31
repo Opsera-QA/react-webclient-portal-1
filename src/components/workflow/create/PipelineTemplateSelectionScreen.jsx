@@ -116,7 +116,10 @@ export default function PipelineTemplateSelectionScreen(
 
   return (
     <div className={className}>
-      <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
+      <TabPanelContainer
+        currentView={getCurrentView()}
+        tabContainer={getTabContainer()}
+      />
     </div>
   );
 }

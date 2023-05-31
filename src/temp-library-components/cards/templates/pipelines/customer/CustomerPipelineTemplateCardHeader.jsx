@@ -8,11 +8,12 @@ export default function CustomerPipelineTemplateCardHeader(
   {
     pipelineTemplate,
     activeTemplates,
+    visible,
   }) {
   const {getCustomerPipelineTemplateModel} = useGetCustomerPipelineTemplateModel();
   const customerPipelineTemplateModel = getCustomerPipelineTemplateModel(pipelineTemplate, false);
 
-  if (pipelineTemplate == null) {
+  if (pipelineTemplate == null || visible === false) {
     return null;
   }
 
@@ -36,4 +37,5 @@ export default function CustomerPipelineTemplateCardHeader(
 CustomerPipelineTemplateCardHeader.propTypes = {
   pipelineTemplate: PropTypes.object,
   activeTemplates: PropTypes.array,
+  visible: PropTypes.bool,
 };

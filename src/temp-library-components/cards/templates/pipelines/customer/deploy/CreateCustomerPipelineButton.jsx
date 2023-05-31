@@ -33,6 +33,7 @@ export default function CreateCustomerPipelineButton(
   };
 
   if (
+    customerPipelineTemplateModel == null ||
     PipelineRoleHelper.canCreatePipeline(userData) !== true ||
     (isOpseraAdministrator !== true && (template?.readOnly === true || (template?.singleUse === true && activeTemplates.includes(template?._id))))
   ) {

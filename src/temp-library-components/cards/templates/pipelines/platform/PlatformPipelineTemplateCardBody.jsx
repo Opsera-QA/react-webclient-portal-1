@@ -19,8 +19,8 @@ export default function PlatformPipelineTemplateCardBody(
           <div
             className={"w-100 d-flex mt-2"}
             style={{
-              minHeight: "50px",
-              maxHeight: "50px",
+              minHeight: "75px",
+              maxHeight: "75px",
             }}
           >
             {truncateString(template?.description, 150)}

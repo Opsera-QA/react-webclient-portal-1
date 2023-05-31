@@ -1,19 +1,19 @@
 import React from "react";
 import CardHeaderBase from "temp-library-components/cards/CardHeaderBase";
 import PropTypes from "prop-types";
-import CreateCustomerPipelineButton from "temp-library-components/cards/templates/pipelines/customer/deploy/CreateCustomerPipelineButton";
-import useGetCustomerPipelineTemplateModel from "hooks/workflow/catalog/customer/useGetCustomerPipelineTemplateModel";
 import CreatePlatformPipelineButton from "temp-library-components/cards/templates/pipelines/platform/deploy/CreatePlatformPipelineButton";
+import useGetPlatformPipelineTemplateModel from "hooks/workflow/catalog/platform/useGetPlatformPipelineTemplateModel";
 
 export default function PlatformPipelineTemplateCardHeader(
   {
     pipelineTemplate,
     activeTemplates,
+    visible,
   }) {
-  const {getCustomerPipelineTemplateModel} = useGetCustomerPipelineTemplateModel();
-  const customerPipelineTemplateModel = getCustomerPipelineTemplateModel(pipelineTemplate, false);
+  const {getPlatformPipelineTemplateModel} = useGetPlatformPipelineTemplateModel();
+  const platformPipelineTemplateModel = getPlatformPipelineTemplateModel(pipelineTemplate, false);
 
-  if (pipelineTemplate == null) {
+  if (pipelineTemplate == null || visible === false) {
     return null;
   }
 
@@ -21,7 +21,7 @@ export default function PlatformPipelineTemplateCardHeader(
     <CardHeaderBase>
       <div className={"d-flex w-100"}>
         <CreatePlatformPipelineButton
-          customerPipelineTemplateModel={customerPipelineTemplateModel}
+          platformPipelineTemplateModel={platformPipelineTemplateModel}
           activeTemplates={activeTemplates}
           buttonSize={"sm"}
           variant={"link"}
@@ -37,4 +37,5 @@ export default function PlatformPipelineTemplateCardHeader(
 PlatformPipelineTemplateCardHeader.propTypes = {
   pipelineTemplate: PropTypes.object,
   activeTemplates: PropTypes.array,
+  visible: PropTypes.bool,
 };
