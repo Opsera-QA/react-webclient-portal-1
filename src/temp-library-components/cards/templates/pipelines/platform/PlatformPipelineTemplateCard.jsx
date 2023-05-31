@@ -12,6 +12,8 @@ import CustomerPipelineTemplateCardHeader from "temp-library-components/cards/te
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import PlatformPipelineTemplateCardBody
   from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCardBody";
+import PlatformPipelineTemplateCardHeader
+  from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCardHeader";
 
 // TODO: Rewrite to use model
 export default function PlatformPipelineTemplateCard(
@@ -60,7 +62,12 @@ export default function PlatformPipelineTemplateCard(
     <SelectionIconCard
       onClickFunction={onClickFunction}
       tooltip={tooltip}
-      cardHeader={<CustomerPipelineTemplateCardHeader />}
+      cardHeader={
+        <PlatformPipelineTemplateCardHeader
+          pipelineTemplate={template}
+          activeTemplates={activeTemplates}
+        />
+      }
       titleBar={getTitleBar()}
       contentBody={
         <PlatformPipelineTemplateCardBody
