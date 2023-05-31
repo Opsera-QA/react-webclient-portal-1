@@ -47,15 +47,9 @@ export default function CreatePlatformPipelineButton(
       icon={faUpload}
       disabled={disabled}
       onClickFunction={launchConfirmationOverlay}
-<<<<<<< Updated upstream:src/components/workflow/catalog/platform/deploy/CreatePlatformPipelineButton.jsx
-      buttonClassName={"w-100"}
-      variant={"success"}
-      normalText={"Create Pipeline"}
-=======
       variant={variant}
       buttonSize={buttonSize}
       normalText={showText !== false ? "Create Pipeline" : undefined}
->>>>>>> Stashed changes:src/temp-library-components/cards/templates/pipelines/platform/deploy/CreatePlatformPipelineButton.jsx
       tooltip={"Create a new Pipeline from this Template"}
     />
   );
