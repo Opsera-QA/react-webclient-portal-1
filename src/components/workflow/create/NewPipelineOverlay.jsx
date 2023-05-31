@@ -13,7 +13,7 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import pipelineMetadata from "@opsera/definitions/constants/pipelines/pipeline.metadata";
 import DeployPlatformPipelineOverlay from "components/workflow/catalog/platform/deploy/DeployPlatformPipelineOverlay";
-import DeployCustomerPipelineOverlay from "components/workflow/catalog/private/deploy/DeployCustomerPipelineOverlay";
+import DeployCustomerPipelineOverlay from "temp-library-components/cards/templates/pipelines/customer/deploy/DeployCustomerPipelineOverlay";
 import PipelineTemplateSelectionScreen from "components/workflow/create/PipelineTemplateSelectionScreen";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 

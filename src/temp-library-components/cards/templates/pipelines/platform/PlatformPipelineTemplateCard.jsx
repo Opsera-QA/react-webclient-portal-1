@@ -8,7 +8,7 @@ import PipelineCardFooter from "temp-library-components/cards/pipelines/Pipeline
 import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 import {getLargeVendorIconComponentFromPipeline} from "components/common/helpers/icon-helpers";
-import PipelineTemplateCardHeader from "temp-library-components/cards/templates/pipelines/PipelineTemplateCardHeader";
+import CustomerPipelineTemplateCardHeader from "temp-library-components/cards/templates/pipelines/customer/CustomerPipelineTemplateCardHeader";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import PlatformPipelineTemplateCardBody
   from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCardBody";
@@ -60,7 +60,7 @@ export default function PlatformPipelineTemplateCard(
     <SelectionIconCard
       onClickFunction={onClickFunction}
       tooltip={tooltip}
-      cardHeader={<PipelineTemplateCardHeader />}
+      cardHeader={<CustomerPipelineTemplateCardHeader />}
       titleBar={getTitleBar()}
       contentBody={
         <PlatformPipelineTemplateCardBody

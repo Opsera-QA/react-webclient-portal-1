@@ -13,6 +13,8 @@ import OpseraPipelineMarketplace from "components/workflow/catalog/platform/Opse
 import useGetPolicyModelByName from "hooks/settings/organization_settings/policies/useGetPolicyModelByName";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import {pipelineCatalogHelper} from "components/workflow/catalog/pipelineCatalog.helper";
+import {useHistory} from "react-router-dom";
 
 function PipelineCatalogLibrary() {
   const [activeTemplates, setActiveTemplates] = useState([]);
@@ -28,6 +30,7 @@ function PipelineCatalogLibrary() {
     policyModel,
     isLoading,
   } = useGetPolicyModelByName(policyConstants.POLICY_NAMES.PLATFORM_PIPELINE_CATALOG_VISIBILITY);
+  const history = useHistory();
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
@@ -58,6 +61,10 @@ function PipelineCatalogLibrary() {
     setActiveTemplates([...DataParsingHelper.parseNestedArray(response, "data.data", [])]);
   };
 
+  const handleCustomerPipelineTemplateSelection = (templateId) => {
+    history.push(pipelineCatalogHelper.getCustomerPipelineTemplateDetailViewLink(templateId));
+  };
+
   const getCurrentView = () => {
     if (policyModel == null && activeTab === "all") {
       return (
@@ -73,6 +80,7 @@ function PipelineCatalogLibrary() {
         return (
           <CustomerPipelineTemplateCatalog
             activeTemplates={activeTemplates}
+            selectTemplateFunction={handleCustomerPipelineTemplateSelection}
           />
         );
     }

@@ -8,20 +8,17 @@ import PipelineCardFooter from "temp-library-components/cards/pipelines/Pipeline
 import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 import {getLargeVendorIconComponentFromPipeline} from "components/common/helpers/icon-helpers";
-import PipelineTemplateCardHeader from "temp-library-components/cards/templates/pipelines/PipelineTemplateCardHeader";
+import CustomerPipelineTemplateCardHeader from "temp-library-components/cards/templates/pipelines/customer/CustomerPipelineTemplateCardHeader";
 import CustomerPipelineTemplateCardBody
   from "temp-library-components/cards/templates/pipelines/customer/CustomerPipelineTemplateCardBody";
-import {pipelineHelper} from "components/workflow/pipeline.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 // TODO: Rewrite to use model
 export default function CustomerPipelineTemplateCard(
   {
     pipelineTemplateModel,
-    onClickFunction,
     tooltip,
     selectedOption,
-    option,
     activeTemplates,
     selectTemplateFunction,
     template,
@@ -59,20 +56,23 @@ export default function CustomerPipelineTemplateCard(
 
   return (
     <SelectionIconCard
-      onClickFunction={onClickFunction}
+      onClickFunction={selectTemplateFunction}
       tooltip={tooltip}
-      cardHeader={<PipelineTemplateCardHeader />}
+      cardHeader={
+        <CustomerPipelineTemplateCardHeader
+          activeTemplates={activeTemplates}
+          pipelineTemplate={template}
+        />
+      }
       titleBar={getTitleBar()}
       contentBody={
         <CustomerPipelineTemplateCardBody
           template={template}
-          selectTemplateFunction={selectTemplateFunction}
-          disabled={disabled}
         />
       }
       cardFooter={<PipelineCardFooter />}
       selectedOption={selectedOption}
-      option={option}
+      option={template?._id}
       highlightedBorderColor={themeConstants.RESOURCE_COLORS.PIPELINES}
     />
   );
@@ -80,10 +80,8 @@ export default function CustomerPipelineTemplateCard(
 
 CustomerPipelineTemplateCard.propTypes = {
   pipelineTemplateModel: PropTypes.object,
-  onClickFunction: PropTypes.func,
   tooltip: PropTypes.any,
   selectedOption: PropTypes.string,
-  option: PropTypes.string,
   activeTemplates: PropTypes.array,
   selectTemplateFunction: PropTypes.func,
   template: PropTypes.object,
