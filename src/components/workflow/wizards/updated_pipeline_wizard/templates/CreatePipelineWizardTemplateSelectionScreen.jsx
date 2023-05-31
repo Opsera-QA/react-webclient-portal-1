@@ -8,10 +8,15 @@ import OverlayWizardButtonContainerBase
 import useGetCustomerPipelineTemplateModel from "hooks/workflow/catalog/customer/useGetCustomerPipelineTemplateModel";
 import useGetPlatformPipelineTemplateModel from "hooks/workflow/catalog/platform/useGetPlatformPipelineTemplateModel";
 
-export default function CreatePipelineWizardTemplateSelectionScreen({loadData, backButtonFunction, setupMode, setButtonContainer}) {
-  const [selectedPlatformTemplate, setSelectedPlatformTemplate] =
+export default function CreatePipelineWizardTemplateSelectionScreen(
+  {
+    backButtonFunction,
+    setupMode,
+    setButtonContainer,
+  }) {
+  const [selectedPlatformTemplateModel, setSelectedPlatformTemplateModel] =
     useState(undefined);
-  const [selectedCustomerTemplate, setSelectedCustomerTemplate] = useState(undefined);
+  const [selectedCustomerTemplateModel, setSelectedCustomerTemplateModel] = useState(undefined);
   const {getCustomerPipelineTemplateModel} = useGetCustomerPipelineTemplateModel();
   const {getPlatformPipelineTemplateModel} = useGetPlatformPipelineTemplateModel();
 
@@ -25,24 +30,24 @@ export default function CreatePipelineWizardTemplateSelectionScreen({loadData, b
     }
   }, []);
 
-  if (selectedPlatformTemplate != null) {
+  if (selectedPlatformTemplateModel != null) {
     return (
       <DeployPlatformPipelineForm
-        platformPipelineTemplateModel={selectedPlatformTemplate}
+        platformPipelineTemplateModel={selectedPlatformTemplateModel}
         backButtonFunction={() => {
-          setSelectedPlatformTemplate(undefined);
+          setSelectedPlatformTemplateModel(undefined);
         }}
         setButtonContainer={setButtonContainer}
       />
     );
   }
 
-  if (selectedCustomerTemplate != null) {
+  if (selectedCustomerTemplateModel != null) {
     return (
       <DeployCustomerPipelineForm
-        customerPipelineTemplateModel={selectedCustomerTemplate}
+        customerPipelineTemplateModel={selectedCustomerTemplateModel}
         backButtonFunction={() => {
-          setSelectedCustomerTemplate(undefined);
+          setSelectedCustomerTemplateModel(undefined);
         }}
         setButtonContainer={setButtonContainer}
       />
@@ -51,8 +56,8 @@ export default function CreatePipelineWizardTemplateSelectionScreen({loadData, b
 
   return (
     <PipelineTemplateSelectionScreen
-      setSelectedPlatformTemplate={(pipelineTemplate) => setSelectedPlatformTemplate(getPlatformPipelineTemplateModel(pipelineTemplate, false))}
-      setSelectedCustomerTemplate={(pipelineTemplate) => setSelectedCustomerTemplate(getCustomerPipelineTemplateModel(pipelineTemplate, false))}
+      setSelectedPlatformTemplate={(pipelineTemplate) => setSelectedPlatformTemplateModel(getPlatformPipelineTemplateModel(pipelineTemplate, false))}
+      setSelectedCustomerTemplate={(pipelineTemplate) => setSelectedCustomerTemplateModel(getCustomerPipelineTemplateModel(pipelineTemplate, false))}
       className={"p-3"}
       setupMode={setupMode}
     />
@@ -60,7 +65,6 @@ export default function CreatePipelineWizardTemplateSelectionScreen({loadData, b
 }
 
 CreatePipelineWizardTemplateSelectionScreen.propTypes = {
-  loadData: PropTypes.func,
   backButtonFunction: PropTypes.func,
   setupMode: PropTypes.string,
   setButtonContainer: PropTypes.func

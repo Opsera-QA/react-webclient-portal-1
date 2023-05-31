@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {
   faQuestionCircle,
 } from "@fortawesome/pro-light-svg-icons";
-import useComponentStateReference from "hooks/useComponentStateReference";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
@@ -24,7 +23,6 @@ export default function DeployCustomerPipelineForm(
   }) {
   const [pipelineTemplateModelCopy, setPipelineTemplateModelCopy] =
     useState(undefined);
-  const {toastContext} = useComponentStateReference();
 
   useEffect(() => {
     if (customerPipelineTemplateModel) {
