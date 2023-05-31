@@ -27,6 +27,7 @@ export default function PlatformPipelineTemplateCardHeader(
           variant={"link"}
           showText={false}
           className={"mx-auto"}
+          buttonClassName={"py-0"}
         />
       </div>
     </CardHeaderBase>

@@ -15,6 +15,7 @@ export default function CreateCustomerPipelineButton(
     variant,
     buttonSize,
     showText,
+    buttonClassName,
   }) {
   const template = customerPipelineTemplateModel?.getCurrentData();
   const {
@@ -41,7 +42,7 @@ export default function CreateCustomerPipelineButton(
   return (
     <VanityButtonBase
       className={className}
-      buttonClassName={"my-0 py-0"}
+      buttonClassName={buttonClassName}
       icon={faUpload}
       disabled={disabled}
       onClickFunction={launchConfirmationOverlay}
@@ -61,6 +62,7 @@ CreateCustomerPipelineButton.propTypes = {
   variant: PropTypes.string,
   buttonSize: PropTypes.string,
   showText: PropTypes.bool,
+  buttonClassName: PropTypes.string,
 };
 
 CreateCustomerPipelineButton.defaultProps = {
