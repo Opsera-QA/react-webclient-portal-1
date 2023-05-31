@@ -72,7 +72,7 @@ export default function CustomerPipelineTemplateCard(
       }
       cardFooter={<PipelineCardFooter />}
       selectedOption={selectedOption}
-      option={template?._id}
+      option={template}
       highlightedBorderColor={themeConstants.RESOURCE_COLORS.PIPELINES}
     />
   );
