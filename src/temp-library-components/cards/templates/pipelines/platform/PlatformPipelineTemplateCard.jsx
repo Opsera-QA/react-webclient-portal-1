@@ -8,7 +8,6 @@ import PipelineCardFooter from "temp-library-components/cards/pipelines/Pipeline
 import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 import {getLargeVendorIconComponentFromPipeline} from "components/common/helpers/icon-helpers";
-import CustomerPipelineTemplateCardHeader from "temp-library-components/cards/templates/pipelines/customer/CustomerPipelineTemplateCardHeader";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import PlatformPipelineTemplateCardBody
   from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCardBody";
@@ -22,7 +21,6 @@ export default function PlatformPipelineTemplateCard(
     onClickFunction,
     tooltip,
     selectedOption,
-    option,
     activeTemplates,
     selectTemplateFunction,
     template,
@@ -78,7 +76,7 @@ export default function PlatformPipelineTemplateCard(
       }
       cardFooter={<PipelineCardFooter />}
       selectedOption={selectedOption}
-      option={option}
+      option={template?._id}
       highlightedBorderColor={themeConstants.RESOURCE_COLORS.PIPELINES}
     />
   );
@@ -89,7 +87,6 @@ PlatformPipelineTemplateCard.propTypes = {
   onClickFunction: PropTypes.func,
   tooltip: PropTypes.any,
   selectedOption: PropTypes.string,
-  option: PropTypes.string,
   activeTemplates: PropTypes.array,
   selectTemplateFunction: PropTypes.func,
   template: PropTypes.object,
