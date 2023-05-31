@@ -75,6 +75,7 @@ function PipelineCatalogLibrary() {
         <OpseraPipelineMarketplace
           activeTemplates={activeTemplates}
           selectTemplateFunction={handlePlatformPipelineTemplateSelection}
+          cardTooltip={"Click to View Pipeline Template Details"}
         />
       );
     }
@@ -86,6 +87,7 @@ function PipelineCatalogLibrary() {
           <CustomerPipelineTemplateCatalog
             activeTemplates={activeTemplates}
             selectTemplateFunction={handleCustomerPipelineTemplateSelection}
+            cardTooltip={"Click to View Pipeline Template Details"}
           />
         );
     }

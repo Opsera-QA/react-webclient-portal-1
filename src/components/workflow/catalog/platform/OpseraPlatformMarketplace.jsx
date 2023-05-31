@@ -8,7 +8,13 @@ import useGetPlatformPipelineTemplates from "hooks/workflow/catalog/platform/use
 import PlatformTagFilter from "components/common/filters/tags/tag/PlatformTagFilter";
 import {wizardsHelper} from "components/workflow/wizards/updated_pipeline_wizard/helpers/wizard-helpers";
 
-export default function OpseraPipelineMarketplace({activeTemplates, selectTemplateFunction, setupMode }) {
+export default function OpseraPipelineMarketplace(
+  {
+    activeTemplates,
+    selectTemplateFunction,
+    setupMode,
+    cardTooltip,
+  }) {
   const {
     pipelineTemplates,
     pipelineTemplateFilterModel,
@@ -45,6 +51,7 @@ export default function OpseraPipelineMarketplace({activeTemplates, selectTempla
         activeTemplates={activeTemplates}
         error={error}
         selectTemplateFunction={selectTemplateFunction}
+        cardTooltip={cardTooltip}
       />
     );
   };
@@ -97,5 +104,6 @@ export default function OpseraPipelineMarketplace({activeTemplates, selectTempla
 OpseraPipelineMarketplace.propTypes = {
   activeTemplates: PropTypes.array,
   selectTemplateFunction: PropTypes.func,
-  setupMode: PropTypes.string
+  setupMode: PropTypes.string,
+  cardTooltip: PropTypes.string,
 };
