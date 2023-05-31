@@ -72,10 +72,10 @@ export default function CreateNewPipelineWizard({
   };
 
   const handleBackButtonFunction = () => {
-    if (currentScreen === "template_select") {
+    if (currentScreen === CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_SELECT) {
       setCurrentScreen(CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT);
     }
-    if (currentScreen === "connection_test") {
+    if (currentScreen === CREATE_PIPELINE_WIZARD_SCREENS.CONNECTION_TEST) {
       setCurrentScreen(CREATE_PIPELINE_WIZARD_SCREENS.CONNECTION_INFO);
     }
   };
