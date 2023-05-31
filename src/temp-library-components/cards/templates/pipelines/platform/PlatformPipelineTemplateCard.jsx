@@ -23,6 +23,7 @@ export default function PlatformPipelineTemplateCard(
     activeTemplates,
     selectTemplateFunction,
     template,
+    showDeployPipelineIcon,
   }) {
   const { themeConstants } = useComponentStateReference();
   const [disabled, setDisabled] = useState(false);
@@ -63,6 +64,7 @@ export default function PlatformPipelineTemplateCard(
         <PlatformPipelineTemplateCardHeader
           pipelineTemplate={template}
           activeTemplates={activeTemplates}
+          visible={showDeployPipelineIcon === true}
         />
       }
       titleBar={getTitleBar()}
@@ -84,4 +86,5 @@ PlatformPipelineTemplateCard.propTypes = {
   activeTemplates: PropTypes.array,
   selectTemplateFunction: PropTypes.func,
   template: PropTypes.object,
+  showDeployPipelineIcon: PropTypes.bool,
 };

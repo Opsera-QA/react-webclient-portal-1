@@ -14,6 +14,7 @@ export default function OpseraPipelineMarketplace(
     selectTemplateFunction,
     setupMode,
     cardTooltip,
+    showDeployPipelineIcon,
   }) {
   const {
     pipelineTemplates,
@@ -52,6 +53,7 @@ export default function OpseraPipelineMarketplace(
         error={error}
         selectTemplateFunction={selectTemplateFunction}
         cardTooltip={cardTooltip}
+        showDeployPipelineIcon={showDeployPipelineIcon}
       />
     );
   };
@@ -106,4 +108,5 @@ OpseraPipelineMarketplace.propTypes = {
   selectTemplateFunction: PropTypes.func,
   setupMode: PropTypes.string,
   cardTooltip: PropTypes.string,
+  showDeployPipelineIcon: PropTypes.bool,
 };

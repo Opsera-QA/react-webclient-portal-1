@@ -15,6 +15,7 @@ export default function PlatformPipelineTemplateCardView(
     error,
     selectTemplateFunction,
     cardTooltip,
+    showDeployPipelineIcon,
   }) {
   const getPipelineCard = (template) => {
     return (
@@ -23,6 +24,7 @@ export default function PlatformPipelineTemplateCardView(
         activeTemplates={activeTemplates}
         selectTemplateFunction={selectTemplateFunction}
         tooltip={cardTooltip}
+        showDeployPipelineIcon={showDeployPipelineIcon}
       />
     );
   };
@@ -52,4 +54,5 @@ PlatformPipelineTemplateCardView.propTypes = {
   error: PropTypes.any,
   selectTemplateFunction: PropTypes.func,
   cardTooltip: PropTypes.string,
+  showDeployPipelineIcon: PropTypes.bool,
 };

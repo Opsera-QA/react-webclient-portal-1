@@ -14,6 +14,7 @@ export default function CustomerPipelineTemplateCatalog(
     selectTemplateFunction,
     setupMode,
     cardTooltip,
+    showDeployPipelineIcon,
   }) {
   const {
     pipelineTemplates,
@@ -52,6 +53,7 @@ export default function CustomerPipelineTemplateCatalog(
         error={error}
         selectTemplateFunction={selectTemplateFunction}
         cardTooltip={cardTooltip}
+        showDeployPipelineIcon={showDeployPipelineIcon}
       />
     );
   };
@@ -107,4 +109,5 @@ CustomerPipelineTemplateCatalog.propTypes = {
   selectTemplateFunction: PropTypes.func,
   setupMode: PropTypes.string,
   cardTooltip: PropTypes.string,
+  showDeployPipelineIcon: PropTypes.bool,
 };

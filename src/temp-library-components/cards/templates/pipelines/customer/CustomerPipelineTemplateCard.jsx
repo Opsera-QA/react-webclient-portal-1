@@ -22,6 +22,7 @@ export default function CustomerPipelineTemplateCard(
     activeTemplates,
     selectTemplateFunction,
     template,
+    showDeployPipelineIcon,
   }) {
   const { themeConstants } = useComponentStateReference();
   const [disabled, setDisabled] = useState(false);
@@ -62,6 +63,7 @@ export default function CustomerPipelineTemplateCard(
         <CustomerPipelineTemplateCardHeader
           activeTemplates={activeTemplates}
           pipelineTemplate={template}
+          visible={showDeployPipelineIcon === true}
         />
       }
       titleBar={getTitleBar()}
@@ -85,4 +87,5 @@ CustomerPipelineTemplateCard.propTypes = {
   activeTemplates: PropTypes.array,
   selectTemplateFunction: PropTypes.func,
   template: PropTypes.object,
+  showDeployPipelineIcon: PropTypes.bool,
 };

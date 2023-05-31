@@ -76,6 +76,7 @@ function PipelineCatalogLibrary() {
           activeTemplates={activeTemplates}
           selectTemplateFunction={handlePlatformPipelineTemplateSelection}
           cardTooltip={"Click to View Pipeline Template Details"}
+          showDeployPipelineIcon={true}
         />
       );
     }
@@ -88,6 +89,7 @@ function PipelineCatalogLibrary() {
             activeTemplates={activeTemplates}
             selectTemplateFunction={handleCustomerPipelineTemplateSelection}
             cardTooltip={"Click to View Pipeline Template Details"}
+            showDeployPipelineIcon={true}
           />
         );
     }
