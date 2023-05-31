@@ -4,7 +4,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import { useHistory } from "react-router-dom";
 import TemplateTypeSelectInput from "./templates/TemplateTypeSelectInput";
 import PropTypes from "prop-types";
-import WizardCatalogLibrary from "./templates/WizardCatalogLibrary";
+import CreatePipelineWizardTemplateSelectionScreen from "components/workflow/wizards/updated_pipeline_wizard/templates/CreatePipelineWizardTemplateSelectionScreen";
 import CenterLoadingIndicator from "../../../common/loading/CenterLoadingIndicator";
 import DeployBlankPipeline from "./templates/DeployBlankPipeline";
 
@@ -101,7 +101,7 @@ export default function CreateNewPipelineWizard({
         );
       case CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_SELECT:
         return (
-          <WizardCatalogLibrary
+          <CreatePipelineWizardTemplateSelectionScreen
             setupMode={setUpMode}
             backButtonFunction={() =>
               setCurrentScreen(CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT)

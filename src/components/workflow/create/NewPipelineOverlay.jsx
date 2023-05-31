@@ -6,6 +6,8 @@ import DeployPlatformPipelineOverlay from "temp-library-components/cards/templat
 import DeployCustomerPipelineOverlay from "temp-library-components/cards/templates/pipelines/customer/deploy/DeployCustomerPipelineOverlay";
 import PipelineTemplateSelectionScreen from "components/workflow/create/PipelineTemplateSelectionScreen";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import useGetCustomerPipelineTemplateModel from "hooks/workflow/catalog/customer/useGetCustomerPipelineTemplateModel";
+import useGetPlatformPipelineTemplateModel from "hooks/workflow/catalog/platform/useGetPlatformPipelineTemplateModel";
 
 export default function NewPipelineOverlay(
   {
@@ -14,6 +16,8 @@ export default function NewPipelineOverlay(
   }) {
   const [selectedPlatformTemplate, setSelectedPlatformTemplate] = useState(undefined);
   const [selectedCustomerTemplate, setSelectedCustomerTemplate] = useState(undefined);
+  const {getCustomerPipelineTemplateModel} = useGetCustomerPipelineTemplateModel();
+  const {getPlatformPipelineTemplateModel} = useGetPlatformPipelineTemplateModel();
 
   const handleBackButton = () => {
     setSelectedPlatformTemplate(undefined);
@@ -23,8 +27,8 @@ export default function NewPipelineOverlay(
   const getBody = () => {
     return (
       <PipelineTemplateSelectionScreen
-        setSelectedPlatformTemplate={setSelectedPlatformTemplate}
-        setSelectedCustomerTemplate={setSelectedPlatformTemplate}
+        setSelectedPlatformTemplate={(pipelineTemplate) => setSelectedPlatformTemplate(getCustomerPipelineTemplateModel(pipelineTemplate, false))}
+        setSelectedCustomerTemplate={(pipelineTemplate) => setSelectedCustomerTemplate(getPlatformPipelineTemplateModel(pipelineTemplate, false))}
         className={"p-3"}
       />
     );
