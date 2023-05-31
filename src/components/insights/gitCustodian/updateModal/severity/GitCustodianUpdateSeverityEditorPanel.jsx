@@ -17,11 +17,8 @@ function GitCustodianUpdateSeverityEditorPanel({
   loadData,
 }) {
   const [dataModel, setDataModel] = useState(undefined);
-  const {
-    isMounted,
-    cancelTokenSource,
-    getAccessToken,
-  } = useComponentStateReference();
+  const { isMounted, cancelTokenSource, getAccessToken } =
+    useComponentStateReference();
 
   useEffect(() => {
     unpackIssues();
@@ -32,18 +29,28 @@ function GitCustodianUpdateSeverityEditorPanel({
       setDataModel(undefined);
       return;
     }
-    const issueIds = !selectedIssues ? [] : selectedIssues.map(({ issueId }) => issueId);
+    const issueIds = !selectedIssues
+      ? []
+      : selectedIssues.map(({ issueId }) => issueId);
 
-    const newModel = modelHelpers.parseObjectIntoModel({
-      issuesList: [...selectedIssues],
-      issues: issueIds,
-    }, gitCustodianUpdateSeverityMetaData);
+    const newModel = modelHelpers.parseObjectIntoModel(
+      {
+        issuesList: [...selectedIssues],
+        issues: issueIds,
+      },
+      gitCustodianUpdateSeverityMetaData,
+    );
 
     setDataModel({ ...newModel });
   };
 
   const updateSeverity = async () => {
-    const response = await chartsActions.updateGitCustodianVulnerabilitySeverity(getAccessToken, cancelTokenSource, dataModel.getPersistData());
+    const response =
+      await chartsActions.updateGitCustodianVulnerabilitySeverity(
+        getAccessToken,
+        cancelTokenSource,
+        dataModel.getPersistData(),
+      );
     setSelectedIssues([]);
     handleClose();
     loadData();
@@ -62,7 +69,7 @@ function GitCustodianUpdateSeverityEditorPanel({
       createRecord={updateSeverity}
       updateRecord={updateSeverity}
       addAnotherOption={false}
-      disable={dataModel?.isModelValid() !== true}
+      disable={dataModel?.checkCurrentValidity() !== true}
     >
       <div className={"px-2"}>
         <Row>
@@ -81,9 +88,7 @@ function GitCustodianUpdateSeverityEditorPanel({
             />
           </Col>
           <Col md={12}>
-            <GitCustodianSelectedIssuesTable
-              selectedIssues={selectedIssues}
-            />
+            <GitCustodianSelectedIssuesTable selectedIssues={selectedIssues} />
           </Col>
         </Row>
       </div>
