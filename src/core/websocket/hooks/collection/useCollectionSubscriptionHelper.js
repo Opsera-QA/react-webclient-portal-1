@@ -21,9 +21,9 @@ export default function useCollectionSubscriptionHelper(
   const getFormattedItemLabel = (document) => {
     const parsedDocument = DataParsingHelper.parseObject(document, {});
 
-    if (textField === "string") {
+    if (typeof textField === "string") {
       return parsedDocument[textField];
-    } else if (textField === "function") {
+    } else if (typeof textField === "function") {
       return textField(parsedDocument);
     }
   };
@@ -97,7 +97,6 @@ export default function useCollectionSubscriptionHelper(
   };
 
   const handleLiveUpdateFunction = useCallback((type, liveMessageData) => {
-    console.log("collection: " + JSON.stringify(collection));
     if (type === liveMessageTypeConstants.LIVE_MESSAGE_TYPES.NEW_RECORD) {
       onCreateFunction(liveMessageData.data);
     } else if (type === liveMessageTypeConstants.LIVE_MESSAGE_TYPES.UPDATED_RECORD) {

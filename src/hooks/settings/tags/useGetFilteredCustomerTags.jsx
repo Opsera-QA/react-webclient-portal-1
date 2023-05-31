@@ -23,7 +23,7 @@ export default function useGetFilteredCustomerTags(handleErrorFunction) {
     (tag) => `${tag?.type}: ${tag?.value}`,
     customerTags,
     setCustomerTags,
-    (tag) => tagHelper.getDetailViewLink(tag?._id),
+    (tagId) => tagHelper.getDetailViewLink(tagId),
   );
 
   useEffect(() => {
