@@ -65,11 +65,16 @@ function PipelineCatalogLibrary() {
     history.push(pipelineCatalogHelper.getCustomerPipelineTemplateDetailViewLink(templateId));
   };
 
+  const handlePlatformPipelineTemplateSelection = (templateId) => {
+    history.push(pipelineCatalogHelper.getPlatformPipelineTemplateDetailViewLink(templateId));
+  };
+
   const getCurrentView = () => {
     if (policyModel == null && activeTab === "all") {
       return (
         <OpseraPipelineMarketplace
           activeTemplates={activeTemplates}
+          selectTemplateFunction={handlePlatformPipelineTemplateSelection}
         />
       );
     }
