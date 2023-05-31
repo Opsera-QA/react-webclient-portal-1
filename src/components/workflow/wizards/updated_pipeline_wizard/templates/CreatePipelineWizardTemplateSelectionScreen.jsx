@@ -51,8 +51,8 @@ export default function CreatePipelineWizardTemplateSelectionScreen({loadData, b
 
   return (
     <PipelineTemplateSelectionScreen
-      setSelectedPlatformTemplate={(pipelineTemplate) => setSelectedPlatformTemplate(getCustomerPipelineTemplateModel(pipelineTemplate, false))}
-      setSelectedCustomerTemplate={(pipelineTemplate) => setSelectedCustomerTemplate(getPlatformPipelineTemplateModel(pipelineTemplate, false))}
+      setSelectedPlatformTemplate={(pipelineTemplate) => setSelectedPlatformTemplate(getPlatformPipelineTemplateModel(pipelineTemplate, false))}
+      setSelectedCustomerTemplate={(pipelineTemplate) => setSelectedCustomerTemplate(getCustomerPipelineTemplateModel(pipelineTemplate, false))}
       className={"p-3"}
       setupMode={setupMode}
     />
