@@ -118,6 +118,6 @@ export default function useCollectionSubscriptionHelper(
   }, [topicName]);
 
   useEffect(() => {
-    console.log("collection update");
-  }, [collection]);
+    websocketClient?.updateLiveUpdateHandlerFunction(topicName, handleLiveUpdateFunction);
+  }, [topicName, collection]);
 }
