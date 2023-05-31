@@ -3,7 +3,7 @@ import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useTagActions from "hooks/settings/tags/useTagActions";
 import liveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessageTopic.constants";
-import useCollectionSubscriptionHelper from "core/websocket/hooks/useCollectionSubscriptionHelper";
+import useCollectionSubscriptionHelperBase from "core/websocket/hooks/collection/useCollectionSubscriptionHelperBase";
 
 export default function useGetCustomerTags(handleErrorFunction) {
   const tagActions = useTagActions();
@@ -50,7 +50,7 @@ export default function useGetCustomerTags(handleErrorFunction) {
     }
   };
 
-  useCollectionSubscriptionHelper(
+  useCollectionSubscriptionHelperBase(
     liveMessageTopicConstants.LIVE_MESSAGE_TOPICS.TAGS,
     onCreateFunction,
     onUpdateFunction,
