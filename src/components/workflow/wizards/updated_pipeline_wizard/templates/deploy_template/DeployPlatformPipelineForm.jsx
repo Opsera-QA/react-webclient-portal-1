@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
-  faDraftingCompass,
   faQuestionCircle,
 } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
@@ -11,14 +10,11 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import DeployPlatformPipelineButton from "temp-library-components/cards/templates/pipelines/platform/deploy/DeployPlatformPipelineButton";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
-import SaveButtonContainer from "../../../../../common/buttons/saving/containers/SaveButtonContainer";
-import CloseButton from "../../../../../common/buttons/CloseButton";
 
 export default function DeployPlatformPipelineForm({
   platformPipelineTemplateModel,

@@ -71,7 +71,7 @@ export default function PlatformPipelineTemplateCard(
       }
       cardFooter={<PipelineCardFooter />}
       selectedOption={selectedOption}
-      option={template?._id}
+      option={template}
       highlightedBorderColor={themeConstants.RESOURCE_COLORS.PIPELINES}
     />
   );
