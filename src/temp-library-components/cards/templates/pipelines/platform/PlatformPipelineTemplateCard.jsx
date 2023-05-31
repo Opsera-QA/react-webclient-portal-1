@@ -18,7 +18,6 @@ import PlatformPipelineTemplateCardHeader
 export default function PlatformPipelineTemplateCard(
   {
     pipelineTemplateModel,
-    onClickFunction,
     tooltip,
     selectedOption,
     activeTemplates,
@@ -58,7 +57,7 @@ export default function PlatformPipelineTemplateCard(
 
   return (
     <SelectionIconCard
-      onClickFunction={onClickFunction}
+      onClickFunction={selectTemplateFunction}
       tooltip={tooltip}
       cardHeader={
         <PlatformPipelineTemplateCardHeader
@@ -68,11 +67,7 @@ export default function PlatformPipelineTemplateCard(
       }
       titleBar={getTitleBar()}
       contentBody={
-        <PlatformPipelineTemplateCardBody
-          template={template}
-          selectTemplateFunction={selectTemplateFunction}
-          disabled={disabled}
-        />
+        <PlatformPipelineTemplateCardBody template={template} />
       }
       cardFooter={<PipelineCardFooter />}
       selectedOption={selectedOption}
@@ -84,7 +79,6 @@ export default function PlatformPipelineTemplateCard(
 
 PlatformPipelineTemplateCard.propTypes = {
   pipelineTemplateModel: PropTypes.object,
-  onClickFunction: PropTypes.func,
   tooltip: PropTypes.any,
   selectedOption: PropTypes.string,
   activeTemplates: PropTypes.array,
