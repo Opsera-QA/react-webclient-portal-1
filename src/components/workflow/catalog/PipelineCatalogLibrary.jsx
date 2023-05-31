@@ -61,12 +61,12 @@ function PipelineCatalogLibrary() {
     setActiveTemplates([...DataParsingHelper.parseNestedArray(response, "data.data", [])]);
   };
 
-  const handleCustomerPipelineTemplateSelection = (templateId) => {
-    history.push(pipelineCatalogHelper.getCustomerPipelineTemplateDetailViewLink(templateId));
+  const handleCustomerPipelineTemplateSelection = (template) => {
+    history.push(pipelineCatalogHelper.getCustomerPipelineTemplateDetailViewLink(template?._id));
   };
 
-  const handlePlatformPipelineTemplateSelection = (templateId) => {
-    history.push(pipelineCatalogHelper.getPlatformPipelineTemplateDetailViewLink(templateId));
+  const handlePlatformPipelineTemplateSelection = (template) => {
+    history.push(pipelineCatalogHelper.getPlatformPipelineTemplateDetailViewLink(template?._id));
   };
 
   const getCurrentView = () => {
