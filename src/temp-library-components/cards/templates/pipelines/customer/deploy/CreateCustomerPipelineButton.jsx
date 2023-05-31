@@ -43,13 +43,8 @@ export default function CreateCustomerPipelineButton(
   return (
     <VanityButtonBase
       className={className}
-<<<<<<< Updated upstream:src/components/workflow/catalog/private/deploy/CreateCustomerPipelineButton.jsx
-      buttonClassName={"w-100"}
-      // icon={faPlus}
-=======
       buttonClassName={buttonClassName}
       icon={faUpload}
->>>>>>> Stashed changes:src/temp-library-components/cards/templates/pipelines/customer/deploy/CreateCustomerPipelineButton.jsx
       disabled={disabled}
       onClickFunction={launchConfirmationOverlay}
       variant={variant}
