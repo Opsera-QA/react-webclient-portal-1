@@ -9,7 +9,7 @@ import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
-import DeployCustomerPipelineButton from "components/workflow/catalog/private/deploy/DeployCustomerPipelineButton";
+import DeployCustomerPipelineButton from "temp-library-components/cards/templates/pipelines/customer/deploy/DeployCustomerPipelineButton";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
