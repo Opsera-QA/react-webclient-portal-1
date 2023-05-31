@@ -2,8 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import DeployPlatformPipelineOverlay from "components/workflow/catalog/platform/deploy/DeployPlatformPipelineOverlay";
+import DeployPlatformPipelineOverlay from "temp-library-components/cards/templates/pipelines/platform/deploy/DeployPlatformPipelineOverlay";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
+import {faUpload} from "@fortawesome/pro-light-svg-icons";
 
 export default function CreatePlatformPipelineButton(
   {
@@ -11,6 +12,9 @@ export default function CreatePlatformPipelineButton(
     className,
     platformPipelineTemplateModel,
     activeTemplates,
+    variant,
+    buttonSize,
+    showText,
   }) {
   const template = platformPipelineTemplateModel?.getCurrentData();
   const {
@@ -37,12 +41,13 @@ export default function CreatePlatformPipelineButton(
   return (
     <VanityButtonBase
       className={className}
-      // icon={faPlus}
+      buttonClassName={"my-0 py-0"}
+      icon={faUpload}
       disabled={disabled}
       onClickFunction={launchConfirmationOverlay}
-      buttonClassName={"w-100"}
-      variant={"success"}
-      normalText={"Create Pipeline"}
+      variant={variant}
+      buttonSize={buttonSize}
+      normalText={showText !== false ? "Create Pipeline" : undefined}
       tooltip={"Create a new Pipeline from this Template"}
     />
   );
@@ -53,4 +58,11 @@ CreatePlatformPipelineButton.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   activeTemplates: PropTypes.array,
+  variant: PropTypes.string,
+  buttonSize: PropTypes.string,
+  showText: PropTypes.bool,
+};
+
+CreatePlatformPipelineButton.defaultProps = {
+  variant: "success",
 };

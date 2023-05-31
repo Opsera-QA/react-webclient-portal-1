@@ -12,7 +12,7 @@ import CustomTab from "components/common/tabs/CustomTab";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import pipelineMetadata from "@opsera/definitions/constants/pipelines/pipeline.metadata";
-import DeployPlatformPipelineOverlay from "components/workflow/catalog/platform/deploy/DeployPlatformPipelineOverlay";
+import DeployPlatformPipelineOverlay from "temp-library-components/cards/templates/pipelines/platform/deploy/DeployPlatformPipelineOverlay";
 import DeployCustomerPipelineOverlay from "temp-library-components/cards/templates/pipelines/customer/deploy/DeployCustomerPipelineOverlay";
 import PipelineTemplateSelectionScreen from "components/workflow/create/PipelineTemplateSelectionScreen";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";

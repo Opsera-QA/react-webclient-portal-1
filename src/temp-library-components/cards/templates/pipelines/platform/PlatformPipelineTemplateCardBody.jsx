@@ -7,7 +7,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {createPipelineFromTemplateMetadata} from "components/workflow/catalog/createPipelineFromTemplate.metadata";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import {truncateString} from "components/common/helpers/string-helpers";
-import CreatePlatformPipelineButton from "components/workflow/catalog/platform/deploy/CreatePlatformPipelineButton";
+import CreatePlatformPipelineButton from "temp-library-components/cards/templates/pipelines/platform/deploy/CreatePlatformPipelineButton";
 import ViewPlatformPipelineTemplateDetailsButton
   from "components/workflow/catalog/platform/ViewPlatformPipelineTemplateDetailsButton";
 

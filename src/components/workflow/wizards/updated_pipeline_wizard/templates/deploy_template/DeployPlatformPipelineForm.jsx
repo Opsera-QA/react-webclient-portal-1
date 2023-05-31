@@ -12,7 +12,7 @@ import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
-import DeployPlatformPipelineButton from "components/workflow/catalog/platform/deploy/DeployPlatformPipelineButton";
+import DeployPlatformPipelineButton from "temp-library-components/cards/templates/pipelines/platform/deploy/DeployPlatformPipelineButton";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";

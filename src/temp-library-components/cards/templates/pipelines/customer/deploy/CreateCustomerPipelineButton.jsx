@@ -65,5 +65,4 @@ CreateCustomerPipelineButton.propTypes = {
 
 CreateCustomerPipelineButton.defaultProps = {
   variant: "success",
-
 };
