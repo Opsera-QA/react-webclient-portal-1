@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {
   faQuestionCircle,
@@ -9,20 +9,22 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import DeployCustomerPipelineButton from "temp-library-components/cards/templates/pipelines/customer/deploy/DeployCustomerPipelineButton";
+import DeployCustomerPipelineButton
+  from "temp-library-components/cards/templates/pipelines/customer/deploy/DeployCustomerPipelineButton";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 
-export default function DeployCustomerPipelineForm({
-  customerPipelineTemplateModel,
-  backButtonFunction,
+export default function DeployCustomerPipelineForm(
+  {
+    customerPipelineTemplateModel,
+    backButtonFunction,
     setButtonContainer
-}) {
+  }) {
   const [pipelineTemplateModelCopy, setPipelineTemplateModelCopy] =
     useState(undefined);
-  const { toastContext } = useComponentStateReference();
+  const {toastContext} = useComponentStateReference();
 
   useEffect(() => {
     if (customerPipelineTemplateModel) {
@@ -35,9 +37,9 @@ export default function DeployCustomerPipelineForm({
   useEffect(() => {
     if (setButtonContainer) {
       setButtonContainer(
-          <div className={"mt-auto bg-white p-3"}>
-            {getButtonContainer()}
-          </div>
+        <div className={"mt-auto bg-white p-3"}>
+          {getButtonContainer()}
+        </div>
       );
     }
   }, [pipelineTemplateModelCopy]);
@@ -47,7 +49,7 @@ export default function DeployCustomerPipelineForm({
       <ButtonContainerBase
         className={"bg-white p-3"}
         leftSideButtons={
-          <BackButtonBase backButtonFunction={backButtonFunction} />
+          <BackButtonBase backButtonFunction={backButtonFunction}/>
         }
       >
         <div className={"d-flex"}>
