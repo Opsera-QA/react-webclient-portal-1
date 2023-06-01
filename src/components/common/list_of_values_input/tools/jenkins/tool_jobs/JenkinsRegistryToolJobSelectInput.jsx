@@ -109,11 +109,11 @@ function JenkinsRegistryToolJobSelectInput(
       if (buildType) {
         switch (buildType) {
           case toolIdentifierConstants.TOOL_IDENTIFIERS.DOT_NET:
-            let buildTypeDotNetJobs = jenkinsJobs.filter((job) => job?.configuration?.buildType === "dotnet");
+            let buildTypeDotNetJobs = jenkinsJobs.filter((job) => job?.configuration?.buildType === "msbuild");
             setJenkinsJobs(buildTypeDotNetJobs);
             break;
           case toolIdentifierConstants.TOOL_IDENTIFIERS.DOT_NET_CLI:
-            let buildTypeMSBuildJobs = jenkinsJobs.filter((job) => job?.configuration?.buildType === "msbuild");
+            let buildTypeMSBuildJobs = jenkinsJobs.filter((job) => job?.configuration?.buildType === "dotnet");
             setJenkinsJobs(buildTypeMSBuildJobs);
             break;
           case toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS:
