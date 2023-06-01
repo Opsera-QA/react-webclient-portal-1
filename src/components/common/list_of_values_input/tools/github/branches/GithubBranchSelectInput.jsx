@@ -71,10 +71,34 @@ function GithubBranchSelectInput(
     const branches = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(branches)) {
+      searchTerm.length > 0 ? branches.unshift(searchTerm): null; 
       setGithubBranches([...branches]);
     }
     setIsLoading(false);
   };
+
+  const selectedBranch = model.getData("branch");
+  
+  const branch = async () => {
+    console.log(selectedBranch)
+    const response = await githubActions.getBranch(
+      getAccessToken,
+      cancelTokenSource,
+      toolId,
+      repositoryId,
+      selectedBranch,
+    );
+
+    const branchResult = response?.data?.data?.branch;
+
+    if (!branchResult){
+      setError("Unable to find exact match for this branch")
+    } 
+  };
+
+  if(selectedBranch){
+    branch();
+  }
 
   if (multi) {
     return (
