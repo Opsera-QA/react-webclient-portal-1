@@ -284,6 +284,30 @@ export default class ClientWebsocket {
     this.websocketClient.emit(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST, subscriptionRequest);
   };
 
+  updateLiveUpdateHandlerFunction = (topicName, liveUpdateHandlerFunction) => {
+    const foundIndex = this.subscriptions.findIndex((subscription) => subscription?.topic === topicName);
+
+    if (foundIndex === -1) {
+      return;
+    }
+
+    if (typeof liveUpdateHandlerFunction !== "function") {
+      ReactLoggingHandler.logErrorMessage(
+        "clientWebsocket",
+        "updateLiveUpdateHandlerFunction",
+        undefined,
+        `Cannot attempt to update live update handler function with an invalid live update handler function.`,
+      );
+      return;
+    }
+
+    this.subscriptions[foundIndex] = {
+      type: websocketSubscriptionTypeConstants.WEBSOCKET_SUBSCRIPTION_TYPES.COLLECTION_SUBSCRIPTION,
+      topic: topicName,
+      liveUpdateHandlerFunction: liveUpdateHandlerFunction,
+    };
+  };
+
   subscribeToCollectionUpdates = (topicName, liveUpdateHandlerFunction) => {
     if (liveMessageTopicConstants.isLiveMessageTopicValid(topicName) !== true) {
       ReactLoggingHandler.logErrorMessage(
@@ -295,7 +319,7 @@ export default class ClientWebsocket {
       return;
     }
 
-    const foundIndex = this.subscriptions.indexOf((subscription) => subscription?.topic === topicName);
+    const foundIndex = this.subscriptions.findIndex((subscription) => subscription?.topic === topicName);
 
     if (foundIndex !== -1) {
       return;

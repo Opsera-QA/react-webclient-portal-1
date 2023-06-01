@@ -1,16 +1,14 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { useHistory } from "react-router-dom";
 import TemplateTypeSelectInput from "./templates/TemplateTypeSelectInput";
 import PropTypes from "prop-types";
-import PipelineCatalogLibrary from "../../catalog/PipelineCatalogLibrary";
-import WizardCatalogLibrary from "./templates/WizardCatalogLibrary";
+import CreatePipelineWizardTemplateSelectionScreen from "components/workflow/wizards/updated_pipeline_wizard/templates/CreatePipelineWizardTemplateSelectionScreen";
 import CenterLoadingIndicator from "../../../common/loading/CenterLoadingIndicator";
 import DeployBlankPipeline from "./templates/DeployBlankPipeline";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 
-export const REGISTRY_WIZARD_SCREENS = {
+export const CREATE_PIPELINE_WIZARD_SCREENS = {
   TEMPLATE_TYPE_SELECT: "mode_select",
   TEMPLATE_SELECT: "template_select",
   LOADING_SCREEN: "loading_screen",
@@ -25,7 +23,7 @@ export default function CreateNewPipelineWizard({
   backButtonFunction,
 }) {
   const [currentScreen, setCurrentScreen] = useState(
-    REGISTRY_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT,
+    CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT,
   );
   const [buttonContainer, setButtonContainer] = useState(undefined);
   const history = useHistory();
@@ -46,19 +44,19 @@ export default function CreateNewPipelineWizard({
 
   useEffect(() => {
     switch (currentScreen) {
-      case REGISTRY_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT:
+      case CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT:
         setOverlayTitle(REGISTRY_WIZARD_TITLES.TEMPLATE_TYPE_SELECT);
         return;
-      case REGISTRY_WIZARD_SCREENS.TEMPLATE_SELECT:
+      case CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_SELECT:
         setOverlayTitle(REGISTRY_WIZARD_TITLES.TEMPLATE_SELECT);
         return;
-      case REGISTRY_WIZARD_SCREENS.LOADING_SCREEN:
+      case CREATE_PIPELINE_WIZARD_SCREENS.LOADING_SCREEN:
         setOverlayTitle(REGISTRY_WIZARD_TITLES.LOADING_SCREEN);
         return;
-      case REGISTRY_WIZARD_SCREENS.BLANK_PIPELINE:
+      case CREATE_PIPELINE_WIZARD_SCREENS.BLANK_PIPELINE:
         setOverlayTitle(REGISTRY_WIZARD_TITLES.BLANK_PIPELINE);
         return;
-      case REGISTRY_WIZARD_SCREENS.CONNECTION_TEST:
+      case CREATE_PIPELINE_WIZARD_SCREENS.CONNECTION_TEST:
         setOverlayTitle(REGISTRY_WIZARD_TITLES.CONNECTION_TEST);
         return;
     }
@@ -74,11 +72,11 @@ export default function CreateNewPipelineWizard({
   };
 
   const handleBackButtonFunction = () => {
-    if (currentScreen === "template_select") {
-      setCurrentScreen(REGISTRY_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT);
+    if (currentScreen === CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_SELECT) {
+      setCurrentScreen(CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT);
     }
-    if (currentScreen === "connection_test") {
-      setCurrentScreen(REGISTRY_WIZARD_SCREENS.CONNECTION_INFO);
+    if (currentScreen === CREATE_PIPELINE_WIZARD_SCREENS.CONNECTION_TEST) {
+      setCurrentScreen(CREATE_PIPELINE_WIZARD_SCREENS.CONNECTION_INFO);
     }
   };
 
@@ -89,7 +87,7 @@ export default function CreateNewPipelineWizard({
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
-      case REGISTRY_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT:
+      case CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT:
         return (
           <TemplateTypeSelectInput
             setCurrentScreen={setCurrentScreen}
@@ -101,26 +99,26 @@ export default function CreateNewPipelineWizard({
             className={"py-5"}
           />
         );
-      case REGISTRY_WIZARD_SCREENS.TEMPLATE_SELECT:
+      case CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_SELECT:
         return (
-          <WizardCatalogLibrary
+          <CreatePipelineWizardTemplateSelectionScreen
             setupMode={setUpMode}
             backButtonFunction={() =>
-              setCurrentScreen(REGISTRY_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT)
+              setCurrentScreen(CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT)
             }
             setButtonContainer={setButtonContainer}
           />
         );
-      case REGISTRY_WIZARD_SCREENS.BLANK_PIPELINE:
+      case CREATE_PIPELINE_WIZARD_SCREENS.BLANK_PIPELINE:
         return (
           <DeployBlankPipeline
             backButtonFunction={() =>
-              setCurrentScreen(REGISTRY_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT)
+              setCurrentScreen(CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT)
             }
             setButtonContainer={setButtonContainer}
           />
         );
-      case REGISTRY_WIZARD_SCREENS.LOADING_SCREEN:
+      case CREATE_PIPELINE_WIZARD_SCREENS.LOADING_SCREEN:
         return (
             <CenterLoadingIndicator
                 type={"Pipeline"}

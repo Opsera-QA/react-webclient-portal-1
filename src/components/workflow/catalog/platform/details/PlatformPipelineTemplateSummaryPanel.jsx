@@ -10,7 +10,7 @@ import PlatformPipelineTemplateRoleAccessInput
   from "components/admin/pipeline_templates/details/inputs/PlatformPipelineTemplateRoleAccessInput";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import CreatePlatformPipelineButton from "components/workflow/catalog/platform/deploy/CreatePlatformPipelineButton";
+import CreatePlatformPipelineButton from "temp-library-components/cards/templates/pipelines/platform/deploy/CreatePlatformPipelineButton";
 import PrimaryPipelineTypeField
   from "components/common/list_of_values_input/admin/pipeline_templates/PrimaryPipelineTypeField";
 

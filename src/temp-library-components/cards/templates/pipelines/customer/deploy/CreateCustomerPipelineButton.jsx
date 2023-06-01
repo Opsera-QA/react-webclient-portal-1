@@ -2,8 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import DeployCustomerPipelineOverlay from "components/workflow/catalog/private/deploy/DeployCustomerPipelineOverlay";
+import DeployCustomerPipelineOverlay from "temp-library-components/cards/templates/pipelines/customer/deploy/DeployCustomerPipelineOverlay";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
+import {faUpload} from "@fortawesome/pro-light-svg-icons";
 
 export default function CreateCustomerPipelineButton(
   {
@@ -11,6 +12,10 @@ export default function CreateCustomerPipelineButton(
     className,
     customerPipelineTemplateModel,
     activeTemplates,
+    variant,
+    buttonSize,
+    showText,
+    buttonClassName,
   }) {
   const template = customerPipelineTemplateModel?.getCurrentData();
   const {
@@ -28,6 +33,7 @@ export default function CreateCustomerPipelineButton(
   };
 
   if (
+    customerPipelineTemplateModel == null ||
     PipelineRoleHelper.canCreatePipeline(userData) !== true ||
     (isOpseraAdministrator !== true && (template?.readOnly === true || (template?.singleUse === true && activeTemplates.includes(template?._id))))
   ) {
@@ -37,12 +43,13 @@ export default function CreateCustomerPipelineButton(
   return (
     <VanityButtonBase
       className={className}
-      buttonClassName={"w-100"}
-      // icon={faPlus}
+      buttonClassName={buttonClassName}
+      icon={faUpload}
       disabled={disabled}
       onClickFunction={launchConfirmationOverlay}
-      variant={"success"}
-      normalText={"Create Pipeline"}
+      variant={variant}
+      buttonSize={buttonSize}
+      normalText={showText !== false ? "Create Pipeline" : undefined}
       tooltip={"Create a new Pipeline from this Template"}
     />
   );
@@ -53,4 +60,12 @@ CreateCustomerPipelineButton.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   activeTemplates: PropTypes.array,
+  variant: PropTypes.string,
+  buttonSize: PropTypes.string,
+  showText: PropTypes.bool,
+  buttonClassName: PropTypes.string,
+};
+
+CreateCustomerPipelineButton.defaultProps = {
+  variant: "success",
 };

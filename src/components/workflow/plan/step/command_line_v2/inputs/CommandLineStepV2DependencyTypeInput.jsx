@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import DependencyMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/DependencyMultiSelectInput";
 
-function CommandLineDependencyTypeInput({
+function CommandLineStepV2DependencyTypeInput({
   dataObject,
   setDataObject,
   disabled,
@@ -20,7 +20,7 @@ function CommandLineDependencyTypeInput({
     newDataObject?.setDefaultValue("dependencies");
     setDataObject({ ...newDataObject });
   };
-
+  
   return (
     <DependencyMultiSelectInput
       dataObject={dataObject}
@@ -28,15 +28,14 @@ function CommandLineDependencyTypeInput({
       clearDataFunction={clearDataFunction}
       fieldName={"dependencyType"}
       setDataObject={setDataObject}
-      disabled={disabled}
     />
   );
 }
 
-CommandLineDependencyTypeInput.propTypes = {
+CommandLineStepV2DependencyTypeInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default CommandLineDependencyTypeInput;
+export default CommandLineStepV2DependencyTypeInput;
