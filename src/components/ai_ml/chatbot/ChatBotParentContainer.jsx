@@ -76,16 +76,19 @@ function ChatBotParentContainer() {
   const closePanel = () => {
     toastContext.clearOverlayPanel();
     sessionHelper.setCookie(sessionHelper.SUPPORTED_COOKIE_STORAGE_KEYS.AI_ML_DISCLAIMER, !showDisclaimer);
+    setShowDisclaimer(!showDisclaimer);
   };
 
   const showDisclaimerPanel = () => {
-    toastContext.showOverlayPanel(
-        <ChatbotDisclaimer
-            closePanel={closePanel}
-            showPanel={showDisclaimer}
-            title={"Opsera AI Tools"}
-        />
-    );
+    if (showDisclaimer) {
+      toastContext.showOverlayPanel(
+          <ChatbotDisclaimer
+              closePanel={closePanel}
+              showPanel={showDisclaimer}
+              title={"Opsera AI Tools"}
+          />
+      );
+    }
   };
 
   const checkChatBotConnection = async (cancelSource = cancelTokenSource) => {
