@@ -3,7 +3,6 @@ import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useTagActions from "hooks/settings/tags/useTagActions";
 import liveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessageTopic.constants";
-import useCollectionSubscriptionHelperBase from "core/websocket/hooks/collection/useCollectionSubscriptionHelperBase";
 import useCollectionSubscriptionHelper from "core/websocket/hooks/collection/useCollectionSubscriptionHelper";
 import {tagHelper} from "components/settings/tags/tag.helper";
 
