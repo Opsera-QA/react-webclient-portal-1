@@ -1,10 +1,15 @@
-import { useEffect, useRef, useState, useContext } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../../contexts/AuthContext";
 import chatbotActions from "./chatbot-actions";
 import CenterLoadingIndicator from "../../common/loading/CenterLoadingIndicator";
 import ChatLogContainer from "./ChatLogContainer";
 import OpseraAIInputBox from "./OpseraAIInputBox";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import sessionHelper from "../../../utils/session.helper";
+import CreateLdapOrganizationOverlay from "../../admin/accounts/ldap/organizations/CreateLdapOrganizationOverlay";
+import useComponentStateReference from "../../../hooks/useComponentStateReference";
+import ChatbotDisclaimer from "./disclaimer/ChatbotDisclaimer";
 
 const MESSAGE_CONSTANT = [
   {
@@ -23,6 +28,11 @@ function ChatBotParentContainer() {
   const [connectionState, setConnectionState] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    toastContext,
+  } = useComponentStateReference();
+  const [showDisclaimer, setShowDisclaimer] = useState(DataParsingHelper.parseBooleanV2(sessionHelper.getCookie(sessionHelper.SUPPORTED_COOKIE_STORAGE_KEYS.AI_ML_DISCLAIMER), true));
+
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -39,6 +49,8 @@ function ChatBotParentContainer() {
         setError(error);
       }
     });
+
+    showDisclaimerPanel();
 
     return () => {
       source.cancel();
@@ -59,6 +71,21 @@ function ChatBotParentContainer() {
         setIsLoading(false);
       }
     }
+  };
+
+  const closePanel = () => {
+    toastContext.clearOverlayPanel();
+    sessionHelper.setCookie(sessionHelper.SUPPORTED_COOKIE_STORAGE_KEYS.AI_ML_DISCLAIMER, !showDisclaimer);
+  };
+
+  const showDisclaimerPanel = () => {
+    toastContext.showOverlayPanel(
+        <ChatbotDisclaimer
+            closePanel={closePanel}
+            showPanel={showDisclaimer}
+            title={"Opsera AI Tools"}
+        />
+    );
   };
 
   const checkChatBotConnection = async (cancelSource = cancelTokenSource) => {

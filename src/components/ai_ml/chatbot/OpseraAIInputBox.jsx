@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Col from "react-bootstrap/Col";
 import Model from "../../../core/data_model/model";
 import chatbotModel from "./chatbot-model";
