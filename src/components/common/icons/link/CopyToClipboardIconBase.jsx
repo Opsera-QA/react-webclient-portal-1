@@ -14,6 +14,7 @@ function CopyToClipboardIconBase(
     copiedIcon,
     size,
     visible,
+    showCopyTextLabel,
   }) {
   const [copiedToClipboard, setCopiedToClipboard] = useState(false);
 
@@ -25,6 +26,19 @@ function CopyToClipboardIconBase(
     document.execCommand("copy");
     document.body.removeChild(dummy);
     setCopiedToClipboard(true);
+  };
+
+  const getLabel = () => {
+    if (showCopyTextLabel === true) {
+      return (
+        <span
+          className={"ml-2 pointer"}
+          onClick={() => {copyToClipboard();}}
+        >
+          {copiedToClipboard === true ? copiedText : copyText}
+        </span>
+      );
+    }
   };
 
   if (copyString == null || copyString === "" || visible === false) {
@@ -40,6 +54,7 @@ function CopyToClipboardIconBase(
           iconSize={size}
           className={"pointer"}
         />
+        {getLabel()}
       </div>
     </ButtonTooltip>
   );
@@ -54,6 +69,7 @@ CopyToClipboardIconBase.propTypes = {
   copyIcon: PropTypes.object,
   copiedIcon: PropTypes.object,
   visible: PropTypes.bool,
+  showCopyTextLabel: PropTypes.bool,
 };
 
 CopyToClipboardIconBase.defaultProps = {
