@@ -95,7 +95,7 @@ function ServiceNowStepConfiguration({ stepTool, parentCallback, closeEditorPane
       persistRecord={callbackFunction}
       isLoading={isLoading}
     >
-      <div>A Service Now Step in an Opsera Pipeline will halt the running pipeline and notify the configured
+      <div>A ServiceNow Step in an Opsera Pipeline will halt the running pipeline and notify the configured
         user in order to allow the pipeline to proceed. Approval notification follows the rules defined for overall step notification. <b>Only Site Administrators and the pipeline&apos;s assigned Owner, Administrator and Manager roles (assigned via Access Rules) are permitted to perform this action</b>.
         <div className="my-3">Use the notification icon (<IconBase icon={faEnvelope}/>) to enable the various channels to use.</div>
       </div>
