@@ -19,7 +19,7 @@ export default function EnableSalesforceLandingPageInactiveEntitlementPageLinkCa
   const launchActivationConfirmationOverlay = () => {
     toastContext.showOverlayPanel(
       <OrganizationSettingsEntitlementActivationConfirmationOverlay
-        entitlementName={entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_LANDING_SCREEN}
+        entitlementName={entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_FEATURES}
         organizationDomain={organizationDomain}
         organizationAccountName={organizationAccountId}
       />
@@ -29,15 +29,15 @@ export default function EnableSalesforceLandingPageInactiveEntitlementPageLinkCa
   const getBody = () => {
     return (
       <div>
-        <div className={"mb-2"}>The {entitlementConstants.ENTITLEMENT_NAME_LABELS.ENABLE_SALESFORCE_LANDING_SCREEN} Feature Flag is an optional Feature Flag that Opsera Administrators Administrators can enable.</div>
-        <div className={"mb-2"}>This Entitlement will enable the Salesforce Landing Screen</div>
+        <div className={"mb-2"}>The {entitlementConstants.ENTITLEMENT_NAME_LABELS.ENABLE_SALESFORCE_FEATURES} Feature Flag is an optional Feature Flag that Opsera Administrators Administrators can enable.</div>
+        <div className={"mb-2"}>This Entitlement will enable whatever child entitlements are enabled for Salesforce Features</div>
       </div>
     );
   };
 
   const title = (
     <div className={"d-flex justify-content-between"}>
-      <div>{entitlementConstants.ENTITLEMENT_NAME_LABELS.ENABLE_SALESFORCE_LANDING_SCREEN}</div>
+      <div>{entitlementConstants.ENTITLEMENT_NAME_LABELS.ENABLE_SALESFORCE_FEATURES}</div>
     </div>
   );
 

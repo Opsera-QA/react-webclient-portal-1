@@ -5,6 +5,7 @@ import useGetOrganizationSettingsEntitlementByName
   from "hooks/settings/organization_settings/entitlements/useGetOrganizationSettingsEntitlementByName";
 import entitlementConstants
   from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 export default function EntitlementRoute(
   {
@@ -12,12 +13,18 @@ export default function EntitlementRoute(
     exact,
     component,
     entitlementName,
+    childEntitlementName,
   }) {
   const {
     isActive,
+    childEntitlements,
   } = useGetOrganizationSettingsEntitlementByName(entitlementName);
 
-  if (entitlementConstants.isEntitlementNameValid(entitlementName) !== true || isActive !== true) {
+  if (
+    entitlementConstants.isEntitlementNameValid(entitlementName) !== true
+    || isActive !== true
+    || (hasStringValue(childEntitlementName) === true && childEntitlements[childEntitlementName] !== true)
+  ) {
     return null;
   }
 
@@ -35,4 +42,5 @@ EntitlementRoute.propTypes = {
   exact: PropTypes.bool,
   component: PropTypes.any,
   entitlementName: PropTypes.string,
+  childEntitlementName: PropTypes.string,
 };

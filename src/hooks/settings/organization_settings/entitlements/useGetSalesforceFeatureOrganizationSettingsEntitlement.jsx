@@ -8,7 +8,7 @@ export default function useGetSalesforceFeatureOrganizationSettingsEntitlement()
     setOrganizationSettingsEntitlement,
     isLoading,
     isActive,
-  } = useGetOrganizationSettingsEntitlementByName(entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_LANDING_SCREEN);
+  } = useGetOrganizationSettingsEntitlementByName(entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_FEATURES);
   
   return ({
     organizationSettingsEntitlement: organizationSettingsEntitlement,
