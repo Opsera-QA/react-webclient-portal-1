@@ -135,7 +135,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   SELENIUM_TEST_RESULTS: "selenium-test-results",
   SELENIUM_TEST_SUMMARY_PERCENTAGES: "selenium-test-summary-percentages",
 
-  // Service Now
+  // ServiceNow
   SERVICE_NOW_MEAN_TIME_TO_ACKNOWLEDGE: "servicenow-mean-time-to-acknowledge",
   SERVICE_NOW_MEAN_TIME_TO_RESOLUTION: "servicenow-mean-time-to-resolution",
 

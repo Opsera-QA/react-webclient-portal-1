@@ -93,7 +93,7 @@ export default function NotificationsField(
     }
   };
 
-  // TODO: When adding support for service now, add summary panel
+  // TODO: When adding support for ServiceNow, add summary panel
   const getServiceNowNotificationMethodSummaryCard = () => {
     const serviceNowNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.SERVICE_NOW);
 

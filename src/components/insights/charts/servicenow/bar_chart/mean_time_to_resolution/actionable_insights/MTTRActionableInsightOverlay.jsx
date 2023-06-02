@@ -116,7 +116,7 @@ function MTTRActionableInsightOverlay({ kpiConfiguration, dashboardData }) {
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={"Service Now MTTR Issues by Severity Report"}
+      titleText={"ServiceNow MTTR Issues by Severity Report"}
       showToasts={true}
       titleIcon={faTable}
       // isLoading={isLoading}

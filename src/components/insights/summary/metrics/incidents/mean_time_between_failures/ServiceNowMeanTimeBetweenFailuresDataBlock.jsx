@@ -88,7 +88,7 @@ function ServiceNowMeanTimeBetweenFailuresDataBlock({ dashboardData, toggleDynam
     return (
       <ServiceNowMeanTimeBetweenFailuresBarChart
         dashboardData={dashboardData}
-        kpiConfiguration={{ kpi_name: "Service Now Mean Time Between Failures", filters: [] }}
+        kpiConfiguration={{ kpi_name: "ServiceNow Mean Time Between Failures", filters: [] }}
         showSettingsToggle={false}
       />
     );
