@@ -39,7 +39,7 @@ pipelineStepNotificationActions.getServiceNowGroupsByName = async (
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-// TODO : why is this here? Move this to service now actions.
+// TODO : why is this here? Move this to ServiceNow actions.
 
 pipelineStepNotificationActions.getServiceNowGroupsByNamev2 = async (
   toolId,

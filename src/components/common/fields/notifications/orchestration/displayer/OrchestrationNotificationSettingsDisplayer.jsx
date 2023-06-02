@@ -56,7 +56,7 @@ function OrchestrationNotificationSettingsDisplayer({notifications, className, n
     }
 
     if (serviceNowSettings?.enabled === true) {
-      enabledNotificationString += enabledNotificationString?.length > 0 ? ", Service Now" : "Service Now";
+      enabledNotificationString += enabledNotificationString?.length > 0 ? ", ServiceNow" : "ServiceNow";
     }
 
     if (slackSettings?.enabled === true) {

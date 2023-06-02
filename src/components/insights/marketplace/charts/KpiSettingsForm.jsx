@@ -54,7 +54,7 @@ import SeleniumTestSuitesMultiSelectInput from "components/common/list_of_values
 import SonarProjectLanguagesMultiSelectInput from "components/common/list_of_values_input/insights/charts/sonar/SonarProjectLanguagesMultiSelectInput";
 import SonarProjectsMultiSelectInput from "components/common/list_of_values_input/insights/charts/sonar/SonarProjectsMultiSelectInput";
 
-// Service Now
+// ServiceNow
 import ServiceNowPrioritiesMultiSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowPrioritiesMultiSelectInput";
 import ServiceNowToolsSelectInputLegacy from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowToolsSelectInputLegacy";
 import ServiceNowAssignmentGroupSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowGroupsSelectInput";
