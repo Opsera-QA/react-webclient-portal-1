@@ -11,6 +11,8 @@ import entitlementConstants
 import OrganizationSettingsActivateEntitlementButton
   from "components/admin/organization_settings/details/entitlements/inactive/OrganizationSettingsActivateEntitlementButton";
 import useGetNewEntitlementModel from "hooks/settings/organization_settings/entitlements/useGetNewEntitlementModel";
+import SalesforceFeaturesChildEntitlementEditorPanel
+  from "components/admin/organization_settings/details/entitlements/cards/salesforce_landing/SalesforceFeaturesChildEntitlementEditorPanel";
 
 export default function OrganizationSettingsEntitlementActivationConfirmationOverlay(
   {
@@ -20,8 +22,10 @@ export default function OrganizationSettingsEntitlementActivationConfirmationOve
   }) {
   const {
     entitlementModel,
-  } = useGetNewEntitlementModel();
-  entitlementModel?.setData("name", entitlementName);
+    setEntitlementModel,
+    childEntitlementModel,
+    setChildEntitlementModel,
+  } = useGetNewEntitlementModel(entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_FEATURES);
   const {
     toastContext,
   } = useComponentStateReference();
@@ -38,6 +42,25 @@ export default function OrganizationSettingsEntitlementActivationConfirmationOve
 
   const closeOverlayFunction = () => {
     toastContext.clearOverlayPanel();
+  };
+
+  const updateParentModel = (newChildEntitlementModel) => {
+    const parsedParameters = DataParsingHelper.parseObject(newChildEntitlementModel?.getPersistData(), {});
+    entitlementModel.setData("parameters", parsedParameters);
+    setEntitlementModel({...entitlementModel});
+    setChildEntitlementModel({...newChildEntitlementModel});
+  };
+
+  const getChildEntitlementEditorPanel = () => {
+    switch (entitlementName) {
+      case entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_FEATURES:
+        return (
+          <SalesforceFeaturesChildEntitlementEditorPanel
+            childEntitlementModel={childEntitlementModel}
+            updateParentModel={updateParentModel}
+          />
+        );
+    }
   };
 
   return (
@@ -59,6 +82,7 @@ export default function OrganizationSettingsEntitlementActivationConfirmationOve
               marginTop: "150px",
             }}
           />
+          {getChildEntitlementEditorPanel()}
           <ButtonContainerBase>
             <OrganizationSettingsActivateEntitlementButton
               entitlementModel={entitlementModel}

@@ -7,7 +7,7 @@ import entitlementConstants
 import OrganizationSettingsEntitlementActivationConfirmationOverlay
   from "components/admin/organization_settings/details/entitlements/inactive/OrganizationSettingsEntitlementActivationConfirmationOverlay";
 
-export default function EnableSalesforceLandingPageInactiveEntitlementPageLinkCard(
+export default function EnableSalesforceFeaturesInactiveEntitlementPageLinkCard(
   {
     organizationDomain,
     organizationAccountId,
@@ -52,7 +52,7 @@ export default function EnableSalesforceLandingPageInactiveEntitlementPageLinkCa
   );
 }
 
-EnableSalesforceLandingPageInactiveEntitlementPageLinkCard.propTypes = {
+EnableSalesforceFeaturesInactiveEntitlementPageLinkCard.propTypes = {
   organizationDomain: PropType.string,
   organizationAccountId: PropType.string,
 };
