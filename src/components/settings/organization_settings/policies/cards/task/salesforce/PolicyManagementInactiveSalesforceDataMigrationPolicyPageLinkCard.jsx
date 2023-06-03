@@ -3,8 +3,8 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
 import PolicyManagementPolicyActivationConfirmationOverlay
   from "components/settings/organization_settings/policies/cards/inactive/PolicyManagementPolicyActivationConfirmationOverlay";
-import InactivePipelineStepTagRequirementPolicyPageLinkCardBase
-  from "temp-library-components/cards/policies/pipelines/steps/tags/InactivePipelineStepTagRequirementPolicyPageLinkCardBase";
+import InactiveSalesforceDataMigrationTaskSupportPolicyPageLinkCardBase
+  from "temp-library-components/cards/policies/tasks/InactiveSalesforceDataMigrationTaskSupportPolicyPageLinkCardBase";
 
 export default function PolicyManagementInactiveSalesforceDataMigrationPolicyPageLinkCard() {
   const {
@@ -29,7 +29,7 @@ export default function PolicyManagementInactiveSalesforceDataMigrationPolicyPag
   };
 
   return (
-    <InactivePipelineStepTagRequirementPolicyPageLinkCardBase
+    <InactiveSalesforceDataMigrationTaskSupportPolicyPageLinkCardBase
       onClickFunction={launchActivationConfirmationOverlay}
     />
   );
