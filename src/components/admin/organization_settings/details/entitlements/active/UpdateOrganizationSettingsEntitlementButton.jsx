@@ -35,7 +35,7 @@ export default function UpdateOrganizationSettingsEntitlementButton(
         organizationDomain,
         organizationAccountName,
       );
-      toastContext.showUpdateSuccessResultDialog("Enitlement");
+      toastContext.showUpdateSuccessResultDialog("Entitlement");
       buttonStateFunctions.setSuccessState();
       history.push(history.location);
       closeOverlayFunction();
