@@ -21,6 +21,10 @@ export default class EntitlementModel extends ModelBase {
     return entitlementConstants.getEntitlementNameLabel(this.getData("name"));
   };
 
+  getEntitlementNameLabel = () => {
+    return entitlementConstants.getEntitlementNameLabel(this.getData("name"));
+  };
+
   clone = () => {
     const newModel = new EntitlementModel(
       DataParsingHelper.cloneDeep(this.data),

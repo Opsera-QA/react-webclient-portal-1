@@ -49,7 +49,7 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
       source.cancel();
       isMounted.current = false;
     };
-  }, [JSON.stringify(kpiConfiguration)]);
+  }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
