@@ -16,13 +16,13 @@ export default function PolicyManagementInactiveSalesforceDataMigrationPolicyPag
       <span>
         Enabling this rule would allow users to use Opsera to migrate data from one Salesforce instance to another. Where required, the mocking of data will be applied and the same can be leverage by users while seeding data into sandboxes.’
       </span>
-    )
+    );
   };
 
   const launchActivationConfirmationOverlay = () => {
     toastContext.showOverlayPanel(
       <PolicyManagementPolicyActivationConfirmationOverlay
-        policyName={policyConstants.POLICY_NAMES.PIPELINE_STEP_TAG_REQUIREMENT}
+        policyName={policyConstants.POLICY_NAMES.ENABLE_SALESFORCE_DATA_MIGRATION_TASK}
         description={getDescription()}
       />
     );

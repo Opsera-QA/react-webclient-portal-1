@@ -2,8 +2,6 @@ import React from "react";
 import PropType from "prop-types";
 import PolicyManagementPageLinkCardBase
   from "components/settings/organization_settings/policies/cards/PolicyManagementPageLinkCardBase";
-import PolicyManagementInactivePipelineStepTagRequirementPolicyPageLinkCard
-  from "components/settings/organization_settings/policies/cards/pipelines/steps/tags/PolicyManagementInactivePipelineStepTagRequirementPolicyPageLinkCard";
 import useGetSalesforceFeatureOrganizationSettingsEntitlement
   from "hooks/settings/organization_settings/entitlements/useGetSalesforceFeatureOrganizationSettingsEntitlement";
 import PolicyManagementInactiveSalesforceDataMigrationPolicyPageLinkCard
