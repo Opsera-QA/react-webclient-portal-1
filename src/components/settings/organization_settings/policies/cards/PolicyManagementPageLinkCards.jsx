@@ -8,12 +8,15 @@ import PolicyManagementPlatformPipelineCatalogVisibilityPageLinkCard
   from "components/settings/organization_settings/policies/cards/pipelines/templates/public_marketplace/PolicyManagementPlatformPipelineCatalogVisibilityPageLinkCard";
 import PolicyManagementPipelineStepTagRequirementPolicyPageLinkCard
   from "components/settings/organization_settings/policies/cards/pipelines/steps/tags/PolicyManagementPipelineStepTagRequirementPolicyPageLinkCard";
+import PolicyManagementSalesforceDataMigrationPolicyPageLinkCard
+  from "components/settings/organization_settings/policies/cards/task/salesforce/PolicyManagementSalesforceDataMigrationPolicyPageLinkCard";
 
 export default function PolicyManagementPageLinkCards({policies}) {
   const parsedPolicies = DataParsingHelper.parseArray(policies, []);
   const pipelinePublishingRestrictionsPolicy = parsedPolicies.find((siteRole) => siteRole.name === policyConstants.POLICY_NAMES.PIPELINE_PRIVATE_CATALOG_PUBLISHING_RESTRICTIONS);
   const platformPipelineCatalogVisibilityPolicy = parsedPolicies.find((siteRole) => siteRole.name === policyConstants.POLICY_NAMES.PLATFORM_PIPELINE_CATALOG_VISIBILITY);
   const pipelineStepTagRequirementPolicy = parsedPolicies.find((siteRole) => siteRole.name === policyConstants.POLICY_NAMES.PIPELINE_STEP_TAG_REQUIREMENT);
+  const salesforceDataMigrationTaskPolicy = parsedPolicies.find((siteRole) => siteRole.name === policyConstants.POLICY_NAMES.ENABLE_SALESFORCE_DATA_MIGRATION_TASK);
 
   if (!parsedPolicies) {
     return null;
@@ -29,6 +32,9 @@ export default function PolicyManagementPageLinkCards({policies}) {
       />
       <PolicyManagementPipelineStepTagRequirementPolicyPageLinkCard
         pipelineStepTagRequirementPolicy={pipelineStepTagRequirementPolicy}
+      />
+      <PolicyManagementSalesforceDataMigrationPolicyPageLinkCard
+        salesforceDataMigrationTaskPolicy={salesforceDataMigrationTaskPolicy}
       />
     </div>
   );

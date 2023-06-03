@@ -12,7 +12,7 @@ import useGetNewPolicyModel from "hooks/settings/organization_settings/policies/
 import PolicyEditorPanelBase from "components/settings/organization_settings/policies/details/PolicyEditorPanelBase";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 
-export default function PolicyManagementPolicyActivationConfirmationOverlay({ policyName }) {
+export default function PolicyManagementPolicyActivationConfirmationOverlay({ policyName, description }) {
   const {
     policyModel,
     setPolicyModel,
@@ -50,6 +50,7 @@ export default function PolicyManagementPolicyActivationConfirmationOverlay({ po
       >
         <div className={"mx-3 mb-3 mt-2"}>
           <div>Are you sure you would like to activate the {getFormattedRoleLabel()} Policy?</div>
+          {description}
           <PolicyEditorPanelBase
             policyModel={policyModel}
             setPolicyModel={setPolicyModel}
@@ -68,4 +69,5 @@ export default function PolicyManagementPolicyActivationConfirmationOverlay({ po
 
 PolicyManagementPolicyActivationConfirmationOverlay.propTypes = {
   policyName: PropTypes.string,
+  description: PropTypes.any,
 };
