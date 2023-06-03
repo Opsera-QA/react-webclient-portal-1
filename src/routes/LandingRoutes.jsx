@@ -20,7 +20,7 @@ export default function LandingRoutes() {
         path="/salesforce"
         exact
         component={SalesforceLandingScreen}
-        entitlementName={entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_LANDING_SCREEN}
+        entitlementName={entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_FEATURES}
         childEntitlementName={salesforceFeatureEntitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_LANDING_SCREEN}
       />
     </>
