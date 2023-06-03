@@ -18,8 +18,8 @@ export default function useGetSalesforceFeatureOrganizationSettingsEntitlement()
   return ({
     organizationSettingsEntitlement: organizationSettingsEntitlement,
     setOrganizationSettingsEntitlement: setOrganizationSettingsEntitlement,
-    isSalesforceLandingPageEnabled: DataParsingHelper.parseNestedBoolean(childEntitlements, salesforceFeatureEntitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_LANDING_SCREEN) === true,
-    isSalesforceDataMigrationTaskEnabled: DataParsingHelper.parseNestedBoolean(childEntitlements, salesforceFeatureEntitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_DATA_MIGRATION_TASK) === true,
+    isSalesforceLandingPageEnabled: isActive === true && DataParsingHelper.parseNestedBoolean(childEntitlements, salesforceFeatureEntitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_LANDING_SCREEN) === true,
+    isSalesforceDataMigrationTaskEnabled: isActive === true && DataParsingHelper.parseNestedBoolean(childEntitlements, salesforceFeatureEntitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_DATA_MIGRATION_TASK) === true,
     isLoading: isLoading,
     isActive: isActive === true,
   });
