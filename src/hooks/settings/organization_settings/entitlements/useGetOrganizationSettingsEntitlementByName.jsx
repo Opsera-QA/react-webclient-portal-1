@@ -8,7 +8,6 @@ export default function useGetOrganizationSettingsEntitlementByName(
 ) {
   const [organizationSettingsEntitlement, setOrganizationSettingsEntitlement] = useState(undefined);
   const { organizationSettingsRecord, isLoadingOrganizationSettingsRecord } = useContext(AuthContext);
-  const [childEntitlements, setChildEntitlements] = useState(undefined);
 
   useEffect(() => {
     setOrganizationSettingsEntitlement(undefined);
@@ -19,7 +18,6 @@ export default function useGetOrganizationSettingsEntitlementByName(
 
       if (foundEntitlement) {
         setOrganizationSettingsEntitlement({...foundEntitlement});
-        setChildEntitlements(DataParsingHelper.parseNestedObject(foundEntitlement?.parameters));
       }
     }
   }, [name, organizationSettingsRecord]);
@@ -27,7 +25,7 @@ export default function useGetOrganizationSettingsEntitlementByName(
   return ({
     organizationSettingsEntitlement: organizationSettingsEntitlement,
     setOrganizationSettingsEntitlement: setOrganizationSettingsEntitlement,
-    childEntitlements: childEntitlements,
+    childEntitlements: organizationSettingsEntitlement?.parameters,
     isLoading: isLoadingOrganizationSettingsRecord,
     isActive: organizationSettingsEntitlement?.active === true,
   });
