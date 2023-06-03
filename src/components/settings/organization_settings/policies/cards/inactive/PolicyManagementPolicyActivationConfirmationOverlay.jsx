@@ -18,13 +18,12 @@ export default function PolicyManagementPolicyActivationConfirmationOverlay({ po
     setPolicyModel,
   } = useGetNewPolicyModel();
   policyModel?.setData("name", policyName);
+  const label = DataParsingHelper.parseString(policyConstants.getPolicyNameLabel(policyName));
   const {
     toastContext,
   } = useComponentStateReference();
 
   const getFormattedRoleLabel = () => {
-    const label = DataParsingHelper.parseString(policyConstants.getPolicyNameLabel(policyName));
-
     if (label) {
       return (
         <b>{label}</b>
@@ -40,7 +39,7 @@ export default function PolicyManagementPolicyActivationConfirmationOverlay({ po
     <ConfirmationOverlay
       closePanel={closeOverlayFunction}
       showPanel={true}
-      titleText={`Activate Policy?`}
+      titleText={`Activate ${label} Policy?`}
       titleIcon={faQuestionCircle}
       showToasts={true}
       showCloseButton={false}
