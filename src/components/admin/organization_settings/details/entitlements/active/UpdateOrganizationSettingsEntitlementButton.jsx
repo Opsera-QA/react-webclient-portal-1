@@ -35,7 +35,6 @@ export default function UpdateOrganizationSettingsEntitlementButton(
         organizationDomain,
         organizationAccountName,
       );
-      console.log("response: " + JSON.stringify(response));
       toastContext.showUpdateSuccessResultDialog("Enitlement");
       buttonStateFunctions.setSuccessState();
       history.push(history.location);
