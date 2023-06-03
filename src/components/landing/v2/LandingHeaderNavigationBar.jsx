@@ -62,7 +62,7 @@ export default function LandingHeaderNavigationBar() {
   } = useComponentStateReference();
   const {isActive} = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_TOP_NAVIGATION_BAR);
   const nextGenerationWorkspace = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_WORKSPACE);
-  const {isSalesforceLandingPageEnabled} = useGetSalesforceFeatureOrganizationSettingsEntitlement(entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_LANDING_SCREEN);
+  const {isSalesforceLandingPageEnabled} = useGetSalesforceFeatureOrganizationSettingsEntitlement();
   const fromWorkspaceUrlParameter = sessionHelper.getStoredUrlParameter("fromWorkspace");
   const fromWorkspace = DataParsingHelper.parseBooleanV2(fromWorkspaceUrlParameter);
 

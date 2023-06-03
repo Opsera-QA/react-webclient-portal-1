@@ -6,6 +6,7 @@ import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import {useHistory} from "react-router-dom";
 import useEntitlementAdministrationActions
   from "hooks/settings/organization_settings/entitlements/useEntitlementAdministrationActions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function OrganizationSettingsActivateEntitlementButton(
   {
