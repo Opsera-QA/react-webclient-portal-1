@@ -50,11 +50,11 @@ export default function PolicyManagementPolicyActivationConfirmationOverlay({ po
       >
         <div className={"mx-3 mb-3 mt-2"}>
           <div>Are you sure you would like to activate the {getFormattedRoleLabel()} Policy?</div>
-          {description}
           <PolicyEditorPanelBase
             policyModel={policyModel}
             setPolicyModel={setPolicyModel}
           />
+          {description}
           <ButtonContainerBase>
             <PolicyManagementActivatePolicyButton
               policyModel={policyModel}
