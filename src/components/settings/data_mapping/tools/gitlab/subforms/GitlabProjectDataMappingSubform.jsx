@@ -22,12 +22,12 @@ function GitlabProjectDataMappingSubform({ model, setModel }) {
         setDataObject={setModel}
         setDataFunction={setDataFunction}
       />
-      <GitlabMonoRepoPathMultiSelectInput 
-        fieldName={"monoRepoPath"}
-        model={model}
-        setModel={setModel}
-        repoId={model?.getData("repoId")}
-      />
+      {/*<GitlabMonoRepoPathMultiSelectInput */}
+      {/*  fieldName={"monoRepoPath"}*/}
+      {/*  model={model}*/}
+      {/*  setModel={setModel}*/}
+      {/*  repoId={model?.getData("repoId")}*/}
+      {/*/>*/}
       <GitlabPipelineStagesMultiSelectInput 
         fieldName={"pipelineStages"}
         model={model}

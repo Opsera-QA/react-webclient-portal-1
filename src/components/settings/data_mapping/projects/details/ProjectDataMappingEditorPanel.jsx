@@ -101,6 +101,10 @@ function ProjectDataMappingEditorPanel(
             model={projectDataMappingModel}
             setModel={setProjectDataMappingModel}
           />
+            <GitlabProjectDataMappingSubform
+                model={projectDataMappingModel}
+                setModel={setProjectDataMappingModel}
+            />
         </Col>
       );
     }
