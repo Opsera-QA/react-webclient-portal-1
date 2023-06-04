@@ -110,7 +110,10 @@ export default function WorkspaceWorkflowSelectionCardView(
           return (
             <CenteredContentWrapper minHeight={"250px"}>
               <InfoMessageFieldBase
-                message={"You have not subscribed to any Workflows"}
+                message={<>
+                  No subscribed Workflows. A Pipeline/Task can be subscribed to by clicking the follow icon.
+                  All workflows that have been subscribed to will appear here. <br></br>View <a href="https://docs.opsera.io/readme/set-your-homepage" target="_blank" rel="noopener noreferrer"><b>Set Your Homepage Help Documentation</b> for more info</a>.
+                </>}
                 showInformationLabel={false}
               />
             </CenteredContentWrapper>

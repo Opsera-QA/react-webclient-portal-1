@@ -13,7 +13,7 @@ function ServiceNowStepNotificationToolSelectInput({visible, model, setModel, di
   return (
     <RoleRestrictedServiceNowToolSelectInput
       toolType={"servicenow"}
-      toolFriendlyName={"Service Now"}
+      toolFriendlyName={"ServiceNow"}
       fieldName={"toolId"}
       model={model}
       setModel={setModel}

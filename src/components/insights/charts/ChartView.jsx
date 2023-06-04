@@ -146,7 +146,7 @@ import SFDCProfileMigrationsBarChart from "components/insights/charts/sfdc/bar_c
 import SFDCUnitTestingPieChart from "components/insights/charts/sfdc/pie_chart/unit_testing/SFDCUnitTestingPieChart";
 import SalesforceDurationByStageMetrics from "components/insights/charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageMetrics";
 
-// Service Now KPIs
+// ServiceNow KPIs
 import ServiceNowMeanTimeToResolutionBarChart from "./servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionBarChart";
 import ServiceNowMeanTimeToAcknowledgeBarChart from "./servicenow/bar_chart/mean_time_to_acknowledge/ServiceNowMeanTimeToAcknowledgeBarChart";
 import ServiceNowMeanTimeBetweenFailuresBarChart from "./servicenow/bar_chart/mean_time_between_failures/ServiceNowMeanTimeBetweenFailuresBarChart";
@@ -2160,7 +2160,7 @@ function ChartView({
             />
           </Col>
         );
-      // Service Now
+      // ServiceNow
       case "servicenow-mean-time-to-resolution":
         return (
           <Col

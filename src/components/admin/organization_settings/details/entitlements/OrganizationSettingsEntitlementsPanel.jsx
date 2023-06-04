@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import EnableSalesforceLandingPageEntitlementPageLinkCard
-  from "components/admin/organization_settings/details/entitlements/cards/salesforce_landing/EnableSalesforceLandingPageEntitlementPageLinkCard";
+import EnableSalesforceFeaturesPageEntitlementPageLinkCard
+  from "components/admin/organization_settings/details/entitlements/cards/salesforce_landing/EnableSalesforceFeaturesPageEntitlementPageLinkCard";
 import entitlementConstants
   from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
 
@@ -13,7 +13,7 @@ export default function OrganizationSettingsEntitlementsPanel(
     organizationAccountId,
   }) {
   const parsedEntitlements = DataParsingHelper.parseArray(organizationSettingsModel?.getData("entitlements"), []);
-  const salesforceLandingPageEntitlement = parsedEntitlements.find((entitlement) => entitlement.name === entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_LANDING_SCREEN);
+  const salesforceLandingPageEntitlement = parsedEntitlements.find((entitlement) => entitlement.name === entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_FEATURES);
 
   if (!parsedEntitlements) {
     return null;
@@ -21,7 +21,7 @@ export default function OrganizationSettingsEntitlementsPanel(
 
   return (
     <div className={"mx-3"}>
-      <EnableSalesforceLandingPageEntitlementPageLinkCard
+      <EnableSalesforceFeaturesPageEntitlementPageLinkCard
         entitlement={salesforceLandingPageEntitlement}
         organizationDomain={organizationDomain}
         organizationAccountId={organizationAccountId}

@@ -90,7 +90,7 @@ function ServiceNowMeanTimeToAcknowledgeDataBlock({ dashboardData, toggleDynamic
     return (
       <ServiceNowMeanTimeToAcknowledgeBarChart
         dashboardData={dashboardData}
-        kpiConfiguration={{ kpi_name: "Service Now Mean Time to Acknowledgement", filters: [] }}
+        kpiConfiguration={{ kpi_name: "ServiceNow Mean Time to Acknowledgement", filters: [] }}
         showSettingsToggle={false}
       />
     );
