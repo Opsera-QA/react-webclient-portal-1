@@ -54,8 +54,6 @@ function GithubRepositorySelectInput(
       );
       const repositories = await DataParsingHelper.parseNestedArray(response, "data.data", []);
       // searchTerm.length > 0 ? repositories.unshift(searchTerm): null;
-      // console.log(searchTerm);
-      // console.log(repositories);
       setRepositories([...repositories]);
 
       if (response) {
