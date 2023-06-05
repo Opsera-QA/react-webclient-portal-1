@@ -4,7 +4,6 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import {
   PIPELINE_TYPES,
 } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
-import PipelineCardFooter from "temp-library-components/cards/pipelines/PipelineCardFooter";
 import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 import {getLargeVendorIconComponentFromPipeline} from "components/common/helpers/icon-helpers";
@@ -13,6 +12,7 @@ import PlatformPipelineTemplateCardBody
   from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCardBody";
 import PlatformPipelineTemplateCardHeader
   from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCardHeader";
+import PipelineTemplateCardFooter from "temp-library-components/cards/templates/pipelines/PipelineTemplateCardFooter";
 
 // TODO: Rewrite to use model
 export default function PlatformPipelineTemplateCard(
@@ -64,14 +64,15 @@ export default function PlatformPipelineTemplateCard(
         <PlatformPipelineTemplateCardHeader
           pipelineTemplate={template}
           activeTemplates={activeTemplates}
-          visible={showDeployPipelineIcon === true}
+          visible={false}
+          // visible={showDeployPipelineIcon === true}
         />
       }
       titleBar={getTitleBar()}
       contentBody={
         <PlatformPipelineTemplateCardBody template={template} />
       }
-      cardFooter={<PipelineCardFooter />}
+      cardFooter={<PipelineTemplateCardFooter />}
       selectedOption={selectedOption}
       option={template}
       highlightedBorderColor={themeConstants.RESOURCE_COLORS.PIPELINES}
