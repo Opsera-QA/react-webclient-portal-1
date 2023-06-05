@@ -37,7 +37,7 @@ function InsightsSubNavigationBar({currentTab}) {
         history.push(`/insights/salesforce`);
         return;
       case "lookup":
-        history.push(`/insights/lookup`);
+        history.push(`/insights/salesforce/lookup`);
         return;
       case "marketplace":
         history.push(`/insights/marketplace`);

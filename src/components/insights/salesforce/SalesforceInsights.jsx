@@ -8,13 +8,22 @@ import SalesforceInsightsOptionCardBase, {
 import useComponentStateReference from "hooks/useComponentStateReference";
 import ScreenContainer from "../../common/panels/general/ScreenContainer";
 import InsightsSubNavigationBar from "../InsightsSubNavigationBar";
+import { useHistory } from "react-router-dom";
 
 export default function SalesforceInsights() {
   const { toastContext } = useComponentStateReference();
-
+  const history = useHistory();
   const handleFlowSelectionButton = (selectedFlow) => {
-    console.log(selectedFlow);
-    return;
+    switch (selectedFlow) {
+      case SALESFORCE_INSIGHTS_TYPES.LOOKUP:
+        history.push(`/insights/salesforce/lookup`);
+        return;
+      case SALESFORCE_INSIGHTS_TYPES.DEPENDENCY_ANALYSER:
+        history.push(`/insights/salesforce/dependency-analyser`);
+        return;
+      default:
+        return;
+    }
   };
 
   return (
