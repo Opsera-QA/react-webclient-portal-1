@@ -146,7 +146,7 @@ import SFDCProfileMigrationsBarChart from "components/insights/charts/sfdc/bar_c
 import SFDCUnitTestingPieChart from "components/insights/charts/sfdc/pie_chart/unit_testing/SFDCUnitTestingPieChart";
 import SalesforceDurationByStageMetrics from "components/insights/charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageMetrics";
 
-// Service Now KPIs
+// ServiceNow KPIs
 import ServiceNowMeanTimeToResolutionBarChart from "./servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionBarChart";
 import ServiceNowMeanTimeToAcknowledgeBarChart from "./servicenow/bar_chart/mean_time_to_acknowledge/ServiceNowMeanTimeToAcknowledgeBarChart";
 import ServiceNowMeanTimeBetweenFailuresBarChart from "./servicenow/bar_chart/mean_time_between_failures/ServiceNowMeanTimeBetweenFailuresBarChart";
@@ -191,6 +191,12 @@ import AquasecIssuesBySeverity from "./aquasec_security_insights/AquasecIssuesBy
 import GitLogDeveloper360 from "./gitlog/commit_activities/GitLogDeveloper360";
 import SalesforceCodeAnalyserChart from "./sfdc/salesforce_code_analyser/SalesforceCodeAnalyserChart";
 import SystemDrivenMaturity from "./system_driven_maturity/SystemDrivenMaturity";
+
+// Tasks
+import SalesforceToGitMergeSyncTaskChart from "./tasks/salesforce-to-git-merge-sync/SalesforceToGitMergeSyncChart";
+import BulkMigrationSyncTaskChart from "./tasks/bulk-migration/BulkMigrationChart";
+import GitToGitSyncTaskChart from "./tasks/git-to-git-sync/GitToGitSyncChart";
+import SalesforceOrgSyncTaskChart from "./tasks/salesforce-org-sync/SalesforceOrgSyncChart";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({
@@ -521,19 +527,19 @@ function ChartView({
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.JENKINS_CHANGE_FAILURE_RATE_V2:
         return (
-            <Col
-                xl={6}
-                md={12}
-                className="p-2"
-            >
-              <JenkinsChangeFailureRateChart
-                  kpiConfiguration={kpiConfig}
-                  setKpiConfiguration={setKpiConfig}
-                  dashboardData={dashboardData}
-                  setKpis={setKpis}
-                  index={index}
-              />
-            </Col>
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
+            <JenkinsChangeFailureRateChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
 
       // Jira KPIs
@@ -1747,6 +1753,66 @@ function ChartView({
             />
           </Col>
         );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_TO_GIT_MERGE_SYNC_TASK:
+        return (
+          <Col
+            md={12}
+            className="p-2"
+          >
+            <SalesforceToGitMergeSyncTaskChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.BULK_MIGRATION_TASK:
+        return (
+          <Col
+            md={12}
+            className="p-2"
+          >
+            <BulkMigrationSyncTaskChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_TO_GIT_SYNC_TASK:
+        return (
+          <Col
+            md={12}
+            className="p-2"
+          >
+            <GitToGitSyncTaskChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_ORG_SYNC_TASK:
+        return (
+          <Col
+            md={12}
+            className="p-2"
+          >
+            <SalesforceOrgSyncTaskChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_ACTIONS_WORKFLOW:
         return (
           <Col
@@ -2160,7 +2226,7 @@ function ChartView({
             />
           </Col>
         );
-      // Service Now
+      // ServiceNow
       case "servicenow-mean-time-to-resolution":
         return (
           <Col
@@ -2297,34 +2363,34 @@ function ChartView({
             />
           </Col>
         );
-        case kpiIdentifierConstants.KPI_IDENTIFIERS.SYSTEM_DRIVEN_MATURITY:
-          return (
-            <Col
-              md={12}
-              className="p-2"
-            >
-              <SystemDrivenMaturity
-                kpiConfiguration={kpiConfig}
-                setKpiConfiguration={setKpiConfig}
-                dashboardData={dashboardData}
-                setKpis={setKpis}
-                index={index}
-              />
-            </Col>
-          );
-        case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_LOG_DEVELOPER_360:
-          return (
-            <Col md={6} className="p-2">
-              <GitLogDeveloper360
-                kpiConfiguration={kpiConfig}
-                setKpiConfiguration={setKpiConfig}
-                dashboardData={dashboardData}
-                setKpis={setKpis}
-                index={index}
-              />
-            </Col>
-          );
-        case kpiIdentifierConstants.KPI_IDENTIFIERS.APPROVAL_GATES:
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SYSTEM_DRIVEN_MATURITY:
+        return (
+          <Col
+            md={12}
+            className="p-2"
+          >
+            <SystemDrivenMaturity
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_LOG_DEVELOPER_360:
+        return (
+          <Col md={6} className="p-2">
+            <GitLogDeveloper360
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.APPROVAL_GATES:
         return (
           <Col
             md={12}
@@ -2341,27 +2407,27 @@ function ChartView({
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.AQUASEC_ISSUES_BY_SEVERITY:
         return (
-            <Col md={12} className="p-2">
-              <AquasecIssuesBySeverity
-                  kpiConfiguration={kpiConfig}
-                  setKpiConfiguration={setKpiConfig}
-                  dashboardData={dashboardData}
-                  setKpis={setKpis}
-                  index={index}
-              />
-            </Col>
+          <Col md={12} className="p-2">
+            <AquasecIssuesBySeverity
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_CODE_ANALYSER:
         return (
-            <Col md={12} className="p-2">
-              <SalesforceCodeAnalyserChart
-                  kpiConfiguration={kpiConfig}
-                  setKpiConfiguration={setKpiConfig}
-                  dashboardData={dashboardData}
-                  setKpis={setKpis}
-                  index={index}
-              />
-            </Col>
+          <Col md={12} className="p-2">
+            <SalesforceCodeAnalyserChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       default:
         return null;

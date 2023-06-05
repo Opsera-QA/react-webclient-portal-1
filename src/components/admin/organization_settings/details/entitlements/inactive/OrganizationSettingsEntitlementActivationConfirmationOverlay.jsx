@@ -11,6 +11,8 @@ import entitlementConstants
 import OrganizationSettingsActivateEntitlementButton
   from "components/admin/organization_settings/details/entitlements/inactive/OrganizationSettingsActivateEntitlementButton";
 import useGetNewEntitlementModel from "hooks/settings/organization_settings/entitlements/useGetNewEntitlementModel";
+import SalesforceFeaturesChildEntitlementEditorPanel
+  from "components/admin/organization_settings/details/entitlements/cards/salesforce_landing/SalesforceFeaturesChildEntitlementEditorPanel";
 
 export default function OrganizationSettingsEntitlementActivationConfirmationOverlay(
   {
@@ -20,15 +22,16 @@ export default function OrganizationSettingsEntitlementActivationConfirmationOve
   }) {
   const {
     entitlementModel,
-  } = useGetNewEntitlementModel();
-  entitlementModel?.setData("name", entitlementName);
+    setEntitlementModel,
+    childEntitlementModel,
+    setChildEntitlementModel,
+  } = useGetNewEntitlementModel(entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_FEATURES);
+  const label = DataParsingHelper.parseString(entitlementConstants.getEntitlementNameLabel(entitlementName));
   const {
     toastContext,
   } = useComponentStateReference();
 
   const getFormattedRoleLabel = () => {
-    const label = DataParsingHelper.parseString(entitlementConstants.getEntitlementNameLabel(entitlementName));
-
     if (label) {
       return (
         <b>{label}</b>
@@ -40,11 +43,30 @@ export default function OrganizationSettingsEntitlementActivationConfirmationOve
     toastContext.clearOverlayPanel();
   };
 
+  const updateParentModel = (newChildEntitlementModel) => {
+    const parsedParameters = DataParsingHelper.parseObject(newChildEntitlementModel?.getPersistData(), {});
+    entitlementModel.setData("parameters", parsedParameters);
+    setEntitlementModel({...entitlementModel});
+    setChildEntitlementModel({...newChildEntitlementModel});
+  };
+
+  const getChildEntitlementEditorPanel = () => {
+    switch (entitlementName) {
+      case entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_FEATURES:
+        return (
+          <SalesforceFeaturesChildEntitlementEditorPanel
+            childEntitlementModel={childEntitlementModel}
+            updateParentModel={updateParentModel}
+          />
+        );
+    }
+  };
+
   return (
     <ConfirmationOverlay
       closePanel={closeOverlayFunction}
       showPanel={true}
-      titleText={`Activate Entitlement?`}
+      titleText={`Activate ${label} Entitlement?`}
       titleIcon={faQuestionCircle}
       showToasts={true}
       showCloseButton={false}
@@ -54,6 +76,7 @@ export default function OrganizationSettingsEntitlementActivationConfirmationOve
       >
         <div className={"mx-3 mb-3 mt-2"}>
           <div>Are you sure you would like to activate the {getFormattedRoleLabel()} Entitlement?</div>
+          {getChildEntitlementEditorPanel()}
           <div
             style={{
               marginTop: "150px",

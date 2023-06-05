@@ -14,6 +14,8 @@ import entitlementConstants
   from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
 import useGetOrganizationSettingsEntitlementByName
   from "hooks/settings/organization_settings/entitlements/useGetOrganizationSettingsEntitlementByName";
+import useGetSalesforceFeatureOrganizationSettingsEntitlement
+  from "hooks/settings/organization_settings/entitlements/useGetSalesforceFeatureOrganizationSettingsEntitlement";
 
 const HEADER_NAVIGATION_SCREENS = {
   HOME: "home",
@@ -60,7 +62,7 @@ export default function LandingHeaderNavigationBar() {
   } = useComponentStateReference();
   const {isActive} = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_TOP_NAVIGATION_BAR);
   const nextGenerationWorkspace = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_WORKSPACE);
-  const salesforceLandingPageEntitlement = useGetOrganizationSettingsEntitlementByName(entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_LANDING_SCREEN);
+  const {isSalesforceLandingPageEnabled} = useGetSalesforceFeatureOrganizationSettingsEntitlement();
   const fromWorkspaceUrlParameter = sessionHelper.getStoredUrlParameter("fromWorkspace");
   const fromWorkspace = DataParsingHelper.parseBooleanV2(fromWorkspaceUrlParameter);
 
@@ -133,7 +135,7 @@ export default function LandingHeaderNavigationBar() {
           label={<div>Salesforce</div>}
           itemKey={HEADER_NAVIGATION_SCREENS.SALESFORCE_LANDING}
           disabled={currentPath?.startsWith("/salesforce") === true}
-          visible={salesforceLandingPageEntitlement.isActive === true}
+          visible={isSalesforceLandingPageEnabled === true}
         />
         <SubMenuItem
           className={"px-3"}

@@ -4,7 +4,6 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import {
   PIPELINE_TYPES,
 } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
-import PipelineCardFooter from "temp-library-components/cards/pipelines/PipelineCardFooter";
 import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 import {getLargeVendorIconComponentFromPipeline} from "components/common/helpers/icon-helpers";
@@ -12,6 +11,7 @@ import CustomerPipelineTemplateCardHeader from "temp-library-components/cards/te
 import CustomerPipelineTemplateCardBody
   from "temp-library-components/cards/templates/pipelines/customer/CustomerPipelineTemplateCardBody";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import PipelineTemplateCardFooter from "temp-library-components/cards/templates/pipelines/PipelineTemplateCardFooter";
 
 // TODO: Rewrite to use model
 export default function CustomerPipelineTemplateCard(
@@ -63,7 +63,8 @@ export default function CustomerPipelineTemplateCard(
         <CustomerPipelineTemplateCardHeader
           activeTemplates={activeTemplates}
           pipelineTemplate={template}
-          visible={showDeployPipelineIcon === true}
+          visible={false}
+          // visible={showDeployPipelineIcon === true}
         />
       }
       titleBar={getTitleBar()}
@@ -72,7 +73,7 @@ export default function CustomerPipelineTemplateCard(
           template={template}
         />
       }
-      cardFooter={<PipelineCardFooter />}
+      cardFooter={<PipelineTemplateCardFooter />}
       selectedOption={selectedOption}
       option={template}
       highlightedBorderColor={themeConstants.RESOURCE_COLORS.PIPELINES}

@@ -1,6 +1,5 @@
 import io from 'socket.io-client';
 import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
-import WebsocketLiveUpdateHelper from "@opsera/definitions/constants/websocket/helpers/websocketLiveUpdate.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {ReactLoggingHandler} from "temp-library-components/handler/reactLogging.handler";
 import websocketEventNameConstants

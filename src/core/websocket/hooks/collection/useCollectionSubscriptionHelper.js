@@ -79,7 +79,6 @@ export default function useCollectionSubscriptionHelper(
     const parsedDocument = DataParsingHelper.parseObject(deletedDocument);
 
     if (parsedDocument) {
-
       if (setCollection) {
         const parsedDocumentMongoDbId = DataParsingHelper.parseMongoDbId(parsedDocument, "_id");
         const updatedDocuments = collection.filter((document) => document._id !== parsedDocumentMongoDbId);

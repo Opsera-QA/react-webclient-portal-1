@@ -36,6 +36,7 @@ import ArgoClusterSelectInput from "components/common/list_of_values_input/tools
 import ArgoCdStepCustomImageToggleInput from "./inputs/ArgoCdStepCustomImageToggleInput";
 import ArgoCdStepPlatformSelectInput from "./inputs/ArgoCdStepPlatformSelectInput";
 import AzureCustomImageDetailsSubForm from "./subforms/AzureCustomImageDetailsSubForm";
+import AwsCustomImageDetailsSubForm from "./subforms/AwsCustomImageDetailsSubForm";
 
 function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEditorPanel, pipelineId }) {
   const toastContext = useContext(DialogToastContext);
@@ -224,6 +225,13 @@ const getPlatformSpecificInputFields = () => {
     case "azure":
       return (
         <AzureCustomImageDetailsSubForm 
+          model={argoCdModel}
+          setModel={setArgoCdModel}
+        />
+      );
+    case "aws":
+      return (
+        <AwsCustomImageDetailsSubForm 
           model={argoCdModel}
           setModel={setArgoCdModel}
         />
