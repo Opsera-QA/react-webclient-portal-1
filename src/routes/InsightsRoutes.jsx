@@ -14,6 +14,7 @@ import SonarPipelineScanReport from "components/insights/reports/sonar/SonarPipe
 import CoverityScanReport from "components/insights/reports/coverity/CoverityScanReport";
 import GitScraperScanReport from "../components/insights/reports/git_scraper/GitScraperScanReport";
 import AquasecReport from "../components/insights/reports/aquasec/AquasecReport";
+import DependencyAnalyser from "../components/insights/salesforce/dependency-analyser/DependencyAnalyser";
 
 export default function InsightsRoutes() {
   return (
@@ -24,7 +25,7 @@ export default function InsightsRoutes() {
       <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace} />
       <SecureRoute path="/insights/salesforce" exact component={SalesforceInsights} />
       <SecureRoute path="/insights/salesforce/lookup" exact component={Lookup} />
-      <SecureRoute path="/insights/salesforce/dependency-analyser" exact component={Lookup} />
+      <SecureRoute path="/insights/salesforce/dependency-analyser" exact component={DependencAnalyser} />
       <SecureRoute path="/insights/release360" exact component={Release360} />
       <SecureRoute path="/insights/synopsis" component={InsightsSynopsis} />
       <SecureRoute path="/insights/connected-assets" component={ConnectedAssets} />
