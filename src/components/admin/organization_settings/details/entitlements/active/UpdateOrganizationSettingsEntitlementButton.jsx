@@ -6,9 +6,8 @@ import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import {useHistory} from "react-router-dom";
 import useEntitlementAdministrationActions
   from "hooks/settings/organization_settings/entitlements/useEntitlementAdministrationActions";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-export default function OrganizationSettingsActivateEntitlementButton(
+export default function UpdateOrganizationSettingsEntitlementButton(
   {
     entitlementModel,
     organizationDomain,
@@ -26,24 +25,21 @@ export default function OrganizationSettingsActivateEntitlementButton(
   } = useButtonState();
   const entitlementAdministrationActions = useEntitlementAdministrationActions();
 
-  const activateEntitlement = async () => {
+  const updateEntitlement = async () => {
     try {
       buttonStateFunctions.setBusyState();
-      const response = await entitlementAdministrationActions.activateEntitlement(
+      const response = await entitlementAdministrationActions.updateEntitlement(
+        entitlementModel?.getMongoDbId(),
         entitlementModel?.getPersistData(),
         organizationDomain,
         organizationAccountName,
       );
-      const entitlement = DataParsingHelper.parseNestedObject(response, "data.data");
-
-      if (entitlement) {
-        toastContext.showInformationToast("The Entitlement has been successfully activated.");
-        buttonStateFunctions.setSuccessState();
-        history.push(history.location);
-        closeOverlayFunction();
-      }
+      toastContext.showUpdateSuccessResultDialog("Entitlement");
+      buttonStateFunctions.setSuccessState();
+      history.push(history.location);
+      closeOverlayFunction();
     } catch (error) {
-      toastContext.showFormErrorToast(error, `Error activating Entitlement:`);
+      toastContext.showUpdateFailureResultDialog("Entitlement", error);
       buttonStateFunctions.setErrorState();
     }
   };
@@ -52,16 +48,16 @@ export default function OrganizationSettingsActivateEntitlementButton(
     <VanityButtonBase
       buttonState={buttonState}
       className={className}
-      normalText={"Activate Entitlement"}
-      busyText={"Activating Entitlement"}
-      errorText={"Error Activating Entitlement!"}
-      successText={"Successfully Activated Entitlement!"}
-      onClickFunction={activateEntitlement}
+      normalText={"Save Entitlement"}
+      busyText={"Saving Entitlement"}
+      errorText={"Error Saving Entitlement!"}
+      successText={"Successfully Saved Entitlement!"}
+      onClickFunction={updateEntitlement}
     />
   );
 }
 
-OrganizationSettingsActivateEntitlementButton.propTypes = {
+UpdateOrganizationSettingsEntitlementButton.propTypes = {
   entitlementModel: PropTypes.object,
   organizationDomain: PropTypes.string,
   organizationAccountName: PropTypes.string,

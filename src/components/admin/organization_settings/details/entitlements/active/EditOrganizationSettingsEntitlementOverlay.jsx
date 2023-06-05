@@ -1,43 +1,43 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import entitlementConstants
   from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
-import OrganizationSettingsActivateEntitlementButton
-  from "components/admin/organization_settings/details/entitlements/inactive/OrganizationSettingsActivateEntitlementButton";
-import useGetNewEntitlementModel from "hooks/settings/organization_settings/entitlements/useGetNewEntitlementModel";
 import SalesforceFeaturesChildEntitlementEditorPanel
   from "components/admin/organization_settings/details/entitlements/cards/salesforce_landing/SalesforceFeaturesChildEntitlementEditorPanel";
+import UpdateOrganizationSettingsEntitlementButton
+  from "components/admin/organization_settings/details/entitlements/active/UpdateOrganizationSettingsEntitlementButton";
+import DeleteConfirmationOverlay from "components/common/overlays/center/delete/DeleteConfirmationOverlay";
+import useEntitlementAdministrationActions
+  from "hooks/settings/organization_settings/entitlements/useEntitlementAdministrationActions";
+import useGetEntitlementModel from "hooks/settings/organization_settings/entitlements/useGetEntitlementModel";
+import DeleteButtonBase from "temp-library-components/button/delete/DeleteButtonBase";
+import {useHistory} from "react-router-dom";
+import {faEdit} from "@fortawesome/pro-light-svg-icons";
 
-export default function OrganizationSettingsEntitlementActivationConfirmationOverlay(
+export default function EditOrganizationSettingsEntitlementOverlay(
   {
-    entitlementName,
+    entitlement,
     organizationDomain,
     organizationAccountName,
   }) {
   const {
-    entitlementModel,
-    setEntitlementModel,
-    childEntitlementModel,
-    setChildEntitlementModel,
-  } = useGetNewEntitlementModel(entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_FEATURES);
-  const label = DataParsingHelper.parseString(entitlementConstants.getEntitlementNameLabel(entitlementName));
+    getEntitlementModel,
+    getChildEntitlementModel,
+  } = useGetEntitlementModel();
+  const [entitlementModel, setEntitlementModel] = useState(getEntitlementModel(entitlement));
+  const [childEntitlementModel, setChildEntitlementModel] = useState(getChildEntitlementModel(entitlement));
+  const [inDeleteMode, setInDeleteMode] = useState(false);
+  const label = DataParsingHelper.parseString(entitlementConstants.getEntitlementNameLabel(entitlementModel?.getEntitlementNameLabel()));
+  const entitlementAdministrationActions = useEntitlementAdministrationActions();
+  const history = useHistory();
   const {
     toastContext,
   } = useComponentStateReference();
-
-  const getFormattedRoleLabel = () => {
-    if (label) {
-      return (
-        <b>{label}</b>
-      );
-    }
-  };
 
   const closeOverlayFunction = () => {
     toastContext.clearOverlayPanel();
@@ -51,7 +51,7 @@ export default function OrganizationSettingsEntitlementActivationConfirmationOve
   };
 
   const getChildEntitlementEditorPanel = () => {
-    switch (entitlementName) {
+    switch (entitlementModel?.getData("name")) {
       case entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_FEATURES:
         return (
           <SalesforceFeaturesChildEntitlementEditorPanel
@@ -62,12 +62,34 @@ export default function OrganizationSettingsEntitlementActivationConfirmationOve
     }
   };
 
+  const handleDeleteFunction = async () => {
+    return await entitlementAdministrationActions.deleteEntitlement(
+      entitlementModel?.getMongoDbId(),
+      organizationDomain,
+      organizationAccountName,
+    );
+  };
+
+  if (entitlement == null || entitlementModel == null) {
+    return null;
+  }
+
+  if (inDeleteMode === true) {
+    return (
+      <DeleteConfirmationOverlay
+        type={"Entitlement"}
+        handleDeleteFunction={handleDeleteFunction}
+        afterDeleteFunction={() => history.push(history.location)}
+      />
+    );
+  }
+
   return (
     <ConfirmationOverlay
       closePanel={closeOverlayFunction}
       showPanel={true}
-      titleText={`Activate ${label} Entitlement?`}
-      titleIcon={faQuestionCircle}
+      titleText={`Editing ${label} Entitlement`}
+      titleIcon={faEdit}
       showToasts={true}
       showCloseButton={false}
     >
@@ -75,15 +97,21 @@ export default function OrganizationSettingsEntitlementActivationConfirmationOve
         hideCloseButton={true}
       >
         <div className={"mx-3 mb-3 mt-2"}>
-          <div>Are you sure you would like to activate the {getFormattedRoleLabel()} Entitlement?</div>
           {getChildEntitlementEditorPanel()}
           <div
             style={{
               marginTop: "150px",
             }}
           />
-          <ButtonContainerBase>
-            <OrganizationSettingsActivateEntitlementButton
+          <ButtonContainerBase
+            leftSideButtons={
+              <DeleteButtonBase
+                normalText={"Delete Entitlement"}
+                onClickFunction={() => setInDeleteMode(true)}
+              />
+            }
+          >
+            <UpdateOrganizationSettingsEntitlementButton
               entitlementModel={entitlementModel}
               organizationDomain={organizationDomain}
               organizationAccountName={organizationAccountName}
@@ -96,8 +124,8 @@ export default function OrganizationSettingsEntitlementActivationConfirmationOve
   );
 }
 
-OrganizationSettingsEntitlementActivationConfirmationOverlay.propTypes = {
-  entitlementName: PropTypes.string,
+EditOrganizationSettingsEntitlementOverlay.propTypes = {
+  entitlement: PropTypes.object,
   organizationDomain: PropTypes.string,
   organizationAccountName: PropTypes.string,
 };

@@ -12,19 +12,18 @@ import useGetNewPolicyModel from "hooks/settings/organization_settings/policies/
 import PolicyEditorPanelBase from "components/settings/organization_settings/policies/details/PolicyEditorPanelBase";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 
-export default function PolicyManagementPolicyActivationConfirmationOverlay({ policyName }) {
+export default function PolicyManagementPolicyActivationConfirmationOverlay({ policyName, description }) {
   const {
     policyModel,
     setPolicyModel,
   } = useGetNewPolicyModel();
   policyModel?.setData("name", policyName);
+  const label = DataParsingHelper.parseString(policyConstants.getPolicyNameLabel(policyName));
   const {
     toastContext,
   } = useComponentStateReference();
 
   const getFormattedRoleLabel = () => {
-    const label = DataParsingHelper.parseString(policyConstants.getPolicyNameLabel(policyName));
-
     if (label) {
       return (
         <b>{label}</b>
@@ -40,7 +39,7 @@ export default function PolicyManagementPolicyActivationConfirmationOverlay({ po
     <ConfirmationOverlay
       closePanel={closeOverlayFunction}
       showPanel={true}
-      titleText={`Activate Policy?`}
+      titleText={`Activate ${label} Policy?`}
       titleIcon={faQuestionCircle}
       showToasts={true}
       showCloseButton={false}
@@ -54,6 +53,7 @@ export default function PolicyManagementPolicyActivationConfirmationOverlay({ po
             policyModel={policyModel}
             setPolicyModel={setPolicyModel}
           />
+          {description}
           <ButtonContainerBase>
             <PolicyManagementActivatePolicyButton
               policyModel={policyModel}
@@ -68,4 +68,5 @@ export default function PolicyManagementPolicyActivationConfirmationOverlay({ po
 
 PolicyManagementPolicyActivationConfirmationOverlay.propTypes = {
   policyName: PropTypes.string,
+  description: PropTypes.any,
 };
