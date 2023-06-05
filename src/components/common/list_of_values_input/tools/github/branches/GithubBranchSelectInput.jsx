@@ -6,9 +6,9 @@ import PropTypes from "prop-types";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {githubActions} from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
-import useComponentStateReference from "hooks/useComponentStateReference";
+import useComponentStateReference from "hooks/useComponentStateReference"
+import ExactMatchSearchSelectInputBase from "components/common/inputs/select/ExactMatchSearchSelectInputBase";
 
 function GithubBranchSelectInput(
   {
@@ -26,6 +26,7 @@ function GithubBranchSelectInput(
   const [githubBranches, setGithubBranches] = useState([]);
   const [error, setError] = useState(undefined);
   const [inEditMode, setInEditMode] = useState(false);
+  const [requiresLookup, setRequiresLookup] = useState(true);
   const {
     cancelTokenSource,
     isMounted,
@@ -71,34 +72,33 @@ function GithubBranchSelectInput(
     const branches = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(branches)) {
+
+      if(branches.includes(searchTerm)) {
+        setRequiresLookup(false);
+      }
+
       searchTerm.length > 0 ? branches.unshift(searchTerm): null; 
       setGithubBranches([...branches]);
     }
     setIsLoading(false);
   };
 
-  const selectedBranch = model.getData("branch");
-  
-  const branchExactMatchSearch = async () => {
-    console.log(selectedBranch)
+  const branchExactMatchSearch = async (branch) => {
+    setError(undefined);
     const response = await githubActions.getBranch(
       getAccessToken,
       cancelTokenSource,
       toolId,
       repositoryId,
-      selectedBranch,
+      branch,
     );
 
     const branchResult = response?.data?.data?.branch;
 
     if (!branchResult){
-      setError("Unable to find exact match for this branch")
+     setError("Unable to find exact match for this branch")
     } 
   };
-
-  if(selectedBranch){
-    branchExactMatchSearch();
-  }
 
   if (multi) {
     return (
@@ -123,7 +123,7 @@ function GithubBranchSelectInput(
   }
 
   return (
-    <SelectInputBase
+    <ExactMatchSearchSelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
@@ -142,6 +142,8 @@ function GithubBranchSelectInput(
       supportSearchLookup={true}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
+      requiresLookup={requiresLookup}
+      branchExactMatchSearch={branchExactMatchSearch}
     />
   );
 }
