@@ -120,10 +120,42 @@ const projectDataMappingMetadata = {
             type: metadataConstants.SUPPORTED_VALUE_TYPES.ARRAY,
         },
         {
-            label: "Stage Name Filter",
-            id: "stageNameFilter",
+            label: "Deploy Dev Stage Name Filter",
+            id: "devStageNameFilter",
             isRequiredFunction: (model) => {
-                return model != null && model.getData("isMonoRepo") === true;
+                return model != null && model.getData("isGithubActions") === true;
+            },
+            type: metadataConstants.SUPPORTED_VALUE_TYPES.ARRAY,
+        },
+        {
+            label: "Deploy QA Stage Name Filter",
+            id: "deployQAStageNameFilter",
+            isRequiredFunction: (model) => {
+                return model != null && model.getData("isGithubActions") === true;
+            },
+            type: metadataConstants.SUPPORTED_VALUE_TYPES.ARRAY,
+        },
+        {
+            label: "Deploy Production Stage Name Filter",
+            id: "deployProductionStageNameFilter",
+            isRequiredFunction: (model) => {
+                return model != null && model.getData("isGithubActions") === true;
+            },
+            type: metadataConstants.SUPPORTED_VALUE_TYPES.ARRAY,
+        },
+        {
+            label: "Security Stage Name Filter",
+            id: "securityStageNameFilter",
+            isRequiredFunction: (model) => {
+                return model != null && model.getData("isGithubActions") === true;
+            },
+            type: metadataConstants.SUPPORTED_VALUE_TYPES.ARRAY,
+        },
+        {
+            label: "Quality Stage Name Filter",
+            id: "qualityStageNameFilter",
+            isRequiredFunction: (model) => {
+                return model != null && model.getData("isGithubActions") === true;
             },
             type: metadataConstants.SUPPORTED_VALUE_TYPES.ARRAY,
         },
@@ -147,7 +179,11 @@ const projectDataMappingMetadata = {
         "repoId",
         "monoRepoPath",
         "pipelineStages",
-        "stageNameFilter",
+        "devStageNameFilter",
+        "deployQAStageNameFilter",
+        "deployProductionStageNameFilter",
+        "securityStageNameFilter",
+        "qualityStageNameFilter",
     ],
     newObjectFields: {
         type: "project",
@@ -166,8 +202,12 @@ const projectDataMappingMetadata = {
         isMonoRepo: false,
         isGithubActions: false,
         pipelineStages: [],
-        stageNameFilter: [],
+        devStageNameFilter: [],
+        deployQAStageNameFilter: [],
+        deployProductionStageNameFilter: [],
+        securityStageNameFilter: [],
+        qualityStageNameFilter: [],
     },
 };
 
-module.exports = projectDataMappingMetadata;
+export default projectDataMappingMetadata;

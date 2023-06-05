@@ -28,6 +28,7 @@ import ProjectDataMappingJiraProjectSelectInput
 import ProjectDataMappingBitbucketRepositorySelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingBitbucketRepositorySelectInput";
 import GitlabProjectDataMappingSubform from "../../tools/gitlab/subforms/GitlabProjectDataMappingSubform";
+import GithubDataMappingSubform from "../../tools/github/subforms/GithubDataMappingSubform";
 
 function ProjectDataMappingEditorPanel(
   {
@@ -101,7 +102,7 @@ function ProjectDataMappingEditorPanel(
             model={projectDataMappingModel}
             setModel={setProjectDataMappingModel}
           />
-            <GitlabProjectDataMappingSubform
+            <GithubDataMappingSubform
                 model={projectDataMappingModel}
                 setModel={setProjectDataMappingModel}
             />

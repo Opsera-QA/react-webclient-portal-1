@@ -10,7 +10,7 @@ function GitlabProjectDataMappingSubform({ model, setModel }) {
     const newModel = {...model};
     newModel?.setData(fieldName, newValue);
     newModel?.setDefaultValue("monoRepoPath");
-    newModel?.setDefaultValue("deploymentStage");
+    newModel?.setDefaultValue("pipelineStages");
     setModel({...newModel});
   };
 
@@ -22,12 +22,12 @@ function GitlabProjectDataMappingSubform({ model, setModel }) {
         setDataObject={setModel}
         setDataFunction={setDataFunction}
       />
-      {/*<GitlabMonoRepoPathMultiSelectInput */}
-      {/*  fieldName={"monoRepoPath"}*/}
-      {/*  model={model}*/}
-      {/*  setModel={setModel}*/}
-      {/*  repoId={model?.getData("repoId")}*/}
-      {/*/>*/}
+      <GitlabMonoRepoPathMultiSelectInput
+        fieldName={"monoRepoPath"}
+        model={model}
+        setModel={setModel}
+        repoId={model?.getData("repoId")}
+      />
       <GitlabPipelineStagesMultiSelectInput 
         fieldName={"pipelineStages"}
         model={model}
