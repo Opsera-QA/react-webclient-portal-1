@@ -6,6 +6,10 @@ const PLATFORM_IDENTIFIERS = [
   {
     name: "Azure",
     value: "azure",
+  },
+  {
+    name: "AWS",
+    value: "aws",
   }
 ];
 

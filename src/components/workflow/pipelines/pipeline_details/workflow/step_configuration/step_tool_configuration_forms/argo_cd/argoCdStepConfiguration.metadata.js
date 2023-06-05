@@ -160,7 +160,7 @@ export const ArgoCdStepConfigurationMetadata = {
       label: "Azure Tool",
       id: "azureToolConfigId",
       isRequiredFunction: (model) => {
-        return model?.getData("customImageTag") === true;
+        return model?.getData("customImageTag") === true && model?.getData("platform") === "azure";
       },
       type: metadataConstants.SUPPORTED_VALUE_TYPES.MONGO_DB_ID,
     },
@@ -168,7 +168,7 @@ export const ArgoCdStepConfigurationMetadata = {
       label: "Azure Credential",
       id: "azureCredentialId",      
       isRequiredFunction: (model) => {
-        return model?.getData("customImageTag") === true;
+        return model?.getData("customImageTag") === true && model?.getData("platform") === "azure";
       },
       type: metadataConstants.SUPPORTED_VALUE_TYPES.MONGO_DB_ID,
     },
@@ -176,7 +176,7 @@ export const ArgoCdStepConfigurationMetadata = {
       label: "Resource",
       id: "resource",
       isRequiredFunction: (model) => {
-        return model?.getData("customImageTag") === true;
+        return model?.getData("customImageTag") === true && model?.getData("platform") === "azure";
       },
       type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
@@ -184,7 +184,7 @@ export const ArgoCdStepConfigurationMetadata = {
       label: "Azure Registry",
       id: "azureRegistryName",
       isRequiredFunction: (model) => {
-        return model?.getData("customImageTag") === true;
+        return model?.getData("customImageTag") === true && model?.getData("platform") === "azure";
       },
       type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
@@ -192,14 +192,39 @@ export const ArgoCdStepConfigurationMetadata = {
       label: "Repository",
       id: "azureRepoName",
       isRequiredFunction: (model) => {
-        return model?.getData("customImageTag") === true;
+        return model?.getData("customImageTag") === true && model?.getData("platform") === "azure";
       },
       regexDefinitionName: "azureLabels",
       type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
       id: "acrLoginUrl",
-    }
+    },
+    {
+      label: "AWS Tool",
+      id: "awsToolConfigId",
+      isRequiredFunction: (model) => {
+        return model?.getData("customImageTag") === true && model?.getData("platform") === "aws";
+      },
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.MONGO_DB_ID,
+    },
+    {
+      label: "AWS Cluster Name",
+      id: "awsClusterName",
+      isRequiredFunction: (model) => {
+        return model?.getData("customImageTag") === true && model?.getData("platform") === "aws";
+      },
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
+    },
+    {
+      label: "Repository",
+      id: "ecrRepoName",
+      isRequiredFunction: (model) => {
+        return model?.getData("customImageTag") === true && model?.getData("platform") === "aws";
+      },
+      regexDefinitionName: "ecrRepoField",
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
+    },    
   ],
   newObjectFields: {
     existingContent: "image",
@@ -238,5 +263,8 @@ export const ArgoCdStepConfigurationMetadata = {
     azureRegistryName: "",
     azureRepoName: "",
     acrLoginUrl: "",
+    awsToolConfigId: "",
+    awsClusterName: "",
+    ecrRepoName: "",
   },
 };
