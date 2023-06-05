@@ -5,7 +5,7 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import liveMessageTypeConstants from "@opsera/definitions/constants/websocket/constants/liveMessageType.constants";
 
-export default function useItemSubscription(
+export default function useItemSubscriptionHelper(
   topicName,
   recordId,
   onUpdateFunction,
@@ -14,26 +14,23 @@ export default function useItemSubscription(
   const { websocketClient } = useComponentStateReference();
 
   const handleLiveUpdateFunction = (type, liveMessageData) => {
-    console.log("got update in handleLiveUpdateFunction: " + JSON.stringify(liveMessageData));
     const parsedObjectId = DataParsingHelper.parseNestedMongoDbId(liveMessageData, "_id");
 
     if (parsedObjectId === recordId) {
       if (type === liveMessageTypeConstants.LIVE_MESSAGE_TYPES.UPDATED_RECORD) {
         onUpdateFunction(liveMessageData.data);
       } else if (type === liveMessageTypeConstants.LIVE_MESSAGE_TYPES.DELETED_RECORD) {
-        onDeleteFunction(parsedObjectId);
+        onDeleteFunction(liveMessageData.data);
       }
     }
   };
 
   useEffect(() => {
     if (isMongoDbId(recordId) === true && hasStringValue(topicName) === true) {
-      console.log("subscribing to tags topic");
-      websocketClient?.subscribeToTopic(topicName, handleLiveUpdateFunction);
+      websocketClient?.subscribeToItemUpdates(topicName, recordId, handleLiveUpdateFunction);
     }
 
     return () => {
-      console.log("unsubscribing from  tags topic");
       websocketClient?.unsubscribeFromTopic(topicName);
     };
   }, [topicName, recordId]);
