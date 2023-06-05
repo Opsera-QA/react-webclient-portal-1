@@ -13,14 +13,14 @@ if (typeof window["TextEncoder"] !== "function") {
 
 const browserNotSupported = (function (agent) {
   switch (true) {
-  case agent.indexOf("edge") > -1: return false; // "edge";
-  case agent.indexOf("edg") > -1: return false; //"chromium based edge (dev or canary)";
-  case agent.indexOf("opr") > -1 && !!window.opr: return false; // "opera";
-  case agent.indexOf("chrome") > -1 && !!window.chrome: return false; // "chrome";
-  case agent.indexOf("trident") > -1: return "ie";
-  case agent.indexOf("firefox") > -1: return false; // "firefox";
-  case agent.indexOf("safari") > -1: return false; // "safari";
-  default: return false;
+    case agent.indexOf("edge") > -1: return false; // "edge";
+    case agent.indexOf("edg") > -1: return false; //"chromium based edge (dev or canary)";
+    case agent.indexOf("opr") > -1 && !!window.opr: return false; // "opera";
+    case agent.indexOf("chrome") > -1 && !!window.chrome: return false; // "chrome";
+    case agent.indexOf("trident") > -1: return "ie";
+    case agent.indexOf("firefox") > -1: return false; // "firefox";
+    case agent.indexOf("safari") > -1: return false; // "safari";
+    default: return false;
   }
 })(window.navigator.userAgent.toLowerCase());
 

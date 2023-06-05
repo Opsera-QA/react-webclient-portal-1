@@ -8,11 +8,6 @@
       "type": "image/x-icon"
     },
     {
-      "src": "img/opsera_logo_large.png",
-      "type": "image/png",
-      "sizes": "500x500"
-    },
-    {
       "src": "img/opsera_logo_125x125.png",
       "type": "image/png",
       "sizes": "125x125"
