@@ -25,7 +25,7 @@ export default function InsightsRoutes() {
       <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace} />
       <SecureRoute path="/insights/salesforce" exact component={SalesforceInsights} />
       <SecureRoute path="/insights/salesforce/lookup" exact component={Lookup} />
-      <SecureRoute path="/insights/salesforce/dependency-analyser" exact component={DependencAnalyser} />
+      <SecureRoute path="/insights/salesforce/dependency-analyser" exact component={DependencyAnalyser} />
       <SecureRoute path="/insights/release360" exact component={Release360} />
       <SecureRoute path="/insights/synopsis" component={InsightsSynopsis} />
       <SecureRoute path="/insights/connected-assets" component={ConnectedAssets} />
