@@ -24,6 +24,7 @@ export default function InsightsRoutes() {
       <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace} />
       <SecureRoute path="/insights/salesforce" exact component={SalesforceInsights} />
       <SecureRoute path="/insights/salesforce/lookup" exact component={Lookup} />
+      <SecureRoute path="/insights/salesforce/dependency-analyser" exact component={Lookup} />
       <SecureRoute path="/insights/release360" exact component={Release360} />
       <SecureRoute path="/insights/synopsis" component={InsightsSynopsis} />
       <SecureRoute path="/insights/connected-assets" component={ConnectedAssets} />
@@ -37,7 +38,7 @@ export default function InsightsRoutes() {
                    component={CoverityScanReport} />
       <SecureRoute path="/insights/reports/scans/gitscraper/:repository/:branch"
                    component={GitScraperScanReport} />
-        <SecureRoute path="/insights/reports/scans/aquasec/:pipelineId/:imageName/:severity" component={AquasecReport} />
+      <SecureRoute path="/insights/reports/scans/aquasec/:pipelineId/:imageName/:severity" component={AquasecReport} />
     </>
   );
 }

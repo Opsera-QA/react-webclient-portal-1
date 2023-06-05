@@ -13,6 +13,7 @@ paths.dashboardDetails = paths.insights;
 paths.dashboardDetails = "analytics";
 paths.salesforce = "/salesforce";
 paths.lookup = "/salesforce/lookup";
+paths.dependencyAnalyser = "/salesforce/dependency-analyser";
 paths.marketplace = paths.insights + "/marketplace";
 paths.release360 = paths.insights + "/release360";
 paths.insightsSummary = "insights/summary";

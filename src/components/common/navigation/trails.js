@@ -27,6 +27,7 @@ import {
   faUserAltSlash,
   faUserCheck,
   faClipboardUser,
+  faSitemap
 } from "@fortawesome/pro-light-svg-icons";
 import { taskTypeConstants } from "components/tasks/task.types";
 import { pipelineSettingsTrails } from "components/settings/pipelines/pipelineSettings.trails";
@@ -150,6 +151,15 @@ export const breadcrumbs = {
     title: "Salesforce Lookup",
     linkText: "Salesforce Lookup",
     icon: faMagnifyingGlass,
+    isBeta: true,
+  },
+  dependencyAnalyser: {
+    parent: "salesforce",
+    name: "dependencyAnalyser",
+    path: paths.dependencyAnalyser,
+    title: "Salesforce Dependency Analyser",
+    linkText: "Salesforce Dependency Analyser",
+    icon: faSitemap,
     isBeta: true,
   },
   marketplace: {
