@@ -79,7 +79,7 @@ function GithubBranchSelectInput(
 
   const selectedBranch = model.getData("branch");
   
-  const branch = async () => {
+  const branchExactMatchSearch = async () => {
     console.log(selectedBranch)
     const response = await githubActions.getBranch(
       getAccessToken,
@@ -97,7 +97,7 @@ function GithubBranchSelectInput(
   };
 
   if(selectedBranch){
-    branch();
+    branchExactMatchSearch();
   }
 
   if (multi) {
