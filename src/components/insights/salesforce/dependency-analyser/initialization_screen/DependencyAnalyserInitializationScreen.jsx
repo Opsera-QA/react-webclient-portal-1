@@ -29,8 +29,6 @@ const DependencyAnalyserInitializationScreen = ({
 }) => {
   const [activeTab, setActiveTab] = useState("manual");
   const [isLoading, setIsLoading] = useState(false);
-  const [creatingNewRecord, setCreatingNewRecord] = useState(false);
-  const [existingRecord, setExistingRecord] = useState(undefined);
 
   const { isMounted, cancelTokenSource, toastContext, getAccessToken } =
     useComponentStateReference();
@@ -40,7 +38,7 @@ const DependencyAnalyserInitializationScreen = ({
     newPipelineWizardModel = pipelineWizardModel,
   ) => {
     try {
-
+      setIsLoading(true);
       const response = await sfdcDependencyAnalyserActions.createNewRecord(getAccessToken, cancelTokenSource, newPipelineWizardModel);
       const newRecord = response?.data;
       if (newRecord) {
@@ -55,7 +53,7 @@ const DependencyAnalyserInitializationScreen = ({
       setError("Could not create new Salesforce Pipeline Wizard record");
     } finally {
       if (isMounted?.current === true) {
-        setCreatingNewRecord(false);
+        setIsLoading(false);
       }
     }
   };
@@ -165,7 +163,7 @@ const DependencyAnalyserInitializationScreen = ({
   };
 
   const getMainView = () => {
-    if (creatingNewRecord) {
+    if (isLoading) {
       return (
         <LoadingDialog
           message={`Starting a new Salesforce Dependency Analyser Instance`}
