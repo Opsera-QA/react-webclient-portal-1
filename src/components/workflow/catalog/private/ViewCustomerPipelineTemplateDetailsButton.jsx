@@ -21,6 +21,7 @@ export default function ViewCustomerPipelineTemplateDetailsButton(
       className={className}
       normalText={"Details"}
       variant={"outline-secondary"}
+      buttonClassName={"w-100"}
       icon={faSearch}
       onClickFunction={showPipelineDetails}
     />

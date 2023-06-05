@@ -8,7 +8,14 @@ import useGetCustomerPipelineTemplates from "hooks/workflow/catalog/customer/use
 import CustomerTagFilter from "components/common/filters/tags/tag/CustomerTagFilter";
 import {wizardsHelper} from "components/workflow/wizards/updated_pipeline_wizard/helpers/wizard-helpers";
 
-export default function CustomerPipelineTemplateCatalog({activeTemplates, selectTemplateFunction, setupMode}) {
+export default function CustomerPipelineTemplateCatalog(
+  {
+    activeTemplates,
+    selectTemplateFunction,
+    setupMode,
+    cardTooltip,
+    showDeployPipelineIcon,
+  }) {
   const {
     pipelineTemplates,
     pipelineTemplateFilterModel,
@@ -45,6 +52,8 @@ export default function CustomerPipelineTemplateCatalog({activeTemplates, select
         activeTemplates={activeTemplates}
         error={error}
         selectTemplateFunction={selectTemplateFunction}
+        cardTooltip={cardTooltip}
+        showDeployPipelineIcon={showDeployPipelineIcon}
       />
     );
   };
@@ -98,5 +107,7 @@ export default function CustomerPipelineTemplateCatalog({activeTemplates, select
 CustomerPipelineTemplateCatalog.propTypes = {
   activeTemplates: PropTypes.array,
   selectTemplateFunction: PropTypes.func,
-  setupMode: PropTypes.string
+  setupMode: PropTypes.string,
+  cardTooltip: PropTypes.string,
+  showDeployPipelineIcon: PropTypes.bool,
 };

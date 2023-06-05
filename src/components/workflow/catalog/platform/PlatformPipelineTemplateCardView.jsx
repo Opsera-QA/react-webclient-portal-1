@@ -1,62 +1,46 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Col, Row} from "react-bootstrap";
-import CardView from "components/common/card/CardView";
-import InlineInformation from "components/common/status_notifications/inline/InlineInformation";
-import LoadingDialog from "components/common/status_notifications/loading";
-import PlatformPipelineTemplateCard from "components/workflow/catalog/platform/PlatformPipelineTemplateCard";
+import VanitySetCardView from "components/common/card/VanitySetCardView";
+import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
+import PlatformPipelineTemplateCard
+  from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCard";
 
 export default function PlatformPipelineTemplateCardView(
   {
     pipelineTemplates,
     pipelineTemplateFilterModel,
-    setPipelineTemplateFilterModel,
     loadData,
     isLoading,
     activeTemplates,
     error,
     selectTemplateFunction,
+    cardTooltip,
+    showDeployPipelineIcon,
   }) {
-  const getCards = () => {
-    if (isLoading) {
-      return <LoadingDialog message={"Loading Pipeline Templates"} size={"sm"} />;
-    }
-
-    if (!Array.isArray(pipelineTemplates) || pipelineTemplates.length === 0) {
-      return (
-        <div className={"py-5"}>
-          <InlineInformation
-            className={"mt-1 mb-3"}
-            message={`No Opsera Marketplace Pipeline Templates Found.`}
-          />
-        </div>
-      );
-    }
-
+  const getPipelineCard = (template) => {
     return (
-      <Row>
-        {pipelineTemplates.map((template) => {
-          return (
-            <Col xs={12} xl={6} key={template._id} className={"pb-2"}>
-              <PlatformPipelineTemplateCard
-                template={template}
-                activeTemplates={activeTemplates}
-                selectTemplateFunction={selectTemplateFunction}
-              />
-            </Col>
-          );
-        })}
-      </Row>
+      <PlatformPipelineTemplateCard
+        template={template}
+        activeTemplates={activeTemplates}
+        selectTemplateFunction={selectTemplateFunction}
+        tooltip={cardTooltip}
+        showDeployPipelineIcon={showDeployPipelineIcon}
+      />
     );
   };
 
   return (
-    <CardView
+    <VanitySetCardView
       isLoading={isLoading}
       loadData={loadData}
-      setPaginationDto={setPipelineTemplateFilterModel}
-      paginationDto={pipelineTemplateFilterModel}
-      cards={getCards()}
+      paginationModel={pipelineTemplateFilterModel}
+      cards={
+        <VerticalCardViewBase
+          isLoading={isLoading}
+          data={pipelineTemplates}
+          getCardFunction={getPipelineCard}
+        />
+      }
     />
   );
 }
@@ -64,10 +48,11 @@ export default function PlatformPipelineTemplateCardView(
 PlatformPipelineTemplateCardView.propTypes = {
   pipelineTemplates: PropTypes.array,
   pipelineTemplateFilterModel: PropTypes.object,
-  setPipelineTemplateFilterModel: PropTypes.func,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   activeTemplates: PropTypes.array,
   error: PropTypes.any,
   selectTemplateFunction: PropTypes.func,
+  cardTooltip: PropTypes.string,
+  showDeployPipelineIcon: PropTypes.bool,
 };
