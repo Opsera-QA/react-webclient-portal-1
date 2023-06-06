@@ -4,7 +4,6 @@ import {
   getTagsFromKpiConfiguration,
   getUseKpiTagsFromKpiConfiguration,
   getUseDashboardTagsFromKpiConfiguration,
-  getHierarchyFiltersFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 
 const tasksActions = {};
@@ -15,13 +14,10 @@ tasksActions.bulkMigrationKPIDataBlocks = async (
   cancelTokenSource,
   dashboardTags,
   dashboardOrgs,
-  dashboardFilters,
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/tasks/v1/getSfdcBulkMigrationTaskKPIDataBlocks";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
@@ -45,8 +41,6 @@ tasksActions.bulkMigrationKPIDataBlocks = async (
         ? dashboardTags
         : tags,
     dashboardOrgs: dashboardOrgs,
-    projectTags: dashboardFilters,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -64,13 +58,10 @@ tasksActions.bulkMigrationBaseKPITable = async (
   tableFilterDto,
   dashboardTags,
   dashboardOrgs,
-  dashboardFilters,
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/tasks/v1/getSfdcBulkMigrationTaskKPITable";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
     getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
@@ -94,8 +85,6 @@ tasksActions.bulkMigrationBaseKPITable = async (
         ? dashboardTags
         : tags,
     dashboardOrgs: dashboardOrgs,
-    projectTags: dashboardFilters,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,
@@ -118,8 +107,6 @@ tasksActions.bulkMigrationActionableOneDataBlocks = async (
   const apiUrl =
     "/analytics/tasks/v1/getSfdcBulkMigrationTaskActionableOneDataBlocks";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
     getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
@@ -144,7 +131,6 @@ tasksActions.bulkMigrationActionableOneDataBlocks = async (
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     taskId: taskId,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -167,8 +153,6 @@ tasksActions.bulkMigrationActionableOneTable = async (
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/tasks/v1/getSfdcBulkMigrationTaskActionableOneTable";
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
@@ -196,7 +180,6 @@ tasksActions.bulkMigrationActionableOneTable = async (
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     taskId,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,

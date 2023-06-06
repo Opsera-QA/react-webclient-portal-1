@@ -4,7 +4,6 @@ import {
   getTagsFromKpiConfiguration,
   getUseKpiTagsFromKpiConfiguration,
   getUseDashboardTagsFromKpiConfiguration,
-  getHierarchyFiltersFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 
 const tasksActions = {};
@@ -15,13 +14,10 @@ tasksActions.sfdcToGitMergeSyncKPIDataBlocks = async (
   cancelTokenSource,
   dashboardTags,
   dashboardOrgs,
-  dashboardFilters,
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/tasks/v1/getSfdcToGitMergeTaskKPIDataBlocks";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
@@ -45,8 +41,6 @@ tasksActions.sfdcToGitMergeSyncKPIDataBlocks = async (
         ? dashboardTags
         : tags,
     dashboardOrgs: dashboardOrgs,
-    projectTags: dashboardFilters,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -64,13 +58,10 @@ tasksActions.sfdcToGitMergeSyncBaseKPITable = async (
   tableFilterDto,
   dashboardTags,
   dashboardOrgs,
-  dashboardFilters,
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/tasks/v1/getSfdcToGitMergeTaskKPITable";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
     getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
@@ -94,8 +85,6 @@ tasksActions.sfdcToGitMergeSyncBaseKPITable = async (
         ? dashboardTags
         : tags,
     dashboardOrgs: dashboardOrgs,
-    projectTags: dashboardFilters,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,
@@ -118,8 +107,6 @@ tasksActions.sfdcToGitMergeSyncActionableOneDataBlocks = async (
   const apiUrl =
     "/analytics/tasks/v1/getSfdcToGitMergeTaskActionableOneDataBlocks";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
     getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
@@ -144,7 +131,6 @@ tasksActions.sfdcToGitMergeSyncActionableOneDataBlocks = async (
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     taskId: taskId,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -167,8 +153,6 @@ tasksActions.sfdcToGitMergeSyncActionableOneTable = async (
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/tasks/v1/getSfdcToGitMergeTaskActionableOneTable";
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
@@ -196,7 +180,6 @@ tasksActions.sfdcToGitMergeSyncActionableOneTable = async (
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     taskId,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,
@@ -212,15 +195,12 @@ tasksActions.sfdcToGitMergeSyncActionableTwoDataBlocks = async (
   cancelTokenSource,
   dashboardTags,
   dashboardOrgs,
-  dashboardFilters,
   runId,
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl =
     "/analytics/tasks/v1/getSfdcToGitMergeTaskActionableTwoDataBlocks";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
     getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
@@ -243,9 +223,7 @@ tasksActions.sfdcToGitMergeSyncActionableTwoDataBlocks = async (
         ? dashboardTags
         : tags,
     dashboardOrgs: dashboardOrgs,
-    dashboardFilters: dashboardFilters,
     runId: runId,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -268,8 +246,6 @@ tasksActions.sfdcToGitMergeSyncActionableTwoTable = async (
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/tasks/v1/getSfdcToGitMergeTaskActionableTwoTable";
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
@@ -296,7 +272,6 @@ tasksActions.sfdcToGitMergeSyncActionableTwoTable = async (
     dashboardFilters: dashboardFilters,
     runId: runId,
     search: tableFilterDto?.getData("search"),
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,

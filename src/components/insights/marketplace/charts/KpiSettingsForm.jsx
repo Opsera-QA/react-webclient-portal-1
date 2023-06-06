@@ -336,6 +336,10 @@ function KpiSettingsForm({
     "deployment-analytics",
     "gitlab-merge-requests-statistics",
     kpiIdentifierConstants.KPI_IDENTIFIERS.AQUASEC_ISSUES_BY_SEVERITY,
+    kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_TO_GIT_MERGE_SYNC_TASK,
+    kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_TO_GIT_SYNC_TASK,
+    kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_ORG_SYNC_TASK,
+    kpiIdentifierConstants.KPI_IDENTIFIERS.BULK_MIGRATION_TASK,
   ];
 
   const getKpiFilters = (filter) => {

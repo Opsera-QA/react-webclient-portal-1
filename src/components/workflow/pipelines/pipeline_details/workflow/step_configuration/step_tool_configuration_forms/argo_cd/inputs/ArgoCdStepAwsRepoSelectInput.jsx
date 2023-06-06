@@ -22,7 +22,7 @@ function ArgoCdStepAwsRepoSelectInput({model, setModel, disabled, awsToolConfigI
        setDataFunction={setRepo}
        setDataObject={setModel}
        clearDataFunction={clearDataFunction}
-       disabled={disabled || isMongoDbId(awsToolConfigId)}
+       disabled={disabled}
      />
   );
 }
