@@ -93,13 +93,20 @@ function ExactMatchSearchSelectInputBase(
   const validateAndSetData = (fieldName, value) => {
     dataObject?.setData(fieldName, value);
     setDataObject({...dataObject});
-    if(requiresLookup){
-      console.log("requires lookup")
-      branchExactMatchSearch(dataObject.getData("branch"));
-    }
   };
 
-  const updateValue = (newValue) => {
+  const updateValue = async (newValue) => {
+    setInternalErrorMessage("")
+
+    if(requiresLookup){
+      const searchedBranch = await branchExactMatchSearch(newValue);
+      
+      if (!searchedBranch){
+        setInternalErrorMessage("There was no exact match of this branch name. Please search for another branch.")
+        return;
+      }
+    }
+
     const parsedNewValue = DataParsingHelper.parseObject(newValue);
     const parsedValueField = DataParsingHelper.parseString(valueField);
 

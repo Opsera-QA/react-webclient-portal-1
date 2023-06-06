@@ -73,9 +73,7 @@ function GithubBranchSelectInput(
 
     if (isMounted?.current === true && Array.isArray(branches)) {
 
-      if(branches.includes(searchTerm)) {
-        setRequiresLookup(false);
-      }
+      setRequiresLookup(branches.includes(searchTerm) === false && searchTerm.length > 0);
 
       searchTerm.length > 0 ? branches.unshift(searchTerm): null; 
       setGithubBranches([...branches]);
@@ -84,7 +82,7 @@ function GithubBranchSelectInput(
   };
 
   const branchExactMatchSearch = async (branch) => {
-    setError(undefined);
+    
     const response = await githubActions.getBranch(
       getAccessToken,
       cancelTokenSource,
@@ -95,9 +93,7 @@ function GithubBranchSelectInput(
 
     const branchResult = response?.data?.data?.branch;
 
-    if (!branchResult){
-     setError("Unable to find exact match for this branch")
-    } 
+    return branchResult; 
   };
 
   if (multi) {
