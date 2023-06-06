@@ -53,8 +53,8 @@ export default function GithubQualityStageMultiSelectInput({
     };
 
     const loadDeployementStages = async () => {
-        const response = await dataMappingActions.getGithubDataMappingStages(getAccessToken, cancelTokenSource);
-        const stages = DataParsingHelper.parseNestedArray(response, "data.data.gitlabDeploymentStagesList.data", []);
+        const response = await dataMappingActions.getGithubDataMappingStages(getAccessToken, cancelTokenSource, repoId);
+        const stages = DataParsingHelper.parseNestedArray(response, "data.data.getGithubDataMappingStages.data", []);
         setDeploymentStages([...stages]);
     };
 

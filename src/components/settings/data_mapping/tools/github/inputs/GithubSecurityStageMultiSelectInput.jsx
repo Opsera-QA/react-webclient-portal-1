@@ -53,8 +53,9 @@ export default function GithubSecurityStageMultiSelectInput({
     };
 
     const loadDeployementStages = async () => {
-        const response = await dataMappingActions.getGithubDataMappingStages(getAccessToken, cancelTokenSource);
-        const stages = DataParsingHelper.parseNestedArray(response, "data.data.gitlabDeploymentStagesList.data", []);
+        const response = await dataMappingActions.getGithubDataMappingStages(getAccessToken, cancelTokenSource, repoId);
+        console.log("reponse",response);
+        const stages = DataParsingHelper.parseNestedArray(response, "data.data.getGithubDataMappingStages.data", []);
         setDeploymentStages([...stages]);
     };
 

@@ -3,7 +3,7 @@ import {
   analyticsProjectDataMappingHelper
 } from "components/settings/data_mapping/projects/analyticsProjectDataMapping.helper";
 import projectDataMappingMetadata
-  from "@opsera/definitions/constants/settings/data_mapping/project/projectDataMapping.metadata";
+  from "components/settings/data_mapping/projects/projectDataMappingMetadata";
 import useAnalyticsProjectDataMappingActions
   from "hooks/settings/insights/analytics_data_mappings/projects/useAnalyticsProjectDataMappingActions";
 import AnalyticsProjectDataMappingRoleHelper

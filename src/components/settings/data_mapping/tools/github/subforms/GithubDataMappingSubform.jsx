@@ -28,26 +28,31 @@ function GithubDataMappingSubform({ model, setModel }) {
                 fieldName={"devStageNameFilter"}
                 model={model}
                 setModel={setModel}
+                repoId={model?.getData("repoId")}
             />
             <GithubPipelineStageMultiSelectInput
                 fieldName={"deployQAStageNameFilter"}
                 model={model}
                 setModel={setModel}
+                repoId={model?.getData("repoId")}
             />
             <GithubPipelineStageMultiSelectInput
                 fieldName={"deployProductionStageNameFilter"}
                 model={model}
                 setModel={setModel}
+                repoId={model?.getData("repoId")}
             />
             <GithubPipelineStageMultiSelectInput
                 fieldName={"securityStageNameFilter"}
                 model={model}
                 setModel={setModel}
+                repoId={model?.getData("repoId")}
             />
             <GithubPipelineStageMultiSelectInput
                 fieldName={"qualityStageNameFilter"}
                 model={model}
                 setModel={setModel}
+                repoId={model?.getData("repoId")}
             />
         </>
     );
