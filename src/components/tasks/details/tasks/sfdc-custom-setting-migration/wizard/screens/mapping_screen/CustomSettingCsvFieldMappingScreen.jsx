@@ -135,9 +135,10 @@ const CustomSettingCsvFieldMappingScreen = ({
       }
 
       if (Array.isArray(fieldList)) {
+        let csvFields = wizardModel?.getData("csvFields");
         let mappedResult = fieldList.map((field) => ({
           targetField: field.name,
-          sourceField: "",
+          sourceField: csvFields.includes(field.name) ? field.name : "",
           nillable: field.nillable,
           type: field.type,
           unique: field.unique,
