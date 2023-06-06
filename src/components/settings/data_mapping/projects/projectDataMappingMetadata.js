@@ -122,41 +122,41 @@ const projectDataMappingMetadata = {
         {
             label: "Deploy Dev Stage Name Filter",
             id: "devStageNameFilter",
-            isRequiredFunction: (model) => {
-                return model != null && model.getData("isGithubActions") === true;
-            },
+            // isRequiredFunction: (model) => {
+            //     return model != null && model.getData("isGithubActions") === true;
+            // },
             type: metadataConstants.SUPPORTED_VALUE_TYPES.ARRAY,
         },
         {
             label: "Deploy QA Stage Name Filter",
             id: "deployQAStageNameFilter",
-            isRequiredFunction: (model) => {
-                return model != null && model.getData("isGithubActions") === true;
-            },
+            // isRequiredFunction: (model) => {
+            //     return model != null && model.getData("isGithubActions") === true;
+            // },
             type: metadataConstants.SUPPORTED_VALUE_TYPES.ARRAY,
         },
         {
             label: "Deploy Production Stage Name Filter",
             id: "deployProductionStageNameFilter",
-            isRequiredFunction: (model) => {
-                return model != null && model.getData("isGithubActions") === true;
-            },
+            // isRequiredFunction: (model) => {
+            //     return model != null && model.getData("isGithubActions") === true;
+            // },
             type: metadataConstants.SUPPORTED_VALUE_TYPES.ARRAY,
         },
         {
             label: "Security Stage Name Filter",
             id: "securityStageNameFilter",
-            isRequiredFunction: (model) => {
-                return model != null && model.getData("isGithubActions") === true;
-            },
+            // isRequiredFunction: (model) => {
+            //     return model != null && model.getData("isGithubActions") === true;
+            // },
             type: metadataConstants.SUPPORTED_VALUE_TYPES.ARRAY,
         },
         {
             label: "Quality Stage Name Filter",
             id: "qualityStageNameFilter",
-            isRequiredFunction: (model) => {
-                return model != null && model.getData("isGithubActions") === true;
-            },
+            // isRequiredFunction: (model) => {
+            //     return model != null && model.getData("isGithubActions") === true;
+            // },
             type: metadataConstants.SUPPORTED_VALUE_TYPES.ARRAY,
         },
     ],

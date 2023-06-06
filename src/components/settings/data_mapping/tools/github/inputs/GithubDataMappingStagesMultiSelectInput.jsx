@@ -6,15 +6,15 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-export default function GithubQAStageMultiSelectInput({
-                                                           fieldName,
-                                                           model,
-                                                           setModel,
-                                                           disabled,
-                                                           setDataFunction,
-                                                           clearDataFunction,
-                                                           repoId,
-                                                       }) {
+export default function GithubDataMappingStagesMultiSelectInput({
+                                                                 fieldName,
+                                                                 model,
+                                                                 setModel,
+                                                                 disabled,
+                                                                 setDataFunction,
+                                                                 clearDataFunction,
+                                                                 repoId,
+                                                             }) {
     const [isLoading, setIsLoading] = useState(true);
     const [deploymentStages, setDeploymentStages] = useState([]);
     const [error, setError] = useState(undefined);
@@ -25,16 +25,14 @@ export default function GithubQAStageMultiSelectInput({
     } = useComponentStateReference();
 
     useEffect(() => {
-        setDeploymentStages([]);
-        if (hasStringValue(repoId) === true) {
-            loadData().catch((error) => {
-                setError(error);
-                if (isMounted?.current === true) {
-                    throw error;
-                }
-            });
-        }
-    }, [repoId]);
+        loadData().catch((error) => {
+            setError(error);
+            if (isMounted?.current === true) {
+                throw error;
+            }
+        });
+
+    }, []);
 
     const loadData = async () => {
         try {
@@ -82,7 +80,7 @@ export default function GithubQAStageMultiSelectInput({
     );
 }
 
-GithubQAStageMultiSelectInput.propTypes = {
+GithubDataMappingStagesMultiSelectInput.propTypes = {
     fieldName: PropTypes.string,
     model: PropTypes.object,
     setModel: PropTypes.func,

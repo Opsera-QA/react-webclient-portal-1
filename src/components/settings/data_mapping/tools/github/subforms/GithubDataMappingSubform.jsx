@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import GithubPipelineStageMultiSelectInput from "../inputs/GithubDevStageMultiSelectInput";
+import GithubDataMappingStagesMultiSelectInput from "../inputs/GithubDataMappingStagesMultiSelectInput";
 
 function GithubDataMappingSubform({ model, setModel }) {
 
@@ -24,31 +24,31 @@ function GithubDataMappingSubform({ model, setModel }) {
                 setDataObject={setModel}
                 setDataFunction={setDataFunction}
             />
-            <GithubPipelineStageMultiSelectInput
+            <GithubDataMappingStagesMultiSelectInput
                 fieldName={"devStageNameFilter"}
                 model={model}
                 setModel={setModel}
                 repoId={model?.getData("repoId")}
             />
-            <GithubPipelineStageMultiSelectInput
+            <GithubDataMappingStagesMultiSelectInput
                 fieldName={"deployQAStageNameFilter"}
                 model={model}
                 setModel={setModel}
                 repoId={model?.getData("repoId")}
             />
-            <GithubPipelineStageMultiSelectInput
+            <GithubDataMappingStagesMultiSelectInput
                 fieldName={"deployProductionStageNameFilter"}
                 model={model}
                 setModel={setModel}
                 repoId={model?.getData("repoId")}
             />
-            <GithubPipelineStageMultiSelectInput
+            <GithubDataMappingStagesMultiSelectInput
                 fieldName={"securityStageNameFilter"}
                 model={model}
                 setModel={setModel}
                 repoId={model?.getData("repoId")}
             />
-            <GithubPipelineStageMultiSelectInput
+            <GithubDataMappingStagesMultiSelectInput
                 fieldName={"qualityStageNameFilter"}
                 model={model}
                 setModel={setModel}
