@@ -58,7 +58,7 @@ function ExactMatchSearchSelectInputBase(
     customLabel,
     dropUp,
     requiresLookup,
-    branchExactMatchSearch,
+    exactMatchSearch,
   }) {
   const field = dataObject?.getFieldById(fieldName);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
@@ -96,10 +96,10 @@ function ExactMatchSearchSelectInputBase(
   };
 
   const updateValue = async (newValue) => {
-    setInternalErrorMessage("")
+    setInternalErrorMessage("");
 
     if(requiresLookup){
-      const searchedBranch = await branchExactMatchSearch(newValue);
+      const searchedBranch = await exactMatchSearch(newValue);
       
       if (!searchedBranch){
         validateAndSetData(field?.id, null);

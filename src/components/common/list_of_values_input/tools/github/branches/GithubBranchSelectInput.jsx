@@ -75,13 +75,14 @@ function GithubBranchSelectInput(
 
       setRequiresLookup(branches.includes(searchTerm) === false && searchTerm.length > 0);
 
-      searchTerm.length > 0 ? branches.unshift(searchTerm): null; 
+      searchTerm.length > 0 && !branches.includes(searchTerm) ? branches.unshift(searchTerm): null;
+
       setGithubBranches([...branches]);
     }
     setIsLoading(false);
   };
 
-  const branchExactMatchSearch = async (branch) => {
+  const exactMatchSearch = async (branch) => {
     
     const response = await githubActions.getBranch(
       getAccessToken,
@@ -114,6 +115,8 @@ function GithubBranchSelectInput(
         pluralTopic={"Github Branches"}
         loadDataFunction={loadData}
         supportSearchLookup={true}
+        requiresLookup={requiresLookup}
+        exactMatchSearch={exactMatchSearch}
       />
     );
   }
@@ -139,7 +142,7 @@ function GithubBranchSelectInput(
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
       requiresLookup={requiresLookup}
-      branchExactMatchSearch={branchExactMatchSearch}
+      exactMatchSearch={exactMatchSearch}
     />
   );
 }

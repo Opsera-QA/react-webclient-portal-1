@@ -42,6 +42,8 @@ function MultiSelectInputBase(
     loadDataFunction,
     requireUserEnable,
     onEnableEditFunction,
+    branchExactMatchSearch, 
+    requiresLookup,
   }) {
   const field = dataObject?.getFieldById(fieldName);
   const [errorMessage, setErrorMessage] = useState("");
@@ -142,7 +144,19 @@ function MultiSelectInputBase(
     return parsedValues;
   };
 
-  const updateValue = (newValue) => {
+  const updateValue = async (newValue) => {
+    setInternalErrorMessage("");
+
+    if(requiresLookup){
+      const searchedBranch = await branchExactMatchSearch(newValue);
+      
+      if (!searchedBranch){
+        validateAndSetData(field?.id, null);
+        setInternalErrorMessage("There was no exact match of this branch name. Please search for another branch.")
+        return;
+      }
+    }
+
     if (setDataFunction) {
       // TODO: Should we also handle parsing values here?
       setDataFunction(field?.id, newValue);
