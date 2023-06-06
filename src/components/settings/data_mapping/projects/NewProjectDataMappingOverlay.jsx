@@ -5,7 +5,7 @@ import ProjectDataMappingEditorPanel
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import projectDataMappingMetadata
-  from "./projectDataMappingMetadata";
+  from "@opsera/definitions/constants/settings/data_mapping/project/projectDataMapping.metadata";
 import useGetAnalyticsProjectDataMappingModel
   from "hooks/settings/insights/analytics_data_mappings/projects/useGetAnalyticsProjectDataMappingModel";
 

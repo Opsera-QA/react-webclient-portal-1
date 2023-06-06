@@ -10,7 +10,7 @@ function GitlabProjectDataMappingSubform({ model, setModel }) {
     const newModel = {...model};
     newModel?.setData(fieldName, newValue);
     newModel?.setDefaultValue("monoRepoPath");
-    newModel?.setDefaultValue("pipelineStages");
+    newModel?.setDefaultValue("deploymentStage");
     setModel({...newModel});
   };
 
