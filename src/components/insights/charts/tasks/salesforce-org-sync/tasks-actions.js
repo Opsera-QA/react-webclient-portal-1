@@ -4,7 +4,6 @@ import {
   getTagsFromKpiConfiguration,
   getUseKpiTagsFromKpiConfiguration,
   getUseDashboardTagsFromKpiConfiguration,
-  getHierarchyFiltersFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 
 const tasksActions = {};
@@ -15,14 +14,11 @@ tasksActions.sfdcOrgSyncKPIDataBlocks = async (
   cancelTokenSource,
   dashboardTags,
   dashboardOrgs,
-  dashboardFilters,
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/tasks/v1/getSfdcSyncTaskKPIDataBlocks";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
-
+  
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
     getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
@@ -45,8 +41,6 @@ tasksActions.sfdcOrgSyncKPIDataBlocks = async (
         ? dashboardTags
         : tags,
     dashboardOrgs: dashboardOrgs,
-    projectTags: dashboardFilters,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -64,13 +58,10 @@ tasksActions.sfdcOrgSyncBaseKPITable = async (
   tableFilterDto,
   dashboardTags,
   dashboardOrgs,
-  dashboardFilters,
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/tasks/v1/getSfdcSyncTaskKPITable";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
     getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
@@ -94,8 +85,6 @@ tasksActions.sfdcOrgSyncBaseKPITable = async (
         ? dashboardTags
         : tags,
     dashboardOrgs: dashboardOrgs,
-    projectTags: dashboardFilters,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,
@@ -118,8 +107,6 @@ tasksActions.sfdcOrgSyncActionableOneDataBlocks = async (
   const apiUrl =
     "/analytics/tasks/v1/getSfdcSyncTaskActionableOneDataBlocks";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
     getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
@@ -144,7 +131,6 @@ tasksActions.sfdcOrgSyncActionableOneDataBlocks = async (
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     taskId: taskId,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -167,8 +153,6 @@ tasksActions.sfdcOrgSyncActionableOneTable = async (
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/tasks/v1/getSfdcSyncTaskActionableOneTable";
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
@@ -196,7 +180,6 @@ tasksActions.sfdcOrgSyncActionableOneTable = async (
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     taskId,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,
@@ -212,15 +195,12 @@ tasksActions.sfdcOrgSyncActionableTwoDataBlocks = async (
   cancelTokenSource,
   dashboardTags,
   dashboardOrgs,
-  dashboardFilters,
   runId,
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl =
     "/analytics/tasks/v1/getSfdcSyncTaskActionableTwoDataBlocks";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
     getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
@@ -243,9 +223,7 @@ tasksActions.sfdcOrgSyncActionableTwoDataBlocks = async (
         ? dashboardTags
         : tags,
     dashboardOrgs: dashboardOrgs,
-    dashboardFilters: dashboardFilters,
     runId: runId,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -268,8 +246,6 @@ tasksActions.sfdcOrgSyncActionableTwoTable = async (
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/tasks/v1/getSfdcSyncTaskActionableTwoTable";
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
@@ -296,7 +272,6 @@ tasksActions.sfdcOrgSyncActionableTwoTable = async (
     dashboardFilters: dashboardFilters,
     runId: runId,
     search: tableFilterDto?.getData("search"),
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,

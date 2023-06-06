@@ -194,7 +194,7 @@ import SystemDrivenMaturity from "./system_driven_maturity/SystemDrivenMaturity"
 
 // Tasks
 import SalesforceToGitMergeSyncTaskChart from "./tasks/salesforce-to-git-merge-sync/SalesforceToGitMergeSyncChart";
-import BulkMigrationSyncTaskChart from "./tasks/bulk-migration/BulkMigrationChart";
+import BulkMigrationTaskChart from "./tasks/bulk-migration/BulkMigrationChart";
 import GitToGitSyncTaskChart from "./tasks/git-to-git-sync/GitToGitSyncChart";
 import SalesforceOrgSyncTaskChart from "./tasks/salesforce-org-sync/SalesforceOrgSyncChart";
 
@@ -1774,7 +1774,7 @@ function ChartView({
             md={12}
             className="p-2"
           >
-            <BulkMigrationSyncTaskChart
+            <BulkMigrationTaskChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}

@@ -4,7 +4,6 @@ import {
   getTagsFromKpiConfiguration,
   getUseKpiTagsFromKpiConfiguration,
   getUseDashboardTagsFromKpiConfiguration,
-  getHierarchyFiltersFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 
 const tasksActions = {};
@@ -15,13 +14,10 @@ tasksActions.gitToGitSyncKPIDataBlocks = async (
   cancelTokenSource,
   dashboardTags,
   dashboardOrgs,
-  dashboardFilters,
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/tasks/v1/getGitToGitTaskKPIDataBlocks";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
@@ -45,8 +41,6 @@ tasksActions.gitToGitSyncKPIDataBlocks = async (
         ? dashboardTags
         : tags,
     dashboardOrgs: dashboardOrgs,
-    projectTags: dashboardFilters,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -64,13 +58,10 @@ tasksActions.gitToGitSyncBaseKPITable = async (
   tableFilterDto,
   dashboardTags,
   dashboardOrgs,
-  dashboardFilters,
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/tasks/v1/getGitToGitTaskKPITable";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
     getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
@@ -94,8 +85,6 @@ tasksActions.gitToGitSyncBaseKPITable = async (
         ? dashboardTags
         : tags,
     dashboardOrgs: dashboardOrgs,
-    projectTags: dashboardFilters,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,
@@ -118,8 +107,6 @@ tasksActions.gitToGitSyncActionableOneDataBlocks = async (
   const apiUrl =
     "/analytics/tasks/v1/getGitToGitTaskActionableOneDataBlocks";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
     getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
@@ -144,7 +131,6 @@ tasksActions.gitToGitSyncActionableOneDataBlocks = async (
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     taskId: taskId,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -167,8 +153,6 @@ tasksActions.gitToGitSyncActionableOneTable = async (
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/tasks/v1/getGitToGitTaskActionableOneTable";
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
@@ -196,7 +180,6 @@ tasksActions.gitToGitSyncActionableOneTable = async (
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     taskId,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,
