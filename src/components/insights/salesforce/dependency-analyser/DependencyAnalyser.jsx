@@ -5,9 +5,9 @@ import ScreenContainer from "../../../common/panels/general/ScreenContainer";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Model from "../../../../core/data_model/model";
-import sfdcPipelineWizardMetadata from "../../../workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-wizard-metadata";
 import DependencyAnalyserInitializationScreen from "./initialization_screen/DependencyAnalyserInitializationScreen";
 import ErrorDialog from "../../../common/status_notifications/error";
+import sfdcDataAnalyserMetadata from "./sfdc-dependency-analyser-metadata";
 
 export const DEPENDENCY_ANALYSER_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
@@ -30,7 +30,7 @@ function DependencyAnalyser() {
   }, []);
 
   const loadModel = async () => {
-    let newModel = new Model(sfdcPipelineWizardMetadata.newObjectFields, sfdcPipelineWizardMetadata, false);
+    let newModel = new Model(sfdcDataAnalyserMetadata.newObjectFields, sfdcDataAnalyserMetadata, false);
     newModel.setData("fromDate", new Date(new Date().setHours(0,0,0,0)));
     newModel.setData("toDate", new Date());
     newModel.setData("selectedComponentTypes", []);

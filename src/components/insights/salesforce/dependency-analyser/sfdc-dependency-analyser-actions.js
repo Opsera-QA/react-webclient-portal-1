@@ -6,6 +6,7 @@ sfdcDependencyAnalyserActions.createNewRecord = async (getAccessToken, cancelTok
   const postBody = {
     dataType: "sfdc-packageXml",
     sfdcToolId: model.getData("sfdcToolId"),
+    referenceType: model.getData("referenceType"),
   };
 
   const apiUrl = `/analytics/sfdc/dependency_analyser/create_new_instance`;
