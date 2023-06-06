@@ -54,7 +54,6 @@ function SalesforceOrgSyncTableOverlay({ kpiConfiguration, dashboardData }) {
       let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
-      let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
       const response = await taskActions.sfdcOrgSyncBaseKPITable(
         kpiConfiguration,
         getAccessToken,
@@ -62,9 +61,8 @@ function SalesforceOrgSyncTableOverlay({ kpiConfiguration, dashboardData }) {
         filterDto,
         dashboardTags,
         dashboardOrgs,
-        dashboardFilters,
       );
-      const { count, mostFailedTaskByCount, mostTimeTakingSuccessTask, mostTimeTakingFailedTask, list } = response.data.data
+      const { count, mostFailedTaskByCount, mostTimeTakingSuccessTask, mostTimeTakingFailedTask, list } = response?.data?.data;
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", count);
       setFilterModel({ ...newFilterDto });

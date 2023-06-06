@@ -49,6 +49,16 @@ function SalesforceToGitMergeSyncDataBlocks({
     };
   }, [JSON.stringify(dashboardData)]);
 
+  const loadDataPoints = async () => {
+    const dataPoints = kpiConfiguration?.dataPoints;
+    const averageExecutionTimeDataPoint = dataPointHelpers.getDataPoint(
+      dataPoints,
+      SALESFORCE_TO_GIT_MERGE_SYNC_METRIC_CONSTANTS.SUPPORTED_DATA_POINT_IDENTIFIERS
+        .BASE_KPI_AVERAGE_EXECUTION_TIME_DATA_POINT,
+    );
+    setAverageExecutionTimeDataPoint(averageExecutionTimeDataPoint);
+  };
+
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
@@ -58,7 +68,6 @@ function SalesforceToGitMergeSyncDataBlocks({
       );
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
-      let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
       const res =
         await TasksActions.sfdcToGitMergeSyncKPIDataBlocks(
           kpiConfiguration,
@@ -66,9 +75,8 @@ function SalesforceToGitMergeSyncDataBlocks({
           cancelSource,
           dashboardTags,
           dashboardOrgs,
-          dashboardFilters,
         );
-      const [response, prevResponse] = res.data
+      const [response, prevResponse] = res?.data || [];
       if (
         prevResponse?.data?.length === 0 &&
         response?.data?.length > 0
@@ -113,16 +121,6 @@ function SalesforceToGitMergeSyncDataBlocks({
       />
     );
   }
-
-  const loadDataPoints = async () => {
-    const dataPoints = kpiConfiguration?.dataPoints;
-    const averageExecutionTimeDataPoint = dataPointHelpers.getDataPoint(
-      dataPoints,
-      SALESFORCE_TO_GIT_MERGE_SYNC_METRIC_CONSTANTS.SUPPORTED_DATA_POINT_IDENTIFIERS
-        .BASE_KPI_AVERAGE_EXECUTION_TIME_DATA_POINT,
-    );
-    setAverageExecutionTimeDataPoint(averageExecutionTimeDataPoint);
-  };
 
   return (
     <Row className={"mx-1"} style={{ justifyContent: "space-evenly" }}>

@@ -37,14 +37,12 @@ function SalesforceOrgSyncUniqueRunSummaryDataBlocks(
       let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
-      let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
       const response = await taskActions.sfdcOrgSyncActionableTwoDataBlocks(
         kpiConfiguration,
         getAccessToken,
         cancelTokenSource,
         dashboardTags,
         dashboardOrgs,
-        dashboardFilters,
         selectedRunObject._id
       );
 

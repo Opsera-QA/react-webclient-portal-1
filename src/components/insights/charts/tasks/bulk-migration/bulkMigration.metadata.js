@@ -108,15 +108,5 @@ export const bulkMigrationMetadata = {
     search: "",
     activeFilters: [],
     date: undefined,
-    hierarchyFilters: {
-      filter1: [],
-      filter2: [],
-      filter3: [],
-      filter4: [],
-      filter5: [],
-      filter6: [],
-      filter7: [],
-      filter8: [],
-    },
   },
 };
