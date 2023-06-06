@@ -7,6 +7,7 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useGithubActions from "hooks/tools/github/useGithubActions";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import ExactMatchSearchSelectInputBase from "components/common/inputs/select/ExactMatchSearchSelectInputBase";
 
 function GithubRepositorySelectInput(
@@ -56,7 +57,7 @@ function GithubRepositorySelectInput(
         searchTerm,
       );
       const repositories = await DataParsingHelper.parseNestedArray(response, "data.data", []);
-      searchTerm.length > 0 ? repositories.unshift(searchTerm): null;
+      
       setRepositories([...repositories]);
 
       if (response) {
@@ -130,7 +131,7 @@ function GithubRepositorySelectInput(
   };
 
   return (
-    <ExactMatchSearchSelectInputBase
+    <SelectInputBase
       fieldName={fieldName}
       dataObject={model}
       helpTooltipText={getDataPullLimitMessage()}

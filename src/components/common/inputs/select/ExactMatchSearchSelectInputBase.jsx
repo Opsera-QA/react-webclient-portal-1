@@ -99,9 +99,9 @@ function ExactMatchSearchSelectInputBase(
     setInternalErrorMessage("");
 
     if(requiresLookup){
-      const searchedBranch = await exactMatchSearch(newValue);
+      const searchedItem = await exactMatchSearch(newValue);
       
-      if (!searchedBranch){
+      if (!searchedItem){
         validateAndSetData(field?.id, null);
         setInternalErrorMessage("There was no exact match of this branch name. Please search for another branch.")
         return;

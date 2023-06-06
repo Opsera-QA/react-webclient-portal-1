@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { gitlabActions } from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
 import ExactMatchSearchSelectInputBase from "components/common/inputs/select/ExactMatchSearchSelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
@@ -71,8 +72,7 @@ function GitlabRepositorySelectInput({
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
-      setRequiresLookup(repositories.includes(searchTerm) === false && searchTerm.length > 0);
-      searchTerm.length > 0 ? repositories.unshift(searchTerm): null;
+
       setGitlabRepositories([...repositories]);
     }
   };
@@ -138,7 +138,7 @@ function GitlabRepositorySelectInput({
   };
 
   return (
-    <ExactMatchSearchSelectInputBase
+    <SelectInputBase
       fieldName={fieldName}
       dataObject={model}
       helpTooltipText={getDataPullLimitMessage()}
