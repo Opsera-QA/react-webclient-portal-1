@@ -20,6 +20,10 @@ import RoleRestrictedSalesforceConfiguratorToolSelectInput from "../../../../com
 import sfdcDependencyAnalyserActions from "../sfdc-dependency-analyser-actions";
 import { DEPENDENCY_ANALYSER_SCREENS } from "../DependencyAnalyser";
 const DataParsingHelper = require("@opsera/persephone/helpers/data/dataParsing.helper");
+import RadioButtonOption from "components/common/inputs/radio/RadioButtonOption";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import RadioButtonInputContainer from "../../../../common/inputs/radio/RadioButtonInputContainer";
 
 const DependencyAnalyserInitializationScreen = ({
   pipelineWizardModel,
@@ -42,7 +46,7 @@ const DependencyAnalyserInitializationScreen = ({
       const response = await sfdcDependencyAnalyserActions.createNewRecord(getAccessToken, cancelTokenSource, newPipelineWizardModel);
       const newRecord = response?.data;
       if (newRecord) {
-        console.log(newRecord);
+        // console.log(newRecord);
         newPipelineWizardModel?.setData("recordId", newRecord._id);
         setPipelineWizardModel({...newPipelineWizardModel});
       }
@@ -77,7 +81,30 @@ const DependencyAnalyserInitializationScreen = ({
             setModel={setPipelineWizardModel}
           />
         </div>
-
+        <div className={"mt-3"}>
+          <RadioButtonInputContainer dataObject={pipelineWizardModel} fieldName={"referenceType"}>
+            <Row className={"py-1"}>
+              <Col sm={12} md={4}>
+                <RadioButtonOption
+                  fieldName={"referenceType"}
+                  dataObject={pipelineWizardModel}
+                  setDataObject={setPipelineWizardModel}
+                  value={"referenceBy"}
+                  label={<div><strong>Referenced By</strong></div>}
+                />
+              </Col>
+              <Col sm={12} md={4}>
+                <RadioButtonOption
+                  fieldName={"referenceType"}
+                  dataObject={pipelineWizardModel}
+                  setDataObject={setPipelineWizardModel}
+                  value={"referencesTo"}
+                  label={<div><strong>References To</strong></div>}
+                />
+              </Col>
+            </Row>
+          </RadioButtonInputContainer>
+        </div>
         <SaveButtonContainer>
           <Button
             className={"mr-2"}
