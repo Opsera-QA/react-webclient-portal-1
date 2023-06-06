@@ -170,21 +170,26 @@ const CustomSettingTaskConfirmationScreen = ({
                 fieldName={"taskType"}
               />
             </Col>
-            <Col xs={6}>
-              <ToolNameField
-                model={wizardModel}
-                fieldName={"sourceToolId"}
-                loadToolInNewWindow={true}
-              />
-            </Col>
-            <Col xs={6}>
-              <ToolNameField
-                model={wizardModel}
-                fieldName={"targetToolId"}
-                loadToolInNewWindow={true}
-                visible={wizardModel?.getData("taskType") === MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG}
-              />
-            </Col>
+            {wizardModel?.getData("taskType") !== MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG ?
+              <Col xs={6}>
+                <ToolNameField
+                  model={wizardModel}
+                  fieldName={"sourceToolId"}
+                  loadToolInNewWindow={true}
+                  visible={wizardModel?.getData("taskType") !== MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG}
+                />
+              </Col> : null
+            }
+            {wizardModel?.getData("taskType") !== MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV ?
+              <Col xs={6}>
+                <ToolNameField
+                  model={wizardModel}
+                  fieldName={"targetToolId"}
+                  loadToolInNewWindow={true}
+                  visible={wizardModel?.getData("taskType") !== MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV}
+                />
+              </Col> : null
+            }
             <Col xs={12}>
               <span className={"mb-0 mr-2 text-muted no-wrap-inline"}>
                 Query:
