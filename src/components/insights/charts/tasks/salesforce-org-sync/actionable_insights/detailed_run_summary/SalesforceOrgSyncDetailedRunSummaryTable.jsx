@@ -10,7 +10,7 @@ import {
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  faDraftingCompass,
+  faTasks,
   faExternalLink,
 } from "@fortawesome/pro-light-svg-icons";
 import ExportReportPanel from "../../../ExportReportPanel";
@@ -130,7 +130,7 @@ export default function SalesforceOrgSyncDetailedRunSummaryTable({
       <FilterContainer
         isLoading={isLoading}
         title={`Task Execution Details`}
-        titleIcon={faDraftingCompass}
+        titleIcon={faTasks}
         body={getTable()}
         className={"pb-2"}
         loadData={loadData}

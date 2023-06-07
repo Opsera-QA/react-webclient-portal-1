@@ -5,7 +5,7 @@ import { getTableTextColumn, getStaticIconColumn, getTableDurationTextColumn, ge
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  faDraftingCompass,
+  faTasks,
   faExternalLink,
 } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -133,7 +133,7 @@ function SalesforceToGitMergeBottomTable(
       <FilterContainer
         isLoading={isLoading}
         title={"Salesforce To Git Merge Sync Summary"}
-        titleIcon={faDraftingCompass}
+        titleIcon={faTasks}
         body={getTable()}
         loadData={loadData}
         setFilterDto={setFilterModel}

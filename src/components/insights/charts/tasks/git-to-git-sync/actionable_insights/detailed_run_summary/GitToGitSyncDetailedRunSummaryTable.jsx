@@ -9,7 +9,7 @@ import {
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  faDraftingCompass,
+  faTasks,
 } from "@fortawesome/pro-light-svg-icons";
 import ExportReportPanel from "../../../ExportReportPanel";
 import { gitToGitSyncMetadata } from "../../gitToGitSync.metadata";
@@ -109,7 +109,7 @@ export default function GitToGitSyncDetailedRunSummaryTable({
       <FilterContainer
         isLoading={isLoading}
         title={`Task Execution Details`}
-        titleIcon={faDraftingCompass}
+        titleIcon={faTasks}
         body={getTable()}
         className={"pb-2"}
         loadData={loadData}
