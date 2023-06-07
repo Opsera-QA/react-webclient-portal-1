@@ -16,6 +16,7 @@ function AwsCustomImageDetailsSubForm({ model, setModel }) {
         model={model}
         setModel={setModel}
         awsToolConfigId={model.getData("awsToolConfigId")}
+        disabled={!model.getData("awsToolConfigId")}
       />
       <ArgoCdStepAwsRepositoryTagSelectInput 
         model={model}

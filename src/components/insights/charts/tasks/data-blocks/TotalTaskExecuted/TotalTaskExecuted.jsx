@@ -15,7 +15,7 @@ const TotalTaskExecuted = ({score}) => {
             subtitle={"Total Tasks Executed"}
             icon={faInfoCircle}
             iconOverlayTitle={""}
-            iconOverlayBody={"The total number of task executed"}
+            iconOverlayBody={"The total number of tasks executed"}
           />
         </div>
       </DataBlockBoxContainer>

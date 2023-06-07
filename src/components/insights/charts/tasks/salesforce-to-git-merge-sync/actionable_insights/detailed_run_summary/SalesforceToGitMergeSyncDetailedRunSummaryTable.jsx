@@ -10,7 +10,7 @@ import {
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  faDraftingCompass,
+  faTasks,
   faExternalLink,
 } from "@fortawesome/pro-light-svg-icons";
 import ExportReportPanel from "../../../ExportReportPanel";
@@ -129,8 +129,8 @@ export default function SalesforceToGitMergeSyncDetailedRunSummaryTable({
     <div className={"mx-3"}>
       <FilterContainer
         isLoading={isLoading}
-        title={`Task Executed Details`}
-        titleIcon={faDraftingCompass}
+        title={`Task Execution Details`}
+        titleIcon={faTasks}
         body={getTable()}
         className={"pb-2"}
         loadData={loadData}

@@ -10,7 +10,7 @@ import {
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  faDraftingCompass,
+  faTasks,
   faExternalLink,
 } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -138,7 +138,7 @@ function GitToGitSyncBottomTable(
       <FilterContainer
         isLoading={isLoading}
         title={"Git To Git Sync Summary"}
-        titleIcon={faDraftingCompass}
+        titleIcon={faTasks}
         body={getTable()}
         loadData={loadData}
         setFilterDto={setFilterModel}
@@ -162,10 +162,10 @@ function GitToGitSyncBottomTable(
           <b>Most Failed Task (by counts):</b> {mostFailed}
         </div>
         <div className={"mr-4"}>
-          <b>Most Time Consuming for Successful Task:</b> {mostSuccessTime}
+          <b>Most Time Consuming Successful Task:</b> {mostSuccessTime}
         </div>
         <div className={"mr-4"}>
-          <b>Most Time Consuming for Failed task:</b> {mostFailedTime}
+          <b>Most Time Consuming Failed Task:</b> {mostFailedTime}
         </div>
       </div>
       {getBody()}
