@@ -25,4 +25,33 @@ sfdcDependencyAnalyserActions.updateSelectedComponentTypes = async (getAccessTok
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+sfdcDependencyAnalyserActions.setXmlFileContents = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const postBody = {
+    packageXml: pipelineWizardModel?.getData("xmlFileContent"),
+  };
+
+  const apiUrl = `/analytics/sfdc/dependency_analyser/${pipelineWizardModel?.getData("recordId")}/set_xml_file_contents`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+sfdcDependencyAnalyserActions.setUploadedCsvFileList = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const postBody = {
+    selectedFileList: pipelineWizardModel?.getData("csvFileContent"),
+  };
+
+  const apiUrl = `/analytics/sfdc/dependency_analyser/${pipelineWizardModel?.getData("recordId")}/set_csv_file_contents`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+sfdcDependencyAnalyserActions.toggleSfdcCsvFilesValidation = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const apiUrl = `/analytics/sfdc/dependency_analyser/${pipelineWizardModel?.getData("recordId")}/toggle_sfdc_csv_upload_validation`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+sfdcDependencyAnalyserActions.toggleSfdcXmlFilesValidation = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const apiUrl = `/analytics/sfdc/dependency_analyser/${pipelineWizardModel?.getData("recordId")}/toggle_sfdc_xml_upload_validation`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+
 export default sfdcDependencyAnalyserActions;

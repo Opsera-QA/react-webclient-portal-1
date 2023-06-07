@@ -10,6 +10,7 @@ import ErrorDialog from "../../../common/status_notifications/error";
 import sfdcDataAnalyserMetadata from "./sfdc-dependency-analyser-metadata";
 import DependencyAnalyserComponentSelectionScreen
   from "./component_selection_screen/DependencyAnalyserComponentSelectionScreen";
+import DependencyAnalyserFileValidationScreen from "./file_validation_screen/DependencyAnalyserFileValidationScreen";
 
 export const DEPENDENCY_ANALYSER_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
@@ -69,6 +70,15 @@ function DependencyAnalyser() {
         );
       case DEPENDENCY_ANALYSER_SCREENS.DEPENDENCY_VIEWER:
         return (<>DEPENDENCY_VIEWER Screen</>);
+      case DEPENDENCY_ANALYSER_SCREENS.VALIDATED_FILE_VIEWER:
+        return (
+          <DependencyAnalyserFileValidationScreen
+            pipelineWizardModel={dependencyAnalyserModel}
+            setPipelineWizardModel={setDependencyAnalyserModel}
+            setPipelineWizardScreen={setScreen}
+            setError={setError}
+          />
+        );
     }
   };
 
