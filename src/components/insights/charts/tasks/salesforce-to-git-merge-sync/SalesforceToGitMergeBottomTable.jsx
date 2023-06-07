@@ -157,10 +157,10 @@ function SalesforceToGitMergeBottomTable(
           <b>Most Failed Task (by counts):</b> {mostFailed}
         </div>
         <div className={"mr-4"}>
-          <b>Most Time Consuming for Successful Task:</b> {mostSuccessTime}
+          <b>Most Time Consuming Successful Task:</b> {mostSuccessTime}
         </div>
         <div className={"mr-4"}>
-          <b>Most Time Consuming for Failed task:</b> {mostFailedTime}
+          <b>Most Time Consuming Failed Task:</b> {mostFailedTime}
         </div>
       </div>
       {getBody()}

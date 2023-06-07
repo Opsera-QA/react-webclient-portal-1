@@ -129,7 +129,7 @@ export default function SalesforceOrgSyncDetailedRunSummaryTable({
     <div className={"mx-3"}>
       <FilterContainer
         isLoading={isLoading}
-        title={`Task Executed Details`}
+        title={`Task Execution Details`}
         titleIcon={faDraftingCompass}
         body={getTable()}
         className={"pb-2"}

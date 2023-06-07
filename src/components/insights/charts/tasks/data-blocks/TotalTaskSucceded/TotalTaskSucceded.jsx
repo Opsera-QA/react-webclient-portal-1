@@ -12,10 +12,10 @@ const TotalTaskSucceded = ({score, colSize}) => {
         <div className={"p-2"}>
           <TwoLineScoreDataBlock
             score={score}
-            subtitle={"Total Task Succeded By Run Count"}
+            subtitle={"Total Tasks Succeeded By Run Count"}
             icon={faInfoCircle}
             iconOverlayTitle={""}
-            iconOverlayBody={"The total number of task succeded by run count"}
+            iconOverlayBody={"The total number of tasks Succeeded by run count"}
           />
         </div>
       </DataBlockBoxContainer>
