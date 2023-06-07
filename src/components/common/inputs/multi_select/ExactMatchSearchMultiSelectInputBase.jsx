@@ -9,7 +9,7 @@ import {errorHelpers} from "components/common/helpers/error-helpers";
 import _ from "lodash";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-function MultiSelectInputBase(
+function ExactMatchSearchMultiSelectInputBase(
   {
     fieldName,
     dataObject,
@@ -270,7 +270,7 @@ function MultiSelectInputBase(
   );
 }
 
-MultiSelectInputBase.propTypes = {
+ExactMatchSearchMultiSelectInputBase.propTypes = {
   selectOptions: PropTypes.array,
   setDataObject: PropTypes.func,
   fieldName: PropTypes.string,
@@ -314,4 +314,4 @@ MultiSelectInputBase.propTypes = {
   supportSearchLookup: PropTypes.bool,
 };
 
-export default MultiSelectInputBase;
+export default ExactMatchSearchMultiSelectInputBase;

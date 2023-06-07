@@ -26,7 +26,6 @@ function GithubBranchSelectInput(
   const [githubBranches, setGithubBranches] = useState([]);
   const [error, setError] = useState(undefined);
   const [inEditMode, setInEditMode] = useState(false);
-  const [requiresLookup, setRequiresLookup] = useState(true);
   const {
     cancelTokenSource,
     isMounted,
@@ -69,13 +68,18 @@ function GithubBranchSelectInput(
       repositoryId,
       searchTerm,
     );
+
     const branches = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(branches)) {
 
-      setRequiresLookup(branches.includes(searchTerm) === false && searchTerm.length > 0);
+      const result = branches.map(branch => {
+        return {name: branch}
+      })
 
-      searchTerm.length > 0 && !branches.includes(searchTerm) ? branches.unshift(searchTerm): null;
+      if (searchTerm.length > 0 && !branches.includes(searchTerm)){
+        branches.unshift({name: searchTerm, OPSERA_DIRECT_LOOKUP_NEEDED: true})
+      };
 
       setGithubBranches([...branches]);
     }
@@ -115,7 +119,6 @@ function GithubBranchSelectInput(
         pluralTopic={"Github Branches"}
         loadDataFunction={loadData}
         supportSearchLookup={true}
-        requiresLookup={requiresLookup}
         exactMatchSearch={exactMatchSearch}
       />
     );
@@ -141,7 +144,6 @@ function GithubBranchSelectInput(
       supportSearchLookup={true}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
-      requiresLookup={requiresLookup}
       exactMatchSearch={exactMatchSearch}
     />
   );

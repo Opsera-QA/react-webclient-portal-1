@@ -57,7 +57,6 @@ function ExactMatchSearchSelectInputBase(
     noDataText,
     customLabel,
     dropUp,
-    requiresLookup,
     exactMatchSearch,
   }) {
   const field = dataObject?.getFieldById(fieldName);
@@ -95,25 +94,28 @@ function ExactMatchSearchSelectInputBase(
     setDataObject({...dataObject});
   };
 
-  const updateValue = async (newValue) => {
-    setInternalErrorMessage("");
-
-    if(requiresLookup){
-      const searchedItem = await exactMatchSearch(newValue);
-      
-      if (!searchedItem){
-        validateAndSetData(field?.id, null);
-        setInternalErrorMessage("There was no exact match of this branch name. Please search for another branch.")
+    const updateValue = async (newValue) => {
+      setInternalErrorMessage("");
+      const parsedNewValue = DataParsingHelper.parseObject(newValue);
+      const parsedValueField = DataParsingHelper.parseString(valueField);
+    
+      if (parsedNewValue && parsedNewValue.OPSERA_DIRECT_LOOKUP_NEEDED === true) {
+        const searchedItem = await exactMatchSearch(parsedNewValue);
+    
+        if (!searchedItem){
+          setInternalErrorMessage("There was no exact match of this branch name. Please search for another branch.");
+          if (getClearDataFunction() != null) {
+            clearValue();
+          } else {
+            console.error("This select input is not properly wired up for clearing out data. Leaving in cached data");
+          }
+        }
         return;
       }
-    }
 
-    const parsedNewValue = DataParsingHelper.parseObject(newValue);
-    const parsedValueField = DataParsingHelper.parseString(valueField);
-
-    if (parsedNewValue && parsedValueField && (externalCacheToolIdentifier || externalCacheToolId)) {
-      const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
-      parameters.cache = newValue;
+      if (parsedNewValue && parsedValueField && (externalCacheToolIdentifier || externalCacheToolId)) {
+        const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
+        parameters.cache = newValue;
 
       if (typeof textField === "string") {
         parameters.textField = textField;
