@@ -383,7 +383,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     terraformStepId:"",
     useTerraformOutput: false,
     job_type:"",
-    xcodeVersions:"",
+    xcodeVersion:"",
     dynamicTag: false,
     dockerTagType:[],
     dockerDynamicTagName:"",
