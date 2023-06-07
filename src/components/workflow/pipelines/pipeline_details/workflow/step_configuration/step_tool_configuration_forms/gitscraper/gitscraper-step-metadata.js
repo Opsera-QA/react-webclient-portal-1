@@ -79,6 +79,23 @@ const GitScraperStepFormMetadata = {
       label: "Exclude Certain Project Files from Scan",
       id: "filesException",
     },
+    {
+      label: "Enable Email Scan",
+      id: "scanEmail",
+    },
+    {
+      label: "Domains to be excluded from scan",
+      id: "excludeDomains",
+      regexDefinitionName: "domainFieldWithExtension",
+    },
+    {
+      label: "Set Custom Entropy",
+      id: "customEntropy",
+    },
+    {
+      label: "Custom Entropy",
+      id: "entropy",
+    },
 
   ],
   newObjectFields: {
@@ -98,7 +115,11 @@ const GitScraperStepFormMetadata = {
     excludeFiles: [],
     secretsException: false,
     filesException: false,
-    service : ""
+    service: "",
+    scanEmail: false,
+    excludeDomains: [],
+    customEntropy: false,
+    entropy: 3.5,
   },
 };
 
