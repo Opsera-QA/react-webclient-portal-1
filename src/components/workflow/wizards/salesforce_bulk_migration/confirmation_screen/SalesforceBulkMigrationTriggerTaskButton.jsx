@@ -35,6 +35,9 @@ const SalesforceBulkMigrationTriggerTaskButton = ({pipelineWizardModel, handleCl
     let createJobResponse;
     try {
       setIsTriggeringTask(true);
+      if (pipelineWizardModel.getData("commitMessage")?.length > 0){
+        await salesforceBulkMigrationWizardActions.updateCommitMsg(getAccessToken, cancelTokenSource, pipelineWizardModel);
+      }
       createJobResponse = await salesforceBulkMigrationWizardActions.triggerTaskV2(getAccessToken, cancelTokenSource, pipelineWizardModel.getData("gitTaskId"));
 
       if (createJobResponse?.data?.message?.status === "EXECUTED") {

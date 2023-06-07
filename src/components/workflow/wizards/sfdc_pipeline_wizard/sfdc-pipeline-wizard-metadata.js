@@ -174,7 +174,11 @@ const sfdcPipelineWizardMetadata = {
     {
       label: "Salesforce API Version",
       id: "apiVersion"
-    }
+    },
+    {
+      label: "Commit Message",
+      id: "commitMessage",
+    },
   ],
   newObjectFields: {
     includedComponentTypes: "all",
