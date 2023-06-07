@@ -1,5 +1,5 @@
 const ServiceNowMttaMetaData = {
-  type: "Service Now Mean Time to Acknowledgement",
+  type: "ServiceNow Mean Time to Acknowledgement",
   fields: [
     {
       label: "Goal: Mean Time To Acknowledgement (Hours)",

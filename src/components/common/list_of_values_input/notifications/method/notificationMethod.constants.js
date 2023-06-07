@@ -12,7 +12,7 @@ export const NOTIFICATION_METHOD_LABELS = {
   SLACK: "Slack",
   JIRA: "Jira",
   TEAMS: "Teams",
-  SERVICE_NOW: "Service Now",
+  SERVICE_NOW: "ServiceNow",
   GCHAT: "GChat",
 };
 

@@ -1,10 +1,6 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
-import {AuthContext} from "contexts/AuthContext";
+import React, {useState} from "react";
 import UsersTable from "components/settings/users/UsersTable";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import accountsActions from "components/admin/accounts/accounts-actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import axios from "axios";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faUserHardHat, faUsers} from "@fortawesome/pro-light-svg-icons";

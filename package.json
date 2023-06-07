@@ -64,9 +64,9 @@
     "@nivo/line": "^0.80.0",
     "@nivo/pie": "^0.80.0",
     "@nivo/scatterplot": "^0.80.0",
-    "@okta/okta-auth-js": "^7.3.0",
+    "@okta/okta-auth-js": "^6.7.2",
     "@okta/okta-react": "^6.7.0",
-    "@okta/okta-signin-widget": "^7.6.0",
+    "@okta/okta-signin-widget": "^6.9.0",
     "@opsera/definitions": "latest",
     "@opsera/dhx-suite-package": "^7.1.2",
     "@opsera/know-your-role": "latest",
@@ -140,7 +140,6 @@
     ]
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",

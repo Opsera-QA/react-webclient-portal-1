@@ -1,88 +1,90 @@
-import React, {useState, useEffect, useContext} from "react";
-import Model from "core/data_model/model";
+import React, {useEffect} from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import tagFilterMetadata from "components/settings/tags/tag-filter-metadata";
-import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import TagsTable from "components/settings/tags/TagsTable";
 import TagManagementSubNavigationBar from "components/settings/tags/TagManagementSubNavigationBar";
+import useGetFilteredCustomerTags from "hooks/settings/tags/useGetFilteredCustomerTags";
+import NewTagOverlay from "components/settings/tags/NewTagOverlay";
+import InlineTagTypeFilter from "components/common/filters/tags/tag_type/InlineTagTypeFilter";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import TagRoleHelper from "@opsera/know-your-role/roles/settings/tags/tagRole.helper";
+import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
+import TagFilterOverlay from "components/settings/tags/TagFilterOverlay";
+import PaginationContainer from "components/common/pagination/PaginationContainer";
+import TableCardView from "components/common/table/TableCardView";
+import {
+  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
+} from "components/common/table/FilterContainer";
 
-function TagManagement() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [tagList, setTagList] = useState([]);
-  const toastContext = useContext(DialogToastContext);
-  const [tagFilterDto, setTagFilterDto] = useState(new Model({...tagFilterMetadata.newObjectFields}, tagFilterMetadata, false));
+export default function TagManagement() {
   const {
+    customerTags,
+    tagFilterModel,
+    setTagFilterModel,
+    error,
+    loadData,
+    isLoading,
+  } = useGetFilteredCustomerTags();
+  const {
+    toastContext,
     userData,
-    accessRoleData,
-    getAccessToken,
-    cancelTokenSource,
-    isMounted,
   } = useComponentStateReference();
+  const siteRole = SiteRoleHelper.getSiteRoleLevel(userData);
 
-  useEffect(() => {
-    loadData(tagFilterDto).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-  }, []);
+  useEffect(() => {}, []);
 
-  const loadData = async (filterDto = tagFilterDto) => {
-    try {
-      setTagList([]);
-
-      if (TagRoleHelper.canGetTags(userData) === true) {
-        setIsLoading(true);
-        await getTags(filterDto);
-      }
-    }
-    catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    }
-    finally {
-      if (isMounted?.current === true ) {
-        setIsLoading(false);
-      }
-    }
+  const createTag = () => {
+    toastContext.showOverlayPanel(<NewTagOverlay loadData={loadData} />);
   };
 
-  const getTags = async (filterDto = tagFilterDto) => {
-    const response = await adminTagsActions.getTags(
-      getAccessToken,
-      cancelTokenSource,
-      filterDto,
+  const getInlineFilters = () => {
+    return (
+      <InlineTagTypeFilter
+        filterModel={tagFilterModel}
+        setFilterModel={setTagFilterModel}
+        loadData={loadData}
+        className={"ml-2"}
+      />
     );
-    const tagList = response?.data?.data;
+  };
 
-    if (isMounted?.current === true && Array.isArray(tagList)) {
-      setTagList(tagList);
-      filterDto.setData("totalCount", response?.data?.count);
-      filterDto.setData("activeFilters", filterDto?.getActiveFilters());
-      setTagFilterDto({...filterDto});
-    }
+  const getTableView = () => {
+    return (
+      <TagsTable
+        loadData={loadData}
+        isLoading={isLoading}
+        data={customerTags}
+        error={error}
+      />
+    );
   };
 
   return (
     <ScreenContainer
       breadcrumbDestination={"tagManagement"}
-      isLoading={!accessRoleData}
-      accessRoleData={accessRoleData}
       navigationTabContainer={<TagManagementSubNavigationBar activeTab={"tags"} />}
+      addRecordFunction={siteRole !== SiteRoleHelper.SITE_ROLES.AUDITOR && siteRole !== SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER ? createTag : undefined}
+      filterOverlay={<TagFilterOverlay tagFilterModel={tagFilterModel} loadDataFunction={loadData} />}
+      titleActionBar={getInlineFilters()}
+      filterModel={tagFilterModel}
+      setFilterModel={setTagFilterModel}
+      loadDataFunction={loadData}
     >
-      <TagsTable
+      <PaginationContainer
         loadData={loadData}
         isLoading={isLoading}
-        data={tagList}
-        tagFilterDto={tagFilterDto}
-        setTagFilterDto={setTagFilterDto}
-      />
+        filterDto={tagFilterModel}
+        setFilterDto={setTagFilterModel}
+        data={customerTags}
+        nextGeneration={true}
+      >
+        <TableCardView
+          filterModel={tagFilterModel}
+          isLoading={isLoading}
+          data={customerTags}
+          cardView={getTableView()}
+          tableView={getTableView()}
+          tableHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
+        />
+      </PaginationContainer>
     </ScreenContainer>
   );
 }
-
-export default TagManagement;

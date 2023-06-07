@@ -37,7 +37,7 @@ function NumberPickerInputBase(
   };
 
   const updateValue = (newValue) => {
-    const parsedNewValue = numberHelpers.hasNumberValue(newValue) === true ? newValue : defaultValue;
+    const parsedNewValue = newValue !== null && numberHelpers.hasNumberValue(newValue) === true ? newValue : defaultValue;
 
     if (setDataFunction) {
       setDataFunction(field?.id, parsedNewValue);

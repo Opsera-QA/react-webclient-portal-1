@@ -32,7 +32,7 @@ export default function PipelineCardBody(
               <div>
                 {orchestrationHelper.getLastRunCardSummary(pipelineHelper.getLastRunCompletionTime(pipelineModel?.getOriginalData()), pipelineHelper.getPipelineModelOrchestrationState(pipelineModel), "Pipeline")}
               </div>
-              <div>
+              <div className={"ml-1"}>
                 <span>{runCount} Runs</span>
               </div>
             </div>

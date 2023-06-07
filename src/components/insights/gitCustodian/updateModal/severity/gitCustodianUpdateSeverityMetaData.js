@@ -5,7 +5,13 @@ const GitCustodianUpdateSeverityMetaData = {
       label: "Severity",
       id: "severity",
       isRequired: true,
-    },   
+    },
+    {
+      label: "Comments",
+      id: "comment",
+      isRequired: false,
+      maxLength: 500,
+    },
     {
       label: "Issues",
       id: "issues",
@@ -15,13 +21,14 @@ const GitCustodianUpdateSeverityMetaData = {
       id: "issuesList",
       isRequired: true,
       minItems: 1,
-    },    
+    },
   ],
   newObjectFields: {
     severity: "",
+    comment: "",
     issues: [],
     issuesList: [],
-  }
+  },
 };
 
 export default GitCustodianUpdateSeverityMetaData;

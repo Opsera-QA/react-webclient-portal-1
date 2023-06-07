@@ -1489,14 +1489,19 @@ div.data-blocks-ellipses {
     min-width: 500px;
 }
 
-.success-toast {
-    background-color: #FFF;
-    color: #000000;
-    border: 2px solid green;
-    border-left: 8px solid green;
+.opsera-toast {
     padding: 2px;
     z-index: 3000;
     width: 775px;
+    background-color: #FFF;
+    color: #000000;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+    /*border-radius: 1rem;*/
+}
+
+.success-toast {
+    border: 2px solid green;
+    border-left: 8px solid green;
 }
 
 .error-toast {
@@ -1510,13 +1515,8 @@ div.data-blocks-ellipses {
 }
 
 .information-toast {
-    background-color: #FFF;
-    color: #000000;
     border: 2px solid #1989F9;
     border-left: 8px solid #1989F9;
-    padding: 1px;
-    width: 775px;
-    z-index: 3000;
 }
 
 .information-toast-close-button {

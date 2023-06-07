@@ -33,7 +33,6 @@ function DotNetStepConfiguration({ pipelineId, stepTool, stepId, createJob, clos
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
 
-
   useEffect(() => {
     loadData();
   }, []);
@@ -100,6 +99,7 @@ function DotNetStepConfiguration({ pipelineId, stepTool, stepId, createJob, clos
       <DotNetStepJenkinsJobSelectInput
         model={dotNetStepConfigurationDto}
         setModel={setDotNetStepConfigurationDataDto}
+        toolIdentifier={stepTool?.tool_identifier}
       />
       <DotNetJenkinsAccountInput dataObject={dotNetStepConfigurationDto} setDataObject={setDotNetStepConfigurationDataDto} />
       <DotNetBitbucketWorkspaceInput dataObject={dotNetStepConfigurationDto} setDataObject={setDotNetStepConfigurationDataDto} />

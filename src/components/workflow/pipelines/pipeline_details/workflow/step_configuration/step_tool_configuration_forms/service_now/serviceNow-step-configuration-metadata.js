@@ -1,8 +1,8 @@
 const ServiceNowPipelineStepConfigurationMetadata = {
-  type: "Service Now Pipeline Configuration",
+  type: "ServiceNow Pipeline Configuration",
   fields: [
     {
-      label: "Service Now Tool",
+      label: "ServiceNow Tool",
       id: "serviceNowToolId",
       isRequired: true,
     },

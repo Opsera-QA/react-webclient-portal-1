@@ -74,9 +74,13 @@ customSettingMigrationTaskWizardActions.triggerFieldPropertiesPull = async (
   const postBody = {
     taskId: taskId,
     runCount: runCount,
-    sfdcToolId: wizardModel?.getData("sourceToolId"),
+    sfdcToolId:
+      wizardModel?.getData("taskType") ===
+      MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG
+        ? wizardModel?.getData("targetToolId")
+        : wizardModel?.getData("sourceToolId"),
     pipelineStorageRecordId: wizardModel?.getData("recordId"),
-    objectName: selectedObjectName
+    objectName: selectedObjectName,
   };
 
   return await baseActions.apiPostCallV2(

@@ -2,13 +2,10 @@ import React from "react";
 import PropType from "prop-types";
 import SelectionCardBase from "components/common/card/selection/SelectionCardBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import DeleteConfirmationOverlay from "components/common/overlays/center/delete/DeleteConfirmationOverlay";
-import {useHistory} from "react-router-dom";
 import entitlementConstants
   from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
-import useEntitlementAdministrationActions
-  from "hooks/settings/organization_settings/entitlements/useEntitlementAdministrationActions";
-import useGetEntitlementModel from "hooks/settings/organization_settings/entitlements/useGetEntitlementModel";
+import EditOrganizationSettingsEntitlementOverlay
+  from "components/admin/organization_settings/details/entitlements/active/EditOrganizationSettingsEntitlementOverlay";
 
 export default function OrganizationSettingsEntitlementPageLinkCardBase(
   {
@@ -18,28 +15,16 @@ export default function OrganizationSettingsEntitlementPageLinkCardBase(
     organizationDomain,
     organizationAccountId,
   }) {
-  const { getEntitlementModel } = useGetEntitlementModel();
-  const entitlementAdministrationActions = useEntitlementAdministrationActions();
-  const entitlementModel = getEntitlementModel(entitlement);
-  const history = useHistory();
   const {
     toastContext,
   } = useComponentStateReference();
 
-  const handleDeleteFunction = async () => {
-    return await entitlementAdministrationActions.deleteEntitlement(
-      entitlementModel?.getMongoDbId(),
-      organizationDomain,
-      organizationAccountId,
-    );
-  };
-
   const handleOnClickFunction = () => {
     toastContext.showOverlayPanel(
-      <DeleteConfirmationOverlay
-        type={"Entitlement"}
-        handleDeleteFunction={handleDeleteFunction}
-        afterDeleteFunction={() => history.push(history.location)}
+      <EditOrganizationSettingsEntitlementOverlay
+        organizationDomain={organizationDomain}
+        organizationAccountName={organizationAccountId}
+        entitlement={entitlement}
       />
     );
   };

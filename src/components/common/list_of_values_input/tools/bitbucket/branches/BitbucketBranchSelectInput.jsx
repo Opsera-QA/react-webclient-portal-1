@@ -12,9 +12,10 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { bitbucketActions } from "components/inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket.actions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import _ from "lodash";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import ExactMatchSearchSelectInputBase from "components/common/inputs/select/ExactMatchSearchSelectInputBase";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function BitbucketRepositorySelectInput({
   fieldName,
@@ -81,11 +82,37 @@ function BitbucketRepositorySelectInput({
       repositoryId,
       searchTerm,
     );
-    const branches = response?.data?.data;
 
+    const branches = DataParsingHelper.parseNestedArray(response, "data.data", [])
+  
     if (isMounted?.current === true && Array.isArray(branches)) {
-      setBitbucketBranches([...branches]);
+
+      const result = branches?.map(branch => {
+        return {name: branch}
+      })
+
+      if (searchTerm.length > 0 && !branches.includes(searchTerm)){
+        result.unshift({name: searchTerm, OPSERA_DIRECT_LOOKUP_NEEDED: true})
+      };
+
+      setBitbucketBranches([...result]);
     }
+  };
+
+  const exactMatchSearch = async (branch) => {
+    
+    const response = await bitbucketActions.getBranch(
+      getAccessToken,
+      cancelTokenSource,
+      toolId,
+      workspace,
+      repositoryId,
+      branch?.name,
+    );
+
+    const branchResult = response?.data?.data?.branch;
+
+    return branchResult; 
   };
 
   if (multi) {
@@ -112,7 +139,7 @@ function BitbucketRepositorySelectInput({
   }
 
   return (
-    <SelectInputBase
+    <ExactMatchSearchSelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
@@ -132,6 +159,7 @@ function BitbucketRepositorySelectInput({
       onEnableEditFunction={() => setInEditMode(true)}
       externalCacheToolId={toolId}
       loadDataFunction={loadData}
+      exactMatchSearch={exactMatchSearch}
     />
   );
 }

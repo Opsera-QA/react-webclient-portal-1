@@ -23,6 +23,8 @@ function GitCustodianCustomEntropyInput({model, setModel, fieldName, disabled, p
         setDataObject={setModel}
         minimum={2.4}
         maximum={5.0}
+        defaultValue={2.4}
+        incrementValue={0.1}
       />
     );
   };

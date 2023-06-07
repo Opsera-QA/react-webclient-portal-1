@@ -91,7 +91,7 @@ function ServiceNowMeanTimeToResolutionDataBlock({ dashboardData, toggleDynamicP
     return (
       <ServiceNowMeanTimeToResolutionBarChart
         dashboardData={dashboardData}
-        kpiConfiguration={{kpi_name: "Service Now Mean Time to Resolution", filters: []}}
+        kpiConfiguration={{kpi_name: "ServiceNow Mean Time to Resolution", filters: []}}
         showSettingsToggle={false}
       />
     );

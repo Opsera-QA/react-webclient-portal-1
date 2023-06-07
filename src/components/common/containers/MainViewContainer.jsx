@@ -20,7 +20,7 @@ export default function MainViewContainer(
   };
 
   return (
-    <ToastContextProvider navBar={getNavBar()}>
+    <ToastContextProvider className={"w-100"} navBar={getNavBar()}>
       <div
         className={"w-100"}
         key={locationKey}

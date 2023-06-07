@@ -42,7 +42,7 @@ function PipelineNotificationVerticalTabContainer(
       />
       <VanitySetVerticalTab
         icon={faEnvelope}
-        tabText={serviceNowEnabled ? <div className={"d-flex"}>Service Now<IconBase icon={faLightbulb} className={"ml-3"}/> </div> : "Service Now"}
+        tabText={serviceNowEnabled ? <div className={"d-flex"}>ServiceNow<IconBase icon={faLightbulb} className={"ml-3"}/> </div> : "ServiceNow"}
         tabName={"service-now"}
         handleTabClick={handleTabClickFunction}
         activeTab={activeTab}

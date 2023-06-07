@@ -19,7 +19,6 @@ import JenkinsChangeFailureTotalFailuresDataBlock from "./data_blocks/JenkinsCha
 import JenkinsChangeFailureRateActionableOverlay from "./actionable_insights/JenkinsChangeFailureRateActionableOverlay";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import InfoDialog from "../../../../../common/status_notifications/info";
-import aquasecActions from "../../../aquasec_security_insights/aquasec.action";
 import jenkinsActions from "../../jenkins.action";
 
 
@@ -114,48 +113,48 @@ function JenkinsChangeFailureRateChart({ kpiConfiguration, setKpiConfiguration, 
                     />
                 </Col>
             </Row>
-                <Row className={'pb-1 pt-3'}>
-                    <Col>
-                        <JenkinsChangeFailureTotalFailuresDataBlock
-                            data={metrics?.[0]?.failures}
-                            onSelect={onRowSelect}
-                            //dataPoint={boomiFrequencyPercentageDataPoint}
-                            //lastScore={ dataBlockValues?.prevDeployments}
-                            //icon={getIcon(dataBlockValues?.deploymentsTrend?.trend)}
-                            //className={getIconColor(dataBlockValues?.deploymentsTrend?.trend)}
-                        />
-                    </Col>
-                </Row></>);
+            <Row className={'pb-1 pt-3'}>
+                <Col>
+                    <JenkinsChangeFailureTotalFailuresDataBlock
+                        data={metrics?.[0]?.failures}
+                        onSelect={onRowSelect}
+                        //dataPoint={boomiFrequencyPercentageDataPoint}
+                        //lastScore={ dataBlockValues?.prevDeployments}
+                        //icon={getIcon(dataBlockValues?.deploymentsTrend?.trend)}
+                        //className={getIconColor(dataBlockValues?.deploymentsTrend?.trend)}
+                    />
+                </Col>
+            </Row></>);
         };
 
         const getChart = () => {
             return(<Row>
-                    <Col md={12} sm={12} lg={12}>
-                        <div className="new-chart" style={{height: "300px"}}>
-                            <div className="text-center">
-                                <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
-                                    Change Failure Rate
-                                </div>
-                            </div>
-                            {metrics.length == 0 ||
-                            typeof metrics[0].failureRate !== "number" ? (
-                                <div
-                                    className="max-content-width p-5 mt-5"
-                                    style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-                                >
-                                    <InfoDialog message="No Data is available for this chart at this time." />
-                                </div>
-                            ) : (
-                                <div
-                                    className="circle"
-                                    style={{ backgroundColor: metrics && metrics[0].failureRate > 15 ? failColor : goalSuccessColor }}
-                                >
-                                    {metrics && metrics[0].failureRate.toFixed(2) + "%"}
-                                </div>
-                            )}
-                        </div>
-                    </Col>
-                </Row>
+                <Col md={12} sm={12} lg={12}>
+                <div className="new-chart" style={{height: "300px"}}>
+                <div className="text-center">
+                    <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
+                        Change Failure Rate
+                    </div>
+                </div>
+                {metrics.length == 0 ||
+                typeof metrics[0].failureRate !== "number" ? (
+                    <div
+                        className="max-content-width p-5 mt-5"
+                        style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+                    >
+                        <InfoDialog message="No Data is available for this chart at this time." />
+                    </div>
+                ) : (
+                    <div
+                        className="circle"
+                        style={{ backgroundColor: metrics && metrics[0].failureRate > 15 ? failColor : goalSuccessColor }}
+                    >
+                        {metrics && metrics[0].failureRate.toFixed(2) + "%"}
+                    </div>
+                )}
+                </div>
+                </Col>
+            </Row>
             );
         };
 

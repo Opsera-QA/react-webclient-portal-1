@@ -189,8 +189,8 @@ function ToastContextProvider({children, navBar}) {
     addToast(warningToast, id, notificationType);
   };
 
-  const showSystemSuccessToast = (successMessage, autoCloseLengthInSeconds) => {
-    showSuccessToast(successMessage, autoCloseLengthInSeconds, notificationTypes.SYSTEM);
+  const showSystemSuccessToast = (successMessage, autoCloseLengthInSeconds, itemLink) => {
+    showSuccessToast(successMessage, autoCloseLengthInSeconds, notificationTypes.SYSTEM, itemLink);
   };
 
   const showFormSuccessToast = (successMessage, autoCloseLengthInSeconds) => {
@@ -198,9 +198,9 @@ function ToastContextProvider({children, navBar}) {
     showSuccessToast(successMessage, autoCloseLengthInSeconds, notificationTypes.FORM);
   };
 
-  const showSuccessToast = (successMessage, autoCloseLengthInSeconds = 10, notificationType = notificationTypes.UNKNOWN) => {
+  const showSuccessToast = (successMessage, autoCloseLengthInSeconds = 10, notificationType = notificationTypes.UNKNOWN, itemLink) => {
     let id = generateUUID();
-    let successToast = getSuccessToast(successMessage, id, autoCloseLengthInSeconds);
+    let successToast = getSuccessToast(successMessage, id, autoCloseLengthInSeconds, itemLink);
     addToast(successToast, id, notificationType);
   };
 
@@ -241,9 +241,9 @@ function ToastContextProvider({children, navBar}) {
     showInformationToast(informationMessage, autoCloseLengthInSeconds, notificationTypes.FORM);
   };
 
-  const showInformationToast = (informationMessage, autoCloseLengthInSeconds, notificationType = notificationTypes.UNKNOWN) => {
+  const showInformationToast = (informationMessage, autoCloseLengthInSeconds, notificationType = notificationTypes.UNKNOWN, itemLink) => {
     let id = generateUUID();
-    let informationToast = getInformationToast(informationMessage, id, autoCloseLengthInSeconds);
+    let informationToast = getInformationToast(informationMessage, id, autoCloseLengthInSeconds, itemLink);
     addToast(informationToast, id, notificationType);
   };
 
@@ -424,13 +424,14 @@ function ToastContextProvider({children, navBar}) {
     );
   };
 
-  const getSuccessToast = (message, id, autoCloseLengthInSeconds = 10) => {
+  const getSuccessToast = (message, id, autoCloseLengthInSeconds = 10, itemLink) => {
     return (
       <SuccessToast
         successMessage={message}
         id={id}
         removeToast={removeToast}
         autoCloseLength={autoCloseLengthInSeconds}
+        link={itemLink}
       />
     );
   };
@@ -499,13 +500,14 @@ function ToastContextProvider({children, navBar}) {
     );
   };
 
-  const getInformationToast = (message, id, autoCloseLengthInSeconds) => {
+  const getInformationToast = (message, id, autoCloseLengthInSeconds, itemLink) => {
     return (
       <InformationToast
         informationMessage={message}
         id={id}
         removeToast={removeToast}
         autoCloseLength={autoCloseLengthInSeconds}
+        link={itemLink}
       />
     );
   };

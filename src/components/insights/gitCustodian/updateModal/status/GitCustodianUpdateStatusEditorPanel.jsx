@@ -61,7 +61,7 @@ function GitCustodianUpdateStatusEditorPanel({
       createRecord={updateStatus}
       updateRecord={updateStatus}
       addAnotherOption={false}
-      disable={dataModel?.isModelValid() !== true}
+      disable={dataModel?.checkCurrentValidity() !== true}
     >
       <div className={"px-2"}>
         <Row>
@@ -79,7 +79,6 @@ function GitCustodianUpdateStatusEditorPanel({
               useInfoContainer={false}
             />
           </Col>
-
           <Col md={12}>
             <GitCustodianSelectedIssuesTable
               selectedIssues={selectedIssues}

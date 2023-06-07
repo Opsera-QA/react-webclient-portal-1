@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {gitlabActions} from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
+import ExactMatchSearchSelectInputBase from "components/common/inputs/select/ExactMatchSearchSelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase"
 import useComponentStateReference from "hooks/useComponentStateReference";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function GitlabBranchSelectInput(
   {
@@ -60,12 +61,45 @@ function GitlabBranchSelectInput(
   };
 
   const loadGitlabBranches = async (searchTerm) => {
-    const response = await gitlabActions.getBranchesFromGitlabInstanceV3(getAccessToken, cancelTokenSource, toolId, repositoryId, searchTerm);
-    const branches = response?.data?.data;
+    setIsLoading(true);
+    const response = await gitlabActions.getBranchesFromGitlabInstanceV3(
+      getAccessToken, 
+      cancelTokenSource, 
+      toolId, 
+      repositoryId, 
+      searchTerm
+    );
+  
+    const branches = DataParsingHelper.parseNestedArray(response, "data.data", []);
 
     if (isMounted?.current === true && Array.isArray(branches)) {
-      setGitlabBranches([...branches]);
+  
+      const result = branches?.map(branch => {
+        return {name: branch}
+      })
+
+      if (searchTerm.length > 0 && !branches.includes(searchTerm)){
+        result.unshift({name: searchTerm, OPSERA_DIRECT_LOOKUP_NEEDED: true})
+      };
+
+      setGitlabBranches([...result]);
     }
+    setIsLoading(false);
+  };
+
+  const exactMatchSearch = async (branch) => {
+    
+    const response = await gitlabActions.getBranch(
+      getAccessToken,
+      cancelTokenSource,
+      toolId,
+      repositoryId,
+      branch.name,
+    );
+
+    const branchResult = response?.data?.data?.branch;
+
+    return branchResult; 
   };
 
   if (multi) {
@@ -92,26 +126,26 @@ function GitlabBranchSelectInput(
   }
 
   return (
-    <SelectInputBase
-      fieldName={fieldName}
-      dataObject={model}
-      setDataObject={setModel}
-      selectOptions={gitlabBranches}
-      busy={isLoading}
-      setDataFunction={setDataFunction}
-      clearDataFunction={clearDataFunction}
-      valueField={"name"}
-      textField={"name"}
-      disabled={disabled}
-      filterOption={"startsWith"}
-      error={error}
-      pluralTopic={"Gitlab Branches"}
-      singularTopic={"Gitlab Branch"}
-      supportSearchLookup={true}
-      requireUserEnable={true}
-      onEnableEditFunction={() => setInEditMode(true)}
-      externalCacheToolId={toolId}
-      loadDataFunction={loadData}
+    <ExactMatchSearchSelectInputBase
+    fieldName={fieldName}
+    dataObject={model}
+    setDataObject={setModel}
+    selectOptions={gitlabBranches}
+    busy={isLoading}
+    setDataFunction={setDataFunction}
+    clearDataFunction={clearDataFunction}
+    valueField={"name"}
+    textField={"name"}
+    disabled={disabled}
+    filterOption={"startsWith"}
+    error={error}
+    pluralTopic={"Gitlab Branches"}
+    singularTopic={"Gitlab Branch"}
+    loadDataFunction={loadData}
+    supportSearchLookup={true}
+    requireUserEnable={true}
+    onEnableEditFunction={() => setInEditMode(true)}
+    exactMatchSearch={exactMatchSearch}
     />
   );
 }

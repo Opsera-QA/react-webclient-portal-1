@@ -38,9 +38,7 @@ websocketLiveUpdateHelper.handleModelLiveUpdate = (
         setModel(undefined);
       }
     } else {
-      console.log("existing model");
       const hasUpdate = model.replaceOriginalData(liveUpdateObject);
-      console.log("hasUpdate: " + JSON.stringify(hasUpdate));
 
       if (hasUpdate === true) {
         setModel({...model});

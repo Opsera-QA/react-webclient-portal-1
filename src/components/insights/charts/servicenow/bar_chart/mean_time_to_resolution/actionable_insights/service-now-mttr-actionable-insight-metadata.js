@@ -1,6 +1,6 @@
 const ServiceNowMTTRActionableMetadata = {
   idProperty: "_id",
-  type: "Service Now Issues by Severity Report",
+  type: "ServiceNow Issues by Severity Report",
   fields: [
     {
       label: "Incident Number",

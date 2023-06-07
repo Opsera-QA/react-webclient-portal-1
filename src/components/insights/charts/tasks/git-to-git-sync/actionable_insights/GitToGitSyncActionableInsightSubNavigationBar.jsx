@@ -1,0 +1,62 @@
+import React from "react";
+import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
+import NavigationTab from "components/common/tabs/navigation/NavigationTab";
+import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
+import PropTypes from "prop-types";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import {
+  GIT_TO_GIT_SYNC_ACTIONABLE_INSIGHT_SCREENS,
+} from "./GitToGitSyncActionableInsightOverlay";
+
+export default function GitToGitSyncActionableInsightSubNavigationBar(
+  {
+    currentScreen,
+    setCurrentScreen,
+  }) {
+  const {
+    toastContext,
+  } = useComponentStateReference();
+
+  const handleTabClick = (tabSelection) => e => {
+    e.preventDefault();
+
+    if (tabSelection === currentScreen) {
+      return;
+    }
+
+    switch (tabSelection) {
+      case "insights":
+        toastContext.removeInlineMessage();
+        toastContext.clearInfoOverlayPanel();
+        return;
+      case GIT_TO_GIT_SYNC_ACTIONABLE_INSIGHT_SCREENS.GIT_TO_GIT_SYNC_RUN_SUMMARY:
+        setCurrentScreen(GIT_TO_GIT_SYNC_ACTIONABLE_INSIGHT_SCREENS.GIT_TO_GIT_SYNC_RUN_SUMMARY);
+        return;
+    }
+  };
+
+  return (
+    <div className={"mx-3 mb-2"}>
+      <NavigationTabContainer>
+        <NavigationTab
+          icon={faArrowLeft}
+          tabName={"insights"}
+          handleTabClick={handleTabClick}
+          activeTab={currentScreen}
+          tabText={"Back to Insights"}
+        />
+        <NavigationTab
+          tabName={GIT_TO_GIT_SYNC_ACTIONABLE_INSIGHT_SCREENS.GIT_TO_GIT_SYNC_RUN_SUMMARY}
+          handleTabClick={handleTabClick}
+          activeTab={currentScreen}
+          tabText={"Task Run Record"}
+        />
+      </NavigationTabContainer>
+    </div>
+  );
+}
+
+GitToGitSyncActionableInsightSubNavigationBar.propTypes = {
+  currentScreen: PropTypes.string,
+  setCurrentScreen: PropTypes.func,
+};

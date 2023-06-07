@@ -54,7 +54,7 @@ import SeleniumTestSuitesMultiSelectInput from "components/common/list_of_values
 import SonarProjectLanguagesMultiSelectInput from "components/common/list_of_values_input/insights/charts/sonar/SonarProjectLanguagesMultiSelectInput";
 import SonarProjectsMultiSelectInput from "components/common/list_of_values_input/insights/charts/sonar/SonarProjectsMultiSelectInput";
 
-// Service Now
+// ServiceNow
 import ServiceNowPrioritiesMultiSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowPrioritiesMultiSelectInput";
 import ServiceNowToolsSelectInputLegacy from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowToolsSelectInputLegacy";
 import ServiceNowAssignmentGroupSelectInput from "components/common/list_of_values_input/insights/charts/servicenow/ServiceNowGroupsSelectInput";
@@ -336,6 +336,10 @@ function KpiSettingsForm({
     "deployment-analytics",
     "gitlab-merge-requests-statistics",
     kpiIdentifierConstants.KPI_IDENTIFIERS.AQUASEC_ISSUES_BY_SEVERITY,
+    kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_TO_GIT_MERGE_SYNC_TASK,
+    kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_TO_GIT_SYNC_TASK,
+    kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_ORG_SYNC_TASK,
+    kpiIdentifierConstants.KPI_IDENTIFIERS.BULK_MIGRATION_TASK,
   ];
 
   const getKpiFilters = (filter) => {

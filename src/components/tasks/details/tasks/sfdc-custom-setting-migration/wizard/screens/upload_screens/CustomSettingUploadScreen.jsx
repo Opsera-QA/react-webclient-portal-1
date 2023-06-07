@@ -23,6 +23,7 @@ const CustomSettingUploadScreen = ({
   wizardModel,
   setWizardModel,
   setCurrentScreen,
+  setEnableEdit,
   handleClose,
   taskType,
 }) => {
@@ -45,6 +46,10 @@ const CustomSettingUploadScreen = ({
   }, []);
 
   const handleBackButton = () => {
+    if(setEnableEdit) {
+      setEnableEdit(true);
+      return;
+    }
     setCurrentScreen(
       CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN,
     );
@@ -155,6 +160,7 @@ CustomSettingUploadScreen.propTypes = {
   handleClose: PropTypes.func,
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
+  setEnableEdit: PropTypes.func,
 };
 
 export default CustomSettingUploadScreen;

@@ -1,8 +1,8 @@
 const serviceNowConnectionMetadata = {
-  type: "Service Now Configuration",
+  type: "ServiceNow Configuration",
   fields: [
     {
-      label: "Service Now URL",
+      label: "ServiceNow URL",
       id: "toolURL",
       isRequired: true,
       isSecureUrl: true,

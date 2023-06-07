@@ -75,7 +75,7 @@ ClearSearchFilterButton.propTypes = {
   busyText: PropTypes.string,
   variant: PropTypes.string,
   fieldName: PropTypes.string,
-  paginationModel: PropTypes.string,
+  paginationModel: PropTypes.object,
   loadDataFunction: PropTypes.func,
   clientSide: PropTypes.bool,
   setCurrentSearchTerm: PropTypes.func,

@@ -182,6 +182,7 @@ function NexusStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdito
         setDataObject={setNexusStepConfigurationDataDto}
         dataObject={nexusStepConfigurationDto}
         fieldName={"customVersion"}
+        disabled={nexusStepConfigurationDto.getData("repositoryFormat") === "docker"}
       />      
     </PipelineStepEditorPanelContainer>
   );
