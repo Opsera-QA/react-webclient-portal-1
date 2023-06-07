@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import PropTypes from "prop-types";import LoadingDialog from "components/common/status_notifications/loading";
-import { format } from "date-fns";
+import PropTypes from "prop-types";
+import LoadingDialog from "components/common/status_notifications/loading";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import { Button } from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
@@ -9,12 +9,9 @@ import {
   faStepForward,
   faSync,
 } from "@fortawesome/pro-light-svg-icons";
-import { parseDate } from "utils/helpers";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
-import SfdcPipelineWizardFileUploadComponent from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardFileUploadComponent";
-import { parseError } from "components/common/helpers/error-helpers";
 import useComponentStateReference from "../../../../../hooks/useComponentStateReference";
 import RoleRestrictedSalesforceConfiguratorToolSelectInput from "../../../../common/list_of_values_input/tools/salesforce/sfdc-configurator/RoleRestrictedSalesforceConfiguratorToolSelectInput";
 import sfdcDependencyAnalyserActions from "../sfdc-dependency-analyser-actions";
@@ -24,6 +21,7 @@ import RadioButtonOption from "components/common/inputs/radio/RadioButtonOption"
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import RadioButtonInputContainer from "../../../../common/inputs/radio/RadioButtonInputContainer";
+import DependencyAnalyserFileUploadScreen from "../file_upload_screen/DependencyAnalyserFileUploadScreen";
 
 const DependencyAnalyserInitializationScreen = ({
   pipelineWizardModel,
@@ -51,7 +49,7 @@ const DependencyAnalyserInitializationScreen = ({
         setPipelineWizardModel({...newPipelineWizardModel});
       }
 
-        setPipelineWizardScreen(DEPENDENCY_ANALYSER_SCREENS.COMPONENT_SELECTOR);
+      setPipelineWizardScreen(DEPENDENCY_ANALYSER_SCREENS.COMPONENT_SELECTOR);
     } catch (error) {
       console.error(error);
       setError("Could not create new Salesforce Pipeline Wizard record");
@@ -62,18 +60,9 @@ const DependencyAnalyserInitializationScreen = ({
     }
   };
 
-  const getBody = () => {
-    if (isLoading || pipelineWizardModel == null) {
-      return (
-        <LoadingDialog
-          message={`Initializing a new instance`}
-          size={"sm"}
-        />
-      );
-    }
-
+  const getInputContainer = () => {
     return (
-      <div>
+      <>
         <div>
           <RoleRestrictedSalesforceConfiguratorToolSelectInput
             fieldName={"sfdcToolId"}
@@ -105,6 +94,23 @@ const DependencyAnalyserInitializationScreen = ({
             </Row>
           </RadioButtonInputContainer>
         </div>
+      </>
+    );
+  };
+
+  const getBody = () => {
+    if (isLoading || pipelineWizardModel == null) {
+      return (
+        <LoadingDialog
+          message={`Initializing a new instance`}
+          size={"sm"}
+        />
+      );
+    }
+
+    return (
+      <div>
+        {getInputContainer()}
         <SaveButtonContainer>
           <Button
             className={"mr-2"}
@@ -171,11 +177,14 @@ const DependencyAnalyserInitializationScreen = ({
   const getFileUploadBody = () => {
     return (
       <div>
-        <SfdcPipelineWizardFileUploadComponent
-          pipelineWizardModel={pipelineWizardModel}
-          setPipelineWizardScreen={setPipelineWizardScreen}
-          setPipelineWizardModel={setPipelineWizardModel}
-        />
+        {getInputContainer()}
+        {pipelineWizardModel?.getData("sfdcToolId") ?
+          <DependencyAnalyserFileUploadScreen
+            pipelineWizardModel={pipelineWizardModel}
+            setPipelineWizardScreen={setPipelineWizardScreen}
+            setPipelineWizardModel={setPipelineWizardModel}
+          /> : null
+        }
       </div>
     );
   };
