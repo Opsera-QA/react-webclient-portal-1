@@ -15,5 +15,21 @@ export default function useGithubActions() {
     return await apiService.handleApiGetRequest(apiUrl, queryParameters);
   };
 
+  githubActions.getRepo = async (
+    getAccessToken,
+    cancelTokenSource,
+    toolId,
+    repositoryId,
+  ) => {
+    const apiUrl = `/tools/${toolId}/github/repository`;
+  
+    const queryParameters = {    
+      repositoryId: repositoryId,
+    };
+  
+    return await apiService.handleApiGetRequest(apiUrl, queryParameters);
+  };
+  
+
   return githubActions;
 }

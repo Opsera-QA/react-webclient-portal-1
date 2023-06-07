@@ -4,10 +4,11 @@ import React, {
 } from "react";
 import PropTypes from "prop-types";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useGithubActions from "hooks/tools/github/useGithubActions";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import ExactMatchSearchSelectInputBase from "components/common/inputs/select/ExactMatchSearchSelectInputBase";
 
 function GithubRepositorySelectInput(
   {
@@ -25,9 +26,12 @@ function GithubRepositorySelectInput(
   const [repositories, setRepositories] = useState([]);
   const [error, setError] = useState(undefined);
   const [inEditMode, setInEditMode] = useState(false);
+  const [requiresLookup, setRequiresLookup] = useState(true);
   const githubActions = useGithubActions();
   const {
+    cancelTokenSource,
     isMounted,
+    getAccessToken,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -53,6 +57,7 @@ function GithubRepositorySelectInput(
         searchTerm,
       );
       const repositories = await DataParsingHelper.parseNestedArray(response, "data.data", []);
+      
       setRepositories([...repositories]);
 
       if (response) {
@@ -111,6 +116,20 @@ function GithubRepositorySelectInput(
     return repo;
   };
 
+  const exactMatchSearch = async (repoId) => {
+    
+    const response = await githubActions.getRepo(
+      getAccessToken,
+      cancelTokenSource,
+      toolId,
+      repoId,
+    );
+
+    const repoResult = response?.data?.data?.branch;
+
+    return repoResult; 
+  };
+
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -132,6 +151,8 @@ function GithubRepositorySelectInput(
       externalCacheToolId={toolId}
       loadDataFunction={loadData}
       supportSearchLookup={true}
+      exactMatchSearch={exactMatchSearch}
+      requiresLookup={requiresLookup}
     />
   );
 }

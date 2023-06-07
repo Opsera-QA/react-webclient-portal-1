@@ -5,6 +5,7 @@ import React, {
 import PropTypes from "prop-types";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { gitlabActions } from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
+import ExactMatchSearchSelectInputBase from "components/common/inputs/select/ExactMatchSearchSelectInputBase";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
@@ -24,6 +25,7 @@ function GitlabRepositorySelectInput({
   const [gitlabRepositories, setGitlabRepositories] = useState([]);
   const [error, setError] = useState(undefined);
   const [inEditMode, setInEditMode] = useState(false);
+  const [requiresLookup, setRequiresLookup] = useState(true);
   const {
     cancelTokenSource,
     isMounted,
@@ -70,6 +72,7 @@ function GitlabRepositorySelectInput({
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
+
       setGitlabRepositories([...repositories]);
     }
   };
@@ -119,6 +122,21 @@ function GitlabRepositorySelectInput({
     return repo;
   };
 
+  const exactMatchSearch = async (branch) => {
+    
+    const response = await gitlabActions.getBranch(
+      getAccessToken,
+      cancelTokenSource,
+      toolId,
+      repositoryId,
+      branch,
+    );
+
+    const branchResult = response?.data?.data?.branch;
+
+    return branchResult; 
+  };
+
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -140,6 +158,8 @@ function GitlabRepositorySelectInput({
       externalCacheToolId={toolId}
       loadDataFunction={loadData}
       supportSearchLookup={true}
+      requiresLookup={requiresLookup}
+      exactMatchSearch={exactMatchSearch}
     />
   );
 }
