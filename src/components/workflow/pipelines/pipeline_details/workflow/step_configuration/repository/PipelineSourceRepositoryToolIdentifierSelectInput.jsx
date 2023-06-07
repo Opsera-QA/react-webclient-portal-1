@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import SourceRepositoryToolIdentifierSelectInput
   from "components/common/list_of_values_input/workflow/pipelines/source_repository/SourceRepositoryToolIdentifierSelectInput";
 
-function PipelineSourceRepositoryToolIdentifierSelectInput({ fieldName, model, setModel }) {
+function PipelineSourceRepositoryToolIdentifierSelectInput({ fieldName, model, setModel, disabled }) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel?.setData("service", selectedOption?.value);
@@ -49,7 +49,7 @@ function PipelineSourceRepositoryToolIdentifierSelectInput({ fieldName, model, s
       lenientClearValueButton={true}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
-      disabled={!model?.isChanged("service") && model?.getData("service") !== ""}
+      disabled={disabled}
     />
   );
 }
