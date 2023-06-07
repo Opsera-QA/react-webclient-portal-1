@@ -8,11 +8,13 @@ import Model from "../../../../core/data_model/model";
 import DependencyAnalyserInitializationScreen from "./initialization_screen/DependencyAnalyserInitializationScreen";
 import ErrorDialog from "../../../common/status_notifications/error";
 import sfdcDataAnalyserMetadata from "./sfdc-dependency-analyser-metadata";
+import DependencyAnalyserComponentSelectionScreen
+  from "./component_selection_screen/DependencyAnalyserComponentSelectionScreen";
 
 export const DEPENDENCY_ANALYSER_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
   COMPONENT_SELECTOR: "COMPONENT_SELECTOR",
-  DEPENDENCY_SELECTOR: "STANDARD_FILE_SELECTOR",
+  DEPENDENCY_VIEWER: "STANDARD_DEPENDENCY_VIEWER",
   VALIDATED_FILE_VIEWER: "VALIDATED_FILE_VIEWER",
 };
 
@@ -57,9 +59,16 @@ function DependencyAnalyser() {
         />
         );
       case DEPENDENCY_ANALYSER_SCREENS.COMPONENT_SELECTOR:
-        return (<>COMPONENT_SELECTOR Screen</>);
-      case DEPENDENCY_ANALYSER_SCREENS.DEPENDENCY_SELECTOR:
-        return (<>DEPENDENCY_SELECTOR Screen</>);
+        return (
+          <DependencyAnalyserComponentSelectionScreen
+            pipelineWizardModel={dependencyAnalyserModel}
+            setPipelineWizardModel={setDependencyAnalyserModel}
+            setPipelineWizardScreen={setScreen}
+            setError={setError}
+          />
+        );
+      case DEPENDENCY_ANALYSER_SCREENS.DEPENDENCY_VIEWER:
+        return (<>DEPENDENCY_VIEWER Screen</>);
     }
   };
 
