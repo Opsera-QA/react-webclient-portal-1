@@ -53,7 +53,7 @@ const pipelineActivityFilterMetadata = {
   },
 };
 
-export class PipelineActivityFilterModel extends FilterModelBase {
+export class PipelineActivityLogFilterModel extends FilterModelBase {
   constructor(getAccessToken, cancelTokenSource, loadData) {
     super(pipelineActivityFilterMetadata);
     this.getAccessToken = getAccessToken;
@@ -84,6 +84,6 @@ export class PipelineActivityFilterModel extends FilterModelBase {
   };
 }
 
-export default PipelineActivityFilterModel;
+export default PipelineActivityLogFilterModel;
 
 
