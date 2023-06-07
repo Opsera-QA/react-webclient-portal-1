@@ -35,4 +35,12 @@ salesforceBulkMigrationWizardActions.triggerTaskV2 = async (getAccessToken, canc
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+salesforceBulkMigrationWizardActions.updateCommitMsg = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const postBody = {
+    commitMsg: pipelineWizardModel?.getData("commitMessage"),
+  };
+  const apiUrl = `/tasks/update-commit-msg-pipeline-storage-configuration/wizard/${pipelineWizardModel?.getData("recordId")}`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 export default salesforceBulkMigrationWizardActions;

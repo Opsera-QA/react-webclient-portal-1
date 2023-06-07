@@ -171,6 +171,11 @@ const sfdcPipelineWizardMetadata = {
       label: "Salesforce Destination Org",
       id: "sfdcDestToolId",
     },
+    {
+      label: "Commit Message",
+      id: "commitMessage",
+      maxLength: 2000,
+    },
   ],
   newObjectFields: {
     includedComponentTypes: "all",
