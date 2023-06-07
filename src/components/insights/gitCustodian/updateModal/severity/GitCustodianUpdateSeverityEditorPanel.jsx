@@ -8,6 +8,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import modelHelpers from "components/common/model/modelHelpers";
 import GitCustodianSelectedIssuesTable from "components/insights/gitCustodian/modal/GitCustodianSelectedIssuesTable";
 import GitCustodianSeveritySelectInput from "./inputs/GitCustodianSeveritySelectInput";
+import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 
 function GitCustodianUpdateSeverityEditorPanel({
   handleClose,
@@ -16,11 +17,8 @@ function GitCustodianUpdateSeverityEditorPanel({
   loadData,
 }) {
   const [dataModel, setDataModel] = useState(undefined);
-  const {
-    isMounted,
-    cancelTokenSource,
-    getAccessToken,
-  } = useComponentStateReference();
+  const { isMounted, cancelTokenSource, getAccessToken } =
+    useComponentStateReference();
 
   useEffect(() => {
     unpackIssues();
@@ -31,18 +29,28 @@ function GitCustodianUpdateSeverityEditorPanel({
       setDataModel(undefined);
       return;
     }
-    const issueIds = !selectedIssues ? [] : selectedIssues.map(({ issueId }) => issueId);
+    const issueIds = !selectedIssues
+      ? []
+      : selectedIssues.map(({ issueId }) => issueId);
 
-    const newModel = modelHelpers.parseObjectIntoModel({
-      issuesList: [...selectedIssues],
-      issues: issueIds,
-    }, gitCustodianUpdateSeverityMetaData);
+    const newModel = modelHelpers.parseObjectIntoModel(
+      {
+        issuesList: [...selectedIssues],
+        issues: issueIds,
+      },
+      gitCustodianUpdateSeverityMetaData,
+    );
 
     setDataModel({ ...newModel });
   };
 
-  const updateSeverity = async () => {    
-    const response = await chartsActions.updateGitCustodianVulnerabilitySeverity(getAccessToken, cancelTokenSource, dataModel.getPersistData());
+  const updateSeverity = async () => {
+    const response =
+      await chartsActions.updateGitCustodianVulnerabilitySeverity(
+        getAccessToken,
+        cancelTokenSource,
+        dataModel.getPersistData(),
+      );
     setSelectedIssues([]);
     handleClose();
     loadData();
@@ -61,20 +69,26 @@ function GitCustodianUpdateSeverityEditorPanel({
       createRecord={updateSeverity}
       updateRecord={updateSeverity}
       addAnotherOption={false}
-      disable={dataModel?.isModelValid() !== true}
+      disable={dataModel?.checkCurrentValidity() !== true}
     >
       <div className={"px-2"}>
         <Row>
           <Col md={12}>
-            <GitCustodianSeveritySelectInput 
+            <GitCustodianSeveritySelectInput
               model={dataModel}
               setModel={setDataModel}
             />
           </Col>
           <Col md={12}>
-            <GitCustodianSelectedIssuesTable
-              selectedIssues={selectedIssues}
+            <TextAreaInputBase
+              fieldName={"comment"}
+              model={dataModel}
+              setModel={setDataModel}
+              useInfoContainer={false}
             />
+          </Col>
+          <Col md={12}>
+            <GitCustodianSelectedIssuesTable selectedIssues={selectedIssues} />
           </Col>
         </Row>
       </div>
