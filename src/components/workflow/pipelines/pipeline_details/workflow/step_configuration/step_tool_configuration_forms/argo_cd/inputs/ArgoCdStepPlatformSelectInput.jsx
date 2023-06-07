@@ -26,6 +26,8 @@ function ArgoCdStepPlatformSelectInput({model, setModel, disabled}) {
     newModel.setDefaultValue("azureRepoName");
     newModel.setDefaultValue("repositoryTag");
     newModel.setDefaultValue("imageUrl");
+    newModel.setDefaultValue("awsToolConfigId");
+    newModel.setDefaultValue("ecrRepoName");
     setModel({...newModel});    
   };
 
@@ -40,6 +42,8 @@ function ArgoCdStepPlatformSelectInput({model, setModel, disabled}) {
     newModel.setDefaultValue("azureRepoName");
     newModel.setDefaultValue("repositoryTag");
     newModel.setDefaultValue("imageUrl");
+    newModel.setDefaultValue("awsToolConfigId");
+    newModel.setDefaultValue("ecrRepoName");
     setModel({...newModel});
   };
 

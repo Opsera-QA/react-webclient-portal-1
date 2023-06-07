@@ -209,14 +209,6 @@ export const ArgoCdStepConfigurationMetadata = {
       type: metadataConstants.SUPPORTED_VALUE_TYPES.MONGO_DB_ID,
     },
     {
-      label: "AWS Cluster Name",
-      id: "awsClusterName",
-      isRequiredFunction: (model) => {
-        return model?.getData("customImageTag") === true && model?.getData("platform") === "aws";
-      },
-      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
-    },
-    {
       label: "Repository",
       id: "ecrRepoName",
       isRequiredFunction: (model) => {
@@ -264,7 +256,6 @@ export const ArgoCdStepConfigurationMetadata = {
     azureRepoName: "",
     acrLoginUrl: "",
     awsToolConfigId: "",
-    awsClusterName: "",
     ecrRepoName: "",
   },
 };

@@ -7,18 +7,16 @@ const ArgoCdStepAwsToolSelectInput = ({ fieldName, model, setModel, disabled, te
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = { ...model };
     newDataObject.setData(fieldName, selectedOption._id);
-    newDataObject.setData("roleArn", "");
-    newDataObject.setData("roleSessionName", "");
-    newDataObject.setData("clusterName", "");
+    newDataObject.setDefaultValue("ecrRepoName");
+    newDataObject.setDefaultValue("repositoryTag");
     setModel({ ...newDataObject });
   };
 
   const clearDataFunction = () => {
     let newDataObject = { ...model };
-    newDataObject.setData(fieldName, "");
-    newDataObject.setData("roleArn", "");
-    newDataObject.setData("roleSessionName", "");
-    newDataObject.setData("clusterName", "");
+    newDataObject.setDefaultValue("awsToolConfigId");
+    newDataObject.setDefaultValue("ecrRepoName");
+    newDataObject.setDefaultValue("repositoryTag");
     setModel({ ...newDataObject });
   };
 
