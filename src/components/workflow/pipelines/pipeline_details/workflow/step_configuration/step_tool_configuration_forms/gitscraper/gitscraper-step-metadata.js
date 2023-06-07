@@ -100,6 +100,23 @@ const GitScraperStepFormMetadata = {
       label: "Custom Entropy",
       id: "entropy",
     },
+    {
+      label: "Enable Email Scan",
+      id: "scanEmail",
+    },
+    {
+      label: "Domains to be excluded from scan",
+      id: "excludeDomains",
+      regexDefinitionName: "domainFieldWithExtension",
+    },
+    {
+      label: "Set Custom Entropy",
+      id: "customEntropy",
+    },
+    {
+      label: "Custom Entropy",
+      id: "entropy",
+    },
 
   ],
   newObjectFields: {
