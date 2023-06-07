@@ -5,7 +5,7 @@ import { getTableTextColumn, getStaticIconColumn, getTableDurationTextColumn, ge
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  faDraftingCompass,
+  faTasks,
   faExternalLink,
 } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -133,7 +133,7 @@ function SalesforceOrgSyncBottomTable(
       <FilterContainer
         isLoading={isLoading}
         title={"Salesforce Org Sync Summary"}
-        titleIcon={faDraftingCompass}
+        titleIcon={faTasks}
         body={getTable()}
         loadData={loadData}
         setFilterDto={setFilterModel}
@@ -157,10 +157,10 @@ function SalesforceOrgSyncBottomTable(
           <b>Most Failed Task (by counts):</b> {mostFailed}
         </div>
         <div className={"mr-4"}>
-          <b>Most Time Consuming for Successful Task:</b> {mostSuccessTime}
+          <b>Most Time Consuming Successful Task:</b> {mostSuccessTime}
         </div>
         <div className={"mr-4"}>
-          <b>Most Time Consuming for Failed task:</b> {mostFailedTime}
+          <b>Most Time Consuming Failed Task:</b> {mostFailedTime}
         </div>
       </div>
       {getBody()}

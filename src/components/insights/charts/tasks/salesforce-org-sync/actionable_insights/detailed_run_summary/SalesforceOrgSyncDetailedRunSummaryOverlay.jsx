@@ -57,7 +57,7 @@ function SalesforceOrgSyncDetailedRunSummaryOverlay(
 
   const getButtonContainer = () => {
     return (
-      <div className={"mx-3"}>
+      <div className={"mx-3 py-2"}>
         <ButtonContainerBase
           leftSideButtons={
             <BackButtonBase

@@ -6,7 +6,7 @@ import {
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
-import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
+import { faTasks } from "@fortawesome/pro-light-svg-icons";
 import ExportReportPanel from "../../../ExportReportPanel";
 import { salesforceOrgSyncMetadata } from "../../salesforceOrgSync.metadata";
 import TaskExportReportButton from "../../../TaskExportReportButton";
@@ -99,7 +99,7 @@ export default function SalesforceOrgSyncUniqueRunSummaryTable({
       <FilterContainer
         isLoading={isLoading}
         title={`Task Components Details`}
-        titleIcon={faDraftingCompass}
+        titleIcon={faTasks}
         body={getTable()}
         className={"pb-2"}
         loadData={loadData}

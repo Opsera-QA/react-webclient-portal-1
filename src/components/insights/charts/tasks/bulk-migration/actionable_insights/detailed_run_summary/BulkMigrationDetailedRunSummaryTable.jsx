@@ -9,7 +9,7 @@ import {
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  faDraftingCompass,
+  faTasks,
 } from "@fortawesome/pro-light-svg-icons";
 import ExportReportPanel from "../../../ExportReportPanel";
 import { bulkMigrationMetadata } from "../../bulkMigration.metadata";
@@ -108,8 +108,8 @@ export default function BulkMigrationDetailedRunSummaryTable({
     <div className={"mx-3"}>
       <FilterContainer
         isLoading={isLoading}
-        title={`Task Executed Details`}
-        titleIcon={faDraftingCompass}
+        title={`Task Execution Details`}
+        titleIcon={faTasks}
         body={getTable()}
         className={"pb-2"}
         loadData={loadData}
