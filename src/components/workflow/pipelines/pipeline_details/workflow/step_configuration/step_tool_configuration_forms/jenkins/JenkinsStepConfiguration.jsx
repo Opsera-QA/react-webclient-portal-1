@@ -197,7 +197,6 @@ function JenkinsStepConfiguration({
         />
       );
     }
-    return null;
   }
 
   const getJobForm = () => {
