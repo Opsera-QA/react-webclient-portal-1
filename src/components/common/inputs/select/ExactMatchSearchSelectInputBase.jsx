@@ -101,14 +101,10 @@ function ExactMatchSearchSelectInputBase(
     
       if (parsedNewValue && parsedNewValue.OPSERA_DIRECT_LOOKUP_NEEDED === true) {
         const searchedItem = await exactMatchSearch(parsedNewValue);
-    
+    console.log(searchedItem);
         if (!searchedItem){
           setInternalErrorMessage("There was no exact match of this branch name. Please search for another branch.");
-          if (getClearDataFunction() != null) {
-            clearValue();
-          } else {
-            console.error("This select input is not properly wired up for clearing out data. Leaving in cached data");
-          }
+          clearValue();
         }
         return;
       }

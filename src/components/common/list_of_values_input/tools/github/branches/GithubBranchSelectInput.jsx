@@ -78,10 +78,10 @@ function GithubBranchSelectInput(
       })
 
       if (searchTerm.length > 0 && !branches.includes(searchTerm)){
-        branches.unshift({name: searchTerm, OPSERA_DIRECT_LOOKUP_NEEDED: true})
+        result.unshift({name: searchTerm, OPSERA_DIRECT_LOOKUP_NEEDED: true})
       };
 
-      setGithubBranches([...branches]);
+      setGithubBranches([...result]);
     }
     setIsLoading(false);
   };
@@ -93,7 +93,7 @@ function GithubBranchSelectInput(
       cancelTokenSource,
       toolId,
       repositoryId,
-      branch,
+      branch?.name,
     );
 
     const branchResult = response?.data?.data?.branch;

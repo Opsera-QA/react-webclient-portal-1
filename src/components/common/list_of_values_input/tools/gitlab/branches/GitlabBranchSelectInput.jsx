@@ -6,6 +6,7 @@ import {gitlabActions} from "components/inventory/tools/tool_details/tool_jobs/g
 import ExactMatchSearchSelectInputBase from "components/common/inputs/select/ExactMatchSearchSelectInputBase";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase"
 import useComponentStateReference from "hooks/useComponentStateReference";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function GitlabBranchSelectInput(
   {
@@ -23,7 +24,6 @@ function GitlabBranchSelectInput(
   const [gitlabBranches, setGitlabBranches] = useState([]);
   const [error, setError] = useState(undefined);
   const [inEditMode, setInEditMode] = useState(false);
-  const [requiresLookup, setRequiresLookup] = useState(true);
   const {
     cancelTokenSource,
     isMounted,
@@ -69,14 +69,20 @@ function GitlabBranchSelectInput(
       repositoryId, 
       searchTerm
     );
-    const branches = response?.data?.data;
+  
+    const branches = DataParsingHelper.parseNestedArray(response, "data.data", []);
 
     if (isMounted?.current === true && Array.isArray(branches)) {
-      setRequiresLookup(branches.includes(searchTerm) === false && searchTerm.length > 0);
+  
+      const result = branches?.map(branch => {
+        return {name: branch}
+      })
 
-      searchTerm.length > 0 && !branches.includes(searchTerm) ? branches.unshift(searchTerm): null;
+      if (searchTerm.length > 0 && !branches.includes(searchTerm)){
+        result.unshift({name: searchTerm, OPSERA_DIRECT_LOOKUP_NEEDED: true})
+      };
 
-      setGitlabBranches([...branches]);
+      setGitlabBranches([...result]);
     }
     setIsLoading(false);
   };
@@ -88,7 +94,7 @@ function GitlabBranchSelectInput(
       cancelTokenSource,
       toolId,
       repositoryId,
-      branch,
+      branch.name,
     );
 
     const branchResult = response?.data?.data?.branch;
@@ -139,7 +145,6 @@ function GitlabBranchSelectInput(
     supportSearchLookup={true}
     requireUserEnable={true}
     onEnableEditFunction={() => setInEditMode(true)}
-    requiresLookup={requiresLookup}
     exactMatchSearch={exactMatchSearch}
     />
   );
