@@ -12,7 +12,6 @@ import AzureAcrPushStepRegistryNameSelectInput from "components/workflow/pipelin
 import AzureAcrPushNewRepoBooleanInput from "./inputs/AzureAcrPushNewRepoBooleanInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import AzureAcrPushRepositoryNameSelectInput from "./inputs/AzureAcrPushRepositoryNameSelectInput";
-import AzureAcrPushUseRunCountBooleanInput from "./inputs/AzureAcrPushUseRunCountBooleanInput";
 import AzureAcrPushStepToolTypeSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_acr_push/inputs/AzureAcrPushStepToolTypeSelectInput";
 import AzureAcrPushCredentialIdSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_acr_push/inputs/AzureAcrPushCredentialIdSelectInput";
@@ -134,7 +133,6 @@ function AzureAcrPushStepConfiguration({ stepTool, closeEditorPanel, plan, stepI
       />
       <AzureAcrPushNewRepoBooleanInput dataObject={azureAcrPushModel} setDataObject={setAzureAcrPushModel} />
       {getRepositoryDropdown()}
-      <AzureAcrPushUseRunCountBooleanInput dataObject={azureAcrPushModel} setDataObject={setAzureAcrPushModel} />
     </PipelineStepEditorPanelContainer>
   );
 }
