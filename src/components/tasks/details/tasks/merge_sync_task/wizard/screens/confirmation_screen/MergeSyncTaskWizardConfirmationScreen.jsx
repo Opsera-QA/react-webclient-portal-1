@@ -13,7 +13,7 @@ import MergeSyncTaskWizardSelectedCommitTable
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 import MergeSyncTaskWizardSelectedDeltasVerticalTabContainer
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/selected_deltas_table/MergeSyncTaskWizardSelectedDeltasVerticalTabContainer";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 
 const MergeSyncTaskWizardConfirmationScreen = (
   {
@@ -57,7 +57,7 @@ const MergeSyncTaskWizardConfirmationScreen = (
         />
         {getFileSelectionTable()}
       </div>
-      <TextInputBase
+      <TextAreaInput
         dataObject={pipelineWizardModel}
         setDataObject={setPipelineWizardModel}
         fieldName={"commitMessage"}

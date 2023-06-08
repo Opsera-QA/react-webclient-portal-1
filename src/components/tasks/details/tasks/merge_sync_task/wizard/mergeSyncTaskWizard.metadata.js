@@ -78,6 +78,7 @@ export const mergeSyncTaskWizardMetadata = {
     {
       label: "Commit Message",
       id: "commitMessage",
+      maxLength: 2000,
     },
   ],
   newObjectFields: {

@@ -57,7 +57,7 @@ const SalesforceBulkMigrationTriggerTaskButton = ({pipelineWizardModel, handleCl
   };
 
   return (
-    <Button variant="success" size="sm" onClick={triggerGitTask} disabled={isTriggeringTask}>
+    <Button variant="success" size="sm" onClick={triggerGitTask} disabled={isTriggeringTask || !pipelineWizardModel?.isModelValid()}>
       <IconBase className={"mr-2"} isLoading={isTriggeringTask} icon={faCheck}/>
       Proceed
     </Button>

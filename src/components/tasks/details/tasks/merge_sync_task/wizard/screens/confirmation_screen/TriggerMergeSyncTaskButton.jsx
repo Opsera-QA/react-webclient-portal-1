@@ -80,7 +80,7 @@ const TriggerMergeSyncTaskButton = ({ wizardModel, handleClose }) => {
       variant={"success"}
       size={"sm"}
       onClick={triggerTask}
-      disabled={isTriggeringTask}
+      disabled={isTriggeringTask || !wizardModel?.isModelValid()}
     >
       <IconBase
         className={"mr-2"}

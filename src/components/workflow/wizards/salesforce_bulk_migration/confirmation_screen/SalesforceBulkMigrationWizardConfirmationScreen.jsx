@@ -10,7 +10,7 @@ import SalesforceBulkMigrationTriggerTaskButton
   from "components/workflow/wizards/salesforce_bulk_migration/confirmation_screen/SalesforceBulkMigrationTriggerTaskButton";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import ListInputBase from "components/common/inputs/list/ListInputBase";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 
 const SalesforceBulkMigrationWizardConfirmationScreen = (
   {
@@ -59,7 +59,7 @@ const SalesforceBulkMigrationWizardConfirmationScreen = (
           />
         </Col>
       </Row>
-      <TextInputBase
+      <TextAreaInput
         dataObject={pipelineWizardModel}
         setDataObject={setPipelineWizardModel}
         fieldName={"commitMessage"}

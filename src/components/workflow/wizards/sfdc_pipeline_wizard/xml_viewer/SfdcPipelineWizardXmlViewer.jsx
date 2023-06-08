@@ -20,7 +20,7 @@ import SalesforcePipelineComponentCountsViewer
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import SfdcPipelineWizardBasicSummary
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardBasicSummary";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 
 // TODO: This should be refactored and cleaned up.
 const SfdcPipelineWizardXmlViewer = (
@@ -259,7 +259,7 @@ const SfdcPipelineWizardXmlViewer = (
         {getTabContainer()}
         {getView()}
         {pipelineWizardModel.getData('fromGitTasks') ? (
-          <TextInputBase
+          <TextAreaInput
             dataObject={pipelineWizardModel}
             setDataObject={setPipelineWizardModel}
             fieldName={"commitMessage"}
@@ -270,7 +270,7 @@ const SfdcPipelineWizardXmlViewer = (
             <IconBase icon={faArrowLeft} fixedWidth className="mr-2" />
             Back
           </Button>
-          <Button variant="success" size="sm" onClick={() => { saveAndTriggerPipeline(); }} disabled={isSaving || (pipelineWizardModel.getData("isRollBack") && pipelineWizardModel.getData("destructiveXml")?.length === 0)}>
+          <Button variant="success" size="sm" onClick={() => { saveAndTriggerPipeline(); }} disabled={isSaving || !pipelineWizardModel?.isModelValid() || (pipelineWizardModel.getData("isRollBack") && pipelineWizardModel.getData("destructiveXml")?.length === 0)}>
             <IconBase className={"mr-2"} isLoading={isSaving} icon={faCheck} />
             Proceed
           </Button>
