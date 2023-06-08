@@ -3,6 +3,7 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import PropTypes from "prop-types";
 import GitToGitSyncDataBlocks from "./GitToGitSyncDataBlocks";
 import GitToGitSyncTableOverlay from "./GitToGitSyncTableOverlay";
+import HelpDocumentation from "./HelpDocumentation";
 
 function GitToGitSyncChart(
   {
@@ -42,6 +43,7 @@ function GitToGitSyncChart(
       setKpis={setKpis}
       showSettingsToggle={showSettingsToggle}
       error={error}
+      chartHelpComponent={(closeHelpPanel) => <HelpDocumentation closeHelpPanel={closeHelpPanel} />}
     />
   );
 }

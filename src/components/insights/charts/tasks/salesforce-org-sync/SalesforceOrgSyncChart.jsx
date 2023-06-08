@@ -3,6 +3,7 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import PropTypes from "prop-types";
 import SalesforceOrgSyncDataBlocks from "./SalesforceOrgSyncDataBlocks";
 import SalesforceOrgSyncTableOverlay from "./SalesforceOrgSyncTableOverlay";
+import HelpDocumentation from "./HelpDocumentation";
 
 function SalesforceOrgSyncChart(
   {
@@ -42,6 +43,7 @@ function SalesforceOrgSyncChart(
       setKpis={setKpis}
       showSettingsToggle={showSettingsToggle}
       error={error}
+      chartHelpComponent={(closeHelpPanel) => <HelpDocumentation closeHelpPanel={closeHelpPanel} />}
     />
   );
 }

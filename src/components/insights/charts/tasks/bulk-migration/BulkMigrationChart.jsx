@@ -3,6 +3,7 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import PropTypes from "prop-types";
 import BulkMigrationDataBlocks from "./BulkMigrationDataBlocks";
 import BulkMigrationTableOverlay from "./BulkMigrationTableOverlay";
+import HelpDocumentation from "./HelpDocumentation";
 
 function BulkMigrationChart(
   {
@@ -42,6 +43,7 @@ function BulkMigrationChart(
       setKpis={setKpis}
       showSettingsToggle={showSettingsToggle}
       error={error}
+      chartHelpComponent={(closeHelpPanel) => <HelpDocumentation closeHelpPanel={closeHelpPanel} />}
     />
   );
 }
