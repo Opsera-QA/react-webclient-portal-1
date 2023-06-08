@@ -75,8 +75,27 @@ function JenkinsStatusByJobNameBarChart({ kpiConfiguration, setKpiConfiguration,
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Build Tag", "Number of Builds", 
-                      true, true, "cutoffString", "wholeNumbers")}
-          {...config(mainColor, failColor, mainPurple, warningColor)}
+                      true, false, "cutoffString", "wholeNumbers")}
+          {...config(colorPalette1, failColor, mainPurple, warningColor)}
+          axisLeft={{
+              format: (d) => {
+                return d.length > 10 ? (
+                  <tspan>
+                    {d.substring(0, 10) + "..."}
+                    <title>{d}</title>
+                  </tspan>
+                ) : (
+                  d
+                );
+              },
+              tickSize: 5,
+              tickPadding: 5,
+              tickRotation: 0,
+              legend: "Build Tag",
+              legendPosition: "middle",
+              legendOffset: -80,
+            }}
+            
           {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}
           tooltip={({ indexValue, color, value, id }) => <ChartTooltip 
