@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 function AquasecIssuesBySeverityHelpDocumentation({ closeHelpPanel }) {
     return (
-        <HelpDocumentationContainer closeHelpPanel={closeHelpPanel} helpTopic={"Aquasec Issues By Severity"}>
+        <HelpDocumentationContainer closeHelpPanel={closeHelpPanel} helpTopic={"Aquasec Security Insights"}>
             <div>
                 The purpose of this KPI is to show Issues by severity. Each data block defines the total number of issues in all
                 projects by severity. Each datablock will also display the trend of each severity, based on the previous
