@@ -16,7 +16,7 @@ const AverageExecutionTimeTwoBlock = ({ score }) => {
             subtitle={"Average Execution Time (sec)"}
             icon={faInfoCircle}
             iconOverlayTitle={""}
-            iconOverlayBody={"The average exexution time"}
+            iconOverlayBody={"The average execution time"}
           />
         </div>
       </DataBlockBoxContainer>

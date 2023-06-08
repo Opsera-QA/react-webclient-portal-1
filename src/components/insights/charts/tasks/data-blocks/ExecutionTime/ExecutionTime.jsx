@@ -16,7 +16,7 @@ const ExecutionTime = ({ score }) => {
             subtitle={"Execution Time (sec)"}
             icon={faInfoCircle}
             iconOverlayTitle={""}
-            iconOverlayBody={"The exexution time"}
+            iconOverlayBody={"The execution time"}
           />
         </div>
       </DataBlockBoxContainer>
