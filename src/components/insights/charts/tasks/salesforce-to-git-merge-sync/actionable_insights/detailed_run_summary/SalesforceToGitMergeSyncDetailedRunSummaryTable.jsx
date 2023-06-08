@@ -1,11 +1,13 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import FilterContainer from "components/common/table/FilterContainer";
 import {
   getTableTextColumn,
   getStaticIconColumn,
   getTableDurationTextColumn,
   getTaskStatusColumnWithoutRunCount,
+  getTableDateTimeColumn,
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
@@ -30,6 +32,7 @@ const pdfHeaderList = [
   "Task Executed By",
   "Task Owned By",
   "Total Components",
+  "Last Run",
 ];
 
 const csvHeaderList = [
@@ -41,6 +44,7 @@ const csvHeaderList = [
   "Task Executed By",
   "Task Owned By",
   "Total Components",
+  "Last Run",
 ];
 
 export default function SalesforceToGitMergeSyncDetailedRunSummaryTable({
@@ -66,6 +70,7 @@ export default function SalesforceToGitMergeSyncDetailedRunSummaryTable({
       getTableTextColumn(getField(fields, "taskExecutedByName")),
       getTableTextColumn(getField(fields, "taskOwnedByName")),
       getTableTextColumn(getField(fields, "totalComponents")),
+      getTableDateTimeColumn(getField(fields, "lastRun")),
       getStaticIconColumn(faExternalLink),
     ],
     [],
@@ -95,6 +100,7 @@ export default function SalesforceToGitMergeSyncDetailedRunSummaryTable({
             item.taskExecutedByName,
             item.taskOwnedByName,
             item.totalComponents,
+            DateFormatHelper.formatDateAsTimestamp(new Date(item.lastRun)),
           ])}
           csvHeaderList={csvHeaderList}
           csvBodyList={data.map((item) => [
@@ -106,6 +112,7 @@ export default function SalesforceToGitMergeSyncDetailedRunSummaryTable({
             item.taskExecutedByName,
             item.taskOwnedByName,
             item.totalComponents,
+            DateFormatHelper.formatDateAsTimestamp(new Date(item.lastRun)),
           ])}
         />
       );

@@ -84,6 +84,10 @@ export const salesforceToGitMergeSyncMetadata = {
     {
       label: "Status",
       id: "status",
+    },
+    {
+      label: "Last Run",
+      id: "lastRun",
     }
   ],
   getActiveFilters(filterDto) {

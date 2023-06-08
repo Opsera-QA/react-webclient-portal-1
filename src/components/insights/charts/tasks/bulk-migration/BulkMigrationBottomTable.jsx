@@ -1,11 +1,13 @@
 import React, { useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import {
   getTableTextColumn,
   getStaticIconColumn,
   getTableDurationTextColumn,
   getTaskStatusColumnWithoutRunCount,
+  getTableDateTimeColumn,
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
@@ -29,6 +31,7 @@ const pdfHeaderList = [
   "Total Execution Time",
   "Task Executed By",
   "Task Owned By",
+  "Last Run",
 ];
 
 const csvHeaderList = [
@@ -39,6 +42,7 @@ const csvHeaderList = [
   "Total Execution Time",
   "Task Executed By",
   "Task Owned By",
+  "Last Run",
 ];
 
 function BulkMigrationBottomTable(
@@ -69,6 +73,7 @@ function BulkMigrationBottomTable(
       getTableDurationTextColumn(getField(fields, "totalExecutionTime")),
       getTableTextColumn(getField(fields, "taskExecutedByName")),
       getTableTextColumn(getField(fields, "taskOwnedByName")),
+      getTableDateTimeColumn(getField(fields, "lastRun")),
       getStaticIconColumn(faExternalLink),
     ],
     [],
@@ -102,6 +107,7 @@ function BulkMigrationBottomTable(
             getTimeDisplay(item.totalExecutionTime),
             item.taskExecutedByName,
             item.taskOwnedByName,
+            DateFormatHelper.formatDateAsTimestamp(new Date(item.lastRun)),
           ])}
           csvHeaderList={csvHeaderList}
           csvBodyList={data.map((item) => [
@@ -112,6 +118,7 @@ function BulkMigrationBottomTable(
             getTimeDisplay(item.totalExecutionTime),
             item.taskExecutedByName,
             item.taskOwnedByName,
+            DateFormatHelper.formatDateAsTimestamp(new Date(item.lastRun)),
           ])}
         />
       );

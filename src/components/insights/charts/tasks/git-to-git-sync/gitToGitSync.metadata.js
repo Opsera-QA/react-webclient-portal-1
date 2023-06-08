@@ -84,6 +84,10 @@ export const gitToGitSyncMetadata = {
     {
       label: "Status",
       id: "status",
+    },
+    {
+      label: "Last Run",
+      id: "lastRun",
     }
   ],
   getActiveFilters(filterDto) {
