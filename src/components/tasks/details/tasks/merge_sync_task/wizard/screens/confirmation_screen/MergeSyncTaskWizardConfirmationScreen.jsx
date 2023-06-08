@@ -58,8 +58,8 @@ const MergeSyncTaskWizardConfirmationScreen = (
         {getFileSelectionTable()}
       </div>
       <TextAreaInput
-        dataObject={pipelineWizardModel}
-        setDataObject={setPipelineWizardModel}
+        dataObject={wizardModel}
+        setDataObject={setWizardModel}
         fieldName={"commitMessage"}
       />
       <SaveButtonContainer>
