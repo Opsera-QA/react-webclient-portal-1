@@ -104,7 +104,7 @@ function CustomSettingFileUploadComponent({
         files[i]["invalid"] = true;
         setSelectedFiles([files[i]]);
 
-        setErrorMessage("File size not permitted");
+        setErrorMessage("File size/extension not permitted");
         setUnsupportedFiles([files[i]]);
       }
     }
