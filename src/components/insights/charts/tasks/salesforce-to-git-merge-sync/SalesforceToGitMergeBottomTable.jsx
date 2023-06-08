@@ -1,7 +1,8 @@
 import React, { useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import FilterContainer from "components/common/table/FilterContainer";
-import { getTableTextColumn, getStaticIconColumn, getTableDurationTextColumn, getTaskStatusColumnWithoutRunCount } from "components/common/table/table-column-helpers";
+import { getTableTextColumn, getStaticIconColumn, getTableDurationTextColumn, getTaskStatusColumnWithoutRunCount, getTableDateTimeColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import {
@@ -24,6 +25,7 @@ const pdfHeaderList = [
   "Total Execution Time",
   "Task Executed By",
   "Task Owned By",
+  "Last Run",
 ];
 
 const csvHeaderList = [
@@ -34,6 +36,7 @@ const csvHeaderList = [
   "Total Execution Time",
   "Task Executed By",
   "Task Owned By",
+  "Last Run",
 ];
 
 function SalesforceToGitMergeBottomTable(
@@ -64,6 +67,7 @@ function SalesforceToGitMergeBottomTable(
       getTableDurationTextColumn(getField(fields, "totalExecutionTime")),
       getTableTextColumn(getField(fields, "taskExecutedByName")),
       getTableTextColumn(getField(fields, "taskOwnedByName")),
+      getTableDateTimeColumn(getField(fields, "lastRun")),
       getStaticIconColumn(faExternalLink),
     ],
     [],
@@ -97,6 +101,7 @@ function SalesforceToGitMergeBottomTable(
             getTimeDisplay(item.totalExecutionTime),
             item.taskExecutedByName,
             item.taskOwnedByName,
+            DateFormatHelper.formatDateAsTimestamp(new Date(item.lastRun)),
           ])}
           csvHeaderList={csvHeaderList}
           csvBodyList={data.map((item) => [
@@ -107,6 +112,7 @@ function SalesforceToGitMergeBottomTable(
             getTimeDisplay(item.totalExecutionTime),
             item.taskExecutedByName,
             item.taskOwnedByName,
+            DateFormatHelper.formatDateAsTimestamp(new Date(item.lastRun)),
           ])}
         />
       );
