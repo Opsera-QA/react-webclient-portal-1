@@ -104,13 +104,16 @@ function CustomSettingFileUploadComponent({
         files[i]["invalid"] = true;
         setSelectedFiles([files[i]]);
 
-        setErrorMessage("File size not permitted");
+        setErrorMessage("File size/extension not permitted");
         setUnsupportedFiles([files[i]]);
       }
     }
   };
 
   const validateFile = (file) => {
+    if(file.type !== "text/csv") {
+      return false;
+    }
     const validSize = 10000000; //10MB
     if (file.size < 1 || file.size > validSize) {
       return false;
