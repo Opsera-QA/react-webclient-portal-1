@@ -161,6 +161,12 @@ function CustomSettingFileUploadComponent({
       const dataString = evt.target.result;
       const rows = dataString.split("\n");
       const csvHeaders = rows[0].split(",");
+      const containsEmptyString = csvHeaders.includes('');
+      if(containsEmptyString){
+        setError(true);
+        setErrorMessage("Please ensure to check the CSV headers for empty values.");
+        return;
+      }
       let processedObj = csvStringToObj(dataString);
       // console.log(processedObj);
       if (processedObj && csvHeaders.length > 0) {
@@ -292,9 +298,9 @@ function CustomSettingFileUploadComponent({
                 {data.name}
               </div>
               <div className="file-size ml-2">({fileSize(data.size)})</div>
-              {data.invalid && (
+              {error || data.invalid ? (
                 <span className="file-error-message">({errorMessage})</span>
-              )}
+              ) : null}
               <div
                 className="ml-3 danger-red pointer fa fa-trash my-auto"
                 onClick={() => removeFile()}
