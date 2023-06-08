@@ -111,6 +111,9 @@ function CustomSettingFileUploadComponent({
   };
 
   const validateFile = (file) => {
+    if(file.type !== "text/csv") {
+      return false;
+    }
     const validSize = 10000000; //10MB
     if (file.size < 1 || file.size > validSize) {
       return false;
