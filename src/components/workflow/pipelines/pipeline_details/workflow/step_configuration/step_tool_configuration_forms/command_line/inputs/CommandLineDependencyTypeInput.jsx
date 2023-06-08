@@ -20,7 +20,7 @@ function CommandLineDependencyTypeInput({
     newDataObject?.setDefaultValue("dependencies");
     setDataObject({ ...newDataObject });
   };
-  
+
   return (
     <DependencyMultiSelectInput
       dataObject={dataObject}
@@ -28,6 +28,7 @@ function CommandLineDependencyTypeInput({
       clearDataFunction={clearDataFunction}
       fieldName={"dependencyType"}
       setDataObject={setDataObject}
+      disabled={disabled}
     />
   );
 }
