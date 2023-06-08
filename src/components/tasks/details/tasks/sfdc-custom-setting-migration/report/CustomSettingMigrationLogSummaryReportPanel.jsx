@@ -110,7 +110,10 @@ function CustomSettingMigrationLogSummaryReportPanel({ activityData }) {
                   <Col lg={8}>
                     <H4FieldSubHeader subheaderText={"Execution Overview"}/>
                   </Col>
-                  <Col lg={4}>
+                  <Col
+                     lg={4}
+                     className={"d-flex justify-content-between"}
+                    >
                     <CustomSettingReportDownloadButton
                       taskId={taskId}
                       runCount={runCount}
