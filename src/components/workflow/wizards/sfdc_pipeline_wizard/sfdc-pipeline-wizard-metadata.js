@@ -178,6 +178,7 @@ const sfdcPipelineWizardMetadata = {
     {
       label: "Commit Message",
       id: "commitMessage",
+      maxLength: 2000,
     },
   ],
   newObjectFields: {

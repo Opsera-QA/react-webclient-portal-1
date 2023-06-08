@@ -3,6 +3,7 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import PropTypes from "prop-types";
 import SalesforceToGitMergeSyncDataBlocks from "./SalesforceToGitMergeSyncDataBlocks";
 import SalesforceToGitMergeTableOverlay from "./SalesforceToGitMergeTableOverlay";
+import HelpDocumentation from "./HelpDocumentation";
 
 function SalesforceToGitMergeSyncChart(
   {
@@ -42,6 +43,7 @@ function SalesforceToGitMergeSyncChart(
       setKpis={setKpis}
       showSettingsToggle={showSettingsToggle}
       error={error}
+      chartHelpComponent={(closeHelpPanel) => <HelpDocumentation closeHelpPanel={closeHelpPanel} />}
     />
   );
 }
