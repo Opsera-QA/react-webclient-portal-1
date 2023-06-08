@@ -1,25 +1,26 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
-import {faCheck, faArrowLeft} from "@fortawesome/pro-solid-svg-icons";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { Button } from "react-bootstrap";
+import { faCheck, faArrowLeft } from "@fortawesome/pro-solid-svg-icons";
+import { AuthContext } from "contexts/AuthContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import UnitTestClassesViewer from "components/workflow/wizards/sfdc_pipeline_wizard/xml_viewer/unit_test/UnitTestClassesViewer";
 import PackageXmlViewer from "components/workflow/wizards/sfdc_pipeline_wizard/xml_viewer/xml/PackageXmlViewer";
-import {faCode, faTally} from "@fortawesome/pro-light-svg-icons";
+import { faCode, faTally } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import CancelButton from "components/common/buttons/CancelButton";
 import IconBase from "components/common/icons/IconBase";
-import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
+import { PIPELINE_WIZARD_SCREENS } from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import SalesforcePipelineComponentCountsViewer
   from "components/workflow/wizards/sfdc_pipeline_wizard/xml_viewer/counts/SalesforcePipelineComponentCountsViewer";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import SfdcPipelineWizardBasicSummary
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardBasicSummary";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 // TODO: This should be refactored and cleaned up.
 const SfdcPipelineWizardXmlViewer = (
@@ -72,7 +73,7 @@ const SfdcPipelineWizardXmlViewer = (
       }
     }
     finally {
-      if (isMounted?.current === true ) {
+      if (isMounted?.current === true) {
         setIsLoading(false);
       }
     }
@@ -90,17 +91,20 @@ const SfdcPipelineWizardXmlViewer = (
 
     pipelineWizardModel.setData("xml", packageXml);
     pipelineWizardModel.setData("destructiveXml", destructiveXml);
-    setPipelineWizardModel({...pipelineWizardModel});
+    setPipelineWizardModel({ ...pipelineWizardModel });
   };
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
-    setActiveTab(tabSelection);        
+    setActiveTab(tabSelection);
   };
 
   const saveAndTriggerPipeline = async () => {
     try {
       setIsSaving(true);
+      if (pipelineWizardModel.getData('fromGitTasks') && pipelineWizardModel.getData("commitMessage")?.length > 0){
+        await sfdcPipelineActions.updateCommitMsg(getAccessToken, cancelTokenSource, pipelineWizardModel);
+      }
       await sfdcPipelineActions.updateIgnoreWarning(getAccessToken, cancelTokenSource, pipelineWizardModel);
       await createJenkinsJob();
     } catch (error) {
@@ -110,7 +114,7 @@ const SfdcPipelineWizardXmlViewer = (
   };
 
   const createJenkinsJob = async () => {
-    if(pipelineWizardModel.getData("fromGitTasks") === true) {
+    if (pipelineWizardModel.getData("fromGitTasks") === true) {
       await triggerGitTask();
     }
     else {
@@ -119,20 +123,20 @@ const SfdcPipelineWizardXmlViewer = (
   };
 
   const handleBackButton = () => {
-    if(pipelineWizardModel.getData("isProfiles") === true){
+    if (pipelineWizardModel.getData("isProfiles") === true) {
       setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.PROFILE_COMPONENT_SELECTOR);
       return;
     }
 
-    if(pipelineWizardModel.getArrayData("unitTestSteps").length > 0) {
+    if (pipelineWizardModel.getArrayData("unitTestSteps").length > 0) {
       setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR);
     } else if (pipelineWizardModel.getData("fromFileUpload") === true) {
       setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN);
     } else if (pipelineWizardModel.getData("fromGitTasks") === true) {
       setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.GIT_TASKS_FILE_SELECTOR);
-    }  else if (pipelineWizardModel.getData("isOrgToOrg") === true) {
+    } else if (pipelineWizardModel.getData("isOrgToOrg") === true) {
       setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.ORG_TO_ORG_FILE_SELECTOR);
-    }  else {
+    } else {
       setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.STANDARD_FILE_SELECTOR);
     }
   };
@@ -253,13 +257,20 @@ const SfdcPipelineWizardXmlViewer = (
       <SfdcPipelineWizardBasicSummary pipelineWizardModel={pipelineWizardModel} />
       <div className="flex-container">
         {getTabContainer()}
-        {getView()}        
+        {getView()}
+        {pipelineWizardModel.getData('fromGitTasks') ? (
+          <TextInputBase
+            dataObject={pipelineWizardModel}
+            setDataObject={setPipelineWizardModel}
+            fieldName={"commitMessage"}
+          />
+        ) : null}
         <SaveButtonContainer>
           <Button variant="secondary" size="sm" className="mr-2" onClick={() => { handleBackButton(); }}>
             <IconBase icon={faArrowLeft} fixedWidth className="mr-2" />
             Back
           </Button>
-          <Button variant="success" size="sm" onClick={() => {saveAndTriggerPipeline();}} disabled={isSaving || (pipelineWizardModel.getData("isRollBack") && pipelineWizardModel.getData("destructiveXml")?.length === 0)}>
+          <Button variant="success" size="sm" onClick={() => { saveAndTriggerPipeline(); }} disabled={isSaving || (pipelineWizardModel.getData("isRollBack") && pipelineWizardModel.getData("destructiveXml")?.length === 0)}>
             <IconBase className={"mr-2"} isLoading={isSaving} icon={faCheck} />
             Proceed
           </Button>

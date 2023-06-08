@@ -35,6 +35,9 @@ const TriggerMergeSyncTaskButton = ({ wizardModel, handleClose }) => {
   const triggerTask = async () => {
     try {
       setIsTriggeringTask(true);
+      if (wizardModel.getData("commitMessage")?.length > 0){
+        await mergeSyncTaskWizardActions.updateCommitMsg(getAccessToken, cancelTokenSource, wizardModel);
+      }
       const response = await mergeSyncTaskWizardActions.runMergeSyncTask(
         getAccessToken,
         cancelTokenSource,

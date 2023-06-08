@@ -510,4 +510,12 @@ sfdcPipelineActions.getApiVersions = async (getAccessToken, cancelTokenSource, s
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+sfdcPipelineActions.updateCommitMsg = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const postBody = {
+    commitMsg: pipelineWizardModel?.getData("commitMessage"),
+  };
+  const apiUrl = `/tasks/update-commit-msg-pipeline-storage-configuration/wizard/${pipelineWizardModel?.getData("recordId")}`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 export default sfdcPipelineActions;
