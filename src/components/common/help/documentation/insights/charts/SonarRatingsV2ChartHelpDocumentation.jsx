@@ -8,7 +8,7 @@ function SonarRatingsV2ChartHelpDocumentation({closeHelpPanel}) {
       closeHelpPanel={closeHelpPanel}
       helpTopic={"Sonar Ratings V2"}
     >
-      <div className={"mb-2"}>This chart consists of various security metrics, such as vulnerabilities, bugs, maintainability and code coverage metrics. The trend icons are based on previous scan. For more information, view the <a href="https://docs.opsera.io/insights/kpi/sonar-kpi" target="_blank" rel="noreferrer"><b>Sonar KPI Help Documentation</b>.</a></div>
+      <div className={"mb-2"}>This chart consists of various security metrics, such as vulnerabilities, bugs, maintainability and code coverage metrics. The trend icons are based on previous scan. For more information, view the <a href="https://docs.opsera.io/insights/kpi/sonar-kpi#sonar-ratings-v2" target="_blank" rel="noreferrer"><b>Sonar Ratings V2 KPI Help Documentation</b>.</a></div>
       <div className={"ml-3 mt-2"}>
         <h6>Sonar Ratings: Security</h6>
         <div className={"ml-3"}>

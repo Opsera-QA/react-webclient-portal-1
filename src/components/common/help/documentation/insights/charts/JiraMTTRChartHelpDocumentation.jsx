@@ -8,7 +8,7 @@ function JiraMTTRChartHelpDocumentation({ closeHelpPanel }) {
       closeHelpPanel={closeHelpPanel}
       helpTopic={"Jira Mean Time To Resolution"}
     >
-      <div>This chart represents the mean time to resolution of Jira incidents. This chart always displays the 15 most recent results of the <b>Date Range</b> selected in KPI Settings. The <b>Mean Time to Resolution</b> chart on the left depicts the mean time to resolution of Jira incidents by date, showing only 15 results. The <b>Number of Incidents</b> chart on the right depicts the number of incidents by severity. Customize the results to display only specific <b>Jira Priorites</b> and <b>Jira Projects</b> in the KPI Settings.</div>
+      <div>This chart represents the mean time to resolution of Jira incidents. This chart always displays the 15 most recent results of the <b>Date Range</b> selected in KPI Settings. The <b>Mean Time to Resolution</b> chart on the left depicts the mean time to resolution of Jira incidents by date, showing only 15 results. The <b>Number of Incidents</b> chart on the right depicts the number of incidents by severity. Customize the results to display only specific <b>Jira Priorites</b> and <b>Jira Projects</b> in the KPI Settings. For more information view the <a href="https://docs.opsera.io/insights/kpi/dora-metrics/jira-mean-time-to-resolution-kpi" target="_blank" rel="noreferrer"><b>Jira Mean Time to Resolution KPI Help Documentation</b>.</a></div>
       <div className={"mt-2"}>
         <ul style={{listStyleType: "none"}}>
         <li><b>Total Incidents</b> - Total number of incidents that were created for the selected time range.</li>

@@ -9,7 +9,7 @@ function GitlabDeployFrequencyChartHelpDocumentation({closeHelpPanel}) {
       helpTopic={"GitLab Lead Time"}
     >
       <div>
-        <div className={"mb-2"}>This KPI measures GitLab average lead and merge time and lead time. You have the option to view data from a specific Deployment Stage and Gitlab Project(s) by configuring them in the KPI Settings.</div>
+        <div className={"mb-2"}>This KPI measures GitLab average lead and merge time and lead time. You have the option to view data from a specific Deployment Stage and Gitlab Project(s) by configuring them in the KPI Settings. For more information view the <a href="https://docs.opsera.io/insights/kpi/dora-metrics/gitlab-lead-time-kpi" target="_blank" rel="noreferrer"><b>GitLab Lead Time KPI Help Documentation</b>.</a></div>
         <div>
           <ul style={{listStyleType: "none"}}>
             <li><b>Average Lead Time </b> -  The average time (in days) it takes from code commit to production deployment. The <b>Deployment Stage</b> can be defined in the KPI Settings.  </li>

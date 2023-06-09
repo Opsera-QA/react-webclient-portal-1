@@ -9,7 +9,8 @@ function JiraChangeFailureRateHelpDocumentation({closeHelpPanel}) {
         helpTopic={"Jira Change Failure Rate"}
       >
         <div>
-          <div className={"mb-2"}>This chart displays the change failures percentage and failures chart based on selected timelines.</div>
+          <div>This chart displays the change failures percentage and failures chart based on selected timelines.</div>
+          <div className={"mb-2"}>For more information view the <a href="https://docs.opsera.io/insights/kpi/dora-metrics/jira-change-failure-kpi" target="_blank" rel="noreferrer"><b>Jira Change Failure Rate KPI Help Documentation</b>.</a></div>
             <div>
               <ul style={{listStyleType: "none"}}>
                 <li><b>Jira Change Failure Chart</b> - Displays the change failures for the chosen period of time and filters.</li>
