@@ -18,7 +18,7 @@ export default function useTaskActivityLogCollectionSubscriptionHelper(
 
   const onCreateFunction = (newDocument) => {
     const parsedDocument = DataParsingHelper.parseObject(newDocument);
-    const parsedPipelineId = DataParsingHelper.parseNestedMongoDbId(parsedDocument, "pipeline_id");
+    const parsedPipelineId = DataParsingHelper.parseNestedMongoDbId(parsedDocument, "task_id");
 
     if (parsedDocument && parsedPipelineId === taskId) {
       const documentIndex = collection.findIndex((document) => document._id === parsedDocument._id);
@@ -37,7 +37,7 @@ export default function useTaskActivityLogCollectionSubscriptionHelper(
 
   const onUpdateFunction = (updatedDocument) => {
     const parsedDocument = DataParsingHelper.parseObject(updatedDocument);
-    const parsedPipelineId = DataParsingHelper.parseNestedMongoDbId(parsedDocument, "pipeline_id");
+    const parsedPipelineId = DataParsingHelper.parseNestedMongoDbId(parsedDocument, "task_id");
 
     if (parsedDocument && parsedPipelineId === taskId) {
       const documentIndex = collection.findIndex((document) => document._id === parsedDocument._id);
@@ -52,7 +52,7 @@ export default function useTaskActivityLogCollectionSubscriptionHelper(
   const onDeleteFunction = (deletedDocument) => {
     console.debug("Received a delete message for activity log: ", deletedDocument);
     const parsedDocument = DataParsingHelper.parseObject(deletedDocument);
-    const parsedPipelineId = DataParsingHelper.parseNestedMongoDbId(parsedDocument, "pipeline_id");
+    const parsedPipelineId = DataParsingHelper.parseNestedMongoDbId(parsedDocument, "task_id");
 
     if (parsedDocument && parsedPipelineId === taskId) {
       if (setCollection) {
