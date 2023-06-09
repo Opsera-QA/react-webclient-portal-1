@@ -2,13 +2,13 @@ import {useEffect, useRef, useState} from "react";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import liveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessageTopic.constants";
 import usePipelineActivityLogActions from "hooks/workflow/pipelines/logs/usePipelineActivityLogActions";
-import useDocumentActivityLogCollectionSubscriptionHelper
-  from "core/websocket/hooks/collection/activity_logs/useDocumentActivityLogCollectionSubscriptionHelper";
 import PipelineActivityLogFilterModel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipelineActivityLogFilterModel";
 import pipelineLogHelpers
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineLog.helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import usePipelineActivityLogCollectionSubscriptionHelper
+  from "core/websocket/hooks/collection/activity_logs/usePipelineActivityLogCollectionSubscriptionHelper";
 
 export default function useGetPipelineActivityLogs(
   pipelineId,
@@ -26,7 +26,7 @@ export default function useGetPipelineActivityLogs(
     setError,
     loadData,
   } = useLoadData();
-  useDocumentActivityLogCollectionSubscriptionHelper(
+  usePipelineActivityLogCollectionSubscriptionHelper(
     liveMessageTopicConstants.LIVE_MESSAGE_TOPICS.PIPELINE_ACTIVITY_LOGS,
     pipelineActivityLogs,
     setPipelineActivityLogs,
