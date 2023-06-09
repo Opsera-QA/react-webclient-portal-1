@@ -1,20 +1,22 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import toolsActions from "components/inventory/tools/tools-actions";
-import {Link} from "react-router-dom";
-import {getJenkinsJobTypeLabelForValue} from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobTypeSelectInput";
+import { Link } from "react-router-dom";
+import { getJenkinsJobTypeLabelForValue } from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobTypeSelectInput";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import {faTools} from "@fortawesome/pro-light-svg-icons";
+import { faTools } from "@fortawesome/pro-light-svg-icons";
+import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants.js";
 
 function JenkinsRegistryToolJobSelectInput(
   {
     jenkinsToolId,
     visible,
     typeFilter,
+    buildType,
     fieldName,
     model,
     setModel,
@@ -77,7 +79,7 @@ function JenkinsRegistryToolJobSelectInput(
 
     if (Array.isArray(jenkinsJobs) && jenkinsJobs.length > 0) {
       if (typeFilter) {
-        let filteredJobs = jenkinsJobs.filter((job) => {return job.type[0] === typeFilter;});
+        let filteredJobs = jenkinsJobs.filter((job) => { return job.type[0] === typeFilter; });
 
         if (Array.isArray(filteredJobs) && existingJobSelection != null && existingJobSelection !== "") {
           // TODO: We should probably pass in valueField and check based on that.
@@ -89,6 +91,7 @@ function JenkinsRegistryToolJobSelectInput(
             );
           }
         }
+        
         setJenkinsJobs(filteredJobs);
       } else {
         setJenkinsJobs(jenkinsJobs);
@@ -100,6 +103,23 @@ function JenkinsRegistryToolJobSelectInput(
               "Preselected job is no longer available. It may have been deleted. Please select another job from the list or recreate the job in Tool Registry."
             );
           }
+        }
+      }
+
+      if (buildType) {
+        switch (buildType) {
+          case toolIdentifierConstants.TOOL_IDENTIFIERS.DOT_NET:
+            let buildTypeDotNetJobs = jenkinsJobs.filter((job) => job?.configuration?.buildType === "dotnet");
+            setJenkinsJobs(buildTypeDotNetJobs);
+            break;
+          case toolIdentifierConstants.TOOL_IDENTIFIERS.DOT_NET_CLI:
+            let buildTypeMSBuildJobs = jenkinsJobs.filter((job) => job?.configuration?.buildType === "msbuild");
+            setJenkinsJobs(buildTypeMSBuildJobs);
+            break;
+          case toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS:
+            let otherThanDotNetMSbuildJobs = jenkinsJobs.filter((job) => job?.configuration?.buildType !== "msbuild" && job?.configuration?.buildType !== "dotnet");
+            setJenkinsJobs(otherThanDotNetMSbuildJobs);
+            break;
         }
       }
     }
@@ -194,6 +214,7 @@ JenkinsRegistryToolJobSelectInput.propTypes = {
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   typeFilter: PropTypes.string,
+  buildType: PropTypes.string,
   configurationRequired: PropTypes.bool,
   clearDataFunction: PropTypes.func,
   valueField: PropTypes.string,
