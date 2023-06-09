@@ -97,7 +97,7 @@ function JenkinsBuildsByUserBarChart({ persona, date }) {
                       true, false, "subString", "")}
               {...adjustBarWidth(data ? data.data : [], false)}
               data={data ? data.data : []}
-              keys={["Value"]}
+              keys={["Build Count"]}
               indexBy="key"
               colorBy="id"
               layout="horizontal"
