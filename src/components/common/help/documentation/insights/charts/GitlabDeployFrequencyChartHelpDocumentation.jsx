@@ -9,7 +9,8 @@ function GitlabDeployFrequencyChartHelpDocumentation({closeHelpPanel}) {
       helpTopic={"GitLab Deployment Frequency"}
     >
       <div>
-        <div className={"mb-2"}>This chart displays an overall summary of deployment in pipelines. To customize goals based on your organization&#39;s goal, provide values in Settings.</div>
+        <div>This chart displays an overall summary of deployment in pipelines. To customize goals based on your organization&#39;s goal, provide values in Settings. </div>
+        <div className={"mb-2"}>For more information view the <a href="https://docs.opsera.io/insights/kpi/dora-metrics/gitlab-deployment-frequency-kpi" target="_blank" rel="noreferrer"><b>Gitlab Deployment Frequency KPI Help Documentation</b>.</a></div>
         <div>
           <ul style={{listStyleType: "none"}}>
             <li><b>Deployment Frequency Chart</b> - Displays the average number of pipelines and deployment that occur daily for the chosen period of time.</li>
