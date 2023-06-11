@@ -53,5 +53,14 @@ sfdcDependencyAnalyserActions.toggleSfdcXmlFilesValidation = async (getAccessTok
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+sfdcDependencyAnalyserActions.triggerDependentFiles = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const apiUrl = `/analytics/sfdc/dependency_analyser`;
+  const postBody = {
+    sfdcToolId: pipelineWizardModel.getData("sfdcToolId"),
+    pipelineStorageId: pipelineWizardModel?.getData("recordId"),
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 
 export default sfdcDependencyAnalyserActions;

@@ -42,6 +42,12 @@ function DependencyAnalyserSubmitSelectedComponentsButton({pipelineWizardModel, 
         console.error("Error Saving Selected Component Types: ", result?.data?.message);
         toastContext.showInlineErrorMessage("Error Saving Selected Component Types: " + result?.data?.message);
       } else {
+        let triggerResponse = await sfdcDependencyAnalyserActions.triggerDependentFiles(getAccessToken, cancelTokenSource, pipelineWizardModel);
+
+        if(triggerResponse?.data?.status !== 200) {
+          toastContext.showInlineErrorMessage(triggerResponse?.data?.message);
+          return;
+        }
         setPipelineWizardScreen(DEPENDENCY_ANALYSER_SCREENS.DEPENDENCY_VIEWER);
       }
     } catch (error) {
