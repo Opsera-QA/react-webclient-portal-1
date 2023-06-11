@@ -20,6 +20,7 @@ import SfdcPipelineWizardSubmitSfdcFilesButton
 import IconBase from "components/common/icons/IconBase";
 import sfdcDependencyAnalyserActions from "../sfdc-dependency-analyser-actions";
 import { DEPENDENCY_ANALYSER_SCREENS } from "../DependencyAnalyser";
+import DependencyAnalyserSubmitFileButton from "./DependencyAnalyserSubmitFileButton";
 
 const DependencyAnalyserFileValidationScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -121,13 +122,12 @@ const DependencyAnalyserFileValidationScreen = ({ pipelineWizardModel, setPipeli
         <Button variant="secondary" size="sm" className="mr-2" onClick={() => {setPipelineWizardScreen(DEPENDENCY_ANALYSER_SCREENS.INITIALIZATION_SCREEN);}}>
           <IconBase icon={faArrowLeft} className={"mr-1"}/>Back
         </Button>
-        {/* TODO : Add save and trigger xml generate button */}
-        {/*<SfdcPipelineWizardSubmitSfdcFilesButton*/}
-        {/*  setPipelineWizardScreen={setPipelineWizardScreen}*/}
-        {/*  pipelineWizardModel={pipelineWizardModel}*/}
-        {/*  filteredFileCount={filteredFileCount}*/}
-        {/*  isLoading={isLoading}*/}
-        {/*/>*/}
+        <DependencyAnalyserSubmitFileButton
+          setPipelineWizardScreen={setPipelineWizardScreen}
+          pipelineWizardModel={pipelineWizardModel}
+          filteredFileCount={filteredFileCount}
+          isLoading={isLoading}
+        />
         <CancelButton size={"sm"} className={"ml-2"} cancelFunction={handleClose} />
       </SaveButtonContainer>
     </div>
