@@ -26,10 +26,7 @@ import TaskOrchestrationSummaryField
   from "temp-library-components/fields/orchestration/task/TaskOrchestrationSummaryField";
 import TaskRunDurationMetricsStandaloneField
   from "temp-library-components/fields/orchestration/task/metrics/TaskRunDurationMetricsStandaloneField";
-import tagTypeConstants from "@opsera/definitions/constants/settings/tags/tagType.constants";
 import TaskTagManagerInput from "components/tasks/details/inputs/TaskTagManagerInput";
-import TaskOrchestrationProgressBarBase
-  from "temp-library-components/fields/orchestration/progress/TaskOrchestrationProgressBarBase";
 
 function TaskSummaryPanel(
   {
