@@ -58,6 +58,7 @@ sfdcDependencyAnalyserActions.triggerDependentFiles = async (getAccessToken, can
   const postBody = {
     sfdcToolId: pipelineWizardModel.getData("sfdcToolId"),
     pipelineStorageId: pipelineWizardModel?.getData("recordId"),
+    referenceType: pipelineWizardModel?.getData("referenceType"),
   };
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
