@@ -26,17 +26,17 @@ import { TASK_TYPES } from "components/tasks/task.types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput
   from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput";
-import MergeSyncTaskJiraToolSelectInput 
+import MergeSyncTaskJiraToolSelectInput
   from "components/tasks/details/tasks/merge_sync_task/inputs/MergeSyncTaskJiraToolSelectInput";
-import MergeSyncTaskJiraProjectSelectInput 
+import MergeSyncTaskJiraProjectSelectInput
   from "components/tasks/details/tasks/merge_sync_task/inputs/MergeSyncTaskJiraProjectSelectInput";
-import MergeSyncTaskJiraIssueMultiSelectInput 
+import MergeSyncTaskJiraIssueMultiSelectInput
   from "components/tasks/details/tasks/merge_sync_task/inputs/MergeSyncTaskJiraIssueMultiSelectInput";
-import GitToGitMergeSyncTaskBuildTypeSelectInput 
+import GitToGitMergeSyncTaskBuildTypeSelectInput
   from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskBuildTypeSelectInput";
 import GitToGitMergeSyncTaskSalesforceToggleInput
   from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskSalesforceToggleInput";
-
+import GitToGitMergeSyncTaskEnableJiraToggleInput from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskEnableJiraToggleInput"
 
 function GitToGitMergeSyncTaskConfigurationEditorPanel({
   taskModel,
@@ -61,13 +61,13 @@ function GitToGitMergeSyncTaskConfigurationEditorPanel({
       mergeSyncTaskGitConfigurationMetadata,
     );
     newGitModel?.setData("jobType", TASK_TYPES.GIT_TO_GIT_MERGE_SYNC);
-    setGitConfigurationModel({...newGitModel});
+    setGitConfigurationModel({ ...newGitModel });
   };
 
   const setModelFunction = (newModel) => {
-    setGitConfigurationModel({...newModel});
+    setGitConfigurationModel({ ...newModel });
     taskConfigurationModel?.setData("git", gitConfigurationModel?.getPersistData());
-    setTaskConfigurationModel({...taskConfigurationModel});
+    setTaskConfigurationModel({ ...taskConfigurationModel });
   };
 
   const getDestinationBranchInputs = () => {
@@ -102,19 +102,14 @@ function GitToGitMergeSyncTaskConfigurationEditorPanel({
     );
   };
 
-  const getSfdcJiraInputs = () => {
-    if (gitConfigurationModel?.getData("isSalesforce") !== true) {
+  const getJiraInputs = () => {
+
+    if (gitConfigurationModel?.getData("enableJiraIntegration") !== true) {
       return null;
     }
+
     return (
       <>
-        <Col lg={12}>
-          <GitToGitMergeSyncTaskBuildTypeSelectInput 
-            model={gitConfigurationModel}
-            setModel={setModelFunction}
-            fieldName={"buildType"}
-          />
-        </Col>
         <Col lg={12}>
           <MergeSyncTaskJiraToolSelectInput
             model={gitConfigurationModel}
@@ -135,7 +130,31 @@ function GitToGitMergeSyncTaskConfigurationEditorPanel({
             jiraToolId={gitConfigurationModel?.getData("jiraToolId")}
             jiraProjectKey={gitConfigurationModel?.getData("jiraProjectKey")}
           />
-        </Col>        
+        </Col>
+      </>
+    );
+  };
+
+  const getSfdcJiraInputs = () => {
+    if (gitConfigurationModel?.getData("isSalesforce") !== true) {
+      return null;
+    }
+    return (
+      <>
+        <Col lg={12}>
+          <GitToGitMergeSyncTaskBuildTypeSelectInput
+            model={gitConfigurationModel}
+            setModel={setModelFunction}
+            fieldName={"buildType"}
+          />
+        </Col>
+        <Col lg={12}>
+          <GitToGitMergeSyncTaskEnableJiraToggleInput
+            model={gitConfigurationModel}
+            setModel={setModelFunction}
+          />
+        </Col>
+        {getJiraInputs()}
       </>
     );
   };
@@ -147,11 +166,11 @@ function GitToGitMergeSyncTaskConfigurationEditorPanel({
   return (
     <Row>
       <Col lg={12}>
-        <GitToGitMergeSyncTaskSalesforceToggleInput 
+        <GitToGitMergeSyncTaskSalesforceToggleInput
           model={gitConfigurationModel}
           setModel={setModelFunction}
         />
-      </Col>      
+      </Col>
       {getSfdcJiraInputs()}
       <Col lg={12}>
         <GitToGitMergeSyncTaskSourceControlTypeSelectInput
@@ -178,21 +197,21 @@ function GitToGitMergeSyncTaskConfigurationEditorPanel({
           setModel={setModelFunction}
         />
       </Col>
-      {(gitConfigurationModel?.getData("jiraIssueIds") === undefined || gitConfigurationModel?.getData("jiraIssueIds")?.length === 0) && 
-      <Col lg={12}>
-        <GitToGitMergeSyncTaskSourceBranchSelectInput
-          model={gitConfigurationModel}
-          setModel={setModelFunction}
-          targetBranch={gitConfigurationModel?.getData("targetBranch")}
-        />
-      </Col>}
+      {(gitConfigurationModel?.getData("jiraIssueIds") === undefined || gitConfigurationModel?.getData("jiraIssueIds")?.length === 0) &&
+        <Col lg={12}>
+          <GitToGitMergeSyncTaskSourceBranchSelectInput
+            model={gitConfigurationModel}
+            setModel={setModelFunction}
+            targetBranch={gitConfigurationModel?.getData("targetBranch")}
+          />
+        </Col>}
       <Col lg={12}>
         <GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput
           model={gitConfigurationModel}
           setModel={setModelFunction}
         />
       </Col>
-      {getDestinationBranchInputs()}      
+      {getDestinationBranchInputs()}
     </Row>
   );
 }

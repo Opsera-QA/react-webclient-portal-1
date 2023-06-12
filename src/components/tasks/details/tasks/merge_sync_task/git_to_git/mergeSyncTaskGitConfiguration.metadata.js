@@ -94,7 +94,7 @@ export const mergeSyncTaskGitConfigurationMetadata = {
       id: "jiraIssueIds",
     },
     {
-      label: "Salesforce Task",
+      label: "Salesforce Repo",
       id: "isSalesforce",
     },
     {
