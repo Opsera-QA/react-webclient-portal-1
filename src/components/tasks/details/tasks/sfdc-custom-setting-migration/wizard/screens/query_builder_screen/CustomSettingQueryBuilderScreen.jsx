@@ -8,13 +8,11 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import { Button, Row } from "react-bootstrap";
 import IconBase from "../../../../../../../common/icons/IconBase";
-import { faArrowLeft } from "@fortawesome/pro-solid-svg-icons";
 import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
 import FieldQueryComponent from "./FieldQueryComponent";
-import customSettingQueryMetadata from "./custom-setting-query-metadata";
 import DetailPanelContainer from "../../../../../../../common/panels/detail_panel_container/DetailPanelContainer";
-import { getMigrationTypeLabel } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
-import { faPlug, faPlus, faSave } from "@fortawesome/pro-light-svg-icons";
+import { getMigrationTypeLabel, MIGRATION_TYPES } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
+import { faArrowLeft, faPlug, faPlus, faSave } from "@fortawesome/pro-light-svg-icons";
 import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
 import { parseError } from "../../../../../../../common/helpers/error-helpers";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
@@ -24,6 +22,9 @@ import CustomSettingQueryBuilderMenuBar, {
 } from "./CustomSettingQueryBuilderMenuBar";
 import axios from "axios";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
+import Col from "react-bootstrap/Col";
+import StandaloneSelectInput from "../../../../../../../common/inputs/select/StandaloneSelectInput";
+import InputLabel from "../../../../../../../common/inputs/info_text/InputLabel";
 
 const operators = [
   "=",
@@ -40,6 +41,7 @@ const operators = [
   "INCLUDES",
   "EXCLUDES",
 ];
+const limits = [50, 100, 200, 500, 2000];
 const CustomSettingQueryBuilderScreen = ({
   wizardModel,
   setWizardModel,
@@ -51,6 +53,7 @@ const CustomSettingQueryBuilderScreen = ({
   const toastContext = useContext(DialogToastContext);
   const [fieldsList, setFieldsList] = useState([]);
   const [queryFilters, setQueryFilters] = useState([]);
+  const [limit, setLimit] = useState([limits[0]]);
   const [isLoading, setIsLoading] = useState(false);
   const [isValidating, setIsValidating] = useState(false);
   const [currentView, setCurrentView] = useState(
@@ -87,7 +90,7 @@ const CustomSettingQueryBuilderScreen = ({
           return { name: item.name, type: item.type };
         });
         setFieldsList(filteredFieldsList);
-
+        setLimit(wizardModel?.getData("limit"));
         const filters =
           Array.isArray(wizardModel?.getData("queryFilters")) &&
           wizardModel?.getData("queryFilters").length > 0
@@ -190,6 +193,10 @@ const CustomSettingQueryBuilderScreen = ({
 
   const query = useMemo(() => generateQuery(), [queryFilters]);
   const handleBackButton = () => {
+    if (taskType === MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
+      setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.MAPPING_SCREEN);
+      return;
+    }
     setCurrentScreen(
       CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN,
     );
@@ -204,6 +211,7 @@ const CustomSettingQueryBuilderScreen = ({
       }
       wizardModel.setData("filterQuery", finalQuery);
       wizardModel.setData("queryFilters", queryFilters);
+      wizardModel.setData("limit", limit);
       const response =
         await customSettingMigrationTaskWizardActions.validateQuery(
           getAccessToken,
@@ -328,7 +336,7 @@ const CustomSettingQueryBuilderScreen = ({
             <textarea
               value={manualQueryString}
               onChange={(event) => setManualQueryString(event.target.value)}
-              className={`form-control`}
+              className={`form-control container-border`}
               rows={10}
             />
             <div className="d-flex justify-content-between mt-2">
@@ -386,12 +394,33 @@ const CustomSettingQueryBuilderScreen = ({
                 <textarea
                   value={query}
                   disabled={true}
-                  className={`form-control`}
+                  className={`form-control container-border`}
                   rows={10}
                 />
                 <div className="d-flex justify-content-between mt-2">
                   {`SOQL query generated based of filter selection made above.`}
                 </div>
+                {/*<Row>*/}
+                {/*  <Col sm={3} className={"custom-select-input my-2"}>*/}
+                {/*    <InputLabel*/}
+                {/*      model={wizardModel}*/}
+                {/*      field={wizardModel?.getFieldById("limit")}*/}
+                {/*      showLabel={true}*/}
+                {/*      className={"mt-1 mr-2"}*/}
+                {/*      disabled={isLoading}*/}
+                {/*      isLoading={isLoading}*/}
+                {/*    />*/}
+                {/*    <StandaloneSelectInput*/}
+                {/*      fieldName={"limit"}*/}
+                {/*      dataObject={wizardModel}*/}
+                {/*      setDataObject={setWizardModel}*/}
+                {/*      value={limit}*/}
+                {/*      setDataFunction={(selectedOption)=> { console.log(selectedOption); setLimit(selectedOption);}}*/}
+                {/*      selectOptions={limits}*/}
+                {/*      dropUp={true}*/}
+                {/*    />*/}
+                {/*  </Col>*/}
+                {/*</Row>*/}
               </div>
             </div>
           </div>

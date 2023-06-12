@@ -33,6 +33,7 @@ const CustomSettingTaskWizardConfigScreen = ({
             setWizardModel={setWizardModel}
             handleClose={handleClose}
             setCurrentScreen={setCurrentScreen}
+            taskType={taskType}
           />
         </div>
       </div>

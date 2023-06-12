@@ -1,5 +1,6 @@
 import baseActions from "utils/actionsBase";
 import taskActions from "../../../../task.actions";
+import { MIGRATION_TYPES } from "../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 
 const customSettingMigrationTaskWizardActions = {};
 
@@ -73,9 +74,13 @@ customSettingMigrationTaskWizardActions.triggerFieldPropertiesPull = async (
   const postBody = {
     taskId: taskId,
     runCount: runCount,
-    sfdcToolId: wizardModel?.getData("sourceToolId"),
+    sfdcToolId:
+      wizardModel?.getData("taskType") ===
+      MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG
+        ? wizardModel?.getData("targetToolId")
+        : wizardModel?.getData("sourceToolId"),
     pipelineStorageRecordId: wizardModel?.getData("recordId"),
-    objectName: selectedObjectName
+    objectName: selectedObjectName,
   };
 
   return await baseActions.apiPostCallV2(
@@ -167,7 +172,11 @@ customSettingMigrationTaskWizardActions.validateQuery = async (
   const apiUrl = `/tasks/custom-setting-migration-task/wizard/validate-query`;
   const postBody = {
     query: query,
-    sfdcToolId: wizardModel?.getData("sourceToolId"),
+    sfdcToolId:
+      wizardModel?.getData("taskType") ===
+      MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG
+        ? wizardModel?.getData("targetToolId")
+        : wizardModel?.getData("sourceToolId"),
   };
 
   return await baseActions.apiPostCallV2(
@@ -246,4 +255,39 @@ customSettingMigrationTaskWizardActions.downloadCustomSettingsReport = async (ge
   );
 };
 
+customSettingMigrationTaskWizardActions.setCsvFieldsList = async (
+  getAccessToken,
+  cancelTokenSource,
+  wizardModel,
+) => {
+  const apiUrl = `/tasks/custom-setting-migration-task/wizard/${wizardModel?.getData("recordId")}/csv-fields-list`;
+  const postBody = {
+    selectedObject: wizardModel?.getData("csvFields"),
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
+customSettingMigrationTaskWizardActions.setFieldMappings = async (
+  getAccessToken,
+  cancelTokenSource,
+  wizardModel,
+) => {
+  const apiUrl = `/tasks/custom-setting-migration-task/wizard/${wizardModel?.getData("recordId")}/set-fields-mappings`;
+  const postBody = {
+    fieldMapping: wizardModel?.getData("fieldMapping"),
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
 export default customSettingMigrationTaskWizardActions;
