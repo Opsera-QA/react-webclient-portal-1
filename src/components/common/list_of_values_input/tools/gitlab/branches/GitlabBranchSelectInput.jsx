@@ -84,7 +84,7 @@ function GitlabBranchSelectInput({
         return { name: branch };
       });
 
-      if (searchTerm.length > 0 && !branches.includes(searchTerm)) {
+      if (branches.length > 0 && searchTerm.length > 0 && !branches.includes(searchTerm)) {
         result.unshift({ name: searchTerm, OPSERA_DIRECT_LOOKUP_NEEDED: true });
       }
 

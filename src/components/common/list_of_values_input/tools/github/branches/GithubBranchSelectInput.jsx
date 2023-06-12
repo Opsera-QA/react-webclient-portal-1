@@ -6,6 +6,7 @@ import { githubActions } from "components/inventory/tools/tool_details/tool_jobs
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import ExactMatchSearchSelectInputBase from "components/common/inputs/select/ExactMatchSearchSelectInputBase";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function GithubBranchSelectInput({
   fieldName,
@@ -62,14 +63,18 @@ function GithubBranchSelectInput({
       searchTerm,
     );
 
-    const branches = response?.data?.data;
+    const branches = DataParsingHelper.parseNestedArray(
+      response,
+      "data.data",
+      [],
+    );
 
     if (isMounted?.current === true && Array.isArray(branches)) {
       const result = branches.map((branch) => {
         return { name: branch };
       });
 
-      if (searchTerm.length > 0 && !branches.includes(searchTerm)) {
+      if (branches.length > 0 && searchTerm.length > 0 && !branches.includes(searchTerm)) {
         result.unshift({ name: searchTerm, OPSERA_DIRECT_LOOKUP_NEEDED: true });
       }
 
