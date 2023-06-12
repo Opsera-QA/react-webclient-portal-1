@@ -62,5 +62,17 @@ sfdcDependencyAnalyserActions.triggerDependentFiles = async (getAccessToken, can
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+sfdcDependencyAnalyserActions.getDependentList = async (getAccessToken, cancelTokenSource, pipelineWizardModel, newFilterDto) => {
+  const postBody = {
+    rules: pipelineWizardModel?.getData("sfdcModifiedRuleList"),
+    page: newFilterDto ? newFilterDto.getData("currentPage") : 1,
+    size: newFilterDto ? newFilterDto.getData("pageSize") : 3000,
+    search: newFilterDto ? newFilterDto.getData("search") : "",
+    componentFilter: newFilterDto ? newFilterDto.getData("componentFilter") : "",
+  };
+
+  const apiUrl = `/pipelines/sfdc/dependency_analyser/${pipelineWizardModel?.getData("recordId")}/get_dependent_list`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
 
 export default sfdcDependencyAnalyserActions;
