@@ -46,6 +46,10 @@ export const customSettingMigrationTaskWizardMetadata = {
     {
       label: "Custom Setting Edit Mode",
       id: "customSettingEditMode"
+    },
+    {
+      label: "Query Limit",
+      id: "limit"
     }
   ],
   newObjectFields: {
@@ -62,5 +66,6 @@ export const customSettingMigrationTaskWizardMetadata = {
     filterQuery: "",
     fieldList: [],
     customSettingEditMode: true,
+    limit: 50,
   }
 };

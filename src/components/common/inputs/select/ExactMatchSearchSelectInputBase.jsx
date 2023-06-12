@@ -11,7 +11,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import useExternalToolPropertyCacheEntry from "hooks/cache/external_tools/useExternalToolPropertyCache";
 import _ from "lodash";
 
-function SelectInputBase(
+function ExactMatchSearchSelectInputBase(
   {
     fieldName,
     dataObject,
@@ -55,7 +55,9 @@ function SelectInputBase(
     externalCacheToolIdentifier,
     supportSearchLookup,
     noDataText,
+    customLabel,
     dropUp,
+    exactMatchSearch,
   }) {
   const field = dataObject?.getFieldById(fieldName);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
@@ -92,13 +94,25 @@ function SelectInputBase(
     setDataObject({...dataObject});
   };
 
-  const updateValue = (newValue) => {
-    const parsedNewValue = DataParsingHelper.parseObject(newValue);
-    const parsedValueField = DataParsingHelper.parseString(valueField);
+    const updateValue = async (newValue) => {
+      setInternalErrorMessage("");
+      const parsedNewValue = DataParsingHelper.parseObject(newValue);
+      const parsedValueField = DataParsingHelper.parseString(valueField);
+      const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
+    
+      if (parsedNewValue && parsedNewValue.OPSERA_DIRECT_LOOKUP_NEEDED === true) {
+        const searchedItem = await exactMatchSearch(parsedNewValue);
 
-    if (parsedNewValue && parsedValueField && (externalCacheToolIdentifier || externalCacheToolId)) {
-      const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
-      parameters.cache = newValue;
+        if (!searchedItem){
+          setInternalErrorMessage("There was no exact match of this branch name. Please search for another branch.");
+          clearValue();
+        }
+        return;
+      }
+
+      if (parsedNewValue && parsedValueField && (externalCacheToolIdentifier || externalCacheToolId)) {
+        const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
+        parameters.cache = newValue;
 
       if (typeof textField === "string") {
         parameters.textField = textField;
@@ -108,9 +122,8 @@ function SelectInputBase(
     }
 
     if (setDataFunction) {
-      setDataFunction(field?.id, newValue);
+      setDataFunction(field?.id, parsedValue);
     } else {
-      const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
       validateAndSetData(field?.id, parsedValue);
     }
   };
@@ -277,6 +290,7 @@ function SelectInputBase(
         loadDataFunction={loadDataFunction}
         disabled={disabled}
         isLoading={busy}
+        customLabel={customLabel}
       />
       <div className={"d-flex"}>
         <StandaloneSelectInput
@@ -317,7 +331,7 @@ function SelectInputBase(
   );
 }
 
-SelectInputBase.propTypes = {
+ExactMatchSearchSelectInputBase.propTypes = {
   selectOptions: PropTypes.array.isRequired,
   setDataObject: PropTypes.func,
   fieldName: PropTypes.string,
@@ -369,13 +383,15 @@ SelectInputBase.propTypes = {
   externalCacheToolIdentifier: PropTypes.string,
   supportSearchLookup: PropTypes.bool,
   noDataText: PropTypes.string,
+  customLabel: PropTypes.string,
   dropUp: PropTypes.bool,
+  exactMatchSearch: PropTypes.func,
 };
 
-SelectInputBase.defaultProps = {
+ExactMatchSearchSelectInputBase.defaultProps = {
   showClearValueButton: true,
   className: "custom-select-input my-2",
   dropUp: false,
 };
 
-export default SelectInputBase;
+export default ExactMatchSearchSelectInputBase;
