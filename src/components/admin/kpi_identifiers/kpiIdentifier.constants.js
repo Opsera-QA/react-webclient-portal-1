@@ -5,6 +5,12 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   ADOPTION_PERCENTAGE: "adoption-percentage",
   APPROVAL_GATES: "approval-gates",
 
+  // Tasks
+  SALESFORCE_TO_GIT_MERGE_SYNC_TASK: "salesforce-to-git-merge-sync-task",
+  GIT_TO_GIT_SYNC_TASK: "git-to-git-sync-task",
+  SALESFORCE_ORG_SYNC_TASK: "salesforce-org-sync-task",
+  BULK_MIGRATION_TASK: "bulk-migration-task",
+
   // Github Actions
   ALL_GITHUB_ACTIONS_DATA_BLOCK: "all-github-actions-data-block",
   GITHUB_ACTIONS_WORKFLOW: "github-actions-workflow",
@@ -135,7 +141,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   SELENIUM_TEST_RESULTS: "selenium-test-results",
   SELENIUM_TEST_SUMMARY_PERCENTAGES: "selenium-test-summary-percentages",
 
-  // Service Now
+  // ServiceNow
   SERVICE_NOW_MEAN_TIME_TO_ACKNOWLEDGE: "servicenow-mean-time-to-acknowledge",
   SERVICE_NOW_MEAN_TIME_TO_RESOLUTION: "servicenow-mean-time-to-resolution",
 

@@ -81,7 +81,7 @@ SelectionIconCard.propTypes = {
   onClickFunction: PropTypes.func,
   tooltip: PropTypes.any,
   selectedOption: PropTypes.string,
-  option: PropTypes.string,
+  option: PropTypes.any,
   highlightedBorderColor: PropTypes.string,
   disabled: PropTypes.bool,
 };

@@ -69,6 +69,7 @@ export default function PipelineTemplateSelectionScreen(
           activeTemplates={activeTemplates}
           selectTemplateFunction={setSelectedPlatformTemplate}
           setupMode={setupMode}
+          cardTooltip={"Click to select Pipeline"}
         />
       );
     }
@@ -81,6 +82,7 @@ export default function PipelineTemplateSelectionScreen(
             activeTemplates={activeTemplates}
             selectTemplateFunction={setSelectedCustomerTemplate}
             setupMode={setupMode}
+            cardTooltip={"Click to select Pipeline"}
           />
         );
     }
@@ -116,7 +118,10 @@ export default function PipelineTemplateSelectionScreen(
 
   return (
     <div className={className}>
-      <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
+      <TabPanelContainer
+        currentView={getCurrentView()}
+        tabContainer={getTabContainer()}
+      />
     </div>
   );
 }

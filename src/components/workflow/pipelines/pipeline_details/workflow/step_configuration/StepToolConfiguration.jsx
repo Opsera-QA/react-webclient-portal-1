@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import PipelineActions from "../../../../pipeline-actions";
-import { AuthContext } from "../../../../../../contexts/AuthContext";
 import JUnitStepConfiguration from "./step_tool_configuration_forms/junit/JUnitStepConfiguration";
 import XUnitStepConfiguration from "./step_tool_configuration_forms/xunit/XUnitStepConfiguration";
 import SonarStepConfiguration from "./step_tool_configuration_forms/sonar/SonarStepConfiguration";
@@ -82,7 +81,6 @@ import ExternalRestApiIntegrationStepEditorPanel
   from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationStepEditorPanel";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import AzureScriptsStepEditorPanel from "components/workflow/plan/step/azure_scripts/AzureScriptsStepEditorPanel";
-import axios from "axios";
 import GitScraperStepFormConfiguration
   from "./step_tool_configuration_forms/gitscraper/GitScraperStepFormConfiguration";
 import SalesforceScanStepConfiguration
@@ -112,6 +110,7 @@ import HelmStepConfiguration from "./step_tool_configuration_forms/helm/HelmStep
 import ServiceNowStepConfiguration from "./step_tool_configuration_forms/service_now/ServiceNowStepConfiguration";
 import OracleFusionReportMigrationStepConfiguration 
   from "./step_tool_configuration_forms/oracle_fusion_report_migration/OracleFusionReportMigrationStepConfiguration";
+import CommandLineStepV2EditorPanel from "components/workflow/plan/step/command_line_v2/CommandLineStepV2EditorPanel";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -586,6 +585,17 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
+            createJob={createJob}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.COMMAND_LINE_V2:
+        return (
+          <CommandLineStepV2EditorPanel
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
             createJob={createJob}
             closeEditorPanel={closeEditorPanel}
           />

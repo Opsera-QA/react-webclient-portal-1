@@ -49,6 +49,7 @@ export default function useGetPolicyModelByName(
   return ({
     policyModel: policyModel,
     setPolicyModel: setPolicyModel,
+    isActive: policyModel?.getData("active") === true,
     error: error,
     setError: setError,
     loadData: () => loadData(getPolicy),

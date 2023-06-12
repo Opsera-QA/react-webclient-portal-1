@@ -1,11 +1,14 @@
 import io from 'socket.io-client';
 import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
-import WebsocketLiveUpdateHelper from "@opsera/definitions/constants/websocket/helpers/websocketLiveUpdate.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {ReactLoggingHandler} from "temp-library-components/handler/reactLogging.handler";
 import websocketEventNameConstants
   from "@opsera/definitions/constants/websocket/constants/websocketEventName.constants";
 import liveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessageTopic.constants";
+import WebsocketSubscriptionRequestHelper
+  from "@opsera/definitions/constants/websocket/helpers/websocketSubscriptionRequest.helper";
+import websocketSubscriptionTypeConstants
+  from "@opsera/definitions/constants/websocket/constants/websocketSubscriptionType.constants";
 const websocketEnabled = DataParsingHelper.parseBooleanV2(process.env.REACT_APP_WEBSOCKET_ENABLED);
 
 export const WEBSOCKET_STATE = {
@@ -127,10 +130,6 @@ export default class ClientWebsocket {
     }
   };
 
-  getWebsocketClientInstance = () => {
-    return this.websocketClient;
-  };
-
   closeWebsocket = () => {
     if (this.isConnected() === true) {
       ReactLoggingHandler.logDebugMessage(
@@ -176,28 +175,150 @@ export default class ClientWebsocket {
 
     parsedSubscriptions.forEach((subscription) => {
       const topicName = subscription.topic;
-      const subscriptionRequest = WebsocketLiveUpdateHelper.generateLiveMessageForSubscriptionRequest(topicName);
-      ReactLoggingHandler.logDebugMessage(
-        "clientWebsocket",
-        "subscribeToTopic",
-        `subscribing to topic: [${topicName}]`,
-      );
-      this.websocketClient.emit(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST, subscriptionRequest);
+      const subscriptionType = subscription.type;
+      const objectId = subscription.objectId;
+
+      switch (subscriptionType) {
+        case websocketSubscriptionTypeConstants.WEBSOCKET_SUBSCRIPTION_TYPES.ITEM_SUBSCRIPTION:
+          ReactLoggingHandler.logDebugMessage(
+            "clientWebsocket",
+            "resubscribe",
+            `resubscribing to topic: [${topicName}] for item [${objectId}]`,
+          );
+          this.websocketClient.emit(
+            websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST,
+            WebsocketSubscriptionRequestHelper.generateLiveMessageForItemSubscriptionRequest(topicName, objectId),
+          );
+          break;
+        case websocketSubscriptionTypeConstants.WEBSOCKET_SUBSCRIPTION_TYPES.COLLECTION_SUBSCRIPTION:
+          ReactLoggingHandler.logDebugMessage(
+            "clientWebsocket",
+            "resubscribe",
+            `resubscribing to topic: [${topicName}].`,
+          );
+          this.websocketClient.emit(
+            websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST,
+            WebsocketSubscriptionRequestHelper.generateLiveMessageForCollectionSubscriptionRequest(topicName),
+          );
+          break;
+        default:
+          ReactLoggingHandler.logWarningMessage(
+            "clientWebsocket",
+            "resubscribe",
+            `Cannot resubscribe to unknown subscription type [${JSON.stringify(subscriptionType)}].`,
+          );
+      }
     });
   };
 
-  subscribeToTopic = (topicName, liveUpdateHandlerFunction) => {
+  subscribeToItemUpdates = (topicName, objectId, liveUpdateHandlerFunction) => {
     if (liveMessageTopicConstants.isLiveMessageTopicValid(topicName) !== true) {
       ReactLoggingHandler.logErrorMessage(
         "clientWebsocket",
-        "subscribeToTopic",
+        "subscribeToItemUpdates",
         undefined,
         `Cannot attempt to subscribe to an invalid topic: [${topicName}]`,
       );
       return;
     }
 
+    const parsedObjectId = DataParsingHelper.parseMongoDbId(objectId);
+
+    if (!parsedObjectId) {
+      ReactLoggingHandler.logErrorMessage(
+        "clientWebsocket",
+        "subscribeToItemUpdates",
+        undefined,
+        `Cannot attempt to subscribe to an item with an invalid ID`,
+      );
+      return;
+    }
+
+    if (typeof liveUpdateHandlerFunction !== "function") {
+      ReactLoggingHandler.logErrorMessage(
+        "clientWebsocket",
+        "subscribeToItemUpdates",
+        undefined,
+        `Cannot attempt to subscribe with an invalid live update handler function.`,
+      );
+      return;
+    }
+
     const foundIndex = this.subscriptions.indexOf((subscription) => subscription?.topic === topicName);
+    const newSubscription = {
+      type: websocketSubscriptionTypeConstants.WEBSOCKET_SUBSCRIPTION_TYPES.ITEM_SUBSCRIPTION,
+      topic: topicName,
+      objectId: parsedObjectId,
+      liveUpdateHandlerFunction: liveUpdateHandlerFunction,
+    };
+
+    if (foundIndex !== -1) {
+      const foundSubscription = this.subscriptions[foundIndex];
+
+      if (foundSubscription.objectId === parsedObjectId) {
+        return;
+      }
+
+      this.subscriptions[foundIndex] = newSubscription;
+    } else {
+      this.subscriptions.push(newSubscription);
+    }
+
+    if (this.isConnected() !== true) {
+      ReactLoggingHandler.logInfoMessage(
+        "clientWebsocket",
+        "subscribeToItemUpdates",
+        `Websocket is not connected so cannot subscribe to topic [${topicName}]`,
+      );
+      return;
+    }
+
+    ReactLoggingHandler.logDebugMessage(
+      "clientWebsocket",
+      "subscribeToItemUpdates",
+      `subscribing to topic: [${topicName}]`,
+    );
+
+    const subscriptionRequest = WebsocketSubscriptionRequestHelper.generateLiveMessageForItemSubscriptionRequest(topicName, parsedObjectId);
+    this.websocketClient.emit(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST, subscriptionRequest);
+  };
+
+  updateLiveUpdateHandlerFunction = (topicName, liveUpdateHandlerFunction) => {
+    const foundIndex = this.subscriptions.findIndex((subscription) => subscription?.topic === topicName);
+
+    if (foundIndex === -1) {
+      return;
+    }
+
+    if (typeof liveUpdateHandlerFunction !== "function") {
+      ReactLoggingHandler.logErrorMessage(
+        "clientWebsocket",
+        "updateLiveUpdateHandlerFunction",
+        undefined,
+        `Cannot attempt to update live update handler function with an invalid live update handler function.`,
+      );
+      return;
+    }
+
+    this.subscriptions[foundIndex] = {
+      type: websocketSubscriptionTypeConstants.WEBSOCKET_SUBSCRIPTION_TYPES.COLLECTION_SUBSCRIPTION,
+      topic: topicName,
+      liveUpdateHandlerFunction: liveUpdateHandlerFunction,
+    };
+  };
+
+  subscribeToCollectionUpdates = (topicName, liveUpdateHandlerFunction) => {
+    if (liveMessageTopicConstants.isLiveMessageTopicValid(topicName) !== true) {
+      ReactLoggingHandler.logErrorMessage(
+        "clientWebsocket",
+        "subscribeToCollectionUpdates",
+        undefined,
+        `Cannot attempt to subscribe to an invalid topic: [${topicName}]`,
+      );
+      return;
+    }
+
+    const foundIndex = this.subscriptions.findIndex((subscription) => subscription?.topic === topicName);
 
     if (foundIndex !== -1) {
       return;
@@ -206,7 +327,7 @@ export default class ClientWebsocket {
     if (typeof liveUpdateHandlerFunction !== "function") {
       ReactLoggingHandler.logErrorMessage(
         "clientWebsocket",
-        "subscribeToTopic",
+        "subscribeToCollectionUpdates",
         undefined,
         `Cannot attempt to subscribe with an invalid live update handler function.`,
       );
@@ -214,6 +335,7 @@ export default class ClientWebsocket {
     }
 
     const newSubscription = {
+      type: websocketSubscriptionTypeConstants.WEBSOCKET_SUBSCRIPTION_TYPES.COLLECTION_SUBSCRIPTION,
       topic: topicName,
       liveUpdateHandlerFunction: liveUpdateHandlerFunction,
     };
@@ -223,7 +345,7 @@ export default class ClientWebsocket {
     if (this.isConnected() !== true) {
       ReactLoggingHandler.logInfoMessage(
         "clientWebsocket",
-        "subscribeToTopic",
+        "subscribeToCollectionUpdates",
         `Websocket is not connected so cannot subscribe to topic [${topicName}]`,
       );
       return;
@@ -231,11 +353,11 @@ export default class ClientWebsocket {
 
     ReactLoggingHandler.logDebugMessage(
       "clientWebsocket",
-      "subscribeToTopic",
+      "subscribeToCollectionUpdates",
       `subscribing to topic: [${topicName}]`,
     );
 
-    const subscriptionRequest = WebsocketLiveUpdateHelper.generateLiveMessageForSubscriptionRequest(topicName);
+    const subscriptionRequest = WebsocketSubscriptionRequestHelper.generateLiveMessageForCollectionSubscriptionRequest(topicName);
     this.websocketClient.emit(websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST, subscriptionRequest);
   };
 
@@ -248,7 +370,7 @@ export default class ClientWebsocket {
     if (liveMessageTopicConstants.isLiveMessageTopicValid(topicName) !== true) {
       ReactLoggingHandler.logErrorMessage(
         "clientWebsocket",
-        "subscribeToTopic",
+        "unsubscribeFromTopic",
         undefined,
         `Cannot attempt to unsubscribe from an invalid topic: [${topicName}]`
       );
@@ -257,10 +379,10 @@ export default class ClientWebsocket {
 
     ReactLoggingHandler.logDebugMessage(
       "clientWebsocket",
-      "subscribeToTopic",
+      "unsubscribeFromTopic",
       `unsubscribing from topic: [${topicName}]`,
     );
-    const unsubscriptionRequest = WebsocketLiveUpdateHelper.generateLiveMessageForUnsubscriptionRequest(topicName);
+    const unsubscriptionRequest = WebsocketSubscriptionRequestHelper.generateLiveMessageForUnsubscriptionRequest(topicName);
     const currentSubscriptions = [...this.subscriptions];
     const subscriptionIndex = currentSubscriptions.findIndex((subscription) => subscription.topic === topicName);
 

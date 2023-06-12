@@ -17,7 +17,7 @@ function RoleRestrictedServiceNowToolSelectInput(
   return (
     <RoleRestrictedToolByIdentifierInputBase
       toolIdentifier={"servicenow"}
-      toolFriendlyName={"Service Now"}
+      toolFriendlyName={"ServiceNow"}
       fieldName={fieldName}
       configurationRequired={true}
       model={model}

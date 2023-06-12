@@ -183,3 +183,16 @@ awsActions.getS3BucketListWithRegions = async (
     apiUrl,
   );
 };
+
+awsActions.getEcrTags = async (getAccessToken, cancelTokenSource, toolId, repoName) => {
+  const apiUrl = `/tools/${toolId}/aws/ecr/tags`;
+  const queryParameters = {
+    repoName: repoName
+  };
+  return await baseActions.apiGetCallV3(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    queryParameters,
+  );
+};

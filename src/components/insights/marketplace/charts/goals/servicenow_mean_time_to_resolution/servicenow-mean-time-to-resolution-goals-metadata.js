@@ -1,5 +1,5 @@
 const ServiceNowMTTRMetaData = {
-  type: "Service Now Mean Time to Resolution",
+  type: "ServiceNow Mean Time to Resolution",
   fields: [
     {
       label: "Goal: Average Mean Time (Hours)",

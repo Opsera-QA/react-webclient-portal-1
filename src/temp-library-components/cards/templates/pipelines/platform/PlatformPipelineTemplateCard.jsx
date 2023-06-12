@@ -4,26 +4,26 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import {
   PIPELINE_TYPES,
 } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
-import PipelineCardFooter from "temp-library-components/cards/pipelines/PipelineCardFooter";
 import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 import {getLargeVendorIconComponentFromPipeline} from "components/common/helpers/icon-helpers";
-import PipelineTemplateCardHeader from "temp-library-components/cards/templates/pipelines/PipelineTemplateCardHeader";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import PlatformPipelineTemplateCardBody
   from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCardBody";
+import PlatformPipelineTemplateCardHeader
+  from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCardHeader";
+import PipelineTemplateCardFooter from "temp-library-components/cards/templates/pipelines/PipelineTemplateCardFooter";
 
 // TODO: Rewrite to use model
 export default function PlatformPipelineTemplateCard(
   {
     pipelineTemplateModel,
-    onClickFunction,
     tooltip,
     selectedOption,
-    option,
     activeTemplates,
     selectTemplateFunction,
     template,
+    showDeployPipelineIcon,
   }) {
   const { themeConstants } = useComponentStateReference();
   const [disabled, setDisabled] = useState(false);
@@ -58,20 +58,23 @@ export default function PlatformPipelineTemplateCard(
 
   return (
     <SelectionIconCard
-      onClickFunction={onClickFunction}
+      onClickFunction={selectTemplateFunction}
       tooltip={tooltip}
-      cardHeader={<PipelineTemplateCardHeader />}
-      titleBar={getTitleBar()}
-      contentBody={
-        <PlatformPipelineTemplateCardBody
-          template={template}
-          selectTemplateFunction={selectTemplateFunction}
-          disabled={disabled}
+      cardHeader={
+        <PlatformPipelineTemplateCardHeader
+          pipelineTemplate={template}
+          activeTemplates={activeTemplates}
+          visible={false}
+          // visible={showDeployPipelineIcon === true}
         />
       }
-      cardFooter={<PipelineCardFooter />}
+      titleBar={getTitleBar()}
+      contentBody={
+        <PlatformPipelineTemplateCardBody template={template} />
+      }
+      cardFooter={<PipelineTemplateCardFooter />}
       selectedOption={selectedOption}
-      option={option}
+      option={template}
       highlightedBorderColor={themeConstants.RESOURCE_COLORS.PIPELINES}
     />
   );
@@ -79,11 +82,10 @@ export default function PlatformPipelineTemplateCard(
 
 PlatformPipelineTemplateCard.propTypes = {
   pipelineTemplateModel: PropTypes.object,
-  onClickFunction: PropTypes.func,
   tooltip: PropTypes.any,
   selectedOption: PropTypes.string,
-  option: PropTypes.string,
   activeTemplates: PropTypes.array,
   selectTemplateFunction: PropTypes.func,
   template: PropTypes.object,
+  showDeployPipelineIcon: PropTypes.bool,
 };

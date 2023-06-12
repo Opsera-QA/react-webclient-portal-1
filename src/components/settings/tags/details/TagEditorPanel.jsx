@@ -15,7 +15,12 @@ function TagEditorPanel({ tagData, setTagData, handleClose }) {
   const tagActions = useTagActions();
 
   useEffect(() => {
-    setTagModel(tagData);
+    if (tagModel) {
+      tagModel.replaceOriginalData(tagData?.getOriginalData());
+      setTagModel({...tagModel});
+    } else {
+      setTagModel(tagData);
+    }
   }, [tagData]);
 
   const createTag = async () => {

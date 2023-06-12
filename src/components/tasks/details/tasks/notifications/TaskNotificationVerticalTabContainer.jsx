@@ -35,7 +35,7 @@ function TaskNotificationVerticalTabContainer(
       />
       {/*<VanitySetVerticalTab*/}
       {/*  icon={faEnvelope}*/}
-      {/*  tabText={"Service Now"}*/}
+      {/*  tabText={"ServiceNow"}*/}
       {/*  tabName={"service-now"}*/}
       {/*  handleTabClick={handleTabClickFunction}*/}
       {/*  activeTab={activeTab}*/}

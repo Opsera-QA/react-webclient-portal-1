@@ -25,6 +25,7 @@ export default function useGetOrganizationSettingsEntitlementByName(
   return ({
     organizationSettingsEntitlement: organizationSettingsEntitlement,
     setOrganizationSettingsEntitlement: setOrganizationSettingsEntitlement,
+    childEntitlements: organizationSettingsEntitlement?.parameters,
     isLoading: isLoadingOrganizationSettingsRecord,
     isActive: organizationSettingsEntitlement?.active === true,
   });

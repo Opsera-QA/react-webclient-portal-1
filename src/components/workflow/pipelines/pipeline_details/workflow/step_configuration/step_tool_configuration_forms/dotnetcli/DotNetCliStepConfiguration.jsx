@@ -95,7 +95,7 @@ function DotNetCliStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       isLoading={isLoading}
     >
       <DotNetCliStepJenkinsToolSelectInput dataObject={dotNetCliStepConfigurationDto} setDataObject={setDotNetCliStepConfigurationDataDto} />
-      <DotNetCliStepJenkinsJobSelectInput dataObject={dotNetCliStepConfigurationDto} setDataObject={setDotNetCliStepConfigurationDataDto}/>
+      <DotNetCliStepJenkinsJobSelectInput dataObject={dotNetCliStepConfigurationDto} setDataObject={setDotNetCliStepConfigurationDataDto} toolIdentifier={stepTool?.tool_identifier}/>
       <DotNetJenkinsAccountInput dataObject={dotNetCliStepConfigurationDto} setDataObject={setDotNetCliStepConfigurationDataDto} />
       <DotNetBitbucketWorkspaceInput dataObject={dotNetCliStepConfigurationDto} setDataObject={setDotNetCliStepConfigurationDataDto} />
       <DotNetGitRepositoryInput dataObject={dotNetCliStepConfigurationDto} setDataObject={setDotNetCliStepConfigurationDataDto} />

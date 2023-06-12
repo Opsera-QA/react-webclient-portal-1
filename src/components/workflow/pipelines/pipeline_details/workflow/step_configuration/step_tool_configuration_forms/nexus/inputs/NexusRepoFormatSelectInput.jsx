@@ -26,6 +26,7 @@ const NexusRepoFormatSelectInput = ({dataObject, setDataObject, disabled}) => {
     if(selectedOption.value === "docker"){
       newDataObject.setData("groupName", "");
       newDataObject.setData("artifactName", "");
+      newDataObject.setDefaultValue("customVersion");
     }else {
       newDataObject.setData("toolConfigId", "");
       newDataObject.setData("jobType", "");

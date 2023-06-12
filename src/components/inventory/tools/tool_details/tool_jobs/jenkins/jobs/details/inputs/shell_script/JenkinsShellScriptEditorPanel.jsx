@@ -15,18 +15,23 @@ import JenkinsJobsPythonAgentLabelSelectInput
 const JENKINS_JOBS_GENERIC_AGENT_TYPES = [
   {
     "name": "Ubuntu Agent",
-    "env" : "linux",
+    "env": "linux",
     "value": "generic-linux",
   },
   {
     "name": "Windows Agent",
-    "env" : "windows",
+    "env": "windows",
     "value": "generic-windows",
   },
   {
     "name": "CentOS Agent",
-    "env" : "linux",
+    "env": "linux",
     "value": "generic-centos",
+  },
+  {
+    "name": "Mac Mini Agent",
+    "env": "mac",
+    "value": "generic-mac",
   }
 ];
 
@@ -37,7 +42,7 @@ function JenkinsShellScriptEditorPanel({ jenkinsJobConfiguration, model, setMode
 
   const unpackJobConfiguration = () => {
     const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, JenkinsShellScriptJobMetadata);
-    setModel({...parsedModel});
+    setModel({ ...parsedModel });
   };
 
   const getAutoScalingField = () => {

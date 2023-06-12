@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactJson from "react-json-view";
+import ReactJson from "@microlink/react-json-view";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
 
