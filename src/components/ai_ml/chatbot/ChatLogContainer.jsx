@@ -9,16 +9,23 @@ import IconBase from "../../common/icons/IconBase";
 import PropTypes from "prop-types";
 import CenterLoadingIndicator from "../../common/loading/CenterLoadingIndicator";
 import {screenContainerHeights} from "../../common/panels/general/screenContainer.heights";
+import LoadingIcon from "../../common/icons/LoadingIcon";
 
 function ChatLogContainer({ messages, connectionState, disabled, isLoading }) {
   const [chatModel, setChatModel] = useState(
     new Model({ ...chatbotModel.newObjectFields }, chatbotModel, true),
   );
+  const endOfMessageContainer = useRef(null);
+  const autoBottomScroll = () => {
+    endOfMessageContainer.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    autoBottomScroll();
+  }, [messages]);
 
   const getChatClass = (item) => {
-    if (item?.user === "opsera") {
+    if (item?.user === "opsera" || item?.user === "loading") {
       return "chat-message opsera-ai";
     }
     return "chat-message user";
@@ -33,6 +40,13 @@ function ChatLogContainer({ messages, connectionState, disabled, isLoading }) {
             imageClassName={"my-auto"}
           />
         </div>
+      );
+    } else if (item?.user === "loading") {
+      return (
+          <LoadingIcon
+              iconSize={"md"}
+              className={"ml-2 mr-2 my-auto"}
+          />
       );
     }
     return (
@@ -77,7 +91,7 @@ function ChatLogContainer({ messages, connectionState, disabled, isLoading }) {
           </Row>
         </div>
       ))}
-      {getIsLoading()}
+      <div ref={endOfMessageContainer} />
     </div>
   );
 }

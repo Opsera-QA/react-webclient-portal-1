@@ -3,9 +3,10 @@ import Col from "react-bootstrap/Col";
 import Model from "../../../core/data_model/model";
 import chatbotModel from "./chatbot-model";
 import TextInputBase from "../../common/inputs/text/TextInputBase";
-import { faMagnifyingGlassArrowRight } from "@fortawesome/pro-light-svg-icons";
+import {faMagnifyingGlassArrowRight, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import ButtonBase from "../../common/buttons/ButtonBase";
 import PropTypes from "prop-types";
+import CenterLoadingIndicator from "../../common/loading/CenterLoadingIndicator";
 
 function OpseraAIInputBox({sendMessage, isLoading, disabled}) {
   const [chatModel, setChatModel] = useState(
@@ -19,7 +20,7 @@ function OpseraAIInputBox({sendMessage, isLoading, disabled}) {
       let newModel = chatModel;
       newModel.setDefaultValue("question");
       setChatModel({...newModel});
-  }
+  };
 
   return (
     <div className="chat-input-holder">
@@ -31,13 +32,14 @@ function OpseraAIInputBox({sendMessage, isLoading, disabled}) {
           fieldName={"question"}
           dataObject={chatModel}
           setDataObject={setChatModel}
+          disabled={isLoading}
           rightSideInputButton={
             <ButtonBase
-              disabled={(!chatModel?.getData("question") || chatModel?.getData("question")?.length === 0)}
+              disabled={isLoading || (!chatModel?.getData("question") || chatModel?.getData("question")?.length === 0)}
               onClickFunction={processMessage}
               variant={"primary"}
               isLoading={false}
-              icon={faMagnifyingGlassArrowRight}
+              icon={isLoading ? faSpinner : faMagnifyingGlassArrowRight}
             />
           }
         />
