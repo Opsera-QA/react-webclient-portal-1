@@ -101,6 +101,12 @@ function TaskNotificationTabView(
       <TaskNotificationVerticalTabContainer
         handleTabClickFunction={setTabSelection}
         activeTab={activeTab}
+        slackEnabled={slackNotificationModel?.getData("enabled")}
+        teamsEnabled={teamsNotificationModel?.getData("enabled")}
+        jiraEnabled={jiraNotificationModel?.getData("enabled")}
+        serviceNowEnabled={serviceNowNotificationModel?.getData("enabled")}
+        emailEnabled={emailNotificationModel?.getData("enabled")}
+        gChatEnabled={gChatNotificationModel?.getData("enabled")}
       />
     );
   };
