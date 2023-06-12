@@ -33,11 +33,8 @@ function BitbucketRepositorySelectInput({
   const [bitbucketBranches, setBitbucketBranches] = useState([]);
   const [error, setError] = useState(undefined);
   const [inEditMode, setInEditMode] = useState(false);
-  const {
-    cancelTokenSource,
-    isMounted,
-    getAccessToken,
-  } = useComponentStateReference();
+  const { cancelTokenSource, isMounted, getAccessToken } =
+    useComponentStateReference();
 
   useEffect(() => {
     setBitbucketBranches([]);
@@ -71,9 +68,7 @@ function BitbucketRepositorySelectInput({
     }
   };
 
-  const loadBitbucketBranches = async (
-    searchTerm = "",
-  ) => {
+  const loadBitbucketBranches = async (searchTerm = "") => {
     const response = await bitbucketActions.getBranchesFromBitbucketInstanceV3(
       getAccessToken,
       cancelTokenSource,
@@ -83,24 +78,26 @@ function BitbucketRepositorySelectInput({
       searchTerm,
     );
 
-    const branches = DataParsingHelper.parseNestedArray(response, "data.data", [])
-  
+    const branches = DataParsingHelper.parseNestedArray(
+      response,
+      "data.data",
+      [],
+    );
+
     if (isMounted?.current === true && Array.isArray(branches)) {
+      const result = branches?.map((branch) => {
+        return { name: branch };
+      });
 
-      const result = branches?.map(branch => {
-        return {name: branch}
-      })
-
-      if (searchTerm.length > 0 && !branches.includes(searchTerm)){
-        result.unshift({name: searchTerm, OPSERA_DIRECT_LOOKUP_NEEDED: true})
-      };
+      if (searchTerm.length > 0 && !branches.includes(searchTerm)) {
+        result.unshift({ name: searchTerm, OPSERA_DIRECT_LOOKUP_NEEDED: true });
+      }
 
       setBitbucketBranches([...result]);
     }
   };
 
   const exactMatchSearch = async (branch) => {
-    
     const response = await bitbucketActions.getBranch(
       getAccessToken,
       cancelTokenSource,
@@ -112,7 +109,7 @@ function BitbucketRepositorySelectInput({
 
     const branchResult = response?.data?.data?.branch;
 
-    return branchResult; 
+    return branchResult;
   };
 
   if (multi) {

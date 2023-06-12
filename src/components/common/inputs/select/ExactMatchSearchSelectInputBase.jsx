@@ -385,6 +385,7 @@ ExactMatchSearchSelectInputBase.propTypes = {
   noDataText: PropTypes.string,
   customLabel: PropTypes.string,
   dropUp: PropTypes.bool,
+  exactMatchSearch: PropTypes.func,
 };
 
 ExactMatchSearchSelectInputBase.defaultProps = {

@@ -1,45 +1,38 @@
-import React, {
-  useEffect,
-  useState,
-} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import {hasStringValue} from "components/common/helpers/string-helpers";
-import {githubActions} from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import { githubActions } from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
-import useComponentStateReference from "hooks/useComponentStateReference"
+import useComponentStateReference from "hooks/useComponentStateReference";
 import ExactMatchSearchSelectInputBase from "components/common/inputs/select/ExactMatchSearchSelectInputBase";
 
-function GithubBranchSelectInput(
-  {
-    fieldName,
-    model,
-    setModel,
-    toolId,
-    disabled,
-    setDataFunction,
-    clearDataFunction,
-    repositoryId,
-    multi,
-  }) {
+function GithubBranchSelectInput({
+  fieldName,
+  model,
+  setModel,
+  toolId,
+  disabled,
+  setDataFunction,
+  clearDataFunction,
+  repositoryId,
+  multi,
+}) {
   const [isLoading, setIsLoading] = useState(false);
   const [githubBranches, setGithubBranches] = useState([]);
   const [error, setError] = useState(undefined);
   const [inEditMode, setInEditMode] = useState(false);
-  const {
-    cancelTokenSource,
-    isMounted,
-    getAccessToken,
-  } = useComponentStateReference();
+  const { cancelTokenSource, isMounted, getAccessToken } =
+    useComponentStateReference();
 
   useEffect(() => {
     setGithubBranches([]);
     setError(undefined);
 
     if (
-      isMongoDbId(toolId) === true
-      && hasStringValue(repositoryId) === true
-      && (inEditMode === true || multi)
+      isMongoDbId(toolId) === true &&
+      hasStringValue(repositoryId) === true &&
+      (inEditMode === true || multi)
     ) {
       loadData().catch((error) => {
         throw error;
@@ -72,14 +65,13 @@ function GithubBranchSelectInput(
     const branches = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(branches)) {
+      const result = branches.map((branch) => {
+        return { name: branch };
+      });
 
-      const result = branches.map(branch => {
-        return {name: branch}
-      })
-
-      if (searchTerm.length > 0 && !branches.includes(searchTerm)){
-        result.unshift({name: searchTerm, OPSERA_DIRECT_LOOKUP_NEEDED: true})
-      };
+      if (searchTerm.length > 0 && !branches.includes(searchTerm)) {
+        result.unshift({ name: searchTerm, OPSERA_DIRECT_LOOKUP_NEEDED: true });
+      }
 
       setGithubBranches([...result]);
     }
@@ -87,7 +79,6 @@ function GithubBranchSelectInput(
   };
 
   const exactMatchSearch = async (branch) => {
-    
     const response = await githubActions.getBranch(
       getAccessToken,
       cancelTokenSource,
@@ -98,7 +89,7 @@ function GithubBranchSelectInput(
 
     const branchResult = response?.data?.data?.branch;
 
-    return branchResult; 
+    return branchResult;
   };
 
   if (multi) {
