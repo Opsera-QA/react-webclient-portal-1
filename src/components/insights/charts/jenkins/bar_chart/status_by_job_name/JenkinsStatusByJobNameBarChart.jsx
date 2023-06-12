@@ -7,8 +7,10 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, mainColor, failColor, mainPurple, warningColor,
-         adjustBarWidth } from '../../../charts-views';
+import {
+  defaultConfig, mainColor, failColor, mainPurple, warningColor,
+  adjustBarWidth, colorPalette1
+} from "../../../charts-views";
 import ChartTooltip from '../../../ChartTooltip';
 
 function JenkinsStatusByJobNameBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
