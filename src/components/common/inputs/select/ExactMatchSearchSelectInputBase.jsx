@@ -105,7 +105,11 @@ function ExactMatchSearchSelectInputBase(
 
         if (!searchedItem){
           setInternalErrorMessage("There was no exact match of this branch name. Please search for another branch.");
-          clearValue();
+          const clearValueFunction = getClearDataFunction();
+
+          if (clearValueFunction) {
+            clearValueFunction();
+          }
         }
         return;
       }
