@@ -7,14 +7,14 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function GithubDataMappingStagesMultiSelectInput({
-                                                                 fieldName,
-                                                                 model,
-                                                                 setModel,
-                                                                 disabled,
-                                                                 setDataFunction,
-                                                                 clearDataFunction,
-                                                                 repoId,
-                                                             }) {
+                                                                    fieldName,
+                                                                    model,
+                                                                    setModel,
+                                                                    disabled,
+                                                                    setDataFunction,
+                                                                    clearDataFunction,
+                                                                    repoId,
+                                                                }) {
     const [isLoading, setIsLoading] = useState(true);
     const [deploymentStages, setDeploymentStages] = useState([]);
     const [error, setError] = useState(undefined);

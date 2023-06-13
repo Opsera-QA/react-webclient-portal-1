@@ -102,10 +102,10 @@ function ProjectDataMappingEditorPanel(
             model={projectDataMappingModel}
             setModel={setProjectDataMappingModel}
           />
-            <GithubDataMappingSubform
-                model={projectDataMappingModel}
-                setModel={setProjectDataMappingModel}
-            />
+          <GithubDataMappingSubform
+            model={projectDataMappingModel}
+            setModel={setProjectDataMappingModel}
+          />
         </Col>
       );
     }
