@@ -15,7 +15,8 @@ function TextFieldBase(
     requireSavedValue,
   }) {
   const field = dataObject?.getFieldById(fieldName);
-  const value = DataParsingHelper.parseString(dataObject?.getData(fieldName));
+  const textValue = DataParsingHelper.parseString(dataObject?.getData(fieldName));
+  const numberValue = DataParsingHelper.parseNumber(dataObject?.getData(fieldName));
 
   const getClipboardButton = () => {
     if (showClipboardButton === true) {
@@ -23,7 +24,7 @@ function TextFieldBase(
     }
   };
 
-  if (field == null || visible === false || (requireSavedValue === true && !value)) {
+  if (field == null || visible === false || (requireSavedValue === true && !textValue && !numberValue)) {
     return null;
   }
 
@@ -31,7 +32,7 @@ function TextFieldBase(
     <FieldContainer className={className}>
       <div className="w-100 d-flex">
         <FieldLabel field={field} />
-        <span>{value || ""}</span>
+        <span>{textValue || numberValue || ""}</span>
         {getClipboardButton()}
       </div>
     </FieldContainer>
