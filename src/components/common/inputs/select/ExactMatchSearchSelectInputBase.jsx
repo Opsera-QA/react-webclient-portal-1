@@ -105,7 +105,11 @@ function ExactMatchSearchSelectInputBase(
 
         if (!searchedItem){
           setInternalErrorMessage("There was no exact match of this branch name. Please search for another branch.");
-          clearValue();
+          const clearValueFunction = getClearDataFunction();
+
+          if (clearValueFunction) {
+            clearValueFunction();
+          }
         }
         return;
       }
@@ -139,7 +143,7 @@ function ExactMatchSearchSelectInputBase(
   const getClearDataFunction = () => {
     if (
       hasStringValue(dataObject.getData(field.id)) === true
-      && ((disabled !== true && field?.isRequired !== true) || lenientClearValueButton === true)
+      && (disabled !== true || lenientClearValueButton === true)
       && showClearValueButton !== false
       && (setDataFunction == null || clearDataFunction != null)
     ) {
