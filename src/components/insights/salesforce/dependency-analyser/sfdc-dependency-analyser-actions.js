@@ -1,5 +1,4 @@
 import baseActions from "../../../../utils/actionsBase";
-import sfdcPipelineActions from "../../../workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 
 const sfdcDependencyAnalyserActions = {};
 
@@ -50,6 +49,11 @@ sfdcDependencyAnalyserActions.toggleSfdcCsvFilesValidation = async (getAccessTok
 
 sfdcDependencyAnalyserActions.toggleSfdcXmlFilesValidation = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const apiUrl = `/analytics/sfdc/dependency_analyser/${pipelineWizardModel?.getData("recordId")}/toggle_sfdc_xml_upload_validation`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+sfdcDependencyAnalyserActions.triggerDependencyAnalyserSfdcFilesPull = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const apiUrl = `/analytics/sfdc/dependency_analyser/${pipelineWizardModel?.getData("recordId")}/trigger_sfdc_files_pull`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
