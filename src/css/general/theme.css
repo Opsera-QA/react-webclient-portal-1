@@ -1867,6 +1867,7 @@ div.data-blocks-ellipses {
     width: 100%;
     border: 2px solid #DFD1FF;
     border-radius: 1rem;
+    padding-right: 2rem;
 }
 
 .chat-message-center {

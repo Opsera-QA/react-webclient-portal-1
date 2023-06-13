@@ -8,7 +8,7 @@ import OpseraInfinityLogo from "../../logo/OpseraInfinityLogo";
 import IconBase from "../../common/icons/IconBase";
 import PropTypes from "prop-types";
 import CenterLoadingIndicator from "../../common/loading/CenterLoadingIndicator";
-import {screenContainerHeights} from "../../common/panels/general/screenContainer.heights";
+import { screenContainerHeights } from "../../common/panels/general/screenContainer.heights";
 import LoadingIcon from "../../common/icons/LoadingIcon";
 
 function ChatLogContainer({ messages, connectionState, disabled, isLoading }) {
@@ -43,10 +43,10 @@ function ChatLogContainer({ messages, connectionState, disabled, isLoading }) {
       );
     } else if (item?.user === "loading") {
       return (
-          <LoadingIcon
-              iconSize={"md"}
-              className={"ml-2 mr-2 my-auto"}
-          />
+        <LoadingIcon
+          iconSize={"md"}
+          className={"ml-2 mr-2 my-auto"}
+        />
       );
     }
     return (
@@ -59,15 +59,17 @@ function ChatLogContainer({ messages, connectionState, disabled, isLoading }) {
     );
   };
 
-
   const getIsLoading = () => {
     if (isLoading) {
-      return (<CenterLoadingIndicator customMessage={"Analyzing prompt..."}/>);
+      return <CenterLoadingIndicator customMessage={"Analyzing prompt..."} />;
     }
   };
 
   return (
-    <div className={"chatarea"} style={{minHeight: `90%`}}>
+    <div
+      className={"chatarea"}
+      style={{ minHeight: `90%` }}
+    >
       {messages.map((item, idx) => (
         <div
           key={idx}
@@ -77,14 +79,8 @@ function ChatLogContainer({ messages, connectionState, disabled, isLoading }) {
             <Col lg={11}>
               <div className={getChatClass(item)}>
                 <div className="chat-message-center">
-                    <div className="row mb-1">
-                      {getAvatar(item)}
-                    </div>
-                    <div
-                      className="row ml-4"
-                    >
-                      {item?.message}
-                    </div>
+                  <div className="row mb-1">{getAvatar(item)}</div>
+                  <div className="row ml-4">{item?.message}</div>
                 </div>
               </div>
             </Col>

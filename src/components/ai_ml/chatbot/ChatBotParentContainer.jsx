@@ -8,9 +8,6 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import sessionHelper from "../../../utils/session.helper";
 import useComponentStateReference from "../../../hooks/useComponentStateReference";
 import ChatbotDisclaimer from "./disclaimer/ChatbotDisclaimer";
-import CenterLoadingIndicator from "../../common/loading/CenterLoadingIndicator";
-import LoadingIcon from "../../common/icons/LoadingIcon";
-import path from "path";
 
 let MESSAGE_STACK = [
   {
@@ -168,6 +165,16 @@ function ChatBotParentContainer() {
     }
   };
 
+  const setErrorMessage = (e) => {
+    MESSAGE_STACK.push({
+      user: "opsera",
+      message:
+          "There was an error communicating with the Opsera ML service." +
+          e ? JSON.stringify(e?.message) : "",
+    });
+    setMessages(MESSAGE_STACK);
+  };
+
   const sendMessage = async (message, cancelSource = cancelTokenSource) => {
     setIsLoading(true);
     await updateMessage(messages, {
@@ -193,30 +200,15 @@ function ChatBotParentContainer() {
         return;
       }
       await isLoadingMessage(false);
-      setMessages([
-        ...messages,
-        {
-          user: "opsera",
-          message:
-            "There was an error communicating with the Opsera ML service.",
-        },
-      ]);
+      await setErrorMessage();
       setIsLoading(false);
       return;
     } catch (e) {
-      if (isMounted?.current === true) {
-        toastContext.showErrorDialog(e);
-      }
+      // if (isMounted?.current === true) {
+      //   toastContext.showErrorDialog(e);
+      // }
       await isLoadingMessage(false);
-      setMessages([
-        ...messages,
-        {
-          user: "opsera",
-          message:
-            "There was an error communicating with the Opsera ML service." +
-            JSON.stringify(e?.message),
-        },
-      ]);
+      await setErrorMessage(e);
     } finally {
       await isLoadingMessage(false);
       setIsLoading(false);
