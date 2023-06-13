@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import ExportDataOverlay from "components/common/modal/export_data/ExportDataOverlay";
 import jsPDF from "jspdf";
-import chartsActions from "components/insights/charts/charts-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import sfdcDependencyAnalyserActions from "../sfdc-dependency-analyser-actions";
 
 function ExportDependencyListOverlay({ dataModel }) {
   const {
@@ -55,12 +55,12 @@ function ExportDependencyListOverlay({ dataModel }) {
   const fetchDownloadData = async () => {
     try {
       setIsLoading(true);
-      const response = await chartsActions.exportGitCustodianData(
+      const response = await sfdcDependencyAnalyserActions.getDependentList(
         getAccessToken,
         cancelTokenSource,
         dataModel,
       );
-      const allDependentList = response?.data?.data;
+      const allDependentList = response?.data?.data?.data;
 
       if (Array.isArray(allDependentList)) {
         setDependentListData([...allDependentList]);
