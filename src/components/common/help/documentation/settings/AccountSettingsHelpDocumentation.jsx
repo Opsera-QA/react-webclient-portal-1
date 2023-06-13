@@ -145,7 +145,7 @@ function AccountSettingsHelpDocumentation() {
     <HelpOverlayBase
       closePanel={closePanel}
       showPanel={true}
-      helpTopic={"Account Settings"}
+      helpTopic={"Platform Settings"}
       helpDocumentation={getHelpDocumentation()}
     >
     </HelpOverlayBase>
