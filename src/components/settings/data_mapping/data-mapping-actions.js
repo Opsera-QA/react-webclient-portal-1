@@ -44,4 +44,13 @@ dataMappingActions.getDeploymentStages = async (getAccessToken, sourceToken, rep
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, sourceToken, apiUrl, postBody);
 };
 
+dataMappingActions.getGithubDataMappingStages = async (getAccessToken, sourceToken, repoId) => {
+  const apiUrl = `/analytics/githubActions/v1/getGithubDataMappingStages`;
+  const postBody = {
+    repositoryId: repoId
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, sourceToken, apiUrl, postBody);
+};
+
 export default dataMappingActions;
