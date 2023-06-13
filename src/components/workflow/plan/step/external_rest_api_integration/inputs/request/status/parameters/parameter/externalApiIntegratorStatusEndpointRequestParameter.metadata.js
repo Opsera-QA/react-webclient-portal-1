@@ -1,4 +1,4 @@
-export const endpointRequestParameterMetadata = {
+export const externalApiIntegratorStatusEndpointRequestParameterMetadata = {
   fields: [
     {
       label: "Field Name",
