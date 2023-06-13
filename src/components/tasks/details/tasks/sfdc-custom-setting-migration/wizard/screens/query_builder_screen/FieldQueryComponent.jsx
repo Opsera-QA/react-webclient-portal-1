@@ -49,7 +49,7 @@ function FieldQueryComponent({
     setRuleModel({ ...newModel });
     setIsLoading(false);
   };
-  console.log(ruleModel?.getPersistData());
+  // console.log(ruleModel?.getPersistData());
 
   const handleFieldChange = (fieldName, selectedValue) => {
     let newDataObject = ruleModel;

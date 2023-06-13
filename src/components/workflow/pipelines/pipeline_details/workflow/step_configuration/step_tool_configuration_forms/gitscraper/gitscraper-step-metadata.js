@@ -74,14 +74,17 @@ const GitScraperStepFormMetadata = {
     {
       label: "Exclude Certain Secrets from Scan",
       id: "secretsException",
+      helpTooltipText: "Select any Parameters to be ignored during the scan from the drop-down. These will not be counted toward the threshold. To add them to the table, click the Add button. Parameters are fetched from Tool Registry Parameters."
     },
     {
       label: "Exclude Certain Project Files from Scan",
       id: "filesException",
+      helpTooltipText: "Select Absolute File Path(s) to be ignored during the scan from the drop-down. These will not be counted toward the threshold. To add them to the table, click the Add button."
     },
     {
       label: "Enable Email Scan",
       id: "scanEmail",
+      helpTooltipText: "Select to find emails from the code. Additionally, specify any email domains to exclude from the scan."
     },
     {
       label: "Domains to be excluded from scan",
@@ -91,6 +94,7 @@ const GitScraperStepFormMetadata = {
     {
       label: "Set Custom Entropy",
       id: "customEntropy",
+      helpTooltipText: "Plain Text passwords are identified using the entropy of the string identified. The default entropy is 3.5. Select to set a custom entropy in the range of 2.4 to 5."
     },
     {
       label: "Custom Entropy",

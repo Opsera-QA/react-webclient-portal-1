@@ -19,4 +19,4 @@ const getTrendForBlocks = (curr, previous) => {
   };
 };
 
-export { getTrendForBlocks }
+export { getTrendForBlocks };

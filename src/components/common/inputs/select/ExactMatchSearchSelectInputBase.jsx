@@ -98,6 +98,7 @@ function ExactMatchSearchSelectInputBase(
       setInternalErrorMessage("");
       const parsedNewValue = DataParsingHelper.parseObject(newValue);
       const parsedValueField = DataParsingHelper.parseString(valueField);
+      const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
     
       if (parsedNewValue && parsedNewValue.OPSERA_DIRECT_LOOKUP_NEEDED === true) {
         const searchedItem = await exactMatchSearch(parsedNewValue);
@@ -121,9 +122,8 @@ function ExactMatchSearchSelectInputBase(
     }
 
     if (setDataFunction) {
-      setDataFunction(field?.id, newValue);
+      setDataFunction(field?.id, parsedValue);
     } else {
-      const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
       validateAndSetData(field?.id, parsedValue);
     }
   };
@@ -385,6 +385,7 @@ ExactMatchSearchSelectInputBase.propTypes = {
   noDataText: PropTypes.string,
   customLabel: PropTypes.string,
   dropUp: PropTypes.bool,
+  exactMatchSearch: PropTypes.func,
 };
 
 ExactMatchSearchSelectInputBase.defaultProps = {
