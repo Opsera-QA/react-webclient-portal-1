@@ -10,6 +10,7 @@ import DependencyAnalyserComponentSelectionScreen
   from "./component_selection_screen/DependencyAnalyserComponentSelectionScreen";
 import DependencyAnalyserFileValidationScreen from "./file_validation_screen/DependencyAnalyserFileValidationScreen";
 import DependencyAnalyserModifiedFileViewer from "./file_viewer_screen/DependencyAnalyserModifiedFileViewer";
+import DependencyAnalyserViewScreen from "./dependent_list_screen/DependencyAnalyserViewScreen";
 
 export const DEPENDENCY_ANALYSER_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
@@ -23,10 +24,6 @@ function DependencyAnalyser() {
   const [error, setError] = useState("");
   const [screen, setScreen] = useState(DEPENDENCY_ANALYSER_SCREENS.INITIALIZATION_SCREEN);
   const [dependencyAnalyserModel, setDependencyAnalyserModel] = useState(undefined);
-
-  const [isLoading, setIsLoading] = useState(false);
-  const {isMounted, cancelTokenSource, toastContext, getAccessToken} =
-    useComponentStateReference();
 
   useEffect(() => {
     loadModel().catch(() => {});
@@ -87,7 +84,14 @@ function DependencyAnalyser() {
           />
         );
       case DEPENDENCY_ANALYSER_SCREENS.DEPENDENCY_VIEWER:
-        return (<>DEPENDENCY_VIEWER Screen</>);
+        return (
+          <DependencyAnalyserViewScreen
+            pipelineWizardModel={dependencyAnalyserModel}
+            setPipelineWizardModel={setDependencyAnalyserModel}
+            setPipelineWizardScreen={setScreen}
+            setError={setError}
+          />
+        );
     }
   };
 

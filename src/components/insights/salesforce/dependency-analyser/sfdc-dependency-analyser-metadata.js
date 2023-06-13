@@ -1,4 +1,5 @@
 import React from "react";
+import sfdcRuleMetadata from "../../../workflow/wizards/sfdc_pipeline_wizard/rules/sfdc-rule-metadata";
 
 const sfdcDataAnalyserMetadata = {
   idProperty: "_id",
@@ -44,6 +45,10 @@ const sfdcDataAnalyserMetadata = {
     {
       label: "Salesforce Rule List",
       id: "sfdcModifiedRuleList",
+    },
+    {
+      label: "Salesforce Dependency Rule List",
+      id: "sfdcDependencyFileRuleList",
     },
     {
       label: "Git Rule List",
@@ -174,6 +179,8 @@ const sfdcDataAnalyserMetadata = {
   newObjectFields: {
     referenceType: "referenceBy",
     selectedComponentTypes: [],
+    sfdcModifiedRuleList: [{...sfdcRuleMetadata.newObjectFields}],
+    sfdcDependencyFileRuleList: [{...sfdcRuleMetadata.newObjectFields}],
     fromDate: new Date(new Date().setHours(0,0,0,0)),
     toDate: new Date(),
     recordId: "",
@@ -185,10 +192,7 @@ const sfdcDataAnalyserMetadata = {
     selectedRunNumber: "",
     csvFileContent: [],
     fromFileUpload: false,
-    isRollBack: false,
     includeDependencies: true,
-    gitBranch: "",
-    accountUsername: "",
   }
 };
 

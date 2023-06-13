@@ -76,7 +76,7 @@ sfdcDependencyAnalyserActions.getDependentList = async (getAccessToken, cancelTo
     componentFilter: newFilterDto ? newFilterDto.getData("componentFilter") : "",
   };
 
-  const apiUrl = `/pipelines/sfdc/dependency_analyser/${pipelineWizardModel?.getData("recordId")}/get_dependent_list`;
+  const apiUrl = `/analytics/sfdc/dependency_analyser/${pipelineWizardModel?.getData("recordId")}/get_dependent_list`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
