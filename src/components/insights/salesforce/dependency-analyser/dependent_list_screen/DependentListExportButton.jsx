@@ -23,7 +23,6 @@ export default function DependentListExportButton(
     );
   };
 
-  // TODO: Refine when more is complete
   return (
     <ExportDataButtonBase
       isLoading={isLoading}
