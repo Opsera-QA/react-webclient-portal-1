@@ -47,7 +47,7 @@ export const jenkinsMSBuildJobMetadata = {
   newObjectFields: {
     commandLineArgs: "",
     mavenTask: "",
-    buildType: "xcode",
+    buildType: "msbuild",
     gradleTask: "",
     agentLabels: "",
     customMavenSettings: false,
