@@ -35,7 +35,6 @@ const DependencyAnalyserInitializationScreen = ({
   const { isMounted, cancelTokenSource, toastContext, getAccessToken } =
     useComponentStateReference();
 
-  console.log(pipelineWizardModel?.getPersistData());
   const createNewPipelineWizardRecord = async (
     newPipelineWizardModel = pipelineWizardModel,
   ) => {

@@ -9,19 +9,16 @@ import { AuthContext } from "contexts/AuthContext";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import { Button } from "react-bootstrap";
 import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
-import CancelButton from "components/common/buttons/CancelButton";
-import SfdcPipelineWizardSubmitSfdcFilesButton from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSubmitSfdcFilesButton";
-import SfdcPipelineWizardSfdcFilesTable from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSfdcFilesTable";
 import { parseError } from "components/common/helpers/error-helpers";
 import IconBase from "components/common/icons/IconBase";
 import sfdcDependencyAnalyserActions from "../sfdc-dependency-analyser-actions";
 import { DEPENDENCY_ANALYSER_SCREENS } from "../DependencyAnalyser";
+import DependencyAnalyserDependentFilesTable from "./DependencyAnalyserDependentFilesTable";
 
 const DependencyAnalyserViewScreen = ({
   pipelineWizardModel,
   setPipelineWizardModel,
   setPipelineWizardScreen,
-  handleClose,
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -34,7 +31,7 @@ const DependencyAnalyserViewScreen = ({
       false,
     ),
   );
-  const [sfdcFiles, setSfdcFiles] = useState([]);
+  const [sfdcDependentFilesList, setSfdcDependentFilesList] = useState([]);
   const [filePullCompleted, setFilePullCompleted] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -67,7 +64,7 @@ const DependencyAnalyserViewScreen = ({
       isMounted.current = false;
       stopPolling();
     };
-  }, [JSON.stringify(pipelineWizardModel.getData("sfdcModifiedRuleList"))]);
+  }, [JSON.stringify(pipelineWizardModel.getData("sfdcDependencyFileRuleList"))]);
 
   const stopPolling = () => {
     if (Array.isArray(timerIds) && timerIds.length > 0) {
@@ -92,7 +89,7 @@ const DependencyAnalyserViewScreen = ({
     }
   };
 
-  const getModifiedFiles = async (
+  const getDependentFilesList = async (
     cancelSource = cancelTokenSource,
     newFilterDto = sfdcFilterDto,
   ) => {
@@ -128,7 +125,7 @@ const DependencyAnalyserViewScreen = ({
         setTotalFileCount(data.count);
         setSfdcFilterDto({ ...newSfdcFilterDto });
         setPipelineWizardModel({ ...pipelineWizardModel });
-        setSfdcFiles(files);
+        setSfdcDependentFilesList(files);
         setIsLoading(false);
         setFilePullCompleted(true);
       }
@@ -147,10 +144,10 @@ const DependencyAnalyserViewScreen = ({
       return;
     }
 
-    const sfdcCommitList = await getModifiedFiles(cancelSource, newFilterDto);
+    const dependentFileList = await getDependentFilesList(cancelSource, newFilterDto);
 
     if (
-      !Array.isArray(sfdcCommitList) &&
+      !Array.isArray(dependentFileList) &&
       count <= 5 &&
       filePullCompleted === false
     ) {
@@ -161,8 +158,8 @@ const DependencyAnalyserViewScreen = ({
 
   return (
     <div>
-      <SfdcPipelineWizardSfdcFilesTable
-        sfdcFiles={sfdcFiles}
+      <DependencyAnalyserDependentFilesTable
+        sfdcFiles={sfdcDependentFilesList}
         pipelineWizardModel={pipelineWizardModel}
         setPipelineWizardScreen={setPipelineWizardScreen}
         isLoading={isLoading}
@@ -183,7 +180,7 @@ const DependencyAnalyserViewScreen = ({
           className="mr-2"
           onClick={() => {
             setPipelineWizardScreen(
-              DEPENDENCY_ANALYSER_SCREENS.COMPONENT_SELECTOR,
+              DEPENDENCY_ANALYSER_SCREENS.MODIFIED_FILE_LIST_VIEWER,
             );
           }}
         >
@@ -193,17 +190,6 @@ const DependencyAnalyserViewScreen = ({
           />
           Back
         </Button>
-        <SfdcPipelineWizardSubmitSfdcFilesButton
-          setPipelineWizardScreen={setPipelineWizardScreen}
-          pipelineWizardModel={pipelineWizardModel}
-          filteredFileCount={totalFileCount}
-          isLoading={isLoading}
-        />
-        <CancelButton
-          size={"sm"}
-          className={"ml-2"}
-          cancelFunction={handleClose}
-        />
       </SaveButtonContainer>
     </div>
   );
@@ -213,7 +199,6 @@ DependencyAnalyserViewScreen.propTypes = {
   pipelineWizardModel: PropTypes.object,
   setPipelineWizardModel: PropTypes.func,
   setPipelineWizardScreen: PropTypes.func,
-  handleClose: PropTypes.func,
 };
 
 export default DependencyAnalyserViewScreen;
