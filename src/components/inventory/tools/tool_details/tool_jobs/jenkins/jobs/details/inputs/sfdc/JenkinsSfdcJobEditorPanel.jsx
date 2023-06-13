@@ -10,7 +10,7 @@ import JenkinsJobsGenericAgentTypeSelectInput
 import JenkinsJobsSfdcTypeSelectInput
   from "components/common/list_of_values_input/tools/jenkins/jobs/sfdc/JenkinsJobsSfdcTypeSelectInput";
 
-function JenkinsSfdcJobEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled }) {
+function JenkinsSfdcJobEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled, jenkinsJobType }) {
   useEffect(() => {
     unpackJobConfiguration();
   }, [jenkinsJobConfiguration]);
@@ -27,6 +27,7 @@ function JenkinsSfdcJobEditorPanel({ jenkinsJobConfiguration, model, setModel, a
           <JenkinsJobsGenericAgentTypeSelectInput
             model={model}
             setModel={setModel}
+            jenkinsJobType={jenkinsJobType}
           />
         </Col>
       );
@@ -56,6 +57,7 @@ JenkinsSfdcJobEditorPanel.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   autoScalingEnabled: PropTypes.bool,
+  jenkinsJobType: PropTypes.string
 };
 
 export default JenkinsSfdcJobEditorPanel;

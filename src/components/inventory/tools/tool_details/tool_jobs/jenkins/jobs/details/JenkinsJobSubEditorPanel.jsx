@@ -66,6 +66,7 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             jenkinsJobConfiguration={jenkinsJobConfiguration}
             autoScalingEnabled={autoScalingEnabled}
             buildType={jenkinsJobConfigurationModel?.getData("buildType")}
+            jenkinsJobType={jenkinsJobType}
           />
         );
       case "SFDC":
@@ -75,6 +76,7 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
             autoScalingEnabled={autoScalingEnabled}
+            jenkinsJobType={jenkinsJobType}
           />
         );
       case "UNIT TESTING":
@@ -85,6 +87,7 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
             autoScalingEnabled={autoScalingEnabled}
+            jenkinsJobType={jenkinsJobType}
           />
         );
       case "SHELL SCRIPT":
@@ -94,6 +97,7 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
             autoScalingEnabled={autoScalingEnabled}
+            jenkinsJobType={jenkinsJobType}
           />
         );
       case "DOCKER PUSH":
@@ -104,6 +108,7 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             jenkinsJobConfiguration={jenkinsJobConfiguration}
             type="DOCKER PUSH"
             autoScalingEnabled={autoScalingEnabled}
+            jenkinsJobType={jenkinsJobType}
           />
         );
       case "ARTIFACTORY_DOCKER_PUSH":
@@ -112,7 +117,9 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             model={jenkinsJobConfigurationModel}
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
+            autoScalingEnabled={autoScalingEnabled}
             type="ARTIFACTORY_DOCKER_PUSH"
+            jenkinsJobType={jenkinsJobType}
           />
         );
       case "AZURE_DOCKER_PUSH":
@@ -121,7 +128,8 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             model={jenkinsJobConfigurationModel}
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
-            autoScalingEnabled={autoScalingEnabled}
+            autoScalingEnabled={autoScalingEnabled}            
+            jenkinsJobType={jenkinsJobType}
           />
         );
       default:
@@ -131,6 +139,7 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
             autoScalingEnabled={autoScalingEnabled}
+            jenkinsJobType={jenkinsJobType}
           />
         );
     }
