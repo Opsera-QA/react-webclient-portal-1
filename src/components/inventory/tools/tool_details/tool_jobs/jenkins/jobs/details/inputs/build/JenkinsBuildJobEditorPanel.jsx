@@ -18,11 +18,16 @@ import PasswordInput from "components/common/inputs/text/PasswordInput";
 import {
   jenkinsXcodeBuildJobMetadata
 } from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/build/jenkinsXcodeBuildJob.metadata";
+import {
+  jenkinsMSBuildJobMetadata
+} from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/build/jenkinsMSBuildJob.metadata";
 
 export const getMetadataForJenkinsJobBuildType = (buildType) => {
   switch (buildType) {
     case "xcode":
       return jenkinsXcodeBuildJobMetadata;
+    case "msbuild":
+      return jenkinsMSBuildJobMetadata;
     default:
       return JenkinsJobsBuildMetadata;
   }
@@ -35,6 +40,7 @@ function JenkinsBuildJobEditorPanel(
     setModel,
     autoScalingEnabled,
     buildType,
+    jenkinsJobType
   }) {
   useEffect(() => {
     const metadata = getMetadataForJenkinsJobBuildType(buildType);
@@ -128,6 +134,7 @@ function JenkinsBuildJobEditorPanel(
           <JenkinsJobsGenericAgentTypeSelectInput
             model={model}
             setModel={setModel}
+            jenkinsJobType={jenkinsJobType}
           />
         </Col>
       );
@@ -160,6 +167,7 @@ JenkinsBuildJobEditorPanel.propTypes = {
   setModel: PropTypes.func,
   autoScalingEnabled: PropTypes.bool,
   buildType: PropTypes.string,
+  jenkinsJobType: PropTypes.string
 };
 
 export default JenkinsBuildJobEditorPanel;

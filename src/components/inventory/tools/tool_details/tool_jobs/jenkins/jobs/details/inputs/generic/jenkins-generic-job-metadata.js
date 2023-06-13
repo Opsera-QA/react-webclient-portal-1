@@ -4,7 +4,6 @@ const JenkinsGenericJobMetadata = {
     {
       label: "Agent Label",
       id: "agentLabels",
-      formText: "Currently, only .Net and Coverity Scan supports windows agent",
     },
   ],
   newObjectFields: {
