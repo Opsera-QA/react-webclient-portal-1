@@ -104,7 +104,13 @@ function ExactMatchSearchSelectInputBase(
         const searchedItem = await exactMatchSearch(parsedNewValue);
 
         if (!searchedItem){
-          setInternalErrorMessage("There was no exact match of this branch name. Please search for another branch.");
+          let error = "There was no exact match of this branch name. Please search for another branch.";
+
+          if (hasStringValue(dataObject.getData(field.id)) === true) {
+            error += " Please Note: The currently selected value will remain selected until another branch is set.";
+          }
+
+          setInternalErrorMessage(error);
           const clearValueFunction = getClearDataFunction();
 
           if (clearValueFunction) {
