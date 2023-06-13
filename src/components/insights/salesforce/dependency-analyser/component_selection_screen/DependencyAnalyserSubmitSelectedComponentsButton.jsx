@@ -42,13 +42,14 @@ function DependencyAnalyserSubmitSelectedComponentsButton({pipelineWizardModel, 
         console.error("Error Saving Selected Component Types: ", result?.data?.message);
         toastContext.showInlineErrorMessage("Error Saving Selected Component Types: " + result?.data?.message);
       } else {
-        let triggerResponse = await sfdcDependencyAnalyserActions.triggerDependentFiles(getAccessToken, cancelTokenSource, pipelineWizardModel);
+        let triggerResponse = await sfdcDependencyAnalyserActions.triggerDependencyAnalyserSfdcFilesPull(getAccessToken, cancelTokenSource, pipelineWizardModel);
 
-        if(triggerResponse?.data?.status !== 200) {
-          toastContext.showInlineErrorMessage(triggerResponse?.data?.message);
+        console.log(triggerResponse);
+        if(triggerResponse?.data?.sfdcModified?.status !== 200) {
+          toastContext.showInlineErrorMessage(triggerResponse?.data?.sfdcModified?.message);
           return;
         }
-        setPipelineWizardScreen(DEPENDENCY_ANALYSER_SCREENS.DEPENDENCY_VIEWER);
+        setPipelineWizardScreen(DEPENDENCY_ANALYSER_SCREENS.MODIFIED_FILE_LIST_VIEWER);
       }
     } catch (error) {
       console.error(error);
