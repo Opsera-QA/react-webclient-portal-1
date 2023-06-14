@@ -32,7 +32,7 @@ function TextFieldBase(
     <FieldContainer className={className}>
       <div className="w-100 d-flex">
         <FieldLabel field={field} />
-        <span>{textValue || numberValue || ""}</span>
+        <span>{textValue || numberValue?.toString() || ""}</span>
         {getClipboardButton()}
       </div>
     </FieldContainer>

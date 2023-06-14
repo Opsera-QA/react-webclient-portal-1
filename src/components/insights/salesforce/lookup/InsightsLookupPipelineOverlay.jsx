@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import { insightsLookupActions } from "./insightsLookup.actions";
-import { AuthContext } from "../../../contexts/AuthContext";
+import { AuthContext } from "../../../../contexts/AuthContext";
 import InsightsLookupDetailsTable from "./InsightsLookupDetailsTable";
 import axios from "axios";
-import {formatDate} from "../../common/helpers/date/date.helpers";
+import {formatDate} from "../../../common/helpers/date/date.helpers";
 
-const InsightsLookupPipelineOverlay = ({ componentName, pipeline, startDate, endDate, orgs }) => {
+const InsightsLookupPipelineOverlay = ({ componentName, pipeline, startDate, endDate }) => {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -51,8 +51,7 @@ const InsightsLookupPipelineOverlay = ({ componentName, pipeline, startDate, end
           componentName,
           pipeline,
           formattedStartDate,
-          formattedEndDate,
-          orgs
+          formattedEndDate
       );
 
       setLookupDetails(data.data.results);
@@ -98,7 +97,6 @@ InsightsLookupPipelineOverlay.propTypes = {
   pipeline: PropTypes.string,
   startDate: PropTypes.string,
   endDate:PropTypes.string,
-  orgs: PropTypes.array,
 };
 
 export default InsightsLookupPipelineOverlay;

@@ -6,7 +6,7 @@ import { getTableTextColumn } from "components/common/table/table-column-helpers
 import MakeupTableBase from "components/common/table/makeup/MakeupTableBase";
 import { faBug } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
-import { DialogToastContext } from "../../../contexts/DialogToastContext";
+import { DialogToastContext } from "../../../../contexts/DialogToastContext";
 
 const fields = [
   {
@@ -61,12 +61,12 @@ const initialState = {
   ],
 };
 
-const InsightsLookupPipelinesTable = ({ pipelines, componentName, startDate,endDate, orgs }) => {
+const InsightsLookupPipelinesTable = ({ pipelines, componentName, startDate,endDate }) => {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect = (row) => {
     toastContext.showOverlayPanel(
-        <InsightsLookupPipelineOverlay componentName={componentName} pipeline={row?.original?.pipeline} startDate={startDate} endDate={endDate} orgs={orgs}/>,
+        <InsightsLookupPipelineOverlay componentName={componentName} pipeline={row?.original?.pipeline} startDate={startDate} endDate={endDate}/>,
     );
   };
 
@@ -109,7 +109,6 @@ InsightsLookupPipelinesTable.propTypes = {
   componentName: PropTypes.string,
   startDate: PropTypes.string,
   endDate: PropTypes.string,
-  orgs: PropTypes.array
 };
 
 export default InsightsLookupPipelinesTable;

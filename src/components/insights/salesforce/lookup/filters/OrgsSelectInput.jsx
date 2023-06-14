@@ -2,8 +2,8 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {insightsLookupActions} from "components/insights/lookup/insightsLookup.actions";
-import {capitalizeFirstLetter} from "../../../common/helpers/string-helpers";
+import {insightsLookupActions} from "components/insights/salesforce/lookup/insightsLookup.actions";
+import {capitalizeFirstLetter} from "../../../../common/helpers/string-helpers";
 
 function OrgsSelectInput(
     {

@@ -27,6 +27,7 @@ import {
   faUserAltSlash,
   faUserCheck,
   faClipboardUser,
+  faSitemap
 } from "@fortawesome/pro-light-svg-icons";
 import { taskTypeConstants } from "components/tasks/task.types";
 import { pipelineSettingsTrails } from "components/settings/pipelines/pipelineSettings.trails";
@@ -36,6 +37,7 @@ import {accountSettingsTrails} from "components/settings/accountSettings.trails"
 import {adminToolsTrails} from "components/admin/adminTools.trails";
 import {reportsTrails} from "components/reports/reports.trails";
 import {workspaceTrails} from "components/workspace/workspace.trails";
+import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
 export const breadcrumbs = {
@@ -133,13 +135,31 @@ export const breadcrumbs = {
     linkText: "Dashboard Details",
     icon: faChartNetwork
   },
-  lookup: {
+  salesforce: {
     parent: "insights",
+    name: "salesforce",
+    path: paths.salesforce,
+    title: "Salesforce Insights",
+    linkText: "Salesforce",
+    icon: faSalesforce,
+    isBeta: true,
+  },
+  lookup: {
+    parent: "salesforce",
     name: "lookup",
     path: paths.lookup,
     title: "Salesforce Lookup",
     linkText: "Salesforce Lookup",
     icon: faMagnifyingGlass,
+    isBeta: true,
+  },
+  dependencyAnalyser: {
+    parent: "salesforce",
+    name: "dependencyAnalyser",
+    path: paths.dependencyAnalyser,
+    title: "Salesforce Dependency Analyser",
+    linkText: "Salesforce Dependency Analyser",
+    icon: faSitemap,
     isBeta: true,
   },
   marketplace: {
