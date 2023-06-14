@@ -74,7 +74,12 @@ export const mergeSyncTaskWizardMetadata = {
     {
       label: "Salesforce API Version",
       id: "apiVersion"
-    }
+    },
+    {
+      label: "Commit Message",
+      id: "commitMessage",
+      maxLength: 2000,
+    },
   ],
   newObjectFields: {
     selectedComponentTypes: [],

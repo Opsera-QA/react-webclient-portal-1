@@ -27,6 +27,14 @@ mergeSyncTaskWizardActions.createNewRecordV2 = async (
   );
 };
 
+mergeSyncTaskWizardActions.updateCommitMsg = async (getAccessToken, cancelTokenSource, taskWizardModel) => {
+  const postBody = {
+    commitMsg: taskWizardModel?.getData("commitMessage"),
+  };
+  const apiUrl = `/tasks/update-commit-msg-pipeline-storage-configuration/wizard/${taskWizardModel?.getData("recordId")}`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 mergeSyncTaskWizardActions.updatePipelineStorageRecordV2 = async (getAccessToken, cancelTokenSource, taskWizardModel) => {
   const apiUrl = `/tasks/merge-sync-task/wizard/${taskWizardModel?.getData("recordId")}`;
   const componentTypes = taskWizardModel?.getData("isProfiles") ? [...taskWizardModel?.getArrayData("selectedComponentTypes"), "Profile"] : taskWizardModel?.getArrayData(
