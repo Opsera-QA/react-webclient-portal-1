@@ -13,8 +13,6 @@ import PipelineActivityLogTable
 import CustomTable from "components/common/table/CustomTable";
 import PaginationHelper from "@opsera/persephone/helpers/array/pagination.helper";
 import useGetPipelineActivityLogs from "hooks/workflow/pipelines/logs/useGetPipelineActivityLogs";
-import useGetPollingPipelineActivityLogCountForRun
-  from "hooks/workflow/pipelines/logs/useGetPollingPipelineActivityLogCountForRun";
 
 function PipelineActivityLogTreeTable(
   {
@@ -34,26 +32,12 @@ function PipelineActivityLogTreeTable(
     error,
     loadData,
     isLoading,
-    pipelineTree,
+    pipelineLogsTree,
   } = useGetPipelineActivityLogs(
     pipelineId,
     currentRunNumber,
     pipelineRunCount,
   );
-  const {
-    logCount,
-  } = useGetPollingPipelineActivityLogCountForRun(
-    pipelineId,
-    currentRunNumber === pipelineRunCount ? currentRunNumber : undefined
-  );
-
-  useEffect(() => {
-    if (logCount > pipelineActivityLogs.length) {
-      console.debug(`logCount: [${logCount}], current log count: [${pipelineActivityLogs.length}]`);
-      loadData().catch(() => {
-      });
-    }
-  }, [logCount]);
 
   const getNoDataMessage = () => {
     if (pipelineActivityFilterModel?.getActiveFilters()?.length > 0) {
@@ -97,7 +81,7 @@ function PipelineActivityLogTreeTable(
   const getTree = () => {
     return (
       <PipelineActivityLogTree
-        pipelineLogTree={pipelineTree?.current}
+        pipelineLogTree={pipelineLogsTree}
         setCurrentRunNumber={setCurrentRunNumber}
         setCurrentStepId={setCurrentStepId}
         pipelineRunCount={pipelineRunCount}

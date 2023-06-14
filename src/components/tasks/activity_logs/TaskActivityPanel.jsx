@@ -1,9 +1,6 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
-import taskActivityLogHelpers
-  from "components/tasks/activity_logs/taskActivityLog.helpers";
 import TaskActivityLogTreeTable from "components/tasks/details/TaskActivityLogTreeTable";
-import useGetPollingTaskActivityLogCountForRun from "hooks/workflow/tasks/logs/useGetPollingTaskActivityLogCountForRun";
 import useGetTaskActivityLogs from "hooks/workflow/tasks/logs/useGetTaskActivityLogs";
 
 export default function TaskActivityPanel(
@@ -13,7 +10,6 @@ export default function TaskActivityPanel(
     taskId,
     showFilterContainerIcon,
   }) {
-  const taskLogsTree = useRef([]);
   const [currentRunNumber, setCurrentRunNumber] = useState(taskRunCount);
   const {
     taskActivityLogs,
@@ -23,29 +19,12 @@ export default function TaskActivityPanel(
     error,
     loadData,
     isLoading,
+    taskLogsTree,
   } = useGetTaskActivityLogs(
     taskId,
     currentRunNumber,
+    taskRunCount,
   );
-  const pollingTaskActivityLogCountForRunHook = useGetPollingTaskActivityLogCountForRun(
-    taskId,
-    currentRunNumber === taskRunCount ? currentRunNumber : undefined
-  );
-
-  useEffect(() => {
-    if (pollingTaskActivityLogCountForRunHook.logCount > taskActivityLogs.length) {
-      console.debug(`logCount: [${pollingTaskActivityLogCountForRunHook.logCount}], current log count: [${taskActivityLogs.length}]`);
-      loadData();
-    }
-  }, [pollingTaskActivityLogCountForRunHook.logCount]);
-
-  useEffect(() => {
-    const taskTree = taskActivityLogHelpers.constructRunCountTreeWithRunCountAndTaskId(taskRunCount, taskId);
-
-    if (Array.isArray(taskTree)) {
-      taskLogsTree.current = taskTree;
-    }
-  }, [taskRunCount, taskId]);
 
   if (taskModel == null) {
     return null;
@@ -59,7 +38,7 @@ export default function TaskActivityPanel(
       loadData={loadData}
       taskActivityFilterModel={taskActivityFilterModel}
       setTaskActivityFilterModel={setTaskActivityFilterModel}
-      taskActivityTreeData={taskLogsTree?.current}
+      taskActivityTreeData={taskLogsTree}
       setCurrentRunNumber={setCurrentRunNumber}
       currentRunNumber={currentRunNumber}
       taskRunCount={taskRunCount}
