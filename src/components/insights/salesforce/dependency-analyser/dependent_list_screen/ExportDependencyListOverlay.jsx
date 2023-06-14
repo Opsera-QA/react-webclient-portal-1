@@ -31,7 +31,7 @@ function ExportDependencyListOverlay({ dataModel }) {
       showHead: "firstPage",
       headStyles:{fontSize: 8, minCellWidth: 30, fillColor: [54, 46, 84]},
       margin: { left: 1, right: 1 },
-      head:[["committedFileId", "componentName", "componentType", "refComponentId", "refComponentName", "refComponentType"]],
+      head:[["Committed File Id", "component Name", "Component Type", "Ref Component Id", "Ref Component Name", "Ref Component Type"]],
       body: dependentListData.map((item) => [item.committedFileId, item.componentName, item.componentType, item.refComponentId, item.refComponentName, item.refComponentType])
     });
 
@@ -39,7 +39,7 @@ function ExportDependencyListOverlay({ dataModel }) {
   };
 
   const getCsvData = () => {
-    return [["committedFileId", "componentName", "componentType", "refComponentId", "refComponentName", "refComponentType"],
+    return [["Committed File Id", "component Name", "Component Type", "Ref Component Id", "Ref Component Name", "Ref Component Type"],
       ...dependentListData.map((item) =>
         [
           item.committedFileId,
