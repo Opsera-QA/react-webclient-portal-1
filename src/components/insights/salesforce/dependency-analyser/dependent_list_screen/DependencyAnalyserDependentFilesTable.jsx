@@ -87,17 +87,17 @@ const DependencyAnalyserDependentFilesTable = ({ pipelineWizardModel, setPipelin
 
   return (
     <div>
-      <DependencyAnalyserRuleInput
-        pipelineWizardModel={pipelineWizardModel}
-        sfdcFiles={sfdcFiles}
-        setPipelineWizardModel={setPipelineWizardModel}
-        isLoading={isLoading}
-        filePullCompleted={filePullCompleted}
-      />
-      <InlineWarning
-        className={"ml-2"}
-        warningMessage={"Warning: Use of the component or keyword search filter in the table below will not alter the final filtered file list."}
-      />
+      {/*<DependencyAnalyserRuleInput*/}
+      {/*  pipelineWizardModel={pipelineWizardModel}*/}
+      {/*  sfdcFiles={sfdcFiles}*/}
+      {/*  setPipelineWizardModel={setPipelineWizardModel}*/}
+      {/*  isLoading={isLoading}*/}
+      {/*  filePullCompleted={filePullCompleted}*/}
+      {/*/>*/}
+      {/*<InlineWarning*/}
+      {/*  className={"ml-2"}*/}
+      {/*  warningMessage={"Warning: Use of the component or keyword search filter in the table below will not alter the final filtered file list."}*/}
+      {/*/>*/}
       <FilterContainer
         loadData={loadData}
         filterDto={sfdcFilesPaginationModel}

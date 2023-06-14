@@ -60,7 +60,8 @@ function ExportDependencyListOverlay({ dataModel }) {
         cancelTokenSource,
         dataModel,
       );
-      const allDependentList = response?.data?.data?.data;
+
+      const allDependentList = response?.data?.data;
 
       if (Array.isArray(allDependentList)) {
         setDependentListData([...allDependentList]);

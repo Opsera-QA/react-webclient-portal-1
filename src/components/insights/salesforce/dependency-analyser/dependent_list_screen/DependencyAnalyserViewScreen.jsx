@@ -131,7 +131,6 @@ const DependencyAnalyserViewScreen = ({
       }
     }
 
-    console.log(data?.data);
     return data?.data;
   };
 
@@ -179,6 +178,10 @@ const DependencyAnalyserViewScreen = ({
           size="sm"
           className="mr-2"
           onClick={() => {
+            if(pipelineWizardModel?.getData("fromFileUpload") === true) {
+              setPipelineWizardScreen(DEPENDENCY_ANALYSER_SCREENS.INITIALIZATION_SCREEN);
+              return;
+            }
             setPipelineWizardScreen(
               DEPENDENCY_ANALYSER_SCREENS.MODIFIED_FILE_LIST_VIEWER,
             );
