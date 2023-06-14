@@ -27,14 +27,17 @@ export default function TaskActivityPanel(
     taskId,
     currentRunNumber,
   );
-  // const pollingTaskActivityLogCountForRunHook = useGetPollingTaskActivityLogCountForRun(
-  //   taskId,
-  //   currentRunNumber === taskRunCount ? currentRunNumber : undefined
-  // );
+  const pollingTaskActivityLogCountForRunHook = useGetPollingTaskActivityLogCountForRun(
+    taskId,
+    currentRunNumber === taskRunCount ? currentRunNumber : undefined
+  );
 
-  // useEffect(() => {
-  //   loadData();
-  // }, [pollingTaskActivityLogCountForRunHook.logCount]);
+  useEffect(() => {
+    if (pollingTaskActivityLogCountForRunHook.logCount > taskActivityLogs.length) {
+      console.debug(`logCount: [${pollingTaskActivityLogCountForRunHook.logCount}], current log count: [${taskActivityLogs.length}]`);
+      loadData();
+    }
+  }, [pollingTaskActivityLogCountForRunHook.logCount]);
 
   useEffect(() => {
     const taskTree = taskActivityLogHelpers.constructRunCountTreeWithRunCountAndTaskId(taskRunCount, taskId);
