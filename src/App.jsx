@@ -19,7 +19,7 @@ import "css/inputs/rich-text-input.css";
 import "temp-library-components/scss/opsera-theme.scss";
 import "temp-library-components/scss/sub-menu.scss";
 import "assets/scss/fonts.scss";
-import "@okta/okta-signin-widget/dist/css/okta-sign-in.min.css";
+import "css/external/okta-sign-in.min.css";
 
 const App = () => {
   return (
