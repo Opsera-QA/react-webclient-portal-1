@@ -49,7 +49,7 @@ function PipelineActivityLogTreeTable(
 
   useEffect(() => {
     if (logCount > pipelineActivityLogs.length) {
-      console.log(`logCount: [${logCount}], current log count: [${pipelineActivityLogs.length}]`);
+      console.debug(`logCount: [${logCount}], current log count: [${pipelineActivityLogs.length}]`);
       loadData().catch(() => {
       });
     }
