@@ -17,8 +17,6 @@ function OpseraAIInputBox({ sendMessage, isLoading, disabled }) {
     new Model({ ...chatbotModel.newObjectFields }, chatbotModel, true),
   );
 
-  useEffect(() => {}, []);
-
   const processMessage = (e) => {
     e.preventDefault();
     sendMessage(chatModel?.getData("question"));
