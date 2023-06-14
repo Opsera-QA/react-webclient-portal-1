@@ -258,7 +258,7 @@ const SfdcPipelineWizardXmlViewer = (
       <div className="flex-container">
         {getTabContainer()}
         {getView()}
-        {pipelineWizardModel.getData('fromGitTasks') ? (
+        {pipelineWizardModel?.getData('fromGitTasks') ? (
           <TextAreaInput
             dataObject={pipelineWizardModel}
             setDataObject={setPipelineWizardModel}
