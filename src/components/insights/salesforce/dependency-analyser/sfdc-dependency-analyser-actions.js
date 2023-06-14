@@ -69,7 +69,7 @@ sfdcDependencyAnalyserActions.triggerDependentFiles = async (getAccessToken, can
 
 sfdcDependencyAnalyserActions.getDependentList = async (getAccessToken, cancelTokenSource, pipelineWizardModel, newFilterDto) => {
   const postBody = {
-    rules: pipelineWizardModel?.getData("sfdcModifiedRuleList"),
+    rules: pipelineWizardModel?.getData("sfdcDependencyFileRuleList"),
     page: newFilterDto ? newFilterDto.getData("currentPage") : 1,
     size: newFilterDto ? newFilterDto.getData("pageSize") : 3000,
     search: newFilterDto ? newFilterDto.getData("search") : "",
