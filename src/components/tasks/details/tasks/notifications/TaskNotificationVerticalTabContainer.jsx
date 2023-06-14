@@ -68,6 +68,12 @@ function TaskNotificationVerticalTabContainer(
 TaskNotificationVerticalTabContainer.propTypes = {
   activeTab: PropTypes.string,
   handleTabClickFunction: PropTypes.func,
+  slackEnabled: PropTypes.bool,
+  jiraEnabled: PropTypes.bool,
+  teamsEnabled: PropTypes.bool,
+  serviceNowEnabled: PropTypes.bool,
+  emailEnabled: PropTypes.bool,
+  gChatEnabled: PropTypes.bool,
 };
 
 export default TaskNotificationVerticalTabContainer;
