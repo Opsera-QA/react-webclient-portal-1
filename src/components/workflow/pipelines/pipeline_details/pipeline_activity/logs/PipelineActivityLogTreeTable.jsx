@@ -13,8 +13,6 @@ import PipelineActivityLogTable
 import CustomTable from "components/common/table/CustomTable";
 import PaginationHelper from "@opsera/persephone/helpers/array/pagination.helper";
 import useGetPipelineActivityLogs from "hooks/workflow/pipelines/logs/useGetPipelineActivityLogs";
-import useGetPollingPipelineActivityLogCountForRun
-  from "hooks/workflow/pipelines/logs/useGetPollingPipelineActivityLogCountForRun";
 
 function PipelineActivityLogTreeTable(
   {
