@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import liveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessageTopic.constants";
 import TaskActivityLogFilterModel from "components/tasks/activity_logs/taskActivityLog.filter.model";
@@ -6,15 +6,19 @@ import useTaskActivityLogActions from "hooks/workflow/tasks/logs/useTaskActivity
 import useTaskActivityLogCollectionSubscriptionHelper
   from "core/websocket/hooks/collection/activity_logs/useTaskActivityLogCollectionSubscriptionHelper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useGetPollingTaskActivityLogCountForRun from "hooks/workflow/tasks/logs/useGetPollingTaskActivityLogCountForRun";
+import taskActivityLogHelpers from "components/tasks/activity_logs/taskActivityLog.helpers";
 
 export default function useGetTaskActivityLogs(
   taskId,
   currentRunNumber,
+  taskRunCount,
   handleErrorFunction,
 ) {
   const taskActivityLogActions = useTaskActivityLogActions();
   const [taskActivityFilterModel, setTaskActivityFilterModel] = useState(new TaskActivityLogFilterModel());
   const [taskActivityLogs, setTaskActivityLogs] = useState([]);
+  const taskLogsTree = useRef([]);
   const {
     isLoading,
     error,
@@ -28,6 +32,10 @@ export default function useGetTaskActivityLogs(
     taskId,
     currentRunNumber,
   );
+  const pollingTaskActivityLogCountForRunHook = useGetPollingTaskActivityLogCountForRun(
+    taskId,
+    currentRunNumber === taskRunCount ? currentRunNumber : undefined
+  );
 
   useEffect(() => {
     setTaskActivityLogs([]);
@@ -36,6 +44,23 @@ export default function useGetTaskActivityLogs(
       loadData(getTaskActivityLogs, handleErrorFunction).catch(() => {});
     }
   }, [currentRunNumber, taskId]);
+
+  useEffect(() => {
+    if (pollingTaskActivityLogCountForRunHook.logCount > taskActivityLogs.length) {
+      console.debug(`logCount: [${pollingTaskActivityLogCountForRunHook.logCount}], current log count: [${taskActivityLogs.length}]`);
+      if (currentRunNumber && taskId && loadData) {
+        loadData(getTaskActivityLogs, handleErrorFunction).catch(() => {});
+      }
+    }
+  }, [pollingTaskActivityLogCountForRunHook.logCount]);
+
+  useEffect(() => {
+    const taskTree = taskActivityLogHelpers.constructRunCountTreeWithRunCountAndTaskId(taskRunCount, taskId);
+
+    if (Array.isArray(taskTree)) {
+      taskLogsTree.current = taskTree;
+    }
+  }, [taskRunCount, taskId]);
 
   const getTaskActivityLogs = async (newFilterModel = taskActivityFilterModel) => {
 
@@ -84,5 +109,6 @@ export default function useGetTaskActivityLogs(
     isLoading: isLoading,
     error: error,
     setError: setError,
+    taskLogsTree: taskLogsTree?.current,
   });
 }
