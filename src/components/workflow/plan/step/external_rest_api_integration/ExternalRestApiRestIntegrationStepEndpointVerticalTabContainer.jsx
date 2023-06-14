@@ -21,6 +21,8 @@ import ExternalApiIntegrationStepUseConnectionCheckBooleanToggleInput
 import {
   EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
+import ExternalApiIntegrationStepStatusEndpointRequestInputBase
+  from "components/workflow/plan/step/external_rest_api_integration/inputs/request/status/ExternalApiIntegrationStepStatusEndpointRequestInputBase";
 
 const EXTERNAL_API_REST_INTEGRATION_TABS = {
   CONNECTION_CHECK_API_CONFIGURATION: "connection-check-api-configuration",
@@ -191,7 +193,7 @@ function ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer(
               setModel={setExternalRestApiIntegrationModel}
               disabled={disabled}
             />
-            <ExternalApiIntegrationStepRunEndpointRequestInputBase
+            <ExternalApiIntegrationStepStatusEndpointRequestInputBase
               fieldName={"statusEndpointRequestParameters"}
               model={externalRestApiIntegrationModel}
               setModel={setExternalRestApiIntegrationModel}

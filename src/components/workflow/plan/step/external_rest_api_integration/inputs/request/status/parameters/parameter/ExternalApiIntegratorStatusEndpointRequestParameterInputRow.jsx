@@ -72,6 +72,7 @@ export default function ExternalApiIntegratorStatusEndpointRequestParameterInput
   const getValueInput = () => {
     const type = endpointFieldModel?.getData("type");
     const isSensitiveData = endpointFieldModel?.getData("isSensitiveData");
+    const useRunApiResponseParameter = endpointFieldModel?.getData("useRunApiResponseParameter");
 
     switch (type) {
       case "string":
@@ -171,9 +172,13 @@ export default function ExternalApiIntegratorStatusEndpointRequestParameterInput
       title={`Field: ${endpointFieldModel?.getData("fieldName")}`}
     >
       <div className={"h-100"}>
-        <BooleanToggleInput
-
-        />
+        <div className={"mx-3 mt-2"}>
+          <BooleanToggleInput
+            dataObject={endpointFieldModel}
+            setDataFunction={(fieldName, newValue) => updateMainModelFunction(fieldName, newValue)}
+            fieldName={"useRunApiResponseParameter"}
+          />
+        </div>
         {getValueInput()}
       </div>
     </VanitySetTabContentContainer>

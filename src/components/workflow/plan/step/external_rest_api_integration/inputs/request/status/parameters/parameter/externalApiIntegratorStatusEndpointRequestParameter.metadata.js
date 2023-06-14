@@ -21,6 +21,10 @@ export const externalApiIntegratorStatusEndpointRequestParameterMetadata = {
       label: "Is Required",
       id: "isRequired",
     },
+    {
+      label: "Use Parameter From API Run Response",
+      id: "useRunApiResponseParameter",
+    },
   ],
   newObjectFields: {
     fieldName: "",
@@ -28,5 +32,6 @@ export const externalApiIntegratorStatusEndpointRequestParameterMetadata = {
     type: "",
     isSensitiveData: false,
     isRequired: false,
+    useRunApiResponseParameter: false,
   }
 };
