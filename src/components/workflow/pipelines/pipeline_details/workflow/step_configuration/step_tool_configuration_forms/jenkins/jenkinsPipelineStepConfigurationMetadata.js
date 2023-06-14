@@ -28,6 +28,11 @@ const jenkinsPipelineStepConfigurationMetadata = {
       // isRequired: true
     },
     {
+      label: "Version",
+      id: "xcodeVersion",
+      // isRequired: true
+    },
+    {
       label: "Account",
       id: "gitCredential",
       // isRequired: true
@@ -378,6 +383,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     terraformStepId:"",
     useTerraformOutput: false,
     job_type:"",
+    xcodeVersion:"",
     dynamicTag: false,
     dockerTagType:[],
     dockerDynamicTagName:"",
