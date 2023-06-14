@@ -24,6 +24,12 @@ import useGetOrganizationSettingsFeatureFlagModelByName
   from "hooks/settings/organization_settings/feature_flags/useGetOrganizationSettingsFeatureFlagModelByName";
 import featureFlagConstants
   from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
+import AIMLSidebarNavigationLink from "./links/AIMLSidebarNavigationLink";
+import useGetPlatformSettingsFeatureFlagByName
+  from "../../hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
+import platformSettingFeatureConstants
+  from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
+import CreateToolRegistryWizard from "../inventory/tools/tool_details/wizards/CreateToolRegistryWizard";
 
 export default function Sidebar({ hideSideBar }) {
   const { userData } = useComponentStateReference();
@@ -31,6 +37,8 @@ export default function Sidebar({ hideSideBar }) {
   const {
     isActive,
   } = useGetOrganizationSettingsFeatureFlagModelByName(featureFlagConstants.FEATURE_FLAG_NAMES.SHOW_INSIGHTS_VNEXT_SIDEBAR_LINK);
+  const getPlatformSettingsFeatureFlagByName = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.AI_ML_CHATBOT);
+
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(DataParsingHelper.parseBooleanV2(sessionHelper.getCookie(sessionHelper.SUPPORTED_COOKIE_STORAGE_KEYS.COLLAPSE_SIDEBAR), true));
 
   useEffect(() => {}, [isSidebarCollapsed, hideSideBar, isActive]);
@@ -40,6 +48,16 @@ export default function Sidebar({ hideSideBar }) {
         <InnovationLabsNavigationLinks
           isSidebarCollapsed={isSidebarCollapsed}
         />
+      );
+    }
+  };
+
+  const getAIMLChatbotLink = () => {
+    if (getPlatformSettingsFeatureFlagByName?.platformSettingsFeatureFlag?.active === true) {
+      return (
+          <AIMLSidebarNavigationLink
+              isSidebarCollapsed={isSidebarCollapsed}
+          />
       );
     }
   };
@@ -86,7 +104,7 @@ export default function Sidebar({ hideSideBar }) {
         <InsightsSidebarNavigationLink
           isSidebarCollapsed={isSidebarCollapsed}
         />
-
+        {getAIMLChatbotLink()}
         {getVnextSidebarLink()}
         <SidebarSubheaderText
           isSidebarCollapsed={isSidebarCollapsed}

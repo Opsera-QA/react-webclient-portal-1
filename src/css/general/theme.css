@@ -1819,4 +1819,83 @@ div.data-blocks-ellipses {
     border-color: #7F74B9 !important;
 }
 
+.chatbox {
+    position: relative;
+}
+
+.chatarea {
+    overflow-y: auto;
+}
+
+.chat-input-holder {
+    padding: 12px;
+    /*width: fit-content;*/
+    max-width: 105rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-bottom: .6rem;
+}
+
+.chat-input-textarea {
+    width: 100%;
+    border-radius: 1rem;
+    border: none;
+    margin-right: 24px;
+    outline: none;
+    padding: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.chat-log {
+    padding: 10px;
+    margin-left: 12px;
+    margin-right: 12px;
+    text-align: left;
+    display: flex;
+    width: 99%;
+}
+
+.chat-message.opsera-ai {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 1rem;
+}
+
+.chat-message.user {
+    width: 100%;
+    border: 2px solid #DFD1FF;
+    border-radius: 1rem;
+    padding-right: 2rem;
+}
+
+.chat-message-center {
+    padding: 17px;
+    padding-left: 28px;
+    padding-right: 28px;
+    /*max-width: 480px;*/
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+}
+
+.chatbox-panel-body {
+    max-height: calc(92vh - 250px);
+    overflow-y: auto;
+}
+
+.avatar {
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.15);
+    border: 2px solid #46376F;
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+.message {
+    padding-left: 40px;
+    padding-right: 40px
+}
+
 /* End Page Link Card Styling */

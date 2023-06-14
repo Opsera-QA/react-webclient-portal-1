@@ -27,7 +27,8 @@ import {
   faUserAltSlash,
   faUserCheck,
   faClipboardUser,
-  faSitemap
+  faSitemap,
+  faMicrochipAi
 } from "@fortawesome/pro-light-svg-icons";
 import { taskTypeConstants } from "components/tasks/task.types";
 import { pipelineSettingsTrails } from "components/settings/pipelines/pipelineSettings.trails";
@@ -357,6 +358,15 @@ export const breadcrumbs = {
     title: "Page Not Found!",
     linkText: undefined,
     icon: faDiamondExclamation,
+  },
+
+  ai: {
+    parent: undefined,
+    name: "ai",
+    path: paths.ai,
+    title: "AI Tools (Beta)",
+    linkText: "AI Tools (Beta)",
+    icon: faMicrochipAi
   },
 
   ...pipelineSettingsTrails,
