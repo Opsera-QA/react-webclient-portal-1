@@ -197,7 +197,7 @@ function JenkinsStepConfiguration({
         />
       );
     }
-  }
+  };
 
   const getJobForm = () => {
     if (jenkinsStepConfigurationDto?.getData("job_type") === "job") {
