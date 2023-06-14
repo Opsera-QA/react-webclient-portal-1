@@ -48,7 +48,10 @@ function PipelineActivityLogTreeTable(
   );
 
   useEffect(() => {
-    loadData().catch(() => {});
+    if (logCount > pipelineActivityLogs.length) {
+      loadData().catch(() => {
+      });
+    }
   }, [logCount]);
 
   const getNoDataMessage = () => {
