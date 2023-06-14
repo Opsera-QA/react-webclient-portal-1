@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import LookupMetricTotalsDataBlocks from "components/insights/lookup/LookupMetricTotalsDataBlocks";
-import InsightsLookupPipelinesTable from "components/insights/lookup/InsightsLookupPipelinesTable";
+import LookupMetricTotalsDataBlocks from "components/insights/salesforce/lookup/LookupMetricTotalsDataBlocks";
+import InsightsLookupPipelinesTable from "components/insights/salesforce/lookup/InsightsLookupPipelinesTable";
 import TabTreeAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
@@ -95,7 +95,6 @@ function LookupResults(
                         componentName={selectedComponentName}
                         startDate={filterModel?.getData("startDate")}
                         endDate={filterModel?.getData("endDate")}
-                        orgs={filterModel?.getData("orgsComponentFilterData")}
                     />
                 </div>
             );
