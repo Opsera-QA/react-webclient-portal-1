@@ -44,12 +44,16 @@ sfdcTableConstants.fields = [
     id: "errorReason"
   },
   {
-    label: "Ref Component Name",
+    label: "Dependent Component Name",
     id: "refComponentName"
   },
   {
-    label: "Ref Component Type",
+    label: "Dependent Component Type",
     id: "refComponentType"
+  },
+  {
+    label: "Dependent Component Id",
+    id: "refComponentId"
   },
 ];
 
