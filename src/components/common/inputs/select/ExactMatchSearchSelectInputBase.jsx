@@ -94,45 +94,41 @@ function ExactMatchSearchSelectInputBase(
     setDataObject({...dataObject});
   };
 
-    const updateValue = async (newValue) => {
-      setInternalErrorMessage("");
-      let parsedObjectValue = DataParsingHelper.parseObject(newValue);
-      const parsedValueField = DataParsingHelper.parseString(valueField);
-    
-      if (parsedObjectValue && parsedObjectValue.OPSERA_DIRECT_LOOKUP_NEEDED === true) {
-        const searchedItem = await exactMatchSearch(parsedObjectValue);
+  const updateValue = async (newValue) => {
+    setInternalErrorMessage("");
+    const parsedNewValue = DataParsingHelper.parseObject(newValue);
+    const parsedValueField = DataParsingHelper.parseString(valueField);
+    const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
 
-        if (!searchedItem){
-          let error = "There was no exact match of this branch name. Please search for another branch.";
+    if (parsedNewValue && parsedNewValue.OPSERA_DIRECT_LOOKUP_NEEDED === true) {
+      const searchedItem = await exactMatchSearch(parsedNewValue);
 
-          if (hasStringValue(dataObject.getData(field.id)) === true) {
-            error += " Please Note: The currently selected value will remain selected until another branch is set.";
-          }
+      if (!searchedItem){
+        let error = "There was no exact match of this branch name. Please search for another branch.";
 
-          setInternalErrorMessage(error);
-          const clearValueFunction = getClearDataFunction();
-
-          if (clearValueFunction) {
-            clearValueFunction();
-          }
-          return;
+        if (hasStringValue(dataObject.getData(field.id)) === true) {
+          error += " Please Note: The currently selected value will remain selected until another branch is set.";
         }
 
-        parsedObjectValue = searchedItem;
+        setInternalErrorMessage(error);
+        const clearValueFunction = getClearDataFunction();
+
+        if (clearValueFunction) {
+          clearValueFunction();
+        }
       }
+      return;
+    }
 
-      // TODO: This will break if used for anything other than branches. We need to send objects for setDataFunction, not the value field.
-      const parsedValue = typeof newValue === "string" ? newValue : parsedObjectValue[valueField];
-
-      if (parsedObjectValue && parsedValueField && (externalCacheToolIdentifier || externalCacheToolId)) {
-        const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
-        parameters.cache = newValue;
+    if (parsedNewValue && parsedValueField && (externalCacheToolIdentifier || externalCacheToolId)) {
+      const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
+      parameters.cache = newValue;
 
       if (typeof textField === "string") {
         parameters.textField = textField;
       }
 
-      setCachedValue(parsedObjectValue[parsedValueField], parameters);
+      setCachedValue(parsedNewValue[parsedValueField], parameters);
     }
 
     if (setDataFunction) {
