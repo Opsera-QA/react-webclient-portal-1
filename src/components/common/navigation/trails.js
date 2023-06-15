@@ -364,8 +364,8 @@ export const breadcrumbs = {
     parent: undefined,
     name: "ai",
     path: paths.ai,
-    title: "AI Tools (Beta)",
-    linkText: "AI Tools (Beta)",
+    title: "Opsera AI Chatbot Prototype",
+    linkText: "Opsera AI Chatbot Prototype",
     icon: faMicrochipAi
   },
 

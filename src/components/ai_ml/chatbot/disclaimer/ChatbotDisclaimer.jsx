@@ -20,8 +20,12 @@ function ChatbotDisclaimer({
         title={title}
       >
         <div>
-          Opsera AI Tools may occasionally produce inaccurate information about
-          people, places, or facts.
+          Welcome to the brand new Opsera AI chat experience! We are excited to
+          share this new technology in DevOps with you! But as you may expect,
+          work around AI and this type of data is still an evovling field and
+          the results presented right now are representative of a prototype
+          model that is still learning. Just like with anything, please bear
+          with us and know that some inaccuracies (hallucinations) could occur.
           <div className={"mt-2"}>
             <ul style={{ listStyleType: "none" }}>
               <li>

@@ -27,7 +27,7 @@ function AIToolsHelpDocumentation() {
         <HelpOverlayBase
             closePanel={closePanel}
             showPanel={true}
-            helpTopic={"AI Tools"}
+            helpTopic={"Opsera AI Chatbot Prototype"}
             helpDocumentation={getHelpDocumentation()}
         >
         </HelpOverlayBase>
