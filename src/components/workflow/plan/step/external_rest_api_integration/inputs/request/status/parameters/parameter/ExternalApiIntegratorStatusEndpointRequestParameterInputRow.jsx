@@ -19,6 +19,7 @@ export default function ExternalApiIntegratorStatusEndpointRequestParameterInput
     endpointBodyField,
     endpointParameterArrayInputHeight,
     endpointParameterInputHeight,
+    toolId,
     runEndpointId,
   }) {
   const [endpointFieldModel, setEndpointFieldModel] = useState(undefined);
@@ -41,6 +42,8 @@ export default function ExternalApiIntegratorStatusEndpointRequestParameterInput
         <ExternalApiIntegrationStepRunResponseParameterSelectInput
           model={endpointFieldModel}
           setModel={setEndpointFieldModel}
+          toolId={toolId}
+          runEndpointId={runEndpointId}
           disabled={disabled}
         />
       );
@@ -83,6 +86,7 @@ export default function ExternalApiIntegratorStatusEndpointRequestParameterInput
 }
 
 ExternalApiIntegratorStatusEndpointRequestParameterInputRow.propTypes = {
+  toolId: PropTypes.string,
   runEndpointId: PropTypes.string,
   updateParameterFunction: PropTypes.func,
   disabled: PropTypes.bool,

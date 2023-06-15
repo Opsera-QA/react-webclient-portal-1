@@ -7,6 +7,8 @@ export default function ExternalApiIntegrationStepRunResponseParameterSelectInpu
   {
     model,
     setModel,
+    toolId,
+    runEndpointId,
     disabled,
   }) {
   const setDataFunction = (fieldName, selectedOption) => {
@@ -19,8 +21,8 @@ export default function ExternalApiIntegrationStepRunResponseParameterSelectInpu
   return (
     <ExternalApiIntegratorToolEndpointResponseBodyFieldSelectInput
       fieldName={"runEndpointFieldName"}
-      toolId={model?.getData("toolId")}
-      endpointId={model?.getData("endpointId")}
+      toolId={toolId}
+      endpointId={runEndpointId}
       model={model}
       setModel={setModel}
       setDataFunction={setDataFunction}
@@ -32,5 +34,7 @@ export default function ExternalApiIntegrationStepRunResponseParameterSelectInpu
 ExternalApiIntegrationStepRunResponseParameterSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
+  toolId: PropTypes.string,
+  runEndpointId: PropTypes.string,
   disabled: PropTypes.bool,
 };

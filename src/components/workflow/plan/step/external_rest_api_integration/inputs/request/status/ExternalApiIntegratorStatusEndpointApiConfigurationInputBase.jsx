@@ -55,6 +55,7 @@ export default function ExternalApiIntegratorStatusEndpointApiConfigurationInput
             endpointParameterArrayInputHeight={endpointParameterArrayInputHeight}
             endpointParameterInputHeight={endpointParameterInputHeight}
             runEndpointId={model?.getData("runEndpointId")}
+            toolId={model?.getData("toolId")}
           />
         );
       case ENDPOINT_REQUEST_TYPES.PUT:
@@ -70,6 +71,7 @@ export default function ExternalApiIntegratorStatusEndpointApiConfigurationInput
             endpointParameterArrayInputHeight={endpointParameterArrayInputHeight}
             endpointParameterInputHeight={endpointParameterInputHeight}
             runEndpointId={model?.getData("runEndpointId")}
+            toolId={model?.getData("toolId")}
           />
         );
       default:

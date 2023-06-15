@@ -27,8 +27,9 @@ export default function ExternalApiIntegratorStatusEndpointRequestParametersInpu
     endpointParameterArrayInputHeight,
     endpointParameterInputHeight,
     runEndpointId,
+    toolId,
   }) {
-  const [field] = useState(model?.getFieldById(fieldName));
+  const field = model?.getFieldById(fieldName);
   const [parameters, setParameters] = useState([]);
   const isMounted = useRef(false);
   const [activeTab, setActiveTab] = useState(undefined);
@@ -146,6 +147,7 @@ export default function ExternalApiIntegratorStatusEndpointRequestParametersInpu
         disabled={disabled}
         endpointParameterArrayInputHeight={endpointParameterArrayInputHeight}
         endpointParameterInputHeight={endpointParameterInputHeight}
+        toolId={toolId}
         runEndpointId={runEndpointId}
       />
     );
@@ -235,4 +237,5 @@ ExternalApiIntegratorStatusEndpointRequestParametersInputBase.propTypes = {
   endpointParameterArrayInputHeight: PropTypes.string,
   endpointParameterInputHeight: PropTypes.string,
   runEndpointId: PropTypes.string,
+  toolId: PropTypes.string,
 };
