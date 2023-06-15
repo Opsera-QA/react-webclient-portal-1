@@ -25,6 +25,10 @@ export const externalApiIntegratorStatusEndpointRequestParameterMetadata = {
       label: "Use Parameter From API Run Response",
       id: "useRunApiResponseParameter",
     },
+    {
+      label: "Run Endpoint Response Parameter Field Name",
+      id: "runEndpointFieldName",
+    },
   ],
   newObjectFields: {
     fieldName: "",
