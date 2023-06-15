@@ -7,15 +7,23 @@ import JenkinsXcodeScriptTypeSelectInput from "./JenkinsXcodeScriptTypeSelectInp
 import ParameterSelectListInputBase
   from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
 import {faHandshake} from "@fortawesome/pro-light-svg-icons";
+import JenkinsXcodeCertificateSelectInput from "./JenkinsXcodeCertificateSelectInput";
 
 
-function JenkinsIosBuildPanel({plan, model, setModel, buildType}) {
+function JenkinsIosBuildPanel({plan, model, setModel, buildType, jenkinsList, toolConfigId}) {
   if (buildType == null || buildType !== "xcode") {
     return null;
   }
 
   return (
-    <>      
+    <>
+      <JenkinsXcodeCertificateSelectInput 
+        model={model}
+        setModel={setModel}
+        fieldName={"credentialsId"}
+        jenkinsList={jenkinsList}
+        toolConfigId={toolConfigId}
+      />
       <TextInputBase dataObject={model} fieldName={"filePath"} setDataObject={setModel} />
       <TextInputBase dataObject={model} fieldName={"schemeName"} setDataObject={setModel} />      
       <TextInputBase dataObject={model} fieldName={"projectWorkspace"} setDataObject={setModel} />
@@ -48,6 +56,8 @@ JenkinsIosBuildPanel.propTypes = {
   setModel: PropTypes.func,
   buildType: PropTypes.string,
   plan: PropTypes.array,
+  jenkinsList: PropTypes.any,
+  toolConfigId: PropTypes.string,
 };
 
 export default JenkinsIosBuildPanel;

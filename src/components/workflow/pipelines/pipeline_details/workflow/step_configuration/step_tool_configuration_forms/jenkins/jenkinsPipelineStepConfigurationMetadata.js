@@ -334,6 +334,10 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {      
       id: "developerTeamId",
     },
+    {
+      label: "Certificate",
+      id: "credentialsId",
+    },
   ],
   newObjectFields: {
     jobType: "",
@@ -406,6 +410,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     configurationType: "",
     scriptType: "opsera",
     developerTeamId: "",
+    credentialsId: "",
   }
 };
 
