@@ -17,6 +17,7 @@ export default function ExternalApiIntegratorStatusEndpointRequestParameterInput
     endpointBodyField,
     endpointParameterArrayInputHeight,
     endpointParameterInputHeight,
+    runEndpointId,
   }) {
   const [endpointFieldModel, setEndpointFieldModel] = useState(undefined);
 
@@ -36,7 +37,7 @@ export default function ExternalApiIntegratorStatusEndpointRequestParameterInput
     if (useRunApiResponseParameter === true) {
       return (
         <>
-          Select run endpoint field
+          Select run endpoint field for {runEndpointId}
         </>
       );
     }
@@ -78,6 +79,7 @@ export default function ExternalApiIntegratorStatusEndpointRequestParameterInput
 }
 
 ExternalApiIntegratorStatusEndpointRequestParameterInputRow.propTypes = {
+  runEndpointId: PropTypes.string,
   updateParameterFunction: PropTypes.func,
   disabled: PropTypes.bool,
   endpointBodyField: PropTypes.object,
