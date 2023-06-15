@@ -1,6 +1,6 @@
 import useApiService from "hooks/api/service/useApiService";
 
-export default function useRegistryToolActions() {
+export default function useExternalApiIntegratorEndpointActions() {
   const apiService = useApiService();
   const externalApiIntegratorEndpointsActions = {};
 

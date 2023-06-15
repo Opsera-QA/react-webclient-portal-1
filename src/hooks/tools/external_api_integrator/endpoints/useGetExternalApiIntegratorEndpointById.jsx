@@ -4,8 +4,11 @@ import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import useToolIdentifierActions from "hooks/tool_identifiers/useToolIdentifierActions";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import useExternalApiIntegratorEndpointActions
+  from "hooks/tools/external_api_integrator/endpoints/useExternalApiIntegratorEndpointActions";
 
 export default function useGetExternalApiIntegratorEndpointById(
+  toolId,
   endpointId,
   handleErrorFunction,
 ) {
@@ -16,22 +19,32 @@ export default function useGetExternalApiIntegratorEndpointById(
     setError,
     loadData,
   } = useLoadData();
-  const toolIdentifierActions = useToolIdentifierActions();
+  const externalApiIntegratorEndpointsActions = useExternalApiIntegratorEndpointActions();
 
   useEffect(() => {
     setEndpoint(undefined);
 
-    if (isMongoDbId(endpointId) === true && loadData) {
+    if (
+      DataParsingHelper.isMongoDbId(endpointId) === true &&
+      DataParsingHelper.isMongoDbId(toolId) === true &&
+      loadData
+    ) {
       loadData(getExternalApiIntegratorEndpointById, handleErrorFunction).catch(() => {});
     }
-  }, [identifier]);
+  }, [toolId, endpointId]);
 
   const getExternalApiIntegratorEndpointById = async () => {
-    if (hasStringValue(identifier) !== true) {
+    if (
+      DataParsingHelper.isMongoDbId(endpointId) !== true ||
+      DataParsingHelper.isMongoDbId(toolId) !== true
+    ) {
       return;
     }
 
-    const response = await toolIdentifierActions.getToolIdentifierByIdentifier( identifier);
+    const response = await externalApiIntegratorEndpointsActions.getExternalApiIntegratorEndpointById(
+      toolId,
+      endpointId,
+    );
     setEndpoint(DataParsingHelper.parseNestedObject(response, "data.data"));
   };
 
