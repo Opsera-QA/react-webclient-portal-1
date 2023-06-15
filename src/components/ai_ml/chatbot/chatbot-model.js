@@ -5,7 +5,7 @@ const chatbotModel = {
         {
             label: "How can I Help you Today",
             id: "question",
-            formText: "Disclaimer: Opsera AI Tools may occasionally produce inaccurate information about people, places, or facts."
+            formText: "Disclaimer: Opsera AI Chatbot Prototype may occasionally produce inaccurate information about people, places, or facts."
 
         },
     ],
