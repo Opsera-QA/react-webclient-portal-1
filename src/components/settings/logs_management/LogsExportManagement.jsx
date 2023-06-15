@@ -8,13 +8,15 @@ import LogsExportManagementAwsAccountToolSelectInput
   from "components/settings/logs_management/inputs/LogsExportManagementAwsAccountToolSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import LogsExportOptionsSubNavigationBar from "components/settings/logs_management/LogsExportOptionsSubNavigationBar";
-
+import LogsExportManagementHelpDocumentation
+  from "../../common/help/documentation/settings/LogsExportManagementHelpDocumentation";
 function LogsExportManagement() {
   const [scheduledTaskModel, setScheduledTaskModel] = useState(modelHelpers.parseObjectIntoModel(undefined, logsExportScheduledTaskMetadata));
 
   return (
     <ScreenContainer
       breadcrumbDestination={"logsExportManagement"}
+      helpComponent={<LogsExportManagementHelpDocumentation/>}
       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       navigationTabContainer={<LogsExportOptionsSubNavigationBar activeTab={"logsExportOptions"} />}
     >
