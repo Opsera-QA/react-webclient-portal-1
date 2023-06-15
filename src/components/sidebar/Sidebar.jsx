@@ -37,8 +37,6 @@ export default function Sidebar({ hideSideBar }) {
   const {
     isActive,
   } = useGetOrganizationSettingsFeatureFlagModelByName(featureFlagConstants.FEATURE_FLAG_NAMES.SHOW_INSIGHTS_VNEXT_SIDEBAR_LINK);
-  const getPlatformSettingsFeatureFlagByName = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.AI_ML_CHATBOT);
-
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(DataParsingHelper.parseBooleanV2(sessionHelper.getCookie(sessionHelper.SUPPORTED_COOKIE_STORAGE_KEYS.COLLAPSE_SIDEBAR), true));
 
   useEffect(() => {}, [isSidebarCollapsed, hideSideBar, isActive]);
@@ -48,16 +46,6 @@ export default function Sidebar({ hideSideBar }) {
         <InnovationLabsNavigationLinks
           isSidebarCollapsed={isSidebarCollapsed}
         />
-      );
-    }
-  };
-
-  const getAIMLChatbotLink = () => {
-    if (getPlatformSettingsFeatureFlagByName?.platformSettingsFeatureFlag?.active === true) {
-      return (
-          <AIMLSidebarNavigationLink
-              isSidebarCollapsed={isSidebarCollapsed}
-          />
       );
     }
   };
@@ -104,7 +92,9 @@ export default function Sidebar({ hideSideBar }) {
         <InsightsSidebarNavigationLink
           isSidebarCollapsed={isSidebarCollapsed}
         />
-        {getAIMLChatbotLink()}
+        <AIMLSidebarNavigationLink
+            isSidebarCollapsed={isSidebarCollapsed}
+        />
         {getVnextSidebarLink()}
         <SidebarSubheaderText
           isSidebarCollapsed={isSidebarCollapsed}

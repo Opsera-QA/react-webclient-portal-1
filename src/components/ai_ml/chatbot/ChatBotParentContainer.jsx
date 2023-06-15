@@ -88,7 +88,7 @@ function ChatBotParentContainer() {
         <ChatbotDisclaimer
           closePanel={closePanel}
           showPanel={showDisclaimer}
-          title={"Opsera AI Tools"}
+          title={"Opsera AI Chatbot Prototype"}
         />,
       );
     }

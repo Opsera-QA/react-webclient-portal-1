@@ -25,7 +25,7 @@ function AIToolsSubNavigationBar({activeTab}) {
                 tabName={"aiTools"}
                 handleTabClick={handleTabClick}
                 activeTab={activeTab}
-                tabText={"AI Tools"}
+                tabText={"Opsera AI Chatbot Prototype"}
             />
         </NavigationTabContainer>
     );
