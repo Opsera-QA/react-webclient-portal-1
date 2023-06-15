@@ -96,12 +96,11 @@ function ExactMatchSearchSelectInputBase(
 
     const updateValue = async (newValue) => {
       setInternalErrorMessage("");
-      const parsedNewValue = DataParsingHelper.parseObject(newValue);
+      let parsedObjectValue = DataParsingHelper.parseObject(newValue);
       const parsedValueField = DataParsingHelper.parseString(valueField);
-      const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
     
-      if (parsedNewValue && parsedNewValue.OPSERA_DIRECT_LOOKUP_NEEDED === true) {
-        const searchedItem = await exactMatchSearch(parsedNewValue);
+      if (parsedObjectValue && parsedObjectValue.OPSERA_DIRECT_LOOKUP_NEEDED === true) {
+        const searchedItem = await exactMatchSearch(parsedObjectValue);
 
         if (!searchedItem){
           let error = "There was no exact match of this branch name. Please search for another branch.";
@@ -116,11 +115,16 @@ function ExactMatchSearchSelectInputBase(
           if (clearValueFunction) {
             clearValueFunction();
           }
+          return;
         }
-        return;
+
+        parsedObjectValue = searchedItem;
       }
 
-      if (parsedNewValue && parsedValueField && (externalCacheToolIdentifier || externalCacheToolId)) {
+      // TODO: This will break if used for anything other than branches. We need to send objects for setDataFunction, not the value field.
+      const parsedValue = typeof newValue === "string" ? newValue : parsedObjectValue[valueField];
+
+      if (parsedObjectValue && parsedValueField && (externalCacheToolIdentifier || externalCacheToolId)) {
         const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
         parameters.cache = newValue;
 
@@ -128,7 +132,7 @@ function ExactMatchSearchSelectInputBase(
         parameters.textField = textField;
       }
 
-      setCachedValue(parsedNewValue[parsedValueField], parameters);
+      setCachedValue(parsedObjectValue[parsedValueField], parameters);
     }
 
     if (setDataFunction) {
