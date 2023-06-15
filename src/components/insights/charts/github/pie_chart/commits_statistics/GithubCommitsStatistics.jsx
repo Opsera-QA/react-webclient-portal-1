@@ -18,13 +18,15 @@ import {
   METRIC_CHART_STANDARD_HEIGHT,
 } from "components/common/helpers/metrics/metricTheme.helpers";
 import { Col, Row } from "react-bootstrap";
-import GitHubCommitsTotalCommitsDataBlock from "./data_blocks/GitHubCommitsTotalCommitsDataBlock";
+import GitHubCommitsTotalDeclinedDataBlock from "./data_blocks/GitHubCommitsTotalDeclinedDataBlock";
 import GitHubCommitsTotalMergesDataBlock from "./data_blocks/GitHubCommitsTotalMergesDataBlock";
 import GitHubCommitsTotalPullRequestsDataBlock from "./data_blocks/GitHubCommitsTotalPullRequestsDataBlock";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import GithubCommitsActionableInsightOverlay from "./actionable_insights/GithubCommitsActionableInsightOverlay";
 import GithubDeclinedPullRequestActionableInsightOverlay from "./actionable_insights/GithubDeclinedPullRequestActionableInsightOverlay";
 import GithubApprovedPullRequestActionableInsightOverlay from "./actionable_insights/GithubApprovedPullRequestActionableInsightOverlay";
+import GitHubCommitsOpenPullRequestDataBlock from "./data_blocks/GithubCommitsOpenPullRequestDataBlock";
+import {Container} from "@nivo/core";
 // import GithubCommitStatisticsHelpDocumentation from "components/common/help/documentation/insights/charts/github/GithubCommitStatisticsHelpDocumentation";
 
 function GithubCommitsStatistics({
@@ -187,176 +189,30 @@ function GithubCommitsStatistics({
     return (
       <Row className="px-4 justify-content-between">
         <Col
-          md={4}
-          className={"my-1"}
-        >
-          <GitHubCommitsTotalCommitsDataBlock data={totalCommits} />
-        </Col>
-        <Col
-          md={4}
-          className={"my-1"}
-        >
-          <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
-        </Col>
-        <Col
-          md={4}
-          className={"my-1"}
-        >
-          <GitHubCommitsTotalPullRequestsDataBlock data={totalPullRequest} />
-        </Col>
-      </Row>
-    );
-  };
-
-  const getDataBlocks = () => {
-    return (
-      <Row className="px-4 justify-content-between">
-        <Col
-          md={12}
-          className={"my-1"}
-        >
-          <GitHubCommitsTotalCommitsDataBlock data={totalCommits} />
-        </Col>
-        <Col
-          md={12}
-          className={"my-1"}
+            md={3}
+            className={"my-1"}
         >
           <GitHubCommitsTotalPullRequestsDataBlock data={totalPullRequest} />
         </Col>
         <Col
-          md={12}
-          className={"my-1"}
+            md={3}
+            className={"my-1"}
+        >
+          <GitHubCommitsOpenPullRequestDataBlock data={totalCommits} />
+        </Col>
+        <Col
+            md={3}
+            className={"my-1"}
         >
           <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
         </Col>
+        <Col
+            md={3}
+            className={"my-1"}
+        >
+          <GitHubCommitsTotalDeclinedDataBlock data={5} />
+        </Col>
       </Row>
-    );
-  };
-  const getSmallView = () => {
-    return (
-      <div className={"d-block d-lg-none"}>
-        <Row>
-          <Col md={12}>{getHorizontalDataBlocks()}</Col>
-        </Row>
-        <Row>
-          <Col md={4}>
-            <div className="text-center col-12">
-              <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
-                Approved Pull Requests
-              </div>
-            </div>
-            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-              <ResponsivePie
-                data={highestMergesMetric}
-                {...defaultConfig("", "", false, false, "", "", true)}
-                {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={(node) => showGithubApprovedPullRequestModal(node)}
-              />
-            </div>
-          </Col>
-          <Col md={4}>
-            <div className="text-center col-12">
-              <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
-                Active Contributors
-              </div>
-            </div>
-            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-              <ResponsiveBar
-                data={mostActiveUsersMetrics}
-                {...defaultConfig(
-                  "Users",
-                  "Total Commits",
-                  true,
-                  false,
-                  "cutoffString",
-                  "wholeNumbers",
-                  true,
-                )}
-                {...config(METRIC_THEME_CHART_PALETTE_COLORS)}
-                {...adjustBarWidth(mostActiveUsersMetrics, false)}
-              />
-            </div>
-          </Col>
-          <Col md={4}>
-            <div className="text-center col-12">
-              <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
-                Declined Pull Requests
-              </div>
-            </div>
-            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-              <ResponsivePie
-                data={totalDeclinedMerges}
-                {...defaultConfig("", "", false, false, "", "", true)}
-                {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={(node) => showGithubDeclinedPullRequestModal(node)}
-              />
-            </div>
-          </Col>
-        </Row>
-      </div>
-    );
-  };
-
-  const getLargeView = () => {
-    return (
-      <div className={"d-none d-lg-block"}>
-        <Row>
-          <Col md={3}>{getDataBlocks()}</Col>
-          <Col md={3}>
-            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-              <ResponsivePie
-                data={highestMergesMetric}
-                {...defaultConfig("", "", false, false, "", "", true)}
-                {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={(node) => showGithubApprovedPullRequestModal(node)}
-              />
-            </div>
-            <div className="text-center col-12">
-              <div className="text-center font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
-                Approved Pull Requests
-              </div>
-            </div>
-          </Col>
-          <Col md={3}>
-            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-              <ResponsiveBar
-                data={mostActiveUsersMetrics}
-                {...defaultConfig(
-                  "Users",
-                  "Total Merges",
-                  true,
-                  false,
-                  "cutoffString",
-                  "wholeNumbers",
-                  true,
-                )}
-                {...config(METRIC_THEME_CHART_PALETTE_COLORS)}
-                {...adjustBarWidth(mostActiveUsersMetrics, false)}
-              />
-            </div>
-            <div className="text-center col-12">
-              <div className="text-center font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
-                Active Contributors
-              </div>
-            </div>
-          </Col>
-          <Col md={3}>
-            <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
-              <ResponsivePie
-                data={totalDeclinedMerges}
-                {...defaultConfig("", "", false, false, "", "", true)}
-                {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={(node) => showGithubDeclinedPullRequestModal(node)}
-              />
-            </div>
-            <div className="text-center col-12">
-              <div className="text-center font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
-                Declined Pull Requests
-              </div>
-            </div>
-          </Col>
-        </Row>
-      </div>
     );
   };
 
@@ -369,10 +225,58 @@ function GithubCommitsStatistics({
     }
 
     return (
-      <div className="new-chart mb-3">
-        {getLargeView()}
-        {getSmallView()}
-      </div>
+        <div
+            className="new-chart mb-3"
+            style={{ minHeight: "300px" }}
+        >
+        <Container>
+            <Row className="p-2 gray">
+              <Col
+                  md={3}
+                  className={"my-1"}
+              >
+                <GitHubCommitsTotalPullRequestsDataBlock data={totalPullRequest} />
+              </Col>
+              <Col
+                  md={3}
+                  className={"my-1"}
+              >
+                <GitHubCommitsOpenPullRequestDataBlock data={totalCommits} />
+              </Col>
+              <Col
+                  md={3}
+                  className={"my-1"}
+              >
+                <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
+              </Col>
+              <Col
+                  md={3}
+                  className={"my-1"}
+              >
+                <GitHubCommitsTotalDeclinedDataBlock data={5} />
+              </Col>
+            </Row>
+          <Row className="p-2 gray">
+            <Col
+                md={3}
+                className={"mr-4"}
+            >
+              <GitHubCommitsTotalPullRequestsDataBlock data={totalPullRequest} />
+            </Col>
+            <Col
+              md={3}
+            >
+              <GitHubCommitsOpenPullRequestDataBlock data={totalCommits} />
+            </Col>
+            <Col
+                md={3}
+                className={"ml-5"}
+            >
+              <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
+            </Col>
+          </Row>
+        </Container>
+    </div>
     );
   };
 

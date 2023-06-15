@@ -3,21 +3,21 @@ import PropTypes from "prop-types";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 
-function GitHubCommitsTotalCommitsDataBlock({ data, onSelect }) {
+function GitHubCommitsTotalFixedDataBlock({ data, onSelect }) {
     return (
         <DataBlockBoxContainer showBorder={true}  onClickFunction={onSelect}>
             <TwoLineScoreDataBlock
                 className={"p-3"}
                 score={data}
-                subtitle={"Total Commits"}
+                subtitle={"Total Fixed Pull Requests"}
             />
         </DataBlockBoxContainer>
     );
 }
 
-GitHubCommitsTotalCommitsDataBlock.propTypes = {
+GitHubCommitsTotalFixedDataBlock.propTypes = {
     data: PropTypes.number,
     onSelect: PropTypes.func,
 };
 
-export default GitHubCommitsTotalCommitsDataBlock;
+export default GitHubCommitsTotalFixedDataBlock;
