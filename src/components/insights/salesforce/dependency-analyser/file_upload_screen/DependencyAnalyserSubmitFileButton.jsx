@@ -34,28 +34,42 @@ function DependencyAnalyserSubmitFileButton({pipelineWizardModel, setPipelineWiz
   const submitFiles = async () => {
     try {
       setIsSaving(true);
-      if(!pipelineWizardModel?.getData("recordId")) {
-        let newPipelineWizardModel = pipelineWizardModel;
-        const response = await sfdcDependencyAnalyserActions.createNewRecord(getAccessToken, cancelTokenSource, newPipelineWizardModel);
-        const newRecord = response?.data;
-        if (newRecord) {
-          // console.log(newRecord);
-          newPipelineWizardModel?.setData("recordId", newRecord._id);
-          setPipelineWizardModel({...newPipelineWizardModel});
-        }
+      let newPipelineWizardModel = pipelineWizardModel;
+      const response = await sfdcDependencyAnalyserActions.createNewRecord(
+        getAccessToken,
+        cancelTokenSource,
+        newPipelineWizardModel,
+      );
+      const newRecord = response?.data;
+      if (newRecord) {
+        // console.log(newRecord);
+        newPipelineWizardModel?.setData("recordId", newRecord._id);
+        setPipelineWizardModel({ ...newPipelineWizardModel });
       }
+
       if (isXml) {
-        await sfdcDependencyAnalyserActions.setXmlFileContents(getAccessToken, cancelTokenSource, pipelineWizardModel);
-        setPipelineWizardScreen(DEPENDENCY_ANALYSER_SCREENS.VALIDATED_FILE_VIEWER);
+        await sfdcDependencyAnalyserActions.setXmlFileContents(
+          getAccessToken,
+          cancelTokenSource,
+          pipelineWizardModel,
+        );
+        setPipelineWizardScreen(
+          DEPENDENCY_ANALYSER_SCREENS.VALIDATED_FILE_VIEWER,
+        );
       } else {
-        await sfdcDependencyAnalyserActions.setUploadedCsvFileList(getAccessToken, cancelTokenSource, pipelineWizardModel);
-        setPipelineWizardScreen(DEPENDENCY_ANALYSER_SCREENS.VALIDATED_FILE_VIEWER);
+        await sfdcDependencyAnalyserActions.setUploadedCsvFileList(
+          getAccessToken,
+          cancelTokenSource,
+          pipelineWizardModel,
+        );
+        setPipelineWizardScreen(
+          DEPENDENCY_ANALYSER_SCREENS.VALIDATED_FILE_VIEWER,
+        );
       }
     } catch (error) {
       console.error(error);
       toastContext.showInlineErrorMessage(error);
-    }
-    finally {
+    } finally {
       setIsSaving(false);
     }
   };

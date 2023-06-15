@@ -51,6 +51,7 @@ const DependencyAnalyserDependentFilesTable = ({ pipelineWizardModel, setPipelin
       getTableTextColumn(fields.find(field => { return field.id === "committedFileId";})),
       getTableTextColumn(fields.find(field => { return field.id === "componentType";})),
       getTableTextColumn(fields.find(field => { return field.id === "componentName";}), "force-text-wrap"),
+      getTableTextColumn(fields.find(field => { return field.id === "refComponentId";})),
       getTableTextColumn(fields.find(field => { return field.id === "refComponentType";})),
       getTableTextColumn(fields.find(field => { return field.id === "refComponentName";}), "force-text-wrap"),
     ],
