@@ -3,12 +3,13 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import useToolIdentifierActions from "hooks/tool_identifiers/useToolIdentifierActions";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
-export default function useGetToolIdentifierByIdentifier(
-  identifier,
+export default function useGetExternalApiIntegratorEndpointById(
+  endpointId,
   handleErrorFunction,
 ) {
-  const [toolIdentifier, setToolIdentifier] = useState(undefined);
+  const [endpoint, setEndpoint] = useState(undefined);
   const {
     isLoading,
     error,
@@ -18,26 +19,26 @@ export default function useGetToolIdentifierByIdentifier(
   const toolIdentifierActions = useToolIdentifierActions();
 
   useEffect(() => {
-    setToolIdentifier(undefined);
+    setEndpoint(undefined);
 
-    if (hasStringValue(identifier) === true && loadData) {
-      loadData(getToolIdentifier, handleErrorFunction).catch(() => {});
+    if (isMongoDbId(endpointId) === true && loadData) {
+      loadData(getExternalApiIntegratorEndpointById, handleErrorFunction).catch(() => {});
     }
   }, [identifier]);
 
-  const getToolIdentifier = async () => {
+  const getExternalApiIntegratorEndpointById = async () => {
     if (hasStringValue(identifier) !== true) {
       return;
     }
 
     const response = await toolIdentifierActions.getToolIdentifierByIdentifier( identifier);
-    setToolIdentifier(DataParsingHelper.parseNestedObject(response, "data.data"));
+    setEndpoint(DataParsingHelper.parseNestedObject(response, "data.data"));
   };
 
   return ({
-    toolIdentifier: toolIdentifier,
-    setToolIdentifier: setToolIdentifier,
-    loadData: () => loadData(getToolIdentifier, handleErrorFunction),
+    endpoint: endpoint,
+    setEndpoint: setEndpoint,
+    loadData: () => loadData(getExternalApiIntegratorEndpointById, handleErrorFunction),
     isLoading: isLoading,
     error: error,
     setError: setError,
