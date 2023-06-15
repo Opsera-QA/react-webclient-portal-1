@@ -9,6 +9,8 @@ import {
 } from "components/workflow/plan/step/external_rest_api_integration/inputs/request/status/parameters/parameter/externalApiIntegratorStatusEndpointRequestParameter.metadata";
 import EndpointRequestParameterManualValueEntryInput
   from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/EndpointRequestParameterManualValueEntryInput";
+import ExternalApiIntegrationStepRunResponseParameterSelectInput
+  from "components/workflow/plan/step/external_rest_api_integration/inputs/request/status/parameters/parameter/ExternalApiIntegrationStepRunResponseParameterSelectInput";
 
 export default function ExternalApiIntegratorStatusEndpointRequestParameterInputRow(
   {
@@ -36,9 +38,11 @@ export default function ExternalApiIntegratorStatusEndpointRequestParameterInput
 
     if (useRunApiResponseParameter === true) {
       return (
-        <>
-          Select run endpoint field for {runEndpointId}
-        </>
+        <ExternalApiIntegrationStepRunResponseParameterSelectInput
+          model={endpointFieldModel}
+          setModel={setEndpointFieldModel}
+          disabled={disabled}
+        />
       );
     }
 

@@ -13,6 +13,7 @@ export default function useGetExternalApiIntegratorEndpointById(
   handleErrorFunction,
 ) {
   const [endpoint, setEndpoint] = useState(undefined);
+  const [endpointResponseBodyFieldNames, setEndpointResponseBodyFieldNames] = useState([]);
   const {
     isLoading,
     error,
@@ -23,6 +24,7 @@ export default function useGetExternalApiIntegratorEndpointById(
 
   useEffect(() => {
     setEndpoint(undefined);
+    setEndpointResponseBodyFieldNames([]);
 
     if (
       DataParsingHelper.isMongoDbId(endpointId) === true &&
@@ -45,12 +47,19 @@ export default function useGetExternalApiIntegratorEndpointById(
       toolId,
       endpointId,
     );
-    setEndpoint(DataParsingHelper.parseNestedObject(response, "data.data"));
+    const newEndpoint = DataParsingHelper.parseNestedObject(response, "data.data");
+    const responseBodyFields = DataParsingHelper.parseNestedArray(endpoint, "responseBodyFields", []);
+    setEndpoint(newEndpoint);
+    setEndpointResponseBodyFieldNames([...responseBodyFields.map((field) => field.fieldName)]);
   };
 
   return ({
     endpoint: endpoint,
     setEndpoint: setEndpoint,
+    queryParameterFields: DataParsingHelper.parseNestedArray(endpoint, "queryParameterFields", []),
+    requestBodyFields: DataParsingHelper.parseNestedArray(endpoint, "requestBodyFields", []),
+    responseBodyFields: DataParsingHelper.parseNestedArray(endpoint, "responseBodyFields", []),
+    responseBodyFieldNames: endpointResponseBodyFieldNames,
     loadData: () => loadData(getExternalApiIntegratorEndpointById, handleErrorFunction),
     isLoading: isLoading,
     error: error,
