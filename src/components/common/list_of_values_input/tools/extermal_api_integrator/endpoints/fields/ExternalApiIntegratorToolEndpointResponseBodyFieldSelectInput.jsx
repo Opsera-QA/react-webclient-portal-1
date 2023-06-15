@@ -52,3 +52,8 @@ ExternalApiIntegratorToolEndpointResponseBodyFieldSelectInput.propTypes = {
   valueField: PropTypes.string,
   textField: PropTypes.string,
 };
+
+ExternalApiIntegratorToolEndpointResponseBodyFieldSelectInput.defaultProps = {
+  textField: "fieldName",
+  valueField: "fieldName",
+};
