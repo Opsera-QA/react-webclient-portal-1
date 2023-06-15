@@ -50,7 +50,15 @@ export default function useGetExternalApiIntegratorEndpointById(
     const newEndpoint = DataParsingHelper.parseNestedObject(response, "data.data");
     const responseBodyFields = DataParsingHelper.parseNestedArray(endpoint, "responseBodyFields", []);
     setEndpoint(newEndpoint);
-    setEndpointResponseBodyFieldNames([...responseBodyFields.map((field) => field.fieldName)]);
+
+    const responseBodyFieldNames = [];
+    responseBodyFields.forEach((field) => {
+      if (responseBodyFieldNames.includes(field.fieldName) === false) {
+        responseBodyFieldNames.push(field.fieldName);
+      }
+    });
+
+    setEndpointResponseBodyFieldNames([...responseBodyFieldNames]);
   };
 
   return ({
