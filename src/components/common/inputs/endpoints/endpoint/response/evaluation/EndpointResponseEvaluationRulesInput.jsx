@@ -1,17 +1,16 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import axios from "axios";
-import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import externalApiIntegratorEndpointsActions
-  from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoints.actions";
-import {AuthContext} from "contexts/AuthContext";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import EndpointResponseEvaluationRulesInputBase
   from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesInputBase";
 import {
   EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
+import useGetExternalApiIntegratorEndpointById
+  from "hooks/tools/external_api_integrator/endpoints/useGetExternalApiIntegratorEndpointById";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 function EndpointResponseEvaluationRulesInput(
   {
@@ -23,72 +22,32 @@ function EndpointResponseEvaluationRulesInput(
     setModel,
     disabled,
   }) {
-  const {getAccessToken} = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const [endpoint, setEndpoint] = useState(undefined);
-  const [error, setError] = useState(undefined);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const isMounted = useRef(false);
+  const {
+    endpoint,
+    isLoading,
+    error,
+  } = useGetExternalApiIntegratorEndpointById(
+    toolId,
+    endpointId,
+  );
 
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
+  useEffect(() => {}, [toolId, endpointId, fieldName]);
 
-    isMounted.current = true;
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    setEndpoint(undefined);
-
-    if (isMongoDbId(toolId) === true && isMongoDbId(endpointId) === true) {
-      loadData(source).catch((error) => {
-        throw error;
-      });
-    }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, [toolId, endpointId, fieldName]);
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
-    try {
-      setError(undefined);
-      setIsLoading(true);
-      await loadExternalApiIntegratorEndpoints(cancelSource);
-    } catch (error) {
-      if (isMounted?.current === true) {
-        setError(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const loadExternalApiIntegratorEndpoints = async (cancelSource = cancelTokenSource) => {
-    const response = await externalApiIntegratorEndpointsActions.getExternalApiIntegratorEndpointByIdV2(
-      getAccessToken,
-      cancelSource,
-      toolId,
-      endpointId,
-    );
-    const newEndpoint = response?.data?.data;
-
-    if (isMounted?.current === true && newEndpoint) {
-      setEndpoint(newEndpoint);
-    }
-  };
-
-  if (isMongoDbId(endpointId) !== true) {
+  if (DataParsingHelper.isMongoDbId(endpointId) !== true) {
     return (
       <CenteredContentWrapper>
         <div className={"my-5"}>
           An External API Integrator Tool and Endpoint must be selected before you can configure evaluation rules.
         </div>
       </CenteredContentWrapper>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <CenterLoadingIndicator
+        minHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_RESPONSE_PARAMETER_CONTAINER_HEIGHT}
+      />
     );
   }
 
