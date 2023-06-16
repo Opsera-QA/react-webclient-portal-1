@@ -57,7 +57,7 @@ function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData
       case "tools":
         return <RegisteredUserToolsPanel userData={userData} setIsDeployingElk={setIsDeployingElk} isDeployingElk={isDeployingElk} />;
       case "customerDB":
-        return <CustomerDatabaseEditorPanel userId={userData["_id"]} customerDatabaseData={analyticsProfileData} setCustomerDatabaseData={setAnalyticsProfileData} />;
+        return <CustomerDatabaseEditorPanel userId={userData?.getMongoDbId()} customerDatabaseData={analyticsProfileData} setCustomerDatabaseData={setAnalyticsProfileData} />;
       case "analyticsSettings":
         return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
       case "ldap":
