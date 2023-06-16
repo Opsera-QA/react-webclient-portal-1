@@ -16,7 +16,7 @@ function
                     <li><b>Clean Repositories:</b> Displays the number of clean repositories in the provided date range.</li>
                     <li><b>Total Number of Issues:</b> Displays the number of issues existing in the provided date range. Click the <i>Total number of issues</i> tab to view detailed information on the identified issues. For each issue, you can view insights using the magnifier icon on the top-right corner. </li>
                 </ul>
-                <div>Click the magnifier export icon on the top right corner of the table view. This lists the <b>Git Scraper Reports</b> displaying the information on path, author, Line Number and commit. You can click the export icon on the top-right corner to download the report. In the Export Data pop-up that appears, choose the required format and enter a name for the file to start downloading.</div>
+                <div>Click the magnifier export icon on the top right corner of the table view. This lists the <b>Git Scraper Reports</b> displaying the information on path, author, Line Number and commit. You can click the export icon on the top-right corner to download the report. In the <i>Export Data</i> pop-up that appears, choose the required format and enter a name for the file to start downloading.</div>
                 <div className={"mt-2"}><h5>Entropy</h5></div>
                 <ul style={{ listStyleType: "none" }}>
                     <li>Plain Text passwords are identified using the entropy of the string identified. </li>
