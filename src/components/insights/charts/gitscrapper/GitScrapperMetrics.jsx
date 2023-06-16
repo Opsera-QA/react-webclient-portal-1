@@ -18,7 +18,7 @@ import GitScrapperOverallScannedRepositoriesTrendDataBlock from "./data_blocks/o
 import GitScrapperOverallCleanRepositoriesTrendDataBlock from "./data_blocks/overall_clean_repositories_trend/GitScrapperOverallCleanRepositoriesTrendDataBlock";
 import GitScrapperOverallIssuesTrendDataBlock from "./data_blocks/overall_issues_trend/GitScrapperOverallIssuesTrendDataBlock";
 // import gitScrapperPipelineFilterMetadata from "./git-scrapper-pipeline-filter-metadata";
-
+import GitScrapperMetricsHelpDocumentation from "components/common/help/documentation/insights/charts/GitScrapperMetricsHelpDocumentation";
 function GitScrapperMetrics({
   kpiConfiguration,
   setKpiConfiguration,
@@ -235,9 +235,9 @@ function GitScrapperMetrics({
         setKpis={setKpis}
         isLoading={isLoading}
         tableChart={true}
-        // chartHelpComponent={(closeHelpPanel) => (
-        //   <CoverityIssuesByCategoryHelpDocumentation closeHelpPanel={closeHelpPanel} />
-        // )}
+        chartHelpComponent={(closeHelpPanel) => (
+          <GitScrapperMetricsHelpDocumentation closeHelpPanel={closeHelpPanel} />
+        )}
       />
       <ModalLogs
         header="Git Custodian Metrics"
