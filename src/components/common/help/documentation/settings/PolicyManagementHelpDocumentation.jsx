@@ -22,7 +22,7 @@ function PolicyManagementHelpDocumentation() {
     <HelpOverlayBase
       closePanel={closePanel}
       showPanel={true}
-      helpTopic={"Policies Management"}
+      helpTopic={"Policy Management"}
       helpDocumentation={getHelpDocumentation()}
     >
     </HelpOverlayBase>
