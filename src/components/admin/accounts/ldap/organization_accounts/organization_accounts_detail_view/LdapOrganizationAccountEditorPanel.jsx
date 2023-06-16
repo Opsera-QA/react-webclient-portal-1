@@ -12,6 +12,7 @@ import IdpVendorSelectInput
   from "components/common/list_of_values_input/admin/accounts/ldap_idp_accounts/IdpVendorSelectInput";
 import LdapOrganizationAccountOpseraUserSelectInput
   from "components/common/list_of_values_input/admin/accounts/ldap_accounts/LdapOrganizationAccountOpseraUserSelectInput";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOrganization, handleClose}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -19,8 +20,10 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    loadData();
-  }, []);
+    if (ldapOrganization && ldapOrganizationAccountData) {
+      loadData();
+    }
+  }, [ldapOrganization, ldapOrganizationAccountData]);
 
   const loadData = async () => {
     setIsLoading(true);
@@ -30,12 +33,17 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
 
   const unpackLdapOrganizationAccountData = async () => {
     let ldapOrganizationAccountDataDto = ldapOrganizationAccountData;
-    if (ldapOrganizationAccountDataDto.isNew() && ldapOrganization != null) {
-      let orgDomain = ldapOrganization.orgOwnerEmail.substring(ldapOrganization.orgOwnerEmail.lastIndexOf("@") + 1);
+    const orgOwnerEmail = DataParsingHelper.parseNestedEmailAddress(ldapOrganization, "orgOwnerEmail");
+    const orgName = DataParsingHelper.parseNestedString(ldapOrganization, "name");
+
+    if (orgOwnerEmail && ldapOrganizationAccountDataDto.isNew() && ldapOrganization != null) {
+      // TODO: Should we be pulling this off something else?
+      const orgDomain = orgOwnerEmail.substring(orgOwnerEmail.lastIndexOf("@") + 1);
       ldapOrganizationAccountDataDto.setData("orgDomain", orgDomain);
-      ldapOrganizationAccountDataDto.setData("name", ldapOrganization["name"] + "-acc");
-      ldapOrganizationAccountDataDto.setData("org", ldapOrganization["name"] != null ? ldapOrganization["name"] : "");
+      ldapOrganizationAccountDataDto.setData("name", `${orgName}-acc`);
+      ldapOrganizationAccountDataDto.setData("org", orgName != null ? orgName : "");
     }
+
     setLdapOrganizationAccountDataDto(ldapOrganizationAccountDataDto);
   };
 
