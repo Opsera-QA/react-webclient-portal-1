@@ -116,8 +116,8 @@ function ExactMatchSearchSelectInputBase(
           if (clearValueFunction) {
             clearValueFunction();
           }
+          return;
         }
-        return;
       }
 
       if (parsedNewValue && parsedValueField && (externalCacheToolIdentifier || externalCacheToolId)) {
