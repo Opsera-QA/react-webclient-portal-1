@@ -9,11 +9,14 @@ import CreateLdapOrganizationAccountOverlay
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faSitemap} from "@fortawesome/pro-light-svg-icons";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function LdapOrganizationAccountsTable({ldapOrganizationAccounts, ldapOrganizationData, isLoading, loadData, className }) {
-  const [showCreateOrganizationAccountModal, setShowCreateOrganizationAccountModal] = useState(false);
-  let fields = ldapOrganizationAccountMetaData.fields;
+  const fields = ldapOrganizationAccountMetaData.fields;
   const history = useHistory();
+  const {
+    toastContext,
+  } = useComponentStateReference();
 
   const columns = useMemo(
     () => [
@@ -32,7 +35,12 @@ function LdapOrganizationAccountsTable({ldapOrganizationAccounts, ldapOrganizati
   };
 
   const createOrganizationAccount = () => {
-    setShowCreateOrganizationAccountModal(true);
+    toastContext.showOverlayPanel(
+      <CreateLdapOrganizationAccountOverlay
+        ldapOrganizationData={ldapOrganizationData?.getCurrentData()}
+        loadData={loadData}
+      />
+    );
   };
 
   const getOrganizationAccountsTable = () => {
@@ -56,12 +64,6 @@ function LdapOrganizationAccountsTable({ldapOrganizationAccounts, ldapOrganizati
         titleIcon={faSitemap}
         title={"Organization Accounts"}
         type={"Organization Account"}
-      />
-      <CreateLdapOrganizationAccountOverlay
-        ldapOrganizationData={ldapOrganizationData}
-        showModal={showCreateOrganizationAccountModal}
-        loadData={loadData}
-        setShowModal={setShowCreateOrganizationAccountModal}
       />
     </div>
   );

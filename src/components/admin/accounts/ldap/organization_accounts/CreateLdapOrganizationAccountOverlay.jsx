@@ -1,43 +1,57 @@
 import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import {ldapOrganizationAccountMetaData} from "components/admin/accounts/ldap/organization_accounts/ldap-organization-account-metadata";
+import {
+  ldapOrganizationAccountMetaData
+} from "components/admin/accounts/ldap/organization_accounts/ldap-organization-account-metadata";
 import LdapOrganizationAccountEditorPanel
   from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountEditorPanel";
-import CreateModal from "components/common/modal/CreateModal";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 
-function CreateLdapOrganizationAccountOverlay({ setShowModal, showModal, ldapOrganizationData, loadData } ) {
+export default function CreateLdapOrganizationAccountOverlay(
+  {
+    ldapOrganizationData,
+    loadData,
+  }) {
+  const {toastContext,} = useComponentStateReference();
   const [ldapOrganizationAccountData, setLdapOrganizationAccountData] = useState(undefined);
 
   useEffect(() => {
     setLdapOrganizationAccountData(new Model({...ldapOrganizationAccountMetaData.newObjectFields}, ldapOrganizationAccountMetaData, true));
-  }, [showModal]);
+  }, []);
 
-  const handleClose = () => {
-    setShowModal(false);
-    loadData();
+  const closePanel = () => {
+    if (loadData) {
+      loadData();
+    }
+
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
   };
 
+  if (ldapOrganizationAccountData == null) {
+    return null;
+  }
+
   return (
-    <CreateModal handleCancelModal={handleClose} objectType={"Organization Account"} showModal={showModal} loadData={loadData} >
+    <CreateCenterPanel
+      closePanel={closePanel}
+      objectType={"Organization Account"}
+      loadData={loadData}
+    >
       <LdapOrganizationAccountEditorPanel
         ldapOrganization={ldapOrganizationData}
         setLdapOrganizationAccountData={setLdapOrganizationAccountData}
-        handleClose={handleClose}
+        handleClose={closePanel}
         ldapOrganizationAccountData={ldapOrganizationAccountData}
       />
-     </CreateModal>
+    </CreateCenterPanel>
   );
 }
 
 CreateLdapOrganizationAccountOverlay.propTypes = {
   ldapOrganizationData: PropTypes.object,
-  showModal: PropTypes.bool,
-  setShowModal: PropTypes.func,
   loadData: PropTypes.func,
-  authorizedActions: PropTypes.array
 };
-
-export default CreateLdapOrganizationAccountOverlay;
-
 
