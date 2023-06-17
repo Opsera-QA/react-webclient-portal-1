@@ -18,6 +18,7 @@ import PipelineOrchestrationSummaryField
 import PipelineModel from "components/workflow/pipeline.model";
 import PipelineDescriptionTextInput from "components/workflow/pipelines/summary/inputs/PipelineDescriptionTextInput";
 import PipelineTagManagerInput from "components/workflow/pipelines/summary/inputs/PipelineTagManagerInput";
+import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
 
 function PipelineSummaryPanel(
   {
@@ -60,7 +61,8 @@ function PipelineSummaryPanel(
             disabled={parentWorkflowStatus === "running"}
           />
           <Col sm={12} md={6}>
-            <OwnerNameField
+            <SsoUserField
+              fieldName={"owner"}
               model={pipelineModel}
             />
           </Col>

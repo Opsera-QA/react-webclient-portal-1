@@ -11,6 +11,7 @@ import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTa
 import TaskActivityPanel from "components/tasks/activity_logs/TaskActivityPanel";
 import { AuthContext } from "contexts/AuthContext";
 import {useParams} from "react-router-dom";
+import TaskConfigurationSummaryPanel from "components/tasks/details/TaskConfigurationSummaryPanel";
 
 const getActiveTab = (runTask, tab) => {
   if (tab === "logs") {
@@ -72,10 +73,10 @@ function TaskDetailPanel(
         />
         <CustomTab
           icon={faTable}
-          tabName={"logs"}
+          tabName={"details"}
           handleTabClick={handleTabClick}
           activeTab={activeTab}
-          tabText={"Activity Logs"}
+          tabText={"Details"}
         />
         {/*{getFeatureFlaggedTab()}*/}
       </CustomTabContainer>
@@ -107,14 +108,11 @@ function TaskDetailPanel(
             runTask={runTask}
           />
         );
-      case "logs":
+      case "details":
         return (
-          <TaskActivityPanel
-            taskModel={gitTasksData}
-            taskId={gitTasksData?.getMongoDbId()}
-            taskRunCount={runCount}
-            status={status}
-          />
+          <div className="px-3 mt-3">
+            <TaskConfigurationSummaryPanel taskModel={gitTasksData} />
+          </div>
         );
       // case "audit-logs":
       //   return (
