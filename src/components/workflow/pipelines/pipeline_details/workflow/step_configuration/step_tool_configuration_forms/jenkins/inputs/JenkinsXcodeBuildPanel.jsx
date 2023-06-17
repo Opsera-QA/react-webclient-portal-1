@@ -20,7 +20,7 @@ function JenkinsIosBuildPanel({plan, model, setModel, buildType, jenkinsList, to
       <JenkinsXcodeCertificateSelectInput 
         model={model}
         setModel={setModel}
-        fieldName={"credentialsId"}
+        fieldName={"credentailsId"}
         jenkinsList={jenkinsList}
         toolConfigId={toolConfigId}
       />

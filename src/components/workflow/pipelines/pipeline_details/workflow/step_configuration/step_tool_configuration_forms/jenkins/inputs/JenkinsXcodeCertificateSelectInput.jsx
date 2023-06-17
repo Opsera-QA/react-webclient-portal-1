@@ -54,7 +54,7 @@ JenkinsXcodeCertificateSelectInput.propTypes = {
 };
 
 JenkinsXcodeCertificateSelectInput.defaultProps = {
-  fieldName: "credentialsId",
+  fieldName: "credentailsId",
 };
 
 export default JenkinsXcodeCertificateSelectInput;
