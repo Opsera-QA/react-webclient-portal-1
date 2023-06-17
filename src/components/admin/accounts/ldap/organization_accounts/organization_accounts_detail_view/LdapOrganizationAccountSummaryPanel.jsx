@@ -8,6 +8,8 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import LoadingDialog from "components/common/status_notifications/loading";
 import LdapAccountRegistrationLinkField
   from "components/common/fields/link/standalone/ldap/LdapAccountRegistrationLinkField";
+import SpecificOrganizationAccountSettingsPageLinkCard
+  from "components/admin/organization_settings/SpecificOrganizationAccountSettingsPageLinkCard";
 
 function LdapOrganizationAccountSummaryPanel({ ldapOrganizationAccountData, setActiveTab }) {
 
@@ -70,6 +72,12 @@ function LdapOrganizationAccountSummaryPanel({ ldapOrganizationAccountData, setA
           <LdapAccountRegistrationLinkField
             model={ldapOrganizationAccountData}
             fieldName={"urlString"}
+          />
+        </Col>
+        <Col lg={12}>
+          <SpecificOrganizationAccountSettingsPageLinkCard
+            organizationDomain={ldapOrganizationAccountData?.getData("orgDomain")}
+            organizationAccountId={ldapOrganizationAccountData?.getData("name")}
           />
         </Col>
       </Row>
