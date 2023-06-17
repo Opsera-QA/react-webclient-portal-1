@@ -3,6 +3,7 @@ import sessionHelper from "utils/session.helper";
 import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
+import TagParsingHelper from "@opsera/persephone/helpers/data/tags/tagParsing.helper";
 
 const pipelineFilterMetadata = {
   type: "Pipeline",
@@ -117,13 +118,10 @@ export class PipelineFilterModel extends FilterModelBase {
     }
 
     const tag = this.getData("tag");
+    const parsedTag = TagParsingHelper.parseTagFilter(tag);
 
-    if (hasStringValue(tag) === true) {
-      const tagArray = tag.split(":");
-
-      if (Array.isArray(tagArray) && tagArray.length === 2) {
-        activeFilters.push({ filterId: "tag", text: `Tag: ${capitalizeFirstLetter(tagArray[0])}: ${tagArray[1]}` });
-      }
+    if (parsedTag) {
+      activeFilters.push({ filterId: "tag", text: `Tag: ${capitalizeFirstLetter(parsedTag?.type)}: ${parsedTag?.value}` });
     }
 
     const toolIdentifier = DataParsingHelper.parseString(this.getData("tool_identifier"));

@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import FilterSelectionOverlayContainer from "components/common/filters/buttons/FilterSelectionOverlayContainer";
-import ActiveFilter from "components/common/filters/status/ActiveFilter";
-import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import PipelineStatusFilter from "components/common/filters/pipelines/status/PipelineStatusFilter";
 import PipelineStepToolIdentifierFilter
   from "components/common/filters/tools/tool_identifier/pipelines/PipelineStepToolIdentifierFilter";
 import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
+import PipelineTagFilter from "components/common/filters/tags/tag/pipelines/PipelineTagFilter";
 
 export default function PipelineFilterOverlay(
   {
@@ -34,20 +33,16 @@ export default function PipelineFilterOverlay(
         setFilterModel={setFilterModel}
         className={"mb-2"}
       />
-      <TagFilter
-        filterDto={filterModel}
-        setFilterDto={setFilterModel}
-        className={"mb-2"}
-      />
       <PipelineStepToolIdentifierFilter
         filterModel={filterModel}
         setFilterModel={setFilterModel}
         className={"mb-2"}
       />
-      {/*<PipelineTagFilter*/}
-      {/*  filterModel={filterModel}*/}
-      {/*  setFilterModel={setPipelineFilterModel}*/}
-      {/*/>*/}
+      <PipelineTagFilter
+        filterModel={filterModel}
+        setFilterModel={setFilterModel}
+        className={"mb-2"}
+      />
       <OwnerFilter
         filterModel={filterModel}
         setFilterModel={setFilterModel}
