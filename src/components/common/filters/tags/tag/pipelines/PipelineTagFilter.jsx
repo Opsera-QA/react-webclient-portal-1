@@ -26,9 +26,7 @@ export default function PipelineTagFilter(
   };
 
   const setDataFunction = (fieldName, tag) => {
-    // TODO: Wire up the object when node end is updated
-    // filterModel.setData(fieldName, tag);
-    filterModel?.setData(fieldName, `${tag?.type}:${tag?.value}`,);
+    filterModel.setData(fieldName, tag);
     setFilterModel({...filterModel});
   };
 
