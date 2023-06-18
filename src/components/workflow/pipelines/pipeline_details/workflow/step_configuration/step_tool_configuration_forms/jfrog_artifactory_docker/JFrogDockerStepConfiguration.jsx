@@ -11,7 +11,6 @@ import JfrogRepoSelectInput from "./inputs/JfrogRepoSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import jfrogStepFormMetadata from "./jfrog-stepForm-metadata";
 import JFrogRepositoryTypeSelectInput from "./inputs/JFrogRepositoryTypeSelectInput";
-import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import JfrogDockerStepRepositorySubFolderNameInputs
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_docker/inputs/JfrogDockerStepRepositorySubFolderNameInputs";
 
