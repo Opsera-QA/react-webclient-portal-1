@@ -63,34 +63,6 @@ userActions.isDomainAvailable = async (domain) => {
 
 
 // TODO: Update as needed, create multi level input items to prevent having to deconstruct them
-userActions.createFreeTrialAccount = async (cancelTokenSource, registrationModel) => {
-  const finalObject = registrationModel?.getPersistData();
-  const company = finalObject?.company;
-  const attributes = {
-    title: finalObject?.title,
-    company: company,
-  };
-  const configuration = {
-    cloudProvider: "GKE",
-    cloudProviderRegion: "",
-  };
-  finalObject.company = undefined;
-  finalObject.title = undefined;
-  finalObject.attributes = attributes;
-  finalObject.configuration = configuration;
-  finalObject.organizationName = `${stringHelper.replaceSpacesWithUnderscores(company)}-${finalObject?.email}-${generateUUID()}`;
-  const token = apiTokenHelper.generateApiCallToken(routeTokenConstants.ROUTE_MIDDLEWARE_TOKEN_KEYS.CREATE_OPSERA_ACCOUNT);
-  const apiUrl = "/users/create";
-
-  return await baseActions.customTokenApiPostCallV2(
-    cancelTokenSource,
-    token,
-    apiUrl,
-    finalObject,
-  );
-};
-
-// TODO: Update as needed, create multi level input items to prevent having to deconstruct them
 userActions.createOpseraAccount = async (cancelTokenSource, registrationDataDto) => {
   let finalObject = {...registrationDataDto.getPersistData()};
   let configuration = {
