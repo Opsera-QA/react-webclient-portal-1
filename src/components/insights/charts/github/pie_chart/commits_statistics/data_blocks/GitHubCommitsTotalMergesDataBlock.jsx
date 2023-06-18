@@ -7,7 +7,7 @@ function GitHubCommitsTotalMergesDataBlock({ data }) {
     return (
         <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
-                className={"p-3"}
+                className={"p-3 h-100"}
                 score={data}
                 subtitle={"Merged Pull Requests"}
             />

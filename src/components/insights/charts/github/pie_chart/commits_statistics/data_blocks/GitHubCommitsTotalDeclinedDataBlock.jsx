@@ -7,7 +7,7 @@ function GitHubCommitsTotalDeclinedDataBlock({ data, onSelect }) {
     return (
         <DataBlockBoxContainer showBorder={true}  onClickFunction={onSelect}>
             <TwoLineScoreDataBlock
-                className={"p-3"}
+                className={"p-3 h-100"}
                 score={data}
                 subtitle={"Declined Pull Requests"}
             />

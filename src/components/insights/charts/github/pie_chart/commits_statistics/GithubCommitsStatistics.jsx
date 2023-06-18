@@ -27,6 +27,12 @@ import GithubDeclinedPullRequestActionableInsightOverlay from "./actionable_insi
 import GithubApprovedPullRequestActionableInsightOverlay from "./actionable_insights/GithubApprovedPullRequestActionableInsightOverlay";
 import GitHubCommitsOpenPullRequestDataBlock from "./data_blocks/GithubCommitsOpenPullRequestDataBlock";
 import {Container} from "@nivo/core";
+import GitHubCommitsTotalActivityDataBlock from "./data_blocks/GithubCommitsTotalActivityDataBlock";
+import GithubCommitsApprovedPullRequestsDataBlock from "./data_blocks/GithubCommitsApprovedPullRequestsDataBlock";
+import GithubCommitsTotalFixedDataBlock from "./data_blocks/GithubCommitsTotalFixedDataBlock";
+import GitHubCommitsTotalCommitsDataBlock from "./data_blocks/GithubCommitsTotalCommitsDataBlock";
+import GithubCommitStatisticsHelpDocumentation
+  from "../../../../../common/help/documentation/insights/charts/GithubCommitStatisticsHelpDocumentation";
 // import GithubCommitStatisticsHelpDocumentation from "components/common/help/documentation/insights/charts/github/GithubCommitStatisticsHelpDocumentation";
 
 function GithubCommitsStatistics({
@@ -44,6 +50,9 @@ function GithubCommitsStatistics({
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [totalPullRequest, setTotalPullRequest] = useState(0);
+  const [totalOpen, setTotalOpen] = useState(0);
+  const [totalActivity, setTotalActivity] = useState(0);
+  const [totalFixed, setTotalFixed] = useState(0);
   const [totalCommits, setTotalCommits] = useState(0);
   const [totalMerges, setTotalMerges] = useState(0);
   const [highestMergesMetric, setHighestMergesMetric] = useState([]);
@@ -111,6 +120,15 @@ function GithubCommitsStatistics({
         }
         return 0;
       });
+      const total_activity = response?.data
+          ? response?.data?.data?.total_activity
+          : 0;
+      const open_pull_request = response?.data
+          ? response?.data?.data?.open_pull_request
+          : 0;
+      const fixed_pull_request = response?.data
+          ? response?.data?.data?.fixed_pull_request
+          : 0;
       const total_pull_request = response?.data
         ? response?.data?.data?.total_pull_request
         : 0;
@@ -134,6 +152,9 @@ function GithubCommitsStatistics({
       if (isMounted?.current === true && dataObject) {
         setMostActiveUsersMetrics(dataObject);
         setTotalPullRequest(total_pull_request);
+        setTotalOpen(open_pull_request),
+        setTotalActivity(total_activity),
+        setTotalFixed(fixed_pull_request),
         setTotalCommits(total_commits);
         setTotalMerges(total_merges);
         setHighestMergesMetric(project_with_highest_merges);
@@ -151,6 +172,21 @@ function GithubCommitsStatistics({
       }
     }
   };
+
+  let totalDeclined = 0;
+  let totalApproved = 0;
+
+  totalDeclinedMerges.forEach((obj) =>{
+    totalDeclined = totalDeclined + obj.commits;
+  } );
+
+  highestMergesMetric.forEach((obj) =>{
+    totalApproved = totalApproved + obj.commits;
+  } );
+
+  console.log("declined", totalDeclined);
+  console.log("approved", totalApproved);
+
   const onRowSelect = () => {
     toastContext.showOverlayPanel(
       <GithubCommitsActionableInsightOverlay
@@ -185,37 +221,6 @@ function GithubCommitsStatistics({
     );
   };
 
-  const getHorizontalDataBlocks = () => {
-    return (
-      <Row className="px-4 justify-content-between">
-        <Col
-            md={3}
-            className={"my-1"}
-        >
-          <GitHubCommitsTotalPullRequestsDataBlock data={totalPullRequest} />
-        </Col>
-        <Col
-            md={3}
-            className={"my-1"}
-        >
-          <GitHubCommitsOpenPullRequestDataBlock data={totalCommits} />
-        </Col>
-        <Col
-            md={3}
-            className={"my-1"}
-        >
-          <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
-        </Col>
-        <Col
-            md={3}
-            className={"my-1"}
-        >
-          <GitHubCommitsTotalDeclinedDataBlock data={5} />
-        </Col>
-      </Row>
-    );
-  };
-
   const getChartBody = () => {
     if (
       !Array.isArray(mostActiveUsersMetrics) ||
@@ -233,46 +238,45 @@ function GithubCommitsStatistics({
             <Row className="p-2 gray">
               <Col
                   md={3}
-                  className={"my-1"}
+              >
+                <GitHubCommitsTotalActivityDataBlock data={totalActivity} />
+              </Col>
+              <Col
+                  md={3}
               >
                 <GitHubCommitsTotalPullRequestsDataBlock data={totalPullRequest} />
               </Col>
               <Col
                   md={3}
-                  className={"my-1"}
               >
-                <GitHubCommitsOpenPullRequestDataBlock data={totalCommits} />
+                <GithubCommitsApprovedPullRequestsDataBlock data={totalApproved} />
               </Col>
               <Col
                   md={3}
-                  className={"my-1"}
               >
-                <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
-              </Col>
-              <Col
-                  md={3}
-                  className={"my-1"}
-              >
-                <GitHubCommitsTotalDeclinedDataBlock data={5} />
+                <GitHubCommitsOpenPullRequestDataBlock data={totalOpen} />
               </Col>
             </Row>
           <Row className="p-2 gray">
             <Col
                 md={3}
-                className={"mr-4"}
             >
-              <GitHubCommitsTotalPullRequestsDataBlock data={totalPullRequest} />
-            </Col>
-            <Col
-              md={3}
-            >
-              <GitHubCommitsOpenPullRequestDataBlock data={totalCommits} />
+              <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
             </Col>
             <Col
                 md={3}
-                className={"ml-5"}
             >
-              <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
+              <GitHubCommitsTotalCommitsDataBlock data={totalCommits} />
+            </Col>
+            <Col
+                md={3}
+            >
+              <GitHubCommitsTotalDeclinedDataBlock data={totalDeclined} />
+            </Col>
+            <Col
+                md={3}
+            >
+              <GithubCommitsTotalFixedDataBlock data={totalFixed} />
             </Col>
           </Row>
         </Container>
@@ -294,11 +298,11 @@ function GithubCommitsStatistics({
         setKpis={setKpis}
         isLoading={isLoading}
         launchActionableInsightsFunction={onRowSelect}
-        // chartHelpComponent={(closeHelpPanel) => (
-        //   <GithubCommitStatisticsHelpDocumentation
-        //     closeHelpPanel={closeHelpPanel}
-        //   />
-        // )}
+        chartHelpComponent={(closeHelpPanel) => (
+          <GithubCommitStatisticsHelpDocumentation
+            closeHelpPanel={closeHelpPanel}
+          />
+        )}
       />
       <ModalLogs
         header="Github Commits Statistics"
