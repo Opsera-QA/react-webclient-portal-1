@@ -1,92 +1,10 @@
-import { ApiService, axiosApiService } from "../../api/apiService";
+import { axiosApiService } from "../../api/apiService";
 import baseActions from "../../utils/actionsBase";
-import { stringHelper } from "components/common/helpers/string/string.helper";
-import { generateUUID } from "components/common/helpers/string-helpers";
 import { apiTokenHelper } from "temp-library-components/helpers/api/token/apiToken.helper";
 import routeTokenConstants from "@opsera/definitions/constants/routes/tokens/routeToken.constants";
 
 // TODO: Rename with whatever name makes sense
 const userActions = {};
-
-// TODO: Remove after upgrading to V2 (IN Analytics Settings Actions)
-userActions.getAnalyticsSettings = async (getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = `/analytics/settings`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw { error };});
-  return response;
-};
-
-//Check if the email is already registered in the system
-userActions.isEmailAvailable = async (cancelTokenSource, emailAddress) => {
-  const token = apiTokenHelper.generateApiCallToken(routeTokenConstants.ROUTE_MIDDLEWARE_TOKEN_KEYS.DOES_EMAIL_EXIST);
-  const apiUrl = "/users/check-email";
-  const postBody = {
-    email: emailAddress,
-    hostname: window.location.hostname,
-  };
-
-  return await baseActions.customTokenApiPostCallV2(
-    cancelTokenSource,
-    token,
-    apiUrl,
-    postBody,
-  );
-};
-
-//Check if the domain is already registered in the system
-userActions.isDomainAvailable = async (domain) => {
-  console.log("checking if domain is registered to an account: " + domain);
-
-  // TODO: Are there more opsera-specific subdomains?
-  if (domain === "portal" || domain === "test" || domain === "dev" || domain === "freetrial") {
-    return false;
-  }
-
-  const apiCall = new ApiService(`/users/check-domain/${domain}`, {}, null);
-
-  console.log(`Api call domain: /users/check-domain/${domain}`);
-  return await apiCall
-    .get()
-    .then(function (response) {
-      if (response.data) {
-        return false;
-      } else {
-        return true;
-      }
-    })
-    .catch(function (error) {
-      return true;
-    });
-};
-
-
-// TODO: Update as needed, create multi level input items to prevent having to deconstruct them
-userActions.createOpseraAccount = async (cancelTokenSource, registrationDataDto) => {
-  let finalObject = {...registrationDataDto.getPersistData()};
-  let configuration = {
-    cloudProvider: registrationDataDto.getData("cloudProvider"),
-    cloudProviderRegion: registrationDataDto.getData("cloudProviderRegion")
-  };
-  let attributes = {
-    title: registrationDataDto.getData("title"),
-    company: registrationDataDto.getData("company"),
-  };
-  delete finalObject["cloudProviderRegion"];
-  delete finalObject["cloudProvider"];
-  finalObject["configuration"] = configuration;
-  finalObject["attributes"] = attributes;
-  const token = apiTokenHelper.generateApiCallToken(routeTokenConstants.ROUTE_MIDDLEWARE_TOKEN_KEYS.CREATE_OPSERA_ACCOUNT);
-  const apiUrl = "/users/create";
-
-  return await baseActions.customTokenApiPostCallV2(
-    cancelTokenSource,
-    token,
-    apiUrl,
-    finalObject,
-  );
-};
 
 userActions.getLoggedInUser = async (
   token,
@@ -103,39 +21,6 @@ userActions.getLoggedInUser = async (
     cancelTokenSource,
     apiUrl,
     queryParameters,
-  );
-};
-
-userActions.createAwsMarketplaceOpseraAccount = async (cancelTokenSource, registrationModel) => {
-  const apiUrl = "/users/create";
-  let finalObject = {...registrationModel.getPersistData()};
-
-  const configuration = {
-    cloudProvider: registrationModel.getData("cloudProvider"),
-    cloudProviderRegion: registrationModel.getData("cloudProviderRegion")
-  };
-
-  const attributes = {
-    title: registrationModel.getData("title"),
-    company: registrationModel.getData("company"),
-    aws_customer_id: registrationModel.getData("aws_customer_id"),
-    aws_product_code: registrationModel.getData("aws_product_code"),
-  };
-
-  delete finalObject["cloudProviderRegion"];
-  delete finalObject["cloudProvider"];
-  delete finalObject["aws_customer_id"];
-  delete finalObject["aws_product_code"];
-
-  finalObject["configuration"] = configuration;
-  finalObject["attributes"] = attributes;
-  const token = apiTokenHelper.generateApiCallToken(routeTokenConstants.ROUTE_MIDDLEWARE_TOKEN_KEYS.CREATE_OPSERA_ACCOUNT);
-
-  return await baseActions.customTokenApiPostCallV2(
-    cancelTokenSource,
-    token,
-    apiUrl,
-    finalObject,
   );
 };
 

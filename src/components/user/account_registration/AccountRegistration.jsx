@@ -95,7 +95,6 @@ function AccountRegistration() {
   // TODO: This check should be moved to register button when updating free trial/standard sign up forms next
   const createAccount = async () => {
     const response = await userActions.isEmailAvailable(
-      cancelTokenSource,
       registrationDataDto?.getData("email")
     );
     const isEmailAvailable = response?.data?.emailExists === false;
