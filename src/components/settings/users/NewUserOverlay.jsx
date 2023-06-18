@@ -10,7 +10,7 @@ import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {usersMetadata} from "components/settings/users/users.metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import useApiTokenHandlerActions from "hooks/token/useGetUnauthenticatedReactToken";
+import useApiTokenHandlerActions from "hooks/token/useApiTokenActions";
 
 export default function NewUserOverlay({ loadData } ) {
   const { getUserRecord } = useContext(AuthContext);
