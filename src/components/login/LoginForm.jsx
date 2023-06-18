@@ -12,7 +12,7 @@ import OktaSignIn from '@okta/okta-signin-widget';
 import LoginWelcomeMessage from "components/login/LoginWelcomeMessage";
 import {AuthContext} from "contexts/AuthContext";
 import useAuthenticationToken from "hooks/general/api/useAuthenticationToken";
-import useApiTokenHandlerActions from "hooks/token/useGetUnauthenticatedReactToken";
+import useApiTokenHandlerActions from "hooks/token/useApiTokenActions";
 
 const LoginForm = () => {
   const history = useHistory();
