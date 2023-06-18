@@ -21,11 +21,11 @@ export default function useGetToolIdentifierByIdentifier(
     setToolIdentifier(undefined);
 
     if (hasStringValue(identifier) === true && loadData) {
-      loadData(getPipeline, handleErrorFunction).catch(() => {});
+      loadData(getToolIdentifier, handleErrorFunction).catch(() => {});
     }
   }, [identifier]);
 
-  const getPipeline = async () => {
+  const getToolIdentifier = async () => {
     if (hasStringValue(identifier) !== true) {
       return;
     }
@@ -37,7 +37,7 @@ export default function useGetToolIdentifierByIdentifier(
   return ({
     toolIdentifier: toolIdentifier,
     setToolIdentifier: setToolIdentifier,
-    loadData: loadData,
+    loadData: () => loadData(getToolIdentifier, handleErrorFunction),
     isLoading: isLoading,
     error: error,
     setError: setError,

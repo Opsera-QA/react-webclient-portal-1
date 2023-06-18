@@ -4,12 +4,12 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import liveMessageTypeConstants from "@opsera/definitions/constants/websocket/constants/liveMessageType.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-// TODO: Because of how activity logs work, we'll want to make new subscription types
-export default function useDocumentActivityLogCollectionSubscriptionHelper(
+// TODO: Make new subscription type for better handling of live updates?
+export default function useTaskActivityLogCollectionSubscriptionHelper(
   topicName,
   collection,
   setCollection,
-  objectId,
+  taskId,
   currentRunNumber,
 ) {
   const {
@@ -18,8 +18,9 @@ export default function useDocumentActivityLogCollectionSubscriptionHelper(
 
   const onCreateFunction = (newDocument) => {
     const parsedDocument = DataParsingHelper.parseObject(newDocument);
+    const parsedPipelineId = DataParsingHelper.parseNestedMongoDbId(parsedDocument, "task_id");
 
-    if (parsedDocument) {
+    if (parsedDocument && parsedPipelineId === taskId) {
       const documentIndex = collection.findIndex((document) => document._id === parsedDocument._id);
 
       if (
@@ -36,24 +37,24 @@ export default function useDocumentActivityLogCollectionSubscriptionHelper(
 
   const onUpdateFunction = (updatedDocument) => {
     const parsedDocument = DataParsingHelper.parseObject(updatedDocument);
+    const parsedPipelineId = DataParsingHelper.parseNestedMongoDbId(parsedDocument, "task_id");
 
-    if (parsedDocument) {
+    if (parsedDocument && parsedPipelineId === taskId) {
       const documentIndex = collection.findIndex((document) => document._id === parsedDocument._id);
 
       if (documentIndex !== -1) {
-        const foundDocument = collection[documentIndex];
         collection[documentIndex] = parsedDocument;
         setCollection([...collection]);
-
       }
     }
   };
 
   const onDeleteFunction = (deletedDocument) => {
-    const parsedDocument = DataParsingHelper.parseObject(deletedDocument);
     console.debug("Received a delete message for activity log: ", deletedDocument);
+    const parsedDocument = DataParsingHelper.parseObject(deletedDocument);
+    const parsedPipelineId = DataParsingHelper.parseNestedMongoDbId(parsedDocument, "task_id");
 
-    if (parsedDocument) {
+    if (parsedDocument && parsedPipelineId === taskId) {
       if (setCollection) {
         const parsedDocumentMongoDbId = DataParsingHelper.parseMongoDbId(parsedDocument, "_id");
         const updatedDocuments = collection.filter((document) => document._id !== parsedDocumentMongoDbId);
@@ -70,7 +71,7 @@ export default function useDocumentActivityLogCollectionSubscriptionHelper(
     } else if (type === liveMessageTypeConstants.LIVE_MESSAGE_TYPES.DELETED_RECORD) {
       onDeleteFunction(liveMessageData.data);
     }
-  }, [collection, objectId, currentRunNumber]);
+  }, [collection, taskId, currentRunNumber]);
 
   useEffect(() => {
     if (hasStringValue(topicName) === true) {
