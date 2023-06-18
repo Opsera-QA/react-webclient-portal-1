@@ -1,11 +1,15 @@
-import React, {useState, useEffect, useCallback} from "react";
+import React, {useState, useEffect, useContext, useRef, useCallback} from "react";
 import PropTypes from "prop-types";
+import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
+import axios from "axios";
+import userActions from "components/user/user-actions";
+import {DialogToastContext} from "contexts/DialogToastContext";
 import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
 import Model from "core/data_model/model";
 import {ldapUserMetadata} from "components/admin/accounts/ldap/users/ldapUser.metadata";
@@ -20,7 +24,6 @@ import LdapGroupForDomainMultiSelectInput
   from "components/common/list_of_values_input/settings/groups/LdapGroupForDomainMultiSelectInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import useLdapGroupActions from "hooks/ldap/groups/useLdapGroupActions";
-import useUserActions from "hooks/users/useUserActions";
 
 function UserEditorPanel(
   {
@@ -40,7 +43,6 @@ function UserEditorPanel(
     isOpseraAdministrator,
   } = useComponentStateReference();
   const ldapGroupActions = useLdapGroupActions();
-  const userActions = useUserActions();
 
   useEffect(() => {
     setUserModel(userData);
@@ -193,7 +195,7 @@ function UserEditorPanel(
     };
     const newSsoUser = new Model({...newSsoUserData}, ssoUserMetadata, false);
 
-    return await userActions.createOpseraAccount(newSsoUser);
+    return await userActions.createOpseraAccount(cancelTokenSource, newSsoUser);
   };
 
   const assignUserToSelectedGroups = async (groups) => {

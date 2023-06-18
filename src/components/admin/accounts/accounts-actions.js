@@ -1,4 +1,6 @@
 import baseActions from "utils/actionsBase";
+import { apiTokenHelper } from "temp-library-components/helpers/api/token/apiToken.helper";
+import routeTokenConstants from "@opsera/definitions/constants/routes/tokens/routeToken.constants";
 
 const accountsActions = {};
 
@@ -56,6 +58,22 @@ accountsActions.getLdapUsersWithDomainV2 = async (getAccessToken, cancelTokenSou
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+accountsActions.isFreeTrialAccountActive = async (cancelTokenSource, email) => {
+  const token = apiTokenHelper.generateApiCallToken(routeTokenConstants.ROUTE_MIDDLEWARE_TOKEN_KEYS.IS_ACCOUNT_ACTIVE);
+  const apiUrl = "/users/trial/is-account-active";
+  const postBody = {
+    email: email,
+    hostname: window.location.hostname,
+  };
+
+  return await baseActions.customTokenApiPostCallV2(
+    cancelTokenSource,
+    token,
+    apiUrl,
+    postBody,
+  );
+};
+
 accountsActions.getFreeTrialAccountMetrics = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = `/trial/users/account/metrics`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
@@ -107,6 +125,15 @@ accountsActions.getSsoUserOrganizationNames = async (getAccessToken, cancelToken
 accountsActions.getUser = async (userId, getAccessToken) => {
   const apiUrl = `/users/${userId}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+// TODO: Remove after all references are updated to V2
+accountsActions.isEmailAvailable = async (email, getAccessToken) => {
+  const postBody = {
+    email: email
+  };
+  const apiUrl = "/users/account/is-email-available";
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 accountsActions.isEmailAvailableV2 = async (getAccessToken, cancelTokenSource, email) => {

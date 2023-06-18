@@ -5,13 +5,14 @@ import "components/user/user.css";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import userActions from "components/user/user-actions";
 import RegisterButton from "components/common/buttons/saving/RegisterButton";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import awsAccountRegistrationMetadata from "components/user/aws_registration/aws_account_registration_metadata";
 import SignupCloudProviderSelectInput
   from "components/common/list_of_values_input/general/SignupCloudProviderSelectInput";
 import UsStateSelectInput from "components/common/list_of_values_input/general/UsStateSelectInput";
-import useUserActions from "hooks/users/useUserActions";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function AwsAccountRegistration() {
   const { customerId } = useParams();
@@ -19,7 +20,9 @@ function AwsAccountRegistration() {
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [registrationModel, setRegistrationModel] = useState(undefined);
-  const userActions = useUserActions();
+  const {
+    cancelTokenSource,
+  } = useComponentStateReference();
 
   useEffect(() => {
     loadData();
@@ -48,6 +51,7 @@ function AwsAccountRegistration() {
     // TODO: We should probably add check for unique customer IDs and throw error if found
 
     const response = await userActions.isEmailAvailable(
+      cancelTokenSource,
       registrationModel?.getData("email")
     );
     const isEmailAvailable = response?.data?.emailExists === false;

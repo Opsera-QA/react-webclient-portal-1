@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import { Form, Row, Col, Card } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import "components/user/user.css";
+import userActions from "components/user/user-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -12,7 +13,6 @@ import accountRegistrationMetadata from "components/user/account_registration/ac
 import TempTextInput from "components/common/inputs/text/TempTextInput";
 import {validateEmail} from "utils/helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import useUserActions from "hooks/users/useUserActions";
 
 function AccountRegistration() {
   const { domain } = useParams();
@@ -28,7 +28,6 @@ function AccountRegistration() {
     isMounted,
     accessRoleData,
   } = useComponentStateReference();
-  const userActions = useUserActions();
 
   useEffect(() => {
     loadData().catch((error) => {
@@ -42,7 +41,7 @@ function AccountRegistration() {
     try {
       setIsLoading(true);
       setInvalidHost(false);
-      const accountResponse = await userActions.getAccountInformationWithDomain(domain);
+      const accountResponse = await userActions.getAccountInformationWithDomain(cancelTokenSource, domain);
       let newAccountDto = (new Model(accountRegistrationMetadata.newObjectFields, accountRegistrationMetadata, true));
 
       if (accountResponse?.data) {
@@ -95,6 +94,7 @@ function AccountRegistration() {
   // TODO: This check should be moved to register button when updating free trial/standard sign up forms next
   const createAccount = async () => {
     const response = await userActions.isEmailAvailable(
+      cancelTokenSource,
       registrationDataDto?.getData("email")
     );
     const isEmailAvailable = response?.data?.emailExists === false;
@@ -106,7 +106,7 @@ function AccountRegistration() {
 
     if (registrationDataDto.isModelValid()) {
       try {
-        const response = await userActions.createOpseraAccount( registrationDataDto);
+        const response = await userActions.createOpseraAccount(cancelTokenSource, registrationDataDto);
         // toastContext.showCreateSuccessResultDialog("Opsera Account")
         loadRegistrationResponse();
       } catch (error) {

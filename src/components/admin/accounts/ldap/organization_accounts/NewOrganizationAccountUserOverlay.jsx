@@ -6,10 +6,11 @@ import {faUser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import UserEditorPanel from "components/settings/users/details/UserEditorPanel";
 import userActions from "components/user/user-actions";
+import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {usersMetadata} from "components/settings/users/users.metadata";
+import {apiTokenHelper} from "temp-library-components/helpers/api/token/apiToken.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import useApiTokenHandlerActions from "hooks/token/useApiTokenHandlerActions";
 
 export default function NewOrganizationAccountUserOverlay({ orgDomain, loadData } ) {
   const toastContext = useContext(DialogToastContext);
@@ -20,7 +21,6 @@ export default function NewOrganizationAccountUserOverlay({ orgDomain, loadData 
     cancelTokenSource,
     isOpseraAdministrator,
   } = useComponentStateReference();
-  const apiTokenHandlerActions = useApiTokenHandlerActions();
 
   useEffect(() => {
     if (isOpseraAdministrator === true) {
@@ -31,7 +31,7 @@ export default function NewOrganizationAccountUserOverlay({ orgDomain, loadData 
 
   const initializeData = async () => {
     try {
-      const token = await apiTokenHandlerActions.generateApiCallToken("orgRegistrationForm");
+      const token = apiTokenHelper.generateApiCallToken("orgRegistrationForm");
       const accountResponse = await userActions.getAccountInformationV2(cancelTokenSource, orgDomain, token);
       const newUserModel = new Model(usersMetadata.newObjectFields, usersMetadata, true);
 

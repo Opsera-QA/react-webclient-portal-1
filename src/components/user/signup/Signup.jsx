@@ -6,6 +6,7 @@ import "components/user/user.css";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import userActions from "components/user/user-actions";
 import RegisterButton from "components/common/buttons/saving/RegisterButton";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import SignupCloudProviderSelectInput
@@ -15,7 +16,6 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import AwsCloudProviderRegionSelectInput
   from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
 import WarningMessageFieldBase from "../../common/fields/text/message/WarningMessageFieldBase";
-import useUserActions from "hooks/users/useUserActions";
 
 
 function Signup() {
@@ -26,7 +26,6 @@ function Signup() {
     cancelTokenSource,
     isMounted,
   } = useComponentStateReference();
-  const userActions = useUserActions();
 
   useEffect(() => {
     setRegistrationDataDto({...
@@ -51,6 +50,7 @@ function Signup() {
     }
 
     const response = await userActions.isEmailAvailable(
+      cancelTokenSource,
       registrationDataDto?.getData("email")
     );
     const isEmailAvailable = response?.data?.emailExists === false;
@@ -62,7 +62,7 @@ function Signup() {
 
     if (registrationDataDto.isModelValid()) {
       try {
-        await userActions.createOpseraAccount(registrationDataDto);
+        await userActions.createOpseraAccount(cancelTokenSource, registrationDataDto);
         //toastContext.showCreateSuccessResultDialog("Opsera Account")
         loadRegistrationResponse();
       } catch (error) {

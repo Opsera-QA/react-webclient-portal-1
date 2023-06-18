@@ -10,9 +10,9 @@ import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import OktaSignIn from '@okta/okta-signin-widget';
 import LoginWelcomeMessage from "components/login/LoginWelcomeMessage";
+import {apiTokenHelper} from "temp-library-components/helpers/api/token/apiToken.helper";
 import {AuthContext} from "contexts/AuthContext";
 import useAuthenticationToken from "hooks/general/api/useAuthenticationToken";
-import useApiTokenHandlerActions from "hooks/token/useApiTokenHandlerActions";
 
 const LoginForm = () => {
   const history = useHistory();
@@ -27,7 +27,6 @@ const LoginForm = () => {
   const [oktaSignInWidget, setOktaSignInWidget] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
   const { setExpectedEmailAddress } = useContext(AuthContext);
-  const apiTokenHandlerActions = useApiTokenHandlerActions();
 
   // TODO: OktaAuth and authCLient are the same thing, we need to remove one
   const { authClient } = useAuthenticationToken();
@@ -254,7 +253,7 @@ const LoginForm = () => {
 
         /*START NEW FEDERATION CODE*/
         if (accountType === "ldap-organization") {
-          const token = await apiTokenHandlerActions.generateApiCallToken("orgRegistrationForm");
+          const token = apiTokenHelper.generateApiCallToken("orgRegistrationForm");
 
           if (token) {
             const accountResponse = await userActions.getAccountInformationWithEmailAddress(lookupAccountEmail, token);

@@ -1,7 +1,8 @@
 import React from "react";
 import App from "./App";
+import ReactDOM from "react-dom";
 import reportWebVitals from "reportWebVitals";
-import { createRoot } from 'react-dom/client';
+// import { createRoot } from 'react-dom/client';
 
 if (typeof window["TextEncoder"] !== "function") {
   console.log("Using text-encoding shim");
@@ -12,14 +13,14 @@ if (typeof window["TextEncoder"] !== "function") {
 
 const browserNotSupported = (function (agent) {
   switch (true) {
-  case agent.indexOf("edge") > -1: return false; // "edge";
-  case agent.indexOf("edg") > -1: return false; //"chromium based edge (dev or canary)";
-  case agent.indexOf("opr") > -1 && !!window.opr: return false; // "opera";
-  case agent.indexOf("chrome") > -1 && !!window.chrome: return false; // "chrome";
-  case agent.indexOf("trident") > -1: return "ie";
-  case agent.indexOf("firefox") > -1: return false; // "firefox";
-  case agent.indexOf("safari") > -1: return false; // "safari";
-  default: return false;
+    case agent.indexOf("edge") > -1: return false; // "edge";
+    case agent.indexOf("edg") > -1: return false; //"chromium based edge (dev or canary)";
+    case agent.indexOf("opr") > -1 && !!window.opr: return false; // "opera";
+    case agent.indexOf("chrome") > -1 && !!window.chrome: return false; // "chrome";
+    case agent.indexOf("trident") > -1: return "ie";
+    case agent.indexOf("firefox") > -1: return false; // "firefox";
+    case agent.indexOf("safari") > -1: return false; // "safari";
+    default: return false;
   }
 })(window.navigator.userAgent.toLowerCase());
 
@@ -34,9 +35,10 @@ if (browserNotSupported) {
   Chromium Edge browser (released January 2020).  Please return with one of those browsers to ensure a secure experience.</div>";
   document.body.innerHTML = uiMessage;
 } else {
-  const container = document.getElementById('root');
-  const root = createRoot(container);
-  root.render(<App />);
+  ReactDOM.render(<App />, document.getElementById("root"));
+  // const container = document.getElementById('root');
+  // const root = createRoot(container);
+  // root.render(<App />);
 }
 
 // If you want to start measuring performance in your app, pass a function
