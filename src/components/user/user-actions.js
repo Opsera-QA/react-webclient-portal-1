@@ -1,6 +1,5 @@
 import { axiosApiService } from "../../api/apiService";
 import baseActions from "../../utils/actionsBase";
-import { apiTokenHelper } from "temp-library-components/helpers/api/token/apiToken.helper";
 import routeTokenConstants from "@opsera/definitions/constants/routes/tokens/routeToken.constants";
 
 // TODO: Rename with whatever name makes sense
@@ -98,17 +97,6 @@ userActions.getAccountInformationWithEmailAddress = async (emailAddress, token) 
   };
 
   return await baseActions.customTokenApiPostCall(token, apiUrl, postBody);
-};
-
-userActions.getAccountInformationWithDomain = async (cancelTokenSource, domain) => {
-  const apiUrl = `/users/account/summary`;
-  const token = apiTokenHelper.generateApiCallToken("orgRegistrationForm");
-
-  const postBody = {
-    domain: domain,
-  };
-
-  return await baseActions.customTokenApiPostCallV2(cancelTokenSource, token, apiUrl, postBody);
 };
 
 userActions.getAccountInformationV2 = async (cancelTokenSource, domain, token) => {
