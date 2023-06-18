@@ -2,9 +2,10 @@ import {useEffect, useState} from "react";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import useAuthenticationActions from "hooks/token/useAuthenticationActions";
+import routeTokenConstants from "@opsera/definitions/constants/routes/tokens/routeToken.constants";
 
 export default function useGetUnauthenticatedReactToken(
-  id = ,
+  id = routeTokenConstants.UNAUTHENTICATED_ROUTE_MIDDLEWARE_TOKEN_KEYS.GENERIC_KEY,
   handleErrorFunction,
 ) {
   const [reactToken, setReactToken] = useState(undefined);
