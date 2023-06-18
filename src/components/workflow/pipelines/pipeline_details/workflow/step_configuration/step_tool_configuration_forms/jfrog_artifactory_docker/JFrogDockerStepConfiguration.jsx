@@ -12,10 +12,11 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import jfrogStepFormMetadata from "./jfrog-stepForm-metadata";
 import JFrogRepositoryTypeSelectInput from "./inputs/JFrogRepositoryTypeSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import JfrogDockerStepRepositorySubFolderNameInputs
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_docker/inputs/JfrogDockerStepRepositorySubFolderNameInputs";
 
 function JFrogDockerStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [jobType, setJobType] = useState("");
   const [jfrogStepConfigurationDto, setJFrogStepConfigurationDataDto] = useState(undefined);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
@@ -41,17 +42,13 @@ function JFrogDockerStepConfiguration({ pipelineId, stepTool, stepId, createJob,
 
   const loadData = async () => {
     setIsLoading(true);
-    let { threshold, job_type } = stepTool;
+    let { threshold } = stepTool;
     let jfrogConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, jfrogStepFormMetadata);
 
     if (jfrogConfigurationData.getData("type") === "PORTPERREPO") {
       jfrogConfigurationData.setMetaDataFields(jfrogStepFormMetadata.fieldsAlt);
     }
     setJFrogStepConfigurationDataDto(jfrogConfigurationData);
-
-    if (job_type) {
-      setJobType(job_type);
-    }
 
     if (threshold) {
       setThresholdType(threshold?.type);
@@ -86,16 +83,31 @@ function JFrogDockerStepConfiguration({ pipelineId, stepTool, stepId, createJob,
     }
   };
 
-  const getSubFolderInput = () => {
-    if (jfrogStepConfigurationDto.getData("useRepositorySubFolderName") === true) {
+  const getDynamicFields = () => {
+    if (jfrogStepConfigurationDto.getData("type") === "PORTPERREPO") {
       return (
-        <TextInputBase 
-          fieldName="repositorySubFolderName"
+        <TextInputBase
+          fieldName={"port"}
+          setDataObject={setJFrogStepConfigurationDataDto}
           dataObject={jfrogStepConfigurationDto}
-          setDataObject={setJFrogStepConfigurationDataDto}          
         />
       );
     }
+
+    return (
+      <JfrogRepoSelectInput
+        fieldName={"repositoryName"}
+        dataObject={jfrogStepConfigurationDto}
+        setDataObject={setJFrogStepConfigurationDataDto}
+        options={listOfSteps}
+        disabled={jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("jfrogToolConfigId")?.length === 0}
+        tool_prop={
+          jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("jfrogToolConfigId")
+            ? jfrogStepConfigurationDto.getData("jfrogToolConfigId")
+            : ""
+        }
+      />
+    );
   };
 
   if (isLoading || jfrogStepConfigurationDto == null) {
@@ -135,27 +147,11 @@ function JFrogDockerStepConfiguration({ pipelineId, stepTool, stepId, createJob,
         dataObject={jfrogStepConfigurationDto}
         setDataObject={setJFrogStepConfigurationDataDto}
       />
-      {jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("type") === "PORTPERREPO" ?
-        <TextInputBase fieldName="port" setDataObject={setJFrogStepConfigurationDataDto} dataObject={jfrogStepConfigurationDto}/> :
-        <JfrogRepoSelectInput
-          fieldName={"repositoryName"}
-          dataObject={jfrogStepConfigurationDto}
-          setDataObject={setJFrogStepConfigurationDataDto}
-          options={listOfSteps}
-          disabled={jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("jfrogToolConfigId")?.length === 0}
-          tool_prop={
-            jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("jfrogToolConfigId")
-              ? jfrogStepConfigurationDto.getData("jfrogToolConfigId")
-              : ""
-          }
-        />
-      }
-      <BooleanToggleInput
-        fieldName={"useRepositorySubFolderName"}
-        dataObject={jfrogStepConfigurationDto}
-        setDataObject={setJFrogStepConfigurationDataDto}
+      {getDynamicFields()}
+      <JfrogDockerStepRepositorySubFolderNameInputs
+        model={jfrogStepConfigurationDto}
+        setModel={setJFrogStepConfigurationDataDto}
       />
-      {getSubFolderInput()}
     </PipelineStepEditorPanelContainer>
   );
 }
