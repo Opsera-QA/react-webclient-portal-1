@@ -9,8 +9,8 @@ import userActions from "components/user/user-actions";
 import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {usersMetadata} from "components/settings/users/users.metadata";
-import {apiTokenHelper} from "temp-library-components/helpers/api/token/apiToken.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import useApiTokenHandlerActions from "hooks/token/useGetUnauthenticatedReactToken";
 
 export default function NewUserOverlay({ loadData } ) {
   const { getUserRecord } = useContext(AuthContext);
@@ -20,6 +20,7 @@ export default function NewUserOverlay({ loadData } ) {
   const [domain, setDomain] = useState(undefined);
   const [organization, setOrganization] = useState(undefined);
   const { cancelTokenSource } = useComponentStateReference();
+  const apiTokenHandlerActions = useApiTokenHandlerActions();
 
   useEffect(() => {
     initializeData().catch(() => {});
@@ -31,7 +32,7 @@ export default function NewUserOverlay({ loadData } ) {
       const orgDomain = user?.ldap?.domain;
       setOrganization(user?.ldap?.organization);
       setDomain(orgDomain);
-      const token = apiTokenHelper.generateApiCallToken("orgRegistrationForm");
+      const token = await apiTokenHandlerActions.generateApiCallToken("orgRegistrationForm");
       const accountResponse = await userActions.getAccountInformationV2(cancelTokenSource, orgDomain, token);
       const newUserModel = new Model(usersMetadata.newObjectFields, usersMetadata, true);
 
