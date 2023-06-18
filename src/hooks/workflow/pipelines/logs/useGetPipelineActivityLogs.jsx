@@ -2,13 +2,15 @@ import {useEffect, useRef, useState} from "react";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import liveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessageTopic.constants";
 import usePipelineActivityLogActions from "hooks/workflow/pipelines/logs/usePipelineActivityLogActions";
-import useDocumentActivityLogCollectionSubscriptionHelper
-  from "core/websocket/hooks/collection/activity_logs/useDocumentActivityLogCollectionSubscriptionHelper";
 import PipelineActivityLogFilterModel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipelineActivityLogFilterModel";
 import pipelineLogHelpers
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineLog.helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import usePipelineActivityLogCollectionSubscriptionHelper
+  from "core/websocket/hooks/collection/activity_logs/usePipelineActivityLogCollectionSubscriptionHelper";
+import useGetPollingPipelineActivityLogCountForRun
+  from "hooks/workflow/pipelines/logs/useGetPollingPipelineActivityLogCountForRun";
 
 export default function useGetPipelineActivityLogs(
   pipelineId,
@@ -19,19 +21,25 @@ export default function useGetPipelineActivityLogs(
   const pipelineActivityLogActions = usePipelineActivityLogActions();
   const [pipelineActivityFilterModel, setPipelineActivityFilterModel] = useState(new PipelineActivityLogFilterModel());
   const [pipelineActivityLogs, setPipelineActivityLogs] = useState([]);
-  const pipelineTree = useRef([]);
+  const pipelineLogsTree = useRef([]);
   const {
     isLoading,
     error,
     setError,
     loadData,
   } = useLoadData();
-  useDocumentActivityLogCollectionSubscriptionHelper(
+  usePipelineActivityLogCollectionSubscriptionHelper(
     liveMessageTopicConstants.LIVE_MESSAGE_TOPICS.PIPELINE_ACTIVITY_LOGS,
     pipelineActivityLogs,
     setPipelineActivityLogs,
     pipelineId,
     currentRunNumber,
+  );
+  const {
+    logCount,
+  } = useGetPollingPipelineActivityLogCountForRun(
+    pipelineId,
+    currentRunNumber === pipelineRunCount ? currentRunNumber : undefined
   );
 
   useEffect(() => {
@@ -45,8 +53,19 @@ export default function useGetPipelineActivityLogs(
 
   useEffect(() => {
     const newPipelineTree = pipelineLogHelpers.constructTopLevelTreeBasedOnRunCount(pipelineRunCount);
-    pipelineTree.current = [...newPipelineTree];
+    pipelineLogsTree.current = [...newPipelineTree];
   }, [pipelineRunCount]);
+
+  useEffect(() => {
+    if (logCount > pipelineActivityLogs.length) {
+      console.debug(`logCount: [${logCount}], current log count: [${pipelineActivityLogs.length}]`);
+
+      if (currentRunNumber && pipelineId && loadData) {
+        loadData(getPipelineActivityLogs, handleErrorFunction).catch(() => {
+        });
+      }
+    }
+  }, [logCount]);
 
   const getPipelineActivityLogs = async (newFilterModel = pipelineActivityFilterModel) => {
 
@@ -87,10 +106,10 @@ export default function useGetPipelineActivityLogs(
     newFilterModel.setData("activeFilters", newFilterModel?.getActiveFilters());
     setPipelineActivityFilterModel({...newFilterModel});
 
-    const newTree = pipelineLogHelpers.updateSelectedRunNumberTree(pipelineTree.current, currentRunNumber, pipelineActivityData, triggeredBy);
+    const newTree = pipelineLogHelpers.updateSelectedRunNumberTree(pipelineLogsTree.current, currentRunNumber, pipelineActivityData, triggeredBy);
 
     if (Array.isArray(newTree) && newTree.length > 0) {
-      pipelineTree.current = [...newTree];
+      pipelineLogsTree.current = [...newTree];
     }
   };
 
@@ -103,6 +122,6 @@ export default function useGetPipelineActivityLogs(
     isLoading: isLoading,
     error: error,
     setError: setError,
-    pipelineTree: pipelineTree,
+    pipelineLogsTree: pipelineLogsTree?.current,
   });
 }
