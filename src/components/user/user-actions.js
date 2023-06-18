@@ -1,6 +1,5 @@
 import { axiosApiService } from "../../api/apiService";
 import baseActions from "../../utils/actionsBase";
-import routeTokenConstants from "@opsera/definitions/constants/routes/tokens/routeToken.constants";
 
 // TODO: Rename with whatever name makes sense
 const userActions = {};
