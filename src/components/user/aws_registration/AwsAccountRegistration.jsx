@@ -11,7 +11,6 @@ import awsAccountRegistrationMetadata from "components/user/aws_registration/aws
 import SignupCloudProviderSelectInput
   from "components/common/list_of_values_input/general/SignupCloudProviderSelectInput";
 import UsStateSelectInput from "components/common/list_of_values_input/general/UsStateSelectInput";
-import useComponentStateReference from "hooks/useComponentStateReference";
 import useUserActions from "hooks/users/useUserActions";
 
 function AwsAccountRegistration() {

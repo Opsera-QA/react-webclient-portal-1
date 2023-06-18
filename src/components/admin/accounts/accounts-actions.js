@@ -109,15 +109,6 @@ accountsActions.getUser = async (userId, getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-// TODO: Remove after all references are updated to V2
-accountsActions.isEmailAvailable = async (email, getAccessToken) => {
-  const postBody = {
-    email: email
-  };
-  const apiUrl = "/users/account/is-email-available";
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
 accountsActions.isEmailAvailableV2 = async (getAccessToken, cancelTokenSource, email) => {
   const apiUrl = "/users/account/is-email-available";
   const postBody = {
