@@ -197,7 +197,7 @@ function JenkinsStepConfiguration({
         />
       );
     }
-  }
+  };
 
   const getJobForm = () => {
     if (jenkinsStepConfigurationDto?.getData("job_type") === "job") {
@@ -300,6 +300,8 @@ function JenkinsStepConfiguration({
           model={jenkinsStepConfigurationDto}
           setModel={setJenkinsStepConfigurationDto}
           buildType={jenkinsStepConfigurationDto?.getData("buildType")}
+          jenkinsList={jenkinsList}
+          toolConfigId={jenkinsStepConfigurationDto?.getData("toolConfigId")}          
         />
       </div>
     );
