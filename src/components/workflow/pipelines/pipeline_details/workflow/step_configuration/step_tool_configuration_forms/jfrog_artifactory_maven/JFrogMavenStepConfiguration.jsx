@@ -15,7 +15,6 @@ import JFrogRepositoryFormatSelectInput from "./inputs/JFrogRepositoryFormatSele
 function JFrogMavenStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan, parentCallback }) {
 
   const [isLoading, setIsLoading] = useState(false);
-  const [jobType, setJobType] = useState("");
   const [jfrogStepConfigurationDto, setJFrogStepConfigurationDataDto] = useState(undefined);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
@@ -41,14 +40,10 @@ function JFrogMavenStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
 
   const loadData = async () => {
     setIsLoading(true);
-    let { threshold, job_type } = stepTool;
+    let { threshold } = stepTool;
     let jfrogConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, jfrogMavenStepFormMetadata);
 
     setJFrogStepConfigurationDataDto(jfrogConfigurationData);
-
-    if (job_type) {
-      setJobType(job_type);
-    }
 
     if (threshold) {
       setThresholdType(threshold?.type);
@@ -76,6 +71,46 @@ function JFrogMavenStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
       },
     };
     await parentCallback(item);
+  };
+
+  const getDynamicFields = () => {
+    switch (jfrogStepConfigurationDto.getData("repositoryFormat")) {
+      case "Maven":
+        return (
+          <>
+            <TextInputBase
+              setDataObject={setJFrogStepConfigurationDataDto}
+              dataObject={jfrogStepConfigurationDto}
+              fieldName={"groupName"}
+              key={"groupName"}
+            />
+            <TextInputBase
+              setDataObject={setJFrogStepConfigurationDataDto}
+              dataObject={jfrogStepConfigurationDto}
+              fieldName={"artifactName"}
+              key={"artifactName"}
+            />
+            <BooleanToggleInput
+              dataObject={jfrogStepConfigurationDto}
+              setDataObject={setJFrogStepConfigurationDataDto}
+              fieldName={"customVersion"}
+            />
+          </>
+        );
+      case "NuGet":
+        return (
+          <>
+            <TextInputBase
+              setDataObject={setJFrogStepConfigurationDataDto}
+              dataObject={jfrogStepConfigurationDto}
+              fieldName={"serverPath"}
+              key={"serverPath"}
+            />
+          </>
+        );
+      default:
+        return null;
+    }
   };
 
   if (isLoading || jfrogStepConfigurationDto == null) {
@@ -107,37 +142,7 @@ function JFrogMavenStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
             : ""
         }
       />
-      {jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("repositoryFormat") === "Maven" &&
-        <>
-          <TextInputBase                      
-            setDataObject={setJFrogStepConfigurationDataDto}
-            dataObject={jfrogStepConfigurationDto}
-            fieldName={"groupName"}
-            key="groupName"
-          />
-          <TextInputBase                      
-            setDataObject={setJFrogStepConfigurationDataDto}
-            dataObject={jfrogStepConfigurationDto}
-            fieldName={"artifactName"}
-            key="artifactName"
-          />
-          <BooleanToggleInput 
-            dataObject={jfrogStepConfigurationDto} 
-            setDataObject={setJFrogStepConfigurationDataDto} 
-            fieldName={"customVersion"} 
-          />  
-        </>
-      }
-      {jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("repositoryFormat") === "NuGet" &&
-        <>
-          <TextInputBase                      
-            setDataObject={setJFrogStepConfigurationDataDto}
-            dataObject={jfrogStepConfigurationDto}
-            fieldName={"serverPath"}
-            key="serverPath"
-          />
-        </>
-      }
+      {getDynamicFields()}
       <JFrogMavenBuildStepSelectInput
         dataObject={jfrogStepConfigurationDto}
         setDataObject={setJFrogStepConfigurationDataDto}
