@@ -235,7 +235,7 @@ function GithubCommitsStatistics({
             style={{ minHeight: "300px" }}
         >
         <Container>
-            <Row className="p-2 gray">
+            <Row className="p-2 gray justify-content-center">
               <Col
                   md={3}
               >
@@ -249,20 +249,15 @@ function GithubCommitsStatistics({
               <Col
                   md={3}
               >
-                <GithubCommitsApprovedPullRequestsDataBlock data={totalApproved} />
+                <GitHubCommitsOpenPullRequestDataBlock data={totalOpen} />
               </Col>
               <Col
                   md={3}
               >
-                <GitHubCommitsOpenPullRequestDataBlock data={totalOpen} />
+                <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
               </Col>
             </Row>
-          <Row className="p-2 gray">
-            <Col
-                md={3}
-            >
-              <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
-            </Col>
+          <Row className="p-2 gray justify-content-center">
             <Col
                 md={3}
             >
