@@ -7,12 +7,13 @@ toolIdentifierActions.getToolIdentifierByIdV2 = async (getAccessToken, cancelTok
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-toolIdentifierActions.getToolIdentifiersV2 = async (getAccessToken, cancelTokenSource, status, enabledInToolRegistry) => {
+toolIdentifierActions.getToolIdentifiersV2 = async (getAccessToken, cancelTokenSource, status, enabledInToolRegistry, search) => {
   const apiUrl = `/registry/tools`;
   const urlParams = {
     params: {
       status: status,
       registry: enabledInToolRegistry,
+      search: search,
     },
   };
 
