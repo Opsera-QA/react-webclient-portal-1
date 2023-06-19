@@ -26,12 +26,22 @@ githubActions.githubRepositoryList = async (
   );
 };
 
-githubActions.githubBranchList = async (getAccessToken, cancelTokenSource) => {
+githubActions.githubBranchList = async (getAccessToken, cancelTokenSource,repository) => {
   // TODO FILTER WITH TAGS
   const apiUrl = githubBaseURL + "githubBranchList";
-  const postBody = {
-    size: 10,
-  };
+  let postBody = {};
+    if (Array.isArray(repository)) {
+      if (repository.length > 0) {
+        postBody = { 
+          githubRepositoryList: repository,
+          size: 10, };
+      }
+    } else if (repository) {
+      postBody = { 
+        githubRepositoryList: [repository],
+        size: 10, };
+    }
+  
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,
     cancelTokenSource,
