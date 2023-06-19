@@ -1,60 +1,24 @@
-import React, {useEffect, useState} from "react";
-import PropTypes from "prop-types";
-import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
+import React, {useEffect} from "react";
 import ToolIdentifierTableCardView from "components/admin/tools/identifiers/ToolIdentifierTableCardView";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import ToolManagementSubNavigationBar from "components/admin/tools/ToolManagementSubNavigationBar";
-import ToolFilterModel from "components/inventory/tools/tool.filter.model";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import useGetToolIdentifiers from "components/admin/tools/identifiers/hooks/useGetToolIdentifiers";
 
-function ToolIdentifierManagement() {
-  const [isLoading, setLoading] = useState(false);
-  const [toolIdentifiers, setToolIdentifiers] = useState([]);
-  const [toolIdentifierFilterModel, setToolIdentifierFilterModel] = useState(new ToolFilterModel());
+export default function ToolIdentifierManagement() {
   const {
-    accessRoleData,
-    toastContext,
-    getAccessToken,
-    cancelTokenSource,
-    isMounted,
     isOpseraAdministrator,
   } = useComponentStateReference();
+  const {
+    isLoading,
+    error,
+    loadData,
+    toolIdentifiers,
+    toolIdentifierFilterModel,
+    setToolIdentifierFilterModel,
+  } = useGetToolIdentifiers();
 
-  useEffect(() => {
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-  }, []);
-
-  const loadData = async () => {
-    try {
-      if (isOpseraAdministrator !== true) {
-        return;
-      }
-
-      setLoading(true);
-      await getToolIdentifiers();
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setLoading(false);
-      }
-    }
-  };
-
-  const getToolIdentifiers = async () => {
-    const response = await toolIdentifierActions.getToolIdentifiersV2(getAccessToken, cancelTokenSource);
-    const identifiers = response?.data?.data;
-
-    if (isMounted?.current === true && Array.isArray(identifiers)) {
-      setToolIdentifiers(identifiers);
-    }
-  };
+  useEffect(() => {}, []);
 
   if (isOpseraAdministrator !== true) {
     return null;
@@ -71,14 +35,10 @@ function ToolIdentifierManagement() {
         loadData={loadData}
         toolIdentifierFilterModel={toolIdentifierFilterModel}
         setToolIdentifierFilterModel={setToolIdentifierFilterModel}
+        error={error}
       />
     </ScreenContainer>
   );
 }
 
-ToolIdentifierManagement.propTypes = {
-  customerAccessRules: PropTypes.object,
-  handleTabClick: PropTypes.func
-};
-
-export default ToolIdentifierManagement;
+ToolIdentifierManagement.propTypes = {};

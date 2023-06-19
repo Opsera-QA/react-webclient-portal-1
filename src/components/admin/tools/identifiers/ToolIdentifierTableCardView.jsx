@@ -8,14 +8,14 @@ import NewToolIdentifierOverlay from "components/admin/tools/identifiers/NewTool
 import ToolIdentifierTable from "components/admin/tools/identifiers/ToolIdentifierTable";
 import ToolIdentifierCardView from "components/admin/tools/identifiers/ToolIdentifierCardView";
 
-function ToolIdentifierTableCardView(
+export default function ToolIdentifierTableCardView(
   {
     toolIdentifierFilterModel,
     setToolIdentifierFilterModel,
     isLoading,
     loadData,
     toolIdentifiers,
-    isMounted, taskMetadata
+    isMounted,
   }) {
   const toastContext = useContext(DialogToastContext);
 
@@ -64,12 +64,11 @@ function ToolIdentifierTableCardView(
         setFilterDto={setToolIdentifierFilterModel}
         supportViewToggle={true}
         isLoading={isLoading}
-        metadata={taskMetadata}
         body={getTableCardView()}
         titleIcon={faTools}
         title={"Tool Identifiers"}
         type={"Tool Identifier"}
-        className="px-2 pb-2"
+        className={"px-2 pb-2"}
       />
   );
 }
@@ -81,7 +80,4 @@ ToolIdentifierTableCardView.propTypes = {
   setToolIdentifierFilterModel: PropTypes.func,
   loadData: PropTypes.func,
   isMounted: PropTypes.object,
-  taskMetadata: PropTypes.object,
 };
-
-export default ToolIdentifierTableCardView;
