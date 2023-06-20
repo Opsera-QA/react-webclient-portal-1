@@ -36,6 +36,10 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, handle
     return (<LoadingDialog size="sm"/>);
   }
 
+  if (ldapOrganizationAccountDataDto == null) {
+    return null;
+  }
+
   return (
     <EditorPanelContainer
       createRecord={createOrganizationAccount}
