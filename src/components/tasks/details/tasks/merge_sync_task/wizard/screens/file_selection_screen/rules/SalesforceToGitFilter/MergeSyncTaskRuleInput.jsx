@@ -1,15 +1,14 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
-import {faPlus, faTimes} from "@fortawesome/pro-light-svg-icons";
+import { Button } from "react-bootstrap";
+import { faPlus, faTimes } from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import RuleTypeSelectInput from "components/common/list_of_values_input/rules/type/RuleTypeSelectInput";
-import SfdcRuleFieldSelectInput from "components/common/list_of_values_input/workflow/wizard/rules/SfdcRuleFieldSelectInput";
+import MergeSyncSfdcRuleFieldSelectInput from "./MergeSyncSfdcRuleFieldSelectInput";
 import Model from "core/data_model/model";
 import sfdcRuleMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/rules/sfdc-rule-metadata";
-import GitRuleFieldSelectInput
-  from "components/common/list_of_values_input/workflow/wizard/rules/GitRuleFieldSelectInput";
+import MergeSyncGitRuleFieldSelectInput from "./MergeSyncGitRuleFieldSelectInput";
 import SfdcPipelineWizardRuleFieldFilterSelectInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/rules/SfdcPipelineWizardRuleFieldFilterSelectInput";
 import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
@@ -17,9 +16,10 @@ import IconBase from "components/common/icons/IconBase";
 import MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/rules/MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput";
 
-function MergeSyncTaskRuleInput({wizardModel, ruleData, index, addRule, deleteRule, updateRule, fetchAttribute, isGitTab}) {
+function MergeSyncTaskRuleInput({ wizardModel, ruleData, index, addRule, deleteRule, updateRule, fetchAttribute }) {
   const [ruleModel, setRuleModel] = useState(undefined);
   const isMounted = useRef(false);
+  const [isSalesforce] = useState(wizardModel.getData("taskType") === "GIT_VS_GIT_SYNC" && wizardModel.getData("configuration.git.isSalesforce"))
 
   useEffect(() => {
     isMounted.current = true;
@@ -32,8 +32,8 @@ function MergeSyncTaskRuleInput({wizardModel, ruleData, index, addRule, deleteRu
   }, [index, ruleData]);
 
   const loadData = () => {
-    let newModel = new Model({...ruleData}, sfdcRuleMetadata, false);
-    setRuleModel({...newModel});
+    let newModel = new Model({ ...ruleData }, sfdcRuleMetadata, false);
+    setRuleModel({ ...newModel });
   };
 
   const updateData = (newModel) => {
@@ -45,7 +45,7 @@ function MergeSyncTaskRuleInput({wizardModel, ruleData, index, addRule, deleteRu
   const getDeleteRuleButton = (index) => {
     return (
       <Button variant="link" onClick={() => deleteRule(index)}>
-        <span><IconBase className={"danger-red"} icon={faTimes}/></span>
+        <span><IconBase className={"danger-red"} icon={faTimes} /></span>
       </Button>
     );
   };
@@ -54,17 +54,17 @@ function MergeSyncTaskRuleInput({wizardModel, ruleData, index, addRule, deleteRu
   const getAddRuleButton = (index) => {
     return (
       <Button variant="link" onClick={() => addRule(index)}>
-        <span><IconBase className={"opsera-primary"} icon={faPlus}/></span>
+        <span><IconBase className={"opsera-primary"} icon={faPlus} /></span>
       </Button>
     );
   };
 
   const getRulesFieldComponent = () => {
-    if (isGitTab === true) {
-      return (<GitRuleFieldSelectInput dataObject={ruleModel} setDataObject={updateData} showLabel={false} />);
+    if (wizardModel.getData("taskType") === "GIT_VS_GIT_SYNC") {
+      return (<MergeSyncGitRuleFieldSelectInput dataObject={ruleModel} setDataObject={updateData} showLabel={false} isSalesforce={wizardModel.getData("configuration.git.isSalesforce")} />);
     }
 
-    return (<SfdcRuleFieldSelectInput dataObject={ruleModel} setDataObject={updateData} showLabel={false} />);
+    return (<MergeSyncSfdcRuleFieldSelectInput dataObject={ruleModel} setDataObject={updateData} showLabel={false} />);
   };
 
   const getRuleValueInput = () => {
@@ -84,13 +84,15 @@ function MergeSyncTaskRuleInput({wizardModel, ruleData, index, addRule, deleteRu
       default:
         return (
           <MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput
-              ruleFieldName={ruleModel?.getData("field")}
-              fieldName="values"
-              ruleModel={ruleModel}
-              showLabel={false}
-              setRuleModel={updateData}
-              pipelineStorageRecordId={wizardModel?.getData("recordId")}
-            />
+            ruleFieldName={ruleModel?.getData("field")}
+            fieldName="values"
+            ruleModel={ruleModel}
+            showLabel={false}
+            setRuleModel={updateData}
+            fetchAttribute={fetchAttribute}
+            componentTypes={ruleModel?.getData("componentTypes")}
+            pipelineStorageRecordId={wizardModel?.getData("recordId")}
+          />
         );
     }
   };
@@ -103,27 +105,30 @@ function MergeSyncTaskRuleInput({wizardModel, ruleData, index, addRule, deleteRu
     <Row className="d-flex mx-2 justify-content-between" key={index}>
       <Col sm={12} className={"px-0"}>
         <Row className={"mx-0"}>
-          <Col xs={1} className={"pr-1 pl-0"}>
+          <Col xs={isSalesforce ? 1 : 2} className={"pr-1 pl-0"}>
             <RuleTypeSelectInput
               model={ruleModel}
               setModel={updateData}
               showLabel={false}
             />
           </Col>
-          <Col xs={3} className={"px-0"}>
-            <MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput
-              ruleFieldName="componentType"
-              fieldName="componentTypes"
-              ruleModel={ruleModel}
-              showLabel={false}
-              setRuleModel={updateData}
-              pipelineStorageRecordId={wizardModel?.getData("recordId")}
-            />
-          </Col>
-          <Col xs={2} className={"px-1"}>
+          {isSalesforce ?
+            <Col xs={3} className={"px-0"}>
+              <MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput
+                ruleFieldName="componentType"
+                fieldName="componentTypes"
+                ruleModel={ruleModel}
+                showLabel={false}
+                setRuleModel={updateData}
+                pipelineStorageRecordId={wizardModel?.getData("recordId")}
+              />
+            </Col>
+            : null
+          }
+          <Col xs={isSalesforce ? 2 : 3} className={"px-1"}>
             {getRulesFieldComponent()}
           </Col>
-          <Col xs={2} className={"pl-0 pr-1"}>
+          <Col xs={isSalesforce ? 2 : 3} className={"pl-0 pr-1"}>
             <SfdcPipelineWizardRuleFieldFilterSelectInput
               setModel={updateData}
               model={ruleModel}

@@ -18,6 +18,7 @@ function MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput(
     className,
     pipelineStorageRecordId,
     ruleFieldName,
+    componentTypes,
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const [ruleValues, setRuleValues] = useState([]);
@@ -48,7 +49,7 @@ function MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput(
       source.cancel();
       isMounted.current = false;
     };
-  }, [pipelineStorageRecordId, ruleFieldName]);
+  }, [pipelineStorageRecordId, ruleFieldName, componentTypes]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -73,9 +74,10 @@ function MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput(
         getAccessToken,
         cancelSource,
         pipelineStorageRecordId,
-        ruleFieldName
+        ruleFieldName,
+        componentTypes,
       );
-      const newRuleValues = response?.data?.data;
+      const newRuleValues = response?.data;
 
       if (isMounted?.current === true && Array.isArray(newRuleValues)) {
         setRuleValues(newRuleValues);
@@ -117,6 +119,7 @@ MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput.propTypes = {
   disabled: PropTypes.bool,
   className: PropTypes.string,
   ruleFieldName: PropTypes.string,
+  componentTypes: PropTypes.array
 };
 
 MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput.defaultProps = {

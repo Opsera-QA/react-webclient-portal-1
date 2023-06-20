@@ -1,6 +1,6 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import {faFilter} from "@fortawesome/pro-light-svg-icons";
+import { faFilter } from "@fortawesome/pro-light-svg-icons";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import MergeSyncTaskRuleInput from "./MergeSyncTaskRuleInput";
 import sfdcRuleMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/rules/sfdc-rule-metadata";
@@ -8,10 +8,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import IconBase from "components/common/icons/IconBase";
 
-function MergeSyncTaskRulesInputContainerBase({wizardModel, setWizardModel, fieldName, modifiedFiles, isGitTab, isLoading, filePullCompleted, fetchAttribute}) {
+function MergeSyncTaskRulesInputContainerBase({ wizardModel, setWizardModel, fieldName, modifiedFiles, isGitTab, isLoading, filePullCompleted, fetchAttribute }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [rules, setRules] = useState([]);
   const isMounted = useRef(false);
+  const [isSalesforce] = useState(wizardModel.getData("taskType") === "GIT_VS_GIT_SYNC" && wizardModel.getData("configuration.git.isSalesforce"));
 
   useEffect(() => {
     isMounted.current = true;
@@ -29,7 +30,7 @@ function MergeSyncTaskRulesInputContainerBase({wizardModel, setWizardModel, fiel
     let items = Array.isArray(currentData) && currentData.length > 0 ? currentData : [];
 
     if (items.length === 0) {
-      items.push({...sfdcRuleMetadata.newObjectFields});
+      items.push({ ...sfdcRuleMetadata.newObjectFields });
     }
 
     setRules([...items]);
@@ -45,12 +46,12 @@ function MergeSyncTaskRulesInputContainerBase({wizardModel, setWizardModel, fiel
     }
 
     if (newArray.length === 0) {
-      newPropertyList.push({...sfdcRuleMetadata.newObjectFields});
+      newPropertyList.push({ ...sfdcRuleMetadata.newObjectFields });
     }
 
     setRules([...newPropertyList]);
     wizardModel.setData(fieldName, [...newPropertyList]);
-    setWizardModel({...wizardModel});
+    setWizardModel({ ...wizardModel });
   };
 
   const updateRule = (index, rule) => {
@@ -61,7 +62,7 @@ function MergeSyncTaskRulesInputContainerBase({wizardModel, setWizardModel, fiel
 
   const addRule = () => {
     let newPropertyList = rules;
-    newPropertyList.push({...sfdcRuleMetadata.newObjectFields});
+    newPropertyList.push({ ...sfdcRuleMetadata.newObjectFields });
     validateAndSetData(newPropertyList);
   };
 
@@ -105,17 +106,17 @@ function MergeSyncTaskRulesInputContainerBase({wizardModel, setWizardModel, fiel
 
   const getHeaderBar = () => {
     return (
-      <Row className="d-flex mx-1 py-1 justify-content-between">
-        <Col xs={1} className={"pr-1 pl-0 my-auto"}>
+      <Row className="d-flex mx-1 py-1">
+        <Col xs={isSalesforce ? 1 : 2} className={"pr-1 pl-0 my-auto"}>
           Type
         </Col>
-        <Col xs={3} className={"px-0 my-auto"}>
+        {isSalesforce ? (<Col xs={3} className={"px-0 my-auto"}>
           Component Type
-        </Col>
-        <Col xs={2} className={"px-1 my-auto"}>
+        </Col>) : null}
+        <Col xs={isSalesforce ? 2 : 3} className={"px-1 my-auto"}>
           Field
         </Col>
-        <Col xs={2} className={"px-1 my-auto"}>
+        <Col xs={isSalesforce ? 2 : 3} className={"px-1 my-auto"}>
           Filter
         </Col>
         <Col xs={4} className={"px-0 my-auto"}>
