@@ -15,7 +15,7 @@ function InformationBanner ({ informationMessage, removeBanner, id }) {
 
   return (
     <BannerBase
-      bannerClassName={"w-100 py-3  info-block top-dialog-block"}
+      bannerClassName={"w-100 py-3 info-block top-dialog-block"}
       bannerMessage={messageBody}
       removeBannerFunction={clearInformationMessage}
     />
