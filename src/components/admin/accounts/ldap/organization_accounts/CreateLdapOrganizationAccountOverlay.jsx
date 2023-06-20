@@ -8,6 +8,7 @@ import LdapOrganizationAccountEditorPanel
   from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountEditorPanel";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function CreateLdapOrganizationAccountOverlay(
   {
@@ -18,8 +19,19 @@ export default function CreateLdapOrganizationAccountOverlay(
   const [ldapOrganizationAccountData, setLdapOrganizationAccountData] = useState(undefined);
 
   useEffect(() => {
-    setLdapOrganizationAccountData(new Model({...ldapOrganizationAccountMetaData.newObjectFields}, ldapOrganizationAccountMetaData, true));
-  }, []);
+    if (ldapOrganizationData) {
+      const newLdapOrganizationAccountModel = new Model({...ldapOrganizationAccountMetaData.newObjectFields}, ldapOrganizationAccountMetaData, true);
+      const orgOwnerEmail = DataParsingHelper.parseNestedEmailAddress(ldapOrganizationData, "orgOwnerEmail");
+      const orgName = DataParsingHelper.parseNestedString(ldapOrganizationData, "name");
+
+      // TODO: Should we be pulling this off something else?
+      const orgDomain = orgOwnerEmail.substring(orgOwnerEmail.lastIndexOf("@") + 1);
+      newLdapOrganizationAccountModel.setData("orgDomain", orgDomain);
+      newLdapOrganizationAccountModel.setData("name", `${orgName}-acc`);
+      newLdapOrganizationAccountModel.setData("org", orgName != null ? orgName : "");
+      setLdapOrganizationAccountData({...newLdapOrganizationAccountModel});
+    }
+  }, [ldapOrganizationData]);
 
   const closePanel = () => {
     if (loadData) {
