@@ -10,8 +10,6 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import VanityInlineError from "temp-library-components/fields/info/VanityInlineError";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import PolicyRoleHelper from "@opsera/know-your-role/roles/settings/policies/policyRole.helper";
-import useGetSalesforceDataMigrationPolicy
-  from "hooks/settings/organization_settings/policies/salesforce/useGetSalesforceDataMigrationPolicy";
 import PolicyManagementHelpDocumentation
   from "../../../common/help/documentation/settings/PolicyManagementHelpDocumentation";
 
