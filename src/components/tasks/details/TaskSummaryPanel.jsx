@@ -40,20 +40,6 @@ function TaskSummaryPanel(
     userData,
   } = useComponentStateReference();
 
-  const getDynamicField = () => {
-    if (gitTasksData.getData("type") !== TASK_TYPES.AWS_CREATE_ECS_CLUSTER) {
-      return (
-        <Col md={6}>
-          <TextFieldBase
-            className={"upper-case-first my-2"}
-            dataObject={gitTasksData}
-            fieldName={"tool_identifier"}
-          />
-        </Col>
-      );
-    }
-  };
-
   const getButtonForTaskType = () => {
     switch (gitTasksData?.getData("type")) {
       case TASK_TYPES.AZURE_CLUSTER_CREATION:
@@ -98,12 +84,10 @@ function TaskSummaryPanel(
   const getSchedulerField = () => {
     if (SCHEDULER_SUPPORTED_TASK_TYPES.includes(gitTasksData?.getData("type")) === true) {
       return (
-        <Col sm={12} md={6}>
-          <TaskSchedulerField
-            taskModel={gitTasksData}
-            canEditTaskSchedule={TaskRoleHelper.canUpdateTask(userData, gitTasksData?.getPersistData())}
-          />
-        </Col>
+        <TaskSchedulerField
+          taskModel={gitTasksData}
+          canEditTaskSchedule={TaskRoleHelper.canUpdateTask(userData, gitTasksData?.getPersistData())}
+        />
       );
     }
   };
@@ -178,8 +162,9 @@ function TaskSummaryPanel(
           />
         </Col>
         {getNotificationsInput()}
-        {getSchedulerField()}
-        {getDynamicField()}
+        <Col sm={12} md={6}>
+          {getSchedulerField()}
+        </Col>
         <Col md={12} className={"pt-1"}>
           <TaskTagManagerInput
             taskModel={gitTasksData}
