@@ -132,13 +132,11 @@ function TaskSummaryPanel(
       editingAllowed={TaskRoleHelper.canUpdateTask(userData, gitTasksData?.getPersistData())}
     >
       <Row>
-        <Col lg={12}>
-          <TaskRoleAccessInput
-            dataObject={gitTasksData}
-            setDataObject={setGitTasksData}
-            disabled={TaskRoleHelper.canEditAccessRoles(userData, gitTasksData?.getPersistData()) !== true}
-          />
-        </Col>
+        <TaskRoleAccessInput
+          dataObject={gitTasksData}
+          setDataObject={setGitTasksData}
+          disabled={TaskRoleHelper.canEditAccessRoles(userData, gitTasksData?.getPersistData()) !== true}
+        />
         <Col sm={12} md={6}>
           <SsoUserField
             fieldName={"owner"}
