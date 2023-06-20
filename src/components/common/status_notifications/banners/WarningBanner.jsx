@@ -15,7 +15,7 @@ function WarningBanner({warningMessage, removeBanner, id}) {
 
   return (
     <BannerBase
-      bannerClassName={"w-100 top-dialog-block warning-block"}
+      bannerClassName={"w-100 py-3 top-dialog-block warning-block"}
       bannerMessage={messageBody}
       removeBannerFunction={clearWarning}
     />
