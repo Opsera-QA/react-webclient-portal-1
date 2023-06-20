@@ -1,29 +1,38 @@
 import React from "react";
 import PropTypes from "prop-types";
-import OrchestrationStateField from "temp-library-components/fields/orchestration/state/OrchestrationStateField";
+import FieldContainer from "components/common/fields/FieldContainer";
+import OrchestrationStateFieldBase
+  from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
+import FieldLabelBase from "components/common/fields/FieldLabelBase";
+import {pipelineHelper} from "components/workflow/pipeline.helper";
 
 export default function PipelineStateField(
   {
-    fieldName,
     model,
     showLabel,
   }) {
+
+  if (model == null) {
+    return null;
+  }
+
   return (
-    <OrchestrationStateField
-      model={model}
-      fieldName={fieldName}
-      showLabel={showLabel}
-      type={"Pipeline"}
-    />
+    <FieldContainer>
+      <div className={"d-flex"}>
+        <FieldLabelBase
+          label={"Status"}
+          showLabel={showLabel}
+        />
+        <OrchestrationStateFieldBase
+          type={"Pipeline"}
+          orchestrationState={pipelineHelper.getPipelineState(model?.getCurrentData())}
+        />
+      </div>
+    </FieldContainer>
   );
 }
 
 PipelineStateField.propTypes = {
-  fieldName: PropTypes.string,
   model: PropTypes.object,
   showLabel: PropTypes.bool,
-};
-
-PipelineStateField.defaultProps = {
-  fieldName: "state",
 };
