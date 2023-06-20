@@ -65,7 +65,7 @@ export default function SoftwareDevelopmentLandingWelcomeWidget({ className }) {
           <div className={"d-none d-md-inline ml-3"}>
             <div className={"mt-auto"}>
               <ImageBase
-                height={235}
+                height={135}
                 imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.COLLABORATION}
               />
             </div>
