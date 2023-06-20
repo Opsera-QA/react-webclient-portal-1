@@ -38,6 +38,7 @@ import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleI
 import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
 import CountdownUntilDateFieldBase from "components/common/fields/date/countdown/CountdownUntilDateFieldBase";
 import { hoursToMinutes } from "date-fns";
+import {pipelineHelper} from "components/workflow/pipeline.helper";
 
 export const getDataObjectFromTableRow = (row) => {
   try {
@@ -385,11 +386,11 @@ export const getCustomTablePipelineStateColumnDefinition = (field, className) =>
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function parseStatus(tableRow) {
-      const pipelineState = tableRow?.row?.original[field?.id];
+      const pipeline = tableRow?.row?.original;
 
       return (
         <OrchestrationStateFieldBase
-          orchestrationState={pipelineState}
+          orchestrationState={pipelineHelper.getPipelineState(pipeline)}
           type={"Pipeline"}
         />
       );
