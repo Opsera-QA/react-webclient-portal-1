@@ -7,7 +7,7 @@ import {
   getTableTextColumn,
   getTaskStatusColumn,
   getFormattedLabelWithFunctionColumnDefinition,
-  getRoleAccessColumn, getTableDateTimeColumn,
+  getRoleAccessColumn, getTableDateTimeColumn, getOwnerNameField,
 } from "components/common/table/table-column-helpers";
 import { useHistory } from "react-router-dom";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -27,11 +27,10 @@ function TaskTable({ taskData, taskFilterModel, setTaskFilterModel, loadData, is
 
       const columnsArray = [
         getTableTextColumn(getField(fields, "name"), "force-text-wrap"),
-        getTableTextColumn(getField(fields, "run_count"), "mx-auto"),
         getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), getTaskTypeLabel),
-        getTableDateColumn(getField(fields, "createdAt")),
-        getTableBooleanIconColumn(getField(fields, "active")),
+        getOwnerNameField(),
         getTaskStatusColumn(getField(fields, "status")),
+        getTableTextColumn(getField(fields, "run_count"), "mx-auto"),
         getTableDateTimeColumn(getField(fields, "completion")),
       ];
 
