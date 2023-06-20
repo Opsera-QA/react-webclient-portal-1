@@ -12,40 +12,17 @@ import IdpVendorSelectInput
   from "components/common/list_of_values_input/admin/accounts/ldap_idp_accounts/IdpVendorSelectInput";
 import LdapOrganizationAccountOpseraUserSelectInput
   from "components/common/list_of_values_input/admin/accounts/ldap_accounts/LdapOrganizationAccountOpseraUserSelectInput";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOrganization, handleClose}) {
+function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, handleClose}) {
   const {getAccessToken} = useContext(AuthContext);
   const [ldapOrganizationAccountDataDto, setLdapOrganizationAccountDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (ldapOrganization && ldapOrganizationAccountData) {
-      loadData();
-    }
-  }, [ldapOrganization, ldapOrganizationAccountData]);
-
-  const loadData = async () => {
     setIsLoading(true);
-    await unpackLdapOrganizationAccountData();
+    setLdapOrganizationAccountDataDto({...ldapOrganizationAccountDataDto});
     setIsLoading(false);
-  };
-
-  const unpackLdapOrganizationAccountData = async () => {
-    let ldapOrganizationAccountDataDto = ldapOrganizationAccountData;
-    const orgOwnerEmail = DataParsingHelper.parseNestedEmailAddress(ldapOrganization, "orgOwnerEmail");
-    const orgName = DataParsingHelper.parseNestedString(ldapOrganization, "name");
-
-    if (orgOwnerEmail && ldapOrganizationAccountDataDto.isNew() && ldapOrganization != null) {
-      // TODO: Should we be pulling this off something else?
-      const orgDomain = orgOwnerEmail.substring(orgOwnerEmail.lastIndexOf("@") + 1);
-      ldapOrganizationAccountDataDto.setData("orgDomain", orgDomain);
-      ldapOrganizationAccountDataDto.setData("name", `${orgName}-acc`);
-      ldapOrganizationAccountDataDto.setData("org", orgName != null ? orgName : "");
-    }
-
-    setLdapOrganizationAccountDataDto(ldapOrganizationAccountDataDto);
-  };
+  }, [ldapOrganizationAccountData]);
 
   const updateLdapOrganizationAccount = async () => {
     return await accountsActions.updateOrganizationAccount(ldapOrganizationAccountDataDto, getAccessToken);
@@ -194,7 +171,6 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
 }
 
 LdapOrganizationAccountEditorPanel.propTypes = {
-  ldapOrganization: PropTypes.object,
   ldapOrganizationAccountData: PropTypes.object,
   handleClose: PropTypes.func
 };
