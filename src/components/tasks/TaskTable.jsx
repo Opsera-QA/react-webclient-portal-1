@@ -30,7 +30,6 @@ function TaskTable({ taskData, taskFilterModel, setTaskFilterModel, loadData, is
         getTableTextColumn(getField(fields, "run_count"), "mx-auto"),
         getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), getTaskTypeLabel),
         getTableDateColumn(getField(fields, "createdAt")),
-        getTableBooleanIconColumn(getField(fields, "active")),
         getTaskStatusColumn(getField(fields, "status")),
         getTableDateTimeColumn(getField(fields, "completion")),
       ];

@@ -383,7 +383,7 @@ export const getPipelineTypeColumn = (field, className) => {
 
 export const getCustomTablePipelineStateColumnDefinition = (field, className) => {
   return {
-    Header: getCustomTableHeader(field),
+    Header: "Status",
     accessor: getCustomTableAccessor(field),
     Cell: function parseStatus(tableRow) {
       const pipeline = tableRow?.row?.original;
