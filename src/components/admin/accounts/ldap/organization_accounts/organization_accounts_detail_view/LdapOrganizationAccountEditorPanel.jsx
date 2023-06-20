@@ -20,7 +20,7 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, handle
 
   useEffect(() => {
     setIsLoading(true);
-    setLdapOrganizationAccountDataDto({...ldapOrganizationAccountDataDto});
+    setLdapOrganizationAccountDataDto({...ldapOrganizationAccountData});
     setIsLoading(false);
   }, [ldapOrganizationAccountData]);
 
