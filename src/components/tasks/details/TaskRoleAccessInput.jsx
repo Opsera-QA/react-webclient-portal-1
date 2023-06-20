@@ -7,8 +7,17 @@ import GitRoleAccessHelpDocumentation
 import useComponentStateReference from "hooks/useComponentStateReference";
 import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 import {taskHelper} from "components/tasks/task.helper";
+import Col from "react-bootstrap/Col";
+import {FieldDivider} from "temp-library-components/divider/FieldDivider";
 
-function TaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled, visible}) {
+function TaskRoleAccessInput(
+  {
+    fieldName,
+    dataObject,
+    setDataObject,
+    disabled,
+    visible,
+  }) {
   const [canEditRoles, setCanEditRoles] = useState(undefined);
   const {
     isMounted,
@@ -36,7 +45,7 @@ function TaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled, vi
     newDataObject.setData(fieldName, newRoles);
     const response = await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newDataObject);
 
-    if(isMounted?.current === true) {
+    if (isMounted?.current === true) {
       setDataObject({...newDataObject});
     }
 
@@ -54,16 +63,21 @@ function TaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled, vi
   }
 
   return (
-    <RoleAccessInlineInputBase
-      fieldName={fieldName}
-      model={dataObject}
-      disabled={canEditRoles !== true || disabled}
-      saveData={saveData}
-      noDataMessage={getNoDataMessage()}
-      visible={visible}
-      helpComponent={<GitRoleAccessHelpDocumentation />}
-      lostAccessRerouteRoute={taskHelper.getManagementScreenLink()}
-    />
+    <>
+      <Col xs={12}>
+        <RoleAccessInlineInputBase
+          fieldName={fieldName}
+          model={dataObject}
+          disabled={canEditRoles !== true || disabled}
+          saveData={saveData}
+          noDataMessage={getNoDataMessage()}
+          visible={visible}
+          helpComponent={<GitRoleAccessHelpDocumentation/>}
+          lostAccessRerouteRoute={taskHelper.getManagementScreenLink()}
+        />
+      </Col>
+      <FieldDivider />
+    </>
   );
 }
 
