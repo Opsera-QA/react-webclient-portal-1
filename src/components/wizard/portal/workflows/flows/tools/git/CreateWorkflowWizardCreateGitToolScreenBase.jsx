@@ -22,6 +22,7 @@ import {workspaceConstants} from "../../../../../../workspace/workspace.constant
 import CenteredContentWrapper from "../../../../../../common/wrapper/CenteredContentWrapper";
 import CreateWorkflowWizardCreateBitbucketToolEditorPanel
     from "./bitbucket/CreateWorkflowWizardCreateBitbucketToolEditorPanel";
+import CreateWorkflowWizardCreateAzureDevopsToolEditorPanel from "./azure_devops/CreateWorkflowWizardCreateAzureDevopsToolEditorPanel";
 
 export default function CreateWorkflowWizardCreateGitToolScreenBase(
   {
@@ -100,6 +101,22 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
                     setConnectionFailure={setConnectionFailure}
                 />
             );
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS:
+          return (
+            <CreateWorkflowWizardCreateAzureDevopsToolEditorPanel 
+              gitToolModel={gitToolModel}
+              setGitToolModel={setGitToolModel}
+              setGitToolId={setGitToolId}
+              onSuccessFunction={onSuccessFunction}
+              gitToolId={gitToolId}
+              backButtonFunction={backButtonFunction}
+              setButtonContainer={setButtonContainer}
+              toolType={toolType}
+              connectionFailure={connectionFailure}
+              onSkipConnectionTestFunction={onSkipConnectionTestFunction}
+              setConnectionFailure={setConnectionFailure}
+            />
+          );
     }
   };
 
