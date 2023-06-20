@@ -18,7 +18,7 @@ function TextFieldBase(
   }) {
   const field = dataObject?.getFieldById(fieldName);
   const textValue = DataParsingHelper.parseString(dataObject?.getData(fieldName));
-  const numberValue = dataObject?.getData(fieldName);
+  const numberValue = DataParsingHelper.parseNumber(dataObject?.getData(fieldName));
 
   const getClipboardButton = () => {
     if (showClipboardButton === true) {
