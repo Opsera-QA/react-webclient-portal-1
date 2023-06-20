@@ -31,9 +31,8 @@ export const salesforceBulkMigrationTaskConfigurationMetadata = {
       label: "SCM Type",
       id: "service",
       isRequired: true,
-      maxLength: 10,
+      maxLength: 50,
       lowercase: true,
-      regexDefinitionName: "alphabetic",
     },
     {
       label: "Git Account",
