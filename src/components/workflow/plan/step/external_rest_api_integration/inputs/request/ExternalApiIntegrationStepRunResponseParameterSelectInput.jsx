@@ -12,6 +12,9 @@ export default function ExternalApiIntegrationStepRunResponseParameterSelectInpu
     setDataFunction,
     disabled,
   }) {
+  const handleSetDataFunction = (fieldName, selectedOption) => {
+    setDataFunction(fieldName, selectedOption?.fieldName);
+  };
 
   return (
     <ExternalApiIntegratorToolEndpointResponseBodyFieldSelectInput
@@ -20,7 +23,7 @@ export default function ExternalApiIntegrationStepRunResponseParameterSelectInpu
       endpointId={runEndpointId}
       model={model}
       setModel={setModel}
-      setDataFunction={setDataFunction}
+      setDataFunction={handleSetDataFunction}
       disabled={disabled}
     />
   );
