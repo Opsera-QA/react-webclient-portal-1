@@ -44,7 +44,7 @@ export default function EndpointRequestParameterInputRow(
           style={{minHeight: endpointParameterInputHeight}}
         >
           <H5FieldSubHeader
-            subheaderText={"Select the Call Operation Response field to use for this parameter"}
+            subheaderText={"Select the Call Operation Response field to use as the value for this parameter"}
           />
           <ExternalApiIntegrationStepRunResponseParameterSelectInput
             model={endpointFieldModel}
