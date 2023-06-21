@@ -68,6 +68,12 @@ function GithubBranchFilterMultiSelectInput({
     if (response?.data != null) {
       setBranches(response?.data?.data?.githubBranchList?.data);
     }
+    if (repository?.length == 0) {
+        model.setData(fieldName, []);
+        setModel({...model});
+     
+    
+    }
   };
   const disabled = !repository || repository.length === 0;
   return (
