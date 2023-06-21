@@ -25,6 +25,8 @@ function GitCustodianStepConfigurationHelpDocumentation() {
                 <li><b>Maximum Allows Secrets Threshold</b> - Select the maximum allowed secrets that scan can contain without receiving a failure status.</li>
                 <li><b>Exclude Certain Secrets from Scan - Secrets to Ignore</b> - Select any Parameters to be ignored during the scan from the drop-down. These will not be counted toward the threshold. To add them to the table, click <b>Add</b>. Parameters are fetched from Tool Registry Parameters.</li>
                 <li><b>Exclude Certain Project Files from Scan - Project Files to Ignore</b> - Select Absolute File Path(s) to be ignored during the scan from the drop-down. These will not be counted toward the threshold. To add them to the table, click <b>Add</b>.</li>
+                <li><b>Enable Email Scan</b> - Select to find emails from the code. Additionally, specify any email domains to exclude from the scan.</li>
+                <li><b>Set Custom Entropy</b> - Plain Text passwords are identified using the entropy of the string identified. The default entropy is 3.5. Select to set a custom entropy in the range of 2.4 to 5.</li>
               </ul>
             </li>
             <li>Click <b>Save</b> and start pipeline.</li>
