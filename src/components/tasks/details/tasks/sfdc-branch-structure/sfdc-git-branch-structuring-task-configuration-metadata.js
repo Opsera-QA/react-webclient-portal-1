@@ -120,9 +120,14 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
-  ],
-  newObjectFields:
     {
+      id: "repoId",
+    },
+    {
+      id: "azureProjectId",
+    },
+  ],
+  newObjectFields:{
     toolConfigId: "",
     jobType: "SFDC_CONVERT_METADATA",
     autoScaleEnable: false,
@@ -146,8 +151,10 @@ const sfdcGitBranchTaskConfigurationMetadata = {
     sfdcToolName: "",
     accountUsername: "",
     conversionType: "",
-    destinationBranch: ""
-    }
+    destinationBranch: "",
+    repoId: "",
+    azureProjectId: "",
+  }
 };
 
 export default sfdcGitBranchTaskConfigurationMetadata;
