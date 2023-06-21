@@ -15,6 +15,9 @@ import ButtonContainerBase from "components/common/buttons/saving/containers/But
 import EndpointRequestFieldNameTextInput
   from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldNameTextInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import {
+  ENDPOINT_TYPES
+} from "components/common/list_of_values_input/inventory/endpoints/type/endpointType.constants";
 
 function EndpointRequestBodyFieldInputRow(
   {
@@ -23,6 +26,7 @@ function EndpointRequestBodyFieldInputRow(
     deleteFieldFunction,
     endpointBodyField,
     index,
+    endpointType,
   }) {
   const [endpointFieldModel, setEndpointFieldModel] = useState(undefined);
 
@@ -83,13 +87,12 @@ function EndpointRequestBodyFieldInputRow(
         <Col xs={6}>
           <BooleanToggleInput
             dataObject={endpointFieldModel}
-            setDataFunction={(fieldName, newValue) => updateMainModelFunction(fieldName, newValue)}
+            updateMainModelFunction={updateMainModelFunction}
             fieldName={"useRunApiResponseParameter"}
+            visible={endpointType === ENDPOINT_TYPES.OPERATION_STATUS_CHECK}
             disabled={disabled || endpointFieldModel?.getData("type") === "object"}
-            visible={}
           />
         </Col>
-
         {/*TODO: Add default value and hardcoded value inputs*/}
         {/*<Col xs={6}>*/}
         {/*  <EndpointRequestFieldIsSensitiveDataToggleInput*/}
@@ -113,6 +116,7 @@ EndpointRequestBodyFieldInputRow.propTypes = {
   disabled: PropTypes.bool,
   endpointBodyField: PropTypes.object,
   index: PropTypes.number,
+  endpointType: PropTypes.string,
 };
 
 export default EndpointRequestBodyFieldInputRow;
