@@ -71,6 +71,13 @@ function ExternalApiIntegratorEndpointsTable(
     );
   };
 
+  const getExportAndImportButtons = () => {
+    return (
+      <>
+      </>
+    );
+  };
+
   return (
     <FilterContainer
       showBorder={false}
@@ -79,6 +86,7 @@ function ExternalApiIntegratorEndpointsTable(
       body={getEndpointsTable()}
       isLoading={isLoading}
       metadata={externalApiIntegratorEndpointMetadata}
+      inlineFilters={getExportAndImportButtons()}
       titleIcon={faLink}
       title={"Endpoints"}
       className={"mt-2"}
