@@ -25,6 +25,7 @@ import PipelineUserActionSummaryPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/user_action/PipelineUserActionSummaryPanel";
 import RuntimeSettingsTaskSummaryPanel
   from "components/workflow/plan/step/runtime_settings/RuntimeSettingsTaskSummaryPanel";
+import ScheduleSummaryPanel from "./scheduler/ScheduleSummaryPanel";
 
 const PIPELINE_TASK_ACTIONS = {
   REPORT: "report",
@@ -119,7 +120,7 @@ function PipelineTaskSummaryPanel(
         />
       );
     }
-
+console.log(pipelineTaskData.tool_identifier);
     switch (pipelineTaskData.tool_identifier) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.PARALLEL_PROCESSOR:
         return (<ParallelProcessorPipelineTaskSummaryPanel pipelineTaskData={wrapObject(parallelProcessorPipelineTaskMetadata)}/>);
@@ -138,6 +139,10 @@ function PipelineTaskSummaryPanel(
           <RuntimeSettingsTaskSummaryPanel
             pipelineTaskModel={wrapObject(pipelineTaskMetadata)}
           />
+        );
+      case "opsera scheduler":
+        return (
+          <ScheduleSummaryPanel scheduleData={wrapObject(pipelineTaskMetadata)}/>
         );
       default:
         return (
