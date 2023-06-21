@@ -76,14 +76,6 @@ export default function ExternalApiIntegratorStatusEndpointRequestParameterInput
       title={`Field: ${endpointFieldModel?.getData("fieldName")}`}
     >
       <div className={"h-100"}>
-        <div className={"mx-3 mt-2"}>
-          {/*//TODO Ensure to clear out selected values when toggling this boolean*/}
-          <BooleanToggleInput
-            dataObject={endpointFieldModel}
-            setDataFunction={(fieldName, newValue) => updateMainModelFunction(fieldName, newValue)}
-            fieldName={"useRunApiResponseParameter"}
-          />
-        </div>
         {getValueInput()}
       </div>
     </VanitySetTabContentContainer>

@@ -14,6 +14,7 @@ import DeleteButton from "components/common/buttons/delete/DeleteButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import EndpointRequestFieldNameTextInput
   from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldNameTextInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function EndpointRequestBodyFieldInputRow(
   {
@@ -79,15 +80,17 @@ function EndpointRequestBodyFieldInputRow(
             disabled={disabled || endpointFieldModel?.getData("type") === "object"}
           />
         </Col>
+        <Col xs={6}>
+          <BooleanToggleInput
+            dataObject={endpointFieldModel}
+            setDataFunction={(fieldName, newValue) => updateMainModelFunction(fieldName, newValue)}
+            fieldName={"useRunApiResponseParameter"}
+            disabled={disabled || endpointFieldModel?.getData("type") === "object"}
+            visible={}
+          />
+        </Col>
+
         {/*TODO: Add default value and hardcoded value inputs*/}
-        {/*<Col xs={6}>*/}
-        {/*  <EndpointRequestFieldIsSensitiveDataToggleInput*/}
-        {/*    model={endpointFieldModel}*/}
-        {/*    updateMainModelFunction={updateMainModelFunction}*/}
-        {/*    index={index}*/}
-        {/*    disabled={disabled}*/}
-        {/*  />*/}
-        {/*</Col>*/}
         {/*<Col xs={6}>*/}
         {/*  <EndpointRequestFieldIsSensitiveDataToggleInput*/}
         {/*    model={endpointFieldModel}*/}
