@@ -12,6 +12,7 @@ import {
   getJenkinsJobConfigurationMetadata
 } from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/JenkinsJobSubEditorPanel";
 import JenkinsJobTypes from "../jenkinsJobTypes.constants";
+import ArrayToTextField from "components/common/fields/text/ArrayToTextField";
 
 function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobType, setActiveTab, handleClose }) {
   const [jenkinsJobConfigurationModel, setJenkinsJobConfigurationModel] = useState(null);
@@ -63,7 +64,7 @@ function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobType, setActiveTab, 
     <SummaryPanelContainer setActiveTab={setActiveTab} className={"p-0"}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={jenkinsJobData} fieldName={"type"}/>
+          <ArrayToTextField model={jenkinsJobData} fieldName={"type"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={jenkinsJobData} fieldName={"name"}/>
