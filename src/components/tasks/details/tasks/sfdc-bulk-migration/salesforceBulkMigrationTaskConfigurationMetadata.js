@@ -129,6 +129,12 @@ export const salesforceBulkMigrationTaskConfigurationMetadata = {
         return model?.getData("includePackageXml") === true;
       },
     },
+    {
+      id: "repoId",
+    },
+    {
+      id: "azureProjectId",
+    },
   ],
   newObjectFields: {
     type: "",
@@ -165,5 +171,7 @@ export const salesforceBulkMigrationTaskConfigurationMetadata = {
     packageXmlReferencePath: "",
     reviewers: [],
     reviewerNames: [],
+    repoId: "",
+    azureProjectId: "",
   },
 };
