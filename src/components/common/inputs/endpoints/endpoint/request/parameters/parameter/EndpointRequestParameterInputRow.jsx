@@ -8,14 +8,18 @@ import {faCode} from "@fortawesome/pro-light-svg-icons";
 import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
 import EndpointRequestParameterManualValueEntryInput
   from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/EndpointRequestParameterManualValueEntryInput";
+import ExternalApiIntegrationStepRunResponseParameterSelectInput
+  from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegrationStepRunResponseParameterSelectInput";
 
-function EndpointRequestParameterInputRow(
+export default function EndpointRequestParameterInputRow(
   {
     disabled,
     updateParameterFunction,
     endpointBodyField,
     endpointParameterArrayInputHeight,
     endpointParameterInputHeight,
+    toolId,
+    runEndpointId,
   }) {
   const [endpointFieldModel, setEndpointFieldModel] = useState(undefined);
 
@@ -29,7 +33,27 @@ function EndpointRequestParameterInputRow(
     updateParameterFunction({...newModel?.getCurrentData()});
   };
 
+  const setModelFunction = (newModel) => {
+    setEndpointFieldModel({...newModel});
+    updateParameterFunction({...newModel?.getCurrentData()});
+  };
+
   const getValueInput = () => {
+    const useRunApiResponseParameter = endpointFieldModel?.getData("useRunApiResponseParameter");
+
+    if (useRunApiResponseParameter === true) {
+      return (
+        <ExternalApiIntegrationStepRunResponseParameterSelectInput
+          model={endpointFieldModel}
+          setModel={setModelFunction}
+          toolId={toolId}
+          runEndpointId={runEndpointId}
+          disabled={disabled}
+          setDataFunction={updateMainModelFunction}
+        />
+      );
+    }
+
     return (
       <EndpointRequestParameterManualValueEntryInput
         endpointParameterInputHeight={endpointParameterInputHeight}
@@ -59,11 +83,11 @@ function EndpointRequestParameterInputRow(
 }
 
 EndpointRequestParameterInputRow.propTypes = {
+  toolId: PropTypes.string,
+  runEndpointId: PropTypes.string,
   updateParameterFunction: PropTypes.func,
   disabled: PropTypes.bool,
   endpointBodyField: PropTypes.object,
   endpointParameterArrayInputHeight: PropTypes.string,
   endpointParameterInputHeight: PropTypes.string,
 };
-
-export default EndpointRequestParameterInputRow;

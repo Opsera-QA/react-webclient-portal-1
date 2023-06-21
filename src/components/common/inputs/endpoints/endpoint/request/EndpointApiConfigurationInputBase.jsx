@@ -54,6 +54,8 @@ function EndpointApiConfigurationInputBase(
             height={height}
             endpointParameterArrayInputHeight={endpointParameterArrayInputHeight}
             endpointParameterInputHeight={endpointParameterInputHeight}
+            runEndpointId={model?.getData("runEndpointId")}
+            toolId={model?.getData("toolId")}
           />
         );
       case ENDPOINT_REQUEST_TYPES.PUT:
@@ -68,6 +70,8 @@ function EndpointApiConfigurationInputBase(
             height={height}
             endpointParameterArrayInputHeight={endpointParameterArrayInputHeight}
             endpointParameterInputHeight={endpointParameterInputHeight}
+            runEndpointId={model?.getData("runEndpointId")}
+            toolId={model?.getData("toolId")}
           />
         );
     }

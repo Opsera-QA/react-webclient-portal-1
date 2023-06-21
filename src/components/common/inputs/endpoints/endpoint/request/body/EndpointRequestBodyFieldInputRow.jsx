@@ -87,7 +87,7 @@ function EndpointRequestBodyFieldInputRow(
         <Col xs={6}>
           <BooleanToggleInput
             dataObject={endpointFieldModel}
-            updateMainModelFunction={updateMainModelFunction}
+            setDataFunction={updateMainModelFunction}
             fieldName={"useRunApiResponseParameter"}
             visible={endpointType === ENDPOINT_TYPES.OPERATION_STATUS_CHECK}
             disabled={disabled || endpointFieldModel?.getData("type") === "object"}

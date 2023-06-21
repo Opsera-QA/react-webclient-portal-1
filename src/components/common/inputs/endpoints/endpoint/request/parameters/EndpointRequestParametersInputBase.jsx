@@ -26,6 +26,8 @@ function EndpointRequestParametersInputBase(
     height,
     endpointParameterArrayInputHeight,
     endpointParameterInputHeight,
+    runEndpointId,
+    toolId,
   }) {
   const [field] = useState(model?.getFieldById(fieldName));
   const [parameters, setParameters] = useState([]);
@@ -145,6 +147,8 @@ function EndpointRequestParametersInputBase(
         disabled={disabled}
         endpointParameterArrayInputHeight={endpointParameterArrayInputHeight}
         endpointParameterInputHeight={endpointParameterInputHeight}
+        toolId={toolId}
+        runEndpointId={runEndpointId}
       />
     );
   };
@@ -232,6 +236,8 @@ EndpointRequestParametersInputBase.propTypes = {
   height: PropTypes.string,
   endpointParameterArrayInputHeight: PropTypes.string,
   endpointParameterInputHeight: PropTypes.string,
+  runEndpointId: PropTypes.string,
+  toolId: PropTypes.string,
 };
 
 export default EndpointRequestParametersInputBase;

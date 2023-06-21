@@ -9,18 +9,13 @@ export default function ExternalApiIntegrationStepRunResponseParameterSelectInpu
     setModel,
     toolId,
     runEndpointId,
+    setDataFunction,
     disabled,
   }) {
-  // TODO: Clear out other fields
-  const setDataFunction = (fieldName, selectedOption) => {
-    model?.setData(fieldName, selectedOption?.fieldName);
-    model?.setDefaultValue("value");
-    setModel({...model});
-  };
 
   return (
     <ExternalApiIntegratorToolEndpointResponseBodyFieldSelectInput
-      fieldName={"runEndpointFieldName"}
+      fieldName={"value"}
       toolId={toolId}
       endpointId={runEndpointId}
       model={model}
@@ -37,4 +32,5 @@ ExternalApiIntegrationStepRunResponseParameterSelectInput.propTypes = {
   toolId: PropTypes.string,
   runEndpointId: PropTypes.string,
   disabled: PropTypes.bool,
+  setDataFunction: PropTypes.func,
 };
