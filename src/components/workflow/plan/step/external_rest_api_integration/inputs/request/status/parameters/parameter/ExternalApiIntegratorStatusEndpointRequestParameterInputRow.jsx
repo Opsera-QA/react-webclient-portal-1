@@ -35,6 +35,7 @@ export default function ExternalApiIntegratorStatusEndpointRequestParameterInput
   };
 
   const setModelFunction = (newModel) => {
+    setEndpointFieldModel({...newModel});
     updateParameterFunction({...newModel?.getCurrentData()});
   };
 

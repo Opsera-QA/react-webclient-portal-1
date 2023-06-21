@@ -15,6 +15,7 @@ import ExternalRestApiIntegrationEndpointParameterField
   from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationEndpointParameterField";
 import ExternalApiIntegratorStatusEndpointRequestParameterInputRow
   from "components/workflow/plan/step/external_rest_api_integration/inputs/request/status/parameters/parameter/ExternalApiIntegratorStatusEndpointRequestParameterInputRow";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function ExternalApiIntegratorStatusEndpointRequestParametersInputBase(
   {
@@ -80,6 +81,7 @@ export default function ExternalApiIntegratorStatusEndpointRequestParametersInpu
     setParameters([...unpackedParameters]);
   };
 
+  // TODO: Use metadata to determine
   const validateAndSetData = (newParameters) => {
     setParameters([...newParameters]);
     const newModel = {...model};
@@ -88,6 +90,8 @@ export default function ExternalApiIntegratorStatusEndpointRequestParametersInpu
     newParameters.forEach((parameter) => {
       const fieldName = parameter?.fieldName;
       const value = parameter?.value;
+      constructedParameterObject["useRunApiResponseParameter"] = parameter?.useRunApiResponseParameter === true;
+      constructedParameterObject["runEndpointFieldName"] = DataParsingHelper.parseString(parameter?.runEndpointFieldName, "");
 
       constructedParameterObject[fieldName] = dataParsingHelper.parseObjectValue(parameter?.type, value);
     });
