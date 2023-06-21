@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RepositorySelectInput from "components/common/list_of_values_input/tools/repositories/RepositorySelectInput";
+import toolIdentifierConstants from "@opsera/definitions/constants/tool_identifiers/toolIdentifier.constants";
 
 function GitToGitMergeSyncTaskRepositorySelectInput({
   model,
@@ -19,6 +20,9 @@ function GitToGitMergeSyncTaskRepositorySelectInput({
     newModel.setDefaultValue("sourceBranch");
     newModel.setDefaultValue("upstreamBranch");
     newModel.setDefaultValue("isNewBranch");
+    if (model?.getData("service") === toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS) {
+      newModel.setData("azureProjectId", selectedOption?.projectId);
+    }
     setModel({ ...newModel });
   };
 
@@ -31,6 +35,7 @@ function GitToGitMergeSyncTaskRepositorySelectInput({
     newModel.setDefaultValue("sourceBranch");
     newModel.setDefaultValue("upstreamBranch");
     newModel.setDefaultValue("isNewBranch");
+    newModel.setDefaultValue("azureProjectId");
     setModel({ ...newModel });
   };
 

@@ -108,6 +108,9 @@ export const mergeSyncTaskGitConfigurationMetadata = {
       label: "Enable Jira Integration",
       id: "enableJiraIntegration",
     },
+    {
+      id: "azureProjectId",
+    },
   ],
   newObjectFields: {
     toolId: "",
@@ -129,5 +132,6 @@ export const mergeSyncTaskGitConfigurationMetadata = {
     buildType: "",
     isSalesforce: false,
     enableJiraIntegration: false,
+    azureProjectId: "",
   }
 };

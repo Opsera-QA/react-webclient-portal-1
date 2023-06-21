@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RepositorySelectInput from "components/common/list_of_values_input/tools/repositories/RepositorySelectInput";
+import toolIdentifierConstants from "@opsera/definitions/constants/tool_identifiers/toolIdentifier.constants";
 
 function SalesforceBulkMigrationTaskRepositorySelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
@@ -17,6 +18,10 @@ function SalesforceBulkMigrationTaskRepositorySelectInput({model, setModel, disa
     newModel.setData("autoApprove", false);
     newModel.setData("reviewers", []);
     newModel.setData("reviewerNames", []);
+    if (model?.getData("service") === toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS) {      
+      newModel.setData("repoId", repoId);
+      newModel.setData("azureProjectId", selectedOption?.projectId);      
+    }
     setModel({...newModel});
   };
 
@@ -32,6 +37,8 @@ function SalesforceBulkMigrationTaskRepositorySelectInput({model, setModel, disa
     newModel.setDefaultValue("autoApprove");
     newModel.setDefaultValue("reviewers");
     newModel.setDefaultValue("reviewerNames");
+    newModel.setDefaultValue("repoId");
+    newModel.setDefaultValue("azureProjectId");
     setModel({...newModel});
   };
 
