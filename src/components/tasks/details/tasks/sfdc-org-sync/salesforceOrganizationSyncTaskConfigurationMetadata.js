@@ -134,6 +134,12 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
         return model?.getData("includePackageXml") === true;
       },
     },
+    {
+      id: "repoId",
+    },
+    {
+      id: "azureProjectId",
+    },
   ],
   newObjectFields: {
     type: "",
@@ -170,6 +176,8 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
     packageXmlReferencePath: "",
     reviewers: [],
     reviewerNames: [],
+    repoId: "",
+    azureProjectId: "",
   }
 };
 
