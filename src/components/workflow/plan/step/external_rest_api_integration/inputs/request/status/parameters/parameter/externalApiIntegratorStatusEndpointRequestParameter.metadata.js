@@ -37,5 +37,6 @@ export const externalApiIntegratorStatusEndpointRequestParameterMetadata = {
     isSensitiveData: false,
     isRequired: false,
     useRunApiResponseParameter: false,
+    runEndpointFieldName: "",
   }
 };
