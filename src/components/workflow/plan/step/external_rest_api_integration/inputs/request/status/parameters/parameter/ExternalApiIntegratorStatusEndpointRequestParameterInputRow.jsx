@@ -34,6 +34,10 @@ export default function ExternalApiIntegratorStatusEndpointRequestParameterInput
     updateParameterFunction({...newModel?.getCurrentData()});
   };
 
+  const setModelFunction = (newModel) => {
+    updateParameterFunction({...newModel?.getCurrentData()});
+  };
+
   const getValueInput = () => {
     const useRunApiResponseParameter = endpointFieldModel?.getData("useRunApiResponseParameter");
 
@@ -41,7 +45,7 @@ export default function ExternalApiIntegratorStatusEndpointRequestParameterInput
       return (
         <ExternalApiIntegrationStepRunResponseParameterSelectInput
           model={endpointFieldModel}
-          setModel={setEndpointFieldModel}
+          setModel={setModelFunction}
           toolId={toolId}
           runEndpointId={runEndpointId}
           disabled={disabled}

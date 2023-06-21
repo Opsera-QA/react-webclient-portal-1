@@ -14,8 +14,7 @@ export default function ExternalApiIntegrationStepRunResponseParameterSelectInpu
   // TODO: Clear out other fields
   const setDataFunction = (fieldName, selectedOption) => {
     model?.setData(fieldName, selectedOption?.fieldName);
-    // model?.setDefaultValue("statusEndpointRequestParameters");
-    // model?.setDefaultValue("statusEndpointResponseEvaluationRules");
+    model?.setDefaultValue("value");
     setModel({...model});
   };
 
