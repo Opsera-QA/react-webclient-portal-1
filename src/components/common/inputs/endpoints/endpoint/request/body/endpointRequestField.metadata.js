@@ -29,6 +29,10 @@ export const endpointRequestFieldMetadata = {
       id: "hardcodeValue",
       formText: "Hardcoded values cannot be edited in the Pipeline Step."
     },
+    {
+      label: "Use Parameter From API Run Response",
+      id: "useRunApiResponseParameter",
+    },
   ],
   newObjectFields: {
     type: "string",
@@ -37,5 +41,6 @@ export const endpointRequestFieldMetadata = {
     isSensitiveData: false,
     defaultValue: "",
     hardcodeValue: false,
+    useRunApiResponseParameter: false,
   }
 };

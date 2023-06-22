@@ -8,14 +8,22 @@ import {faCode} from "@fortawesome/pro-light-svg-icons";
 import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
 import EndpointRequestParameterManualValueEntryInput
   from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/EndpointRequestParameterManualValueEntryInput";
+<<<<<<< Updated upstream
+=======
+import ExternalApiIntegrationStepRunResponseParameterSelectInput
+  from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegrationStepRunResponseParameterSelectInput";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+>>>>>>> Stashed changes
 
-function EndpointRequestParameterInputRow(
+export default function EndpointRequestParameterInputRow(
   {
     disabled,
     updateParameterFunction,
     endpointBodyField,
     endpointParameterArrayInputHeight,
     endpointParameterInputHeight,
+    toolId,
+    runEndpointId,
   }) {
   const [endpointFieldModel, setEndpointFieldModel] = useState(undefined);
 
@@ -30,6 +38,31 @@ function EndpointRequestParameterInputRow(
   };
 
   const getValueInput = () => {
+<<<<<<< Updated upstream
+=======
+    const useRunApiResponseParameter = endpointFieldModel?.getData("useRunApiResponseParameter");
+
+    if (useRunApiResponseParameter === true) {
+      return (
+        <div
+          className={"mx-3 mt-2"}
+          style={{minHeight: endpointParameterInputHeight}}
+        >
+          <H5FieldSubHeader
+            subheaderText={"Select the Call Operation Response field to use as the value for this parameter"}
+          />
+          <ExternalApiIntegrationStepRunResponseParameterSelectInput
+            model={endpointFieldModel}
+            toolId={toolId}
+            runEndpointId={runEndpointId}
+            disabled={disabled}
+            setDataFunction={updateMainModelFunction}
+          />
+        </div>
+      );
+    }
+
+>>>>>>> Stashed changes
     return (
       <EndpointRequestParameterManualValueEntryInput
         endpointParameterInputHeight={endpointParameterInputHeight}
@@ -59,11 +92,11 @@ function EndpointRequestParameterInputRow(
 }
 
 EndpointRequestParameterInputRow.propTypes = {
+  toolId: PropTypes.string,
+  runEndpointId: PropTypes.string,
   updateParameterFunction: PropTypes.func,
   disabled: PropTypes.bool,
   endpointBodyField: PropTypes.object,
   endpointParameterArrayInputHeight: PropTypes.string,
   endpointParameterInputHeight: PropTypes.string,
 };
-
-export default EndpointRequestParameterInputRow;
