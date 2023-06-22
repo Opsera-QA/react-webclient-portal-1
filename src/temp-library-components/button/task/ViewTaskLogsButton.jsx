@@ -20,7 +20,7 @@ export default function ViewTaskLogsButton(
   const { toastContext } = useComponentStateReference();
 
   const handleLoadFunction = async () => {
-    history.push(`${taskHelper.getDetailViewLink(taskId)}/logs`);
+    history.push(`${taskHelper.getDetailViewLink(taskId)}`);
     toastContext.clearOverlayPanel();
   };
 
