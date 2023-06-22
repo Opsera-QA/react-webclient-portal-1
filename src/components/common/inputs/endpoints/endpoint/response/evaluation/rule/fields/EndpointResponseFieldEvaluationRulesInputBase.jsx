@@ -21,9 +21,8 @@ function EndpointResponseFieldEvaluationRulesInputBase(
     responseParameterInputHeight,
     responseParameterArrayInputHeight,
   }) {
-  const [field, setField] = useState(model?.getFieldById(fieldName));
+  const field = model?.getFieldById(fieldName);
   const [fields, setFields] = useState([]);
-  const isMounted = useRef(false);
   const [activeTab, setActiveTab] = useState(undefined);
   const [currentFieldData, setCurrentFieldData] = useState(undefined);
 
@@ -35,14 +34,7 @@ function EndpointResponseFieldEvaluationRulesInputBase(
     }
   };
 
-  useEffect(() => {
-    isMounted.current = true;
-    setField(model?.getFieldById(fieldName));
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, [fieldName]);
+  useEffect(() => {}, [fieldName, model]);
 
   useEffect(() => {
     setFields([]);
