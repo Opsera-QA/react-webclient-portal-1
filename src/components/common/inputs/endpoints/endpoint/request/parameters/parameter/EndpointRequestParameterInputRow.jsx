@@ -21,12 +21,13 @@ export default function EndpointRequestParameterInputRow(
     endpointParameterInputHeight,
     toolId,
     runEndpointId,
+    fieldName,
   }) {
   const [endpointFieldModel, setEndpointFieldModel] = useState(undefined);
 
   useEffect(() => {
-    setEndpointFieldModel(modelHelpers.parseObjectIntoModel(endpointBodyField, endpointRequestParameterMetadata));
-  }, [endpointBodyField]);
+    setEndpointFieldModel({...modelHelpers.parseObjectIntoModel(endpointBodyField, endpointRequestParameterMetadata)});
+  }, [endpointBodyField, runEndpointId]);
 
   const updateMainModelFunction = (fieldName, newValue) => {
     endpointFieldModel.setData(fieldName, newValue);
@@ -78,7 +79,7 @@ export default function EndpointRequestParameterInputRow(
       titleIcon={faCode}
       title={`Field: ${endpointFieldModel?.getData("fieldName")}`}
     >
-      <div className={"h-100"}>
+      <div className={"h-100"} id={fieldName}>
         {getValueInput()}
       </div>
     </VanitySetTabContentContainer>
@@ -93,4 +94,5 @@ EndpointRequestParameterInputRow.propTypes = {
   endpointBodyField: PropTypes.object,
   endpointParameterArrayInputHeight: PropTypes.string,
   endpointParameterInputHeight: PropTypes.string,
+  fieldName: PropTypes.string,
 };

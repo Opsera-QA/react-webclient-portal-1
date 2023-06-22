@@ -29,7 +29,7 @@ function EndpointRequestParametersInputBase(
     runEndpointId,
     toolId,
   }) {
-  const [field] = useState(model?.getFieldById(fieldName));
+  const field = model?.getFieldById(fieldName);
   const [parameters, setParameters] = useState([]);
   const isMounted = useRef(false);
   const [activeTab, setActiveTab] = useState(undefined);
@@ -152,6 +152,7 @@ function EndpointRequestParametersInputBase(
         endpointParameterInputHeight={endpointParameterInputHeight}
         toolId={toolId}
         runEndpointId={runEndpointId}
+        fieldName={fieldName}
       />
     );
   };
@@ -217,7 +218,7 @@ function EndpointRequestParametersInputBase(
   }
 
   return (
-    <div>
+    <div id={fieldName}>
       <Row>
         <Col xs={7} className={"pr-2"}>
           {getParameterInputContainer()}
