@@ -142,8 +142,7 @@ function EndpointResponseRuleFieldInputRow(
             <div style={{minHeight: responseParameterInputHeight}}>
               <BooleanToggleInput
                 dataObject={endpointFieldModel}
-                setDataObject={setEndpointFieldModel}
-                setDataFunction={updateMainModelFunction}
+                setDataObject={updateMainModel}
                 fieldName={"value"}
                 disabled={disabled}
               />
