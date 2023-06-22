@@ -89,7 +89,10 @@ function EndpointRequestParametersInputBase(
       const fieldName = parameter?.fieldName;
       const value = parameter?.value;
 
-      constructedParameterObject[fieldName] = dataParsingHelper.parseObjectValue(parameter?.type, value);
+      constructedParameterObject[fieldName] = dataParsingHelper.parseObjectValue(
+        parameter?.useRunApiResponseParameter === true ? "string" : parameter?.type,
+        value
+      );
     });
 
     newModel.setData(fieldName, constructedParameterObject);
