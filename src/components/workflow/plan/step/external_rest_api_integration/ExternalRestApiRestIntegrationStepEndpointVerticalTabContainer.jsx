@@ -21,6 +21,8 @@ import ExternalApiIntegrationStepUseConnectionCheckBooleanToggleInput
 import {
   EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
+import EndpointResponseSuccessfulCompletionEvaluationRulesInput
+  from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseSuccessfulCompletionEvaluationRulesInput";
 
 const EXTERNAL_API_REST_INTEGRATION_TABS = {
   CONNECTION_CHECK_API_CONFIGURATION: "connection-check-api-configuration",
@@ -215,9 +217,7 @@ function ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer(
         );
       case EXTERNAL_API_REST_INTEGRATION_TABS.STATUS_CHECK_SUCCESSFUL_COMPLETION_EVALUATION_RULES_CONFIGURATION:
         return (
-          <EndpointResponseEvaluationRulesInput
-            fieldName={"statusEndpointResponseEvaluationRules"}
-            evaluationRuleFieldName={"success_rule"}
+          <EndpointResponseSuccessfulCompletionEvaluationRulesInput
             model={externalRestApiIntegrationModel}
             setModel={setExternalRestApiIntegrationModel}
             toolId={externalRestApiIntegrationModel?.getData("toolId")}
