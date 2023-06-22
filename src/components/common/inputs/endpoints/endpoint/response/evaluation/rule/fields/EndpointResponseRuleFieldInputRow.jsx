@@ -17,6 +17,7 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import NumberPickerInputBase from "components/common/inputs/number/picker/base/NumberPickerInputBase";
 import IntegerTextInputBase from "components/common/inputs/text/number/integer/IntegerTextInputBase";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function EndpointResponseRuleFieldInputRow(
   {
@@ -128,6 +129,18 @@ function EndpointResponseRuleFieldInputRow(
           return (
             <div style={{minHeight: responseParameterInputHeight}}>
               <IntegerTextInputBase
+                dataObject={endpointFieldModel}
+                setDataObject={setEndpointFieldModel}
+                setDataFunction={updateMainModelFunction}
+                fieldName={"value"}
+                disabled={disabled}
+              />
+            </div>
+          );
+        case "boolean":
+          return (
+            <div style={{minHeight: responseParameterInputHeight}}>
+              <BooleanToggleInput
                 dataObject={endpointFieldModel}
                 setDataObject={setEndpointFieldModel}
                 setDataFunction={updateMainModelFunction}
