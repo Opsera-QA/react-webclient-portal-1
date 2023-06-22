@@ -26,12 +26,13 @@ function EndpointResponseRuleFieldInputRow(
     endpointBodyField,
     responseParameterInputHeight,
     responseParameterArrayInputHeight,
+    fieldName,
   }) {
   const [endpointFieldModel, setEndpointFieldModel] = useState(undefined);
 
   useEffect(() => {
-    setEndpointFieldModel(modelHelpers.parseObjectIntoModel(endpointBodyField, endpointResponseFieldEvaluationRuleMetadata));
-  }, [endpointBodyField]);
+    setEndpointFieldModel({...modelHelpers.parseObjectIntoModel(endpointBodyField, endpointResponseFieldEvaluationRuleMetadata)});
+  }, [endpointBodyField, fieldName]);
 
   const updateMainModelFunction = (fieldName, newValue) => {
     endpointFieldModel.setData(fieldName, newValue);
@@ -189,7 +190,9 @@ function EndpointResponseRuleFieldInputRow(
   }
 
   return (
-    <div className={"mx-3 mt-2"}>
+    <div
+      id={fieldName}
+      className={"mx-3 mt-2"}>
       {getBody()}
     </div>
   );
@@ -201,6 +204,7 @@ EndpointResponseRuleFieldInputRow.propTypes = {
   disabled: PropTypes.bool,
   responseParameterInputHeight: PropTypes.string,
   responseParameterArrayInputHeight: PropTypes.string,
+  fieldName: PropTypes.string,
 };
 
 export default EndpointResponseRuleFieldInputRow;

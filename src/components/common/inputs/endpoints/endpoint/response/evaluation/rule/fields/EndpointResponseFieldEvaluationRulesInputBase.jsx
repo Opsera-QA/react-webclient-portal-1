@@ -136,6 +136,7 @@ function EndpointResponseFieldEvaluationRulesInputBase(
           disabled={disabled}
           responseParameterInputHeight={responseParameterInputHeight}
           responseParameterArrayInputHeight={responseParameterArrayInputHeight}
+          fieldName={fieldName}
         />
       );
     }
