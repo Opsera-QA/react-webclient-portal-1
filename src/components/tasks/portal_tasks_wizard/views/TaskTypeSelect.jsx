@@ -42,7 +42,7 @@ export default function TaskTypeSelect(
   };
 
   return (
-    <div className={"p-3"}>
+    <div className={"m-4"}>
       <CenteredContentWrapper>
         <H5FieldSubHeader
           className={"mb-3 mx-3"}

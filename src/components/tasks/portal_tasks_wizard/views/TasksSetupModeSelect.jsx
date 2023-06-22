@@ -72,23 +72,14 @@ function TasksSetupModeSelect(
           }
         />
       </CenteredContentWrapper>
-      <div
-        className={className}
-        style={{minHeight: "150px"}}
-      >
-        <Row
-          className={"py-3 px-2"}
-          noGutters={true}
-          style={{alignItems: "center", justifyContent: "center"}}
-        >
-          <Col xs={5}>
+        <Row>
+          <Col md={6}>
             <TaskCardBase
               option={TOOL_CREATION_OPTIONS.WIZARD}
               handleFlowSelection={handleFlowSelection}
               selectedFlow={selectedFlow}
               icon={
                 <IconTitleBar
-                  className={""}
                   icon={
                     <ImageBase
                       height={96}
@@ -109,8 +100,7 @@ function TasksSetupModeSelect(
               workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
             />
           </Col>
-          <Col xs={1} />
-          <Col xs={5}>
+          <Col md={6}>
             <TaskCardBase
               option={TOOL_CREATION_OPTIONS.ADVANCED}
               handleFlowSelection={handleFlowSelection}
@@ -139,7 +129,6 @@ function TasksSetupModeSelect(
             />
           </Col>
         </Row>
-      </div>
     </div>
   );
 }
