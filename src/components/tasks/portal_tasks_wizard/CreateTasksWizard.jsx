@@ -26,7 +26,7 @@ export default function CreateTasksWizard({ loadData, backButtonFunction }) {
   );
   const [buttonContainer, setButtonContainer] = useState(undefined);
   const history = useHistory();
-  const [setUpMode, setSetupMode] = useState(undefined);
+  const [selectedFlow, setSelectedFlow] = useState(undefined);
   const [taskType, setTaskType] = useState(undefined);
   const { taskModel, setTaskModel } = useGetNewTaskModel();
   const { toastContext } = useComponentStateReference();
@@ -42,7 +42,7 @@ export default function CreateTasksWizard({ loadData, backButtonFunction }) {
       taskModel?.getData("tool_identifier"),
     )} connection information`,
     TASK_CONFIGURATION: `${
-      setUpMode && setUpMode === "wizard" ? "Step 3:" : "Step 2:"
+      selectedFlow && selectedFlow === "wizard" ? "Step 3:" : "Step 2:"
     } Configure Task Details`,
   };
   const [overlayTitle, setOverlayTitle] = useState(
@@ -90,7 +90,7 @@ export default function CreateTasksWizard({ loadData, backButtonFunction }) {
   };
 
   const getTaskConfigurationView = () => {
-    if (setUpMode === "advanced") {
+    if (selectedFlow === "advanced") {
       return (
         <TaskEditorPanel
           taskData={taskModel}
@@ -116,8 +116,8 @@ export default function CreateTasksWizard({ loadData, backButtonFunction }) {
             setCurrentScreen={setCurrentScreen}
             closeOverlayFunction={closeOverlayFunction}
             setButtonContainer={setButtonContainer}
-            setSetupMode={setSetupMode}
-            setupMode={setUpMode}
+            setSelectedFlow={setSelectedFlow}
+            selectedFlow={selectedFlow}
             className={"py-5"}
             backButtonFunction={backButtonFunction}
           />
@@ -127,7 +127,7 @@ export default function CreateTasksWizard({ loadData, backButtonFunction }) {
       case REGISTRY_WIZARD_SCREENS.TASK_SELECT:
         return (
           <TaskTypeSelect
-            selectedFlow={setUpMode}
+            selectedFlow={selectedFlow}
             setSelectedFlow={setTaskType}
             setCurrentScreen={setCurrentScreen}
             setButtonContainer={setButtonContainer}
