@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
@@ -6,25 +6,26 @@ import Row from "react-bootstrap/Row";
 import SelectionCardColumn from "temp-library-components/cards/SelectionCardColumn";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import TaskCardBase from "../task_cards/TaskCardBase";
-import { TASK_TYPE_LABELS, TASK_TYPES } from "../../task.types";
-import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
+import {TASK_TYPE_LABELS, TASK_TYPES} from "../../task.types";
+import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import IconBase from "../../../common/icons/IconBase";
-import { WORKFLOW_OPTION_TYPES } from "../../../wizard/portal/workflows/flows/WorkflowOptionCardBase";
-import { getLargeVendorIconFromToolIdentifier } from "../../../common/helpers/icon-helpers";
-import { toolIdentifierConstants } from "../../../admin/tools/identifiers/toolIdentifier.constants";
+import {WORKFLOW_OPTION_TYPES} from "../../../wizard/portal/workflows/flows/WorkflowOptionCardBase";
+import {getLargeVendorIconFromToolIdentifier} from "../../../common/helpers/icon-helpers";
+import {toolIdentifierConstants} from "../../../admin/tools/identifiers/toolIdentifier.constants";
 import IconTitleBar from "../../../common/fields/title/IconTitleBar";
-import { ImageBase } from "@opsera/react-vanity-set";
-import { platformImageConstants } from "../../../../temp-library-components/image/platformImage.constants";
+import {ImageBase} from "@opsera/react-vanity-set";
+import {platformImageConstants} from "../../../../temp-library-components/image/platformImage.constants";
 import Col from "react-bootstrap/Col";
 
-export default function TaskTypeSelect({
-  className,
-  selectedFlow,
-  setSelectedFlow,
-  setCurrentScreen,
-  backButtonFunction,
-  setButtonContainer,
-}) {
+export default function TaskTypeSelect(
+  {
+    className,
+    selectedTaskType,
+    setSelectedTaskType,
+    setCurrentScreen,
+    backButtonFunction,
+    setButtonContainer,
+  }) {
   useEffect(() => {
     if (setButtonContainer) {
       setButtonContainer(
@@ -35,8 +36,8 @@ export default function TaskTypeSelect({
     }
   }, []);
 
-  const handleFlowSelection = (newFlowOption) => {
-    setSelectedFlow(newFlowOption);
+  const handleFlowSelection = (taskType) => {
+    setSelectedTaskType(taskType);
     setCurrentScreen("task_config");
   };
 
@@ -55,7 +56,7 @@ export default function TaskTypeSelect({
           <TaskCardBase
             option={TASK_TYPES.SALESFORCE_BULK_MIGRATION}
             handleFlowSelection={handleFlowSelection}
-            selectedFlow={selectedFlow}
+            selectedFlow={selectedTaskType}
             icon={
               <IconTitleBar
                 icon={
@@ -80,7 +81,7 @@ export default function TaskTypeSelect({
           <TaskCardBase
             option={TASK_TYPES.SALESFORCE_QUICK_DEPLOY}
             handleFlowSelection={handleFlowSelection}
-            selectedFlow={selectedFlow}
+            selectedFlow={selectedTaskType}
             icon={
               <IconTitleBar
                 icon={
@@ -105,7 +106,7 @@ export default function TaskTypeSelect({
           <TaskCardBase
             option={TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC}
             handleFlowSelection={handleFlowSelection}
-            selectedFlow={selectedFlow}
+            selectedFlow={selectedTaskType}
             icon={
               <IconTitleBar
                 icon={
@@ -134,7 +135,7 @@ export default function TaskTypeSelect({
           <TaskCardBase
             option={TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE}
             handleFlowSelection={handleFlowSelection}
-            selectedFlow={selectedFlow}
+            selectedFlow={selectedTaskType}
             icon={
               <IconTitleBar
                 icon={
@@ -161,7 +162,7 @@ export default function TaskTypeSelect({
           <TaskCardBase
             option={TASK_TYPES.SYNC_SALESFORCE_REPO}
             handleFlowSelection={handleFlowSelection}
-            selectedFlow={selectedFlow}
+            selectedFlow={selectedTaskType}
             icon={
               <IconTitleBar
                 icon={
@@ -190,8 +191,8 @@ export default function TaskTypeSelect({
 }
 
 TaskTypeSelect.propTypes = {
-  selectedFlow: PropTypes.string,
-  setSelectedFlow: PropTypes.func,
+  selectedTaskType: PropTypes.string,
+  setSelectedTaskType: PropTypes.func,
   setCurrentScreen: PropTypes.func,
   backButtonFunction: PropTypes.func,
   setButtonContainer: PropTypes.func,

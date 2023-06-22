@@ -27,7 +27,7 @@ export default function CreateTasksWizard({ loadData, backButtonFunction }) {
   const [buttonContainer, setButtonContainer] = useState(undefined);
   const history = useHistory();
   const [selectedFlow, setSelectedFlow] = useState(undefined);
-  const [taskType, setTaskType] = useState(undefined);
+  const [selectedTaskType, setSelectedTaskType] = useState(undefined);
   const { taskModel, setTaskModel } = useGetNewTaskModel();
   const { toastContext } = useComponentStateReference();
 
@@ -100,7 +100,7 @@ export default function CreateTasksWizard({ loadData, backButtonFunction }) {
     }
     return (
       <WizardTaskConfigurationRouter
-        flow={taskType}
+        flow={selectedTaskType}
         setButtonContainer={setButtonContainer}
         backButtonFunction={() => {setCurrentScreen(REGISTRY_WIZARD_SCREENS.TASK_SELECT);}}
         handleClose={closeOverlayFunction}
@@ -127,8 +127,8 @@ export default function CreateTasksWizard({ loadData, backButtonFunction }) {
       case REGISTRY_WIZARD_SCREENS.TASK_SELECT:
         return (
           <TaskTypeSelect
-            selectedFlow={selectedFlow}
-            setSelectedFlow={setTaskType}
+            selectedTaskType={selectedTaskType}
+            setSelectedTaskType={setSelectedTaskType}
             setCurrentScreen={setCurrentScreen}
             setButtonContainer={setButtonContainer}
             backButtonFunction={() => {setCurrentScreen(REGISTRY_WIZARD_SCREENS.MODE_SELECT);}}
