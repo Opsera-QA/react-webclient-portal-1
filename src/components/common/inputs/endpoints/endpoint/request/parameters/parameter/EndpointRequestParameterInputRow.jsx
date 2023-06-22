@@ -8,12 +8,9 @@ import {faCode} from "@fortawesome/pro-light-svg-icons";
 import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
 import EndpointRequestParameterManualValueEntryInput
   from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/EndpointRequestParameterManualValueEntryInput";
-<<<<<<< Updated upstream
-=======
 import ExternalApiIntegrationStepRunResponseParameterSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegrationStepRunResponseParameterSelectInput";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
->>>>>>> Stashed changes
 
 export default function EndpointRequestParameterInputRow(
   {
@@ -38,8 +35,6 @@ export default function EndpointRequestParameterInputRow(
   };
 
   const getValueInput = () => {
-<<<<<<< Updated upstream
-=======
     const useRunApiResponseParameter = endpointFieldModel?.getData("useRunApiResponseParameter");
 
     if (useRunApiResponseParameter === true) {
@@ -62,7 +57,6 @@ export default function EndpointRequestParameterInputRow(
       );
     }
 
->>>>>>> Stashed changes
     return (
       <EndpointRequestParameterManualValueEntryInput
         endpointParameterInputHeight={endpointParameterInputHeight}
