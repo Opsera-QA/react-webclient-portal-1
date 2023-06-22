@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
@@ -7,16 +7,17 @@ import Col from "react-bootstrap/Col";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
-import { faGear, faWandMagicSparkles } from "@fortawesome/pro-light-svg-icons";
+import {faGear, faWandMagicSparkles} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "../../../common/icons/IconBase";
 import OpseraInfinityLogo from "../../../logo/OpseraInfinityLogo";
-import OverlayWizardButtonContainerBase from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import OverlayWizardButtonContainerBase
+  from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import SelectionCardColumn from "../../../../temp-library-components/cards/SelectionCardColumn";
-import { platformImageConstants } from "../../../../temp-library-components/image/platformImage.constants";
-import { ImageBase } from "@opsera/react-vanity-set";
+import {platformImageConstants} from "../../../../temp-library-components/image/platformImage.constants";
+import {ImageBase} from "@opsera/react-vanity-set";
 import TaskCardBase from "../task_cards/TaskCardBase";
-import { TASK_TYPE_LABELS, TASK_TYPES} from "../../task.types";
-import { WORKFLOW_OPTION_TYPES} from "../task_cards/TaskTypeOptionCardBase";
+import {TASK_TYPE_LABELS, TASK_TYPES} from "../../task.types";
+import {WORKFLOW_OPTION_TYPES} from "../task_cards/TaskTypeOptionCardBase";
 
 export const TOOL_CREATION_OPTIONS = {
   WIZARD: "wizard",
@@ -28,16 +29,16 @@ export const TASKS_CREATION_OPTION_LABELS = {
   ADVANCED: "SDLC Tasks",
 };
 
-function TasksSetupModeSelect({
-                                className,
-                                selectedFlow,
-                                setSelectedFlow,
-                                setCurrentScreen,
-                                setButtonContainer,
-                                REGISTRY_WIZARD_SCREENS,
-                                backButtonFunction
-                              }) {
-  const { themeConstants } = useComponentStateReference();
+function TasksSetupModeSelect(
+  {
+    className,
+    selectedFlow,
+    setSelectedFlow,
+    setCurrentScreen,
+    setButtonContainer,
+    backButtonFunction
+  }) {
+  const {themeConstants} = useComponentStateReference();
 
   useEffect(() => {
     if (setButtonContainer) {
@@ -73,12 +74,12 @@ function TasksSetupModeSelect({
       </CenteredContentWrapper>
       <div
         className={className}
-        style={{ minHeight: "150px" }}
+        style={{minHeight: "150px"}}
       >
         <Row
           className={"py-3 px-2"}
           noGutters={true}
-          style={{ alignItems: "center", justifyContent: "center" }}
+          style={{alignItems: "center", justifyContent: "center"}}
         >
           <SelectionCardColumn>
             <TaskCardBase
@@ -148,7 +149,6 @@ TasksSetupModeSelect.propTypes = {
   setSelectedFlow: PropTypes.func,
   setCurrentScreen: PropTypes.func,
   setButtonContainer: PropTypes.func,
-  REGISTRY_WIZARD_SCREENS: PropTypes.object,
   backButtonFunction: PropTypes.func
 };
 
