@@ -56,7 +56,7 @@ function EndpointResponseEvaluationRulesInput(
   }
 
   return (
-    <div className={"mx-2"}>
+    <div className={"mx-2"} id={fieldName}>
       <EndpointResponseEvaluationRulesInputBase
         model={model}
         setModel={setModel}

@@ -185,7 +185,7 @@ function ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer(
         );
       case EXTERNAL_API_REST_INTEGRATION_TABS.STATUS_CHECK_API_CONFIGURATION:
         return (
-          <div className={"mx-2"}>
+          <div className={"mx-2"} id={EXTERNAL_API_REST_INTEGRATION_TABS.STATUS_CHECK_API_CONFIGURATION}>
             <ExternalApiIntegrationStepStatusCheckEndpointSelectInput
               model={externalRestApiIntegrationModel}
               setModel={setExternalRestApiIntegrationModel}
