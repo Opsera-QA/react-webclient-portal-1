@@ -108,6 +108,8 @@ function EndpointResponseEvaluationRuleInput(
             responseBodyType={endpoint?.responseBodyType}
           />
         );
+      default:
+        return null;
     }
   };
 
