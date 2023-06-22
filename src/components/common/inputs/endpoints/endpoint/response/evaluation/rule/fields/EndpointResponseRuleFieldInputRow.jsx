@@ -32,7 +32,7 @@ function EndpointResponseRuleFieldInputRow(
 
   useEffect(() => {
     setEndpointFieldModel({...modelHelpers.parseObjectIntoModel(endpointBodyField, endpointResponseFieldEvaluationRuleMetadata)});
-  }, [endpointBodyField, fieldName]);
+  }, [JSON.stringify(endpointBodyField), fieldName]);
 
   const updateMainModelFunction = (fieldName, newValue) => {
     endpointFieldModel.setData(fieldName, newValue);

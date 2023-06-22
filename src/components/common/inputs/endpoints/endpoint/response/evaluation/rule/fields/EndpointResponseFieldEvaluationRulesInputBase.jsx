@@ -20,6 +20,7 @@ function EndpointResponseFieldEvaluationRulesInputBase(
     height,
     responseParameterInputHeight,
     responseParameterArrayInputHeight,
+    parentFieldName,
   }) {
   const field = model?.getFieldById(fieldName);
   const [fields, setFields] = useState([]);
@@ -34,7 +35,7 @@ function EndpointResponseFieldEvaluationRulesInputBase(
     }
   };
 
-  useEffect(() => {}, [fieldName, model]);
+  useEffect(() => {}, [fieldName, JSON.stringify(model), parentFieldName]);
 
   useEffect(() => {
     setFields([]);
@@ -180,6 +181,7 @@ EndpointResponseFieldEvaluationRulesInputBase.propTypes = {
   height: PropTypes.string,
   responseParameterInputHeight: PropTypes.string,
   responseParameterArrayInputHeight: PropTypes.string,
+  parentFieldName: PropTypes.string,
 };
 
 export default EndpointResponseFieldEvaluationRulesInputBase;

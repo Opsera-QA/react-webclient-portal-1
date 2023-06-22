@@ -93,6 +93,7 @@ function EndpointResponseEvaluationRuleInput(
                 height={evaluationRulesInputHeight}
                 responseParameterArrayInputHeight={responseParameterArrayInputHeight}
                 responseParameterInputHeight={responseParameterInputHeight}
+                parentFieldName={fieldName}
               />
             </Col>
           </>
