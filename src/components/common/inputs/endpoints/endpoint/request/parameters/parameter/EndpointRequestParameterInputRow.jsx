@@ -30,6 +30,7 @@ export default function EndpointRequestParameterInputRow(
 
   const updateMainModelFunction = (fieldName, newValue) => {
     endpointFieldModel.setData(fieldName, newValue);
+    setEndpointFieldModel({...endpointFieldModel});
     updateParameterFunction({...endpointFieldModel?.getCurrentData()});
   };
 
