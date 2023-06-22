@@ -90,7 +90,7 @@ function EndpointApiConfigurationInputBase(
   }
 
   return (
-    <div>
+    <div id={fieldName}>
       {getDynamicInputsForRequestType()}
     </div>
   );
