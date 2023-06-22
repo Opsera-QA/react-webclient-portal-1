@@ -15,6 +15,7 @@ import { toolIdentifierConstants } from "../../../admin/tools/identifiers/toolId
 import IconTitleBar from "../../../common/fields/title/IconTitleBar";
 import { ImageBase } from "@opsera/react-vanity-set";
 import { platformImageConstants } from "../../../../temp-library-components/image/platformImage.constants";
+import Col from "react-bootstrap/Col";
 
 export default function TaskTypeSelect({
   className,
@@ -40,7 +41,7 @@ export default function TaskTypeSelect({
   };
 
   return (
-    <div className={"py-3"}>
+    <div className={"p-3"}>
       <CenteredContentWrapper>
         <H5FieldSubHeader
           className={"mb-3 mx-3"}
@@ -49,15 +50,8 @@ export default function TaskTypeSelect({
           }
         />
       </CenteredContentWrapper>
-      <Row
-        xs={3}
-        style={{
-          verticleAlign: "middle",
-          marginLeft: "10rem",
-          marginRight: "10rem",
-        }}
-      >
-        <SelectionCardColumn>
+      <Row>
+        <Col xs={4}>
           <TaskCardBase
             option={TASK_TYPES.SALESFORCE_BULK_MIGRATION}
             handleFlowSelection={handleFlowSelection}
@@ -66,7 +60,7 @@ export default function TaskTypeSelect({
               <IconTitleBar
                 icon={
                   <ImageBase
-                    height={"96px"}
+                    height={96}
                     imageSource={
                       platformImageConstants.PLATFORM_IMAGE_LINKS
                         .SALESFORCE_GENERAL
@@ -81,8 +75,8 @@ export default function TaskTypeSelect({
             description={"Retrieve and Create Salesforce Repo."}
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />
-        </SelectionCardColumn>
-        <SelectionCardColumn>
+        </Col>
+        <Col xs={4}>
           <TaskCardBase
             option={TASK_TYPES.SALESFORCE_QUICK_DEPLOY}
             handleFlowSelection={handleFlowSelection}
@@ -91,7 +85,7 @@ export default function TaskTypeSelect({
               <IconTitleBar
                 icon={
                   <ImageBase
-                    height={"96px"}
+                    height={96}
                     imageSource={
                       platformImageConstants.PLATFORM_IMAGE_LINKS
                         .SALESFORCE_GENERAL
@@ -106,8 +100,8 @@ export default function TaskTypeSelect({
             description={"Quick Deploy validated packages."}
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />
-        </SelectionCardColumn>
-        <SelectionCardColumn>
+        </Col>
+        <Col xs={4}>
           <TaskCardBase
             option={TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC}
             handleFlowSelection={handleFlowSelection}
@@ -116,7 +110,7 @@ export default function TaskTypeSelect({
               <IconTitleBar
                 icon={
                   <ImageBase
-                    height={"96px"}
+                    height={96}
                     imageSource={
                       platformImageConstants.PLATFORM_IMAGE_LINKS
                         .SALESFORCE_GIT_TASK
@@ -133,8 +127,10 @@ export default function TaskTypeSelect({
             }
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />
-        </SelectionCardColumn>
-        <SelectionCardColumn>
+        </Col>
+      </Row>
+      <Row className={"mt-2"}>
+        <Col xs={4}>
           <TaskCardBase
             option={TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE}
             handleFlowSelection={handleFlowSelection}
@@ -143,7 +139,7 @@ export default function TaskTypeSelect({
               <IconTitleBar
                 icon={
                   <ImageBase
-                    height={"96px"}
+                    height={96}
                     imageSource={
                       platformImageConstants.PLATFORM_IMAGE_LINKS
                         .SALESFORCE_GIT_TASK
@@ -160,8 +156,8 @@ export default function TaskTypeSelect({
             }
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />
-        </SelectionCardColumn>
-        <SelectionCardColumn>
+        </Col>
+        <Col xs={4}>
           <TaskCardBase
             option={TASK_TYPES.SYNC_SALESFORCE_REPO}
             handleFlowSelection={handleFlowSelection}
@@ -170,7 +166,7 @@ export default function TaskTypeSelect({
               <IconTitleBar
                 icon={
                   <ImageBase
-                    height={"96px"}
+                    height={96}
                     imageSource={
                       platformImageConstants.PLATFORM_IMAGE_LINKS
                         .SALESFORCE_GIT_TASK
@@ -187,7 +183,7 @@ export default function TaskTypeSelect({
             }
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />
-        </SelectionCardColumn>
+        </Col>
       </Row>
     </div>
   );

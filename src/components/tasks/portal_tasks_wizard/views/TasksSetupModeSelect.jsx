@@ -81,7 +81,7 @@ function TasksSetupModeSelect(
           noGutters={true}
           style={{alignItems: "center", justifyContent: "center"}}
         >
-          <SelectionCardColumn>
+          <Col xs={5}>
             <TaskCardBase
               option={TOOL_CREATION_OPTIONS.WIZARD}
               handleFlowSelection={handleFlowSelection}
@@ -91,7 +91,7 @@ function TasksSetupModeSelect(
                   className={""}
                   icon={
                     <ImageBase
-                      height={"96px"}
+                      height={96}
                       imageSource={
                         platformImageConstants.PLATFORM_IMAGE_LINKS
                           .WIZARD_GENERAL
@@ -108,8 +108,9 @@ function TasksSetupModeSelect(
               }
               workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
             />
-          </SelectionCardColumn>
-          <SelectionCardColumn>
+          </Col>
+          <Col xs={1} />
+          <Col xs={5}>
             <TaskCardBase
               option={TOOL_CREATION_OPTIONS.ADVANCED}
               handleFlowSelection={handleFlowSelection}
@@ -119,7 +120,7 @@ function TasksSetupModeSelect(
                   className={""}
                   icon={
                     <ImageBase
-                      height={"96px"}
+                      height={96}
                       imageSource={
                         platformImageConstants.PLATFORM_IMAGE_LINKS
                           .ADVANCED_OPTION
@@ -136,7 +137,7 @@ function TasksSetupModeSelect(
               }
               workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
             />
-          </SelectionCardColumn>
+          </Col>
         </Row>
       </div>
     </div>
