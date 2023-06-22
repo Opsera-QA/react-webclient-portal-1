@@ -23,7 +23,6 @@ import {
 } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
 import EndpointResponseSuccessfulCompletionEvaluationRulesInput
   from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseSuccessfulCompletionEvaluationRulesInput";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const EXTERNAL_API_REST_INTEGRATION_TABS = {
   CONNECTION_CHECK_API_CONFIGURATION: "connection-check-api-configuration",
