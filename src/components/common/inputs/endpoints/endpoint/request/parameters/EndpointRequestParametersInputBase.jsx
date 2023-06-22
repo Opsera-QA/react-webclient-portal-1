@@ -65,7 +65,10 @@ function EndpointRequestParametersInputBase(
         return;
       }
 
-      const value = dataParsingHelper.parseObjectValue(parameter?.type, currentData?.[fieldName]);
+      const value = dataParsingHelper.parseObjectValue(
+        parameter?.useRunApiResponseParameter === true ? "string" : parameter?.type,
+        currentData?.[fieldName],
+      );
 
       unpackedParameters.push({
         ...parameter,
