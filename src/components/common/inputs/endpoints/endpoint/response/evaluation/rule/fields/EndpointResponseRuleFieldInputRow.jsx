@@ -15,6 +15,8 @@ import MultiTextListInputBase from "components/common/inputs/list/text/MultiText
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import NumberPickerInputBase from "components/common/inputs/number/picker/base/NumberPickerInputBase";
+import IntegerTextInputBase from "components/common/inputs/text/number/integer/IntegerTextInputBase";
 
 function EndpointResponseRuleFieldInputRow(
   {
@@ -107,6 +109,30 @@ function EndpointResponseRuleFieldInputRow(
                 defaultToNull={true}
                 disabled={disabled}
                 clearDataFunction={() => updateMainModelFunction("value", undefined)}
+              />
+            </div>
+          );
+        case "number":
+          return (
+            <div style={{minHeight: responseParameterInputHeight}}>
+              <NumberPickerInputBase
+                dataObject={endpointFieldModel}
+                setDataObject={setEndpointFieldModel}
+                setDataFunction={updateMainModelFunction}
+                fieldName={"value"}
+                disabled={disabled}
+              />
+            </div>
+          );
+        case "integer":
+          return (
+            <div style={{minHeight: responseParameterInputHeight}}>
+              <IntegerTextInputBase
+                dataObject={endpointFieldModel}
+                setDataObject={setEndpointFieldModel}
+                setDataFunction={updateMainModelFunction}
+                fieldName={"value"}
+                disabled={disabled}
               />
             </div>
           );
