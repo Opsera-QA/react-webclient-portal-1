@@ -155,7 +155,7 @@ function EndpointResponseEvaluationRuleInput(
   }
 
   return (
-    <div>
+    <div id={fieldName}>
       {getBody()}
     </div>
   );

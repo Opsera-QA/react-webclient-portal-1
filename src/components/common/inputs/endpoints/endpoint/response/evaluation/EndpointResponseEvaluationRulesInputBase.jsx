@@ -26,7 +26,7 @@ function EndpointResponseEvaluationRulesInputBase(
   const [endpointResponseEvaluationRuleModel, setEndpointResponseEvaluationRuleModel] = useState(undefined);
 
   useEffect(() => {
-    setEndpointResponseEvaluationRuleModel(modelHelpers.parseObjectIntoModel(model?.getData(fieldName), endpointResponseEvaluationRulesMetadata));
+    setEndpointResponseEvaluationRuleModel({...modelHelpers.parseObjectIntoModel(model?.getData(fieldName), endpointResponseEvaluationRulesMetadata)});
   }, [fieldName]);
 
   const validateAndSetData = (newRulesModel) => {
