@@ -18,7 +18,7 @@ import GitScrapperOverallScannedRepositoriesTrendDataBlock from "./data_blocks/o
 import GitScrapperOverallCleanRepositoriesTrendDataBlock from "./data_blocks/overall_clean_repositories_trend/GitScrapperOverallCleanRepositoriesTrendDataBlock";
 import GitScrapperOverallIssuesTrendDataBlock from "./data_blocks/overall_issues_trend/GitScrapperOverallIssuesTrendDataBlock";
 // import gitScrapperPipelineFilterMetadata from "./git-scrapper-pipeline-filter-metadata";
-
+import GitScrapperMetricsHelpDocumentation from "components/common/help/documentation/insights/charts/GitScrapperMetricsHelpDocumentation";
 function GitScrapperMetrics({
   kpiConfiguration,
   setKpiConfiguration,
@@ -153,9 +153,9 @@ function GitScrapperMetrics({
   const getDescription = (severity) => {
     switch (severity) {
       case "Red":
-        return "This project's issues are trending upward";
+        return "The project  issues show an upward trend";
       case "Green":
-        return "This project's issues are trending downward";
+        return "The project issues show a downward trend";
       case "Neutral":
         return "Neutral: This project's issues have experienced no change";
     }
@@ -235,9 +235,9 @@ function GitScrapperMetrics({
         setKpis={setKpis}
         isLoading={isLoading}
         tableChart={true}
-        // chartHelpComponent={(closeHelpPanel) => (
-        //   <CoverityIssuesByCategoryHelpDocumentation closeHelpPanel={closeHelpPanel} />
-        // )}
+        chartHelpComponent={(closeHelpPanel) => (
+          <GitScrapperMetricsHelpDocumentation closeHelpPanel={closeHelpPanel} />
+        )}
       />
       <ModalLogs
         header="Git Custodian Metrics"
