@@ -2320,9 +2320,8 @@ function ChartView({
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_SCRAPER_METRICS:
         return (
           <Col
-            xl={6}
-            md={12}
-            className="p-2"
+              md={12}
+              className="p-2"
           >
             <GitSrapperMetrics
               kpiConfiguration={kpiConfig}
