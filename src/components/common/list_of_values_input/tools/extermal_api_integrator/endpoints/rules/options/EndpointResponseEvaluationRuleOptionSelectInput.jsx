@@ -3,17 +3,6 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import apiFieldTypeConstants from "@opsera/definitions/constants/api/request/apiFieldType.constants";
 
-const SUPPORTED_RULE_OPTIONS = [
-  {
-    text: "Status Code",
-    value: "status",
-  },
-  {
-    text: "Response Field Evaluation",
-    value: "field_evaluation",
-  },
-];
-
 function EndpointResponseEvaluationRuleOptionSelectInput(
   {
     model,
