@@ -53,7 +53,7 @@ export default function ExportDataPanel(
           visible={getPdfExporter != null}
           label={
             <span>
-              <div><strong>Format Data Before Export</strong></div>
+              <div>PDF (formatted view)</div>
             </span>
           }
         />
@@ -66,7 +66,7 @@ export default function ExportDataPanel(
           visible={getRawData != null}
           label={
             <span>
-              <div><strong>Raw Data</strong></div>
+              <div>JSON</div>
             </span>
           }
         />
@@ -79,7 +79,7 @@ export default function ExportDataPanel(
           visible={getCsvData != null}
           label={
             <span>
-              <div><strong>CSV</strong></div>
+              <div>CSV</div>
             </span>
           }
         />
