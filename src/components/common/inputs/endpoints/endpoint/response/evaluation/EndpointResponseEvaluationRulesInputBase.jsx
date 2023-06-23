@@ -22,11 +22,11 @@ function EndpointResponseEvaluationRulesInputBase(
     responseParameterInputHeight,
     responseParameterArrayInputHeight,
   }) {
-  const [field] = useState(model?.getFieldById(fieldName));
+  const field = model?.getFieldById(fieldName);
   const [endpointResponseEvaluationRuleModel, setEndpointResponseEvaluationRuleModel] = useState(undefined);
 
   useEffect(() => {
-    setEndpointResponseEvaluationRuleModel(modelHelpers.parseObjectIntoModel(model?.getData(fieldName), endpointResponseEvaluationRulesMetadata));
+    setEndpointResponseEvaluationRuleModel({...modelHelpers.parseObjectIntoModel(model?.getData(fieldName), endpointResponseEvaluationRulesMetadata)});
   }, [fieldName]);
 
   const validateAndSetData = (newRulesModel) => {

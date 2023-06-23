@@ -173,6 +173,7 @@ function EndpointRequestBodyInputPanel(
           endpointBodyField={fieldData}
           updateFieldFunction={(newField) => updateFieldFunction(index, newField)}
           disabled={disabled}
+          endpointType={model?.getData("type")}
         />
       );
     }

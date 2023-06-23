@@ -31,7 +31,7 @@ function EndpointResponseEvaluationRulesInput(
     endpointId,
   );
 
-  useEffect(() => {}, [toolId, endpointId, fieldName]);
+  useEffect(() => {}, [toolId, endpointId, fieldName, evaluationRuleFieldName]);
 
   if (DataParsingHelper.isMongoDbId(endpointId) !== true) {
     return (
@@ -56,7 +56,7 @@ function EndpointResponseEvaluationRulesInput(
   }
 
   return (
-    <div className={"mx-2"}>
+    <div className={"mx-2"} id={evaluationRuleFieldName}>
       <EndpointResponseEvaluationRulesInputBase
         model={model}
         setModel={setModel}

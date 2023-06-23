@@ -28,12 +28,13 @@ function EndpointResponseEvaluationRuleInput(
     evaluationRulesInputHeight,
     responseParameterInputHeight,
     responseParameterArrayInputHeight,
+    fieldName,
   }) {
   const [evaluationRuleModel, setEvaluationRuleModel] = useState(undefined);
 
   useEffect(() => {
-    setEvaluationRuleModel(modelHelpers.parseObjectIntoModel(rule, endpointResponseEvaluationRuleMetadata));
-  }, [rule]);
+    setEvaluationRuleModel({...modelHelpers.parseObjectIntoModel(rule, endpointResponseEvaluationRuleMetadata)});
+  }, [rule, fieldName]);
 
   const updateMainModelFunction = (fieldName, newValue) => {
     evaluationRuleModel.setData(fieldName, newValue);
@@ -92,6 +93,7 @@ function EndpointResponseEvaluationRuleInput(
                 height={evaluationRulesInputHeight}
                 responseParameterArrayInputHeight={responseParameterArrayInputHeight}
                 responseParameterInputHeight={responseParameterInputHeight}
+                parentFieldName={fieldName}
               />
             </Col>
           </>
@@ -107,6 +109,8 @@ function EndpointResponseEvaluationRuleInput(
             responseBodyType={endpoint?.responseBodyType}
           />
         );
+      default:
+        return null;
     }
   };
 
@@ -154,7 +158,7 @@ function EndpointResponseEvaluationRuleInput(
   }
 
   return (
-    <div>
+    <div id={fieldName}>
       {getBody()}
     </div>
   );
@@ -168,6 +172,7 @@ EndpointResponseEvaluationRuleInput.propTypes = {
   evaluationRulesInputHeight: PropTypes.string,
   responseParameterInputHeight: PropTypes.string,
   responseParameterArrayInputHeight: PropTypes.string,
+  fieldName: PropTypes.string,
 };
 
 export default EndpointResponseEvaluationRuleInput;

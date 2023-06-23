@@ -165,7 +165,7 @@ function ExternalApiRestIntegrationStepSummaryVerticalTabContainer(
                 subheaderText={"Status Check API Request Configuration"}
               />
               <Row>
-                <Col lg={6}>
+                <Col lg={12}>
                   <EndpointField
                     model={externalRestApiIntegrationModel}
                     fieldName={"statusEndpointId"}

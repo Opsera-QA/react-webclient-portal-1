@@ -20,10 +20,10 @@ function EndpointResponseFieldEvaluationRulesInputBase(
     height,
     responseParameterInputHeight,
     responseParameterArrayInputHeight,
+    parentFieldName,
   }) {
-  const [field, setField] = useState(model?.getFieldById(fieldName));
+  const field = model?.getFieldById(fieldName);
   const [fields, setFields] = useState([]);
-  const isMounted = useRef(false);
   const [activeTab, setActiveTab] = useState(undefined);
   const [currentFieldData, setCurrentFieldData] = useState(undefined);
 
@@ -35,14 +35,7 @@ function EndpointResponseFieldEvaluationRulesInputBase(
     }
   };
 
-  useEffect(() => {
-    isMounted.current = true;
-    setField(model?.getFieldById(fieldName));
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, [fieldName]);
+  useEffect(() => {}, [fieldName, JSON.stringify(model), parentFieldName]);
 
   useEffect(() => {
     setFields([]);
@@ -136,6 +129,7 @@ function EndpointResponseFieldEvaluationRulesInputBase(
           disabled={disabled}
           responseParameterInputHeight={responseParameterInputHeight}
           responseParameterArrayInputHeight={responseParameterArrayInputHeight}
+          fieldName={fieldName}
         />
       );
     }
@@ -187,6 +181,7 @@ EndpointResponseFieldEvaluationRulesInputBase.propTypes = {
   height: PropTypes.string,
   responseParameterInputHeight: PropTypes.string,
   responseParameterArrayInputHeight: PropTypes.string,
+  parentFieldName: PropTypes.string,
 };
 
 export default EndpointResponseFieldEvaluationRulesInputBase;
