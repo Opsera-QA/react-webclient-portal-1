@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
-import IconBase from "components/common/icons/IconBase";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import ErrorLoadingDataField from "components/common/fields/text/message/ErrorLoadingDataField";
+import InfoMessageFieldBase from "../fields/text/message/InfoMessageFieldBase";
+import ErrorMessageFieldBase from "../fields/text/message/ErrorMessageFieldBase";
 
 // TODO: Fix so when passing in height the height doesn't change after the table loads
 function TableBodyLoadingWrapper(
@@ -13,17 +12,17 @@ function TableBodyLoadingWrapper(
     data,
     tableComponent,
     noDataMessage,
-    tableHeight,
+    minHeight,
     error,
   }) {
   if (error) {
     return (
       <CenteredContentWrapper
-        minHeight={tableHeight}
+        minHeight={minHeight}
       >
-        <ErrorLoadingDataField
-          error={error}
-        />
+        <ErrorMessageFieldBase
+          message={error}
+          />
       </CenteredContentWrapper>
     );
   }
@@ -32,22 +31,17 @@ function TableBodyLoadingWrapper(
     if (isLoading === true) {
       return (
         <CenterLoadingIndicator
-          minHeight={tableHeight}
+          minHeight={minHeight}
         />
       );
     }
 
     return (
-      <CenteredContentWrapper minHeight={tableHeight}>
-        <div className={"info-text-alt mx-3"}>
-          <IconBase
-            iconSize={"xl"}
-            icon={faTriangleExclamation}
-            isLoading={isLoading}
-            className={"mr-2"}
+      <CenteredContentWrapper minHeight={minHeight}>
+        <InfoMessageFieldBase
+          message={noDataMessage}
+          showInformationLabel={false}
           />
-          {noDataMessage}
-        </div>
       </CenteredContentWrapper>
     );
   }
@@ -64,12 +58,11 @@ TableBodyLoadingWrapper.propTypes = {
   data: PropTypes.array,
   tableComponent: PropTypes.object,
   noDataMessage: PropTypes.string,
-  tableHeight: PropTypes.string,
+  minHeight: PropTypes.string,
   error: PropTypes.any,
 };
 
 TableBodyLoadingWrapper.defaultProps = {
-  tableHeight: "500px",
   noDataMessage: "No data is currently available"
 };
 
