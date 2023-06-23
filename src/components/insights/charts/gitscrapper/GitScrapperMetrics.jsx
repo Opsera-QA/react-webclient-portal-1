@@ -82,8 +82,6 @@ function GitScrapperMetrics({
         dashboardOrgs,
       );
 
-      console.log("response", response);
-
       const dataObject =
         response?.data && response?.status === 200
           ? response?.data?.data?.getGitScraperDataBlockMetrics?.data
@@ -92,7 +90,6 @@ function GitScrapperMetrics({
           response?.data && response?.status === 200
               ? response?.data?.data?.gitScraperLineChartFrequency?.data
               : [];
-      console.log("dataObject", dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -109,9 +106,6 @@ function GitScrapperMetrics({
       }
     }
   };
-
-  console.log("metrics", metrics);
-  console.log("line chart", lineChart);
 
   const onRowSelect = (data) => {
     toastContext.showOverlayPanel(
