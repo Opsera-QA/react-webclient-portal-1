@@ -43,14 +43,12 @@ export default function TaskTypeSelect(
 
   return (
     <div className={"m-4"}>
-      <CenteredContentWrapper>
         <H5FieldSubHeader
           className={"mb-3 mx-3"}
           subheaderText={
             "What kind of Salesforce Task would you like to create today?"
           }
         />
-      </CenteredContentWrapper>
       <Row>
         <Col xs={4}>
           <TaskCardBase

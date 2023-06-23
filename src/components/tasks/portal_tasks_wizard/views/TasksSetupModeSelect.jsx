@@ -64,14 +64,12 @@ function TasksSetupModeSelect(
 
   return (
     <div className={"m-4"}>
-      <CenteredContentWrapper>
         <H5FieldSubHeader
           className={"mb-3 mx-3"}
           subheaderText={
             "Pick between the new Opsera Salesforce Task Creation Wizard or the SDLC Tasks Classic View view to setup your tasks."
           }
         />
-      </CenteredContentWrapper>
         <Row>
           <Col md={6}>
             <TaskCardBase
