@@ -1,3 +1,6 @@
+import apiResponseEvaluationOptionConstants
+  from "@opsera/definitions/constants/api/response/apiResponseEvaluationOption.constants";
+
 export const endpointResponseFieldEvaluationRuleMetadata = {
   fields: [
     {
@@ -14,12 +17,11 @@ export const endpointResponseFieldEvaluationRuleMetadata = {
       label: "Value",
       id: "value",
       isRequired: true,
-      // maxLength: 20,
     },
   ],
   newObjectFields: {
     fieldName: "",
-    filter: "is_not_null",
+    filter: apiResponseEvaluationOptionConstants.API_RESPONSE_EVALUATION_OPTIONS.IS_NOT_NULL,
     value: "",
   }
 };
