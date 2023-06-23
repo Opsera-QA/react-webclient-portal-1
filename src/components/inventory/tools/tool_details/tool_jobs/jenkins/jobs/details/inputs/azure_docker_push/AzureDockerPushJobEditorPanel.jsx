@@ -9,7 +9,7 @@ import AzureDockerPushJobMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/azure_docker_push/azure-docker-push-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
-function AzureDockerPushJobEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled }) {
+function AzureDockerPushJobEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled, jenkinsJobType }) {
   useEffect(() => {
     unpackJobConfiguration();
   }, [jenkinsJobConfiguration]);
@@ -26,6 +26,7 @@ function AzureDockerPushJobEditorPanel({ jenkinsJobConfiguration, model, setMode
           <JenkinsJobsGenericAgentTypeSelectInput
             model={model}
             setModel={setModel}
+            jenkinsJobType={jenkinsJobType}
           />
         </Col>
       );
@@ -56,6 +57,7 @@ AzureDockerPushJobEditorPanel.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   autoScalingEnabled: PropTypes.bool,
+  jenkinsJobType: PropTypes.string
 };
 
 export default AzureDockerPushJobEditorPanel;

@@ -11,6 +11,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {
   getJenkinsJobConfigurationMetadata
 } from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/JenkinsJobSubEditorPanel";
+import JenkinsJobTypes from "../jenkinsJobTypes.constants";
 
 function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobType, setActiveTab, handleClose }) {
   const [jenkinsJobConfigurationModel, setJenkinsJobConfigurationModel] = useState(null);
@@ -25,15 +26,15 @@ function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobType, setActiveTab, 
 
   const getDynamicJobTypeSummaryPanel = () => {
     switch (jenkinsJobData?.getArrayData("type", 0)) {
-      case "BUILD":
+      case JenkinsJobTypes.BUILD:
         return <JenkinsBuildJobSummaryPanel dataObject={jenkinsJobConfigurationModel} />;
-      case "UNIT TESTING":
-      case "FUNCTIONAL TESTING":
-        return <JenkinsUnitTestingJobSummaryPanel dataObject={jenkinsJobConfigurationModel}/>;
-      case "SHELL SCRIPT":
-      case "DOCKER PUSH":
-      case "COVERITY":
-      case "ARTIFACTORY_DOCKER_PUSH":
+      case JenkinsJobTypes.UNIT_TESTING:
+      case JenkinsJobTypes.FUNCTIONAL_TESTING:
+        return <JenkinsUnitTestingJobSummaryPanel dataObject={jenkinsJobConfigurationModel} />;
+      case JenkinsJobTypes.SHELL_SCRIPT:
+      case JenkinsJobTypes.DOCKER_PUSH:
+      case JenkinsJobTypes.COVERITY:
+      case JenkinsJobTypes.ARTIFACTORY_DOCKER_PUSH:
         return (
           <>
             <Col lg={6}>
