@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
-import useGetPipelineAppliedTags from "hooks/workflow/pipelines/tags/useGetPipelineAppliedTags";
+import useGetPipelineStepAppliedTags from "hooks/workflow/pipelines/tags/useGetPipelineStepAppliedTags";
 
 export default function PipelineStepTagFilter(
   {
@@ -15,7 +15,7 @@ export default function PipelineStepTagFilter(
     tags,
     isLoading,
     error,
-  } = useGetPipelineAppliedTags();
+  } = useGetPipelineStepAppliedTags();
 
   const getTextFieldString = (tag) => {
     if (tag == null) {
@@ -48,7 +48,7 @@ export default function PipelineStepTagFilter(
   );
 }
 
-PipelineTagFilter.propTypes = {
+PipelineStepTagFilter.propTypes = {
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
   className: PropTypes.string,
