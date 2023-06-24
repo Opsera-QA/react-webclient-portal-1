@@ -18,7 +18,7 @@ import DeactivateUserButton from "components/common/buttons/user/DeactivateUserB
 import ReactivateUserButton from "components/common/buttons/user/ReactivateUserButton";
 import RevokeUserAccessTokensButton from "components/common/buttons/access_tokens/RevokeUserAccessTokensButton";
 
-function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
+function LdapSettingsPanel({userData, ldapData, loadData, showSyncButton}) {
   const [userLdapModel, setUserLdapModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
@@ -51,7 +51,7 @@ function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
         <ReactivateUserButton
           userModel={userData}
           loadData={loadData}
-          className={"ml-3"}
+          className={"mt-5"}
         />
       );
     }
@@ -60,7 +60,7 @@ function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
       <DeactivateUserButton
         userModel={userData}
         loadData={loadData}
-        className={"ml-3"}
+        className={"mt-5"}
       />
     );
   };
@@ -69,7 +69,7 @@ function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
     if (showSyncButton) {
       return (
         <Row>
-          <Col>
+          <Col xs={12}>
             <DateTimeField dataObject={userData} fieldName={"ldapSyncAt"}/>
             <ButtonContainerBase
               className={"mt-3"}
@@ -79,26 +79,43 @@ function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
                   loadData={loadData}
                 />
               }
-            >
-              <RevokeLdapGroupMembershipButton
-                userModel={userData}
-                loadData={loadData}
-                className={"ml-3"}
-              />
-              <RevokeLdapSiteRoleMembershipButton
-                userModel={userData}
-                loadData={loadData}
-                className={"ml-3"}
-              />
-              <RevokeUserAccessTokensButton
-                userModel={userData}
-                loadData={loadData}
-                className={"ml-3"}
-              />
-              {getUserActivationButton()}
-            </ButtonContainerBase>
+            />
           </Col>
+          {getLdapButtons()}
         </Row>
+      );
+    }
+  };
+
+  const getLdapButtons = () => {
+    if (showSyncButton) {
+      return (
+        <>
+          <Col xs={12}>
+            <RevokeLdapGroupMembershipButton
+              userModel={userData}
+              loadData={loadData}
+              className={"mt-5 mb-2"}
+            />
+          </Col>
+          <Col xs={12}>
+            <RevokeLdapSiteRoleMembershipButton
+              userModel={userData}
+              loadData={loadData}
+              className={"my-2"}
+            />
+          </Col>
+          <Col xs={12}>
+            <RevokeUserAccessTokensButton
+              userModel={userData}
+              loadData={loadData}
+              className={"my-2"}
+            />
+          </Col>
+          <Col xs={12}>
+            {getUserActivationButton()}
+          </Col>
+        </>
       );
     }
   };
@@ -138,10 +155,16 @@ function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
           />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={userLdapModel} fieldName={"division"}/>
+          <TextFieldBase
+            dataObject={userLdapModel}
+            fieldName={"division"}
+          />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={userLdapModel} fieldName={"type"} />
+          <TextFieldBase
+            dataObject={userLdapModel}
+            fieldName={"type"}
+          />
         </Col>
       </Row>
       {getSyncButton()}
