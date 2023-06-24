@@ -21,6 +21,7 @@ export default function usePipelineActions() {
       search: pipelineFilterModel?.getFilterValue("search"),
       owner: pipelineFilterModel?.getFilterValue("owner"),
       tag: pipelineFilterModel?.getData("tag"),
+      stepTag: pipelineFilterModel?.getData("stepTag"),
       status: pipelineFilterModel?.getFilterValue("status"),
       toolIdentifier: pipelineFilterModel?.getFilterValue("tool_identifier"),
       active: active,

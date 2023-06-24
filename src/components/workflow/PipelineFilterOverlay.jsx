@@ -6,6 +6,7 @@ import PipelineStepToolIdentifierFilter
   from "components/common/filters/tools/tool_identifier/pipelines/PipelineStepToolIdentifierFilter";
 import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 import PipelineTagFilter from "components/common/filters/tags/tag/pipelines/PipelineTagFilter";
+import PipelineStepTagFilter from "components/common/filters/tags/tag/pipelines/PipelineStepTagFilter";
 
 export default function PipelineFilterOverlay(
   {
@@ -39,6 +40,11 @@ export default function PipelineFilterOverlay(
         className={"mb-2"}
       />
       <PipelineTagFilter
+        filterModel={filterModel}
+        setFilterModel={setFilterModel}
+        className={"mb-2"}
+      />
+      <PipelineStepTagFilter
         filterModel={filterModel}
         setFilterModel={setFilterModel}
         className={"mb-2"}
