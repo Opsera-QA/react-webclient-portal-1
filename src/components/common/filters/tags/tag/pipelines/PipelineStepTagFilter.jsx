@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
-import useGetPipelineAppliedTags from "hooks/workflow/pipelines/tags/useGetPipelineAppliedTags";
+import useGetPipelineStepAppliedTags from "hooks/workflow/pipelines/tags/useGetPipelineStepAppliedTags";
 
-export default function PipelineTagFilter(
+export default function PipelineStepTagFilter(
   {
     filterModel,
     setFilterModel,
@@ -15,11 +15,11 @@ export default function PipelineTagFilter(
     tags,
     isLoading,
     error,
-  } = useGetPipelineAppliedTags();
+  } = useGetPipelineStepAppliedTags();
 
   const getTextFieldString = (tag) => {
     if (tag == null) {
-      return "Select Pipeline Tag";
+      return "Select Pipeline Step Tag";
     }
 
     return `${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`;
@@ -33,9 +33,9 @@ export default function PipelineTagFilter(
   return (
     <div className={className}>
       <FilterSelectInputBase
-        fieldName={"tag"}
+        fieldName={"stepTag"}
         busy={isLoading}
-        placeholderText={"Filter by Pipeline Tag"}
+        placeholderText={"Filter by Pipeline Step Tag"}
         groupBy={"type"}
         setDataFunction={setDataFunction}
         dataObject={filterModel}
@@ -48,7 +48,7 @@ export default function PipelineTagFilter(
   );
 }
 
-PipelineTagFilter.propTypes = {
+PipelineStepTagFilter.propTypes = {
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
   className: PropTypes.string,
