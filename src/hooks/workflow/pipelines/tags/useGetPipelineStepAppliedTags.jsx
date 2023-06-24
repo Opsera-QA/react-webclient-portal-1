@@ -3,7 +3,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 
-export default function useGetPipelineAppliedTags(
+export default function useGetPipelineStepAppliedTags(
   handleErrorFunction,
 ) {
   const [tags, setTags] = useState([]);
@@ -19,12 +19,12 @@ export default function useGetPipelineAppliedTags(
     setTags([]);
 
     if (loadData) {
-      loadData(getUniqueAppliedTagsForPipelineFilter, handleErrorFunction).catch(() => {});
+      loadData(getUniqueAppliedTagsForPipelineStepsFilter, handleErrorFunction).catch(() => {});
     }
   }, []);
 
-  const getUniqueAppliedTagsForPipelineFilter = async () => {
-    const response = await pipelineActions.getUniqueAppliedTagsForPipelineFilter();
+  const getUniqueAppliedTagsForPipelineStepsFilter = async () => {
+    const response = await pipelineActions.getUniqueAppliedTagsForPipelineStepsFilter();
     const newTags = DataParsingHelper.parseNestedArray(response, "data.data", []);
     setTags([...newTags]);
   };
@@ -32,7 +32,7 @@ export default function useGetPipelineAppliedTags(
   return ({
     tags: tags,
     setTags: setTags,
-    loadData: () => loadData(getUniqueAppliedTagsForPipelineFilter, handleErrorFunction),
+    loadData: () => loadData(getUniqueAppliedTagsForPipelineStepsFilter, handleErrorFunction),
     isLoading: isLoading,
     error: error,
     setError: setError,
