@@ -3,11 +3,8 @@ import PropTypes from "prop-types";
 import PipelineWelcomeView from "./PipelineWelcomeView";
 import PipelinesTableBase from "components/workflow/pipelines/pipeline_details/PipelinesTableBase";
 import InformationDialog from "components/common/status_notifications/info";
-import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import PipelineCardView from "components/workflow/pipelines/PipelineCardView";
-import FilterContainer, {
-  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
-} from "components/common/table/FilterContainer";
+import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import pipelineSummaryMetadata
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
@@ -16,15 +13,15 @@ import TableCardView from "components/common/table/TableCardView";
 import {useHistory} from "react-router-dom";
 import PipelineVerticalTabContainer from "components/workflow/pipelines/PipelineVerticalTabContainer";
 import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
-import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import PipelineStepToolIdentifierFilter
   from "components/common/filters/tools/tool_identifier/pipelines/PipelineStepToolIdentifierFilter";
 import SideBySideViewBase from "components/common/tabs/SideBySideViewBase";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
-import CreateToolRegistryWizard from "../../inventory/tools/tool_details/wizards/CreateToolRegistryWizard";
 import CreateNewPipelineWizard from "../wizards/updated_pipeline_wizard/CreateNewPipelineWizard";
+import PipelineTagFilter from "components/common/filters/tags/tag/pipelines/PipelineTagFilter";
+import PipelineStepTagFilter from "components/common/filters/tags/tag/pipelines/PipelineStepTagFilter";
 
 function PipelineTableCardView(
   {
@@ -48,20 +45,21 @@ function PipelineTableCardView(
           setFilterModel={setPipelineFilterModel}
           className={"mb-2"}
         />
-        <TagFilter
-          filterDto={pipelineFilterModel}
-          setFilterDto={setPipelineFilterModel}
-          className={"mb-2"}
-        />
         <PipelineStepToolIdentifierFilter
           filterModel={pipelineFilterModel}
           setFilterModel={setPipelineFilterModel}
           className={"mb-2"}
         />
-        {/*<PipelineTagFilter*/}
-        {/*  filterModel={pipelineFilterModel}*/}
-        {/*  setFilterModel={setPipelineFilterModel}*/}
-        {/*/>*/}
+        <PipelineTagFilter
+          filterModel={pipelineFilterModel}
+          setFilterModel={setPipelineFilterModel}
+          className={"mb-2"}
+        />
+        <PipelineStepTagFilter
+          filterModel={pipelineFilterModel}
+          setFilterModel={setPipelineFilterModel}
+          className={"mb-2"}
+        />
         <OwnerFilter
           filterModel={pipelineFilterModel}
           setFilterModel={setPipelineFilterModel}

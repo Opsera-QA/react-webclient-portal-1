@@ -19,7 +19,7 @@ export default function PipelineStepTagFilter(
 
   const getTextFieldString = (tag) => {
     if (tag == null) {
-      return "Select Tag";
+      return "Select Pipeline Step Tag";
     }
 
     return `${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`;
@@ -33,7 +33,7 @@ export default function PipelineStepTagFilter(
   return (
     <div className={className}>
       <FilterSelectInputBase
-        fieldName={"tag"}
+        fieldName={"stepTag"}
         busy={isLoading}
         placeholderText={"Filter by Pipeline Step Tag"}
         groupBy={"type"}
