@@ -4,7 +4,7 @@ import FilterSelectInputBase from "components/common/filters/input/FilterSelectI
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import useGetPipelineAppliedTags from "hooks/workflow/pipelines/tags/useGetPipelineAppliedTags";
 
-export default function PipelineTagFilter(
+export default function PipelineStepTagFilter(
   {
     filterModel,
     setFilterModel,
@@ -35,7 +35,7 @@ export default function PipelineTagFilter(
       <FilterSelectInputBase
         fieldName={"tag"}
         busy={isLoading}
-        placeholderText={"Filter by Pipeline Tag"}
+        placeholderText={"Filter by Pipeline Step Tag"}
         groupBy={"type"}
         setDataFunction={setDataFunction}
         dataObject={filterModel}

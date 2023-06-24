@@ -41,8 +41,12 @@ const pipelineFilterMetadata = {
       id: "tool_identifier",
     },
     {
-      label: "Tag",
+      label: "Pipeline Tag",
       id: "tag",
+    },
+    {
+      label: "Pipeline Step Tag",
+      id: "stepTag",
     },
     {
       label: "Search",
@@ -61,6 +65,8 @@ const pipelineFilterMetadata = {
     activeFilters: [],
     viewType: "list",
     category: "",
+    tag: "",
+    stepTag: "",
     type: "",
     status: "",
     active: "",
@@ -121,7 +127,14 @@ export class PipelineFilterModel extends FilterModelBase {
     const parsedTag = TagParsingHelper.parseTagFilter(tag);
 
     if (parsedTag) {
-      activeFilters.push({ filterId: "tag", text: `Tag: ${capitalizeFirstLetter(parsedTag?.type)}: ${parsedTag?.value}` });
+      activeFilters.push({ filterId: "tag", text: `Pipeline Tag: ${capitalizeFirstLetter(parsedTag?.type)}: ${parsedTag?.value}` });
+    }
+
+    const stepTag = this.getData("stepTag");
+    const parsedStepTag = TagParsingHelper.parseTagFilter(stepTag);
+
+    if (parsedStepTag) {
+      activeFilters.push({ filterId: "stepTag", text: `Pipeline Step Tag: ${capitalizeFirstLetter(parsedStepTag?.type)}: ${parsedStepTag?.value}` });
     }
 
     const toolIdentifier = DataParsingHelper.parseString(this.getData("tool_identifier"));
