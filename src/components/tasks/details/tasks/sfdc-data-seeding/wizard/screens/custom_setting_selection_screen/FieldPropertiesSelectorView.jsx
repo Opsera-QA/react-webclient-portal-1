@@ -4,7 +4,7 @@ import axios from "axios";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import { parseError } from "components/common/helpers/error-helpers";
-import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
+import dataSeedingTaskWizardActions from "../../dataSeedingTaskWizard.actions";
 import CenterLoadingIndicator from "../../../../../../../common/loading/CenterLoadingIndicator";
 import FieldSelectorBasePanel from "./panels/FieldSelectorBasePanel";
 
@@ -86,7 +86,7 @@ const FieldPropertiesSelectorView = ({ wizardModel, setWizardModel, handleClose,
   const getFieldPropertiesList = async (cancelSource = cancelTokenSource) => {
     setIsLoading(true);
     const response =
-      await customSettingMigrationTaskWizardActions.pullFieldList(
+      await dataSeedingTaskWizardActions.pullFieldList(
         getAccessToken,
         cancelSource,
         wizardModel,

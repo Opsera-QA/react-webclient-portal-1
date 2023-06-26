@@ -6,7 +6,7 @@ import IconBase from "components/common/icons/IconBase";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import customSettingMigrationTaskWizardActions from "../wizard/customSettingMigrationTaskWizard.actions";
+import dataSeedingTaskWizardActions from "../wizard/dataSeedingTaskWizard.actions";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 import { parseError } from "../../../../../common/helpers/error-helpers";
 
@@ -46,7 +46,7 @@ function CustomSettingReportDownloadButton({
       setDownloading(true);
       let url = undefined;
       const response =
-        await customSettingMigrationTaskWizardActions.downloadCustomSettingsReport(
+        await dataSeedingTaskWizardActions.downloadCustomSettingsReport(
           getAccessToken,
           cancelTokenSource,
           taskId,

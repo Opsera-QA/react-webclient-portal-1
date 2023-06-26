@@ -8,12 +8,10 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import { Button, Row } from "react-bootstrap";
 import IconBase from "../../../../../../../common/icons/IconBase";
-import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
 import FieldQueryComponent from "./FieldQueryComponent";
 import DetailPanelContainer from "../../../../../../../common/panels/detail_panel_container/DetailPanelContainer";
-import { getMigrationTypeLabel, MIGRATION_TYPES } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 import { faArrowLeft, faPlug, faPlus, faSave } from "@fortawesome/pro-light-svg-icons";
-import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
+import dataSeedingTaskWizardActions from "../../dataSeedingTaskWizard.actions";
 import { parseError } from "../../../../../../../common/helpers/error-helpers";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
@@ -25,6 +23,7 @@ import InlineWarning from "components/common/status_notifications/inline/InlineW
 import Col from "react-bootstrap/Col";
 import StandaloneSelectInput from "../../../../../../../common/inputs/select/StandaloneSelectInput";
 import InputLabel from "../../../../../../../common/inputs/info_text/InputLabel";
+import { DATA_SEEDING_WIZARD_SCREENS } from "../../dataSeedingTaskWizard.constants";
 
 const operators = [
   "=",
@@ -193,12 +192,8 @@ const CustomSettingQueryBuilderScreen = ({
 
   const query = useMemo(() => generateQuery(), [queryFilters]);
   const handleBackButton = () => {
-    if (taskType === MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
-      setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.MAPPING_SCREEN);
-      return;
-    }
     setCurrentScreen(
-      CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN,
+      DATA_SEEDING_WIZARD_SCREENS.CONFIGURATION_SCREEN,
     );
   };
 
@@ -213,14 +208,14 @@ const CustomSettingQueryBuilderScreen = ({
       wizardModel.setData("queryFilters", queryFilters);
       wizardModel.setData("limit", limit);
       const response =
-        await customSettingMigrationTaskWizardActions.validateQuery(
+        await dataSeedingTaskWizardActions.validateQuery(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
           finalQuery,
         );
       if (response?.status === 200) {
-        await customSettingMigrationTaskWizardActions.setFilterQuery(
+        await dataSeedingTaskWizardActions.setFilterQuery(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
@@ -228,7 +223,7 @@ const CustomSettingQueryBuilderScreen = ({
           queryFilters,
         );
         setCurrentScreen(
-          CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN,
+          DATA_SEEDING_WIZARD_SCREENS.CONFIRMATION_SCREEN,
         );
       }
     } catch (error) {
@@ -253,7 +248,7 @@ const CustomSettingQueryBuilderScreen = ({
       wizardModel.setData("filterQuery", finalQuery);
       wizardModel.setData("queryFilters", queryFilters);
       const response =
-        await customSettingMigrationTaskWizardActions.validateQuery(
+        await dataSeedingTaskWizardActions.validateQuery(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
@@ -434,9 +429,7 @@ const CustomSettingQueryBuilderScreen = ({
     <DetailPanelContainer>
       <Row className="mx-2">
         <H5FieldSubHeader
-          subheaderText={`${getMigrationTypeLabel(
-            taskType,
-          )} : Query Builder Screen`}
+          subheaderText={`Data Seeding Task : Query Builder Screen`}
         />
       </Row>
       <div className={"my-3"}>

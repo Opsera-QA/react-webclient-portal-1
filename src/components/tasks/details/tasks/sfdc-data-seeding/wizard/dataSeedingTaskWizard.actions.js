@@ -1,10 +1,9 @@
 import baseActions from "utils/actionsBase";
 import taskActions from "../../../../task.actions";
-import { MIGRATION_TYPES } from "../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 
-const customSettingMigrationTaskWizardActions = {};
+const dataSeedingTaskWizardActions = {};
 
-customSettingMigrationTaskWizardActions.createNewRecordV2 = async (
+dataSeedingTaskWizardActions.createNewRecordV2 = async (
   getAccessToken,
   cancelTokenSource,
   taskId,
@@ -24,7 +23,7 @@ customSettingMigrationTaskWizardActions.createNewRecordV2 = async (
   );
 };
 
-customSettingMigrationTaskWizardActions.triggerCustomSettingsPull = async (
+dataSeedingTaskWizardActions.triggerCustomSettingsPull = async (
   getAccessToken,
   cancelTokenSource,
   taskId,
@@ -48,7 +47,7 @@ customSettingMigrationTaskWizardActions.triggerCustomSettingsPull = async (
   );
 };
 
-customSettingMigrationTaskWizardActions.pullCustomSettingsList = async (
+dataSeedingTaskWizardActions.pullCustomSettingsList = async (
   getAccessToken,
   cancelTokenSource,
   wizardModel,
@@ -62,7 +61,7 @@ customSettingMigrationTaskWizardActions.pullCustomSettingsList = async (
   );
 };
 
-customSettingMigrationTaskWizardActions.triggerFieldPropertiesPull = async (
+dataSeedingTaskWizardActions.triggerFieldPropertiesPull = async (
   getAccessToken,
   cancelTokenSource,
   taskId,
@@ -74,11 +73,7 @@ customSettingMigrationTaskWizardActions.triggerFieldPropertiesPull = async (
   const postBody = {
     taskId: taskId,
     runCount: runCount,
-    sfdcToolId:
-      wizardModel?.getData("taskType") ===
-      MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG
-        ? wizardModel?.getData("targetToolId")
-        : wizardModel?.getData("sourceToolId"),
+    sfdcToolId: wizardModel?.getData("sourceToolId"),
     pipelineStorageRecordId: wizardModel?.getData("recordId"),
     objectName: selectedObjectName,
   };
@@ -91,7 +86,7 @@ customSettingMigrationTaskWizardActions.triggerFieldPropertiesPull = async (
   );
 };
 
-customSettingMigrationTaskWizardActions.setSelectedObjectList = async (
+dataSeedingTaskWizardActions.setSelectedObjectList = async (
   getAccessToken,
   cancelTokenSource,
   wizardModel,
@@ -109,7 +104,7 @@ customSettingMigrationTaskWizardActions.setSelectedObjectList = async (
   );
 };
 
-customSettingMigrationTaskWizardActions.pullFieldList = async (
+dataSeedingTaskWizardActions.pullFieldList = async (
   getAccessToken,
   cancelTokenSource,
   wizardModel,
@@ -123,7 +118,7 @@ customSettingMigrationTaskWizardActions.pullFieldList = async (
   );
 };
 
-customSettingMigrationTaskWizardActions.updateSelectedFields = async (
+dataSeedingTaskWizardActions.updateSelectedFields = async (
   getAccessToken,
   cancelTokenSource,
   wizardModel,
@@ -142,7 +137,7 @@ customSettingMigrationTaskWizardActions.updateSelectedFields = async (
   );
 };
 
-customSettingMigrationTaskWizardActions.setFilterQuery = async (
+dataSeedingTaskWizardActions.setFilterQuery = async (
   getAccessToken,
   cancelTokenSource,
   wizardModel,
@@ -163,7 +158,7 @@ customSettingMigrationTaskWizardActions.setFilterQuery = async (
   );
 };
 
-customSettingMigrationTaskWizardActions.validateQuery = async (
+dataSeedingTaskWizardActions.validateQuery = async (
   getAccessToken,
   cancelTokenSource,
   wizardModel,
@@ -172,11 +167,7 @@ customSettingMigrationTaskWizardActions.validateQuery = async (
   const apiUrl = `/tasks/custom-setting-migration-task/wizard/validate-query`;
   const postBody = {
     query: query,
-    sfdcToolId:
-      wizardModel?.getData("taskType") ===
-      MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG
-        ? wizardModel?.getData("targetToolId")
-        : wizardModel?.getData("sourceToolId"),
+    sfdcToolId: wizardModel?.getData("sourceToolId"),
   };
 
   return await baseActions.apiPostCallV2(
@@ -187,7 +178,7 @@ customSettingMigrationTaskWizardActions.validateQuery = async (
   );
 };
 
-customSettingMigrationTaskWizardActions.getRecordCount = async (
+dataSeedingTaskWizardActions.getRecordCount = async (
   getAccessToken,
   cancelTokenSource,
   wizardModel,
@@ -207,7 +198,7 @@ customSettingMigrationTaskWizardActions.getRecordCount = async (
   );
 };
 
-customSettingMigrationTaskWizardActions.getStorageDetails = async (
+dataSeedingTaskWizardActions.getStorageDetails = async (
   getAccessToken,
   cancelTokenSource,
   wizardModel,
@@ -226,7 +217,7 @@ customSettingMigrationTaskWizardActions.getStorageDetails = async (
   );
 };
 
-customSettingMigrationTaskWizardActions.runCustomSettingMigrationTask = async (getAccessToken, cancelTokenSource, wizardModel) => {
+dataSeedingTaskWizardActions.runCustomSettingMigrationTask = async (getAccessToken, cancelTokenSource, wizardModel) => {
   const postBody = {
     pipelineStorageRecordId: wizardModel?.getData("recordId"),
   };
@@ -239,7 +230,7 @@ customSettingMigrationTaskWizardActions.runCustomSettingMigrationTask = async (g
   );
 };
 
-customSettingMigrationTaskWizardActions.downloadCustomSettingsReport = async (getAccessToken, cancelTokenSource, taskId, runCount, expiryDate) => {
+dataSeedingTaskWizardActions.downloadCustomSettingsReport = async (getAccessToken, cancelTokenSource, taskId, runCount, expiryDate) => {
   const postBody = {
     taskId: taskId,
     runCount: runCount,
@@ -255,7 +246,7 @@ customSettingMigrationTaskWizardActions.downloadCustomSettingsReport = async (ge
   );
 };
 
-customSettingMigrationTaskWizardActions.setCsvFieldsList = async (
+dataSeedingTaskWizardActions.setCsvFieldsList = async (
   getAccessToken,
   cancelTokenSource,
   wizardModel,
@@ -273,7 +264,7 @@ customSettingMigrationTaskWizardActions.setCsvFieldsList = async (
   );
 };
 
-customSettingMigrationTaskWizardActions.setFieldMappings = async (
+dataSeedingTaskWizardActions.setFieldMappings = async (
   getAccessToken,
   cancelTokenSource,
   wizardModel,
@@ -290,4 +281,4 @@ customSettingMigrationTaskWizardActions.setFieldMappings = async (
     postBody,
   );
 };
-export default customSettingMigrationTaskWizardActions;
+export default dataSeedingTaskWizardActions;

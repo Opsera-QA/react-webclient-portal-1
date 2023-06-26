@@ -6,22 +6,20 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import { getMigrationTypeLabel } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 import CustomSettingTaskWizardCreateNewRecordButton from "./CustomSettingTaskWizardCreateNewRecordButton";
 
-const CustomSettingTaskWizardInitializationScreen = ({
+const DataSeedingTaskWizardInitializationScreen = ({
   wizardModel,
   setWizardModel,
   setCurrentScreen,
   handleClose,
-  taskType,
 }) => {
   const getBody = () => {
     if (wizardModel == null) {
       return (
         <CenterLoadingIndicator
           minHeight={"500px"}
-          message={`Initializing ${taskType} Custom Setting Migration Wizard`}
+          message={`Initializing Data Seeding Task Wizard`}
         />
       );
     }
@@ -38,14 +36,10 @@ const CustomSettingTaskWizardInitializationScreen = ({
             <CenteredContentWrapper>
               <div className={"mx-auto mt-3"}>
                 <H5FieldSubHeader
-                  subheaderText={`${getMigrationTypeLabel(
-                    taskType,
-                  )} : Initialization`}
+                  subheaderText={`Data Seeding Task : Initialization`}
                 />
                 <div className={"focusText"}>
-                  {`Would you like to start a new ${getMigrationTypeLabel(
-                    taskType,
-                  )} Task Wizard Instance?`}
+                  {`Would you like to start a new Data Seeding Task Wizard Instance?`}
                 </div>
               </div>
             </CenteredContentWrapper>
@@ -56,7 +50,6 @@ const CustomSettingTaskWizardInitializationScreen = ({
             wizardModel={wizardModel}
             setWizardModel={setWizardModel}
             setCurrentScreen={setCurrentScreen}
-            taskType={taskType}
             className={"mr-2"}
           />
           <CancelButton
@@ -76,12 +69,11 @@ const CustomSettingTaskWizardInitializationScreen = ({
   );
 };
 
-CustomSettingTaskWizardInitializationScreen.propTypes = {
-  taskType: PropTypes.string,
+DataSeedingTaskWizardInitializationScreen.propTypes = {
   setCurrentScreen: PropTypes.func,
   handleClose: PropTypes.func,
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
 };
 
-export default CustomSettingTaskWizardInitializationScreen;
+export default DataSeedingTaskWizardInitializationScreen;

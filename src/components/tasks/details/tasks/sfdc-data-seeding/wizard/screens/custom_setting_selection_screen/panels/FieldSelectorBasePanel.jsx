@@ -12,9 +12,9 @@ import axios from "axios";
 import IconBase from "components/common/icons/IconBase";
 import FieldListPanel from "./FieldListPanel";
 import SelectedFieldListPanel from "./SelectedFieldListPanel";
-import customSettingMigrationTaskWizardActions from "../../../customSettingMigrationTaskWizard.actions";
+import dataSeedingTaskWizardActions from "../../../dataSeedingTaskWizard.actions";
 import SaveButtonContainer from "../../../../../../../../common/buttons/saving/containers/SaveButtonContainer";
-import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../../customSettingMigrationTaskWizard.constants";
+import { DATA_SEEDING_WIZARD_SCREENS } from "../../../dataSeedingTaskWizard.constants";
 
 function FieldSelectorBasePanel({
   recordId,
@@ -95,7 +95,7 @@ function FieldSelectorBasePanel({
       wizardModel.setData("selectedFieldList", members);
       wizardModel.setData("queryFilters", []);
       wizardModel.setData("filterQuery", "");
-      await customSettingMigrationTaskWizardActions.updateSelectedFields(
+      await dataSeedingTaskWizardActions.updateSelectedFields(
         getAccessToken,
         cancelTokenSource,
         wizardModel,
@@ -164,7 +164,7 @@ function FieldSelectorBasePanel({
     }
     await updateMembers();
     setCurrentScreen(
-      CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.QUERY_BUILDER_SCREEN,
+      DATA_SEEDING_WIZARD_SCREENS.QUERY_BUILDER_SCREEN,
     );
   };
 

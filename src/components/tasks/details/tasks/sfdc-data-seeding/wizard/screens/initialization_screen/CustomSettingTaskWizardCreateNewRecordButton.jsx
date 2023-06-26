@@ -6,9 +6,8 @@ import IconBase from "components/common/icons/IconBase";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
-import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
-import { MIGRATION_TYPES } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
+import dataSeedingTaskWizardActions from "../../dataSeedingTaskWizard.actions";
+import { DATA_SEEDING_WIZARD_SCREENS } from "../../dataSeedingTaskWizard.constants";
 
 function CustomSettingTaskWizardCreateNewRecordButton({
   wizardModel,
@@ -45,7 +44,7 @@ function CustomSettingTaskWizardCreateNewRecordButton({
     try {
       setCreatingNewRecord(true);
       const response =
-        await customSettingMigrationTaskWizardActions.createNewRecordV2(
+        await dataSeedingTaskWizardActions.createNewRecordV2(
           getAccessToken,
           cancelTokenSource,
           wizardModel?.getData("taskId"),
@@ -56,11 +55,8 @@ function CustomSettingTaskWizardCreateNewRecordButton({
       if (isMounted?.current === true && newRecord != null) {
         wizardModel?.setData("recordId", newRecord._id);
         setWizardModel({ ...wizardModel });
-        const sfdcToolId =
-          taskType === MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG
-            ? wizardModel?.getData("targetToolId")
-            : wizardModel?.getData("sourceToolId");
-        await customSettingMigrationTaskWizardActions.triggerCustomSettingsPull(
+        const sfdcToolId = wizardModel?.getData("sourceToolId");
+        await dataSeedingTaskWizardActions.triggerCustomSettingsPull(
           getAccessToken,
           cancelTokenSource,
           wizardModel?.getData("taskId"),
@@ -69,7 +65,7 @@ function CustomSettingTaskWizardCreateNewRecordButton({
           newRecord._id,
         );
         setCurrentScreen(
-          CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN,
+          DATA_SEEDING_WIZARD_SCREENS.CONFIGURATION_SCREEN,
         );
       }
     } catch (error) {

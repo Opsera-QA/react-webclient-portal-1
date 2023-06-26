@@ -9,12 +9,7 @@ import IconBase from "../../../../../../../common/icons/IconBase";
 import { faArrowLeft, faArrowRight } from "@fortawesome/pro-light-svg-icons";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
-import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
-import {
-  getMigrationTypeLabel,
-  MIGRATION_TYPES,
-} from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
-import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
+import dataSeedingTaskWizardActions from "../../dataSeedingTaskWizard.actions";
 import { parseError } from "../../../../../../../common/helpers/error-helpers";
 import useAxiosCancelToken from "../../../../../../../../hooks/useAxiosCancelToken";
 import axios from "axios";
@@ -23,6 +18,7 @@ import SelectInputBase from "../../../../../../../common/inputs/select/SelectInp
 import Model from "../../../../../../../../core/data_model/model";
 import { customSettingMappingMetadata } from "./customSettingMapping.metadata";
 import { hasStringValue } from "../../../../../../../common/helpers/string-helpers";
+import { DATA_SEEDING_WIZARD_SCREENS } from "../../dataSeedingTaskWizard.constants";
 
 const CustomSettingCsvFieldMappingScreen = ({
   wizardModel,
@@ -118,7 +114,7 @@ const CustomSettingCsvFieldMappingScreen = ({
   const getFieldPropertiesList = async (cancelSource = cancelTokenSource) => {
     setIsLoading(true);
     const response =
-      await customSettingMigrationTaskWizardActions.pullFieldList(
+      await dataSeedingTaskWizardActions.pullFieldList(
         getAccessToken,
         cancelSource,
         wizardModel,
@@ -166,9 +162,9 @@ const CustomSettingCsvFieldMappingScreen = ({
   };
 
   const handleBackButton = () => {
-    // setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.UPLOAD_SCREEN);
+    // setCurrentScreen(DATA_SEEDING_WIZARD_SCREENS.UPLOAD_SCREEN);
     setCurrentScreen(
-      CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN,
+      DATA_SEEDING_WIZARD_SCREENS.CONFIGURATION_SCREEN,
     );
   };
 
@@ -210,26 +206,26 @@ const CustomSettingCsvFieldMappingScreen = ({
       newDataObject.setData("filterQuery", query);
       setWizardModel({ ...newDataObject });
 
-      await customSettingMigrationTaskWizardActions.updateSelectedFields(
+      await dataSeedingTaskWizardActions.updateSelectedFields(
         getAccessToken,
         null,
         wizardModel,
         finalSelectedFields,
       );
-      await customSettingMigrationTaskWizardActions.setFieldMappings(
+      await dataSeedingTaskWizardActions.setFieldMappings(
         getAccessToken,
         null,
         wizardModel,
       );
       const response =
-        await customSettingMigrationTaskWizardActions.validateQuery(
+        await dataSeedingTaskWizardActions.validateQuery(
           getAccessToken,
           null,
           wizardModel,
           query,
         );
       if (response?.status === 200) {
-        await customSettingMigrationTaskWizardActions.setFilterQuery(
+        await dataSeedingTaskWizardActions.setFilterQuery(
           getAccessToken,
           null,
           wizardModel,
@@ -237,7 +233,7 @@ const CustomSettingCsvFieldMappingScreen = ({
           [],
         );
         setCurrentScreen(
-          CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN,
+          DATA_SEEDING_WIZARD_SCREENS.CONFIRMATION_SCREEN,
         );
       }
     } catch (error) {
@@ -407,9 +403,7 @@ const CustomSettingCsvFieldMappingScreen = ({
       <div className={"my-3"}>
         <Row className="mx-1">
           <H5FieldSubHeader
-            subheaderText={`${getMigrationTypeLabel(
-              wizardModel?.getData("taskType"),
-            )} : Custom Setting Field Mapping Screen`}
+            subheaderText={`Data Seeding Task : Custom Setting Field Mapping Screen`}
           />
         </Row>
         {getBody()}

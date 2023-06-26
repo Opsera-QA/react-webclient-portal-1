@@ -9,13 +9,8 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import { Button, Col, Row } from "react-bootstrap";
 import IconBase from "../../../../../../../common/icons/IconBase";
 import { faArrowLeft, faCheck } from "@fortawesome/pro-solid-svg-icons";
-import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
 import DetailPanelContainer from "../../../../../../../common/panels/detail_panel_container/DetailPanelContainer";
-import {
-  getMigrationTypeLabel,
-  MIGRATION_TYPES,
-} from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
-import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
+import dataSeedingTaskWizardActions from "../../dataSeedingTaskWizard.actions";
 import { parseError } from "../../../../../../../common/helpers/error-helpers";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
@@ -25,6 +20,7 @@ import ToolNameField from "../../../../../../../common/fields/inventory/ToolName
 import axios from "axios";
 import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
 import WarningMessageFieldBase from "components/common/fields/text/message/WarningMessageFieldBase";
+import { DATA_SEEDING_WIZARD_SCREENS } from "../../dataSeedingTaskWizard.constants";
 
 const CustomSettingTaskConfirmationScreen = ({
   wizardModel,
@@ -66,24 +62,21 @@ const CustomSettingTaskConfirmationScreen = ({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      if (taskType !== MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
-        const recordCountResponse =
-          await customSettingMigrationTaskWizardActions.getRecordCount(
-            getAccessToken,
-            cancelSource,
-            wizardModel,
-          );
-        setRecordCount(recordCountResponse?.data?.message?.totalSize);
-      }
-      if (taskType !== MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV) {
-        const storageResponse =
-          await customSettingMigrationTaskWizardActions.getStorageDetails(
-            getAccessToken,
-            cancelSource,
-            wizardModel,
-          );
-        setStorageDetails(storageResponse?.data?.message?.DataStorageMB);
-      }
+      const recordCountResponse =
+        await dataSeedingTaskWizardActions.getRecordCount(
+          getAccessToken,
+          cancelSource,
+          wizardModel,
+        );
+      setRecordCount(recordCountResponse?.data?.message?.totalSize);
+
+      const storageResponse =
+        await dataSeedingTaskWizardActions.getStorageDetails(
+          getAccessToken,
+          cancelSource,
+          wizardModel,
+        );
+      setStorageDetails(storageResponse?.data?.message?.DataStorageMB);
     } catch (e) {
       if (isMounted?.current === true) {
         toastContext.showInlineErrorMessage(e);
@@ -96,19 +89,13 @@ const CustomSettingTaskConfirmationScreen = ({
   };
 
   const handleBackButton = () => {
-    if (taskType === MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
-      setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.MAPPING_SCREEN);
-      return;
-    }
-    setCurrentScreen(
-      CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.QUERY_BUILDER_SCREEN,
-    );
+    setCurrentScreen(DATA_SEEDING_WIZARD_SCREENS.QUERY_BUILDER_SCREEN);
   };
 
   const triggerTask = async () => {
     try {
       setIsStartig(true);
-      await customSettingMigrationTaskWizardActions.runCustomSettingMigrationTask(
+      await dataSeedingTaskWizardActions.runCustomSettingMigrationTask(
         getAccessToken,
         cancelTokenSource,
         wizardModel,
@@ -127,28 +114,24 @@ const CustomSettingTaskConfirmationScreen = ({
   };
 
   const getCountOfRecords = () => {
-    if (taskType !== MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
-      return (
-        <Col xs={6}>
-          <span className={"mb-0 mr-2 text-muted no-wrap-inline"}>
-            Records (count):
-          </span>{" "}
-          {recordCount}{" "}
-        </Col>
-      );
-    }
+    return (
+      <Col xs={6}>
+        <span className={"mb-0 mr-2 text-muted no-wrap-inline"}>
+          Records (count):
+        </span>{" "}
+        {recordCount}{" "}
+      </Col>
+    );
   };
   const getAvailableStorage = () => {
-    if (taskType !== MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV) {
-      return (
-        <Col xs={6}>
-          <span className={"mb-0 mr-2 text-muted no-wrap-inline"}>
-            Available Storage in Target Org:
-          </span>{" "}
-          {storageDetails?.Remaining} of {storageDetails?.Max} (in MB){" "}
-        </Col>
-      );
-    }
+    return (
+      <Col xs={6}>
+        <span className={"mb-0 mr-2 text-muted no-wrap-inline"}>
+          Available Storage in Target Org:
+        </span>{" "}
+        {storageDetails?.Remaining} of {storageDetails?.Max} (in MB){" "}
+      </Col>
+    );
   };
 
   const getBody = () => {
@@ -170,26 +153,21 @@ const CustomSettingTaskConfirmationScreen = ({
                 fieldName={"taskType"}
               />
             </Col>
-            {wizardModel?.getData("taskType") !== MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG ?
-              <Col xs={6}>
-                <ToolNameField
-                  model={wizardModel}
-                  fieldName={"sourceToolId"}
-                  loadToolInNewWindow={true}
-                  visible={wizardModel?.getData("taskType") !== MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG}
-                />
-              </Col> : null
-            }
-            {wizardModel?.getData("taskType") !== MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV ?
-              <Col xs={6}>
-                <ToolNameField
-                  model={wizardModel}
-                  fieldName={"targetToolId"}
-                  loadToolInNewWindow={true}
-                  visible={wizardModel?.getData("taskType") !== MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV}
-                />
-              </Col> : null
-            }
+
+            <Col xs={6}>
+              <ToolNameField
+                model={wizardModel}
+                fieldName={"sourceToolId"}
+                loadToolInNewWindow={true}
+              />
+            </Col>
+            <Col xs={6}>
+              <ToolNameField
+                model={wizardModel}
+                fieldName={"targetToolId"}
+                loadToolInNewWindow={true}
+              />
+            </Col>
             <Col xs={12}>
               <span className={"mb-0 mr-2 text-muted no-wrap-inline"}>
                 Query:
@@ -203,18 +181,22 @@ const CustomSettingTaskConfirmationScreen = ({
             {getCountOfRecords()}
             {getAvailableStorage()}
           </Row>
-          {wizardModel?.getData("taskType") === MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV ?
-            <MessageFieldBase
-              className={"mt-3"}
-              message={"Upon completion of the task execution, a file will be generated and made available for download in the task activity report section."}
-            /> : null
-          }
-          {taskType !== MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG && recordCount < 1 ?
+
+          <MessageFieldBase
+            className={"mt-3"}
+            message={
+              "Upon completion of the task execution, a file will be generated and made available for download in the task activity report section."
+            }
+          />
+
+          {recordCount < 1 ? (
             <WarningMessageFieldBase
               className={"mt-3"}
-              message={"Our system has not identified any records according to the parameters specified in your query. Please review and update your query criteria and try again."}
-            /> : null
-          }
+              message={
+                "Our system has not identified any records according to the parameters specified in your query. Please review and update your query criteria and try again."
+              }
+            />
+          ) : null}
         </div>
         <SaveButtonContainer>
           <Button
@@ -236,7 +218,7 @@ const CustomSettingTaskConfirmationScreen = ({
             variant="success"
             size="sm"
             onClick={triggerTask}
-            disabled={isStarting || (taskType !== MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG && recordCount < 1)}
+            disabled={isStarting || recordCount < 1}
             className="mr-2"
           >
             <IconBase
@@ -260,9 +242,7 @@ const CustomSettingTaskConfirmationScreen = ({
     <DetailPanelContainer>
       <Row className="mx-2">
         <H5FieldSubHeader
-          subheaderText={`${getMigrationTypeLabel(
-            taskType,
-          )} : Confirmation Screen`}
+          subheaderText={`Data Seeding Task : Confirmation Screen`}
         />
       </Row>
       <div className={"my-3"}>{getBody()}</div>

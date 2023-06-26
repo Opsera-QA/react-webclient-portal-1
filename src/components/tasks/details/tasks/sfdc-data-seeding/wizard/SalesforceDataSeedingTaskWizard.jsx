@@ -9,20 +9,18 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { TASK_TYPES } from "components/tasks/task.types";
-import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "./customSettingMigrationTaskWizard.constants";
-import CustomSettingTaskWizardInitializationScreen
-  from "./screens/initialization_screen/CustomSettingTaskWizardInitializationScreen";
-import { customSettingMigrationTaskWizardMetadata } from "./customSettingMigrationWizard.metadata";
+import DataSeedingTaskWizardInitializationScreen
+  from "./screens/initialization_screen/DataSeedingTaskWizardInitializationScreen";
 import CustomSettingTaskWizardConfigScreen
   from "./screens/custom_setting_selection_screen/CustomSettingTaskWizardConfigScreen";
 import CustomSettingQueryBuilderScreen from "./screens/query_builder_screen/CustomSettingQueryBuilderScreen";
 import CustomSettingTaskConfirmationScreen from "./screens/confirmation_screen/CustomSettingTaskConfirmationScreen";
-import CustomSettingUploadScreen from "./screens/upload_screens/CustomSettingUploadScreen";
-import CustomSettingCsvFieldMappingScreen from "./screens/mapping_screen/CustomSettingCsvFieldMappingScreen";
+import { DATA_SEEDING_WIZARD_SCREENS } from "./dataSeedingTaskWizard.constants";
+import { dataSeedingTaskWizardMetadata } from "./dataSeedingWizard.metadata";
 
-const SalesforceCustomSettingMigrationTaskWizard = ({ handleClose, taskModel }) => {
+const SalesforceDataSeedingTaskWizard = ({ handleClose, taskModel }) => {
   const toastContext = useContext(DialogToastContext);
-  const [currentScreen, setCurrentScreen] = useState(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN);
+  const [currentScreen, setCurrentScreen] = useState(DATA_SEEDING_WIZARD_SCREENS.INITIALIZATION_SCREEN);
   const [wizardModel, setWizardModel] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -49,16 +47,13 @@ const SalesforceCustomSettingMigrationTaskWizard = ({ handleClose, taskModel }) 
   }, [taskModel]);
 
   const initializeWizardRecord = () => {
-    const newWizardModel = modelHelpers.parseObjectIntoModel({}, customSettingMigrationTaskWizardMetadata);
+    const newWizardModel = modelHelpers.parseObjectIntoModel({}, dataSeedingTaskWizardMetadata);
     newWizardModel.setDefaultValue("errorMessage");
-    newWizardModel.setData("type", TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION);
+    newWizardModel.setData("type", TASK_TYPES.SALESFORCE_DATA_SEEDING);
     newWizardModel.setData("taskId", taskModel?.getMongoDbId());
 
     const configuration = taskModel?.getData("configuration");
     const sfdc = configuration?.sfdc;
-    const taskType = configuration?.taskType;
-
-    newWizardModel.setData("taskType", taskType);
     if (dataParsingHelper.parseObject(sfdc)) {
       newWizardModel?.setData("sourceToolId", sfdc?.sourceToolId);
       newWizardModel?.setData("targetToolId", sfdc?.targetToolId);
@@ -77,17 +72,16 @@ const SalesforceCustomSettingMigrationTaskWizard = ({ handleClose, taskModel }) 
 
   const getBody = () => {
     switch (currentScreen) {
-      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+      case DATA_SEEDING_WIZARD_SCREENS.INITIALIZATION_SCREEN:
         return (
-          <CustomSettingTaskWizardInitializationScreen
+          <DataSeedingTaskWizardInitializationScreen
             wizardModel={wizardModel}
             setWizardModel={setWizardModel}
             setCurrentScreen={setCurrentScreen}
             handleClose={handleClose}
-            taskType={wizardModel?.getData("taskType")}
           />
         );
-      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN:
+      case DATA_SEEDING_WIZARD_SCREENS.CONFIGURATION_SCREEN:
         return (
           <CustomSettingTaskWizardConfigScreen
             wizardModel={wizardModel}
@@ -97,27 +91,7 @@ const SalesforceCustomSettingMigrationTaskWizard = ({ handleClose, taskModel }) 
             taskType={wizardModel?.getData("taskType")}
           />
         );
-      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.UPLOAD_SCREEN:
-        return (
-          <CustomSettingUploadScreen
-            wizardModel={wizardModel}
-            setWizardModel={setWizardModel}
-            setCurrentScreen={setCurrentScreen}
-            handleClose={handleClose}
-            taskType={wizardModel?.getData("taskType")}
-          />
-        );
-      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.MAPPING_SCREEN:
-        return (
-          <CustomSettingCsvFieldMappingScreen
-            wizardModel={wizardModel}
-            setWizardModel={setWizardModel}
-            setCurrentScreen={setCurrentScreen}
-            handleClose={handleClose}
-            taskType={wizardModel?.getData("taskType")}
-          />
-        );
-      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.QUERY_BUILDER_SCREEN:
+      case DATA_SEEDING_WIZARD_SCREENS.QUERY_BUILDER_SCREEN:
         return (
           <CustomSettingQueryBuilderScreen
             wizardModel={wizardModel}
@@ -127,7 +101,7 @@ const SalesforceCustomSettingMigrationTaskWizard = ({ handleClose, taskModel }) 
             taskType={wizardModel?.getData("taskType")}
           />
         );
-      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN:
+      case DATA_SEEDING_WIZARD_SCREENS.CONFIRMATION_SCREEN:
         return (
           <CustomSettingTaskConfirmationScreen
             wizardModel={wizardModel}
@@ -142,12 +116,12 @@ const SalesforceCustomSettingMigrationTaskWizard = ({ handleClose, taskModel }) 
 
   const getHelpComponentFunction = (setHelpIsShown) => {
     switch (currentScreen) {
-      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+      case DATA_SEEDING_WIZARD_SCREENS.INITIALIZATION_SCREEN:
         return null;
-      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN:
+      case DATA_SEEDING_WIZARD_SCREENS.CONFIGURATION_SCREEN:
         return null;
-      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.MAPPING_SCREEN:
-      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.QUERY_BUILDER_SCREEN:
+      case DATA_SEEDING_WIZARD_SCREENS.MAPPING_SCREEN:
+      case DATA_SEEDING_WIZARD_SCREENS.QUERY_BUILDER_SCREEN:
       default:
         return null;
     }
@@ -156,7 +130,7 @@ const SalesforceCustomSettingMigrationTaskWizard = ({ handleClose, taskModel }) 
   if (wizardModel == null) {
     return (
       <LoadingDialog
-        message={"Initializing Custom Setting Migration Wizard"}
+        message={"Initializing Data Seeding Task Wizard"}
         size={"sm"}
       />
     );
@@ -174,9 +148,9 @@ const SalesforceCustomSettingMigrationTaskWizard = ({ handleClose, taskModel }) 
   );
 };
 
-SalesforceCustomSettingMigrationTaskWizard.propTypes = {
+SalesforceDataSeedingTaskWizard.propTypes = {
   handleClose: PropTypes.func,
   taskModel: PropTypes.object,
 };
 
-export default SalesforceCustomSettingMigrationTaskWizard;
+export default SalesforceDataSeedingTaskWizard;

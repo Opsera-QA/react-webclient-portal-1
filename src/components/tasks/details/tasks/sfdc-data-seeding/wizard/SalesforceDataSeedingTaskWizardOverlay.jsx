@@ -2,20 +2,20 @@ import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import SalesforceCustomSettingMigrationTaskWizard from "./SalesforceCustomSettingMigrationTaskWizard";
+import SalesforceDataSeedingTaskWizard from "./SalesforceDataSeedingTaskWizard";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 
-export const SALESFORCE_CUSTOM_SETTING_MIGRATION_TASK_WIZARD_SCREENS = {
+export const SALESFORCE_DATA_SEEDING_TASK_WIZARD_SCREENS = {
   PRE_RUN_TASK_SCREEN: "pre_run_task_screen",
   TASK_WIZARD: "task_wizard",
 };
 
-function SalesforceCustomSettingMigrationTaskWizardOverlay({ taskModel }) {
+function SalesforceDataSeedingTaskWizardOverlay({ taskModel }) {
   // const [currentScreen, setCurrentScreen] = useState(
   //   taskModel.canUpdate() ? SALESFORCE_CUSTOM_SETTING_MIGRATION_TASK_WIZARD_SCREENS.PRE_RUN_TASK_SCREEN : SALESFORCE_CUSTOM_SETTING_MIGRATION_TASK_WIZARD_SCREENS.TASK_WIZARD
   // );
   const [currentScreen, setCurrentScreen] = useState(
-    SALESFORCE_CUSTOM_SETTING_MIGRATION_TASK_WIZARD_SCREENS.TASK_WIZARD,
+    SALESFORCE_DATA_SEEDING_TASK_WIZARD_SCREENS.TASK_WIZARD,
   );
   const [internalTaskModel, setInternalTaskModel] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
@@ -28,7 +28,7 @@ function SalesforceCustomSettingMigrationTaskWizardOverlay({ taskModel }) {
 
   const getBody = () => {
     return (
-      <SalesforceCustomSettingMigrationTaskWizard
+      <SalesforceDataSeedingTaskWizard
         taskModel={internalTaskModel}
         handleClose={closePanel}
       />
@@ -53,8 +53,8 @@ function SalesforceCustomSettingMigrationTaskWizardOverlay({ taskModel }) {
   );
 }
 
-SalesforceCustomSettingMigrationTaskWizardOverlay.propTypes = {
+SalesforceDataSeedingTaskWizardOverlay.propTypes = {
   taskModel: PropTypes.object,
 };
 
-export default SalesforceCustomSettingMigrationTaskWizardOverlay;
+export default SalesforceDataSeedingTaskWizardOverlay;

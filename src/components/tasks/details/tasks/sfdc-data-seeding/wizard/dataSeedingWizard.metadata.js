@@ -1,6 +1,6 @@
-export const customSettingMigrationTaskWizardMetadata = {
+export const dataSeedingTaskWizardMetadata = {
   idProperty: "_id",
-  type: "Custom Setting Migration Task Wizard Metadata",
+  type: "Data Seeding Task Wizard Metadata",
   activeField: "active",
   fields: [
     {

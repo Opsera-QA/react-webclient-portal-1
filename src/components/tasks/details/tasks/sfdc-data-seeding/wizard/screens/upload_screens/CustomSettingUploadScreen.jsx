@@ -9,15 +9,11 @@ import IconBase from "../../../../../../../common/icons/IconBase";
 import { faArrowLeft, faArrowRight } from "@fortawesome/pro-light-svg-icons";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
-import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
-import {
-  getMigrationTypeLabel,
-  MIGRATION_TYPES,
-} from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 import CustomSettingFileUploadComponent from "./CustomSettingFileUploadComponent";
-import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
+import dataSeedingTaskWizardActions from "../../dataSeedingTaskWizard.actions";
 import { parseError } from "../../../../../../../common/helpers/error-helpers";
 import useAxiosCancelToken from "../../../../../../../../hooks/useAxiosCancelToken";
+import { DATA_SEEDING_WIZARD_SCREENS } from "../../dataSeedingTaskWizard.constants";
 
 const CustomSettingUploadScreen = ({
   wizardModel,
@@ -51,19 +47,19 @@ const CustomSettingUploadScreen = ({
       return;
     }
     setCurrentScreen(
-      CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN,
+      DATA_SEEDING_WIZARD_SCREENS.CONFIGURATION_SCREEN,
     );
   };
 
   const saveAndMoveToNextScreen = async () => {
     try {
       setIsSaving(true);
-      await customSettingMigrationTaskWizardActions.setCsvFieldsList(
+      await dataSeedingTaskWizardActions.setCsvFieldsList(
         getAccessToken,
         cancelTokenSource,
         wizardModel,
       );
-      setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.MAPPING_SCREEN);
+      setCurrentScreen(DATA_SEEDING_WIZARD_SCREENS.MAPPING_SCREEN);
     } catch (error) {
       if (isMounted?.current === true) {
         const parsedError = parseError(error);
@@ -89,9 +85,7 @@ const CustomSettingUploadScreen = ({
       <div>
         <Row className="mx-1">
           <H5FieldSubHeader
-            subheaderText={`${getMigrationTypeLabel(
-              wizardModel?.getData("taskType"),
-            )} : Custom Setting File Upload Screen`}
+            subheaderText={`Data Seeding Task : Custom Setting File Upload Screen`}
           />
         </Row>
         <CustomSettingFileUploadComponent

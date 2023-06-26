@@ -4,7 +4,7 @@ import axios from "axios";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import { parseError } from "components/common/helpers/error-helpers";
-import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
+import dataSeedingTaskWizardActions from "../../dataSeedingTaskWizard.actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { faArrowRight } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "../../../../../../../common/icons/IconBase";
@@ -12,14 +12,9 @@ import { Button, Col, Row } from "react-bootstrap";
 import SaveButtonContainer from "../../../../../../../common/buttons/saving/containers/SaveButtonContainer";
 import FieldPropertiesSelectorView from "./FieldPropertiesSelectorView";
 import EnableEditingIcon from "../../../../../../../common/icons/enable/EnableEditingIcon";
-import {
-  getMigrationTypeLabel,
-  MIGRATION_TYPES,
-} from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 import H5FieldSubHeader from "../../../../../../../common/fields/subheader/H5FieldSubHeader";
 import ToolNameField from "../../../../../../../common/fields/inventory/ToolNameField";
 import LoadingDialog from "components/common/status_notifications/loading";
-import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
 import CustomSettingUploadScreen from "../upload_screens/CustomSettingUploadScreen";
 
 const CustomSettingSelector = ({
@@ -113,7 +108,7 @@ const CustomSettingSelector = ({
   const getCustomSettingsList = async (cancelSource = cancelTokenSource) => {
     setIsLoading(true);
     const response =
-      await customSettingMigrationTaskWizardActions.pullCustomSettingsList(
+      await dataSeedingTaskWizardActions.pullCustomSettingsList(
         getAccessToken,
         cancelSource,
         wizardModel,
@@ -151,12 +146,12 @@ const CustomSettingSelector = ({
   const saveAndTriggerFieldsPull = async () => {
     try {
       setIsSaving(true);
-      await customSettingMigrationTaskWizardActions.setSelectedObjectList(
+      await dataSeedingTaskWizardActions.setSelectedObjectList(
         getAccessToken,
         cancelTokenSource,
         wizardModel,
       );
-      await customSettingMigrationTaskWizardActions.triggerFieldPropertiesPull(
+      await dataSeedingTaskWizardActions.triggerFieldPropertiesPull(
         getAccessToken,
         cancelTokenSource,
         wizardModel?.getData("taskId"),
@@ -165,7 +160,7 @@ const CustomSettingSelector = ({
         wizardModel?.getData("selectedCustomSetting")?.componentName,
       );
       // if (taskType === MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
-      //   setCurrentScreen(CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.UPLOAD_SCREEN);
+      //   setCurrentScreen(DATA_SEEDING_WIZARD_SCREENS.UPLOAD_SCREEN);
       //   return;
       // }
     } catch (error) {
@@ -186,38 +181,20 @@ const CustomSettingSelector = ({
       return (
         <div className={`p-3 message-field info-message-field`}>
           <div className={"px-3 d-flex"}>
-            {wizardModel?.getData("taskType") !==
-            MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG ? (
               <Col xs={6}>
                 <ToolNameField
                   model={wizardModel}
                   fieldName={"sourceToolId"}
                   loadToolInNewWindow={true}
-                  visible={
-                    wizardModel?.getData("taskType") !==
-                    MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG
-                  }
                 />
               </Col>
-            ) : null}
-            {wizardModel?.getData("taskType") ===
-              MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG ||
-            wizardModel?.getData("taskType") ===
-              MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG ? (
               <Col xs={6}>
                 <ToolNameField
                   model={wizardModel}
                   fieldName={"targetToolId"}
                   loadToolInNewWindow={true}
-                  visible={
-                    wizardModel?.getData("taskType") ===
-                      MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG ||
-                    wizardModel?.getData("taskType") ===
-                      MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG
-                  }
                 />
               </Col>
-            ) : null}
           </div>
         </div>
       );
@@ -292,18 +269,6 @@ const CustomSettingSelector = ({
 
   const getDynamicView = () => {
     if (!enableEdit) {
-      if(taskType === MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
-        return (
-          <CustomSettingUploadScreen
-            wizardModel={wizardModel}
-            setWizardModel={setWizardModel}
-            setCurrentScreen={setCurrentScreen}
-            setEnableEdit={setEnableEdit}
-            handleClose={handleClose}
-            taskType={wizardModel?.getData("taskType")}
-          />
-        );
-      }
       return (
         <FieldPropertiesSelectorView
           wizardModel={wizardModel}
@@ -320,9 +285,7 @@ const CustomSettingSelector = ({
     <div>
       <Row className="mx-1">
         <H5FieldSubHeader
-          subheaderText={`${getMigrationTypeLabel(
-            wizardModel?.getData("taskType"),
-          )} : Custom Setting Selection Screen`}
+          subheaderText={`Data Seeding Task : Custom Setting Selection Screen`}
         />
       </Row>
       {getSummaryView()}
