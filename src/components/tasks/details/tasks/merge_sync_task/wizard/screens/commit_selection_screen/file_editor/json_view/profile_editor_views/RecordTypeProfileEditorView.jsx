@@ -51,6 +51,7 @@ const RecordTypeProfileEditorView = ({
         <TextFieldBase
           dataObject={customMetaJsonMetadata}
           fieldName={"recordType"}
+          className="overflowWrapAnywhere"
         />
       </Col>
       <Col lg={6}>

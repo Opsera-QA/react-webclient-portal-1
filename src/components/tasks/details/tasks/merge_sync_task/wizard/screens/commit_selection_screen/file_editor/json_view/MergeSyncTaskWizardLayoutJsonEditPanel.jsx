@@ -19,6 +19,7 @@ import StandaloneSaveButton from "../../../../../../../../../common/buttons/savi
 import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
 import ToolNameFieldDisplayer from "../../../../../../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
 import MergeSyncTaskWizardProfileSubmitFileButton from "../MergeSyncTaskWizardProfileSubmitFileButton";
+import { getDiff } from "./utils";
 
 const MergeSyncTaskWizardLayoutJsonEditPanel = ({
   wizardModel,
@@ -203,24 +204,29 @@ const MergeSyncTaskWizardLayoutJsonEditPanel = ({
       modifiedContentJson?.layoutAssignments?.filter((obj) => {
         return obj?.layout?.toLowerCase().includes(searchText.toLowerCase());
       });
+    if (filteredData && filteredData.length && originalContentJson?.layoutAssignments) {
+      const { arr2 } = getDiff([...originalContentJson?.layoutAssignments], [...filteredData], 'layout');
+      filteredData = arr2;
+    }
     return (
       <Col>
-        <span className="h5">
+        {wizardModel?.getData("taskType") === "GIT_VS_GIT_SYNC" ? <span className="h5">
+          Source Git Branch ({wizardModel?.getData("sourceBranch")}
+          )</span> : <span className="h5">
           Source Salesforce Org (
           <ToolNameFieldDisplayer
             toolId={wizardModel?.getData("sfdcToolId")}
             loadToolInNewWindow={true}
           />
-          )
-        </span>
+          )</span>}
         {filteredData && filteredData.length > 0 ? (
           filteredData.map((layoutData, idx, { length }) => (
             <div key={idx}>
-              <LayoutProfileEditorView
+              {layoutData?.isDummy !== undefined ? <div style={{ height: '77.59px' }}></div> : (<LayoutProfileEditorView
                 layoutData={layoutData}
                 setLayoutDataJson={setLayoutDataJson}
                 isLoading={isLoading}
-              />
+              />)}
               {idx + 1 !== length && <DividerWithCenteredText />}
             </div>
           ))
@@ -240,6 +246,10 @@ const MergeSyncTaskWizardLayoutJsonEditPanel = ({
       originalContentJson?.layoutAssignments?.filter((obj) => {
         return obj?.layout?.toLowerCase().includes(searchText.toLowerCase());
       });
+    if (filteredData && filteredData.length > 0 && modifiedContentJson?.layoutAssignments) {
+      const { arr1 } = getDiff([...filteredData], [...modifiedContentJson?.layoutAssignments], 'layout');
+      filteredData = arr1;
+    }
     return (
       <Col>
         <span className="h5">
@@ -248,12 +258,12 @@ const MergeSyncTaskWizardLayoutJsonEditPanel = ({
         {filteredData && filteredData.length > 0 ? (
           filteredData.map((layoutData, idx, { length }) => (
             <div key={idx}>
-              <LayoutProfileEditorView
+              {layoutData?.isDummy !== undefined ? <div style={{ height: '77.59px' }}></div> : (<LayoutProfileEditorView
                 layoutData={layoutData}
                 setLayoutDataJson={setLayoutDataJson}
                 isLoading={isLoading}
                 disabled={true}
-              />
+              />)}
               {idx + 1 !== length && <DividerWithCenteredText />}
             </div>
           ))

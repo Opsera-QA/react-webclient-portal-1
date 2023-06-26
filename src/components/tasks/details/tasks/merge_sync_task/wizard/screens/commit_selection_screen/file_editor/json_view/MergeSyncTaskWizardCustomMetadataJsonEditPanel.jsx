@@ -19,6 +19,7 @@ import StandaloneSaveButton from "../../../../../../../../../common/buttons/savi
 import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
 import ToolNameFieldDisplayer from "../../../../../../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
 import MergeSyncTaskWizardProfileSubmitFileButton from "../MergeSyncTaskWizardProfileSubmitFileButton";
+import { getDiff } from "./utils";
 
 const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
   wizardModel,
@@ -207,24 +208,29 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
       modifiedContentJson?.customMetadataTypeAccesses?.filter((obj) => {
         return obj?.name?.toLowerCase().includes(searchText.toLowerCase());
       });
+    if (filteredData && filteredData.length && originalContentJson?.customMetadataTypeAccesses) {
+      const { arr2 } = getDiff([...originalContentJson?.customMetadataTypeAccesses], [...filteredData], 'name');
+      filteredData = arr2;
+    }
     return (
       <Col>
-        <span className="h5">
+        {wizardModel?.getData("taskType") === "GIT_VS_GIT_SYNC" ? <span className="h5">
+          Source Git Branch ({wizardModel?.getData("sourceBranch")}
+          )</span> : <span className="h5">
           Source Salesforce Org (
           <ToolNameFieldDisplayer
             toolId={wizardModel?.getData("sfdcToolId")}
             loadToolInNewWindow={true}
           />
-          )
-        </span>
+          )</span>}
         {filteredData && filteredData.length > 0 ? (
           filteredData.map((customMetaData, idx, { length }) => (
             <div key={idx}>
-              <CustomMetadataProfileEditorView
+              {customMetaData?.isDummy !== undefined ? <div style={{ height: '77.59px' }}></div> : (<CustomMetadataProfileEditorView
                 customMetadataData={customMetaData}
                 setCustomMetaJson={setCustomMetaJson}
                 isLoading={isLoading}
-              />
+              />)}
               {idx + 1 !== length && <DividerWithCenteredText />}
             </div>
           ))
@@ -244,6 +250,10 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
       originalContentJson?.customMetadataTypeAccesses?.filter((obj) => {
         return obj?.name?.toLowerCase().includes(searchText.toLowerCase());
       });
+    if (filteredData && filteredData.length > 0 && modifiedContentJson?.customMetadataTypeAccesses) {
+      const { arr1 } = getDiff([...filteredData], [...modifiedContentJson?.customMetadataTypeAccesses], 'name');
+      filteredData = arr1;
+    }
     return (
       <Col>
         <span className="h5">
@@ -252,12 +262,12 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
         {filteredData && filteredData.length > 0 ? (
           filteredData.map((customMetaData, idx, { length }) => (
             <div key={idx}>
-              <CustomMetadataProfileEditorView
+              {customMetaData?.isDummy !== undefined ? <div style={{ height: '77.59px' }}></div> : (<CustomMetadataProfileEditorView
                 customMetadataData={customMetaData}
                 setCustomMetaJson={setCustomMetaJson}
                 isLoading={isLoading}
                 disabled={true}
-              />
+              />)}
               {idx + 1 !== length && <DividerWithCenteredText />}
             </div>
           ))

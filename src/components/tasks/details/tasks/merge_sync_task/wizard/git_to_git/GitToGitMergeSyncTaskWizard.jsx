@@ -64,6 +64,8 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
     newWizardModel.setData("taskType", TASK_TYPES.GIT_TO_GIT_MERGE_SYNC);
     newWizardModel.setData("taskId", taskModel?.getMongoDbId());
     newWizardModel.setData("configuration", taskModel?.getData('configuration'));
+    newWizardModel.setData("targetBranch", taskModel?.getData("configuration.git.targetBranch"));
+    newWizardModel.setData("sourceBranch", taskModel?.getData("configuration.git.sourceBranch"));
 
     const configuration = taskModel?.getData("configuration");
     const git = configuration?.git;
