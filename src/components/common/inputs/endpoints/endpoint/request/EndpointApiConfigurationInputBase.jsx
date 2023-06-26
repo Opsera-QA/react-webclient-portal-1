@@ -6,10 +6,9 @@ import {
 import EndpointRequestParametersInputBase
   from "components/common/inputs/endpoints/endpoint/request/parameters/EndpointRequestParametersInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
-import {
-  endpointRequestParametersMetadata,
-} from "components/common/inputs/endpoints/endpoint/request/parameters/endpointRequestParameters.metadata";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import endpointRequestParametersMetadata
+  from "@opsera/definitions/constants/api/request/parameters/endpointRequestParameters.metadata";
 
 function EndpointApiConfigurationInputBase(
   {

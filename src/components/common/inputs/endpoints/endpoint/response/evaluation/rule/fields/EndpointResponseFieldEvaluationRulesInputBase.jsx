@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState} from "react";
+import React, { useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import EndpointResponseRuleFieldInputRow
@@ -9,6 +9,8 @@ import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySet
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
+import apiResponseEvaluationOptionConstants
+  from "@opsera/definitions/constants/api/response/apiResponseEvaluationOption.constants";
 
 function EndpointResponseFieldEvaluationRulesInputBase(
   {
@@ -63,11 +65,11 @@ function EndpointResponseFieldEvaluationRulesInputBase(
       newField.value = dataParsingHelper.parseObjectValue(field?.type, foundItem?.value);
       const filter = foundItem?.filter;
 
-      if (hasStringValue(filter) === true) {
+      if (apiResponseEvaluationOptionConstants.isApiResponseEvaluationOptionValid(filter) === true) {
         newField.filter = filter;
       }
       else {
-        newField.filter = "is_not_null";
+        newField.filter = apiResponseEvaluationOptionConstants.API_RESPONSE_EVALUATION_OPTIONS.IS_NOT_NULL;
         requiresUpdate = true;
       }
 

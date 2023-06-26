@@ -5,7 +5,7 @@ import {
   getTableDateTimeColumn,
   getTableTextColumn, getUppercaseTableTextColumn
 } from "components/common/table/table-column-helpers-v2";
-import PipelineTaskDetailViewer from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineTaskDetailViewer";
+import PipelineActivityLogDetailViewOverlay from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogDetailViewOverlay";
 import TableBase from "components/common/table/TableBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
@@ -93,7 +93,7 @@ function PipelineActivityLogTable(
     }
 
     toastContext.showOverlayPanel(
-      <PipelineTaskDetailViewer
+      <PipelineActivityLogDetailViewOverlay
         pipelineName={pipeline?.name}
         pipelineActivityLogId={row._id}
       />,
