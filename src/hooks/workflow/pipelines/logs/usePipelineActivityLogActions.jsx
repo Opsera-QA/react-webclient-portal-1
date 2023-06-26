@@ -16,6 +16,11 @@ export default function usePipelineActivityLogActions() {
     return await apiService.handleApiGetRequest(apiUrl, queryParameters);
   };
 
+  pipelineActivityLogActions.getPipelineActivityLogById = async (id) => {
+    const apiUrl = `/pipelines/activity/v2/${id}`;
+    return await apiService.handleApiGetRequest(apiUrl);
+  };
+
   pipelineActivityLogActions.getPipelineDurationMetrics = async (
     pipelineId,
   ) => {
