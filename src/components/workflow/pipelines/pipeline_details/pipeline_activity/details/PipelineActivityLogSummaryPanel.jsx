@@ -31,8 +31,7 @@ const PIPELINE_TASK_ACTIONS = {
   USER_ACTION: "user action",
 };
 
-// TODO: Rename PipelineActivityLogTaskSummaryPannel for clarity or something similar
-function PipelineTaskSummaryPanel(
+function PipelineActivityLogSummaryPanel(
   {
     pipelineTaskData,
     setActiveTab,
@@ -157,9 +156,9 @@ function PipelineTaskSummaryPanel(
 }
 
 
-PipelineTaskSummaryPanel.propTypes = {
+PipelineActivityLogSummaryPanel.propTypes = {
   pipelineTaskData: PropTypes.object,
   setActiveTab: PropTypes.func,
 };
 
-export default PipelineTaskSummaryPanel;
+export default PipelineActivityLogSummaryPanel;

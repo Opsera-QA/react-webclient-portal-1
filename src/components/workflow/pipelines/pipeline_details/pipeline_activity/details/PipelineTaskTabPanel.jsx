@@ -4,7 +4,7 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import JsonTab from "components/common/tabs/detail_view/JsonTab";
 import PipelineTaskJsonPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskJsonPanel";
-import PipelineTaskSummaryPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskSummaryPanel";
+import PipelineActivityLogSummaryPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineActivityLogSummaryPanel";
 import PipelineTaskConsoleLogPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskConsoleLogPanel";
 import ConsoleLogTab from "components/common/tabs/detail_view/ConsoleLogTab";
 import OverlayTabPanelContainer from "components/common/panels/general/OverlayTabPanelContainer";
@@ -86,7 +86,7 @@ function PipelineTaskTabPanel({ pipelineTaskData }) {
     switch (activeTab) {
       case "summary":
         return (
-          <PipelineTaskSummaryPanel
+          <PipelineActivityLogSummaryPanel
             pipelineTaskData={pipelineTaskData}
             setActiveTab={setActiveTab}
           />
