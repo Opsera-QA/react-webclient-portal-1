@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import apiFieldTypeConstants from "@opsera/definitions/constants/api/request/apiFieldType.constants";
 
-function ApiResponseBodyTypeSelectInput(
+export default function ApiResponseBodyTypeSelectInput(
   {
     model,
     setModel,
@@ -32,5 +32,3 @@ ApiResponseBodyTypeSelectInput.propTypes = {
   disabled: PropTypes.bool,
   setDataFunction: PropTypes.func,
 };
-
-export default ApiResponseBodyTypeSelectInput;
