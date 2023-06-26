@@ -1,13 +1,14 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import { Button } from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
 import {
+  faArrowLeft,
   faFileCode,
   faStepForward,
-  faSync,
+  faSync
 } from "@fortawesome/pro-light-svg-icons";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
@@ -22,6 +23,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import RadioButtonInputContainer from "../../../../common/inputs/radio/RadioButtonInputContainer";
 import DependencyAnalyserFileUploadScreen from "../file_upload_screen/DependencyAnalyserFileUploadScreen";
+import { useHistory } from "react-router-dom";
 
 const DependencyAnalyserInitializationScreen = ({
   pipelineWizardModel,
@@ -34,6 +36,12 @@ const DependencyAnalyserInitializationScreen = ({
 
   const { isMounted, cancelTokenSource, toastContext, getAccessToken } =
     useComponentStateReference();
+  const history = useHistory();
+
+  const backButtonClick = () => {
+    history.push(`/insights/salesforce`);
+    return;
+  };
 
   const createNewPipelineWizardRecord = async (
     newPipelineWizardModel = pipelineWizardModel,
@@ -111,6 +119,9 @@ const DependencyAnalyserInitializationScreen = ({
       <div>
         {getInputContainer()}
         <SaveButtonContainer>
+          <Button variant="secondary" size="sm" className="mr-2" onClick={() => backButtonClick()}>
+          <IconBase icon={faArrowLeft} className={"mr-1"}/>Back
+          </Button>
           <Button
             className={"mr-2"}
             size={"sm"}
@@ -184,6 +195,13 @@ const DependencyAnalyserInitializationScreen = ({
             setPipelineWizardModel={setPipelineWizardModel}
           /> : null
         }
+        <div>
+          <SaveButtonContainer>
+            <Button variant="secondary" size="sm" className="mr-2" onClick={() => backButtonClick()}>
+              <IconBase icon={faArrowLeft} className={"mr-1"}/>Back
+            </Button>
+          </SaveButtonContainer>
+        </div>
       </div>
     );
   };
