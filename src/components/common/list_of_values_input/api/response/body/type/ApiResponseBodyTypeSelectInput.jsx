@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-const SUPPORTED_RESPONSE_BODY_TYPES = [
+const SUPPORTED_FIELD_TYPES = [
   {
     text: "Array",
     value: "array",
@@ -10,6 +10,18 @@ const SUPPORTED_RESPONSE_BODY_TYPES = [
   {
     text: "Boolean",
     value: "boolean",
+  },
+  {
+    text: "Date",
+    value: "date",
+  },
+  {
+    text: "Integer",
+    value: "integer",
+  },
+  {
+    text: "Number",
+    value: "number",
   },
   {
     text: "Object",
@@ -31,7 +43,7 @@ function ApiResponseBodyTypeSelectInput(
   }) {
   return (
     <SelectInputBase
-      selectOptions={SUPPORTED_RESPONSE_BODY_TYPES}
+      selectOptions={SUPPORTED_FIELD_TYPES}
       dataObject={model}
       setDataObject={setModel}
       fieldName={fieldName}

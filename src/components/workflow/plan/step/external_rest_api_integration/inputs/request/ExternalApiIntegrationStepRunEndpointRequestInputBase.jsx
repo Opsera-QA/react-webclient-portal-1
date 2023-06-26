@@ -27,10 +27,10 @@ function ExternalApiIntegrationStepRunEndpointRequestInputBase(
     endpointId,
   );
 
-  useEffect(() => {}, []);
+  useEffect(() => {}, [fieldName]);
 
   return (
-    <div>
+    <div id={fieldName}>
       <InfoText errorMessage={error} />
       <EndpointApiConfigurationInputBase
         fieldName={fieldName}

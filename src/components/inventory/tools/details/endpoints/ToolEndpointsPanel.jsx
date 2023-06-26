@@ -11,7 +11,6 @@ function ToolEndpointsPanel({toolModel}) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR:
         return (
           <ExternalApiIntegratorEndpointsPanel
-            toolModel={toolModel}
             toolId={toolModel?.getData("_id")}
           />
         );

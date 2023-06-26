@@ -8,8 +8,20 @@ const SUPPORTED_FIELD_TYPES = [
     value: "array",
   },
   {
+    text: "Boolean",
+    value: "boolean",
+  },
+  {
     text: "Date",
     value: "date",
+  },
+  {
+    text: "Integer",
+    value: "integer",
+  },
+  {
+    text: "Number",
+    value: "number",
   },
   {
     text: "Object",

@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { hasDateValue } from "components/common/helpers/date/date.helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 // TODO: Clean up and figure out how we want to use this on React end
 export const dataParsingHelper = {};
@@ -92,11 +93,7 @@ dataParsingHelper.parseInteger = (integer, defaultValue) => {
 };
 
 dataParsingHelper.parseJson = (json) => {
-  try {
-    return JSON.parse(json);
-  } catch (error) {
-    return json;
-  }
+  return DataParsingHelper.parseJson(json, json);
 };
 
 // TODO: Wire up constants
@@ -110,6 +107,12 @@ dataParsingHelper.parseObjectValue = (type, value) => {
       return dataParsingHelper.parseDate(value, undefined);
     case "boolean":
       return dataParsingHelper.parseBoolean(value, false);
+    case "number":
+      return DataParsingHelper.parseNumber(value, undefined);
+    case "integer":
+      return DataParsingHelper.parseInteger(value, undefined);
+    case "object":
+      return DataParsingHelper.parseObject(value, {});
   }
 };
 

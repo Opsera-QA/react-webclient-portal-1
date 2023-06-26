@@ -29,7 +29,7 @@ function EndpointRequestParametersInputBase(
     runEndpointId,
     toolId,
   }) {
-  const [field] = useState(model?.getFieldById(fieldName));
+  const field = model?.getFieldById(fieldName);
   const [parameters, setParameters] = useState([]);
   const isMounted = useRef(false);
   const [activeTab, setActiveTab] = useState(undefined);
@@ -65,7 +65,10 @@ function EndpointRequestParametersInputBase(
         return;
       }
 
-      const value = dataParsingHelper.parseObjectValue(parameter?.type, currentData?.[fieldName]);
+      const value = dataParsingHelper.parseObjectValue(
+        parameter?.useRunApiResponseParameter === true ? "string" : parameter?.type,
+        currentData?.[fieldName],
+      );
 
       unpackedParameters.push({
         ...parameter,
@@ -89,7 +92,10 @@ function EndpointRequestParametersInputBase(
       const fieldName = parameter?.fieldName;
       const value = parameter?.value;
 
-      constructedParameterObject[fieldName] = dataParsingHelper.parseObjectValue(parameter?.type, value);
+      constructedParameterObject[fieldName] = dataParsingHelper.parseObjectValue(
+        parameter?.useRunApiResponseParameter === true ? "string" : parameter?.type,
+        value
+      );
     });
 
     newModel.setData(fieldName, constructedParameterObject);
@@ -149,6 +155,7 @@ function EndpointRequestParametersInputBase(
         endpointParameterInputHeight={endpointParameterInputHeight}
         toolId={toolId}
         runEndpointId={runEndpointId}
+        fieldName={fieldName}
       />
     );
   };
@@ -214,7 +221,7 @@ function EndpointRequestParametersInputBase(
   }
 
   return (
-    <div>
+    <div id={fieldName}>
       <Row>
         <Col xs={7} className={"pr-2"}>
           {getParameterInputContainer()}
