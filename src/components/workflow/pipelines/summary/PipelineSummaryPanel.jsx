@@ -33,14 +33,14 @@ function PipelineSummaryPanel(
   } = useComponentStateReference();
 
   useEffect(() => {
-    // if (pipeline) {
-    //   if (pipelineModel) {
-    //     pipelineModel?.replaceOriginalData(pipeline);
-    //     setPipelineModel({...pipelineModel});
-    //   } else {
-    //     setPipelineModel({...new PipelineModel(pipeline, false)});
-    //   }
-    // }
+    if (pipeline) {
+      if (pipelineModel) {
+        pipelineModel?.replaceOriginalData(pipeline);
+        setPipelineModel({...pipelineModel});
+      } else {
+        setPipelineModel({...new PipelineModel(pipeline, false)});
+      }
+    }
   }, [pipeline]);
 
   if (pipeline == null || typeof pipeline !== "object" || Object.keys(pipeline).length === 0) {
