@@ -67,7 +67,7 @@ function TasksSetupModeSelect(
         <H5FieldSubHeader
           className={"mb-3 mx-3"}
           subheaderText={
-            "Pick between the new Opsera Salesforce Tasks Creation Wizard or the SDLC Tasks Classic view to setup your tasks."
+            "Pick between the new Opsera Salesforce Task Creation Wizard or the SDLC Tasks Classic view to setup your tasks."
           }
         />
         <Row>
