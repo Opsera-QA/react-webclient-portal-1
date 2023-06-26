@@ -43,8 +43,8 @@ function PipelineTaskTabPanel({ pipelineTaskData }) {
 
     if (
       RUN_CONFIGURATION_SUMMARY_SUPPORTED_TOOL_IDENTIFIERS.includes(pipelineTaskData?.tool_identifier)
-      || RUN_CONFIGURATION_SUMMARY_SUPPORTED_TOOL_IDENTIFIERS.includes(apiResponseStepIdentifier,
-      )) {
+      || RUN_CONFIGURATION_SUMMARY_SUPPORTED_TOOL_IDENTIFIERS.includes(apiResponseStepIdentifier)
+    ) {
       return (
         <CustomTab
           handleTabClick={handleTabClick}
