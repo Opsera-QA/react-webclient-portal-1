@@ -84,24 +84,9 @@ export const itemArray = [
     version: "8",
   },
   {
-    name: "Java openJDK Version 9",
-    dependencyType: "java",
-    version: "9",
-  },
-  {
-    name: "Java openJDK Version 10",
-    dependencyType: "java",
-    version: "10",
-  },
-  {
     name: "Java openJDK Version 11",
     dependencyType: "java",
     version: "11",
-  },
-  {
-    name: "Java openJDK Version 12",
-    dependencyType: "java",
-    version: "12",
   },
   {
     name: "Java openJDK Version 13",
@@ -109,16 +94,10 @@ export const itemArray = [
     version: "13",
   },
   {
-    name: "Java openJDK Version 14",
+    name: "Java openJDK Version 17",
     dependencyType: "java",
-    version: "14",
+    version: "17",
   },
-  {
-    name: "Java openJDK Version 15",
-    dependencyType: "java",
-    version: "15",
-  },
-
   {
     name: "Gradle Version 1.0",
     dependencyType: "gradle",
