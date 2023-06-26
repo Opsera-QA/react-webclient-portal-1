@@ -52,6 +52,7 @@ const DependencyAnalyserViewScreen = ({
       sfdcComponentFilterMetadata,
       false,
     );
+    newSfdcFilterDto.setData("pageSize", 50);
     setSfdcFilterDto({ ...newSfdcFilterDto });
     loadData(newSfdcFilterDto, source).catch((error) => {
       if (isMounted?.current === true) {
