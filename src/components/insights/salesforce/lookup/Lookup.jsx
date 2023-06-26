@@ -13,7 +13,7 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 
-function Lookup() {
+function SalesforceComponentLookup() {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingSalesforceComponentNames, setIsLoadingSalesforceComponentNames] = useState(false);
   const [salesforceComponentNames, setSalesforceComponentNames] = useState([]);
@@ -193,4 +193,4 @@ function Lookup() {
   );
 }
 
-export default Lookup;
+export default SalesforceComponentLookup;
