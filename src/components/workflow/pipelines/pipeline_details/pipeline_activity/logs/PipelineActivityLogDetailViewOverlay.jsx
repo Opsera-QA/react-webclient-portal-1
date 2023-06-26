@@ -1,76 +1,56 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import PipelineTaskTabPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskTabPanel";
-import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import axios from "axios";
-import pipelineActivityLogsActions
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineActivityLogs.actions";
-import {AuthContext} from "contexts/AuthContext";
-import Model from "core/data_model/model";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import useGetPipelineActivityLogModelById from "hooks/workflow/pipelines/logs/useGetPipelineActivityLogModelById";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import ErrorMessageFieldBase from "components/common/fields/text/message/ErrorMessageFieldBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import {errorHelpers} from "components/common/helpers/error-helpers";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
-function PipelineActivityLogDetailViewOverlay({ pipelineActivityLogId, pipelineName }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [isLoading, setIsLoading] = useState(true);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [pipelineTaskData, setPipelineTaskData] = useState(undefined);
+export default function PipelineActivityLogDetailViewOverlay({ pipelineActivityLogId, pipelineName }) {
+  const {
+    toastContext,
+  } = useComponentStateReference();
+  const {
+    pipelineActivityLogModel,
+    isLoading,
+    error,
+  } = useGetPipelineActivityLogModelById(pipelineActivityLogId);
 
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    setPipelineTaskData(undefined);
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-      await getPipelineTaskData(cancelSource);
-    }
-    catch (error) {
-      if (isMounted?.current === true) {
-        console.error(error);
-        toastContext.showLoadingErrorDialog(error);
-      }
-    }
-    finally {
-      if (isMounted?.current === true ) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const getPipelineTaskData = async (cancelSource = cancelTokenSource) => {
-    const response = await pipelineActivityLogsActions.getPipelineActivityLogById(getAccessToken, cancelSource, pipelineActivityLogId);
-    const pipelineActivityLogData = response?.data?.data;
-
-    if (isMounted?.current === true && pipelineActivityLogData) {
-      setPipelineTaskData(new Model(pipelineActivityLogData, response?.data?.metadata, false));
-    }
-  };
+  useEffect(() => {}, []);
 
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
+  };
+
+  const getBody = () => {
+    if (isLoading === true) {
+      return (
+        <CenterLoadingIndicator
+
+        />
+      );
+    }
+
+    if (error) {
+      return (
+        <CenteredContentWrapper>
+          <ErrorMessageFieldBase
+            message={errorHelpers.parseApiErrorForInfoText("Pipeline Activity Log", error)}
+          />
+        </CenteredContentWrapper>
+      );
+    }
+
+    return (
+      <PipelineTaskTabPanel
+        pipelineTaskData={pipelineActivityLogModel?.getCurrentData()}
+      />
+    );
   };
 
   return (
@@ -81,7 +61,7 @@ function PipelineActivityLogDetailViewOverlay({ pipelineActivityLogId, pipelineN
       isLoading={isLoading}
     >
       <div className={"p-3"}>
-        <PipelineTaskTabPanel pipelineTaskData={pipelineTaskData?.data} />
+        {getBody()}
       </div>
     </FullScreenCenterOverlayContainer>
   );
@@ -91,5 +71,3 @@ PipelineActivityLogDetailViewOverlay.propTypes = {
   pipelineActivityLogId: PropTypes.string,
   pipelineName: PropTypes.string,
 };
-
-export default PipelineActivityLogDetailViewOverlay;
