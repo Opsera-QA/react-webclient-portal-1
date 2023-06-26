@@ -41,25 +41,26 @@ const CustomObjectProfileEditorView = ({
     switch (fieldName) {
       case "allowCreate":
         if (!newModel?.getData("allowRead")) {
-          newModel?.setDefaultValue("allowCreate");
-          break;
+          newModel?.setData("allowRead", true);
         }
         newModel?.setData(fieldName, newValue);
         break;
       case "allowDelete":
         if (
-          !newModel?.getData("allowRead") ||
           !newModel?.getData("allowEdit")
         ) {
-          newModel?.setDefaultValue("allowDelete");
-          break;
+          newModel?.setData("allowEdit", true);
+        }
+        if (
+          !newModel?.getData("allowRead")
+        ) {
+          newModel?.setData("allowRead", true);
         }
         newModel?.setData(fieldName, newValue);
         break;
       case "allowEdit":
         if (!newModel?.getData("allowRead")) {
-          newModel?.setDefaultValue("allowEdit");
-          break;
+          newModel?.setData("allowRead", true);
         }
         newModel?.setData(fieldName, newValue);
         break;
@@ -75,20 +76,30 @@ const CustomObjectProfileEditorView = ({
         break;
       case "modifyAllRecords":
         if (
-          !newModel?.getData("allowRead") ||
-          !newModel?.getData("allowEdit") ||
-          !newModel?.getData("allowDelete") ||
+          !newModel?.getData("allowEdit")
+        ) {
+          newModel?.setData("allowEdit", true);
+        }
+        if (
+          !newModel?.getData("allowRead")
+        ) {
+          newModel?.setData("allowRead", true);
+        }
+        if (
+          !newModel?.getData("allowDelete")
+        ) {
+          newModel?.setData("allowDelete", true);
+        }
+        if (
           !newModel?.getData("viewAllRecords")
         ) {
-          newModel?.setDefaultValue("modifyAllRecords");
-          break;
+          newModel?.setData("viewAllRecords", true);
         }
         newModel?.setData(fieldName, newValue);
         break;
       case "viewAllRecords":
         if (!newModel?.getData("allowRead")) {
-          newModel?.setDefaultValue("viewAllRecords");
-          break;
+          newModel?.setData("allowRead", true);
         }
         newModel?.setData(fieldName, newValue);
         break;
