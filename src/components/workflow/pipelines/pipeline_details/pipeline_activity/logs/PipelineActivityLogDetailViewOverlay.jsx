@@ -11,7 +11,7 @@ import {AuthContext} from "contexts/AuthContext";
 import Model from "core/data_model/model";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 
-function PipelineTaskDetailViewer({ pipelineActivityLogId, pipelineName }) {
+function PipelineActivityLogDetailViewOverlay({ pipelineActivityLogId, pipelineName }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -87,9 +87,9 @@ function PipelineTaskDetailViewer({ pipelineActivityLogId, pipelineName }) {
   );
 }
 
-PipelineTaskDetailViewer.propTypes = {
+PipelineActivityLogDetailViewOverlay.propTypes = {
   pipelineActivityLogId: PropTypes.string,
   pipelineName: PropTypes.string,
 };
 
-export default PipelineTaskDetailViewer;
+export default PipelineActivityLogDetailViewOverlay;
