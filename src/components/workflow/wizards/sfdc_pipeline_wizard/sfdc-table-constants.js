@@ -52,7 +52,7 @@ sfdcTableConstants.fields = [
     id: "refComponentType"
   },
   {
-    label: "Dependent Component Id",
+    label: "Dependent Component ID",
     id: "refComponentId"
   },
 ];
