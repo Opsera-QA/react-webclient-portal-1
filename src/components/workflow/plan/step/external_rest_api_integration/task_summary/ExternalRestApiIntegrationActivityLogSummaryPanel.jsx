@@ -10,7 +10,12 @@ import ExternalRestApiIntegrationEndpointSummary
 } from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointSummary";
 
 // TODO: Make fully fleshed out report.
-function ExternalRestApiIntegrationTaskSummaryPanel({ externalRestApiIntegrationStepTaskModel, endpoint, endpoints }) {
+function ExternalRestApiIntegrationActivityLogSummaryPanel(
+  {
+    externalRestApiIntegrationStepTaskModel,
+    endpoint,
+    endpoints,
+  }) {
   const getEndpointFields = () => {
     const parsedEndpoints = dataParsingHelper.parseObject(endpoints, false);
 
@@ -52,6 +57,21 @@ function ExternalRestApiIntegrationTaskSummaryPanel({ externalRestApiIntegration
     }
   };
 
+  const getBody = () => {
+    const action = externalRestApiIntegrationStepTaskModel?.getData("action");
+
+    // TODO: Write up constant instead of hardcoding string
+    if (action === "operation log") {
+      return (
+        <>
+          <div>Future operation log</div>
+        </>
+      );
+    }
+
+    return getEndpointFields();
+  };
+
   if (externalRestApiIntegrationStepTaskModel == null) {
     return null;
   }
@@ -59,17 +79,17 @@ function ExternalRestApiIntegrationTaskSummaryPanel({ externalRestApiIntegration
   return (
     <PipelineTaskSummaryPanelBase pipelineTaskData={externalRestApiIntegrationStepTaskModel}>
       <Col xs={12}>
-        {getEndpointFields()}
+        {getBody()}
       </Col>
     </PipelineTaskSummaryPanelBase>
   );
 }
 
-ExternalRestApiIntegrationTaskSummaryPanel.propTypes = {
+ExternalRestApiIntegrationActivityLogSummaryPanel.propTypes = {
   externalRestApiIntegrationStepTaskModel: PropTypes.object,
   endpoint: PropTypes.object,
   endpoints: PropTypes.object,
 };
 
 
-export default ExternalRestApiIntegrationTaskSummaryPanel;
+export default ExternalRestApiIntegrationActivityLogSummaryPanel;

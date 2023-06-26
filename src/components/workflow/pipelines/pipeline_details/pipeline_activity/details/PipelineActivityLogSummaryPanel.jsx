@@ -17,8 +17,8 @@ import childPipelineTaskMetadata
 import PipelineSummaryReportPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineSummaryReportPanel";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
-import ExternalRestApiIntegrationTaskSummaryPanel
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/ExternalRestApiIntegrationTaskSummaryPanel";
+import ExternalRestApiIntegrationActivityLogSummaryPanel
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/ExternalRestApiIntegrationActivityLogSummaryPanel";
 import axios from "axios";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import PipelineUserActionSummaryPanel
@@ -111,7 +111,7 @@ function PipelineActivityLogSummaryPanel(
 
     if (apiResponseStepIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION) {
       return (
-        <ExternalRestApiIntegrationTaskSummaryPanel
+        <ExternalRestApiIntegrationActivityLogSummaryPanel
           externalRestApiIntegrationStepTaskModel={wrapObject(pipelineTaskMetadata)}
           endpoint={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoint")}
           endpoints={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoints")}
@@ -126,7 +126,7 @@ function PipelineActivityLogSummaryPanel(
         return (<ChildPipelineTaskSummaryPanel pipelineTaskData={wrapObject(childPipelineTaskMetadata)} />);
       case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
         return (
-          <ExternalRestApiIntegrationTaskSummaryPanel
+          <ExternalRestApiIntegrationActivityLogSummaryPanel
             externalRestApiIntegrationStepTaskModel={wrapObject(pipelineTaskMetadata)}
             endpoint={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoint")}
             endpoints={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoints")}
