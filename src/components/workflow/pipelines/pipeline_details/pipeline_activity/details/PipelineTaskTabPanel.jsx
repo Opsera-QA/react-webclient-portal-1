@@ -39,7 +39,7 @@ function PipelineTaskTabPanel({ pipelineTaskData }) {
   };
 
   const getIdentifierSpecificTabs = () => {
-    const apiResponseStepIdentifier = pipelineTaskData?.api_response?.stepIdentifier;
+    const apiResponseStepIdentifier = DataParsingHelper.parseNestedString(pipelineTaskData, "api_response.stepIdentifier");
 
     if (
       RUN_CONFIGURATION_SUMMARY_SUPPORTED_TOOL_IDENTIFIERS.includes(pipelineTaskData?.tool_identifier)
