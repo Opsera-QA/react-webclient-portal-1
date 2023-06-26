@@ -31,9 +31,9 @@ const nodeDependencies = [
     version: "19.3",
   },
   {
-    name: "Node Version 20.2.0",
+    name: "Node Version 20.2",
     dependencyType: "nodejs",
-    version: "20.2.0",
+    version: "20.2",
   },
 ];
 
