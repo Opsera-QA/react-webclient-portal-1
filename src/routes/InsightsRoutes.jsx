@@ -40,7 +40,7 @@ export default function InsightsRoutes() {
       <SecureRoute path="/insights/reports/scans/aquasec/:pipelineId/:imageName/:severity" component={AquasecReport} />
       <SecureRoute path="/insights/reports/scans/gitscraper/:repository/:branch"
                    component={GitScraperScanReport} />
-        <SecureRoute path="/insights/reports/scans/aquasec/:pipelineId/:imageName/:severity" component={AquasecReport} />
+      <SecureRoute path="/insights/reports/scans/aquasec/:pipelineId/:imageName/:severity" component={AquasecReport} />
     </>
   );
 }
