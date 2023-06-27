@@ -178,7 +178,6 @@ function GithubCommitsStatistics({
   };
 
   const onRowSelect = () => {
-    if(highestMergesMetric.length > 0) {
       toastContext.showOverlayPanel(
           <GithubCommitsActionableInsightOverlay
               kpiConfiguration={kpiConfiguration}
@@ -188,7 +187,6 @@ function GithubCommitsStatistics({
               repositoriesWithCommits={repositoriesWithCommits}
           />,
       );
-    }
   };
 
   const showGithubApprovedPullRequestModal = (node) => {
