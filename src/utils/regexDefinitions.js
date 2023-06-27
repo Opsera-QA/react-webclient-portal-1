@@ -23,6 +23,11 @@ regexDefinitions.urlField = {
   errorFormText: "Letters, numbers, dashes, colons, forward slashes, underscores, tildes, and periods are allowed"
 };
 
+regexDefinitions.urlFieldWithoutQueryString = {
+  regex:/^((https?):\/\/)?(www.)?[a-z0-9-]+(\.[a-z]{2,}(-[a-z]{2,}){0,1}){1,3}(#?\/[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9_]+=[a-zA-Z0-9%]+&?)?$/,
+  errorFormText: "Letters, numbers, dashes, colons, forward slashes, underscores, tildes, and periods are allowed. Query Strings (?) are not allowed."
+};
+
 regexDefinitions.generalTextWithSpaces = {
   regex: /^[A-Za-z0-9'\-_.: ]*$/,
   formText: "Spaces, letters, numbers dashes, colons, underscores, and periods are allowed",
