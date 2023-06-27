@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
@@ -7,13 +7,17 @@ import Col from "react-bootstrap/Col";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
-import { faGear, faWandMagicSparkles } from "@fortawesome/pro-light-svg-icons";
+import {faGear, faWandMagicSparkles} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "../../../common/icons/IconBase";
 import OpseraInfinityLogo from "../../../logo/OpseraInfinityLogo";
-import OverlayWizardButtonContainerBase from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import OverlayWizardButtonContainerBase
+  from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import SelectionCardColumn from "../../../../temp-library-components/cards/SelectionCardColumn";
-import { platformImageConstants } from "../../../../temp-library-components/image/platformImage.constants";
-import { ImageBase } from "@opsera/react-vanity-set";
+import {platformImageConstants} from "../../../../temp-library-components/image/platformImage.constants";
+import {ImageBase} from "@opsera/react-vanity-set";
+import TaskCardBase from "../task_cards/TaskCardBase";
+import {TASK_TYPE_LABELS, TASK_TYPES} from "../../task.types";
+import {WORKFLOW_OPTION_TYPES} from "../task_cards/TaskTypeOptionCardBase";
 
 export const TOOL_CREATION_OPTIONS = {
   WIZARD: "wizard",
@@ -21,135 +25,118 @@ export const TOOL_CREATION_OPTIONS = {
 };
 
 export const TASKS_CREATION_OPTION_LABELS = {
-  WIZARD: "Salesforce Tasks Wizard",
-  ADVANCED: "SDLC Tasks Classic View",
+  WIZARD: "Salesforce Tasks",
+  ADVANCED: "SDLC Tasks",
 };
 
-function TasksSetupModeSelect({
-  className,
-  setupMode,
-  setSetupMode,
-  setCurrentScreen,
-  setButtonContainer,
-  REGISTRY_WIZARD_SCREENS,
+function TasksSetupModeSelect(
+  {
+    className,
+    selectedFlow,
+    setSelectedFlow,
+    setCurrentScreen,
+    setButtonContainer,
     backButtonFunction
-}) {
-  const { themeConstants } = useComponentStateReference();
+  }) {
+  const {themeConstants} = useComponentStateReference();
 
   useEffect(() => {
-    if (setButtonContainer && setCurrentScreen) {
-      setButtonContainer(<OverlayWizardButtonContainerBase backButtonFunction={backButtonFunction}/>);
+    if (setButtonContainer) {
+      setButtonContainer(
+        <OverlayWizardButtonContainerBase
+          backButtonFunction={backButtonFunction}
+        />
+      );
     }
   }, []);
 
-  const setDataFunction = (newValue) => {
-    setSetupMode(newValue);
-    if (newValue === TOOL_CREATION_OPTIONS.WIZARD) {
-      setSetupMode("wizard");
+
+  const handleFlowSelection = (newFlowOption) => {
+    setSelectedFlow(newFlowOption);
+    if (newFlowOption === TOOL_CREATION_OPTIONS.WIZARD) {
+      setSelectedFlow("wizard");
       setCurrentScreen("task_select");
     } else {
-      setSetupMode("advanced");
+      setSelectedFlow("advanced");
       setCurrentScreen("task_config");
     }
   };
 
   return (
-    <div
-      className={className}
-      style={{ position: "relative" }}
-    >
-      <CenteredContentWrapper minHeight={"20px"}>
+    <div className={"m-4"}>
         <H5FieldSubHeader
           className={"mb-3 mx-3"}
           subheaderText={
-            "Pick between the new Opsera Salesforce Task Creation Wizard or the SDLC Tasks Classic View view to setup your tasks."
+            "Pick between the new Opsera Salesforce Task Creation Wizard or the SDLC Tasks Classic view to setup your tasks."
           }
         />
-      </CenteredContentWrapper>
-      <div
-        className={className}
-        style={{ minHeight: "150px" }}
-      >
-        <Row
-          className={"py-3 px-2"}
-          noGutters={true}
-          style={{ alignItems: "center", justifyContent: "center" }}
-        >
-          <SelectionCardColumn>
-            <SelectionIconCardBase
-              selectedOption={setupMode}
-              tooltip={
-                "Use the Opsera Task Creation Wizard to set up your task."
-              }
+        <Row>
+          <Col md={6}>
+            <TaskCardBase
               option={TOOL_CREATION_OPTIONS.WIZARD}
-              onClickFunction={setDataFunction}
-              highlightedBorderColor={
-                themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE
+              handleFlowSelection={handleFlowSelection}
+              selectedFlow={selectedFlow}
+              icon={
+                <IconTitleBar
+                  icon={
+                    <ImageBase
+                      height={96}
+                      imageSource={
+                        platformImageConstants.PLATFORM_IMAGE_LINKS
+                          .WIZARD_GENERAL
+                      }
+                    />
+                  }
+                  title={TASKS_CREATION_OPTION_LABELS.WIZARD}
+                  titleClassName={"mx-auto"}
+                  subTitleClassName={"mx-auto"}
+                />
               }
-              titleBar={
-                <div className={"p-2"}>
-                  <IconTitleBar
-                    className={""}
-                    title={TASKS_CREATION_OPTION_LABELS.WIZARD}
-                    titleClassName={"mx-auto"}
-                    icon={
-                      <ImageBase
-                        height={"96px"}
-                        imageSource={
-                          platformImageConstants.PLATFORM_IMAGE_LINKS
-                            .WIZARD_GENERAL
-                        }
-                      />
-                    }
-                  />
-                </div>
+              description={
+                "New Salesforce task creation wizard"
               }
+              workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
             />
-          </SelectionCardColumn>
-          <SelectionCardColumn>
-            <SelectionIconCardBase
-              selectedOption={setupMode}
-              tooltip={
-                "Use the legacy advanced tasks creation workflow to create tasks with Opsera."
-              }
+          </Col>
+          <Col md={6}>
+            <TaskCardBase
               option={TOOL_CREATION_OPTIONS.ADVANCED}
-              onClickFunction={setDataFunction}
-              highlightedBorderColor={
-                themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE
+              handleFlowSelection={handleFlowSelection}
+              selectedFlow={selectedFlow}
+              icon={
+                <IconTitleBar
+                  className={""}
+                  icon={
+                    <ImageBase
+                      height={96}
+                      imageSource={
+                        platformImageConstants.PLATFORM_IMAGE_LINKS
+                          .ADVANCED_OPTION
+                      }
+                    />
+                  }
+                  title={TASKS_CREATION_OPTION_LABELS.ADVANCED}
+                  titleClassName={"mx-auto"}
+                  subTitleClassName={"mx-auto"}
+                />
               }
-              titleBar={
-                <div className={"p-2"}>
-                  <IconTitleBar
-                    className={""}
-                    title={TASKS_CREATION_OPTION_LABELS.ADVANCED}
-                    titleClassName={"mx-auto mt-auto"}
-                    icon={
-                      <ImageBase
-                        height={"96px"}
-                        imageSource={
-                          platformImageConstants.PLATFORM_IMAGE_LINKS
-                            .ADVANCED_OPTION
-                        }
-                      />
-                    }
-                  />
-                </div>
+              description={
+                "Classic view"
               }
+              workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
             />
-          </SelectionCardColumn>
+          </Col>
         </Row>
-      </div>
     </div>
   );
 }
 
 TasksSetupModeSelect.propTypes = {
   className: PropTypes.string,
-  setupMode: PropTypes.string,
-  setSetupMode: PropTypes.func,
+  selectedFlow: PropTypes.string,
+  setSelectedFlow: PropTypes.func,
   setCurrentScreen: PropTypes.func,
   setButtonContainer: PropTypes.func,
-  REGISTRY_WIZARD_SCREENS: PropTypes.object,
   backButtonFunction: PropTypes.func
 };
 
