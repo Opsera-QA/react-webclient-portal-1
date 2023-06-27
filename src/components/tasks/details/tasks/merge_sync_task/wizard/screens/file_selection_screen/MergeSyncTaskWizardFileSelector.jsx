@@ -16,8 +16,6 @@ import GitToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/git_to_git/GitToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable";
 import MergeSyncTaskWizardSubmitSelectedFilesButton
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/MergeSyncTaskWizardSubmitSelectedFilesButton";
-import MergeSyncTaskFileSelectionRulesInputContainer
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/rules/MergeSyncTaskFileSelectionRulesInputContainer";
 import { TASK_TYPES } from "components/tasks/task.types";
 import SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable";
@@ -165,6 +163,7 @@ const MergeSyncTaskWizardFileSelector = ({
             sourceCommitList={sourceCommitList}
             isLoading={isLoading}
             loadData={loadData}
+            wizardModel={wizardModel}
             ruleCount={wizardModel?.getArrayData("fileSelectionRules")?.length}
           />
         );
@@ -174,29 +173,17 @@ const MergeSyncTaskWizardFileSelector = ({
   return (
     <div>
       <div className={"mb-2"}>
-        {wizardModel.getData('taskType') === 'SFDC_GIT_COMPARE_SYNC'
-          ?
-            <div className={"my-4"}>
-              <MergeSyncTaskRulesInputContainerBase
-                wizardModel={wizardModel}
-                setWizardModel={setWizardModel}
-                fieldName={"fileSelectionRules"}
-                fetchAttribute={"sfdcCommitList"}
-                modifiedFiles={sourceCommitList}
-                isLoading={isLoading}
-                filePullCompleted={filePullCompleted}
-              />
-            </div>   
-        : 
-          <MergeSyncTaskFileSelectionRulesInputContainer
-              isLoading={isLoading}
-              filePullCompleted={filePullCompleted}
-              wizardModel={wizardModel}
-              setWizardModel={setWizardModel}
-              fieldName={"fileSelectionRules"}
-              fileList={sourceCommitList}
-            />
-        }
+        <div className={"my-4"}>
+          <MergeSyncTaskRulesInputContainerBase
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            fieldName={"fileSelectionRules"}
+            fetchAttribute={"sfdcCommitList"}
+            modifiedFiles={sourceCommitList}
+            isLoading={isLoading}
+            filePullCompleted={filePullCompleted}
+          />
+        </div>
       </div>
       {getCommitListTable()}
       <SaveButtonContainer>

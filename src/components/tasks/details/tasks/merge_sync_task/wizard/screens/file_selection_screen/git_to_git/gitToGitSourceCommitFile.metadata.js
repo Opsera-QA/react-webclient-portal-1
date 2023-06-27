@@ -21,6 +21,14 @@ export const gitToGitSourceCommitFileMetadata = {
       label: "Latest Commit ID",
       id: "commitID",
     },
+    {
+      label: "Component Type",
+      id: "componentType",
+    },
+    {
+      label: "Component Name",
+      id: "componentName",
+    },
   ],
   newObjectFields: {
     committedFile: "",
