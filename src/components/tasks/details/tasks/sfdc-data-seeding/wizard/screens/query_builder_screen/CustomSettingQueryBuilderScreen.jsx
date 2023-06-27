@@ -186,7 +186,7 @@ const CustomSettingQueryBuilderScreen = ({
       ?.map((ele) => ele.name)
       .join(", ")} FROM ${
       wizardModel?.getData("selectedCustomSetting")?.componentName
-    }${whereClause ? ` WHERE ${whereClause}` : ""}`;
+    }${whereClause ? ` WHERE ${whereClause} ` : ""} ${limit ? `LIMIT ${limit}` : ""}`;
     return query;
   };
 
@@ -395,27 +395,27 @@ const CustomSettingQueryBuilderScreen = ({
                 <div className="d-flex justify-content-between mt-2">
                   {`SOQL query generated based of filter selection made above.`}
                 </div>
-                {/*<Row>*/}
-                {/*  <Col sm={3} className={"custom-select-input my-2"}>*/}
-                {/*    <InputLabel*/}
-                {/*      model={wizardModel}*/}
-                {/*      field={wizardModel?.getFieldById("limit")}*/}
-                {/*      showLabel={true}*/}
-                {/*      className={"mt-1 mr-2"}*/}
-                {/*      disabled={isLoading}*/}
-                {/*      isLoading={isLoading}*/}
-                {/*    />*/}
-                {/*    <StandaloneSelectInput*/}
-                {/*      fieldName={"limit"}*/}
-                {/*      dataObject={wizardModel}*/}
-                {/*      setDataObject={setWizardModel}*/}
-                {/*      value={limit}*/}
-                {/*      setDataFunction={(selectedOption)=> { console.log(selectedOption); setLimit(selectedOption);}}*/}
-                {/*      selectOptions={limits}*/}
-                {/*      dropUp={true}*/}
-                {/*    />*/}
-                {/*  </Col>*/}
-                {/*</Row>*/}
+                <Row>
+                  <Col sm={3} className={"custom-select-input my-2"}>
+                    <InputLabel
+                      model={wizardModel}
+                      field={wizardModel?.getFieldById("limit")}
+                      showLabel={true}
+                      className={"mt-1 mr-2"}
+                      disabled={isLoading}
+                      isLoading={isLoading}
+                    />
+                    <StandaloneSelectInput
+                      fieldName={"limit"}
+                      dataObject={wizardModel}
+                      setDataObject={setWizardModel}
+                      value={limit}
+                      setDataFunction={(selectedOption)=> { setLimit(selectedOption);}}
+                      selectOptions={limits}
+                      dropUp={true}
+                    />
+                  </Col>
+                </Row>
               </div>
             </div>
           </div>

@@ -9,7 +9,7 @@ dataSeedingTaskWizardActions.createNewRecordV2 = async (
   taskId,
   runCount
 ) => {
-  const apiUrl = `/tasks/custom-setting-migration-task/wizard/create-record`;
+  const apiUrl = `/tasks/data-seeding/wizard/create-record`;
   const postBody = {
     taskId: taskId,
     runCount: runCount,
@@ -31,7 +31,7 @@ dataSeedingTaskWizardActions.triggerCustomSettingsPull = async (
   sfdcToolId,
   storageRecordId
 ) => {
-  const apiUrl = `/tasks/custom-setting-migration-task/wizard/trigger-list-custom-settings`;
+  const apiUrl = `/tasks/data-seeding/wizard/trigger-list-custom-settings`;
   const postBody = {
     taskId: taskId,
     runCount: runCount,
@@ -52,7 +52,7 @@ dataSeedingTaskWizardActions.pullCustomSettingsList = async (
   cancelTokenSource,
   wizardModel,
 ) => {
-  const apiUrl = `/tasks/custom-setting-migration-task/wizard/${wizardModel?.getData("recordId")}/pull-custom-settings-list`;
+  const apiUrl = `/tasks/data-seeding/wizard/${wizardModel?.getData("recordId")}/pull-custom-settings-list`;
 
   return await baseActions.apiGetCallV2(
     getAccessToken,
@@ -69,7 +69,7 @@ dataSeedingTaskWizardActions.triggerFieldPropertiesPull = async (
   wizardModel,
   selectedObjectName,
 ) => {
-  const apiUrl = `/tasks/custom-setting-migration-task/wizard/trigger-list-field-properties`;
+  const apiUrl = `/tasks/data-seeding/wizard/trigger-list-field-properties`;
   const postBody = {
     taskId: taskId,
     runCount: runCount,
@@ -91,7 +91,7 @@ dataSeedingTaskWizardActions.setSelectedObjectList = async (
   cancelTokenSource,
   wizardModel,
 ) => {
-  const apiUrl = `/tasks/custom-setting-migration-task/wizard/${wizardModel?.getData("recordId")}/selected-object-list`;
+  const apiUrl = `/tasks/data-seeding/wizard/${wizardModel?.getData("recordId")}/selected-object-list`;
   const postBody = {
     selectedObject: [wizardModel?.getData("selectedCustomSetting")],
   };
@@ -109,7 +109,7 @@ dataSeedingTaskWizardActions.pullFieldList = async (
   cancelTokenSource,
   wizardModel,
 ) => {
-  const apiUrl = `/tasks/custom-setting-migration-task/wizard/${wizardModel?.getData("recordId")}/pull-field-list`;
+  const apiUrl = `/tasks/data-seeding/wizard/${wizardModel?.getData("recordId")}/pull-field-list`;
 
   return await baseActions.apiGetCallV2(
     getAccessToken,
@@ -124,7 +124,7 @@ dataSeedingTaskWizardActions.updateSelectedFields = async (
   wizardModel,
   members,
 ) => {
-  const apiUrl = `/tasks/custom-setting-migration-task/wizard/${wizardModel?.getData("recordId")}/selected-field-list`;
+  const apiUrl = `/tasks/data-seeding/wizard/${wizardModel?.getData("recordId")}/selected-field-list`;
   const postBody = {
     selectedFieldList: members,
   };
@@ -144,7 +144,7 @@ dataSeedingTaskWizardActions.setFilterQuery = async (
   query,
   queryFilters,
 ) => {
-  const apiUrl = `/tasks/custom-setting-migration-task/wizard/${wizardModel?.getData("recordId")}/set-query-filter`;
+  const apiUrl = `/tasks/data-seeding/wizard/${wizardModel?.getData("recordId")}/set-query-filter`;
   const postBody = {
     query: query,
     queryFilters: queryFilters,
@@ -164,7 +164,7 @@ dataSeedingTaskWizardActions.validateQuery = async (
   wizardModel,
   query,
 ) => {
-  const apiUrl = `/tasks/custom-setting-migration-task/wizard/validate-query`;
+  const apiUrl = `/tasks/data-seeding/wizard/validate-query`;
   const postBody = {
     query: query,
     sfdcToolId: wizardModel?.getData("sourceToolId"),
@@ -183,7 +183,7 @@ dataSeedingTaskWizardActions.getRecordCount = async (
   cancelTokenSource,
   wizardModel,
 ) => {
-  const apiUrl = `/tasks/custom-setting-migration-task/wizard/records-count`;
+  const apiUrl = `/tasks/data-seeding/wizard/records-count`;
   const postBody = {
     pipelineStorageRecordId: wizardModel?.getData("recordId"),
     taskId: wizardModel?.getData("taskId"),
@@ -203,7 +203,7 @@ dataSeedingTaskWizardActions.getStorageDetails = async (
   cancelTokenSource,
   wizardModel,
 ) => {
-  const apiUrl = `/tasks/custom-setting-migration-task/wizard/org-size-limit`;
+  const apiUrl = `/tasks/data-seeding/wizard/org-size-limit`;
   const postBody = {
     taskId: wizardModel?.getData("taskId"),
     sfdcToolId: wizardModel?.getData("targetToolId"),
@@ -237,7 +237,7 @@ dataSeedingTaskWizardActions.downloadCustomSettingsReport = async (getAccessToke
     expiryDate: expiryDate
   };
 
-  const apiUrl = `/tasks/custom-setting-migration-task/wizard/download-report`;
+  const apiUrl = `/tasks/data-seeding/wizard/download-report`;
   return await baseActions.apiPostCallV2(
     getAccessToken,
     cancelTokenSource,
@@ -251,7 +251,7 @@ dataSeedingTaskWizardActions.setCsvFieldsList = async (
   cancelTokenSource,
   wizardModel,
 ) => {
-  const apiUrl = `/tasks/custom-setting-migration-task/wizard/${wizardModel?.getData("recordId")}/csv-fields-list`;
+  const apiUrl = `/tasks/data-seeding/wizard/${wizardModel?.getData("recordId")}/csv-fields-list`;
   const postBody = {
     selectedObject: wizardModel?.getData("csvFields"),
   };
@@ -269,7 +269,7 @@ dataSeedingTaskWizardActions.setFieldMappings = async (
   cancelTokenSource,
   wizardModel,
 ) => {
-  const apiUrl = `/tasks/custom-setting-migration-task/wizard/${wizardModel?.getData("recordId")}/set-fields-mappings`;
+  const apiUrl = `/tasks/data-seeding/wizard/${wizardModel?.getData("recordId")}/set-fields-mappings`;
   const postBody = {
     fieldMapping: wizardModel?.getData("fieldMapping"),
   };
