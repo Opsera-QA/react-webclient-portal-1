@@ -8,6 +8,7 @@ export default function SsoUserField(
   {
     model,
     fieldName,
+    visible,
     className,
   }) {
   const field = model?.getFieldById(fieldName);
@@ -44,6 +45,7 @@ export default function SsoUserField(
       isBusy={isLoading}
       label={field?.label}
       error={error}
+      visible={visible}
     />
   );
 }
@@ -52,4 +54,5 @@ SsoUserField.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   className: PropTypes.string,
+  visible: PropTypes.bool,
 };

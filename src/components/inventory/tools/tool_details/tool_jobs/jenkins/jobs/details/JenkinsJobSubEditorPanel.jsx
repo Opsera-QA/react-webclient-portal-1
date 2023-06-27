@@ -18,20 +18,21 @@ import JenkinsGenericJobEditorPanel
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/generic/JenkinsPythonJobEditorPanel";
 import AzureDockerPushJobEditorPanel
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/azure_docker_push/AzureDockerPushJobEditorPanel";
+import JenkinsJobTypes from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/jenkinsJobTypes.constants"
 
 export const getJenkinsJobConfigurationMetadata = (jenkinsJobType, buildType) => {
   switch (jenkinsJobType) {
-    case "SFDC":
+    case JenkinsJobTypes.SFDC:
       return JenkinsSfdcJobMetadata;
-    case "UNIT TESTING":
-    case "FUNCTIONAL TESTING":
+    case JenkinsJobTypes.UNIT_TESTING:
+    case JenkinsJobTypes.FUNCTIONAL_TESTING:
       return JenkinsUnitTestJobMetadata;
-    case "DOCKER PUSH":
-    case "ARTIFACTORY_DOCKER_PUSH":
+    case JenkinsJobTypes.DOCKER_PUSH:
+    case JenkinsJobTypes.ARTIFACTORY_DOCKER_PUSH:
       return JenkinsDockerPushJobMetadata;
-    case "SHELL SCRIPT":
+    case JenkinsJobTypes.SHELL_SCRIPT:
       return JenkinsShellScriptJobMetadata;
-    case "BUILD":
+    case JenkinsJobTypes.BUILD:
     default:
       return getMetadataForJenkinsJobBuildType(buildType);
   }
@@ -58,7 +59,7 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
 
   const getSubEditorPanel = () => {
     switch (jenkinsJobType) {
-      case "BUILD":
+      case JenkinsJobTypes.BUILD:
         return (
           <JenkinsBuildJobEditorPanel
             model={jenkinsJobConfigurationModel}
@@ -66,37 +67,41 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             jenkinsJobConfiguration={jenkinsJobConfiguration}
             autoScalingEnabled={autoScalingEnabled}
             buildType={jenkinsJobConfigurationModel?.getData("buildType")}
+            jenkinsJobType={jenkinsJobType}
           />
         );
-      case "SFDC":
+      case JenkinsJobTypes.SFDC:
         return (
           <JenkinsSfdcJobEditorPanel
             model={jenkinsJobConfigurationModel}
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
             autoScalingEnabled={autoScalingEnabled}
+            jenkinsJobType={jenkinsJobType}
           />
         );
-      case "UNIT TESTING":
-      case "FUNCTIONAL TESTING":
+      case JenkinsJobTypes.UNIT_TESTING:
+      case JenkinsJobTypes.FUNCTIONAL_TESTING:
         return (
           <JenkinsUnitTestingEditorPanel
             model={jenkinsJobConfigurationModel}
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
             autoScalingEnabled={autoScalingEnabled}
+            jenkinsJobType={jenkinsJobType}
           />
         );
-      case "SHELL SCRIPT":
+      case JenkinsJobTypes.SHELL_SCRIPT:
         return (
           <JenkinsShellScriptEditorPanel
             model={jenkinsJobConfigurationModel}
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
             autoScalingEnabled={autoScalingEnabled}
+            jenkinsJobType={jenkinsJobType}
           />
         );
-      case "DOCKER PUSH":
+      case JenkinsJobTypes.DOCKER_PUSH:
         return (
           <JenkinsDockerPushEditorPanel
             model={jenkinsJobConfigurationModel}
@@ -104,24 +109,28 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             jenkinsJobConfiguration={jenkinsJobConfiguration}
             type="DOCKER PUSH"
             autoScalingEnabled={autoScalingEnabled}
+            jenkinsJobType={jenkinsJobType}
           />
         );
-      case "ARTIFACTORY_DOCKER_PUSH":
+      case JenkinsJobTypes.ARTIFACTORY_DOCKER_PUSH:
         return (
           <JenkinsDockerPushEditorPanel
             model={jenkinsJobConfigurationModel}
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
+            autoScalingEnabled={autoScalingEnabled}
             type="ARTIFACTORY_DOCKER_PUSH"
+            jenkinsJobType={jenkinsJobType}
           />
         );
-      case "AZURE_DOCKER_PUSH":
+      case JenkinsJobTypes.AZURE_DOCKER_PUSH:
         return (
           <AzureDockerPushJobEditorPanel
             model={jenkinsJobConfigurationModel}
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
             autoScalingEnabled={autoScalingEnabled}
+            jenkinsJobType={jenkinsJobType}
           />
         );
       default:
@@ -131,6 +140,7 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
             autoScalingEnabled={autoScalingEnabled}
+            jenkinsJobType={jenkinsJobType}
           />
         );
     }

@@ -39,7 +39,7 @@ function RegisteredUserToolsPanel({ userData, isDeployingElk, setIsDeployingElk 
   };
 
   const getUserTools = async () => {
-    const response = await RegisteredUserActions.getRegisteredUserTools(userData["_id"], getAccessToken);
+    const response = await RegisteredUserActions.getRegisteredUserTools(userData?.getMongoDbId(), getAccessToken);
     // console.log("JSON RESPONSE: " + JSON.stringify(response));
     if (response != null && response.data != null) {
       setRegisteredUserToolsDto(new Model({...response.data}, registeredUserToolsMetadata, false));

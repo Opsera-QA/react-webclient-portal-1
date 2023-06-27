@@ -55,7 +55,6 @@ function SelectInputBase(
     externalCacheToolIdentifier,
     supportSearchLookup,
     noDataText,
-    customLabel,
     dropUp,
   }) {
   const field = dataObject?.getFieldById(fieldName);
@@ -127,7 +126,7 @@ function SelectInputBase(
   const getClearDataFunction = () => {
     if (
       hasStringValue(dataObject.getData(field.id)) === true
-      && ((disabled !== true && field?.isRequired !== true) || lenientClearValueButton === true)
+      && (disabled !== true || lenientClearValueButton === true)
       && showClearValueButton !== false
       && (setDataFunction == null || clearDataFunction != null)
     ) {
@@ -278,7 +277,6 @@ function SelectInputBase(
         loadDataFunction={loadDataFunction}
         disabled={disabled}
         isLoading={busy}
-        customLabel={customLabel}
       />
       <div className={"d-flex"}>
         <StandaloneSelectInput
@@ -371,7 +369,6 @@ SelectInputBase.propTypes = {
   externalCacheToolIdentifier: PropTypes.string,
   supportSearchLookup: PropTypes.bool,
   noDataText: PropTypes.string,
-  customLabel: PropTypes.string,
   dropUp: PropTypes.bool,
 };
 

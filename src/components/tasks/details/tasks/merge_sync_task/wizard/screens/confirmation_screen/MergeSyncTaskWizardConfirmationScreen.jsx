@@ -13,12 +13,14 @@ import MergeSyncTaskWizardSelectedCommitTable
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 import MergeSyncTaskWizardSelectedDeltasVerticalTabContainer
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/selected_deltas_table/MergeSyncTaskWizardSelectedDeltasVerticalTabContainer";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 
 const MergeSyncTaskWizardConfirmationScreen = (
   {
     wizardModel,
     setCurrentScreen,
     handleClose,
+    setWizardModel,
   }) => {
   if (wizardModel == null) {
     return null;
@@ -37,7 +39,7 @@ const MergeSyncTaskWizardConfirmationScreen = (
     if (updatedFileDeltas.length > 0) {
       return (
         <MergeSyncTaskWizardSelectedDeltasVerticalTabContainer
-            updatedFileDeltas={updatedFileDeltas}
+          updatedFileDeltas={updatedFileDeltas}
         />
       );
     }
@@ -55,10 +57,15 @@ const MergeSyncTaskWizardConfirmationScreen = (
         />
         {getFileSelectionTable()}
       </div>
+      <TextAreaInput
+        dataObject={wizardModel}
+        setDataObject={setWizardModel}
+        fieldName={"commitMessage"}
+      />
       <SaveButtonContainer>
         <BackButton
           className={"mr-2"}
-          backButtonFunction={() => {setCurrentScreen(MERGE_SYNC_WIZARD_SCREENS.COMMIT_SELECTION_SCREEN);}}
+          backButtonFunction={() => { setCurrentScreen(MERGE_SYNC_WIZARD_SCREENS.COMMIT_SELECTION_SCREEN); }}
         />
         <TriggerMergeSyncTaskButton
           wizardModel={wizardModel}
@@ -78,6 +85,7 @@ MergeSyncTaskWizardConfirmationScreen.propTypes = {
   setCurrentScreen: PropTypes.func,
   handleClose: PropTypes.func,
   wizardModel: PropTypes.object,
+  setWizardModel: PropTypes.func,
 };
 
 export default MergeSyncTaskWizardConfirmationScreen;

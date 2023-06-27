@@ -15,29 +15,34 @@ import JenkinsJobsPythonAgentLabelSelectInput
 const JENKINS_JOBS_GENERIC_AGENT_TYPES = [
   {
     "name": "Ubuntu Agent",
-    "env" : "linux",
+    "env": "linux",
     "value": "generic-linux",
   },
   {
     "name": "Windows Agent",
-    "env" : "windows",
+    "env": "windows",
     "value": "generic-windows",
   },
   {
     "name": "CentOS Agent",
-    "env" : "linux",
+    "env": "linux",
     "value": "generic-centos",
+  },
+  {
+    "name": "Mac Mini Agent",
+    "env": "mac",
+    "value": "generic-mac",
   }
 ];
 
-function JenkinsShellScriptEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled }) {
+function JenkinsShellScriptEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled, jenkinsJobType }) {
   useEffect(() => {
     unpackJobConfiguration();
   }, [jenkinsJobConfiguration]);
 
   const unpackJobConfiguration = () => {
     const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, JenkinsShellScriptJobMetadata);
-    setModel({...parsedModel});
+    setModel({ ...parsedModel });
   };
 
   const getAutoScalingField = () => {
@@ -59,6 +64,7 @@ function JenkinsShellScriptEditorPanel({ jenkinsJobConfiguration, model, setMode
             model={model}
             setModel={setModel}
             agentList={JENKINS_JOBS_GENERIC_AGENT_TYPES}
+            jenkinsJobType={jenkinsJobType}
           />
         </Col>
       );
@@ -88,6 +94,7 @@ JenkinsShellScriptEditorPanel.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   autoScalingEnabled: PropTypes.bool,
+  jenkinsJobType: PropTypes.string
 };
 
 export default JenkinsShellScriptEditorPanel;

@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/endpoint/request/body/endpointRequestField.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import EndpointRequestFieldTypeSelectInput
   from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldTypeSelectInput";
@@ -14,6 +13,11 @@ import DeleteButton from "components/common/buttons/delete/DeleteButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import EndpointRequestFieldNameTextInput
   from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldNameTextInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import {
+  ENDPOINT_TYPES
+} from "components/common/list_of_values_input/inventory/endpoints/type/endpointType.constants";
+import endpointRequestFieldMetadata from "@opsera/definitions/constants/api/request/body/endpointRequestField.metadata";
 
 function EndpointRequestBodyFieldInputRow(
   {
@@ -22,6 +26,7 @@ function EndpointRequestBodyFieldInputRow(
     deleteFieldFunction,
     endpointBodyField,
     index,
+    endpointType,
   }) {
   const [endpointFieldModel, setEndpointFieldModel] = useState(undefined);
 
@@ -79,15 +84,16 @@ function EndpointRequestBodyFieldInputRow(
             disabled={disabled || endpointFieldModel?.getData("type") === "object"}
           />
         </Col>
+        <Col xs={6}>
+          <BooleanToggleInput
+            dataObject={endpointFieldModel}
+            setDataFunction={updateMainModelFunction}
+            fieldName={"useRunApiResponseParameter"}
+            visible={endpointType === ENDPOINT_TYPES.OPERATION_STATUS_CHECK}
+            disabled={disabled || endpointFieldModel?.getData("type") === "object"}
+          />
+        </Col>
         {/*TODO: Add default value and hardcoded value inputs*/}
-        {/*<Col xs={6}>*/}
-        {/*  <EndpointRequestFieldIsSensitiveDataToggleInput*/}
-        {/*    model={endpointFieldModel}*/}
-        {/*    updateMainModelFunction={updateMainModelFunction}*/}
-        {/*    index={index}*/}
-        {/*    disabled={disabled}*/}
-        {/*  />*/}
-        {/*</Col>*/}
         {/*<Col xs={6}>*/}
         {/*  <EndpointRequestFieldIsSensitiveDataToggleInput*/}
         {/*    model={endpointFieldModel}*/}
@@ -110,6 +116,7 @@ EndpointRequestBodyFieldInputRow.propTypes = {
   disabled: PropTypes.bool,
   endpointBodyField: PropTypes.object,
   index: PropTypes.number,
+  endpointType: PropTypes.string,
 };
 
 export default EndpointRequestBodyFieldInputRow;

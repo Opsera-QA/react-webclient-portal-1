@@ -29,6 +29,7 @@ function TextInputBase(
     inputHelpOverlay,
     visible,
     helpTooltipText,
+      placeholderText
   }) {
   const field = dataObject?.getFieldById(fieldName);
   const [errorMessage, setErrorMessage] = useState("");
@@ -105,6 +106,7 @@ function TextInputBase(
     return (
       <input
         id={fieldName}
+        placeholder={placeholderText}
         type={type}
         style={style}
         disabled={disabled}
@@ -190,6 +192,7 @@ TextInputBase.propTypes = {
   inputButtons: PropTypes.any,
   visible: PropTypes.bool,
   helpTooltipText: PropTypes.string,
+  placeholderText: PropTypes.string
 };
 
 export default TextInputBase;

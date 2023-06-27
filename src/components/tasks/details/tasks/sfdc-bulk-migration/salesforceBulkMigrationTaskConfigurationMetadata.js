@@ -31,9 +31,8 @@ export const salesforceBulkMigrationTaskConfigurationMetadata = {
       label: "SCM Type",
       id: "service",
       isRequired: true,
-      maxLength: 10,
+      maxLength: 50,
       lowercase: true,
-      regexDefinitionName: "alphabetic",
     },
     {
       label: "Git Account",
@@ -130,6 +129,12 @@ export const salesforceBulkMigrationTaskConfigurationMetadata = {
         return model?.getData("includePackageXml") === true;
       },
     },
+    {
+      id: "repoId",
+    },
+    {
+      id: "azureProjectId",
+    },
   ],
   newObjectFields: {
     type: "",
@@ -166,5 +171,7 @@ export const salesforceBulkMigrationTaskConfigurationMetadata = {
     packageXmlReferencePath: "",
     reviewers: [],
     reviewerNames: [],
+    repoId: "",
+    azureProjectId: "",
   },
 };

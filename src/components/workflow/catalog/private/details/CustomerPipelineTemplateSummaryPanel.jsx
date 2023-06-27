@@ -9,7 +9,7 @@ import TagField from "components/common/fields/multiple_items/tags/TagField";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import CreateCustomerPipelineButton from "components/workflow/catalog/private/deploy/CreateCustomerPipelineButton";
+import CreateCustomerPipelineButton from "temp-library-components/cards/templates/pipelines/customer/deploy/CreateCustomerPipelineButton";
 import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
 import CustomerPipelineTemplateRoleHelper
   from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";

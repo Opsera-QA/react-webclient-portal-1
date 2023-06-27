@@ -241,4 +241,11 @@
     margin: 0
 }
 
+.disclaimer-container .disclaimer-body {
+    background-color: #E6E5E3;
+    min-height: 195px;
+    overflow-y: auto;
+    overflow-x: hidden
+}
+
 /* End Property Input Container Styling */

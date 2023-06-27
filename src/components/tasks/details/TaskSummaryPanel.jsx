@@ -1,17 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import taskActions from "components/tasks/task.actions";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import {Col, Row} from "react-bootstrap";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import TaskTypeField from "components/common/fields/tasks/TaskTypeField";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
-import DateFieldBase from "components/common/fields/date/DateFieldBase";
-import TagsInlineOverlayInputBase from "components/common/inputs/tags/inline/TagsInlineOverlayInputBase";
 import TaskRoleAccessInput from "components/tasks/details/TaskRoleAccessInput";
 import TasksEcsActionButtons from "components/tasks/buttons/ecs/TasksEcsActionButtons";
 import TaskAksActionButtons from "components/tasks/buttons/aks/TaskAksActionButtons";
-import TaskConfigurationSummaryPanel from "components/tasks/details/TaskConfigurationSummaryPanel";
 import RunTaskButton from "components/tasks/buttons/RunTaskButton";
 import TaskOrchestrationNotificationInlineInput
   from "components/common/fields/notifications/orchestration/tasks/TaskOrchestrationNotificationInlineInput";
@@ -26,10 +22,9 @@ import TaskOrchestrationSummaryField
   from "temp-library-components/fields/orchestration/task/TaskOrchestrationSummaryField";
 import TaskRunDurationMetricsStandaloneField
   from "temp-library-components/fields/orchestration/task/metrics/TaskRunDurationMetricsStandaloneField";
-import tagTypeConstants from "@opsera/definitions/constants/settings/tags/tagType.constants";
 import TaskTagManagerInput from "components/tasks/details/inputs/TaskTagManagerInput";
-import TaskOrchestrationProgressBarBase
-  from "temp-library-components/fields/orchestration/progress/TaskOrchestrationProgressBarBase";
+import TaskActivityPanel from "components/tasks/activity_logs/TaskActivityPanel";
+import DateTimeField from "components/common/fields/date/DateTimeField";
 
 function TaskSummaryPanel(
   {
@@ -42,31 +37,8 @@ function TaskSummaryPanel(
     taskStartTime,
   }) {
   const {
-    cancelTokenSource,
-    getAccessToken,
     userData,
-    isFreeTrial,
   } = useComponentStateReference();
-
-  const updateRecord = async (newDataModel) => {
-    const response = await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newDataModel);
-    loadData();
-    return response;
-  };
-
-  const getDynamicField = () => {
-    if (gitTasksData.getData("type") !== TASK_TYPES.AWS_CREATE_ECS_CLUSTER) {
-      return (
-        <Col md={6}>
-          <TextFieldBase
-            className={"upper-case-first my-2"}
-            dataObject={gitTasksData}
-            fieldName={"tool_identifier"}
-          />
-        </Col>
-      );
-    }
-  };
 
   const getButtonForTaskType = () => {
     switch (gitTasksData?.getData("type")) {
@@ -112,12 +84,10 @@ function TaskSummaryPanel(
   const getSchedulerField = () => {
     if (SCHEDULER_SUPPORTED_TASK_TYPES.includes(gitTasksData?.getData("type")) === true) {
       return (
-        <Col md={6}>
-          <TaskSchedulerField
-            taskModel={gitTasksData}
-            canEditTaskSchedule={TaskRoleHelper.canUpdateTask(userData, gitTasksData?.getPersistData())}
-          />
-        </Col>
+        <TaskSchedulerField
+          taskModel={gitTasksData}
+          canEditTaskSchedule={TaskRoleHelper.canUpdateTask(userData, gitTasksData?.getPersistData())}
+        />
       );
     }
   };
@@ -136,19 +106,6 @@ function TaskSummaryPanel(
     }
   };
 
-  const getOwnerNameField = () => {
-    if (isFreeTrial !== true) {
-      return (
-        <Col md={6}>
-          <SsoUserField
-            fieldName={"owner"}
-            model={gitTasksData}
-          />
-        </Col>
-      );
-    }
-  };
-
   if (gitTasksData == null) {
     return null;
   }
@@ -159,37 +116,55 @@ function TaskSummaryPanel(
       editingAllowed={TaskRoleHelper.canUpdateTask(userData, gitTasksData?.getPersistData())}
     >
       <Row>
-        <Col md={6}>
-          <TextFieldBase dataObject={gitTasksData} fieldName={"name"} />
-        </Col>
-        {getOwnerNameField()}
-        <Col lg={12}>
-          <TaskRoleAccessInput
-            dataObject={gitTasksData}
-            setDataObject={setGitTasksData}
-            disabled={TaskRoleHelper.canEditAccessRoles(userData, gitTasksData?.getPersistData()) !== true}
+        <TaskRoleAccessInput
+          dataObject={gitTasksData}
+          setDataObject={setGitTasksData}
+          disabled={TaskRoleHelper.canEditAccessRoles(userData, gitTasksData?.getPersistData()) !== true}
+        />
+        <Col sm={12} md={6}>
+          <SsoUserField
+            fieldName={"owner"}
+            model={gitTasksData}
           />
         </Col>
-        <Col md={6}>
+        <Col sm={12} md={6}>
+          <SmartIdField
+            model={gitTasksData}
+          />
+        </Col>
+        <Col sm={12} md={6}>
+          <TextFieldBase
+            dataObject={gitTasksData}
+            fieldName={"run_count"}
+          />
+        </Col>
+        <Col sm={12} md={6}>
+          <DateTimeField
+            fieldName={"createdAt"}
+            dataObject={gitTasksData}
+          />
+        </Col>
+        <Col sm={12} md={6}>
           <TaskStateField
             model={gitTasksData}
           />
         </Col>
-        <Col md={6}>
-          <TextFieldBase dataObject={gitTasksData} fieldName={"run_count"} />
+        <Col sm={12} md={6}>
+          <TextFieldBase
+            dataObject={gitTasksData}
+            fieldName={"account"}
+          />
         </Col>
-        <Col md={6}>
-          <TaskTypeField fieldName={"type"} model={gitTasksData} />
-        </Col>
-        <Col md={6}>
-          <SmartIdField model={gitTasksData} fieldName={"_id"} />
-        </Col>
-        <Col md={6}>
-          <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
+        <Col sm={12} md={6}>
+          <TaskTypeField
+            fieldName={"type"}
+            model={gitTasksData}
+          />
         </Col>
         {getNotificationsInput()}
-        {getSchedulerField()}
-        {getDynamicField()}
+        <Col sm={12} md={6}>
+          {getSchedulerField()}
+        </Col>
         <Col md={12} className={"pt-1"}>
           <TaskTagManagerInput
             taskModel={gitTasksData}
@@ -225,9 +200,12 @@ function TaskSummaryPanel(
       {/*    taskStartTime={taskStartTime}*/}
       {/*  />*/}
       {/*</Col>*/}
-      <div className="px-3 mt-3">
-        <TaskConfigurationSummaryPanel taskModel={gitTasksData} />
-      </div>
+      <TaskActivityPanel
+        taskModel={gitTasksData}
+        taskId={gitTasksData?.getMongoDbId()}
+        taskRunCount={runCount}
+        status={status}
+      />
     </SummaryPanelContainer>
   );
 }

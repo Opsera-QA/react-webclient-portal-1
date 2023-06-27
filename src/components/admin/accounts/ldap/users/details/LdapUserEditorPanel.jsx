@@ -46,7 +46,7 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, handleC
 
   const createLdapUser = async () => {
     const email = ldapUserDataDto.getData("emailAddress");
-    const emailIsAvailable = await accountsActions.isEmailAvailable(email, getAccessToken);
+    const emailIsAvailable = await accountsActions.isEmailAvailableV2(getAccessToken, cancelTokenSource, email);
 
     if (emailIsAvailable?.data === false) {
       throw `User with email ${email} already exists. Please try another email address.`;

@@ -28,6 +28,11 @@ const jenkinsPipelineStepConfigurationMetadata = {
       // isRequired: true
     },
     {
+      label: "Version",
+      id: "xcodeVersion",
+      // isRequired: true
+    },
+    {
       label: "Account",
       id: "gitCredential",
       // isRequired: true
@@ -329,6 +334,10 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {      
       id: "developerTeamId",
     },
+    {
+      label: "Certificate",
+      id: "credentailsId",
+    },
   ],
   newObjectFields: {
     jobType: "",
@@ -378,6 +387,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     terraformStepId:"",
     useTerraformOutput: false,
     job_type:"",
+    xcodeVersion:"",
     dynamicTag: false,
     dockerTagType:[],
     dockerDynamicTagName:"",
@@ -400,6 +410,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     configurationType: "",
     scriptType: "opsera",
     developerTeamId: "",
+    credentailsId: "",
   }
 };
 

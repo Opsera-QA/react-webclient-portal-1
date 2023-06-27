@@ -10,11 +10,11 @@ import ButtonContainerBase from "components/common/buttons/saving/containers/But
 import { FREE_TRIAL_REGISTRATION_SCREENS } from "components/trial/registration/FreeTrialRegistration";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import FreeTrialRegisterButton from "components/trial/registration/FreeTrialRegisterButton";
-import userActions from "components/user/user-actions";
 import BackButton from "components/common/buttons/back/BackButton";
 import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
 import { Form } from "react-bootstrap";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useUserActions from "hooks/users/useUserActions";
 
 export default function FreeTrialRegistrationSignupScreen (
   {
@@ -22,6 +22,7 @@ export default function FreeTrialRegistrationSignupScreen (
     setRegistrationModel,
     setCurrentScreen,
   }) {
+  const userActions = useUserActions();
   const { toastContext, isMounted, cancelTokenSource } = useComponentStateReference();
 
   const registerAccountFunction = async () => {
@@ -33,7 +34,6 @@ export default function FreeTrialRegistrationSignupScreen (
       }
 
       const response = await userActions.isEmailAvailable(
-        cancelTokenSource,
         registrationModel?.getData("email")
       );
       const isEmailAvailable = response?.data?.emailExists === false;
@@ -44,7 +44,7 @@ export default function FreeTrialRegistrationSignupScreen (
       }
 
       try {
-        const response = await userActions.createFreeTrialAccount(cancelTokenSource, registrationModel);
+        const response = await userActions.createFreeTrialAccount(registrationModel);
         setCurrentScreen(FREE_TRIAL_REGISTRATION_SCREENS.CONGRATULATIONS_SCREEN);
         return response;
       } catch (error) {

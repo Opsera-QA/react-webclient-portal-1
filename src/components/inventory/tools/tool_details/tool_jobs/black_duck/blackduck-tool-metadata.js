@@ -7,6 +7,7 @@ const BlackduckMetadata = {
       id: "url",
       isRequired: true,
       isSecureUrl: true,
+      regexDefinitionName: "urlFieldWithoutQueryString",
     },
     {
       label: "BlackDuck Token",

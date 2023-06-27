@@ -77,7 +77,7 @@ function JenkinsBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, d
             <ResponsiveBar
               data={metrics}
               {...defaultConfig("Build Duration (Minutes)", "Build Number", 
-                      false, true, "wholeNumbers", "numbers")}
+                      false, false, "wholeNumbers", "numbers")}
               {...config(getColorByData)}
               {...adjustBarWidth(metrics)}
               onClick={() => setShowModal(true)}

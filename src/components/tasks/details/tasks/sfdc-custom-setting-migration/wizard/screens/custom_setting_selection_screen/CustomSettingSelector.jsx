@@ -298,6 +298,7 @@ const CustomSettingSelector = ({
             wizardModel={wizardModel}
             setWizardModel={setWizardModel}
             setCurrentScreen={setCurrentScreen}
+            setEnableEdit={setEnableEdit}
             handleClose={handleClose}
             taskType={wizardModel?.getData("taskType")}
           />

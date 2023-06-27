@@ -10,7 +10,7 @@ export const ORCHESTRATION_NOTIFICATION_TYPES = {
 export const ORCHESTRATION_NOTIFICATION_TYPE_LABELS = {
   EMAIL: "Email",
   JIRA: "Jira",
-  SERVICE_NOW: "Service Now",
+  SERVICE_NOW: "ServiceNow",
   SLACK: "Slack",
   TEAMS: "Microsoft Teams",
   GCHAT: "Google Chat"

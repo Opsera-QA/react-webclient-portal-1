@@ -9,7 +9,7 @@ import JenkinsJobsGenericAgentTypeSelectInput
 import JenkinsDockerPushJobMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/docker_push/jenkins-docker-push-metadata";
 
-function JenkinsDockerPushEditorPanel({ jenkinsJobConfiguration, model, setModel, type, autoScalingEnabled }) {
+function JenkinsDockerPushEditorPanel({ jenkinsJobConfiguration, model, setModel, type, autoScalingEnabled, jenkinsJobType }) {
   useEffect(() => {
     unpackJobConfiguration();
   }, [jenkinsJobConfiguration]);
@@ -26,6 +26,7 @@ function JenkinsDockerPushEditorPanel({ jenkinsJobConfiguration, model, setModel
           <JenkinsJobsGenericAgentTypeSelectInput
             model={model}
             setModel={setModel}
+            jenkinsJobType={jenkinsJobType}
           />
         </Col>
       );
@@ -57,6 +58,7 @@ JenkinsDockerPushEditorPanel.propTypes = {
   setModel: PropTypes.func,
   type: PropTypes.string,
   autoScalingEnabled: PropTypes.bool,
+  jenkinsJobType: PropTypes.string
 };
 
 export default JenkinsDockerPushEditorPanel;

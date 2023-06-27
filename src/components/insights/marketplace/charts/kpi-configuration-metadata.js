@@ -411,14 +411,14 @@ export const kpiSonarProjectLanguagesFilterMetadata = {
 };
 
 export const kpiServiceNowPrioritiesFilterMetadata = {
-  type: "Service Now Priorities",
+  type: "ServiceNow Priorities",
   fields: [
     {
       label: "Type",
       id: "type",
     },
     {
-      label: "Service Now Priorities",
+      label: "ServiceNow Priorities",
       id: "value",
     },
   ],
@@ -428,14 +428,14 @@ export const kpiServiceNowPrioritiesFilterMetadata = {
 };
 
 export const kpiServiceNowToolsFilterMetadata = {
-  type: "Service Now Tools",
+  type: "ServiceNow Tools",
   fields: [
     {
       label: "Type",
       id: "type",
     },
     {
-      label: "Service Now Tool",
+      label: "ServiceNow Tool",
       id: "value",
     },
   ],
@@ -445,14 +445,14 @@ export const kpiServiceNowToolsFilterMetadata = {
 };
 
 export const kpiServiceNowAssignmentGroupsFilterMetadata = {
-  type: "Service Now Assignment Groups",
+  type: "ServiceNow Assignment Groups",
   fields: [
     {
       label: "Type",
       id: "type",
     },
     {
-      label: "Service Now Assignment Groups",
+      label: "ServiceNow Assignment Groups",
       id: "value",
     },
   ],
@@ -462,14 +462,14 @@ export const kpiServiceNowAssignmentGroupsFilterMetadata = {
 };
 
 export const kpiServiceNowServiceOfferingsFilterMetadata = {
-  type: "Service Now Service Offerings",
+  type: "ServiceNow Service Offerings",
   fields: [
     {
       label: "Type",
       id: "type",
     },
     {
-      label: "Service Now Service Offerings",
+      label: "ServiceNow Service Offerings",
       id: "value",
     },
   ],
@@ -479,14 +479,14 @@ export const kpiServiceNowServiceOfferingsFilterMetadata = {
 };
 
 export const kpiServiceNowConfigurationItemsFilterMetadata = {
-  type: "Service Now Configuration Items",
+  type: "ServiceNow Configuration Items",
   fields: [
     {
       label: "Type",
       id: "type",
     },
     {
-      label: "Service Now Configuration Items",
+      label: "ServiceNow Configuration Items",
       id: "value",
     },
   ],
@@ -496,14 +496,14 @@ export const kpiServiceNowConfigurationItemsFilterMetadata = {
 };
 
 export const kpiServiceNowBusinessServicesFilterMetadata = {
-  type: "Service Now Business Services",
+  type: "ServiceNow Business Services",
   fields: [
     {
       label: "Type",
       id: "type",
     },
     {
-      label: "Service Now Business Services",
+      label: "ServiceNow Business Services",
       id: "value",
     },
   ],

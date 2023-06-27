@@ -20,7 +20,8 @@ export default function usePipelineActions() {
       type: type !== "all" ? type : undefined,
       search: pipelineFilterModel?.getFilterValue("search"),
       owner: pipelineFilterModel?.getFilterValue("owner"),
-      tag: pipelineFilterModel?.getFilterValue("tag"),
+      tag: pipelineFilterModel?.getData("tag"),
+      stepTag: pipelineFilterModel?.getData("stepTag"),
       status: pipelineFilterModel?.getFilterValue("status"),
       toolIdentifier: pipelineFilterModel?.getFilterValue("tool_identifier"),
       active: active,
@@ -198,13 +199,13 @@ export default function usePipelineActions() {
     return await apiService.handleApiGetRequest(apiUrl);
   };
 
-  pipelineActions.getUniqueToolIdentifiersByPipelineUsageForFilter = async () => {
-    const apiUrl = `/workflow/pipelines/filters/tool-identifiers`;
+  pipelineActions.getUniqueAppliedTagsForPipelineStepsFilter = async () => {
+    const apiUrl = `/workflow/pipelines/filters/steps/tags`;
     return await apiService.handleApiGetRequest(apiUrl);
   };
 
-  pipelineActions.getUniqueAppliedTagsForPipelineFilter = async (toolIdentifier) => {
-    const apiUrl = `/workflow/pipelines/filters/${toolIdentifier}`;
+  pipelineActions.getUniqueToolIdentifiersByPipelineUsageForFilter = async () => {
+    const apiUrl = `/workflow/pipelines/filters/tool-identifiers`;
     return await apiService.handleApiGetRequest(apiUrl);
   };
 

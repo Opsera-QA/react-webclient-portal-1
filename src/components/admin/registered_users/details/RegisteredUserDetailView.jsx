@@ -60,6 +60,10 @@ function RegisteredUserDetailView() {
       }
 
       setUserData(new Model(response.data, registeredUsersMetadata, false));
+
+      if (DataParsingHelper.parseNestedString(user, "dbConnectionString") == null) {
+        toastContext.showSystemWarningBanner("This User does not have a DB connection string. This indicates a problem and will prevent the User from properly accessing the platform. Please ask the infrastructure team to look into it.");
+      }
     }
   };
 

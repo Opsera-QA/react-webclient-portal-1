@@ -11,14 +11,17 @@ import {
   faArrowCircleUp,
   faMinusCircle,
 } from "@fortawesome/pro-solid-svg-icons";
-//import Model from "core/data_model/model";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import GitScrapperActionableInsightOverlay from "./actionable_insights/GitScrapperActionableInsightOverlay";
 import GitScrapperOverallScannedRepositoriesTrendDataBlock from "./data_blocks/overall_scanned_repositories_trend/GitScrapperOverallScannedRepositoriesTrendDataBlock";
 import GitScrapperOverallCleanRepositoriesTrendDataBlock from "./data_blocks/overall_clean_repositories_trend/GitScrapperOverallCleanRepositoriesTrendDataBlock";
 import GitScrapperOverallIssuesTrendDataBlock from "./data_blocks/overall_issues_trend/GitScrapperOverallIssuesTrendDataBlock";
-// import gitScrapperPipelineFilterMetadata from "./git-scrapper-pipeline-filter-metadata";
-
+import GitScrapperMetricsHelpDocumentation from "components/common/help/documentation/insights/charts/GitScrapperMetricsHelpDocumentation";
+import {ResponsiveLine} from "@nivo/line";
+import {adjustBarWidth, defaultConfig} from "../charts-views";
+import config from "./gitScraperLineChartConfig";
+import {METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY} from "../../../common/helpers/metrics/metricTheme.helpers";
+import ChartTooltip from "../ChartTooltip";
 function GitScrapperMetrics({
   kpiConfiguration,
   setKpiConfiguration,
@@ -29,6 +32,7 @@ function GitScrapperMetrics({
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
+  const [lineChart, setLineChart] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -80,11 +84,16 @@ function GitScrapperMetrics({
 
       const dataObject =
         response?.data && response?.status === 200
-          ? response?.data?.data?.data
+          ? response?.data?.data?.getGitScraperDataBlockMetrics?.data
           : [];
+      const lineChart =
+          response?.data && response?.status === 200
+              ? response?.data?.data?.gitScraperLineChartFrequency?.data
+              : [];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+        setLineChart(lineChart);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -153,9 +162,9 @@ function GitScrapperMetrics({
   const getDescription = (severity) => {
     switch (severity) {
       case "Red":
-        return "This project's issues are trending upward";
+        return "The project  issues show an upward trend";
       case "Green":
-        return "This project's issues are trending downward";
+        return "The project issues show a downward trend";
       case "Neutral":
         return "Neutral: This project's issues have experienced no change";
     }
@@ -166,14 +175,9 @@ function GitScrapperMetrics({
       return null;
     }
 
-    return (
-      <div
-        className="new-chart mb-3"
-        style={{ minHeight: "300px" }}
-      >
-        <Container>
-          <Row className="p-2 gray">
-            <Col md={4}>
+    const getDataBlocks = () =>{
+    return (<><Row className={'pb-1'}>
+          <Col>
               <GitScrapperOverallScannedRepositoriesTrendDataBlock
                 score={metrics[0]?.current?.count || 0}
                 icon={getIcon(metrics[0]?.trend?.count)}
@@ -182,8 +186,9 @@ function GitScrapperMetrics({
                 lastScore={metrics[0]?.previous?.count}
                 iconOverlayBody={getDescription(metrics[0]?.trend?.count)}
               />
-            </Col>
-            <Col md={4}>
+          </Col>
+          </Row><Row className={'pb-1 pt-1'}>
+            <Col>
               <GitScrapperOverallCleanRepositoriesTrendDataBlock
                 score={metrics[0]?.current?.cleanRepoCount || 0}
                 icon={getIcon(metrics[0]?.trend?.cleanRepoCount)}
@@ -200,7 +205,8 @@ function GitScrapperMetrics({
                 )}
               />
             </Col>
-            <Col md={4}>
+        </Row><Row className={'pb-1 pt-1'}>
+            <Col>
               <GitScrapperOverallIssuesTrendDataBlock
                 score={metrics[0]?.current?.issueCount || 0}
                 icon={getIconIssuesTrend(metrics[0]?.trend?.issueCount)}
@@ -215,9 +221,44 @@ function GitScrapperMetrics({
                 iconOverlayBody={getDescription(metrics[0]?.trend?.issueCount)}
               />
             </Col>
-          </Row>
-        </Container>
-      </div>
+        </Row></>
+    );};
+
+    const getChart = () =>{
+      return(<Row>
+        <Col md={12} sm={12} lg={12} >
+          <div className="chart" style={{ height: "354px" }} >
+            <ResponsiveLine
+                data={lineChart}
+                {...defaultConfig(
+                    "Count",
+                    "Date",
+                    false,
+                    false,
+                    "wholeNumbers",
+                    "monthDate2",
+                )}
+                {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
+                {...adjustBarWidth(metrics)}
+                tooltip={({point, color}) => <ChartTooltip
+                    titles = {["Date", "Deployments"]}
+                    values = {[String(point.data.xFormatted), point.data.y]}
+                    color = {color} />}
+            />
+          </div>
+        </Col>
+      </Row>);
+    };
+
+    return (
+        <>
+          <div className="new-chart m-3">
+            <Row>
+              <Col md={3} sm={6} lg={3}>{getDataBlocks()}</Col>
+              <Col md={9} sm={6} lg={9}>{getChart()}</Col>
+            </Row>
+          </div>
+        </>
     );
   };
 
@@ -235,9 +276,9 @@ function GitScrapperMetrics({
         setKpis={setKpis}
         isLoading={isLoading}
         tableChart={true}
-        // chartHelpComponent={(closeHelpPanel) => (
-        //   <CoverityIssuesByCategoryHelpDocumentation closeHelpPanel={closeHelpPanel} />
-        // )}
+        chartHelpComponent={(closeHelpPanel) => (
+          <GitScrapperMetricsHelpDocumentation closeHelpPanel={closeHelpPanel} />
+        )}
       />
       <ModalLogs
         header="Git Custodian Metrics"

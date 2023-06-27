@@ -6,10 +6,9 @@ import {
 import EndpointRequestParametersInputBase
   from "components/common/inputs/endpoints/endpoint/request/parameters/EndpointRequestParametersInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
-import {
-  endpointRequestParametersMetadata,
-} from "components/common/inputs/endpoints/endpoint/request/parameters/endpointRequestParameters.metadata";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import endpointRequestParametersMetadata
+  from "@opsera/definitions/constants/api/request/parameters/endpointRequestParameters.metadata";
 
 function EndpointApiConfigurationInputBase(
   {
@@ -54,6 +53,8 @@ function EndpointApiConfigurationInputBase(
             height={height}
             endpointParameterArrayInputHeight={endpointParameterArrayInputHeight}
             endpointParameterInputHeight={endpointParameterInputHeight}
+            runEndpointId={model?.getData("runEndpointId")}
+            toolId={model?.getData("toolId")}
           />
         );
       case ENDPOINT_REQUEST_TYPES.PUT:
@@ -68,6 +69,8 @@ function EndpointApiConfigurationInputBase(
             height={height}
             endpointParameterArrayInputHeight={endpointParameterArrayInputHeight}
             endpointParameterInputHeight={endpointParameterInputHeight}
+            runEndpointId={model?.getData("runEndpointId")}
+            toolId={model?.getData("toolId")}
           />
         );
     }
@@ -86,7 +89,7 @@ function EndpointApiConfigurationInputBase(
   }
 
   return (
-    <div>
+    <div id={fieldName}>
       {getDynamicInputsForRequestType()}
     </div>
   );

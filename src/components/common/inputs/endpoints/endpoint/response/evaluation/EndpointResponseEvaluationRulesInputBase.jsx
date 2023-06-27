@@ -2,12 +2,11 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import EndpointResponseEvaluationRuleInput
   from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/EndpointResponseEvaluationRuleInput";
-import {
-  endpointResponseEvaluationRulesMetadata
-} from "components/common/inputs/endpoints/endpoint/response/evaluation/endpointResponseEvaluationRules.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import endpointResponseEvaluationRulesMetadata
+  from "@opsera/definitions/constants/api/evaluation/endpointResponseEvaluationRules.metadata";
 
 function EndpointResponseEvaluationRulesInputBase(
   {
@@ -22,11 +21,11 @@ function EndpointResponseEvaluationRulesInputBase(
     responseParameterInputHeight,
     responseParameterArrayInputHeight,
   }) {
-  const [field] = useState(model?.getFieldById(fieldName));
+  const field = model?.getFieldById(fieldName);
   const [endpointResponseEvaluationRuleModel, setEndpointResponseEvaluationRuleModel] = useState(undefined);
 
   useEffect(() => {
-    setEndpointResponseEvaluationRuleModel(modelHelpers.parseObjectIntoModel(model?.getData(fieldName), endpointResponseEvaluationRulesMetadata));
+    setEndpointResponseEvaluationRuleModel({...modelHelpers.parseObjectIntoModel(model?.getData(fieldName), endpointResponseEvaluationRulesMetadata)});
   }, [fieldName]);
 
   const validateAndSetData = (newRulesModel) => {

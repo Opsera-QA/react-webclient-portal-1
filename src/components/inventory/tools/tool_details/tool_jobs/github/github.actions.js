@@ -86,3 +86,19 @@ githubActions.getBranch = async (
 
   return baseActions.apiGetCallV3( getAccessToken, cancelTokenSource, apiUrl, queryParameters);
 };
+
+githubActions.getRepo = async (
+  getAccessToken,
+  cancelTokenSource,
+  toolId,
+  repositoryId,
+) => {
+  const apiUrl = `/tools/${toolId}/github/repository`;
+
+  const queryParameters = {    
+    repositoryId: repositoryId,
+    branchName: branchName,
+  };
+
+  return baseActions.apiGetCallV3( getAccessToken, cancelTokenSource, apiUrl, queryParameters);
+};

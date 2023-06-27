@@ -171,6 +171,7 @@ const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
         return (
           <MergeSyncTaskWizardConfirmationScreen
             wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
             setCurrentScreen={setCurrentScreen}
             handleClose={handleClose}
           />

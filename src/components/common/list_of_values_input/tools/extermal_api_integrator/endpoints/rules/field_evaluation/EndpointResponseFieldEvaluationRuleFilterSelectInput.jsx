@@ -1,26 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-
-// TODO: We should probably have different options per type
-const SUPPORTED_FIELD_EVALUATION_FILTERS = [
-  {
-    text: "Equals",
-    value: "equals",
-  },
-  {
-    text: "Does Not Equal",
-    value: "not_equals",
-  },
-  {
-    text: "Is Not Null",
-    value: "is_not_null",
-  },
-  {
-    text: "Is Null",
-    value: "is_null",
-  },
-];
+import apiResponseEvaluationOptionConstants
+  from "@opsera/definitions/constants/api/response/apiResponseEvaluationOption.constants";
 
 function EndpointResponseFieldEvaluationRuleFilterSelectInput(
   {
@@ -35,23 +17,10 @@ function EndpointResponseFieldEvaluationRuleFilterSelectInput(
   }) {
   const getSelectOptions = () => {
     if (isSensitiveData === true) {
-      return (
-        [
-          {
-            text: "Is Not Null",
-            value: "is_not_null",
-          },
-          {
-            text: "Is Null",
-            value: "is_null",
-          },
-        ]
-      );
+      return (apiResponseEvaluationOptionConstants.SUPPORTED_SENSITIVE_DATA_RESPONSE_EVALUATION_SELECT_OPTIONS);
     }
 
-    return (
-      SUPPORTED_FIELD_EVALUATION_FILTERS
-    );
+    return (apiResponseEvaluationOptionConstants.SUPPORTED_RESPONSE_EVALUATION_SELECT_OPTIONS);
   };
 
   return (

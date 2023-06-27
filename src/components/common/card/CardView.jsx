@@ -1,10 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import InfoMessageFieldBase from "components/common/fields/text/message/InfoMessageFieldBase";
 
-function CardView({ cards, isLoading, paginationDto, setPaginationDto, loadData, noDataMessage, className, nextGeneration }) {
+function CardView(
+  {
+    cards,
+    isLoading,
+    paginationDto,
+    setPaginationDto,
+    loadData,
+    noDataMessage,
+    className,
+    nextGeneration,
+    minHeight,
+  }) {
   if (!isLoading && cards == null) {
-    return <div className="info-text text-center p-5">{noDataMessage}</div>;
+    return (
+      <CenteredContentWrapper minHeight={minHeight}>
+        <InfoMessageFieldBase
+          message={noDataMessage}
+          showInformationLabel={false}
+        />
+      </CenteredContentWrapper>
+    );
   }
 
   return (
@@ -34,6 +54,7 @@ CardView.propTypes = {
   noDataMessage: PropTypes.string,
   className:PropTypes.string,
   nextGeneration: PropTypes.bool,
+  minHeight: PropTypes.string,
 };
 
 CardView.defaultProps = {

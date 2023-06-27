@@ -3,9 +3,6 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import modelHelpers from "components/common/model/modelHelpers";
-import {
-  endpointResponseFieldEvaluationRuleMetadata
-} from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/fields/endpointResponseFieldEvaluationRule.metadata";
 import ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
@@ -15,6 +12,11 @@ import MultiTextListInputBase from "components/common/inputs/list/text/MultiText
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import NumberPickerInputBase from "components/common/inputs/number/picker/base/NumberPickerInputBase";
+import IntegerTextInputBase from "components/common/inputs/text/number/integer/IntegerTextInputBase";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import endpointResponseFieldEvaluationRuleMetadata
+  from "@opsera/definitions/constants/api/evaluation/rule/fields/endpointResponseFieldEvaluationRule.metadata";
 
 function EndpointResponseRuleFieldInputRow(
   {
@@ -23,12 +25,13 @@ function EndpointResponseRuleFieldInputRow(
     endpointBodyField,
     responseParameterInputHeight,
     responseParameterArrayInputHeight,
+    fieldName,
   }) {
   const [endpointFieldModel, setEndpointFieldModel] = useState(undefined);
 
   useEffect(() => {
-    setEndpointFieldModel(modelHelpers.parseObjectIntoModel(endpointBodyField, endpointResponseFieldEvaluationRuleMetadata));
-  }, [endpointBodyField]);
+    setEndpointFieldModel({...modelHelpers.parseObjectIntoModel(endpointBodyField, endpointResponseFieldEvaluationRuleMetadata)});
+  }, [JSON.stringify(endpointBodyField), fieldName]);
 
   const updateMainModelFunction = (fieldName, newValue) => {
     endpointFieldModel.setData(fieldName, newValue);
@@ -110,6 +113,41 @@ function EndpointResponseRuleFieldInputRow(
               />
             </div>
           );
+        case "number":
+          return (
+            <div style={{minHeight: responseParameterInputHeight}}>
+              <NumberPickerInputBase
+                dataObject={endpointFieldModel}
+                setDataObject={setEndpointFieldModel}
+                setDataFunction={updateMainModelFunction}
+                fieldName={"value"}
+                disabled={disabled}
+              />
+            </div>
+          );
+        case "integer":
+          return (
+            <div style={{minHeight: responseParameterInputHeight}}>
+              <IntegerTextInputBase
+                dataObject={endpointFieldModel}
+                setDataObject={setEndpointFieldModel}
+                setDataFunction={updateMainModelFunction}
+                fieldName={"value"}
+                disabled={disabled}
+              />
+            </div>
+          );
+        case "boolean":
+          return (
+            <div style={{minHeight: responseParameterInputHeight}}>
+              <BooleanToggleInput
+                dataObject={endpointFieldModel}
+                setDataObject={updateMainModel}
+                fieldName={"value"}
+                disabled={disabled}
+              />
+            </div>
+          );
         case "object":
         default:
         return (
@@ -151,7 +189,9 @@ function EndpointResponseRuleFieldInputRow(
   }
 
   return (
-    <div className={"mx-3 mt-2"}>
+    <div
+      id={fieldName}
+      className={"mx-3 mt-2"}>
       {getBody()}
     </div>
   );
@@ -163,6 +203,7 @@ EndpointResponseRuleFieldInputRow.propTypes = {
   disabled: PropTypes.bool,
   responseParameterInputHeight: PropTypes.string,
   responseParameterArrayInputHeight: PropTypes.string,
+  fieldName: PropTypes.string,
 };
 
 export default EndpointResponseRuleFieldInputRow;

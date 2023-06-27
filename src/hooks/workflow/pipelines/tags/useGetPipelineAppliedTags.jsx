@@ -32,7 +32,7 @@ export default function useGetPipelineAppliedTags(
   return ({
     tags: tags,
     setTags: setTags,
-    loadData: () => getUniqueAppliedTagsForPipelineFilter(),
+    loadData: () => loadData(getUniqueAppliedTagsForPipelineFilter, handleErrorFunction),
     isLoading: isLoading,
     error: error,
     setError: setError,

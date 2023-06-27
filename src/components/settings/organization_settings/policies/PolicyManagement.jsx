@@ -10,6 +10,8 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import VanityInlineError from "temp-library-components/fields/info/VanityInlineError";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import PolicyRoleHelper from "@opsera/know-your-role/roles/settings/policies/policyRole.helper";
+import PolicyManagementHelpDocumentation
+  from "../../../common/help/documentation/settings/PolicyManagementHelpDocumentation";
 
 export default function PolicyManagement() {
   const {
@@ -55,6 +57,7 @@ export default function PolicyManagement() {
     <ScreenContainer
       navigationTabContainer={<PolicyManagementSubNavigationBar activeTab={"policyManagement"} />}
       breadcrumbDestination={"policyManagement"}
+      helpComponent={<PolicyManagementHelpDocumentation/>}
     >
       {getBody()}
     </ScreenContainer>

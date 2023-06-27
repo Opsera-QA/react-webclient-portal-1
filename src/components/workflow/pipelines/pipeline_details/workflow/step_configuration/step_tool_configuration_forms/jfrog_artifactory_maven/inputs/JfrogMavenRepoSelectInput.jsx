@@ -103,7 +103,7 @@ function JfrogMavenRepoSelectInput({ fieldName, dataObject, setDataObject, disab
         valueField={valueField}
         textField={textField}
         placeholderText={placeholder}
-        disabled={disabled || isLoading || (!isLoading && (repos == null || repos.length === 0))}
+        disabled={disabled}
       />
     </div>
   );

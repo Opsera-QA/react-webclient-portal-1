@@ -5,8 +5,8 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
-import {Divider} from "temp-library-components/divider/Divider";
 import Col from "react-bootstrap/Col";
+import {FieldDivider} from "temp-library-components/divider/FieldDivider";
 
 export default function PipelineRoleAccessInput(
   {
@@ -56,9 +56,7 @@ export default function PipelineRoleAccessInput(
           lostAccessRerouteRoute={pipelineHelper.getManagementScreenLink()}
         />
       </Col>
-      <div className={"d-flex my-1 mx-3 w-100"}>
-        <Divider className={"w-100"} />
-      </div>
+      <FieldDivider />
     </>
   );
 }

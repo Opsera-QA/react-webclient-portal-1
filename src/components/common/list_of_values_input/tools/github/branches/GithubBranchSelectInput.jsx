@@ -1,45 +1,39 @@
-import React, {
-  useEffect,
-  useState,
-} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import {hasStringValue} from "components/common/helpers/string-helpers";
-import {githubActions} from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import { githubActions } from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import ExactMatchSearchSelectInputBase from "components/common/inputs/select/ExactMatchSearchSelectInputBase";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-function GithubBranchSelectInput(
-  {
-    fieldName,
-    model,
-    setModel,
-    toolId,
-    disabled,
-    setDataFunction,
-    clearDataFunction,
-    repositoryId,
-    multi,
-  }) {
+function GithubBranchSelectInput({
+  fieldName,
+  model,
+  setModel,
+  toolId,
+  disabled,
+  setDataFunction,
+  clearDataFunction,
+  repositoryId,
+  multi,
+}) {
   const [isLoading, setIsLoading] = useState(false);
   const [githubBranches, setGithubBranches] = useState([]);
   const [error, setError] = useState(undefined);
   const [inEditMode, setInEditMode] = useState(false);
-  const {
-    cancelTokenSource,
-    isMounted,
-    getAccessToken,
-  } = useComponentStateReference();
+  const { cancelTokenSource, isMounted, getAccessToken } =
+    useComponentStateReference();
 
   useEffect(() => {
     setGithubBranches([]);
     setError(undefined);
 
     if (
-      isMongoDbId(toolId) === true
-      && hasStringValue(repositoryId) === true
-      && (inEditMode === true || multi)
+      isMongoDbId(toolId) === true &&
+      hasStringValue(repositoryId) === true &&
+      (inEditMode === true || multi)
     ) {
       loadData().catch((error) => {
         throw error;
@@ -68,12 +62,39 @@ function GithubBranchSelectInput(
       repositoryId,
       searchTerm,
     );
-    const branches = response?.data?.data;
+
+    const branches = DataParsingHelper.parseNestedArray(
+      response,
+      "data.data",
+      [],
+    );
 
     if (isMounted?.current === true && Array.isArray(branches)) {
-      setGithubBranches([...branches]);
+      const result = branches.map((branch) => {
+        return { name: branch };
+      });
+
+      if (branches.length > 0 && searchTerm.length > 0 && !branches.includes(searchTerm)) {
+        result.unshift({ name: searchTerm, OPSERA_DIRECT_LOOKUP_NEEDED: true });
+      }
+
+      setGithubBranches([...result]);
     }
     setIsLoading(false);
+  };
+
+  const exactMatchSearch = async (branch) => {
+    const response = await githubActions.getBranch(
+      getAccessToken,
+      cancelTokenSource,
+      toolId,
+      repositoryId,
+      branch?.name,
+    );
+
+    const branchResult = response?.data?.data?.branch;
+
+    return branchResult;
   };
 
   if (multi) {
@@ -94,12 +115,13 @@ function GithubBranchSelectInput(
         pluralTopic={"Github Branches"}
         loadDataFunction={loadData}
         supportSearchLookup={true}
+        exactMatchSearch={exactMatchSearch}
       />
     );
   }
 
   return (
-    <SelectInputBase
+    <ExactMatchSearchSelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
@@ -118,6 +140,7 @@ function GithubBranchSelectInput(
       supportSearchLookup={true}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
+      exactMatchSearch={exactMatchSearch}
     />
   );
 }

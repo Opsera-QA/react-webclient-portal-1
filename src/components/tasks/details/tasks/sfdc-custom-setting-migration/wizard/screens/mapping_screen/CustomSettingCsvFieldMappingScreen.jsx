@@ -135,9 +135,10 @@ const CustomSettingCsvFieldMappingScreen = ({
       }
 
       if (Array.isArray(fieldList)) {
+        let csvFields = wizardModel?.getData("csvFields");
         let mappedResult = fieldList.map((field) => ({
           targetField: field.name,
-          sourceField: "",
+          sourceField: csvFields.includes(field.name) ? field.name : "",
           nillable: field.nillable,
           type: field.type,
           unique: field.unique,
@@ -173,6 +174,16 @@ const CustomSettingCsvFieldMappingScreen = ({
 
   const saveAndMoveToNextScreen = async () => {
     try {
+      // added check if multiple csv columns are mapped to same field
+      const nonEmptySources = mappedData.filter(item => item.sourceField !== "");
+      const duplicateSourceFields = nonEmptySources.some((item, index) => {
+        return nonEmptySources.findIndex((element) => element.sourceField === item.sourceField) !== index;
+      });
+
+      if (duplicateSourceFields) {
+        toastContext.showInlineErrorMessage("Operation Not Allowed : Single column has been mapped to multiple fields");
+        return;
+      }
       setIsSaving(true);
       wizardModel.setData("queryFilters", []);
       wizardModel.setData("fieldMapping", mappedData);

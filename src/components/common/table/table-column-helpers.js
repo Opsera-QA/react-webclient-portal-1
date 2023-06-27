@@ -38,6 +38,7 @@ import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleI
 import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
 import CountdownUntilDateFieldBase from "components/common/fields/date/countdown/CountdownUntilDateFieldBase";
 import { hoursToMinutes } from "date-fns";
+import {pipelineHelper} from "components/workflow/pipeline.helper";
 
 export const getDataObjectFromTableRow = (row) => {
   try {
@@ -221,6 +222,25 @@ export const getTaskStatusColumn = (field, className) => {
   };
 };
 
+export const getTaskStatusColumnWithoutRunCount = (field, className) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    width: 105,
+    Cell: function getTaskStatus(row) {
+      const taskStatus = DataParsingHelper.parseString(row?.value, "");
+
+      return (
+        <OrchestrationStateFieldBase
+          orchestrationState={taskStatus}
+          type={"Task"}
+        />
+      );
+    },
+    class: className,
+  };
+};
+
 export const getTagColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
@@ -363,14 +383,14 @@ export const getPipelineTypeColumn = (field, className) => {
 
 export const getCustomTablePipelineStateColumnDefinition = (field, className) => {
   return {
-    Header: getCustomTableHeader(field),
+    Header: "Status",
     accessor: getCustomTableAccessor(field),
     Cell: function parseStatus(tableRow) {
-      const pipelineState = tableRow?.row?.original[field?.id];
+      const pipeline = tableRow?.row?.original;
 
       return (
         <OrchestrationStateFieldBase
-          orchestrationState={pipelineState}
+          orchestrationState={pipelineHelper.getPipelineState(pipeline)}
           type={"Pipeline"}
         />
       );

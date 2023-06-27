@@ -64,7 +64,7 @@ pipelineHelper.getPipelineOrientation = (pipeline) => {
   return "start";
 };
 
-pipelineHelper.getPipelineStatus = (pipeline) => {
+pipelineHelper.getPipelineLastStepStatus = (pipeline) => {
   const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status");
   const paused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
 
@@ -205,12 +205,21 @@ pipelineHelper.getPipelineCompletionPercentage = (pipeline) => {
 };
 
 pipelineHelper.getPipelineState = (pipeline) => {
-  const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status", "stopped");
+  const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_run.status");
+  const lastStepStatus = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status", "stopped");
   const isPaused =
-    status === "stopped" &&
+    lastStepStatus === "stopped" &&
     DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused") === true;
 
-  return isPaused === true ? "paused" : status;
+  if (isPaused === true) {
+    return "paused";
+  }
+
+  if (lastStepStatus === "running") {
+    return "running";
+  }
+
+  return status;
 };
 
 pipelineHelper.getPipelineColor = (pipelineModel, themeConstants) => {

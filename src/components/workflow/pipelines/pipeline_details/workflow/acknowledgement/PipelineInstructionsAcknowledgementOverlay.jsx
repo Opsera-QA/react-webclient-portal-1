@@ -30,8 +30,8 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import useGetPipelineInstructionModelByPipelineStep
   from "components/workflow/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
 import useGetPipelineById from "hooks/workflow/pipelines/useGetPipelineById";
-import PipelineTaskDetailViewer
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineTaskDetailViewer";
+import PipelineActivityLogDetailViewOverlay
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogDetailViewOverlay";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
@@ -203,7 +203,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
 
   if (isPaused !== true && getPipelineByIdHook.isLoading !== true && isMongoDbId(pipelineActivityLogId) === true) {
     return (
-      <PipelineTaskDetailViewer
+      <PipelineActivityLogDetailViewOverlay
         pipelineName={pipeline?.name}
         pipelineActivityLogId={pipelineActivityLogId}
       />

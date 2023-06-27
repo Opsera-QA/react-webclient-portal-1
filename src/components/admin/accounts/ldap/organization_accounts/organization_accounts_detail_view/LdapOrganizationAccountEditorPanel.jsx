@@ -13,31 +13,16 @@ import IdpVendorSelectInput
 import LdapOrganizationAccountOpseraUserSelectInput
   from "components/common/list_of_values_input/admin/accounts/ldap_accounts/LdapOrganizationAccountOpseraUserSelectInput";
 
-function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOrganization, handleClose}) {
+function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, handleClose}) {
   const {getAccessToken} = useContext(AuthContext);
   const [ldapOrganizationAccountDataDto, setLdapOrganizationAccountDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = async () => {
     setIsLoading(true);
-    await unpackLdapOrganizationAccountData();
+    setLdapOrganizationAccountDataDto({...ldapOrganizationAccountData});
     setIsLoading(false);
-  };
-
-  const unpackLdapOrganizationAccountData = async () => {
-    let ldapOrganizationAccountDataDto = ldapOrganizationAccountData;
-    if (ldapOrganizationAccountDataDto.isNew() && ldapOrganization != null) {
-      let orgDomain = ldapOrganization.orgOwnerEmail.substring(ldapOrganization.orgOwnerEmail.lastIndexOf("@") + 1);
-      ldapOrganizationAccountDataDto.setData("orgDomain", orgDomain);
-      ldapOrganizationAccountDataDto.setData("name", ldapOrganization["name"] + "-acc");
-      ldapOrganizationAccountDataDto.setData("org", ldapOrganization["name"] != null ? ldapOrganization["name"] : "");
-    }
-    setLdapOrganizationAccountDataDto(ldapOrganizationAccountDataDto);
-  };
+  }, [ldapOrganizationAccountData]);
 
   const updateLdapOrganizationAccount = async () => {
     return await accountsActions.updateOrganizationAccount(ldapOrganizationAccountDataDto, getAccessToken);
@@ -49,6 +34,10 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
 
   if (isLoading) {
     return (<LoadingDialog size="sm"/>);
+  }
+
+  if (ldapOrganizationAccountDataDto == null) {
+    return null;
   }
 
   return (
@@ -186,7 +175,6 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
 }
 
 LdapOrganizationAccountEditorPanel.propTypes = {
-  ldapOrganization: PropTypes.object,
   ldapOrganizationAccountData: PropTypes.object,
   handleClose: PropTypes.func
 };

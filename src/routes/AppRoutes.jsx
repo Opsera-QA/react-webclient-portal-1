@@ -20,6 +20,7 @@ import FreeTrialSettingsRoutes from "routes/FreeTrialSettingsRoutes";
 import FreeTrialAdminToolsRoutes from "routes/FreeTrialAdminToolsRoutes";
 import WorkspaceRoutes from "routes/WorkspaceRoutes";
 import LandingRoutes from "routes/LandingRoutes";
+import AIMLRoutes from "routes/AIMLRoutes";
 
 export default function AppRoutes() {
   return (
@@ -41,8 +42,9 @@ export default function AppRoutes() {
       <AdminToolsRoutes/>
       <FreeTrialAdminToolsRoutes/>
       <WorkspaceRoutes/>
+      <AIMLRoutes />
 
-      {/*TODO: These are legacy routes that should probably be removed*/}
+        {/*TODO: These are legacy routes that should probably be removed*/}
       <SecureRoute path="/dashboard" component={Dashboard}/>
       <SecureRoute path="/tools/:id?" component={ApiConnector}/>
       <SecureRoute path="/update" component={Update}/>
