@@ -40,9 +40,9 @@ export default function FilterSelectionOverlayContainer(
     if (filterModel?.getNewInstance) {
       newFilterModel = filterModel.getNewInstance();
 
-      // if (newFilterModel?.resetUrlParameters) {
-      //   newFilterModel?.resetUrlParameters();
-      // }
+      if (newFilterModel?.resetUrlParameters) {
+        newFilterModel?.resetUrlParameters();
+      }
     } else {
       newFilterModel = new Model({...filterModel.getNewObjectFields()}, filterModel.getMetaData(), false);
     }
