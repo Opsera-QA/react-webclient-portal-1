@@ -154,6 +154,15 @@ export class FilterModelBase {
     }
   };
 
+  resetUrlParameters = () => {
+    if (this.getUpdateUrlWithQueryParameters() === true) {
+      sessionHelper.removeUrlParameters();
+      this.unpackUrlParameters();
+    }
+  };
+
+  unpackUrlParameters = () => {};
+
   resetDataToDefault = () => {
     const parsedData = DataParsingHelper.parseObject(this.getNewObjectFields(), {});
     const newInstance = this;
