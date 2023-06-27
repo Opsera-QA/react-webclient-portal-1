@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import DateRangeInputBase from "components/common/inputs/date/range/DateRangeInputBase";
 import SalesforceComponentTypeMultiSelectInput
-    from "components/insights/lookup/filters/SalesforceComponentTypeMultiSelectInput";
+    from "components/insights/salesforce/lookup/filters/SalesforceComponentTypeMultiSelectInput";
 import TasksSelectInput from "./filters/TasksSelectInput";
 import OrgsSelectInput from "./filters/OrgsSelectInput";
 import PipelineSelectInput from "./filters/PipelineSelectInput";
 import SalesforceComponentNameMultiSelectInput
-    from "components/insights/lookup/filters/SalesforceComponentNameMultiSelectInput";
+    from "components/insights/salesforce/lookup/filters/SalesforceComponentNameMultiSelectInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import PropTypes from "prop-types";

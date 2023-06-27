@@ -2,21 +2,20 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {insightsLookupActions} from "components/insights/lookup/insightsLookup.actions";
-import {capitalizeFirstLetter} from "../../../common/helpers/string-helpers";
+import {formatDate} from "../../../../common/helpers/date/date.helpers";
+import {insightsLookupActions} from "../insightsLookup.actions";
 
-function PipelineSelectInput(
+function SalesforceComponentNameMultiSelectInput(
     {
         fieldName,
         model,
         setModel,
-        disabled,
-        formatDataFunction,
         textField,
         valueField,
-        setDataFunction,
-        clearDataFunction,
-        className,
+        placeholderText,
+        projects,
+        startDate,
+        endDate
     }) {
     const [salesforceComponentNames, setSalesforceComponentNames] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +31,10 @@ function PipelineSelectInput(
                 throw error;
             }
         });
-    }, []);
+    }, [projects, startDate, endDate]);
+
+    const disabled = model.getArrayData('selectedComponentFilterData').length === 0;
+    if(disabled){ model?.setData("selectedComponentNames", []);}
 
     const loadData = async () => {
         try {
@@ -50,66 +52,64 @@ function PipelineSelectInput(
         }
     };
 
-    const loadComponentNames = async () => {
-        const pipelinesResponse = await insightsLookupActions.getPipelines(
+    const loadComponentNames = async (newFilterModel = model) => {
+        const DATE_STRING_FORMAT = "MM/dd/yyyy";
+        const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
+        const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
+        const response = await insightsLookupActions.getComponentNames(
             getAccessToken,
             cancelTokenSource,
+            formattedStartDate,
+            formattedEndDate,
+            [],
+            projects,
+            [],
+            [],
+            newFilterModel
         );
+        const names = response?.data?.data?.componentNames;
 
-        const pipelines = pipelinesResponse?.data?.results;
-
-        if (
-            isMounted?.current === true &&
-            Array.isArray(pipelines) &&
-            Array.isArray(pipelines)
-        ) {
-            const resultArray = [...pipelines];
-            setSalesforceComponentNames(resultArray);
+        if (isMounted?.current === true && Array.isArray(names)) {
+            setSalesforceComponentNames(names);
         }
     };
 
     return (
         <MultiSelectInputBase
-            className={className}
-            setDataFunction={setDataFunction}
             fieldName={fieldName}
             dataObject={model}
             setDataObject={setModel}
             selectOptions={salesforceComponentNames}
-            formatDataFunction={formatDataFunction}
-            clearDataFunction={clearDataFunction}
-            // groupBy={(filterOption) =>
-            //     capitalizeFirstLetter(filterOption?.type, " ", "Undefined Type")
-            // }
-            textField={(data) =>
-                capitalizeFirstLetter(data["type"]) +
-                ": " +
-                capitalizeFirstLetter(data["name"])
-            }
             busy={isLoading}
             valueField={valueField}
-            disabled={disabled}
             error={error}
+            textField={textField}
+            placeholderText={placeholderText}
+            disabled={disabled || isLoading}
             pluralTopic={"Filters"}
         />
     );
 }
 
-PipelineSelectInput.propTypes = {
+SalesforceComponentNameMultiSelectInput.propTypes = {
     className: PropTypes.string,
     fieldName: PropTypes.string,
     model: PropTypes.object,
     setModel: PropTypes.func,
-    disabled: PropTypes.bool,
     textField: PropTypes.string,
     valueField: PropTypes.string,
     formatDataFunction: PropTypes.func,
     setDataFunction: PropTypes.func,
     clearDataFunction: PropTypes.func,
+    data: PropTypes.any,
+    projects: PropTypes.any,
+    placeholderText: PropTypes.string,
+    startDate: PropTypes.string,
+    endDate: PropTypes.string,
 };
 
-PipelineSelectInput.defaultProps = {
+SalesforceComponentNameMultiSelectInput.defaultProps = {
     textField: "name",
 };
 
-export default PipelineSelectInput;
+export default SalesforceComponentNameMultiSelectInput;

@@ -1,7 +1,7 @@
 import FilterModelBase from "core/data_model/filterModel.base";
 import { formatDate, hasDateValue } from "components/common/helpers/date/date.helpers";
 import {subDays} from "date-fns";
-import AppliedTagBadge from "../../common/badges/tag/AppliedTagBadge";
+import AppliedTagBadge from "../../../common/badges/tag/AppliedTagBadge";
 import React from "react";
 
 const insightsLookupMetadata = {
