@@ -41,6 +41,10 @@ sessionHelper.getStoredUrlParameter = (queryParameter) => {
   return urlSearchParams.get(queryParameter);
 };
 
+sessionHelper.removeUrlParameters = () => {
+  window.history.replaceState({}, undefined, window.location.pathname);
+};
+
 sessionHelper.updateUrlWithQueryParameters = (url) => {
   window.history.replaceState(null, null, url?.toString());
 };

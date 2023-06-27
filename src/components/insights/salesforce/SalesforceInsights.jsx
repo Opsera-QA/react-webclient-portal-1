@@ -44,7 +44,7 @@ export default function SalesforceInsights() {
           >
             <SalesforceInsightsOptionCardBase
               option={SALESFORCE_INSIGHTS_TYPES.LOOKUP}
-              description={"Salesforce Lookup"}
+              description={"Monitor and analyze detailed performance data, including pipeline runs, unit tests, and validation information, to view encapsulated data of component deployments in Salesforce Pipelines."}
               onClickFunction={handleFlowSelectionButton}
             />
             <div className={"d-md-block d-lg-block d-xl-none mb-2"} />
@@ -59,7 +59,9 @@ export default function SalesforceInsights() {
             <div className={"d-sm-block d-md-none d-lg-none d-xl-none mt-4"} />
             <SalesforceInsightsOptionCardBase
               option={SALESFORCE_INSIGHTS_TYPES.DEPENDENCY_ANALYSER}
-              description={"Dependency Analyser"}
+              description={
+                "Use this tool to identify dependencies in Apex classes, Lightning components, and more. It is helpful for reviewing dependencies and conducting impact analysis as needed."
+              }
               onClickFunction={handleFlowSelectionButton}
             />
             <div className={"d-md-block d-lg-block d-xl-none mb-4"} />

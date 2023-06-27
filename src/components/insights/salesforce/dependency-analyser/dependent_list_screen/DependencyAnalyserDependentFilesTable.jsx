@@ -66,6 +66,7 @@ const DependencyAnalyserDependentFilesTable = ({ pipelineWizardModel, setPipelin
         filterDto={sfdcFilesPaginationModel}
         setFilterDto={setSfdcFilesPaginationModel}
         loadData={loadData}
+        fieldName={"componentType"}
       />
     );
   };
@@ -108,9 +109,9 @@ const DependencyAnalyserDependentFilesTable = ({ pipelineWizardModel, setPipelin
         exportButton={getExportButton()}
         titleIcon={faSalesforce}
         body={getView()}
-        supportSearch={true}
+        // supportSearch={true}
         showBorder={false}
-        inlineFilters={getSfdcInlineFilters()}
+        // inlineFilters={getSfdcInlineFilters()}
       />
     </div>
   );

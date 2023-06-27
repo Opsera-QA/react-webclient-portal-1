@@ -77,7 +77,7 @@ function GithubOpenCommitsTab({ repository, dashboardData, kpiConfiguration, ico
       dashboardFilters,
       dashboardOrgs,
       filterDto,
-      "opened",
+      "open",
       repository
     );
     let dataObject = response?.data ? response?.data?.pull_requests?.data[0]?.data : [];

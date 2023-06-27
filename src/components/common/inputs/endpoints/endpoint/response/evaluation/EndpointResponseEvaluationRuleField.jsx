@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import InfoContainer from "components/common/containers/InfoContainer";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import FieldContainer from "components/common/fields/FieldContainer";
+import apiResponseEvaluationOptionConstants
+  from "@opsera/definitions/constants/api/response/apiResponseEvaluationOption.constants";
 
 function EndpointResponseEvaluationRuleField(
   {
@@ -32,8 +34,8 @@ function EndpointResponseEvaluationRuleField(
       return "Incomplete Rule";
     }
 
-    if (filter === "is_not_null" || filter === "is_null") {
-      const filterText = filter === "is_not_null" ? "Not Null" : "Null";
+    if (filter === apiResponseEvaluationOptionConstants.API_RESPONSE_EVALUATION_OPTIONS.IS_NOT_NULL || filter === apiResponseEvaluationOptionConstants.API_RESPONSE_EVALUATION_OPTIONS.IS_NULL) {
+      const filterText = filter === apiResponseEvaluationOptionConstants.API_RESPONSE_EVALUATION_OPTIONS.IS_NOT_NULL ? "Not Null" : "Null";
       return <span>The API Response will meet the requirements for {ruleType} evaluation if the <b>Response Body</b> is <b>{filterText}</b>.</span>;
     }
 
@@ -81,8 +83,8 @@ function EndpointResponseEvaluationRuleField(
 
     const typeText = type === "array" ? "an array" : `a ${type}`;
 
-    if (filter === "is_not_null" || filter === "is_null") {
-      const filterText = filter === "is_not_null" ? "Not Null" : "Null";
+    if (filter === apiResponseEvaluationOptionConstants.API_RESPONSE_EVALUATION_OPTIONS.IS_NOT_NULL || filter === apiResponseEvaluationOptionConstants.API_RESPONSE_EVALUATION_OPTIONS.IS_NULL) {
+      const filterText = filter === apiResponseEvaluationOptionConstants.API_RESPONSE_EVALUATION_OPTIONS.IS_NOT_NULL ? "Not Null" : "Null";
       return <span>The field <b>{fieldName}</b> is {typeText} that is {filterText}.</span>;
     }
 

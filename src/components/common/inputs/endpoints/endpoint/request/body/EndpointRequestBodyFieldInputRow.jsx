@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/endpoint/request/body/endpointRequestField.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import EndpointRequestFieldTypeSelectInput
   from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldTypeSelectInput";
@@ -18,6 +17,7 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import {
   ENDPOINT_TYPES
 } from "components/common/list_of_values_input/inventory/endpoints/type/endpointType.constants";
+import endpointRequestFieldMetadata from "@opsera/definitions/constants/api/request/body/endpointRequestField.metadata";
 
 function EndpointRequestBodyFieldInputRow(
   {

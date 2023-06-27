@@ -1,17 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-
-const SUPPORTED_RULE_OPTIONS = [
-  {
-    text: "Status Code",
-    value: "status",
-  },
-  {
-    text: "Response Field Evaluation",
-    value: "field_evaluation",
-  },
-];
+import apiFieldTypeConstants from "@opsera/definitions/constants/api/request/apiFieldType.constants";
 
 function EndpointResponseEvaluationRuleOptionSelectInput(
   {
@@ -41,7 +31,13 @@ function EndpointResponseEvaluationRuleOptionSelectInput(
       }
     }
 
-    const simpleResponseEvaluationSupportedResponseBodyTypes = ["boolean", "array", "string", "number", "integer"];
+    const simpleResponseEvaluationSupportedResponseBodyTypes = [
+      apiFieldTypeConstants.API_FIELD_TYPES.ARRAY,
+      apiFieldTypeConstants.API_FIELD_TYPES.BOOLEAN,
+      apiFieldTypeConstants.API_FIELD_TYPES.INTEGER,
+      apiFieldTypeConstants.API_FIELD_TYPES.NUMBER,
+      apiFieldTypeConstants.API_FIELD_TYPES.STRING,
+    ];
     if (simpleResponseEvaluationSupportedResponseBodyTypes.includes(endpoint?.responseBodyType)) {
       supportedRuleOptions.push({
         text: "API Response Evaluation",

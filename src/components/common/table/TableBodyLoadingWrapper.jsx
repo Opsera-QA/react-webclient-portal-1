@@ -29,7 +29,7 @@ function TableBodyLoadingWrapper(
     if (isLoading === true) {
       return (
         <CenterLoadingIndicator
-          minHeight={tableHeight}
+          tableHeight={tableHeight}
         />
       );
     }

@@ -9,7 +9,7 @@ function GitHubCommitsTotalActivityDataBlock({ data, onSelect }) {
             <TwoLineScoreDataBlock
                 className={"p-3 h-100"}
                 score={data}
-                subtitle={"Total Activity"}
+                subtitle={"Total Pull Request Activity"}
             />
         </DataBlockBoxContainer>
     );
