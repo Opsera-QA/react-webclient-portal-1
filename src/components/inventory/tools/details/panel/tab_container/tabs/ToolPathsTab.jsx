@@ -3,11 +3,13 @@ import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faFolderTree,} from "@fortawesome/pro-light-svg-icons";
 import {TOOL_DETAIL_PANEL_TABS} from "components/inventory/tools/details/panel/tab_container/ToolDetailPanelTabContainer";
+import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 export const PATHS_TAB_SUPPORTED_TOOL_IDENTIFIERS = [
-  "gitlab",
-  "github",
-  "bitbucket",
+  toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS,
 ];
 
 function ToolPathsTab({ toolModel, handleTabClick, activeTab }) {

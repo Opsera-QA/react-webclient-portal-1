@@ -156,6 +156,8 @@ export default function CreateSalesforceWorkflowWizardSelectToolInputBase(
     const accountName =
       toolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS
         ? tool?.configuration?.jUserId
+        : toolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS
+        ? tool?.configuration?.organization
         : tool?.configuration?.accountUsername;
 
     return (`${toolName} (${accountName})`);

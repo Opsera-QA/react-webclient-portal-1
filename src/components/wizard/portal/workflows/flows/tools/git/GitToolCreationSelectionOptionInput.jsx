@@ -14,17 +14,20 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import bitbucketConnectionMetadata from "../../../../../../inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket-connection-metadata";
+import AzureDevopsConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/azure-devops/azureDevops-connection-metadata";
 
 export const GIT_TOOL_CREATION_OPTIONS = {
   GITHUB: toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
   GITLAB: toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB,
   BITBUCKET: toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET,
+  AZURE: toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS,
 };
 
 export const GIT_TOOL_CREATION_OPTION_LABELS = {
   GITHUB: "Github",
   GITLAB: "Gitlab",
   BITBUCKET: "Bitbucket",
+  AZURE: "Azure",
 };
 
 function GitToolCreationSelectionOptionInput({
@@ -56,6 +59,11 @@ function GitToolCreationSelectionOptionInput({
           ...modelHelpers.getNewModelForMetadata(bitbucketConnectionMetadata),
         });
         return;
+      case GIT_TOOL_CREATION_OPTIONS.AZURE:
+        setGitToolModel({
+          ...modelHelpers.getNewModelForMetadata(AzureDevopsConnectionMetadata),
+        });
+        return;
     }
   };
 
@@ -69,7 +77,7 @@ function GitToolCreationSelectionOptionInput({
           }
         />
       </CenteredContentWrapper>
-      <Row className={"d-flex align-items-center justify-content-center"}>
+      <Row className={"d-flex align-items-center justify-content-center px-4"}>
         <Col xs={3}>
           <SelectionIconCardBase
             selectedOption={gitToolOption}
@@ -131,6 +139,27 @@ function GitToolCreationSelectionOptionInput({
                   </div>
                 }
                 title={GIT_TOOL_CREATION_OPTION_LABELS.BITBUCKET}
+                titleClassName={"mx-auto py-1"}
+                subTitleClassName={"mx-auto"}
+              />
+            }
+          />
+        </Col>
+        <Col xs={3}>
+          <SelectionIconCardBase
+            selectedOption={gitToolOption}
+            option={GIT_TOOL_CREATION_OPTIONS.AZURE}
+            onClickFunction={setDataFunction}
+            highlightedBorderColor={
+              themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE
+            }
+            titleBar={
+              <IconTitleBar
+                className={""}
+                icon={getLargeVendorIconFromToolIdentifier(
+                  toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS,
+                )}
+                title={GIT_TOOL_CREATION_OPTION_LABELS.AZURE}
                 titleClassName={"mx-auto py-1"}
                 subTitleClassName={"mx-auto"}
               />
