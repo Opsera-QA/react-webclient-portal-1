@@ -22,6 +22,16 @@ function GithubRepositoryFilterMultiSelectInput({
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
+  const setRepositoryMetricModel=()=> {
+    let repository= model.getData(fieldName);
+    if (repository?.length==0){
+    model.setData("github-branch", []);
+    setModel({ ...model });
+  }
+  else{
+    setModel({ ...model });
+  }}
+  
   useEffect(() => {
     setRepositories([]);
     if (cancelTokenSource) {
@@ -72,7 +82,7 @@ function GithubRepositoryFilterMultiSelectInput({
     <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={model}
-      setDataObject={setModel}
+      setDataObject={setRepositoryMetricModel}
       selectOptions={repositories}
       busy={isLoading}
       valueField={valueField}
