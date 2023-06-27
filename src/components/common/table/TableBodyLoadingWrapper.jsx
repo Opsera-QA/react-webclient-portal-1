@@ -12,17 +12,16 @@ function TableBodyLoadingWrapper(
     data,
     tableComponent,
     noDataMessage,
-    minHeight,
+    tableHeight,
     error,
   }) {
   if (error) {
     return (
-      <CenteredContentWrapper
-        minHeight={minHeight}
-      >
+      <CenteredContentWrapper>
         <ErrorMessageFieldBase
+          tableHeight={tableHeight}
           message={error}
-          />
+        />
       </CenteredContentWrapper>
     );
   }
@@ -31,17 +30,18 @@ function TableBodyLoadingWrapper(
     if (isLoading === true) {
       return (
         <CenterLoadingIndicator
-          minHeight={minHeight}
+          tableHeight={tableHeight}
         />
       );
     }
 
     return (
-      <CenteredContentWrapper minHeight={minHeight}>
+      <CenteredContentWrapper>
         <InfoMessageFieldBase
           message={noDataMessage}
+          tableHeight={tableHeight}
           showInformationLabel={false}
-          />
+        />
       </CenteredContentWrapper>
     );
   }
@@ -58,11 +58,12 @@ TableBodyLoadingWrapper.propTypes = {
   data: PropTypes.array,
   tableComponent: PropTypes.object,
   noDataMessage: PropTypes.string,
-  minHeight: PropTypes.string,
+  tableHeight: PropTypes.string,
   error: PropTypes.any,
 };
 
 TableBodyLoadingWrapper.defaultProps = {
+  tableHeight: "500px",
   noDataMessage: "No data is currently available"
 };
 
