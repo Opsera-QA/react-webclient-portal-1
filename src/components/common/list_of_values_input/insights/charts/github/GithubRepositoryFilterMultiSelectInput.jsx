@@ -22,16 +22,6 @@ function GithubRepositoryFilterMultiSelectInput({
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-  const setRepositoryMetricModel=()=> {
-    let repository= model.getData(fieldName);
-    if (repository?.length==0){
-    model.setData("github-branch", []);
-    setModel({ ...model });
-  }
-  else{
-    setModel({ ...model });
-  }}
-  
   useEffect(() => {
     setRepositories([]);
     if (cancelTokenSource) {
@@ -78,11 +68,25 @@ function GithubRepositoryFilterMultiSelectInput({
       setRepositories(response?.data?.data);
     }
   };
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newModel = {...model};
+    newModel.setData(fieldName, selectedOption.map(option => option.value));
+    if(selectedOption?.length===0){
+      newModel.setData("github-branch",[]);
+    }
+    setModel({ ...newModel });
+  };
+  const clearDataFunction = () => { 
+      let newModel = { ...model };
+      newModel.setData("github-branch",[]);
+      newModel.setData(fieldName,[]);
+      setModel({ ...newModel });
+  };
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={model}
-      setDataObject={setRepositoryMetricModel}
+      setDataObject={setModel}
       selectOptions={repositories}
       busy={isLoading}
       valueField={valueField}
@@ -90,6 +94,8 @@ function GithubRepositoryFilterMultiSelectInput({
       textField={textField}
       placeholderText={placeholderText}
       disabled={disabled}
+      clearDataFunction={clearDataFunction}
+      setDataFunction={setDataFunction}
     />
   );
 }

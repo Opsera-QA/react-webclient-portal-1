@@ -70,6 +70,7 @@ function GithubBranchFilterMultiSelectInput({
         setBranches(response?.data?.data?.githubBranchList?.data);
       }
     }
+    
   };
   const disabled = !repository || repository.length === 0;
   return (
