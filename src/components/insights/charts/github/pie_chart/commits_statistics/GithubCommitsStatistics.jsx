@@ -55,7 +55,8 @@ function GithubCommitsStatistics({
   const [totalActivity, setTotalActivity] = useState(0);
   const [totalFixed, setTotalFixed] = useState(0);
   const [highestMergesMetric, setHighestMergesMetric] = useState([]);
-  const [totalDeclinedMerges, setTotalDeclinedMerges] = useState([]);
+  const [totalDeclinedMerges, setTotalDeclinedMerges] = useState(0);
+  const [totalDeclinedActionable, setTotalDeclinedActionable] = useState([]);
   const [repositoriesWithCommits, setRepositoriesWithCommits] = useState([]);
   const toastContext = useContext(DialogToastContext);
 
@@ -142,7 +143,10 @@ function GithubCommitsStatistics({
         : [];
       const total_declined_merges = response?.data
         ? response?.data?.data?.total_declined_merges
-        : [];
+        : 0;
+      const declined_actionable = response?.data
+          ? response?.data?.data?.declined_actionable
+          : [];
       const repositories_with_commits = response?.data
         ? response?.data?.data?.repositories_with_commits
         : [];
@@ -158,6 +162,7 @@ function GithubCommitsStatistics({
         setTotalFixed(fixed_pull_request),
         setHighestMergesMetric(project_with_highest_merges);
         setTotalDeclinedMerges(total_declined_merges);
+        setTotalDeclinedActionable(declined_actionable);
         setRepositoriesWithCommits(repositories_with_commits);
       }
     } catch (error) {
@@ -172,16 +177,16 @@ function GithubCommitsStatistics({
     }
   };
 
-  let totalDeclined = 0;
-  let totalApproved = 0;
-
-  totalDeclinedMerges.forEach((obj) =>{
-    totalDeclined = totalDeclined + obj.commits;
-  } );
-
-  highestMergesMetric.forEach((obj) =>{
-    totalApproved = totalApproved + obj.commits;
-  } );
+  // let totalDeclined = 0;
+  // let totalApproved = 0;
+  //
+  // totalDeclinedMerges.forEach((obj) =>{
+  //   totalDeclined = totalDeclined + obj.commits;
+  // } );
+  //
+  // highestMergesMetric.forEach((obj) =>{
+  //   totalApproved = totalApproved + obj.commits;
+  // } );
 
   const onRowSelect = () => {
     toastContext.showOverlayPanel(
@@ -189,7 +194,7 @@ function GithubCommitsStatistics({
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
         highestMergesMetric={highestMergesMetric}
-        totalDeclinedMerges={totalDeclinedMerges}
+        totalDeclinedMerges={totalDeclinedActionable}
         repositoriesWithCommits={repositoriesWithCommits}
       />,
     );
@@ -262,7 +267,7 @@ function GithubCommitsStatistics({
               <Col
                   md={3}
               >
-                <GitHubCommitsTotalDeclinedDataBlock data={totalDeclined} />
+                <GitHubCommitsTotalDeclinedDataBlock data={totalDeclinedMerges} />
               </Col>
               <Col
                   md={3}
