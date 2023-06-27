@@ -178,15 +178,17 @@ function GithubCommitsStatistics({
   };
 
   const onRowSelect = () => {
-    toastContext.showOverlayPanel(
-      <GithubCommitsActionableInsightOverlay
-        kpiConfiguration={kpiConfiguration}
-        dashboardData={dashboardData}
-        highestMergesMetric={highestMergesMetric}
-        totalDeclinedMerges={totalDeclinedActionable}
-        repositoriesWithCommits={repositoriesWithCommits}
-      />,
-    );
+    if(highestMergesMetric.length > 0) {
+      toastContext.showOverlayPanel(
+          <GithubCommitsActionableInsightOverlay
+              kpiConfiguration={kpiConfiguration}
+              dashboardData={dashboardData}
+              highestMergesMetric={highestMergesMetric}
+              totalDeclinedMerges={totalDeclinedActionable}
+              repositoriesWithCommits={repositoriesWithCommits}
+          />,
+      );
+    }
   };
 
   const showGithubApprovedPullRequestModal = (node) => {
