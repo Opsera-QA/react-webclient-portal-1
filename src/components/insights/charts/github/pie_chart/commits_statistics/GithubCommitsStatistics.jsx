@@ -178,15 +178,15 @@ function GithubCommitsStatistics({
   };
 
   const onRowSelect = () => {
-    toastContext.showOverlayPanel(
-      <GithubCommitsActionableInsightOverlay
-        kpiConfiguration={kpiConfiguration}
-        dashboardData={dashboardData}
-        highestMergesMetric={highestMergesMetric}
-        totalDeclinedMerges={totalDeclinedActionable}
-        repositoriesWithCommits={repositoriesWithCommits}
-      />,
-    );
+      toastContext.showOverlayPanel(
+          <GithubCommitsActionableInsightOverlay
+              kpiConfiguration={kpiConfiguration}
+              dashboardData={dashboardData}
+              highestMergesMetric={highestMergesMetric}
+              totalDeclinedMerges={totalDeclinedActionable}
+              repositoriesWithCommits={repositoriesWithCommits}
+          />,
+      );
   };
 
   const showGithubApprovedPullRequestModal = (node) => {
