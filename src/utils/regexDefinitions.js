@@ -8,9 +8,9 @@ regexDefinitions.generalText = {
 };
 
 regexDefinitions.descriptionField = {
-  regex: /^[A-Za-z0-9'\-_.:,! ]*$/,
-  formText: "Spaces, letters, numbers dashes, colons, underscores, commas, exclamation points, and periods are allowed",
-  errorFormText: "Only spaces, letters, numbers dashes, colons, commas, exclamation points, underscores, and periods are allowed"
+  regex: /^[A-Za-z0-9'\-_.:,! ()]*$/,
+  formText: "Spaces, letters, numbers dashes, colons, underscores, commas, exclamation points, parentheses and periods are allowed",
+  errorFormText: "Only spaces, letters, numbers dashes, colons, commas, exclamation points, underscores, parentheses, and periods are allowed"
 };
 
 regexDefinitions.portField = {
