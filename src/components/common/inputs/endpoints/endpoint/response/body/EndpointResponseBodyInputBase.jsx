@@ -7,9 +7,6 @@ import EndpointResponseBodyFieldInputRow
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import {
-  endpointRequestFieldMetadata
-} from "components/common/inputs/endpoints/endpoint/request/body/endpointRequestField.metadata";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
@@ -20,6 +17,8 @@ import EndpointResponseBodyTypeSelectInput
 import {
   EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS
 } from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
+import endpointResponseFieldMetadata
+  from "@opsera/definitions/constants/api/response/body/field/endpointResponseField.metadata";
 
 function EndpointResponseBodyInputBase(
   {
@@ -97,7 +96,7 @@ function EndpointResponseBodyInputBase(
 
   const addField = () => {
     const newFields = fields;
-    const newField = {...endpointRequestFieldMetadata.newObjectFields};
+    const newField = {...endpointResponseFieldMetadata.newObjectFields};
     newField.fieldName = `field${fields.length + 1}`;
     newFields.push(newField);
     loadData();

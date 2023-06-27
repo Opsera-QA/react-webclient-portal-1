@@ -1,13 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import GitToolPathsPanel from "components/inventory/tools/tool_details/paths/git/GitToolPathsPanel";
+import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 function ToolPathsPanel({toolModel}) {
   const getPathsPanel = () => {
     switch (toolModel?.getData("tool_identifier")) {
-      case "gitlab":
-      case "github":
-      case "bitbucket":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS:
         return (
           <GitToolPathsPanel
             toolModel={toolModel}
