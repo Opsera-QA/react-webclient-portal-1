@@ -17,6 +17,7 @@ import CustomSettingQueryBuilderScreen from "./screens/query_builder_screen/Cust
 import CustomSettingTaskConfirmationScreen from "./screens/confirmation_screen/CustomSettingTaskConfirmationScreen";
 import { DATA_SEEDING_WIZARD_SCREENS } from "./dataSeedingTaskWizard.constants";
 import { dataSeedingTaskWizardMetadata } from "./dataSeedingWizard.metadata";
+import DataSeedingFieldMappingScreen from "./screens/mapping_screen/DataSeedingFieldMappingScreen";
 
 const SalesforceDataSeedingTaskWizard = ({ handleClose, taskModel }) => {
   const toastContext = useContext(DialogToastContext);
@@ -89,6 +90,15 @@ const SalesforceDataSeedingTaskWizard = ({ handleClose, taskModel }) => {
             setCurrentScreen={setCurrentScreen}
             handleClose={handleClose}
             taskType={wizardModel?.getData("taskType")}
+          />
+        );
+      case DATA_SEEDING_WIZARD_SCREENS.MAPPING_SCREEN:
+        return (
+          <DataSeedingFieldMappingScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
           />
         );
       case DATA_SEEDING_WIZARD_SCREENS.QUERY_BUILDER_SCREEN:

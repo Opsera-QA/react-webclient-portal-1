@@ -66,7 +66,7 @@ function FieldSelectorBasePanel({
       if (fieldLists.length > 0) {
         fieldLists.forEach((user, index) => {
           let member = unpackedMembers.find((member) => {
-            return member.name === user.name;
+            return member.componentName === user.componentName;
           });
 
           if (member == null) {
@@ -92,14 +92,25 @@ function FieldSelectorBasePanel({
   const updateMembers = async () => {
     try {
       setIsSaving(true);
-      wizardModel.setData("selectedFieldList", members);
+      wizardModel.setData("selectedDependentObjectList", members);
+      wizardModel.setData("fieldList", {});
+      wizardModel.setData("selectedFieldList", {});
       wizardModel.setData("queryFilters", []);
       wizardModel.setData("filterQuery", "");
-      await dataSeedingTaskWizardActions.updateSelectedFields(
+      await dataSeedingTaskWizardActions.updateSelectedDependentObjects(
         getAccessToken,
         cancelTokenSource,
         wizardModel,
         members,
+      );
+      // trigger field fetch
+      await dataSeedingTaskWizardActions.triggerFieldPropertiesPull(
+        getAccessToken,
+        cancelTokenSource,
+        wizardModel?.getData("taskId"),
+        wizardModel?.getData("runCount"),
+        wizardModel,
+        wizardModel?.getData("selectedCustomSetting")?.componentName,
       );
       setShowUnsavedChangesMessage(false);
     } catch (error) {
@@ -156,15 +167,9 @@ function FieldSelectorBasePanel({
   };
 
   const updateAndProceed = async () => {
-    // check if theres any mandatory fields in unselected options, if so dont allow them to proceed
-    const hasMandatedValue = nonMembers.some(obj => obj.nillable === false);
-    if(hasMandatedValue) {
-      toastContext.showSystemErrorToast("You need to select all mandatory fields to proceed.");
-      return;
-    }
     await updateMembers();
     setCurrentScreen(
-      DATA_SEEDING_WIZARD_SCREENS.QUERY_BUILDER_SCREEN,
+      DATA_SEEDING_WIZARD_SCREENS.MAPPING_SCREEN,
     );
   };
 

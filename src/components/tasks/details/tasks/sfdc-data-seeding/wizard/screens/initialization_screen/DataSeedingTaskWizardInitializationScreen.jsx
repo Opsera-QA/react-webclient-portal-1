@@ -6,7 +6,7 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import CustomSettingTaskWizardCreateNewRecordButton from "./CustomSettingTaskWizardCreateNewRecordButton";
+import DataSeedingTaskWizardCreateNewRecordButton from "./DataSeedingTaskWizardCreateNewRecordButton";
 
 const DataSeedingTaskWizardInitializationScreen = ({
   wizardModel,
@@ -46,7 +46,7 @@ const DataSeedingTaskWizardInitializationScreen = ({
           </div>
         </div>
         <SaveButtonContainer>
-          <CustomSettingTaskWizardCreateNewRecordButton
+          <DataSeedingTaskWizardCreateNewRecordButton
             wizardModel={wizardModel}
             setWizardModel={setWizardModel}
             setCurrentScreen={setCurrentScreen}

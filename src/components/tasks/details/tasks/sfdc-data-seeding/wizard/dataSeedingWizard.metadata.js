@@ -28,6 +28,14 @@ export const dataSeedingTaskWizardMetadata = {
       id: "selectedCustomSetting",
     },
     {
+      label: "Dependent Object List",
+      id: "dependentObjectList"
+    },
+    {
+      label: "Selected Dependent Object List",
+      id: "selectedDependentObjectList",
+    },
+    {
       label: "Selected Field Properties",
       id: "selectedFieldList",
     },
@@ -62,6 +70,8 @@ export const dataSeedingTaskWizardMetadata = {
     taskType: "",
     selectedCustomSetting: "",
     selectedFieldList: [],
+    dependentObjectList: [],
+    selectedDependentObjectList: [],
     queryFilters: [],
     filterQuery: "",
     fieldList: [],

@@ -9,7 +9,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import dataSeedingTaskWizardActions from "../../dataSeedingTaskWizard.actions";
 import { DATA_SEEDING_WIZARD_SCREENS } from "../../dataSeedingTaskWizard.constants";
 
-function CustomSettingTaskWizardCreateNewRecordButton({
+function DataSeedingTaskWizardCreateNewRecordButton({
   wizardModel,
   setWizardModel,
   setCurrentScreen,
@@ -115,7 +115,7 @@ function CustomSettingTaskWizardCreateNewRecordButton({
   );
 }
 
-CustomSettingTaskWizardCreateNewRecordButton.propTypes = {
+DataSeedingTaskWizardCreateNewRecordButton.propTypes = {
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
   setCurrentScreen: PropTypes.func,
@@ -127,9 +127,9 @@ CustomSettingTaskWizardCreateNewRecordButton.propTypes = {
   isLoading: PropTypes.bool,
 };
 
-CustomSettingTaskWizardCreateNewRecordButton.defaultProps = {
+DataSeedingTaskWizardCreateNewRecordButton.defaultProps = {
   size: "sm",
   icon: faSync,
 };
 
-export default CustomSettingTaskWizardCreateNewRecordButton;
+export default DataSeedingTaskWizardCreateNewRecordButton;

@@ -12,8 +12,8 @@ const FieldPropertiesSelectorView = ({ wizardModel, setWizardModel, handleClose,
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [fieldsPropertiesList, setFieldsPropertiesList] = useState([]);
-  const [selectedFields, setSelectedFields] = useState(wizardModel?.getData("selectedFieldList"));
+  const [dependentObjectList, setDependentObjectList] = useState([]);
+  const [selectedDependentList, setSelectedDependentList] = useState(wizardModel?.getData("selectedDependentObjectList"));
   const [filePullCompleted, setFilePullCompleted] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -27,7 +27,7 @@ const FieldPropertiesSelectorView = ({ wizardModel, setWizardModel, handleClose,
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    setFieldsPropertiesList([]);
+    setDependentObjectList([]);
 
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
@@ -86,13 +86,13 @@ const FieldPropertiesSelectorView = ({ wizardModel, setWizardModel, handleClose,
   const getFieldPropertiesList = async (cancelSource = cancelTokenSource) => {
     setIsLoading(true);
     const response =
-      await dataSeedingTaskWizardActions.pullFieldList(
+      await dataSeedingTaskWizardActions.pullDependentObjectList(
         getAccessToken,
         cancelSource,
         wizardModel,
       );
     const errorMessage = response?.data?.data?.errorMessage;
-    const fieldList = response?.data?.data?.fieldList;
+    const dependentObjectList = response?.data?.data?.dependentObjectList;
 
     if (isMounted?.current === true) {
       if (errorMessage) {
@@ -102,15 +102,15 @@ const FieldPropertiesSelectorView = ({ wizardModel, setWizardModel, handleClose,
         );
       }
 
-      if (Array.isArray(fieldList)) {
-        setFieldsPropertiesList(fieldList);
-        wizardModel?.setData("fieldList", fieldList);
+      if (Array.isArray(dependentObjectList)) {
+        setDependentObjectList(dependentObjectList);
+        wizardModel?.setData("dependentObjectList", dependentObjectList);
         setIsLoading(false);
         setFilePullCompleted(true);
       }
     }
 
-    return fieldList;
+    return dependentObjectList;
   };
 
   // console.log(fieldsPropertiesList);
@@ -124,9 +124,9 @@ const FieldPropertiesSelectorView = ({ wizardModel, setWizardModel, handleClose,
       <FieldSelectorBasePanel
         recordId={wizardModel?.getData("recordId")}
         reload={loadData}
-        selectedFields={selectedFields}
-        setSelectedFields={setSelectedFields}
-        fieldList={fieldsPropertiesList}
+        selectedFields={selectedDependentList}
+        setSelectedFields={setSelectedDependentList}
+        fieldList={dependentObjectList}
         isLoading={isLoading}
         wizardModel={wizardModel}
         setWizardModel={setWizardModel}

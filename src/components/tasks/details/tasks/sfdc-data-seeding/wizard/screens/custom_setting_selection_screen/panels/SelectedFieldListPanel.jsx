@@ -143,10 +143,10 @@ function SelectedFieldListPanel({
               icon={faCode}
               className={"mr-2"}
             />
-            Selected Fields
+            Selected Dependent Objects
           </div>
           <div>
-            {members.length} {members.length !== 1 ? "Fields" : "Field"}
+            {members.length} {members.length !== 1 ? "Objects" : "Objects"}
           </div>
         </div>
         <ul className="list-group membership-list">{formatUsers()}</ul>

@@ -4,7 +4,7 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import CancelButton from "components/common/buttons/CancelButton";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import { Button, Row } from "react-bootstrap";
+import { Button, Row, Collapse, ListGroup, ListGroupItem, Nav  } from "react-bootstrap";
 import IconBase from "../../../../../../../common/icons/IconBase";
 import { faArrowLeft, faArrowRight } from "@fortawesome/pro-light-svg-icons";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
@@ -20,7 +20,16 @@ import { customSettingMappingMetadata } from "./customSettingMapping.metadata";
 import { hasStringValue } from "../../../../../../../common/helpers/string-helpers";
 import { DATA_SEEDING_WIZARD_SCREENS } from "../../dataSeedingTaskWizard.constants";
 
-const CustomSettingCsvFieldMappingScreen = ({
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card';
+
+  const items = [
+    { id: 1, title: 'List Item 1', content: 'Content 1' },
+    { id: 2, title: 'List Item 2', content: 'Content 2' },
+    { id: 3, title: 'List Item 3', content: 'Content 3' },
+  ];
+
+const DataSeedingFieldMappingScreen = ({
   wizardModel,
   setWizardModel,
   setCurrentScreen,
@@ -131,26 +140,10 @@ const CustomSettingCsvFieldMappingScreen = ({
       }
 
       if (Array.isArray(fieldList)) {
-        let csvFields = wizardModel?.getData("csvFields");
-        let mappedResult = fieldList.map((field) => ({
-          targetField: field.name,
-          sourceField: csvFields.includes(field.name) ? field.name : "",
-          nillable: field.nillable,
-          type: field.type,
-          unique: field.unique,
-        }));
-        // console.log(mappedResult);
-
-        let currentMappingData = wizardModel?.getData("fieldMapping");
-        let mappedItems =
-          Array.isArray(currentMappingData) && currentMappingData.length > 0
-            ? currentMappingData
-            : mappedResult;
-        setMappedData([...mappedItems]);
         setFieldsPropertiesList(fieldList);
 
         let newDataObject = { ...wizardModel };
-        newDataObject.setData("selectedFieldList", fieldList);
+        // newDataObject.setData("selectedFieldList", fieldList);
         setWizardModel({ ...newDataObject });
 
         setIsLoading(false);
@@ -162,7 +155,6 @@ const CustomSettingCsvFieldMappingScreen = ({
   };
 
   const handleBackButton = () => {
-    // setCurrentScreen(DATA_SEEDING_WIZARD_SCREENS.UPLOAD_SCREEN);
     setCurrentScreen(
       DATA_SEEDING_WIZARD_SCREENS.CONFIGURATION_SCREEN,
     );
@@ -170,17 +162,7 @@ const CustomSettingCsvFieldMappingScreen = ({
 
   const saveAndMoveToNextScreen = async () => {
     try {
-      // added check if multiple csv columns are mapped to same field
-      const nonEmptySources = mappedData.filter(item => item.sourceField !== "");
-      const duplicateSourceFields = nonEmptySources.some((item, index) => {
-        return nonEmptySources.findIndex((element) => element.sourceField === item.sourceField) !== index;
-      });
-
-      if (duplicateSourceFields) {
-        toastContext.showInlineErrorMessage("Operation Not Allowed : Single column has been mapped to multiple fields");
-        return;
-      }
-
+      // TODO : fix this
       setIsSaving(true);
       wizardModel.setData("queryFilters", []);
       wizardModel.setData("fieldMapping", mappedData);
@@ -248,21 +230,6 @@ const CustomSettingCsvFieldMappingScreen = ({
     }
   };
 
-  const setCsvFieldData = (selectedOption, index) => {
-    setMappedData((prevMappings) => {
-      const newMapping = [...prevMappings];
-      newMapping[index].sourceField = selectedOption;
-      return newMapping;
-    });
-  };
-
-  const validateMappingData = () => {
-    if (isSaving || mappedData.length < 1) return false;
-    return mappedData
-      .filter((item) => !item.nillable)
-      .every((item) => item["sourceField"].length > 1);
-  };
-
   const getBody = () => {
     if (wizardModel == null || isLoading) {
       return (
@@ -280,120 +247,22 @@ const CustomSettingCsvFieldMappingScreen = ({
           minHeight: "calc(100vh - 500px)",
         }}
       >
-        <div className="d-flex justify-content-center page-description mt-3">
-          <Col sm={12}>
-            <Row>
-              <Col
-                sm={6}
-                className={"pl-2 pr-0 py-2"}
-              >
-                <h6 className="text-muted ml-4">Custom Object Fields</h6>
-              </Col>
-              <Col
-                sm={6}
-                className={"pl-2 pr-0 py-2"}
-              >
-                <h6 className="text-muted">CSV Fields</h6>
-              </Col>
-            </Row>
-          </Col>
-        </div>
-        <div className={"m-3"}>
-          {mappedData && mappedData.length > 1 ? (
-            mappedData.map((field, index, { length }) => {
-              return (
-                <Row
-                  className="d-flex mx-1 justify-content-between mt-2"
-                  key={index}
-                >
-                  <Col
-                    sm={12}
-                    className={"px-0"}
-                  >
-                    <Row className={"mx-0"}>
-                      <Col
-                        xs={6}
-                        className={"pr-1 mt-3 pl-0"}
-                      >
-                        <Row className={"mx-0"}>
-                          <Col
-                            lg={6}
-                            xl={6}
-                            className={"no-wrap-inline mb-1"}
-                          >
-                            <span style={{ fontWeight: 500 }}>
-                              {field?.targetField}
-                            </span>
-                          </Col>
-                          <Col
-                            lg={6}
-                            xl={6}
-                            className={"d-flex mb-1 mt-1 justify-content-end"}
-                          >
-                            <div
-                              className={"badge badge-secondary mr-2"}
-                              style={{
-                                fontSize: "10px",
-                                letterSpacing: "0.6px",
-                              }}
-                            >
-                              {field?.type?.toUpperCase()}
-                            </div>
-                            {field?.unique ? (
-                              <div
-                                className={"badge badge-secondary mr-2"}
-                                style={{
-                                  fontSize: "10px",
-                                  letterSpacing: "0.6px",
-                                }}
-                              >
-                                UNIQUE
-                              </div>
-                            ) : null}
-                            {!field?.nillable ? (
-                              <div
-                                className={"badge badge-danger mr-2"}
-                                style={{
-                                  fontSize: "10px",
-                                  letterSpacing: "0.6px",
-                                }}
-                              >
-                                MANDATORY
-                              </div>
-                            ) : null}
-                          </Col>
-                        </Row>
-                      </Col>
-                      <Col
-                        xs={6}
-                        className={"pr-1 pl-0"}
-                      >
-                        <SelectInputBase
-                          selectOptions={wizardModel?.getData("csvFields")}
-                          fieldName={"sourceField"}
-                          defaultValue={field.sourceField}
-                          dataObject={localMappedData}
-                          setDataObject={setLocalMappedData}
-                          setDataFunction={(field, newValue) =>
-                            setCsvFieldData(newValue, index)
-                          }
-                          showLabel={false}
-                          dropUp={
-                            length > 6 && index + 1 > Math.floor(length / 2)
-                              ? true
-                              : false
-                          }
-                        />
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
-              );
-            })
-          ) : (
-            <div className={"ml-3"}>No Fields Found!</div>
-          )}
-        </div>
+        {fieldsPropertiesList && fieldsPropertiesList.length > 0 ?
+          <Accordion>
+            {fieldsPropertiesList.map((item) => (
+              <Card key={item.id}>
+                <Accordion.Toggle as={Card.Header} eventKey={item.id.toString()}>
+                  {item.title}
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey={item.id.toString()}>
+                  <Card.Body style={{ height: "500px" }}>content</Card.Body>
+                </Accordion.Collapse>
+              </Card>
+            ))}
+          </Accordion>
+          :
+          <>No Fields Found</>
+        }
       </div>
     );
   };
@@ -429,7 +298,6 @@ const CustomSettingCsvFieldMappingScreen = ({
           size="sm"
           variant="primary"
           onClick={saveAndMoveToNextScreen}
-          disabled={!validateMappingData()}
         >
           <span>
             <IconBase
@@ -451,7 +319,7 @@ const CustomSettingCsvFieldMappingScreen = ({
   );
 };
 
-CustomSettingCsvFieldMappingScreen.propTypes = {
+DataSeedingFieldMappingScreen.propTypes = {
   taskType: PropTypes.string,
   setCurrentScreen: PropTypes.func,
   handleClose: PropTypes.func,
@@ -459,4 +327,4 @@ CustomSettingCsvFieldMappingScreen.propTypes = {
   setWizardModel: PropTypes.func,
 };
 
-export default CustomSettingCsvFieldMappingScreen;
+export default DataSeedingFieldMappingScreen;

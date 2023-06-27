@@ -15,7 +15,6 @@ import EnableEditingIcon from "../../../../../../../common/icons/enable/EnableEd
 import H5FieldSubHeader from "../../../../../../../common/fields/subheader/H5FieldSubHeader";
 import ToolNameField from "../../../../../../../common/fields/inventory/ToolNameField";
 import LoadingDialog from "components/common/status_notifications/loading";
-import CustomSettingUploadScreen from "../upload_screens/CustomSettingUploadScreen";
 
 const CustomSettingSelector = ({
   wizardModel,
@@ -151,7 +150,7 @@ const CustomSettingSelector = ({
         cancelTokenSource,
         wizardModel,
       );
-      await dataSeedingTaskWizardActions.triggerFieldPropertiesPull(
+      await dataSeedingTaskWizardActions.triggerDependenyObjectListPull(
         getAccessToken,
         cancelTokenSource,
         wizardModel?.getData("taskId"),
@@ -159,10 +158,6 @@ const CustomSettingSelector = ({
         wizardModel,
         wizardModel?.getData("selectedCustomSetting")?.componentName,
       );
-      // if (taskType === MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG) {
-      //   setCurrentScreen(DATA_SEEDING_WIZARD_SCREENS.UPLOAD_SCREEN);
-      //   return;
-      // }
     } catch (error) {
       if (isMounted?.current === true) {
         const parsedError = parseError(error);

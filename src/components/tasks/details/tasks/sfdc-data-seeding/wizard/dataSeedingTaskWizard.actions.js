@@ -61,6 +61,31 @@ dataSeedingTaskWizardActions.pullCustomSettingsList = async (
   );
 };
 
+dataSeedingTaskWizardActions.triggerDependenyObjectListPull = async (
+  getAccessToken,
+  cancelTokenSource,
+  taskId,
+  runCount,
+  wizardModel,
+  selectedObjectName,
+) => {
+  const apiUrl = `/tasks/data-seeding/wizard/trigger-dependent-object-list`;
+  const postBody = {
+    taskId: taskId,
+    runCount: runCount,
+    sfdcToolId: wizardModel?.getData("sourceToolId"),
+    pipelineStorageRecordId: wizardModel?.getData("recordId"),
+    objectName: selectedObjectName,
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 dataSeedingTaskWizardActions.triggerFieldPropertiesPull = async (
   getAccessToken,
   cancelTokenSource,
@@ -104,6 +129,20 @@ dataSeedingTaskWizardActions.setSelectedObjectList = async (
   );
 };
 
+dataSeedingTaskWizardActions.pullDependentObjectList = async (
+  getAccessToken,
+  cancelTokenSource,
+  wizardModel,
+) => {
+  const apiUrl = `/tasks/data-seeding/wizard/${wizardModel?.getData("recordId")}/pull-dependent-object-list`;
+
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
 dataSeedingTaskWizardActions.pullFieldList = async (
   getAccessToken,
   cancelTokenSource,
@@ -115,6 +154,25 @@ dataSeedingTaskWizardActions.pullFieldList = async (
     getAccessToken,
     cancelTokenSource,
     apiUrl,
+  );
+};
+
+dataSeedingTaskWizardActions.updateSelectedDependentObjects = async (
+  getAccessToken,
+  cancelTokenSource,
+  wizardModel,
+  members,
+) => {
+  const apiUrl = `/tasks/data-seeding/wizard/${wizardModel?.getData("recordId")}/selected-dependent-object-list`;
+  const postBody = {
+    selectedDependentObjectList: members,
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
   );
 };
 

@@ -18,7 +18,7 @@ function FieldItemCard({ field, selectedFields, setSelectedFields }) {
     } else {
       if (selectedFields.includes(field)) {
         let newSelectedUsers = selectedFields.filter(
-          (user) => user.name !== field.name,
+          (user) => user.componentName !== field.componentName,
         );
         setSelectedFields([...newSelectedUsers]);
       }
@@ -38,38 +38,10 @@ function FieldItemCard({ field, selectedFields, setSelectedFields }) {
       <Row className={"mx-0"}>
         <Col
           lg={12}
-          xl={6}
+          xl={12}
           className={"no-wrap-inline mb-1"}
         >
-          {field.name}
-        </Col>
-        <Col
-          lg={12}
-          xl={6}
-          className={"d-flex mb-1 mt-1 justify-content-end"}
-        >
-          <div
-            className={"badge badge-secondary mr-2"}
-            style={{ fontSize: "10px", letterSpacing: "0.6px" }}
-          >
-            {field?.type?.toUpperCase()}
-          </div>
-          {field?.unique ? (
-            <div
-              className={"badge badge-secondary mr-2"}
-              style={{ fontSize: "10px", letterSpacing: "0.6px" }}
-            >
-              UNIQUE
-            </div>
-          ) : null}
-          {!field?.nillable ? (
-            <div
-              className={"badge badge-danger mr-2"}
-              style={{ fontSize: "10px", letterSpacing: "0.6px" }}
-            >
-              MANDATORY
-            </div>
-          ) : null}
+          {field.componentName}
         </Col>
       </Row>
     </li>
