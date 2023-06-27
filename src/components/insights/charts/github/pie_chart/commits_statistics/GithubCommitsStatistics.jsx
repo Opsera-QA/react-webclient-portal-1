@@ -177,17 +177,6 @@ function GithubCommitsStatistics({
     }
   };
 
-  // let totalDeclined = 0;
-  // let totalApproved = 0;
-  //
-  // totalDeclinedMerges.forEach((obj) =>{
-  //   totalDeclined = totalDeclined + obj.commits;
-  // } );
-  //
-  // highestMergesMetric.forEach((obj) =>{
-  //   totalApproved = totalApproved + obj.commits;
-  // } );
-
   const onRowSelect = () => {
     toastContext.showOverlayPanel(
       <GithubCommitsActionableInsightOverlay
