@@ -16,12 +16,12 @@ import EndpointRequestHeaderConfigurationInput
 import {
   EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS
 } from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
-import { ENDPOINT_TYPES } from "components/common/list_of_values_input/inventory/endpoints/type/endpointType.constants";
 import EndpointApiConfigurationInputBase
   from "components/common/inputs/endpoints/endpoint/request/EndpointApiConfigurationInputBase";
 import EndpointResponseEvaluationRulesInputBase
   from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesInputBase";
 import ValidateEndpointPanel from "components/common/inputs/endpoints/endpoint/response/test/ValidateEndpointPanel";
+import endpointTypeConstants from "@opsera/definitions/constants/api/request/endpoint/endpointType.constants";
 
 function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
   {
@@ -40,8 +40,8 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
 
   const getDynamicTabsForEndpointType = () => {
     switch (externalApiIntegratorModel?.getData("type")) {
-      case ENDPOINT_TYPES.ACCESS_TOKEN_GENERATION:
-      case ENDPOINT_TYPES.CONNECTION_VALIDATION:
+      case endpointTypeConstants.ENDPOINT_TYPES.ACCESS_TOKEN_GENERATION:
+      case endpointTypeConstants.ENDPOINT_TYPES.CONNECTION_VALIDATION:
         return (
           <>
             <VanitySetVerticalTab

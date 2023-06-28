@@ -14,10 +14,8 @@ import ButtonContainerBase from "components/common/buttons/saving/containers/But
 import EndpointRequestFieldNameTextInput
   from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldNameTextInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import {
-  ENDPOINT_TYPES
-} from "components/common/list_of_values_input/inventory/endpoints/type/endpointType.constants";
 import endpointRequestFieldMetadata from "@opsera/definitions/constants/api/request/body/endpointRequestField.metadata";
+import endpointTypeConstants from "@opsera/definitions/constants/api/request/endpoint/endpointType.constants";
 
 function EndpointRequestBodyFieldInputRow(
   {
@@ -89,7 +87,7 @@ function EndpointRequestBodyFieldInputRow(
             dataObject={endpointFieldModel}
             setDataFunction={updateMainModelFunction}
             fieldName={"useRunApiResponseParameter"}
-            visible={endpointType === ENDPOINT_TYPES.OPERATION_STATUS_CHECK}
+            visible={endpointType === endpointTypeConstants.ENDPOINT_TYPES.OPERATION_STATUS_CHECK}
             disabled={disabled || endpointFieldModel?.getData("type") === "object"}
           />
         </Col>
