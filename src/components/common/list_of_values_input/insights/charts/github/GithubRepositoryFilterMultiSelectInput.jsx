@@ -83,8 +83,8 @@ function GithubRepositoryFilterMultiSelectInput({
       textField={textField}
       placeholderText={placeholderText}
       disabled={disabled}
-      clearDataFunction={clearDataFunction}
       setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
     />
   );
 }
