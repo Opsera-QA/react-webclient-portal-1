@@ -148,7 +148,7 @@ function FieldSelectorBasePanel({
     if (searchText !== "") {
       const lowercaseSearchText = searchText.toLowerCase();
       return members.filter((member) => {
-        return member?.name?.toLowerCase().includes(lowercaseSearchText);
+        return member?.componentName?.toLowerCase().includes(lowercaseSearchText);
       });
     }
 
@@ -159,7 +159,7 @@ function FieldSelectorBasePanel({
     if (searchText !== "") {
       const lowercaseSearchText = searchText.toLowerCase();
       return nonMembers.filter((nonMember) => {
-        return nonMember?.name?.toLowerCase().includes(lowercaseSearchText);
+        return nonMember?.componentName?.toLowerCase().includes(lowercaseSearchText);
       });
     }
 
@@ -221,12 +221,12 @@ function FieldSelectorBasePanel({
       <DetailPanelContainer>
         <Row className="mx-2">
           <div>
-            <h5>Select Field Properties to proceed with Query Generation</h5>
+            <h5>Select Dependent Object to proceed</h5>
           </div>
         </Row>
         <Row className="mx-2">
           <div>
-            Select field properties below by adding items from the left column
+            Select dependent object below by adding items from the left column
             into the right or removing from the right column.
           </div>
         </Row>

@@ -13,21 +13,18 @@ import dataSeedingTaskWizardActions from "../../dataSeedingTaskWizard.actions";
 import { parseError } from "../../../../../../../common/helpers/error-helpers";
 import useAxiosCancelToken from "../../../../../../../../hooks/useAxiosCancelToken";
 import axios from "axios";
-import Col from "react-bootstrap/Col";
-import SelectInputBase from "../../../../../../../common/inputs/select/SelectInputBase";
 import Model from "../../../../../../../../core/data_model/model";
 import { customSettingMappingMetadata } from "./customSettingMapping.metadata";
 import { hasStringValue } from "../../../../../../../common/helpers/string-helpers";
 import { DATA_SEEDING_WIZARD_SCREENS } from "../../dataSeedingTaskWizard.constants";
-
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
-
-  const items = [
-    { id: 1, title: 'List Item 1', content: 'Content 1' },
-    { id: 2, title: 'List Item 2', content: 'Content 2' },
-    { id: 3, title: 'List Item 3', content: 'Content 3' },
-  ];
+import { faChevronUp, faChevronDown } from "@fortawesome/pro-solid-svg-icons";
+import {
+  DividerWithCenteredText
+} from "../../../../../../../../temp-library-components/divider/DividerWithCenteredText";
+import DataSeedingFieldEditorPanel from "./DataSeedingFieldEditorPanel";
+import Col from "react-bootstrap/Col";
 
 const DataSeedingFieldMappingScreen = ({
   wizardModel,
@@ -230,6 +227,18 @@ const DataSeedingFieldMappingScreen = ({
     }
   };
 
+  const toggleItem = (id) => {
+    setFieldsPropertiesList((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id ? { ...item, isCollapsed: !item.isCollapsed } : item
+      )
+    );
+  };
+  const setFieldData = (key, modifiedValue) => {
+    console.log(key);
+    console.log(modifiedValue);
+  };
+
   const getBody = () => {
     if (wizardModel == null || isLoading) {
       return (
@@ -247,22 +256,64 @@ const DataSeedingFieldMappingScreen = ({
           minHeight: "calc(100vh - 500px)",
         }}
       >
-        {fieldsPropertiesList && fieldsPropertiesList.length > 0 ?
+        {fieldsPropertiesList && fieldsPropertiesList.length > 0 ? (
           <Accordion>
-            {fieldsPropertiesList.map((item) => (
+            {fieldsPropertiesList.map((item, idx, { length }) => (
               <Card key={item.id}>
-                <Accordion.Toggle as={Card.Header} eventKey={item.id.toString()}>
-                  {item.title}
+                <Accordion.Toggle
+                  as={Card.Header}
+                  eventKey={item.id.toString()}
+                  onClick={() => toggleItem(item.id)}
+                >
+                  <Row>
+                    <Col lg={11} md={11}>
+                      <H5FieldSubHeader subheaderText={item.title} />
+                    </Col>
+                    <Col lg={1} md={1}>
+                      <span className={"ml-4"}>
+                    {item.isCollapsed ? (
+                      <IconBase
+                        icon={faChevronDown}
+                        iconSize={"sm"}
+                      />
+                    ) : (
+                      <IconBase
+                        icon={faChevronUp}
+                        iconSize={"sm"}
+                      />
+                    )}
+                  </span>
+                    </Col>
+                  </Row>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey={item.id.toString()}>
-                  <Card.Body style={{ height: "500px" }}>content</Card.Body>
+                  <Card.Body className={"scroll-y"}>
+                    {item.fieldList && item.fieldList.length > 0 ? (
+                      item?.fieldList?.map((field, idx, { length }) => (
+                        <div key={idx}>
+                          <DataSeedingFieldEditorPanel
+                            index={idx}
+                            fieldsData={field}
+                            setFieldData={setFieldData}
+                          />
+                          {idx + 1 !== length && <DividerWithCenteredText />}
+                        </div>
+                      ))
+                    ) : (
+                      <small className={"text-muted form-text mt-4"}>
+                        <div>
+                          No fields found for the selected dependent object
+                        </div>
+                      </small>
+                    )}
+                  </Card.Body>
                 </Accordion.Collapse>
               </Card>
             ))}
           </Accordion>
-          :
+        ) : (
           <>No Fields Found</>
-        }
+        )}
       </div>
     );
   };
@@ -272,7 +323,7 @@ const DataSeedingFieldMappingScreen = ({
       <div className={"my-3"}>
         <Row className="mx-1">
           <H5FieldSubHeader
-            subheaderText={`Data Seeding Task : Custom Setting Field Mapping Screen`}
+            subheaderText={`Data Seeding Task : Custom Setting Field Edit View`}
           />
         </Row>
         {getBody()}
