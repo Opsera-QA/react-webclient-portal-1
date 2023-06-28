@@ -17,9 +17,8 @@ function TableBodyLoadingWrapper(
   }) {
   if (error) {
     return (
-      <CenteredContentWrapper>
+      <CenteredContentWrapper minHeight={tableHeight}>
         <ErrorMessageFieldBase
-          tableHeight={tableHeight}
           message={error}
         />
       </CenteredContentWrapper>
@@ -36,10 +35,9 @@ function TableBodyLoadingWrapper(
     }
 
     return (
-      <CenteredContentWrapper>
+      <CenteredContentWrapper minHeight={tableHeight}>
         <InfoMessageFieldBase
           message={noDataMessage}
-          tableHeight={tableHeight}
           showInformationLabel={false}
         />
       </CenteredContentWrapper>
