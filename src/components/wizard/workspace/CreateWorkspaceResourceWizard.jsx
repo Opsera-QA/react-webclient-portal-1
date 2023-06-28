@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import CreateWorkspaceResourceWizardResourceSelectionScreen
   from "components/wizard/workspace/CreateWorkspaceResourceWizardResourceSelectionScreen";
 import NewTaskOverlay from "components/tasks/NewTaskOverlay";
@@ -19,7 +19,7 @@ export const CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS = {
   CREATE_PIPELINE_SCREEN: "create_pipeline_screen",
 };
 
-export default function CreateWorkspaceResourceWizard({ loadDataFunction }) {
+export default function CreateWorkspaceResourceWizard({loadDataFunction}) {
   const [currentScreen, setCurrentScreen] = useState(CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.RESOURCE_SELECTION_SCREEN);
   const {isActive} = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_WIZARDS_TOGGLE);
 
@@ -38,15 +38,18 @@ export default function CreateWorkspaceResourceWizard({ loadDataFunction }) {
       case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_PIPELINE_SCREEN:
         if (isActive === true) {
           return (
-              <CreateNewPipelineWizard loadData={loadDataFunction} backButtonFunction={backButtonFunction}/>
+            <CreateNewPipelineWizard
+              loadData={loadDataFunction}
+              backButtonFunction={backButtonFunction}
+            />
           );
         }
 
         return (
-            <NewPipelineOverlay
-                backButtonFunction={backButtonFunction}
-                loadData={loadDataFunction}
-            />
+          <NewPipelineOverlay
+            backButtonFunction={backButtonFunction}
+            loadData={loadDataFunction}
+          />
         );
       case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TASK_SCREEN:
         if (isActive === true) {
@@ -73,7 +76,7 @@ export default function CreateWorkspaceResourceWizard({ loadDataFunction }) {
             />
           );
         }
-        
+
         return (
           <NewToolOverlay
             loadData={loadDataFunction}

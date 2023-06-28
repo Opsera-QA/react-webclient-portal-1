@@ -60,19 +60,15 @@ function GithubBranchFilterMultiSelectInput({
   };
 
   const loadBranches = async (cancelSource = cancelTokenSource) => {
-    const response = await githubAction.githubBranchList(
-      getAccessToken,
-      cancelSource,
-      repository
-    );
-    if (response?.data != null) {
-      setBranches(response?.data?.data?.githubBranchList?.data);
-    }
-    if (repository?.length == 0) {
-        model.setData(fieldName, []);
-        setModel({...model});
-     
-    
+    if (repository?.length) {
+      const response = await githubAction.githubBranchList(
+        getAccessToken,
+        cancelSource,
+        repository
+      );
+      if (response?.data != null) {
+        setBranches(response?.data?.data?.githubBranchList?.data);
+      }
     }
   };
   const disabled = !repository || repository.length === 0;
