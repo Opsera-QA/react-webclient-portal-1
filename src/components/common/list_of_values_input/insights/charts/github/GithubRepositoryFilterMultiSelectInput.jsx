@@ -14,6 +14,8 @@ function GithubRepositoryFilterMultiSelectInput({
   model,
   setModel,
   disabled,
+  setDataFunction,
+  clearDataFunction,
 }) {
   const { getAccessToken } = useContext(AuthContext);
   const [repositories, setRepositories] = useState([]);
@@ -68,20 +70,7 @@ function GithubRepositoryFilterMultiSelectInput({
       setRepositories(response?.data?.data);
     }
   };
-  const setDataFunction = (fieldName, selectedOption) => {
-    let newModel = {...model};
-    newModel.setData(fieldName, selectedOption.map(option => option.value));
-    if(selectedOption?.length===0){
-      newModel.setData("github-branch",[]);
-    }
-    setModel({ ...newModel });
-  };
-  const clearDataFunction = () => { 
-      let newModel = { ...model };
-      newModel.setData("github-branch",[]);
-      newModel.setData(fieldName,[]);
-      setModel({ ...newModel });
-  };
+
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
@@ -108,6 +97,7 @@ GithubRepositoryFilterMultiSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
+  clearDataFunction: PropTypes.func,
   visible: PropTypes.bool,
   project: PropTypes.array,
   disabled: PropTypes.bool,
