@@ -4,9 +4,15 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import CancelButton from "components/common/buttons/CancelButton";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import { Button, Row, Collapse, ListGroup, ListGroupItem, Nav  } from "react-bootstrap";
+import {
+  Button,
+  Row,
+} from "react-bootstrap";
 import IconBase from "../../../../../../../common/icons/IconBase";
-import { faArrowLeft, faArrowRight } from "@fortawesome/pro-light-svg-icons";
+import {
+  faArrowLeft,
+  faArrowRight,
+} from "@fortawesome/pro-light-svg-icons";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import dataSeedingTaskWizardActions from "../../dataSeedingTaskWizard.actions";
@@ -17,14 +23,11 @@ import Model from "../../../../../../../../core/data_model/model";
 import { customSettingMappingMetadata } from "./customSettingMapping.metadata";
 import { hasStringValue } from "../../../../../../../common/helpers/string-helpers";
 import { DATA_SEEDING_WIZARD_SCREENS } from "../../dataSeedingTaskWizard.constants";
-import Accordion from 'react-bootstrap/Accordion';
-import Card from 'react-bootstrap/Card';
+import Accordion from "react-bootstrap/Accordion";
+import Card from "react-bootstrap/Card";
 import { faChevronUp, faChevronDown } from "@fortawesome/pro-solid-svg-icons";
-import {
-  DividerWithCenteredText
-} from "../../../../../../../../temp-library-components/divider/DividerWithCenteredText";
-import DataSeedingFieldEditorPanel from "./DataSeedingFieldEditorPanel";
 import Col from "react-bootstrap/Col";
+import DataSeedingFieldSelectionBaseEditorPanel from "./DataSeedingFieldSelectionBaseEditorPanel";
 
 const DataSeedingFieldMappingScreen = ({
   wizardModel,
@@ -119,12 +122,11 @@ const DataSeedingFieldMappingScreen = ({
 
   const getFieldPropertiesList = async (cancelSource = cancelTokenSource) => {
     setIsLoading(true);
-    const response =
-      await dataSeedingTaskWizardActions.pullFieldList(
-        getAccessToken,
-        cancelSource,
-        wizardModel,
-      );
+    const response = await dataSeedingTaskWizardActions.pullFieldList(
+      getAccessToken,
+      cancelSource,
+      wizardModel,
+    );
     const errorMessage = response?.data?.data?.errorMessage;
     const fieldList = response?.data?.data?.fieldList;
 
@@ -152,17 +154,15 @@ const DataSeedingFieldMappingScreen = ({
   };
 
   const handleBackButton = () => {
-    setCurrentScreen(
-      DATA_SEEDING_WIZARD_SCREENS.CONFIGURATION_SCREEN,
-    );
+    setCurrentScreen(DATA_SEEDING_WIZARD_SCREENS.CONFIGURATION_SCREEN);
   };
 
   const saveAndMoveToNextScreen = async () => {
     try {
       // TODO : fix this
+
       setIsSaving(true);
       wizardModel.setData("queryFilters", []);
-      wizardModel.setData("fieldMapping", mappedData);
       wizardModel.setData("filterQuery", "");
 
       let finalSelectedFields = fieldsPropertiesList.filter((field) => {
@@ -191,30 +191,7 @@ const DataSeedingFieldMappingScreen = ({
         wizardModel,
         finalSelectedFields,
       );
-      await dataSeedingTaskWizardActions.setFieldMappings(
-        getAccessToken,
-        null,
-        wizardModel,
-      );
-      const response =
-        await dataSeedingTaskWizardActions.validateQuery(
-          getAccessToken,
-          null,
-          wizardModel,
-          query,
-        );
-      if (response?.status === 200) {
-        await dataSeedingTaskWizardActions.setFilterQuery(
-          getAccessToken,
-          null,
-          wizardModel,
-          query,
-          [],
-        );
-        setCurrentScreen(
-          DATA_SEEDING_WIZARD_SCREENS.CONFIRMATION_SCREEN,
-        );
-      }
+      setCurrentScreen(DATA_SEEDING_WIZARD_SCREENS.QUERY_BUILDER_SCREEN);
     } catch (error) {
       if (isMounted?.current === true) {
         const parsedError = parseError(error);
@@ -229,14 +206,22 @@ const DataSeedingFieldMappingScreen = ({
 
   const toggleItem = (id) => {
     setFieldsPropertiesList((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id ? { ...item, isCollapsed: !item.isCollapsed } : item
-      )
+      prevItems.map((item) => {
+        if (item.id === id) {
+          return { ...item, isCollapsed: !item.isCollapsed };
+        } else {
+          return { ...item, isCollapsed: true };
+        }
+      }),
     );
   };
-  const setFieldData = (key, modifiedValue) => {
-    console.log(key);
-    console.log(modifiedValue);
+  const setFieldData = (id, fieldIndex, modifiedValue) => {
+    let newFieldPropertiesList = [...fieldsPropertiesList];
+    let newFieldObj = newFieldPropertiesList[id]?.fieldList;
+    newFieldObj[fieldIndex] = modifiedValue;
+    // console.log(modifiedValue);
+    // console.log(newFieldPropertiesList[id]?.fieldList[fieldIndex]);
+    setFieldsPropertiesList(newFieldPropertiesList);
   };
 
   const getBody = () => {
@@ -258,52 +243,51 @@ const DataSeedingFieldMappingScreen = ({
       >
         {fieldsPropertiesList && fieldsPropertiesList.length > 0 ? (
           <Accordion>
-            {fieldsPropertiesList.map((item, idx, { length }) => (
-              <Card key={item.id}>
+            {fieldsPropertiesList.map((item) => (
+              <Card key={item?.id}>
                 <Accordion.Toggle
                   as={Card.Header}
-                  eventKey={item.id.toString()}
-                  onClick={() => toggleItem(item.id)}
+                  eventKey={item?.id.toString()}
+                  onClick={() => toggleItem(item?.id)}
                 >
                   <Row>
-                    <Col lg={11} md={11}>
-                      <H5FieldSubHeader subheaderText={item.title} />
+                    <Col
+                      lg={11}
+                      md={11}
+                    >
+                      <H5FieldSubHeader subheaderText={item?.title} />
                     </Col>
-                    <Col lg={1} md={1}>
+                    <Col
+                      lg={1}
+                      md={1}
+                    >
                       <span className={"ml-4"}>
-                    {item.isCollapsed ? (
-                      <IconBase
-                        icon={faChevronDown}
-                        iconSize={"sm"}
-                      />
-                    ) : (
-                      <IconBase
-                        icon={faChevronUp}
-                        iconSize={"sm"}
-                      />
-                    )}
-                  </span>
+                        {item?.isCollapsed ? (
+                          <IconBase
+                            icon={faChevronDown}
+                            iconSize={"sm"}
+                          />
+                        ) : (
+                          <IconBase
+                            icon={faChevronUp}
+                            iconSize={"sm"}
+                          />
+                        )}
+                      </span>
                     </Col>
                   </Row>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey={item.id.toString()}>
                   <Card.Body className={"scroll-y"}>
                     {item.fieldList && item.fieldList.length > 0 ? (
-                      item?.fieldList?.map((field, idx, { length }) => (
-                        <div key={idx}>
-                          <DataSeedingFieldEditorPanel
-                            index={idx}
-                            fieldsData={field}
-                            setFieldData={setFieldData}
-                          />
-                          {idx + 1 !== length && <DividerWithCenteredText />}
-                        </div>
-                      ))
+                      <DataSeedingFieldSelectionBaseEditorPanel
+                        id={item?.id - 1}
+                        fieldsList={item.fieldList}
+                        setFieldData={setFieldData}
+                      />
                     ) : (
                       <small className={"text-muted form-text mt-4"}>
-                        <div>
-                          No fields found for the selected dependent object
-                        </div>
+                        <div>No fields found for the selected objects</div>
                       </small>
                     )}
                   </Card.Body>

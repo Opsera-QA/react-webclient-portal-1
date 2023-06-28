@@ -232,7 +232,7 @@ const CustomSettingSelector = ({
           setDataFunction={setSelectedCustomSettingFunc}
           textField={"componentName"}
           busy={isLoading}
-          placeholderText={"Select a Custom Setting"}
+          placeholderText={"Select a Custom Object"}
           disabled={isLoading || isSaving}
         />
         <SaveButtonContainer>

@@ -9,7 +9,8 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import { dataSeedingFieldsMetadata } from "./dataSeedingFields.metadata";
 
 const DataSeedingFieldEditorPanel = ({
-  index,
+  id,
+  fieldIndex,
   fieldsData,
   setFieldData,
   isLoading,
@@ -38,7 +39,7 @@ const DataSeedingFieldEditorPanel = ({
     const newModel = { ...fieldsMetadata };
     newModel?.setData(fieldName, newValue);
     setFieldsMetadata({ ...newModel });
-    setFieldData(index, newModel.getPersistData());
+    setFieldData(id, fieldIndex, newModel.getPersistData());
   };
 
   return (
@@ -107,7 +108,8 @@ const DataSeedingFieldEditorPanel = ({
 };
 
 DataSeedingFieldEditorPanel.propTypes = {
-  index: PropTypes.number,
+  id: PropTypes.number,
+  fieldIndex: PropTypes.number,
   setFieldData: PropTypes.func,
   isLoading: PropTypes.bool,
   fieldsData: PropTypes.object,

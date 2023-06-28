@@ -24,7 +24,7 @@ export const dataSeedingTaskWizardMetadata = {
       id: "runCount",
     },
     {
-      label: "Custom Setting",
+      label: "Custom Object",
       id: "selectedCustomSetting",
     },
     {
