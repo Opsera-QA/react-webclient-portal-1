@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ConstantFieldBase from "components/common/fields/constant/ConstantFieldBase";
-import {
-  getEndpointResponseEvaluationOptionLabel
-} from "components/common/list_of_values_input/tools/extermal_api_integrator/response/evaluation/option/endpointResponseEvaluationOption.constants";
+import endpointResponseEvaluationOptionConstants
+  from "@opsera/definitions/constants/api/request/endpoint/endpointResponseEvaluationOption.constants";
 
 function EndpointResponseEvaluationOptionField(
   {
@@ -15,7 +14,7 @@ function EndpointResponseEvaluationOptionField(
     <ConstantFieldBase
       model={model}
       fieldName={fieldName}
-      getLabelFunction={getEndpointResponseEvaluationOptionLabel}
+      getLabelFunction={endpointResponseEvaluationOptionConstants.getEndpointResponseEvaluationOptionLabel}
       className={className}
     />
   );
