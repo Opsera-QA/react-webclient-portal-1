@@ -12,10 +12,9 @@ import {faLink} from "@fortawesome/pro-light-svg-icons";
 import externalApiIntegratorEndpointMetadata from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoint.metadata";
 import NewExternalApiIntegratorEndpointOverlay
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/NewExternalApiIntegratorEndpointOverlay";
-import {
-  getEndpointRequestTypeLabel
-} from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/endpointRequestType.constants";
 import endpointTypeConstants from "@opsera/definitions/constants/api/request/endpoint/endpointType.constants";
+import endpointRequestTypeConstants
+  from "@opsera/definitions/constants/api/request/endpoint/endpointRequestType.constants";
 
 function ExternalApiIntegratorEndpointsTable(
   {
@@ -50,7 +49,7 @@ function ExternalApiIntegratorEndpointsTable(
     () => [
       getTableTextColumn(getField(fields, "name")),
       getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), endpointTypeConstants.getEndpointTypeLabel),
-      getFormattedLabelWithFunctionColumnDefinition(getField(fields, "requestType"), getEndpointRequestTypeLabel),
+      getFormattedLabelWithFunctionColumnDefinition(getField(fields, "requestType"), endpointRequestTypeConstants.getEndpointRequestTypeLabel),
       getTableTextColumn(getField(fields, "url")),
       getLimitedTableTextColumn(getField(fields, "description"), 100),
     ],
