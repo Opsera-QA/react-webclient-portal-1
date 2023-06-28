@@ -8,6 +8,10 @@ import ExternalRestApiIntegrationEndpointSummary
   , {
   EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES,
 } from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointSummary";
+import pipelineActivityLogActionConstants
+  from "@opsera/definitions/constants/pipelines/logs/pipelineActivityLogAction.constants";
+import InfoContainer from "components/common/containers/InfoContainer";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 
 // TODO: Make fully fleshed out report.
 function ExternalRestApiIntegrationActivityLogSummaryPanel(
@@ -61,10 +65,17 @@ function ExternalRestApiIntegrationActivityLogSummaryPanel(
     const action = externalRestApiIntegrationStepTaskModel?.getData("action");
 
     // TODO: Write up constant instead of hardcoding string
-    if (action === "operation log") {
+    if (action === pipelineActivityLogActionConstants.PIPELINE_ACTIVITY_LOG_ACTIONS.OPERATION_LOG) {
       return (
         <>
-          <div>Future operation log</div>
+          <StandaloneJsonField
+            titleText={"Call Operation"}
+            json={externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request")}
+          />
+          <StandaloneJsonField
+            titleText={"Latest Status Check"}
+            json={externalRestApiIntegrationStepTaskModel?.getData("api_response.last_status_check_request")}
+          />
         </>
       );
     }
