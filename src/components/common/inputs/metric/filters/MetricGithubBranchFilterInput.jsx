@@ -26,6 +26,7 @@ MetricGithubBranchFilterInput.propTypes = {
   setMetricFilterModel: PropTypes.func,
   metricModel: PropTypes.object,
   fieldName: PropTypes.string,
+  repositoryFieldName: PropTypes.string,
 };
 
 MetricGithubBranchFilterInput.defaultProps = {

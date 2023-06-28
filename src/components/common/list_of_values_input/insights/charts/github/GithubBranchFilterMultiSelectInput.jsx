@@ -70,18 +70,6 @@ function GithubBranchFilterMultiSelectInput({
         setBranches(response?.data?.data?.githubBranchList?.data);
       }
     }
-    else if (repository?.length == 0) {
-      model.setData(fieldName, []);
-      setModel({ ...model });
-
-
-    }
-    if (repository?.length == 0) {
-        model.setData(fieldName, []);
-        setModel({...model});
-     
-    
-    }
   };
   const disabled = !repository || repository.length === 0;
   return (
