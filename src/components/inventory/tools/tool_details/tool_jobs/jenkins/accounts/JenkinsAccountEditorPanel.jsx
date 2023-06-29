@@ -17,6 +17,8 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import {faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import JenkinsAccountRepositorySelectInput from "./inputs/JenkinsAccountRepositorySelectInput";
+import PasswordInput from "components/common/inputs/text/PasswordInput";
+import JenkinsAccountSecretFileUploadInput from "./inputs/JenkinsAccountSecretFileUploadInput";
 
 function JenkinsAccountEditorPanel(
   {
@@ -87,6 +89,36 @@ function JenkinsAccountEditorPanel(
   };
 
   const getDynamicFields = () => {
+    if(jenkinsAccountData?.getData("service") === "secretFile") {
+      return (
+        <>
+          <Col lg={12}>
+            <JenkinsAccountSecretFileUploadInput 
+              model={jenkinsAccountData} 
+              setModel={setJenkinsAccountData} 
+              fieldName={"secretFile"}
+            />
+            <PasswordInput 
+              dataObject={jenkinsAccountData} 
+              setDataObject={setJenkinsAccountData} 
+              fieldName={"password"}
+            />
+          </Col>
+        </>
+      );
+    }
+    return (
+      <Col lg={12}>
+        <JenkinsAccountToolSelectInput
+          model={jenkinsAccountData}
+          setModel={setJenkinsAccountData}
+          disabled={jenkinsAccountData?.isNew() !== true && hasStringValue(jenkinsAccountData?.getData("credentialsId")) === false}
+        />
+      </Col>
+    );
+  };
+
+  const getRepositoryField = () => {
     if(jenkinsAccountData?.getData("service") === "github-deploykey" && jenkinsAccountData?.getData("repositories")) {
       return (
           <Col lg={12}>
@@ -110,7 +142,7 @@ function JenkinsAccountEditorPanel(
       handleClose={closePanelFunction}
       recordDto={jenkinsAccountData}
       createRecord={createJenkinsAccount}
-      updateRecord={createJenkinsAccount}
+      updateRecord={jenkinsAccountData?.getData("service") === "secretFile" ? null : createJenkinsAccount}
       lenient={true}
       setRecordDto={setJenkinsAccountData}
       extraButtons={getDeleteButton()}
@@ -123,14 +155,8 @@ function JenkinsAccountEditorPanel(
             disabled={jenkinsAccountData?.isNew() !== true && hasStringValue(jenkinsAccountData?.getData("credentialsId")) === false}
           />
         </Col>
-        <Col lg={12}>
-          <JenkinsAccountToolSelectInput
-            model={jenkinsAccountData}
-            setModel={setJenkinsAccountData}
-            disabled={jenkinsAccountData?.isNew() !== true && hasStringValue(jenkinsAccountData?.getData("credentialsId")) === false}
-          />
-        </Col>
-        {getDynamicFields()}
+        {getDynamicFields()}        
+        {getRepositoryField()}
         <Col lg={12}>
           <TextInputBase
             fieldName={"credentialsId"}

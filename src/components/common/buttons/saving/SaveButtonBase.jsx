@@ -74,6 +74,10 @@ function SaveButtonBase(
     return ("Save");
   };
 
+  if (updateRecord == null) {
+    return null;
+  }
+
   return (
     <div className={className}>
       <Button size={size} variant="primary" disabled={isSaving || disable || (!lenient && !recordDto.isChanged())} onClick={() => persistRecord()}>
