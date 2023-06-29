@@ -142,7 +142,7 @@ function JenkinsAccountEditorPanel(
       handleClose={closePanelFunction}
       recordDto={jenkinsAccountData}
       createRecord={createJenkinsAccount}
-      updateRecord={createJenkinsAccount}
+      updateRecord={jenkinsAccountData?.getData("service") === "secretFile" ? null : createJenkinsAccount}
       lenient={true}
       setRecordDto={setJenkinsAccountData}
       extraButtons={getDeleteButton()}
