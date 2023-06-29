@@ -55,7 +55,7 @@ function PersistAndCloseButtonContainer(
         disable={disable}
         isIncomplete={isIncomplete}
       />
-    );    
+    );
   };
 
   // Don't show close button when using create modal. At least for now
