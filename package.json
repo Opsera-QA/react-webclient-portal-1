@@ -125,8 +125,8 @@
     "extends": "react-app"
   },
   "engines": {
-    "node": ">=16.5.0",
-    "npm": ">=7.5.2"
+    "node": ">=18.16.0",
+    "npm": ">=9.5.1"
   },
   "browserslist": {
     "production": [
