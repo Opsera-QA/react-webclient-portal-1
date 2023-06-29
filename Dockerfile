@@ -1,4 +1,4 @@
-FROM node:16-alpine3.15 as build
+FROM node:16-alpine3.17 as build
 ARG build_env=kube-generic
 RUN echo ${build_env}
 RUN apk add curl
@@ -10,6 +10,12 @@ ENV GENERATE_SOURCEMAP false
 COPY package.json /usr/src/app/package.json
 COPY package-lock.json /usr/src/app/package-lock.json
 COPY .npmrc /usr/src/app/.npmrc
+ARG PACKAGE_MANAGER_URL_NPM
+ENV PACKAGE_MANAGER_URL_NPM=${PACKAGE_MANAGER_URL_NPM}
+ARG PACKAGE_MANAGER_NPM_BASIC_AUTH
+ENV PACKAGE_MANAGER_NPM_BASIC_AUTH=${PACKAGE_MANAGER_NPM_BASIC_AUTH}
+ARG PACKAGE_MANAGER_EMAIL
+ENV PACKAGE_MANAGER_EMAIL=${PACKAGE_MANAGER_EMAIL}
 RUN npm install --legacy-peer-deps --omit=dev
 COPY . /usr/src/app
 RUN npm run build:${build_env}
