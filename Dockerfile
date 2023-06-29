@@ -10,7 +10,7 @@ ENV GENERATE_SOURCEMAP false
 COPY package.json /usr/src/app/package.json
 COPY package-lock.json /usr/src/app/package-lock.json
 COPY .npmrc /usr/src/app/.npmrc
-RUN echo "PACKAGE_MANAGER_URL_NPM: ${PACKAGE_MANAGER_URL_NPM}"
+RUN echo ${PACKAGE_MANAGER_URL_NPM}
 ARG PACKAGE_MANAGER_URL_NPM
 ENV PACKAGE_MANAGER_URL_NPM=${PACKAGE_MANAGER_URL_NPM}
 ARG PACKAGE_MANAGER_NPM_BASIC_AUTH
