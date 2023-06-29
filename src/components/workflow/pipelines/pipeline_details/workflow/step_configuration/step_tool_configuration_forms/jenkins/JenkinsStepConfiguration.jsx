@@ -300,6 +300,8 @@ function JenkinsStepConfiguration({
           model={jenkinsStepConfigurationDto}
           setModel={setJenkinsStepConfigurationDto}
           buildType={jenkinsStepConfigurationDto?.getData("buildType")}
+          jenkinsList={jenkinsList}
+          toolConfigId={jenkinsStepConfigurationDto?.getData("toolConfigId")}
         />
       </div>
     );
