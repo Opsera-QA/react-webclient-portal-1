@@ -6,22 +6,9 @@ This project is a ReactJS SPA bootstrapped with [Create React App](https://githu
 for the OpsERA platform
 
 ---
-*Legacy Library Install Issue:*
-
-If you run into a problem performing npm install on the project, you will need to use the syntax:
-
-`npm install --legacy-peer-deps`
-
-It is also advised that you remove your package-lock.json file that's local before running this command.  This is due to 
-a version incompatibility with the latest NPM verions and some older libraries in use in this project.
-
----
-
-## Configuration Variables:
-This React App uses [dotenv](https://www.npmjs.com/package/dotenv) natively, although it's a paired down instance.  Any Environment variables 
-used MUST be prefixed with the string "REACT_APP_" in order for them to be accessible in the application.  At this time the configuraiton 
-variables are used for basic API Host/DNS and Okta configurations which may vary based on Deployment stages: development (localhost), 
-Staging (dev.opsera.io) and Production (portal.opsera.io).
+## Environment Variables:
+In order to be able to pull the external libraries from Nexus, you must follow Karthik's guide here:
+https://opsera.atlassian.net/wiki/spaces/OI/pages/1882292225/Node+Local+Development+-+Configure+NPM+Registry+Environment+Variables
 
 Four ".env" files are included in this project:
 * .env contains defaults shared across all environments.
