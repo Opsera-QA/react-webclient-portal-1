@@ -14,7 +14,9 @@ export const jenkinsToolAccountMetadata = {
     {
       label: "Tool",
       id: "toolId",
-      isRequired: true
+      isRequiredFunction: (model) => {
+        return model?.getData("service") !== "secretFile";
+      },
     },
     {
       label: "Tool User",
@@ -36,6 +38,24 @@ export const jenkinsToolAccountMetadata = {
     {
       label: "Repository Id",
       id: "repositoryId"
+    },
+    {
+      label: "Certificate File",
+      id: "secretFile",
+      formText: "Only .p12 files are supported",
+      isRequiredFunction: (model) => {
+        return model?.getData("service") === "secretFile";
+      },
+    },
+    {
+      label: "Password",
+      id: "password",
+      isRequiredFunction: (model) => {
+        return model?.getData("service") === "secretFile";
+      },
+    },
+    {
+      id: "fileName",
     }
   ],
   newObjectFields: {
@@ -46,7 +66,10 @@ export const jenkinsToolAccountMetadata = {
     service: "",
     credentialsToolId: "",
     gitCredential: "",
-    repositoryId: ""
+    repositoryId: "",
+    secretFile: "",
+    password: "",
+    fileName: "",
   },
 };
 

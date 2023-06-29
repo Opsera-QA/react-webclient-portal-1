@@ -9,6 +9,7 @@ const TOOL_TYPES = [
   { value: "github", label: "Github" },
   { value: "github-deploykey", label: "Github Deploy Key" },
   { value: "gitlab", label: "Gitlab" },
+  { value: "secretFile", label: "Certificate" },
 ];
 
 function JenkinsAccountServiceSelectInput({ fieldName, dataObject, setDataObject, disabled }) {
