@@ -36,27 +36,26 @@ function PersistAndCloseButtonContainer(
         />
       );
     }
-    if (updateRecord) {
-      if (lenient) {
-        return (
-          <LenientSaveButton
-            recordDto={recordDto}
-            updateRecord={updateRecord}
-            disable={disable}
-            isIncomplete={isIncomplete}
-          />
-        );
-      }
-  
+
+    if (lenient) {
       return (
-        <StrictSaveButton
+        <LenientSaveButton
           recordDto={recordDto}
           updateRecord={updateRecord}
           disable={disable}
           isIncomplete={isIncomplete}
         />
       );
-    }    
+    }
+
+    return (
+      <StrictSaveButton
+        recordDto={recordDto}
+        updateRecord={updateRecord}
+        disable={disable}
+        isIncomplete={isIncomplete}
+      />
+    );    
   };
 
   // Don't show close button when using create modal. At least for now
