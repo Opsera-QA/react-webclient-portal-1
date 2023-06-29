@@ -67,7 +67,9 @@ mergeSyncTaskWizardActions.triggerGitToGitSourceFilePull = async (
   const apiUrl = `/tasks/merge-sync-task/wizard/${taskWizardModel?.getData(
     "recordId",
   )}/git-to-git/source-files`;
+  const componentTypes = taskWizardModel?.getArrayData("selectedComponentTypes");
   const postBody = {
+    componentTypes: componentTypes,
     taskId: taskWizardModel?.getData("taskId"),
     runCount: taskWizardModel?.getData("runCount"),
     lastCommitFromTimestamp: taskWizardModel?.getData(
