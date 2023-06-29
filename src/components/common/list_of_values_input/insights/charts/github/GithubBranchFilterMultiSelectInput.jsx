@@ -13,6 +13,7 @@ function GithubBranchFilterMultiSelectInput({
   fieldName,
   model,
   setModel,
+  repository
 }) {
   const { getAccessToken } = useContext(AuthContext);
   const [branches, setBranches] = useState([]);
@@ -40,7 +41,7 @@ function GithubBranchFilterMultiSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [repository]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -59,14 +60,18 @@ function GithubBranchFilterMultiSelectInput({
   };
 
   const loadBranches = async (cancelSource = cancelTokenSource) => {
-    const response = await githubAction.githubBranchList(
-      getAccessToken,
-      cancelSource,
-    );
-    if (response.data != null) {
-      setBranches(response?.data?.data);
+    if (repository?.length) {
+      const response = await githubAction.githubBranchList(
+        getAccessToken,
+        cancelSource,
+        repository
+      );
+      if (response?.data != null) {
+        setBranches(response?.data?.data?.githubBranchList?.data);
+      }
     }
   };
+  const disabled = !repository || repository.length === 0;
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
@@ -78,6 +83,8 @@ function GithubBranchFilterMultiSelectInput({
       error={error}
       textField={textField}
       placeholderText={placeholderText}
+      disabled={disabled || isLoading}
+      pluralTopic={"Filters"}
     />
   );
 }
@@ -92,6 +99,7 @@ GithubBranchFilterMultiSelectInput.propTypes = {
   setDataFunction: PropTypes.func,
   visible: PropTypes.bool,
   project: PropTypes.array,
+  repository: PropTypes.string
 };
 
 GithubBranchFilterMultiSelectInput.defaultProps = {

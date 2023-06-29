@@ -6,8 +6,8 @@ import GithubBranchFilterMultiSelectInput from "components/common/list_of_values
 function MetricGithubBranchFilterInput({
   metricFilterModel,
   setMetricFilterModel,
-  metricModel,
   fieldName,
+  repositoryFieldName
 }) {
   return (
     <GithubBranchFilterMultiSelectInput
@@ -16,6 +16,7 @@ function MetricGithubBranchFilterInput({
       textField={"text"}
       model={metricFilterModel}
       setModel={setMetricFilterModel}
+      repository={metricFilterModel?.getData(repositoryFieldName)}
     />
   );
 }
@@ -25,10 +26,12 @@ MetricGithubBranchFilterInput.propTypes = {
   setMetricFilterModel: PropTypes.func,
   metricModel: PropTypes.object,
   fieldName: PropTypes.string,
+  repositoryFieldName: PropTypes.string,
 };
 
 MetricGithubBranchFilterInput.defaultProps = {
   fieldName: KPI_FILTER_TYPES.GITHUB_BRANCH,
+  repositoryFieldName: KPI_FILTER_TYPES.GITHUB_REPOSITORY,
 };
 
 export default MetricGithubBranchFilterInput;

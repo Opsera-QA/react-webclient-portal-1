@@ -35,7 +35,7 @@ const JENKINS_JOBS_GENERIC_AGENT_TYPES = [
   }
 ];
 
-function JenkinsShellScriptEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled }) {
+function JenkinsShellScriptEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled, jenkinsJobType }) {
   useEffect(() => {
     unpackJobConfiguration();
   }, [jenkinsJobConfiguration]);
@@ -64,6 +64,7 @@ function JenkinsShellScriptEditorPanel({ jenkinsJobConfiguration, model, setMode
             model={model}
             setModel={setModel}
             agentList={JENKINS_JOBS_GENERIC_AGENT_TYPES}
+            jenkinsJobType={jenkinsJobType}
           />
         </Col>
       );
@@ -93,6 +94,7 @@ JenkinsShellScriptEditorPanel.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   autoScalingEnabled: PropTypes.bool,
+  jenkinsJobType: PropTypes.string
 };
 
 export default JenkinsShellScriptEditorPanel;

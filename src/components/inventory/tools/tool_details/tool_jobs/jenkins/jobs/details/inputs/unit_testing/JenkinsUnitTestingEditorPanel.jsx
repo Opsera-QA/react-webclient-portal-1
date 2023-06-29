@@ -15,6 +15,7 @@ function JenkinsUnitTestingEditorPanel({
   model,
   setModel,
   autoScalingEnabled,
+  jenkinsJobType
 }) {
   useEffect(() => {
     unpackJobConfiguration();
@@ -86,6 +87,7 @@ function JenkinsUnitTestingEditorPanel({
           <JenkinsJobsGenericAgentTypeSelectInput
             model={model}
             setModel={setModel}
+            jenkinsJobType={jenkinsJobType}
           />
         </Col>
       );
@@ -116,6 +118,7 @@ JenkinsUnitTestingEditorPanel.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   autoScalingEnabled: PropTypes.bool,
+  jenkinsJobType: PropTypes.string
 };
 
 export default JenkinsUnitTestingEditorPanel;

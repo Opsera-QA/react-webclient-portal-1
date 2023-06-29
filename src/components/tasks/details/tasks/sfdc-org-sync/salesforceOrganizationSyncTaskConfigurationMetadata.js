@@ -34,9 +34,8 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
       label: "SCM Type",
       id: "service",
       isRequired: true,
-      maxLength: 10,
+      maxLength: 50,
       lowercase: true,
-      regexDefinitionName: "alphabetic",
     },    
     {
       label: "Git Account",
@@ -135,6 +134,12 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
         return model?.getData("includePackageXml") === true;
       },
     },
+    {
+      id: "repoId",
+    },
+    {
+      id: "azureProjectId",
+    },
   ],
   newObjectFields: {
     type: "",
@@ -171,6 +176,8 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
     packageXmlReferencePath: "",
     reviewers: [],
     reviewerNames: [],
+    repoId: "",
+    azureProjectId: "",
   }
 };
 

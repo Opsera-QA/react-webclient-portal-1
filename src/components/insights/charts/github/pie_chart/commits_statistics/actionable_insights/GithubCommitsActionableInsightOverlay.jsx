@@ -17,6 +17,7 @@ import GithubCommitsActionableInsightClosedTab from "./GithubCommitsActionableIn
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import GithubCommitsActionableInsightMergedTab from "./GithubCommitsActionableInsightMergedTab";
 import GithubCommitsActionableInsightContributorsTab from "./GithubCommitsActionableInsightContributorsTab";
+import GithubCommitsActionableInsightTable from "./GithubCommitsActionableInsightTable";
 
 function GithubCommitsActionableInsightOverlay({
   kpiConfiguration,
@@ -113,24 +114,46 @@ function GithubCommitsActionableInsightOverlay({
     );
   };
 
-  return (
-    <FullScreenCenterOverlayContainer
-      closePanel={closePanel}
-      showPanel={true}
-      titleText={"Github Total Commits"}
-      showToasts={true}
-      titleIcon={faTable}
-      // isLoading={isLoading}
-      linkTooltipText={"View Full Blueprint"}
-    >
-      <div className={"p-3"}>
-        <TabPanelContainer
-          currentView={getBody()}
-          tabContainer={getTabContainer()}
-        />
-      </div>
-    </FullScreenCenterOverlayContainer>
-  );
+  if(highestMergesMetric.length > 0) {
+    return (
+        <FullScreenCenterOverlayContainer
+            closePanel={closePanel}
+            showPanel={true}
+            titleText={"Github Total Commits"}
+            showToasts={true}
+            titleIcon={faTable}
+            // isLoading={isLoading}
+            linkTooltipText={"View Full Blueprint"}
+        >
+          <div className={"p-3"}>
+            <TabPanelContainer
+                currentView={getBody()}
+                tabContainer={getTabContainer()}
+            />
+          </div>
+        </FullScreenCenterOverlayContainer>
+    );
+  }else {
+    return (
+        <FullScreenCenterOverlayContainer
+            closePanel={closePanel}
+            showPanel={true}
+            titleText={"Github Total Commits"}
+            showToasts={true}
+            titleIcon={faTable}
+            // isLoading={isLoading}
+            linkTooltipText={"View Full Blueprint"}
+        >
+          <div className={"p-2"}>
+            <GithubCommitsActionableInsightTable
+                data={[]}
+                title={"No Data Available"}
+                type={"open"}
+            />
+          </div>
+        </FullScreenCenterOverlayContainer>
+    );
+  }
 }
 
 GithubCommitsActionableInsightOverlay.propTypes = {

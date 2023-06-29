@@ -61,12 +61,10 @@ export default function CreateWorkspaceResourceWizardResourceSelectionScreen(
       buttonContainer={getButtonContainer()}
     >
       <div className={"m-4"}>
-        <CenteredContentWrapper>
           <H5FieldSubHeader
             className={"mb-3 mx-3"}
             subheaderText={"What kind of Resource would you like to create today?"}
           />
-        </CenteredContentWrapper>
         <Row>
           <Col xs={12} sm={12} md={6} lg={6} xl={4}>
             <WorkspaceResourceOptionCardBase

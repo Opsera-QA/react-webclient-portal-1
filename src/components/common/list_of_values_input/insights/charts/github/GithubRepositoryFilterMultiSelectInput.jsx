@@ -13,6 +13,9 @@ function GithubRepositoryFilterMultiSelectInput({
   fieldName,
   model,
   setModel,
+  disabled,
+  setDataFunction,
+  clearDataFunction,
 }) {
   const { getAccessToken } = useContext(AuthContext);
   const [repositories, setRepositories] = useState([]);
@@ -67,6 +70,7 @@ function GithubRepositoryFilterMultiSelectInput({
       setRepositories(response?.data?.data);
     }
   };
+
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
@@ -78,6 +82,9 @@ function GithubRepositoryFilterMultiSelectInput({
       error={error}
       textField={textField}
       placeholderText={placeholderText}
+      disabled={disabled}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
     />
   );
 }
@@ -90,8 +97,10 @@ GithubRepositoryFilterMultiSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
+  clearDataFunction: PropTypes.func,
   visible: PropTypes.bool,
   project: PropTypes.array,
+  disabled: PropTypes.bool,
 };
 
 GithubRepositoryFilterMultiSelectInput.defaultProps = {
