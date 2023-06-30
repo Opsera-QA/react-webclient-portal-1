@@ -55,12 +55,21 @@ function GitlabMergeRequestsPushesAndComments({
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+        let dashboardOrgs =
+      dashboardData?.data?.filters[
+        dashboardData?.data?.filters.findIndex(
+          (obj) => obj.type === "organizations",
+        )
+      ]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "gitlabTotalCountOfMergeReqAndPushPerDay",
         kpiConfiguration,
-        dashboardTags
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs
       );
       let dataObject = response?.data
         ? response?.data?.data[0]?.gitlabTotalCountOfMergeReqAndPushPerDay?.data[0]?.data
