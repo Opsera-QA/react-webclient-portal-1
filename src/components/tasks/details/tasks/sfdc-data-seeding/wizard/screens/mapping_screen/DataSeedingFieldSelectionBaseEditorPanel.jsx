@@ -40,7 +40,7 @@ const DataSeedingFieldSelectionBaseEditorPanel = ({
     if (searchText !== "") {
       const lowercaseSearchText = searchText.toLowerCase();
       return fieldsList.filter((field) => {
-        return field?.name?.toLowerCase().includes(lowercaseSearchText);
+        return field?.label?.toLowerCase().includes(lowercaseSearchText) || field?.name?.toLowerCase().includes(lowercaseSearchText);
       });
     }
 

@@ -47,62 +47,82 @@ const DataSeedingFieldEditorPanel = ({
       <Col lg={12}>
         <Row className={"mx-0"}>
           <Col
-            lg={6}
-            className={"no-wrap-inline"}
+            lg={4}
+            style={{ overflowWrap: "anywhere"}}
           >
-            {/*<TextFieldBase*/}
-            {/*  dataObject={fieldsMetadata}*/}
-            {/*  fieldName={"name"}*/}
-            {/*/>*/}
-            <h6>{fieldsMetadata?.getData("name")}</h6>
+            <TextFieldBase
+              dataObject={fieldsMetadata}
+              fieldName={"label"}
+            />
           </Col>
           <Col
-            lg={6}
+            lg={4}
+            style={{ overflowWrap: "anywhere"}}
+          >
+            <TextFieldBase
+              dataObject={fieldsMetadata}
+              fieldName={"name"}
+            />
+          </Col>
+          <Col
+            lg={4}
             className={"d-flex mb-1 mt-1 justify-content-end"}
           >
+            <Col lg={6}>
+              <CheckboxInputBase
+                className={"ml-3"}
+                fieldName={"isMock"}
+                model={fieldsMetadata}
+                setModel={setFieldsMetadata}
+                setDataFunction={setDataFunction}
+                disabled={fieldsMetadata?.getData("isMockDisabled")}
+              />
+            </Col>
+            <Col lg={6}>
+              <CheckboxInputBase
+                fieldName={"isExternalId"}
+                model={fieldsMetadata}
+                setModel={setFieldsMetadata}
+                setDataFunction={setDataFunction}
+                disabled={fieldsMetadata?.getData("isExternalIdDisabled")}
+              />
+            </Col>
+          </Col>
+        </Row>
+        <Col lg={12} className={"d-flex mb-1 mt-1 justify-content-end"}>
+          <div
+            className={"badge badge-secondary mr-2"}
+            style={{ fontSize: "10px", letterSpacing: "0.6px" }}
+          >
+            {fieldsMetadata?.getData("type")?.toUpperCase()}
+          </div>
+          {fieldsMetadata?.getData("unique") ? (
             <div
               className={"badge badge-secondary mr-2"}
               style={{ fontSize: "10px", letterSpacing: "0.6px" }}
             >
-              {fieldsMetadata?.getData("type")?.toUpperCase()}
+              UNIQUE
             </div>
-            {fieldsMetadata?.getData("unique") ? (
-              <div
-                className={"badge badge-secondary mr-2"}
-                style={{ fontSize: "10px", letterSpacing: "0.6px" }}
-              >
-                UNIQUE
-              </div>
-            ) : null}
-            {!fieldsMetadata?.getData("nillable") ? (
-              <div
-                className={"badge badge-danger mr-2"}
-                style={{ fontSize: "10px", letterSpacing: "0.6px" }}
-              >
-                MANDATORY
-              </div>
-            ) : null}
-          </Col>
-        </Row>
+          ) : null}
+          {!fieldsMetadata?.getData("nillable") ? (
+            <div
+              className={"badge badge-danger mr-2"}
+              style={{ fontSize: "10px", letterSpacing: "0.6px" }}
+            >
+              MANDATORY
+            </div>
+          ) : null}
+          {!fieldsMetadata?.getData("nillable") ? (
+            <div
+              className={"badge badge-danger mr-2"}
+              style={{ fontSize: "10px", letterSpacing: "0.6px" }}
+            >
+              MANDATORY
+            </div>
+          ) : null}
+        </Col>
       </Col>
-      <Col lg={6}>
-        <CheckboxInputBase
-          fieldName={"isMock"}
-          model={fieldsMetadata}
-          setModel={setFieldsMetadata}
-          setDataFunction={setDataFunction}
-          disabled={fieldsMetadata?.getData("isMockDisabled")}
-        />
-      </Col>
-      <Col lg={6}>
-        <CheckboxInputBase
-          fieldName={"isExternalId"}
-          model={fieldsMetadata}
-          setModel={setFieldsMetadata}
-          setDataFunction={setDataFunction}
-          disabled={fieldsMetadata?.getData("isExternalIdDisabled")}
-        />
-      </Col>
+
     </Row>
   );
 };

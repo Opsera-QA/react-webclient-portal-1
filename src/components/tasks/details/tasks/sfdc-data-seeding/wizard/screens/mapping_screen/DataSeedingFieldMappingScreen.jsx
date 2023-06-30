@@ -20,7 +20,6 @@ import { parseError } from "../../../../../../../common/helpers/error-helpers";
 import useAxiosCancelToken from "../../../../../../../../hooks/useAxiosCancelToken";
 import axios from "axios";
 import Model from "../../../../../../../../core/data_model/model";
-import { customSettingMappingMetadata } from "./customSettingMapping.metadata";
 import { hasStringValue } from "../../../../../../../common/helpers/string-helpers";
 import { DATA_SEEDING_WIZARD_SCREENS } from "../../dataSeedingTaskWizard.constants";
 import Accordion from "react-bootstrap/Accordion";
@@ -42,9 +41,7 @@ const DataSeedingFieldMappingScreen = ({
   const [isSaving, setIsSaving] = useState(false);
   const [filePullCompleted, setFilePullCompleted] = useState(false);
   const [fieldsPropertiesList, setFieldsPropertiesList] = useState([]);
-  const [localMappedData, setLocalMappedData] = useState(
-    new Model({}, customSettingMappingMetadata, false),
-  );
+
   const [mappedData, setMappedData] = useState([]);
 
   const { cancelTokenSource } = useAxiosCancelToken();
@@ -72,12 +69,6 @@ const DataSeedingFieldMappingScreen = ({
       stopPolling();
     };
   }, []);
-
-  // useEffect(() => {
-  //   let newDataObject = {...wizardModel};
-  //   newDataObject.setData("fieldMapping", mappedData);
-  //   setWizardModel({...newDataObject});
-  // }, [mappedData]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {

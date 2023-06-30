@@ -6,7 +6,7 @@ export const dataSeedingFieldsMetadata = {
       id: "label",
     },
     {
-      label: "Name",
+      label: "API Name",
       id: "name",
     },
     {
@@ -26,7 +26,7 @@ export const dataSeedingFieldsMetadata = {
       id: "type",
     },
     {
-      label: "Is Mock",
+      label: "Mock",
       id: "isMock",
     },
     {
@@ -38,15 +38,15 @@ export const dataSeedingFieldsMetadata = {
       id: "updateable",
     },
     {
-      label: "Is External Id",
+      label: "External Ref Id",
       id: "isExternalId",
     },
     {
-      label: "Is Mock Disabled",
+      label: "Mock Disabled",
       id: "isMockDisabled",
     },
     {
-      label: "Is External Id Disabled",
+      label: "External Id Disabled",
       id: "isExternalIdDisabled",
     },
   ],
