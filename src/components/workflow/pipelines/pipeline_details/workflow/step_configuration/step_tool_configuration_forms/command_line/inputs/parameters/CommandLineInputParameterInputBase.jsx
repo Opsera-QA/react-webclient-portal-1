@@ -107,7 +107,7 @@ export default function CommandLineInputParameterInputBase(
         newArray.push({
           parameterName: parameter?.parameterName,
           parameterId: parameter?.parameterId,
-          outputKey: newParameter?.outputKey,
+          outputKey: parameter?.outputKey,
         });
       }
     });
