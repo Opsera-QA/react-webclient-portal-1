@@ -42,8 +42,6 @@ const DataSeedingFieldMappingScreen = ({
   const [filePullCompleted, setFilePullCompleted] = useState(false);
   const [fieldsPropertiesList, setFieldsPropertiesList] = useState([]);
 
-  const [mappedData, setMappedData] = useState([]);
-
   const { cancelTokenSource } = useAxiosCancelToken();
   const isMounted = useRef(false);
   let timerIds = [];
@@ -130,12 +128,11 @@ const DataSeedingFieldMappingScreen = ({
       }
 
       if (Array.isArray(fieldList)) {
-        setFieldsPropertiesList(fieldList);
-
-        let newDataObject = { ...wizardModel };
-        // newDataObject.setData("selectedFieldList", fieldList);
-        setWizardModel({ ...newDataObject });
-
+        let selectedFieldList = wizardModel?.getData("selectedFieldList");
+        setFieldsPropertiesList(selectedFieldList && selectedFieldList.length > 0 ? selectedFieldList : fieldList);
+        // let newDataObject = { ...wizardModel };
+        // newDataObject.setData("selectedFieldList", selectedFieldList);
+        // setWizardModel({ ...newDataObject });
         setIsLoading(false);
         setFilePullCompleted(true);
       }
@@ -150,29 +147,25 @@ const DataSeedingFieldMappingScreen = ({
 
   const saveAndMoveToNextScreen = async () => {
     try {
-      // TODO : fix this
-
       setIsSaving(true);
       wizardModel.setData("queryFilters", []);
       wizardModel.setData("filterQuery", "");
-
-      let finalSelectedFields = fieldsPropertiesList.filter((field) => {
-        return mappedData.some(
-          (obj) =>
-            obj.targetField === field.name && hasStringValue(obj.sourceField),
-        );
+      const formattedFieldList = fieldsPropertiesList.reduce((list, item) => {
+        list[item.name] = item.fieldList;
+        return list;
       });
 
+      let finalSelectedFields = fieldsPropertiesList.find((obj) => obj.name === wizardModel?.getData("selectedCustomSetting")?.componentName);
       let newDataObject = { ...wizardModel };
-      newDataObject.setData("selectedFieldList", finalSelectedFields);
 
-      const query = `SELECT ${finalSelectedFields
+      const query = `SELECT ${finalSelectedFields?.fieldList
         ?.map((ele) => ele.name)
         .join(", ")} FROM ${
         wizardModel?.getData("selectedCustomSetting")?.componentName
       }`;
 
       // console.log(query);
+      newDataObject.setData("filteredFieldList", finalSelectedFields?.fieldList);
       newDataObject.setData("filterQuery", query);
       setWizardModel({ ...newDataObject });
 
@@ -180,7 +173,7 @@ const DataSeedingFieldMappingScreen = ({
         getAccessToken,
         null,
         wizardModel,
-        finalSelectedFields,
+        formattedFieldList,
       );
       setCurrentScreen(DATA_SEEDING_WIZARD_SCREENS.QUERY_BUILDER_SCREEN);
     } catch (error) {
@@ -212,6 +205,9 @@ const DataSeedingFieldMappingScreen = ({
     newFieldObj[fieldIndex] = modifiedValue;
     // console.log(modifiedValue);
     // console.log(newFieldPropertiesList[id]?.fieldList[fieldIndex]);
+    let newDataObject = { ...wizardModel };
+    newDataObject.setData("selectedFieldList", newFieldPropertiesList);
+    setWizardModel({ ...newDataObject });
     setFieldsPropertiesList(newFieldPropertiesList);
   };
 
@@ -246,7 +242,7 @@ const DataSeedingFieldMappingScreen = ({
                       lg={11}
                       md={11}
                     >
-                      <H5FieldSubHeader subheaderText={item?.title} />
+                      <H5FieldSubHeader subheaderText={item?.name} />
                     </Col>
                     <Col
                       lg={1}

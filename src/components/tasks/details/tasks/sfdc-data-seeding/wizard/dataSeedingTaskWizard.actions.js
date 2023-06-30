@@ -180,11 +180,11 @@ dataSeedingTaskWizardActions.updateSelectedFields = async (
   getAccessToken,
   cancelTokenSource,
   wizardModel,
-  members,
+  finalSelectedFields,
 ) => {
   const apiUrl = `/tasks/data-seeding/wizard/${wizardModel?.getData("recordId")}/selected-field-list`;
   const postBody = {
-    selectedFieldList: members,
+    selectedFieldList: finalSelectedFields,
   };
 
   return await baseActions.apiPostCallV2(

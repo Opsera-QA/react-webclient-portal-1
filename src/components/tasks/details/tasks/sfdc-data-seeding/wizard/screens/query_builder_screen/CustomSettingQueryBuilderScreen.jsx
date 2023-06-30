@@ -73,13 +73,13 @@ const CustomSettingQueryBuilderScreen = ({
     return () => {
       isMounted.current = false;
     };
-  }, [wizardModel?.getData("selectedFieldList")]);
+  }, [wizardModel?.getData("filteredFieldList")]);
 
   const loadData = () => {
     try {
-      if (wizardModel?.getData("selectedFieldList")) {
+      if (wizardModel?.getData("filteredFieldList")) {
         const filteredData = wizardModel
-          ?.getData("selectedFieldList")
+          ?.getData("filteredFieldList")
           ?.filter((item) => {
             return item.filterable === true;
           });
@@ -193,7 +193,7 @@ const CustomSettingQueryBuilderScreen = ({
   const query = useMemo(() => generateQuery(), [queryFilters]);
   const handleBackButton = () => {
     setCurrentScreen(
-      DATA_SEEDING_WIZARD_SCREENS.CONFIGURATION_SCREEN,
+      DATA_SEEDING_WIZARD_SCREENS.MAPPING_SCREEN,
     );
   };
 
