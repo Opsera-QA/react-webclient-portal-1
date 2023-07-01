@@ -4,13 +4,13 @@ import { SteppedLineTo } from "react-lineto";
 import { faPlusSquare, faCaretSquareDown, faCaretSquareUp, faCopy } from "@fortawesome/pro-light-svg-icons";
 import PipelineWorkflowItem from "./PipelineWorkflowItem";
 import { pipelineValidationHelper } from "components/workflow/pipelines/helpers/pipelineValidation.helper";
-import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 import IconBase from "components/common/icons/IconBase";
+import useGetToolIdentifiers from "components/admin/tools/identifiers/hooks/useGetToolIdentifiers";
 
 function PipelineWorkflowItemList(
   {
@@ -25,52 +25,20 @@ function PipelineWorkflowItemList(
     parentWorkflowStatus,
   }) {
   const [isSaving, setIsSaving] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [toolIdentifiers, setToolIdentifiers] = useState([]);
   const {
-    cancelTokenSource,
-    isMounted,
-    getAccessToken,
     toastContext,
   } = useComponentStateReference();
   const pipelineActions = usePipelineActions();
+  const {
+    toolIdentifiers,
+    isLoading,
+    getToolIdentifierByIdentifier,
+  } = useGetToolIdentifiers();
 
-  useEffect(() => {
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-  }, []);
+  useEffect(() => {}, []);
 
   const delayedRefresh = async () => {
     await fetchPlan();
-  };
-
-  const loadData = async () => {
-    try {
-      setIsLoading(true);
-      await getToolIdentifiers();
-    }
-    catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    }
-    finally {
-      if (isMounted?.current === true ) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const getToolIdentifiers = async () => {
-    const response = await toolIdentifierActions.getToolIdentifiersV2(getAccessToken, cancelTokenSource);
-    const identifiers = response?.data?.data;
-
-    if (isMounted?.current === true && Array.isArray(identifiers)) {
-      setToolIdentifiers(identifiers);
-    }
   };
 
   const handleAddStep = async (itemId, index) => {
@@ -167,12 +135,6 @@ function PipelineWorkflowItemList(
     return classString += " " + stepStatusClass;
   };
 
-  const getToolIdentifierForStep = (toolIdentifier) => {
-    if (Array.isArray(toolIdentifiers) && toolIdentifiers.length > 0 && hasStringValue(toolIdentifier)) {
-      return toolIdentifiers.find((identifier) => toolIdentifier === identifier?.identifier);
-    }
-  };
-
   const getPipelineWorkflowItemControls = (item, index) => {
     if (editWorkflow) {
       return (
@@ -260,7 +222,7 @@ function PipelineWorkflowItemList(
               tempLoading={isLoading}
               parentCallbackEditItem={parentCallbackEditItem}
               parentWorkflowStatus={parentWorkflowStatus}
-              toolIdentifier={getToolIdentifierForStep(item?.tool?.tool_identifier)}
+              toolIdentifier={getToolIdentifierByIdentifier(item?.tool?.tool_identifier)}
               loadPipeline={fetchPlan}
             />
           </div>
