@@ -75,9 +75,6 @@ import {
 } from "components/workflow/plan/step/s3/s3PipelineStepConfiguration.metadata";
 import twistlockPipelineStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/twistlockPipelineStepForm.metadata";
-import {
-  externalRestApiIntegrationStepMetadata
-} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
 import {azureScriptsStepMetadata} from "components/workflow/plan/step/azure_scripts/azureScriptsStep.metadata";
 import {
   userActionsPipelineStepMetadata
@@ -149,6 +146,8 @@ import jfrogMavenStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_maven/jfrog-maven-stepForm-metadata";
 import toolIdentifierConstants from "@opsera/definitions/constants/tool_identifiers/toolIdentifier.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import externalRestApiIntegrationStepMetadata
+  from "@opsera/definitions/constants/pipelines/steps/definitions/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
 
 export const pipelineStepMetadataConstants = {};
 
