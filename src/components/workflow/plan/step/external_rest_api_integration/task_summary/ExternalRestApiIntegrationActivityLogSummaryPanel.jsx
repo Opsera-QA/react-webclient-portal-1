@@ -10,7 +10,6 @@ import ExternalRestApiIntegrationEndpointSummary
 } from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointSummary";
 import pipelineActivityLogActionConstants
   from "@opsera/definitions/constants/pipelines/logs/pipelineActivityLogAction.constants";
-import InfoContainer from "components/common/containers/InfoContainer";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 
 // TODO: Make fully fleshed out report.
@@ -27,7 +26,7 @@ function ExternalRestApiIntegrationActivityLogSummaryPanel(
       const connectionCheckEndpoint = parsedEndpoints?.connectionCheckEndpoint;
       const headerTokenEndpoint = parsedEndpoints?.headerTokenEndpoint;
       const statusCheckEndpoint = parsedEndpoints?.statusCheckEndpoint;
-      const callOperationEndpoint = parsedEndpoints?.callOperationEndpoint;
+      const callOperationEndpoint = parsedEndpoints?.runTriggerEndpoint;
 
       return (
         <div>
