@@ -19,6 +19,7 @@ import StandaloneSaveButton from "../../../../../../../../../common/buttons/savi
 import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
 import ToolNameFieldDisplayer from "../../../../../../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
 import MergeSyncTaskWizardProfileSubmitFileButton from "../MergeSyncTaskWizardProfileSubmitFileButton";
+import { getDiff } from "./utils";
 
 const MergeSyncTaskWizardCustomPermissionsJsonEditPanel = ({
   wizardModel,
@@ -204,24 +205,29 @@ const MergeSyncTaskWizardCustomPermissionsJsonEditPanel = ({
       modifiedContentJson?.customPermissions?.filter((obj) => {
         return obj?.name?.toLowerCase().includes(searchText.toLowerCase());
       });
+    if (filteredData && filteredData.length && originalContentJson?.customPermissions) {
+      const { arr2 } = getDiff([...originalContentJson?.customPermissions], [...filteredData], 'name');
+      filteredData = arr2;
+    }
     return (
       <Col>
-        <span className="h5">
+        {wizardModel?.getData("taskType") === "GIT_VS_GIT_SYNC" ? <span className="h5">
+          Source Git Branch ({wizardModel?.getData("sourceBranch")}
+          )</span> : <span className="h5">
           Source Salesforce Org (
           <ToolNameFieldDisplayer
             toolId={wizardModel?.getData("sfdcToolId")}
             loadToolInNewWindow={true}
           />
-          )
-        </span>
+          )</span>}
         {filteredData && filteredData.length > 0 ? (
           filteredData.map((customPermissionsData, idx, { length }) => (
             <div key={idx}>
-              <CustomPermissionsProfileEditorView
+              {customPermissionsData?.isDummy !== undefined ? <div style={{ height: '77.59px' }}></div> : (<CustomPermissionsProfileEditorView
                 customPermissionsData={customPermissionsData}
                 setCustomPermissionJson={setCustomPermissionJson}
                 isLoading={isLoading}
-              />
+              />)}
               {idx + 1 !== length && <DividerWithCenteredText />}
             </div>
           ))
@@ -241,6 +247,10 @@ const MergeSyncTaskWizardCustomPermissionsJsonEditPanel = ({
       originalContentJson?.customPermissions?.filter((obj) => {
         return obj?.name?.toLowerCase().includes(searchText.toLowerCase());
       });
+    if (filteredData && filteredData.length > 0 && modifiedContentJson?.customPermissions) {
+      const { arr1 } = getDiff([...filteredData], [...modifiedContentJson?.customPermissions], 'name');
+      filteredData = arr1;
+    }
     return (
       <Col>
         <span className="h5">
@@ -249,12 +259,12 @@ const MergeSyncTaskWizardCustomPermissionsJsonEditPanel = ({
         {filteredData && filteredData.length > 0 ? (
           filteredData.map((customPermissionsData, idx, { length }) => (
             <div key={idx}>
-              <CustomPermissionsProfileEditorView
+              {customPermissionsData?.isDummy !== undefined ? <div style={{ height: '77.59px' }}></div> : (<CustomPermissionsProfileEditorView
                 customPermissionsData={customPermissionsData}
                 setCustomPermissionJson={setCustomPermissionJson}
                 isLoading={isLoading}
                 disabled={true}
-              />
+              />)}
               {idx + 1 !== length && <DividerWithCenteredText />}
             </div>
           ))

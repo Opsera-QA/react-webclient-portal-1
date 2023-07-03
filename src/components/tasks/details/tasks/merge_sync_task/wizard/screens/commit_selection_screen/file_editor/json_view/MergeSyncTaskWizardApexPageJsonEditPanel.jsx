@@ -18,6 +18,7 @@ import InlineWarning from "../../../../../../../../../common/status_notification
 import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
 import ToolNameFieldDisplayer from "../../../../../../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
 import MergeSyncTaskWizardProfileSubmitFileButton from "../MergeSyncTaskWizardProfileSubmitFileButton";
+import { getDiff } from "./utils";
 
 const MergeSyncTaskWizardApexPageJsonEditPanel = ({
   wizardModel,
@@ -203,24 +204,30 @@ const MergeSyncTaskWizardApexPageJsonEditPanel = ({
       modifiedContentJson?.pageAccesses?.filter((obj) => {
         return obj?.apexPage?.toLowerCase().includes(searchText.toLowerCase());
       });
+    if (filteredData && filteredData.length && originalContentJson?.pageAccesses) {
+      const { arr2 } = getDiff([...originalContentJson?.pageAccesses], [...filteredData], 'apexPage');
+      filteredData = arr2;
+    }
     return (
       <Col>
-        <span className="h5">
+        {wizardModel?.getData("taskType") === "GIT_VS_GIT_SYNC" ? <span className="h5">
+          Source Git Branch ({wizardModel?.getData("sourceBranch")}
+          )</span> : <span className="h5">
           Source Salesforce Org (
           <ToolNameFieldDisplayer
             toolId={wizardModel?.getData("sfdcToolId")}
             loadToolInNewWindow={true}
           />
-          )
-        </span>
+          )</span>}
         {filteredData && filteredData.length > 0 ? (
           filteredData.map((pageAccessData, idx, { length }) => (
             <div key={idx}>
-              <ApexPageProfileEditorView
-                pageAccessData={pageAccessData}
-                setPageAccessDataJson={setPageAccessDataJson}
-                isLoading={isLoading}
-              />
+              {pageAccessData?.isDummy !== undefined ? <div style={{ height: '77.59px' }}></div> :
+                (<ApexPageProfileEditorView
+                  pageAccessData={pageAccessData}
+                  setPageAccessDataJson={setPageAccessDataJson}
+                  isLoading={isLoading}
+                />)}
               {idx + 1 !== length && <DividerWithCenteredText />}
             </div>
           ))
@@ -240,6 +247,10 @@ const MergeSyncTaskWizardApexPageJsonEditPanel = ({
       originalContentJson?.pageAccesses?.filter((obj) => {
         return obj?.apexPage?.toLowerCase().includes(searchText.toLowerCase());
       });
+    if (filteredData && filteredData.length > 0 && modifiedContentJson?.pageAccesses) {
+      const { arr1 } = getDiff([...filteredData], [...modifiedContentJson?.pageAccesses], 'apexPage');
+      filteredData = arr1;
+    }
     return (
       <Col>
         <span className="h5">
@@ -248,12 +259,13 @@ const MergeSyncTaskWizardApexPageJsonEditPanel = ({
         {filteredData && filteredData.length > 0 ? (
           filteredData.map((pageAccessData, idx, { length }) => (
             <div key={idx}>
-              <ApexPageProfileEditorView
-                pageAccessData={pageAccessData}
-                setPageAccessDataJson={setPageAccessDataJson}
-                isLoading={isLoading}
-                disabled={true}
-              />
+              {pageAccessData?.isDummy !== undefined ? <div style={{ height: '77.59px' }}></div> :
+                (<ApexPageProfileEditorView
+                  pageAccessData={pageAccessData}
+                  setPageAccessDataJson={setPageAccessDataJson}
+                  isLoading={isLoading}
+                  disabled={true}
+                />)}
               {idx + 1 !== length && <DividerWithCenteredText />}
             </div>
           ))

@@ -19,6 +19,7 @@ import StandaloneSaveButton from "../../../../../../../../../common/buttons/savi
 import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
 import ToolNameFieldDisplayer from "../../../../../../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
 import MergeSyncTaskWizardProfileSubmitFileButton from "../MergeSyncTaskWizardProfileSubmitFileButton";
+import { getDiff } from "./utils";
 
 const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
   wizardModel,
@@ -209,24 +210,29 @@ const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
           ?.toLowerCase()
           .includes(searchText.toLowerCase());
       });
+    if (filteredData && filteredData.length && originalContentJson?.externalDataSourceAccesses) {
+      const { arr2 } = getDiff([...originalContentJson?.externalDataSourceAccesses], [...filteredData], 'externalDataSource');
+      filteredData = arr2;
+    }
     return (
       <Col>
-        <span className="h5">
+        {wizardModel?.getData("taskType") === "GIT_VS_GIT_SYNC" ? <span className="h5">
+          Source Git Branch ({wizardModel?.getData("sourceBranch")}
+          )</span> : <span className="h5">
           Source Salesforce Org (
           <ToolNameFieldDisplayer
             toolId={wizardModel?.getData("sfdcToolId")}
             loadToolInNewWindow={true}
           />
-          )
-        </span>
+          )</span>}
         {filteredData && filteredData.length > 0 ? (
           filteredData.map((externalDataSourceData, idx, { length }) => (
             <div key={idx}>
-              <ExternalDataSourceProfileEditorView
+              {externalDataSourceData?.isDummy !== undefined ? <div style={{ height: '77.59px' }}></div> : (<ExternalDataSourceProfileEditorView
                 externalDataSourceData={externalDataSourceData}
                 setExternalSourceDataJson={setExternalSourceDataJson}
                 isLoading={isLoading}
-              />
+              />)}
               {idx + 1 !== length && <DividerWithCenteredText />}
             </div>
           ))
@@ -248,6 +254,10 @@ const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
           ?.toLowerCase()
           .includes(searchText.toLowerCase());
       });
+    if (filteredData && filteredData.length > 0 && modifiedContentJson?.externalDataSourceAccesses) {
+      const { arr1 } = getDiff([...filteredData], [...modifiedContentJson?.externalDataSourceAccesses], 'externalDataSource');
+      filteredData = arr1;
+    }
     return (
       <Col>
         <span className="h5">
@@ -256,12 +266,12 @@ const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
         {filteredData && filteredData.length > 0 ? (
           filteredData.map((externalDataSourceData, idx, { length }) => (
             <div key={idx}>
-              <ExternalDataSourceProfileEditorView
+              {externalDataSourceData?.isDummy !== undefined ? <div style={{ height: '77.59px' }}></div> : (<ExternalDataSourceProfileEditorView
                 externalDataSourceData={externalDataSourceData}
                 setExternalSourceDataJson={setExternalSourceDataJson}
                 isLoading={isLoading}
                 disabled={true}
-              />
+              />)}
               {idx + 1 !== length && <DividerWithCenteredText />}
             </div>
           ))
