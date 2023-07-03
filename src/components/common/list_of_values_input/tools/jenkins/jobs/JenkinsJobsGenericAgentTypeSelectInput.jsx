@@ -70,7 +70,7 @@ function JenkinsJobsGenericAgentTypeSelectInput({ fieldName, model, setModel, se
       case JenkinsJobTypes.COVERITY:
         return JENKINS_JOBS_GENERIC_AGENT_TYPES;
     }
-  }
+  };
 
   return (
     <SelectInputBase
