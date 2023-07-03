@@ -9,7 +9,8 @@ import {
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faLink} from "@fortawesome/pro-light-svg-icons";
-import externalApiIntegratorEndpointMetadata from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoint.metadata";
+import externalApiIntegratorEndpointMetadata
+  from "@opsera/definitions/constants/registry/tools/external_api_integrator/externalApiIntegratorEndpoint.metadata";
 import NewExternalApiIntegratorEndpointOverlay
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/NewExternalApiIntegratorEndpointOverlay";
 import endpointTypeConstants from "@opsera/definitions/constants/api/request/endpoint/endpointType.constants";

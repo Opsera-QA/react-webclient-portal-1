@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
 import ExternalApiIntegratorEndpointEditorPanel
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointEditorPanel";
-import externalApiIntegratorEndpointMetadata from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoint.metadata";
+import externalApiIntegratorEndpointMetadata
+  from "@opsera/definitions/constants/registry/tools/external_api_integrator/externalApiIntegratorEndpoint.metadata";
 import useGetExternalApiIntegratorEndpoints
   from "hooks/tools/external_api_integrator/endpoints/useGetExternalApiIntegratorEndpoints";
 
