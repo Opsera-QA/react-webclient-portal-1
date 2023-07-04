@@ -21,6 +21,7 @@ function StandaloneJsonField(
     maximumHeight,
     theme,
     showInContainer,
+    hideIfNoValue,
   }) {
   const [copiedJson, setCopiedJson] = useState(undefined);
 
@@ -52,6 +53,10 @@ function StandaloneJsonField(
       );
     }
   };
+
+  if (hideIfNoValue === true && !copiedJson) {
+    return null;
+  }
 
   if (showInContainer === false) {
     return (
@@ -101,6 +106,7 @@ StandaloneJsonField.propTypes = {
   exportFileName: PropTypes.string,
   theme: PropTypes.string,
   showInContainer: PropTypes.bool,
+  hideIfNoValue: PropTypes.bool,
 };
 
 StandaloneJsonField.defaultProps = {

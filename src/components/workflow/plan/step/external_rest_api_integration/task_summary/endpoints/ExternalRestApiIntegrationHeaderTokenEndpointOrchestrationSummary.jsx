@@ -13,7 +13,6 @@ export default function ExternalRestApiIntegrationHeaderTokenEndpointOrchestrati
     requestType,
     className,
   }) {
-  console.log("endpoint: " + JSON.stringify(endpoint));
 
   if (dataParsingHelper.hasObjectProperties(endpoint) !== true) {
     return null;

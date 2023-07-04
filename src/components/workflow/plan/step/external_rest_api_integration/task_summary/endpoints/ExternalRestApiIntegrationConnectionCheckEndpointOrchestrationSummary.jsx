@@ -6,6 +6,8 @@ import EndpointResponseField
   from "components/common/inputs/endpoints/endpoint/response/EndpointResponseField";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
+import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 
 export default function ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary(
   {
@@ -17,21 +19,31 @@ export default function ExternalRestApiIntegrationConnectionCheckEndpointOrchest
     return null;
   }
 
-
   return (
     <div className={className}>
       <H5FieldSubHeader
         subheaderText={`${requestType} Connection Check Endpoint Response`}
       />
       <Row>
-        {/*<Col xs={6}>*/}
-        {/*  <StandaloneJsonField*/}
-        {/*    json={endpoint?.request}*/}
-        {/*    titleText={`Connection Check API Request`}*/}
-        {/*  />*/}
-        {/*</Col>*/}
-        {/*<Col xs={6}>*/}
         <Col xs={12}>
+          <StandaloneTextFieldBase
+            label={"Endpoint URL"}
+            text={endpoint?.url}
+          />
+        </Col>
+        <Col xs={6}>
+          <StandaloneJsonField
+            json={endpoint?.queryParameters}
+            titleText={`Connection Check API Query Parameters`}
+            hideIfNoValue={true}
+          />
+          <StandaloneJsonField
+            json={endpoint?.requestBody}
+            titleText={`Connection Check API Request Body`}
+            hideIfNoValue={true}
+          />
+        </Col>
+        <Col xs={6}>
           <EndpointResponseField
             responseObject={endpoint?.response}
             titleText={`Connection Check API Response`}
