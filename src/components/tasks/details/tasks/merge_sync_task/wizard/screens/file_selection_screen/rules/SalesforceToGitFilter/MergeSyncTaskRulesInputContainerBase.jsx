@@ -12,7 +12,7 @@ function MergeSyncTaskRulesInputContainerBase({ wizardModel, setWizardModel, fie
   const [errorMessage, setErrorMessage] = useState("");
   const [rules, setRules] = useState([]);
   const isMounted = useRef(false);
-  const [isSalesforce] = useState(wizardModel.getData("taskType") === "GIT_VS_GIT_SYNC" && wizardModel.getData("configuration.git.isSalesforce"));
+  const [isSalesforce] = useState(wizardModel.getData("taskType") === "SFDC_GIT_COMPARE_SYNC" || (wizardModel.getData("taskType") === "GIT_VS_GIT_SYNC" && wizardModel.getData("configuration.git.isSalesforce")));
 
   useEffect(() => {
     isMounted.current = true;
