@@ -153,7 +153,10 @@ const DataSeedingFieldMappingScreen = ({
       const formattedFieldList = fieldsPropertiesList.reduce((list, item) => {
         list[item.name] = item.fieldList;
         return list;
-      });
+      }, { fieldList: {} });
+      delete formattedFieldList["fieldList"];
+
+      // console.log(formattedFieldList);
 
       let finalSelectedFields = fieldsPropertiesList.find((obj) => obj.name === wizardModel?.getData("selectedCustomSetting")?.componentName);
       let newDataObject = { ...wizardModel };
