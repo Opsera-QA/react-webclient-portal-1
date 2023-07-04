@@ -70,9 +70,14 @@ function DataSeedingManagedPackageListSelectInput({
       customObject,
     );
     const managedPackageList = response?.data?.message;
-
+    const filteredArray = managedPackageList.filter(
+      (obj) =>
+        !wizardModel
+          ?.getData("selectedCustomSetting")
+          ?.componentName?.startsWith(obj.namespacePrefix),
+    );
     const uniqueManagedPackageList = [
-      ...new Set(managedPackageList.map((item) => item.name)),
+      ...new Set(filteredArray.map((item) => item.name)),
     ];
 
     if (isMounted?.current === true && Array.isArray(managedPackageList)) {
