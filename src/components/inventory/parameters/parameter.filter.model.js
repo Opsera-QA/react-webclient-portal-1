@@ -18,6 +18,7 @@ const parameterFilterMetadata = {
     {
       label: "Search",
       id: "search",
+      maxLength: 50,
     },
     {
       label: "Active Filters",
@@ -28,7 +29,7 @@ const parameterFilterMetadata = {
     pageSize: 100,
     currentPage: 1,
     search: "",
-    activeFilters: []
+    activeFilters: [],
   },
 };
 
@@ -50,5 +51,3 @@ export class ParameterFilterModel extends FilterModelBase {
 }
 
 export default ParameterFilterModel;
-
-
