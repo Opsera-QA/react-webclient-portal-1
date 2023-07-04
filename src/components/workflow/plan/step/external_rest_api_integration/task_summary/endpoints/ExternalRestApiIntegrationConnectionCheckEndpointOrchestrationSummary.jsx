@@ -31,6 +31,12 @@ export default function ExternalRestApiIntegrationConnectionCheckEndpointOrchest
             text={endpoint?.url}
           />
         </Col>
+        <Col xs={12}>
+          <StandaloneTextFieldBase
+            label={"Status"}
+            text={endpoint?.status}
+          />
+        </Col>
         <Col xs={6}>
           <StandaloneJsonField
             json={endpoint?.queryParameters}
