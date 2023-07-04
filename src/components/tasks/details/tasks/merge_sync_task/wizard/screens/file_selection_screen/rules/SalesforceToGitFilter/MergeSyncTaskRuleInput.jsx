@@ -19,7 +19,7 @@ import MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput
 function MergeSyncTaskRuleInput({ wizardModel, ruleData, index, addRule, deleteRule, updateRule, fetchAttribute }) {
   const [ruleModel, setRuleModel] = useState(undefined);
   const isMounted = useRef(false);
-  const [isSalesforce] = useState(wizardModel.getData("taskType") === "GIT_VS_GIT_SYNC" && wizardModel.getData("configuration.git.isSalesforce"))
+  const [isSalesforce] = useState(wizardModel.getData("taskType") === "SFDC_GIT_COMPARE_SYNC" || (wizardModel.getData("taskType") === "GIT_VS_GIT_SYNC" && wizardModel.getData("configuration.git.isSalesforce")));
 
   useEffect(() => {
     isMounted.current = true;
