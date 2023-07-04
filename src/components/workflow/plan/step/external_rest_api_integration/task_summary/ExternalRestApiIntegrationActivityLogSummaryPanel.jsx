@@ -9,16 +9,11 @@ import ExternalRestApiIntegrationEndpointSummary
 } from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointSummary";
 import pipelineActivityLogActionConstants
   from "@opsera/definitions/constants/pipelines/logs/pipelineActivityLogAction.constants";
-import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
-import ExternalRestApiIntegrationConnectionCheckEndpointResponseSummary
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationConnectionCheckEndpointResponseSummary";
-import ExternalRestApiIntegrationHeaderTokenEndpointResponseSummary
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationHeaderTokenEndpointResponseSummary";
-import StandaloneDateFieldBase from "components/common/fields/date/StandaloneDateFieldBase";
 import ExternalRestApiIntegrationStatusCheckEndpointsSummary
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationStatusCheckEndpointsSummary";
+import ExternalRestApiIntegrationCallOperationEndpointsSummary
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationCallOperationEndpointsSummary";
 
 // TODO: Make fully fleshed out report.
 function ExternalRestApiIntegrationActivityLogSummaryPanel(
@@ -72,29 +67,14 @@ function ExternalRestApiIntegrationActivityLogSummaryPanel(
     const action = externalRestApiIntegrationStepTaskModel?.getData("action");
 
     if (action === pipelineActivityLogActionConstants.PIPELINE_ACTIVITY_LOG_ACTIONS.OPERATION_LOG) {
-      const runRequestConnectionCheckEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.endpoints.connectionCheckEndpoint");
-      const runRequestHeaderTokenEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.endpoints.headerTokenEndpoint");
-      const runRequestStatusCheckEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.endpoints.statusCheckEndpoint");
-      const runRequestCallOperationEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.endpoints.runTriggerEndpoint");
-
       return (
         <>
           <ExternalRestApiIntegrationStatusCheckEndpointsSummary
             externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
           />
-          <div className={"my-3"} />
-          <H5FieldSubHeader subheaderText={"Call Operation"} />
-          <ExternalRestApiIntegrationConnectionCheckEndpointResponseSummary
-            requestType={"Call Operation"}
-            endpoint={runRequestConnectionCheckEndpoint}
-          />
-          <ExternalRestApiIntegrationHeaderTokenEndpointResponseSummary
-            requestType={"Call Operation"}
-            endpoint={runRequestHeaderTokenEndpoint}
-          />
-          <StandaloneJsonField
-            titleText={"Call Operation Call Operation Endpoint"}
-            json={runRequestCallOperationEndpoint}
+          <ExternalRestApiIntegrationCallOperationEndpointsSummary
+            externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
+            className={"mt-3"}
           />
         </>
       );
