@@ -10,6 +10,10 @@ const REPO_TYPES = [
   {
     name: "NuGet",
     value: "NuGet"
+  },
+  {
+    name: "Generic",
+    value: "Generic"
   }
 ];
 
