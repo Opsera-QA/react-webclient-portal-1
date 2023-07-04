@@ -90,36 +90,20 @@ const DataSeedingFieldEditorPanel = ({
           </Col>
         </Row>
         <Col lg={12} className={"d-flex mb-1 mt-1 justify-content-end"}>
+          {!fieldsMetadata?.getData("nillable") ? (
+            <div
+              className={"badge badge-danger mr-2"}
+              style={{ fontSize: "10px", letterSpacing: "0.6px" }}
+            >
+              MANDATORY
+            </div>
+          ) : null}
           <div
             className={"badge badge-secondary mr-2"}
             style={{ fontSize: "10px", letterSpacing: "0.6px" }}
           >
             {fieldsMetadata?.getData("type")?.toUpperCase()}
           </div>
-          {fieldsMetadata?.getData("unique") ? (
-            <div
-              className={"badge badge-secondary mr-2"}
-              style={{ fontSize: "10px", letterSpacing: "0.6px" }}
-            >
-              UNIQUE
-            </div>
-          ) : null}
-          {!fieldsMetadata?.getData("nillable") ? (
-            <div
-              className={"badge badge-danger mr-2"}
-              style={{ fontSize: "10px", letterSpacing: "0.6px" }}
-            >
-              MANDATORY
-            </div>
-          ) : null}
-          {!fieldsMetadata?.getData("nillable") ? (
-            <div
-              className={"badge badge-danger mr-2"}
-              style={{ fontSize: "10px", letterSpacing: "0.6px" }}
-            >
-              MANDATORY
-            </div>
-          ) : null}
         </Col>
       </Col>
 

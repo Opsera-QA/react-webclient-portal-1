@@ -275,7 +275,7 @@ dataSeedingTaskWizardActions.getStorageDetails = async (
   );
 };
 
-dataSeedingTaskWizardActions.runCustomSettingMigrationTask = async (getAccessToken, cancelTokenSource, wizardModel) => {
+dataSeedingTaskWizardActions.runDataSeedingTask = async (getAccessToken, cancelTokenSource, wizardModel) => {
   const postBody = {
     pipelineStorageRecordId: wizardModel?.getData("recordId"),
   };
@@ -339,4 +339,46 @@ dataSeedingTaskWizardActions.setFieldMappings = async (
     postBody,
   );
 };
+
+dataSeedingTaskWizardActions.getManagedPackageList = async (
+  getAccessToken,
+  cancelTokenSource,
+  taskId,
+  wizardModel,
+  selectedObjectName,
+) => {
+  const apiUrl = `/tasks/data-seeding/wizard/get-managed-package-list`;
+  const postBody = {
+    taskId: taskId,
+    sfdcToolId: wizardModel?.getData("sourceToolId"),
+    pipelineStorageRecordId: wizardModel?.getData("recordId"),
+    objectName: selectedObjectName,
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
+dataSeedingTaskWizardActions.setSelectedManagedPackageList = async (
+  getAccessToken,
+  cancelTokenSource,
+  wizardModel,
+) => {
+  const apiUrl = `/tasks/data-seeding/wizard/${wizardModel?.getData("recordId")}/selected-managed-package-list`;
+  const postBody = {
+    selectedManagedPackageList: wizardModel?.getData("selectedManagedPackageList"),
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 export default dataSeedingTaskWizardActions;

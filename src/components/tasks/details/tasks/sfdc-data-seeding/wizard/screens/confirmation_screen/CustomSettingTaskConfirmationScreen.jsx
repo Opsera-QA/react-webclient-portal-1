@@ -62,14 +62,6 @@ const CustomSettingTaskConfirmationScreen = ({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const recordCountResponse =
-        await dataSeedingTaskWizardActions.getRecordCount(
-          getAccessToken,
-          cancelSource,
-          wizardModel,
-        );
-      setRecordCount(recordCountResponse?.data?.message?.totalSize);
-
       const storageResponse =
         await dataSeedingTaskWizardActions.getStorageDetails(
           getAccessToken,
@@ -77,6 +69,13 @@ const CustomSettingTaskConfirmationScreen = ({
           wizardModel,
         );
       setStorageDetails(storageResponse?.data?.message?.DataStorageMB);
+      const recordCountResponse =
+        await dataSeedingTaskWizardActions.getRecordCount(
+          getAccessToken,
+          cancelSource,
+          wizardModel,
+        );
+      setRecordCount(recordCountResponse?.data?.message?.totalSize);
     } catch (e) {
       if (isMounted?.current === true) {
         toastContext.showInlineErrorMessage(e);
@@ -95,7 +94,7 @@ const CustomSettingTaskConfirmationScreen = ({
   const triggerTask = async () => {
     try {
       setIsStartig(true);
-      await dataSeedingTaskWizardActions.runCustomSettingMigrationTask(
+      await dataSeedingTaskWizardActions.runDataSeedingTask(
         getAccessToken,
         cancelTokenSource,
         wizardModel,
@@ -147,13 +146,6 @@ const CustomSettingTaskConfirmationScreen = ({
       <div>
         <div className={"m-2"}>
           <Row>
-            <Col xs={12}>
-              <TaskMigrationTypeField
-                model={wizardModel}
-                fieldName={"taskType"}
-              />
-            </Col>
-
             <Col xs={6}>
               <ToolNameField
                 model={wizardModel}

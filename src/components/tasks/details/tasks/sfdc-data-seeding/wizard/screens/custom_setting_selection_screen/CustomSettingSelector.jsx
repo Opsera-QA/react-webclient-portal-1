@@ -15,6 +15,7 @@ import EnableEditingIcon from "../../../../../../../common/icons/enable/EnableEd
 import H5FieldSubHeader from "../../../../../../../common/fields/subheader/H5FieldSubHeader";
 import ToolNameField from "../../../../../../../common/fields/inventory/ToolNameField";
 import LoadingDialog from "components/common/status_notifications/loading";
+import DataSeedingManagedPackageListSelectInput from "./inputs/DataSeedingManagedPackageListSelectInput";
 
 const CustomSettingSelector = ({
   wizardModel,
@@ -150,6 +151,11 @@ const CustomSettingSelector = ({
         cancelTokenSource,
         wizardModel,
       );
+      await dataSeedingTaskWizardActions.setSelectedManagedPackageList(
+        getAccessToken,
+        cancelTokenSource,
+        wizardModel,
+      );
       await dataSeedingTaskWizardActions.triggerDependenyObjectListPull(
         getAccessToken,
         cancelTokenSource,
@@ -233,6 +239,12 @@ const CustomSettingSelector = ({
           textField={"componentName"}
           busy={isLoading}
           placeholderText={"Select a Custom Object"}
+          disabled={isLoading || isSaving}
+        />
+        <DataSeedingManagedPackageListSelectInput
+          wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
+          customObject={wizardModel?.getData("selectedCustomSetting")?.componentName}
           disabled={isLoading || isSaving}
         />
         <SaveButtonContainer>

@@ -28,6 +28,18 @@ export const dataSeedingTaskWizardMetadata = {
       id: "selectedCustomSetting",
     },
     {
+      label: "Managed Package List",
+      id: "managedPackageList",
+    },
+    {
+      label: "Managed Package List",
+      id: "selectedManagedPackageKey",
+    },
+    {
+      label: "Managed Package",
+      id: "selectedManagedPackageList",
+    },
+    {
       label: "Dependent Object List",
       id: "dependentObjectList"
     },
@@ -68,6 +80,9 @@ export const dataSeedingTaskWizardMetadata = {
     runCount: 1,
     type: "",
     taskType: "",
+    managedPackageList: [],
+    selectedManagedPackageKey: "",
+    selectedManagedPackageList: [],
     selectedCustomSetting: "",
     selectedFieldList: [],
     dependentObjectList: [],
