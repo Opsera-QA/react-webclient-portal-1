@@ -61,14 +61,15 @@ const jenkinsPipelineStepConfigurationMetadata = {
       label: "Rollback Branch Name",
       id: "rollbackBranchName",
       // isRequired: true,
-      formText:"An Orphan branch will be created with only the back up specific files.",
-      maxLength:50,
+      formText:
+        "An Orphan branch will be created with only the back up specific files.",
+      maxLength: 50,
     },
     {
       label: "Branch Name",
       id: "gitBranch",
       // isRequired: true,
-      maxLength:50,
+      maxLength: 50,
     },
     {
       label: "Build/Xml Step Info",
@@ -79,19 +80,20 @@ const jenkinsPipelineStepConfigurationMetadata = {
       label: "Docker Name",
       id: "dockerName",
       // isRequired: true,
-      maxLength:256,
+      maxLength: 256,
       // TODO: This should be the pattern but this is probably fine.
       regexValidator: RegExp("^[a-zA-Z0-9_.-]*$"),
       isLowercase: true,
-      formText:"Lowercase alphanumeric characters and underscore, period, and dash are allowed"
+      formText:
+        "Lowercase alphanumeric characters and underscore, period, and dash are allowed",
     },
     {
       label: "Use Dynamic Docker Name",
-      id: "useDockerDynamicName"
+      id: "useDockerDynamicName",
     },
     {
       label: "Docker Dynamic Name",
-      id: "dockerDynamicName"
+      id: "dockerDynamicName",
     },
     {
       label: "Docker Tag",
@@ -102,16 +104,17 @@ const jenkinsPipelineStepConfigurationMetadata = {
     },
     {
       label: "Dynamic Tag",
-      id: "dynamicTag"
+      id: "dynamicTag",
     },
     {
       label: "Docker Dynamic Tag Type",
-      id: "dockerTagType"
+      id: "dockerTagType",
     },
     {
       label: "Docker Dynamic Tag",
       id: "dockerDynamicTagName",
-      formText: "date, timestamp, run_count, commit_sha text can be used to make it dynamic",
+      formText:
+        "date, timestamp, run_count, commit_sha text can be used to make it dynamic",
       regexDefinitionName: "dockerName",
       maxLength: 50,
       lowercase: true,
@@ -131,7 +134,8 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Commit SHA Character Limit",
       id: "commitIdCharLimit",
-      formText: "The Commit SHA will be trimmed to the number of characters specified",      
+      formText:
+        "The Commit SHA will be trimmed to the number of characters specified",
       minNumber: 1,
       maxNumber: 40,
       isRequiredFunction: (model) => {
@@ -141,7 +145,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Docker File Path",
       id: "dockerPath",
-      maxLength:256,
+      maxLength: 256,
     },
     {
       label: "Build Arguments",
@@ -152,29 +156,29 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "agentLabels",
     },
     {
-      label:"Output File Name",	
-      id:"outputFileName",
+      label: "Output File Name",
+      id: "outputFileName",
       formText: "File name with extension is expected.",
-      maxLength:50,
+      maxLength: 50,
     },
-    {	
-      label:"Output File Path",	
-      id:"outputPath",
-      maxLength:50,
+    {
+      label: "Output File Path",
+      id: "outputPath",
+      maxLength: 100,
     },
-    {	
-      label:"Script File Name",	
-      id:"inputFileName",
-      formText:"File name with extension is expected.",
-      maxLength:256,
+    {
+      label: "Script File Name",
+      id: "inputFileName",
+      formText: "File name with extension is expected.",
+      maxLength: 256,
     },
-    {	
-      label:"Specify Script File Path",	
-      id:"inputFilePath",
-      maxLength:256,
+    {
+      label: "Specify Script File Path",
+      id: "inputFilePath",
+      maxLength: 256,
     },
-    {	
-      label: "Docker Secrets",	
+    {
+      label: "Docker Secrets",
       id: "dockerSecrets",
     },
     {
@@ -186,28 +190,29 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "inputDetails",
     },
     {
-      label:"Salesforce Credentials",
-      id:"sfdcToolId",
+      label: "Salesforce Credentials",
+      id: "sfdcToolId",
       // isRequired: true,
     },
     {
-      label:"Unit Test Type",
-      id:"sfdcUnitTestType",
-      formText:"Note: TestLevel of NoTestRun cannot be used in production organizations"
+      label: "Unit Test Type",
+      id: "sfdcUnitTestType",
+      formText:
+        "Note: TestLevel of NoTestRun cannot be used in production organizations",
     },
     {
-      label:"Destination Salesforce Credentials",
-      id:"sfdcDestToolId",
+      label: "Destination Salesforce Credentials",
+      id: "sfdcDestToolId",
       // isRequired: true
     },
     {
-      id:"upstreamBranch",
-      label:"Specify Upstream Branch",
+      id: "upstreamBranch",
+      label: "Specify Upstream Branch",
       // isRequired: true
     },
     {
-      id:"terraformStepId",
-      label:"Terraform Step"
+      id: "terraformStepId",
+      label: "Terraform Step",
     },
     {
       label: "Parameters",
@@ -216,15 +221,15 @@ const jenkinsPipelineStepConfigurationMetadata = {
     },
     {
       label: "Use Terraform Output",
-      id: "useTerraformOutput"
+      id: "useTerraformOutput",
     },
     {
-      label:"Configure Branch Name",
-      id:"isManualRollBackBranch"
+      label: "Configure Branch Name",
+      id: "isManualRollBackBranch",
     },
     {
-      label:"Jenkins Job Type",
-      id:"job_type",
+      label: "Jenkins Job Type",
+      id: "job_type",
       // isRequired: true,
     },
     {
@@ -258,7 +263,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "runtimeArguments",
       regexDefinitionName: "argumentList",
       formText: "A newline-separated list of Runtime Arguments",
-      maxLength: 500
+      maxLength: 500,
     },
     {
       label: "MetaData Transformer Rule",
@@ -269,7 +274,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     },
     {
       label: "Use build step resource",
-      id: "useBuildStepResource"
+      id: "useBuildStepResource",
     },
     {
       label: "Build Step",
@@ -280,8 +285,9 @@ const jenkinsPipelineStepConfigurationMetadata = {
     },
     {
       label: "Commands",
-      id: "commands",        
-      formText: "A platform-specific script, which will be executed as .cmd file on Windows or as a shellscript in Unix-like environments. Multiple commands are supported (each line indicates a new command). Please use the parameters ${BUILD_WORKSPACE} & ${WORKSPACE} to refer the previous and current workspace respectively.",
+      id: "commands",
+      formText:
+        "A platform-specific script, which will be executed as .cmd file on Windows or as a shellscript in Unix-like environments. Multiple commands are supported (each line indicates a new command). Please use the parameters ${BUILD_WORKSPACE} & ${WORKSPACE} to refer the previous and current workspace respectively.",
       isRequiredFunction: (model) => {
         return model?.getData("useBuildStepResource") === true;
       },
@@ -289,7 +295,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Dynamic Parameters",
       id: "environmentVariables",
-      maxItems: 15
+      maxItems: 15,
     },
     {
       label: "Enable Quick Deploy",
@@ -297,18 +303,18 @@ const jenkinsPipelineStepConfigurationMetadata = {
     },
     {
       label: "Ignore Warning",
-      id: "ignoreWarning"
+      id: "ignoreWarning",
     },
-    {	
-      label:"File Path",
-      id:"filePath",
+    {
+      label: "File Path",
+      id: "filePath",
       regexDefinitionName: "pathField",
-      maxLength:256,
+      maxLength: 256,
     },
     {
       label: "Scheme Name",
       id: "schemeName",
-      regexDefinitionName: "generalText",      
+      regexDefinitionName: "generalText",
       maxLength: 100,
       isRequiredFunction: (model) => {
         return model?.getData("buildType") === "xcode";
@@ -317,8 +323,8 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Project Workspace",
       id: "projectWorkspace",
-      regexDefinitionName: "generalText",      
-      maxLength: 500
+      regexDefinitionName: "generalText",
+      maxLength: 500,
     },
     {
       label: "Configuration Type",
@@ -331,7 +337,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       label: "Script Type",
       id: "scriptType",
     },
-    {      
+    {
       id: "developerTeamId",
     },
     {
@@ -377,26 +383,26 @@ const jenkinsPipelineStepConfigurationMetadata = {
     isFullBackup: false,
     sfdcUnitTestType: "",
     workspace: "",
-    agentLabels:"",
-    isNewBranch:false,
-    isManualRollBackBranch:false,
-    hasUpstreamBranch:false,
-    workspaceDeleteFlag:false,
-    gitBranch:"",
-    customParameters:[],
-    terraformStepId:"",
+    agentLabels: "",
+    isNewBranch: false,
+    isManualRollBackBranch: false,
+    hasUpstreamBranch: false,
+    workspaceDeleteFlag: false,
+    gitBranch: "",
+    customParameters: [],
+    terraformStepId: "",
     useTerraformOutput: false,
-    job_type:"",
-    xcodeVersion:"",
+    job_type: "",
+    xcodeVersion: "",
     dynamicTag: false,
-    dockerTagType:[],
-    dockerDynamicTagName:"",
+    dockerTagType: [],
+    dockerDynamicTagName: "",
     specifyCommitIdChar: false,
     commitIdCharDirection: "prefix",
     commitIdCharLimit: null,
     runtimeArguments: "",
     dependencies: {},
-    dependencyType:"",
+    dependencyType: "",
     ruleIds: [],
     useBuildStepResource: false,
     buildStepId: "",
@@ -411,7 +417,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     scriptType: "opsera",
     developerTeamId: "",
     credentailsId: "",
-  }
+  },
 };
 
 export default jenkinsPipelineStepConfigurationMetadata;
