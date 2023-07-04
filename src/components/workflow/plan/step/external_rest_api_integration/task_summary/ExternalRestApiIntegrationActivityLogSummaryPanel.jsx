@@ -10,10 +10,10 @@ import ExternalRestApiIntegrationEndpointSummary
 import pipelineActivityLogActionConstants
   from "@opsera/definitions/constants/pipelines/logs/pipelineActivityLogAction.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import ExternalRestApiIntegrationStatusCheckEndpointsSummary
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationStatusCheckEndpointsSummary";
-import ExternalRestApiIntegrationCallOperationEndpointsSummary
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationCallOperationEndpointsSummary";
+import ExternalRestApiIntegrationStatusCheckEndpointOrchestrationSummary
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationStatusCheckEndpointOrchestrationSummary";
+import ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary";
 
 // TODO: Make fully fleshed out report.
 function ExternalRestApiIntegrationActivityLogSummaryPanel(
@@ -69,10 +69,10 @@ function ExternalRestApiIntegrationActivityLogSummaryPanel(
     if (action === pipelineActivityLogActionConstants.PIPELINE_ACTIVITY_LOG_ACTIONS.OPERATION_LOG) {
       return (
         <>
-          <ExternalRestApiIntegrationStatusCheckEndpointsSummary
+          <ExternalRestApiIntegrationStatusCheckEndpointOrchestrationSummary
             externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
           />
-          <ExternalRestApiIntegrationCallOperationEndpointsSummary
+          <ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary
             externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
             className={"mt-3"}
           />

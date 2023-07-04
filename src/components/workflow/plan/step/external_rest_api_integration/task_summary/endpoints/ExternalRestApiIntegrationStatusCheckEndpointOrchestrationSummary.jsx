@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
-import ExternalRestApiIntegrationConnectionCheckEndpointResponseSummary
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationConnectionCheckEndpointResponseSummary";
-import ExternalRestApiIntegrationHeaderTokenEndpointResponseSummary
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationHeaderTokenEndpointResponseSummary";
+import ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary";
+import ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import StandaloneDateField from "components/common/fields/date/StandaloneDateField";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
-export default function ExternalRestApiIntegrationStatusCheckEndpointsSummary(
+export default function ExternalRestApiIntegrationStatusCheckEndpointOrchestrationSummary(
   {
     externalRestApiIntegrationStepTaskModel,
     className,
@@ -33,11 +33,11 @@ export default function ExternalRestApiIntegrationStatusCheckEndpointsSummary(
         date={lastStatusCheckTimestamp}
         dateFormat={DateFormatHelper.DATE_FORMATS.TIMESTAMP}
       />
-      <ExternalRestApiIntegrationConnectionCheckEndpointResponseSummary
+      <ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary
         requestType={"Status Check"}
         endpoint={statusCheckConnectionCheckEndpoint}
       />
-      <ExternalRestApiIntegrationHeaderTokenEndpointResponseSummary
+      <ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary
         requestType={"Status Check"}
         endpoint={statusCheckHeaderTokenEndpoint}
       />
@@ -49,7 +49,7 @@ export default function ExternalRestApiIntegrationStatusCheckEndpointsSummary(
   );
 }
 
-ExternalRestApiIntegrationStatusCheckEndpointsSummary.propTypes = {
+ExternalRestApiIntegrationStatusCheckEndpointOrchestrationSummary.propTypes = {
   externalRestApiIntegrationStepTaskModel: PropTypes.object,
   className: PropTypes.string,
 };

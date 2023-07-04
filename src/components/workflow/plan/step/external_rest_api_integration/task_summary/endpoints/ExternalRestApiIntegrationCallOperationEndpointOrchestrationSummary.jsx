@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
-import ExternalRestApiIntegrationConnectionCheckEndpointResponseSummary
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationConnectionCheckEndpointResponseSummary";
-import ExternalRestApiIntegrationHeaderTokenEndpointResponseSummary
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationHeaderTokenEndpointResponseSummary";
+import ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary";
+import ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 
-export default function ExternalRestApiIntegrationCallOperationEndpointsSummary(
+export default function ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary(
   {
     externalRestApiIntegrationStepTaskModel,
     className,
@@ -24,11 +24,11 @@ export default function ExternalRestApiIntegrationCallOperationEndpointsSummary(
   return (
     <div className={className}>
       <H5FieldSubHeader subheaderText={"Call Operation"} />
-      <ExternalRestApiIntegrationConnectionCheckEndpointResponseSummary
+      <ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary
         requestType={"Call Operation"}
         endpoint={runRequestConnectionCheckEndpoint}
       />
-      <ExternalRestApiIntegrationHeaderTokenEndpointResponseSummary
+      <ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary
         requestType={"Call Operation"}
         endpoint={runRequestHeaderTokenEndpoint}
       />
@@ -40,7 +40,7 @@ export default function ExternalRestApiIntegrationCallOperationEndpointsSummary(
   );
 }
 
-ExternalRestApiIntegrationCallOperationEndpointsSummary.propTypes = {
+ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary.propTypes = {
   externalRestApiIntegrationStepTaskModel: PropTypes.object,
   className: PropTypes.string,
 };

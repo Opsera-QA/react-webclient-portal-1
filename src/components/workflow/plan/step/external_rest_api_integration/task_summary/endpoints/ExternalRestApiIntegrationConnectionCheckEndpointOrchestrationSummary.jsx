@@ -7,22 +7,21 @@ import EndpointResponseField
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
-export default function ExternalRestApiIntegrationHeaderTokenEndpointResponseSummary(
+export default function ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary(
   {
     endpoint,
     requestType,
     className,
   }) {
-  console.log("endpoint: " + JSON.stringify(endpoint));
-
   if (dataParsingHelper.hasObjectProperties(endpoint) !== true) {
     return null;
   }
 
+
   return (
     <div className={className}>
       <H5FieldSubHeader
-        subheaderText={`${requestType} Access Token Generation Endpoint Response`}
+        subheaderText={`${requestType} Connection Check Endpoint Response`}
       />
       <Row>
         {/*<Col xs={6}>*/}
@@ -34,8 +33,8 @@ export default function ExternalRestApiIntegrationHeaderTokenEndpointResponseSum
         {/*<Col xs={6}>*/}
         <Col xs={12}>
           <EndpointResponseField
-            responseObject={endpoint}
-            titleText={`Access Token Generation API Response`}
+            responseObject={endpoint?.response}
+            titleText={`Connection Check API Response`}
           />
         </Col>
       </Row>
@@ -43,7 +42,7 @@ export default function ExternalRestApiIntegrationHeaderTokenEndpointResponseSum
   );
 }
 
-ExternalRestApiIntegrationHeaderTokenEndpointResponseSummary.propTypes = {
+ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary.propTypes = {
   requestType: PropTypes.string,
   endpoint: PropTypes.object,
   className: PropTypes.string,
