@@ -190,7 +190,7 @@ const CustomSettingQueryBuilderScreen = ({
     return query;
   };
 
-  const query = useMemo(() => generateQuery(), [queryFilters]);
+  const query = useMemo(() => generateQuery(), [queryFilters, limit]);
   const handleBackButton = () => {
     setCurrentScreen(
       DATA_SEEDING_WIZARD_SCREENS.MAPPING_SCREEN,
