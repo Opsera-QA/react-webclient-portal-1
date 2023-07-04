@@ -1,33 +1,30 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import JenkinsAccountServiceSelectInput from "./inputs/JenkinsAccountServiceSelectInput";
 import JenkinsAccountToolSelectInput from "./inputs/JenkinsAccountToolSelectInput";
-import jenkinsAccountActions
-  from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/jenkinsToolAccounts.actions";
-import StandaloneDeleteButtonWithConfirmationModal
-  from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
+import jenkinsAccountActions from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/jenkinsToolAccounts.actions";
+import StandaloneDeleteButtonWithConfirmationModal from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import axios from "axios";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import {hasStringValue} from "components/common/helpers/string-helpers";
-import {faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import { faExclamationTriangle } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import JenkinsAccountRepositorySelectInput from "./inputs/JenkinsAccountRepositorySelectInput";
 import PasswordInput from "components/common/inputs/text/PasswordInput";
 import JenkinsAccountSecretFileUploadInput from "./inputs/JenkinsAccountSecretFileUploadInput";
 
-function JenkinsAccountEditorPanel(
-  {
-    toolId,
-    jenkinsAccountData,
-    setJenkinsAccountData,
-    closePanelFunction,
-  }) {
-  const {getAccessToken} = useContext(AuthContext);
+function JenkinsAccountEditorPanel({
+  toolId,
+  jenkinsAccountData,
+  setJenkinsAccountData,
+  closePanelFunction,
+}) {
+  const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -47,13 +44,23 @@ function JenkinsAccountEditorPanel(
   }, [toolId]);
 
   const createJenkinsAccount = async () => {
-    const response = await jenkinsAccountActions.createJenkinsAccountV2(getAccessToken, cancelTokenSource, toolId, jenkinsAccountData);
+    const response = await jenkinsAccountActions.createJenkinsAccountV2(
+      getAccessToken,
+      cancelTokenSource,
+      toolId,
+      jenkinsAccountData,
+    );
     closePanelFunction();
     return response;
   };
 
   const deleteJenkinsAccount = async () => {
-    const response = await jenkinsAccountActions.deleteJenkinsAccountV2(getAccessToken, cancelTokenSource, toolId, jenkinsAccountData);
+    const response = await jenkinsAccountActions.deleteJenkinsAccountV2(
+      getAccessToken,
+      cancelTokenSource,
+      toolId,
+      jenkinsAccountData,
+    );
     closePanelFunction();
     return response;
   };
@@ -76,12 +83,21 @@ function JenkinsAccountEditorPanel(
         <Row>
           <Col sm={1}>
             <div className="mt-2">
-              <IconBase icon={faExclamationTriangle} size={"lg"}/>
+              <IconBase
+                icon={faExclamationTriangle}
+                size={"lg"}
+              />
             </div>
           </Col>
           <Col sm={11}>
-            <div>Editing this Account Credential does not change the configuration in any Pipelines.</div>
-            <div>Visit the <strong>Usage</strong> tab to view a list of Pipelines that require attention.</div>
+            <div>
+              Editing this Account Credential does not change the configuration
+              in any Pipelines.
+            </div>
+            <div>
+              Visit the <strong>Usage</strong> tab to view a list of Pipelines
+              that require attention.
+            </div>
           </Col>
         </Row>
       );
@@ -89,19 +105,21 @@ function JenkinsAccountEditorPanel(
   };
 
   const getDynamicFields = () => {
-    if(jenkinsAccountData?.getData("service") === "secretFile") {
+    if (jenkinsAccountData?.getData("service") === "secretFile") {
       return (
         <>
           <Col lg={12}>
-            <JenkinsAccountSecretFileUploadInput 
-              model={jenkinsAccountData} 
-              setModel={setJenkinsAccountData} 
+            <JenkinsAccountSecretFileUploadInput
+              model={jenkinsAccountData}
+              setModel={setJenkinsAccountData}
               fieldName={"secretFile"}
+              disabled={jenkinsAccountData?.isNew() !== true}
             />
-            <PasswordInput 
-              dataObject={jenkinsAccountData} 
-              setDataObject={setJenkinsAccountData} 
+            <PasswordInput
+              dataObject={jenkinsAccountData}
+              setDataObject={setJenkinsAccountData}
               fieldName={"password"}
+              disabled={jenkinsAccountData?.isNew() !== true}
             />
           </Col>
         </>
@@ -112,29 +130,40 @@ function JenkinsAccountEditorPanel(
         <JenkinsAccountToolSelectInput
           model={jenkinsAccountData}
           setModel={setJenkinsAccountData}
-          disabled={jenkinsAccountData?.isNew() !== true && hasStringValue(jenkinsAccountData?.getData("credentialsId")) === false}
+          disabled={
+            jenkinsAccountData?.isNew() !== true &&
+            hasStringValue(jenkinsAccountData?.getData("credentialsId")) ===
+              false
+          }
         />
       </Col>
     );
   };
 
   const getRepositoryField = () => {
-    if(jenkinsAccountData?.getData("service") === "github-deploykey" && jenkinsAccountData?.getData("repositories")) {
+    if (
+      jenkinsAccountData?.getData("service") === "github-deploykey" &&
+      jenkinsAccountData?.getData("repositories")
+    ) {
       return (
-          <Col lg={12}>
-            <JenkinsAccountRepositorySelectInput
-                model={jenkinsAccountData}
-                setModel={setJenkinsAccountData}
-                repos={jenkinsAccountData?.getData("repositories")}
-                disabled={jenkinsAccountData?.isNew() !== true && hasStringValue(jenkinsAccountData?.getData("credentialsId")) === false}
-            />
-          </Col>
+        <Col lg={12}>
+          <JenkinsAccountRepositorySelectInput
+            model={jenkinsAccountData}
+            setModel={setJenkinsAccountData}
+            repos={jenkinsAccountData?.getData("repositories")}
+            disabled={
+              jenkinsAccountData?.isNew() !== true &&
+              hasStringValue(jenkinsAccountData?.getData("credentialsId")) ===
+                false
+            }
+          />
+        </Col>
       );
     }
   };
 
   if (jenkinsAccountData == null) {
-    return <LoadingDialog size="sm"/>;
+    return <LoadingDialog size="sm" />;
   }
 
   return (
@@ -142,7 +171,11 @@ function JenkinsAccountEditorPanel(
       handleClose={closePanelFunction}
       recordDto={jenkinsAccountData}
       createRecord={createJenkinsAccount}
-      updateRecord={jenkinsAccountData?.getData("service") === "secretFile" ? null : createJenkinsAccount}
+      updateRecord={
+        jenkinsAccountData?.getData("service") === "secretFile"
+          ? null
+          : createJenkinsAccount
+      }
       lenient={true}
       setRecordDto={setJenkinsAccountData}
       extraButtons={getDeleteButton()}
@@ -152,10 +185,14 @@ function JenkinsAccountEditorPanel(
           <JenkinsAccountServiceSelectInput
             dataObject={jenkinsAccountData}
             setDataObject={setJenkinsAccountData}
-            disabled={jenkinsAccountData?.isNew() !== true && hasStringValue(jenkinsAccountData?.getData("credentialsId")) === false}
+            disabled={
+              jenkinsAccountData?.isNew() !== true &&
+              hasStringValue(jenkinsAccountData?.getData("credentialsId")) ===
+                false
+            }
           />
         </Col>
-        {getDynamicFields()}        
+        {getDynamicFields()}
         {getRepositoryField()}
         <Col lg={12}>
           <TextInputBase
@@ -175,10 +212,17 @@ function JenkinsAccountEditorPanel(
         </Col>
       </Row>
       <Row className={"my-2"}>
-        <Col sm={12} md={8} lg={6} xl={6} className={"mx-auto"}>
+        <Col
+          sm={12}
+          md={8}
+          lg={6}
+          xl={6}
+          className={"mx-auto"}
+        >
           {getEditWarning()}
         </Col>
       </Row>
+      {console.log("jenkinsAccountData", jenkinsAccountData)}
     </EditorPanelContainer>
   );
 }
