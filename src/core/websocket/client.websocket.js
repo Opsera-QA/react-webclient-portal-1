@@ -10,6 +10,8 @@ import WebsocketSubscriptionRequestHelper
 import websocketSubscriptionTypeConstants
   from "@opsera/definitions/constants/websocket/constants/websocketSubscriptionType.constants";
 const websocketEnabled = DataParsingHelper.parseBooleanV2(process.env.REACT_APP_WEBSOCKET_ENABLED);
+const isDevelopmentEnvironment = process.env.REACT_APP_ENVIRONMENT === "development";
+const isMismatchedEnvironment = NODE_API_ORCHESTRATOR_SERVER_URL !== process.env.REACT_APP_OPSERA_API_SERVER_URL;
 
 export const WEBSOCKET_STATE = {
   CONNECTING: 0,
@@ -47,7 +49,7 @@ export default class ClientWebsocket {
   // TODO: We should probably send and parse token rather than user object.
   //  Sending user object for now but planning on enhancing the security as more websocket work gets done.
   initializeWebsocket = (userData) => {
-    if (websocketEnabled !== true || userData == null) {
+    if (websocketEnabled !== true || userData == null || (isDevelopmentEnvironment === true && isMismatchedEnvironment === true)) {
       return;
     }
 
