@@ -21,6 +21,7 @@ import SnaplogicTaskConfigurationEditorPanel from "./snaplogic/SnaplogicTaskConf
 import GitScraperConfigurationPanel from "./gitscraper/GitScraperConfigurationPanel";
 import SalesforceCustomSettingMigrationTaskEditorPanel
   from "./sfdc-custom-setting-migration/SalesforceCustomSettingMigrationTaskEditorPanel";
+import SalesforceDataSeedingTaskEditorPanel from "./sfdc-data-seeding/SalesforceDataSeedingTaskEditorPanel";
 
 function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationModel, setTaskConfigurationModel, taskType }) {
   const getConfigurationPanel = () => {
@@ -132,6 +133,14 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
       case TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION:
         return (
           <SalesforceCustomSettingMigrationTaskEditorPanel
+            taskModel={taskModel}
+            setTaskConfigurationModel={setTaskConfigurationModel}
+            taskConfigurationModel={taskConfigurationModel}
+          />
+        );
+      case TASK_TYPES.SALESFORCE_DATA_SEEDING:
+        return (
+          <SalesforceDataSeedingTaskEditorPanel
             taskModel={taskModel}
             setTaskConfigurationModel={setTaskConfigurationModel}
             taskConfigurationModel={taskConfigurationModel}

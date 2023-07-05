@@ -13,7 +13,7 @@ export const JENKINS_JOBS_GENERIC_AGENT_TYPES = [
     "name": "Windows Agent",
     "env": "windows",
     "value": "generic-windows",
-  },
+  }
 ];
 
 function JenkinsJobsGenericAgentTypeSelectInput({ fieldName, model, setModel, setDataFunction, agentList, jenkinsJobType }) {
@@ -70,7 +70,7 @@ function JenkinsJobsGenericAgentTypeSelectInput({ fieldName, model, setModel, se
       case JenkinsJobTypes.COVERITY:
         return JENKINS_JOBS_GENERIC_AGENT_TYPES;
     }
-  }
+  };
 
   return (
     <SelectInputBase
