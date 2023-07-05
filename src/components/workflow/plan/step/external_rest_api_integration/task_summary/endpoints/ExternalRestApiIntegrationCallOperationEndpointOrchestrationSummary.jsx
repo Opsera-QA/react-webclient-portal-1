@@ -5,7 +5,10 @@ import ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary";
 import ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary";
-import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
+import ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationSummaryBase";
+import ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary";
 
 export default function ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary(
   {
@@ -14,7 +17,7 @@ export default function ExternalRestApiIntegrationCallOperationEndpointOrchestra
   }) {
   const runRequestConnectionCheckEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.endpoints.connectionCheckEndpoint");
   const runRequestHeaderTokenEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.endpoints.headerTokenEndpoint");
-  // const runRequestStatusCheckEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.endpoints.statusCheckEndpoint");
+  const runRequestRuleEvaluation = externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.ruleEvaluation");
   const runRequestCallOperationEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.endpoints.runTriggerEndpoint");
 
   if (externalRestApiIntegrationStepTaskModel == null) {
@@ -24,6 +27,9 @@ export default function ExternalRestApiIntegrationCallOperationEndpointOrchestra
   return (
     <div className={className}>
       <H5FieldSubHeader subheaderText={"Call Operation"} />
+      <ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
+        ruleEvaluation={runRequestRuleEvaluation}
+      />
       <ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary
         requestType={"Call Operation"}
         endpoint={runRequestConnectionCheckEndpoint}
@@ -32,9 +38,11 @@ export default function ExternalRestApiIntegrationCallOperationEndpointOrchestra
         requestType={"Call Operation"}
         endpoint={runRequestHeaderTokenEndpoint}
       />
-      <StandaloneJsonField
-        titleText={"Call Operation Call Operation Endpoint"}
-        json={runRequestCallOperationEndpoint}
+      <ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
+        className={className}
+        requestType={"Call Operation"}
+        endpointType={"Call Operation"}
+        endpoint={runRequestCallOperationEndpoint}
       />
     </div>
   );
