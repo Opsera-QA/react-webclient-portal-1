@@ -10,10 +10,6 @@ import ExternalRestApiIntegrationEndpointSummary
 import pipelineActivityLogActionConstants
   from "@opsera/definitions/constants/pipelines/logs/pipelineActivityLogAction.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import ExternalRestApiIntegrationStatusCheckEndpointOrchestrationSummary
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationStatusCheckEndpointOrchestrationSummary";
-import ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary";
 import ExternalRestApiIntegrationActivityLogOperationLogSummaryPanel
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/ExternalRestApiIntegrationActivityLogOperationLogSummaryPanel";
 
