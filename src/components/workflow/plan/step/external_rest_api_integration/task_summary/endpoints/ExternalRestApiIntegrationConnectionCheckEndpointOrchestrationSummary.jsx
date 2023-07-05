@@ -10,6 +10,7 @@ export default function ExternalRestApiIntegrationConnectionCheckEndpointOrchest
     className,
   }) {
   const parsedEndpoint = DataParsingHelper.parseObject(endpoint);
+  const status = DataParsingHelper.parseNestedString(parsedEndpoint, "ruleEvaluation.status");
 
   if (parsedEndpoint == null) {
     return null;
@@ -20,7 +21,7 @@ export default function ExternalRestApiIntegrationConnectionCheckEndpointOrchest
       className={className}
       endpoint={endpoint}
       endpointType={"Connection Validation"}
-      isCollapsed={true}
+      isCollapsed={status === "success"}
     />
   );
 }

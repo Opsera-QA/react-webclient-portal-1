@@ -66,7 +66,9 @@ export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBa
                 text={parsedEndpoint?.status}
               />
             </Col>
-            {children}
+            <Col xs={12}>
+              {children}
+            </Col>
             <Col xs={6}>
               <StandaloneJsonField
                 json={parsedEndpoint?.queryParameters}
