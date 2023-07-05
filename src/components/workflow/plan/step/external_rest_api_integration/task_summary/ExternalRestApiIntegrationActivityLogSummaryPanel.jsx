@@ -14,6 +14,8 @@ import ExternalRestApiIntegrationStatusCheckEndpointOrchestrationSummary
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationStatusCheckEndpointOrchestrationSummary";
 import ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary";
+import ExternalRestApiIntegrationActivityLogOperationLogSummaryPanel
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/ExternalRestApiIntegrationActivityLogOperationLogSummaryPanel";
 
 // TODO: Make fully fleshed out report.
 function ExternalRestApiIntegrationActivityLogSummaryPanel(
@@ -68,15 +70,9 @@ function ExternalRestApiIntegrationActivityLogSummaryPanel(
 
     if (action === pipelineActivityLogActionConstants.PIPELINE_ACTIVITY_LOG_ACTIONS.OPERATION_LOG) {
       return (
-        <>
-          <ExternalRestApiIntegrationStatusCheckEndpointOrchestrationSummary
-            externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
-          />
-          <ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary
-            externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
-            className={"mt-3"}
-          />
-        </>
+        <ExternalRestApiIntegrationActivityLogOperationLogSummaryPanel
+          externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
+        />
       );
     }
 
