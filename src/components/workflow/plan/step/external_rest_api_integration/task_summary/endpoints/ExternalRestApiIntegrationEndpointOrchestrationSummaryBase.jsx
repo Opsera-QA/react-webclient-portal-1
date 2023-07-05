@@ -28,7 +28,7 @@ export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBa
   return (
     <div className={className}>
       <H5FieldSubHeader
-        subheaderText={`${requestType} ${endpointType} Endpoint Response`}
+        subheaderText={`${requestType} ${endpointType} Endpoint Summary`}
       />
       <Row>
         <Col xs={12}>
