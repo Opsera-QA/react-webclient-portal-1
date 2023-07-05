@@ -6,11 +6,9 @@ import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import GroupField from "components/common/fields/multiple_items/GroupField";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
-import SiteRoleField from "components/common/fields/access/SiteRoleField";
 import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import SiteRoleFieldBase from "components/common/fields/access/SiteRoleFieldBase";
-import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
 function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString }) {
 
