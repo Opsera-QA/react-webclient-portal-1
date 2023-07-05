@@ -46,46 +46,47 @@ export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBa
         titleText={`${endpointType} Endpoint Summary`}
         isCollapsable={true}
         collapsed={isCollapsed}
-        bodyClassName={"m-2"}
       >
-        <Row>
-          <Col xs={12}>
-            <ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
-              ruleEvaluation={parsedEndpoint?.ruleEvaluation}
-            />
-          </Col>
-          <Col xs={12}>
-            <StandaloneTextFieldBase
-              label={"Endpoint URL"}
-              text={parsedEndpoint?.url}
-            />
-          </Col>
-          <Col xs={12}>
-            <StandaloneTextFieldBase
-              label={"Status"}
-              text={parsedEndpoint?.status}
-            />
-          </Col>
-          {children}
-          <Col xs={6}>
-            <StandaloneJsonField
-              json={parsedEndpoint?.queryParameters}
-              titleText={`API Query Parameters`}
-              hideIfNoValue={true}
-            />
-            <StandaloneJsonField
-              json={parsedEndpoint?.requestBody}
-              titleText={`API Request Body`}
-              hideIfNoValue={true}
-            />
-          </Col>
-          <Col xs={6}>
-            <EndpointResponseField
-              responseObject={parsedEndpoint?.response}
-              titleText={`API Response`}
-            />
-          </Col>
-        </Row>
+        <div className={"m-2"}>
+          <Row>
+            <Col xs={12}>
+              <ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
+                ruleEvaluation={parsedEndpoint?.ruleEvaluation}
+              />
+            </Col>
+            <Col xs={12}>
+              <StandaloneTextFieldBase
+                label={"Endpoint URL"}
+                text={parsedEndpoint?.url}
+              />
+            </Col>
+            <Col xs={12}>
+              <StandaloneTextFieldBase
+                label={"Status"}
+                text={parsedEndpoint?.status}
+              />
+            </Col>
+            {children}
+            <Col xs={6}>
+              <StandaloneJsonField
+                json={parsedEndpoint?.queryParameters}
+                titleText={`API Query Parameters`}
+                hideIfNoValue={true}
+              />
+              <StandaloneJsonField
+                json={parsedEndpoint?.requestBody}
+                titleText={`API Request Body`}
+                hideIfNoValue={true}
+              />
+            </Col>
+            <Col xs={6}>
+              <EndpointResponseField
+                responseObject={parsedEndpoint?.response}
+                titleText={`API Response`}
+              />
+            </Col>
+          </Row>
+        </div>
       </InfoContainer>
     </div>
   );
