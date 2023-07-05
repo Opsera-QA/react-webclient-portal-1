@@ -23,7 +23,7 @@ function InfoContainer(
     field,
     bodyClassName,
     overflowY,
-    collapsable,
+    isCollapsable,
     collapsed,
   }) {
   const [isCollapsed, setIsCollapsed] = useState(DataParsingHelper.parseBooleanV2(collapsed, false));
@@ -64,6 +64,9 @@ function InfoContainer(
         rightSideButton={titleRightSideButton}
         loadDataFunction={loadDataFunction}
         field={field}
+        isCollapsable={isCollapsable}
+        isCollapsed={isCollapsed}
+        setIsCollapsed={setIsCollapsed}
       />
       <div
         className={bodyClassName}
@@ -93,7 +96,7 @@ InfoContainer.propTypes = {
   field: PropTypes.object,
   bodyClassName: PropTypes.string,
   overflowY: PropTypes.string,
-  collapsable: PropTypes.bool,
+  isCollapsable: PropTypes.bool,
   collapsed: PropTypes.bool,
 };
 
