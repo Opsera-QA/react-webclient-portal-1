@@ -13,6 +13,8 @@ import SalesforceLogSummaryReportPanel
 import GitscraperLogSummaryReportPanel from "../../details/tasks/gitscraper/GitscraperLogSummaryPanel";
 import CustomSettingMigrationLogSummaryReportPanel
   from "../../details/tasks/sfdc-custom-setting-migration/report/CustomSettingMigrationLogSummaryReportPanel";
+import DataSeedingLogSummaryReportPanel
+  from "../../details/tasks/sfdc-data-seeding/report/DataSeedingLogSummaryReportPanel";
 
 function TaskActivitySummaryPanel({ taskActivityLogModel }) {
 
@@ -37,6 +39,12 @@ function TaskActivitySummaryPanel({ taskActivityLogModel }) {
     if(taskActivityLogModel.getPersistData()?.type === "CUSTOM_SETTING_MIGRATION" && taskActivityLogModel.getPersistData()?.log_type === "report") {
       return (
         <CustomSettingMigrationLogSummaryReportPanel activityData={taskActivityLogModel.getPersistData()}/>
+      );
+    }
+
+    if(taskActivityLogModel.getPersistData()?.type === "SALESFORCE_DATA_SEEDING" && taskActivityLogModel.getPersistData()?.log_type === "report") {
+      return (
+        <DataSeedingLogSummaryReportPanel activityData={taskActivityLogModel.getPersistData()}/>
       );
     }
 

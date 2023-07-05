@@ -18,7 +18,7 @@ import JenkinsGenericJobEditorPanel
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/generic/JenkinsPythonJobEditorPanel";
 import AzureDockerPushJobEditorPanel
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/azure_docker_push/AzureDockerPushJobEditorPanel";
-import JenkinsJobTypes from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/jenkinsJobTypes.constants"
+import JenkinsJobTypes from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/jenkinsJobTypes.constants";
 
 export const getJenkinsJobConfigurationMetadata = (jenkinsJobType, buildType) => {
   switch (jenkinsJobType) {
