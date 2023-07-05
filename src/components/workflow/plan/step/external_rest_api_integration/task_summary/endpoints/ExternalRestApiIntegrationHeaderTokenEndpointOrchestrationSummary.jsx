@@ -10,6 +10,7 @@ export default function ExternalRestApiIntegrationHeaderTokenEndpointOrchestrati
     className,
   }) {
   const parsedEndpoint = DataParsingHelper.parseObject(endpoint);
+  const status = DataParsingHelper.parseNestedString(parsedEndpoint, "ruleEvaluation.status");
 
   if (parsedEndpoint == null) {
     return null;
@@ -20,7 +21,7 @@ export default function ExternalRestApiIntegrationHeaderTokenEndpointOrchestrati
       className={className}
       endpointType={"Access Token Generation"}
       endpoint={parsedEndpoint}
-      isCollapsed={true}
+      isCollapsed={status === "success"}
     >
       <div>Header test</div>
     </ExternalRestApiIntegrationEndpointOrchestrationSummaryBase>
