@@ -1,45 +1,60 @@
 import PropTypes from "prop-types";
 import React from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import WorkflowOptionCardBase from "../../../components/wizard/portal/workflows/flows/WorkflowOptionCardBase";
-export default function TaskCardBase({
-    selectedFlow,
-    handleFlowSelection,
-    option,
-    title,
-    subtitle,
-    icon,
-    description,
-    workflowOptionType
-  }) {
-  const {themeConstants} = useComponentStateReference();
+import TaskCardFooter from "temp-library-components/cards/tasks/TaskCardFooter";
+import TaskCardHeader from "temp-library-components/cards/tasks/TaskCardHeader";
+import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
+import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
+import TaskCardBody from "temp-library-components/cards/tasks/TaskCardBody";
+import {getLargeVendorIconComponentFromTaskType} from "components/common/helpers/icon-helpers";
 
-  const onClickFunction = (selectedOption) => {
-    handleFlowSelection(selectedOption);
+export default function TaskCardBase(
+  {
+    taskModel,
+    onClickFunction,
+    tooltip,
+    selectedOption,
+    option,
+  }) {
+  const { themeConstants } = useComponentStateReference();
+
+  const getTitleBar = () => {
+    const type = taskModel?.getData("type");
+    const icon = getLargeVendorIconComponentFromTaskType(type);
+
+    return (
+      <CardIconTitleBar
+        formattedIcon={icon}
+        title={`${taskModel?.getData("name")}`}
+        className={"mx-1"}
+        iconSize={"4x"}
+      />
+    );
   };
 
+  if (taskModel == null) {
+    return undefined;
+  }
+
   return (
-    <WorkflowOptionCardBase
+    <SelectionIconCard
+      cardHeader={<TaskCardHeader taskModel={taskModel} />}
+      titleBar={getTitleBar()}
+      contentBody={<TaskCardBody taskModel={taskModel} />}
+      cardFooter={<TaskCardFooter taskModel={taskModel} />}
+      onClickFunction={onClickFunction ? () => onClickFunction(taskModel) : undefined}
+      tooltip={tooltip}
+      selectedOption={selectedOption}
       option={option}
-      selectedOption={selectedFlow}
-      title={title}
-      subtitle={subtitle}
-      icon={icon}
-      iconColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
-      description={description}
-      onClickFunction={onClickFunction}
-      workflowOptionType={workflowOptionType}
+      highlightedBorderColor={themeConstants.RESOURCE_COLORS.TASKS}
     />
   );
 }
 
 TaskCardBase.propTypes = {
-  selectedFlow: PropTypes.string,
-  handleFlowSelection: PropTypes.func,
+  taskModel: PropTypes.object,
+  onClickFunction: PropTypes.func,
+  tooltip: PropTypes.any,
+  selectedOption: PropTypes.string,
   option: PropTypes.string,
-  title: PropTypes.string,
-  subtitle: PropTypes.string,
-  icon: PropTypes.object,
-  description: PropTypes.string,
-  workflowOptionType: PropTypes.string,
 };

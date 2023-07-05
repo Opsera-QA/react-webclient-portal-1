@@ -1,48 +1,68 @@
 import PropTypes from "prop-types";
 import React from "react";
+import { getLargeVendorIconFromToolIdentifier } from "components/common/helpers/icon-helpers";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import ToolCardFooter from "temp-library-components/cards/tools/ToolCardFooter";
+import ToolCardBody from "temp-library-components/cards/tools/ToolCardBody";
+import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
+import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import WorkflowOptionCardBase from "../../../components/wizard/portal/workflows/flows/WorkflowOptionCardBase";
+import ToolCardHeader from "temp-library-components/cards/tools/ToolCardHeader";
 
 export default function ToolCardBase(
   {
-    selectedFlow,
-    handleFlowSelection,
+    toolModel,
+    onClickFunction,
+    tooltip,
+    selectedOption,
     option,
-    title,
-    subtitle,
-    icon,
-    description,
-    workflowOptionType
   }) {
   const { themeConstants } = useComponentStateReference();
 
-  const onClickFunction = (selectedOption) => {
-    handleFlowSelection(selectedOption);
+  const getTitleBar = () => {
+    const icon = getLargeVendorIconFromToolIdentifier(toolModel?.getData("tool_identifier"));
+
+    if (hasStringValue(icon) === true) {
+      return (
+        <CardIconTitleBar
+          iconString={icon}
+          title={`${toolModel?.getData("name")}`}
+        />
+      );
+    }
+
+    return (
+      <CardIconTitleBar
+        formattedIcon={icon}
+        title={`${toolModel?.getData("name")}`}
+      />
+    );
   };
 
+  if (toolModel == null) {
+    return undefined;
+  }
+
   return (
-    <WorkflowOptionCardBase
-      option={option}
-      selectedOption={selectedFlow}
-      title={title}
-      subtitle={subtitle}
-      icon={icon}
-      iconColor={themeConstants.RESOURCE_COLORS.TOOLS}
-      description={description}
+    <SelectionIconCard
+      className={"h-100"}
+      cardHeader={<ToolCardHeader toolModel={toolModel} />}
+      titleBar={getTitleBar()}
+      contentBody={<ToolCardBody toolModel={toolModel} />}
       onClickFunction={onClickFunction}
-      workflowOptionType={workflowOptionType}
+      tooltip={tooltip}
+      cardFooter={<ToolCardFooter />}
+      selectedOption={selectedOption}
+      option={option}
+      highlightedBorderColor={themeConstants.RESOURCE_COLORS.TOOLS}
     />
   );
 }
 
-
 ToolCardBase.propTypes = {
-  selectedFlow: PropTypes.string,
-  handleFlowSelection: PropTypes.func,
+  toolModel: PropTypes.object,
+  onClickFunction: PropTypes.func,
+  tooltip: PropTypes.any,
+  selectedOption: PropTypes.string,
   option: PropTypes.string,
-  title: PropTypes.string,
-  subtitle: PropTypes.string,
-  icon: PropTypes.object,
-  description: PropTypes.string,
-  workflowOptionType: PropTypes.string,
 };
