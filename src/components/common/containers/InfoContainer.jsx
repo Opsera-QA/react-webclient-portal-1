@@ -3,6 +3,10 @@ import PropTypes from "prop-types";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import InfoMessageFieldBase from "components/common/fields/text/message/InfoMessageFieldBase";
+import {faCaretDown} from "@fortawesome/pro-light-svg-icons";
+import {IconBase} from "@opsera/react-vanity-set";
 
 function InfoContainer(
   {
@@ -51,6 +55,19 @@ function InfoContainer(
     if (isCollapsed !== true) {
       return children;
     }
+
+    return (
+      <CenteredContentWrapper className={"m-3"}>
+        <InfoMessageFieldBase
+          showInformationLabel={false}
+          message={
+            <>
+              This field is collapsed. To view more information, please click the <IconBase icon={faCaretDown} /> icon
+            </>
+          }
+        />
+      </CenteredContentWrapper>
+    );
   };
 
   return (
