@@ -73,7 +73,7 @@ function ToolSetupModeSelect(
           <Col md={6}>
           <ToolCreationFlowSelectionCardBase
             option={TOOL_CREATION_OPTIONS.WIZARD}
-            onClickFunction={setDataFunction}
+            setDataFunction={setDataFunction}
             setupMode={setupMode}
             icon={
               <IconTitleBar
