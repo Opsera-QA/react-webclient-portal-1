@@ -8,6 +8,8 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary";
 
 export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBase(
   {
@@ -30,10 +32,8 @@ export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBa
       />
       <Row>
         <Col xs={12}>
-          <StandaloneJsonField
-            json={parsedEndpoint?.ruleEvaluation}
-            titleText={`Rule Evaluation`}
-            hideIfNoValue={true}
+          <ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
+            ruleEvaluation={parsedEndpoint?.ruleEvaluation}
           />
         </Col>
         <Col xs={12}>
