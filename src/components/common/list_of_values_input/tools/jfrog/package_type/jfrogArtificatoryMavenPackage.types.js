@@ -1,11 +1,13 @@
 export const JFROG_ARTIFACTORY_MAVEN_PACKAGE_TYPES = {
   MAVEN: "Maven",
   NUGET: "NuGet",
+  GENERIC: "Generic",
 };
 
 export const JFROG_ARTIFACTORY_MAVEN_PACKAGE_TYPE_LABELS = {
   MAVEN: "Maven",
   NUGET: "NuGet",
+  GENERIC: "Generic",
 };
 
 export const getJfrogArtifactoryMavenPackageTypeLabel = (packageType) => {
@@ -14,6 +16,8 @@ export const getJfrogArtifactoryMavenPackageTypeLabel = (packageType) => {
       return JFROG_ARTIFACTORY_MAVEN_PACKAGE_TYPE_LABELS.MAVEN;
     case JFROG_ARTIFACTORY_MAVEN_PACKAGE_TYPES.NUGET:
       return JFROG_ARTIFACTORY_MAVEN_PACKAGE_TYPE_LABELS.NUGET;
+    case JFROG_ARTIFACTORY_MAVEN_PACKAGE_TYPES.GENERIC:
+      return JFROG_ARTIFACTORY_MAVEN_PACKAGE_TYPES.GENERIC;
     default:
       return packageType;
   }
@@ -27,5 +31,9 @@ export const JFROG_ARTIFACTORY_MAVEN_PACKAGE_TYPE_SELECT_OPTIONS = [
   {
     text: JFROG_ARTIFACTORY_MAVEN_PACKAGE_TYPE_LABELS.NUGET,
     value: JFROG_ARTIFACTORY_MAVEN_PACKAGE_TYPES.NUGET,
+  },
+  {
+    text: JFROG_ARTIFACTORY_MAVEN_PACKAGE_TYPE_LABELS.GENERIC,
+    value: JFROG_ARTIFACTORY_MAVEN_PACKAGE_TYPES.GENERIC,
   },
 ];
