@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faArrowDown, faArrowUp} from "@fortawesome/pro-light-svg-icons";
+import {faCaretDown, faCaretUp} from "@fortawesome/pro-light-svg-icons";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 
 export default function ExpandAndCollapseIcon(
@@ -23,7 +23,7 @@ export default function ExpandAndCollapseIcon(
       <OverlayIconBase
         overlayBody={isCollapsed === true ? "Expand" : "Collapse"}
         iconSize={"lg"}
-        icon={isCollapsed === true ? faArrowDown : faArrowUp}
+        icon={isCollapsed === true ? faCaretDown : faCaretUp}
         onClickFunction={() => handleToggle()}
       />
     </div>
