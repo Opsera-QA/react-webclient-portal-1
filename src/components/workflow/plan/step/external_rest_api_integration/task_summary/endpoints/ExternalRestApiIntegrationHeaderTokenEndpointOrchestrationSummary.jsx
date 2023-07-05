@@ -7,7 +7,6 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 export default function ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary(
   {
     endpoint,
-    requestType,
     className,
   }) {
   const parsedEndpoint = DataParsingHelper.parseObject(endpoint);
@@ -19,9 +18,9 @@ export default function ExternalRestApiIntegrationHeaderTokenEndpointOrchestrati
   return (
     <ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
       className={className}
-      requestType={requestType}
       endpointType={"Access Token Generation"}
       endpoint={parsedEndpoint}
+      isCollapsed={true}
     >
       <div>Header test</div>
     </ExternalRestApiIntegrationEndpointOrchestrationSummaryBase>
@@ -29,7 +28,6 @@ export default function ExternalRestApiIntegrationHeaderTokenEndpointOrchestrati
 }
 
 ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary.propTypes = {
-  requestType: PropTypes.string,
   endpoint: PropTypes.object,
   className: PropTypes.string,
 };

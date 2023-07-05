@@ -7,7 +7,6 @@ import ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
 export default function ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary(
   {
     endpoint,
-    requestType,
     className,
   }) {
   const parsedEndpoint = DataParsingHelper.parseObject(endpoint);
@@ -19,15 +18,14 @@ export default function ExternalRestApiIntegrationConnectionCheckEndpointOrchest
   return (
     <ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
       className={className}
-      requestType={requestType}
       endpoint={endpoint}
       endpointType={"Connection Validation"}
+      isCollapsed={true}
     />
   );
 }
 
 ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary.propTypes = {
-  requestType: PropTypes.string,
   endpoint: PropTypes.object,
   className: PropTypes.string,
 };

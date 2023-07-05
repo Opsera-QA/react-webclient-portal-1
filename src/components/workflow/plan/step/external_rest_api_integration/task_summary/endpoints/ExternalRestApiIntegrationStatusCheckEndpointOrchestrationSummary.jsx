@@ -39,18 +39,17 @@ export default function ExternalRestApiIntegrationStatusCheckEndpointOrchestrati
         ruleEvaluation={statusCheckRuleEvaluation}
       />
       <ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary
-        requestType={"Status Check"}
         endpoint={statusCheckConnectionCheckEndpoint}
+        className={"mt-2"}
       />
       <ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary
-        requestType={"Status Check"}
         endpoint={statusCheckHeaderTokenEndpoint}
+        className={"mt-2"}
       />
       <ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
-        className={className}
-        requestType={"Status Check"}
         endpointType={"Status Check"}
         endpoint={statusCheckStatusCheckEndpoint}
+        className={"mt-2"}
       />
     </div>
   );
