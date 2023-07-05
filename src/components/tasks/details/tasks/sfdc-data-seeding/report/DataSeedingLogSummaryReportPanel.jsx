@@ -11,22 +11,24 @@ import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import customSettingMigrationReportMetadata from "./custom-setting-migration-report-metadata";
+import dataSeedingReportMetadata from "./data-seeding-report-metadata";
 import { Col, Row } from "react-bootstrap";
 import H4FieldSubHeader from "../../../../../common/fields/subheader/H4FieldSubHeader";
 import TextFieldBase from "../../../../../common/fields/text/TextFieldBase";
-import CustomSettingReportDownloadButton from "./CustomSettingReportDownloadButton";
+import DataSeedingReportDownloadButton from "./DataSeedingReportDownloadButton";
 import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 import taskActions from "../../../../task.actions";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
 import axios from "axios";
 import useComponentStateReference from "../../../../../../hooks/useComponentStateReference";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import DataSeedingLogReportTable from "./DataSeedingLogReportTable";
 
-function CustomSettingMigrationLogSummaryReportPanel({ activityData }) {
+function DataSeedingLogSummaryReportPanel({ activityData }) {
   const { getAccessToken } = useContext(AuthContext);
   const { userData } = useComponentStateReference();
   const [summaryData, setSummaryData] = useState(undefined);
+  const [detailedObjectSummary, setDetailedObjectSummary] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [runCount, setRunCount] = useState("");
   const [taskId, setTaskId] = useState("");
@@ -62,11 +64,12 @@ function CustomSettingMigrationLogSummaryReportPanel({ activityData }) {
         setSummaryData(null);
         return;
       }
+      setDetailedObjectSummary(reportObject?.objectSummary);
       setRunCount(activityData?.run_count);
       setTaskId(activityData?.task_id);
       const task = await taskActions.getTaskByIdV2(getAccessToken, cancelTokenSource, activityData?.task_id);
       setTask(task);
-      setSummaryData(new Model(reportObject, customSettingMigrationReportMetadata, false));
+      setSummaryData(new Model(reportObject, dataSeedingReportMetadata, false));
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -89,16 +92,6 @@ function CustomSettingMigrationLogSummaryReportPanel({ activityData }) {
     return TaskRoleHelper.canRunTask(userData, task);
   };
 
-
-  if (summaryData == null) {
-    return (
-      <div className={"mt-3"}>
-        <IconBase className={"mr-2"} icon={faCheckCircle} />
-        There was no proper report captured with this execution.
-      </div>
-    );
-  }
-
   const getTabContentContainer = () => {
     return (
       <VanitySetTabViewContainer>
@@ -114,7 +107,7 @@ function CustomSettingMigrationLogSummaryReportPanel({ activityData }) {
                     lg={4}
                     className={"d-flex justify-content-between"}
                   >
-                    <CustomSettingReportDownloadButton
+                    <DataSeedingReportDownloadButton
                       taskId={taskId}
                       runCount={runCount}
                       expiryDate={summaryData?.getData("expirationTime")}
@@ -132,15 +125,22 @@ function CustomSettingMigrationLogSummaryReportPanel({ activityData }) {
               <Col lg={6}>
                 <TextFieldBase dataObject={summaryData} fieldName={"timeTaken"} />
               </Col>
-              <Col lg={6}>
-                <TextFieldBase dataObject={summaryData} fieldName={"recordsProcessed"} />
+              <Col>
+                {detailedObjectSummary ?
+                  <DataSeedingLogReportTable
+                    summaryObject={detailedObjectSummary}
+                  />
+                  : null}
               </Col>
-              <Col lg={6}>
-                <TextFieldBase dataObject={summaryData} fieldName={"recordsSuccessful"} />
-              </Col>
-              <Col lg={6}>
-                <TextFieldBase dataObject={summaryData} fieldName={"recordsFailed"} />
-              </Col>
+              {/*<Col lg={6}>*/}
+              {/*  <TextFieldBase dataObject={summaryData} fieldName={"recordsProcessed"} />*/}
+              {/*</Col>*/}
+              {/*<Col lg={6}>*/}
+              {/*  <TextFieldBase dataObject={summaryData} fieldName={"recordsSuccessful"} />*/}
+              {/*</Col>*/}
+              {/*<Col lg={6}>*/}
+              {/*  <TextFieldBase dataObject={summaryData} fieldName={"recordsFailed"} />*/}
+              {/*</Col>*/}
               <Col lg={12}>
                 <TextFieldBase dataObject={summaryData} fieldName={"errorMessage"} visible={hasStringValue(summaryData?.getData("errorMessage"))}/>
               </Col>
@@ -160,6 +160,15 @@ function CustomSettingMigrationLogSummaryReportPanel({ activityData }) {
         message={"Loading Summary Report"}
         size={'sm'}
       />
+    );
+  }
+
+  if (!isLoading && summaryData == null) {
+    return (
+      <div className={"mt-3"}>
+        <IconBase className={"mr-2"} icon={faCheckCircle} />
+        There was no proper report captured with this execution.
+      </div>
     );
   }
 
@@ -183,8 +192,8 @@ function CustomSettingMigrationLogSummaryReportPanel({ activityData }) {
 }
 
 
-CustomSettingMigrationLogSummaryReportPanel.propTypes = {
+DataSeedingLogSummaryReportPanel.propTypes = {
   activityData: PropTypes.object,
 };
 
-export default CustomSettingMigrationLogSummaryReportPanel;
+export default DataSeedingLogSummaryReportPanel;

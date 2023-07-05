@@ -1,4 +1,4 @@
-const customSettingMigrationReportMetadata = {
+const dataSeedingReportMetadata = {
   type: "Custom Setting Migration Report",
   fields: [
     {
@@ -61,4 +61,37 @@ const customSettingMigrationReportMetadata = {
   },
 };
 
-export default customSettingMigrationReportMetadata;
+export default dataSeedingReportMetadata;
+
+export const dataSeedingObjectTableMetadata = {
+  type: "Field Data Seeding Report",
+  fields: [
+    {
+      label: "Object Name",
+      id: "objectName",
+    },
+    {
+      label: "Records Failed",
+      id: "recordsFailed",
+    },
+    {
+      label: "Records Processed",
+      id: "recordsProcessed",
+    },
+    {
+      label: "Records Successful",
+      id: "recordsSuccessful",
+    },
+    {
+      label: "Field List",
+      id: "fieldList",
+    },
+  ],
+  newObjectFields: {
+    objectName: "",
+    recordsFailed: "",
+    recordsProcessed: "",
+    recordsSuccessful: "",
+    fieldList: []
+  },
+};

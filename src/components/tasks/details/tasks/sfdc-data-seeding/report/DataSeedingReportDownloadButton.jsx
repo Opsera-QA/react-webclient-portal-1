@@ -10,7 +10,7 @@ import dataSeedingTaskWizardActions from "../wizard/dataSeedingTaskWizard.action
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 import { parseError } from "../../../../../common/helpers/error-helpers";
 
-function CustomSettingReportDownloadButton({
+function DataSeedingReportDownloadButton({
   taskId,
   runCount,
   expiryDate,
@@ -135,7 +135,7 @@ function CustomSettingReportDownloadButton({
   );
 }
 
-CustomSettingReportDownloadButton.propTypes = {
+DataSeedingReportDownloadButton.propTypes = {
   taskId: PropTypes.string,
   runCount: PropTypes.number,
   expiryDate: PropTypes.string,
@@ -147,9 +147,9 @@ CustomSettingReportDownloadButton.propTypes = {
   visible: PropTypes.bool,
 };
 
-CustomSettingReportDownloadButton.defaultProps = {
+DataSeedingReportDownloadButton.defaultProps = {
   size: "sm",
   icon: faFileDownload,
 };
 
-export default CustomSettingReportDownloadButton;
+export default DataSeedingReportDownloadButton;
