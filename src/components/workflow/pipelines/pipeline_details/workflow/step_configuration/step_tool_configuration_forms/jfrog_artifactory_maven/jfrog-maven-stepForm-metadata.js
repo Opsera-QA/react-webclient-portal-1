@@ -1,26 +1,26 @@
 const jfrogMavenStepFormMetadata = {
   type: "JFrog Artifactory Maven Tool Configuration",
-  fields: [            
+  fields: [
     {
       label: "Build Step",
       id: "artifactStepId",
-      isRequired: true
+      isRequired: true,
     },
     {
       label: "Repository",
       id: "repositoryName",
-      isRequired: true
+      isRequired: true,
     },
     {
       label: "Repository Format",
       id: "repositoryFormat",
-      isRequired: true
-    },    
+      isRequired: true,
+    },
     {
       label: "Step Tool",
       id: "jfrogToolConfigId",
-      isRequired: true
-    },    
+      isRequired: true,
+    },
     {
       label: "Group Name",
       id: "groupName",
@@ -41,19 +41,19 @@ const jfrogMavenStepFormMetadata = {
     },
     {
       label: "Package ID",
-      id: "packageId"
+      id: "packageId",
     },
     {
       label: "JFrogStep Type",
       id: "type",
-      isRequired: true
+      isRequired: true,
     },
     {
       label: "Use Run count as version?",
       id: "customVersion",
     },
     {
-      label: "Server Path",
+      label: "Server Path / Target Path",
       id: "serverPath",
       regexDefinitionName: "pathField",
       isRequiredFunction: (model) => {
@@ -61,18 +61,18 @@ const jfrogMavenStepFormMetadata = {
       },
     },
   ],
-  newObjectFields: {    
+  newObjectFields: {
     jfrogToolConfigId: "",
-    repositoryName : "",
-    repositoryFormat: "Maven",    
+    repositoryName: "",
+    repositoryFormat: "Maven",
     groupName: "",
     artifactName: "",
-    type: "",    
+    type: "",
     artifactStepId: "",
     serverPath: "",
-    packageId : "",
+    packageId: "",
     customVersion: true,
-  }
+  },
 };
 
 export default jfrogMavenStepFormMetadata;
