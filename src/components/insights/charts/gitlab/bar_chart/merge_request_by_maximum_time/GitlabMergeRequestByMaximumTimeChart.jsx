@@ -48,7 +48,13 @@ function GitlabMergeRequestByMaximumTimeChart({ kpiConfiguration, setKpiConfigur
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "gitlabMergeReqWithMaximumTime", kpiConfiguration, dashboardTags);
+      let dashboardOrgs =
+      dashboardData?.data?.filters[
+        dashboardData?.data?.filters.findIndex(
+          (obj) => obj.type === "organizations",
+        )
+      ]?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "gitlabMergeReqWithMaximumTime", kpiConfiguration, dashboardTags,null,null,dashboardOrgs);
       let dataObject = response?.data ? response?.data?.data[0]?.gitlabMergeReqWithMaximumTime?.data : [];
       assignStandardColors(dataObject, true);
       spaceOutMergeRequestTimeTakenLegend(dataObject);
