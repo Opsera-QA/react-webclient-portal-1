@@ -60,10 +60,10 @@ export default function WorkflowOptionCardBase(
 
   const getCardFooterForWorkflowOptionType = () => {
     switch (workflowOptionType) {
-      case WORKFLOW_OPTION_TYPES.TASK:
-        return <TaskCardFooter />;
       case WORKFLOW_OPTION_TYPES.PIPELINE:
         return <PipelineCardFooter />;
+      case WORKFLOW_OPTION_TYPES.TASK:
+        return <TaskCardFooter />;
       case WORKFLOW_OPTION_TYPES.TOOL:
         return <ToolCardFooter />;
     }
