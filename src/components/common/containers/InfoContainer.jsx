@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function InfoContainer(
   {
@@ -22,7 +23,11 @@ function InfoContainer(
     field,
     bodyClassName,
     overflowY,
+    collapsable,
+    collapsed,
   }) {
+  const [isCollapsed, setIsCollapsed] = useState(DataParsingHelper.parseBooleanV2(collapsed, false));
+
   const getBodyStyling = () => {
     const styling = {};
 
@@ -42,6 +47,12 @@ function InfoContainer(
     return styling;
   };
 
+  const getChildren = () => {
+    if (isCollapsed !== true) {
+      return children;
+    }
+  };
+
   return (
     <div className={className}>
       <InputTitleBar
@@ -58,7 +69,7 @@ function InfoContainer(
         className={bodyClassName}
         style={getBodyStyling()}
       >
-        {children}
+        {getChildren()}
       </div>
     </div>
   );
@@ -82,11 +93,14 @@ InfoContainer.propTypes = {
   field: PropTypes.object,
   bodyClassName: PropTypes.string,
   overflowY: PropTypes.string,
+  collapsable: PropTypes.bool,
+  collapsed: PropTypes.bool,
 };
 
 InfoContainer.defaultProps = {
   bodyClassName: "content-container",
   overflowY: "auto",
+  collapsed: false,
 };
 
 export default InfoContainer;
