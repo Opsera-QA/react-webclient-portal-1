@@ -6,8 +6,9 @@ import registryToolMetadata from "@opsera/definitions/constants/registry/tools/r
 import {useHistory} from "react-router-dom";
 import {toolHelper} from "components/inventory/tools/tool.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import ToolCardBase from "temp-library-components/cards/tools/ToolCardBase";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
+import ToolCreationFlowSelectionCardBase
+  from "../../../temp-library-components/cards/tools/ToolCreationFlowSelectionCardBase";
 
 export default function RegistryToolCardView({ tools, loadData, isLoading }) {
   const history = useHistory();
@@ -22,7 +23,7 @@ export default function RegistryToolCardView({ tools, loadData, isLoading }) {
 
   const getRegistryToolCard = (tool) => {
     return (
-      <ToolCardBase
+      <ToolCreationFlowSelectionCardBase
         toolModel={new Model({ ...tool }, registryToolMetadata, false)}
         onClickFunction={() => loadTool(tool)}
         tooltip={"Click to view Tool"}

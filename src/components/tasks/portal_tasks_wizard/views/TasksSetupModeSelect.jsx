@@ -15,9 +15,10 @@ import OverlayWizardButtonContainerBase
 import SelectionCardColumn from "../../../../temp-library-components/cards/SelectionCardColumn";
 import {platformImageConstants} from "../../../../temp-library-components/image/platformImage.constants";
 import {ImageBase} from "@opsera/react-vanity-set";
-import TaskCardBase from "../task_cards/TaskCardBase";
+import TaskCreationFlowSelectionCardBase from "../task_cards/TaskCreationFlowSelectionCardBase";
 import {TASK_TYPE_LABELS, TASK_TYPES} from "../../task.types";
-import {WORKFLOW_OPTION_TYPES} from "../task_cards/TaskTypeOptionCardBase";
+import {WORKFLOW_OPTION_TYPES
+} from "../../../wizard/portal/workflows/flows/WorkflowOptionCardBase";
 
 export const TOOL_CREATION_OPTIONS = {
   WIZARD: "wizard",
@@ -72,7 +73,7 @@ function TasksSetupModeSelect(
         />
         <Row>
           <Col md={6}>
-            <TaskCardBase
+            <TaskCreationFlowSelectionCardBase
               option={TOOL_CREATION_OPTIONS.WIZARD}
               handleFlowSelection={handleFlowSelection}
               selectedFlow={selectedFlow}
@@ -99,7 +100,7 @@ function TasksSetupModeSelect(
             />
           </Col>
           <Col md={6}>
-            <TaskCardBase
+            <TaskCreationFlowSelectionCardBase
               option={TOOL_CREATION_OPTIONS.ADVANCED}
               handleFlowSelection={handleFlowSelection}
               selectedFlow={selectedFlow}

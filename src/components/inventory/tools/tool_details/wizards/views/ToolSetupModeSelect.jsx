@@ -18,6 +18,10 @@ import SelectionCardColumn from "../../../../../../temp-library-components/cards
 import InfoMessageFieldBase from "components/common/fields/text/message/InfoMessageFieldBase";
 import ExternalPageLink from "components/common/links/ExternalPageLink";
 import {EXTERNAL_LINKS} from "assets/links/externalLinks";
+import ToolCreationFlowSelectionCardBase
+  from "../../../../../../temp-library-components/cards/tools/ToolCreationFlowSelectionCardBase";
+import WorkflowOptionCardBase from "../../../../../wizard/portal/workflows/flows/WorkflowOptionCardBase";
+import {WORKFLOW_OPTION_TYPES} from "../../../../../wizard/portal/workflows/flows/WorkflowOptionCardBase";
 
 export const TOOL_CREATION_OPTIONS = {
   WIZARD: "wizard",
@@ -44,12 +48,6 @@ function ToolSetupModeSelect(
     if (setButtonContainer && setCurrentScreen) {
       setButtonContainer(
         <>
-          <div className={"mb-1 mx-3"}>
-            <InfoMessageFieldBase
-              showInformationLabel={false}
-              message={"* Advanced Settings is the classic create view"}
-            />
-          </div>
           <OverlayWizardButtonContainerBase
             backButtonFunction={backButtonFunction}
           />
@@ -64,93 +62,69 @@ function ToolSetupModeSelect(
   };
 
   return (
-    <div
-      className={className}
-      style={{ position: "relative" }}
-    >
-      <CenteredContentWrapper minHeight={"20px"}>
+    <div className={"m-4"}>
         <H5FieldSubHeader
           className={"mb-3 mx-3"}
           subheaderText={
             "Pick between the new Opsera Tool Creation Wizard or the legacy advanced settings view to setup your tool."
           }
         />
-      </CenteredContentWrapper>
-      <div
-        className={className}
-        style={{ minHeight: "150px" }}
-      >
-        <Row
-            className={"py-3 px-2"}
-            noGutters={true}
-            style={{ alignItems: 'center', justifyContent: 'center' }}
-        >
-          <SelectionCardColumn
-          >
-            <SelectionIconCardBase
-              selectedOption={setupMode}
-              tooltip={
-                "Use the Opsera Tool Creation Wizard to set up your tool and test its connection."
-              }
+        <Row>
+          <Col md={6}>
+          <ToolCreationFlowSelectionCardBase
+            option={TOOL_CREATION_OPTIONS.WIZARD}
+            onClickFunction={setDataFunction}
+            setupMode={setupMode}
+            icon={
+              <IconTitleBar
+                icon={
+                  <ImageBase
+                    height={96}
+                    imageSource={
+                      platformImageConstants.PLATFORM_IMAGE_LINKS
+                        .WIZARD_GENERAL
+                    }
+                  />
+                }
+                title={TOOL_CREATION_OPTION_LABELS.WIZARD}
+                titleClassName={"mx-auto"}
+                subTitleClassName={"mx-auto"}
+              />
+            }
+            description={
+            "Classic tool wizard"
+          }
+            workflowOptionType={WORKFLOW_OPTION_TYPES.TOOL}
+          />
+          </Col>
+          <Col md={6}>
+            <ToolCreationFlowSelectionCardBase
               option={TOOL_CREATION_OPTIONS.WIZARD}
-              onClickFunction={setDataFunction}
-              highlightedBorderColor={
-                themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE
+              setDataFunction={setDataFunction}
+              setupMode={setupMode}
+              icon={
+                <IconTitleBar
+                  icon={
+                    <ImageBase
+                      height={96}
+                      imageSource={
+                        platformImageConstants.PLATFORM_IMAGE_LINKS
+                          .ADVANCED_OPTION
+                      }
+                    />
+                  }
+                  title={TOOL_CREATION_OPTION_LABELS.ADVANCED}
+                  titleClassName={"mx-auto"}
+                  subTitleClassName={"mx-auto"}
+                />
               }
-              titleBar={
-                <div className={"p-2"}>
-                  <IconTitleBar
-                    className={""}
-                    title={TOOL_CREATION_OPTION_LABELS.WIZARD}
-                    titleClassName={"mx-auto"}
-                    icon={
-                      <ImageBase
-                        height={"96px"}
-                        imageSource={
-                          platformImageConstants.PLATFORM_IMAGE_LINKS
-                            .WIZARD_GENERAL
-                        }
-                      />
-                    }
-                  />
-                </div>
+              description={
+                "ADVANCED tool wizard"
               }
+              workflowOptionType={WORKFLOW_OPTION_TYPES.TOOL}
             />
-          </SelectionCardColumn>
-          <SelectionCardColumn
-          >
-            <SelectionIconCardBase
-              selectedOption={setupMode}
-              tooltip={
-                "Use the Advanced tool creation workflow to register your tool's details with Opsera."
-              }
-              option={TOOL_CREATION_OPTIONS.ADVANCED}
-              onClickFunction={setDataFunction}
-              highlightedBorderColor={
-                themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE
-              }
-              titleBar={
-                <div className={"p-2"}>
-                  <IconTitleBar
-                    className={""}
-                    title={TOOL_CREATION_OPTION_LABELS.ADVANCED}
-                    titleClassName={"mx-auto mt-auto"}
-                    icon={
-                      <ImageBase
-                        height={"96px"}
-                        imageSource={
-                          platformImageConstants.PLATFORM_IMAGE_LINKS
-                            .ADVANCED_OPTION
-                        }
-                      />
-                    }
-                  />
-                </div>
-              }
-            />
-          </SelectionCardColumn>
+          </Col>
         </Row>
-      </div>
     </div>
   );
 }

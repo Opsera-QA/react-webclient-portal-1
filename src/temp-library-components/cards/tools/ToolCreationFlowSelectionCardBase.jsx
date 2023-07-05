@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
+
 import WorkflowOptionCardBase from "../../../components/wizard/portal/workflows/flows/WorkflowOptionCardBase";
 
-export default function ToolCardBase(
+export default function ToolCreationFlowSelectionCardBase(
   {
     selectedFlow,
     handleFlowSelection,
@@ -25,7 +26,7 @@ export default function ToolCardBase(
       option={option}
       selectedOption={selectedFlow}
       title={title}
-      subtitle={subtitle}
+      subTitle={subtitle}
       icon={icon}
       iconColor={themeConstants.RESOURCE_COLORS.TOOLS}
       description={description}
@@ -36,7 +37,7 @@ export default function ToolCardBase(
 }
 
 
-ToolCardBase.propTypes = {
+ToolCreationFlowSelectionCardBase.propTypes = {
   selectedFlow: PropTypes.string,
   handleFlowSelection: PropTypes.func,
   option: PropTypes.string,
