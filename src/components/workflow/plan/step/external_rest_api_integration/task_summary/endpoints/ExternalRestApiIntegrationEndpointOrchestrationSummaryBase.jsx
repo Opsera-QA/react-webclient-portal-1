@@ -16,7 +16,6 @@ export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBa
   {
     endpoint,
     endpointType,
-    children,
     className,
     isCollapsed,
   }) {
@@ -66,9 +65,6 @@ export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBa
                 text={parsedEndpoint?.status}
               />
             </Col>
-            <Col xs={12}>
-              {children}
-            </Col>
             <Col xs={6}>
               <StandaloneJsonField
                 json={parsedEndpoint?.queryParameters}
@@ -97,7 +93,6 @@ export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBa
 ExternalRestApiIntegrationEndpointOrchestrationSummaryBase.propTypes = {
   endpointType: PropTypes.string,
   endpoint: PropTypes.object,
-  children: PropTypes.any,
   className: PropTypes.string,
   isCollapsed: PropTypes.bool,
 };
