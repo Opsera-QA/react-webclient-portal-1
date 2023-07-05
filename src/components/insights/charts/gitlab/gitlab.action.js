@@ -270,7 +270,70 @@ gitlabActions.gitlabDeploymentStatisticsV2 = async (
     postBody,
   );
 };
+gitlabActions.getGitlabCommitUser = async (
+  getAccessToken,
+  cancelTokenSource,
+  kpiConfiguration,
+  dashboardTags,
+  tableFilterDto,
+  author,
+  startDate,
+  endDate,
+) => {
+  const apiUrl = gitlabBaseURL + "getGitlabCommitUser";
+  const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  // TODO Revert this code when timezone is fixed everywhere
+  let timeOffsetInMins = 0;
+  if (!dateRange.label) {
+    timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+  }
+  if (!startDate) {
+    startDate = new Date(dateRange?.start);
+    endDate = new Date(dateRange?.end);
+    startDate.setTime(startDate.getTime() - timeOffsetInMins);
+    endDate.setTime(endDate.getTime() - timeOffsetInMins);
+    startDate = startDate.toISOString();
+    endDate = endDate.toISOString();
+  }
 
+  // Checking the use kpi tags toggle
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags =
+    getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+  }
+  const postBody = {
+    tags:
+      tags && dashboardTags
+        ? tags.concat(dashboardTags)
+        : dashboardTags?.length > 0
+          ? dashboardTags
+          : tags,
+    gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
+    page: tableFilterDto?.getData("currentPage")
+      ? tableFilterDto?.getData("currentPage")
+      : 1,
+    size: tableFilterDto?.getData("pageSize")
+      ? tableFilterDto?.getData("pageSize")
+      : 5,
+    author,
+    startDate,
+    endDate,
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
 gitlabActions.getActionablePipelinesChartData = async (
   getAccessToken,
   cancelTokenSource,

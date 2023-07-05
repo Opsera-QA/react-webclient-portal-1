@@ -1,127 +1,110 @@
-import React, { useState, useContext, useMemo } from "react";
+import React, { useState, useContext, useMemo, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
-import {
-  getTableTextColumn
-} from "../../../../../common/table/table-column-helpers";
-import {getField} from "../../../../../common/metadata/metadata-helpers";
-import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import axios from "axios";
+import { AuthContext } from "contexts/AuthContext";
+import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer
   from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
-import CustomTable from "components/common/table/CustomTable";
-import FilterContainer from "components/common/table/FilterContainer";
+import Model from "../../../../../../core/data_model/model";
+import actionableInsightsGenericChartFilterMetadata
+  from "../../../generic_filters/actionableInsightsGenericChartFilterMetadata";
+import GitlabCommitsByAuthorActionableTable from "./GitlabCommitsByAuthorActionableTable";
+import gitlabActions from "../../gitlab.action";
 
-const NO_DATA_MESSAGE = "No data available";
-
-function GitlabCommitsBytAuthorActionableModal({ metrics }) {
+function GitlabCommitsByAuthorActionableModal({ kpiConfiguration, dashboardData, author, date, icon, endDate, startDate, y }) {
+  const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-
-  /**
-   * given the data format:
-   *
-   * [
-   *  {
-   *    id: "2023-04-26", // date
-   *    data: [
-   *      {
-   *        "x": "Suriya Prakash",
-   *        "y": 6
-   *      },
-   *      ...
-   *    ]
-   *  },
-   *  ...
-   * ]
-   * 
-   * Output:
-   * [
-   *  {
-   *    id: "date",
-   *    label: "Date",
-   *  },
-   *  {
-   *    id: "Suriya Prakash",
-   *    label: "Suriya Prakash",
-   *  },
-   *  ...
-   * ]
-   */
-  const addFields = () => {
-    if (!Array.isArray(metrics) || metrics.length === 0) {
-      return {};
-    }
-
-    return [
-      {
-        id: 'date',
-        label: 'Date'
-      },
-      // add each x value from data
-      ...metrics[0].data.map(({ x }) => ({
-        id: x,
-        label: x
-      }))
-    ];
-  };
-
-  const fields = addFields();
-
-  const columnsToRender = () => {
-    const columns = [getTableTextColumn(getField(fields, 'date'))];
-    fields.forEach(field => {
-      if(field.id !== 'date') {
-        columns.push(getTableTextColumn(getField(fields, field.id)));
-      }
-    });
-    return columns;
-  };
-
-  const columns = useMemo(
-    columnsToRender,
-    []
+  const [error, setError] = useState(undefined);
+  const [metrics, setMetrics] = useState([]);
+  const [totalCount, setTotalCount] =useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [filterModel, setFilterModel] = useState(
+    new Model(
+      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+      actionableInsightsGenericChartFilterMetadata,
+      false
+    )
   );
 
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
+
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
+    try {
+      setIsLoading(true);
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      const response = await gitlabActions.getGitlabCommitUser(
+        getAccessToken,
+        cancelSource,
+        kpiConfiguration,
+        dashboardTags,
+        filterDto,
+        author,
+        startDate,
+        endDate,
+      );
+      let dataObject = response?.data ? response?.data?.data?.gitlabCommitUser?.data[0]?.data : [];
+      let totalCount = response?.data ? response?.data?.data?.gitlabCommitUser?.data[0]?.count[0]?.count : [];
+
+      if (isMounted?.current === true && dataObject) {
+        setMetrics(dataObject);
+        setTotalCount(totalCount);
+
+        let newFilterDto = filterDto;
+        newFilterDto.setData("totalCount", totalCount);
+        setFilterModel({ ...newFilterDto });
+      }
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        setError(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearInfoOverlayPanel();
   };
 
-  const convertData = () => {
-    return metrics.map(({ id, data }) => {
-      const newData = {
-        date: id,
-      };
-
-      data.map(({ x, y}) => {
-        newData[x] = y;
-      });
-
-      return newData;
-    });
-  };
-
-  const data = convertData();
-
   const getBody = () => {
     return (
-      <FilterContainer
-        title={'Total Commits Per Author By Date'}
-        body={getTable()}
-        metadata={data}
-      />
-    );
-  };
-
-  const getTable = () => {
-    return (
-      <CustomTable
-        columns={columns}
-        data={data}
-        noDataMessage={NO_DATA_MESSAGE}
-        className={'no-wrap'}
-      />
-    );
-  };
-
+      <div className={"p-3"}>
+        <GitlabCommitsByAuthorActionableTable
+          isLoading={isLoading}
+          data={metrics}
+          filterModel={filterModel}
+          setFilterModel={setFilterModel}
+          loadData={loadData}
+          tableTitleIcon={icon}
+        />
+      </div>)
+  }
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
@@ -136,8 +119,15 @@ function GitlabCommitsBytAuthorActionableModal({ metrics }) {
   );
 }
 
-GitlabCommitsBytAuthorActionableModal.propTypes = {
+GitlabCommitsByAuthorActionableModal.propTypes = {
   metrics: PropTypes.array,
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  start: PropTypes.string,
+  end: PropTypes.string,
+  range: PropTypes.string,
+  type: PropTypes.string,
+
 };
 
-export default GitlabCommitsBytAuthorActionableModal;
+export default GitlabCommitsByAuthorActionableModal;
