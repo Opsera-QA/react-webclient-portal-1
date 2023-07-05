@@ -47,12 +47,14 @@ export default function ExternalRestApiIntegrationActivityLogOperationLogSummary
         return (
           <ExternalRestApiIntegrationStatusCheckEndpointOrchestrationSummary
             externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
+            className={"mt-2"}
           />
         );
       case "callOperation":
         return (
           <ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary
             externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
+            className={"mt-2"}
           />
         );
       default:
