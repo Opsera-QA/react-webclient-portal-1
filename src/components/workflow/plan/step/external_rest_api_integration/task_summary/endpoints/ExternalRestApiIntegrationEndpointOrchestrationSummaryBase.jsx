@@ -13,6 +13,7 @@ import InfoContainer from "components/common/containers/InfoContainer";
 import {
   externalRestApiIntegrationStepHelper
 } from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/externalRestApiIntegrationStep.helper";
+import FieldContainer from "components/common/fields/FieldContainer";
 
 export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBase(
   {
@@ -52,16 +53,18 @@ export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBa
               />
             </Col>
             <Col xs={6}>
-              <StandaloneJsonField
-                json={parsedEndpoint?.queryParameters}
-                titleText={`API Query Parameters`}
-                hideIfNoValue={true}
-              />
-              <StandaloneJsonField
-                json={parsedEndpoint?.requestBody}
-                titleText={`API Request Body`}
-                hideIfNoValue={true}
-              />
+              <FieldContainer>
+                <StandaloneJsonField
+                  json={parsedEndpoint?.queryParameters}
+                  titleText={`API Query Parameters`}
+                  hideIfNoValue={true}
+                />
+                <StandaloneJsonField
+                  json={parsedEndpoint?.requestBody}
+                  titleText={`API Request Body`}
+                  hideIfNoValue={true}
+                />
+              </FieldContainer>
             </Col>
             <Col xs={6}>
               <EndpointResponseField
