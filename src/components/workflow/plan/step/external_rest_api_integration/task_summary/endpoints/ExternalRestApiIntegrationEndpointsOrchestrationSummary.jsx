@@ -10,7 +10,7 @@ import ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-export default function ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary(
+export default function ExternalRestApiIntegrationEndpointsOrchestrationSummary(
   {
     endpoints,
     className,
@@ -18,6 +18,7 @@ export default function ExternalRestApiIntegrationCallOperationEndpointOrchestra
   const parsedEndpoints = DataParsingHelper.parseObject(endpoints);
   const runRequestConnectionCheckEndpoint = DataParsingHelper.parseNestedObject(endpoints, "connectionCheckEndpoint");
   const runRequestHeaderTokenEndpoint = DataParsingHelper.parseNestedObject(endpoints, "headerTokenEndpoint");
+  const statusCheckStatusCheckEndpoint = DataParsingHelper.parseNestedObject(endpoints, "statusCheckEndpoint");
   const runRequestRuleEvaluation = DataParsingHelper.parseNestedObject(endpoints, "ruleEvaluation");
   const runRequestCallOperationEndpoint = DataParsingHelper.parseNestedObject(endpoints, "runTriggerEndpoint");
 
@@ -35,6 +36,11 @@ export default function ExternalRestApiIntegrationCallOperationEndpointOrchestra
         endpoint={runRequestCallOperationEndpoint}
         className={"mt-2"}
       />
+      <ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
+        endpointType={"Status Check"}
+        endpoint={statusCheckStatusCheckEndpoint}
+        className={"mt-2"}
+      />
       <ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary
         endpoint={runRequestHeaderTokenEndpoint}
         className={"mt-2"}
@@ -47,7 +53,7 @@ export default function ExternalRestApiIntegrationCallOperationEndpointOrchestra
   );
 }
 
-ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary.propTypes = {
+ExternalRestApiIntegrationEndpointsOrchestrationSummary.propTypes = {
   endpoints: PropTypes.object,
   className: PropTypes.string,
 };

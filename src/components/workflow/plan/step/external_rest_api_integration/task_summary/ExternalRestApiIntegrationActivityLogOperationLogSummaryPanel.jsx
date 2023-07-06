@@ -2,8 +2,8 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import ExternalRestApiIntegrationStatusCheckEndpointOrchestrationSummary
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationStatusCheckEndpointOrchestrationSummary";
-import ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary";
+import ExternalRestApiIntegrationEndpointsOrchestrationSummary
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointsOrchestrationSummary";
 import CustomTab from "components/common/tabs/CustomTab";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import OverlayTabPanelContainer from "components/common/panels/general/OverlayTabPanelContainer";
@@ -52,7 +52,7 @@ export default function ExternalRestApiIntegrationActivityLogOperationLogSummary
         );
       case "callOperation":
         return (
-          <ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary
+          <ExternalRestApiIntegrationEndpointsOrchestrationSummary
             endpoints={externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.endpoints")}
             className={"mt-2"}
           />
