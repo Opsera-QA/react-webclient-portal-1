@@ -18,7 +18,7 @@ export default function ExternalRestApiIntegrationEndpointsOrchestrationSummary(
   const parsedEndpoints = DataParsingHelper.parseObject(endpoints);
   const runRequestConnectionCheckEndpoint = DataParsingHelper.parseNestedObject(endpoints, "connectionCheckEndpoint");
   const runRequestHeaderTokenEndpoint = DataParsingHelper.parseNestedObject(endpoints, "headerTokenEndpoint");
-  const statusCheckStatusCheckEndpoint = DataParsingHelper.parseNestedObject(endpoints, "statusCheckEndpoint");
+  const statusCheckEndpoint = DataParsingHelper.parseNestedObject(endpoints, "statusCheckEndpoint");
   const runRequestRuleEvaluation = DataParsingHelper.parseNestedObject(endpoints, "ruleEvaluation");
   const runRequestCallOperationEndpoint = DataParsingHelper.parseNestedObject(endpoints, "runTriggerEndpoint");
 
@@ -38,7 +38,7 @@ export default function ExternalRestApiIntegrationEndpointsOrchestrationSummary(
       />
       <ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
         endpointType={"Status Check"}
-        endpoint={statusCheckStatusCheckEndpoint}
+        endpoint={runRequestCallOperationEndpoint}
         className={"mt-2"}
       />
       <ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary
