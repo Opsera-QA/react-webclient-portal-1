@@ -1,23 +1,17 @@
 import React, {useEffect} from "react";
 import PropTypes from "prop-types";
-import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
-import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
-import IconBase from "../../../../../common/icons/IconBase";
-import {faGear, faQuestionCircle, faWandMagicSparkles} from "@fortawesome/pro-light-svg-icons";
-import OpseraInfinityLogo from "../../../../../logo/OpseraInfinityLogo";
 import OverlayWizardButtonContainerBase
   from "../../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import {platformImageConstants} from "../../../../../../temp-library-components/image/platformImage.constants";
 import {ImageBase} from "@opsera/react-vanity-set";
-import SelectionCardColumn from "../../../../../../temp-library-components/cards/SelectionCardColumn";
-import InfoMessageFieldBase from "components/common/fields/text/message/InfoMessageFieldBase";
-import ExternalPageLink from "components/common/links/ExternalPageLink";
-import {EXTERNAL_LINKS} from "assets/links/externalLinks";
+import ToolCreationFlowSelectionCardBase
+  from "../../../../../../temp-library-components/cards/tools/ToolCreationFlowSelectionCardBase";
+import {WORKFLOW_OPTION_TYPES} from "../../../../../wizard/portal/workflows/flows/WorkflowOptionCardBase";
 
 export const TOOL_CREATION_OPTIONS = {
   WIZARD: "wizard",
@@ -26,7 +20,7 @@ export const TOOL_CREATION_OPTIONS = {
 
 export const TOOL_CREATION_OPTION_LABELS = {
   WIZARD: "Tool Creation Wizard",
-  ADVANCED: "Advanced Settings*",
+  ADVANCED: "Advanced Settings",
 };
 
 function ToolSetupModeSelect(
@@ -44,12 +38,6 @@ function ToolSetupModeSelect(
     if (setButtonContainer && setCurrentScreen) {
       setButtonContainer(
         <>
-          <div className={"mb-1 mx-3"}>
-            <InfoMessageFieldBase
-              showInformationLabel={false}
-              message={"* Advanced Settings is the classic create view"}
-            />
-          </div>
           <OverlayWizardButtonContainerBase
             backButtonFunction={backButtonFunction}
           />
@@ -64,93 +52,68 @@ function ToolSetupModeSelect(
   };
 
   return (
-    <div
-      className={className}
-      style={{ position: "relative" }}
-    >
-      <CenteredContentWrapper minHeight={"20px"}>
+    <div className={"m-4"}>
         <H5FieldSubHeader
           className={"mb-3 mx-3"}
           subheaderText={
             "Pick between the new Opsera Tool Creation Wizard or the legacy advanced settings view to setup your tool."
           }
         />
-      </CenteredContentWrapper>
-      <div
-        className={className}
-        style={{ minHeight: "150px" }}
-      >
-        <Row
-            className={"py-3 px-2"}
-            noGutters={true}
-            style={{ alignItems: 'center', justifyContent: 'center' }}
-        >
-          <SelectionCardColumn
-          >
-            <SelectionIconCardBase
-              selectedOption={setupMode}
-              tooltip={
-                "Use the Opsera Tool Creation Wizard to set up your tool and test its connection."
-              }
+        <Row>
+          <Col md={6}>
+          <ToolCreationFlowSelectionCardBase
+            option={TOOL_CREATION_OPTIONS.WIZARD}
+            handleFlowSelection={setDataFunction}
+            selectedFlow={setupMode}
+            icon={
+              <IconTitleBar
+                icon={
+                  <ImageBase
+                    height={96}
+                    imageSource={
+                      platformImageConstants.PLATFORM_IMAGE_LINKS
+                        .WIZARD_GENERAL
+                    }
+                  />
+                }
+                title={TOOL_CREATION_OPTION_LABELS.WIZARD}
+                titleClassName={"mx-auto"}
+                subTitleClassName={"mx-auto"}
+              />
+            }
+            description={
+            "Configure your tool and test its connection with the new Tool Creation Wizard"
+          }
+            workflowOptionType={WORKFLOW_OPTION_TYPES.TOOL}
+          />
+          </Col>
+          <Col md={6}>
+            <ToolCreationFlowSelectionCardBase
               option={TOOL_CREATION_OPTIONS.WIZARD}
-              onClickFunction={setDataFunction}
-              highlightedBorderColor={
-                themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE
+              handleFlowSelection={setDataFunction}
+              selectedFlow={setupMode}
+              icon={
+                <IconTitleBar
+                  icon={
+                    <ImageBase
+                      height={96}
+                      imageSource={
+                        platformImageConstants.PLATFORM_IMAGE_LINKS
+                          .ADVANCED_OPTION
+                      }
+                    />
+                  }
+                  title={TOOL_CREATION_OPTION_LABELS.ADVANCED}
+                  titleClassName={"mx-auto"}
+                  subTitleClassName={"mx-auto"}
+                />
               }
-              titleBar={
-                <div className={"p-2"}>
-                  <IconTitleBar
-                    className={""}
-                    title={TOOL_CREATION_OPTION_LABELS.WIZARD}
-                    titleClassName={"mx-auto"}
-                    icon={
-                      <ImageBase
-                        height={"96px"}
-                        imageSource={
-                          platformImageConstants.PLATFORM_IMAGE_LINKS
-                            .WIZARD_GENERAL
-                        }
-                      />
-                    }
-                  />
-                </div>
-              }
+              description={
+                "Classic create view. Use this workflow to register your tool's details with Opsera"}
+              workflowOptionType={WORKFLOW_OPTION_TYPES.TOOL}
             />
-          </SelectionCardColumn>
-          <SelectionCardColumn
-          >
-            <SelectionIconCardBase
-              selectedOption={setupMode}
-              tooltip={
-                "Use the Advanced tool creation workflow to register your tool's details with Opsera."
-              }
-              option={TOOL_CREATION_OPTIONS.ADVANCED}
-              onClickFunction={setDataFunction}
-              highlightedBorderColor={
-                themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE
-              }
-              titleBar={
-                <div className={"p-2"}>
-                  <IconTitleBar
-                    className={""}
-                    title={TOOL_CREATION_OPTION_LABELS.ADVANCED}
-                    titleClassName={"mx-auto mt-auto"}
-                    icon={
-                      <ImageBase
-                        height={"96px"}
-                        imageSource={
-                          platformImageConstants.PLATFORM_IMAGE_LINKS
-                            .ADVANCED_OPTION
-                        }
-                      />
-                    }
-                  />
-                </div>
-              }
-            />
-          </SelectionCardColumn>
+          </Col>
         </Row>
-      </div>
     </div>
   );
 }
