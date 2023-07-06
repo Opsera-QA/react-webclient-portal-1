@@ -9,6 +9,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 export const WORKFLOW_OPTION_TYPES = {
   PIPELINE: "pipeline",
   TASK: "task",
+  TOOL: "tool",
 };
 
 export default function WorkflowOptionCardBase(
