@@ -31,15 +31,17 @@ export default function ExternalRestApiIntegrationCallOperationEndpointOrchestra
         ruleEvaluation={runRequestRuleEvaluation}
       />
       <ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
-        className={className}
         endpointType={"Call Operation"}
         endpoint={runRequestCallOperationEndpoint}
+        className={"mt-2"}
       />
       <ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary
         endpoint={runRequestHeaderTokenEndpoint}
+        className={"mt-2"}
       />
       <ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary
         endpoint={runRequestConnectionCheckEndpoint}
+        className={"mt-2"}
       />
     </div>
   );
