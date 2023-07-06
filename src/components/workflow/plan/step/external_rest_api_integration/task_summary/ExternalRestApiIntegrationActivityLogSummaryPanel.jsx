@@ -9,8 +9,8 @@ import pipelineActivityLogActionConstants
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import ExternalRestApiIntegrationActivityLogOperationLogSummaryPanel
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/ExternalRestApiIntegrationActivityLogOperationLogSummaryPanel";
-import ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary";
+import ExternalRestApiIntegrationEndpointsOrchestrationSummary
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointsOrchestrationSummary";
 
 // TODO: Make fully fleshed out report.
 function ExternalRestApiIntegrationActivityLogSummaryPanel(
@@ -24,7 +24,7 @@ function ExternalRestApiIntegrationActivityLogSummaryPanel(
 
     if (parsedEndpoints) {
       return (
-        <ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary
+        <ExternalRestApiIntegrationEndpointsOrchestrationSummary
           endpoints={endpoints}
         />
       );
