@@ -9,18 +9,20 @@ import ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationSummaryBase";
 import ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary(
   {
-    externalRestApiIntegrationStepTaskModel,
+    endpoints,
     className,
   }) {
-  const runRequestConnectionCheckEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.endpoints.connectionCheckEndpoint");
-  const runRequestHeaderTokenEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.endpoints.headerTokenEndpoint");
-  const runRequestRuleEvaluation = externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.ruleEvaluation");
-  const runRequestCallOperationEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.endpoints.runTriggerEndpoint");
+  const parsedEndpoints = DataParsingHelper.parseObject(endpoints);
+  const runRequestConnectionCheckEndpoint = DataParsingHelper.parseNestedObject(endpoints, "connectionCheckEndpoint");
+  const runRequestHeaderTokenEndpoint = DataParsingHelper.parseNestedObject(endpoints, "headerTokenEndpoint");
+  const runRequestRuleEvaluation = DataParsingHelper.parseNestedObject(endpoints, "ruleEvaluation");
+  const runRequestCallOperationEndpoint = DataParsingHelper.parseNestedObject(endpoints, "runTriggerEndpoint");
 
-  if (externalRestApiIntegrationStepTaskModel == null) {
+  if (parsedEndpoints == null) {
     return null;
   }
 
@@ -48,6 +50,6 @@ export default function ExternalRestApiIntegrationCallOperationEndpointOrchestra
 }
 
 ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary.propTypes = {
-  externalRestApiIntegrationStepTaskModel: PropTypes.object,
+  endpoints: PropTypes.object,
   className: PropTypes.string,
 };
