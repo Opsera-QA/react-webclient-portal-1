@@ -1,12 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary";
 import ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary";
-import StandaloneDateField from "components/common/fields/date/StandaloneDateField";
-import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary";
 import ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
@@ -29,7 +26,6 @@ export default function ExternalRestApiIntegrationStatusCheckEndpointOrchestrati
 
   return (
     <div className={className}>
-      <H5FieldSubHeader subheaderText={"Latest Status Check"} />
       <ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
         ruleEvaluation={statusCheckRuleEvaluation}
         latestStatusCheckTime={lastStatusCheckTimestamp}
