@@ -35,6 +35,7 @@ export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBa
         titleText={`${endpointType} Endpoint Summary: ${externalRestApiIntegrationStepHelper.getLabelForRuleEvaluationStatus(status)}`}
         isCollapsable={true}
         collapsed={isCollapsed}
+        isLoading={status === "running"}
       >
         <div className={"m-2"}>
           <Row>
