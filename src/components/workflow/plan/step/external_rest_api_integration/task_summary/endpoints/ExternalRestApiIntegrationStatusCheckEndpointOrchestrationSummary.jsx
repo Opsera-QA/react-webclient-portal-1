@@ -30,13 +30,9 @@ export default function ExternalRestApiIntegrationStatusCheckEndpointOrchestrati
   return (
     <div className={className}>
       <H5FieldSubHeader subheaderText={"Latest Status Check"} />
-      <StandaloneDateField
-        label={"Latest Status Check Timestamp"}
-        date={lastStatusCheckTimestamp}
-        dateFormat={DateFormatHelper.DATE_FORMATS.TIMESTAMP}
-      />
       <ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
         ruleEvaluation={statusCheckRuleEvaluation}
+        latestStatusCheckTime={lastStatusCheckTimestamp}
       />
       <ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
         endpointType={"Status Check"}
