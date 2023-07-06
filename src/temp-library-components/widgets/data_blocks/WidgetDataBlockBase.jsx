@@ -20,6 +20,7 @@ export default function WidgetDataBlockBase(
     disabled,
     isLoading,
     titleBarClassName,
+    borderColor,
   }) {
   const {
     themeConstants,
@@ -39,7 +40,7 @@ export default function WidgetDataBlockBase(
       onClickFunction={onClickFunction}
       backgroundColor={themeConstants.COLOR_PALETTE.WHITE}
       disabledBackgroundColor={themeConstants.COLOR_PALETTE.BACKGROUND_GRAY}
-      borderColor={themeConstants.BORDER_COLORS.GRAY}
+      borderColor={borderColor ? borderColor : themeConstants.BORDER_COLORS.GRAY}
       fontColor={hasStringValue(fontColor) === true ? fontColor : themeConstants.COLOR_PALETTE.DEEP_PURPLE}
       disabledFontColor={themeConstants.COLOR_PALETTE.DARK_GRAY}
       fontFamily={fontFamily}

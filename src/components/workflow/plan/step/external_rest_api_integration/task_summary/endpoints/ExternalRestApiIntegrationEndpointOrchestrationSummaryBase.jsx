@@ -48,12 +48,7 @@ export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBa
               <StandaloneTextFieldBase
                 label={"Endpoint URL"}
                 text={parsedEndpoint?.url}
-              />
-            </Col>
-            <Col xs={12}>
-              <StandaloneTextFieldBase
-                label={"Status"}
-                text={parsedEndpoint?.status}
+                showClipboardButton={true}
               />
             </Col>
             <Col xs={6}>
