@@ -11,22 +11,9 @@ import Col from "react-bootstrap/Col";
 import ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
-import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
-import EndpointResponseField from "components/common/inputs/endpoints/endpoint/response/EndpointResponseField";
-import {faCheckCircle, faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
-
-const getStatusIcon = (parsedEndpoint) => {
-  const status = DataParsingHelper.parseNestedString(parsedEndpoint, "ruleEvaluation.status");
-
-  switch (status) {
-    case "success":
-      return faCheckCircle;
-    case "failure":
-      return faExclamationCircle;
-    default:
-      return null;
-  }
-};
+import {
+  externalRestApiIntegrationStepHelper
+} from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/externalRestApiIntegrationStep.helper";
 
 export default function ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary(
   {
@@ -45,10 +32,11 @@ export default function ExternalRestApiIntegrationHeaderTokenEndpointOrchestrati
     return (
       <div className={className}>
         <InfoContainer
-          titleIcon={getStatusIcon()}
-          titleText={`Access Token Generation Endpoint Summary`}
+          titleIcon={externalRestApiIntegrationStepHelper.getStatusIcon(status)}
+          titleText={`Access Token Generation Endpoint Summary: ${externalRestApiIntegrationStepHelper.getLabelForRuleEvaluationStatus(status)}`}
           isCollapsable={true}
           collapsed={status === "success"}
+          isLoading={status === "running"}
         >
           <div className={"m-2"}>
             <Row>

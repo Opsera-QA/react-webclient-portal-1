@@ -10,7 +10,9 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary";
 import InfoContainer from "components/common/containers/InfoContainer";
-import {faCheckCircle, faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
+import {
+  externalRestApiIntegrationStepHelper
+} from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/externalRestApiIntegrationStep.helper";
 
 export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBase(
   {
@@ -20,19 +22,7 @@ export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBa
     isCollapsed,
   }) {
   const parsedEndpoint = DataParsingHelper.parseObject(endpoint);
-
-  const getStatusIcon = () => {
-    const status = DataParsingHelper.parseNestedString(parsedEndpoint, "ruleEvaluation.status");
-
-    switch (status) {
-      case "success":
-        return faCheckCircle;
-      case "failure":
-        return faExclamationCircle;
-      default:
-        return null;
-    }
-  };
+  const status = DataParsingHelper.parseNestedString(parsedEndpoint, "ruleEvaluation.status");
 
   if (parsedEndpoint == null) {
     return null;
@@ -41,8 +31,8 @@ export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBa
   return (
     <div className={className}>
       <InfoContainer
-        titleIcon={getStatusIcon()}
-        titleText={`${endpointType} Endpoint Summary`}
+        titleIcon={externalRestApiIntegrationStepHelper.getStatusIcon(status)}
+        titleText={`${endpointType} Endpoint Summary: ${externalRestApiIntegrationStepHelper.getLabelForRuleEvaluationStatus(status)}`}
         isCollapsable={true}
         collapsed={isCollapsed}
       >
