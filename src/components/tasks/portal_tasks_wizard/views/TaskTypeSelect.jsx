@@ -5,7 +5,7 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import Row from "react-bootstrap/Row";
 import SelectionCardColumn from "temp-library-components/cards/SelectionCardColumn";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
-import TaskCardBase from "../task_cards/TaskCardBase";
+import TaskCreationFlowSelectionCardBase from "../task_cards/TaskCreationFlowSelectionCardBase";
 import {TASK_TYPE_LABELS, TASK_TYPES} from "../../task.types";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import IconBase from "../../../common/icons/IconBase";
@@ -51,7 +51,7 @@ export default function TaskTypeSelect(
         />
       <Row>
         <Col xs={4}>
-          <TaskCardBase
+          <TaskCreationFlowSelectionCardBase
             option={TASK_TYPES.SALESFORCE_BULK_MIGRATION}
             handleFlowSelection={handleFlowSelection}
             selectedFlow={selectedTaskType}
@@ -76,7 +76,7 @@ export default function TaskTypeSelect(
           />
         </Col>
         <Col xs={4}>
-          <TaskCardBase
+          <TaskCreationFlowSelectionCardBase
             option={TASK_TYPES.SALESFORCE_QUICK_DEPLOY}
             handleFlowSelection={handleFlowSelection}
             selectedFlow={selectedTaskType}
@@ -101,7 +101,7 @@ export default function TaskTypeSelect(
           />
         </Col>
         <Col xs={4}>
-          <TaskCardBase
+          <TaskCreationFlowSelectionCardBase
             option={TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC}
             handleFlowSelection={handleFlowSelection}
             selectedFlow={selectedTaskType}
@@ -130,7 +130,7 @@ export default function TaskTypeSelect(
       </Row>
       <Row className={"mt-2"}>
         <Col xs={4}>
-          <TaskCardBase
+          <TaskCreationFlowSelectionCardBase
             option={TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE}
             handleFlowSelection={handleFlowSelection}
             selectedFlow={selectedTaskType}
@@ -157,7 +157,7 @@ export default function TaskTypeSelect(
           />
         </Col>
         <Col xs={4}>
-          <TaskCardBase
+          <TaskCreationFlowSelectionCardBase
             option={TASK_TYPES.SYNC_SALESFORCE_REPO}
             handleFlowSelection={handleFlowSelection}
             selectedFlow={selectedTaskType}
