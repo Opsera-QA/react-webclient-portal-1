@@ -11,7 +11,7 @@ import externalApiIntegratorEndpointsActions
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import modelHelpers from "components/common/model/modelHelpers";
 import externalApiIntegratorEndpointMetadata
-  from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoint.metadata";
+  from "@opsera/definitions/constants/registry/tools/external_api_integrator/externalApiIntegratorEndpoint.metadata";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import ExternalApiIntegratorEndpointSummaryCard
   from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointSummaryCard";

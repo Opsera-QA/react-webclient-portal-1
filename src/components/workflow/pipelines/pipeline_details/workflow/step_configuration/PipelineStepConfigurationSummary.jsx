@@ -183,9 +183,6 @@ import GitScraperStepFormMetadata from "./step_tool_configuration_forms/gitscrap
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import ExternalRestApiIntegrationStepSummaryPanel
   from "components/workflow/plan/step/external_rest_api_integration/step_summary/ExternalRestApiIntegrationStepSummaryPanel";
-import {
-  externalRestApiIntegrationStepMetadata
-} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
 import SalesforceScanPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/salesforce_scan/SalesforceScanPipelineStepConfigurationSummaryPanel";
 import salesforceScanStepFormMetadata
@@ -262,6 +259,8 @@ import OracleFusionReportMigrationStepFormMetadata
 import OracleFusionReportMigrationStepConfigurationSummary
   from "./step_tool_configuration_forms/oracle_fusion_report_migration/OracleFusionReportMigrationStepConfigurationSummary";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
+import externalRestApiIntegrationStepMetadata
+  from "@opsera/definitions/constants/pipelines/steps/definitions/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,

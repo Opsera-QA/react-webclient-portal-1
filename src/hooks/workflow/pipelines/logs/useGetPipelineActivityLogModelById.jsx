@@ -3,6 +3,8 @@ import tagMetadata from "components/settings/tags/tag.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import {websocketLiveUpdateHelper} from "core/websocket/websocket.helper";
 import useGetPipelineActivityLogById from "hooks/workflow/pipelines/logs/useGetPipelineActivityLogById";
+import pipelineTaskMetadata
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/pipeline-task-metadata";
 
 export default function useGetPipelineActivityLogModelById(pipelineActivityLogId, handleErrorFunction) {
   const [pipelineActivityLogModel, setPipelineActivityLogModel] = useState(undefined);
@@ -14,8 +16,8 @@ export default function useGetPipelineActivityLogModelById(pipelineActivityLogId
     loadData,
   } = useGetPipelineActivityLogById(pipelineActivityLogId, handleErrorFunction);
 
-  const getTagModel = (tag) => {
-    return modelHelpers.parseObjectIntoModel(tag, tagMetadata);
+  const getActivityLogModel = (activityLog) => {
+    return modelHelpers.parseObjectIntoModel(activityLog, pipelineTaskMetadata);
   };
 
   useEffect(() => {
@@ -25,7 +27,7 @@ export default function useGetPipelineActivityLogModelById(pipelineActivityLogId
       websocketLiveUpdateHelper.handleModelLiveUpdate(
         pipelineActivityLogModel,
         setPipelineActivityLogModel,
-        getTagModel,
+        getActivityLogModel,
         pipelineActivityLog,
       );
     }

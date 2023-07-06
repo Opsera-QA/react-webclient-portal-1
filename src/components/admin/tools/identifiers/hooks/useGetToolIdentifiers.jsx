@@ -51,12 +51,19 @@ export default function useGetToolIdentifiers(
     setToolIdentifierFilterModel({...newFilterModel});
   };
 
+  const getToolIdentifierByIdentifier = (toolIdentifier) => {
+    if (Array.isArray(toolIdentifiers) && toolIdentifiers.length > 0 && hasStringValue(toolIdentifier)) {
+      return toolIdentifiers.find((identifier) => toolIdentifier === identifier?.identifier);
+    }
+  };
+
   return ({
     isLoading: isLoading,
     error: error,
     loadData: () => loadData(getToolIdentifiers, handleErrorFunction),
     toolIdentifierFilterModel: toolIdentifierFilterModel,
     setToolIdentifierFilterModel: setToolIdentifierFilterModel,
+    getToolIdentifierByIdentifier: getToolIdentifierByIdentifier,
     toolIdentifiers: toolIdentifiers,
     setToolIdentifiers: setToolIdentifiers,
   });

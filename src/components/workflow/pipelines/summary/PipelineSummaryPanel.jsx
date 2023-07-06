@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
 import InformationDialog from "components/common/status_notifications/info";
@@ -11,7 +11,6 @@ import PipelineRoleAccessInput from "components/workflow/pipelines/summary/input
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateTimeField from "components/common/fields/date/DateTimeField";
-import OwnerNameField from "components/common/fields/text/general/OwnerNameField";
 import InlinePipelineTypeSelectInput from "components/workflow/pipelines/summary/inputs/type/InlinePipelineTypeSelectInput";
 import PipelineOrchestrationSummaryField
   from "temp-library-components/fields/orchestration/pipeline/PipelineOrchestrationSummaryField";
@@ -33,14 +32,14 @@ function PipelineSummaryPanel(
   } = useComponentStateReference();
 
   useEffect(() => {
-    // if (pipeline) {
-    //   if (pipelineModel) {
-    //     pipelineModel?.replaceOriginalData(pipeline);
-    //     setPipelineModel({...pipelineModel});
-    //   } else {
-    //     setPipelineModel({...new PipelineModel(pipeline, false)});
-    //   }
-    // }
+    if (pipeline) {
+      if (pipelineModel) {
+        pipelineModel?.replaceOriginalData(pipeline);
+        setPipelineModel({...pipelineModel});
+      } else {
+        setPipelineModel({...new PipelineModel(pipeline, false)});
+      }
+    }
   }, [pipeline]);
 
   if (pipeline == null || typeof pipeline !== "object" || Object.keys(pipeline).length === 0) {
