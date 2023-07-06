@@ -109,11 +109,7 @@ function ToolSetupModeSelect(
                 />
               }
               description={
-<<<<<<< HEAD
                 "Classic create view. Use this workflow to register your tool's details with Opsera"
-=======
-                "* Advanced Settings is the classic create view"
->>>>>>> 98dd118fa0943dca9eed467544b93c2da209aad8
               }
               workflowOptionType={WORKFLOW_OPTION_TYPES.TOOL}
             />
