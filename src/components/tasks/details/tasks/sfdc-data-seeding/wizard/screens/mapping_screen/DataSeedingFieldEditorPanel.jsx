@@ -80,11 +80,11 @@ const DataSeedingFieldEditorPanel = ({
             </Col>
             <Col lg={6}>
               <CheckboxInputBase
-                fieldName={"isExternalId"}
+                fieldName={"externalRefId"}
                 model={fieldsMetadata}
                 setModel={setFieldsMetadata}
                 setDataFunction={setDataFunction}
-                disabled={fieldsMetadata?.getData("isExternalIdDisabled")}
+                disabled={fieldsMetadata?.getData("isExternalRefIdDisabled")}
               />
             </Col>
           </Col>
