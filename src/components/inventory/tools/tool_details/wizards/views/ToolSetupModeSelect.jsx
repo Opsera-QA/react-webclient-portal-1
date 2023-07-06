@@ -109,7 +109,7 @@ function ToolSetupModeSelect(
                 />
               }
               description={
-                "ADVANCED tool wizard"
+                "* Advanced Settings is the classic create view"
               }
               workflowOptionType={WORKFLOW_OPTION_TYPES.TOOL}
             />
