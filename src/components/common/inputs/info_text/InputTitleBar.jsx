@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 import RefreshButton from "components/common/buttons/data/RefreshButton";
-import {Button, InputGroup} from "react-bootstrap";
-import {faSearch} from "@fortawesome/pro-light-svg-icons";
+import ExpandAndCollapseIcon from "components/common/icons/details/ExpandAndCollapseIcon";
 
 function InputTitleBar(
   {
@@ -20,6 +19,9 @@ function InputTitleBar(
     loadDataFunction,
     rightSideButton,
     className,
+    isCollapsable,
+    isCollapsed,
+    setIsCollapsed,
   }) {
   const getTitle = () => {
     if (customTitle) {
@@ -92,7 +94,6 @@ function InputTitleBar(
     }
   };
 
-
   return (
     <div className={`${className} px-2 d-flex justify-content-between`}>
       {getFormattedLabel()}
@@ -103,6 +104,12 @@ function InputTitleBar(
         </div>
         {getRightSideButton()}
         {getLoadDataButton()}
+        <ExpandAndCollapseIcon
+          isCollapsed={isCollapsed}
+          setIsCollapsed={setIsCollapsed}
+          className={"ml-2 my-auto"}
+          visible={isCollapsable === true && setIsCollapsed != null}
+        />
       </div>
     </div>
   );
@@ -121,6 +128,9 @@ InputTitleBar.propTypes = {
   loadDataFunction: PropTypes.func,
   className: PropTypes.string,
   rightSideButton: PropTypes.object,
+  isCollapsable: PropTypes.bool,
+  isCollapsed: PropTypes.bool,
+  setIsCollapsed: PropTypes.func,
 };
 
 InputTitleBar.defaultProps = {
