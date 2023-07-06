@@ -38,7 +38,7 @@ export default function ExternalRestApiIntegrationEndpointsOrchestrationSummary(
       />
       <ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
         endpointType={"Status Check"}
-        endpoint={runRequestCallOperationEndpoint}
+        endpoint={statusCheckEndpoint}
         className={"mt-2"}
       />
       <ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary
