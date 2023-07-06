@@ -3,15 +3,14 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import PipelineTaskSummaryPanelBase
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskSummaryPanelBase";
-import ExternalRestApiIntegrationEndpointSummary
-  , {
-  EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES,
-} from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointSummary";
+import ExternalRestApiIntegrationEndpointSummary from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointSummary";
 import pipelineActivityLogActionConstants
   from "@opsera/definitions/constants/pipelines/logs/pipelineActivityLogAction.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import ExternalRestApiIntegrationActivityLogOperationLogSummaryPanel
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/ExternalRestApiIntegrationActivityLogOperationLogSummaryPanel";
+import ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary";
 
 // TODO: Make fully fleshed out report.
 function ExternalRestApiIntegrationActivityLogSummaryPanel(
@@ -24,30 +23,10 @@ function ExternalRestApiIntegrationActivityLogSummaryPanel(
     const parsedEndpoints = DataParsingHelper.parseObject(endpoints);
 
     if (parsedEndpoints) {
-      const connectionCheckEndpoint = parsedEndpoints?.connectionCheckEndpoint;
-      const headerTokenEndpoint = parsedEndpoints?.headerTokenEndpoint;
-      const statusCheckEndpoint = parsedEndpoints?.statusCheckEndpoint;
-      const callOperationEndpoint = parsedEndpoints?.runTriggerEndpoint;
-
       return (
-        <div>
-          <ExternalRestApiIntegrationEndpointSummary
-            endpoint={connectionCheckEndpoint}
-            requestType={EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES.CONNECTION_VALIDATION}
-          />
-          <ExternalRestApiIntegrationEndpointSummary
-            endpoint={headerTokenEndpoint}
-            requestType={EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES.HEADER_TOKEN}
-          />
-          <ExternalRestApiIntegrationEndpointSummary
-            endpoint={statusCheckEndpoint}
-            requestType={EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES.STATUS_CHECK}
-          />
-          <ExternalRestApiIntegrationEndpointSummary
-            endpoint={callOperationEndpoint}
-            requestType={EXTERNAL_REST_API_INTEGRATION_REQUEST_TYPES.CALL_OPERATION}
-          />
-        </div>
+        <ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary
+          endpoints={endpoints}
+        />
       );
     }
 

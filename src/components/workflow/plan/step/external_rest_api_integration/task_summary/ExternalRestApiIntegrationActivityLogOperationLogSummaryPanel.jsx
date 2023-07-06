@@ -53,7 +53,7 @@ export default function ExternalRestApiIntegrationActivityLogOperationLogSummary
       case "callOperation":
         return (
           <ExternalRestApiIntegrationCallOperationEndpointOrchestrationSummary
-            externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
+            endpoints={externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.endpoints")}
             className={"mt-2"}
           />
         );
