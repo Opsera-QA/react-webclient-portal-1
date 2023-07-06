@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
-import IconBase from "components/common/icons/IconBase";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import ErrorLoadingDataField from "components/common/fields/text/message/ErrorLoadingDataField";
+import InfoMessageFieldBase from "../fields/text/message/InfoMessageFieldBase";
+import ErrorMessageFieldBase from "../fields/text/message/ErrorMessageFieldBase";
 
 // TODO: Fix so when passing in height the height doesn't change after the table loads
 function TableBodyLoadingWrapper(
@@ -18,11 +17,9 @@ function TableBodyLoadingWrapper(
   }) {
   if (error) {
     return (
-      <CenteredContentWrapper
-        minHeight={tableHeight}
-      >
-        <ErrorLoadingDataField
-          error={error}
+      <CenteredContentWrapper minHeight={tableHeight}>
+        <ErrorMessageFieldBase
+          message={error}
         />
       </CenteredContentWrapper>
     );
@@ -39,15 +36,10 @@ function TableBodyLoadingWrapper(
 
     return (
       <CenteredContentWrapper minHeight={tableHeight}>
-        <div className={"info-text-alt mx-3"}>
-          <IconBase
-            iconSize={"xl"}
-            icon={faTriangleExclamation}
-            isLoading={isLoading}
-            className={"mr-2"}
-          />
-          {noDataMessage}
-        </div>
+        <InfoMessageFieldBase
+          message={noDataMessage}
+          showInformationLabel={false}
+        />
       </CenteredContentWrapper>
     );
   }
