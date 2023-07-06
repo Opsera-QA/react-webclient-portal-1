@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
 import InformationDialog from "components/common/status_notifications/info";
@@ -32,14 +32,14 @@ function PipelineSummaryPanel(
   } = useComponentStateReference();
 
   useEffect(() => {
-    // if (pipeline) {
-    //   if (pipelineModel) {
-    //     pipelineModel?.replaceOriginalData(pipeline);
-    //     setPipelineModel({...pipelineModel});
-    //   } else {
-    //     setPipelineModel({...new PipelineModel(pipeline, false)});
-    //   }
-    // }
+    if (pipeline) {
+      if (pipelineModel) {
+        pipelineModel?.replaceOriginalData(pipeline);
+        setPipelineModel({...pipelineModel});
+      } else {
+        setPipelineModel({...new PipelineModel(pipeline, false)});
+      }
+    }
   }, [pipeline]);
 
   if (pipeline == null || typeof pipeline !== "object" || Object.keys(pipeline).length === 0) {

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, {useEffect} from "react";
 import FailedOrchestrationStateFieldBase
   from "temp-library-components/fields/orchestration/state/FailedOrchestrationStateFieldBase";
 import RunningOrchestrationStateFieldBase
@@ -21,6 +21,9 @@ export default function OrchestrationStateFieldBase(
     className,
     showStatusText,
   }) {
+
+  useEffect(() => {}, [orchestrationState]);
+
   switch (orchestrationState) {
     case "FAILED":
     case "failed":

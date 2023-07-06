@@ -1,7 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import InfoMessageFieldBase from "components/common/fields/text/message/InfoMessageFieldBase";
+import {faCaretDown} from "@fortawesome/pro-light-svg-icons";
+import {IconBase} from "@opsera/react-vanity-set";
 
 function InfoContainer(
   {
@@ -22,7 +27,11 @@ function InfoContainer(
     field,
     bodyClassName,
     overflowY,
+    isCollapsable,
+    collapsed,
   }) {
+  const [isCollapsed, setIsCollapsed] = useState(DataParsingHelper.parseBooleanV2(collapsed, false));
+
   const getBodyStyling = () => {
     const styling = {};
 
@@ -42,6 +51,25 @@ function InfoContainer(
     return styling;
   };
 
+  const getChildren = () => {
+    if (isCollapsed !== true) {
+      return children;
+    }
+
+    return (
+      <CenteredContentWrapper className={"m-3"}>
+        <InfoMessageFieldBase
+          showInformationLabel={false}
+          message={
+            <>
+              This field is collapsed. To view more information, please click the <IconBase icon={faCaretDown} /> icon
+            </>
+          }
+        />
+      </CenteredContentWrapper>
+    );
+  };
+
   return (
     <div className={className}>
       <InputTitleBar
@@ -53,12 +81,15 @@ function InfoContainer(
         rightSideButton={titleRightSideButton}
         loadDataFunction={loadDataFunction}
         field={field}
+        isCollapsable={isCollapsable}
+        isCollapsed={isCollapsed}
+        setIsCollapsed={setIsCollapsed}
       />
       <div
         className={bodyClassName}
         style={getBodyStyling()}
       >
-        {children}
+        {getChildren()}
       </div>
     </div>
   );
@@ -82,11 +113,14 @@ InfoContainer.propTypes = {
   field: PropTypes.object,
   bodyClassName: PropTypes.string,
   overflowY: PropTypes.string,
+  isCollapsable: PropTypes.bool,
+  collapsed: PropTypes.bool,
 };
 
 InfoContainer.defaultProps = {
   bodyClassName: "content-container",
   overflowY: "auto",
+  collapsed: false,
 };
 
 export default InfoContainer;
