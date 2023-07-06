@@ -39,7 +39,7 @@ export const dataSeedingFieldsMetadata = {
     },
     {
       label: "External Ref Id",
-      id: "isExternalId",
+      id: "externalRefId",
     },
     {
       label: "Mock Disabled",
@@ -47,7 +47,7 @@ export const dataSeedingFieldsMetadata = {
     },
     {
       label: "External Id Disabled",
-      id: "isExternalIdDisabled",
+      id: "isExternalRefIdDisabled",
     },
   ],
   newObjectFields: {
@@ -63,10 +63,10 @@ export const dataSeedingFieldsMetadata = {
     creatable: false,
     filterable: true,
     updateable: true,
-    isExternalId: false,
+    externalRefId: false,
     polymorphicForeignKey: false,
     referenceTo: [],
     isMockDisabled: false,
-    isExternalIdDisabled: false,
+    isExternalRefIdDisabled: false,
   },
 };
