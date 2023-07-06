@@ -20,7 +20,7 @@ export const TOOL_CREATION_OPTIONS = {
 
 export const TOOL_CREATION_OPTION_LABELS = {
   WIZARD: "Tool Creation Wizard",
-  ADVANCED: "Advanced Settings*",
+  ADVANCED: "Advanced Settings",
 };
 
 function ToolSetupModeSelect(
@@ -82,7 +82,7 @@ function ToolSetupModeSelect(
               />
             }
             description={
-            "Classic tool wizard"
+            "Configure your tool and test its connection with the new Tool Creation Wizard"
           }
             workflowOptionType={WORKFLOW_OPTION_TYPES.TOOL}
           />
@@ -109,7 +109,7 @@ function ToolSetupModeSelect(
                 />
               }
               description={
-                "ADVANCED tool wizard"
+                "Classic create view. Use this workflow to register your tool's details with Opsera"
               }
               workflowOptionType={WORKFLOW_OPTION_TYPES.TOOL}
             />
