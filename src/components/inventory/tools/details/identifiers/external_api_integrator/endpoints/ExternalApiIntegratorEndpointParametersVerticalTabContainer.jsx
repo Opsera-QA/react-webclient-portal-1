@@ -2,9 +2,6 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
-import {
-  ENDPOINT_REQUEST_TYPES
-} from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/endpointRequestType.constants";
 import EndpointRequestBodyInputPanel
   from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestBodyInputPanel";
 import EndpointResponseBodyInputBase
@@ -16,12 +13,14 @@ import EndpointRequestHeaderConfigurationInput
 import {
   EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS
 } from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
-import { ENDPOINT_TYPES } from "components/common/list_of_values_input/inventory/endpoints/type/endpointType.constants";
 import EndpointApiConfigurationInputBase
   from "components/common/inputs/endpoints/endpoint/request/EndpointApiConfigurationInputBase";
 import EndpointResponseEvaluationRulesInputBase
   from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesInputBase";
 import ValidateEndpointPanel from "components/common/inputs/endpoints/endpoint/response/test/ValidateEndpointPanel";
+import endpointTypeConstants from "@opsera/definitions/constants/api/request/endpoint/endpointType.constants";
+import endpointRequestTypeConstants
+  from "@opsera/definitions/constants/api/request/endpoint/endpointRequestType.constants";
 
 function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
   {
@@ -40,8 +39,8 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
 
   const getDynamicTabsForEndpointType = () => {
     switch (externalApiIntegratorModel?.getData("type")) {
-      case ENDPOINT_TYPES.ACCESS_TOKEN_GENERATION:
-      case ENDPOINT_TYPES.CONNECTION_VALIDATION:
+      case endpointTypeConstants.ENDPOINT_TYPES.ACCESS_TOKEN_GENERATION:
+      case endpointTypeConstants.ENDPOINT_TYPES.CONNECTION_VALIDATION:
         return (
           <>
             <VanitySetVerticalTab
@@ -70,7 +69,7 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
 
   const getDynamicTabsForRequestType = () => {
     switch (externalApiIntegratorModel?.getData("requestType")) {
-      case ENDPOINT_REQUEST_TYPES.GET:
+      case endpointRequestTypeConstants.ENDPOINT_REQUEST_TYPES.GET:
         return (
           <VanitySetVerticalTab
             tabText={"Query Parameters"}
@@ -79,8 +78,8 @@ function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
             activeTab={activeTab}
           />
         );
-      case ENDPOINT_REQUEST_TYPES.PUT:
-      case ENDPOINT_REQUEST_TYPES.POST:
+      case endpointRequestTypeConstants.ENDPOINT_REQUEST_TYPES.PUT:
+      case endpointRequestTypeConstants.ENDPOINT_REQUEST_TYPES.POST:
         return (
           <VanitySetVerticalTab
             tabText={"Request Body"}

@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {
-  ENDPOINT_TYPE_SELECT_OPTIONS,
-} from "components/common/list_of_values_input/inventory/endpoints/type/endpointType.constants";
+import endpointTypeConstants from "@opsera/definitions/constants/api/request/endpoint/endpointType.constants";
 
 function EndpointTypeSelectInput(
   {
@@ -17,7 +15,7 @@ function EndpointTypeSelectInput(
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={ENDPOINT_TYPE_SELECT_OPTIONS}
+      selectOptions={endpointTypeConstants.ENDPOINT_TYPE_SELECT_OPTIONS}
       valueField={"value"}
       textField={"text"}
       disabled={disabled}

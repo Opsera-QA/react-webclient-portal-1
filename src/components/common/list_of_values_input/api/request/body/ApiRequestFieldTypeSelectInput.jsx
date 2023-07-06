@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import apiFieldTypeConstants from "@opsera/definitions/constants/api/request/apiFieldType.constants";
 
-function ApiRequestFieldTypeSelectInput(
+export default function ApiRequestFieldTypeSelectInput(
   {
     model,
     setModel,
@@ -32,5 +32,3 @@ ApiRequestFieldTypeSelectInput.propTypes = {
   disabled: PropTypes.bool,
   fieldName: PropTypes.string,
 };
-
-export default ApiRequestFieldTypeSelectInput;
