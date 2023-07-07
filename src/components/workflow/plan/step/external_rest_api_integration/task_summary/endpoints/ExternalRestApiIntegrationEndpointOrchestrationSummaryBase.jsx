@@ -22,7 +22,6 @@ export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBa
     className,
   }) {
   const parsedEndpoint = DataParsingHelper.parseObject(endpoint);
-  const status = DataParsingHelper.parseNestedString(parsedEndpoint, "ruleEvaluation.status");
 
   if (parsedEndpoint == null) {
     return null;
@@ -39,6 +38,7 @@ export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBa
         <Col xs={12}>
           <H5FieldSubHeader
             subheaderText={"API Request Summary"}
+            className={"mt-2"}
           />
         </Col>
         <Col xs={12}>

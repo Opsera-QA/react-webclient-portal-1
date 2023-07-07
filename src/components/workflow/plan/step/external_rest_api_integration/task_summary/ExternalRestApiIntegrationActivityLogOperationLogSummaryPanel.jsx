@@ -15,7 +15,6 @@ import ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary";
 import ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary";
-import Col from "react-bootstrap/Col";
 
 const OPERATION_LOG_VIEWS = {
   STATUS_CHECK_SUMMARY: "statusCheckSummary",
@@ -41,9 +40,7 @@ export default function ExternalRestApiIntegrationActivityLogOperationLogSummary
   const runRequestRuleEvaluation = externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.ruleEvaluation");
   const runRequestCallOperationEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.endpoints.runTriggerEndpoint");
 
-  const handleTabClick = (newTab) => e => {
-    e.preventDefault();
-
+  const handleTabClick = (newTab) => {
     if (activeTab !== newTab) {
       setActiveTab(newTab);
     }
@@ -159,7 +156,7 @@ export default function ExternalRestApiIntegrationActivityLogOperationLogSummary
       <ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
         ruleEvaluation={statusCheckRuleEvaluation}
         latestStatusCheckTime={lastStatusCheckTimestamp}
-        className={"mb-2"}
+        className={"my-2"}
       />
       <InfoContainer
         titleText={`Operation Log`}

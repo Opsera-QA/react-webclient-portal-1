@@ -5,7 +5,6 @@ import ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import endpointRequestHeaderBearerTokenTypeConstants
   from "@opsera/definitions/constants/api/request/header/endpointRequestHeaderBearerTokenType.constants";
-import InfoContainer from "components/common/containers/InfoContainer";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
@@ -31,37 +30,27 @@ export default function ExternalRestApiIntegrationHeaderTokenEndpointOrchestrati
   if (authorizationType === endpointRequestHeaderBearerTokenTypeConstants.ENDPOINT_REQUEST_HEADER_BEARER_TOKEN_TYPES.LONG_LIVED_BEARER_TOKEN) {
     return (
       <div className={className}>
-        <InfoContainer
-          titleIcon={externalRestApiIntegrationStepHelper.getStatusIcon(status)}
-          titleText={`Access Token Generation Endpoint Summary: ${externalRestApiIntegrationStepHelper.getLabelForRuleEvaluationStatus(status)}`}
-          isCollapsable={true}
-          collapsed={status === "success"}
-          isLoading={status === "running"}
-        >
-          <div className={"m-2"}>
-            <Row>
-              <Col xs={12}>
-                <ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
-                  ruleEvaluation={parsedEndpoint?.ruleEvaluation}
-                />
-              </Col>
-              <Col xs={12}>
-                <StandaloneTextFieldBase
-                  label={"Status"}
-                  text={parsedEndpoint?.status}
-                />
-              </Col>
-              <Col xs={12}>
-                <StandaloneTextFieldBase
-                  label={"Access Token Custom Parameter ID"}
-                  text={parsedEndpoint?.customParameterId}
-                  showClipboardButton={true}
-                  visible={DataParsingHelper.isMongoDbId(parsedEndpoint?.customParameterId) === true}
-                />
-              </Col>
-            </Row>
-          </div>
-        </InfoContainer>
+        <Row>
+          <Col xs={12}>
+            <ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
+              ruleEvaluation={parsedEndpoint?.ruleEvaluation}
+            />
+          </Col>
+          <Col xs={12}>
+            <StandaloneTextFieldBase
+              label={"Status"}
+              text={externalRestApiIntegrationStepHelper.getLabelForRuleEvaluationStatus(status)}
+            />
+          </Col>
+          <Col xs={12}>
+            <StandaloneTextFieldBase
+              label={"Access Token Custom Parameter ID"}
+              text={parsedEndpoint?.customParameterId}
+              showClipboardButton={true}
+              visible={DataParsingHelper.isMongoDbId(parsedEndpoint?.customParameterId) === true}
+            />
+          </Col>
+        </Row>
       </div>
     );
   }
