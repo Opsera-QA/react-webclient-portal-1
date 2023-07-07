@@ -51,7 +51,7 @@ export default function ExternalRestApiIntegrationActivityLogOperationLogSummary
       <VanitySetVerticalTabContainer className={"m-2"}>
         <H5FieldSubHeader
           subheaderText={"Status Check"}
-          className={"mt-2 mb-3"}
+          className={"mb-3"}
         />
         <VanitySetVerticalTab
           tabText={"Status Check Summary"}
@@ -164,8 +164,8 @@ export default function ExternalRestApiIntegrationActivityLogOperationLogSummary
       >
         <SideBySideViewBase
           leftSideView={getVerticalTabContainer()}
-          leftSideMinimumWidth={"225px"}
-          leftSideMaximumWidth={"225px"}
+          leftSideMinimumWidth={"250px"}
+          leftSideMaximumWidth={"250px"}
           rightSideView={
             <div className={"m-2"} style={{overflowX: "hidden"}}>
               {getCurrentView()}

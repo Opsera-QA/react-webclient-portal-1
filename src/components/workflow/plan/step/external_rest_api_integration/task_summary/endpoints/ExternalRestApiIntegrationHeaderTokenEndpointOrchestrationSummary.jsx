@@ -45,12 +45,6 @@ export default function ExternalRestApiIntegrationHeaderTokenEndpointOrchestrati
           </Col>
           <Col xs={12}>
             <StandaloneTextFieldBase
-              label={"Status"}
-              text={externalRestApiIntegrationStepHelper.getLabelForRuleEvaluationStatus(status)}
-            />
-          </Col>
-          <Col xs={12}>
-            <StandaloneTextFieldBase
               label={"Access Token Custom Parameter ID"}
               text={parsedEndpoint?.customParameterId}
               showClipboardButton={true}
