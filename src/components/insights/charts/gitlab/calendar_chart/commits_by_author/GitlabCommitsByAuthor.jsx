@@ -11,8 +11,7 @@ import { defaultConfig } from '../../../charts-views';
 import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
 import GitlabCommitsByAuthorActionableModal from "./GitlabCommitsByAuthorActionableOverlay";
-import GitlabCommitsByAuthorOverlay from "./GitlabCommitsByAuthorOverlay";
-
+import GitlabCommitsByAuthorVerticalTabContainer from "./GitlabCommitsByAuthorVerticalTabContainer";
 function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -49,12 +48,12 @@ function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let dashboardOrgs =
-      dashboardData?.data?.filters[
-        dashboardData?.data?.filters.findIndex(
-          (obj) => obj.type === "organizations",
-        )
-      ]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "gitlabTotalCommitsByUserAndDate", kpiConfiguration, dashboardTags,null,null,dashboardOrgs);
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "organizations",
+          )
+        ]?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "gitlabTotalCommitsByUserAndDate", kpiConfiguration, dashboardTags, null, null, dashboardOrgs);
       let dataObject = response?.data ? response?.data?.data[0]?.gitlabTotalCommitsByUserAndDate?.data : [];
 
       if (isMounted?.current === true && dataObject) {
@@ -91,9 +90,10 @@ function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
   };
   const onRowSelect = () => {
     toastContext.showInfoOverlayPanel(
-      <GitlabCommitsByAuthorOverlay
+      <GitlabCommitsByAuthorVerticalTabContainer
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
+        metrics={metrics}
       />
     );
   };
