@@ -22,7 +22,7 @@ export const getListOfFields = (field, className) => {
     accessor: getCustomTableAccessor(field),
     Cell: function stringifyArray(row) {
       const listOfFields = row.value;
-      if (DataParsingHelper.parseArray(listOfFields, false, true)) {
+      if (!DataParsingHelper.parseArray(listOfFields, false, true)) {
         return "";
       }
       const listItems = listOfFields?.map((item, index) => {
