@@ -11,12 +11,14 @@ import actionableInsightsGenericChartFilterMetadata
 import GitlabCommitsByAuthorActionableTable from "./GitlabCommitsByAuthorActionableTable";
 import gitlabActions from "../../gitlab.action";
 
-function GitlabCommitsByAuthorActionableModal({ kpiConfiguration, dashboardData, author, date, icon, endDate, startDate, y }) {
+function GitlabCommitsByAuthorOverlay({ author, dashboardData, kpiConfiguration }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
-  const [totalCount, setTotalCount] =useState([]);
+  const [totalCount, setTotalCount] = useState([]);
+  const [chartData, setChartData] =
+    useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -27,6 +29,7 @@ function GitlabCommitsByAuthorActionableModal({ kpiConfiguration, dashboardData,
       false
     )
   );
+
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -50,27 +53,25 @@ function GitlabCommitsByAuthorActionableModal({ kpiConfiguration, dashboardData,
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
+
     try {
       setIsLoading(true);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+
       const response = await gitlabActions.getGitlabCommitUser(
         getAccessToken,
         cancelSource,
         kpiConfiguration,
         dashboardTags,
         filterDto,
-        author,
-        startDate,
-        endDate,
+        author
       );
       let dataObject = response?.data ? response?.data?.data?.gitlabCommitUser?.data[0]?.data : [];
       let totalCount = response?.data ? response?.data?.data?.gitlabCommitUser?.data[0]?.count[0]?.count : [];
-
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         setTotalCount(totalCount);
-
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", totalCount);
         setFilterModel({ ...newFilterDto });
@@ -87,10 +88,6 @@ function GitlabCommitsByAuthorActionableModal({ kpiConfiguration, dashboardData,
       }
     }
   };
-  const closePanel = () => {
-    toastContext.removeInlineMessage();
-    toastContext.clearInfoOverlayPanel();
-  };
 
   const getBody = () => {
     return (
@@ -101,25 +98,24 @@ function GitlabCommitsByAuthorActionableModal({ kpiConfiguration, dashboardData,
           filterModel={filterModel}
           setFilterModel={setFilterModel}
           loadData={loadData}
-          tableTitleIcon={icon}
         />
       </div>)
   }
   return (
-    <FullScreenCenterOverlayContainer
-      closePanel={closePanel}
-      showPanel={true}
-      titleText={`Gitlab Total Commits Per Author By Date`}
-      showToasts={true}
-    >
-      <div className={"p-3"}>
-        {getBody()}
-      </div>
-    </FullScreenCenterOverlayContainer>
+    <div className={"p-3"}>
+      <GitlabCommitsByAuthorActionableTable
+        isLoading={isLoading}
+        data={metrics}
+        filterModel={filterModel}
+        setFilterModel={setFilterModel}
+        loadData={loadData}
+      />
+    </div>
+
   );
 }
 
-GitlabCommitsByAuthorActionableModal.propTypes = {
+GitlabCommitsByAuthorOverlay.propTypes = {
   metrics: PropTypes.array,
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
@@ -130,4 +126,5 @@ GitlabCommitsByAuthorActionableModal.propTypes = {
 
 };
 
-export default GitlabCommitsByAuthorActionableModal;
+
+export default GitlabCommitsByAuthorOverlay;
