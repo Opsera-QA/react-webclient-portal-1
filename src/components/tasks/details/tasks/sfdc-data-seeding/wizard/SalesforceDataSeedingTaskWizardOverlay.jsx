@@ -43,7 +43,7 @@ function SalesforceDataSeedingTaskWizardOverlay({ taskModel }) {
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
-      titleText={`Salesforce Custom Setting Migration Wizard`}
+      titleText={`Salesforce Data Seeding Wizard`}
       titleIcon={faSalesforce}
       showToasts={true}
       showCloseButton={false}
