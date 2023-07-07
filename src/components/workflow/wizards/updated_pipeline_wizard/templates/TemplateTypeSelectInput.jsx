@@ -99,9 +99,9 @@ function TemplateTypeSelectInput({
               />
             }
           description={
-            "Configure!"
+            "Create pipeline using a predefined SFDC Pipeline Template"
           }
-          workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE}
+          workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE_TEMPLATE}
           />
         </Col>
         <Col md={4}>
@@ -129,9 +129,9 @@ function TemplateTypeSelectInput({
               />
             }
             description={
-              "Configure this too"
+              "Create pipeline using a predefined SDLC Pipeline Template"
             }
-            workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE}
+            workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE_TEMPLATE}
           />
         </Col>
         <Col md={4}>
@@ -157,9 +157,9 @@ function TemplateTypeSelectInput({
               />
             }
             description={
-              "Start from scratch with a blank Opsera Pipeline Template"
+              "Start building a pipeline from scratch using a blank Opsera Pipeline Template"
             }
-            workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE}
+            workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE_TEMPLATE}
           />
         </Col>
       </Row>
