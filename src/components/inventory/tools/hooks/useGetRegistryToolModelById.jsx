@@ -1,74 +1,54 @@
 import { useEffect, useState } from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import toolsActions from "components/inventory/tools/tools-actions";
-import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useGetRegistryToolModel from "components/inventory/tools/hooks/useGetRegistryToolModel";
 import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
+import {websocketLiveUpdateHelper} from "core/websocket/websocket.helper";
+import useGetRegistryToolById from "components/inventory/tools/hooks/useGetRegistryToolById";
 
 export default function useGetRegistryToolModelById(
   id,
+  handleErrorFunction,
+  rerouteOnDeletion,
 ) {
-  const [isLoading, setIsLoading] = useState(false);
   const [toolModel, setToolModel] = useState(undefined);
   const { getRegistryToolModel } = useGetRegistryToolModel();
   const {
-    getAccessToken,
-    cancelTokenSource,
-    toastContext,
     isFreeTrial,
     isOpseraAdministrator,
     userData,
   } = useComponentStateReference();
-
-  useEffect(() => {
-    setToolModel(undefined);
-
-    if (isMongoDbId(id) === true) {
-      loadData().catch(() => {});
-    }
-  }, [id]);
-
-  const loadData = async () => {
-    try {
-      setIsLoading(true);
-      await getTool();
-    } catch (error) {
-      if (!error?.error?.message?.includes(404)) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const getTool = async () => {
-    const response = await toolsActions.getRoleLimitedToolByIdV3(
-      getAccessToken,
-      cancelTokenSource,
-      id,
+  const {
+    tool,
+    error,
+    isLoading,
+    loadData,
+  } = useGetRegistryToolById(
+    id,
+      handleErrorFunction,
+    rerouteOnDeletion,
     );
 
-    const tool = response?.data?.data;
-
-    if (
-      isOpseraAdministrator !== true
-      && isFreeTrial === true
-      && ObjectAccessRoleHelper.isUserObjectOwner(userData, tool) !== true
-    ) {
-      return;
-    }
-
-    if (tool) {
-      const newModel = getRegistryToolModel(tool, false);
-      newModel.setSetStateFunction(setToolModel);
-      setToolModel({...newModel});
-    }
+  const getToolModel = (tool) => {
+    return getRegistryToolModel(tool, false);
   };
+
+  useEffect(() => {
+    if (!tool) {
+      setToolModel(undefined);
+    } else if (
+      isOpseraAdministrator === true
+      || isFreeTrial === false
+      || ObjectAccessRoleHelper.isUserObjectOwner(userData, tool) === true
+    ) {
+      websocketLiveUpdateHelper.handleModelLiveUpdate(toolModel, setToolModel, getToolModel, tool);
+    }
+  }, [tool]);
 
   return ({
     toolModel: toolModel,
     setToolModel: setToolModel,
     loadData: loadData,
     isLoading: isLoading,
+    error: error,
   });
 }
