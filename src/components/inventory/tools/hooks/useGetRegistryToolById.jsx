@@ -53,11 +53,11 @@ export default function useGetRegistryToolById(
     setTool(undefined);
 
     if (isMongoDbId(toolId) && loadData) {
-      loadData(getCustomerTools, handleErrorFunction).catch(() => {});
+      loadData(getToolById, handleErrorFunction).catch(() => {});
     }
   }, [toolId]);
 
-  const getCustomerTools = async () => {
+  const getToolById = async () => {
     setTool(undefined);
 
     if (isMongoDbId(toolId) !== true) {
@@ -72,7 +72,7 @@ export default function useGetRegistryToolById(
   return ({
     tool: tool,
     setTool: setTool,
-    loadData: () => loadData(getCustomerTools, handleErrorFunction),
+    loadData: () => loadData(getToolById, handleErrorFunction),
     isLoading: isLoading,
     error: error,
     setError: setError,
