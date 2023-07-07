@@ -238,7 +238,7 @@ function FieldSelectorBasePanel({
             variant="primary"
             size="sm"
             onClick={updateAndProceed}
-            disabled={isSaving || members?.length === 0}
+            disabled={isSaving}
           >
             <IconBase
               className={"mr-2"}

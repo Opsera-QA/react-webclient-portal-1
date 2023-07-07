@@ -323,6 +323,7 @@ const DataSeedingFieldMappingScreen = ({
           size="sm"
           variant="primary"
           onClick={saveAndMoveToNextScreen}
+          disabled={isLoading || isSaving}
         >
           <span>
             <IconBase
