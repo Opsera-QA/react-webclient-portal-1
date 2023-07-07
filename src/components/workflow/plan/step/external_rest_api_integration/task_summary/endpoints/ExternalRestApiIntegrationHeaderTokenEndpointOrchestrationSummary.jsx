@@ -13,6 +13,7 @@ import StandaloneTextFieldBase from "components/common/fields/text/standalone/St
 import {
   externalRestApiIntegrationStepHelper
 } from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/externalRestApiIntegrationStep.helper";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
 export default function ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary(
   {
@@ -31,6 +32,12 @@ export default function ExternalRestApiIntegrationHeaderTokenEndpointOrchestrati
     return (
       <div className={className}>
         <Row>
+          <Col xs={12}>
+            <H5FieldSubHeader
+              subheaderText={"API Request Summary"}
+              className={"mt-2"}
+            />
+          </Col>
           <Col xs={12}>
             <ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
               ruleEvaluation={parsedEndpoint?.ruleEvaluation}

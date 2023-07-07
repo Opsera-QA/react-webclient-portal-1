@@ -19,6 +19,8 @@ function ExternalRestApiIntegrationActivityLogSummaryPanel(
     endpoint,
     endpoints,
   }) {
+  const action = externalRestApiIntegrationStepTaskModel?.getData("action");
+
   const getEndpointFields = () => {
     const parsedEndpoints = DataParsingHelper.parseObject(endpoints);
 
@@ -41,7 +43,6 @@ function ExternalRestApiIntegrationActivityLogSummaryPanel(
   };
 
   const getBody = () => {
-    const action = externalRestApiIntegrationStepTaskModel?.getData("action");
 
     if (action === pipelineActivityLogActionConstants.PIPELINE_ACTIVITY_LOG_ACTIONS.OPERATION_LOG) {
       return (
@@ -59,7 +60,10 @@ function ExternalRestApiIntegrationActivityLogSummaryPanel(
   }
 
   return (
-    <PipelineTaskSummaryPanelBase pipelineTaskData={externalRestApiIntegrationStepTaskModel}>
+    <PipelineTaskSummaryPanelBase
+      pipelineTaskData={externalRestApiIntegrationStepTaskModel}
+      showMessageField={action !== pipelineActivityLogActionConstants.PIPELINE_ACTIVITY_LOG_ACTIONS.OPERATION_LOG}
+    >
       <Col xs={12}>
         {getBody()}
       </Col>

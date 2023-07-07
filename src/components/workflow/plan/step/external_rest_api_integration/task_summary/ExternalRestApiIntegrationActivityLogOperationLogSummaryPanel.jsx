@@ -152,6 +152,7 @@ export default function ExternalRestApiIntegrationActivityLogOperationLogSummary
     <>
       <H5FieldSubHeader
         subheaderText={"Latest Status Check"}
+        className={"mt-2"}
       />
       <ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
         ruleEvaluation={statusCheckRuleEvaluation}

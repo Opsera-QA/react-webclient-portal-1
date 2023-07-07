@@ -31,14 +31,14 @@ export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBa
     <div className={className}>
       <Row>
         <Col xs={12}>
-          <ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
-            ruleEvaluation={parsedEndpoint?.ruleEvaluation}
-          />
-        </Col>
-        <Col xs={12}>
           <H5FieldSubHeader
             subheaderText={"API Request Summary"}
             className={"mt-2"}
+          />
+        </Col>
+        <Col xs={12}>
+          <ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
+            ruleEvaluation={parsedEndpoint?.ruleEvaluation}
           />
         </Col>
         <Col xs={12}>
