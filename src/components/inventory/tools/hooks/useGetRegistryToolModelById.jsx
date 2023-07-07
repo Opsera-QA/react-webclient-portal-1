@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetRegistryToolModel from "components/inventory/tools/hooks/useGetRegistryToolModel";
 import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
@@ -11,7 +11,7 @@ export default function useGetRegistryToolModelById(
   rerouteOnDeletion,
 ) {
   const [toolModel, setToolModel] = useState(undefined);
-  const { getRegistryToolModel } = useGetRegistryToolModel();
+  const {getRegistryToolModel} = useGetRegistryToolModel();
   const {
     isFreeTrial,
     isOpseraAdministrator,
@@ -24,9 +24,9 @@ export default function useGetRegistryToolModelById(
     loadData,
   } = useGetRegistryToolById(
     id,
-      handleErrorFunction,
+    handleErrorFunction,
     rerouteOnDeletion,
-    );
+  );
 
   const getToolModel = (tool) => {
     return getRegistryToolModel(tool, false);
@@ -37,7 +37,7 @@ export default function useGetRegistryToolModelById(
       setToolModel(undefined);
     } else if (
       isOpseraAdministrator === true
-      || isFreeTrial === false
+      || isFreeTrial !== true
       || ObjectAccessRoleHelper.isUserObjectOwner(userData, tool) === true
     ) {
       websocketLiveUpdateHelper.handleModelLiveUpdate(toolModel, setToolModel, getToolModel, tool);
