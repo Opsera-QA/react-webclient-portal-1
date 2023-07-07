@@ -27,5 +27,12 @@ export default function useRegistryToolActions() {
     );
   };
 
+  registryToolActions.getRoleRestrictedToolById = async (toolId) => {
+    const apiUrl = `/registry/configs/tool/${toolId}`;
+    return await apiService.handleApiGetRequest(
+      apiUrl,
+    );
+  };
+
   return registryToolActions;
 }
