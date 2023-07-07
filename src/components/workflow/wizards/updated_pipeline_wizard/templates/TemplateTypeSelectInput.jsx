@@ -21,6 +21,9 @@ import {buttonLabelHelper} from "../../../../../temp-library-components/helpers/
 import {isMongoDbId} from "../../../../common/helpers/mongo/mongoDb.helpers";
 import {pipelineHelper} from "../../../pipeline.helper";
 import {useHistory} from "react-router-dom";
+import PipelineCreationFlowSelectionCardBase
+  from "../../../../../temp-library-components/cards/pipelines/PipelineCreationFlowSelectionCardBase";
+import {WORKFLOW_OPTION_TYPES} from "../../../../wizard/portal/workflows/flows/WorkflowOptionCardBase";
 
 export const TOOL_CREATION_OPTIONS = {
   SFDC: "sfdc",
@@ -62,117 +65,103 @@ function TemplateTypeSelectInput({
   };
 
   return (
-    <div
-      className={className}
-      style={{ position: "relative" }}
-    >
-      <CenteredContentWrapper minHeight={"20px"}>
+    <div className={"m-4"}>
         <H5FieldSubHeader
           className={"mb-3 mx-3"}
           subheaderText={
             "Select a template category or start from scratch with a blank Opsera pipeline template."
           }
         />
-      </CenteredContentWrapper>
 
-      <Row
-        className={"py-5 px-2"}
-        noGutters={true}
-        style={{ alignItems: 'center', justifyContent: 'center' }}
-      >
-        <SelectionCardColumn>
-          <SelectionIconCardBase
-            selectedOption={setupMode}
-            tooltip={"Select from a set from SFDC Based pipeline templates"}
+      <Row>
+        <Col md={4}>
+          <PipelineCreationFlowSelectionCardBase
             option={TOOL_CREATION_OPTIONS.SFDC}
-            onClickFunction={setDataFunction}
-            highlightedBorderColor={
-              themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE
+            handleFlowSelection={setDataFunction}
+            selectedFlow={setupMode}
+            icon={
+              <IconTitleBar
+                icon={
+                  <ImageBase
+                    height={platformImageConstants.getRecommendedCardPlatformImageHeight(
+                      platformImageConstants.PLATFORM_IMAGE_LINKS
+                        .SALESFORCE_GENERAL,
+                    )}
+                    imageSource={
+                      platformImageConstants.PLATFORM_IMAGE_LINKS
+                        .SALESFORCE_GENERAL
+                    }
+                  />
+                }
+                title={TOOL_CREATION_OPTION_LABELS.SFDC}
+                titleClassName={"mx-auto"}
+                subTitleClassName={"mx-auto"}
+              />
             }
-            titleBar={
-              <div className={"p-2"}>
-                <IconTitleBar
-                  className={""}
-                  title={TOOL_CREATION_OPTION_LABELS.SFDC}
-                  titleClassName={"mx-auto"}
-                  icon={
-                    <ImageBase
-                      height={platformImageConstants.getRecommendedCardPlatformImageHeight(
-                        platformImageConstants.PLATFORM_IMAGE_LINKS
-                          .SALESFORCE_GENERAL,
-                      )}
-                      imageSource={
-                        platformImageConstants.PLATFORM_IMAGE_LINKS
-                          .SALESFORCE_GENERAL
-                      }
-                    />
-                  }
-                />
-              </div>
-            }
+          description={
+            "Configure!"
+          }
+          workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE}
           />
-        </SelectionCardColumn>
-        <SelectionCardColumn>
-          <SelectionIconCardBase
-            selectedOption={setupMode}
-            tooltip={"Select from a set from SDLC Based pipeline templates"}
+        </Col>
+        <Col md={4}>
+          <PipelineCreationFlowSelectionCardBase
             option={TOOL_CREATION_OPTIONS.SDLC}
-            onClickFunction={setDataFunction}
-            highlightedBorderColor={
-              themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE
+            handleFlowSelection={setDataFunction}
+            selectedFlow={setupMode}
+            icon={
+              <IconTitleBar
+                className={""}
+                title={TOOL_CREATION_OPTION_LABELS.SDLC}
+                titleClassName={"mx-auto mt-auto"}
+                icon={
+                  <ImageBase
+                    height={platformImageConstants.getRecommendedCardPlatformImageHeight(
+                      platformImageConstants.PLATFORM_IMAGE_LINKS
+                        .SOFTWARE_DEVELOPMENT_GENERAL,
+                    )}
+                    imageSource={
+                      platformImageConstants.PLATFORM_IMAGE_LINKS
+                        .SOFTWARE_DEVELOPMENT_GENERAL
+                    }
+                  />
+                }
+              />
             }
-            titleBar={
-              <div className={"p-2"}>
-                <IconTitleBar
-                  className={""}
-                  title={TOOL_CREATION_OPTION_LABELS.SDLC}
-                  titleClassName={"mx-auto mt-auto"}
-                  icon={
-                    <ImageBase
-                      height={platformImageConstants.getRecommendedCardPlatformImageHeight(
-                        platformImageConstants.PLATFORM_IMAGE_LINKS
-                          .SOFTWARE_DEVELOPMENT_GENERAL,
-                      )}
-                      imageSource={
-                        platformImageConstants.PLATFORM_IMAGE_LINKS
-                          .SOFTWARE_DEVELOPMENT_GENERAL
-                      }
-                    />
-                  }
-                />
-              </div>
+            description={
+              "Configure this too"
             }
+            workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE}
           />
-        </SelectionCardColumn>
-        <SelectionCardColumn>
-          <SelectionIconCardBase
-            selectedOption={setupMode}
-            tooltip={"Start from scratch with a blank Opsera Pipeline Template"}
+        </Col>
+        <Col md={4}>
+          <PipelineCreationFlowSelectionCardBase
             option={TOOL_CREATION_OPTIONS.BLANK}
+            handleFlowSelection={setDataFunction}
             onClickFunction={() => setCurrentScreen("blank_pipeline")}
-            highlightedBorderColor={
-              themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE
+            selectedFlow={setupMode}
+            icon={
+              <IconTitleBar
+                icon={
+                  <ImageBase
+                    height={"96px"}
+                    imageSource={
+                      platformImageConstants.PLATFORM_IMAGE_LINKS
+                        .ADVANCED_OPTION
+                    }
+                  />
+                }
+                title={TOOL_CREATION_OPTION_LABELS.BLANK}
+                titleClassName={"mx-auto mt-auto"}
+                subTitleClassName={"mx-auto"}
+              />
             }
-            titleBar={
-              <div className={"p-2"}>
-                <IconTitleBar
-                  className={""}
-                  title={TOOL_CREATION_OPTION_LABELS.BLANK}
-                  titleClassName={"mx-auto mt-auto"}
-                  icon={
-                    <ImageBase
-                      height={"96px"}
-                      imageSource={
-                        platformImageConstants.PLATFORM_IMAGE_LINKS
-                          .ADVANCED_OPTION
-                      }
-                    />
-                  }
-                />
-              </div>
+            description={
+              "Start from scratch with a blank Opsera Pipeline Template"
             }
+            workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE}
           />
-        </SelectionCardColumn>
+        </Col>
       </Row>
     </div>
   );
