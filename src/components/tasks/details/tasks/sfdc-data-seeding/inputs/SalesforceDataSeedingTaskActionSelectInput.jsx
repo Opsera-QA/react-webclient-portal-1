@@ -6,7 +6,7 @@ export const actionTypes = [
   {text: "Insert", value: "Insert"},
   {text: "Update", value: "Update"},
   {text: "Upsert", value: "Upsert"},
-  {text: "Delete", value: "Delete"}
+  // {text: "Delete", value: "Delete"}
 ];
 
 function SalesforceDataSeedingTaskActionSelectInput({ fieldName, model, setModel, placeholderText, disabled, setDataFunction }) {
