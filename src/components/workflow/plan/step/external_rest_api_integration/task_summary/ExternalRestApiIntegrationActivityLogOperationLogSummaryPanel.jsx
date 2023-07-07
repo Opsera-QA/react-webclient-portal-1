@@ -1,18 +1,45 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import ExternalRestApiIntegrationStatusCheckEndpointOrchestrationSummary
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationStatusCheckEndpointOrchestrationSummary";
 import ExternalRestApiIntegrationEndpointsOrchestrationSummary
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointsOrchestrationSummary";
-import CustomTab from "components/common/tabs/CustomTab";
-import CustomTabContainer from "components/common/tabs/CustomTabContainer";
-import OverlayTabPanelContainer from "components/common/panels/general/OverlayTabPanelContainer";
+import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
+import InfoContainer from "components/common/containers/InfoContainer";
+import SideBySideViewBase from "components/common/tabs/SideBySideViewBase";
+import ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationSummaryBase";
+import ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary";
+import ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary";
+import ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary";
+import Col from "react-bootstrap/Col";
+
+const OPERATION_LOG_VIEWS = {
+  STATUS_CHECK_SUMMARY: "statusCheckSummary",
+  STATUS_CHECK_API_TOKEN_GENERATION: "statusCheckApiTokenGeneration",
+  STATUS_CHECK_CONNECTION_VALIDATION: "statusCheckConnectionValidation",
+  CALL_OPERATION_SUMMARY: "callOperationSummary",
+  CALL_OPERATION_API_TOKEN_GENERATION: "callOperationApiTokenGeneration",
+  CALL_OPERATION_CONNECTION_VALIDATION: "callOperationConnectionValidation",
+};
 
 export default function ExternalRestApiIntegrationActivityLogOperationLogSummaryPanel(
   {
     externalRestApiIntegrationStepTaskModel,
   }) {
-  const [activeTab, setActiveTab] = useState("statusCheck");
+  const [activeTab, setActiveTab] = useState(OPERATION_LOG_VIEWS.STATUS_CHECK_SUMMARY);
+  const statusCheckRuleEvaluation = externalRestApiIntegrationStepTaskModel?.getData("api_response.last_status_check_request.ruleEvaluation");
+  const lastStatusCheckTimestamp = externalRestApiIntegrationStepTaskModel?.getData("api_response.last_status_check_timestamp");
+  const statusCheckConnectionCheckEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.last_status_check_request.endpoints.connectionCheckEndpoint");
+  const statusCheckHeaderTokenEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.last_status_check_request.endpoints.headerTokenEndpoint");
+  const statusCheckStatusCheckEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.last_status_check_request.endpoints.statusCheckEndpoint");
+  const runRequestConnectionCheckEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.endpoints.connectionCheckEndpoint");
+  const runRequestHeaderTokenEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.endpoints.headerTokenEndpoint");
+  const runRequestRuleEvaluation = externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.ruleEvaluation");
+  const runRequestCallOperationEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.endpoints.runTriggerEndpoint");
 
   const handleTabClick = (newTab) => e => {
     e.preventDefault();
@@ -22,39 +49,97 @@ export default function ExternalRestApiIntegrationActivityLogOperationLogSummary
     }
   };
 
-  const getTabContainer = () => {
+  const getVerticalTabContainer = () => {
     return (
-      <CustomTabContainer>
-        <CustomTab
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
+      <VanitySetVerticalTabContainer className={"m-2"}>
+        <H5FieldSubHeader
+          subheaderText={"Status Check"}
+          className={"mt-2 mb-3"}
+        />
+        <VanitySetVerticalTab
           tabText={"Status Check Summary"}
-          tabName={"statusCheck"}
-        />
-        <CustomTab
+          tabName={OPERATION_LOG_VIEWS.STATUS_CHECK_SUMMARY}
           handleTabClick={handleTabClick}
           activeTab={activeTab}
-          tabText={"Call Operation Summary"}
-          tabName={"callOperation"}
         />
-      </CustomTabContainer>
+        <VanitySetVerticalTab
+          tabText={"API Token Generation"}
+          tabName={OPERATION_LOG_VIEWS.STATUS_CHECK_API_TOKEN_GENERATION}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          visible={statusCheckHeaderTokenEndpoint != null}
+        />
+        <VanitySetVerticalTab
+          tabText={"Connection Validation"}
+          tabName={OPERATION_LOG_VIEWS.STATUS_CHECK_CONNECTION_VALIDATION}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          visible={statusCheckConnectionCheckEndpoint != null}
+        />
+        <H5FieldSubHeader
+          subheaderText={"Call Operation"}
+          className={"mt-4 mb-3"}
+        />
+        <VanitySetVerticalTab
+          tabText={"Call Operation Summary"}
+          tabName={OPERATION_LOG_VIEWS.CALL_OPERATION_SUMMARY}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+        />
+        <VanitySetVerticalTab
+          tabText={"API Token Generation"}
+          tabName={OPERATION_LOG_VIEWS.CALL_OPERATION_API_TOKEN_GENERATION}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          visible={runRequestHeaderTokenEndpoint != null}
+        />
+        <VanitySetVerticalTab
+          tabText={"Connection Validation"}
+          tabName={OPERATION_LOG_VIEWS.CALL_OPERATION_CONNECTION_VALIDATION}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          visible={runRequestConnectionCheckEndpoint != null}
+        />
+      </VanitySetVerticalTabContainer>
     );
   };
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "statusCheck":
+      case OPERATION_LOG_VIEWS.STATUS_CHECK_SUMMARY:
         return (
-          <ExternalRestApiIntegrationStatusCheckEndpointOrchestrationSummary
-            externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
-            className={"mt-2"}
+          <ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
+            endpoint={statusCheckStatusCheckEndpoint}
           />
         );
-      case "callOperation":
+      case OPERATION_LOG_VIEWS.STATUS_CHECK_API_TOKEN_GENERATION:
         return (
-          <ExternalRestApiIntegrationEndpointsOrchestrationSummary
-            endpoints={externalRestApiIntegrationStepTaskModel?.getData("api_response.run_request.endpoints")}
-            className={"mt-2"}
+          <ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary
+            endpoint={statusCheckHeaderTokenEndpoint}
+          />
+        );
+      case OPERATION_LOG_VIEWS.STATUS_CHECK_CONNECTION_VALIDATION:
+        return (
+          <ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary
+            endpoint={statusCheckConnectionCheckEndpoint}
+          />
+        );
+      case OPERATION_LOG_VIEWS.CALL_OPERATION_SUMMARY:
+        return (
+          <ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
+            endpoint={runRequestCallOperationEndpoint}
+          />
+        );
+      case OPERATION_LOG_VIEWS.CALL_OPERATION_API_TOKEN_GENERATION:
+        return (
+          <ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary
+            endpoint={runRequestHeaderTokenEndpoint}
+          />
+        );
+      case OPERATION_LOG_VIEWS.CALL_OPERATION_CONNECTION_VALIDATION:
+        return (
+          <ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary
+            endpoint={runRequestConnectionCheckEndpoint}
           />
         );
       default:
@@ -67,10 +152,30 @@ export default function ExternalRestApiIntegrationActivityLogOperationLogSummary
   }
 
   return (
-    <OverlayTabPanelContainer
-      currentView={getCurrentView()}
-      tabContainer={getTabContainer()}
-    />
+    <>
+      <H5FieldSubHeader
+        subheaderText={"Latest Status Check"}
+      />
+      <ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
+        ruleEvaluation={statusCheckRuleEvaluation}
+        latestStatusCheckTime={lastStatusCheckTimestamp}
+        className={"mb-2"}
+      />
+      <InfoContainer
+        titleText={`Operation Log`}
+      >
+        <SideBySideViewBase
+          leftSideView={getVerticalTabContainer()}
+          leftSideMinimumWidth={"225px"}
+          leftSideMaximumWidth={"225px"}
+          rightSideView={
+            <div className={"m-2"} style={{overflowX: "hidden"}}>
+              {getCurrentView()}
+            </div>
+          }
+        />
+      </InfoContainer>
+    </>
   );
 }
 
