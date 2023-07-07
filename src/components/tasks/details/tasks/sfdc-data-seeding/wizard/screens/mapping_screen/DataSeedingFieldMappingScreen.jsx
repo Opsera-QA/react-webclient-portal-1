@@ -286,7 +286,7 @@ const DataSeedingFieldMappingScreen = ({
             ))}
           </Accordion>
         ) : (
-          <>No Fields Found</>
+          <div className={"m-5"}>No Fields Found</div>
         )}
       </div>
     );
@@ -323,6 +323,7 @@ const DataSeedingFieldMappingScreen = ({
           size="sm"
           variant="primary"
           onClick={saveAndMoveToNextScreen}
+          disabled={isLoading || isSaving}
         >
           <span>
             <IconBase
