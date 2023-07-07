@@ -182,9 +182,7 @@ const CustomSettingQueryBuilderScreen = ({
         }
       })
       .join(" AND ");
-    const query = `SELECT ${fieldsList
-      ?.map((ele) => ele.name)
-      .join(", ")} FROM ${
+    const query = `SELECT Id FROM ${
       wizardModel?.getData("selectedCustomSetting")?.componentName
     }${whereClause ? ` WHERE ${whereClause} ` : ""} ${limit ? `LIMIT ${limit}` : ""}`;
     return query;
