@@ -286,7 +286,7 @@ const DataSeedingFieldMappingScreen = ({
             ))}
           </Accordion>
         ) : (
-          <>No Fields Found</>
+          <div className={"m-5"}>No Fields Found</div>
         )}
       </div>
     );
