@@ -5,13 +5,12 @@ import Row from "react-bootstrap/Row";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
 import EndpointRequestHeaderBearerTokenTypeSelectInput
   from "components/common/list_of_values_input/inventory/endpoints/header/bearer_token/EndpointRequestHeaderBearerTokenTypeSelectInput";
-import {
-  ENDPOINT_REQUEST_HEADER_BEARER_TOKEN_TYPES
-} from "components/common/list_of_values_input/inventory/endpoints/header/bearer_token/endpointRequestHeaderBearerTokenType.constants";
 import EndpointRequestHeaderBearerTokenEndpointSelectInput
   from "components/common/list_of_values_input/inventory/endpoints/header/token_endpoint/EndpointRequestHeaderBearerTokenEndpointSelectInput";
 import EndpointResponseBodyFieldSelectInput
   from "components/common/list_of_values_input/inventory/endpoints/field/EndpointResponseBodyFieldSelectInput";
+import endpointRequestHeaderBearerTokenTypeConstants
+  from "@opsera/definitions/constants/api/request/header/endpointRequestHeaderBearerTokenType.constants";
 
 function EndpointRequestHeaderTokenConfiguration(
   {
@@ -30,7 +29,7 @@ function EndpointRequestHeaderTokenConfiguration(
 
   const getInputsForAuthorizationType = () => {
     switch (endpointRequestHeaderConfigurationModel?.getData("authorizationType")) {
-      case ENDPOINT_REQUEST_HEADER_BEARER_TOKEN_TYPES.SHORT_LIVED_BEARER_TOKEN:
+      case endpointRequestHeaderBearerTokenTypeConstants.ENDPOINT_REQUEST_HEADER_BEARER_TOKEN_TYPES.SHORT_LIVED_BEARER_TOKEN:
         return (
           <>
             <Col xs={12}>
@@ -53,7 +52,7 @@ function EndpointRequestHeaderTokenConfiguration(
             </Col>
           </>
         );
-      case ENDPOINT_REQUEST_HEADER_BEARER_TOKEN_TYPES.LONG_LIVED_BEARER_TOKEN:
+      case endpointRequestHeaderBearerTokenTypeConstants.ENDPOINT_REQUEST_HEADER_BEARER_TOKEN_TYPES.LONG_LIVED_BEARER_TOKEN:
       default:
         return (
           <Col xs={12}>

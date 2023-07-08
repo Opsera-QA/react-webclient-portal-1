@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
-import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/endpoint/request/body/endpointRequestField.metadata";
 import EndpointRequestBodyFieldInputRow from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestBodyFieldInputRow";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import InfoText from "components/common/inputs/info_text/InfoText";
@@ -15,6 +14,7 @@ import InfoContainer from "components/common/containers/InfoContainer";
 import {
   EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS
 } from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
+import endpointRequestFieldMetadata from "@opsera/definitions/constants/api/request/body/endpointRequestField.metadata";
 
 function EndpointRequestBodyInputPanel(
   {
@@ -173,6 +173,7 @@ function EndpointRequestBodyInputPanel(
           endpointBodyField={fieldData}
           updateFieldFunction={(newField) => updateFieldFunction(index, newField)}
           disabled={disabled}
+          endpointType={model?.getData("type")}
         />
       );
     }

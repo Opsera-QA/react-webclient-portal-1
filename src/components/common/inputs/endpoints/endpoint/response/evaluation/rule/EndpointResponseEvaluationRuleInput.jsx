@@ -3,9 +3,6 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import modelHelpers from "components/common/model/modelHelpers";
-import {
-  endpointResponseEvaluationRuleMetadata
-} from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/endpointResponseEvaluationRule.metadata";
 import EndpointResponseEvaluationRuleOptionSelectInput
   from "components/common/list_of_values_input/tools/extermal_api_integrator/endpoints/rules/options/EndpointResponseEvaluationRuleOptionSelectInput";
 import EndpointResponseEvaluationStatusRuleFilterSelectInput
@@ -18,6 +15,8 @@ import EndpointResponseFieldEvaluationRulesFilterSelectInput
   from "components/common/list_of_values_input/tools/extermal_api_integrator/endpoints/rules/field_evaluation/EndpointResponseFieldEvaluationRulesFilterSelectInput";
 import EndpointResponseEvaluationInput
   from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/EndpointResponseValueInput";
+import endpointResponseEvaluationRuleMetadata
+  from "@opsera/definitions/constants/api/evaluation/rule/endpointResponseEvaluationRule.metadata";
 
 function EndpointResponseEvaluationRuleInput(
   {
@@ -28,12 +27,13 @@ function EndpointResponseEvaluationRuleInput(
     evaluationRulesInputHeight,
     responseParameterInputHeight,
     responseParameterArrayInputHeight,
+    fieldName,
   }) {
   const [evaluationRuleModel, setEvaluationRuleModel] = useState(undefined);
 
   useEffect(() => {
-    setEvaluationRuleModel(modelHelpers.parseObjectIntoModel(rule, endpointResponseEvaluationRuleMetadata));
-  }, [rule]);
+    setEvaluationRuleModel({...modelHelpers.parseObjectIntoModel(rule, endpointResponseEvaluationRuleMetadata)});
+  }, [rule, fieldName]);
 
   const updateMainModelFunction = (fieldName, newValue) => {
     evaluationRuleModel.setData(fieldName, newValue);
@@ -92,6 +92,7 @@ function EndpointResponseEvaluationRuleInput(
                 height={evaluationRulesInputHeight}
                 responseParameterArrayInputHeight={responseParameterArrayInputHeight}
                 responseParameterInputHeight={responseParameterInputHeight}
+                parentFieldName={fieldName}
               />
             </Col>
           </>
@@ -107,6 +108,8 @@ function EndpointResponseEvaluationRuleInput(
             responseBodyType={endpoint?.responseBodyType}
           />
         );
+      default:
+        return null;
     }
   };
 
@@ -154,7 +157,7 @@ function EndpointResponseEvaluationRuleInput(
   }
 
   return (
-    <div>
+    <div id={fieldName}>
       {getBody()}
     </div>
   );
@@ -168,6 +171,7 @@ EndpointResponseEvaluationRuleInput.propTypes = {
   evaluationRulesInputHeight: PropTypes.string,
   responseParameterInputHeight: PropTypes.string,
   responseParameterArrayInputHeight: PropTypes.string,
+  fieldName: PropTypes.string,
 };
 
 export default EndpointResponseEvaluationRuleInput;

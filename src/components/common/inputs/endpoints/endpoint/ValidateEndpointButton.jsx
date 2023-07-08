@@ -58,12 +58,14 @@ function ValidateEndpointButton(
 
       const success = response?.data?.successful;
       const message = JSON.stringify(response?.data?.data);
+      const endpointResponse = JSON.stringify(response?.data?.response, undefined, 2);
 
       if (success === true) {
         setLogs([
           ...newLogs,
           "Endpoint Validation Succeeded!\n",
           `Message: ${message}\n`,
+          `Response: ${endpointResponse}\n`,
           `Test Complete.\nPlease close this window to proceed.\n`,
         ]);
 
@@ -74,6 +76,7 @@ function ValidateEndpointButton(
           ...newLogs,
           `Endpoint Validation Failed!\n`,
           `Message: ${message}\n`,
+          `Response: ${endpointResponse}\n`,
           `Test Complete. \nPlease close this panel, address the issue and try again.\n`,
         ]);
 

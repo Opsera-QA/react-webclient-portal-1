@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import {endpointRequestFieldMetadata} from "components/common/inputs/endpoints/endpoint/request/body/endpointRequestField.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import EndpointResponseFieldTypeSelectInput
   from "components/common/inputs/endpoints/endpoint/response/body/field/EndpointResponseFieldTypeSelectInput";
@@ -10,6 +9,8 @@ import DeleteButton from "components/common/buttons/delete/DeleteButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import EndpointResponseFieldNameTextInput
   from "components/common/inputs/endpoints/endpoint/response/body/field/EndpointResponseFieldNameTextInput";
+import endpointResponseFieldMetadata
+  from "@opsera/definitions/constants/api/response/body/field/endpointResponseField.metadata";
 
 function EndpointResponseBodyFieldInputRow(
   {
@@ -22,7 +23,7 @@ function EndpointResponseBodyFieldInputRow(
   const [endpointFieldModel, setEndpointFieldModel] = useState(undefined);
 
   useEffect(() => {
-    setEndpointFieldModel(modelHelpers.parseObjectIntoModel(endpointBodyField, endpointRequestFieldMetadata));
+    setEndpointFieldModel(modelHelpers.parseObjectIntoModel(endpointBodyField, endpointResponseFieldMetadata));
   }, [endpointBodyField]);
 
   const updateMainModelFunction = (fieldName, newValue) => {

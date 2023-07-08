@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  getEndpointTypeLabel,
-} from "components/common/list_of_values_input/inventory/endpoints/type/endpointType.constants";
 import ConstantFieldBase from "components/common/fields/constant/ConstantFieldBase";
+import endpointTypeConstants from "@opsera/definitions/constants/api/request/endpoint/endpointType.constants";
 
 function EndpointTypeField(
   {
@@ -15,7 +13,7 @@ function EndpointTypeField(
     <ConstantFieldBase
       model={model}
       fieldName={fieldName}
-      getLabelFunction={getEndpointTypeLabel}
+      getLabelFunction={endpointTypeConstants.getEndpointTypeLabel}
       className={className}
     />
   );

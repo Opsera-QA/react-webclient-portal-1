@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {
-  ENDPOINT_REQUEST_TYPES,
-} from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/endpointRequestType.constants";
 import EndpointRequestParametersInputBase
   from "components/common/inputs/endpoints/endpoint/request/parameters/EndpointRequestParametersInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
-import {
-  endpointRequestParametersMetadata,
-} from "components/common/inputs/endpoints/endpoint/request/parameters/endpointRequestParameters.metadata";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import endpointRequestParametersMetadata
+  from "@opsera/definitions/constants/api/request/parameters/endpointRequestParameters.metadata";
+import endpointRequestType from "@opsera/definitions/constants/api/request/endpoint/endpointRequestType.constants";
 
 function EndpointApiConfigurationInputBase(
   {
@@ -43,7 +40,7 @@ function EndpointApiConfigurationInputBase(
 
   const getDynamicInputsForRequestType = () => {
     switch (endpoint?.requestType) {
-      case ENDPOINT_REQUEST_TYPES.GET:
+      case endpointRequestType.ENDPOINT_REQUEST_TYPES.GET:
         return (
           <EndpointRequestParametersInputBase
             model={endpointRequestParametersModel}
@@ -54,10 +51,12 @@ function EndpointApiConfigurationInputBase(
             height={height}
             endpointParameterArrayInputHeight={endpointParameterArrayInputHeight}
             endpointParameterInputHeight={endpointParameterInputHeight}
+            runEndpointId={model?.getData("runEndpointId")}
+            toolId={model?.getData("toolId")}
           />
         );
-      case ENDPOINT_REQUEST_TYPES.PUT:
-      case ENDPOINT_REQUEST_TYPES.POST:
+      case endpointRequestType.ENDPOINT_REQUEST_TYPES.PUT:
+      case endpointRequestType.ENDPOINT_REQUEST_TYPES.POST:
         return (
           <EndpointRequestParametersInputBase
             model={endpointRequestParametersModel}
@@ -68,6 +67,8 @@ function EndpointApiConfigurationInputBase(
             height={height}
             endpointParameterArrayInputHeight={endpointParameterArrayInputHeight}
             endpointParameterInputHeight={endpointParameterInputHeight}
+            runEndpointId={model?.getData("runEndpointId")}
+            toolId={model?.getData("toolId")}
           />
         );
     }
@@ -86,7 +87,7 @@ function EndpointApiConfigurationInputBase(
   }
 
   return (
-    <div>
+    <div id={fieldName}>
       {getDynamicInputsForRequestType()}
     </div>
   );

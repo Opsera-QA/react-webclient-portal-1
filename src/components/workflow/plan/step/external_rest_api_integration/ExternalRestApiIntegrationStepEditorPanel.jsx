@@ -4,9 +4,6 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import thresholdMetadata from "components/common/metadata/pipelines/thresholdMetadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {
-  externalRestApiIntegrationStepMetadata
-} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
 import ExternalApiIntegrationStepExternalApiIntegratorToolSelectInput
   from "components/workflow/plan/step/external_rest_api_integration/inputs/ExternalApiIntegrationStepExternalApiIntegratorToolSelectInput";
 import axios from "axios";
@@ -17,6 +14,8 @@ import ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import {faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
+import externalRestApiIntegrationStepMetadata
+  from "@opsera/definitions/constants/pipelines/steps/definitions/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
 
 function ExternalRestApiIntegrationStepEditorPanel(
   { 

@@ -1,17 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import InfoContainer from "components/common/containers/InfoContainer";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import FieldContainer from "components/common/fields/FieldContainer";
-import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
-import { faCode } from "@fortawesome/pro-light-svg-icons";
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
-function EndpointResponseField({
-  responseObject,
-  height,
-  titleText,
-}) {
+export default function EndpointResponseField(
+  {
+    responseObject,
+    titleText,
+  }) {
   const getResponseBodyField = () => {
     const response = responseObject?.message;
 
@@ -38,28 +37,19 @@ function EndpointResponseField({
 
   return (
     <FieldContainer>
-      <InfoContainer
-        titleIcon={faCode}
-        titleText={titleText}
-        minimumHeight={height}
-        maximumHeight={height}
-      >
-        <div className={"m-3"}>
-          <StandaloneTextFieldBase
-            text={String(responseObject?.status)}
-            label={"Status Code"}
-          />
-          {getResponseBodyField()}
-        </div>
-      </InfoContainer>
+      <H5FieldSubHeader
+        subheaderText={titleText}
+      />
+      <StandaloneTextFieldBase
+        text={String(responseObject?.status)}
+        label={"Status Code"}
+      />
+      {getResponseBodyField()}
     </FieldContainer>
   );
 }
 
 EndpointResponseField.propTypes = {
   responseObject: PropTypes.object,
-  height: PropTypes.string,
   titleText: PropTypes.string,
 };
-
-export default EndpointResponseField;

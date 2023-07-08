@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  getEndpointRequestTypeLabel
-} from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/endpointRequestType.constants";
 import ConstantFieldBase from "components/common/fields/constant/ConstantFieldBase";
+import endpointRequestType from "@opsera/definitions/constants/api/request/endpoint/endpointRequestType.constants";
 
 function EndpointRequestTypeField(
   {
@@ -15,7 +13,7 @@ function EndpointRequestTypeField(
     <ConstantFieldBase
       model={model}
       fieldName={fieldName}
-      getLabelFunction={getEndpointRequestTypeLabel}
+      getLabelFunction={endpointRequestType.getEndpointRequestTypeLabel}
       className={className}
     />
   );

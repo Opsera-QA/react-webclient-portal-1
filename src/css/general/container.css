@@ -198,6 +198,9 @@
 /* Property Input Container Styling */
 .object-properties-input .property-header, .input-title-bar {
     background-color: rgba(230, 229, 227, .6);
+    /*border-left: 1px solid #E6E5E3;*/
+    /*border-top: 1px solid #E6E5E3;*/
+    /*border-right: 1px solid #E6E5E3;*/
     color: #3D3B36;
     font-size: 1.1rem;
     border-top-left-radius: 1rem;

@@ -1,31 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import apiFieldTypeConstants from "@opsera/definitions/constants/api/request/apiFieldType.constants";
 
-const SUPPORTED_FIELD_TYPES = [
-  {
-    text: "Array",
-    value: "array",
-  },
-  {
-    text: "Date",
-    value: "date",
-  },
-  {
-    text: "Object",
-    value: "object",
-  },
-  {
-    text: "String",
-    value: "string",
-  },
-  {
-    text: "Boolean",
-    value: "boolean",
-  },
-];
-
-function ApiRequestFieldTypeSelectInput(
+export default function ApiRequestFieldTypeSelectInput(
   {
     model,
     setModel,
@@ -35,7 +13,7 @@ function ApiRequestFieldTypeSelectInput(
   }) {
   return (
     <SelectInputBase
-      selectOptions={SUPPORTED_FIELD_TYPES}
+      selectOptions={apiFieldTypeConstants.API_REQUEST_FIELD_TYPE_SELECT_OPTIONS}
       dataObject={model}
       setDataObject={setModel}
       fieldName={fieldName}
@@ -54,5 +32,3 @@ ApiRequestFieldTypeSelectInput.propTypes = {
   disabled: PropTypes.bool,
   fieldName: PropTypes.string,
 };
-
-export default ApiRequestFieldTypeSelectInput;

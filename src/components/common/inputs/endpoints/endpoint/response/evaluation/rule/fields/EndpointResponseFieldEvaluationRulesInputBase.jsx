@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState} from "react";
+import React, { useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import EndpointResponseRuleFieldInputRow
@@ -9,6 +9,8 @@ import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySet
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
+import apiResponseEvaluationOptionConstants
+  from "@opsera/definitions/constants/api/response/apiResponseEvaluationOption.constants";
 
 function EndpointResponseFieldEvaluationRulesInputBase(
   {
@@ -20,10 +22,10 @@ function EndpointResponseFieldEvaluationRulesInputBase(
     height,
     responseParameterInputHeight,
     responseParameterArrayInputHeight,
+    parentFieldName,
   }) {
-  const [field, setField] = useState(model?.getFieldById(fieldName));
+  const field = model?.getFieldById(fieldName);
   const [fields, setFields] = useState([]);
-  const isMounted = useRef(false);
   const [activeTab, setActiveTab] = useState(undefined);
   const [currentFieldData, setCurrentFieldData] = useState(undefined);
 
@@ -35,14 +37,7 @@ function EndpointResponseFieldEvaluationRulesInputBase(
     }
   };
 
-  useEffect(() => {
-    isMounted.current = true;
-    setField(model?.getFieldById(fieldName));
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, [fieldName]);
+  useEffect(() => {}, [fieldName, JSON.stringify(model), parentFieldName]);
 
   useEffect(() => {
     setFields([]);
@@ -70,11 +65,11 @@ function EndpointResponseFieldEvaluationRulesInputBase(
       newField.value = dataParsingHelper.parseObjectValue(field?.type, foundItem?.value);
       const filter = foundItem?.filter;
 
-      if (hasStringValue(filter) === true) {
+      if (apiResponseEvaluationOptionConstants.isApiResponseEvaluationOptionValid(filter) === true) {
         newField.filter = filter;
       }
       else {
-        newField.filter = "is_not_null";
+        newField.filter = apiResponseEvaluationOptionConstants.API_RESPONSE_EVALUATION_OPTIONS.IS_NOT_NULL;
         requiresUpdate = true;
       }
 
@@ -136,6 +131,7 @@ function EndpointResponseFieldEvaluationRulesInputBase(
           disabled={disabled}
           responseParameterInputHeight={responseParameterInputHeight}
           responseParameterArrayInputHeight={responseParameterArrayInputHeight}
+          fieldName={fieldName}
         />
       );
     }
@@ -187,6 +183,7 @@ EndpointResponseFieldEvaluationRulesInputBase.propTypes = {
   height: PropTypes.string,
   responseParameterInputHeight: PropTypes.string,
   responseParameterArrayInputHeight: PropTypes.string,
+  parentFieldName: PropTypes.string,
 };
 
 export default EndpointResponseFieldEvaluationRulesInputBase;
