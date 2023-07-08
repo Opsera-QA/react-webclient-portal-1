@@ -22,6 +22,7 @@ export default function ExternalRestApiIntegrationActivityLogStatusCheckSummaryP
     externalRestApiIntegrationStepTaskModel,
   }) {
   const [activeTab, setActiveTab] = useState(STATUS_CHECK_VIEWS.STATUS_CHECK_SUMMARY);
+  const statusCheckEndpoints = externalRestApiIntegrationStepTaskModel?.getData("api_response.apiResponse.endpoints");
   const statusCheckConnectionCheckEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.apiResponse.endpoints.connectionCheckEndpoint");
   const statusCheckHeaderTokenEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.apiResponse.endpoints.headerTokenEndpoint");
   const statusCheckStatusCheckEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.apiResponse.endpoints.statusCheckEndpoint");
@@ -84,27 +85,25 @@ export default function ExternalRestApiIntegrationActivityLogStatusCheckSummaryP
     }
   };
 
-  if (externalRestApiIntegrationStepTaskModel == null) {
+  if (externalRestApiIntegrationStepTaskModel == null || statusCheckEndpoints == null) {
     return null;
   }
 
   return (
-    <>
-      <InfoContainer
-        titleText={`Status Check Log`}
-      >
-        <SideBySideViewBase
-          leftSideView={getVerticalTabContainer()}
-          leftSideMinimumWidth={"250px"}
-          leftSideMaximumWidth={"250px"}
-          rightSideView={
-            <div className={"m-2"} style={{overflowX: "hidden"}}>
-              {getCurrentView()}
-            </div>
-          }
-        />
-      </InfoContainer>
-    </>
+    <InfoContainer
+      titleText={`Status Check Log`}
+    >
+      <SideBySideViewBase
+        leftSideView={getVerticalTabContainer()}
+        leftSideMinimumWidth={"250px"}
+        leftSideMaximumWidth={"250px"}
+        rightSideView={
+          <div className={"m-2"} style={{overflowX: "hidden"}}>
+            {getCurrentView()}
+          </div>
+        }
+      />
+    </InfoContainer>
   );
 }
 

@@ -22,6 +22,7 @@ export default function ExternalRestApiIntegrationActivityLogStartConfirmationSu
     externalRestApiIntegrationStepTaskModel,
   }) {
   const [activeTab, setActiveTab] = useState(START_CONFIRMATION_VIEWS.CALL_OPERATION_SUMMARY);
+  const runRequestEndpoints = externalRestApiIntegrationStepTaskModel?.getData("api_response.endpoints");
   const runRequestConnectionCheckEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.endpoints.connectionCheckEndpoint");
   const runRequestHeaderTokenEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.endpoints.headerTokenEndpoint");
   const runRequestRuleEvaluation = externalRestApiIntegrationStepTaskModel?.getData("api_response.ruleEvaluation");
@@ -85,32 +86,25 @@ export default function ExternalRestApiIntegrationActivityLogStartConfirmationSu
     }
   };
 
-  if (externalRestApiIntegrationStepTaskModel == null) {
+  if (externalRestApiIntegrationStepTaskModel == null || runRequestEndpoints == null) {
     return null;
   }
 
   return (
-    <>
-      {/*<ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary*/}
-      {/*  ruleEvaluation={statusCheckRuleEvaluation}*/}
-      {/*  latestStatusCheckTime={lastStatusCheckTimestamp}*/}
-      {/*  className={"my-2"}*/}
-      {/*/>*/}
-      <InfoContainer
-        titleText={`Call Operation Log`}
-      >
-        <SideBySideViewBase
-          leftSideView={getVerticalTabContainer()}
-          leftSideMinimumWidth={"250px"}
-          leftSideMaximumWidth={"250px"}
-          rightSideView={
-            <div className={"m-2"} style={{overflowX: "hidden"}}>
-              {getCurrentView()}
-            </div>
-          }
-        />
-      </InfoContainer>
-    </>
+    <InfoContainer
+      titleText={`Call Operation Log`}
+    >
+      <SideBySideViewBase
+        leftSideView={getVerticalTabContainer()}
+        leftSideMinimumWidth={"250px"}
+        leftSideMaximumWidth={"250px"}
+        rightSideView={
+          <div className={"m-2"} style={{overflowX: "hidden"}}>
+            {getCurrentView()}
+          </div>
+        }
+      />
+    </InfoContainer>
   );
 }
 
