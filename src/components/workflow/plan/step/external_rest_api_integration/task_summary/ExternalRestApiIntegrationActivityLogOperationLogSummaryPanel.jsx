@@ -179,6 +179,4 @@ export default function ExternalRestApiIntegrationActivityLogOperationLogSummary
 
 ExternalRestApiIntegrationActivityLogOperationLogSummaryPanel.propTypes = {
   externalRestApiIntegrationStepTaskModel: PropTypes.object,
-  endpoint: PropTypes.object,
-  endpoints: PropTypes.object,
 };

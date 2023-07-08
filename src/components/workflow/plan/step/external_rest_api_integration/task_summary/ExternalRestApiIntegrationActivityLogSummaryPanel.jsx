@@ -11,6 +11,10 @@ import ExternalRestApiIntegrationActivityLogOperationLogSummaryPanel
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/ExternalRestApiIntegrationActivityLogOperationLogSummaryPanel";
 import ExternalRestApiIntegrationEndpointsOrchestrationSummary
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointsOrchestrationSummary";
+import ExternalRestApiIntegrationActivityLogStartConfirmationSummaryPanel
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/ExternalRestApiIntegrationActivityLogStartConfirmationSummaryPanel";
+import ExternalRestApiIntegrationActivityLogStatusCheckSummaryPanel
+  from "components/workflow/plan/step/external_rest_api_integration/task_summary/ExternalRestApiIntegrationActivityLogStatusCheckSummaryPanel";
 
 // TODO: Make fully fleshed out report.
 function ExternalRestApiIntegrationActivityLogSummaryPanel(
@@ -43,16 +47,28 @@ function ExternalRestApiIntegrationActivityLogSummaryPanel(
   };
 
   const getBody = () => {
-
-    if (action === pipelineActivityLogActionConstants.PIPELINE_ACTIVITY_LOG_ACTIONS.OPERATION_LOG) {
-      return (
-        <ExternalRestApiIntegrationActivityLogOperationLogSummaryPanel
-          externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
-        />
-      );
+    switch (action) {
+      case pipelineActivityLogActionConstants.PIPELINE_ACTIVITY_LOG_ACTIONS.OPERATION_LOG:
+        return (
+          <ExternalRestApiIntegrationActivityLogOperationLogSummaryPanel
+            externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
+          />
+        );
+      case pipelineActivityLogActionConstants.PIPELINE_ACTIVITY_LOG_ACTIONS.START_CONFIRMATION:
+        return (
+          <ExternalRestApiIntegrationActivityLogStartConfirmationSummaryPanel
+            externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
+          />
+        );
+      case pipelineActivityLogActionConstants.PIPELINE_ACTIVITY_LOG_ACTIONS.STATUS_CHECK:
+        return (
+          <ExternalRestApiIntegrationActivityLogStatusCheckSummaryPanel
+            externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
+          />
+        );
+      default:
+        return getEndpointFields();
     }
-
-    return getEndpointFields();
   };
 
   if (externalRestApiIntegrationStepTaskModel == null) {

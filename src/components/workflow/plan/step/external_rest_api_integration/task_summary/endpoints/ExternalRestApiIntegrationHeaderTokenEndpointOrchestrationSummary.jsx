@@ -10,9 +10,6 @@ import Col from "react-bootstrap/Col";
 import ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
-import {
-  externalRestApiIntegrationStepHelper
-} from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/externalRestApiIntegrationStep.helper";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
 export default function ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary(
