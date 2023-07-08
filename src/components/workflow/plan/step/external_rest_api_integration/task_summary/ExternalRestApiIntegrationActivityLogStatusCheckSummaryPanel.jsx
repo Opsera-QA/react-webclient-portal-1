@@ -22,9 +22,9 @@ export default function ExternalRestApiIntegrationActivityLogStatusCheckSummaryP
     externalRestApiIntegrationStepTaskModel,
   }) {
   const [activeTab, setActiveTab] = useState(STATUS_CHECK_VIEWS.STATUS_CHECK_SUMMARY);
-  const statusCheckConnectionCheckEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.last_status_check_request.endpoints.connectionCheckEndpoint");
-  const statusCheckHeaderTokenEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.last_status_check_request.endpoints.headerTokenEndpoint");
-  const statusCheckStatusCheckEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.last_status_check_request.endpoints.statusCheckEndpoint");
+  const statusCheckConnectionCheckEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.apiResponse.endpoints.connectionCheckEndpoint");
+  const statusCheckHeaderTokenEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.apiResponse.endpoints.headerTokenEndpoint");
+  const statusCheckStatusCheckEndpoint = externalRestApiIntegrationStepTaskModel?.getData("api_response.apiResponse.endpoints.statusCheckEndpoint");
 
   const handleTabClick = (newTab) => {
     if (activeTab !== newTab) {
