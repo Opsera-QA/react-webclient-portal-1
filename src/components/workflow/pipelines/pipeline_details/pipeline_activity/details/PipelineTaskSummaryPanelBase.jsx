@@ -17,6 +17,7 @@ function PipelineTaskSummaryPanelBase(
     messageFieldName,
     setActiveTab,
     children,
+    showMessageField,
   }) {
   return (
     <SummaryPanelContainer className={"mx-2"}>
@@ -57,6 +58,7 @@ function PipelineTaskSummaryPanelBase(
           <PipelineTaskSummaryMessageField
             fieldName={messageFieldName}
             model={pipelineTaskData}
+            visible={showMessageField}
           />
         </Col>
         {children}
@@ -70,6 +72,7 @@ PipelineTaskSummaryPanelBase.propTypes = {
   children: PropTypes.any,
   messageFieldName: PropTypes.string,
   setActiveTab: PropTypes.func,
+  showMessageField: PropTypes.bool,
 };
 
 PipelineTaskSummaryPanelBase.defaultProps = {

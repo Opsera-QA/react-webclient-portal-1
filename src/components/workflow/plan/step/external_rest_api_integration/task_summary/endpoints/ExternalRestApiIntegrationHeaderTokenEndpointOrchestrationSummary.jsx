@@ -5,15 +5,12 @@ import ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import endpointRequestHeaderBearerTokenTypeConstants
   from "@opsera/definitions/constants/api/request/header/endpointRequestHeaderBearerTokenType.constants";
-import InfoContainer from "components/common/containers/InfoContainer";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
-import {
-  externalRestApiIntegrationStepHelper
-} from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/externalRestApiIntegrationStep.helper";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
 export default function ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary(
   {
@@ -31,37 +28,27 @@ export default function ExternalRestApiIntegrationHeaderTokenEndpointOrchestrati
   if (authorizationType === endpointRequestHeaderBearerTokenTypeConstants.ENDPOINT_REQUEST_HEADER_BEARER_TOKEN_TYPES.LONG_LIVED_BEARER_TOKEN) {
     return (
       <div className={className}>
-        <InfoContainer
-          titleIcon={externalRestApiIntegrationStepHelper.getStatusIcon(status)}
-          titleText={`Access Token Generation Endpoint Summary: ${externalRestApiIntegrationStepHelper.getLabelForRuleEvaluationStatus(status)}`}
-          isCollapsable={true}
-          collapsed={status === "success"}
-          isLoading={status === "running"}
-        >
-          <div className={"m-2"}>
-            <Row>
-              <Col xs={12}>
-                <ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
-                  ruleEvaluation={parsedEndpoint?.ruleEvaluation}
-                />
-              </Col>
-              <Col xs={12}>
-                <StandaloneTextFieldBase
-                  label={"Status"}
-                  text={parsedEndpoint?.status}
-                />
-              </Col>
-              <Col xs={12}>
-                <StandaloneTextFieldBase
-                  label={"Access Token Custom Parameter ID"}
-                  text={parsedEndpoint?.customParameterId}
-                  showClipboardButton={true}
-                  visible={DataParsingHelper.isMongoDbId(parsedEndpoint?.customParameterId) === true}
-                />
-              </Col>
-            </Row>
-          </div>
-        </InfoContainer>
+        <Row>
+          <Col xs={12}>
+            <H5FieldSubHeader
+              subheaderText={"API Request Summary"}
+              className={"mt-2"}
+            />
+          </Col>
+          <Col xs={12}>
+            <ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
+              ruleEvaluation={parsedEndpoint?.ruleEvaluation}
+            />
+          </Col>
+          <Col xs={12}>
+            <StandaloneTextFieldBase
+              label={"Access Token Custom Parameter ID"}
+              text={parsedEndpoint?.customParameterId}
+              showClipboardButton={true}
+              visible={DataParsingHelper.isMongoDbId(parsedEndpoint?.customParameterId) === true}
+            />
+          </Col>
+        </Row>
       </div>
     );
   }
