@@ -47,28 +47,28 @@ function ExternalRestApiIntegrationActivityLogSummaryPanel(
   };
 
   const getBody = () => {
-    // switch (action) {
-    //   case pipelineActivityLogActionConstants.PIPELINE_ACTIVITY_LOG_ACTIONS.OPERATION_LOG:
-    //     return (
-    //       <ExternalRestApiIntegrationActivityLogOperationLogSummaryPanel
-    //         externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
-    //       />
-    //     );
-    //   case pipelineActivityLogActionConstants.PIPELINE_ACTIVITY_LOG_ACTIONS.START_CONFIRMATION:
-    //     return (
-    //       <ExternalRestApiIntegrationActivityLogStartConfirmationSummaryPanel
-    //         externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
-    //       />
-    //     );
-    //   case pipelineActivityLogActionConstants.PIPELINE_ACTIVITY_LOG_ACTIONS.STATUS_CHECK:
-    //     return (
-    //       <ExternalRestApiIntegrationActivityLogStatusCheckSummaryPanel
-    //         externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
-    //       />
-    //     );
-    //   default:
+    switch (action) {
+      case pipelineActivityLogActionConstants.PIPELINE_ACTIVITY_LOG_ACTIONS.OPERATION_LOG:
+        return (
+          <ExternalRestApiIntegrationActivityLogOperationLogSummaryPanel
+            externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
+          />
+        );
+      case pipelineActivityLogActionConstants.PIPELINE_ACTIVITY_LOG_ACTIONS.START_CONFIRMATION:
+        return (
+          <ExternalRestApiIntegrationActivityLogStartConfirmationSummaryPanel
+            externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
+          />
+        );
+      case pipelineActivityLogActionConstants.PIPELINE_ACTIVITY_LOG_ACTIONS.STATUS_CHECK:
+        return (
+          <ExternalRestApiIntegrationActivityLogStatusCheckSummaryPanel
+            externalRestApiIntegrationStepTaskModel={externalRestApiIntegrationStepTaskModel}
+          />
+        );
+      default:
         return getEndpointFields();
-    // }
+    }
   };
 
   if (externalRestApiIntegrationStepTaskModel == null) {
