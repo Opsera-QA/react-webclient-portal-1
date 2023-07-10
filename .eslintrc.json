@@ -9,12 +9,12 @@
   ],
   "globals": {
     "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly",
-    "require": "readonly",
-    "process": "readonly",
     "Map": "readonly",
+    "process": "readonly",
     "Promise": "readonly",
+    "require": "readonly",
     "Set": "readonly",
+    "SharedArrayBuffer": "readonly",
     "Uint8Array": "readonly"
   },
   "parser": "babel-eslint",
