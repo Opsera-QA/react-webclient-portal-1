@@ -12,6 +12,7 @@
     "SharedArrayBuffer": "readonly",
     "require": "readonly",
     "process": "readonly",
+    "Map": "readonly",
     "Promise": "readonly",
     "Set": "readonly"
   },
