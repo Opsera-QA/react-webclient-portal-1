@@ -13,7 +13,7 @@ function SapCpqToolConfigurationSummaryPanel({ sapCpqToolConfigurationModel }) {
 
   return (
     <SummaryPanelContainer>
-      <Row>        
+      <Row>
         <Col lg={12}>
           <TextFieldBase dataObject={sapCpqToolConfigurationModel} fieldName={"domainName"} />
         </Col>
