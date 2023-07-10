@@ -9,6 +9,7 @@
   ],
   "globals": {
     "Atomics": "readonly",
+    "module": "readonly",
     "Map": "readonly",
     "process": "readonly",
     "Promise": "readonly",
