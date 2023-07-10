@@ -20,6 +20,13 @@ export default function useLdapUserActions() {
     );
   };
 
+  ldapUserActions.getDeactivatedLdapUsers = async () => {
+    const apiUrl = "/account/users/platform/inactive";
+    return await apiService.handleApiGetRequest(
+      apiUrl,
+    );
+  };
+
   ldapUserActions.getResourcesWithUserAssigned = async (
     userEmail,
     type,

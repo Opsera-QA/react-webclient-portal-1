@@ -4,7 +4,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import useLdapUserActions from "hooks/ldap/users/useLdapUserActions";
 
-export default function useGetLdapUsersInCurrentUserDomain(handleErrorFunction) {
+export default function useGetDeactivatedLdapUsersInCurrentUserDomain(handleErrorFunction) {
   const [users, setUsers] = useState([]);
   const ldapUserActions = useLdapUserActions();
   const {
@@ -20,19 +20,19 @@ export default function useGetLdapUsersInCurrentUserDomain(handleErrorFunction) 
     setUsers([]);
 
     if (loadData) {
-      loadData(getLdapUsersForDomain, handleErrorFunction).catch(() => {
+      loadData(getDeactivatedLdapUsersInCurrentUserDomain, handleErrorFunction).catch(() => {
       });
     }
   }, []);
 
-  const getLdapUsersForDomain = async () => {
+  const getDeactivatedLdapUsersInCurrentUserDomain = async () => {
     setUsers([]);
 
     if (isSaasUser !== false) {
       return;
     }
 
-    const response = await ldapUserActions.getLdapUsers();
+    const response = await ldapUserActions.getDeactivatedLdapUsers();
     setUsers([...DataParsingHelper.parseNestedArray(response, "data.data", [])]);
   };
 
@@ -40,7 +40,7 @@ export default function useGetLdapUsersInCurrentUserDomain(handleErrorFunction) 
     users: users,
     setUsers: setUsers,
     error: error,
-    loadData: () => loadData(getLdapUsersForDomain, handleErrorFunction),
+    loadData: () => loadData(getDeactivatedLdapUsersInCurrentUserDomain, handleErrorFunction),
     isLoading: isLoading,
   });
 }
