@@ -22,7 +22,7 @@ export default function LdapUserManagement() {
   } = useComponentStateReference();
 
   useEffect(() => {
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
