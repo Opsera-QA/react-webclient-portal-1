@@ -14,16 +14,14 @@ import {
   externalRestApiIntegrationStepHelper
 } from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/externalRestApiIntegrationStep.helper";
 import FieldContainer from "components/common/fields/FieldContainer";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
 export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBase(
   {
     endpoint,
-    endpointType,
     className,
-    isCollapsed,
   }) {
   const parsedEndpoint = DataParsingHelper.parseObject(endpoint);
-  const status = DataParsingHelper.parseNestedString(parsedEndpoint, "ruleEvaluation.status");
 
   if (parsedEndpoint == null) {
     return null;
@@ -31,56 +29,51 @@ export default function ExternalRestApiIntegrationEndpointOrchestrationSummaryBa
 
   return (
     <div className={className}>
-      <InfoContainer
-        titleIcon={externalRestApiIntegrationStepHelper.getStatusIcon(status)}
-        titleText={`${endpointType} Endpoint Summary: ${externalRestApiIntegrationStepHelper.getLabelForRuleEvaluationStatus(status)}`}
-        isCollapsable={true}
-        collapsed={isCollapsed}
-        isLoading={status === "running"}
-      >
-        <div className={"m-2"}>
-          <Row>
-            <Col xs={12}>
-              <ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
-                ruleEvaluation={parsedEndpoint?.ruleEvaluation}
-              />
-            </Col>
-            <Col xs={12}>
-              <StandaloneTextFieldBase
-                label={"Endpoint URL"}
-                text={parsedEndpoint?.url}
-                showClipboardButton={true}
-              />
-            </Col>
-            <Col xs={6}>
-              <FieldContainer>
-                <StandaloneJsonField
-                  json={parsedEndpoint?.queryParameters}
-                  titleText={`API Query Parameters`}
-                  hideIfNoValue={true}
-                />
-                <StandaloneJsonField
-                  json={parsedEndpoint?.requestBody}
-                  titleText={`API Request Body`}
-                  hideIfNoValue={true}
-                />
-              </FieldContainer>
-            </Col>
-            <Col xs={6}>
-              <EndpointResponseField
-                responseObject={parsedEndpoint?.response}
-                titleText={`API Response`}
-              />
-            </Col>
-          </Row>
-        </div>
-      </InfoContainer>
+      <Row>
+        <Col xs={12}>
+          <H5FieldSubHeader
+            subheaderText={"API Request Summary"}
+            className={"mt-2"}
+          />
+        </Col>
+        <Col xs={12}>
+          <ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
+            ruleEvaluation={parsedEndpoint?.ruleEvaluation}
+          />
+        </Col>
+        <Col xs={12}>
+          <StandaloneTextFieldBase
+            label={"Endpoint URL"}
+            text={parsedEndpoint?.url}
+            showClipboardButton={true}
+          />
+        </Col>
+        <Col xs={12}>
+          <FieldContainer>
+            <StandaloneJsonField
+              json={parsedEndpoint?.queryParameters}
+              titleText={`API Query Parameters`}
+              hideIfNoValue={true}
+            />
+            <StandaloneJsonField
+              json={parsedEndpoint?.requestBody}
+              titleText={`API Request Body`}
+              hideIfNoValue={true}
+            />
+          </FieldContainer>
+        </Col>
+        <Col xs={12}>
+          <EndpointResponseField
+            responseObject={parsedEndpoint?.response}
+            titleText={`API Response Summary`}
+          />
+        </Col>
+      </Row>
     </div>
   );
 }
 
 ExternalRestApiIntegrationEndpointOrchestrationSummaryBase.propTypes = {
-  endpointType: PropTypes.string,
   endpoint: PropTypes.object,
   className: PropTypes.string,
   isCollapsed: PropTypes.bool,

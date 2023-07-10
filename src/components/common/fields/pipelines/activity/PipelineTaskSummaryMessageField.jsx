@@ -8,6 +8,7 @@ export default function PipelineTaskSummaryMessageField(
     fieldName,
     model,
     className,
+    visible,
   }) {
   const label = DataParsingHelper.parseString(model?.getLabel(fieldName, "Message"), "Message");
 
@@ -15,7 +16,7 @@ export default function PipelineTaskSummaryMessageField(
     return DataParsingHelper.parseString(model?.getData(fieldName), "");
   };
 
-  if (model == null) {
+  if (model == null || visible === false) {
     return null;
   }
 
@@ -32,4 +33,5 @@ PipelineTaskSummaryMessageField.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   className: PropTypes.string,
+  visible: PropTypes.bool,
 };

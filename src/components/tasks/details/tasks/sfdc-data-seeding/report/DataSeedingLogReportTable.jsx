@@ -16,6 +16,7 @@ import { pluralize } from "components/common/helpers/string-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import { dataSeedingObjectTableMetadata } from "./data-seeding-report-metadata";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import DataSeedingFieldListTableView from "./DataSeedingFieldListTableView";
 export const getListOfFields = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
@@ -25,18 +26,8 @@ export const getListOfFields = (field, className) => {
       if (!DataParsingHelper.parseArray(listOfFields, false, true)) {
         return "";
       }
-      const listItems = listOfFields?.map((item, index) => {
-        return (
-          <li
-            className={"mt-3"}
-            key={index.toString()}
-          >
-            {item?.name}
-          </li>
-        );
-      });
 
-      return <ul>{listItems}</ul>;
+      return <DataSeedingFieldListTableView listOfFields={listOfFields}/>;
     },
     class: className ? className : "no-wrap-inline",
   };
