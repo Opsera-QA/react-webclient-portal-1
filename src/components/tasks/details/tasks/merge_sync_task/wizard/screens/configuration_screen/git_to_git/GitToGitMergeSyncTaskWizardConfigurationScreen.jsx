@@ -20,10 +20,11 @@ const GitToGitMergeSyncTaskWizardConfigurationScreen = ({
   setCurrentScreen,
   handleClose,
 }) => {
+  const [isSalesforce] = useState(wizardModel?.getData("configuration.git.isSalesforce"));
+
   if (wizardModel == null) {
     return null;
   }
-  const [isSalesforce] = useState(wizardModel?.getData("configuration.git.isSalesforce"));
 
   return (
     <div>
