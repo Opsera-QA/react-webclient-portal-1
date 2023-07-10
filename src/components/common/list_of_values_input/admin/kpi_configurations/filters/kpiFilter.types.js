@@ -11,6 +11,7 @@ export const KPI_FILTER_TYPES = {
   JIRA_ISSUE_LABELS: "jira-issue-labels",
   JIRA_ISSUE_STATUS: "jira-issue-status",
   JIRA_ISSUE_START_STATUS: "jira-issue-start-status",
+  JIRA_ISSUE_START_STAGE: "jira-issue-start-stage",
   JIRA_ISSUE_DONE_STATUS: "jira-issue-done-status",
   SONAR_PROJECT_KEY: "sonar-project-key",
   DOMAIN: "domain",
