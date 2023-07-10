@@ -11,11 +11,23 @@ import useGetOrganizationSettingsFeatureFlagModelByName
   from "hooks/settings/organization_settings/feature_flags/useGetOrganizationSettingsFeatureFlagModelByName";
 import featureFlagConstants
   from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
 
 export default function GitCustodianLandingScreen() {
   const {
     isActive,
+    isLoading,
   } = useGetOrganizationSettingsFeatureFlagModelByName(featureFlagConstants.FEATURE_FLAG_NAMES.ENABLE_GIT_CUSTODIAN_LANDING_PAGE);
+
+  if (isLoading === true) {
+    return (
+      <CenterLoadingIndicator
+        customMessage={"Loading..."}
+        minHeight={screenContainerHeights.SCREEN_CONTAINER_HEIGHT}
+      />
+    );
+  }
 
   if (isActive !== true) {
     return (

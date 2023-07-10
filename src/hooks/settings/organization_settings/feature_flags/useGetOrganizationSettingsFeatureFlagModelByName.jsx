@@ -10,7 +10,7 @@ export default function useGetOrganizationSettingsFeatureFlagModelByName(
 ) {
   const [featureFlagModel, setFeatureFlagModel] = useState(undefined);
   const { getFeatureFlagModel } = useGetFeatureFlagModel();
-  const { organizationSettingsRecord } = useContext(AuthContext);
+  const { organizationSettingsRecord, isLoadingOrganizationSettingsRecord } = useContext(AuthContext);
 
   useEffect(() => {
     if (hasStringValue(featureFlagName) === true) {
@@ -36,5 +36,6 @@ export default function useGetOrganizationSettingsFeatureFlagModelByName(
     featureFlagModel: featureFlagModel,
     setFeatureFlagModel: setFeatureFlagModel,
     isActive: featureFlagModel?.getData("active") === true,
+    isLoading: isLoadingOrganizationSettingsRecord,
   });
 }
