@@ -14,7 +14,8 @@
     "process": "readonly",
     "Map": "readonly",
     "Promise": "readonly",
-    "Set": "readonly"
+    "Set": "readonly",
+    "Uint8Array": "readonly"
   },
   "parser": "babel-eslint",
   "parserOptions": {
