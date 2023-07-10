@@ -12,7 +12,8 @@
     "SharedArrayBuffer": "readonly",
     "require": "readonly",
     "process": "readonly",
-    "Promise": "readonly"
+    "Promise": "readonly",
+    "Set": "readonly"
   },
   "parser": "babel-eslint",
   "parserOptions": {
