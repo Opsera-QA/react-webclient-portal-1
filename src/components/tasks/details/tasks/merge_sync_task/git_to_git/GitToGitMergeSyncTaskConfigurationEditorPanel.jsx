@@ -36,7 +36,7 @@ import GitToGitMergeSyncTaskBuildTypeSelectInput
   from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskBuildTypeSelectInput";
 import GitToGitMergeSyncTaskSalesforceToggleInput
   from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskSalesforceToggleInput";
-import GitToGitMergeSyncTaskEnableJiraToggleInput from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskEnableJiraToggleInput"
+import GitToGitMergeSyncTaskEnableJiraToggleInput from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskEnableJiraToggleInput";
 
 function GitToGitMergeSyncTaskConfigurationEditorPanel({
   taskModel,

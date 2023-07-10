@@ -11,12 +11,12 @@ const getDiff = (arr1, arr2, key) => {
     if (!checkNameInObj(arr2, item, key)) {
       second.push(item);
     }
-  })
+  });
   arr2.map(item => {
     if (!checkNameInObj(arr1, item, key)) {
       first.push(item);
     }
-  })
+  });
   while (i < arr1.length && j < arr2.length) {
     if (checkNameInObj(second, arr1[i], key)) {
       arr2.splice(j, 0, { isDummy: true });
@@ -39,4 +39,4 @@ const getDiff = (arr1, arr2, key) => {
   return { arr1, arr2 };
 };
 
-export { getDiff }
+export { getDiff };

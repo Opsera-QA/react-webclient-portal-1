@@ -99,8 +99,8 @@ function GitlabCommitsByAuthorOverlay({ author, dashboardData, kpiConfiguration 
           setFilterModel={setFilterModel}
           loadData={loadData}
         />
-      </div>)
-  }
+      </div>);
+  };
   return (
     <div className={"p-3"}>
       <GitlabCommitsByAuthorActionableTable

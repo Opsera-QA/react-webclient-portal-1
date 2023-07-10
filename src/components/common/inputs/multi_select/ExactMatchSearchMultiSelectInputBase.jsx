@@ -152,7 +152,7 @@ function ExactMatchSearchMultiSelectInputBase(
       
       if (!searchedBranch){
         validateAndSetData(field?.id, null);
-        setInternalErrorMessage("There was no exact match of this branch name. Please search for another branch.")
+        setInternalErrorMessage("There was no exact match of this branch name. Please search for another branch.");
         return;
       }
     }

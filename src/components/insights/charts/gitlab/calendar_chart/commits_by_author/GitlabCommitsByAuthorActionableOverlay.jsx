@@ -103,8 +103,8 @@ function GitlabCommitsByAuthorActionableModal({ kpiConfiguration, dashboardData,
           loadData={loadData}
           tableTitleIcon={icon}
         />
-      </div>)
-  }
+      </div>);
+  };
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
