@@ -38,6 +38,7 @@ import {adminToolsTrails} from "components/admin/adminTools.trails";
 import {reportsTrails} from "components/reports/reports.trails";
 import {workspaceTrails} from "components/workspace/workspace.trails";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
+import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
 export const breadcrumbs = {
@@ -202,6 +203,13 @@ export const breadcrumbs = {
     title: "Git Custodian",
     linkText: "Git Custodian",
     icon: faShieldKeyhole,
+    allowedRoles: [
+      SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+      SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+      SiteRoleHelper.SITE_ROLES.SAAS_USER,
+      SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+      SiteRoleHelper.SITE_ROLES.AUDITOR,
+    ],
   },
 
   //Notifications
