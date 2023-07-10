@@ -1,9 +1,10 @@
 import { withAuth } from '@okta/okta-react';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import config from '../../config';
 import { Alert, Table } from 'react-bootstrap';
 
-export default withAuth(class Messages extends Component {
+class Messages extends Component {
   constructor(props) {
     super(props);
     this.state = { messages: null, failed: null };
@@ -89,4 +90,12 @@ export default withAuth(class Messages extends Component {
       </div>
     );
   }
-});
+}
+
+Messages.propTypes = {
+  auth: PropTypes.shape({
+    getAccessToken: PropTypes.func
+  })
+};
+
+export default withAuth(Messages);
