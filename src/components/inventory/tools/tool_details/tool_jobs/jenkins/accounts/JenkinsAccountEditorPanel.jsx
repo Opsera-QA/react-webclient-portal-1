@@ -222,7 +222,6 @@ function JenkinsAccountEditorPanel({
           {getEditWarning()}
         </Col>
       </Row>
-      {console.log("jenkinsAccountData", jenkinsAccountData)}
     </EditorPanelContainer>
   );
 }
