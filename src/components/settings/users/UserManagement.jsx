@@ -13,6 +13,9 @@ import useGetLdapUsersInCurrentUserDomain from "hooks/ldap/users/useGetLdapUsers
 import useGetPendingUsers from "hooks/platform/users/useGetPendingUsers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useGetDeactivatedLdapUsersInCurrentUserDomain
+  from "hooks/ldap/users/useGetDeactivatedLdapUsersInCurrentUserDomain";
+import DeactivatedUsersTable from "components/settings/users/DeactivatedUsersTable";
 
 const USER_MANAGEMENT_VIEWS = {
   PENDING_USERS: "pending",
@@ -27,6 +30,7 @@ function UserManagement() {
     accessRoleData,
   } = useComponentStateReference();
   const getLdapUsersInCurrentUserDomain = useGetLdapUsersInCurrentUserDomain();
+  const getDeactivatedLdapUsersInCurrentUserDomain = useGetDeactivatedLdapUsersInCurrentUserDomain();
   const getPendingUsers = useGetPendingUsers(
     DataParsingHelper.parseNestedString(userData, "ldap.domain"),
     DataParsingHelper.parseNestedString(userData, "ldap.account"),
@@ -40,6 +44,14 @@ function UserManagement() {
             loadData={getPendingUsers.loadData}
             isLoading={getPendingUsers.isLoading}
             pendingUserData={getPendingUsers.pendingUsers}
+          />
+        );
+      case USER_MANAGEMENT_VIEWS.DEACTIVATED_USERS:
+        return (
+          <DeactivatedUsersTable
+            isLoading={getDeactivatedLdapUsersInCurrentUserDomain.isLoading}
+            users={getDeactivatedLdapUsersInCurrentUserDomain.users}
+            loadData={getDeactivatedLdapUsersInCurrentUserDomain.loadData}
           />
         );
       case USER_MANAGEMENT_VIEWS.ACTIVE_USERS:
