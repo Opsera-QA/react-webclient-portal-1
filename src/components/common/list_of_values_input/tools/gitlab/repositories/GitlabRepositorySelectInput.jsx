@@ -128,7 +128,7 @@ function GitlabRepositorySelectInput({
       getAccessToken,
       cancelTokenSource,
       toolId,
-      repositoryId,
+      undefined,
       branch,
     );
 

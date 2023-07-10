@@ -97,7 +97,7 @@ githubActions.getRepo = async (
 
   const queryParameters = {    
     repositoryId: repositoryId,
-    branchName: branchName,
+    branchName: undefined,
   };
 
   return baseActions.apiGetCallV3( getAccessToken, cancelTokenSource, apiUrl, queryParameters);

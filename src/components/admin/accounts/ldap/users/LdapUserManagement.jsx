@@ -51,7 +51,7 @@ export default function LdapUserManagement() {
   };
 
   const getUsersByDomain = async () => {
-      const response = await accountsActions.getOrganizationAccountByDomainV2(getAccessToken, cancelTokenSource, ldapDomain);
+      const response = await accountsActions.getOrganizationAccountByDomainV2(getAccessToken, cancelTokenSource, undefined);
       const parsedUsers = DataParsingHelper.parseNestedArray(response, "data.users");
 
       if (isMounted?.current === true && parsedUsers) {
