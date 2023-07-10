@@ -198,7 +198,6 @@ function SourceCodeView_executive({ persona, date }) {
         </div>
       </>
     );
-    );
   }
 }
 
