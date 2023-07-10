@@ -1,26 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
+import apiFieldTypeConstants from "@opsera/definitions/constants/api/request/apiFieldType.constants";
 import ConstantFieldBase from "components/common/fields/constant/ConstantFieldBase";
-import endpointTypeConstants from "@opsera/definitions/constants/api/request/endpoint/endpointType.constants";
 
-export default function EndpointTypeField(
+export default function ApiRequestFieldTypeField(
   {
-    fieldName,
     model,
     className,
+    fieldName,
   }) {
   return (
     <ConstantFieldBase
       model={model}
       fieldName={fieldName}
-      getLabelFunction={endpointTypeConstants.getEndpointTypeLabel}
+      getLabelFunction={apiFieldTypeConstants.getApiFieldTypeLabel}
       className={className}
     />
   );
 }
 
-EndpointTypeField.propTypes = {
-  fieldName: PropTypes.string,
+ApiRequestFieldTypeField.propTypes = {
   model: PropTypes.object,
   className: PropTypes.string,
+  fieldName: PropTypes.string,
 };
