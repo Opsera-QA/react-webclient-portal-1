@@ -312,6 +312,8 @@ ExactMatchSearchMultiSelectInputBase.propTypes = {
   requireUserEnable: PropTypes.bool,
   onEnableEditFunction: PropTypes.func,
   supportSearchLookup: PropTypes.bool,
+  branchExactMatchSearch: PropTypes.func,
+  requiresLookup: PropTypes.bool
 };
 
 export default ExactMatchSearchMultiSelectInputBase;
