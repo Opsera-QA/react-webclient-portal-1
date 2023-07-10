@@ -11,7 +11,7 @@ import actionableInsightsGenericChartFilterMetadata
 import GitlabCommitsByAuthorActionableTable from "./GitlabCommitsByAuthorActionableTable";
 import gitlabActions from "../../gitlab.action";
 
-function GitlabCommitsByAuthorActionableModal({ kpiConfiguration, dashboardData, author, date, icon, endDate, startDate, y }) {
+function GitlabCommitsByAuthorActionableModal({ kpiConfiguration, dashboardData, author, icon, endDate, startDate }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [error, setError] = useState(undefined);
@@ -120,14 +120,12 @@ function GitlabCommitsByAuthorActionableModal({ kpiConfiguration, dashboardData,
 }
 
 GitlabCommitsByAuthorActionableModal.propTypes = {
-  metrics: PropTypes.array,
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  start: PropTypes.string,
-  end: PropTypes.string,
-  range: PropTypes.string,
-  type: PropTypes.string,
-
+  author: PropTypes.any,
+  icon: PropTypes.object,
+  endDate: PropTypes.string,
+  startDate: PropTypes.string,
 };
 
 export default GitlabCommitsByAuthorActionableModal;

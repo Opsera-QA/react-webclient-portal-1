@@ -32,7 +32,7 @@ function SapCpqToolConfigurationSummaryPanel({ sapCpqToolConfigurationModel }) {
 }
 
 SapCpqToolConfigurationSummaryPanel.propTypes = {
-  sapToolConfigurationModel: PropTypes.object,
+  sapCpqToolConfigurationModel: PropTypes.object,
 };
 
 export default SapCpqToolConfigurationSummaryPanel;

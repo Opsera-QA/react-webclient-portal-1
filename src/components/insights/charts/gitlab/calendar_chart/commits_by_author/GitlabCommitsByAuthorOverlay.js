@@ -116,14 +116,9 @@ function GitlabCommitsByAuthorOverlay({ author, dashboardData, kpiConfiguration 
 }
 
 GitlabCommitsByAuthorOverlay.propTypes = {
-  metrics: PropTypes.array,
-  kpiConfiguration: PropTypes.object,
+  author: PropTypes.any,
   dashboardData: PropTypes.object,
-  start: PropTypes.string,
-  end: PropTypes.string,
-  range: PropTypes.string,
-  type: PropTypes.string,
-
+  kpiConfiguration: PropTypes.object,
 };
 
 

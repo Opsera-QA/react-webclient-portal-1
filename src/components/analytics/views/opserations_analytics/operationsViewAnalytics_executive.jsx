@@ -187,6 +187,10 @@ function OperationsViewAnalytics_executive({ persona, date }) {
 
 OperationsViewAnalytics_executive.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.shape({
+    start: PropTypes.string,
+    end: PropTypes.string
+  })
 };
 
 export default OperationsViewAnalytics_executive;

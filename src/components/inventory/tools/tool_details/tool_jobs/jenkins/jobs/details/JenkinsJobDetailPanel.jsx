@@ -55,6 +55,12 @@ function LdapDetailsView({ activeTab, jenkinsJobData, setJenkinsJobData }) {
   }
 }
 
+LdapDetailsView.propTypes = {
+  activeTab: PropTypes.bool,
+  jenkinsJobData: PropTypes.object,
+  setJenkinsJobData: PropTypes.func
+};
+
 JenkinsJobDetailPanel.propTypes = {
   jenkinsJobData: PropTypes.object,
   setJenkinsJobData: PropTypes.func,

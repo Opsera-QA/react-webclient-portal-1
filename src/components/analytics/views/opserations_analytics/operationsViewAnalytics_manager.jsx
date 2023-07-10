@@ -187,6 +187,10 @@ function OperationsViewAnalytics_manager({ persona, date }) {
 
 OperationsViewAnalytics_manager.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.shape({
+    start: PropTypes.string,
+    end: PropTypes.string
+  })
 };
 
 export default OperationsViewAnalytics_manager;

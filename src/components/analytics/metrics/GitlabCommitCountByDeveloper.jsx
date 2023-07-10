@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
+import PropTypes from 'prop-types';
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
@@ -97,5 +98,12 @@ function GitlabCommitCountByDeveloper({ date }) {
       </>
     );}
 }
+
+GitlabCommitCountByDeveloper.propTypes = {
+  date: PropTypes.shape({
+    start: PropTypes.string,
+    end: PropTypes.string
+  })
+};
 
 export default GitlabCommitCountByDeveloper;

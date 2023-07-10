@@ -63,9 +63,6 @@ GitlabCommitsByAuthorActionableTable.propTypes = {
     loadData: PropTypes.func,
     filterModel: PropTypes.object,
     setFilterModel: PropTypes.func,
-    priority: PropTypes.number,
-    tableTitleIcon: PropTypes.object,
-    range: PropTypes.string,
     tableTitleIcon: PropTypes.object,
 };
 

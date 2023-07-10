@@ -51,7 +51,9 @@ function BooleanFilter({ fieldName, setFilterDto, filterDto, setDataFunction, in
 
 BooleanFilter.propTypes = {
   fieldName: PropTypes.string,
+  setFilterDto: PropTypes.func,
   filterDto: PropTypes.object,
+  setDataFunction: PropTypes.func,
   loadData: PropTypes.func,
   inline: PropTypes.bool,
   toolTipText: PropTypes.bool
