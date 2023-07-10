@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { diff as DiffEditor } from "react-ace";
 
 import * as ace from 'ace-builds/src-noconflict/ace';
-import "ace-builds/src-noconflict/ace";
 import "ace-builds/src-noconflict/theme-chrome";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/theme-terminal";
