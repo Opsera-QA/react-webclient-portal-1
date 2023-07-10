@@ -75,4 +75,4 @@ TagsInlineInputBase.defaultProps = {
   fieldName: "tags",
 };
 
-export default TagsInlineOverlayInputBase;
+export default TagsInlineInputBase;
