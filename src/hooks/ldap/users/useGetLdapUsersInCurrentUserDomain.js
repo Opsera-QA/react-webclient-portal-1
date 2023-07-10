@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import {hasStringValue} from "components/common/helpers/string-helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import useLdapUserActions from "hooks/ldap/users/useLdapUserActions";
 
