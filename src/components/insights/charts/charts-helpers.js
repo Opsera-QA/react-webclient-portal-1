@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/pro-solid-svg-icons";
 import moment from "moment";
 import { METRIC_QUALITY_LEVELS } from "../../common/metrics/text/MetricTextBase";
+import { KPI_FILTER_TYPES } from "components/common/list_of_values_input/admin/kpi_configurations/filters/kpiFilter.types";
 
 export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
   const date =
@@ -141,6 +142,13 @@ export function getJiraIssueStartStatusFromKpiConfiguration(kpiConfiguration) {
   return getResultFromKpiConfiguration(
     kpiConfiguration,
     "jira-issue-start-status",
+  );
+}
+
+export function getJiraIssueStartStageFromKpiConfiguration(kpiConfiguration) {
+  return getResultFromKpiConfiguration(
+    kpiConfiguration,
+    KPI_FILTER_TYPES.JIRA_ISSUE_START_STAGE,
   );
 }
 

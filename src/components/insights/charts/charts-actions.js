@@ -10,6 +10,7 @@ import {
   getJiraIssueLabelsFromKpiConfiguration,
   getJiraIssueStatusFromKpiConfiguration,
   getJiraIssueStartStatusFromKpiConfiguration,
+  getJiraIssueStartStageFromKpiConfiguration,
   getJiraIssueDoneStatusFromKpiConfiguration,
   getSonarProjectKeyFromKpiConfiguration,
   getDomainFromKpiConfiguration,
@@ -794,6 +795,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     jiraIssueStatus = getJiraIssueStatusFromKpiConfiguration(kpiConfiguration),
     jiraIssueStartStatus =
       getJiraIssueStartStatusFromKpiConfiguration(kpiConfiguration),
+    jiraIssueStartStage = getJiraIssueStartStageFromKpiConfiguration(kpiConfiguration),
     jiraIssueDoneStatus =
       getJiraIssueDoneStatusFromKpiConfiguration(kpiConfiguration),
     sonarProjectKey = getSonarProjectKeyFromKpiConfiguration(kpiConfiguration),
@@ -856,6 +858,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     jiraIssueLabels: jiraIssueLabels,
     jiraIssueStatus: jiraIssueStatus,
     jiraIssueStartStatus: jiraIssueStartStatus,
+    jiraIssueStartStage: jiraIssueStartStage,
     jiraIssueDoneStatus: jiraIssueDoneStatus,
     sonarProjectKey: sonarProjectKey,
     domain: domain,
