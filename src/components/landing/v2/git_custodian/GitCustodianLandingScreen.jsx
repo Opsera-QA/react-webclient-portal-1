@@ -6,8 +6,23 @@ import GitCustodianLandingAccountStatsWidget
   from "components/landing/v2/git_custodian/GitCustodianLandingAccountStatsWidget";
 import GitCustodianLandingMyWorkflowsWidget
   from "components/landing/v2/git_custodian/GitCustodianLandingMyWorkflowsWidget";
+import GitCustodian from "components/insights/gitCustodian/GitCustodian";
+import useGetOrganizationSettingsFeatureFlagModelByName
+  from "hooks/settings/organization_settings/feature_flags/useGetOrganizationSettingsFeatureFlagModelByName";
+import featureFlagConstants
+  from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
 
 export default function GitCustodianLandingScreen() {
+  const {
+    isActive,
+  } = useGetOrganizationSettingsFeatureFlagModelByName(featureFlagConstants.FEATURE_FLAG_NAMES.ENABLE_GIT_CUSTODIAN_LANDING_PAGE);
+
+  if (isActive !== true) {
+    return (
+      <GitCustodian />
+    );
+  }
+
   return (
     <div className={"max-content-width"}
     >
