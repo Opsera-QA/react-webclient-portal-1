@@ -1,11 +1,11 @@
-import React, {useState, useRef, useEffect, useContext} from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import PropTypes from "prop-types";
 import axios from "axios";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import { AuthContext } from "contexts/AuthContext";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import CancelButton from "components/common/buttons/CancelButton";
-import {parseError} from "components/common/helpers/error-helpers";
+import { parseError } from "components/common/helpers/error-helpers";
 import mergeSyncTaskWizardActions
   from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 import BackButton from "components/common/buttons/back/BackButton";
@@ -119,6 +119,10 @@ const MergeSyncTaskWizardCommitSelector = ({
       if (Array.isArray(newFileList)) {
         setDiffFileList([...newFileList]);
         setFilePullCompleted(true);
+        const newWizardModel = { ...wizardModel };
+        const filteredArr = newFileList.filter(item => item.commitAction === 'conflict');
+        newWizardModel?.setData("conflictFilesList", filteredArr.map(item => ({ fileName: item.committedFile })));
+        setWizardModel({ ...newWizardModel });
       }
     }
 
@@ -141,9 +145,9 @@ const MergeSyncTaskWizardCommitSelector = ({
         <BackButton
           className={"mr-2"}
           backButtonFunction={() => {
-            skipConfig ? 
-            setCurrentScreen(MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN) : 
-            setCurrentScreen(MERGE_SYNC_WIZARD_SCREENS.FILE_SELECTION_SCREEN);
+            skipConfig ?
+              setCurrentScreen(MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN) :
+              setCurrentScreen(MERGE_SYNC_WIZARD_SCREENS.FILE_SELECTION_SCREEN);
           }}
         />
         <MergeSyncTaskWizardConfirmationButton

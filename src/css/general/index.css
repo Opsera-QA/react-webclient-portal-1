@@ -944,6 +944,9 @@ a:hover, .active, .link-text:hover {
     min-height: 400px;
 }
 
+.flex {
+    display: flex;
+}
 
 .flex-container {
     min-height: 500px;
