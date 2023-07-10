@@ -24,7 +24,7 @@ function GitlabCommitsByAuthorVerticalTabContainer({
     return (
       <VanitySetVerticalTabContainer className={"h-100"}>
         {data?.map((item) => {
-          return <VanitySetVerticalTab tabName={item?.x} tabText={item?.x} />;
+          return <VanitySetVerticalTab key={item?.x} tabName={item?.x} tabText={item?.x} />;
         })}
       </VanitySetVerticalTabContainer>
     );
