@@ -54,51 +54,51 @@ export default function CreateWorkflowWizardPipelineCompletionScreen(
 
   const getBody = () => {
     switch (initializationState) {
-    case apiRequestHelper.API_REQUEST_STATES.BUSY:
-      return (
-        <CenterLoadingIndicator customMessage={`Finishing up initialization for your new ${workflowType} Workflow`} />
-      );
-    case apiRequestHelper.API_REQUEST_STATES.ERROR:
-      return (
-        <CenteredContentWrapper>
+      case apiRequestHelper.API_REQUEST_STATES.BUSY:
+        return (
+          <CenterLoadingIndicator customMessage={`Finishing up initialization for your new ${workflowType} Workflow`} />
+        );
+      case apiRequestHelper.API_REQUEST_STATES.ERROR:
+        return (
+          <CenteredContentWrapper>
             There was an issue finalizing the initialization for this {workflowType} Workflow. Please try once more.
-        </CenteredContentWrapper>
-      );
-    case apiRequestHelper.API_REQUEST_STATES.SUCCESS:
-      return (
-        <CenteredContentWrapper
-          minHeight={HEIGHT}
-        >
-          <OpseraInfinityLogoLarge
-            scale={.4}
-          />
-          <div>
-            <H5FieldSubHeader
-              subheaderText={`You have successfully completed creating your new ${workflowType} Pipeline!`}
+          </CenteredContentWrapper>
+        );
+      case apiRequestHelper.API_REQUEST_STATES.SUCCESS:
+        return (
+          <CenteredContentWrapper
+            minHeight={HEIGHT}
+          >
+            <OpseraInfinityLogoLarge
+              scale={.4}
             />
-            <H5FieldSubHeader
-              subheaderText={`Now you can either return to the home page or start the Pipeline.`}
-              className={"my-3"}
-            />
-            <div className={"focusText"}>
+            <div>
+              <H5FieldSubHeader
+                subheaderText={`You have successfully completed creating your new ${workflowType} Pipeline!`}
+              />
+              <H5FieldSubHeader
+                subheaderText={`Now you can either return to the home page or start the Pipeline.`}
+                className={"my-3"}
+              />
+              <div className={"focusText"}>
                 You can start your Pipeline anytime you want from the Opsera home page.
+              </div>
+              <div className={"d-flex"}>
+                <ButtonContainerBase
+                  className={"mt-5 ml-auto"}
+                >
+                  <DoneOverlayButton
+                    className={"mr-2"}
+                  />
+                  <FreeTrialLaunchWorkflowButton
+                    workspaceItem={pipeline}
+                    workspaceType={workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE}
+                  />
+                </ButtonContainerBase>
+              </div>
             </div>
-            <div className={"d-flex"}>
-              <ButtonContainerBase
-                className={"mt-5 ml-auto"}
-              >
-                <DoneOverlayButton
-                  className={"mr-2"}
-                />
-                <FreeTrialLaunchWorkflowButton
-                  workspaceItem={pipeline}
-                  workspaceType={workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE}
-                />
-              </ButtonContainerBase>
-            </div>
-          </div>
-        </CenteredContentWrapper>
-      );
+          </CenteredContentWrapper>
+        );
     }
   };
 

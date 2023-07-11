@@ -27,23 +27,23 @@ function ProjectDataMappingDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <ProjectDataMappingSummaryPanel
-          projectDataMappingModel={projectDataMappingModel}
-          setActiveTab={setActiveTab}
-        />
-      );
-    case "settings":
-      return (
-        <ProjectDataMappingEditorPanel
-          projectDataMappingModel={projectDataMappingModel}
-          setProjectDataMappingModel={setProjectDataMappingModel}
-          handleClose={toggleSummaryPanel}
-        />
-      );
-    default:
-      return null;
+      case "summary":
+        return (
+          <ProjectDataMappingSummaryPanel
+            projectDataMappingModel={projectDataMappingModel}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case "settings":
+        return (
+          <ProjectDataMappingEditorPanel
+            projectDataMappingModel={projectDataMappingModel}
+            setProjectDataMappingModel={setProjectDataMappingModel}
+            handleClose={toggleSummaryPanel}
+          />
+        );
+      default:
+        return null;
     }
   };
 

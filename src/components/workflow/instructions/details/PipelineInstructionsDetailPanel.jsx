@@ -56,29 +56,29 @@ export default function PipelineInstructionsDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <PipelineInstructionsSummaryPanel
-          pipelineInstructionsModel={pipelineInstructionsModel}
-          setPipelineInstructionsModel={setPipelineInstructionsModel}
-          setActiveTab={setActiveTab}
-        />
-      );
-    case "usage":
-      return (
-        <PipelineInstructionsPipelineUsageField
-          pipelineInstructionsId={pipelineInstructionsModel?.getMongoDbId()}
-        />
-      );
-    case "settings":
-      return (
-        <PipelineInstructionsEditorPanel
-          pipelineInstructionsModel={pipelineInstructionsModel}
-          setPipelineInstructionsModel={setPipelineInstructionsModel}
-        />
-      );
-    default:
-      return null;
+      case "summary":
+        return (
+          <PipelineInstructionsSummaryPanel
+            pipelineInstructionsModel={pipelineInstructionsModel}
+            setPipelineInstructionsModel={setPipelineInstructionsModel}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case "usage":
+        return (
+          <PipelineInstructionsPipelineUsageField
+            pipelineInstructionsId={pipelineInstructionsModel?.getMongoDbId()}
+          />
+        );
+      case "settings":
+        return (
+          <PipelineInstructionsEditorPanel
+            pipelineInstructionsModel={pipelineInstructionsModel}
+            setPipelineInstructionsModel={setPipelineInstructionsModel}
+          />
+        );
+      default:
+        return null;
     }
   };
 

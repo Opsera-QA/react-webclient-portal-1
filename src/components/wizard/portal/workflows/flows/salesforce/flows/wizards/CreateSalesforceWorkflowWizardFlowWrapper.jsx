@@ -18,32 +18,32 @@ export default function CreateSalesforceWorkflowWizardFlowWrapper(
   }) {
   const getCurrentScreen = () => {
     switch (flow) {
-    case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC:
-    case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING:
-    case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING_AND_BACKUP:
-      return (
-        <CreateSalesforceOrganizationSyncPipelineWizard
-          flow={flow}
-          setButtonContainer={setButtonContainer}
-          backButtonFunction={backButtonFunction}
-        />
-      );
-    case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK:
-      return (
-        <CreateSalesforceOrganizationSyncTaskWizard
-          flow={flow}
-          setButtonContainer={setButtonContainer}
-          backButtonFunction={backButtonFunction}
-        />
-      );
-    case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC:
-      return (
-        <CreateSalesforceOrganizationToGitMergeSyncTaskWizard
-          flow={flow}
-          setButtonContainer={setButtonContainer}
-          backButtonFunction={backButtonFunction}
-        />
-      );
+      case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC:
+      case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING:
+      case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING_AND_BACKUP:
+        return (
+          <CreateSalesforceOrganizationSyncPipelineWizard
+            flow={flow}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={backButtonFunction}
+          />
+        );
+      case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK:
+        return (
+          <CreateSalesforceOrganizationSyncTaskWizard
+            flow={flow}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={backButtonFunction}
+          />
+        );
+      case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC:
+        return (
+          <CreateSalesforceOrganizationToGitMergeSyncTaskWizard
+            flow={flow}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={backButtonFunction}
+          />
+        );
     }
   };
 

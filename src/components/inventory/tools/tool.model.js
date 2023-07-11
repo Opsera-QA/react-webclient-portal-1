@@ -83,10 +83,10 @@ export default class ToolModel extends ModelBase {
     const canRotateToken = RegistryToolRoleHelper.canRotateRegistryToolToken(this.userData, this.data);
 
     switch (toolIdentifier) {
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS:
-      return canRotateToken === true;
-    default:
-      return false;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS:
+        return canRotateToken === true;
+      default:
+        return false;
     }
   };
 

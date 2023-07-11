@@ -52,24 +52,24 @@ function ConnectedAssetsPipelinesTabContainer({ dashboardData }) {
 
   const getTabContentContainer = () => {
     switch (currentTab) {
-    case CONNECTED_ASSETS_PIPELINES_TABS.RECENT:
-      return (
-        <ConnectedAssetsPipelinesRecentTable
-          dashboardData={dashboardData}
-        />
-      );
-    case CONNECTED_ASSETS_PIPELINES_TABS.DELETED:
-      return (
-        <ConnectedAssetsPipelinesDeletedTable
-          dashboardData={dashboardData}
-        />
-      );
-    case CONNECTED_ASSETS_PIPELINES_TABS.INACTIVE:
-      return (
-        <ConnectedAssetsPipelinesInactiveTable
-          dashboardData={dashboardData}
-        />
-      );
+      case CONNECTED_ASSETS_PIPELINES_TABS.RECENT:
+        return (
+          <ConnectedAssetsPipelinesRecentTable
+            dashboardData={dashboardData}
+          />
+        );
+      case CONNECTED_ASSETS_PIPELINES_TABS.DELETED:
+        return (
+          <ConnectedAssetsPipelinesDeletedTable
+            dashboardData={dashboardData}
+          />
+        );
+      case CONNECTED_ASSETS_PIPELINES_TABS.INACTIVE:
+        return (
+          <ConnectedAssetsPipelinesInactiveTable
+            dashboardData={dashboardData}
+          />
+        );
     }
   };
 

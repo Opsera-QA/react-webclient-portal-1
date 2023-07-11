@@ -19,12 +19,12 @@ export default function PipelineTaskAuditLogSummaryPanel({pipelineTaskData}) {
 
   const getSummaryPanel = () => {
     switch (toolIdentifier) {
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
-      return (
-        <ExternalRestApiIntegrationTaskRunConfigurationSummaryPanel
-          externalRestApiIntegrationStepTaskModel={modelHelpers.parseObjectIntoModel(pipelineTaskData, pipelineTaskMetadata)}
-        />
-      );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
+        return (
+          <ExternalRestApiIntegrationTaskRunConfigurationSummaryPanel
+            externalRestApiIntegrationStepTaskModel={modelHelpers.parseObjectIntoModel(pipelineTaskData, pipelineTaskMetadata)}
+          />
+        );
     }
   };
 

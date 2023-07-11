@@ -6,12 +6,12 @@ import {darkThemeConstants} from "temp-library-components/theme/dark.theme.const
 
 const getThemeConstants = (theme) => {
   switch (theme) {
-  case THEMES.LIGHT:
-    return lightThemeConstants;
-  case THEMES.NIGHT:
-    return darkThemeConstants;
-  default:
-    return lightThemeConstants;
+    case THEMES.LIGHT:
+      return lightThemeConstants;
+    case THEMES.NIGHT:
+      return darkThemeConstants;
+    default:
+      return lightThemeConstants;
   }
 };
 

@@ -89,52 +89,52 @@ function JFrogMavenStepConfiguration({
 
   const getDynamicFields = () => {
     switch (jfrogStepConfigurationDto.getData("repositoryFormat")) {
-    case "Maven":
-      return (
-        <>
-          <TextInputBase
-            setDataObject={setJFrogStepConfigurationDataDto}
-            dataObject={jfrogStepConfigurationDto}
-            fieldName={"groupName"}
-            key={"groupName"}
-          />
-          <TextInputBase
-            setDataObject={setJFrogStepConfigurationDataDto}
-            dataObject={jfrogStepConfigurationDto}
-            fieldName={"artifactName"}
-            key={"artifactName"}
-          />
-          <BooleanToggleInput
-            dataObject={jfrogStepConfigurationDto}
-            setDataObject={setJFrogStepConfigurationDataDto}
-            fieldName={"customVersion"}
-          />
-        </>
-      );
-    case "NuGet":
-      return (
-        <>
-          <TextInputBase
-            setDataObject={setJFrogStepConfigurationDataDto}
-            dataObject={jfrogStepConfigurationDto}
-            fieldName={"serverPath"}
-            key={"serverPath"}
-          />
-        </>
-      );
-    case "Generic":
-      return (
-        <>
-          <TextInputBase
-            setDataObject={setJFrogStepConfigurationDataDto}
-            dataObject={jfrogStepConfigurationDto}
-            fieldName={"serverPath"}
-            key={"serverPath"}
-          />
-        </>
-      );
-    default:
-      return null;
+      case "Maven":
+        return (
+          <>
+            <TextInputBase
+              setDataObject={setJFrogStepConfigurationDataDto}
+              dataObject={jfrogStepConfigurationDto}
+              fieldName={"groupName"}
+              key={"groupName"}
+            />
+            <TextInputBase
+              setDataObject={setJFrogStepConfigurationDataDto}
+              dataObject={jfrogStepConfigurationDto}
+              fieldName={"artifactName"}
+              key={"artifactName"}
+            />
+            <BooleanToggleInput
+              dataObject={jfrogStepConfigurationDto}
+              setDataObject={setJFrogStepConfigurationDataDto}
+              fieldName={"customVersion"}
+            />
+          </>
+        );
+      case "NuGet":
+        return (
+          <>
+            <TextInputBase
+              setDataObject={setJFrogStepConfigurationDataDto}
+              dataObject={jfrogStepConfigurationDto}
+              fieldName={"serverPath"}
+              key={"serverPath"}
+            />
+          </>
+        );
+      case "Generic":
+        return (
+          <>
+            <TextInputBase
+              setDataObject={setJFrogStepConfigurationDataDto}
+              dataObject={jfrogStepConfigurationDto}
+              fieldName={"serverPath"}
+              key={"serverPath"}
+            />
+          </>
+        );
+      default:
+        return null;
     }
   };
 

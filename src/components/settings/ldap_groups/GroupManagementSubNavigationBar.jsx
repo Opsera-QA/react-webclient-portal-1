@@ -17,26 +17,26 @@ function GroupManagementSubNavigationBar({ activeTab }) {
     }
 
     switch (tabSelection) {
-    case "groups":
-      history.push(`/settings/groups`);
-      return;
+      case "groups":
+        history.push(`/settings/groups`);
+        return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-    case "groupViewer":
-      return (
-        <NavigationTab
-          icon={faUsers}
-          tabName={activeTab}
-          handleTabClick={handleTabClick}
-          activeTab={"groupViewer"}
-          tabText={"Group Viewer"}
-        />
-      );
-    default:
-      return null;
+      case "groupViewer":
+        return (
+          <NavigationTab
+            icon={faUsers}
+            tabName={activeTab}
+            handleTabClick={handleTabClick}
+            activeTab={"groupViewer"}
+            tabText={"Group Viewer"}
+          />
+        );
+      default:
+        return null;
     }
   };
 

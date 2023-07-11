@@ -103,16 +103,16 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
 
   const getActionIcon = (action) => {
     switch (action?.toLowerCase()) {
-    case "added":
-      return (<IconBase icon={faPlus} className={"mr-1 green"} />);
-    case "modified":
-      return (<IconBase icon={faEdit} className={"mr-1 yellow"} />);
-    case "removed":
-      return (<IconBase icon={faMinus} className={"mr-1 red"} />);
-    case "conflict":
-      return (<IconBase icon={faTriangleExclamation} className={"mr-1 danger-red"} />);
-    default:
-      return (<IconBase icon={faFile} className={"mr-1 green"} />);
+      case "added":
+        return (<IconBase icon={faPlus} className={"mr-1 green"} />);
+      case "modified":
+        return (<IconBase icon={faEdit} className={"mr-1 yellow"} />);
+      case "removed":
+        return (<IconBase icon={faMinus} className={"mr-1 red"} />);
+      case "conflict":
+        return (<IconBase icon={faTriangleExclamation} className={"mr-1 danger-red"} />);
+      default:
+        return (<IconBase icon={faFile} className={"mr-1 green"} />);
     }
   };
 

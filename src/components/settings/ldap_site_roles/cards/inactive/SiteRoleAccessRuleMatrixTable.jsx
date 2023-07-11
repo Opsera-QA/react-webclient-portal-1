@@ -33,10 +33,10 @@ export default function SiteRoleAccessRuleMatrixTable({ siteRole }) {
 
   const getData = () => {
     switch (siteRole) {
-    case SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER:
-      return securityManagerSiteRoleAccessMatrix;
-    case SiteRoleHelper.SITE_ROLES.AUDITOR:
-      return auditorSiteRoleAccessMatrix;
+      case SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER:
+        return securityManagerSiteRoleAccessMatrix;
+      case SiteRoleHelper.SITE_ROLES.AUDITOR:
+        return auditorSiteRoleAccessMatrix;
     }
   };
 

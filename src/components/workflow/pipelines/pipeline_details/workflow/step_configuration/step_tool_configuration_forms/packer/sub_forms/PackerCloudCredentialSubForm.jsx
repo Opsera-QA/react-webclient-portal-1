@@ -24,27 +24,27 @@ function PackerCloudCredentialSubForm({ model, setModel, cloudProvider}) {
 
   const getCloudCredentialFields = () => {
     switch (cloudProvider) {
-    case "aws":
-      return (
-        <>
-          <PackerAwsCredentialsSelectInput model={model} setModel={setModel} />
-          <PackerIAmRoleFlagToggleInput model={model} setModel={setModel} />
-          {getIamRoleFields()}      
-        </>
-      );        
-    case "azure":        
-      return (
-        <>
-          <PackerAzureToolSelectInput model={model} setModel={setModel} />
-          <PackerAzureApplicationSelectInput model={model} setModel={setModel} />
-        </>
-      );
-    case "gcp":
-      return (
-        <PackerGcpToolSelectInput model={model} setModel={setModel} />
-      );
-    default:
-      return;
+      case "aws":
+        return (
+          <>
+            <PackerAwsCredentialsSelectInput model={model} setModel={setModel} />
+            <PackerIAmRoleFlagToggleInput model={model} setModel={setModel} />
+            {getIamRoleFields()}      
+          </>
+        );        
+      case "azure":        
+        return (
+          <>
+            <PackerAzureToolSelectInput model={model} setModel={setModel} />
+            <PackerAzureApplicationSelectInput model={model} setModel={setModel} />
+          </>
+        );
+      case "gcp":
+        return (
+          <PackerGcpToolSelectInput model={model} setModel={setModel} />
+        );
+      default:
+        return;
     }
 
   };

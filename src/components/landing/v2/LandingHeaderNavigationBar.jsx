@@ -70,37 +70,37 @@ export default function LandingHeaderNavigationBar() {
 
   const handleScreenClick = (newScreen) => {
     switch (newScreen) {
-    case HEADER_NAVIGATION_SCREENS.HOME:
-      if (currentPath !== "/") {
-        history.push("/");
-      }
-      break;
-    case HEADER_NAVIGATION_SCREENS.WORKSPACE:
-      if (currentPath !== "/workspace") {
-        history.push("/workspace");
-      }
-      break;
-    case HEADER_NAVIGATION_SCREENS.SALESFORCE_LANDING:
+      case HEADER_NAVIGATION_SCREENS.HOME:
+        if (currentPath !== "/") {
+          history.push("/");
+        }
+        break;
+      case HEADER_NAVIGATION_SCREENS.WORKSPACE:
+        if (currentPath !== "/workspace") {
+          history.push("/workspace");
+        }
+        break;
+      case HEADER_NAVIGATION_SCREENS.SALESFORCE_LANDING:
       // if (currentPath !== "/unified-insights") {
       //   history.push("/unified-insights");
       // }
-      if (currentPath !== "/salesforce") {
-        history.push("/salesforce");
-      }
-      break;
-    case HEADER_NAVIGATION_SCREENS.UNIFIED_INSIGHTS:
+        if (currentPath !== "/salesforce") {
+          history.push("/salesforce");
+        }
+        break;
+      case HEADER_NAVIGATION_SCREENS.UNIFIED_INSIGHTS:
       // if (currentPath !== "/unified-insights") {
       //   history.push("/unified-insights");
       // }
-      if (currentPath !== "/insights") {
-        history.push("/insights");
-      }
-      break;
-    case HEADER_NAVIGATION_SCREENS.GIT_CUSTODIAN:
-      if (currentPath !== "/git-custodian") {
-        history.push("/git-custodian");
-      }
-      break;
+        if (currentPath !== "/insights") {
+          history.push("/insights");
+        }
+        break;
+      case HEADER_NAVIGATION_SCREENS.GIT_CUSTODIAN:
+        if (currentPath !== "/git-custodian") {
+          history.push("/git-custodian");
+        }
+        break;
     }
   };
 

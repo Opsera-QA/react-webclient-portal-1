@@ -38,45 +38,45 @@ function JenkinsUnitTestingEditorPanel({
 
   const getDynamicBuildTypeFields = () => {
     switch (model?.getData("buildType")) {
-    case "gradle":
-      return (
-        <Col lg={6}>
-          <TextInputBase
-            dataObject={model}
-            setDataObject={setModel}
-            fieldName={"gradleTask"}
-          />
-        </Col>
-      );
-    case "maven":
-      return (
-        <>
+      case "gradle":
+        return (
           <Col lg={6}>
             <TextInputBase
               dataObject={model}
               setDataObject={setModel}
-              fieldName={"mavenTask"}
+              fieldName={"gradleTask"}
             />
           </Col>
-          <Col lg={12}>
-            <BooleanToggleInput
-              dataObject={model}
-              setDataObject={setModel}
-              fieldName={"customMavenSettings"}
-              setDataFunction={setCustomMavenFlag}
-            />
-          </Col>
-          {model?.getData("customMavenSettings") === true && (
-            <Col lg={12}>
-              <ScriptLibrarySelectInput
-                fieldName={"scriptId"}
-                model={model}
-                setModel={setModel}
+        );
+      case "maven":
+        return (
+          <>
+            <Col lg={6}>
+              <TextInputBase
+                dataObject={model}
+                setDataObject={setModel}
+                fieldName={"mavenTask"}
               />
             </Col>
-          )}
-        </>
-      );
+            <Col lg={12}>
+              <BooleanToggleInput
+                dataObject={model}
+                setDataObject={setModel}
+                fieldName={"customMavenSettings"}
+                setDataFunction={setCustomMavenFlag}
+              />
+            </Col>
+            {model?.getData("customMavenSettings") === true && (
+              <Col lg={12}>
+                <ScriptLibrarySelectInput
+                  fieldName={"scriptId"}
+                  model={model}
+                  setModel={setModel}
+                />
+              </Col>
+            )}
+          </>
+        );
     }
   };
 

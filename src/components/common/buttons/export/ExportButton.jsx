@@ -22,17 +22,17 @@ function ExportButton({isLoading, variant, size, className, getRawData, getPdfEx
     setIsExporting(true);
 
     switch (exportDataModel?.getData("exportOption")) {
-    case ExportTypes.PDF:
-      await exportToPdf();
-      break;
-    case ExportTypes.CSV:
-      await exportToCsv();
-      break;
-    default:
-      console.error("No Export Type Selected. Defaulting to Raw.");
+      case ExportTypes.PDF:
+        await exportToPdf();
+        break;
+      case ExportTypes.CSV:
+        await exportToCsv();
+        break;
+      default:
+        console.error("No Export Type Selected. Defaulting to Raw.");
       // eslint-disable-next-line no-fallthrough
-    case ExportTypes.RAW:
-      await exportRaw();
+      case ExportTypes.RAW:
+        await exportRaw();
     }
 
     // TODO: Add ismounted check

@@ -188,28 +188,28 @@ const SfdcPipelineWizardXmlViewer = (
 
   const getView = () => {
     switch (activeTab) {
-    case "pxml":
-      return (
-        <PackageXmlViewer
-          isLoading={isLoading}
-          isSaving={isSaving}
-          pipelineWizardModel={pipelineWizardModel}
-          setPipelineWizardModel={setPipelineWizardModel}
-        />
-      );
-    case "utc":
-      return (
-        <UnitTestClassesViewer
-          pipelineWizardModel={pipelineWizardModel}
-        />
-      );
-    case "counts":
-      return (
-        <SalesforcePipelineComponentCountsViewer
-          pipelineWizardModel={pipelineWizardModel}
-          setPipelineWizardModel={setPipelineWizardModel}
-        />
-      );
+      case "pxml":
+        return (
+          <PackageXmlViewer
+            isLoading={isLoading}
+            isSaving={isSaving}
+            pipelineWizardModel={pipelineWizardModel}
+            setPipelineWizardModel={setPipelineWizardModel}
+          />
+        );
+      case "utc":
+        return (
+          <UnitTestClassesViewer
+            pipelineWizardModel={pipelineWizardModel}
+          />
+        );
+      case "counts":
+        return (
+          <SalesforcePipelineComponentCountsViewer
+            pipelineWizardModel={pipelineWizardModel}
+            setPipelineWizardModel={setPipelineWizardModel}
+          />
+        );
     }
   };
 

@@ -340,26 +340,26 @@ export const getTableDateAndTimeUntilValueColumn = (
 
 export const getAssociatedPipelineStatusIcon = (pipelineStatus) => {
   switch (pipelineStatus) {
-  case "failure":
-  case "failed":
-    return (<IconBase icon={faTimesCircle} className={"red"} />);
-  case "error":
-    return (<IconBase icon={faExclamationCircle} className={"red"} />);
-  case "unknown":
-    return (<IconBase icon={faCircle} className={"yellow"}/>);
-  case "rejected":
-    return (<IconBase icon={faStopCircle} className={"red"}/>);
-  case "running":
-  case "processing event":
-    return (<IconBase icon={faPlayCircle} className={"green"}/>);
-  case "queued":
-  case "pending":
-    return (<IconBase icon={faPauseCircle} className={"yellow"}/>);
-  case "stopped":
-  case "halted":
-    return (<IconBase icon={faOctagon} className={"red"}/>);
-  default:
-    return (<IconBase icon={faCheckCircle} className={"green"}/>);
+    case "failure":
+    case "failed":
+      return (<IconBase icon={faTimesCircle} className={"red"} />);
+    case "error":
+      return (<IconBase icon={faExclamationCircle} className={"red"} />);
+    case "unknown":
+      return (<IconBase icon={faCircle} className={"yellow"}/>);
+    case "rejected":
+      return (<IconBase icon={faStopCircle} className={"red"}/>);
+    case "running":
+    case "processing event":
+      return (<IconBase icon={faPlayCircle} className={"green"}/>);
+    case "queued":
+    case "pending":
+      return (<IconBase icon={faPauseCircle} className={"yellow"}/>);
+    case "stopped":
+    case "halted":
+      return (<IconBase icon={faOctagon} className={"red"}/>);
+    default:
+      return (<IconBase icon={faCheckCircle} className={"green"}/>);
   }
 };
 
@@ -406,17 +406,17 @@ export const getChartPipelineStatusColumn = (field, className) => {
     Cell: function parseStatus(row) {
       let status = typeof row?.value === "string" ? row.value.toLowerCase() : status;
       switch (status) {
-      case "failure":
-      case "failed":
-        return (<FailIcon />);
-      case "unknown":
-        return (<WarningIcon/>);
-      case "passed":
-      case "success":
-      case "successful":
-        return (<SuccessIcon/>);
-      default:
-        return status;
+        case "failure":
+        case "failed":
+          return (<FailIcon />);
+        case "unknown":
+          return (<WarningIcon/>);
+        case "passed":
+        case "success":
+        case "successful":
+          return (<SuccessIcon/>);
+        default:
+          return status;
       }
     },
     class: className ? className :  undefined
@@ -431,16 +431,16 @@ export const getChartTrendStatusColumn = (field, className) => {
       let status = typeof row?.value === "string" ? row.value.toLowerCase() : "";
 
       switch (status) {
-      case "red":
-        return (<DangerMetricIcon />);
-      case "neutral":
-        return null;
-      case "green":
-        return (<SuccessMetricIcon />);
-      case "-":
-        return (<NoTrendMetricIcon />);
-      default:
-        return status;
+        case "red":
+          return (<DangerMetricIcon />);
+        case "neutral":
+          return null;
+        case "green":
+          return (<SuccessMetricIcon />);
+        case "-":
+          return (<NoTrendMetricIcon />);
+        default:
+          return status;
       }
     },
     class: className ? className :  undefined
@@ -470,63 +470,63 @@ export const getGitCustodianOriginColumn = (field, className) => {
       let status = typeof row?.value === "string" ? row.value.toLowerCase() : "";
 
       switch (status) {
-      case "gitlab":
-        return (
-          <TooltipWrapper innerText={"Gitlab"}>
-            <div style={{ marginLeft: '15%' }}>
-              <IconBase
-                icon={faGitlab}
-                iconClassName={"opsera-yellow cell-icon vertical-align-item"}
-              />
-            </div>
-          </TooltipWrapper>
-        );
-      case "github":
-        return (
-          <TooltipWrapper innerText={"GitHub"}>
-            <div style={{ marginLeft: '15%' }}>
-              <IconBase
-                icon={faGithub}
-                iconClassName={"black cell-icon vertical-align-item"}
-              />
-            </div>
-          </TooltipWrapper>
-        );
-      case "bitbucket":
-        return (
-          <TooltipWrapper innerText={"Bitbucket"}>
-            <div style={{ marginLeft: '15%' }}>
-              <IconBase
-                icon={faBitbucket}
-                iconClassName={"bitbucket-color cell-icon vertical-align-item"}
-              />
-            </div>
-          </TooltipWrapper>
-        );
-      case "jira":
-        return (
-          <TooltipWrapper innerText={"Jira"}>
-            <div style={{ marginLeft: '15%' }}>
-              <IconBase
-                icon={faJira}
-                iconClassName={"bitbucket-color cell-icon vertical-align-item"}
-              />
-            </div>
-          </TooltipWrapper>
-        );
-      case "slack":
-        return (
-          <TooltipWrapper innerText={"Slack"}>
-            <div style={{ marginLeft: '15%' }}>
-              <IconBase
-                icon={faSlack}
-                iconClassName={"opsera-yellow cell-icon vertical-align-item"}
-              />
-            </div>
-          </TooltipWrapper>
-        );
-      default:
-        return status;
+        case "gitlab":
+          return (
+            <TooltipWrapper innerText={"Gitlab"}>
+              <div style={{ marginLeft: '15%' }}>
+                <IconBase
+                  icon={faGitlab}
+                  iconClassName={"opsera-yellow cell-icon vertical-align-item"}
+                />
+              </div>
+            </TooltipWrapper>
+          );
+        case "github":
+          return (
+            <TooltipWrapper innerText={"GitHub"}>
+              <div style={{ marginLeft: '15%' }}>
+                <IconBase
+                  icon={faGithub}
+                  iconClassName={"black cell-icon vertical-align-item"}
+                />
+              </div>
+            </TooltipWrapper>
+          );
+        case "bitbucket":
+          return (
+            <TooltipWrapper innerText={"Bitbucket"}>
+              <div style={{ marginLeft: '15%' }}>
+                <IconBase
+                  icon={faBitbucket}
+                  iconClassName={"bitbucket-color cell-icon vertical-align-item"}
+                />
+              </div>
+            </TooltipWrapper>
+          );
+        case "jira":
+          return (
+            <TooltipWrapper innerText={"Jira"}>
+              <div style={{ marginLeft: '15%' }}>
+                <IconBase
+                  icon={faJira}
+                  iconClassName={"bitbucket-color cell-icon vertical-align-item"}
+                />
+              </div>
+            </TooltipWrapper>
+          );
+        case "slack":
+          return (
+            <TooltipWrapper innerText={"Slack"}>
+              <div style={{ marginLeft: '15%' }}>
+                <IconBase
+                  icon={faSlack}
+                  iconClassName={"opsera-yellow cell-icon vertical-align-item"}
+                />
+              </div>
+            </TooltipWrapper>
+          );
+        default:
+          return status;
       }
     },
     class: className ? className :  undefined

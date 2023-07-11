@@ -57,39 +57,39 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
     let configurationData;
     const configuration = taskModel?.getData("configuration");
     switch (taskModel?.getData("type")) {
-    case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
-      configurationData = modelHelpers.parseObjectIntoModel(
-        configuration,
-        salesforceQuickDeployTaskConfigurationMetadata,
-      );
-      break;
-    case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
-      configurationData = modelHelpers.parseObjectIntoModel(
-        configuration,
-        ec2ClusterCreationTaskConfigurationMetadata,
-      );
-      break;
-    case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
-      configurationData = modelHelpers.parseObjectIntoModel(
-        configuration,
-        ec2ServiceCreationTaskConfigurationMetadata,
-      );
-      break;
-    case TASK_TYPES.AZURE_CLUSTER_CREATION:
-      configurationData = modelHelpers.parseObjectIntoModel(
-        configuration,
-        azureAksClusterTaskConfigurationMetadata,
-      );
-      break;
-    case TASK_TYPES.SNAPLOGIC_TASK:
-      configurationData = modelHelpers.parseObjectIntoModel(configuration, snaplogicTaskConfigurationMetadata);
-      break;
-    case TASK_TYPES.GITSCRAPER:
-      configurationData = modelHelpers.parseObjectIntoModel(configuration, gitscraperTaskConfigurationMetadata);
-      break;
-    default:
-      setTaskConfigurationModel(null);
-      return;
+      case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
+        configurationData = modelHelpers.parseObjectIntoModel(
+          configuration,
+          salesforceQuickDeployTaskConfigurationMetadata,
+        );
+        break;
+      case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
+        configurationData = modelHelpers.parseObjectIntoModel(
+          configuration,
+          ec2ClusterCreationTaskConfigurationMetadata,
+        );
+        break;
+      case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
+        configurationData = modelHelpers.parseObjectIntoModel(
+          configuration,
+          ec2ServiceCreationTaskConfigurationMetadata,
+        );
+        break;
+      case TASK_TYPES.AZURE_CLUSTER_CREATION:
+        configurationData = modelHelpers.parseObjectIntoModel(
+          configuration,
+          azureAksClusterTaskConfigurationMetadata,
+        );
+        break;
+      case TASK_TYPES.SNAPLOGIC_TASK:
+        configurationData = modelHelpers.parseObjectIntoModel(configuration, snaplogicTaskConfigurationMetadata);
+        break;
+      case TASK_TYPES.GITSCRAPER:
+        configurationData = modelHelpers.parseObjectIntoModel(configuration, gitscraperTaskConfigurationMetadata);
+        break;
+      default:
+        setTaskConfigurationModel(null);
+        return;
     }
 
     setTaskConfigurationModel({ ...configurationData });
@@ -179,12 +179,12 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
     const type = taskModel?.getData("type");
 
     switch (type) {
-    case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
-      return quickDeployForm();
-    case TASK_TYPES.SNAPLOGIC_TASK:
-      return SnaplogicForm();
-    default:
-      return;
+      case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
+        return quickDeployForm();
+      case TASK_TYPES.SNAPLOGIC_TASK:
+        return SnaplogicForm();
+      default:
+        return;
     }
   };
 

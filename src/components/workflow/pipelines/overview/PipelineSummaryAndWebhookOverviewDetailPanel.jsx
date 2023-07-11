@@ -26,22 +26,22 @@ function PipelineSummaryAndWebhookOverviewDetailPanel({ pipeline }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <PipelineSummaryPanelLite
-          pipelineModel={modelHelpers.parseObjectIntoModel(pipeline, pipelineMetadata)}
-        />
-      );
-    case "webhook":
-      return (
-        <PipelineSourceRepositorySummaryPanel
-          sourceRepositoryModel={modelHelpers.parseObjectIntoModel(pipeline?.workflow?.source, sourceRepositoryConfigurationMetadata)}
-        />
-      );
-    case "json":
-      return <PipelineStepJsonPanel pipelineStepData={pipeline?.workflow?.source} />;
-    default:
-      return null;
+      case "summary":
+        return (
+          <PipelineSummaryPanelLite
+            pipelineModel={modelHelpers.parseObjectIntoModel(pipeline, pipelineMetadata)}
+          />
+        );
+      case "webhook":
+        return (
+          <PipelineSourceRepositorySummaryPanel
+            sourceRepositoryModel={modelHelpers.parseObjectIntoModel(pipeline?.workflow?.source, sourceRepositoryConfigurationMetadata)}
+          />
+        );
+      case "json":
+        return <PipelineStepJsonPanel pipelineStepData={pipeline?.workflow?.source} />;
+      default:
+        return null;
     }
   };
 

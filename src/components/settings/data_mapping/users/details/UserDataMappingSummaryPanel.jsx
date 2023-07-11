@@ -20,27 +20,27 @@ export default function UserDataMappingSummaryPanel({ userDataMappingModel, setA
 
   const getUserField = () => {
     switch (userDataMappingModel?.getData("tool_identifier")) {
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.JIRA:
-      return (
-        <Col lg={6}>
-          <JiraProjectUserCacheField
-            model={userDataMappingModel}
-            fieldName={"tool_user_id"}
-            jiraToolIdFieldName={"tool_id"}
-          />
-        </Col>
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
-      return (
-        <Col lg={6}>
-          <ExternalToolPropertyCacheField
-            model={userDataMappingModel}
-            fieldName={"tool_user_id"}
-            toolIdFieldName={"tool_id"}
-          />
-        </Col>
-      );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.JIRA:
+        return (
+          <Col lg={6}>
+            <JiraProjectUserCacheField
+              model={userDataMappingModel}
+              fieldName={"tool_user_id"}
+              jiraToolIdFieldName={"tool_id"}
+            />
+          </Col>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
+        return (
+          <Col lg={6}>
+            <ExternalToolPropertyCacheField
+              model={userDataMappingModel}
+              fieldName={"tool_user_id"}
+              toolIdFieldName={"tool_id"}
+            />
+          </Col>
+        );
     }
   };
 

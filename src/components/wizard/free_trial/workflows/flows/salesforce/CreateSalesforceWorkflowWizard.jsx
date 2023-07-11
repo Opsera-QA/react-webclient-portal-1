@@ -87,74 +87,74 @@ export default function CreateSalesforceWorkflowWizard(
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
-    case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_FLOW_SCREEN:
-      return (
-        <CreateSalesforceWorkflowWizardFlowSelectionScreen
-          selectedFlow={selectedFlow}
-          setSelectedFlow={setSelectedFlow}
-          setCurrentScreen={setCurrentScreen}
-          setButtonContainer={setButtonContainer}
-          backButtonFunction={backButtonFunction}
-          accountMetrics={accountMetrics}
-          className={"m-4"}
-        />
-      );
-    case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.WIZARD_FLOW_SCREEN:
-      return (
-        <CreateSalesforceWorkflowWizardFlowWrapper
-          flow={selectedFlow}
-          setButtonContainer={setButtonContainer}
-          backButtonFunction={goBackToFlowSelectionScreenFunction}
-        />
-      );
-    case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.PIPELINE_LIMIT_REACHED_SCREEN:
-      return (
-        <FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen
-          selectedFlow={selectedFlow}
-          setSelectedFlow={setSelectedFlow}
-          pipelineCounts={accountMetrics?.pipelineCounts}
-          isAccountWhitelisted={accountMetrics != null && accountMetrics?.expiration == null}
-          setButtonContainer={setButtonContainer}
-          setCurrentScreen={setCurrentScreen}
-          setSelectedWorkflowId={setSelectedWorkflowId}
-          selectedWorkflowId={selectedWorkflowId}
-        />
-      );
-    case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.DELETE_PIPELINE_CONFIRMATION_SCREEN:
-      return (
-        <FreeTrialDeletePipelineWorkflowConfirmationScreen
-          setSelectedFlow={setSelectedFlow}
-          setCurrentScreen={setCurrentScreen}
-          setSelectedWorkflowId={setSelectedWorkflowId}
-          selectedWorkflowId={selectedWorkflowId}
-          setButtonContainer={setButtonContainer}
-          loadData={loadData}
-        />
-      );
-    case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TASK_LIMIT_REACHED_SCREEN:
-      return (
-        <FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
-          selectedFlow={selectedFlow}
-          setSelectedFlow={setSelectedFlow}
-          taskCounts={accountMetrics?.taskCounts}
-          isAccountWhitelisted={accountMetrics != null && accountMetrics?.expiration == null}
-          setButtonContainer={setButtonContainer}
-          setCurrentScreen={setCurrentScreen}
-          setSelectedWorkflowId={setSelectedWorkflowId}
-          selectedWorkflowId={selectedWorkflowId}
-        />
-      );
-    case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.DELETE_TASK_CONFIRMATION_SCREEN:
-      return (
-        <FreeTrialDeleteTaskWorkflowConfirmationScreen
-          setSelectedFlow={setSelectedFlow}
-          setCurrentScreen={setCurrentScreen}
-          setSelectedWorkflowId={setSelectedWorkflowId}
-          selectedWorkflowId={selectedWorkflowId}
-          setButtonContainer={setButtonContainer}
-          loadData={loadData}
-        />
-      );
+      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_FLOW_SCREEN:
+        return (
+          <CreateSalesforceWorkflowWizardFlowSelectionScreen
+            selectedFlow={selectedFlow}
+            setSelectedFlow={setSelectedFlow}
+            setCurrentScreen={setCurrentScreen}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={backButtonFunction}
+            accountMetrics={accountMetrics}
+            className={"m-4"}
+          />
+        );
+      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.WIZARD_FLOW_SCREEN:
+        return (
+          <CreateSalesforceWorkflowWizardFlowWrapper
+            flow={selectedFlow}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={goBackToFlowSelectionScreenFunction}
+          />
+        );
+      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.PIPELINE_LIMIT_REACHED_SCREEN:
+        return (
+          <FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen
+            selectedFlow={selectedFlow}
+            setSelectedFlow={setSelectedFlow}
+            pipelineCounts={accountMetrics?.pipelineCounts}
+            isAccountWhitelisted={accountMetrics != null && accountMetrics?.expiration == null}
+            setButtonContainer={setButtonContainer}
+            setCurrentScreen={setCurrentScreen}
+            setSelectedWorkflowId={setSelectedWorkflowId}
+            selectedWorkflowId={selectedWorkflowId}
+          />
+        );
+      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.DELETE_PIPELINE_CONFIRMATION_SCREEN:
+        return (
+          <FreeTrialDeletePipelineWorkflowConfirmationScreen
+            setSelectedFlow={setSelectedFlow}
+            setCurrentScreen={setCurrentScreen}
+            setSelectedWorkflowId={setSelectedWorkflowId}
+            selectedWorkflowId={selectedWorkflowId}
+            setButtonContainer={setButtonContainer}
+            loadData={loadData}
+          />
+        );
+      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TASK_LIMIT_REACHED_SCREEN:
+        return (
+          <FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
+            selectedFlow={selectedFlow}
+            setSelectedFlow={setSelectedFlow}
+            taskCounts={accountMetrics?.taskCounts}
+            isAccountWhitelisted={accountMetrics != null && accountMetrics?.expiration == null}
+            setButtonContainer={setButtonContainer}
+            setCurrentScreen={setCurrentScreen}
+            setSelectedWorkflowId={setSelectedWorkflowId}
+            selectedWorkflowId={selectedWorkflowId}
+          />
+        );
+      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.DELETE_TASK_CONFIRMATION_SCREEN:
+        return (
+          <FreeTrialDeleteTaskWorkflowConfirmationScreen
+            setSelectedFlow={setSelectedFlow}
+            setCurrentScreen={setCurrentScreen}
+            setSelectedWorkflowId={setSelectedWorkflowId}
+            selectedWorkflowId={selectedWorkflowId}
+            setButtonContainer={setButtonContainer}
+            loadData={loadData}
+          />
+        );
     }
   };
 

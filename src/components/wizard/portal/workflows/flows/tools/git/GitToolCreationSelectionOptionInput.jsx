@@ -44,26 +44,26 @@ function GitToolCreationSelectionOptionInput({
     setGitToolId(undefined);
 
     switch (newValue) {
-    case GIT_TOOL_CREATION_OPTIONS.GITHUB:
-      setGitToolModel({
-        ...modelHelpers.getNewModelForMetadata(githubConnectionMetadata),
-      });
-      return;
-    case GIT_TOOL_CREATION_OPTIONS.GITLAB:
-      setGitToolModel({
-        ...modelHelpers.getNewModelForMetadata(gitlabConnectionMetadata),
-      });
-      return;
-    case GIT_TOOL_CREATION_OPTIONS.BITBUCKET:
-      setGitToolModel({
-        ...modelHelpers.getNewModelForMetadata(bitbucketConnectionMetadata),
-      });
-      return;
-    case GIT_TOOL_CREATION_OPTIONS.AZURE:
-      setGitToolModel({
-        ...modelHelpers.getNewModelForMetadata(AzureDevopsConnectionMetadata),
-      });
-      return;
+      case GIT_TOOL_CREATION_OPTIONS.GITHUB:
+        setGitToolModel({
+          ...modelHelpers.getNewModelForMetadata(githubConnectionMetadata),
+        });
+        return;
+      case GIT_TOOL_CREATION_OPTIONS.GITLAB:
+        setGitToolModel({
+          ...modelHelpers.getNewModelForMetadata(gitlabConnectionMetadata),
+        });
+        return;
+      case GIT_TOOL_CREATION_OPTIONS.BITBUCKET:
+        setGitToolModel({
+          ...modelHelpers.getNewModelForMetadata(bitbucketConnectionMetadata),
+        });
+        return;
+      case GIT_TOOL_CREATION_OPTIONS.AZURE:
+        setGitToolModel({
+          ...modelHelpers.getNewModelForMetadata(AzureDevopsConnectionMetadata),
+        });
+        return;
     }
   };
 

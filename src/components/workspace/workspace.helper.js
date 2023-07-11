@@ -22,12 +22,12 @@ workspaceHelper.getWorkspaceItemDetailLinkBase = (type, mongoId) => {
   }
 
   switch (type) {
-  case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
-    return pipelineHelper.getDetailViewLink(mongoId);
-  case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
-    return taskHelper.getDetailViewLink(mongoId);
-  case workspaceConstants.WORKSPACE_ITEM_TYPES.TOOL:
-    return toolHelper.getDetailViewLink(mongoId);
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
+      return pipelineHelper.getDetailViewLink(mongoId);
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
+      return taskHelper.getDetailViewLink(mongoId);
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.TOOL:
+      return toolHelper.getDetailViewLink(mongoId);
   }
 };
 

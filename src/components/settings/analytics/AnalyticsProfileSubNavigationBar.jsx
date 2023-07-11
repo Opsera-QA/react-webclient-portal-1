@@ -17,9 +17,9 @@ function AnalyticsProfileSubNavigationBar({ activeTab }) {
     }
 
     switch (tabSelection) {
-    case "analyticsProfile":
-      history.push(`/settings/analytics-profile`);
-      return;
+      case "analyticsProfile":
+        history.push(`/settings/analytics-profile`);
+        return;
     }
   };
 

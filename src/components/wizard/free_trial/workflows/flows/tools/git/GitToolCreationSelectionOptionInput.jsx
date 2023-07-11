@@ -40,12 +40,12 @@ function GitToolCreationSelectionOptionInput(
     setGitToolId(undefined);
 
     switch (newValue) {
-    case GIT_TOOL_CREATION_OPTIONS.GITHUB:
-      setGitToolModel({...modelHelpers.getNewModelForMetadata(githubConnectionMetadata)});
-      return;
-    case GIT_TOOL_CREATION_OPTIONS.GITLAB:
-      setGitToolModel({...modelHelpers.getNewModelForMetadata(gitlabConnectionMetadata)});
-      return;
+      case GIT_TOOL_CREATION_OPTIONS.GITHUB:
+        setGitToolModel({...modelHelpers.getNewModelForMetadata(githubConnectionMetadata)});
+        return;
+      case GIT_TOOL_CREATION_OPTIONS.GITLAB:
+        setGitToolModel({...modelHelpers.getNewModelForMetadata(gitlabConnectionMetadata)});
+        return;
     }
   };
 

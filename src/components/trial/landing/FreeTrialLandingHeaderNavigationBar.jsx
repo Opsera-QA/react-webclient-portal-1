@@ -26,21 +26,21 @@ export default function FreeTrialLandingHeaderNavigationBar(
 
   const handleScreenClick = (newScreen) => {
     switch (newScreen) {
-    case FREE_TRIAL_LANDING_SCREENS.HOME:
-      if (currentPath !== "/") {
-        history.push("/");
-      }
-      break;
-    case FREE_TRIAL_LANDING_SCREENS.WORKSPACE:
-      if (currentPath !== "/workspace") {
-        history.push("/workspace");
-      }
-      break;
-    case FREE_TRIAL_LANDING_SCREENS.UNIFIED_INSIGHTS:
-      if (currentPath !== "/unified-insights") {
-        history.push("/unified-insights");
-      }
-      break;
+      case FREE_TRIAL_LANDING_SCREENS.HOME:
+        if (currentPath !== "/") {
+          history.push("/");
+        }
+        break;
+      case FREE_TRIAL_LANDING_SCREENS.WORKSPACE:
+        if (currentPath !== "/workspace") {
+          history.push("/workspace");
+        }
+        break;
+      case FREE_TRIAL_LANDING_SCREENS.UNIFIED_INSIGHTS:
+        if (currentPath !== "/unified-insights") {
+          history.push("/unified-insights");
+        }
+        break;
     }
   };
 

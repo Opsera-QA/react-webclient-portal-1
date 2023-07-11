@@ -26,27 +26,27 @@ function PipelineStepDetailsOverview({ pipelineStep, index }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <PipelineStepConfigurationSummary
-          pipelineData={pipelineStep}
-        />
-      );
-    case "notifications":
-      return (
-        <PipelineStepNotificationConfigurationSummaryPanel
-          pipelineStepData={pipelineStep}
-        />
-      );
-    case "json":
-      return (
-        <PipelineStepJsonPanel
-          pipelineStepData={pipelineStep}
-        />
-      );
-    case "yaml":
-    default:
-      return null;
+      case "summary":
+        return (
+          <PipelineStepConfigurationSummary
+            pipelineData={pipelineStep}
+          />
+        );
+      case "notifications":
+        return (
+          <PipelineStepNotificationConfigurationSummaryPanel
+            pipelineStepData={pipelineStep}
+          />
+        );
+      case "json":
+        return (
+          <PipelineStepJsonPanel
+            pipelineStepData={pipelineStep}
+          />
+        );
+      case "yaml":
+      default:
+        return null;
     }
   };
 

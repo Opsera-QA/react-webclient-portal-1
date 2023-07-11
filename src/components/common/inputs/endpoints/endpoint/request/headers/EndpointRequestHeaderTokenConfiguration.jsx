@@ -29,42 +29,42 @@ function EndpointRequestHeaderTokenConfiguration(
 
   const getInputsForAuthorizationType = () => {
     switch (endpointRequestHeaderConfigurationModel?.getData("authorizationType")) {
-    case endpointRequestHeaderBearerTokenTypeConstants.ENDPOINT_REQUEST_HEADER_BEARER_TOKEN_TYPES.SHORT_LIVED_BEARER_TOKEN:
-      return (
-        <>
+      case endpointRequestHeaderBearerTokenTypeConstants.ENDPOINT_REQUEST_HEADER_BEARER_TOKEN_TYPES.SHORT_LIVED_BEARER_TOKEN:
+        return (
+          <>
+            <Col xs={12}>
+              <EndpointRequestHeaderBearerTokenEndpointSelectInput
+                toolId={toolId}
+                model={endpointRequestHeaderConfigurationModel}
+                setModel={updateMainModelFunction}
+                disabled={disabled}
+              />
+            </Col>
+            <Col xs={12}>
+              <EndpointResponseBodyFieldSelectInput
+                toolId={toolId}
+                endpointId={endpointRequestHeaderConfigurationModel?.getData("accessTokenGenerationEndpointId")}
+                model={endpointRequestHeaderConfigurationModel}
+                setModel={updateMainModelFunction}
+                fieldName={"accessTokenResponseBodyField"}
+                disabled={disabled}
+              />
+            </Col>
+          </>
+        );
+      case endpointRequestHeaderBearerTokenTypeConstants.ENDPOINT_REQUEST_HEADER_BEARER_TOKEN_TYPES.LONG_LIVED_BEARER_TOKEN:
+      default:
+        return (
           <Col xs={12}>
-            <EndpointRequestHeaderBearerTokenEndpointSelectInput
-              toolId={toolId}
+            <CustomParameterSelectInput
               model={endpointRequestHeaderConfigurationModel}
-              setModel={updateMainModelFunction}
+              setModel={setEndpointRequestHeaderConfigurationModel}
+              setDataFunction={updateCustomParameterId}
               disabled={disabled}
+              fieldName={"authorizationTokenCustomParameterId"}
             />
           </Col>
-          <Col xs={12}>
-            <EndpointResponseBodyFieldSelectInput
-              toolId={toolId}
-              endpointId={endpointRequestHeaderConfigurationModel?.getData("accessTokenGenerationEndpointId")}
-              model={endpointRequestHeaderConfigurationModel}
-              setModel={updateMainModelFunction}
-              fieldName={"accessTokenResponseBodyField"}
-              disabled={disabled}
-            />
-          </Col>
-        </>
-      );
-    case endpointRequestHeaderBearerTokenTypeConstants.ENDPOINT_REQUEST_HEADER_BEARER_TOKEN_TYPES.LONG_LIVED_BEARER_TOKEN:
-    default:
-      return (
-        <Col xs={12}>
-          <CustomParameterSelectInput
-            model={endpointRequestHeaderConfigurationModel}
-            setModel={setEndpointRequestHeaderConfigurationModel}
-            setDataFunction={updateCustomParameterId}
-            disabled={disabled}
-            fieldName={"authorizationTokenCustomParameterId"}
-          />
-        </Col>
-      );
+        );
     }
   };
 

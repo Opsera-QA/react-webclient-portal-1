@@ -43,12 +43,12 @@ workspaceConstants.getIdentifierLabelForWorkspaceType = (type, workspaceIdentifi
   }
 
   switch (type) {
-  case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
-    return taskTemplateIdentifierConstants.getLabelForTaskTemplateIdentifier(workspaceIdentifier);
-  case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
-    return pipelineTemplateIdentifierConstants.getLabelForPipelineTemplateIdentifier(workspaceIdentifier);
-  default:
-    return "";
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
+      return taskTemplateIdentifierConstants.getLabelForTaskTemplateIdentifier(workspaceIdentifier);
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
+      return pipelineTemplateIdentifierConstants.getLabelForPipelineTemplateIdentifier(workspaceIdentifier);
+    default:
+      return "";
   }
 };
 

@@ -17,9 +17,9 @@ function UserManagementSubNavigationBar({activeTab}) {
     }
 
     switch (tabSelection) {
-    case "users":
-      history.push(`/settings/user-management`);
-      return;
+      case "users":
+        history.push(`/settings/user-management`);
+        return;
     }
   };
 

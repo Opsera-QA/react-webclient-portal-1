@@ -17,9 +17,9 @@ export default function UnsecuredItemReportSubNavigationBar({activeTab}) {
     }
 
     switch (tabSelection) {
-    case "unsecuredItemReport":
-      history.push(`/settings/unsecured-items`);
-      return;
+      case "unsecuredItemReport":
+        history.push(`/settings/unsecured-items`);
+        return;
     }
   };
 

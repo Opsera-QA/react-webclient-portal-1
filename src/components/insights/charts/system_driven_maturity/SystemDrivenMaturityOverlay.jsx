@@ -32,10 +32,10 @@ function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, group, 
     }
 
     switch (tabSelection) {
-    case OVERLAY_TABS.ORG_TAGS:
-      setActiveTab(OVERLAY_TABS.ORG_TAGS);
-      setSelectedOrgTag(null);
-      return;
+      case OVERLAY_TABS.ORG_TAGS:
+        setActiveTab(OVERLAY_TABS.ORG_TAGS);
+        setSelectedOrgTag(null);
+        return;
     }
   };
 

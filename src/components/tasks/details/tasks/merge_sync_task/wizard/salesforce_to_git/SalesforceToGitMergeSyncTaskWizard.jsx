@@ -130,64 +130,64 @@ const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
 
   const getBody = () => {
     switch (currentScreen) {
-    case MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-      return (
-        <MergeSyncTaskWizardInitializationScreen
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setCurrentScreen={setCurrentScreen}
-          handleClose={handleClose}
-          mergeSyncType={"Salesforce to Git"}
-        />
-      );
-    case MERGE_SYNC_WIZARD_SCREENS.CONFIGURATION_SCREEN:
-      return (
-        <SalesforceToGitMergeSyncTaskWizardConfigurationScreen
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setCurrentScreen={setCurrentScreen}
-          handleClose={handleClose}
-        />
-      );
-    case MERGE_SYNC_WIZARD_SCREENS.FILE_SELECTION_SCREEN:
-      return (
-        <SalesforceToGitMergeSyncTaskWizardFileSelectionScreen
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setCurrentScreen={setCurrentScreen}
-          handleClose={handleClose}
-        />
-      );
-    case MERGE_SYNC_WIZARD_SCREENS.COMMIT_SELECTION_SCREEN:
-      return (
-        <MergeSyncTaskWizardCommitSelectionScreen
-          handleClose={handleClose}
-          setCurrentScreen={setCurrentScreen}
-          setWizardModel={setWizardModel}
-          wizardModel={wizardModel}
-        />
-      );
-    case MERGE_SYNC_WIZARD_SCREENS.CONFIRMATION_SCREEN:
-      return (
-        <MergeSyncTaskWizardConfirmationScreen
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setCurrentScreen={setCurrentScreen}
-          handleClose={handleClose}
-        />
-      );
+      case MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+        return (
+          <MergeSyncTaskWizardInitializationScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+            mergeSyncType={"Salesforce to Git"}
+          />
+        );
+      case MERGE_SYNC_WIZARD_SCREENS.CONFIGURATION_SCREEN:
+        return (
+          <SalesforceToGitMergeSyncTaskWizardConfigurationScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+          />
+        );
+      case MERGE_SYNC_WIZARD_SCREENS.FILE_SELECTION_SCREEN:
+        return (
+          <SalesforceToGitMergeSyncTaskWizardFileSelectionScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+          />
+        );
+      case MERGE_SYNC_WIZARD_SCREENS.COMMIT_SELECTION_SCREEN:
+        return (
+          <MergeSyncTaskWizardCommitSelectionScreen
+            handleClose={handleClose}
+            setCurrentScreen={setCurrentScreen}
+            setWizardModel={setWizardModel}
+            wizardModel={wizardModel}
+          />
+        );
+      case MERGE_SYNC_WIZARD_SCREENS.CONFIRMATION_SCREEN:
+        return (
+          <MergeSyncTaskWizardConfirmationScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+          />
+        );
     }
   };
 
   const getHelpComponentFunction = (setHelpIsShown) => {
     switch (currentScreen) {
-    case MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-      return null;
-    case MERGE_SYNC_WIZARD_SCREENS.CONFIGURATION_SCREEN:
-      return null;
-    case MERGE_SYNC_WIZARD_SCREENS.FILE_SELECTION_SCREEN:
-    default:
-      return null;
+      case MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+        return null;
+      case MERGE_SYNC_WIZARD_SCREENS.CONFIGURATION_SCREEN:
+        return null;
+      case MERGE_SYNC_WIZARD_SCREENS.FILE_SELECTION_SCREEN:
+      default:
+        return null;
     }
   };
 

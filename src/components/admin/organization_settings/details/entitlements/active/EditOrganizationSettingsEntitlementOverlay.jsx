@@ -52,13 +52,13 @@ export default function EditOrganizationSettingsEntitlementOverlay(
 
   const getChildEntitlementEditorPanel = () => {
     switch (entitlementModel?.getData("name")) {
-    case entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_FEATURES:
-      return (
-        <SalesforceFeaturesChildEntitlementEditorPanel
-          childEntitlementModel={childEntitlementModel}
-          updateParentModel={updateParentModel}
-        />
-      );
+      case entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_FEATURES:
+        return (
+          <SalesforceFeaturesChildEntitlementEditorPanel
+            childEntitlementModel={childEntitlementModel}
+            updateParentModel={updateParentModel}
+          />
+        );
     }
   };
 

@@ -58,51 +58,51 @@ export default function CreateWorkflowWizardTaskCompletionScreen(
 
   const getBody = () => {
     switch (initializationState) {
-    case apiRequestHelper.API_REQUEST_STATES.BUSY:
-      return (
-        <CenterLoadingIndicator customMessage={`Finishing up initialization for your ${workflowType} Workflow`} />
-      );
-    case apiRequestHelper.API_REQUEST_STATES.ERROR:
-      return (
-        <div>
-            There was an issue finalizing the initialization for this {workflowType} Workflow. Please try once more.
-        </div>
-      );
-    case apiRequestHelper.API_REQUEST_STATES.SUCCESS:
-      return (
-        <CenteredContentWrapper
-          minHeight={HEIGHT}
-        >
-          <OpseraInfinityLogoLarge
-            desiredHeight={219}
-          />
+      case apiRequestHelper.API_REQUEST_STATES.BUSY:
+        return (
+          <CenterLoadingIndicator customMessage={`Finishing up initialization for your ${workflowType} Workflow`} />
+        );
+      case apiRequestHelper.API_REQUEST_STATES.ERROR:
+        return (
           <div>
-            <H5FieldSubHeader
-              subheaderText={`You have successfully completed creating your new ${workflowType} Task!`}
-            />
-            <H5FieldSubHeader
-              subheaderText={`Now you can either return to the home page or start the Task.`}
-              className={"my-3"}
-            />
-            <div className={"focusText"}>
-                You can start your Task anytime you want from the Opsera home page.
-            </div>
-            <div className={"d-flex"}>
-              <ButtonContainerBase
-                className={"mt-5 ml-auto"}
-              >
-                <DoneOverlayButton
-                  className={"mr-2"}
-                />
-                <FreeTrialLaunchWorkflowButton
-                  workspaceItem={task}
-                  workspaceType={workspaceConstants.WORKSPACE_ITEM_TYPES.TASK}
-                />
-              </ButtonContainerBase>
-            </div>
+            There was an issue finalizing the initialization for this {workflowType} Workflow. Please try once more.
           </div>
-        </CenteredContentWrapper>
-      );
+        );
+      case apiRequestHelper.API_REQUEST_STATES.SUCCESS:
+        return (
+          <CenteredContentWrapper
+            minHeight={HEIGHT}
+          >
+            <OpseraInfinityLogoLarge
+              desiredHeight={219}
+            />
+            <div>
+              <H5FieldSubHeader
+                subheaderText={`You have successfully completed creating your new ${workflowType} Task!`}
+              />
+              <H5FieldSubHeader
+                subheaderText={`Now you can either return to the home page or start the Task.`}
+                className={"my-3"}
+              />
+              <div className={"focusText"}>
+                You can start your Task anytime you want from the Opsera home page.
+              </div>
+              <div className={"d-flex"}>
+                <ButtonContainerBase
+                  className={"mt-5 ml-auto"}
+                >
+                  <DoneOverlayButton
+                    className={"mr-2"}
+                  />
+                  <FreeTrialLaunchWorkflowButton
+                    workspaceItem={task}
+                    workspaceType={workspaceConstants.WORKSPACE_ITEM_TYPES.TASK}
+                  />
+                </ButtonContainerBase>
+              </div>
+            </div>
+          </CenteredContentWrapper>
+        );
     }
   };
 

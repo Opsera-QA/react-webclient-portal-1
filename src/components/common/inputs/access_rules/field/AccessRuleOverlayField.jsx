@@ -20,9 +20,9 @@ function AccessRuleOverlayField({rules, className, noDataMessage}) {
         const type = accessRule?.type;
 
         switch (type) {
-        case accessRuleTypeConstants.ACCESS_RULE_TYPES.ALLOWED_SSO_USER_ORGANIZATIONS:
-          unpackAllowedSsoUserOrganizationNames(accessRule?.value);
-          break;
+          case accessRuleTypeConstants.ACCESS_RULE_TYPES.ALLOWED_SSO_USER_ORGANIZATIONS:
+            unpackAllowedSsoUserOrganizationNames(accessRule?.value);
+            break;
         }
       });
     }

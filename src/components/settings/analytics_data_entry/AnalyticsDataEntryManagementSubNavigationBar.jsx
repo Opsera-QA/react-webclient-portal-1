@@ -17,26 +17,26 @@ function AnalyticsDataEntryManagementSubNavigationBar({ activeTab }) {
     }
 
     switch (tabSelection) {
-    case "analyticsDataEntries":
-      history.push(`/settings/analytics-data-entries`);
-      return;
+      case "analyticsDataEntries":
+        history.push(`/settings/analytics-data-entries`);
+        return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-    case "analyticsDataEntryViewer":
-      return (
-        <NavigationTab
-          icon={faUserChart}
-          tabName={"analyticsDataEntryViewer"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          tabText={"Analytics Data Entry Viewer"}
-        />
-      );
-    default:
-      return null;
+      case "analyticsDataEntryViewer":
+        return (
+          <NavigationTab
+            icon={faUserChart}
+            tabName={"analyticsDataEntryViewer"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+            tabText={"Analytics Data Entry Viewer"}
+          />
+        );
+      default:
+        return null;
     }
   };
 

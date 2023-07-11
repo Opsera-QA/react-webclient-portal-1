@@ -55,36 +55,36 @@ function UserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, hideSetting
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <UserSummaryPanel
-          ldapUserData={ldapUserData}
-        />
-      );
-    case "settings":
-      return (
-        <UserEditorPanel
+      case "summary":
+        return (
+          <UserSummaryPanel
+            ldapUserData={ldapUserData}
+          />
+        );
+      case "settings":
+        return (
+          <UserEditorPanel
           // organization={}
-          userData={ldapUserData}
-          orgDomain={orgDomain}
-          handleClose={toggleSummaryPanel}
-        />
-      );
-    case "assigned-roles":
-      return (
-        <UserAssignedRolesPanel
-          userEmailAddress={ldapUserData?.getData("emailAddress")}
-        />
-      );
-    case "access-token-activity-logs":
-      return (
-        <UserAccessTokenActivityLogPanel
-          userId={ldapUserData?.getData("_id")}
-          className={"mt-2"}
-        />
-      );
-    default:
-      return null;
+            userData={ldapUserData}
+            orgDomain={orgDomain}
+            handleClose={toggleSummaryPanel}
+          />
+        );
+      case "assigned-roles":
+        return (
+          <UserAssignedRolesPanel
+            userEmailAddress={ldapUserData?.getData("emailAddress")}
+          />
+        );
+      case "access-token-activity-logs":
+        return (
+          <UserAccessTokenActivityLogPanel
+            userId={ldapUserData?.getData("_id")}
+            className={"mt-2"}
+          />
+        );
+      default:
+        return null;
     }
   };
 

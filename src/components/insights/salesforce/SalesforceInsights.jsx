@@ -15,14 +15,14 @@ export default function SalesforceInsights() {
   const history = useHistory();
   const handleFlowSelectionButton = (selectedFlow) => {
     switch (selectedFlow) {
-    case SALESFORCE_INSIGHTS_TYPES.LOOKUP:
-      history.push(`/insights/salesforce/lookup`);
-      return;
-    case SALESFORCE_INSIGHTS_TYPES.DEPENDENCY_ANALYSER:
-      history.push(`/insights/salesforce/dependency-analyser`);
-      return;
-    default:
-      return;
+      case SALESFORCE_INSIGHTS_TYPES.LOOKUP:
+        history.push(`/insights/salesforce/lookup`);
+        return;
+      case SALESFORCE_INSIGHTS_TYPES.DEPENDENCY_ANALYSER:
+        history.push(`/insights/salesforce/dependency-analyser`);
+        return;
+      default:
+        return;
     }
   };
 

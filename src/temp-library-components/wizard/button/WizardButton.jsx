@@ -22,35 +22,35 @@ function WizardButton(
 
   const getStyling = () => {
     switch (variant) {
-    case WIZARD_BUTTON_VARIANTS.SECONDARY:
-      return (
-        {
-          backgroundColor: themeConstants.COLOR_PALETTE.WHITE,
-          borderRadius: "2em",
-          border: `2px solid ${themeConstants.COLOR_PALETTE.BACKGROUND_LAVENDER}`,
-          color: themeConstants.COLOR_PALETTE.BLACK,
-          width: "225px",
-          fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
-          fontWeight: 400,
-          fontSize: "18px",
-          cursor: disabled === true ? "default" : "pointer",
-        }
-      );
-    case WIZARD_BUTTON_VARIANTS.PRIMARY:
-    default:
-      return (
-        {
-          backgroundColor: themeConstants.COLOR_PALETTE.DEEP_PURPLE,
-          borderRadius: "2em",
-          border: `2px solid ${themeConstants.COLOR_PALETTE.DEEP_PURPLE}`,
-          color: themeConstants.COLOR_PALETTE.WHITE,
-          width: "225px",
-          fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
-          fontWeight: 400,
-          fontSize: "18px",
-          cursor: disabled === true ? "default" : "pointer",
-        }
-      );
+      case WIZARD_BUTTON_VARIANTS.SECONDARY:
+        return (
+          {
+            backgroundColor: themeConstants.COLOR_PALETTE.WHITE,
+            borderRadius: "2em",
+            border: `2px solid ${themeConstants.COLOR_PALETTE.BACKGROUND_LAVENDER}`,
+            color: themeConstants.COLOR_PALETTE.BLACK,
+            width: "225px",
+            fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
+            fontWeight: 400,
+            fontSize: "18px",
+            cursor: disabled === true ? "default" : "pointer",
+          }
+        );
+      case WIZARD_BUTTON_VARIANTS.PRIMARY:
+      default:
+        return (
+          {
+            backgroundColor: themeConstants.COLOR_PALETTE.DEEP_PURPLE,
+            borderRadius: "2em",
+            border: `2px solid ${themeConstants.COLOR_PALETTE.DEEP_PURPLE}`,
+            color: themeConstants.COLOR_PALETTE.WHITE,
+            width: "225px",
+            fontFamily: fontThemeConstants.FONT_FAMILIES.INTER,
+            fontWeight: 400,
+            fontSize: "18px",
+            cursor: disabled === true ? "default" : "pointer",
+          }
+        );
     }
   };
 

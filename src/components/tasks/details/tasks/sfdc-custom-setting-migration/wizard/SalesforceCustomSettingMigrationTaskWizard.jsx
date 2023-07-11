@@ -77,79 +77,79 @@ const SalesforceCustomSettingMigrationTaskWizard = ({ handleClose, taskModel }) 
 
   const getBody = () => {
     switch (currentScreen) {
-    case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-      return (
-        <CustomSettingTaskWizardInitializationScreen
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setCurrentScreen={setCurrentScreen}
-          handleClose={handleClose}
-          taskType={wizardModel?.getData("taskType")}
-        />
-      );
-    case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN:
-      return (
-        <CustomSettingTaskWizardConfigScreen
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setCurrentScreen={setCurrentScreen}
-          handleClose={handleClose}
-          taskType={wizardModel?.getData("taskType")}
-        />
-      );
-    case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.UPLOAD_SCREEN:
-      return (
-        <CustomSettingUploadScreen
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setCurrentScreen={setCurrentScreen}
-          handleClose={handleClose}
-          taskType={wizardModel?.getData("taskType")}
-        />
-      );
-    case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.MAPPING_SCREEN:
-      return (
-        <CustomSettingCsvFieldMappingScreen
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setCurrentScreen={setCurrentScreen}
-          handleClose={handleClose}
-          taskType={wizardModel?.getData("taskType")}
-        />
-      );
-    case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.QUERY_BUILDER_SCREEN:
-      return (
-        <CustomSettingQueryBuilderScreen
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setCurrentScreen={setCurrentScreen}
-          handleClose={handleClose}
-          taskType={wizardModel?.getData("taskType")}
-        />
-      );
-    case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN:
-      return (
-        <CustomSettingTaskConfirmationScreen
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setCurrentScreen={setCurrentScreen}
-          handleClose={handleClose}
-          taskType={wizardModel?.getData("taskType")}
-        />
-      );
+      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+        return (
+          <CustomSettingTaskWizardInitializationScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+            taskType={wizardModel?.getData("taskType")}
+          />
+        );
+      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN:
+        return (
+          <CustomSettingTaskWizardConfigScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+            taskType={wizardModel?.getData("taskType")}
+          />
+        );
+      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.UPLOAD_SCREEN:
+        return (
+          <CustomSettingUploadScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+            taskType={wizardModel?.getData("taskType")}
+          />
+        );
+      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.MAPPING_SCREEN:
+        return (
+          <CustomSettingCsvFieldMappingScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+            taskType={wizardModel?.getData("taskType")}
+          />
+        );
+      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.QUERY_BUILDER_SCREEN:
+        return (
+          <CustomSettingQueryBuilderScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+            taskType={wizardModel?.getData("taskType")}
+          />
+        );
+      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN:
+        return (
+          <CustomSettingTaskConfirmationScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+            taskType={wizardModel?.getData("taskType")}
+          />
+        );
     }
   };
 
   const getHelpComponentFunction = (setHelpIsShown) => {
     switch (currentScreen) {
-    case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-      return null;
-    case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN:
-      return null;
-    case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.MAPPING_SCREEN:
-    case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.QUERY_BUILDER_SCREEN:
-    default:
-      return null;
+      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+        return null;
+      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.CONFIGURATION_SCREEN:
+        return null;
+      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.MAPPING_SCREEN:
+      case CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS.QUERY_BUILDER_SCREEN:
+      default:
+        return null;
     }
   };
 

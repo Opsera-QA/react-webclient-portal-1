@@ -47,10 +47,10 @@ function LdapDetailsView({ activeTab, jenkinsJobData, setJenkinsJobData }) {
   }, [activeTab]);
   if (activeTab) {
     switch (activeTab) {
-    case "settings":
-      return <JenkinsJobEditorPanel setJenkinsJobData={setJenkinsJobData} jenkinsJobData={jenkinsJobData} />;
-    default:
-      return null;
+      case "settings":
+        return <JenkinsJobEditorPanel setJenkinsJobData={setJenkinsJobData} jenkinsJobData={jenkinsJobData} />;
+      default:
+        return null;
     }
   }
 }

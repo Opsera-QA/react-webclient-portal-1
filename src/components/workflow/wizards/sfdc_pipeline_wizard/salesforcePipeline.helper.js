@@ -36,18 +36,18 @@ salesforcePipelineHelper.updateBranchForSalesforcePipelineSteps = (pipeline, git
     const jobType = stepToolConfiguration?.jobType;
 
     switch (jobType) {
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_CREATE_PACKAGE_XML:
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_BACK_UP:
-      updatedPipelineSteps.push(salesforcePipelineHelper.updateBranchInJenkinsStep(pipelineStep, gitBranch));
-      break;
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_VALIDATE_PACKAGE_XML:
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_UNIT_TESTING:
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_DEPLOY:
-      updatedPipelineSteps.push(pipelineStep);
-      break;
-    default:
-      console.info(`Pipeline Step Identifier [${pipelineStep?.tool?.tool_identifier}] is not supported for branch update with Job Type [${jobType}]`);
-      updatedPipelineSteps.push(pipelineStep);
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_CREATE_PACKAGE_XML:
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_BACK_UP:
+        updatedPipelineSteps.push(salesforcePipelineHelper.updateBranchInJenkinsStep(pipelineStep, gitBranch));
+        break;
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_VALIDATE_PACKAGE_XML:
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_UNIT_TESTING:
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_DEPLOY:
+        updatedPipelineSteps.push(pipelineStep);
+        break;
+      default:
+        console.info(`Pipeline Step Identifier [${pipelineStep?.tool?.tool_identifier}] is not supported for branch update with Job Type [${jobType}]`);
+        updatedPipelineSteps.push(pipelineStep);
     }
   });
 
@@ -106,18 +106,18 @@ salesforcePipelineHelper.updateRepositoryForSalesforcePipelineSteps = (pipeline,
     const jobType = stepToolConfiguration?.jobType;
 
     switch (jobType) {
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_CREATE_PACKAGE_XML:
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_BACK_UP:
-      updatedPipelineSteps.push(salesforcePipelineHelper.updateRepositoryInJenkinsStep(pipelineStep, parsedRepository));
-      break;
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_VALIDATE_PACKAGE_XML:
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_UNIT_TESTING:
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_DEPLOY:
-      updatedPipelineSteps.push(pipelineStep);
-      break;
-    default:
-      console.info(`Pipeline Step Identifier [${pipelineStep?.tool?.tool_identifier}] is not supported for branch update with Job Type [${jobType}]`);
-      updatedPipelineSteps.push(pipelineStep);
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_CREATE_PACKAGE_XML:
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_BACK_UP:
+        updatedPipelineSteps.push(salesforcePipelineHelper.updateRepositoryInJenkinsStep(pipelineStep, parsedRepository));
+        break;
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_VALIDATE_PACKAGE_XML:
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_UNIT_TESTING:
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_DEPLOY:
+        updatedPipelineSteps.push(pipelineStep);
+        break;
+      default:
+        console.info(`Pipeline Step Identifier [${pipelineStep?.tool?.tool_identifier}] is not supported for branch update with Job Type [${jobType}]`);
+        updatedPipelineSteps.push(pipelineStep);
     }
   });
 
@@ -189,18 +189,18 @@ salesforcePipelineHelper.updateGitToolIdForSalesforcePipelineSteps = (pipeline, 
     const jobType = stepToolConfiguration?.jobType;
 
     switch (jobType) {
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_CREATE_PACKAGE_XML:
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_BACK_UP:
-      updatedPipelineSteps.push(salesforcePipelineHelper.updateGitToolIdInJenkinsStep(pipelineStep, gitToolId, service));
-      break;
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_VALIDATE_PACKAGE_XML:
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_UNIT_TESTING:
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_DEPLOY:
-      updatedPipelineSteps.push(pipelineStep);
-      break;
-    default:
-      console.info(`Pipeline Step Identifier [${pipelineStep?.tool?.tool_identifier}] is not supported for branch update with Job Type [${jobType}]`);
-      updatedPipelineSteps.push(pipelineStep);
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_CREATE_PACKAGE_XML:
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_BACK_UP:
+        updatedPipelineSteps.push(salesforcePipelineHelper.updateGitToolIdInJenkinsStep(pipelineStep, gitToolId, service));
+        break;
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_VALIDATE_PACKAGE_XML:
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_UNIT_TESTING:
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_DEPLOY:
+        updatedPipelineSteps.push(pipelineStep);
+        break;
+      default:
+        console.info(`Pipeline Step Identifier [${pipelineStep?.tool?.tool_identifier}] is not supported for branch update with Job Type [${jobType}]`);
+        updatedPipelineSteps.push(pipelineStep);
     }
   });
 
@@ -271,18 +271,18 @@ salesforcePipelineHelper.updateSourceSalesforceToolIdForSalesforcePipelineSteps 
     const jobType = stepToolConfiguration?.jobType;
 
     switch (jobType) {
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_CREATE_PACKAGE_XML:
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_BACK_UP:
-      updatedPipelineSteps.push(salesforcePipelineHelper.updateSalesforceToolIdInJenkinsStep(pipelineStep, salesforceToolId));
-      break;
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_VALIDATE_PACKAGE_XML:
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_UNIT_TESTING:
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_DEPLOY:
-      updatedPipelineSteps.push(pipelineStep);
-      break;
-    default:
-      console.info(`Pipeline Step Identifier [${pipelineStep?.tool?.tool_identifier}] is not supported for source salesforce tool ID update with Job Type [${jobType}]`);
-      updatedPipelineSteps.push(pipelineStep);
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_CREATE_PACKAGE_XML:
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_BACK_UP:
+        updatedPipelineSteps.push(salesforcePipelineHelper.updateSalesforceToolIdInJenkinsStep(pipelineStep, salesforceToolId));
+        break;
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_VALIDATE_PACKAGE_XML:
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_UNIT_TESTING:
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_DEPLOY:
+        updatedPipelineSteps.push(pipelineStep);
+        break;
+      default:
+        console.info(`Pipeline Step Identifier [${pipelineStep?.tool?.tool_identifier}] is not supported for source salesforce tool ID update with Job Type [${jobType}]`);
+        updatedPipelineSteps.push(pipelineStep);
     }
   });
 
@@ -310,18 +310,18 @@ salesforcePipelineHelper.updateDestinationSalesforceToolIdForSalesforcePipelineS
     const jobType = stepToolConfiguration?.jobType;
 
     switch (jobType) {
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_VALIDATE_PACKAGE_XML:
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_UNIT_TESTING:
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_DEPLOY:
-      updatedPipelineSteps.push(salesforcePipelineHelper.updateSalesforceToolIdInJenkinsStep(pipelineStep, salesforceToolId));
-      break;
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_CREATE_PACKAGE_XML:
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_BACK_UP:
-      updatedPipelineSteps.push(pipelineStep);
-      break;
-    default:
-      console.info(`Pipeline Step Identifier [${pipelineStep?.tool?.tool_identifier}] is not supported for salesforce tool ID update with Job Type [${jobType}]`);
-      updatedPipelineSteps.push(pipelineStep);
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_VALIDATE_PACKAGE_XML:
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_UNIT_TESTING:
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_DEPLOY:
+        updatedPipelineSteps.push(salesforcePipelineHelper.updateSalesforceToolIdInJenkinsStep(pipelineStep, salesforceToolId));
+        break;
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_CREATE_PACKAGE_XML:
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_BACK_UP:
+        updatedPipelineSteps.push(pipelineStep);
+        break;
+      default:
+        console.info(`Pipeline Step Identifier [${pipelineStep?.tool?.tool_identifier}] is not supported for salesforce tool ID update with Job Type [${jobType}]`);
+        updatedPipelineSteps.push(pipelineStep);
     }
   });
 
@@ -399,17 +399,17 @@ salesforcePipelineHelper.updateStepsForSalesforcePipeline = (pipeline, flow) => 
   const pipelineSteps = pipelineHelpers.getPipelineSteps(pipeline);
 
   switch (flow) {
-  case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC:
-    updatedPipeline.workflow.plan = salesforcePipelineHelper.updateSalesforceBasicSteps(pipelineSteps);
-    break;
-  case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING:
-    updatedPipeline.workflow.plan = salesforcePipelineHelper.updateSalesforceUnitTestSteps(pipelineSteps);
-    break;
-  case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING_AND_BACKUP:
-    updatedPipeline.workflow.plan = pipelineSteps;
-    break;
-  default:
-    updatedPipeline.workflow.plan = pipelineSteps;
+    case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC:
+      updatedPipeline.workflow.plan = salesforcePipelineHelper.updateSalesforceBasicSteps(pipelineSteps);
+      break;
+    case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING:
+      updatedPipeline.workflow.plan = salesforcePipelineHelper.updateSalesforceUnitTestSteps(pipelineSteps);
+      break;
+    case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_WITH_UNIT_TESTING_AND_BACKUP:
+      updatedPipeline.workflow.plan = pipelineSteps;
+      break;
+    default:
+      updatedPipeline.workflow.plan = pipelineSteps;
   }
 
   return updatedPipeline;
@@ -429,12 +429,12 @@ salesforcePipelineHelper.updateSalesforceBasicSteps = (pipelineSteps) => {
     const jobType = stepToolConfiguration?.jobType;
 
     switch (jobType) {
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_UNIT_TESTING:
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_BACK_UP:
-      updatedPipelineSteps.push(salesforcePipelineHelper.enableStep(pipelineStep, false));
-      break;
-    default:
-      updatedPipelineSteps.push(pipelineStep);
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_UNIT_TESTING:
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_BACK_UP:
+        updatedPipelineSteps.push(salesforcePipelineHelper.enableStep(pipelineStep, false));
+        break;
+      default:
+        updatedPipelineSteps.push(pipelineStep);
     }
   });
 
@@ -455,11 +455,11 @@ salesforcePipelineHelper.updateSalesforceUnitTestSteps = (pipelineSteps) => {
     const jobType = stepToolConfiguration?.jobType;
 
     switch (jobType) {
-    case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_BACK_UP:
-      updatedPipelineSteps.push(salesforcePipelineHelper.enableStep(pipelineStep, false));
-      break;
-    default:
-      updatedPipelineSteps.push(pipelineStep);
+      case salesforceJenkinsJobConstants.SALESFORCE_JENKINS_JOB_TYPES.SFDC_BACK_UP:
+        updatedPipelineSteps.push(salesforcePipelineHelper.enableStep(pipelineStep, false));
+        break;
+      default:
+        updatedPipelineSteps.push(pipelineStep);
     }
   });
 

@@ -50,36 +50,36 @@ function SalesforceToGitMergeSyncTaskWithJiraTargetBranchInput(
       setIsLoading(true);      
       let response = {};
       switch (service) {
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
-        response = await bitbucketActions.getBranch(
-          getAccessToken,
-          cancelTokenSource,
-          toolId,
-          workspace,
-          repositoryId,
-          jiraIssueId,
-        );
-        break;
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
-        response = await githubActions.getBranch(
-          getAccessToken,
-          cancelTokenSource,
-          toolId,
-          repositoryId,
-          jiraIssueId,
-        );
-        break;
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
-        response = await gitlabActions.getBranch(
-          getAccessToken,
-          cancelTokenSource,
-          toolId,
-          repositoryId,
-          jiraIssueId,
-        );
-        break;
-      default:
-        response = {};
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
+          response = await bitbucketActions.getBranch(
+            getAccessToken,
+            cancelTokenSource,
+            toolId,
+            workspace,
+            repositoryId,
+            jiraIssueId,
+          );
+          break;
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
+          response = await githubActions.getBranch(
+            getAccessToken,
+            cancelTokenSource,
+            toolId,
+            repositoryId,
+            jiraIssueId,
+          );
+          break;
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
+          response = await gitlabActions.getBranch(
+            getAccessToken,
+            cancelTokenSource,
+            toolId,
+            repositoryId,
+            jiraIssueId,
+          );
+          break;
+        default:
+          response = {};
       }
 
       const data = DataParsingHelper.parseObject(response?.data?.data, false);

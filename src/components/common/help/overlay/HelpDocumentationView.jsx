@@ -23,20 +23,20 @@ const HELP_DOCUMENTS = {
 function HelpDocumentationView({ currentView }) {
   const getConfigurationSummaryPanel = () => {
     switch (currentView) {
-    case HELP_DOCUMENTS.INSIGHTS_MAIN_HELP_DOCUMENTATION:
-      return (<InsightsHelpDocumentation />);
-    case HELP_DOCUMENTS.SONAR_RATINGS:
-      return (<SonarRatingsChartHelpDocumentation />);
-    case HELP_DOCUMENTS.PIPELINES_OVERVIEW:
-      return (<InsightsPipelinesOverviewHelpDocumentation />);
-    case HELP_DOCUMENTS.COVERITY_ISSUES_BY_CATEGORY:
-      return (<CoverityIssuesByCategoryHelpDocumentation />);
-    case HELP_DOCUMENTS.GENERIC_CHART_SETTINGS:
-      return (<GenericChartSettingsHelpDocumentation />);
-    case HELP_DOCUMENTS.MEAN_TIME_TO_DEPLOY:
-      return (<MeanTimeToDeployHelpDocumentation />);
-    default:
-      return <div className="text-center p-5 text-muted mt-5">Please Select a Help Document</div>;
+      case HELP_DOCUMENTS.INSIGHTS_MAIN_HELP_DOCUMENTATION:
+        return (<InsightsHelpDocumentation />);
+      case HELP_DOCUMENTS.SONAR_RATINGS:
+        return (<SonarRatingsChartHelpDocumentation />);
+      case HELP_DOCUMENTS.PIPELINES_OVERVIEW:
+        return (<InsightsPipelinesOverviewHelpDocumentation />);
+      case HELP_DOCUMENTS.COVERITY_ISSUES_BY_CATEGORY:
+        return (<CoverityIssuesByCategoryHelpDocumentation />);
+      case HELP_DOCUMENTS.GENERIC_CHART_SETTINGS:
+        return (<GenericChartSettingsHelpDocumentation />);
+      case HELP_DOCUMENTS.MEAN_TIME_TO_DEPLOY:
+        return (<MeanTimeToDeployHelpDocumentation />);
+      default:
+        return <div className="text-center p-5 text-muted mt-5">Please Select a Help Document</div>;
     }
   };
 

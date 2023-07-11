@@ -19,29 +19,29 @@ function NotificationPolicySubNavigationBar({activeTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-    case "notifications":
-      history.push(`/notifications`);
-      return;
-    case "activity":
-      history.push(`/notifications/activity`);
-      return;
+      case "notifications":
+        history.push(`/notifications`);
+        return;
+      case "activity":
+        history.push(`/notifications/activity`);
+        return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-    case "notificationViewer":
-      return (
-        <NavigationTab
-          icon={faTools}
-          tabName={"notificationViewer"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          tabText={"Notification Policy Viewer"}
-        />
-      );
-    default:
-      return null;
+      case "notificationViewer":
+        return (
+          <NavigationTab
+            icon={faTools}
+            tabName={"notificationViewer"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+            tabText={"Notification Policy Viewer"}
+          />
+        );
+      default:
+        return null;
     }
   };
 

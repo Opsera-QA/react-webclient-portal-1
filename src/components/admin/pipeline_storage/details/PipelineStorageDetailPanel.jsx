@@ -33,10 +33,10 @@ function PipelineStorageDetailPanel({ pipelineStorageData }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return <PipelineStorageSummaryPanel pipelineStorageData={pipelineStorageData} setActiveTab={setActiveTab} />;
-    default:
-      return null;
+      case "summary":
+        return <PipelineStorageSummaryPanel pipelineStorageData={pipelineStorageData} setActiveTab={setActiveTab} />;
+      default:
+        return null;
     }
   };
 

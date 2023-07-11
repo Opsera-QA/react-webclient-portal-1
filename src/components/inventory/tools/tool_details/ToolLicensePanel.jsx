@@ -10,10 +10,10 @@ function ToolLicensePanel({ toolData, setToolData }) {
     }
 
     switch (toolData?.getData("tool_identifier")) {
-    case "provar":
-      return <ProvarLicenseConfiguration toolData={toolData} />;
-    default:
-      return <div className="text-center p-5 text-muted mt-5">License configuration is not currently available for this tool.</div>;
+      case "provar":
+        return <ProvarLicenseConfiguration toolData={toolData} />;
+      default:
+        return <div className="text-center p-5 text-muted mt-5">License configuration is not currently available for this tool.</div>;
     }
   };
 

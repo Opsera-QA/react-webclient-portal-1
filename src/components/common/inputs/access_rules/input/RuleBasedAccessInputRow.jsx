@@ -41,15 +41,15 @@ function RuleBasedAccessInputRow(
 
   const getValueInput = () => {
     switch(accessRule?.type) {
-    case accessRuleTypeConstants.ACCESS_RULE_TYPES.ALLOWED_SSO_USER_ORGANIZATIONS:
-      return (
-        <AccessRuleSsoUserOrganizationNameStandaloneMultiSelectInput
-          disabled={disabled || disabledSsoUserOrganizations}
-          setDataFunction={setAccessRoleValueFunction}
-          value={accessRule?.value}
-          ssoUserOrganizationNames={ssoUserOrganizationNames}
-        />
-      );
+      case accessRuleTypeConstants.ACCESS_RULE_TYPES.ALLOWED_SSO_USER_ORGANIZATIONS:
+        return (
+          <AccessRuleSsoUserOrganizationNameStandaloneMultiSelectInput
+            disabled={disabled || disabledSsoUserOrganizations}
+            setDataFunction={setAccessRoleValueFunction}
+            value={accessRule?.value}
+            ssoUserOrganizationNames={ssoUserOrganizationNames}
+          />
+        );
     }
   };
 

@@ -24,17 +24,17 @@ function SonarSummaryCard({ sonarData, loadData, type }) {
 
   const initializeDto = async () => {    
     switch (type) {
-    case "bugs":         
-      setSonarMetricScorecardDto(new Model({...sonarData}, SonarBugsMetricScorecardMetaData, false));
-      return;
-    case "vulnerabilities":            
-      setSonarMetricScorecardDto(new Model({...sonarData}, SonarVulnerabilitiesMetricScorecardMetaData, false));
-      return;
-    case "code-smells":
-      setSonarMetricScorecardDto(new Model({...sonarData}, SonarCodeSmellsMetricScorecardMetaData, false));
-      return;
-    default:
-      return;
+      case "bugs":         
+        setSonarMetricScorecardDto(new Model({...sonarData}, SonarBugsMetricScorecardMetaData, false));
+        return;
+      case "vulnerabilities":            
+        setSonarMetricScorecardDto(new Model({...sonarData}, SonarVulnerabilitiesMetricScorecardMetaData, false));
+        return;
+      case "code-smells":
+        setSonarMetricScorecardDto(new Model({...sonarData}, SonarCodeSmellsMetricScorecardMetaData, false));
+        return;
+      default:
+        return;
     }    
   };
 

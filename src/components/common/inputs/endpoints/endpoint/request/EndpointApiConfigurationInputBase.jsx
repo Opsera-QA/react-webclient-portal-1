@@ -40,37 +40,37 @@ function EndpointApiConfigurationInputBase(
 
   const getDynamicInputsForRequestType = () => {
     switch (endpoint?.requestType) {
-    case endpointRequestType.ENDPOINT_REQUEST_TYPES.GET:
-      return (
-        <EndpointRequestParametersInputBase
-          model={endpointRequestParametersModel}
-          setModel={setModelFunction}
-          parameterFields={endpoint?.queryParameterFields}
-          fieldName={"queryParameters"}
-          disabled={disabled}
-          height={height}
-          endpointParameterArrayInputHeight={endpointParameterArrayInputHeight}
-          endpointParameterInputHeight={endpointParameterInputHeight}
-          runEndpointId={model?.getData("runEndpointId")}
-          toolId={model?.getData("toolId")}
-        />
-      );
-    case endpointRequestType.ENDPOINT_REQUEST_TYPES.PUT:
-    case endpointRequestType.ENDPOINT_REQUEST_TYPES.POST:
-      return (
-        <EndpointRequestParametersInputBase
-          model={endpointRequestParametersModel}
-          setModel={setModelFunction}
-          parameterFields={endpoint?.requestBodyFields}
-          fieldName={"requestBody"}
-          disabled={disabled}
-          height={height}
-          endpointParameterArrayInputHeight={endpointParameterArrayInputHeight}
-          endpointParameterInputHeight={endpointParameterInputHeight}
-          runEndpointId={model?.getData("runEndpointId")}
-          toolId={model?.getData("toolId")}
-        />
-      );
+      case endpointRequestType.ENDPOINT_REQUEST_TYPES.GET:
+        return (
+          <EndpointRequestParametersInputBase
+            model={endpointRequestParametersModel}
+            setModel={setModelFunction}
+            parameterFields={endpoint?.queryParameterFields}
+            fieldName={"queryParameters"}
+            disabled={disabled}
+            height={height}
+            endpointParameterArrayInputHeight={endpointParameterArrayInputHeight}
+            endpointParameterInputHeight={endpointParameterInputHeight}
+            runEndpointId={model?.getData("runEndpointId")}
+            toolId={model?.getData("toolId")}
+          />
+        );
+      case endpointRequestType.ENDPOINT_REQUEST_TYPES.PUT:
+      case endpointRequestType.ENDPOINT_REQUEST_TYPES.POST:
+        return (
+          <EndpointRequestParametersInputBase
+            model={endpointRequestParametersModel}
+            setModel={setModelFunction}
+            parameterFields={endpoint?.requestBodyFields}
+            fieldName={"requestBody"}
+            disabled={disabled}
+            height={height}
+            endpointParameterArrayInputHeight={endpointParameterArrayInputHeight}
+            endpointParameterInputHeight={endpointParameterInputHeight}
+            runEndpointId={model?.getData("runEndpointId")}
+            toolId={model?.getData("toolId")}
+          />
+        );
     }
   };
 

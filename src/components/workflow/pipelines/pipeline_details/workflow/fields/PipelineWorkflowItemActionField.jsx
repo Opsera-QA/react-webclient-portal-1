@@ -28,16 +28,16 @@ export default function PipelineWorkflowItemActionField(
     }
 
     switch (toolIdentifier) {
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
-      return (
-        <PipelineWorkflowItemPipelineInstructionsField
-          pipelineStep={pipelineStep}
-          pipeline={pipeline}
-          loadPipelineFunction={loadPipelineFunction}
-        />
-      );
-    default:
-      return null;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
+        return (
+          <PipelineWorkflowItemPipelineInstructionsField
+            pipelineStep={pipelineStep}
+            pipeline={pipeline}
+            loadPipelineFunction={loadPipelineFunction}
+          />
+        );
+      default:
+        return null;
     }
   };
 

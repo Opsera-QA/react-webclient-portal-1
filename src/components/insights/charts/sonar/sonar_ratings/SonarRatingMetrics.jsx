@@ -108,53 +108,53 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
 
     const getIcon = (severity) => {
       switch (severity) {
-      case "Red":
-        return faArrowCircleUp;
-      case "Green":
-        return faArrowCircleDown;
-      case "Neutral":
-        return faMinusCircle;
-      default:
-        break;
+        case "Red":
+          return faArrowCircleUp;
+        case "Green":
+          return faArrowCircleDown;
+        case "Neutral":
+          return faMinusCircle;
+        default:
+          break;
       }
     };
 
     const getReverseIcon = (severity) => {
       switch (severity) {
-      case "Red":
-        return faArrowCircleDown;
-      case "Green":
-        return faArrowCircleUp;
-      case "Neutral":
-        return faMinusCircle;
-      default:
-        break;
+        case "Red":
+          return faArrowCircleDown;
+        case "Green":
+          return faArrowCircleUp;
+        case "Neutral":
+          return faMinusCircle;
+        default:
+          break;
       }
     };
 
     const getIconColor = (severity) => {
       switch (severity) {
-      case "Red":
-        return "red";
-      case "Green":
-        return "green";
-      case "Neutral":
-        return "light-gray-text-secondary";
-      case "-":
-        return "black";
-      default:
-        break;
+        case "Red":
+          return "red";
+        case "Green":
+          return "green";
+        case "Neutral":
+          return "light-gray-text-secondary";
+        case "-":
+          return "black";
+        default:
+          break;
       }
     };
 
     const getDescription = (severity) => {
       switch (severity) {
-      case "Red":
-        return "This project's issues are trending upward";
-      case "Green":
-        return "This project's issues are trending downward";
-      case "Neutral":
-        return "Neutral: This project's issues have experienced no change";
+        case "Red":
+          return "This project's issues are trending upward";
+        case "Green":
+          return "This project's issues are trending downward";
+        case "Neutral":
+          return "Neutral: This project's issues have experienced no change";
       }
     };
 

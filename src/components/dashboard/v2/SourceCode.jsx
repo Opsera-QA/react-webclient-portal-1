@@ -6,17 +6,17 @@ import SourceCodeView_executive from "../../analytics/views/SourceCodeView_execu
 
 function SourceCode( { persona, date } ) {
   switch (persona) {
-  case "developer":
-    return <SourceCodeView_developer persona={persona} date={date} />;
+    case "developer":
+      return <SourceCodeView_developer persona={persona} date={date} />;
 
-  case "manager":
-    return <SourceCodeView_manager persona={persona} date={date} />;
+    case "manager":
+      return <SourceCodeView_manager persona={persona} date={date} />;
 
-  case "executive":
-    return <SourceCodeView_executive persona={persona} date={date} />;
+    case "executive":
+      return <SourceCodeView_executive persona={persona} date={date} />;
 
-  default:
-    return <SourceCodeView_developer persona={persona} date={date} />;
+    default:
+      return <SourceCodeView_developer persona={persona} date={date} />;
   }  
 }
 

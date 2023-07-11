@@ -42,42 +42,42 @@ function TaskSummaryPanel(
 
   const getButtonForTaskType = () => {
     switch (gitTasksData?.getData("type")) {
-    case TASK_TYPES.AZURE_CLUSTER_CREATION:
-      return (
-        <TaskAksActionButtons
-          gitTasksData={gitTasksData}
-          status={status}
-          runCount={runCount}
-        />
-      );
-    case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
-      return (
-        <TasksEcsActionButtons
-          gitTasksData={gitTasksData}
-          status={status}
-          runCount={runCount}
-        />
-      );
-    case TASK_TYPES.GITSCRAPER:
-      return (
-        <GitScraperActionButton
-          gitTasksData={gitTasksData}
-          status={status}
-          runCount={runCount}
-        />
-      );
-    default:
-      return (
-        <RunTaskButton
-          taskModel={gitTasksData}
-          setTaskModel={setGitTasksData}
-          loadData={loadData}
-          status={status}
-          actionAllowed={TaskRoleHelper.canRunTask(userData, gitTasksData?.getPersistData())}
-          taskType={gitTasksData?.getData("type")}
-          runCount={runCount}
-        />
-      );
+      case TASK_TYPES.AZURE_CLUSTER_CREATION:
+        return (
+          <TaskAksActionButtons
+            gitTasksData={gitTasksData}
+            status={status}
+            runCount={runCount}
+          />
+        );
+      case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
+        return (
+          <TasksEcsActionButtons
+            gitTasksData={gitTasksData}
+            status={status}
+            runCount={runCount}
+          />
+        );
+      case TASK_TYPES.GITSCRAPER:
+        return (
+          <GitScraperActionButton
+            gitTasksData={gitTasksData}
+            status={status}
+            runCount={runCount}
+          />
+        );
+      default:
+        return (
+          <RunTaskButton
+            taskModel={gitTasksData}
+            setTaskModel={setGitTasksData}
+            loadData={loadData}
+            status={status}
+            actionAllowed={TaskRoleHelper.canRunTask(userData, gitTasksData?.getPersistData())}
+            taskType={gitTasksData?.getData("type")}
+            runCount={runCount}
+          />
+        );
     }
   };
 

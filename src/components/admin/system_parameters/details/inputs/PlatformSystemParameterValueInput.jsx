@@ -28,73 +28,73 @@ export default function PlatformSystemParameterValueInput(
 
   // TODO: Should email addresses be an option?
   switch (type) {
-  case platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.ARRAY:
-    return (
-      <MultiTextListInputBase
-        model={model}
-        setModel={setModel}
-        fieldName={fieldName}
-        // customTitle={}
-        // isPotentialValueValidFunction={validateEmail}
-        // error={error}
-        // singularTopic={singularTopic}
-        // pluralTopic={pluralTopic}
-        // className={className}
-        disabled={disabled}
-      />
-    );
-  case platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.BOOLEAN:
-    return (
-      <BooleanToggleInput
-        disabled={disabled}
-        dataObject={model}
-        setDataObject={setModel}
-        fieldName={fieldName}
-      />
-    );
-  case platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.NUMBER:
-    return (
-      <NumberPickerInputBase
-        fieldName={fieldName}
-        dataObject={model}
-        setDataObject={setModel}
-      />
-    );
-  case platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.OBJECT:
-    return (
-      <JsonInput
-        fieldName={fieldName}
-        model={model}
-        setModel={setModel}
-      />
-    );
-  case platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.STRING:
-    return (
-      <TextInputBase
-        fieldName={fieldName}
-        dataObject={model}
-        setDataObject={setModel}
-      />
-    );
-  case platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.USER_EMAIL_ADDRESSES:
-    return (
-      <SsoUserSideBySideListInputBase
-        model={model}
-        setModel={setModel}
-        fieldName={"value"}
-        valueField={"email"}
-      />
-    );
-  case platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.VERBOSE_LOGGING:
-    return (
-      <PlatformSystemVerboseLoggingMultiCheckboxInput
-        model={model}
-        setModel={setModel}
-        fieldName={"value"}
-      />
-    );
-  default:
-    return null;
+    case platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.ARRAY:
+      return (
+        <MultiTextListInputBase
+          model={model}
+          setModel={setModel}
+          fieldName={fieldName}
+          // customTitle={}
+          // isPotentialValueValidFunction={validateEmail}
+          // error={error}
+          // singularTopic={singularTopic}
+          // pluralTopic={pluralTopic}
+          // className={className}
+          disabled={disabled}
+        />
+      );
+    case platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.BOOLEAN:
+      return (
+        <BooleanToggleInput
+          disabled={disabled}
+          dataObject={model}
+          setDataObject={setModel}
+          fieldName={fieldName}
+        />
+      );
+    case platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.NUMBER:
+      return (
+        <NumberPickerInputBase
+          fieldName={fieldName}
+          dataObject={model}
+          setDataObject={setModel}
+        />
+      );
+    case platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.OBJECT:
+      return (
+        <JsonInput
+          fieldName={fieldName}
+          model={model}
+          setModel={setModel}
+        />
+      );
+    case platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.STRING:
+      return (
+        <TextInputBase
+          fieldName={fieldName}
+          dataObject={model}
+          setDataObject={setModel}
+        />
+      );
+    case platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.USER_EMAIL_ADDRESSES:
+      return (
+        <SsoUserSideBySideListInputBase
+          model={model}
+          setModel={setModel}
+          fieldName={"value"}
+          valueField={"email"}
+        />
+      );
+    case platformSystemParameterConstants.PLATFORM_SYSTEM_PARAMETER_TYPES.VERBOSE_LOGGING:
+      return (
+        <PlatformSystemVerboseLoggingMultiCheckboxInput
+          model={model}
+          setModel={setModel}
+          fieldName={"value"}
+        />
+      );
+    default:
+      return null;
   }
 }
 

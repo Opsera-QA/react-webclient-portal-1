@@ -18,22 +18,22 @@ function NotificationDetailViewHelpDocumentation({type, method}) {
 
   const getNotificationTypeDocumentation = () => {
     switch (type) {
-    case NOTIFICATION_TYPES.PIPELINE:
-    case NOTIFICATION_TYPES.METRIC:
-    default:
-      return null;
+      case NOTIFICATION_TYPES.PIPELINE:
+      case NOTIFICATION_TYPES.METRIC:
+      default:
+        return null;
     }
   };
 
   const getNotificationMethodDocumentation = () => {
     switch (method) {
-    case NOTIFICATION_METHODS.EMAIL:
-    case NOTIFICATION_METHODS.JIRA:
-    case NOTIFICATION_METHODS.SERVICE_NOW:
-    case NOTIFICATION_METHODS.SLACK:
-    case NOTIFICATION_METHODS.TEAMS:
-    default:
-      return null;
+      case NOTIFICATION_METHODS.EMAIL:
+      case NOTIFICATION_METHODS.JIRA:
+      case NOTIFICATION_METHODS.SERVICE_NOW:
+      case NOTIFICATION_METHODS.SLACK:
+      case NOTIFICATION_METHODS.TEAMS:
+      default:
+        return null;
     }
   };
 

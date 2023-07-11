@@ -8,18 +8,18 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 function ToolEndpointsPanel({toolModel}) {
   const getPathsPanel = () => {
     switch (toolModel?.getData("tool_identifier")) {
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR:
-      return (
-        <ExternalApiIntegratorEndpointsPanel
-          toolId={toolModel?.getData("_id")}
-        />
-      );
-    default:
-      return (
-        <CenteredContentWrapper>
-          <div className={"my-5"}>Opsera endpoint management is not currently available for this tool.</div>
-        </CenteredContentWrapper>
-      );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR:
+        return (
+          <ExternalApiIntegratorEndpointsPanel
+            toolId={toolModel?.getData("_id")}
+          />
+        );
+      default:
+        return (
+          <CenteredContentWrapper>
+            <div className={"my-5"}>Opsera endpoint management is not currently available for this tool.</div>
+          </CenteredContentWrapper>
+        );
     }
   };
 

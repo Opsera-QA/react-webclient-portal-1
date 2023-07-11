@@ -18,18 +18,18 @@ dashboardTypeConstants.DASHBOARD_TYPE_LABELS = {
 
 dashboardTypeConstants.getDashboardTypeLabel = (taskType) => {
   switch (taskType) {
-  case dashboardTypeConstants.DASHBOARD_TYPES.OPERATIONS:
-    return dashboardTypeConstants.DASHBOARD_TYPE_LABELS.OPERATIONS;
-  case dashboardTypeConstants.DASHBOARD_TYPES.PIPELINES:
-    return dashboardTypeConstants.DASHBOARD_TYPE_LABELS.PIPELINES;
-  case dashboardTypeConstants.DASHBOARD_TYPES.PLANNING:
-    return dashboardTypeConstants.DASHBOARD_TYPE_LABELS.PLANNING;
-  case dashboardTypeConstants.DASHBOARD_TYPES.QUALITY:
-    return dashboardTypeConstants.DASHBOARD_TYPE_LABELS.QUALITY;
-  case dashboardTypeConstants.DASHBOARD_TYPES.SECURITY:
-    return dashboardTypeConstants.DASHBOARD_TYPE_LABELS.SECURITY;
-  default:
-    return taskType;
+    case dashboardTypeConstants.DASHBOARD_TYPES.OPERATIONS:
+      return dashboardTypeConstants.DASHBOARD_TYPE_LABELS.OPERATIONS;
+    case dashboardTypeConstants.DASHBOARD_TYPES.PIPELINES:
+      return dashboardTypeConstants.DASHBOARD_TYPE_LABELS.PIPELINES;
+    case dashboardTypeConstants.DASHBOARD_TYPES.PLANNING:
+      return dashboardTypeConstants.DASHBOARD_TYPE_LABELS.PLANNING;
+    case dashboardTypeConstants.DASHBOARD_TYPES.QUALITY:
+      return dashboardTypeConstants.DASHBOARD_TYPE_LABELS.QUALITY;
+    case dashboardTypeConstants.DASHBOARD_TYPES.SECURITY:
+      return dashboardTypeConstants.DASHBOARD_TYPE_LABELS.SECURITY;
+    default:
+      return taskType;
   }
 };
 

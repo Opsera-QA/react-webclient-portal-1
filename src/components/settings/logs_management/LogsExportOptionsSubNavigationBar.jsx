@@ -17,9 +17,9 @@ export default function LogsExportOptionsSubNavigationBar({ activeTab }) {
     }
 
     switch (tabSelection) {
-    case "logsExportOptions":
-      history.push(`/logs-export-management`);
-      return;
+      case "logsExportOptions":
+        history.push(`/logs-export-management`);
+        return;
     }
   };
 

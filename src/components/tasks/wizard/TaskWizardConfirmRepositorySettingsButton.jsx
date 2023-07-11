@@ -31,51 +31,51 @@ export default function TaskWizardConfirmRepositorySettingsButton(
     }
 
     switch(type){
-    case 'SFDC_GIT_COMPARE_SYNC':
-      if((model.isNewBranch && !model.upstreamBranch) || !model.targetBranch || !model.toolId){
-        return Promise.reject('Error in validating branch name');
-      }
+      case 'SFDC_GIT_COMPARE_SYNC':
+        if((model.isNewBranch && !model.upstreamBranch) || !model.targetBranch || !model.toolId){
+          return Promise.reject('Error in validating branch name');
+        }
 
-      return {
-        toolId: model.toolId,
-        branchName: model.targetBranch,
-        repositoryId: model.projectId,
-        service: model.service,
-        workspace: model.service === 'bitbucket' ? model.workspace : undefined,
-        isNewBranch: model.isNewBranch,
-        upstreamBranch: model.upstreamBranch,
-      };
-    case 'GIT_VS_GIT_SYNC':
-      if((model.isNewBranch && !model.upstreamBranch) || !model.targetBranch || !model.toolId){
-        return Promise.reject('Error in validating branch name');
-      }
+        return {
+          toolId: model.toolId,
+          branchName: model.targetBranch,
+          repositoryId: model.projectId,
+          service: model.service,
+          workspace: model.service === 'bitbucket' ? model.workspace : undefined,
+          isNewBranch: model.isNewBranch,
+          upstreamBranch: model.upstreamBranch,
+        };
+      case 'GIT_VS_GIT_SYNC':
+        if((model.isNewBranch && !model.upstreamBranch) || !model.targetBranch || !model.toolId){
+          return Promise.reject('Error in validating branch name');
+        }
 
-      return {
-        toolId: model.toolId,
-        branchName: model.targetBranch,
-        repositoryId: model.projectId,
-        service: model.service,
-        workspace: model.service === 'bitbucket' ? model.workspace : undefined,
-        isNewBranch: model.isNewBranch,
-        upstreamBranch: model.upstreamBranch,
-        sourceBranch: model.sourceBranch,
-      };
-    case 'sync-sfdc-repo':
-      if((model.isNewBranch && !model.upstreamBranch) || !model.defaultBranch || !model.gitToolId){
-        return Promise.reject('Error in validating branch name');
-      }
+        return {
+          toolId: model.toolId,
+          branchName: model.targetBranch,
+          repositoryId: model.projectId,
+          service: model.service,
+          workspace: model.service === 'bitbucket' ? model.workspace : undefined,
+          isNewBranch: model.isNewBranch,
+          upstreamBranch: model.upstreamBranch,
+          sourceBranch: model.sourceBranch,
+        };
+      case 'sync-sfdc-repo':
+        if((model.isNewBranch && !model.upstreamBranch) || !model.defaultBranch || !model.gitToolId){
+          return Promise.reject('Error in validating branch name');
+        }
 
-      return {
-        toolId: model.gitToolId,
-        branchName: model.defaultBranch,
-        repositoryId: model.projectId,
-        service: model.service,
-        workspace: model.service === 'bitbucket' ? model.workspace : undefined,
-        isNewBranch: model.isNewBranch,
-        upstreamBranch: model.upstreamBranch,
-      };
-    default:
-      return Promise.reject('Error in validating branch name');
+        return {
+          toolId: model.gitToolId,
+          branchName: model.defaultBranch,
+          repositoryId: model.projectId,
+          service: model.service,
+          workspace: model.service === 'bitbucket' ? model.workspace : undefined,
+          isNewBranch: model.isNewBranch,
+          upstreamBranch: model.upstreamBranch,
+        };
+      default:
+        return Promise.reject('Error in validating branch name');
     }
   };
 

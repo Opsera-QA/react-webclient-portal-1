@@ -82,137 +82,137 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
 
   const getBody = () => {
     switch (pipelineWizardScreen) {
-    case PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-      return (
-        <SfdcPipelineWizardInitializationScreen
-          pipelineWizardModel={pipelineWizardModel}
-          setPipelineWizardModel={setPipelineWizardModel}
-          setPipelineWizardScreen={setPipelineWizardScreen}
-          handleClose={handleClose}
-          pipeline={pipeline}
-          gitTaskData={gitTaskData}
-          setError={setError}
-        />
-      );
-    case PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR:
-      return (
-        <SfdcPipelineWizardComponentSelector
-          pipelineWizardModel={pipelineWizardModel}
-          setPipelineWizardModel={setPipelineWizardModel}
-          setPipelineWizardScreen={setPipelineWizardScreen}
-          handleClose={handleClose}
-        />
-      );
+      case PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+        return (
+          <SfdcPipelineWizardInitializationScreen
+            pipelineWizardModel={pipelineWizardModel}
+            setPipelineWizardModel={setPipelineWizardModel}
+            setPipelineWizardScreen={setPipelineWizardScreen}
+            handleClose={handleClose}
+            pipeline={pipeline}
+            gitTaskData={gitTaskData}
+            setError={setError}
+          />
+        );
+      case PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR:
+        return (
+          <SfdcPipelineWizardComponentSelector
+            pipelineWizardModel={pipelineWizardModel}
+            setPipelineWizardModel={setPipelineWizardModel}
+            setPipelineWizardScreen={setPipelineWizardScreen}
+            handleClose={handleClose}
+          />
+        );
 
-    case PIPELINE_WIZARD_SCREENS.STANDARD_FILE_SELECTOR:
-      return (
-        <SfdcPipelineWizardStandardFileSelector
-          pipelineWizardModel={pipelineWizardModel}
-          setPipelineWizardModel={setPipelineWizardModel}
-          setPipelineWizardScreen={setPipelineWizardScreen}
-          handleClose={handleClose}
-        />
-      );
-    case PIPELINE_WIZARD_SCREENS.GIT_TASKS_FILE_SELECTOR:
-      return (
-        <SfdcPipelineWizardGitTasksFileSelector
-          pipelineWizardModel={pipelineWizardModel}
-          setPipelineWizardModel={setPipelineWizardModel}
-          setPipelineWizardScreen={setPipelineWizardScreen}
-          handleClose={handleClose}
-        />
-      );
-    case PIPELINE_WIZARD_SCREENS.ORG_TO_ORG_FILE_SELECTOR:
-      return (
-        <SfdcPipelineWizardOrgToOrgFileSelector
-          pipelineWizardModel={pipelineWizardModel}
-          setPipelineWizardModel={setPipelineWizardModel}
-          setPipelineWizardScreen={setPipelineWizardScreen}
-          handleClose={handleClose}
-        />
-      );
-    case PIPELINE_WIZARD_SCREENS.PROFILE_COMPONENT_SELECTOR:
-      return (
-        <SfdcPipelineWizardProfileComponentSelector
-          pipelineWizardModel={pipelineWizardModel}
-          setPipelineWizardModel={setPipelineWizardModel}
-          handleClose={handleClose}
-          setPipelineWizardScreen={setPipelineWizardScreen}
-        />
-      );
-    case PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER:
-      return (
-        <SfdcPipelineWizardValidatedFileViewer
-          pipelineWizardModel={pipelineWizardModel}
-          setPipelineWizardModel={setPipelineWizardModel}
-          handleClose={handleClose}
-          setPipelineWizardScreen={setPipelineWizardScreen}
-        />
-      );
-    case PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR:
-      return (
-        <SfdcPipelineWizardUnitTestSelector
-          pipelineWizardModel={pipelineWizardModel}
-          handleClose={handleClose}
-          setPipelineWizardScreen={setPipelineWizardScreen}
-        />
-      );
-    case PIPELINE_WIZARD_SCREENS.XML_VIEWER:
-      return (
-        <SfdcPipelineWizardXmlViewer
-          pipelineWizardModel={pipelineWizardModel}
-          setPipelineWizardModel={setPipelineWizardModel}
-          handleClose={handleClose}
-          setPipelineWizardScreen={setPipelineWizardScreen}
-          setError={setError}
-          handlePipelineWizardRequest={handlePipelineWizardRequest}
-        />
-      );
+      case PIPELINE_WIZARD_SCREENS.STANDARD_FILE_SELECTOR:
+        return (
+          <SfdcPipelineWizardStandardFileSelector
+            pipelineWizardModel={pipelineWizardModel}
+            setPipelineWizardModel={setPipelineWizardModel}
+            setPipelineWizardScreen={setPipelineWizardScreen}
+            handleClose={handleClose}
+          />
+        );
+      case PIPELINE_WIZARD_SCREENS.GIT_TASKS_FILE_SELECTOR:
+        return (
+          <SfdcPipelineWizardGitTasksFileSelector
+            pipelineWizardModel={pipelineWizardModel}
+            setPipelineWizardModel={setPipelineWizardModel}
+            setPipelineWizardScreen={setPipelineWizardScreen}
+            handleClose={handleClose}
+          />
+        );
+      case PIPELINE_WIZARD_SCREENS.ORG_TO_ORG_FILE_SELECTOR:
+        return (
+          <SfdcPipelineWizardOrgToOrgFileSelector
+            pipelineWizardModel={pipelineWizardModel}
+            setPipelineWizardModel={setPipelineWizardModel}
+            setPipelineWizardScreen={setPipelineWizardScreen}
+            handleClose={handleClose}
+          />
+        );
+      case PIPELINE_WIZARD_SCREENS.PROFILE_COMPONENT_SELECTOR:
+        return (
+          <SfdcPipelineWizardProfileComponentSelector
+            pipelineWizardModel={pipelineWizardModel}
+            setPipelineWizardModel={setPipelineWizardModel}
+            handleClose={handleClose}
+            setPipelineWizardScreen={setPipelineWizardScreen}
+          />
+        );
+      case PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER:
+        return (
+          <SfdcPipelineWizardValidatedFileViewer
+            pipelineWizardModel={pipelineWizardModel}
+            setPipelineWizardModel={setPipelineWizardModel}
+            handleClose={handleClose}
+            setPipelineWizardScreen={setPipelineWizardScreen}
+          />
+        );
+      case PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR:
+        return (
+          <SfdcPipelineWizardUnitTestSelector
+            pipelineWizardModel={pipelineWizardModel}
+            handleClose={handleClose}
+            setPipelineWizardScreen={setPipelineWizardScreen}
+          />
+        );
+      case PIPELINE_WIZARD_SCREENS.XML_VIEWER:
+        return (
+          <SfdcPipelineWizardXmlViewer
+            pipelineWizardModel={pipelineWizardModel}
+            setPipelineWizardModel={setPipelineWizardModel}
+            handleClose={handleClose}
+            setPipelineWizardScreen={setPipelineWizardScreen}
+            setError={setError}
+            handlePipelineWizardRequest={handlePipelineWizardRequest}
+          />
+        );
     }
   };
 
   const getHelpComponentFunction = (setHelpIsShown) => {
     switch (pipelineWizardScreen) {
-    case PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-      return (
-        <SfdcWizardInitializationHelpDocumentation
-          componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
-          closeHelpPanel={() => setHelpIsShown(false)}
-        />
-      );
-    case PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR:
-      return (
-        <SfdcWizardComponentTypeSelectionHelpDocumentation
-          componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
-          closeHelpPanel={() => setHelpIsShown(false)}
-        />
-      );
-    case PIPELINE_WIZARD_SCREENS.STANDARD_FILE_SELECTOR:
-    case PIPELINE_WIZARD_SCREENS.GIT_TASKS_FILE_SELECTOR:
-    case PIPELINE_WIZARD_SCREENS.ORG_TO_ORG_FILE_SELECTOR:
-    case PIPELINE_WIZARD_SCREENS.PROFILE_COMPONENT_SELECTOR:
-      return (
-        <SfdcWizardFileSelectionHelpDocumentation
-          componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
-          closeHelpPanel={() => setHelpIsShown(false)}
-        />
-      );
-    case PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR:
-      return (
-        <SfdcWizardUnitTestSelectionViewHelpDocumentation
-          componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
-          closeHelpPanel={() => setHelpIsShown(false)}
-        />
-      );
-    case PIPELINE_WIZARD_SCREENS.XML_VIEWER:
-      return (
-        <SfdcWizardXmlViewerHelpDocumentation
-          componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
-          closeHelpPanel={() => setHelpIsShown(false)}
-        />
-      );
-    default:
-      return null;
+      case PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+        return (
+          <SfdcWizardInitializationHelpDocumentation
+            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
+            closeHelpPanel={() => setHelpIsShown(false)}
+          />
+        );
+      case PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR:
+        return (
+          <SfdcWizardComponentTypeSelectionHelpDocumentation
+            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
+            closeHelpPanel={() => setHelpIsShown(false)}
+          />
+        );
+      case PIPELINE_WIZARD_SCREENS.STANDARD_FILE_SELECTOR:
+      case PIPELINE_WIZARD_SCREENS.GIT_TASKS_FILE_SELECTOR:
+      case PIPELINE_WIZARD_SCREENS.ORG_TO_ORG_FILE_SELECTOR:
+      case PIPELINE_WIZARD_SCREENS.PROFILE_COMPONENT_SELECTOR:
+        return (
+          <SfdcWizardFileSelectionHelpDocumentation
+            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
+            closeHelpPanel={() => setHelpIsShown(false)}
+          />
+        );
+      case PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR:
+        return (
+          <SfdcWizardUnitTestSelectionViewHelpDocumentation
+            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
+            closeHelpPanel={() => setHelpIsShown(false)}
+          />
+        );
+      case PIPELINE_WIZARD_SCREENS.XML_VIEWER:
+        return (
+          <SfdcWizardXmlViewerHelpDocumentation
+            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
+            closeHelpPanel={() => setHelpIsShown(false)}
+          />
+        );
+      default:
+        return null;
     }
   };
 

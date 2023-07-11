@@ -122,31 +122,31 @@ function TaskDetailView() {
 
   const getHelpComponent = () => {
     switch (taskModel?.getData("type")) {
-    case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
-      return <AwsEcsClusterCreationTaskDetailsHelpDocumentation/>;
-    case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
-      return <AwsEcsServiceCreationTaskDetailsHelpDocumentation/>;
-    case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
-      return <AwsLambdaFunctionCreationTaskDetailsHelpDocumentation/>;
-    case TASK_TYPES.AZURE_CLUSTER_CREATION:
-      return <AzureAKSClusterCreationTaskDetailsHelpDocumentation/>;
-    case TASK_TYPES.GITSCRAPER:
-      return <GitCustodianTaskDetailsHelpDocumentation/>;
-    case TASK_TYPES.SYNC_GIT_BRANCHES:
-      return <GitToGitSyncTaskDetailsHelpDocumentation/>;
-    case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
-      return <GitToGitMergeSyncTaskDetailsHelpDocumentation/>;
-    case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
-      return <SalesforceBulkMigrationTaskDetailsHelpDocumentation/>;
-    case TASK_TYPES.SYNC_SALESFORCE_REPO:
-      return <SfdcOrgSyncTaskDetailsHelpDocumentation/>;
-    case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
-      return <SalesforceToGitMergeSyncTaskDetailsHelpDocumentation/>;
-    case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
-      return <SfdxQuickDeployTaskDetailsHelpDocumentation/>;
-    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
-    default:
-      return null;
+      case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
+        return <AwsEcsClusterCreationTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
+        return <AwsEcsServiceCreationTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
+        return <AwsLambdaFunctionCreationTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.AZURE_CLUSTER_CREATION:
+        return <AzureAKSClusterCreationTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.GITSCRAPER:
+        return <GitCustodianTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.SYNC_GIT_BRANCHES:
+        return <GitToGitSyncTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
+        return <GitToGitMergeSyncTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+        return <SalesforceBulkMigrationTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.SYNC_SALESFORCE_REPO:
+        return <SfdcOrgSyncTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+        return <SalesforceToGitMergeSyncTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
+        return <SfdxQuickDeployTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+      default:
+        return null;
     }
   };
 

@@ -54,44 +54,44 @@ export default function CustomerPipelineTemplateDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <CustomerPipelineTemplateSummaryPanel
-          pipelineTemplateModel={pipelineTemplateModel}
-          setPipelineTemplateModel={setPipelineTemplateModel}
-          setActiveTab={setActiveTab}
-        />
-      );
-    case "details":
-      return (
-        <PipelineTemplatePlanOverviewContainer
-          pipelineTemplateModel={pipelineTemplateModel}
-          className={"mt-1"}
-        />
-      );
-    case "json":
-      return (
-        <div className={"pt-1"}>
-          <StandaloneJsonField
-            titleText={"Pipeline Template View"}
-            json={pipelineTemplateModel?.getPersistData()}
-            displayDataTypes={false}
-            collapsed={false}
-            minimumHeight={"calc(100vh - 325px)"}
-            maximumHeight={"calc(100vh - 325px)"}
+      case "summary":
+        return (
+          <CustomerPipelineTemplateSummaryPanel
+            pipelineTemplateModel={pipelineTemplateModel}
+            setPipelineTemplateModel={setPipelineTemplateModel}
+            setActiveTab={setActiveTab}
           />
-        </div>
-      );
-    case "settings":
-      return (
-        <CustomerPipelineTemplateEditorPanel
-          pipelineTemplateModel={pipelineTemplateModel}
-          setPipelineTemplateModel={setPipelineTemplateModel}
-          handleClose={toggleSummaryPanel}
-        />
-      );
-    default:
-      return null;
+        );
+      case "details":
+        return (
+          <PipelineTemplatePlanOverviewContainer
+            pipelineTemplateModel={pipelineTemplateModel}
+            className={"mt-1"}
+          />
+        );
+      case "json":
+        return (
+          <div className={"pt-1"}>
+            <StandaloneJsonField
+              titleText={"Pipeline Template View"}
+              json={pipelineTemplateModel?.getPersistData()}
+              displayDataTypes={false}
+              collapsed={false}
+              minimumHeight={"calc(100vh - 325px)"}
+              maximumHeight={"calc(100vh - 325px)"}
+            />
+          </div>
+        );
+      case "settings":
+        return (
+          <CustomerPipelineTemplateEditorPanel
+            pipelineTemplateModel={pipelineTemplateModel}
+            setPipelineTemplateModel={setPipelineTemplateModel}
+            handleClose={toggleSummaryPanel}
+          />
+        );
+      default:
+        return null;
     }
   };
 

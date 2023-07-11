@@ -73,67 +73,67 @@ const SalesforceDataSeedingTaskWizard = ({ handleClose, taskModel }) => {
 
   const getBody = () => {
     switch (currentScreen) {
-    case DATA_SEEDING_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-      return (
-        <DataSeedingTaskWizardInitializationScreen
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setCurrentScreen={setCurrentScreen}
-          handleClose={handleClose}
-        />
-      );
-    case DATA_SEEDING_WIZARD_SCREENS.CONFIGURATION_SCREEN:
-      return (
-        <CustomSettingTaskWizardConfigScreen
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setCurrentScreen={setCurrentScreen}
-          handleClose={handleClose}
-          taskType={wizardModel?.getData("taskType")}
-        />
-      );
-    case DATA_SEEDING_WIZARD_SCREENS.MAPPING_SCREEN:
-      return (
-        <DataSeedingFieldMappingScreen
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setCurrentScreen={setCurrentScreen}
-          handleClose={handleClose}
-        />
-      );
-    case DATA_SEEDING_WIZARD_SCREENS.QUERY_BUILDER_SCREEN:
-      return (
-        <CustomSettingQueryBuilderScreen
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setCurrentScreen={setCurrentScreen}
-          handleClose={handleClose}
-          taskType={wizardModel?.getData("taskType")}
-        />
-      );
-    case DATA_SEEDING_WIZARD_SCREENS.CONFIRMATION_SCREEN:
-      return (
-        <CustomSettingTaskConfirmationScreen
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setCurrentScreen={setCurrentScreen}
-          handleClose={handleClose}
-          taskType={wizardModel?.getData("taskType")}
-        />
-      );
+      case DATA_SEEDING_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+        return (
+          <DataSeedingTaskWizardInitializationScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+          />
+        );
+      case DATA_SEEDING_WIZARD_SCREENS.CONFIGURATION_SCREEN:
+        return (
+          <CustomSettingTaskWizardConfigScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+            taskType={wizardModel?.getData("taskType")}
+          />
+        );
+      case DATA_SEEDING_WIZARD_SCREENS.MAPPING_SCREEN:
+        return (
+          <DataSeedingFieldMappingScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+          />
+        );
+      case DATA_SEEDING_WIZARD_SCREENS.QUERY_BUILDER_SCREEN:
+        return (
+          <CustomSettingQueryBuilderScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+            taskType={wizardModel?.getData("taskType")}
+          />
+        );
+      case DATA_SEEDING_WIZARD_SCREENS.CONFIRMATION_SCREEN:
+        return (
+          <CustomSettingTaskConfirmationScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+            taskType={wizardModel?.getData("taskType")}
+          />
+        );
     }
   };
 
   const getHelpComponentFunction = (setHelpIsShown) => {
     switch (currentScreen) {
-    case DATA_SEEDING_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-      return null;
-    case DATA_SEEDING_WIZARD_SCREENS.CONFIGURATION_SCREEN:
-      return null;
-    case DATA_SEEDING_WIZARD_SCREENS.MAPPING_SCREEN:
-    case DATA_SEEDING_WIZARD_SCREENS.QUERY_BUILDER_SCREEN:
-    default:
-      return null;
+      case DATA_SEEDING_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+        return null;
+      case DATA_SEEDING_WIZARD_SCREENS.CONFIGURATION_SCREEN:
+        return null;
+      case DATA_SEEDING_WIZARD_SCREENS.MAPPING_SCREEN:
+      case DATA_SEEDING_WIZARD_SCREENS.QUERY_BUILDER_SCREEN:
+      default:
+        return null;
     }
   };
 

@@ -6,35 +6,35 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 function JenkinsBuildJobSummaryPanel({ dataObject }) {
   const getDynamicBuildTypeFields = () => {
     switch (dataObject?.getData("buildType")) {
-    case "gradle":
-      return (
-        <Col lg={6}>
-          <TextFieldBase dataObject={dataObject} fieldName={"gradleTask"} />
-        </Col>
-      );
-    case "maven":
-      return (
-        <>
+      case "gradle":
+        return (
           <Col lg={6}>
-            <TextFieldBase dataObject={dataObject} fieldName={"mavenTask"} />
+            <TextFieldBase dataObject={dataObject} fieldName={"gradleTask"} />
           </Col>
+        );
+      case "maven":
+        return (
+          <>
+            <Col lg={6}>
+              <TextFieldBase dataObject={dataObject} fieldName={"mavenTask"} />
+            </Col>
+            <Col lg={6}>
+              <TextFieldBase dataObject={dataObject} fieldName={"scriptId"} />
+            </Col>
+          </>          
+        );
+      case "msbuild":
+        return (
           <Col lg={6}>
-            <TextFieldBase dataObject={dataObject} fieldName={"scriptId"} />
+            <TextFieldBase dataObject={dataObject} fieldName={"commandLineArgs"} />
           </Col>
-        </>          
-      );
-    case "msbuild":
-      return (
-        <Col lg={6}>
-          <TextFieldBase dataObject={dataObject} fieldName={"commandLineArgs"} />
-        </Col>
-      );
-    case "xcode":
-      return (                      
-        <Col lg={6}>
-          <TextFieldBase dataObject={dataObject} fieldName={"scriptId"} customLabel={"Custom Plist"} />
-        </Col>
-      );
+        );
+      case "xcode":
+        return (                      
+          <Col lg={6}>
+            <TextFieldBase dataObject={dataObject} fieldName={"scriptId"} customLabel={"Custom Plist"} />
+          </Col>
+        );
     }
   };
 

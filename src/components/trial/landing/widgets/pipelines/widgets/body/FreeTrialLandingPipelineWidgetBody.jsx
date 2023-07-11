@@ -20,35 +20,35 @@ export default function FreeTrialLandingPipelineWidgetBody(
   }) {
   const getBody = () => {
     switch (selectedHeaderItem) {
-    case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.SUMMARY:
-      return (
-        <FreeTrialLandingPipelineWidgetPipelineSummaryPanel
-          selectedPipeline={selectedPipeline}
-          setSelectedPipeline={setSelectedPipeline}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-          className={"m-3"}
-        />
-      );
-    case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.ACTIVITY_LOGS:
-      return (
-        <FreeTrialLandingPipelineWidgetPipelineActivityLogsPanel
-          selectedPipeline={selectedPipeline}
-          className={"m-3"}
-        />
-      );
-    case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.ANALYTICS:
-      return (
-        <FreeTrialLandingPipelineWidgetAnalyticsBody
-          className={"m-3"}
-        />
-      );
-    default:
-      return (
-        <div>
+      case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.SUMMARY:
+        return (
+          <FreeTrialLandingPipelineWidgetPipelineSummaryPanel
+            selectedPipeline={selectedPipeline}
+            setSelectedPipeline={setSelectedPipeline}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+            className={"m-3"}
+          />
+        );
+      case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.ACTIVITY_LOGS:
+        return (
+          <FreeTrialLandingPipelineWidgetPipelineActivityLogsPanel
+            selectedPipeline={selectedPipeline}
+            className={"m-3"}
+          />
+        );
+      case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.ANALYTICS:
+        return (
+          <FreeTrialLandingPipelineWidgetAnalyticsBody
+            className={"m-3"}
+          />
+        );
+      default:
+        return (
+          <div>
             Please select a pipeline.
-        </div>
-      );
+          </div>
+        );
     }
   };
 

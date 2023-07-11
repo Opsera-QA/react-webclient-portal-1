@@ -41,55 +41,55 @@ export default function GithubActionsWorkflowActionableInsightOverlay(
 
   const getBody = () => {
     switch (currentScreen) {
-    case GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_DETAILED_WORKFLOW_SUMMARY:
-      return (
-        <GithubActionsDetailedWorkflowSummaryOverlay
-          dashboardData={dashboardData}
-          kpiConfiguration={kpiConfiguration}
-          dashboardFilters={dashboardFilters}
-          workflowName={workflowName}
-          setCurrentScreen={setCurrentScreen}
-          setSelectedWorkflowObject={setSelectedWorkflowObject}
-          breadcrumbBar={getBreadcrumbBar()}
-        />
-      );
-    case GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_WORKFLOW_UNIQUE_RUN_SUMMARY:
-      return (
-        <GithubActionsUniqueRunSummaryOverlay
-          workflowName={workflowName}
-          kpiConfiguration={kpiConfiguration}
-          dashboardData={dashboardData}
-          dashboardFilters={dashboardFilters}
-          appName={selectedWorkflowObject?.appName}
-          repoName={selectedWorkflowObject?.repoName}
-          workflow={selectedWorkflowObject?.workflow}
-          branchName={selectedWorkflowObject?.branchName}
-          workflowRuns={selectedWorkflowObject?.runs}
-          setSelectedJobName={setSelectedJobName}
-          setCurrentScreen={setCurrentScreen}
-          setSelectedWorkflowObject={setSelectedWorkflowObject}
-          breadcrumbBar={getBreadcrumbBar()}
-        />
-      );
-    case GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_WORKFLOW_STEP_SUMMARY:
-      return (
-        <GithubActionsDetailedJobSummaryOverlay
-          kpiConfiguration={kpiConfiguration}
-          dashboardData={dashboardData}
-          dashboardFilters={dashboardFilters}
-          appName={selectedWorkflowObject?.appName}
-          repoName={selectedWorkflowObject?.repoName}
-          workflow={selectedWorkflowObject?.workflow}
-          workflowName={selectedWorkflowObject?.workflow}
-          branchName={selectedWorkflowObject?.branchName}
-          jobName={selectedJobName}
-          runs={selectedJobRuns}
-          setCurrentScreen={setCurrentScreen}
-          setSelectedJobName={setSelectedJobName}
-          setSelectedJobRuns={setSelectedJobRuns}
-          breadcrumbBar={getBreadcrumbBar()}
-        />
-      );
+      case GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_DETAILED_WORKFLOW_SUMMARY:
+        return (
+          <GithubActionsDetailedWorkflowSummaryOverlay
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            dashboardFilters={dashboardFilters}
+            workflowName={workflowName}
+            setCurrentScreen={setCurrentScreen}
+            setSelectedWorkflowObject={setSelectedWorkflowObject}
+            breadcrumbBar={getBreadcrumbBar()}
+          />
+        );
+      case GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_WORKFLOW_UNIQUE_RUN_SUMMARY:
+        return (
+          <GithubActionsUniqueRunSummaryOverlay
+            workflowName={workflowName}
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+            dashboardFilters={dashboardFilters}
+            appName={selectedWorkflowObject?.appName}
+            repoName={selectedWorkflowObject?.repoName}
+            workflow={selectedWorkflowObject?.workflow}
+            branchName={selectedWorkflowObject?.branchName}
+            workflowRuns={selectedWorkflowObject?.runs}
+            setSelectedJobName={setSelectedJobName}
+            setCurrentScreen={setCurrentScreen}
+            setSelectedWorkflowObject={setSelectedWorkflowObject}
+            breadcrumbBar={getBreadcrumbBar()}
+          />
+        );
+      case GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS.GITHUB_ACTIONS_WORKFLOW_STEP_SUMMARY:
+        return (
+          <GithubActionsDetailedJobSummaryOverlay
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+            dashboardFilters={dashboardFilters}
+            appName={selectedWorkflowObject?.appName}
+            repoName={selectedWorkflowObject?.repoName}
+            workflow={selectedWorkflowObject?.workflow}
+            workflowName={selectedWorkflowObject?.workflow}
+            branchName={selectedWorkflowObject?.branchName}
+            jobName={selectedJobName}
+            runs={selectedJobRuns}
+            setCurrentScreen={setCurrentScreen}
+            setSelectedJobName={setSelectedJobName}
+            setSelectedJobRuns={setSelectedJobRuns}
+            breadcrumbBar={getBreadcrumbBar()}
+          />
+        );
     }
   };
 

@@ -21,24 +21,24 @@ function UserDataMappingDetailPanel({ userDataMappingModel, setUserDataMappingMo
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <UserMappingSummaryPanel
-          userDataMappingModel={userDataMappingModel}
-          setUserDataMappingModel={setUserDataMappingModel}
-          setActiveTab={setActiveTab}
-        />
-      );
-    case "settings":
-      return (
-        <UserMappingEditorPanel
-          userDataMappingModel={userDataMappingModel}
-          setUserDataMappingModel={setUserDataMappingModel}
-          handleClose={toggleSummaryPanel}
-        />
-      );
-    default:
-      return null;
+      case "summary":
+        return (
+          <UserMappingSummaryPanel
+            userDataMappingModel={userDataMappingModel}
+            setUserDataMappingModel={setUserDataMappingModel}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case "settings":
+        return (
+          <UserMappingEditorPanel
+            userDataMappingModel={userDataMappingModel}
+            setUserDataMappingModel={setUserDataMappingModel}
+            handleClose={toggleSummaryPanel}
+          />
+        );
+      default:
+        return null;
     }
   };
 

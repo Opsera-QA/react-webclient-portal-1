@@ -27,29 +27,29 @@ import NotificationsField from "components/common/fields/notifications/Notificat
 function NotificationPolicySummaryPanel({ notificationData, setActiveTab }) {
   const getNotificationTypeSummaryPanel = () => {
     switch (notificationData.getData("type")) {
-    case "audit_log":
-      return (
-        <AuditLogNotificationTypeSummaryPanel
-          notificationConfigurationData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), auditLogNotificationConfigurationMetadata)}
-          notificationData={notificationData}
-        />
-      );
-    case "metric":
-      return (
-        <MetricNotificationTypeSummaryCard
-          notificationConfigurationData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), metricNotificationConfigurationMetadata)}
-          notificationData={notificationData}
-        />
-      );
-    case "pipeline":
-      return (
-        <PipelineNotificationTypeSummaryCard
-          notificationConfigurationData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), pipelineNotificationConfigurationMetadata)}
-          notificationData={notificationData}
-        />
-      );
-    default:
-      return (<div>No notification type associated with this Notification</div>);
+      case "audit_log":
+        return (
+          <AuditLogNotificationTypeSummaryPanel
+            notificationConfigurationData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), auditLogNotificationConfigurationMetadata)}
+            notificationData={notificationData}
+          />
+        );
+      case "metric":
+        return (
+          <MetricNotificationTypeSummaryCard
+            notificationConfigurationData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), metricNotificationConfigurationMetadata)}
+            notificationData={notificationData}
+          />
+        );
+      case "pipeline":
+        return (
+          <PipelineNotificationTypeSummaryCard
+            notificationConfigurationData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), pipelineNotificationConfigurationMetadata)}
+            notificationData={notificationData}
+          />
+        );
+      default:
+        return (<div>No notification type associated with this Notification</div>);
     }
   };
 

@@ -27,25 +27,25 @@ function JiraProjectsDetailPanel({ toolData, setToolData, jiraProjectData, setJi
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <JiraProjectSummaryPanel
-          jiraProjectData={jiraProjectData}
-          jiraConfigurationData={getJiraConfigurationData()}
-          setActiveTab={setTabSelection}
-        />
-      );
-    case "settings":
-      return (
-        <JiraToolProjectEditorPanel
-          toolData={toolData}
-          activeTab={activeTab}
-          setJiraProjectData={setJiraProjectData}
-          jiraProjectData={jiraProjectData}
-        />
-      );
-    default:
-      return null;
+      case "summary":
+        return (
+          <JiraProjectSummaryPanel
+            jiraProjectData={jiraProjectData}
+            jiraConfigurationData={getJiraConfigurationData()}
+            setActiveTab={setTabSelection}
+          />
+        );
+      case "settings":
+        return (
+          <JiraToolProjectEditorPanel
+            toolData={toolData}
+            activeTab={activeTab}
+            setJiraProjectData={setJiraProjectData}
+            jiraProjectData={jiraProjectData}
+          />
+        );
+      default:
+        return null;
     }
   };
 

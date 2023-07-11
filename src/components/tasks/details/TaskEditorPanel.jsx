@@ -98,36 +98,36 @@ function TaskEditorPanel({ taskData, handleClose, backButtonFunction }) {
 
   const getHelpDocumentation = (setHelpIsShown) => {
     switch (taskModel?.getData("type")) {
-    case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
-      return <AwsEcsClusterCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-    case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
-      return <AwsEcsServiceCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-    case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
-      return <AwsLambdaFunctionCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-    case TASK_TYPES.AZURE_CLUSTER_CREATION:
-      return <AzureAksClusterCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-    case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
-      return <GitToGitMergeSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-    case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
-      return <SalesforceBulkMigrationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-    case TASK_TYPES.SYNC_GIT_BRANCHES:
-      return <GitToGitSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-    case TASK_TYPES.SYNC_SALESFORCE_REPO:
-      return <SfdcOrgSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-    case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
-      return <SalesforceToGitMergeSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-    case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
-      return <SfdxQuickDeployTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-    case TASK_TYPES.GITSCRAPER:
-      return <GitCustodianTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
-    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
-      break;
-    case TASK_TYPES.SNAPLOGIC_TASK:
-      break;
-    case TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION:
-      break;
-    default:
-      return <TaskCreationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
+        return <AwsEcsClusterCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
+        return <AwsEcsServiceCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
+        return <AwsLambdaFunctionCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.AZURE_CLUSTER_CREATION:
+        return <AzureAksClusterCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
+        return <GitToGitMergeSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+        return <SalesforceBulkMigrationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.SYNC_GIT_BRANCHES:
+        return <GitToGitSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.SYNC_SALESFORCE_REPO:
+        return <SfdcOrgSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+        return <SalesforceToGitMergeSyncTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
+        return <SfdxQuickDeployTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.GITSCRAPER:
+        return <GitCustodianTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+        break;
+      case TASK_TYPES.SNAPLOGIC_TASK:
+        break;
+      case TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION:
+        break;
+      default:
+        return <TaskCreationHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
     }
   };
 

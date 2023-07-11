@@ -53,14 +53,14 @@ const GitCustodianStandaloneBranchSelectInput = ({ value,  disabled, setDataFunc
       setIsLoading(true);
 
       switch (service) {
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
-        return await loadBitbucketBranches(cancelSource);
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
-        return await loadGitlabBranches(cancelSource);
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
-        return await loadGithubBranches(cancelSource);
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS:
-        return await loadAzureBranches(cancelSource);
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
+          return await loadBitbucketBranches(cancelSource);
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
+          return await loadGitlabBranches(cancelSource);
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
+          return await loadGithubBranches(cancelSource);
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS:
+          return await loadAzureBranches(cancelSource);
       }
     } catch (error) {
       if (isMounted?.current === true) {

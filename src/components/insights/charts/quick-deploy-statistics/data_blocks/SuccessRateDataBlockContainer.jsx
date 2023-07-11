@@ -101,14 +101,14 @@ function SuccessRateDataBlockContainer({ metricData, chartData, kpiConfiguration
 
   const getIcon = (severity) => {
     switch (severity) {
-    case "red":
-      return faArrowCircleDown;
-    case "green":
-      return faArrowCircleUp;
-    case "light-gray-text-secondary":
-      return faMinusCircle;
-    default:
-      break;
+      case "red":
+        return faArrowCircleDown;
+      case "green":
+        return faArrowCircleUp;
+      case "light-gray-text-secondary":
+        return faMinusCircle;
+      default:
+        break;
     }
   };
 

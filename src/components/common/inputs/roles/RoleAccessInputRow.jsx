@@ -79,33 +79,33 @@ export default function RoleAccessInputRow(
     const type = accessRuleModel?.getType();
 
     switch (type) {
-    case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.USER:
-      return (
-        <RoleAccessInputLdapUserSelectInput
-          model={accessRuleModel}
-          setModel={setAccessRuleModel}
-          roles={roles}
-          disabled={disabled}
-        />
-      );
-    case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.GROUP:
-      return (
-        <RoleAccessInputLdapGroupSelectInput
-          model={accessRuleModel}
-          setModel={setAccessRuleModel}
-          roles={roles}
-          disabled={disabled}
-        />
-      );
-    case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.SITE_ROLE:
-      return (
-        <RoleAccessInputSiteRoleSelectInput
-          model={accessRuleModel}
-          setModel={setAccessRuleModel}
-          roles={roles}
-          disabled={disabled}
-        />
-      );
+      case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.USER:
+        return (
+          <RoleAccessInputLdapUserSelectInput
+            model={accessRuleModel}
+            setModel={setAccessRuleModel}
+            roles={roles}
+            disabled={disabled}
+          />
+        );
+      case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.GROUP:
+        return (
+          <RoleAccessInputLdapGroupSelectInput
+            model={accessRuleModel}
+            setModel={setAccessRuleModel}
+            roles={roles}
+            disabled={disabled}
+          />
+        );
+      case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.SITE_ROLE:
+        return (
+          <RoleAccessInputSiteRoleSelectInput
+            model={accessRuleModel}
+            setModel={setAccessRuleModel}
+            roles={roles}
+            disabled={disabled}
+          />
+        );
     }
   };
 

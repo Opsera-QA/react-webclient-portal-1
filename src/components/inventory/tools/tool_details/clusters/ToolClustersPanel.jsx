@@ -10,18 +10,18 @@ function ToolClustersPanel({ toolModel }) {
   const getToolClustersPanel = () => {
     const toolIdentifier = toolModel?.getData("tool_identifier");
     switch (toolIdentifier) {
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
-      return (
-        <ArgoToolClustersPanel
-          toolId={toolModel?.getData("_id")}
-        />
-      );
-    default:
-      return (
-        <div className="text-center p-5 text-muted mt-5">
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
+        return (
+          <ArgoToolClustersPanel
+            toolId={toolModel?.getData("_id")}
+          />
+        );
+      default:
+        return (
+          <div className="text-center p-5 text-muted mt-5">
             Cluster management is not currently available for this tool.
-        </div>
-      );
+          </div>
+        );
     }
   };
 

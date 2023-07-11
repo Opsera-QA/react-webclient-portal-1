@@ -44,23 +44,23 @@ function ToolProjectsView() {
 
   const getMetaData = (toolIdentifier) => {
     switch (toolIdentifier) {
-    case "jira":
-      return jiraToolProjectMetadata;
+      case "jira":
+        return jiraToolProjectMetadata;
     }
   };
 
   const getDetailView = () => {
     switch (toolModel?.getData("tool_identifier")) {
-    case "jira":
-      return (
-        <JiraProjectDetailView
-          toolData={toolModel}
-          loadTool={loadData}
-          isLoading={isLoading}
-          jiraProjectData={toolProjectData}
-          setJiraProjectData={setToolProjectData}
-        />
-      );
+      case "jira":
+        return (
+          <JiraProjectDetailView
+            toolData={toolModel}
+            loadTool={loadData}
+            isLoading={isLoading}
+            jiraProjectData={toolProjectData}
+            setJiraProjectData={setToolProjectData}
+          />
+        );
     }
 
     return (

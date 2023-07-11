@@ -36,31 +36,31 @@ export default function SalesforceToGitMergeSyncActionableInsightOverlay(
 
   const getBody = () => {
     switch (currentScreen) {
-    case SALESFORCE_TO_GIT_MERGE_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_TO_GIT_MERGE_SYNC_RUN_SUMMARY:
-      return (
-        <SalesforceToGitMergeSyncDetailedRunSummaryOverlay
-          dashboardData={dashboardData}
-          kpiConfiguration={kpiConfiguration}
-          dashboardFilters={dashboardFilters}
-          taskId={taskId}
-          taskName={taskName}
-          setCurrentScreen={setCurrentScreen}
-          setSelectedRunObject={setSelectedRunObject}
-          breadcrumbBar={getBreadcrumbBar()}
-        />
-      );
-    case SALESFORCE_TO_GIT_MERGE_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_TO_GIT_MERGE_SYNC_COMPONENT_SUMMARY:
-      return (
-        <SalesforceToGitMergeSyncUniqueRunSummaryOverlay
-          kpiConfiguration={kpiConfiguration}
-          dashboardData={dashboardData}
-          dashboardFilters={dashboardFilters}
-          setCurrentScreen={setCurrentScreen}
-          selectedRunObject={selectedRunObject}
-          setSelectedRunObject={setSelectedRunObject}
-          breadcrumbBar={getBreadcrumbBar()}
-        />
-      );
+      case SALESFORCE_TO_GIT_MERGE_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_TO_GIT_MERGE_SYNC_RUN_SUMMARY:
+        return (
+          <SalesforceToGitMergeSyncDetailedRunSummaryOverlay
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            dashboardFilters={dashboardFilters}
+            taskId={taskId}
+            taskName={taskName}
+            setCurrentScreen={setCurrentScreen}
+            setSelectedRunObject={setSelectedRunObject}
+            breadcrumbBar={getBreadcrumbBar()}
+          />
+        );
+      case SALESFORCE_TO_GIT_MERGE_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_TO_GIT_MERGE_SYNC_COMPONENT_SUMMARY:
+        return (
+          <SalesforceToGitMergeSyncUniqueRunSummaryOverlay
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+            dashboardFilters={dashboardFilters}
+            setCurrentScreen={setCurrentScreen}
+            selectedRunObject={selectedRunObject}
+            setSelectedRunObject={setSelectedRunObject}
+            breadcrumbBar={getBreadcrumbBar()}
+          />
+        );
     }
   };
 

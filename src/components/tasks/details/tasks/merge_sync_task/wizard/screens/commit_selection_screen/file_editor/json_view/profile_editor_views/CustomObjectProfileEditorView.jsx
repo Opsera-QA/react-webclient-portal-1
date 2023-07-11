@@ -39,73 +39,73 @@ const CustomObjectProfileEditorView = ({
     const newModel = { ...customMetaJsonMetadata };
     // newModel?.setData(fieldName, newValue);
     switch (fieldName) {
-    case "allowCreate":
-      if (!newModel?.getData("allowRead")) {
-        newModel?.setData("allowRead", true);
-      }
-      newModel?.setData(fieldName, newValue);
-      break;
-    case "allowDelete":
-      if (
-        !newModel?.getData("allowEdit")
-      ) {
-        newModel?.setData("allowEdit", true);
-      }
-      if (
-        !newModel?.getData("allowRead")
-      ) {
-        newModel?.setData("allowRead", true);
-      }
-      newModel?.setData(fieldName, newValue);
-      break;
-    case "allowEdit":
-      if (!newModel?.getData("allowRead")) {
-        newModel?.setData("allowRead", true);
-      }
-      newModel?.setData(fieldName, newValue);
-      break;
-    case "allowRead":
-      if (!newValue) {
-        newModel?.setDefaultValue("allowCreate");
-        newModel?.setDefaultValue("allowDelete");
-        newModel?.setDefaultValue("allowEdit");
-        newModel?.setDefaultValue("modifyAllRecords");
-        newModel?.setDefaultValue("viewAllRecords");
-      }
-      newModel?.setData(fieldName, newValue);
-      break;
-    case "modifyAllRecords":
-      if (
-        !newModel?.getData("allowEdit")
-      ) {
-        newModel?.setData("allowEdit", true);
-      }
-      if (
-        !newModel?.getData("allowRead")
-      ) {
-        newModel?.setData("allowRead", true);
-      }
-      if (
-        !newModel?.getData("allowDelete")
-      ) {
-        newModel?.setData("allowDelete", true);
-      }
-      if (
-        !newModel?.getData("viewAllRecords")
-      ) {
-        newModel?.setData("viewAllRecords", true);
-      }
-      newModel?.setData(fieldName, newValue);
-      break;
-    case "viewAllRecords":
-      if (!newModel?.getData("allowRead")) {
-        newModel?.setData("allowRead", true);
-      }
-      newModel?.setData(fieldName, newValue);
-      break;
-    default:
-      newModel?.setData(fieldName, newValue);
-      break;
+      case "allowCreate":
+        if (!newModel?.getData("allowRead")) {
+          newModel?.setData("allowRead", true);
+        }
+        newModel?.setData(fieldName, newValue);
+        break;
+      case "allowDelete":
+        if (
+          !newModel?.getData("allowEdit")
+        ) {
+          newModel?.setData("allowEdit", true);
+        }
+        if (
+          !newModel?.getData("allowRead")
+        ) {
+          newModel?.setData("allowRead", true);
+        }
+        newModel?.setData(fieldName, newValue);
+        break;
+      case "allowEdit":
+        if (!newModel?.getData("allowRead")) {
+          newModel?.setData("allowRead", true);
+        }
+        newModel?.setData(fieldName, newValue);
+        break;
+      case "allowRead":
+        if (!newValue) {
+          newModel?.setDefaultValue("allowCreate");
+          newModel?.setDefaultValue("allowDelete");
+          newModel?.setDefaultValue("allowEdit");
+          newModel?.setDefaultValue("modifyAllRecords");
+          newModel?.setDefaultValue("viewAllRecords");
+        }
+        newModel?.setData(fieldName, newValue);
+        break;
+      case "modifyAllRecords":
+        if (
+          !newModel?.getData("allowEdit")
+        ) {
+          newModel?.setData("allowEdit", true);
+        }
+        if (
+          !newModel?.getData("allowRead")
+        ) {
+          newModel?.setData("allowRead", true);
+        }
+        if (
+          !newModel?.getData("allowDelete")
+        ) {
+          newModel?.setData("allowDelete", true);
+        }
+        if (
+          !newModel?.getData("viewAllRecords")
+        ) {
+          newModel?.setData("viewAllRecords", true);
+        }
+        newModel?.setData(fieldName, newValue);
+        break;
+      case "viewAllRecords":
+        if (!newModel?.getData("allowRead")) {
+          newModel?.setData("allowRead", true);
+        }
+        newModel?.setData(fieldName, newValue);
+        break;
+      default:
+        newModel?.setData(fieldName, newValue);
+        break;
     }
     setCustomMetaJsonMetadata({ ...newModel });
     setCustomObjDataJson(newModel.getPersistData());

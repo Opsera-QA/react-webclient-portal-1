@@ -14,24 +14,24 @@ export default function ToolCardBody(
   }) {
   const getCardBodyByIdentifier = () => {
     switch (toolModel?.getData("tool_identifier")) {
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
-      return (
-        <GitlabToolCardBody
-          toolModel={toolModel}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
-      return (
-        <GithubToolCardBody
-          toolModel={toolModel}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR:
-      return (
-        <SalesforceToolCardBody
-          toolModel={toolModel}
-        />
-      );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
+        return (
+          <GitlabToolCardBody
+            toolModel={toolModel}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
+        return (
+          <GithubToolCardBody
+            toolModel={toolModel}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR:
+        return (
+          <SalesforceToolCardBody
+            toolModel={toolModel}
+          />
+        );
     }
   };
 

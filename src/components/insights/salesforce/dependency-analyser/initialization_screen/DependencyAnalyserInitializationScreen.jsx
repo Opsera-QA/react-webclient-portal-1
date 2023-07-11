@@ -208,10 +208,10 @@ const DependencyAnalyserInitializationScreen = ({
 
   const getView = () => {
     switch (activeTab) {
-    case "manual":
-      return getBody();
-    case "automatic":
-      return getFileUploadBody();
+      case "manual":
+        return getBody();
+      case "automatic":
+        return getFileUploadBody();
     }
   };
 

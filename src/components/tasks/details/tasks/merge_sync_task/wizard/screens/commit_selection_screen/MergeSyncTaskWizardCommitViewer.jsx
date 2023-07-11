@@ -173,86 +173,86 @@ const MergeSyncTaskWizardCommitViewer = ({
 
   const getCommitActionLabel = (action) => {
     switch (action?.toLowerCase()) {
-    case "modified":
-      return (
-        <span style={{
-          display: "flex",
-          backgroundColor: "#b3d4ff",
-          borderColor: "#b3d4ff",
-          color: "#0052cc", border: 1,
-          padding: "2px 5px",
-          textAlign: 'center',
-          borderRadius: 3,
-          fontWeight: 500,
-          alignItems: 'center',
-          textTransform: 'capitalize',
-          marginLeft: 10 
-        }}>{action}</span>
-      );
-    case "added":
-      return (
-        <span style={{
-          display: "flex",
-          backgroundColor: "#00875a",
-          borderColor: "#00875a",
-          color: "#fff", border: 1,
-          padding: "2px 5px",
-          textAlign: 'center',
-          borderRadius: 3,
-          fontWeight: 500,
-          alignItems: 'center',
-          textTransform: 'capitalize',
-          marginLeft: 10
-        }}>{action}</span>
-      );
-    case "removed":
-      return (
-        <span style={{
-          display: "flex",
-          backgroundColor: "#E57373",
-          borderColor: "#E57373",
-          color: "#fff", border: 1,
-          padding: "2px 5px",
-          textAlign: 'center',
-          borderRadius: 3,
-          fontWeight: 500,
-          alignItems: 'center',
-          textTransform: 'capitalize',
-          marginLeft: 10
-        }}>{action}</span>
-      );
-    case "conflict":
-      return (
-        <span style={{
-          display: "flex",
-          backgroundColor: "#ffab00",
-          borderColor: "#ffab00",
-          color: "#253858", border: 1,
-          padding: "2px 5px",
-          textAlign: 'center',
-          borderRadius: 3,
-          fontWeight: 500,
-          alignItems: 'center',
-          textTransform: 'capitalize',
-          marginLeft: 10
-        }}>{action}</span>
-      );
-    default:
-      return (
-        <span style={{
-          display: "flex",
-          backgroundColor: "#00897b",
-          borderColor: "#00897b",
-          color: "#fff", border: 1,
-          padding: "2px 5px",
-          textAlign: 'center',
-          borderRadius: 3,
-          fontWeight: 500,
-          alignItems: 'center',
-          textTransform: 'capitalize',
-          marginLeft: 10
-        }}>{action}</span>
-      );
+      case "modified":
+        return (
+          <span style={{
+            display: "flex",
+            backgroundColor: "#b3d4ff",
+            borderColor: "#b3d4ff",
+            color: "#0052cc", border: 1,
+            padding: "2px 5px",
+            textAlign: 'center',
+            borderRadius: 3,
+            fontWeight: 500,
+            alignItems: 'center',
+            textTransform: 'capitalize',
+            marginLeft: 10 
+          }}>{action}</span>
+        );
+      case "added":
+        return (
+          <span style={{
+            display: "flex",
+            backgroundColor: "#00875a",
+            borderColor: "#00875a",
+            color: "#fff", border: 1,
+            padding: "2px 5px",
+            textAlign: 'center',
+            borderRadius: 3,
+            fontWeight: 500,
+            alignItems: 'center',
+            textTransform: 'capitalize',
+            marginLeft: 10
+          }}>{action}</span>
+        );
+      case "removed":
+        return (
+          <span style={{
+            display: "flex",
+            backgroundColor: "#E57373",
+            borderColor: "#E57373",
+            color: "#fff", border: 1,
+            padding: "2px 5px",
+            textAlign: 'center',
+            borderRadius: 3,
+            fontWeight: 500,
+            alignItems: 'center',
+            textTransform: 'capitalize',
+            marginLeft: 10
+          }}>{action}</span>
+        );
+      case "conflict":
+        return (
+          <span style={{
+            display: "flex",
+            backgroundColor: "#ffab00",
+            borderColor: "#ffab00",
+            color: "#253858", border: 1,
+            padding: "2px 5px",
+            textAlign: 'center',
+            borderRadius: 3,
+            fontWeight: 500,
+            alignItems: 'center',
+            textTransform: 'capitalize',
+            marginLeft: 10
+          }}>{action}</span>
+        );
+      default:
+        return (
+          <span style={{
+            display: "flex",
+            backgroundColor: "#00897b",
+            borderColor: "#00897b",
+            color: "#fff", border: 1,
+            padding: "2px 5px",
+            textAlign: 'center',
+            borderRadius: 3,
+            fontWeight: 500,
+            alignItems: 'center',
+            textTransform: 'capitalize',
+            marginLeft: 10
+          }}>{action}</span>
+        );
     }
   };
 

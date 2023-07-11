@@ -55,40 +55,40 @@ export default function GithubActionsUniqueRunSummaryDetailPanel({
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "runs":
-      return (
-        <GithubActionsUniqueRunRunsSummary
-          kpiConfiguration={kpiConfiguration}
-          dashboardData={dashboardData}
-          dashboardFilters={dashboardFilters}
-          workflowName={workflowName}
-          repoName={repoName}
-          appName={appName}
-          workflow={workflow}
-          branchName={branchName}
-          jobName={jobName}
-          setSelectedJobName={setSelectedJobName}
-          setCurrentScreen={setCurrentScreen}
-        />
-      );
-    case "jobs":
-      return (
-        <GithubActionsUniqueRunJobsSummary
-          kpiConfiguration={kpiConfiguration}
-          dashboardData={dashboardData}
-          dashboardFilters={dashboardFilters}
-          workflowName={workflowName}
-          repoName={repoName}
-          appName={appName}
-          workflow={workflow}
-          branchName={branchName}
-          jobName={jobName}
-          setSelectedJobName={setSelectedJobName}
-          setCurrentScreen={setCurrentScreen}
-        />
-      );
-    default:
-      return null;
+      case "runs":
+        return (
+          <GithubActionsUniqueRunRunsSummary
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+            dashboardFilters={dashboardFilters}
+            workflowName={workflowName}
+            repoName={repoName}
+            appName={appName}
+            workflow={workflow}
+            branchName={branchName}
+            jobName={jobName}
+            setSelectedJobName={setSelectedJobName}
+            setCurrentScreen={setCurrentScreen}
+          />
+        );
+      case "jobs":
+        return (
+          <GithubActionsUniqueRunJobsSummary
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+            dashboardFilters={dashboardFilters}
+            workflowName={workflowName}
+            repoName={repoName}
+            appName={appName}
+            workflow={workflow}
+            branchName={branchName}
+            jobName={jobName}
+            setSelectedJobName={setSelectedJobName}
+            setCurrentScreen={setCurrentScreen}
+          />
+        );
+      default:
+        return null;
     }
   };
 

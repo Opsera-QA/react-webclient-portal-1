@@ -28,31 +28,31 @@ function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationDat
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <LdapOrganizationSummaryPanel
-          ldapOrganizationData={ldapOrganizationData}
-          setActiveTab={setActiveTab}
-        />
-      );
-    case "accounts":
-      return (
-        <LdapOrganizationAccountsTable
-          className={"mt-2"}
-          ldapOrganizationAccounts={organizationAccounts}
-          ldapOrganizationData={ldapOrganizationData}
-          loadData={loadData}
-        />
-      );
-    case "settings":
-      return (
-        <LdapOrganizationEditorPanel
-          handleClose={toggleSummaryPanel}
-          ldapOrganizationData={ldapOrganizationData}
-        />
-      );
-    default:
-      return null;
+      case "summary":
+        return (
+          <LdapOrganizationSummaryPanel
+            ldapOrganizationData={ldapOrganizationData}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case "accounts":
+        return (
+          <LdapOrganizationAccountsTable
+            className={"mt-2"}
+            ldapOrganizationAccounts={organizationAccounts}
+            ldapOrganizationData={ldapOrganizationData}
+            loadData={loadData}
+          />
+        );
+      case "settings":
+        return (
+          <LdapOrganizationEditorPanel
+            handleClose={toggleSummaryPanel}
+            ldapOrganizationData={ldapOrganizationData}
+          />
+        );
+      default:
+        return null;
     }
   };
 

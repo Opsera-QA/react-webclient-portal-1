@@ -52,13 +52,13 @@ export default function OrganizationSettingsEntitlementActivationConfirmationOve
 
   const getChildEntitlementEditorPanel = () => {
     switch (entitlementName) {
-    case entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_FEATURES:
-      return (
-        <SalesforceFeaturesChildEntitlementEditorPanel
-          childEntitlementModel={childEntitlementModel}
-          updateParentModel={updateParentModel}
-        />
-      );
+      case entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_FEATURES:
+        return (
+          <SalesforceFeaturesChildEntitlementEditorPanel
+            childEntitlementModel={childEntitlementModel}
+            updateParentModel={updateParentModel}
+          />
+        );
     }
   };
 

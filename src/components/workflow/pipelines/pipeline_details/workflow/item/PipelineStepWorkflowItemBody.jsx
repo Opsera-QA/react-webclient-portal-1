@@ -140,22 +140,22 @@ export default function PipelineStepWorkflowItemBody(
 
   const getBody = () => {
     switch (toolIdentifier?.identifier) {
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.CHILD_PIPELINE:
-      return (
-        <ChildPipelinePipelineStepWorkflowItemBody
-          toolIdentifier={toolIdentifier}
-          pipeline={pipeline}
-          step={step}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.PARALLEL_PROCESSOR:
-      return (
-        <ParallelProcessorPipelineStepWorkflowItemBody
-          toolIdentifier={toolIdentifier}
-          pipeline={pipeline}
-          step={step}
-        />
-      );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.CHILD_PIPELINE:
+        return (
+          <ChildPipelinePipelineStepWorkflowItemBody
+            toolIdentifier={toolIdentifier}
+            pipeline={pipeline}
+            step={step}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.PARALLEL_PROCESSOR:
+        return (
+          <ParallelProcessorPipelineStepWorkflowItemBody
+            toolIdentifier={toolIdentifier}
+            pipeline={pipeline}
+            step={step}
+          />
+        );
     }
 
     return (

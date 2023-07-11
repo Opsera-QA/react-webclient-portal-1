@@ -49,28 +49,28 @@ export default function FreeTrialUserActivityViewerDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "workflows":
-      return (
-        <FreeTrialUserActivityReportWorkflowsTable
-          activityReportFilterModel={activityReportFilterModel}
-          setActivityReportFilterModel={setActivityReportFilterModel}
-          activityReportWorkflows={activityReportWorkflows}
-          loadData={loadData}
-          isLoading={isLoading}
-          userData={userData}
-        />
-      );
-    case "tools":
-      return (
-        <FreeTrialUserActivityReportToolsTable
-          isLoading={isLoading}
-          loadData={loadData}
-          tools={tools}
-          userData={userData}
-        />
-      );
-    default:
-      return null;
+      case "workflows":
+        return (
+          <FreeTrialUserActivityReportWorkflowsTable
+            activityReportFilterModel={activityReportFilterModel}
+            setActivityReportFilterModel={setActivityReportFilterModel}
+            activityReportWorkflows={activityReportWorkflows}
+            loadData={loadData}
+            isLoading={isLoading}
+            userData={userData}
+          />
+        );
+      case "tools":
+        return (
+          <FreeTrialUserActivityReportToolsTable
+            isLoading={isLoading}
+            loadData={loadData}
+            tools={tools}
+            userData={userData}
+          />
+        );
+      default:
+        return null;
     }
   };
 

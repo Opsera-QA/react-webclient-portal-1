@@ -44,21 +44,21 @@ export default function CreateNewPipelineWizard({
 
   useEffect(() => {
     switch (currentScreen) {
-    case CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT:
-      setOverlayTitle(REGISTRY_WIZARD_TITLES.TEMPLATE_TYPE_SELECT);
-      return;
-    case CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_SELECT:
-      setOverlayTitle(REGISTRY_WIZARD_TITLES.TEMPLATE_SELECT);
-      return;
-    case CREATE_PIPELINE_WIZARD_SCREENS.LOADING_SCREEN:
-      setOverlayTitle(REGISTRY_WIZARD_TITLES.LOADING_SCREEN);
-      return;
-    case CREATE_PIPELINE_WIZARD_SCREENS.BLANK_PIPELINE:
-      setOverlayTitle(REGISTRY_WIZARD_TITLES.BLANK_PIPELINE);
-      return;
-    case CREATE_PIPELINE_WIZARD_SCREENS.CONNECTION_TEST:
-      setOverlayTitle(REGISTRY_WIZARD_TITLES.CONNECTION_TEST);
-      return;
+      case CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT:
+        setOverlayTitle(REGISTRY_WIZARD_TITLES.TEMPLATE_TYPE_SELECT);
+        return;
+      case CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_SELECT:
+        setOverlayTitle(REGISTRY_WIZARD_TITLES.TEMPLATE_SELECT);
+        return;
+      case CREATE_PIPELINE_WIZARD_SCREENS.LOADING_SCREEN:
+        setOverlayTitle(REGISTRY_WIZARD_TITLES.LOADING_SCREEN);
+        return;
+      case CREATE_PIPELINE_WIZARD_SCREENS.BLANK_PIPELINE:
+        setOverlayTitle(REGISTRY_WIZARD_TITLES.BLANK_PIPELINE);
+        return;
+      case CREATE_PIPELINE_WIZARD_SCREENS.CONNECTION_TEST:
+        setOverlayTitle(REGISTRY_WIZARD_TITLES.CONNECTION_TEST);
+        return;
     }
   }, [currentScreen]);
 
@@ -87,43 +87,43 @@ export default function CreateNewPipelineWizard({
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
-    case CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT:
-      return (
-        <TemplateTypeSelectInput
-          setCurrentScreen={setCurrentScreen}
-          closeOverlayFunction={closeOverlayFunction}
-          setButtonContainer={setButtonContainer}
-          backButtonFunction={backButtonFunction}
-          setSetupMode={setSetupMode}
-          setupMode={setUpMode}
-          className={"py-5"}
-        />
-      );
-    case CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_SELECT:
-      return (
-        <CreatePipelineWizardTemplateSelectionScreen
-          setupMode={setUpMode}
-          backButtonFunction={() =>
-            setCurrentScreen(CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT)
-          }
-          setButtonContainer={setButtonContainer}
-        />
-      );
-    case CREATE_PIPELINE_WIZARD_SCREENS.BLANK_PIPELINE:
-      return (
-        <DeployBlankPipeline
-          backButtonFunction={() =>
-            setCurrentScreen(CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT)
-          }
-          setButtonContainer={setButtonContainer}
-        />
-      );
-    case CREATE_PIPELINE_WIZARD_SCREENS.LOADING_SCREEN:
-      return (
-        <CenterLoadingIndicator
-          type={"Pipeline"}
-        />
-      );
+      case CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT:
+        return (
+          <TemplateTypeSelectInput
+            setCurrentScreen={setCurrentScreen}
+            closeOverlayFunction={closeOverlayFunction}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={backButtonFunction}
+            setSetupMode={setSetupMode}
+            setupMode={setUpMode}
+            className={"py-5"}
+          />
+        );
+      case CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_SELECT:
+        return (
+          <CreatePipelineWizardTemplateSelectionScreen
+            setupMode={setUpMode}
+            backButtonFunction={() =>
+              setCurrentScreen(CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT)
+            }
+            setButtonContainer={setButtonContainer}
+          />
+        );
+      case CREATE_PIPELINE_WIZARD_SCREENS.BLANK_PIPELINE:
+        return (
+          <DeployBlankPipeline
+            backButtonFunction={() =>
+              setCurrentScreen(CREATE_PIPELINE_WIZARD_SCREENS.TEMPLATE_TYPE_SELECT)
+            }
+            setButtonContainer={setButtonContainer}
+          />
+        );
+      case CREATE_PIPELINE_WIZARD_SCREENS.LOADING_SCREEN:
+        return (
+          <CenterLoadingIndicator
+            type={"Pipeline"}
+          />
+        );
     }
   };
 

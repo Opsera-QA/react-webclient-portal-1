@@ -9,16 +9,16 @@ import StoppedPipelineStateFieldBase from "components/common/fields/pipelines/st
 
 export const getPipelineStateFieldBase = (pipelineState) => {
   switch (pipelineState) {
-  case "failed":
-    return (<FailedPipelineStateFieldBase />);
-  case "running":
-    return (<RunningPipelineStateFieldBase />);
-  case "paused":
-    return (<PausedPipelineStateFieldBase />);
-  case "success":
-    return (<SuccessPipelineStateFieldBase />);
-  default:
-    return (<StoppedPipelineStateFieldBase />);
+    case "failed":
+      return (<FailedPipelineStateFieldBase />);
+    case "running":
+      return (<RunningPipelineStateFieldBase />);
+    case "paused":
+      return (<PausedPipelineStateFieldBase />);
+    case "success":
+      return (<SuccessPipelineStateFieldBase />);
+    default:
+      return (<StoppedPipelineStateFieldBase />);
   }
 };
 

@@ -503,12 +503,12 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
 
   const getView = () => {
     switch (activeTab) {
-    case "manual":
-      return getBody();
-    case "past_run":
-      return getPastRunBody();
-    case "automatic":
-      return getFileUploadBody();
+      case "manual":
+        return getBody();
+      case "past_run":
+        return getPastRunBody();
+      case "automatic":
+        return getFileUploadBody();
     }
   };
 

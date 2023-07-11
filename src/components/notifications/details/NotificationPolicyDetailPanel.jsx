@@ -35,32 +35,32 @@ function NotificationPolicyDetailPanel({ notificationData, setNotificationData, 
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <NotificationPolicySummaryPanel
-          notificationData={notificationData}
-          setActiveTab={setActiveTab}
-        />
-      );
-    case "settings":
-      return (
-        <NotificationPolicyEditorPanel
-          handleClose={toggleSummaryPanel}
-          notificationData={notificationData}
-          setNotificationData={setNotificationData}
-          loadData={loadData}
-        />
-      );
-    case "logs":
-      return (
-        <DetailPanelContainer>
-          <NotificationPolicyActivityLogs
-            notificationId={notificationData?.getData("_id")}
+      case "summary":
+        return (
+          <NotificationPolicySummaryPanel
+            notificationData={notificationData}
+            setActiveTab={setActiveTab}
           />
-        </DetailPanelContainer>
-      );
-    default:
-      return null;
+        );
+      case "settings":
+        return (
+          <NotificationPolicyEditorPanel
+            handleClose={toggleSummaryPanel}
+            notificationData={notificationData}
+            setNotificationData={setNotificationData}
+            loadData={loadData}
+          />
+        );
+      case "logs":
+        return (
+          <DetailPanelContainer>
+            <NotificationPolicyActivityLogs
+              notificationId={notificationData?.getData("_id")}
+            />
+          </DetailPanelContainer>
+        );
+      default:
+        return null;
     }
   };
 

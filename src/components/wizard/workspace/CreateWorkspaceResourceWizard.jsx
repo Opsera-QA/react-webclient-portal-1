@@ -29,62 +29,62 @@ export default function CreateWorkspaceResourceWizard({loadDataFunction}) {
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
-    case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.RESOURCE_SELECTION_SCREEN:
-      return (
-        <CreateWorkspaceResourceWizardResourceSelectionScreen
-          setCurrentScreen={setCurrentScreen}
-        />
-      );
-    case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_PIPELINE_SCREEN:
-      if (isActive === true) {
+      case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.RESOURCE_SELECTION_SCREEN:
         return (
-          <CreateNewPipelineWizard
+          <CreateWorkspaceResourceWizardResourceSelectionScreen
+            setCurrentScreen={setCurrentScreen}
+          />
+        );
+      case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_PIPELINE_SCREEN:
+        if (isActive === true) {
+          return (
+            <CreateNewPipelineWizard
+              loadData={loadDataFunction}
+              backButtonFunction={backButtonFunction}
+            />
+          );
+        }
+
+        return (
+          <NewPipelineOverlay
+            backButtonFunction={backButtonFunction}
+            loadData={loadDataFunction}
+          />
+        );
+      case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TASK_SCREEN:
+        if (isActive === true) {
+          return (
+            <CreateTasksWizard
+              loadData={loadDataFunction}
+              backButtonFunction={backButtonFunction}
+            />
+          );
+        }
+
+        return (
+          <NewTaskOverlay
+            backButtonFunction={backButtonFunction}
+            loadData={loadDataFunction}
+          />
+        );
+      case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TOOL_SCREEN:
+        if (isActive) {
+          return (
+            <CreateToolRegistryWizard
+              loadData={loadDataFunction}
+              backButtonFunction={backButtonFunction}
+            />
+          );
+        }
+
+        return (
+          <NewToolOverlay
             loadData={loadDataFunction}
             backButtonFunction={backButtonFunction}
           />
         );
-      }
-
-      return (
-        <NewPipelineOverlay
-          backButtonFunction={backButtonFunction}
-          loadData={loadDataFunction}
-        />
-      );
-    case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TASK_SCREEN:
-      if (isActive === true) {
-        return (
-          <CreateTasksWizard
-            loadData={loadDataFunction}
-            backButtonFunction={backButtonFunction}
-          />
-        );
-      }
-
-      return (
-        <NewTaskOverlay
-          backButtonFunction={backButtonFunction}
-          loadData={loadDataFunction}
-        />
-      );
-    case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TOOL_SCREEN:
-      if (isActive) {
-        return (
-          <CreateToolRegistryWizard
-            loadData={loadDataFunction}
-            backButtonFunction={backButtonFunction}
-          />
-        );
-      }
-
-      return (
-        <NewToolOverlay
-          loadData={loadDataFunction}
-          backButtonFunction={backButtonFunction}
-        />
-      );
-    default:
-      return null;
+      default:
+        return null;
     }
   };
 

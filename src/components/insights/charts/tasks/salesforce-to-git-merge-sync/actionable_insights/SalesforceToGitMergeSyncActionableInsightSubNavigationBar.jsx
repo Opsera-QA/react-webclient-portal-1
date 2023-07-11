@@ -26,17 +26,17 @@ export default function SalesforceToGitMergeSyncActionableInsightSubNavigationBa
     }
 
     switch (tabSelection) {
-    case "insights":
-      toastContext.removeInlineMessage();
-      toastContext.clearInfoOverlayPanel();
-      return;
-    case SALESFORCE_TO_GIT_MERGE_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_TO_GIT_MERGE_SYNC_RUN_SUMMARY:
-      setCurrentScreen(SALESFORCE_TO_GIT_MERGE_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_TO_GIT_MERGE_SYNC_RUN_SUMMARY);
-      setSelectedRunObject(undefined);
-      return;
-    case SALESFORCE_TO_GIT_MERGE_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_TO_GIT_MERGE_SYNC_COMPONENT_SUMMARY:
-      setCurrentScreen(SALESFORCE_TO_GIT_MERGE_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_TO_GIT_MERGE_SYNC_COMPONENT_SUMMARY);
-      return;
+      case "insights":
+        toastContext.removeInlineMessage();
+        toastContext.clearInfoOverlayPanel();
+        return;
+      case SALESFORCE_TO_GIT_MERGE_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_TO_GIT_MERGE_SYNC_RUN_SUMMARY:
+        setCurrentScreen(SALESFORCE_TO_GIT_MERGE_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_TO_GIT_MERGE_SYNC_RUN_SUMMARY);
+        setSelectedRunObject(undefined);
+        return;
+      case SALESFORCE_TO_GIT_MERGE_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_TO_GIT_MERGE_SYNC_COMPONENT_SUMMARY:
+        setCurrentScreen(SALESFORCE_TO_GIT_MERGE_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_TO_GIT_MERGE_SYNC_COMPONENT_SUMMARY);
+        return;
     }
   };
 

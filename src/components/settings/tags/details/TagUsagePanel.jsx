@@ -29,14 +29,14 @@ function TagUsagePanel({ tagData, closePanel }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "tools":
-      return <SingleTagUsedInToolsField tag={tagData?.getPersistData()} closePanel={closePanel} className={"m-2"} />;
-    case "pipelines":
-      return <SingleTagUsedInPipelinesField tag={tagData?.getPersistData()} closePanel={closePanel} className={"m-2"} />;
-    case "dashboards":
-      return <SingleTagUsedInDashboardsField tag={tagData?.getPersistData()} closePanel={closePanel} className={"m-2"} />;
-    default:
-      return null;
+      case "tools":
+        return <SingleTagUsedInToolsField tag={tagData?.getPersistData()} closePanel={closePanel} className={"m-2"} />;
+      case "pipelines":
+        return <SingleTagUsedInPipelinesField tag={tagData?.getPersistData()} closePanel={closePanel} className={"m-2"} />;
+      case "dashboards":
+        return <SingleTagUsedInDashboardsField tag={tagData?.getPersistData()} closePanel={closePanel} className={"m-2"} />;
+      default:
+        return null;
     }
   };
 

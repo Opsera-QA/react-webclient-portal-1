@@ -16,15 +16,15 @@ export default function CreateSalesforceWizardTestSalesforceSourceToolConnection
 }) {
   const onSuccessFunction = () => {
     switch (flow) {
-    case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
-      setCurrentScreen(
-        CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN,
-      );
-      return;
-    default:
-      setCurrentScreen(
-        CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_JENKINS_ACCOUNT_SCREEN,
-      );
+      case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
+        setCurrentScreen(
+          CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN,
+        );
+        return;
+      default:
+        setCurrentScreen(
+          CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_JENKINS_ACCOUNT_SCREEN,
+        );
     }
 
   };

@@ -34,30 +34,30 @@ export default function CreateWorkflowWizard() {
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
-    case CREATE_WORKFLOW_WIZARD_SCREENS.FLOW_SELECTION_SCREEN:
-      return (
-        <CreateWorkflowWizardFlowSelectionScreen
-          setCurrentScreen={setCurrentScreen}
-          closeOverlayFunction={closeOverlayFunction}
-          setButtonContainer={setButtonContainer}
-          className={"m-4"}
-        />
-      );
-    case CREATE_WORKFLOW_WIZARD_SCREENS.SALESFORCE_FLOW:
-      return (
-        <CreateSalesforceWorkflowWizard
-          backButtonFunction={backButtonFunction}
-          setButtonContainer={setButtonContainer}
-        />
-      );
-    case CREATE_WORKFLOW_WIZARD_SCREENS.SDLC_FLOW:
-      return (
-        <div>Coming Soon</div>
-      );
-    case CREATE_WORKFLOW_WIZARD_SCREENS.GIT_CUSTODIAN_FLOW:
-      return (
-        <div>Coming Soon</div>
-      );
+      case CREATE_WORKFLOW_WIZARD_SCREENS.FLOW_SELECTION_SCREEN:
+        return (
+          <CreateWorkflowWizardFlowSelectionScreen
+            setCurrentScreen={setCurrentScreen}
+            closeOverlayFunction={closeOverlayFunction}
+            setButtonContainer={setButtonContainer}
+            className={"m-4"}
+          />
+        );
+      case CREATE_WORKFLOW_WIZARD_SCREENS.SALESFORCE_FLOW:
+        return (
+          <CreateSalesforceWorkflowWizard
+            backButtonFunction={backButtonFunction}
+            setButtonContainer={setButtonContainer}
+          />
+        );
+      case CREATE_WORKFLOW_WIZARD_SCREENS.SDLC_FLOW:
+        return (
+          <div>Coming Soon</div>
+        );
+      case CREATE_WORKFLOW_WIZARD_SCREENS.GIT_CUSTODIAN_FLOW:
+        return (
+          <div>Coming Soon</div>
+        );
     }
   };
 

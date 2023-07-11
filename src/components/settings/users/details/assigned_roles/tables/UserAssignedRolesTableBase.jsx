@@ -27,62 +27,62 @@ export default function UserAssignedRolesTableBase(
 
   const getTable = () => {
     switch (assignedGroupResourcesFilterModel?.getData("type")) {
-    case "dashboards":
-      return (
-        <UserAssignedRolesDashboardsTable
-          dashboards={items}
-          isLoading={isLoading}
-          userEmailAddress={userEmailAddress}
-        />
-      );
-    case "parameters":
-      return (
-        <UserAssignedRolesParametersTable
-          parameters={items}
-          isLoading={isLoading}
-          userEmailAddress={userEmailAddress}
-        />
-      );
-    case "pipelines":
-      return (
-        <UserAssignedRolesPipelinesTable
-          pipelines={items}
-          isLoading={isLoading}
-          userEmailAddress={userEmailAddress}
-        />
-      );
-    case "pipeline_instructions":
-      return (
-        <UserAssignedRolesPipelineInstructionsTable
-          pipelineInstructions={items}
-          isLoading={isLoading}
-          userEmailAddress={userEmailAddress}
-        />
-      );
-    case "scripts":
-      return (
-        <UserAssignedRolesScriptsTable
-          scripts={items}
-          isLoading={isLoading}
-          userEmailAddress={userEmailAddress}
-        />
-      );
-    case "tools":
-      return (
-        <UserAssignedRolesToolsTable
-          tools={items}
-          isLoading={isLoading}
-          userEmailAddress={userEmailAddress}
-        />
-      );
-    case "tasks":
-      return (
-        <UserAssignedRolesTasksTable
-          tasks={items}
-          isLoading={isLoading}
-          userEmailAddress={userEmailAddress}
-        />
-      );
+      case "dashboards":
+        return (
+          <UserAssignedRolesDashboardsTable
+            dashboards={items}
+            isLoading={isLoading}
+            userEmailAddress={userEmailAddress}
+          />
+        );
+      case "parameters":
+        return (
+          <UserAssignedRolesParametersTable
+            parameters={items}
+            isLoading={isLoading}
+            userEmailAddress={userEmailAddress}
+          />
+        );
+      case "pipelines":
+        return (
+          <UserAssignedRolesPipelinesTable
+            pipelines={items}
+            isLoading={isLoading}
+            userEmailAddress={userEmailAddress}
+          />
+        );
+      case "pipeline_instructions":
+        return (
+          <UserAssignedRolesPipelineInstructionsTable
+            pipelineInstructions={items}
+            isLoading={isLoading}
+            userEmailAddress={userEmailAddress}
+          />
+        );
+      case "scripts":
+        return (
+          <UserAssignedRolesScriptsTable
+            scripts={items}
+            isLoading={isLoading}
+            userEmailAddress={userEmailAddress}
+          />
+        );
+      case "tools":
+        return (
+          <UserAssignedRolesToolsTable
+            tools={items}
+            isLoading={isLoading}
+            userEmailAddress={userEmailAddress}
+          />
+        );
+      case "tasks":
+        return (
+          <UserAssignedRolesTasksTable
+            tasks={items}
+            isLoading={isLoading}
+            userEmailAddress={userEmailAddress}
+          />
+        );
     }
   };
 

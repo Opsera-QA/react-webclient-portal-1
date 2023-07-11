@@ -71,33 +71,33 @@ function Marketplace () {
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "charts":
-      return (<MarketplaceCharts dashboardId={dashboardId} />);
-    case "marketplace":
-      return (<OpseraDashboardMarketplace />);
-    case "catalog":
-      return (<CustomerDashboardCatalog />);
-    default:
-      return null;
+      case "charts":
+        return (<MarketplaceCharts dashboardId={dashboardId} />);
+      case "marketplace":
+        return (<OpseraDashboardMarketplace />);
+      case "catalog":
+        return (<CustomerDashboardCatalog />);
+      default:
+        return null;
     }
   };
 
   const getPageDescription = () => {
     switch (activeTab) {
-    case "charts":
-      return (`
+      case "charts":
+        return (`
           Opsera provides users with access to a vast repository of KPI. Access all available
           KPIs and configure them on your Opsera Analytics Dashboards.
         `);
-    case "marketplace":
-      return (`
+      case "marketplace":
+        return (`
           Opsera offers predefined dashboards focused on topics and personas.
           This is a public catalog of Opsera provided dashboards by topic.
         `);
-    case "catalog":
-      return (`View and select templates created by your Organization in its private catalog.`);
-    default:
-      return null;
+      case "catalog":
+        return (`View and select templates created by your Organization in its private catalog.`);
+      default:
+        return null;
     }
   };
 

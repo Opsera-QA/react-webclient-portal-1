@@ -7,33 +7,33 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 function JenkinsUnitTestingJobSummaryPanel({ dataObject }) {
   const getBuildTypeFields = () => {
     switch (dataObject?.getData("buildType")) {
-    case "gradle":
-      return (
-        <Col lg={6}>
-          <TextFieldBase
-            dataObject={dataObject}
-            fieldName={"gradleTask"}
-          />
-        </Col>
-      );
-    case "maven":
-      return (
-        <>
+      case "gradle":
+        return (
           <Col lg={6}>
             <TextFieldBase
               dataObject={dataObject}
-              fieldName={"mavenTask"}
+              fieldName={"gradleTask"}
             />
           </Col>
-          <Col lg={6}>
-            <TextFieldBase
-              dataObject={dataObject}
-              fieldName={"scriptId"}
-              visible={dataObject?.getData("customMavenSettings") === true}
-            />
-          </Col>
-        </>
-      );
+        );
+      case "maven":
+        return (
+          <>
+            <Col lg={6}>
+              <TextFieldBase
+                dataObject={dataObject}
+                fieldName={"mavenTask"}
+              />
+            </Col>
+            <Col lg={6}>
+              <TextFieldBase
+                dataObject={dataObject}
+                fieldName={"scriptId"}
+                visible={dataObject?.getData("customMavenSettings") === true}
+              />
+            </Col>
+          </>
+        );
     }
   };
 

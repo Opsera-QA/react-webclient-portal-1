@@ -42,165 +42,165 @@ import dataSeedingMigrationTaskMetadata, {
 function TaskConfigurationSummaryPanel({ taskModel }) {
   const getTaskTypeSummaryPanel = () => {
     switch (taskModel?.getData("type")) {
-    case TASK_TYPES.SYNC_SALESFORCE_REPO:
-      return (
-        <SalesforceOrganizationSyncTaskTypeSummaryCard
-          gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
-            taskModel?.getData("configuration"),
-            salesforceOrganizationSyncTaskConfigurationMetadata,
-          )}
-          gitTasksData={taskModel}
-        />
-      );
-    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
-      return (
-        <SFDCBranchStructuringTaskTypeSummaryCard
-          gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
-            taskModel?.getData("configuration"),
-            sfdcGitBranchTaskConfigurationMetadata,
-          )}
-          gitTasksData={taskModel}
-        />
-      );
-    case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
-      return (
-        <SalesforceBulkMigrationTaskTypeSummaryCard
-          taskConfigurationModel={modelHelpers.parseObjectIntoModel(
-            taskModel?.getData("configuration"),
-            salesforceBulkMigrationTaskConfigurationMetadata,
-          )}
-          taskModel={taskModel}
-        />
-      );
-    case TASK_TYPES.SYNC_GIT_BRANCHES:
-      return (
-        <GitToGitSyncTaskTypeSummaryCard
-          gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
-            taskModel?.getData("configuration"),
-            branchToBranchGitTaskConfigurationMetadata,
-          )}
-          gitTasksData={taskModel}
-        />
-      );
-    case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
-      return (
-        <ECSCreationTaskTypeSummaryCard
-          gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
-            taskModel?.getData("configuration"),
-            ec2ClusterCreationTaskConfigurationMetadata,
-          )}
-          gitTasksData={taskModel}
-        />
-      );
-    case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
-      return (
-        <ECSServiceCreationTaskTypeSummaryCard
-          gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
-            taskModel?.getData("configuration"),
-            ec2ServiceCreationTaskConfigurationMetadata,
-          )}
-          gitTasksData={taskModel}
-        />
-      );
-    case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
-      return (
-        <AwsLambdaTaskTypeSummaryCard
-          gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
-            taskModel?.getData("configuration"),
-            awsLambdaFunctionTaskConfigurationMetadata,
-          )}
-          gitTasksData={taskModel}
-        />
-      );
-    case TASK_TYPES.AZURE_CLUSTER_CREATION:
-      return (
-        <AzureClusterSummaryPanel
-          gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
-            taskModel?.getData("configuration"),
-            azureAksClusterTaskConfigurationMetadata,
-          )}
-          gitTasksData={taskModel}
-        />
-      );
-    case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
-      return (
-        <SalesforceQuickDeployTaskTypeSummaryCard
-          tasksData={taskModel}
-          taskConfigurationData={modelHelpers.parseObjectIntoModel(
-            taskModel?.getData("configuration"),
-            salesforceQuickDeployTaskConfigurationMetadata,
-          )}
-        />
-      );
-    case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
-      return (
-        <SalesforceToGitMergeSyncTaskSummaryCard
-          salesforceConfigurationModel={modelHelpers.parseObjectIntoModel(
-            taskModel?.getData("configuration")?.sfdc,
-            mergeSyncTaskSalesforceConfigurationMetadata,
-          )}
-          gitConfigurationModel={modelHelpers.parseObjectIntoModel(
-            taskModel?.getData("configuration")?.git,
-            mergeSyncTaskGitConfigurationMetadata,
-          )}
-        />
-      );
-    case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
-      return (
-        <GitToGitMergeSyncTaskSummaryCard
-          taskConfigurationModel={modelHelpers.parseObjectIntoModel(
-            taskModel?.getData("configuration")?.git,
-            mergeSyncTaskGitConfigurationMetadata,
-          )}
-        />
-      );
-    case TASK_TYPES.SNAPLOGIC_TASK:
-      return (
-        <SnaplogicTaskSummaryCard
-          taskConfigurationModel={modelHelpers.parseObjectIntoModel(
-            taskModel?.getData("configuration"),
-            snaplogicTaskConfigurationMetadata,
-          )}
-        />
-      );
-    case TASK_TYPES.GITSCRAPER:
-      return (
-        <GitscraperSummaryPanel
-          gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
-            taskModel?.getData("configuration"),
-            gitscraperTaskConfigurationMetadata,
-          )}
-          gitTasksData={taskModel}
-        />
-      );
-    case TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION:
-      return (
-        <SalesforceCustomSettingMigrationTaskSummaryCard
-          taskConfigDataModel={modelHelpers.parseObjectIntoModel(
-            taskModel?.getData("configuration"),
-            salesforceCustomSettingMigrationTaskMetadata,
-          )}
-          salesforceConfigurationModel={modelHelpers.parseObjectIntoModel(
-            taskModel?.getData("configuration")?.sfdc,
-            customSettingTaskSalesforceConfigurationMetadata,
-          )}
-        />
-      );
-    case TASK_TYPES.SALESFORCE_DATA_SEEDING:
-      return (
-        <SalesforceDataSeedingTaskSummaryCard
-          taskConfigDataModel={modelHelpers.parseObjectIntoModel(
-            taskModel?.getData("configuration"),
-            dataSeedingMigrationTaskMetadata,
-          )}
-          salesforceConfigurationModel={modelHelpers.parseObjectIntoModel(
-            taskModel?.getData("configuration")?.sfdc,
-            dataSeedingTaskSalesforceConfigurationMetadata,
-          )}
-        />
-      );
-    default:
-      return <div>No type associated with this Task</div>;
+      case TASK_TYPES.SYNC_SALESFORCE_REPO:
+        return (
+          <SalesforceOrganizationSyncTaskTypeSummaryCard
+            gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              salesforceOrganizationSyncTaskConfigurationMetadata,
+            )}
+            gitTasksData={taskModel}
+          />
+        );
+      case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+        return (
+          <SFDCBranchStructuringTaskTypeSummaryCard
+            gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              sfdcGitBranchTaskConfigurationMetadata,
+            )}
+            gitTasksData={taskModel}
+          />
+        );
+      case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+        return (
+          <SalesforceBulkMigrationTaskTypeSummaryCard
+            taskConfigurationModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              salesforceBulkMigrationTaskConfigurationMetadata,
+            )}
+            taskModel={taskModel}
+          />
+        );
+      case TASK_TYPES.SYNC_GIT_BRANCHES:
+        return (
+          <GitToGitSyncTaskTypeSummaryCard
+            gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              branchToBranchGitTaskConfigurationMetadata,
+            )}
+            gitTasksData={taskModel}
+          />
+        );
+      case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
+        return (
+          <ECSCreationTaskTypeSummaryCard
+            gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              ec2ClusterCreationTaskConfigurationMetadata,
+            )}
+            gitTasksData={taskModel}
+          />
+        );
+      case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
+        return (
+          <ECSServiceCreationTaskTypeSummaryCard
+            gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              ec2ServiceCreationTaskConfigurationMetadata,
+            )}
+            gitTasksData={taskModel}
+          />
+        );
+      case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
+        return (
+          <AwsLambdaTaskTypeSummaryCard
+            gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              awsLambdaFunctionTaskConfigurationMetadata,
+            )}
+            gitTasksData={taskModel}
+          />
+        );
+      case TASK_TYPES.AZURE_CLUSTER_CREATION:
+        return (
+          <AzureClusterSummaryPanel
+            gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              azureAksClusterTaskConfigurationMetadata,
+            )}
+            gitTasksData={taskModel}
+          />
+        );
+      case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
+        return (
+          <SalesforceQuickDeployTaskTypeSummaryCard
+            tasksData={taskModel}
+            taskConfigurationData={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              salesforceQuickDeployTaskConfigurationMetadata,
+            )}
+          />
+        );
+      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+        return (
+          <SalesforceToGitMergeSyncTaskSummaryCard
+            salesforceConfigurationModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration")?.sfdc,
+              mergeSyncTaskSalesforceConfigurationMetadata,
+            )}
+            gitConfigurationModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration")?.git,
+              mergeSyncTaskGitConfigurationMetadata,
+            )}
+          />
+        );
+      case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
+        return (
+          <GitToGitMergeSyncTaskSummaryCard
+            taskConfigurationModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration")?.git,
+              mergeSyncTaskGitConfigurationMetadata,
+            )}
+          />
+        );
+      case TASK_TYPES.SNAPLOGIC_TASK:
+        return (
+          <SnaplogicTaskSummaryCard
+            taskConfigurationModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              snaplogicTaskConfigurationMetadata,
+            )}
+          />
+        );
+      case TASK_TYPES.GITSCRAPER:
+        return (
+          <GitscraperSummaryPanel
+            gitTaskConfigurationData={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              gitscraperTaskConfigurationMetadata,
+            )}
+            gitTasksData={taskModel}
+          />
+        );
+      case TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION:
+        return (
+          <SalesforceCustomSettingMigrationTaskSummaryCard
+            taskConfigDataModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              salesforceCustomSettingMigrationTaskMetadata,
+            )}
+            salesforceConfigurationModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration")?.sfdc,
+              customSettingTaskSalesforceConfigurationMetadata,
+            )}
+          />
+        );
+      case TASK_TYPES.SALESFORCE_DATA_SEEDING:
+        return (
+          <SalesforceDataSeedingTaskSummaryCard
+            taskConfigDataModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              dataSeedingMigrationTaskMetadata,
+            )}
+            salesforceConfigurationModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration")?.sfdc,
+              dataSeedingTaskSalesforceConfigurationMetadata,
+            )}
+          />
+        );
+      default:
+        return <div>No type associated with this Task</div>;
     }
   };
 

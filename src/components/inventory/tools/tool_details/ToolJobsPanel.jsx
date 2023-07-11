@@ -5,19 +5,19 @@ import PropTypes from "prop-types";
 function ToolJobsPanel({ toolData, toolIdentifier }) {
   const getJobsPanel = () => {
     switch (toolIdentifier) {
-    case "jenkins":
-      return (
-        <JenkinsJobsPanel
-          toolData={toolData}
-          toolId={toolData?.getData("_id")}
-        />
-      );
-    default:
-      return (
-        <div className="text-center p-5 text-muted mt-5">
+      case "jenkins":
+        return (
+          <JenkinsJobsPanel
+            toolData={toolData}
+            toolId={toolData?.getData("_id")}
+          />
+        );
+      default:
+        return (
+          <div className="text-center p-5 text-muted mt-5">
           Jobs management is not currently available for this tool.
-        </div>
-      );
+          </div>
+        );
     }
   };
 

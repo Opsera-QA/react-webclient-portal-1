@@ -22,21 +22,21 @@ function PipelineDetailsOverview({ pipeline }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <PipelineOverviewContainer
-          pipeline={pipeline}
-        />
-      );
-    case "json":
-      return (
-        <PipelineStepJsonPanel
-          pipelineStepData={pipeline}
-        />
-      );
-    case "yaml":
-    default:
-      return null;
+      case "summary":
+        return (
+          <PipelineOverviewContainer
+            pipeline={pipeline}
+          />
+        );
+      case "json":
+        return (
+          <PipelineStepJsonPanel
+            pipelineStepData={pipeline}
+          />
+        );
+      case "yaml":
+      default:
+        return null;
     }
   };
 

@@ -298,28 +298,28 @@ SalesforceTaskHelper.updateGitToolIdForSalesforceTask = (task, gitToolId, servic
   let updatedTask = { ...task };
 
   switch (flow) {
-  case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC:
-    updatedTask.configuration.git.toolId = gitToolId;
-    updatedTask.configuration.git.service = service;
-    return updatedTask;
-  case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK:
-    updatedTask.configuration.gitToolId = gitToolId;
-    updatedTask.configuration.gitCredential = gitToolModel?.getData("name") ? gitToolModel?.getData("name") : gitToolId;
-    updatedTask.configuration.service = service;
-    updatedTask.tool_identifier = service;
-    return updatedTask;
-  case TASK_TYPES.SYNC_SALESFORCE_REPO:
-  case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
-  case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
-    updatedTask.configuration.gitToolId = gitToolId;
-    updatedTask.configuration.gitCredential = gitToolModel?.getData("name")
-      ? gitToolModel?.getData("name")
-      : gitToolId;
-    updatedTask.configuration.service = service;
-    updatedTask.tool_identifier = service;
-    return updatedTask;
-  default:
-    return task;
+    case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC:
+      updatedTask.configuration.git.toolId = gitToolId;
+      updatedTask.configuration.git.service = service;
+      return updatedTask;
+    case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK:
+      updatedTask.configuration.gitToolId = gitToolId;
+      updatedTask.configuration.gitCredential = gitToolModel?.getData("name") ? gitToolModel?.getData("name") : gitToolId;
+      updatedTask.configuration.service = service;
+      updatedTask.tool_identifier = service;
+      return updatedTask;
+    case TASK_TYPES.SYNC_SALESFORCE_REPO:
+    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+    case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+      updatedTask.configuration.gitToolId = gitToolId;
+      updatedTask.configuration.gitCredential = gitToolModel?.getData("name")
+        ? gitToolModel?.getData("name")
+        : gitToolId;
+      updatedTask.configuration.service = service;
+      updatedTask.tool_identifier = service;
+      return updatedTask;
+    default:
+      return task;
   }
 };
 
@@ -331,28 +331,28 @@ SalesforceTaskHelper.updateSfdcToolIdForSalesforceTask = (task, salesforceToolId
   let updatedTask = { ...task };
 
   switch (flow) {
-  case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC:
-    updatedTask.configuration.sfdc.sourceToolId = salesforceToolId;
-    return updatedTask;
-  case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK:
-    updatedTask.configuration.sfdcToolId = salesforceToolId;
-    updatedTask.configuration.accountUsername = sourceSalesforceToolModel?.getData("accountUsername");
-    updatedTask.configuration.sfdcToolName = sourceSalesforceToolModel?.getData("sfdcToolName");
-    return updatedTask;
-  case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
-    updatedTask.configuration.sfdcToolId = salesforceToolId;
-    updatedTask.configuration.accountUsername = sourceSalesforceToolModel?.getData("accountUsername");
-    updatedTask.configuration.sfdcToolName = sourceSalesforceToolModel?.getData("sfdcToolName");
-    return updatedTask;
-  case TASK_TYPES.SYNC_SALESFORCE_REPO:
-  case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
-  case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
-    updatedTask.configuration.sfdcToolId = salesforceToolId;
-    updatedTask.configuration.accountUsername = sourceSalesforceToolModel?.getData("accountUsername");
-    updatedTask.configuration.sfdcToolName = sourceSalesforceToolModel?.getData("sfdcToolName");
-    return updatedTask;
-  default:
-    return task;
+    case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC:
+      updatedTask.configuration.sfdc.sourceToolId = salesforceToolId;
+      return updatedTask;
+    case salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_ORGANIZATION_SYNC_TASK:
+      updatedTask.configuration.sfdcToolId = salesforceToolId;
+      updatedTask.configuration.accountUsername = sourceSalesforceToolModel?.getData("accountUsername");
+      updatedTask.configuration.sfdcToolName = sourceSalesforceToolModel?.getData("sfdcToolName");
+      return updatedTask;
+    case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
+      updatedTask.configuration.sfdcToolId = salesforceToolId;
+      updatedTask.configuration.accountUsername = sourceSalesforceToolModel?.getData("accountUsername");
+      updatedTask.configuration.sfdcToolName = sourceSalesforceToolModel?.getData("sfdcToolName");
+      return updatedTask;
+    case TASK_TYPES.SYNC_SALESFORCE_REPO:
+    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+    case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+      updatedTask.configuration.sfdcToolId = salesforceToolId;
+      updatedTask.configuration.accountUsername = sourceSalesforceToolModel?.getData("accountUsername");
+      updatedTask.configuration.sfdcToolName = sourceSalesforceToolModel?.getData("sfdcToolName");
+      return updatedTask;
+    default:
+      return task;
   }
 };
 
@@ -364,12 +364,12 @@ SalesforceTaskHelper.updateJenkinsToolIdForSalesforceTask = (task, jenkinsToolId
   let updatedTask = { ...task };
 
   switch (flow) {
-  case TASK_TYPES.SYNC_SALESFORCE_REPO:
-  case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
-  case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
-    updatedTask.configuration.toolConfigId = jenkinsToolId;
-    return updatedTask;
-  default:
-    return task;
+    case TASK_TYPES.SYNC_SALESFORCE_REPO:
+    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+    case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+      updatedTask.configuration.toolConfigId = jenkinsToolId;
+      return updatedTask;
+    default:
+      return task;
   }
 };

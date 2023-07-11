@@ -99,54 +99,54 @@ function ConnectedAssetsDetails({ dashboardData }) {
 
   const onDataBlockSelect = (selectedDataBlock) => {
     switch(selectedDataBlock) {
-    case repositoriesDataBlock:
-      sessionHelper.replaceStoredUrlParameter("view", repositoriesDataBlock);
-      toggleDynamicPanel(repositoriesDataBlock, () => {
-        return (<ConnectedAssetsRepositoryTabContainer dashboardData={dashboardData}/>);
-      });
-      break;
-    case branchesDataBlock:
-      sessionHelper.replaceStoredUrlParameter("view", branchesDataBlock);
-      toggleDynamicPanel(branchesDataBlock, () => {
-        return (<ConnectedAssetsBranchesTabContainer dashboardData={dashboardData}/>);
-      });
-      break;
-    case collaboratorsDataBlock:
-      sessionHelper.replaceStoredUrlParameter("view", collaboratorsDataBlock);
-      toggleDynamicPanel(collaboratorsDataBlock, () => {
-        return (<ConnectedAssetsCollaboratorsTabContainer dashboardData={dashboardData}/>);
-      });
-      break;
-    case pipelinesDataBlock:
-      sessionHelper.replaceStoredUrlParameter("view", pipelinesDataBlock);
-      toggleDynamicPanel(pipelinesDataBlock, () => {
-        return (<ConnectedAssetsPipelinesTabContainer dashboardData={dashboardData}/>);
-      });
-      break;
-    case tasksDataBlock:
-      sessionHelper.replaceStoredUrlParameter("view", tasksDataBlock);
-      toggleDynamicPanel(tasksDataBlock,() => {
-        return (<ConnectedAssetsTasksTabContainer dashboardData={dashboardData}/>);
-      });
-      break;
-    case jobsDataBlock:
-      sessionHelper.replaceStoredUrlParameter("view", jobsDataBlock);
-      toggleDynamicPanel(jobsDataBlock, () => {
-        return (<ConnectedAssetsJobsTabContainer dashboardData={dashboardData}/>);
-      });
-      break;
-    case webhooksDataBlock:
-      sessionHelper.replaceStoredUrlParameter("view", webhooksDataBlock);
-      toggleDynamicPanel(webhooksDataBlock, () => {
-        return (<ConnectedAssetsWebhooksTabContainer dashboardData={dashboardData}/>);
-      });
-      break;
-    case packagesDataBlock:
-      sessionHelper.replaceStoredUrlParameter("view", packagesDataBlock);
-      toggleDynamicPanel(packagesDataBlock, () => {
-        return (<ConnectedAssetsPackagesPipelinesTab dashboardData={dashboardData}/>);
-      });
-      break;
+      case repositoriesDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", repositoriesDataBlock);
+        toggleDynamicPanel(repositoriesDataBlock, () => {
+          return (<ConnectedAssetsRepositoryTabContainer dashboardData={dashboardData}/>);
+        });
+        break;
+      case branchesDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", branchesDataBlock);
+        toggleDynamicPanel(branchesDataBlock, () => {
+          return (<ConnectedAssetsBranchesTabContainer dashboardData={dashboardData}/>);
+        });
+        break;
+      case collaboratorsDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", collaboratorsDataBlock);
+        toggleDynamicPanel(collaboratorsDataBlock, () => {
+          return (<ConnectedAssetsCollaboratorsTabContainer dashboardData={dashboardData}/>);
+        });
+        break;
+      case pipelinesDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", pipelinesDataBlock);
+        toggleDynamicPanel(pipelinesDataBlock, () => {
+          return (<ConnectedAssetsPipelinesTabContainer dashboardData={dashboardData}/>);
+        });
+        break;
+      case tasksDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", tasksDataBlock);
+        toggleDynamicPanel(tasksDataBlock,() => {
+          return (<ConnectedAssetsTasksTabContainer dashboardData={dashboardData}/>);
+        });
+        break;
+      case jobsDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", jobsDataBlock);
+        toggleDynamicPanel(jobsDataBlock, () => {
+          return (<ConnectedAssetsJobsTabContainer dashboardData={dashboardData}/>);
+        });
+        break;
+      case webhooksDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", webhooksDataBlock);
+        toggleDynamicPanel(webhooksDataBlock, () => {
+          return (<ConnectedAssetsWebhooksTabContainer dashboardData={dashboardData}/>);
+        });
+        break;
+      case packagesDataBlock:
+        sessionHelper.replaceStoredUrlParameter("view", packagesDataBlock);
+        toggleDynamicPanel(packagesDataBlock, () => {
+          return (<ConnectedAssetsPackagesPipelinesTab dashboardData={dashboardData}/>);
+        });
+        break;
     }
   };
 

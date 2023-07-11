@@ -66,44 +66,44 @@ function LdapGroupDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <LdapGroupSummaryPanel
-          ldapGroupData={ldapGroupData}
-          domain={orgDomain}
-          loadData={loadData}
-          isLoading={isLoading}
-        />
-      );
-    case "manage":
-      return (
-        <LdapGroupMembershipManagementPanel
-          orgDomain={orgDomain}
-          setActiveTab={setActiveTab}
-          ldapGroupData={ldapGroupData}
-          authorizedActions={authorizedActions}
-          loadData={loadData}
-        />
-      );
-    case "settings":
-      return (
-        <LdapGroupEditorPanel
-          handleClose={toggleSummaryPanel}
-          authorizedActions={authorizedActions}
-          setLdapGroupData={setLdapGroupData}
-          ldapGroupData={ldapGroupData}
-          orgDomain={orgDomain}
-        />
-      );
-    case "assigned-roles":
-      return (
-        <LdapGroupAssignedRolesPanel
-          groupModel={ldapGroupData}
-          domain={orgDomain}
-        />
-      );
-    default:
-      return null;
+      case "summary":
+        return (
+          <LdapGroupSummaryPanel
+            ldapGroupData={ldapGroupData}
+            domain={orgDomain}
+            loadData={loadData}
+            isLoading={isLoading}
+          />
+        );
+      case "manage":
+        return (
+          <LdapGroupMembershipManagementPanel
+            orgDomain={orgDomain}
+            setActiveTab={setActiveTab}
+            ldapGroupData={ldapGroupData}
+            authorizedActions={authorizedActions}
+            loadData={loadData}
+          />
+        );
+      case "settings":
+        return (
+          <LdapGroupEditorPanel
+            handleClose={toggleSummaryPanel}
+            authorizedActions={authorizedActions}
+            setLdapGroupData={setLdapGroupData}
+            ldapGroupData={ldapGroupData}
+            orgDomain={orgDomain}
+          />
+        );
+      case "assigned-roles":
+        return (
+          <LdapGroupAssignedRolesPanel
+            groupModel={ldapGroupData}
+            domain={orgDomain}
+          />
+        );
+      default:
+        return null;
     }
   };
 

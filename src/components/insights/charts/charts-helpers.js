@@ -37,41 +37,41 @@ export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
 
 export function getDatesFromLabel(label) {
   switch (label) {
-  case "Last 24 Hours":
-    return {
-      startDate: new Date(addDays(new Date(), -1)),
-      endDate: new Date(),
-    };
-  case "Last Week":
-    return {
-      startDate: new Date(addDays(new Date(), -7)),
-      endDate: new Date(),
-    };
-  case "Last Month":
-    return {
-      startDate: new Date(addDays(new Date(), -30)),
-      endDate: new Date(),
-    };
-  case "Last 3 Months":
-    return {
-      startDate: new Date(addDays(new Date(), -90)),
-      endDate: new Date(),
-    };
-  case "Last 6 Months":
-    return {
-      startDate: new Date(addDays(new Date(), -180)),
-      endDate: new Date(),
-    };
-  case "Last 1 Year":
-    return {
-      startDate: new Date(addDays(new Date(), -365)),
-      endDate: new Date(),
-    };
-  default:
-    return {
-      startDate: new Date(addDays(new Date(), -90)),
-      endDate: new Date(),
-    };
+    case "Last 24 Hours":
+      return {
+        startDate: new Date(addDays(new Date(), -1)),
+        endDate: new Date(),
+      };
+    case "Last Week":
+      return {
+        startDate: new Date(addDays(new Date(), -7)),
+        endDate: new Date(),
+      };
+    case "Last Month":
+      return {
+        startDate: new Date(addDays(new Date(), -30)),
+        endDate: new Date(),
+      };
+    case "Last 3 Months":
+      return {
+        startDate: new Date(addDays(new Date(), -90)),
+        endDate: new Date(),
+      };
+    case "Last 6 Months":
+      return {
+        startDate: new Date(addDays(new Date(), -180)),
+        endDate: new Date(),
+      };
+    case "Last 1 Year":
+      return {
+        startDate: new Date(addDays(new Date(), -365)),
+        endDate: new Date(),
+      };
+    default:
+      return {
+        startDate: new Date(addDays(new Date(), -90)),
+        endDate: new Date(),
+      };
   }
 }
 
@@ -400,40 +400,40 @@ export const getReverseTrend = (currentValue, previousValue) => {
 
 export const getReverseTrendIcon = (severity) => {
   switch (severity) {
-  case "red":
-    return faArrowCircleUp;
-  case "green":
-    return faArrowCircleDown;
-  case "light-gray-text-secondary":
-    return faMinusCircle;
-  default:
-    break;
+    case "red":
+      return faArrowCircleUp;
+    case "green":
+      return faArrowCircleDown;
+    case "light-gray-text-secondary":
+      return faMinusCircle;
+    default:
+      break;
   }
 };
 
 export const getTrendIcon = (severity) => {
   switch (severity) {
-  case "red":
-    return faArrowCircleDown;
-  case "green":
-    return faArrowCircleUp;
-  case "light-gray-text-secondary":
-    return faMinusCircle;
-  default:
-    break;
+    case "red":
+      return faArrowCircleDown;
+    case "green":
+      return faArrowCircleUp;
+    case "light-gray-text-secondary":
+      return faMinusCircle;
+    default:
+      break;
   }
 };
 
 export const getTrendDescription = (iconColor) => {
   switch (iconColor) {
-  case "red":
-    return "This project's issues are trending upward";
-  case "green":
-    return "This project's issues are trending downward";
-  case "light-gray-text-secondary":
-    return "Neutral: This project's issues have experienced no change";
-  default:
-    return "No Trend";
+    case "red":
+      return "This project's issues are trending upward";
+    case "green":
+      return "This project's issues are trending downward";
+    case "light-gray-text-secondary":
+      return "Neutral: This project's issues have experienced no change";
+    default:
+      return "No Trend";
   }
 };
 
@@ -499,16 +499,16 @@ export const MATURITY_SCORE_VALUE = Object.freeze({
  */
 export const getMaturityScoreText = (maturityScore) => {
   switch (maturityScore) {
-  case `elite`:
-    return "Elite";
-  case `high`:
-    return "High";
-  case `medium`:
-    return "Medium";
-  case `low`:
-    return "Low";
-  default:
-    return "NA";
+    case `elite`:
+      return "Elite";
+    case `high`:
+      return "High";
+    case `medium`:
+      return "Medium";
+    case `low`:
+      return "Low";
+    default:
+      return "NA";
   }
 };
 
@@ -519,16 +519,16 @@ export const getMaturityScoreText = (maturityScore) => {
  */
 export const getMaturityColorClass = (maturityScore) => {
   switch (maturityScore) {
-  case `elite`:
-    return "maturity-card-elite-color";
-  case `high`:
-    return "maturity-card-high-color";
-  case `medium`:
-    return "maturity-card-medium-color";
-  case `low`:
-    return "maturity-card-low-color";
-  default:
-    return "maturity-card-default-color";
+    case `elite`:
+      return "maturity-card-elite-color";
+    case `high`:
+      return "maturity-card-high-color";
+    case `medium`:
+      return "maturity-card-medium-color";
+    case `low`:
+      return "maturity-card-low-color";
+    default:
+      return "maturity-card-default-color";
   }
 };
 
@@ -539,14 +539,14 @@ export const getMaturityColorClass = (maturityScore) => {
  */
 export const getQualityBasedClassName = (qualityLevel) => {
   switch (qualityLevel) {
-  case METRIC_QUALITY_LEVELS.SUCCESS:
-    return "green";
-  case METRIC_QUALITY_LEVELS.WARNING:
-    return "yellow";
-  case METRIC_QUALITY_LEVELS.DANGER:
-    return "danger-red";
-  default:
-    return "";
+    case METRIC_QUALITY_LEVELS.SUCCESS:
+      return "green";
+    case METRIC_QUALITY_LEVELS.WARNING:
+      return "yellow";
+    case METRIC_QUALITY_LEVELS.DANGER:
+      return "danger-red";
+    default:
+      return "";
   }
 };
 

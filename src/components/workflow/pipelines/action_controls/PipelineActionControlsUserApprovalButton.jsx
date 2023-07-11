@@ -59,39 +59,39 @@ export default function PipelineActionControlsUserApprovalButton(
   }
 
   switch (approvalStepToolIdentifier) {
-  case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
-    return (
-      <PipelineActionControlButtonBase
-        icon={faFlag}
-        normalText={"Acknowledge Action"}
-        tooltipText={"A user action is required before this pipeline can proceed. Click here to see the instructions and complete the task."}
-        onClickFunction={handleAcknowledgementClick}
-        disabled={disabled}
-        variant={"warning"}
-      />
-    );      
-  case toolIdentifierConstants.TOOL_IDENTIFIERS.SERVICE_NOW:
-    return (
-      <PipelineActionControlButtonBase
-        icon={faFlag}
-        normalText={"Approve Run"}
-        tooltipText={"A user action is required before this pipeline can proceed. Click here to see the instructions and complete the task."}
-        onClickFunction={handleServiceNowApprovalClick}
-        disabled={disabled}
-        variant={"warning"}
-      />
-    );
-  default:
-    return (
-      <PipelineActionControlButtonBase
-        icon={faFlag}
-        normalText={"Approve Run"}
-        tooltipText={"Approve the current pipeline run in order for it to proceed. Only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this action."}
-        onClickFunction={handleApprovalClick}
-        disabled={PipelineRoleHelper.canAuthorizeApprovalGate(userData, pipeline) !== true || disabled === true}
-        variant={"warning"}
-      />
-    );    
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
+      return (
+        <PipelineActionControlButtonBase
+          icon={faFlag}
+          normalText={"Acknowledge Action"}
+          tooltipText={"A user action is required before this pipeline can proceed. Click here to see the instructions and complete the task."}
+          onClickFunction={handleAcknowledgementClick}
+          disabled={disabled}
+          variant={"warning"}
+        />
+      );      
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.SERVICE_NOW:
+      return (
+        <PipelineActionControlButtonBase
+          icon={faFlag}
+          normalText={"Approve Run"}
+          tooltipText={"A user action is required before this pipeline can proceed. Click here to see the instructions and complete the task."}
+          onClickFunction={handleServiceNowApprovalClick}
+          disabled={disabled}
+          variant={"warning"}
+        />
+      );
+    default:
+      return (
+        <PipelineActionControlButtonBase
+          icon={faFlag}
+          normalText={"Approve Run"}
+          tooltipText={"Approve the current pipeline run in order for it to proceed. Only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this action."}
+          onClickFunction={handleApprovalClick}
+          disabled={PipelineRoleHelper.canAuthorizeApprovalGate(userData, pipeline) !== true || disabled === true}
+          variant={"warning"}
+        />
+      );    
   }
 }
 

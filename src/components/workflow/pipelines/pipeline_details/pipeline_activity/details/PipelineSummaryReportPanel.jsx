@@ -66,81 +66,81 @@ function PipelineSummaryReportPanel(
     const stepIdentifier = DataParsingHelper.parseNestedString(pipelineTaskData, "api_response.stepIdentifier", "");
 
     switch (stepIdentifier) {
-    case "informatica":
-      return (
-        <InformaticaLogSummaryReportPanel
-          pipelineTaskData={pipelineTaskData}
-        />
-      );
-    case "informatica-idq":
-      return (
-        <InformaticaIdqLogSummaryReportPanel
-          pipelineTaskData={pipelineTaskData}
-        />
-      );
-    case "gitscraper":
-      return (
-        <GitScraperLogSummaryReportPanel
-          pipelineTaskData={pipelineTaskData}
-        />
-      );
-    case "apigee":
-      return (
-        <ApigeeLogSummaryReportPanel pipelineTaskData={pipelineTaskData} />
-      );
-    case "jenkins":
-      return getJenkinsReport();
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
-      return (
-        <SfdxScanLogSummaryReportPanel pipelineTaskData={pipelineTaskData} />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ:
-      return (
-        <SapCpqLogSummaryReportPanel pipelineTaskData={pipelineTaskData} />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.PROVAR:
-      return (
-        <ProvarLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI:
-      return (
-        <BoomiLogSummaryReportPanel pipelineTaskData={pipelineTaskData} />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY:
-      return (
-        <FortifyLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.COVERITY:
-      return (
-        <CoveritySummaryReportPanel pipelineTaskData={pipelineTaskData}/>
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.SONAR:
-      return (
-        <SonarLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.ANCHORE_INTEGRATOR:
-      return (
-        <AnchoreSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK:
-      return (
-        <BlackduckLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK:
-      return (
-        <SnykSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC:
-      return (
-        <AquasecLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
-      );        
-    default:
-      return (
-        <PipelineTaskSummaryPanelBase
-          pipelineTaskData={wrapObject(pipelineTaskMetadata)}
-          setActiveTab={setActiveTab}
-        />
-      );
+      case "informatica":
+        return (
+          <InformaticaLogSummaryReportPanel
+            pipelineTaskData={pipelineTaskData}
+          />
+        );
+      case "informatica-idq":
+        return (
+          <InformaticaIdqLogSummaryReportPanel
+            pipelineTaskData={pipelineTaskData}
+          />
+        );
+      case "gitscraper":
+        return (
+          <GitScraperLogSummaryReportPanel
+            pipelineTaskData={pipelineTaskData}
+          />
+        );
+      case "apigee":
+        return (
+          <ApigeeLogSummaryReportPanel pipelineTaskData={pipelineTaskData} />
+        );
+      case "jenkins":
+        return getJenkinsReport();
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
+        return (
+          <SfdxScanLogSummaryReportPanel pipelineTaskData={pipelineTaskData} />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ:
+        return (
+          <SapCpqLogSummaryReportPanel pipelineTaskData={pipelineTaskData} />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.PROVAR:
+        return (
+          <ProvarLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI:
+        return (
+          <BoomiLogSummaryReportPanel pipelineTaskData={pipelineTaskData} />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY:
+        return (
+          <FortifyLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.COVERITY:
+        return (
+          <CoveritySummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SONAR:
+        return (
+          <SonarLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ANCHORE_INTEGRATOR:
+        return (
+          <AnchoreSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK:
+        return (
+          <BlackduckLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK:
+        return (
+          <SnykSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC:
+        return (
+          <AquasecLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );        
+      default:
+        return (
+          <PipelineTaskSummaryPanelBase
+            pipelineTaskData={wrapObject(pipelineTaskMetadata)}
+            setActiveTab={setActiveTab}
+          />
+        );
     }
   };
 

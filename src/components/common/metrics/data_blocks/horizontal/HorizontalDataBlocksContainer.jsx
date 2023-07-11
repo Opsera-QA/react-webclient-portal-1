@@ -16,14 +16,14 @@ function HorizontalDataBlocksContainer({
 }) {
   const getBorderColor = () => {
     switch (borderColor) {
-    case "High":
-      return "#8b0000";
-    case "Medium":
-      return "#ff4500";
-    case "Low":
-      return "#FFA500";
-    default:
-      break;
+      case "High":
+        return "#8b0000";
+      case "Medium":
+        return "#ff4500";
+      case "Low":
+        return "#FFA500";
+      default:
+        break;
     }
   };
 

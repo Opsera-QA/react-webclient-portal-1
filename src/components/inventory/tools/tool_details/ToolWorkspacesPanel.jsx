@@ -5,22 +5,22 @@ import TerraformCloudWorkspacesPanel from "./tool_jobs/terraform_cloud/workspace
 function ToolWorkspacesPanel({ toolData, loadData, isLoading }) {
   const getPanel = (toolIdentifier, loadData) => {
     switch (toolIdentifier) {
-    case "terraform-cloud":
-      return (
-        <TerraformCloudWorkspacesPanel
-          toolActions={toolData?.getData("actions")}
-          isLoading={isLoading}
-          toolId={toolData.id}
-          loadData={loadData}
-          toolData={toolData}
-        />
-      );
-    default:
-      return (
-        <div className="text-center p-5 text-muted mt-5">
+      case "terraform-cloud":
+        return (
+          <TerraformCloudWorkspacesPanel
+            toolActions={toolData?.getData("actions")}
+            isLoading={isLoading}
+            toolId={toolData.id}
+            loadData={loadData}
+            toolData={toolData}
+          />
+        );
+      default:
+        return (
+          <div className="text-center p-5 text-muted mt-5">
             Workspaces are not currently available for this tool.
-        </div>
-      );
+          </div>
+        );
     }
   };
 

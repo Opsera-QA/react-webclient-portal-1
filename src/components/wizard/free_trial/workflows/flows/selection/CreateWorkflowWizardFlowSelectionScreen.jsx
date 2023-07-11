@@ -38,12 +38,12 @@ export default function CreateWorkflowWizardFlowSelectionScreen(
 
   const handleFlowSelectionButton = (selectedFlow) => {
     switch (selectedFlow) {
-    case WORKFLOW_CREATION_OPTIONS.SALESFORCE:
-      setCurrentScreen(CREATE_WORKFLOW_WIZARD_SCREENS.SALESFORCE_FLOW);
-      return;
-    case WORKFLOW_CREATION_OPTIONS.SOFTWARE_DEVELOPMENT_LIFE_CYCLE:
-      setCurrentScreen(CREATE_WORKFLOW_WIZARD_SCREENS.SDLC_FLOW);
-      return;
+      case WORKFLOW_CREATION_OPTIONS.SALESFORCE:
+        setCurrentScreen(CREATE_WORKFLOW_WIZARD_SCREENS.SALESFORCE_FLOW);
+        return;
+      case WORKFLOW_CREATION_OPTIONS.SOFTWARE_DEVELOPMENT_LIFE_CYCLE:
+        setCurrentScreen(CREATE_WORKFLOW_WIZARD_SCREENS.SDLC_FLOW);
+        return;
     }
   };
 

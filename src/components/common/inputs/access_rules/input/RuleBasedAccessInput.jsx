@@ -133,10 +133,10 @@ function RuleBasedAccessInput(
 
   const hasValues = (type, value) => {
     switch (type) {
-    case accessRuleTypeConstants.ACCESS_RULE_TYPES.ALLOWED_SSO_USER_ORGANIZATIONS:
-      return Array.isArray(value) && value.length > 0;
-    default:
-      return false;
+      case accessRuleTypeConstants.ACCESS_RULE_TYPES.ALLOWED_SSO_USER_ORGANIZATIONS:
+        return Array.isArray(value) && value.length > 0;
+      default:
+        return false;
     }
   };
 

@@ -37,36 +37,36 @@ function LdapDepartmentDetailPanel({ ldapDepartmentData, loadData, setLdapDepart
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <LdapDepartmentSummaryPanel
-          ldapDepartmentData={ldapDepartmentData}
-          setActiveTab={setActiveTab}
-          orgDomain={orgDomain}
-        />
-      );
-    case "membership":
-      return (
-        <LdapGroupMembershipManagementPanel
-          orgDomain={orgDomain}
-          setActiveTab={setActiveTab}
-          ldapGroupData={ldapDepartmentGroupData}
-          loadData={loadData}
-          type={"Department"}
-        />
-      );
-    case "settings":
-      return (
-        <LdapDepartmentEditorPanel
-          setLdapDepartmentData={setLdapDepartmentData}
-          orgDomain={orgDomain}
-          ldapDepartmentData={ldapDepartmentData}
-          reloadData={loadData}
-          handleClose={toggleSummaryPanel}
-        />
-      );
-    default:
-      return null;
+      case "summary":
+        return (
+          <LdapDepartmentSummaryPanel
+            ldapDepartmentData={ldapDepartmentData}
+            setActiveTab={setActiveTab}
+            orgDomain={orgDomain}
+          />
+        );
+      case "membership":
+        return (
+          <LdapGroupMembershipManagementPanel
+            orgDomain={orgDomain}
+            setActiveTab={setActiveTab}
+            ldapGroupData={ldapDepartmentGroupData}
+            loadData={loadData}
+            type={"Department"}
+          />
+        );
+      case "settings":
+        return (
+          <LdapDepartmentEditorPanel
+            setLdapDepartmentData={setLdapDepartmentData}
+            orgDomain={orgDomain}
+            ldapDepartmentData={ldapDepartmentData}
+            reloadData={loadData}
+            handleClose={toggleSummaryPanel}
+          />
+        );
+      default:
+        return null;
     }
   };
 

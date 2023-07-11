@@ -21,35 +21,35 @@ export default function FreeTrialLandingTaskWidgetBody(
   }) {
   const getBody = () => {
     switch (selectedHeaderItem) {
-    case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.SUMMARY:
-      return (
-        <FreeTrialLandingTaskWidgetTaskSummaryPanel
-          selectedTask={selectedTask}
-          setSelectedTask={setSelectedTask}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-          className={"mx-2 mb-2"}
-        />
-      );
-    case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.ACTIVITY_LOGS:
-      return (
-        <FreeTrialLandingTaskWidgetTaskActivityLogsPanel
-          taskModel={selectedTask}
-          className={"m-2 mb-3"}
-        />
-      );
-    case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.ANALYTICS:
-      return (
-        <FreeTrialLandingTaskWidgetAnalyticsBody
-          className={"m-3"}
-        />
-      );
-    default:
-      return (
-        <div>
+      case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.SUMMARY:
+        return (
+          <FreeTrialLandingTaskWidgetTaskSummaryPanel
+            selectedTask={selectedTask}
+            setSelectedTask={setSelectedTask}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+            className={"mx-2 mb-2"}
+          />
+        );
+      case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.ACTIVITY_LOGS:
+        return (
+          <FreeTrialLandingTaskWidgetTaskActivityLogsPanel
+            taskModel={selectedTask}
+            className={"m-2 mb-3"}
+          />
+        );
+      case FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS.ANALYTICS:
+        return (
+          <FreeTrialLandingTaskWidgetAnalyticsBody
+            className={"m-3"}
+          />
+        );
+      default:
+        return (
+          <div>
             Please select a Task.
-        </div>
-      );
+          </div>
+        );
     }
   };
 

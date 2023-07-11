@@ -25,62 +25,62 @@ export default function OrchestrationStateFieldBase(
   useEffect(() => {}, [orchestrationState]);
 
   switch (orchestrationState) {
-  case "FAILED":
-  case "failed":
-  case "failure":
-    return (
-      <FailedOrchestrationStateFieldBase
-        type={type}
-        className={className}
-        showStatusText={showStatusText}
-      />
-    );
-  case "running":
-    return (
-      <RunningOrchestrationStateFieldBase
-        type={type}
-        className={className}
-        showStatusText={showStatusText}
-      />
-    );
-  case "paused":
-    return (
-      <PausedOrchestrationStateFieldBase
-        type={type}
-        className={className}
-        showStatusText={showStatusText}
-      />
-    );
-  case "SUCCESS":
-  case "success":
-  case "successful":
-    return (
-      <SuccessOrchestrationStateFieldBase
-        type={type}
-        className={className}
-        showStatusText={showStatusText}
-      />
-    );
-  case "created":
-    return (
-      <CreatedOrchestrationStateFieldBase
-        type={type}
-        className={className}
-        showStatusText={showStatusText}
-      />
-    );
-  default:
-    if (showStoppedState === false) {
-      return null;
-    }
+    case "FAILED":
+    case "failed":
+    case "failure":
+      return (
+        <FailedOrchestrationStateFieldBase
+          type={type}
+          className={className}
+          showStatusText={showStatusText}
+        />
+      );
+    case "running":
+      return (
+        <RunningOrchestrationStateFieldBase
+          type={type}
+          className={className}
+          showStatusText={showStatusText}
+        />
+      );
+    case "paused":
+      return (
+        <PausedOrchestrationStateFieldBase
+          type={type}
+          className={className}
+          showStatusText={showStatusText}
+        />
+      );
+    case "SUCCESS":
+    case "success":
+    case "successful":
+      return (
+        <SuccessOrchestrationStateFieldBase
+          type={type}
+          className={className}
+          showStatusText={showStatusText}
+        />
+      );
+    case "created":
+      return (
+        <CreatedOrchestrationStateFieldBase
+          type={type}
+          className={className}
+          showStatusText={showStatusText}
+        />
+      );
+    default:
+      if (showStoppedState === false) {
+        return null;
+      }
 
-    return (
-      <StoppedOrchestrationStateFieldBase
-        type={type}
-        className={className}
-        showStatusText={showStatusText}
-      />
-    );
+      return (
+        <StoppedOrchestrationStateFieldBase
+          type={type}
+          className={className}
+          showStatusText={showStatusText}
+        />
+      );
   }
 }
 

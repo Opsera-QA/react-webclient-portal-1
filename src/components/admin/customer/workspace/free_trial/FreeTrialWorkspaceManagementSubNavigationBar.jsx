@@ -12,29 +12,29 @@ export default function FreeTrialWorkspaceManagementSubNavigationBar({activeTab}
     e.preventDefault();
 
     switch (tabSelection) {
-    case "adminTools":
-      history.push(`/admin`);
-      return;
-    case "freeTrialCustomerWorkspaceManagement":
-      history.push(`/admin/customer/workspaces`);
-      return;
+      case "adminTools":
+        history.push(`/admin`);
+        return;
+      case "freeTrialCustomerWorkspaceManagement":
+        history.push(`/admin/customer/workspaces`);
+        return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-    case "freeTrialCustomerWorkspaceViewer":
-      return (
-        <NavigationTab
-          icon={faStream}
-          tabName={"freeTrialCustomerWorkspaceViewer"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          tabText={"Free Trial Customer Workspace Viewer"}
-        />
-      );
-    default:
-      return null;
+      case "freeTrialCustomerWorkspaceViewer":
+        return (
+          <NavigationTab
+            icon={faStream}
+            tabName={"freeTrialCustomerWorkspaceViewer"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+            tabText={"Free Trial Customer Workspace Viewer"}
+          />
+        );
+      default:
+        return null;
     }
   };
 

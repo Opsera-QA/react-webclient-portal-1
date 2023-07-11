@@ -14,26 +14,26 @@ function FaqSubNavigationBar({currentTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-    case "faq":
-      history.push(`/faq`);
-      return;
+      case "faq":
+        history.push(`/faq`);
+        return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (currentTab) {
-    case "faqViewer":
-      return (
-        <NavigationTab
-          icon={faQuestion}
-          tabName={currentTab}
-          handleTabClick={handleTabClick}
-          activeTab={"faqViewer"}
-          tabText={"FAQ Viewer"}
-        />
-      );
-    default:
-      return null;
+      case "faqViewer":
+        return (
+          <NavigationTab
+            icon={faQuestion}
+            tabName={currentTab}
+            handleTabClick={handleTabClick}
+            activeTab={"faqViewer"}
+            tabText={"FAQ Viewer"}
+          />
+        );
+      default:
+        return null;
     }
   };
 

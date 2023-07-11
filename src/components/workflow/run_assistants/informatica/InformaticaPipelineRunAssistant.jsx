@@ -49,51 +49,51 @@ const InformaticaPipelineRunAssistant = ({ pipeline, startPipelineRunFunction, c
 
   const getBody = () => {
     switch (runAssistantScreen) {
-    case INFORMATICA_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN:
-      return (
-        <InformaticaPipelineRunAssistantInitializationScreen
-          pipeline={pipeline}
-          informaticaRunParametersModel={informaticaRunParametersModel}
-          setInformaticaRunParametersModel={setInformaticaRunParametersModel}
-          setError={setError}
-          setRunAssistantScreen={setRunAssistantScreen}
-        />
-      );
-    case INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN:
-      return (
-        <InformaticaRunAssistantConfigurationSelectionScreen
-          informaticaRunParametersModel={informaticaRunParametersModel}
-          setInformaticaRunParametersModel={setInformaticaRunParametersModel}
-          setRunAssistantScreen={setRunAssistantScreen}
-          closePanelFunction={closePanelFunction}
-        />
-      );
-    case INFORMATICA_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTION_SCREEN:
-      return (
-        <InformaticaRunAssistantMigrationObjectSelectionScreen
-          informaticaRunParametersModel={informaticaRunParametersModel}
-          setInformaticaRunParametersModel={setInformaticaRunParametersModel}
-          setRunAssistantScreen={setRunAssistantScreen}
-          startPipelineRunFunction={startPipelineRunFunction}
-          closePanelFunction={closePanelFunction}
-        />
-      );
-    case INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIRMATION_SCREEN:
-      return (
-        <div>You have reached the confirmation screen.</div>
-      );
-    default:
-      return null;
+      case INFORMATICA_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN:
+        return (
+          <InformaticaPipelineRunAssistantInitializationScreen
+            pipeline={pipeline}
+            informaticaRunParametersModel={informaticaRunParametersModel}
+            setInformaticaRunParametersModel={setInformaticaRunParametersModel}
+            setError={setError}
+            setRunAssistantScreen={setRunAssistantScreen}
+          />
+        );
+      case INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN:
+        return (
+          <InformaticaRunAssistantConfigurationSelectionScreen
+            informaticaRunParametersModel={informaticaRunParametersModel}
+            setInformaticaRunParametersModel={setInformaticaRunParametersModel}
+            setRunAssistantScreen={setRunAssistantScreen}
+            closePanelFunction={closePanelFunction}
+          />
+        );
+      case INFORMATICA_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTION_SCREEN:
+        return (
+          <InformaticaRunAssistantMigrationObjectSelectionScreen
+            informaticaRunParametersModel={informaticaRunParametersModel}
+            setInformaticaRunParametersModel={setInformaticaRunParametersModel}
+            setRunAssistantScreen={setRunAssistantScreen}
+            startPipelineRunFunction={startPipelineRunFunction}
+            closePanelFunction={closePanelFunction}
+          />
+        );
+      case INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIRMATION_SCREEN:
+        return (
+          <div>You have reached the confirmation screen.</div>
+        );
+      default:
+        return null;
     }
   };
 
   const getHelpComponentFunction = (setHelpIsShown) => {
     switch (runAssistantScreen) {
-    case INFORMATICA_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN:
-    case INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN:
-    case INFORMATICA_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTION_SCREEN:
-    default:
-      return null;
+      case INFORMATICA_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN:
+      case INFORMATICA_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN:
+      case INFORMATICA_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTION_SCREEN:
+      default:
+        return null;
     }
   };
 

@@ -12,12 +12,12 @@ function ApiConnectionDemoSubNavigationBar({activeTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-    case "adminTools":
-      history.push(`/admin`);
-      return;
-    case "apiConnectionTest":
-      history.push(`/admin/demo/api`);
-      return;
+      case "adminTools":
+        history.push(`/admin`);
+        return;
+      case "apiConnectionTest":
+        history.push(`/admin/demo/api`);
+        return;
     }
   };
 

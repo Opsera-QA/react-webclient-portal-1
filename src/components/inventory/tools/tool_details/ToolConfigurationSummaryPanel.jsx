@@ -130,179 +130,179 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
     }
     
     switch (toolIdentifier) {
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR:
-      return (
-        <div className={"text-center p-5 text-muted mt-5"}>
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR:
+        return (
+          <div className={"text-center p-5 text-muted mt-5"}>
             Connection configuration is handled using Endpoints.
-        </div>
-      );
-    case "jenkins":
-      return (
-        <JenkinsToolConfigurationSummaryPanel
-          jenkinsToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, jenkinsConnectionMetadata)}
-        />
-      );
-    case "jira":
-      return (
-        <JiraToolConfigurationSummaryPanel
-          jiraToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, jiraToolConnectionMetadata)}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
-      return (
-        <GithubToolConfigurationSummaryPanel
-          githubToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, githubConnectionMetadata)}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
-      return (
-        <GitlabToolConfigurationSummaryPanel
-          gitlabToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, gitlabConnectionMetadata)}
-        />
-      );
-    case "bitbucket":
-      return (
-        <BitbucketToolConfigurationSummaryPanel
-          bitbucketToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, bitbucketConnectionMetadata)}
-        />
-      );
-    case "spinnaker":
-      return (
-        <SpinnakerToolConfigurationSummaryPanel
-          spinnakerToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, spinnakerConnectionMetadata)}
-        />
-      );
-    case "cypress":
-      return (
-        <CypressToolConfigurationSummaryPanel
-          cypressToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, cypressConnectionMetadata)}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
-      return (
-        <ArgoToolConfigurationSummaryPanel
-          argoToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, argoConnectionMetadata)}
-        />
-      );
-    case "anchore-scan":
-      return (
-        <AnchoreScanToolConfigurationSummaryPanel
-          anchoreScanToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, anchoreScanConnectionMetadata)}
-        />
-      );
-    case "anchore-integrator":
-      return (
-        <AnchoreIntegratorToolConfigurationSummaryPanel
-          anchoreIntegratorToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, anchoreIntegratorConnectionMetadata)}
-        />
-      );
-    case "sonar":
-      return (
-        <SonarToolConfigurationSummaryPanel
-          sonarToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, sonarConnectionMetadata)}
-        />
-      );
-    case "aws_account":
-      return (
-        <AwsToolConfigurationSummaryPanel
-          awsToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, awsConnectionMetadata)}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR:
-      return (
-        <SfdcToolConfigurationSummaryPanel
-          sfdcToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, sfdcConnectionMetadata)}
-        />
-      );
-    case "nexus":
-      return (
-        <NexusToolConfigurationSummaryPanel
-          nexusToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, nexusConnectionMetadata)}
-        />
-      );
-    case "teams":
-      return (
-        <TeamsToolConfigurationSummaryPanel
-          teamsToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, teamsConnectionMetadata)}
-        />
-      );
-    case "octopus":
-      return (
-        <OctopusToolConfigurationSummaryPanel
-          octopusToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, octopusConnectionMetadata)}
-        />
-      );
-    case "slack":
-      return (
-        <SlackToolConfigurationSummaryPanel />
-      );
-    case "azure_account":
-      return (
-        <AzureToolConfigurationSummaryPanel
-          azureToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, AzureConnectionMetadata)}
-        />
-      );
-    case "azure-devops":
-      return (
-        <AzureDevopsToolConfigurationSummaryPanel
-          azureToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, AzureDevopsConnectionMetadata)}
-        />
-      );
-    case "jfrog_artifactory_maven":
-    case "jfrog_artifactory_docker":
-      return (
-        <JFrogToolConfigurationSummaryPanel
-          jFrogToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, jfrogConnectionMetadata)}
-        />
-      );
-    case "servicenow":
-      return (
-        <ServiceNowToolConfigurationSummaryPanel
-          serviceNowToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, serviceNowConnectionMetadata)}
-        />
-      );
-    case "hashicorp_vault":
-      return (
-        <HashicorpVaultToolConfigurationSummaryPanel
-          hashicorpVaultToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, HashicorpVaultConnectionMetadata)}
-        />
-      );
-    case "kafka_connect":
-      return (
-        <KafkaConnectToolConfigurationSummaryPanel
-          kafkaConnectToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, KafkaConnectConnectionMetadata)}
-        />
-      );
-    case "coverity":
-      return (
-        <CoverityToolConfigurationSummaryPanel
-          coverityToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, CoverityConnectionMetadata)}
-        />
-      );
-    case "twistlock":
-      return (
-        <TwistlockToolConfigurationSummaryPanel
-          twistlockToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, TwistlockConnectionMetadata)}
-        />
-      );
-    case "mongodb_realm":
-      return (
-        <MongodbRealmToolConfigurationSummaryPanel
-          mongodbRealmToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, mongodbeRealmConnectionMetadata)}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.FLYWAY_DATABASE_MIGRATOR:
-      return (
-        <FlywayDatabaseToolConnectionSummaryPanel
-          flywayToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, flywayDatabaseToolConnectionMetadata)}
-        />
-      );
-    case "informatica":
-      return (
-        <InformaticaToolConfigurationSummaryPanel
-          informaticaToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, InformaticaConnectionMetadata)}
-        />
-      );
+          </div>
+        );
+      case "jenkins":
+        return (
+          <JenkinsToolConfigurationSummaryPanel
+            jenkinsToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, jenkinsConnectionMetadata)}
+          />
+        );
+      case "jira":
+        return (
+          <JiraToolConfigurationSummaryPanel
+            jiraToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, jiraToolConnectionMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
+        return (
+          <GithubToolConfigurationSummaryPanel
+            githubToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, githubConnectionMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
+        return (
+          <GitlabToolConfigurationSummaryPanel
+            gitlabToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, gitlabConnectionMetadata)}
+          />
+        );
+      case "bitbucket":
+        return (
+          <BitbucketToolConfigurationSummaryPanel
+            bitbucketToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, bitbucketConnectionMetadata)}
+          />
+        );
+      case "spinnaker":
+        return (
+          <SpinnakerToolConfigurationSummaryPanel
+            spinnakerToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, spinnakerConnectionMetadata)}
+          />
+        );
+      case "cypress":
+        return (
+          <CypressToolConfigurationSummaryPanel
+            cypressToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, cypressConnectionMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
+        return (
+          <ArgoToolConfigurationSummaryPanel
+            argoToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, argoConnectionMetadata)}
+          />
+        );
+      case "anchore-scan":
+        return (
+          <AnchoreScanToolConfigurationSummaryPanel
+            anchoreScanToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, anchoreScanConnectionMetadata)}
+          />
+        );
+      case "anchore-integrator":
+        return (
+          <AnchoreIntegratorToolConfigurationSummaryPanel
+            anchoreIntegratorToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, anchoreIntegratorConnectionMetadata)}
+          />
+        );
+      case "sonar":
+        return (
+          <SonarToolConfigurationSummaryPanel
+            sonarToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, sonarConnectionMetadata)}
+          />
+        );
+      case "aws_account":
+        return (
+          <AwsToolConfigurationSummaryPanel
+            awsToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, awsConnectionMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR:
+        return (
+          <SfdcToolConfigurationSummaryPanel
+            sfdcToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, sfdcConnectionMetadata)}
+          />
+        );
+      case "nexus":
+        return (
+          <NexusToolConfigurationSummaryPanel
+            nexusToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, nexusConnectionMetadata)}
+          />
+        );
+      case "teams":
+        return (
+          <TeamsToolConfigurationSummaryPanel
+            teamsToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, teamsConnectionMetadata)}
+          />
+        );
+      case "octopus":
+        return (
+          <OctopusToolConfigurationSummaryPanel
+            octopusToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, octopusConnectionMetadata)}
+          />
+        );
+      case "slack":
+        return (
+          <SlackToolConfigurationSummaryPanel />
+        );
+      case "azure_account":
+        return (
+          <AzureToolConfigurationSummaryPanel
+            azureToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, AzureConnectionMetadata)}
+          />
+        );
+      case "azure-devops":
+        return (
+          <AzureDevopsToolConfigurationSummaryPanel
+            azureToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, AzureDevopsConnectionMetadata)}
+          />
+        );
+      case "jfrog_artifactory_maven":
+      case "jfrog_artifactory_docker":
+        return (
+          <JFrogToolConfigurationSummaryPanel
+            jFrogToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, jfrogConnectionMetadata)}
+          />
+        );
+      case "servicenow":
+        return (
+          <ServiceNowToolConfigurationSummaryPanel
+            serviceNowToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, serviceNowConnectionMetadata)}
+          />
+        );
+      case "hashicorp_vault":
+        return (
+          <HashicorpVaultToolConfigurationSummaryPanel
+            hashicorpVaultToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, HashicorpVaultConnectionMetadata)}
+          />
+        );
+      case "kafka_connect":
+        return (
+          <KafkaConnectToolConfigurationSummaryPanel
+            kafkaConnectToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, KafkaConnectConnectionMetadata)}
+          />
+        );
+      case "coverity":
+        return (
+          <CoverityToolConfigurationSummaryPanel
+            coverityToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, CoverityConnectionMetadata)}
+          />
+        );
+      case "twistlock":
+        return (
+          <TwistlockToolConfigurationSummaryPanel
+            twistlockToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, TwistlockConnectionMetadata)}
+          />
+        );
+      case "mongodb_realm":
+        return (
+          <MongodbRealmToolConfigurationSummaryPanel
+            mongodbRealmToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, mongodbeRealmConnectionMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.FLYWAY_DATABASE_MIGRATOR:
+        return (
+          <FlywayDatabaseToolConnectionSummaryPanel
+            flywayToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, flywayDatabaseToolConnectionMetadata)}
+          />
+        );
+      case "informatica":
+        return (
+          <InformaticaToolConfigurationSummaryPanel
+            informaticaToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, InformaticaConnectionMetadata)}
+          />
+        );
       //TODO: We need to rename either the old or the new metadata
       // case "azure":
       //   break;
@@ -311,44 +311,44 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
       //     azureToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, AzureV2ConnectionMetadata)}
       //   />
       // );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA_IDQ:
-      return (
-        <InformaticaIdqToolConfigurationSummaryPanel
-          informaticaIdqToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, InformaticaIdqConnectionMetadata)}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.GCHAT:
-      return (
-        <GChatToolConfigurationSummaryPanel
-          gChatToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, gchatConnectionMetadata)}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY:
-      return (
-        <FortifyToolConfigurationSummaryPanel
-          fortifyToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, FortifyMetadata)}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK:
-      return (
-        <SnykToolConfigurationSummaryPanel
-          snykToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, snykConnectionMetadata)}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC:
-      return (
-        <AquasecToolConfigurationSummaryPanel
-          aquasecToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, AquasecMetadata)}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.ORACLE_FUSION:
-      return (
-        <OracleFusionToolConfigurationSummaryPanel
-          oracleFusionToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, OracleFusionMetadata)}
-        />
-      );
-    default:
-      return <div className="text-center p-5 text-muted mt-5">Summary Panel is not currently available for this tool configuration.</div>;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA_IDQ:
+        return (
+          <InformaticaIdqToolConfigurationSummaryPanel
+            informaticaIdqToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, InformaticaIdqConnectionMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GCHAT:
+        return (
+          <GChatToolConfigurationSummaryPanel
+            gChatToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, gchatConnectionMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY:
+        return (
+          <FortifyToolConfigurationSummaryPanel
+            fortifyToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, FortifyMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK:
+        return (
+          <SnykToolConfigurationSummaryPanel
+            snykToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, snykConnectionMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC:
+        return (
+          <AquasecToolConfigurationSummaryPanel
+            aquasecToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, AquasecMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ORACLE_FUSION:
+        return (
+          <OracleFusionToolConfigurationSummaryPanel
+            oracleFusionToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, OracleFusionMetadata)}
+          />
+        );
+      default:
+        return <div className="text-center p-5 text-muted mt-5">Summary Panel is not currently available for this tool configuration.</div>;
     }
   };
   

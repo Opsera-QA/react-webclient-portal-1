@@ -20,29 +20,29 @@ export default function FreeTrialUserActivityReportSubNavigationBar({activeTab})
     }
 
     switch (tabSelection) {
-    case "accountSettings":
-      history.push(`/settings`);
-      return;
-    case "freeTrialUserActivityReport":
-      history.push(`/settings/trial/user/activity-report`);
-      return;
+      case "accountSettings":
+        history.push(`/settings`);
+        return;
+      case "freeTrialUserActivityReport":
+        history.push(`/settings/trial/user/activity-report`);
+        return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-    case "userActivityViewer":
-      return (
-        <NavigationTab
-          icon={faClipboardUser}
-          tabName={"userActivityViewer"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          tabText={"User Activity Viewer"}
-        />
-      );
-    default:
-      return null;
+      case "userActivityViewer":
+        return (
+          <NavigationTab
+            icon={faClipboardUser}
+            tabName={"userActivityViewer"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+            tabText={"User Activity Viewer"}
+          />
+        );
+      default:
+        return null;
     }
   };
 

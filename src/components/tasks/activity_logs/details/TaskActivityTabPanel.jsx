@@ -41,26 +41,26 @@ function TaskActivityTabPanel({ taskActivityLogModel }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <TaskActivitySummaryPanel
-          taskActivityLogModel={taskActivityLogModel}
-        />
-      );
-    case "log":
-      return (
-        <TaskActivityConsoleLogPanel
-          logRecord={taskActivityLogModel?.getPersistData()}
-        />
-      );
-    case "json":
-      return (
-        <TaskActivityJsonPanel
-          gitTaskActivityData={taskActivityLogModel?.getPersistData()}
-        />
-      );
-    default:
-      return null;
+      case "summary":
+        return (
+          <TaskActivitySummaryPanel
+            taskActivityLogModel={taskActivityLogModel}
+          />
+        );
+      case "log":
+        return (
+          <TaskActivityConsoleLogPanel
+            logRecord={taskActivityLogModel?.getPersistData()}
+          />
+        );
+      case "json":
+        return (
+          <TaskActivityJsonPanel
+            gitTaskActivityData={taskActivityLogModel?.getPersistData()}
+          />
+        );
+      default:
+        return null;
     }
   };
 

@@ -138,40 +138,40 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
 
   const getIcon = (severity) => {
     switch (severity) {
-    case "Up":
-      return faArrowCircleUp;
-    case "Down":
-      return faArrowCircleDown;
-    case "Neutral":
-      return faMinusCircle;
-    default:
-      break;
+      case "Up":
+        return faArrowCircleUp;
+      case "Down":
+        return faArrowCircleDown;
+      case "Neutral":
+        return faMinusCircle;
+      default:
+        break;
     }
   };
 
   const getIconColor = (severity) => {
     switch (severity) {
-    case "Down":
-      return "red";
-    case "Up":
-      return "green";
-    case "Neutral":
-      return "light-gray-text-secondary";
-    case "-":
-      return "black";
-    default:
-      break;
+      case "Down":
+        return "red";
+      case "Up":
+        return "green";
+      case "Neutral":
+        return "light-gray-text-secondary";
+      case "-":
+        return "black";
+      default:
+        break;
     }
   };
 
   const getDescription = (severity) => {
     switch (severity) {
-    case "Up":
-      return "This project is trending upward.";
-    case "Down":
-      return "This project is trending downward.";
-    case "Neutral":
-      return "Neutral: This project has experienced no change.";
+      case "Up":
+        return "This project is trending upward.";
+      case "Down":
+        return "This project is trending downward.";
+      case "Neutral":
+        return "Neutral: This project has experienced no change.";
     }
   };
 

@@ -12,42 +12,42 @@ function ToolManagementSubNavigationBar({activeTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-    case "adminTools":
-      history.push(`/admin`);
-      return;
-    case "categories":
-      history.push(`/admin/tools/categories`);
-      return;
-    case "identifiers":
-      history.push(`/admin/tools/identifiers`);
-      return;
+      case "adminTools":
+        history.push(`/admin`);
+        return;
+      case "categories":
+        history.push(`/admin/tools/categories`);
+        return;
+      case "identifiers":
+        history.push(`/admin/tools/identifiers`);
+        return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-    case "toolIdentifierViewer":
-      return (
-        <NavigationTab
-          icon={faTools}
-          tabName={"toolIdentifierViewer"}
-          handleTabClick={handleTabClick}
-          activeTab={"toolIdentifierViewer"}
-          tabText={"Tool Identifier Viewer"}
-        />
-      );
-    case "toolCategoryViewer":
-      return (
-        <NavigationTab
-          icon={faToolbox}
-          tabName={"toolCategoryViewer"}
-          handleTabClick={handleTabClick}
-          activeTab={"toolCategoryViewer"}
-          tabText={"Tool Category Viewer"}
-        />
-      );
-    default:
-      return null;
+      case "toolIdentifierViewer":
+        return (
+          <NavigationTab
+            icon={faTools}
+            tabName={"toolIdentifierViewer"}
+            handleTabClick={handleTabClick}
+            activeTab={"toolIdentifierViewer"}
+            tabText={"Tool Identifier Viewer"}
+          />
+        );
+      case "toolCategoryViewer":
+        return (
+          <NavigationTab
+            icon={faToolbox}
+            tabName={"toolCategoryViewer"}
+            handleTabClick={handleTabClick}
+            activeTab={"toolCategoryViewer"}
+            tabText={"Tool Category Viewer"}
+          />
+        );
+      default:
+        return null;
     }
   };
 

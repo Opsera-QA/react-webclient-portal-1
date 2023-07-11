@@ -94,90 +94,90 @@ dataPointEvaluationRulesHelpers.getNumberRangeForDataPointEvaluationRule = (data
   const secondaryValue = numberHelpers.parseNumber(dataPointEvaluationRule?.secondary_trigger_value);
 
   switch (triggerFilter) {
-  case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.BETWEEN_INCLUSIVE:
-    if (numberHelpers.hasNumberValue(primaryValue) !== true || numberHelpers.hasNumberValue(secondaryValue) !== true) {
-      return false;
-    }
+    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.BETWEEN_INCLUSIVE:
+      if (numberHelpers.hasNumberValue(primaryValue) !== true || numberHelpers.hasNumberValue(secondaryValue) !== true) {
+        return false;
+      }
 
-    if (primaryValue <= secondaryValue) {
+      if (primaryValue <= secondaryValue) {
+        return {
+          lowerBound: primaryValue,
+          upperBound: secondaryValue,
+          isOverlappingFunction: (number) => {
+            return numberHelpers.isNumberBetweenInclusive(primaryValue, secondaryValue, number);
+          },
+        };
+      } else {
+        return {
+          lowerBound: secondaryValue,
+          upperBound: primaryValue,
+          isOverlappingFunction: (number) => {
+            return numberHelpers.isNumberBetweenInclusive(secondaryValue, primaryValue, number);
+          },
+        };
+      }
+    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.EQUAL_TO:
+      if (numberHelpers.hasNumberValue(primaryValue) !== true) {
+        return false;
+      }
+
       return {
         lowerBound: primaryValue,
-        upperBound: secondaryValue,
-        isOverlappingFunction: (number) => {
-          return numberHelpers.isNumberBetweenInclusive(primaryValue, secondaryValue, number);
-        },
-      };
-    } else {
-      return {
-        lowerBound: secondaryValue,
         upperBound: primaryValue,
         isOverlappingFunction: (number) => {
-          return numberHelpers.isNumberBetweenInclusive(secondaryValue, primaryValue, number);
+          return numberHelpers.isNumberEqual(primaryValue, number);
         },
       };
-    }
-  case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.EQUAL_TO:
-    if (numberHelpers.hasNumberValue(primaryValue) !== true) {
-      return false;
-    }
+    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.GREATER_THAN:
+      if (numberHelpers.hasNumberValue(primaryValue) !== true) {
+        return false;
+      }
 
-    return {
-      lowerBound: primaryValue,
-      upperBound: primaryValue,
-      isOverlappingFunction: (number) => {
-        return numberHelpers.isNumberEqual(primaryValue, number);
-      },
-    };
-  case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.GREATER_THAN:
-    if (numberHelpers.hasNumberValue(primaryValue) !== true) {
-      return false;
-    }
+      return {
+        lowerBound: primaryValue,
+        upperBound: Infinity,
+        isOverlappingFunction: (number) => {
+          return numberHelpers.isNumberGreaterThan(primaryValue, number);
+        },
+      };
+    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.GREATER_THAN_OR_EQUAL_TO:
+      if (numberHelpers.hasNumberValue(primaryValue) !== true) {
+        return false;
+      }
 
-    return {
-      lowerBound: primaryValue,
-      upperBound: Infinity,
-      isOverlappingFunction: (number) => {
-        return numberHelpers.isNumberGreaterThan(primaryValue, number);
-      },
-    };
-  case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.GREATER_THAN_OR_EQUAL_TO:
-    if (numberHelpers.hasNumberValue(primaryValue) !== true) {
-      return false;
-    }
+      return {
+        lowerBound: primaryValue,
+        upperBound: Infinity,
+        isOverlappingFunction: (number) => {
+          return numberHelpers.isNumberGreaterThanOrEqualTo(primaryValue, number);
+        },
+      };
+    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.LESS_THAN:
+      if (numberHelpers.hasNumberValue(primaryValue) !== true) {
+        return false;
+      }
 
-    return {
-      lowerBound: primaryValue,
-      upperBound: Infinity,
-      isOverlappingFunction: (number) => {
-        return numberHelpers.isNumberGreaterThanOrEqualTo(primaryValue, number);
-      },
-    };
-  case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.LESS_THAN:
-    if (numberHelpers.hasNumberValue(primaryValue) !== true) {
-      return false;
-    }
+      return {
+        lowerBound: -Infinity,
+        upperBound: primaryValue,
+        isOverlappingFunction: (number) => {
+          return numberHelpers.isNumberLessThan(primaryValue, number);
+        },
+      };
+    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.LESS_THAN_OR_EQUAL_TO:
+      if (numberHelpers.hasNumberValue(primaryValue) !== true) {
+        return false;
+      }
 
-    return {
-      lowerBound: -Infinity,
-      upperBound: primaryValue,
-      isOverlappingFunction: (number) => {
-        return numberHelpers.isNumberLessThan(primaryValue, number);
-      },
-    };
-  case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.LESS_THAN_OR_EQUAL_TO:
-    if (numberHelpers.hasNumberValue(primaryValue) !== true) {
+      return {
+        lowerBound: -Infinity,
+        upperBound: primaryValue,
+        isOverlappingFunction: (number) => {
+          return numberHelpers.isNumberLessThanOrEqualTo(primaryValue, number);
+        },
+      };
+    default:
       return false;
-    }
-
-    return {
-      lowerBound: -Infinity,
-      upperBound: primaryValue,
-      isOverlappingFunction: (number) => {
-        return numberHelpers.isNumberLessThanOrEqualTo(primaryValue, number);
-      },
-    };
-  default:
-    return false;
   }
 };
 
@@ -207,19 +207,19 @@ dataPointEvaluationRulesHelpers.evaluateDataPointEvaluationRule = (rule, value) 
   const secondaryValue = numberHelpers.parseNumber(rule?.secondary_trigger_value);
 
   switch (triggerFilter) {
-  case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.BETWEEN_INCLUSIVE:
-    return numberHelpers.isNumberBetweenInclusive(primaryValue, secondaryValue, value);
-  case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.EQUAL_TO:
-    return numberHelpers.isNumberEqual(primaryValue, value);
-  case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.GREATER_THAN:
-    return numberHelpers.isNumberGreaterThan(primaryValue, value);
-  case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.GREATER_THAN_OR_EQUAL_TO:
-    return numberHelpers.isNumberGreaterThanOrEqualTo(primaryValue, value);
-  case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.LESS_THAN:
-    return numberHelpers.isNumberLessThan(primaryValue, value);
-  case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.LESS_THAN_OR_EQUAL_TO:
-    return numberHelpers.isNumberLessThanOrEqualTo(primaryValue, value);
-  default:
-    return false;
+    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.BETWEEN_INCLUSIVE:
+      return numberHelpers.isNumberBetweenInclusive(primaryValue, secondaryValue, value);
+    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.EQUAL_TO:
+      return numberHelpers.isNumberEqual(primaryValue, value);
+    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.GREATER_THAN:
+      return numberHelpers.isNumberGreaterThan(primaryValue, value);
+    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.GREATER_THAN_OR_EQUAL_TO:
+      return numberHelpers.isNumberGreaterThanOrEqualTo(primaryValue, value);
+    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.LESS_THAN:
+      return numberHelpers.isNumberLessThan(primaryValue, value);
+    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.LESS_THAN_OR_EQUAL_TO:
+      return numberHelpers.isNumberLessThanOrEqualTo(primaryValue, value);
+    default:
+      return false;
   }
 };

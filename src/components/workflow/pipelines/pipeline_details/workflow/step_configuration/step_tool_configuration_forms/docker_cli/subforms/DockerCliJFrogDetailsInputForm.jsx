@@ -26,29 +26,29 @@ function DockerCliJFrogDetailsInputForm({ model, setModel, stepId, plan }) {
       return null;
     }
     switch (model?.getData("type")) {
-    case "PORTPERREPO":
-      return (
-        <TextInputBase 
-          dataObject={model}             
-          setDataObject={setModel} 
-          fieldName="port"
-        />
-      );
-    default:
-      return (
-        <JfrogRepoSelectInput
-          fieldName={"repositoryName"}
-          dataObject={model}
-          setDataObject={setModel}
-          options={listOfSteps}
-          disabled={model && model.getData("jfrogToolConfigId")?.length === 0}
-          tool_prop={
-            model && model.getData("jfrogToolConfigId")
-              ? model.getData("jfrogToolConfigId")
-              : ""
-          }
-        />
-      );
+      case "PORTPERREPO":
+        return (
+          <TextInputBase 
+            dataObject={model}             
+            setDataObject={setModel} 
+            fieldName="port"
+          />
+        );
+      default:
+        return (
+          <JfrogRepoSelectInput
+            fieldName={"repositoryName"}
+            dataObject={model}
+            setDataObject={setModel}
+            options={listOfSteps}
+            disabled={model && model.getData("jfrogToolConfigId")?.length === 0}
+            tool_prop={
+              model && model.getData("jfrogToolConfigId")
+                ? model.getData("jfrogToolConfigId")
+                : ""
+            }
+          />
+        );
     }
   };
 

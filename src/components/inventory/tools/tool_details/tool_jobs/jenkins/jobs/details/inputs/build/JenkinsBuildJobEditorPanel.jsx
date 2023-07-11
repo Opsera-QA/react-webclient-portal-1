@@ -24,12 +24,12 @@ import {
 
 export const getMetadataForJenkinsJobBuildType = (buildType) => {
   switch (buildType) {
-  case "xcode":
-    return jenkinsXcodeBuildJobMetadata;
-  case "msbuild":
-    return jenkinsMSBuildJobMetadata;
-  default:
-    return JenkinsJobsBuildMetadata;
+    case "xcode":
+      return jenkinsXcodeBuildJobMetadata;
+    case "msbuild":
+      return jenkinsMSBuildJobMetadata;
+    default:
+      return JenkinsJobsBuildMetadata;
   }
 };
 
@@ -55,26 +55,26 @@ function JenkinsBuildJobEditorPanel(
 
   const getDynamicBuildTypeFields = () => {
     switch (model?.getData("buildType")) {
-    case "gradle":
-      return (
-        <Col lg={6}>
-          <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"gradleTask"}/>
-        </Col>
-      );
-    case "maven":
-      return (
-        <>
+      case "gradle":
+        return (
           <Col lg={6}>
-            <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"mavenTask"}/>
+            <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"gradleTask"}/>
           </Col>
-          <Col lg={12}>
-            <BooleanToggleInput 
-              dataObject={model}
-              setDataObject={setModel}
-              fieldName={"customMavenSettings"}
-            />
-          </Col>
-          {model?.getData("customMavenSettings") === true && 
+        );
+      case "maven":
+        return (
+          <>
+            <Col lg={6}>
+              <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"mavenTask"}/>
+            </Col>
+            <Col lg={12}>
+              <BooleanToggleInput 
+                dataObject={model}
+                setDataObject={setModel}
+                fieldName={"customMavenSettings"}
+              />
+            </Col>
+            {model?.getData("customMavenSettings") === true && 
               <Col lg={12}>
                 <ScriptLibrarySelectInput
                   fieldName={"scriptId"}
@@ -82,34 +82,34 @@ function JenkinsBuildJobEditorPanel(
                   setModel={setModel}
                 />
               </Col>
-          }            
-        </>          
-      );
-    case "msbuild":
-      return (
-        <Col lg={6}>
-          <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"commandLineArgs"}/>
-        </Col>
-      );
-    case "xcode":
-      return (
-        <>
-          <Col lg={12}>
-            <ScriptLibrarySelectInput
-              fieldName={"scriptId"}
-              model={model}
-              setModel={setModel}
-            />
-          </Col>            
-          <Col lg={12}>
-            <PasswordInput 
-              dataObject={model} 
-              setDataObject={setModel} 
-              fieldName={"developerTeamId"}
-            />
+            }            
+          </>          
+        );
+      case "msbuild":
+        return (
+          <Col lg={6}>
+            <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"commandLineArgs"}/>
           </Col>
-        </>          
-      );        
+        );
+      case "xcode":
+        return (
+          <>
+            <Col lg={12}>
+              <ScriptLibrarySelectInput
+                fieldName={"scriptId"}
+                model={model}
+                setModel={setModel}
+              />
+            </Col>            
+            <Col lg={12}>
+              <PasswordInput 
+                dataObject={model} 
+                setDataObject={setModel} 
+                fieldName={"developerTeamId"}
+              />
+            </Col>
+          </>          
+        );        
     }
   };
 

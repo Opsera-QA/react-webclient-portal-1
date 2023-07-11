@@ -16,51 +16,51 @@ export default function WizardTaskConfigurationRouter({
 }) {
   const getCurrentScreen = () => {
     switch (flow) {
-    case TASK_TYPES.SALESFORCE_QUICK_DEPLOY: //TOOLS REQ - SALESFORCE ACC
-      return (
-        <CreateSalesforceQuickDeployTask
-          flow={flow}
-          setButtonContainer={setButtonContainer}
-          backButtonFunction={backButtonFunction}
-          handleClose={handleClose}
-        />
-      );
-    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE: //TOOLS REQ - SALESFORCE, JENKINS, REGISTERED GIT ACC IN JENKINS
-      return (
-        <CreateBranchingStructureTask
-          flow={flow}
-          setButtonContainer={setButtonContainer}
-          backButtonFunction={backButtonFunction}
-          handleClose={handleClose}
-        />
-      );
-    case TASK_TYPES.SALESFORCE_BULK_MIGRATION: //TOOLS REQ - JENKINS, SALESFORCE ACC, GIT
-      return (
-        <CreateSalesforceBulkMigrationTask
-          flow={flow}
-          setButtonContainer={setButtonContainer}
-          backButtonFunction={backButtonFunction}
-          handleClose={handleClose}
-        />
-      );
-    case TASK_TYPES.SYNC_SALESFORCE_REPO:
-      return (
-        <CreateSalesforceOrganizationSyncTaskWizard
-          flow={flow}
-          setButtonContainer={setButtonContainer}
-          backButtonFunction={backButtonFunction}
-          handleClose={handleClose}
-        />
-      );
-    case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
-      return (
-        <CreateSalesforceOrganizationToGitMergeSyncTaskWizard
-          flow={flow}
-          setButtonContainer={setButtonContainer}
-          backButtonFunction={backButtonFunction}
-          handleClose={handleClose}
-        />
-      );
+      case TASK_TYPES.SALESFORCE_QUICK_DEPLOY: //TOOLS REQ - SALESFORCE ACC
+        return (
+          <CreateSalesforceQuickDeployTask
+            flow={flow}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={backButtonFunction}
+            handleClose={handleClose}
+          />
+        );
+      case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE: //TOOLS REQ - SALESFORCE, JENKINS, REGISTERED GIT ACC IN JENKINS
+        return (
+          <CreateBranchingStructureTask
+            flow={flow}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={backButtonFunction}
+            handleClose={handleClose}
+          />
+        );
+      case TASK_TYPES.SALESFORCE_BULK_MIGRATION: //TOOLS REQ - JENKINS, SALESFORCE ACC, GIT
+        return (
+          <CreateSalesforceBulkMigrationTask
+            flow={flow}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={backButtonFunction}
+            handleClose={handleClose}
+          />
+        );
+      case TASK_TYPES.SYNC_SALESFORCE_REPO:
+        return (
+          <CreateSalesforceOrganizationSyncTaskWizard
+            flow={flow}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={backButtonFunction}
+            handleClose={handleClose}
+          />
+        );
+      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+        return (
+          <CreateSalesforceOrganizationToGitMergeSyncTaskWizard
+            flow={flow}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={backButtonFunction}
+            handleClose={handleClose}
+          />
+        );
       // case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC: //TOOLS REQ - GIT
     }
   };

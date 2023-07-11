@@ -23,50 +23,50 @@ function SfdcJobSummaryCardContainer({ children, isLoading, sfdcStepConfiguratio
     
     switch (sfdcStepConfigurationDto.getData("jobType")) {
 
-    case "SFDC CREATE PACKAGE XML":        
-      sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sfdcCreatePackageXmlJobMetadata.fields))]);
-      return (
-        <SfdcPackageJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
-      );
+      case "SFDC CREATE PACKAGE XML":        
+        sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sfdcCreatePackageXmlJobMetadata.fields))]);
+        return (
+          <SfdcPackageJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
+        );
 
-    case "SFDC PROFILE DEPLOY":
-      sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sfdcProfileMigrationJobMetadata.fields))]);
-      return (
-        <SfdcProfileMigrationJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
-      );
+      case "SFDC PROFILE DEPLOY":
+        sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sfdcProfileMigrationJobMetadata.fields))]);
+        return (
+          <SfdcProfileMigrationJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
+        );
 
-    case "SFDC VALIDATE PACKAGE XML":
-      sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sfdcValidatePackageMetadata.fields))]);
-      return (
-        <SfdcValidatePackageSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
-      );
+      case "SFDC VALIDATE PACKAGE XML":
+        sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sfdcValidatePackageMetadata.fields))]);
+        return (
+          <SfdcValidatePackageSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
+        );
 
-    case "SFDC BACK UP":
-      sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sdfcBackupJobMetadata.fields))]);
-      return (
-        <SfdcBackupJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
-      );
+      case "SFDC BACK UP":
+        sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sdfcBackupJobMetadata.fields))]);
+        return (
+          <SfdcBackupJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
+        );
         
-    case "SFDC DEPLOY":
-      sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sfdcDeployJobMetadata.fields))]);
-      return (
-        <SfdcDeployJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
-      );
+      case "SFDC DEPLOY":
+        sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sfdcDeployJobMetadata.fields))]);
+        return (
+          <SfdcDeployJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
+        );
          
-    case "SFDC UNIT TESTING":
-      sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sdfcUnitTestJobMetadata.fields))]);
-      return (
-        <SfdcUnitTestJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
-      );
+      case "SFDC UNIT TESTING":
+        sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sdfcUnitTestJobMetadata.fields))]);
+        return (
+          <SfdcUnitTestJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
+        );
          
-    case "SFDC PUSH ARTIFACTS":
-      sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sfdcPushArtifactsJobMetadata.fields))]);
-      return (
-        <SfdcPushArtifactsJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
-      );
+      case "SFDC PUSH ARTIFACTS":
+        sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sfdcPushArtifactsJobMetadata.fields))]);
+        return (
+          <SfdcPushArtifactsJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
+        );
 
-    default:
-      return <></>;
+      default:
+        return <></>;
     }
   };
 

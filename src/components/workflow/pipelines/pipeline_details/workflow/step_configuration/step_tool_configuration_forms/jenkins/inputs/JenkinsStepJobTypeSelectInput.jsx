@@ -23,27 +23,27 @@ function JenkinsStepJobTypeSelectInput({ model, setModel }) {
     newDataObject.setData("job_type", selectedOption?.value);
 
     switch (selectedOption.value) {
-    case JENKINS_JOB_TYPES.SALESFORCE_PACKAGE_GENERATION_JOB:
-      newDataObject.setData("buildType", "ant");
-      newDataObject.setData("jobDescription", "PACKAGEXML_CREATION");
-      newDataObject.setData("jobType", "SFDC CREATE PACKAGE XML");
-      newDataObject.setData("isOrgToOrg", false);
-      break;
-    case JENKINS_JOB_TYPES.SALESFORCE_PROFILE_MIGRATION_JOB:
-      newDataObject.setData("buildType", "ant");
-      newDataObject.setData("jobDescription", "Profile-migration");
-      newDataObject.setData("jobType", "SFDC PROFILE DEPLOY");
-      newDataObject.setData("isOrgToOrg", true);
-      break;
-    default:
-      newDataObject.setData("sfdcToolId", "");
-      newDataObject.setData("accountUsername", "");
-      newDataObject.setData("buildType", "gradle");
-      newDataObject.setData("jobDescription", "");
-      newDataObject.setData("jobType", "BUILD");
-      newDataObject.setData("isOrgToOrg", false);
-      newDataObject.setData("buildArgs", {});
-      break;
+      case JENKINS_JOB_TYPES.SALESFORCE_PACKAGE_GENERATION_JOB:
+        newDataObject.setData("buildType", "ant");
+        newDataObject.setData("jobDescription", "PACKAGEXML_CREATION");
+        newDataObject.setData("jobType", "SFDC CREATE PACKAGE XML");
+        newDataObject.setData("isOrgToOrg", false);
+        break;
+      case JENKINS_JOB_TYPES.SALESFORCE_PROFILE_MIGRATION_JOB:
+        newDataObject.setData("buildType", "ant");
+        newDataObject.setData("jobDescription", "Profile-migration");
+        newDataObject.setData("jobType", "SFDC PROFILE DEPLOY");
+        newDataObject.setData("isOrgToOrg", true);
+        break;
+      default:
+        newDataObject.setData("sfdcToolId", "");
+        newDataObject.setData("accountUsername", "");
+        newDataObject.setData("buildType", "gradle");
+        newDataObject.setData("jobDescription", "");
+        newDataObject.setData("jobType", "BUILD");
+        newDataObject.setData("isOrgToOrg", false);
+        newDataObject.setData("buildArgs", {});
+        break;
     }
 
     newDataObject.setData("toolJobId", "");

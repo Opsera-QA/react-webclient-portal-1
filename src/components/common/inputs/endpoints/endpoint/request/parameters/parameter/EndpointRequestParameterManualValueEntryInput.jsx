@@ -56,16 +56,33 @@ export default function EndpointRequestParameterManualValueEntryInput(
 
   const getInput = () => {
     switch (type) {
-    case "string":
-      if (isSensitiveData === true) {
+      case "string":
+        if (isSensitiveData === true) {
+          return (
+            <div className={"mx-3 mt-2"} style={{minHeight: endpointParameterInputHeight}}>
+              <CustomParameterSelectInput
+                model={model}
+                fieldName={"value"}
+                className={"value-parameter"}
+                requireVaultSavedParameters={true}
+                setDataFunction={(fieldName, customParameter) => setDataFunction(fieldName, customParameter?._id)}
+                disabled={disabled}
+              />
+              <div className={"d-flex justify-content-end"}>
+                {getInfoTextField()}
+              </div>
+            </div>
+          );
+        }
+
         return (
           <div className={"mx-3 mt-2"} style={{minHeight: endpointParameterInputHeight}}>
-            <CustomParameterSelectInput
+            <CustomParameterComboBoxInput
               model={model}
               fieldName={"value"}
               className={"value-parameter"}
-              requireVaultSavedParameters={true}
-              setDataFunction={(fieldName, customParameter) => setDataFunction(fieldName, customParameter?._id)}
+              requireInsensitiveParameters={true}
+              setDataFunction={setDataFunction}
               disabled={disabled}
             />
             <div className={"d-flex justify-content-end"}>
@@ -73,73 +90,56 @@ export default function EndpointRequestParameterManualValueEntryInput(
             </div>
           </div>
         );
-      }
-
-      return (
-        <div className={"mx-3 mt-2"} style={{minHeight: endpointParameterInputHeight}}>
-          <CustomParameterComboBoxInput
-            model={model}
-            fieldName={"value"}
-            className={"value-parameter"}
-            requireInsensitiveParameters={true}
-            setDataFunction={setDataFunction}
-            disabled={disabled}
-          />
-          <div className={"d-flex justify-content-end"}>
-            {getInfoTextField()}
+      case "array":
+        return (
+          <div className={"m-3"}>
+            <MultiTextListInputBase
+              model={model}
+              setModel={setModel}
+              fieldName={"value"}
+              setDataFunction={setDataFunction}
+              disabled={disabled}
+              singularTopic={"Value"}
+              pluralTopic={"Values"}
+              allowDuplicates={true}
+              minimumHeight={endpointParameterArrayInputHeight}
+              maximumHeight={endpointParameterArrayInputHeight}
+            />
           </div>
-        </div>
-      );
-    case "array":
-      return (
-        <div className={"m-3"}>
-          <MultiTextListInputBase
-            model={model}
-            setModel={setModel}
-            fieldName={"value"}
-            setDataFunction={setDataFunction}
-            disabled={disabled}
-            singularTopic={"Value"}
-            pluralTopic={"Values"}
-            allowDuplicates={true}
-            minimumHeight={endpointParameterArrayInputHeight}
-            maximumHeight={endpointParameterArrayInputHeight}
-          />
-        </div>
-      );
-    case "date":
-      return (
-        <div className={"mx-3 mt-2"} style={{minHeight: endpointParameterInputHeight}}>
-          <DateTimeInput
-            dataObject={model}
-            setDataObject={setModel}
-            setDataFunction={setDataFunction}
-            fieldName={"value"}
-            defaultToNull={true}
-            disabled={disabled}
-            clearDataFunction={() => setDataFunction("value", undefined)}
-          />
-        </div>
-      );
-    case "boolean":
-      return (
-        <div className={"mx-3 mt-2"} style={{minHeight: endpointParameterInputHeight}}>
-          <BooleanSelectInput
-            model={model}
-            setModel={setModel}
-            fieldName={"value"}
-            setDataFunction={(fieldName, selectedOption) => setDataFunction(fieldName, selectedOption?.value)}
-            disabled={disabled}
-          />
-        </div>
-      );
-    case "object":
-    default:
-      return (
-        <CenteredContentWrapper>
-          <div>{`Entering this parameter type's value is not currently supported.`}</div>
-        </CenteredContentWrapper>
-      );
+        );
+      case "date":
+        return (
+          <div className={"mx-3 mt-2"} style={{minHeight: endpointParameterInputHeight}}>
+            <DateTimeInput
+              dataObject={model}
+              setDataObject={setModel}
+              setDataFunction={setDataFunction}
+              fieldName={"value"}
+              defaultToNull={true}
+              disabled={disabled}
+              clearDataFunction={() => setDataFunction("value", undefined)}
+            />
+          </div>
+        );
+      case "boolean":
+        return (
+          <div className={"mx-3 mt-2"} style={{minHeight: endpointParameterInputHeight}}>
+            <BooleanSelectInput
+              model={model}
+              setModel={setModel}
+              fieldName={"value"}
+              setDataFunction={(fieldName, selectedOption) => setDataFunction(fieldName, selectedOption?.value)}
+              disabled={disabled}
+            />
+          </div>
+        );
+      case "object":
+      default:
+        return (
+          <CenteredContentWrapper>
+            <div>{`Entering this parameter type's value is not currently supported.`}</div>
+          </CenteredContentWrapper>
+        );
     }
   };
 

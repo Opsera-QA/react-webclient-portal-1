@@ -5,22 +5,22 @@ import TerraformCloudOrganizationsPanel from "./tool_jobs/terraform_cloud/organi
 function ToolOrganizationsPanel({ toolData, loadData, isLoading }) {
   const getPanel = (toolIdentifier, loadData) => {
     switch (toolIdentifier) {
-    case "terraform-cloud":
-      return (
-        <TerraformCloudOrganizationsPanel
-          toolActions={toolData?.getData("actions")}
-          isLoading={isLoading}
-          toolId={toolData.id}
-          loadData={loadData}
-          toolData={toolData}
-        />
-      );
-    default:
-      return (
-        <div className="text-center p-5 text-muted mt-5">
+      case "terraform-cloud":
+        return (
+          <TerraformCloudOrganizationsPanel
+            toolActions={toolData?.getData("actions")}
+            isLoading={isLoading}
+            toolId={toolData.id}
+            loadData={loadData}
+            toolData={toolData}
+          />
+        );
+      default:
+        return (
+          <div className="text-center p-5 text-muted mt-5">
             Organizations are not currently available for this tool.
-        </div>
-      );
+          </div>
+        );
     }
   };
 

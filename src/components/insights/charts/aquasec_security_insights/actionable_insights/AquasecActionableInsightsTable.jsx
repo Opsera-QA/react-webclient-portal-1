@@ -29,17 +29,17 @@ function AquasecActionableInsightsTable({ data, isLoading, loadData, filterModel
         let classNm = "dark-gray-text-primary";
         const value = row?.value;
         switch (block) {
-        case "total_issues":
-          classNm = value <= 0 ? 'green' : "danger-red";
-          break;
-        case "quality_issues":
-          classNm = value <= 0 ? 'green' : "danger-red";
-          break;
-        case "security_issues":
-          classNm = value <= 0 ? 'green' : "danger-red";
-          break;
-        default:
-          classNm = "dark-gray-text-primary";
+          case "total_issues":
+            classNm = value <= 0 ? 'green' : "danger-red";
+            break;
+          case "quality_issues":
+            classNm = value <= 0 ? 'green' : "danger-red";
+            break;
+          case "security_issues":
+            classNm = value <= 0 ? 'green' : "danger-red";
+            break;
+          default:
+            classNm = "dark-gray-text-primary";
         }
 
         return (<div className={`${classNm}`}>

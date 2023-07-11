@@ -30,24 +30,24 @@ function Ec2ClusterCreationTaskConfigurationPanel({ gitTasksDataDto, gitTasksCon
 
   const getDynamicFields = () => {
     switch (gitTasksConfigurationData?.getData("clusterTemplate")) {
-    case "fargate":
-      return (
-        <Col lg={12}>
-          <NetworkingOnlySubForm
-            dataObject={gitTasksConfigurationData}
-            setDataObject={setGitTasksConfigurationData}
-          />
-        </Col>
-      );
-    case "ec2":
-      return (
-        <Col lg={12}>
-          <EcsClusterCreationTaskConfigurationEc2EditorPanel
-            dataObject={gitTasksConfigurationData}
-            setDataObject={setGitTasksConfigurationData}
-          />
-        </Col>
-      );
+      case "fargate":
+        return (
+          <Col lg={12}>
+            <NetworkingOnlySubForm
+              dataObject={gitTasksConfigurationData}
+              setDataObject={setGitTasksConfigurationData}
+            />
+          </Col>
+        );
+      case "ec2":
+        return (
+          <Col lg={12}>
+            <EcsClusterCreationTaskConfigurationEc2EditorPanel
+              dataObject={gitTasksConfigurationData}
+              setDataObject={setGitTasksConfigurationData}
+            />
+          </Col>
+        );
     }
   };
 

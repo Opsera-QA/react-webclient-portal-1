@@ -21,12 +21,12 @@ function ToolCategoryDetailPanel({ toolCategoryData, setToolCategoryData }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return <ToolCategorySummaryPanel toolCategoryData={toolCategoryData} setToolTypeData={setToolCategoryData} setActiveTab={setActiveTab}/>;
-    case "settings":
-      return <ToolCategoryEditorPanel setToolCategoryData={setToolCategoryData} toolCategoryData={toolCategoryData} handleClose={toggleSummaryPanel} />;
-    default:
-      return null;
+      case "summary":
+        return <ToolCategorySummaryPanel toolCategoryData={toolCategoryData} setToolTypeData={setToolCategoryData} setActiveTab={setActiveTab}/>;
+      case "settings":
+        return <ToolCategoryEditorPanel setToolCategoryData={setToolCategoryData} toolCategoryData={toolCategoryData} handleClose={toggleSummaryPanel} />;
+      default:
+        return null;
     }
   };
 

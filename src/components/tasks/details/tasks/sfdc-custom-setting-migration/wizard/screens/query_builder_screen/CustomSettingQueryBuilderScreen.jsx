@@ -151,35 +151,35 @@ const CustomSettingQueryBuilderScreen = ({
     const whereClause = queryFilters
       .map((filter) => {
         switch (filter.operator) {
-        case "=":
-        case "!=":
-        case ">":
-        case ">=":
-        case "<":
-        case "<=":
-          if (
-            filter?.type === "number" ||
+          case "=":
+          case "!=":
+          case ">":
+          case ">=":
+          case "<":
+          case "<=":
+            if (
+              filter?.type === "number" ||
               filter?.type === "double" ||
               filter?.type === "boolean"
-          )
-            return `${filter.field} ${filter.operator} ${filter.value}`;
-          return `${filter.field} ${filter.operator} '${filter.value}'`;
-        case "STARTS WITH":
-          return `${filter.field} LIKE '${filter.value}%'`;
-        case "ENDS WITH":
-          return `${filter.field} LIKE '%${filter.value}'`;
-        case "CONTAINS":
-          return `${filter.field} LIKE '%${filter.value}%'`;
-        case "IN":
-          return `${filter.field} IN (${filter.value})`;
-        case "NOT IN":
-          return `${filter.field} NOT IN (${filter.value})`;
-        case "INCLUDES":
-          return `${filter.value} IN ${filter.field}`;
-        case "EXCLUDES":
-          return `${filter.value} NOT IN ${filter.field}`;
-        default:
-          return `${filter.field} ${filter.operator} '${filter.value}'`;
+            )
+              return `${filter.field} ${filter.operator} ${filter.value}`;
+            return `${filter.field} ${filter.operator} '${filter.value}'`;
+          case "STARTS WITH":
+            return `${filter.field} LIKE '${filter.value}%'`;
+          case "ENDS WITH":
+            return `${filter.field} LIKE '%${filter.value}'`;
+          case "CONTAINS":
+            return `${filter.field} LIKE '%${filter.value}%'`;
+          case "IN":
+            return `${filter.field} IN (${filter.value})`;
+          case "NOT IN":
+            return `${filter.field} NOT IN (${filter.value})`;
+          case "INCLUDES":
+            return `${filter.value} IN ${filter.field}`;
+          case "EXCLUDES":
+            return `${filter.value} NOT IN ${filter.field}`;
+          default:
+            return `${filter.field} ${filter.operator} '${filter.value}'`;
         }
       })
       .join(" AND ");
@@ -330,103 +330,103 @@ const CustomSettingQueryBuilderScreen = ({
 
   const getQueryBuilderView = () => {
     switch (currentView) {
-    case QUERY_BUILDER_VIEWS.MANUAL_QUERY_BUILDER:
-      return (
-        <div className={"mt-5 mb-5"}>
-          <textarea
-            value={manualQueryString}
-            onChange={(event) => setManualQueryString(event.target.value)}
-            className={`form-control container-border`}
-            rows={10}
-          />
-          <div className="d-flex justify-content-between mt-2">
-            <InlineWarning
-              warningMessage={
-                "Switching back to filter based Query builder will reset out your manual changes."
-              }
+      case QUERY_BUILDER_VIEWS.MANUAL_QUERY_BUILDER:
+        return (
+          <div className={"mt-5 mb-5"}>
+            <textarea
+              value={manualQueryString}
+              onChange={(event) => setManualQueryString(event.target.value)}
+              className={`form-control container-border`}
+              rows={10}
             />
-            <Button
-              variant="primary"
-              size="sm"
-              className="mr-2 mt-2"
-              onClick={validateQuery}
-              disabled={isValidating}
-            >
-              <IconBase
-                icon={faPlug}
-                fixedWidth
-                className="mr-2"
-                isLoading={isValidating}
+            <div className="d-flex justify-content-between mt-2">
+              <InlineWarning
+                warningMessage={
+                  "Switching back to filter based Query builder will reset out your manual changes."
+                }
               />
-              {isValidating ? "Validating" : "Validate Query"}
-            </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                className="mr-2 mt-2"
+                onClick={validateQuery}
+                disabled={isValidating}
+              >
+                <IconBase
+                  icon={faPlug}
+                  fixedWidth
+                  className="mr-2"
+                  isLoading={isValidating}
+                />
+                {isValidating ? "Validating" : "Validate Query"}
+              </Button>
+            </div>
           </div>
-        </div>
-      );
-    case QUERY_BUILDER_VIEWS.FILTER_SELECTION_QUERY_BUILDER:
-      return (
-        <div className={"mt-3 mb-5"}>
-          {getAddRuleButton()}
-          <div className={"m-3"}>
-            {fieldsList &&
+        );
+      case QUERY_BUILDER_VIEWS.FILTER_SELECTION_QUERY_BUILDER:
+        return (
+          <div className={"mt-3 mb-5"}>
+            {getAddRuleButton()}
+            <div className={"m-3"}>
+              {fieldsList &&
               fieldsList.length > 0 &&
               queryFilters &&
               queryFilters.length > 0 ? (
-                <div>
-                  {queryFilters.map((filter, index) => (
-                    <FieldQueryComponent
-                      key={index}
-                      index={index}
-                      fields={fieldsList}
-                      operators={operators}
-                      filter={filter}
-                      onFieldChange={handleFieldChange}
-                      onOperatorChange={handleOperatorChange}
-                      onValueChange={handleValueChange}
-                      onRemove={handleRemoveFilter}
-                      onAdd={handleAddFilter}
-                      isRemovable={queryFilters.length > 1}
-                    />
-                  ))}
+                  <div>
+                    {queryFilters.map((filter, index) => (
+                      <FieldQueryComponent
+                        key={index}
+                        index={index}
+                        fields={fieldsList}
+                        operators={operators}
+                        filter={filter}
+                        onFieldChange={handleFieldChange}
+                        onOperatorChange={handleOperatorChange}
+                        onValueChange={handleValueChange}
+                        onRemove={handleRemoveFilter}
+                        onAdd={handleAddFilter}
+                        isRemovable={queryFilters.length > 1}
+                      />
+                    ))}
+                  </div>
+                ) : null}
+              <div>
+                <textarea
+                  value={query}
+                  disabled={true}
+                  className={`form-control container-border`}
+                  rows={10}
+                />
+                <div className="d-flex justify-content-between mt-2">
+                  {`SOQL query generated based of filter selection made above.`}
                 </div>
-              ) : null}
-            <div>
-              <textarea
-                value={query}
-                disabled={true}
-                className={`form-control container-border`}
-                rows={10}
-              />
-              <div className="d-flex justify-content-between mt-2">
-                {`SOQL query generated based of filter selection made above.`}
+                {/*<Row>*/}
+                {/*  <Col sm={3} className={"custom-select-input my-2"}>*/}
+                {/*    <InputLabel*/}
+                {/*      model={wizardModel}*/}
+                {/*      field={wizardModel?.getFieldById("limit")}*/}
+                {/*      showLabel={true}*/}
+                {/*      className={"mt-1 mr-2"}*/}
+                {/*      disabled={isLoading}*/}
+                {/*      isLoading={isLoading}*/}
+                {/*    />*/}
+                {/*    <StandaloneSelectInput*/}
+                {/*      fieldName={"limit"}*/}
+                {/*      dataObject={wizardModel}*/}
+                {/*      setDataObject={setWizardModel}*/}
+                {/*      value={limit}*/}
+                {/*      setDataFunction={(selectedOption)=> { console.log(selectedOption); setLimit(selectedOption);}}*/}
+                {/*      selectOptions={limits}*/}
+                {/*      dropUp={true}*/}
+                {/*    />*/}
+                {/*  </Col>*/}
+                {/*</Row>*/}
               </div>
-              {/*<Row>*/}
-              {/*  <Col sm={3} className={"custom-select-input my-2"}>*/}
-              {/*    <InputLabel*/}
-              {/*      model={wizardModel}*/}
-              {/*      field={wizardModel?.getFieldById("limit")}*/}
-              {/*      showLabel={true}*/}
-              {/*      className={"mt-1 mr-2"}*/}
-              {/*      disabled={isLoading}*/}
-              {/*      isLoading={isLoading}*/}
-              {/*    />*/}
-              {/*    <StandaloneSelectInput*/}
-              {/*      fieldName={"limit"}*/}
-              {/*      dataObject={wizardModel}*/}
-              {/*      setDataObject={setWizardModel}*/}
-              {/*      value={limit}*/}
-              {/*      setDataFunction={(selectedOption)=> { console.log(selectedOption); setLimit(selectedOption);}}*/}
-              {/*      selectOptions={limits}*/}
-              {/*      dropUp={true}*/}
-              {/*    />*/}
-              {/*  </Col>*/}
-              {/*</Row>*/}
             </div>
           </div>
-        </div>
-      );
-    default:
-      return null;
+        );
+      default:
+        return null;
     }
   };
 

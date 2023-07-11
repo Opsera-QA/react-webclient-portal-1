@@ -44,57 +44,57 @@ function LdapOrganizationAccountDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return <LdapOrganizationAccountSummaryPanel ldapOrganizationAccountData={ldapOrganizationAccountData} setActiveTab={setActiveTab}/>;
-    case "users":
-      return (
-        <LdapOrganizationAccountUsersPanel
-          loadData={loadData}
-          ldapOrganizationAccountData={ldapOrganizationAccountData}
-        />
-      );
-    case "groups":
-      return (
-        <LdapOrganizationAccountGroupsPanel
-          ldapOrganizationAccountData={ldapOrganizationAccountData}
-          currentUser={currentUser}
-          organizationDomain={organizationDomain}
-        />
-      );
-    case "site-roles":
-      return (
-        <LdapOrganizationAccountSiteRolesPanel
-          ldapOrganizationAccountData={ldapOrganizationAccountData}
-          organizationDomain={organizationDomain}
-        />
-      );
-    case "idpAccounts":
-      return(
-        <LdapOrganizationAccountIdpPanel
-          ldapOrganizationAccountData={ldapOrganizationAccountData}
-          loadData={loadData}
-          isMounted={isMounted}
-          currentUser={currentUser}
-        />
-      );
-    case "departments":
-      return (
-        <LdapOrganizationAccountDepartmentsPanel
-          ldapOrganizationAccountData={ldapOrganizationAccountData}
-          organizationDomain={organizationDomain}
-        />
-      );
-    case "settings":
-      return (
-        <LdapOrganizationAccountEditorPanel
-          ldapOrganizationAccountData={ldapOrganizationAccountData}
-          setLdapOrganizationAccountData={setLdapOrganizationAccountData}
-          loadData={loadData}
-          handleClose={toggleSummaryPanel}
-        />
-      );
-    default:
-      return null;
+      case "summary":
+        return <LdapOrganizationAccountSummaryPanel ldapOrganizationAccountData={ldapOrganizationAccountData} setActiveTab={setActiveTab}/>;
+      case "users":
+        return (
+          <LdapOrganizationAccountUsersPanel
+            loadData={loadData}
+            ldapOrganizationAccountData={ldapOrganizationAccountData}
+          />
+        );
+      case "groups":
+        return (
+          <LdapOrganizationAccountGroupsPanel
+            ldapOrganizationAccountData={ldapOrganizationAccountData}
+            currentUser={currentUser}
+            organizationDomain={organizationDomain}
+          />
+        );
+      case "site-roles":
+        return (
+          <LdapOrganizationAccountSiteRolesPanel
+            ldapOrganizationAccountData={ldapOrganizationAccountData}
+            organizationDomain={organizationDomain}
+          />
+        );
+      case "idpAccounts":
+        return(
+          <LdapOrganizationAccountIdpPanel
+            ldapOrganizationAccountData={ldapOrganizationAccountData}
+            loadData={loadData}
+            isMounted={isMounted}
+            currentUser={currentUser}
+          />
+        );
+      case "departments":
+        return (
+          <LdapOrganizationAccountDepartmentsPanel
+            ldapOrganizationAccountData={ldapOrganizationAccountData}
+            organizationDomain={organizationDomain}
+          />
+        );
+      case "settings":
+        return (
+          <LdapOrganizationAccountEditorPanel
+            ldapOrganizationAccountData={ldapOrganizationAccountData}
+            setLdapOrganizationAccountData={setLdapOrganizationAccountData}
+            loadData={loadData}
+            handleClose={toggleSummaryPanel}
+          />
+        );
+      default:
+        return null;
     }
   };
 

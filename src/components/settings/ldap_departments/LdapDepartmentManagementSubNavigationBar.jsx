@@ -17,26 +17,26 @@ function LdapDepartmentManagementSubNavigationBar({activeTab}) {
     }
 
     switch (tabSelection) {
-    case "departments":
-      history.push(`/settings/departments`);
-      return;
+      case "departments":
+        history.push(`/settings/departments`);
+        return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-    case "departmentViewer":
-      return (
-        <NavigationTab
-          icon={faBuilding}
-          tabName={"departmentViewer"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          tabText={"Department Viewer"}
-        />
-      );
-    default:
-      return null;
+      case "departmentViewer":
+        return (
+          <NavigationTab
+            icon={faBuilding}
+            tabName={"departmentViewer"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+            tabText={"Department Viewer"}
+          />
+        );
+      default:
+        return null;
     }
   };
 

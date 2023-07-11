@@ -101,10 +101,10 @@ function JenkinsStatusByJobNameBarChar({ persona, date }) {
               layout="horizontal"
               colors={(bar) => {
                 switch (bar.id) {
-                case "Successful": return colorPalette1;
-                case "Failed": return failColor;
-                case "Aborted": return mainPurple;
-                default: return warningColor;
+                  case "Successful": return colorPalette1;
+                  case "Failed": return failColor;
+                  case "Aborted": return mainPurple;
+                  default: return warningColor;
                 }
               }}
               onClick={() => setShowModal(true)}

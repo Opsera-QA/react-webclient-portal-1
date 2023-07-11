@@ -23,12 +23,12 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 
 const getZoomClass = (val) => {
   switch (val) {
-  case 1:
-    return "scale-80"; // .8x zoom
-  case 2:
-    return "scale-100"; //standard 100% zoom
-  case 3:
-    return "scale-120"; // 1.2x zoom
+    case 1:
+      return "scale-80"; // .8x zoom
+    case 2:
+      return "scale-100"; //standard 100% zoom
+    case 3:
+      return "scale-120"; // 1.2x zoom
   }
 };
 

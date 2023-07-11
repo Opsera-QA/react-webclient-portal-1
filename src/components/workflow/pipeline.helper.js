@@ -232,13 +232,13 @@ pipelineHelper.getPipelineColor = (pipelineModel, themeConstants) => {
   const orchestrationState = state === "paused" || state === "running" || lastRunState == null ? state : lastRunState;
 
   switch (orchestrationState) {
-  case "paused":
-    return themeConstants.COLOR_PALETTE.WARNING;
-  case "running":
-    return themeConstants.COLOR_PALETTE.GREEN;
+    case "paused":
+      return themeConstants.COLOR_PALETTE.WARNING;
+    case "running":
+      return themeConstants.COLOR_PALETTE.GREEN;
     // case "failed":
     //   return themeConstants.COLOR_PALETTE.DANGER_RED;
-  default:
-    return themeConstants.RESOURCE_COLORS.PIPELINES;
+    default:
+      return themeConstants.RESOURCE_COLORS.PIPELINES;
   }
 };

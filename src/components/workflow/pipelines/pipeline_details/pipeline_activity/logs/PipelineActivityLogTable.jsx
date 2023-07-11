@@ -71,23 +71,23 @@ function PipelineActivityLogTable(
         || PipelineRoleHelper.canAuthorizeApprovalGate(userData, pipeline) === true
       ) {
         switch (parsedPipelineStepToolIdentifier) {
-        case toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL:
-          toastContext.showOverlayPanel(
-            <StepApprovalOverlay
-              pipelineId={pipeline?._id}
-              setPipelineStarting={loadPipelineFunction}
-            />,
-          );
-          return;
-        case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
-          toastContext.showOverlayPanel(
-            <PipelineInstructionsAcknowledgementOverlay
-              pipelineId={pipeline?._id}
-              setPipelineStarting={loadPipelineFunction}
-              pipelineActivityLogId={row._id}
-            />,
-          );
-          return;
+          case toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL:
+            toastContext.showOverlayPanel(
+              <StepApprovalOverlay
+                pipelineId={pipeline?._id}
+                setPipelineStarting={loadPipelineFunction}
+              />,
+            );
+            return;
+          case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
+            toastContext.showOverlayPanel(
+              <PipelineInstructionsAcknowledgementOverlay
+                pipelineId={pipeline?._id}
+                setPipelineStarting={loadPipelineFunction}
+                pipelineActivityLogId={row._id}
+              />,
+            );
+            return;
         }
       }
     }
@@ -107,14 +107,14 @@ function PipelineActivityLogTable(
       const status = row?.status;
 
       switch (status) {
-      case "failed":
-      case "stopped":
-      case "halted":
-        return "failed-activity-row";
-      case "success":
-        return "success-activity-row";
-      case "pending":
-        return "pending-activity-row";
+        case "failed":
+        case "stopped":
+        case "halted":
+          return "failed-activity-row";
+        case "success":
+          return "success-activity-row";
+        case "pending":
+          return "pending-activity-row";
       }
     }
   };

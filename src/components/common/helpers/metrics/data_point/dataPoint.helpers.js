@@ -106,12 +106,12 @@ dataPointHelpers.getStrategicCriteriaDataPointEvaluationRule = (dataPointRuleTyp
   const dataPointEvaluationRules = dataPoint?.strategic_criteria?.data_point_evaluation_rules;
 
   switch (dataPointRuleType) {
-  case DATA_POINT_EVALUATION_RULE_TYPES.SUCCESS:
-    return dataPointEvaluationRules?.success_rule;
-  case DATA_POINT_EVALUATION_RULE_TYPES.WARNING:
-    return dataPointEvaluationRules?.warning_rule;
-  case DATA_POINT_EVALUATION_RULE_TYPES.FAILURE:
-    return dataPointEvaluationRules?.failure_rule;
+    case DATA_POINT_EVALUATION_RULE_TYPES.SUCCESS:
+      return dataPointEvaluationRules?.success_rule;
+    case DATA_POINT_EVALUATION_RULE_TYPES.WARNING:
+      return dataPointEvaluationRules?.warning_rule;
+    case DATA_POINT_EVALUATION_RULE_TYPES.FAILURE:
+      return dataPointEvaluationRules?.failure_rule;
   }
 
   return null;

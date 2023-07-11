@@ -31,17 +31,17 @@ export default function BulkMigrationActionableInsightOverlay(
 
   const getBody = () => {
     switch (currentScreen) {
-    case BULK_MIGRATION_ACTIONABLE_INSIGHT_SCREENS.BULK_MIGRATION_RUN_SUMMARY:
-      return (
-        <BulkMigrationDetailedRunSummaryOverlay
-          dashboardData={dashboardData}
-          kpiConfiguration={kpiConfiguration}
-          dashboardFilters={dashboardFilters}
-          taskId={taskId}
-          taskName={taskName}
-          breadcrumbBar={getBreadcrumbBar()}
-        />
-      );
+      case BULK_MIGRATION_ACTIONABLE_INSIGHT_SCREENS.BULK_MIGRATION_RUN_SUMMARY:
+        return (
+          <BulkMigrationDetailedRunSummaryOverlay
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            dashboardFilters={dashboardFilters}
+            taskId={taskId}
+            taskName={taskName}
+            breadcrumbBar={getBreadcrumbBar()}
+          />
+        );
     }
   };
 

@@ -42,18 +42,18 @@ function OctopusApplicationWrapper(
 
   const getMetadata = (type) => {
     switch (type) {
-    case "environment":
-      return OctopusEnvironmentMetadata;
-    case "account":
-      return OctopusAccountMetadata;
-    case "target":
-      return OctopusTargetMetadata;
-    case "feed":
-      return OctopusFeedMetadata;
-    case "tomcat":
-      return OctopusTomcatMetadata;
-    default:
-      return null;
+      case "environment":
+        return OctopusEnvironmentMetadata;
+      case "account":
+        return OctopusAccountMetadata;
+      case "target":
+        return OctopusTargetMetadata;
+      case "feed":
+        return OctopusFeedMetadata;
+      case "tomcat":
+        return OctopusTomcatMetadata;
+      default:
+        return null;
     }
   };
 

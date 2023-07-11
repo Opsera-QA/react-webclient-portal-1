@@ -146,27 +146,27 @@ const MergeSyncTaskWizardFileSelector = ({
 
   const getCommitListTable = () => {
     switch (wizardModel?.getData("taskType")) {
-    case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
-      return (
-        <SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable
-          filePullCompleted={filePullCompleted}
-          sourceCommitList={sourceCommitList}
-          isLoading={isLoading}
-          loadData={loadData}
-          ruleCount={wizardModel?.getArrayData("fileSelectionRules")?.length}
-        />
-      );
-    case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
-      return (
-        <GitToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable
-          filePullCompleted={filePullCompleted}
-          sourceCommitList={sourceCommitList}
-          isLoading={isLoading}
-          loadData={loadData}
-          wizardModel={wizardModel}
-          ruleCount={wizardModel?.getArrayData("fileSelectionRules")?.length}
-        />
-      );
+      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+        return (
+          <SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable
+            filePullCompleted={filePullCompleted}
+            sourceCommitList={sourceCommitList}
+            isLoading={isLoading}
+            loadData={loadData}
+            ruleCount={wizardModel?.getArrayData("fileSelectionRules")?.length}
+          />
+        );
+      case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
+        return (
+          <GitToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable
+            filePullCompleted={filePullCompleted}
+            sourceCommitList={sourceCommitList}
+            isLoading={isLoading}
+            loadData={loadData}
+            wizardModel={wizardModel}
+            ruleCount={wizardModel?.getArrayData("fileSelectionRules")?.length}
+          />
+        );
     }
   };
 

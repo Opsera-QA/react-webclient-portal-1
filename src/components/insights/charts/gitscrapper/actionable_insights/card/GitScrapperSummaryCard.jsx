@@ -25,14 +25,14 @@ function GitScrapperSummaryCard({ gitScrapperData, type, kpiConfiguration, dashb
 
   const initializeDto = async () => {    
     switch (type) {
-    case "totalNumberofIssues":         
-      setGitScrapperMetricScorecardDto(new Model({...gitScrapperData}, GitScrapperMetricIssuesScorecardMetaData, false));
-      return;
-    case "totalCleanRepositories":
-      setGitScrapperMetricScorecardDto(new Model({...gitScrapperData}, GitScrapperMetricCleanRepoScorecardMetaData, false));            
-      return;
-    default:
-      return;
+      case "totalNumberofIssues":         
+        setGitScrapperMetricScorecardDto(new Model({...gitScrapperData}, GitScrapperMetricIssuesScorecardMetaData, false));
+        return;
+      case "totalCleanRepositories":
+        setGitScrapperMetricScorecardDto(new Model({...gitScrapperData}, GitScrapperMetricCleanRepoScorecardMetaData, false));            
+        return;
+      default:
+        return;
     }    
   };
 

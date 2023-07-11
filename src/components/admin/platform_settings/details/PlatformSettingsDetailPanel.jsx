@@ -47,29 +47,29 @@ export default function PlatformSettingsDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <PlatformSettingsSummaryPanel
-          platformSettingsModel={platformSettingsModel}
-          setActiveTab={setActiveTab}
-        />
-      );
-    case "features":
-      return (
-        <PlatformSettingFeaturesPanel
-          platformSettingsId={platformSettingsModel?.getMongoDbId()}
-        />
-      );
-    case "settings":
-      return (
-        <PlatformSettingsEditorPanel
-          platformSettingsModel={platformSettingsModel}
-          setPlatformSettingsModel={setPlatformSettingsModel}
-          handleClose={toggleSummaryPanel}
-        />
-      );
-    default:
-      return null;
+      case "summary":
+        return (
+          <PlatformSettingsSummaryPanel
+            platformSettingsModel={platformSettingsModel}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case "features":
+        return (
+          <PlatformSettingFeaturesPanel
+            platformSettingsId={platformSettingsModel?.getMongoDbId()}
+          />
+        );
+      case "settings":
+        return (
+          <PlatformSettingsEditorPanel
+            platformSettingsModel={platformSettingsModel}
+            setPlatformSettingsModel={setPlatformSettingsModel}
+            handleClose={toggleSummaryPanel}
+          />
+        );
+      default:
+        return null;
     }
   };
 

@@ -15,12 +15,12 @@ function MetricTextBase(
   }) {
   const getQualityBasedClassName = () => {
     switch (qualityLevel) {
-    case METRIC_QUALITY_LEVELS.SUCCESS:
-      return "green";
-    case METRIC_QUALITY_LEVELS.WARNING:
-      return "yellow";
-    case METRIC_QUALITY_LEVELS.DANGER:
-      return "danger-red";
+      case METRIC_QUALITY_LEVELS.SUCCESS:
+        return "green";
+      case METRIC_QUALITY_LEVELS.WARNING:
+        return "yellow";
+      case METRIC_QUALITY_LEVELS.DANGER:
+        return "danger-red";
     }
   };
 

@@ -47,16 +47,16 @@ function DashboardMetricCustomFieldsMappingForm(
     }
     const identifier = dataPoint?.identifier;
     switch (identifier) {
-    case "average-mttr-data-block-data-point":
-      return (
-        <AverageMttrCustomFieldsMappingInput
-          fieldName={"mappedFields"}
-          model={customFieldsMappingModel}
-          setModel={setDataFunction}
-        />
-      );
-    default:
-      return null;
+      case "average-mttr-data-block-data-point":
+        return (
+          <AverageMttrCustomFieldsMappingInput
+            fieldName={"mappedFields"}
+            model={customFieldsMappingModel}
+            setModel={setDataFunction}
+          />
+        );
+      default:
+        return null;
     }
   };
 

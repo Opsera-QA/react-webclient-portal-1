@@ -7,17 +7,17 @@ import OperationsView_Executive from "../../analytics/views/operations/operation
 function OperationsDashboard( { persona, index } ) {
   
   switch (persona) {
-  case "developer":
-    return <OperationsView_Developer persona={persona} index={index}/>;
+    case "developer":
+      return <OperationsView_Developer persona={persona} index={index}/>;
 
-  case "manager":
-    return <OperationsView_Manager persona={persona} index={index}/>;
+    case "manager":
+      return <OperationsView_Manager persona={persona} index={index}/>;
 
-  case "executive":
-    return <OperationsView_Executive persona={persona} index={index}/>;
+    case "executive":
+      return <OperationsView_Executive persona={persona} index={index}/>;
 
-  default:
-    return <OperationsView_Developer persona={persona} index={index}/>;
+    default:
+      return <OperationsView_Developer persona={persona} index={index}/>;
   }  
 }
 

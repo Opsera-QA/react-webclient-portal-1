@@ -27,39 +27,39 @@ export default function NotificationConfigurationPanel(
 
   const getConfigurationPanel = () => {
     switch (notificationModel?.getData("type")) {
-    case NOTIFICATION_TYPES.AUDIT_LOG:
-      return (
-        <AuditLogNotificationConfigurationPanel
-          notificationModel={notificationModel}
-          setNotificationModel={setNotificationModel}
-          notificationConfigurationModel={notificationConfigurationModel}
-          setNotificationConfigurationModel={updateModelFunction}
-        />
-      );
-    case NOTIFICATION_TYPES.METRIC:
-      return (
-        <MetricNotificationConfigurationPanel
-          notificationModel={notificationModel}
-          setNotificationModel={setNotificationModel}
-          notificationConfigurationModel={notificationConfigurationModel}
-          setNotificationConfigurationModel={updateModelFunction}
-        />
-      );
-    case NOTIFICATION_TYPES.PIPELINE:
-      return (
-        <PipelineNotificationEditorPanel
-          notificationModel={notificationModel}
-          setNotificationModel={setNotificationModel}
-          notificationConfigurationModel={notificationConfigurationModel}
-          setNotificationConfigurationModel={updateModelFunction}
-        />
-      );
-    default:
-      return (
-        <div className="text-center text-muted p-5">
+      case NOTIFICATION_TYPES.AUDIT_LOG:
+        return (
+          <AuditLogNotificationConfigurationPanel
+            notificationModel={notificationModel}
+            setNotificationModel={setNotificationModel}
+            notificationConfigurationModel={notificationConfigurationModel}
+            setNotificationConfigurationModel={updateModelFunction}
+          />
+        );
+      case NOTIFICATION_TYPES.METRIC:
+        return (
+          <MetricNotificationConfigurationPanel
+            notificationModel={notificationModel}
+            setNotificationModel={setNotificationModel}
+            notificationConfigurationModel={notificationConfigurationModel}
+            setNotificationConfigurationModel={updateModelFunction}
+          />
+        );
+      case NOTIFICATION_TYPES.PIPELINE:
+        return (
+          <PipelineNotificationEditorPanel
+            notificationModel={notificationModel}
+            setNotificationModel={setNotificationModel}
+            notificationConfigurationModel={notificationConfigurationModel}
+            setNotificationConfigurationModel={updateModelFunction}
+          />
+        );
+      default:
+        return (
+          <div className="text-center text-muted p-5">
             You must select a notification type before configuring notification type details.
-        </div>
-      );
+          </div>
+        );
     }
   };
 

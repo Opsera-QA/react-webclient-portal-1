@@ -41,49 +41,49 @@ function TaskNotificationTabView(
 
   const getViewForTab = () => {
     switch (activeTab) {
-    case "email":
-      return (
-        <EmailNotificationEditorPanel
-          emailNotificationModel={emailNotificationModel}
-          setEmailNotificationModel={setEmailNotificationModel}
-        />
-      );
-    case "jira":
-      return (
-        <JiraNotificationEditorPanel
-          jiraNotificationModel={jiraNotificationModel}
-          setJiraNotificationModel={setJiraNotificationModel}
-          isApprovalStep={false}
-        />
-      );
-    case "slack":
-      return (
-        <SlackNotificationEditorPanel
-          slackNotificationModel={slackNotificationModel}
-          setSlackNotificationModel={setSlackNotificationModel}
-        />
-      );
-    case "service-now":
-      return (
-        <ServiceNowNotificationEditorPanel
-          serviceNowNotificationModel={serviceNowNotificationModel}
-          setServiceNowNotificationModel={setServiceNowNotificationModel}
-        />
-      );
-    case "teams":
-      return (
-        <MicrosoftTeamsNotificationEditorPanel
-          teamsNotificationModel={teamsNotificationModel}
-          setTeamsNotificationModel={setTeamsNotificationModel}
-        />
-      );
-    case "gchat":
-      return (
-        <GChatNotificationEditorPanel
-          gChatNotificationModel={gChatNotificationModel}
-          setGChatNotificationModel={setGChatNotificationModel}
-        />
-      );
+      case "email":
+        return (
+          <EmailNotificationEditorPanel
+            emailNotificationModel={emailNotificationModel}
+            setEmailNotificationModel={setEmailNotificationModel}
+          />
+        );
+      case "jira":
+        return (
+          <JiraNotificationEditorPanel
+            jiraNotificationModel={jiraNotificationModel}
+            setJiraNotificationModel={setJiraNotificationModel}
+            isApprovalStep={false}
+          />
+        );
+      case "slack":
+        return (
+          <SlackNotificationEditorPanel
+            slackNotificationModel={slackNotificationModel}
+            setSlackNotificationModel={setSlackNotificationModel}
+          />
+        );
+      case "service-now":
+        return (
+          <ServiceNowNotificationEditorPanel
+            serviceNowNotificationModel={serviceNowNotificationModel}
+            setServiceNowNotificationModel={setServiceNowNotificationModel}
+          />
+        );
+      case "teams":
+        return (
+          <MicrosoftTeamsNotificationEditorPanel
+            teamsNotificationModel={teamsNotificationModel}
+            setTeamsNotificationModel={setTeamsNotificationModel}
+          />
+        );
+      case "gchat":
+        return (
+          <GChatNotificationEditorPanel
+            gChatNotificationModel={gChatNotificationModel}
+            setGChatNotificationModel={setGChatNotificationModel}
+          />
+        );
     }
   };
 

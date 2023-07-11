@@ -12,9 +12,9 @@ function AIToolsSubNavigationBar({activeTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-    case "aiTools":
-      history.push(`/ai`);
-      return;
+      case "aiTools":
+        history.push(`/ai`);
+        return;
     }
   };
 

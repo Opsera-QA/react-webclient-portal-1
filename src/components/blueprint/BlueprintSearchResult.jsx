@@ -62,12 +62,12 @@ function BlueprintSearchResult({ logData, closeModal }) {
   // TODO: Make component?
   const getStatusIcon = (item) => {
     switch (item?.current?.status) {
-    case "pending":
-      return <IconBase className={"float-right mr-2 mt-1 yellow"} icon={faExclamationCircle} />;
-    case "success":
-      return <IconBase className={"float-right mr-2 mt-1 green"} icon={faCheckCircle} />;
-    default:
-      return <IconBase className={"float-right mr-2 mt-1 cell-icon red"} icon={faTimesCircle} />;
+      case "pending":
+        return <IconBase className={"float-right mr-2 mt-1 yellow"} icon={faExclamationCircle} />;
+      case "success":
+        return <IconBase className={"float-right mr-2 mt-1 green"} icon={faCheckCircle} />;
+      default:
+        return <IconBase className={"float-right mr-2 mt-1 cell-icon red"} icon={faTimesCircle} />;
     }
   };
 

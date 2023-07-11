@@ -174,26 +174,26 @@ function GitCustodianVulnerableCommitsTable({
     //     "Resolved"
     //     "Open"
     switch (activeTab) {
-    case "open":
-      newFilterModel.setData("status", ["Open"]);
-      setTableFilterModel({ ...newFilterModel });
-      break;
-    case "falsePositives":
-      newFilterModel.setData("status", ["False Positive"]);
-      setTableFilterModel({ ...newFilterModel });
-      break;
-    case "resolved":
-      newFilterModel.setData("status", ["Resolved"]);
-      setTableFilterModel({ ...newFilterModel });
-      break;
-    case "commitRemoved":
-      newFilterModel.setData("status", ["Commit Removed"]);
-      setTableFilterModel({ ...newFilterModel });
-      break;
-    default:
-      newFilterModel.setData("status", []);
-      setTableFilterModel({ ...newFilterModel });
-      break;
+      case "open":
+        newFilterModel.setData("status", ["Open"]);
+        setTableFilterModel({ ...newFilterModel });
+        break;
+      case "falsePositives":
+        newFilterModel.setData("status", ["False Positive"]);
+        setTableFilterModel({ ...newFilterModel });
+        break;
+      case "resolved":
+        newFilterModel.setData("status", ["Resolved"]);
+        setTableFilterModel({ ...newFilterModel });
+        break;
+      case "commitRemoved":
+        newFilterModel.setData("status", ["Commit Removed"]);
+        setTableFilterModel({ ...newFilterModel });
+        break;
+      default:
+        newFilterModel.setData("status", []);
+        setTableFilterModel({ ...newFilterModel });
+        break;
     }
     loadData(newFilterModel);
     setActiveTab(activeTab);

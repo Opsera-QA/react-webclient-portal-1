@@ -22,16 +22,16 @@ export default function PolicyParametersInput(
   };
 
   switch (name) {
-  case policyConstants.POLICY_NAMES.PIPELINE_PRIVATE_CATALOG_PUBLISHING_RESTRICTIONS:
-    return (
-      <SiteRoleAccessMultiCheckboxSelectInput
-        model={parametersModel}
-        setModel={setModelFunction}
-        fieldName={"allowed_roles"}
-      />
-    );
-  default:
-    return null;
+    case policyConstants.POLICY_NAMES.PIPELINE_PRIVATE_CATALOG_PUBLISHING_RESTRICTIONS:
+      return (
+        <SiteRoleAccessMultiCheckboxSelectInput
+          model={parametersModel}
+          setModel={setModelFunction}
+          fieldName={"allowed_roles"}
+        />
+      );
+    default:
+      return null;
   }
 }
 

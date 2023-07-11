@@ -85,43 +85,43 @@ function TaskDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <TaskSummaryPanel
-          gitTasksData={gitTasksData}
-          setActiveTab={setActiveTab}
-          accessRoleData={accessRoleData}
-          setGitTasksData={setGitTasksData}
-          loadData={loadData}
-          status={status}
-          runCount={runCount}
-          taskStartTime={taskStartTime}
-        />
-      );
-    case "settings":
-      return (
-        <TaskEditorPanel
-          handleClose={toggleSummaryPanel}
-          taskData={gitTasksData}
-          setGitTasksData={setGitTasksData}
-          loadData={loadData}
-          runTask={runTask}
-        />
-      );
-    case "details":
-      return (
-        <div className="px-3 mt-3">
-          <TaskConfigurationSummaryPanel taskModel={gitTasksData} />
-        </div>
-      );
+      case "summary":
+        return (
+          <TaskSummaryPanel
+            gitTasksData={gitTasksData}
+            setActiveTab={setActiveTab}
+            accessRoleData={accessRoleData}
+            setGitTasksData={setGitTasksData}
+            loadData={loadData}
+            status={status}
+            runCount={runCount}
+            taskStartTime={taskStartTime}
+          />
+        );
+      case "settings":
+        return (
+          <TaskEditorPanel
+            handleClose={toggleSummaryPanel}
+            taskData={gitTasksData}
+            setGitTasksData={setGitTasksData}
+            loadData={loadData}
+            runTask={runTask}
+          />
+        );
+      case "details":
+        return (
+          <div className="px-3 mt-3">
+            <TaskConfigurationSummaryPanel taskModel={gitTasksData} />
+          </div>
+        );
       // case "audit-logs":
       //   return (
       //     <TaskAuditLogPanel
       //       taskId={gitTasksData?.getMongoDbId()}
       //     />
       //   );
-    default:
-      return null;
+      default:
+        return null;
     }
   };
 

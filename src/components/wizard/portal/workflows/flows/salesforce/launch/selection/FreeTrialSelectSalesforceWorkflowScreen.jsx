@@ -100,36 +100,36 @@ export default function FreeTrialSelectSalesforceWorkflowScreen(
 
   const getBody = () => {
     switch (currentScreen) {
-    case LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_OPTION_SCREEN:
-      return (
-        <FreeTrialSelectSalesforceWorkflowOptionScreen
-          className={""}
-          setCurrentScreen={setCurrentScreen}
-          isLoading={isLoading}
-          workspaceItems={workspaceItems}
-          setButtonContainer={setButtonContainer}
-        />
-      );
-    case LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.LAUNCH_EXISTING_WORKFLOW:
-      return (
-        <FreeTrialLaunchSalesforceWorkflowScreen
-          setCurrentScreen={setCurrentScreen}
-          className={"m-3"}
-          isLoading={isLoading}
-          workspaceItems={workspaceItems}
-          loadData={loadData}
-          taskMetadata={taskMetadata}
-          currentScreen={currentScreen}
-          setButtonContainer={setButtonContainer}
-        />
-      );
-    case LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SALESFORCE_WORKFLOW_SCREEN:
-      return (
-        <CreateSalesforceWorkflowWizard
-          setButtonContainer={setButtonContainer}
-          backButtonFunction={goToOptionSelectionScreenFunction}
-        />
-      );
+      case LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_OPTION_SCREEN:
+        return (
+          <FreeTrialSelectSalesforceWorkflowOptionScreen
+            className={""}
+            setCurrentScreen={setCurrentScreen}
+            isLoading={isLoading}
+            workspaceItems={workspaceItems}
+            setButtonContainer={setButtonContainer}
+          />
+        );
+      case LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.LAUNCH_EXISTING_WORKFLOW:
+        return (
+          <FreeTrialLaunchSalesforceWorkflowScreen
+            setCurrentScreen={setCurrentScreen}
+            className={"m-3"}
+            isLoading={isLoading}
+            workspaceItems={workspaceItems}
+            loadData={loadData}
+            taskMetadata={taskMetadata}
+            currentScreen={currentScreen}
+            setButtonContainer={setButtonContainer}
+          />
+        );
+      case LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS.CREATE_SALESFORCE_WORKFLOW_SCREEN:
+        return (
+          <CreateSalesforceWorkflowWizard
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={goToOptionSelectionScreenFunction}
+          />
+        );
     }
   };
 

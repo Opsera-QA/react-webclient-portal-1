@@ -82,16 +82,16 @@ function PipelineCatalogLibrary() {
     }
 
     switch (activeTab) {
-    case "customer":
-    default:
-      return (
-        <CustomerPipelineTemplateCatalog
-          activeTemplates={activeTemplates}
-          selectTemplateFunction={handleCustomerPipelineTemplateSelection}
-          cardTooltip={"Click to View Pipeline Template Details"}
-          showDeployPipelineIcon={true}
-        />
-      );
+      case "customer":
+      default:
+        return (
+          <CustomerPipelineTemplateCatalog
+            activeTemplates={activeTemplates}
+            selectTemplateFunction={handleCustomerPipelineTemplateSelection}
+            cardTooltip={"Click to View Pipeline Template Details"}
+            showDeployPipelineIcon={true}
+          />
+        );
     }
   };
 

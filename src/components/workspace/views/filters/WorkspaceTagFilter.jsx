@@ -25,15 +25,15 @@ export default function WorkspaceTagFilter(
 
   const getTagsForType = useCallback(() => {
     switch (type) {
-    case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
-      return pipelineTags;
-    case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
-      return taskTags;
-    case workspaceConstants.WORKSPACE_ITEM_TYPES.TOOL:
-      return toolTags;
-    case workspaceConstants.WORKSPACE_ITEM_TYPES.ALL:
-    default:
-      return allTags;
+      case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
+        return pipelineTags;
+      case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
+        return taskTags;
+      case workspaceConstants.WORKSPACE_ITEM_TYPES.TOOL:
+        return toolTags;
+      case workspaceConstants.WORKSPACE_ITEM_TYPES.ALL:
+      default:
+        return allTags;
     }
   }, [type, allTags, toolTags, taskTags, pipelineTags]);
 

@@ -164,27 +164,27 @@ pipelineHelpers.getPipelineStatus = (pipeline) => {
 
 pipelineHelpers.displayPipelineType = (typeArray) => {
   switch (typeArray[0]) {
-  case "sfdc":
-    return "Salesforce";
-  case "ai-ml":
-    return "Machine Learning (AI)";
-  case "sdlc":
-    return "Software Development";
-  default:
-    return "";
+    case "sfdc":
+      return "Salesforce";
+    case "ai-ml":
+      return "Machine Learning (AI)";
+    case "sdlc":
+      return "Software Development";
+    default:
+      return "";
   }
 };
 
 pipelineHelpers.displayPipelineValueComponent = ({ typeArray }) => {
   switch (typeArray[0]) {
-  case "sfdc":
-    return "Salesforce";
-  case "ai-ml":
-    return "Machine Learning (AI)";
-  case "sdlc":
-    return "Software Development";
-  default:
-    return "";
+    case "sfdc":
+      return "Salesforce";
+    case "ai-ml":
+      return "Machine Learning (AI)";
+    case "sdlc":
+      return "Software Development";
+    default:
+      return "";
   }
 };
 

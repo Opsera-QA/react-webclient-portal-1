@@ -6,22 +6,22 @@ import { toolIdentifierConstants } from "components/admin/tools/identifiers/tool
 function ToolPathsPanel({toolModel}) {
   const getPathsPanel = () => {
     switch (toolModel?.getData("tool_identifier")) {
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS:
-      return (
-        <GitToolPathsPanel
-          toolModel={toolModel}
-          toolId={toolModel?.getData("_id")}
-        />
-      );
-    default:
-      return (
-        <div className="text-center p-5 text-muted mt-5">
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS:
+        return (
+          <GitToolPathsPanel
+            toolModel={toolModel}
+            toolId={toolModel?.getData("_id")}
+          />
+        );
+      default:
+        return (
+          <div className="text-center p-5 text-muted mt-5">
             Opsera paths management is not currently available for this tool.
-        </div>
-      );
+          </div>
+        );
     }
   };
 

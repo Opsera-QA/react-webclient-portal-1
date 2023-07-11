@@ -52,30 +52,30 @@ export default function LdapUserDetailPanel({ ldapUserData, setLdapUserData, org
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <LdapUserSummaryPanel
-          ldapUserData={ldapUserData}
-          setActiveTab={!hideSettings ? setActiveTab : null}
-        />
-      );
-    case "settings":
-      return (
-        <LdapUserEditorPanel
-          setLdapUserData={setLdapUserData}
-          ldapUserData={ldapUserData}
-          orgDomain={orgDomain}
-          handleClose={toggleSummaryPanel}
-        />
-      );
-    case "assigned-roles":
-      return (
-        <UserAssignedRolesPanel
-          userEmailAddress={ldapUserData?.getData("emailAddress")}
-        />
-      );
-    default:
-      return null;
+      case "summary":
+        return (
+          <LdapUserSummaryPanel
+            ldapUserData={ldapUserData}
+            setActiveTab={!hideSettings ? setActiveTab : null}
+          />
+        );
+      case "settings":
+        return (
+          <LdapUserEditorPanel
+            setLdapUserData={setLdapUserData}
+            ldapUserData={ldapUserData}
+            orgDomain={orgDomain}
+            handleClose={toggleSummaryPanel}
+          />
+        );
+      case "assigned-roles":
+        return (
+          <UserAssignedRolesPanel
+            userEmailAddress={ldapUserData?.getData("emailAddress")}
+          />
+        );
+      default:
+        return null;
     }
   };
 

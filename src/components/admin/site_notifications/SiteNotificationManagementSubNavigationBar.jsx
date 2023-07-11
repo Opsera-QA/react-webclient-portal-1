@@ -12,12 +12,12 @@ function SiteNotificationManagementSubNavigationBar({activeTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-    case "adminTools":
-      history.push(`/admin`);
-      return;
-    case "siteNotificationManager":
-      history.push(`/admin/site-notifications`);
-      return;
+      case "adminTools":
+        history.push(`/admin`);
+        return;
+      case "siteNotificationManager":
+        history.push(`/admin/site-notifications`);
+        return;
     }
   };
 

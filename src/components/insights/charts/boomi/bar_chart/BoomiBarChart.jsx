@@ -143,29 +143,29 @@ function BoomiBarChart({
 
     const getIcon = (severity) => {
       switch (severity) {
-      case "green":
-        return faArrowCircleUp;
-      case "red":
-        return faArrowCircleDown;
-      case "neutral":
-        return faMinusCircle;
-      default:
-        break;
+        case "green":
+          return faArrowCircleUp;
+        case "red":
+          return faArrowCircleDown;
+        case "neutral":
+          return faMinusCircle;
+        default:
+          break;
       }
     };
   
     const getIconColor = (severity) => {
       switch (severity) {
-      case "red":
-        return "red";
-      case "green":
-        return "green";
-      case "neutral":
-        return "light-gray-text-secondary";
-      case "-":
-        return "black";
-      default:
-        break;
+        case "red":
+          return "red";
+        case "green":
+          return "green";
+        case "neutral":
+          return "light-gray-text-secondary";
+        case "-":
+          return "black";
+        default:
+          break;
       }
     };
 

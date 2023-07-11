@@ -27,47 +27,47 @@ export default function FreeTrialLaunchWorkflowButton(
 
   const launchWorkflow = () => {
     switch (workspaceType) {
-    case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
-      switch (workspaceItem?.type) {
-      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+      case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
+        switch (workspaceItem?.type) {
+          case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+            toastContext.showOverlayPanel(
+              <SalesforceToGitMergeSyncTaskWizardOverlay
+                taskModel={modelHelpers.parseObjectIntoModel(workspaceItem, tasksMetadata)}
+              />,
+            );
+            break;
+          case TASK_TYPES.SYNC_SALESFORCE_REPO:
+            toastContext.showOverlayPanel(
+              <SalesforceOrganizationSyncTaskWizardOverlay
+                taskModel={modelHelpers.parseObjectIntoModel(workspaceItem, tasksMetadata)}
+              />,
+            );
+            break;
+          default:
+            toastContext.showOverlayPanel(
+              <RunTaskOverlay
+                taskModel={workspaceItem}
+                setTaskModel={setWorkspaceItem}
+              />
+            );
+        }
+        break;
+      case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
         toastContext.showOverlayPanel(
-          <SalesforceToGitMergeSyncTaskWizardOverlay
-            taskModel={modelHelpers.parseObjectIntoModel(workspaceItem, tasksMetadata)}
+          <SalesforcePipelineWizardOverlay
+            pipeline={workspaceItem}
           />,
         );
         break;
-      case TASK_TYPES.SYNC_SALESFORCE_REPO:
-        toastContext.showOverlayPanel(
-          <SalesforceOrganizationSyncTaskWizardOverlay
-            taskModel={modelHelpers.parseObjectIntoModel(workspaceItem, tasksMetadata)}
-          />,
-        );
-        break;
-      default:
-        toastContext.showOverlayPanel(
-          <RunTaskOverlay
-            taskModel={workspaceItem}
-            setTaskModel={setWorkspaceItem}
-          />
-        );
-      }
-      break;
-    case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
-      toastContext.showOverlayPanel(
-        <SalesforcePipelineWizardOverlay
-          pipeline={workspaceItem}
-        />,
-      );
-      break;
     }
   };
 
   const getButtonText = () => {
     switch (workspaceType) {
-    case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
-      return "Start Task Now!";
-    case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
-      return "Start Pipeline Now!";
+      case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
+        return "Start Task Now!";
+      case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
+        return "Start Pipeline Now!";
     }
   };
 

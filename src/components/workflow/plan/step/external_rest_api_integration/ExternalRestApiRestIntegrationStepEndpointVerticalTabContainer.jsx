@@ -114,117 +114,117 @@ function ExternalRestApiRestIntegrationStepEndpointVerticalTabContainer(
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case EXTERNAL_API_REST_INTEGRATION_TABS.CONNECTION_CHECK_API_CONFIGURATION:
-      return (
-        <div className={"mx-2"}>
-          <Row>
-            <Col xs={6} sm={3}>
-              <ExternalApiIntegrationStepUseConnectionCheckBooleanToggleInput
-                model={externalRestApiIntegrationModel}
-                setModel={setExternalRestApiIntegrationModel}
-                disabled={disabled}
-              />
-            </Col>
-            <Col xs={6} md={9}>
-              <ExternalApiIntegrationStepConnectionCheckEndpointSelectInput
-                model={externalRestApiIntegrationModel}
-                setModel={setExternalRestApiIntegrationModel}
-                disabled={disabled || externalRestApiIntegrationModel?.getData("useConnectionCheck") !== true}
-              />
-            </Col>
-          </Row>
-          <ExternalApiIntegrationStepRunEndpointRequestInputBase
-            fieldName={"connectionCheckRequestParameters"}
+      case EXTERNAL_API_REST_INTEGRATION_TABS.CONNECTION_CHECK_API_CONFIGURATION:
+        return (
+          <div className={"mx-2"}>
+            <Row>
+              <Col xs={6} sm={3}>
+                <ExternalApiIntegrationStepUseConnectionCheckBooleanToggleInput
+                  model={externalRestApiIntegrationModel}
+                  setModel={setExternalRestApiIntegrationModel}
+                  disabled={disabled}
+                />
+              </Col>
+              <Col xs={6} md={9}>
+                <ExternalApiIntegrationStepConnectionCheckEndpointSelectInput
+                  model={externalRestApiIntegrationModel}
+                  setModel={setExternalRestApiIntegrationModel}
+                  disabled={disabled || externalRestApiIntegrationModel?.getData("useConnectionCheck") !== true}
+                />
+              </Col>
+            </Row>
+            <ExternalApiIntegrationStepRunEndpointRequestInputBase
+              fieldName={"connectionCheckRequestParameters"}
+              model={externalRestApiIntegrationModel}
+              setModel={setExternalRestApiIntegrationModel}
+              toolId={externalRestApiIntegrationModel?.getData("toolId")}
+              endpointId={externalRestApiIntegrationModel?.getData("connectionCheckEndpointId")}
+              disabled={disabled || externalRestApiIntegrationModel?.getData("useConnectionCheck") !== true}
+            />
+          </div>
+        );
+      case EXTERNAL_API_REST_INTEGRATION_TABS.CONNECTION_CHECK_SUCCESSFUL_EVALUATION_RULES_CONFIGURATION:
+        return (
+          <EndpointResponseEvaluationRulesInput
+            fieldName={"connectionCheckResponseEvaluationRules"}
+            evaluationRuleFieldName={"success_rule"}
             model={externalRestApiIntegrationModel}
             setModel={setExternalRestApiIntegrationModel}
             toolId={externalRestApiIntegrationModel?.getData("toolId")}
             endpointId={externalRestApiIntegrationModel?.getData("connectionCheckEndpointId")}
-            disabled={disabled || externalRestApiIntegrationModel?.getData("useConnectionCheck") !== true}
-          />
-        </div>
-      );
-    case EXTERNAL_API_REST_INTEGRATION_TABS.CONNECTION_CHECK_SUCCESSFUL_EVALUATION_RULES_CONFIGURATION:
-      return (
-        <EndpointResponseEvaluationRulesInput
-          fieldName={"connectionCheckResponseEvaluationRules"}
-          evaluationRuleFieldName={"success_rule"}
-          model={externalRestApiIntegrationModel}
-          setModel={setExternalRestApiIntegrationModel}
-          toolId={externalRestApiIntegrationModel?.getData("toolId")}
-          endpointId={externalRestApiIntegrationModel?.getData("connectionCheckEndpointId")}
-          disabled={disabled}
-        />
-      );
-    case EXTERNAL_API_REST_INTEGRATION_TABS.RUN_TRIGGER_API_CONFIGURATION:
-      return (
-        <div className={"mx-2"}>
-          <ExternalApiIntegrationStepRunTriggerEndpointSelectInput
-            model={externalRestApiIntegrationModel}
-            setModel={setExternalRestApiIntegrationModel}
             disabled={disabled}
           />
-          <ExternalApiIntegrationStepRunEndpointRequestInputBase
-            fieldName={"runEndpointRequestParameters"}
+        );
+      case EXTERNAL_API_REST_INTEGRATION_TABS.RUN_TRIGGER_API_CONFIGURATION:
+        return (
+          <div className={"mx-2"}>
+            <ExternalApiIntegrationStepRunTriggerEndpointSelectInput
+              model={externalRestApiIntegrationModel}
+              setModel={setExternalRestApiIntegrationModel}
+              disabled={disabled}
+            />
+            <ExternalApiIntegrationStepRunEndpointRequestInputBase
+              fieldName={"runEndpointRequestParameters"}
+              model={externalRestApiIntegrationModel}
+              setModel={setExternalRestApiIntegrationModel}
+              toolId={externalRestApiIntegrationModel?.getData("toolId")}
+              endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
+              disabled={disabled}
+            />
+          </div>
+        );
+      case EXTERNAL_API_REST_INTEGRATION_TABS.RUN_TRIGGER_SUCCESSFUL_TRIGGER_EVALUATION_RULES_CONFIGURATION:
+        return (
+          <EndpointResponseEvaluationRulesInput
+            fieldName={"runEndpointResponseEvaluationRules"}
+            evaluationRuleFieldName={"success_rule"}
             model={externalRestApiIntegrationModel}
             setModel={setExternalRestApiIntegrationModel}
             toolId={externalRestApiIntegrationModel?.getData("toolId")}
             endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
             disabled={disabled}
           />
-        </div>
-      );
-    case EXTERNAL_API_REST_INTEGRATION_TABS.RUN_TRIGGER_SUCCESSFUL_TRIGGER_EVALUATION_RULES_CONFIGURATION:
-      return (
-        <EndpointResponseEvaluationRulesInput
-          fieldName={"runEndpointResponseEvaluationRules"}
-          evaluationRuleFieldName={"success_rule"}
-          model={externalRestApiIntegrationModel}
-          setModel={setExternalRestApiIntegrationModel}
-          toolId={externalRestApiIntegrationModel?.getData("toolId")}
-          endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
-          disabled={disabled}
-        />
-      );
-    case EXTERNAL_API_REST_INTEGRATION_TABS.STATUS_CHECK_API_CONFIGURATION:
-      return (
-        <div className={"mx-2"} id={EXTERNAL_API_REST_INTEGRATION_TABS.STATUS_CHECK_API_CONFIGURATION}>
-          <ExternalApiIntegrationStepStatusCheckEndpointSelectInput
-            model={externalRestApiIntegrationModel}
-            setModel={setExternalRestApiIntegrationModel}
-            disabled={disabled}
-          />
-          <ExternalApiIntegrationStepRunEndpointRequestInputBase
-            fieldName={"statusEndpointRequestParameters"}
+        );
+      case EXTERNAL_API_REST_INTEGRATION_TABS.STATUS_CHECK_API_CONFIGURATION:
+        return (
+          <div className={"mx-2"} id={EXTERNAL_API_REST_INTEGRATION_TABS.STATUS_CHECK_API_CONFIGURATION}>
+            <ExternalApiIntegrationStepStatusCheckEndpointSelectInput
+              model={externalRestApiIntegrationModel}
+              setModel={setExternalRestApiIntegrationModel}
+              disabled={disabled}
+            />
+            <ExternalApiIntegrationStepRunEndpointRequestInputBase
+              fieldName={"statusEndpointRequestParameters"}
+              model={externalRestApiIntegrationModel}
+              setModel={setExternalRestApiIntegrationModel}
+              toolId={externalRestApiIntegrationModel?.getData("toolId")}
+              endpointId={externalRestApiIntegrationModel?.getData("statusEndpointId")}
+              disabled={disabled}
+            />
+          </div>
+        );
+      case EXTERNAL_API_REST_INTEGRATION_TABS.STATUS_CHECK_IN_PROGRESS_EVALUATION_RULES_CONFIGURATION:
+        return (
+          <EndpointResponseEvaluationRulesInput
+            fieldName={"statusEndpointResponseEvaluationRules"}
+            evaluationRuleFieldName={"running_rule"}
             model={externalRestApiIntegrationModel}
             setModel={setExternalRestApiIntegrationModel}
             toolId={externalRestApiIntegrationModel?.getData("toolId")}
             endpointId={externalRestApiIntegrationModel?.getData("statusEndpointId")}
             disabled={disabled}
           />
-        </div>
-      );
-    case EXTERNAL_API_REST_INTEGRATION_TABS.STATUS_CHECK_IN_PROGRESS_EVALUATION_RULES_CONFIGURATION:
-      return (
-        <EndpointResponseEvaluationRulesInput
-          fieldName={"statusEndpointResponseEvaluationRules"}
-          evaluationRuleFieldName={"running_rule"}
-          model={externalRestApiIntegrationModel}
-          setModel={setExternalRestApiIntegrationModel}
-          toolId={externalRestApiIntegrationModel?.getData("toolId")}
-          endpointId={externalRestApiIntegrationModel?.getData("statusEndpointId")}
-          disabled={disabled}
-        />
-      );
-    case EXTERNAL_API_REST_INTEGRATION_TABS.STATUS_CHECK_SUCCESSFUL_COMPLETION_EVALUATION_RULES_CONFIGURATION:
-      return (
-        <EndpointResponseSuccessfulCompletionEvaluationRulesInput
-          model={externalRestApiIntegrationModel}
-          setModel={setExternalRestApiIntegrationModel}
-          toolId={externalRestApiIntegrationModel?.getData("toolId")}
-          endpointId={externalRestApiIntegrationModel?.getData("statusEndpointId")}
-          disabled={disabled}
-        />
-      );
+        );
+      case EXTERNAL_API_REST_INTEGRATION_TABS.STATUS_CHECK_SUCCESSFUL_COMPLETION_EVALUATION_RULES_CONFIGURATION:
+        return (
+          <EndpointResponseSuccessfulCompletionEvaluationRulesInput
+            model={externalRestApiIntegrationModel}
+            setModel={setExternalRestApiIntegrationModel}
+            toolId={externalRestApiIntegrationModel?.getData("toolId")}
+            endpointId={externalRestApiIntegrationModel?.getData("statusEndpointId")}
+            disabled={disabled}
+          />
+        );
     }
   };
 

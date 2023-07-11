@@ -26,10 +26,10 @@ function SiteNotificationManagerDetailPanel({ siteWideNotificationData, setSiteW
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "site":
-      return <SiteNotificationEditorPanel siteNotificationData={siteWideNotificationData} setSiteNotificationData={setSiteWideNotificationData} />;
-    default:
-      return null;
+      case "site":
+        return <SiteNotificationEditorPanel siteNotificationData={siteWideNotificationData} setSiteNotificationData={setSiteWideNotificationData} />;
+      default:
+        return null;
     }
   };
 

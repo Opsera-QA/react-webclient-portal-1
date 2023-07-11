@@ -47,36 +47,36 @@ const SalesforceBulkMigrationWizard = ({ handleClose, taskModel }) => {
 
   const getBody = () => {
     switch (bulkMigrationWizardScreen) {
-    case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-      return (
-        <SalesforceBulkMigrationWizardInitializationScreen
-          pipelineWizardModel={wizardModel}
-          setPipelineWizardModel={setWizardModel}
-          setPipelineWizardScreen={setBulkMigrationWizardScreen}
-          handleClose={handleClose}
-          taskModel={taskModel}
-          setError={setError}
-        />
-      );
-    case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.COMPONENT_SELECTION_SCREEN:
-      return (
-        <SalesforceBulkMigrationWizardComponentSelectionScreen
-          pipelineWizardModel={wizardModel}
-          setPipelineWizardModel={setWizardModel}
-          setPipelineWizardScreen={setBulkMigrationWizardScreen}
-          handleClose={handleClose}
-        />
-      );
-    case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN:
-      return (
-        <SalesforceBulkMigrationWizardConfirmationScreen
-          pipelineWizardModel={wizardModel}
-          setPipelineWizardModel={setWizardModel}
-          setPipelineWizardScreen={setBulkMigrationWizardScreen}
-          handleClose={handleClose}
-          setError={setError}
-        />
-      );
+      case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+        return (
+          <SalesforceBulkMigrationWizardInitializationScreen
+            pipelineWizardModel={wizardModel}
+            setPipelineWizardModel={setWizardModel}
+            setPipelineWizardScreen={setBulkMigrationWizardScreen}
+            handleClose={handleClose}
+            taskModel={taskModel}
+            setError={setError}
+          />
+        );
+      case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.COMPONENT_SELECTION_SCREEN:
+        return (
+          <SalesforceBulkMigrationWizardComponentSelectionScreen
+            pipelineWizardModel={wizardModel}
+            setPipelineWizardModel={setWizardModel}
+            setPipelineWizardScreen={setBulkMigrationWizardScreen}
+            handleClose={handleClose}
+          />
+        );
+      case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN:
+        return (
+          <SalesforceBulkMigrationWizardConfirmationScreen
+            pipelineWizardModel={wizardModel}
+            setPipelineWizardModel={setWizardModel}
+            setPipelineWizardScreen={setBulkMigrationWizardScreen}
+            handleClose={handleClose}
+            setError={setError}
+          />
+        );
     }
   };
 
@@ -94,8 +94,8 @@ const SalesforceBulkMigrationWizard = ({ handleClose, taskModel }) => {
     //       closeHelpPanel={() => setHelpIsShown(false)}
     //     />
     //   );
-    default:
-      return null;
+      default:
+        return null;
     }
   };
 

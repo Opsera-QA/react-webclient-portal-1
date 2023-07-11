@@ -23,12 +23,12 @@ function ToolIdentifierDetailPanel({ toolIdentifierData, setToolIdentifierData }
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return <ToolIdentifierSummaryPanel toolIdentifierData={toolIdentifierData} setActiveTab={setActiveTab} />;
-    case "settings":
-      return <ToolIdentifierEditorPanel setToolIdentifierData={setToolIdentifierData} toolIdentifierData={toolIdentifierData} handleClose={toggleSummaryPanel} />;
-    default:
-      return null;
+      case "summary":
+        return <ToolIdentifierSummaryPanel toolIdentifierData={toolIdentifierData} setActiveTab={setActiveTab} />;
+      case "settings":
+        return <ToolIdentifierEditorPanel setToolIdentifierData={setToolIdentifierData} toolIdentifierData={toolIdentifierData} handleClose={toggleSummaryPanel} />;
+      default:
+        return null;
     }
   };
 

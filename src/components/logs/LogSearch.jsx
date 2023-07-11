@@ -397,24 +397,24 @@ function LogSearch({ tools, sideBySide }) {
 
       if (Object.keys(logData).length > 0) {
         switch (filterType) {
-        case "blueprint":
-          return <BlueprintSearchResult searchResults={logData?.hits} />;
-        case "commit":
-          return (
-          // TODO: Not sure if we want to show both, but this was a bug in legacy code if not
-            <>
-              <LogSearchResult searchResults={logData?.hits} submittedSearchTerm={submittedSearchTerm} />
-              <CommitSearchResult searchResults={logData?.hits} />
-            </>
-          );
-        default:
-          return (
-            <LogSearchResult
-              searchResults={logData?.hits}
-              submittedSearchTerm={submittedSearchTerm}
-              getPaginator={getPaginator}
-            />
-          );
+          case "blueprint":
+            return <BlueprintSearchResult searchResults={logData?.hits} />;
+          case "commit":
+            return (
+            // TODO: Not sure if we want to show both, but this was a bug in legacy code if not
+              <>
+                <LogSearchResult searchResults={logData?.hits} submittedSearchTerm={submittedSearchTerm} />
+                <CommitSearchResult searchResults={logData?.hits} />
+              </>
+            );
+          default:
+            return (
+              <LogSearchResult
+                searchResults={logData?.hits}
+                submittedSearchTerm={submittedSearchTerm}
+                getPaginator={getPaginator}
+              />
+            );
         }
       }
     }

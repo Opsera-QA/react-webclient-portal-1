@@ -7,30 +7,30 @@ import {toolIdentifierConstants} from "../../../admin/tools/identifiers/toolIden
 function ToolServiceTypeMappingPanel({ toolData, loadData, isLoading }) {
   const getPanel = (toolIdentifier, loadData) => {
     switch (toolIdentifier) {
-    case "informatica":
-      return (
-        <InformaticaMapping
-          toolActions={toolData?.getData("actions")}
-          isLoading={isLoading}
-          toolData={toolData}
-          loadData={loadData}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
-      return (
-        <SfdxRulesPanel
-          toolActions={toolData?.getData("actions")}
-          isLoading={isLoading}
-          toolData={toolData}
-          loadData={loadData}
-        />
-      );
-    default:
-      return (
-        <div className="text-center p-5 text-muted mt-5">
+      case "informatica":
+        return (
+          <InformaticaMapping
+            toolActions={toolData?.getData("actions")}
+            isLoading={isLoading}
+            toolData={toolData}
+            loadData={loadData}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
+        return (
+          <SfdxRulesPanel
+            toolActions={toolData?.getData("actions")}
+            isLoading={isLoading}
+            toolData={toolData}
+            loadData={loadData}
+          />
+        );
+      default:
+        return (
+          <div className="text-center p-5 text-muted mt-5">
             Tool Mapping is not currently available for this tool.
-        </div>
-      );
+          </div>
+        );
     }
   };
 

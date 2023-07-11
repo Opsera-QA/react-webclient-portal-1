@@ -7,17 +7,17 @@ import PlanningView_Executive from "../../analytics/views/planning/planningView_
 function PlanningDashboard({persona, date, index}) {
   
   switch (persona) {
-  case "developer":
-    return <PlanningView_Developer persona={persona} date={date} index={index}/>;
+    case "developer":
+      return <PlanningView_Developer persona={persona} date={date} index={index}/>;
 
-  case "manager":
-    return <PlanningView_Manager persona={persona} date={date} index={index}/>;
+    case "manager":
+      return <PlanningView_Manager persona={persona} date={date} index={index}/>;
 
-  case "executive":
-    return <PlanningView_Executive persona={persona} date={date} index={index}/>;
+    case "executive":
+      return <PlanningView_Executive persona={persona} date={date} index={index}/>;
 
-  default:
-    return <PlanningView_Developer persona={persona} date={date} index={index}/>;
+    default:
+      return <PlanningView_Developer persona={persona} date={date} index={index}/>;
   }  
 }
 

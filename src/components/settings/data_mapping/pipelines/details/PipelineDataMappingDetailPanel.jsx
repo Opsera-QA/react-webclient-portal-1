@@ -27,23 +27,23 @@ function PipelineDataMappingDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <PipelineDataMappingSummaryPanel
-          pipelineDataMappingModel={pipelineDataMappingModel}
-          setActiveTab={setActiveTab}
-        />
-      );
-    case "settings":
-      return (
-        <PipelineDataMappingEditorPanel
-          pipelineDataMappingModel={pipelineDataMappingModel}
-          setPipelineDataMappingModel={setPipelineDataMappingModel}
-          handleClose={toggleSummaryPanel}
-        />
-      );
-    default:
-      return null;
+      case "summary":
+        return (
+          <PipelineDataMappingSummaryPanel
+            pipelineDataMappingModel={pipelineDataMappingModel}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case "settings":
+        return (
+          <PipelineDataMappingEditorPanel
+            pipelineDataMappingModel={pipelineDataMappingModel}
+            setPipelineDataMappingModel={setPipelineDataMappingModel}
+            handleClose={toggleSummaryPanel}
+          />
+        );
+      default:
+        return null;
     }
   };
 

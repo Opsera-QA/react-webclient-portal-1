@@ -102,42 +102,42 @@ function NexusStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdito
 
   const getAdditionalFields = () => {
     switch(nexusStepConfigurationDto.getData("repositoryFormat")) {
-    case "docker" : 
-      return (
-        <>          
-          <NexusStepJenkinsToolSelectInput
-            setModel={setNexusStepConfigurationDataDto}
-            model={nexusStepConfigurationDto}
-          />
-          <TextInputBase
-            setDataObject={setNexusStepConfigurationDataDto}
-            dataObject={nexusStepConfigurationDto}
-            fieldName={"dockerPort"}
-            key="dockerPort"
-          />
-        </>
-      );
-    case "maven2" :
-      return (
-        <>
-          <TextInputBase                      
-            setDataObject={setNexusStepConfigurationDataDto}
-            dataObject={nexusStepConfigurationDto}
-            fieldName={"groupName"}
-            key="groupName"
-          />
-          <TextInputBase                      
-            setDataObject={setNexusStepConfigurationDataDto}
-            dataObject={nexusStepConfigurationDto}
-            fieldName={"artifactName"}
-            key="artifactName"
-          />
-        </>
-      );
-    case "nuget" :
-      return (<></>);
-    default:
-      return (<></>);
+      case "docker" : 
+        return (
+          <>          
+            <NexusStepJenkinsToolSelectInput
+              setModel={setNexusStepConfigurationDataDto}
+              model={nexusStepConfigurationDto}
+            />
+            <TextInputBase
+              setDataObject={setNexusStepConfigurationDataDto}
+              dataObject={nexusStepConfigurationDto}
+              fieldName={"dockerPort"}
+              key="dockerPort"
+            />
+          </>
+        );
+      case "maven2" :
+        return (
+          <>
+            <TextInputBase                      
+              setDataObject={setNexusStepConfigurationDataDto}
+              dataObject={nexusStepConfigurationDto}
+              fieldName={"groupName"}
+              key="groupName"
+            />
+            <TextInputBase                      
+              setDataObject={setNexusStepConfigurationDataDto}
+              dataObject={nexusStepConfigurationDto}
+              fieldName={"artifactName"}
+              key="artifactName"
+            />
+          </>
+        );
+      case "nuget" :
+        return (<></>);
+      default:
+        return (<></>);
     }    
   };
 

@@ -22,43 +22,43 @@ function EndpointResponseEvaluationInput(
 
     if (canEnterValue.includes(filter)) {
       switch (responseBodyType) {
-      case "string":
-        return (
-          <Col xs={12}>
-            <TextInputBase
-              dataObject={evaluationRuleModel}
-              setDataObject={setEvaluationRuleModel}
-              fieldName={"value"}
-              setDataFunction={updateMainModelFunction}
-              disabled={disabled}
-            />
-          </Col>
-        );
-      case "array":
-        return (
-          <Col xs={12}>
-            <MultiTextListInputBase
-              model={evaluationRuleModel}
-              setModel={setEvaluationRuleModel}
-              fieldName={"value"}
-              setDataFunction={updateMainModelFunction}
-              disabled={disabled}
-              singularTopic={"Value"}
-              pluralTopic={"Values"}
-            />
-          </Col>
-        );
-      case "boolean":
-        return (
-          <Col xs={4}>
-            <BooleanSelectInput
-              model={evaluationRuleModel}
-              setModel={updateModelFunction}
-              fieldName={"value"}
-              disabled={disabled}
-            />
-          </Col>
-        );
+        case "string":
+          return (
+            <Col xs={12}>
+              <TextInputBase
+                dataObject={evaluationRuleModel}
+                setDataObject={setEvaluationRuleModel}
+                fieldName={"value"}
+                setDataFunction={updateMainModelFunction}
+                disabled={disabled}
+              />
+            </Col>
+          );
+        case "array":
+          return (
+            <Col xs={12}>
+              <MultiTextListInputBase
+                model={evaluationRuleModel}
+                setModel={setEvaluationRuleModel}
+                fieldName={"value"}
+                setDataFunction={updateMainModelFunction}
+                disabled={disabled}
+                singularTopic={"Value"}
+                pluralTopic={"Values"}
+              />
+            </Col>
+          );
+        case "boolean":
+          return (
+            <Col xs={4}>
+              <BooleanSelectInput
+                model={evaluationRuleModel}
+                setModel={updateModelFunction}
+                fieldName={"value"}
+                disabled={disabled}
+              />
+            </Col>
+          );
       }
     }
   };

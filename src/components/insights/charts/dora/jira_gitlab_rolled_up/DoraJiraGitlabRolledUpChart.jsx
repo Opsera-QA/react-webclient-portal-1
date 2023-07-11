@@ -157,22 +157,22 @@ function DoraJiraGitlabRolledUpChart({
         }
 
         switch (scoreA) {
-        case MATURITY_SCORE_TEXT.ELITE:
-          return -1;
-        case MATURITY_SCORE_TEXT.HIGH:
-          if (scoreB === MATURITY_SCORE_TEXT.ELITE) {
-            return 1;
-          }
-          return -1;
-        case MATURITY_SCORE_TEXT.MEDIUM:
-          if (scoreB === MATURITY_SCORE_TEXT.LOW) {
+          case MATURITY_SCORE_TEXT.ELITE:
             return -1;
-          }
-          return 1;
-        case MATURITY_SCORE_TEXT.LOW:
-          return 1;
-        default:
-          return 0;
+          case MATURITY_SCORE_TEXT.HIGH:
+            if (scoreB === MATURITY_SCORE_TEXT.ELITE) {
+              return 1;
+            }
+            return -1;
+          case MATURITY_SCORE_TEXT.MEDIUM:
+            if (scoreB === MATURITY_SCORE_TEXT.LOW) {
+              return -1;
+            }
+            return 1;
+          case MATURITY_SCORE_TEXT.LOW:
+            return 1;
+          default:
+            return 0;
         }
       }).map((data, index) => ({
         ...data,

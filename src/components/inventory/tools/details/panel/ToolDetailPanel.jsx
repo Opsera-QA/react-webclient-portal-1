@@ -63,178 +63,178 @@ function ToolDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case TOOL_DETAIL_PANEL_TABS.ACCOUNTS:
-      return (
-        <ToolAccountsPanel
-          isLoading={isLoading}
-          toolData={toolModel}
-          loadData={loadData}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.APPLICATIONS:
-      return (
-        <ToolApplicationsPanel
-          toolData={toolModel}
-          loadData={loadData}
-          isLoading={isLoading}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.ATTRIBUTES:
-      return (
-        <ToolAttributesPanel
-          toolData={toolModel}
-          setActiveTab={setActiveTab}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.ATTRIBUTE_SETTINGS:
-      return (
-        <ToolAttributeEditorPanel
-          toolData={toolModel}
-          setToolData={setToolModel}
-          loadData={loadData}
-          handleClose={toggleAttributesPanel}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.CONNECTION:
-      return (
-        <ToolConnectionPanel
-          toolData={toolModel}
-          setToolData={setToolModel}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.ENDPOINTS:
-      return (
-        <ToolEndpointsPanel
-          toolModel={toolModel}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.JOBS:
-      return (
-        <ToolJobsPanel
-          toolData={toolModel}
-          toolIdentifier={toolModel?.getData("tool_identifier")}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.LOGS:
-      return (
-        <ToolLogsPanel
-          toolData={toolModel}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.PATHS:
-      return (
-        <ToolPathsPanel
-          toolModel={toolModel}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.PROJECTS:
-      return (
-        <ToolProjectsPanel
-          toolData={toolModel}
-          isLoading={isLoading}
-          loadData={loadData}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.REPOSITORIES:
-      return (
-        <ToolRepositoriesPanel
-          toolData={toolModel}
-          setToolData={setToolModel}            
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.SETTINGS:
-      return (
-        <ToolEditorPanel
-          toolData={toolModel}
-          setToolData={setToolModel}
-          loadData={loadData}
-          handleClose={toggleSummaryPanel}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.STORAGE:
-      return (
-        <ToolStoragePanel
-          toolData={toolModel}
-          setToolData={setToolModel}
-          loadData={loadData}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.ORGANIZATIONS:
-      return (
-        <ToolOrganizationsPanel
-          toolData={toolModel}
-          setToolData={setToolModel}
-          loadData={loadData}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.WORKSPACES:
-      return (
-        <ToolWorkspacesPanel
-          toolData={toolModel}
-          setToolData={setToolModel}
-          loadData={loadData}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.PROVIDERS:
-      return (
-        <ToolProvidersPanel
-          toolData={toolModel}
-          setToolData={setToolModel}
-          loadData={loadData}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.SUMMARY:
-      return (
-        <ToolSummaryPanel
-          toolData={toolModel}
-          setToolData={setToolModel}
-          setActiveTab={setActiveTab}
-          loadToolFunction={loadData}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.USAGE:
-      return (
-        <ToolUsagePanel
-          toolData={toolModel}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.VAULT:
-      return (
-        <ToolVaultPanel
-          toolData={toolModel}
-          setToolData={setToolModel}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.MAPPING:
-      return (
-        <ToolServiceTypeMappingPanel
-          toolData={toolModel}
-          setToolData={setToolModel}
-          loadData={loadData}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.CLUSTERS:
-      return (
-        <ToolClustersPanel
-          toolModel={toolModel}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.LICENSES:
-      return (
-        <ToolLicensePanel
-          toolData={toolModel}
-        />
-      );
-    case TOOL_DETAIL_PANEL_TABS.DATA_TRANSFORMER:
-      return (
-        <ToolDataTransformerRulesMappingPanel
-          toolData={toolModel}
-          setToolData={setToolModel}
-          loadData={loadData}
-        />
-      );
-    default:
-      return null;
+      case TOOL_DETAIL_PANEL_TABS.ACCOUNTS:
+        return (
+          <ToolAccountsPanel
+            isLoading={isLoading}
+            toolData={toolModel}
+            loadData={loadData}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.APPLICATIONS:
+        return (
+          <ToolApplicationsPanel
+            toolData={toolModel}
+            loadData={loadData}
+            isLoading={isLoading}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.ATTRIBUTES:
+        return (
+          <ToolAttributesPanel
+            toolData={toolModel}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.ATTRIBUTE_SETTINGS:
+        return (
+          <ToolAttributeEditorPanel
+            toolData={toolModel}
+            setToolData={setToolModel}
+            loadData={loadData}
+            handleClose={toggleAttributesPanel}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.CONNECTION:
+        return (
+          <ToolConnectionPanel
+            toolData={toolModel}
+            setToolData={setToolModel}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.ENDPOINTS:
+        return (
+          <ToolEndpointsPanel
+            toolModel={toolModel}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.JOBS:
+        return (
+          <ToolJobsPanel
+            toolData={toolModel}
+            toolIdentifier={toolModel?.getData("tool_identifier")}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.LOGS:
+        return (
+          <ToolLogsPanel
+            toolData={toolModel}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.PATHS:
+        return (
+          <ToolPathsPanel
+            toolModel={toolModel}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.PROJECTS:
+        return (
+          <ToolProjectsPanel
+            toolData={toolModel}
+            isLoading={isLoading}
+            loadData={loadData}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.REPOSITORIES:
+        return (
+          <ToolRepositoriesPanel
+            toolData={toolModel}
+            setToolData={setToolModel}            
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.SETTINGS:
+        return (
+          <ToolEditorPanel
+            toolData={toolModel}
+            setToolData={setToolModel}
+            loadData={loadData}
+            handleClose={toggleSummaryPanel}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.STORAGE:
+        return (
+          <ToolStoragePanel
+            toolData={toolModel}
+            setToolData={setToolModel}
+            loadData={loadData}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.ORGANIZATIONS:
+        return (
+          <ToolOrganizationsPanel
+            toolData={toolModel}
+            setToolData={setToolModel}
+            loadData={loadData}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.WORKSPACES:
+        return (
+          <ToolWorkspacesPanel
+            toolData={toolModel}
+            setToolData={setToolModel}
+            loadData={loadData}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.PROVIDERS:
+        return (
+          <ToolProvidersPanel
+            toolData={toolModel}
+            setToolData={setToolModel}
+            loadData={loadData}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.SUMMARY:
+        return (
+          <ToolSummaryPanel
+            toolData={toolModel}
+            setToolData={setToolModel}
+            setActiveTab={setActiveTab}
+            loadToolFunction={loadData}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.USAGE:
+        return (
+          <ToolUsagePanel
+            toolData={toolModel}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.VAULT:
+        return (
+          <ToolVaultPanel
+            toolData={toolModel}
+            setToolData={setToolModel}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.MAPPING:
+        return (
+          <ToolServiceTypeMappingPanel
+            toolData={toolModel}
+            setToolData={setToolModel}
+            loadData={loadData}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.CLUSTERS:
+        return (
+          <ToolClustersPanel
+            toolModel={toolModel}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.LICENSES:
+        return (
+          <ToolLicensePanel
+            toolData={toolModel}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.DATA_TRANSFORMER:
+        return (
+          <ToolDataTransformerRulesMappingPanel
+            toolData={toolModel}
+            setToolData={setToolModel}
+            loadData={loadData}
+          />
+        );
+      default:
+        return null;
     }
   };
 

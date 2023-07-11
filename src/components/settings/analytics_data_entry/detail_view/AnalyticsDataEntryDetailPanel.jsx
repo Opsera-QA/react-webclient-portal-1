@@ -49,22 +49,22 @@ function AnalyticsDataEntryDetailPanel({ analyticsDataEntry }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <AnalyticsDataEntrySummaryPanel
-          analyticsDataEntry={analyticsDataEntry}
-          setActiveTab={getActiveTabSetter()}
-        />
-      );
-    case "settings":
-      return (
-        <AnalyticsDataEntryEditorPanel
-          handleClose={toggleSummaryPanel}
-          analyticsDataEntry={analyticsDataEntry}
-        />
-      );
-    default:
-      return null;
+      case "summary":
+        return (
+          <AnalyticsDataEntrySummaryPanel
+            analyticsDataEntry={analyticsDataEntry}
+            setActiveTab={getActiveTabSetter()}
+          />
+        );
+      case "settings":
+        return (
+          <AnalyticsDataEntryEditorPanel
+            handleClose={toggleSummaryPanel}
+            analyticsDataEntry={analyticsDataEntry}
+          />
+        );
+      default:
+        return null;
     }
   };
 

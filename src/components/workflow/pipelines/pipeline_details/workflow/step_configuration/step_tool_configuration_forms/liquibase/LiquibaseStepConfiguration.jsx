@@ -62,31 +62,31 @@ function LiquibaseStepConfiguration({ pipelineId, stepTool, plan, stepId, closeE
 
   const getDynamicFields = () => {
     switch (liquibaseStepConfigurationDto?.getData("dbType")) {
-    case "redshift":
-      return (          
-        <TextInputBase
-          dataObject={liquibaseStepConfigurationDto}
-          setDataObject={setLiquibaseConfigurationDataDto}
-          fieldName={"database"}
-        />
-      );
-    case "snowflake":
-      return (
-        <>
+      case "redshift":
+        return (          
           <TextInputBase
             dataObject={liquibaseStepConfigurationDto}
             setDataObject={setLiquibaseConfigurationDataDto}
             fieldName={"database"}
           />
-          <TextInputBase
-            dataObject={liquibaseStepConfigurationDto}
-            setDataObject={setLiquibaseConfigurationDataDto}
-            fieldName={"warehouse"}
-          />
-        </>
-      );
-    default:
-      return null;
+        );
+      case "snowflake":
+        return (
+          <>
+            <TextInputBase
+              dataObject={liquibaseStepConfigurationDto}
+              setDataObject={setLiquibaseConfigurationDataDto}
+              fieldName={"database"}
+            />
+            <TextInputBase
+              dataObject={liquibaseStepConfigurationDto}
+              setDataObject={setLiquibaseConfigurationDataDto}
+              fieldName={"warehouse"}
+            />
+          </>
+        );
+      default:
+        return null;
     }    
   };
 

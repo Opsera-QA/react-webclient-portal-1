@@ -25,13 +25,13 @@ export default function BulkMigrationActionableInsightSubNavigationBar(
     }
 
     switch (tabSelection) {
-    case "insights":
-      toastContext.removeInlineMessage();
-      toastContext.clearInfoOverlayPanel();
-      return;
-    case BULK_MIGRATION_ACTIONABLE_INSIGHT_SCREENS.BULK_MIGRATION_RUN_SUMMARY:
-      setCurrentScreen(BULK_MIGRATION_ACTIONABLE_INSIGHT_SCREENS.BULK_MIGRATION_RUN_SUMMARY);
-      return;
+      case "insights":
+        toastContext.removeInlineMessage();
+        toastContext.clearInfoOverlayPanel();
+        return;
+      case BULK_MIGRATION_ACTIONABLE_INSIGHT_SCREENS.BULK_MIGRATION_RUN_SUMMARY:
+        setCurrentScreen(BULK_MIGRATION_ACTIONABLE_INSIGHT_SCREENS.BULK_MIGRATION_RUN_SUMMARY);
+        return;
     }
   };
 

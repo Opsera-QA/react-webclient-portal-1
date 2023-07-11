@@ -58,113 +58,113 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
-    case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.REGISTER_SOURCE_GIT_ACCOUNT_SCREEN:
-      return (
-        <CreateWorkflowWizardCreateGitToolScreenBase
-          gitToolModel={gitToolModel}
-          setGitToolModel={setGitToolModel}
-          onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_SOURCE_GIT_ACCOUNT_CONNECTION_SCREEN)}
-          setGitToolId={setGitToolId}
-          gitToolOption={gitToolOption}
-          setGitToolOption={setGitToolOption}
-          gitToolId={gitToolId}
-          className={"m-3"}
-          setButtonContainer={setButtonContainer}
-          backButtonFunction={backButtonFunction}
-          toolType={CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES.SOURCE}
-        />
-      );
-    case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_SOURCE_GIT_ACCOUNT_CONNECTION_SCREEN:
-      return (
-        <CreateSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen
-          setCurrentScreen={setCurrentScreen}
-          gitToolId={gitToolId}
-          gitToolOption={gitToolOption}
-          pipeline={pipeline}
-          flow={flow}
-          setButtonContainer={setButtonContainer}
-        />
-      );
-    case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.REGISTER_SOURCE_SALESFORCE_ACCOUNT_SCREEN:
-      return (
-        <CreateWorkflowWizardCreateSalesforceToolEditorPanel
-          salesforceToolModel={sourceSalesforceToolModel}
-          setSalesforceToolModel={setSourceSalesforceToolModel}
-          salesforceToolId={sourceSalesforceToolId}
-          setSalesforceToolId={setSourceSalesforceToolId}
-          onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_ACCOUNT_CONNECTION_SCREEN)}
-          toolType={CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES.SOURCE}
-          className={"m-3"}
-          setButtonContainer={setButtonContainer}
-          backButtonFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.REGISTER_SOURCE_GIT_ACCOUNT_SCREEN)}
-        />
-      );
-    case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_ACCOUNT_CONNECTION_SCREEN:
-      return (
-        <CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen
-          setCurrentScreen={setCurrentScreen}
-          salesforceToolId={sourceSalesforceToolId}
-          setButtonContainer={setButtonContainer}
-        />
-      );
-    case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.REGISTER_DESTINATION_SALESFORCE_ACCOUNT_SCREEN:
-      return (
-        <CreateWorkflowWizardCreateSalesforceToolEditorPanel
-          salesforceToolModel={destinationSalesforceToolModel}
-          setSalesforceToolModel={setDestinationSalesforceToolModel}
-          salesforceToolId={destinationSalesforceToolId}
-          setSalesforceToolId={setDestinationSalesforceToolId}
-          onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_DESTINATION_SALESFORCE_ACCOUNT_CONNECTION_SCREEN)}
-          toolType={CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES.DESTINATION}
-          className={"m-3"}
-          setButtonContainer={setButtonContainer}
-          backButtonFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.REGISTER_SOURCE_SALESFORCE_ACCOUNT_SCREEN)}
-        />
-      );
-    case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_DESTINATION_SALESFORCE_ACCOUNT_CONNECTION_SCREEN:
-      return (
-        <CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen
-          setCurrentScreen={setCurrentScreen}
-          salesforceToolId={destinationSalesforceToolId}
-          flow={flow}
-          setButtonContainer={setButtonContainer}
-        />
-      );
-    case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-      return (
-        <CreateSalesforceOrganizationSyncPipelineInitializationScreen
-          setPipeline={setPipeline}
-          flow={flow}
-          setCurrentScreen={setCurrentScreen}
-          setButtonContainer={setButtonContainer}
-          destinationSalesforceToolId={destinationSalesforceToolId}
-          sourceSalesforceToolId={sourceSalesforceToolId}
-          gitToolId={gitToolId}
-          gitToolOption={gitToolOption}
-        />
-      );
-    case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_IN_JENKINS_SCREEN:
-      return (
-        <CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase
-          gitToolId={gitToolId}
-          gitToolOption={gitToolOption}
-          onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN)}
-          onFailureFunction={() => {}}
-          jenkinsToolId={salesforcePipelineHelper.getJenkinsToolIdFromCreatePackageStep(
-            pipeline,
-          )}
-          className={"m-3"}
-          setButtonContainer={setButtonContainer}
-        />
-      );
-    case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
-      return (
-        <CreateWorkflowWizardPipelineCompletionScreen
-          pipeline={pipeline}
-          workflowType={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
-          setButtonContainer={setButtonContainer}
-        />
-      );
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.REGISTER_SOURCE_GIT_ACCOUNT_SCREEN:
+        return (
+          <CreateWorkflowWizardCreateGitToolScreenBase
+            gitToolModel={gitToolModel}
+            setGitToolModel={setGitToolModel}
+            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_SOURCE_GIT_ACCOUNT_CONNECTION_SCREEN)}
+            setGitToolId={setGitToolId}
+            gitToolOption={gitToolOption}
+            setGitToolOption={setGitToolOption}
+            gitToolId={gitToolId}
+            className={"m-3"}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={backButtonFunction}
+            toolType={CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES.SOURCE}
+          />
+        );
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_SOURCE_GIT_ACCOUNT_CONNECTION_SCREEN:
+        return (
+          <CreateSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen
+            setCurrentScreen={setCurrentScreen}
+            gitToolId={gitToolId}
+            gitToolOption={gitToolOption}
+            pipeline={pipeline}
+            flow={flow}
+            setButtonContainer={setButtonContainer}
+          />
+        );
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.REGISTER_SOURCE_SALESFORCE_ACCOUNT_SCREEN:
+        return (
+          <CreateWorkflowWizardCreateSalesforceToolEditorPanel
+            salesforceToolModel={sourceSalesforceToolModel}
+            setSalesforceToolModel={setSourceSalesforceToolModel}
+            salesforceToolId={sourceSalesforceToolId}
+            setSalesforceToolId={setSourceSalesforceToolId}
+            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_ACCOUNT_CONNECTION_SCREEN)}
+            toolType={CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES.SOURCE}
+            className={"m-3"}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.REGISTER_SOURCE_GIT_ACCOUNT_SCREEN)}
+          />
+        );
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_ACCOUNT_CONNECTION_SCREEN:
+        return (
+          <CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen
+            setCurrentScreen={setCurrentScreen}
+            salesforceToolId={sourceSalesforceToolId}
+            setButtonContainer={setButtonContainer}
+          />
+        );
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.REGISTER_DESTINATION_SALESFORCE_ACCOUNT_SCREEN:
+        return (
+          <CreateWorkflowWizardCreateSalesforceToolEditorPanel
+            salesforceToolModel={destinationSalesforceToolModel}
+            setSalesforceToolModel={setDestinationSalesforceToolModel}
+            salesforceToolId={destinationSalesforceToolId}
+            setSalesforceToolId={setDestinationSalesforceToolId}
+            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_DESTINATION_SALESFORCE_ACCOUNT_CONNECTION_SCREEN)}
+            toolType={CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES.DESTINATION}
+            className={"m-3"}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.REGISTER_SOURCE_SALESFORCE_ACCOUNT_SCREEN)}
+          />
+        );
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.TEST_DESTINATION_SALESFORCE_ACCOUNT_CONNECTION_SCREEN:
+        return (
+          <CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen
+            setCurrentScreen={setCurrentScreen}
+            salesforceToolId={destinationSalesforceToolId}
+            flow={flow}
+            setButtonContainer={setButtonContainer}
+          />
+        );
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+        return (
+          <CreateSalesforceOrganizationSyncPipelineInitializationScreen
+            setPipeline={setPipeline}
+            flow={flow}
+            setCurrentScreen={setCurrentScreen}
+            setButtonContainer={setButtonContainer}
+            destinationSalesforceToolId={destinationSalesforceToolId}
+            sourceSalesforceToolId={sourceSalesforceToolId}
+            gitToolId={gitToolId}
+            gitToolOption={gitToolOption}
+          />
+        );
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_IN_JENKINS_SCREEN:
+        return (
+          <CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase
+            gitToolId={gitToolId}
+            gitToolOption={gitToolOption}
+            onSuccessFunction={() => setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN)}
+            onFailureFunction={() => {}}
+            jenkinsToolId={salesforcePipelineHelper.getJenkinsToolIdFromCreatePackageStep(
+              pipeline,
+            )}
+            className={"m-3"}
+            setButtonContainer={setButtonContainer}
+          />
+        );
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
+        return (
+          <CreateWorkflowWizardPipelineCompletionScreen
+            pipeline={pipeline}
+            workflowType={salesforceWorkflowFlowConstants.getLabelForSalesforceFlow(flow)}
+            setButtonContainer={setButtonContainer}
+          />
+        );
     }
   };
 

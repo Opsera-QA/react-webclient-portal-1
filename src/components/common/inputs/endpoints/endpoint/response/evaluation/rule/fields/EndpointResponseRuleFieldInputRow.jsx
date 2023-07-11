@@ -55,106 +55,106 @@ function EndpointResponseRuleFieldInputRow(
 
     if (canEnterValue.includes(filter)) {
       switch (type) {
-      case "string":
-        if (isSensitiveData === true) {
+        case "string":
+          if (isSensitiveData === true) {
+            return (
+              <div style={{minHeight: responseParameterInputHeight}}>
+                <CustomParameterSelectInput
+                  model={endpointFieldModel}
+                  setModel={setEndpointFieldModel}
+                  fieldName={"value"}
+                  className={"value-parameter"}
+                  requireVaultSavedParameters={true}
+                  setDataFunction={updateCustomParameterField}
+                  disabled={disabled}
+                />
+              </div>
+            );
+          }
+
           return (
             <div style={{minHeight: responseParameterInputHeight}}>
-              <CustomParameterSelectInput
+              <CustomParameterComboBoxInput
                 model={endpointFieldModel}
                 setModel={setEndpointFieldModel}
                 fieldName={"value"}
                 className={"value-parameter"}
-                requireVaultSavedParameters={true}
+                requireInsensitiveParameters={true}
                 setDataFunction={updateCustomParameterField}
                 disabled={disabled}
               />
             </div>
           );
-        }
-
-        return (
-          <div style={{minHeight: responseParameterInputHeight}}>
-            <CustomParameterComboBoxInput
+        case "array":
+          return (
+            <MultiTextListInputBase
               model={endpointFieldModel}
               setModel={setEndpointFieldModel}
               fieldName={"value"}
-              className={"value-parameter"}
-              requireInsensitiveParameters={true}
-              setDataFunction={updateCustomParameterField}
-              disabled={disabled}
-            />
-          </div>
-        );
-      case "array":
-        return (
-          <MultiTextListInputBase
-            model={endpointFieldModel}
-            setModel={setEndpointFieldModel}
-            fieldName={"value"}
-            setDataFunction={updateMainModelFunction}
-            disabled={disabled}
-            singularTopic={"Value"}
-            pluralTopic={"Values"}
-            minimumHeight={responseParameterArrayInputHeight}
-            maximumHeight={responseParameterArrayInputHeight}
-          />
-        );
-      case "date":
-        return (
-          <div style={{minHeight: responseParameterInputHeight}}>
-            <DateTimeInput
-              dataObject={endpointFieldModel}
-              setDataObject={setEndpointFieldModel}
               setDataFunction={updateMainModelFunction}
-              fieldName={"value"}
-              defaultToNull={true}
               disabled={disabled}
-              clearDataFunction={() => updateMainModelFunction("value", undefined)}
+              singularTopic={"Value"}
+              pluralTopic={"Values"}
+              minimumHeight={responseParameterArrayInputHeight}
+              maximumHeight={responseParameterArrayInputHeight}
             />
-          </div>
-        );
-      case "number":
-        return (
-          <div style={{minHeight: responseParameterInputHeight}}>
-            <NumberPickerInputBase
-              dataObject={endpointFieldModel}
-              setDataObject={setEndpointFieldModel}
-              setDataFunction={updateMainModelFunction}
-              fieldName={"value"}
-              disabled={disabled}
-            />
-          </div>
-        );
-      case "integer":
-        return (
-          <div style={{minHeight: responseParameterInputHeight}}>
-            <IntegerTextInputBase
-              dataObject={endpointFieldModel}
-              setDataObject={setEndpointFieldModel}
-              setDataFunction={updateMainModelFunction}
-              fieldName={"value"}
-              disabled={disabled}
-            />
-          </div>
-        );
-      case "boolean":
-        return (
-          <div style={{minHeight: responseParameterInputHeight}}>
-            <BooleanToggleInput
-              dataObject={endpointFieldModel}
-              setDataObject={updateMainModel}
-              fieldName={"value"}
-              disabled={disabled}
-            />
-          </div>
-        );
-      case "object":
-      default:
-        return (
-          <CenteredContentWrapper>
-            <div>{`Entering this parameter type's value is not currently supported.`}</div>
-          </CenteredContentWrapper>
-        );
+          );
+        case "date":
+          return (
+            <div style={{minHeight: responseParameterInputHeight}}>
+              <DateTimeInput
+                dataObject={endpointFieldModel}
+                setDataObject={setEndpointFieldModel}
+                setDataFunction={updateMainModelFunction}
+                fieldName={"value"}
+                defaultToNull={true}
+                disabled={disabled}
+                clearDataFunction={() => updateMainModelFunction("value", undefined)}
+              />
+            </div>
+          );
+        case "number":
+          return (
+            <div style={{minHeight: responseParameterInputHeight}}>
+              <NumberPickerInputBase
+                dataObject={endpointFieldModel}
+                setDataObject={setEndpointFieldModel}
+                setDataFunction={updateMainModelFunction}
+                fieldName={"value"}
+                disabled={disabled}
+              />
+            </div>
+          );
+        case "integer":
+          return (
+            <div style={{minHeight: responseParameterInputHeight}}>
+              <IntegerTextInputBase
+                dataObject={endpointFieldModel}
+                setDataObject={setEndpointFieldModel}
+                setDataFunction={updateMainModelFunction}
+                fieldName={"value"}
+                disabled={disabled}
+              />
+            </div>
+          );
+        case "boolean":
+          return (
+            <div style={{minHeight: responseParameterInputHeight}}>
+              <BooleanToggleInput
+                dataObject={endpointFieldModel}
+                setDataObject={updateMainModel}
+                fieldName={"value"}
+                disabled={disabled}
+              />
+            </div>
+          );
+        case "object":
+        default:
+          return (
+            <CenteredContentWrapper>
+              <div>{`Entering this parameter type's value is not currently supported.`}</div>
+            </CenteredContentWrapper>
+          );
       }
     }
   };

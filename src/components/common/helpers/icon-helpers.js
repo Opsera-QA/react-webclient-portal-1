@@ -46,25 +46,25 @@ export function getLargeVendorIconFromToolIdentifier(
   const iconFontSize = `${75 * scaleFactor}px`;
 
   switch (toolIdentifier) {
-  case toolIdentifierConstants.TOOL_IDENTIFIERS.OCTOPUS:
-    return (
-      <IconBase
-        icon={faOctopusDeploy}
-        iconStyling={{color: "#0D80D8"}}
-        iconFontSize={iconFontSize}
-      />
-    );
-  case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
-  case toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR:
-    return (
-      <IconBase
-        className={"d-flex h-100"}
-        imageClassName={"my-auto"}
-        icon={faSalesforce}
-        iconStyling={{color: "#0D80D8"}}
-        iconFontSize={iconFontSize}
-      />
-    );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.OCTOPUS:
+      return (
+        <IconBase
+          icon={faOctopusDeploy}
+          iconStyling={{color: "#0D80D8"}}
+          iconFontSize={iconFontSize}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR:
+      return (
+        <IconBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          icon={faSalesforce}
+          iconStyling={{color: "#0D80D8"}}
+          iconFontSize={iconFontSize}
+        />
+      );
   }
 
   const imageLink = vendorImageConstants.getVendorImageForToolIdentifier(toolIdentifier);
@@ -143,55 +143,55 @@ export function getLargeVendorIconComponentFromTaskType (taskType, scaleFactor =
   const category = taskTypeConstants.getTaskCategoryForType(taskType);
 
   switch (category) {
-  case TASK_TYPE_CATEGORIES.SALESFORCE:
-    return (
-      <IconBase
-        className={"d-flex h-100"}
-        imageClassName={"my-auto"}
-        icon={faSalesforce}
-        iconStyling={{color: "#0D80D8"}}
-        iconFontSize={iconFontSize}
-      />
-    // <ImageBase
-    //   height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL)}
-    //   imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL}
-    // />
-    );
-  case TASK_TYPE_CATEGORIES.GIT:
-    return (
-      <ImageBase
-        height={scaledImageHeight}
-        imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GIT}
-      />
-    );
-  case TASK_TYPE_CATEGORIES.AWS:
-    return (
-      <ImageBase
-        height={scaledImageHeight}
-        imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AWS}
-      />
-    );
-  case TASK_TYPE_CATEGORIES.COMPLIANCE:
-    return (
-      <IconBase
-        icon={faClipboardListCheck}
-        iconFontSize={`${iconFontSize}px`}
-      />
-    );
-  case TASK_TYPE_CATEGORIES.AZURE:
-    return (
-      <ImageBase
-        height={scaledImageHeight}
-        imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AZURE}
-      />
-    );
-  default:
-    return (
-      <ImageBase
-        height={scaledImageHeight}
-        imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SOFTWARE_DEVELOPMENT_GENERAL}
-      />
-    );
+    case TASK_TYPE_CATEGORIES.SALESFORCE:
+      return (
+        <IconBase
+          className={"d-flex h-100"}
+          imageClassName={"my-auto"}
+          icon={faSalesforce}
+          iconStyling={{color: "#0D80D8"}}
+          iconFontSize={iconFontSize}
+        />
+      // <ImageBase
+      //   height={platformImageConstants.getRecommendedCardPlatformImageHeight(platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL)}
+      //   imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL}
+      // />
+      );
+    case TASK_TYPE_CATEGORIES.GIT:
+      return (
+        <ImageBase
+          height={scaledImageHeight}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GIT}
+        />
+      );
+    case TASK_TYPE_CATEGORIES.AWS:
+      return (
+        <ImageBase
+          height={scaledImageHeight}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AWS}
+        />
+      );
+    case TASK_TYPE_CATEGORIES.COMPLIANCE:
+      return (
+        <IconBase
+          icon={faClipboardListCheck}
+          iconFontSize={`${iconFontSize}px`}
+        />
+      );
+    case TASK_TYPE_CATEGORIES.AZURE:
+      return (
+        <ImageBase
+          height={scaledImageHeight}
+          imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AZURE}
+        />
+      );
+    default:
+      return (
+        <ImageBase
+          height={scaledImageHeight}
+          imageSource={platformImageConstants.PLATFORM_IMAGE_LINKS.SOFTWARE_DEVELOPMENT_GENERAL}
+        />
+      );
   }
 }
 

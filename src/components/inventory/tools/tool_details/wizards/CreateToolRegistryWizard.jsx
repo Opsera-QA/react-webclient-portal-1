@@ -45,25 +45,25 @@ export default function CreateToolRegistryWizard({ loadData, backButtonFunction,
 
   useEffect(() => {
     switch (currentScreen) {
-    case REGISTRY_WIZARD_SCREENS.MODE_SELECT:
-      setOverlayTitle(REGISTRY_WIZARD_TITLES.MODE_SELECT);
-      return;
-    case REGISTRY_WIZARD_SCREENS.TOOL_IDENTIFIER_SELECT:
-      if (
-        toolModel?.getData("tool_identifier") == null ||
-          toolModel?.getData("tool_identifier") === ""
-      ) {
-        setOverlayTitle(REGISTRY_WIZARD_TITLES.TOOL_IDENTIFIER_SELECT);
+      case REGISTRY_WIZARD_SCREENS.MODE_SELECT:
+        setOverlayTitle(REGISTRY_WIZARD_TITLES.MODE_SELECT);
         return;
-      }
-      setOverlayTitle(REGISTRY_WIZARD_TITLES.BASIC_TOOL_INFO);
-      return;
-    case REGISTRY_WIZARD_SCREENS.CONNECTION_INFO:
-      setOverlayTitle(REGISTRY_WIZARD_TITLES.CONNECTION_INFO);
-      return;
-    case REGISTRY_WIZARD_SCREENS.CONNECTION_TEST:
-      setOverlayTitle(REGISTRY_WIZARD_TITLES.CONNECTION_TEST);
-      return;
+      case REGISTRY_WIZARD_SCREENS.TOOL_IDENTIFIER_SELECT:
+        if (
+          toolModel?.getData("tool_identifier") == null ||
+          toolModel?.getData("tool_identifier") === ""
+        ) {
+          setOverlayTitle(REGISTRY_WIZARD_TITLES.TOOL_IDENTIFIER_SELECT);
+          return;
+        }
+        setOverlayTitle(REGISTRY_WIZARD_TITLES.BASIC_TOOL_INFO);
+        return;
+      case REGISTRY_WIZARD_SCREENS.CONNECTION_INFO:
+        setOverlayTitle(REGISTRY_WIZARD_TITLES.CONNECTION_INFO);
+        return;
+      case REGISTRY_WIZARD_SCREENS.CONNECTION_TEST:
+        setOverlayTitle(REGISTRY_WIZARD_TITLES.CONNECTION_TEST);
+        return;
     }
   }, [currentScreen, toolModel?.getData("tool_identifier")]);
 
@@ -144,43 +144,43 @@ export default function CreateToolRegistryWizard({ loadData, backButtonFunction,
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
-    case REGISTRY_WIZARD_SCREENS.MODE_SELECT:
-      return (
-        <ToolSetupModeSelect
-          setCurrentScreen={setCurrentScreen}
-          closeOverlayFunction={closeOverlayFunction}
-          setButtonContainer={setButtonContainer}
-          setSetupMode={setSetupMode}
-          setupMode={setUpMode}
-          className={"py-5"}
-          backButtonFunction={backButtonFunction}
-        />
-      );
-    case REGISTRY_WIZARD_SCREENS.TOOL_IDENTIFIER_SELECT:
-      return getIdentifierSelectView();
-    case REGISTRY_WIZARD_SCREENS.CONNECTION_INFO:
-      return (
-        <ToolConnectionPanel
-          toolData={toolModel}
-          setToolData={setToolModel}
-          setUpMode={setUpMode}
-          setCurrentScreen={setCurrentScreen}
-          setButtonContainer={setButtonContainer}
-          handleClose={closeOverlayFunction}
-        />
-      );
-    case REGISTRY_WIZARD_SCREENS.CONNECTION_TEST:
-      return (
-        <ToolConnectionCheck
-          toolData={toolModel}
-          setButtonContainer={setButtonContainer}
-          setCurrentScreen={setCurrentScreen}
-          backButtonFunction={handleBackButtonFunction}
-          handleClose={closeOverlayFunction}
-        />
-      );
-    case REGISTRY_WIZARD_SCREENS.TOOL_DETAIL:
-      return routeToDetailView();
+      case REGISTRY_WIZARD_SCREENS.MODE_SELECT:
+        return (
+          <ToolSetupModeSelect
+            setCurrentScreen={setCurrentScreen}
+            closeOverlayFunction={closeOverlayFunction}
+            setButtonContainer={setButtonContainer}
+            setSetupMode={setSetupMode}
+            setupMode={setUpMode}
+            className={"py-5"}
+            backButtonFunction={backButtonFunction}
+          />
+        );
+      case REGISTRY_WIZARD_SCREENS.TOOL_IDENTIFIER_SELECT:
+        return getIdentifierSelectView();
+      case REGISTRY_WIZARD_SCREENS.CONNECTION_INFO:
+        return (
+          <ToolConnectionPanel
+            toolData={toolModel}
+            setToolData={setToolModel}
+            setUpMode={setUpMode}
+            setCurrentScreen={setCurrentScreen}
+            setButtonContainer={setButtonContainer}
+            handleClose={closeOverlayFunction}
+          />
+        );
+      case REGISTRY_WIZARD_SCREENS.CONNECTION_TEST:
+        return (
+          <ToolConnectionCheck
+            toolData={toolModel}
+            setButtonContainer={setButtonContainer}
+            setCurrentScreen={setCurrentScreen}
+            backButtonFunction={handleBackButtonFunction}
+            handleClose={closeOverlayFunction}
+          />
+        );
+      case REGISTRY_WIZARD_SCREENS.TOOL_DETAIL:
+        return routeToDetailView();
     }
   };
 

@@ -28,12 +28,12 @@ function SiteNotificationDetailPanel({ siteNotificationData, setSiteNotification
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return <SiteNotificationSummaryPanel siteNotificationData={siteNotificationData} setSiteNotificationData={setSiteNotificationData} setActiveTab={setActiveTab} />;
-    case "settings":
-      return <SiteNotificationEditorPanel setSiteNotificationData={setSiteNotificationData} siteNotificationData={siteNotificationData} />;
-    default:
-      return null;
+      case "summary":
+        return <SiteNotificationSummaryPanel siteNotificationData={siteNotificationData} setSiteNotificationData={setSiteNotificationData} setActiveTab={setActiveTab} />;
+      case "settings":
+        return <SiteNotificationEditorPanel setSiteNotificationData={setSiteNotificationData} siteNotificationData={siteNotificationData} />;
+      default:
+        return null;
     }
   };
 

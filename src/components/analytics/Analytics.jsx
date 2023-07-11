@@ -370,221 +370,221 @@ function ChartView({ selection, persona, date, index }) {
 
   if (selection) {
     switch (selection) {
-    case "pipeline":
-      return (
-        <>
-          <div className="mt-2">
-            <SummaryChartsView date={date} index={index}/>
-          </div>
-        </>
-      );
-
-    case "security":
-      return (
-        <>
-          {index.includes("sonar") ? (
-            <>
-              <div className="mt-2">
-                <ReliabilityMetricsCharts persona={persona} date={date}/>
-              </div>
-              <div className="d-flex">
-                <div className="align-self-stretch p-2 w-100">
-                  <SonarSecurityLineChart persona={persona} sonarMeasure="vulnerabilities" date={date}/>
-                </div>
-                <div className="align-self-stretch p-2 w-100">
-                  <SonarSecurityLineChart persona={persona} sonarMeasure="new_vulnerabilities" date={date}/>
-                </div>
-              </div>
-              <div className="d-flex">
-                <div className="align-self-stretch p-2 w-100">
-                  <SonarSecurityLineChart persona={persona} sonarMeasure="code_smells" date={date}/>
-                </div>
-                <div className="align-self-stretch p-2 w-100">
-                  <SonarSecurityLineChart persona={persona} sonarMeasure="new_technical_debt" date={date}/>
-                </div>
-              </div>
-            </>
-          ) : (
-            <div
-              className="mt-3 bordered-content-block p-3 max-content-width"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Row>
-                <InfoDialog
-                  message="No activity data has been captured for this dashboard. In order to activate security metrics contact support@opsera.io"/>
-              </Row>
+      case "pipeline":
+        return (
+          <>
+            <div className="mt-2">
+              <SummaryChartsView date={date} index={index}/>
             </div>
-          )}
-        </>
-      );
+          </>
+        );
 
-    case "software_development":
-      return (
-        <>
-          {!index.includes("jenkins") && !index.includes("jira") ? (
-            <div
-              className="mt-3 bordered-content-block p-3 max-content-width"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Row>
-                <InfoDialog
-                  message="No activity data has been captured for this dashboard. In order to activate software development metrics contact support@opsera.io"/>
-              </Row>
-            </div>
-          ) : (
-            <>
-              {index.includes("jenkins") ? (
-                <div className="d-flex">
-                  <div className="align-self-stretch p-2 w-100">
-                    <DeploymentFrequencyLineChart persona={persona} date={date}/>
-                  </div>
-                  <div className="align-self-stretch p-2 w-100">
-                    <DeploymentsStackedBarChart persona={persona} date={date}/>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-              {index.includes("jira") ? (
-                <div className="d-flex">
-                  <div className="align-self-stretch p-2 w-100">
-                    <JiraIssuesCreatedByDateLineChart persona={persona} date={date}/>
-                  </div>
-                  <div className="align-self-stretch p-2 w-100">
-                    <JiraHealthBySprintBarChart persona={persona} date={date}/>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-              {index.includes("jenkins") ? (
-                <div className="d-flex">
-                  <div className="align-self-stretch p-2 w-100">
-                    <CircleChart persona={persona} date={date}/>
-                  </div>
-                  <div className="align-self-stretch p-2 w-100">{/* Self Contained Chart Component 4  */}</div>
-                </div>
-              ) : (
-                ""
-              )}
-            </>
-          )}
-        </>
-      );
-
-    case "software_testing":
-      return (
-        <>
-          {!index.includes("sonar") && !index.includes("jmeter") ? (
-            <div
-              className="mt-3 bordered-content-block p-3 max-content-width"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Row>
-                <InfoDialog
-                  message="No activity data has been captured for this dashboard. In order to activate software testing metrics contact support@opsera.io"/>
-              </Row>
-            </div>
-          ) : (
-            <>
-              {index.includes("sonar") ? (
+      case "security":
+        return (
+          <>
+            {index.includes("sonar") ? (
+              <>
                 <div className="mt-2">
-                  <CodeCoverageMetricsView date={date}/>
+                  <ReliabilityMetricsCharts persona={persona} date={date}/>
                 </div>
-              ) : (
-                ""
-              )}
-              {index.includes("jmeter") ? (
-                <>
+                <div className="d-flex">
+                  <div className="align-self-stretch p-2 w-100">
+                    <SonarSecurityLineChart persona={persona} sonarMeasure="vulnerabilities" date={date}/>
+                  </div>
+                  <div className="align-self-stretch p-2 w-100">
+                    <SonarSecurityLineChart persona={persona} sonarMeasure="new_vulnerabilities" date={date}/>
+                  </div>
+                </div>
+                <div className="d-flex">
+                  <div className="align-self-stretch p-2 w-100">
+                    <SonarSecurityLineChart persona={persona} sonarMeasure="code_smells" date={date}/>
+                  </div>
+                  <div className="align-self-stretch p-2 w-100">
+                    <SonarSecurityLineChart persona={persona} sonarMeasure="new_technical_debt" date={date}/>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div
+                className="mt-3 bordered-content-block p-3 max-content-width"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Row>
+                  <InfoDialog
+                    message="No activity data has been captured for this dashboard. In order to activate security metrics contact support@opsera.io"/>
+                </Row>
+              </div>
+            )}
+          </>
+        );
+
+      case "software_development":
+        return (
+          <>
+            {!index.includes("jenkins") && !index.includes("jira") ? (
+              <div
+                className="mt-3 bordered-content-block p-3 max-content-width"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Row>
+                  <InfoDialog
+                    message="No activity data has been captured for this dashboard. In order to activate software development metrics contact support@opsera.io"/>
+                </Row>
+              </div>
+            ) : (
+              <>
+                {index.includes("jenkins") ? (
                   <div className="d-flex">
                     <div className="align-self-stretch p-2 w-100">
-                      <JMeterHitsLineChart persona={persona} date={date}/>
+                      <DeploymentFrequencyLineChart persona={persona} date={date}/>
                     </div>
                     <div className="align-self-stretch p-2 w-100">
-                      <JMeterErrorsLineChart persona={persona} date={date}/>
+                      <DeploymentsStackedBarChart persona={persona} date={date}/>
                     </div>
                   </div>
+                ) : (
+                  ""
+                )}
+                {index.includes("jira") ? (
                   <div className="d-flex">
                     <div className="align-self-stretch p-2 w-100">
-                      <JMeterThroughputLineChart persona={persona} date={date}/>
+                      <JiraIssuesCreatedByDateLineChart persona={persona} date={date}/>
                     </div>
                     <div className="align-self-stretch p-2 w-100">
-                      <JMeterResponseTimeLineChart persona={persona} date={date}/>
+                      <JiraHealthBySprintBarChart persona={persona} date={date}/>
                     </div>
                   </div>
-                  <JMeterResultsTable date={date}/>
-                </>
-              ) : (
-                ""
-              )}
-            </>
-          )}
-        </>
-      );
+                ) : (
+                  ""
+                )}
+                {index.includes("jenkins") ? (
+                  <div className="d-flex">
+                    <div className="align-self-stretch p-2 w-100">
+                      <CircleChart persona={persona} date={date}/>
+                    </div>
+                    <div className="align-self-stretch p-2 w-100">{/* Self Contained Chart Component 4  */}</div>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </>
+            )}
+          </>
+        );
 
-    case "source_code":
-      return (
-        <>
-          {index.includes("gitlab") ? (
-            <div className="mt-2">
-              <SourceCodeView persona={persona} date={date}/>
-            </div>
-          ) : (
-            <div
-              className="mt-3 bordered-content-block p-3 max-content-width"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Row>
-                <InfoDialog
-                  message="No activity data has been captured for this dashboard. In order to activate source code metrics contact support@opsera.io"/>
-              </Row>
-            </div>
-          )}
-        </>
-      );
+      case "software_testing":
+        return (
+          <>
+            {!index.includes("sonar") && !index.includes("jmeter") ? (
+              <div
+                className="mt-3 bordered-content-block p-3 max-content-width"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Row>
+                  <InfoDialog
+                    message="No activity data has been captured for this dashboard. In order to activate software testing metrics contact support@opsera.io"/>
+                </Row>
+              </div>
+            ) : (
+              <>
+                {index.includes("sonar") ? (
+                  <div className="mt-2">
+                    <CodeCoverageMetricsView date={date}/>
+                  </div>
+                ) : (
+                  ""
+                )}
+                {index.includes("jmeter") ? (
+                  <>
+                    <div className="d-flex">
+                      <div className="align-self-stretch p-2 w-100">
+                        <JMeterHitsLineChart persona={persona} date={date}/>
+                      </div>
+                      <div className="align-self-stretch p-2 w-100">
+                        <JMeterErrorsLineChart persona={persona} date={date}/>
+                      </div>
+                    </div>
+                    <div className="d-flex">
+                      <div className="align-self-stretch p-2 w-100">
+                        <JMeterThroughputLineChart persona={persona} date={date}/>
+                      </div>
+                      <div className="align-self-stretch p-2 w-100">
+                        <JMeterResponseTimeLineChart persona={persona} date={date}/>
+                      </div>
+                    </div>
+                    <JMeterResultsTable date={date}/>
+                  </>
+                ) : (
+                  ""
+                )}
+              </>
+            )}
+          </>
+        );
 
-    case "operations":
-      return (
-        <>
-          {index.includes("metricbeat") ? (
-            <div className="mt-2">
-              <OperationsView persona={persona} date={date} />
-            </div>
-          ) : (
-            <div
-              className="mt-3 bordered-content-block p-3 max-content-width"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Row>
-                <InfoDialog message="No activity data has been captured for this dashboard. In order to activate source code metrics contact support@opsera.io" />
-              </Row>
-            </div>
-          )}
-        </>
-      );
+      case "source_code":
+        return (
+          <>
+            {index.includes("gitlab") ? (
+              <div className="mt-2">
+                <SourceCodeView persona={persona} date={date}/>
+              </div>
+            ) : (
+              <div
+                className="mt-3 bordered-content-block p-3 max-content-width"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Row>
+                  <InfoDialog
+                    message="No activity data has been captured for this dashboard. In order to activate source code metrics contact support@opsera.io"/>
+                </Row>
+              </div>
+            )}
+          </>
+        );
 
-    default:
-      return null;
+      case "operations":
+        return (
+          <>
+            {index.includes("metricbeat") ? (
+              <div className="mt-2">
+                <OperationsView persona={persona} date={date} />
+              </div>
+            ) : (
+              <div
+                className="mt-3 bordered-content-block p-3 max-content-width"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Row>
+                  <InfoDialog message="No activity data has been captured for this dashboard. In order to activate source code metrics contact support@opsera.io" />
+                </Row>
+              </div>
+            )}
+          </>
+        );
+
+      default:
+        return null;
     }
   }
 }

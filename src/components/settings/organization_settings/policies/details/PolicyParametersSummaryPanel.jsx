@@ -19,15 +19,15 @@ export default function PolicyParametersSummaryPanel(
   }
 
   switch (policyName) {
-  case policyConstants.POLICY_NAMES.PIPELINE_PRIVATE_CATALOG_PUBLISHING_RESTRICTIONS:
-    return (
-      <SiteRoleAccessField
-        model={policyParameterModel}
-        fieldName={"allowed_roles"}
-      />
-    );
-  default:
-    return null;
+    case policyConstants.POLICY_NAMES.PIPELINE_PRIVATE_CATALOG_PUBLISHING_RESTRICTIONS:
+      return (
+        <SiteRoleAccessField
+          model={policyParameterModel}
+          fieldName={"allowed_roles"}
+        />
+      );
+    default:
+      return null;
   }
 }
 

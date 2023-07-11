@@ -26,17 +26,17 @@ export default function SalesforceOrgSyncActionableInsightSubNavigationBar(
     }
 
     switch (tabSelection) {
-    case "insights":
-      toastContext.removeInlineMessage();
-      toastContext.clearInfoOverlayPanel();
-      return;
-    case SALESFORCE_ORG_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_ORG_SYNC_RUN_SUMMARY:
-      setCurrentScreen(SALESFORCE_ORG_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_ORG_SYNC_RUN_SUMMARY);
-      setSelectedRunObject(undefined);
-      return;
-    case SALESFORCE_ORG_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_ORG_SYNC_COMPONENT_SUMMARY:
-      setCurrentScreen(SALESFORCE_ORG_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_ORG_SYNC_COMPONENT_SUMMARY);
-      return;
+      case "insights":
+        toastContext.removeInlineMessage();
+        toastContext.clearInfoOverlayPanel();
+        return;
+      case SALESFORCE_ORG_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_ORG_SYNC_RUN_SUMMARY:
+        setCurrentScreen(SALESFORCE_ORG_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_ORG_SYNC_RUN_SUMMARY);
+        setSelectedRunObject(undefined);
+        return;
+      case SALESFORCE_ORG_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_ORG_SYNC_COMPONENT_SUMMARY:
+        setCurrentScreen(SALESFORCE_ORG_SYNC_ACTIONABLE_INSIGHT_SCREENS.SALESFORCE_ORG_SYNC_COMPONENT_SUMMARY);
+        return;
     }
   };
 

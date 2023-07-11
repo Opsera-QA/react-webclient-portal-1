@@ -36,23 +36,23 @@ export default function PlatformSystemParameterDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <PlatformSystemParameterSummaryPanel
-          platformSystemParameterModel={platformSystemParameterModel}
-          setActiveTab={setActiveTab}
-        />
-      );
-    case "settings":
-      return (
-        <PlatformSystemParameterEditorPanel
-          platformSystemParameterModel={platformSystemParameterModel}
-          setPlatformSystemParameterModel={setPlatformSystemParameterModel}
-          handleClose={toggleSummaryPanel}
-        />
-      );
-    default:
-      return null;
+      case "summary":
+        return (
+          <PlatformSystemParameterSummaryPanel
+            platformSystemParameterModel={platformSystemParameterModel}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case "settings":
+        return (
+          <PlatformSystemParameterEditorPanel
+            platformSystemParameterModel={platformSystemParameterModel}
+            setPlatformSystemParameterModel={setPlatformSystemParameterModel}
+            handleClose={toggleSummaryPanel}
+          />
+        );
+      default:
+        return null;
     }
   };
 

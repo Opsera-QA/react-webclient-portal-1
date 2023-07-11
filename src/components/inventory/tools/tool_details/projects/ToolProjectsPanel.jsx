@@ -11,20 +11,20 @@ import SnaplogicProjectsPanel from "../tool_jobs/snaplogic/projects/SnaplogicPro
 function ToolProjectsPanel({ toolData, loadData, isLoading }) {
   const getToolProjectsPanel = () => {
     switch (toolData?.getData("tool_identifier")) {
-    case "jira":
-      return (
-        <JiraToolProjectsPanel
-          isLoading={isLoading}
-          toolData={toolData}
-          loadData={loadData}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
-      return <ArgoToolProjectsPanel toolId={toolData?.getData("_id")} />;
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC:
-      return <SnaplogicProjectsPanel isLoading={isLoading} toolData={toolData} toolActions={toolData?.getData("projects")} loadData={loadData}/>;
-    default:
-      return <LoadingDialog message={"Loading Tool Projects"} size={"sm"} />;
+      case "jira":
+        return (
+          <JiraToolProjectsPanel
+            isLoading={isLoading}
+            toolData={toolData}
+            loadData={loadData}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
+        return <ArgoToolProjectsPanel toolId={toolData?.getData("_id")} />;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC:
+        return <SnaplogicProjectsPanel isLoading={isLoading} toolData={toolData} toolActions={toolData?.getData("projects")} loadData={loadData}/>;
+      default:
+        return <LoadingDialog message={"Loading Tool Projects"} size={"sm"} />;
     }
   };
 

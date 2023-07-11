@@ -65,75 +65,75 @@ diffHelper.getSeparatedDiffLineNumbers = (text1, text2) => {
 
 
       switch (diffType) {
-      case DIFF_MATCH_LINE_CATEGORIES.NO_CHANGES:
-        for (let i = cursor.left; i < cursor.left + lineCount; i++) {
-          separatedResults.firstString.unchangedLineNumbers.push(i);
-        }
+        case DIFF_MATCH_LINE_CATEGORIES.NO_CHANGES:
+          for (let i = cursor.left; i < cursor.left + lineCount; i++) {
+            separatedResults.firstString.unchangedLineNumbers.push(i);
+          }
 
-        for (let i = cursor.right; i < cursor.right + lineCount; i++) {
-          separatedResults.secondString.unchangedLineNumbers.push(i);
-        }
+          for (let i = cursor.right; i < cursor.right + lineCount; i++) {
+            separatedResults.secondString.unchangedLineNumbers.push(i);
+          }
 
-        cursor.left += lineCount;
-        cursor.right += lineCount;
+          cursor.left += lineCount;
+          cursor.right += lineCount;
 
-        break;
-      case DIFF_MATCH_LINE_CATEGORIES.DELETED_LINE:
+          break;
+        case DIFF_MATCH_LINE_CATEGORIES.DELETED_LINE:
         // If the deletion starts with a newline, push the cursor down to that line
-        if (firstChar === "\n") {
-          cursor.left++;
-          lineCount--;
-        }
+          if (firstChar === "\n") {
+            cursor.left++;
+            lineCount--;
+          }
 
-        linesToHighlight = lineCount;
+          linesToHighlight = lineCount;
 
-        // If the deletion does not include a newline, highlight the same line on the right
-        if (linesToHighlight === 0) {
-          separatedResults.secondString.deletedLineNumbers.push(cursor.right);
-          separatedResults.secondString.changedLines.push(cursor.right);
-        }
+          // If the deletion does not include a newline, highlight the same line on the right
+          if (linesToHighlight === 0) {
+            separatedResults.secondString.deletedLineNumbers.push(cursor.right);
+            separatedResults.secondString.changedLines.push(cursor.right);
+          }
 
-        // If the last character is a newline, we don't want to highlight that line
-        if (lastChar === "\n") {
-          linesToHighlight -= 1;
-        }
+          // If the last character is a newline, we don't want to highlight that line
+          if (lastChar === "\n") {
+            linesToHighlight -= 1;
+          }
 
-        for (let i = cursor.left; i <= cursor.left + linesToHighlight; i++) {
-          separatedResults.firstString.deletedLineNumbers.push(i);
-          separatedResults.firstString.changedLines.push(i);
-        }
+          for (let i = cursor.left; i <= cursor.left + linesToHighlight; i++) {
+            separatedResults.firstString.deletedLineNumbers.push(i);
+            separatedResults.firstString.changedLines.push(i);
+          }
 
-        cursor.left += lineCount;
-        break;
-      case DIFF_MATCH_LINE_CATEGORIES.INSERTED_LINE:
+          cursor.left += lineCount;
+          break;
+        case DIFF_MATCH_LINE_CATEGORIES.INSERTED_LINE:
         // If the insertion starts with a newline, push the cursor down to that line
-        if (firstChar === "\n") {
-          cursor.right++;
-          lineCount--;
-        }
+          if (firstChar === "\n") {
+            cursor.right++;
+            lineCount--;
+          }
 
-        linesToHighlight = lineCount;
+          linesToHighlight = lineCount;
 
-        // If the insertion does not include a newline, highlight the same line on the left
-        if (linesToHighlight === 0) {
-          separatedResults.firstString.insertedLineNumbers.push(cursor.left);
-          separatedResults.firstString.changedLines.push(cursor.left);
-        }
+          // If the insertion does not include a newline, highlight the same line on the left
+          if (linesToHighlight === 0) {
+            separatedResults.firstString.insertedLineNumbers.push(cursor.left);
+            separatedResults.firstString.changedLines.push(cursor.left);
+          }
 
-        // If the last character is a newline, we don't want to highlight that line
-        if (lastChar === "\n") {
-          linesToHighlight -= 1;
-        }
+          // If the last character is a newline, we don't want to highlight that line
+          if (lastChar === "\n") {
+            linesToHighlight -= 1;
+          }
 
-        for (let i = cursor.right; i <= cursor.right + linesToHighlight; i++) {
-          separatedResults.secondString.insertedLineNumbers.push(i);
-          separatedResults.secondString.changedLines.push(i);
-        }
+          for (let i = cursor.right; i <= cursor.right + linesToHighlight; i++) {
+            separatedResults.secondString.insertedLineNumbers.push(i);
+            separatedResults.secondString.changedLines.push(i);
+          }
 
-        cursor.right += lineCount;
-        break;
-      default:
-        console.error("Diff had no category");
+          cursor.right += lineCount;
+          break;
+        default:
+          console.error("Diff had no category");
       }
     });
 

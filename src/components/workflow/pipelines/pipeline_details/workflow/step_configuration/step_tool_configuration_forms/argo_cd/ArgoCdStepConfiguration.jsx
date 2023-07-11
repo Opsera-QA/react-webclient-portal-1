@@ -222,22 +222,22 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
       return null;
     }
     switch (argoCdModel?.getData("platform")) {
-    case "azure":
-      return (
-        <AzureCustomImageDetailsSubForm 
-          model={argoCdModel}
-          setModel={setArgoCdModel}
-        />
-      );
-    case "aws":
-      return (
-        <AwsCustomImageDetailsSubForm 
-          model={argoCdModel}
-          setModel={setArgoCdModel}
-        />
-      );
-    default:
-      return null;
+      case "azure":
+        return (
+          <AzureCustomImageDetailsSubForm 
+            model={argoCdModel}
+            setModel={setArgoCdModel}
+          />
+        );
+      case "aws":
+        return (
+          <AwsCustomImageDetailsSubForm 
+            model={argoCdModel}
+            setModel={setArgoCdModel}
+          />
+        );
+      default:
+        return null;
     }
   };
 

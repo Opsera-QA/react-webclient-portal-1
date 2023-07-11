@@ -58,49 +58,49 @@ const SapCpqPipelineRunAssistant = ({
 
   const getBody = () => {
     switch (runAssistantScreen) {
-    case SAP_CPQ_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN:
-      return (
-        <SapCpqPipelineRunAssistantInitializationScreen
-          pipeline={pipeline}
-          sapCpqRunParametersModel={sapCpqRunParametersModel}
-          setSapCpqRunParametersModel={setSapCpqRunParametersModel}
-          setError={setError}
-          setRunAssistantScreen={setRunAssistantScreen}
-        />
-      );
-    case SAP_CPQ_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN:
-      return (
-        <SapCpqRunAssistantConfigurationSelectionScreen
-          sapCpqRunParametersModel={sapCpqRunParametersModel}
-          setSapCpqRunParametersModel={setSapCpqRunParametersModel}
-          setRunAssistantScreen={setRunAssistantScreen}
-          closePanelFunction={closePanelFunction}
-        />
-      );
-    case SAP_CPQ_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTION_SCREEN:
-      return (
-        <SapCpqRunAssistantMigrationObjectSelectionScreen
-          sapCpqRunParametersModel={sapCpqRunParametersModel}
-          setSapCpqRunParametersModel={setSapCpqRunParametersModel}
-          setRunAssistantScreen={setRunAssistantScreen}
-          startPipelineRunFunction={startPipelineRunFunction}
-          closePanelFunction={closePanelFunction}
-        />
-      );
-    case SAP_CPQ_RUN_ASSISTANT_SCREENS.CONFIRMATION_SCREEN:
-      return <div>You have reached the confirmation screen.</div>;
-    default:
-      return null;
+      case SAP_CPQ_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN:
+        return (
+          <SapCpqPipelineRunAssistantInitializationScreen
+            pipeline={pipeline}
+            sapCpqRunParametersModel={sapCpqRunParametersModel}
+            setSapCpqRunParametersModel={setSapCpqRunParametersModel}
+            setError={setError}
+            setRunAssistantScreen={setRunAssistantScreen}
+          />
+        );
+      case SAP_CPQ_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN:
+        return (
+          <SapCpqRunAssistantConfigurationSelectionScreen
+            sapCpqRunParametersModel={sapCpqRunParametersModel}
+            setSapCpqRunParametersModel={setSapCpqRunParametersModel}
+            setRunAssistantScreen={setRunAssistantScreen}
+            closePanelFunction={closePanelFunction}
+          />
+        );
+      case SAP_CPQ_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTION_SCREEN:
+        return (
+          <SapCpqRunAssistantMigrationObjectSelectionScreen
+            sapCpqRunParametersModel={sapCpqRunParametersModel}
+            setSapCpqRunParametersModel={setSapCpqRunParametersModel}
+            setRunAssistantScreen={setRunAssistantScreen}
+            startPipelineRunFunction={startPipelineRunFunction}
+            closePanelFunction={closePanelFunction}
+          />
+        );
+      case SAP_CPQ_RUN_ASSISTANT_SCREENS.CONFIRMATION_SCREEN:
+        return <div>You have reached the confirmation screen.</div>;
+      default:
+        return null;
     }
   };
 
   const getHelpComponentFunction = (setHelpIsShown) => {
     switch (runAssistantScreen) {
-    case SAP_CPQ_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN:
-    case SAP_CPQ_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN:
-    case SAP_CPQ_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTION_SCREEN:
-    default:
-      return null;
+      case SAP_CPQ_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN:
+      case SAP_CPQ_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN:
+      case SAP_CPQ_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTION_SCREEN:
+      default:
+        return null;
     }
   };
 

@@ -23,23 +23,23 @@ export default function FreeTrialWorkflowItemSelectionCardView(
   }) {
   const getWorkspaceItemCard = (workspaceItem) => {
     switch (workspaceItem?.workspaceType) {
-    case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
-      return (
-        <WorkflowPipelineCard
-          pipeline={workspaceItem}
-          selectedFlow={selectedWorkflowItem}
-          setSelectedFlow={setSelectedWorkflowItem}
-        />
-      );
-    case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
-      return (
-        <WorkflowTaskCard
-          selectedFlow={selectedWorkflowItem}
-          setSelectedFlow={setSelectedWorkflowItem}
-          task={workspaceItem}
-          taskMetadata={taskMetadata}
-        />
-      );
+      case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
+        return (
+          <WorkflowPipelineCard
+            pipeline={workspaceItem}
+            selectedFlow={selectedWorkflowItem}
+            setSelectedFlow={setSelectedWorkflowItem}
+          />
+        );
+      case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
+        return (
+          <WorkflowTaskCard
+            selectedFlow={selectedWorkflowItem}
+            setSelectedFlow={setSelectedWorkflowItem}
+            task={workspaceItem}
+            taskMetadata={taskMetadata}
+          />
+        );
     }
   };
 

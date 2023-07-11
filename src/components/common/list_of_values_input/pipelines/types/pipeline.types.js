@@ -36,20 +36,20 @@ pipelineTypeConstants.PIPELINE_TYPE_LABELS = PIPELINE_TYPE_LABELS;
 
 export const getPipelineTypeLabel = (pipelineType) => {
   switch (pipelineType) {
-  case PIPELINE_TYPES.APIGEE:
-    return PIPELINE_TYPE_LABELS.APIGEE;
-  case PIPELINE_TYPES.INFORMATICA:
-    return PIPELINE_TYPE_LABELS.INFORMATICA;
-  case PIPELINE_TYPES.MACHINE_LEARNING:
-    return PIPELINE_TYPE_LABELS.MACHINE_LEARNING;
-  case PIPELINE_TYPES.SAP_CPQ:
-    return PIPELINE_TYPE_LABELS.SAP_CPQ;
-  case PIPELINE_TYPES.SALESFORCE:
-    return PIPELINE_TYPE_LABELS.SALESFORCE;
-  case PIPELINE_TYPES.SOFTWARE_DEVELOPMENT:
-    return PIPELINE_TYPE_LABELS.SOFTWARE_DEVELOPMENT;
-  default:
-    return "No Pipeline Type Applied";
+    case PIPELINE_TYPES.APIGEE:
+      return PIPELINE_TYPE_LABELS.APIGEE;
+    case PIPELINE_TYPES.INFORMATICA:
+      return PIPELINE_TYPE_LABELS.INFORMATICA;
+    case PIPELINE_TYPES.MACHINE_LEARNING:
+      return PIPELINE_TYPE_LABELS.MACHINE_LEARNING;
+    case PIPELINE_TYPES.SAP_CPQ:
+      return PIPELINE_TYPE_LABELS.SAP_CPQ;
+    case PIPELINE_TYPES.SALESFORCE:
+      return PIPELINE_TYPE_LABELS.SALESFORCE;
+    case PIPELINE_TYPES.SOFTWARE_DEVELOPMENT:
+      return PIPELINE_TYPE_LABELS.SOFTWARE_DEVELOPMENT;
+    default:
+      return "No Pipeline Type Applied";
   }
 };
 
@@ -102,14 +102,14 @@ pipelineTypeConstants.getIconForPipelineType = (typeString) => {
   }
 
   switch (typeString) {
-  case PIPELINE_TYPES.SALESFORCE:
-    return (faSalesforce);
-  case PIPELINE_TYPES.MACHINE_LEARNING:
-    return (faMicrochip);
-  case PIPELINE_TYPES.SOFTWARE_DEVELOPMENT:
-    return (faBracketsCurly);
-  default:
-    return (faDraftingCompass);
+    case PIPELINE_TYPES.SALESFORCE:
+      return (faSalesforce);
+    case PIPELINE_TYPES.MACHINE_LEARNING:
+      return (faMicrochip);
+    case PIPELINE_TYPES.SOFTWARE_DEVELOPMENT:
+      return (faBracketsCurly);
+    default:
+      return (faDraftingCompass);
   }
 };
 
@@ -117,20 +117,20 @@ pipelineTypeConstants.getImageLinkForPipelineType = (typeString) => {
   const parsedType = DataParsingHelper.parseString(typeString, "");
 
   switch (parsedType) {
-  case PIPELINE_TYPES.APIGEE:
-    return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.APIGEE;
-  case PIPELINE_TYPES.INFORMATICA:
-    return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.INFORMATICA;
-  case PIPELINE_TYPES.MACHINE_LEARNING:
-    return undefined;
-  case PIPELINE_TYPES.SALESFORCE:
-    return platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL;
-  case PIPELINE_TYPES.SAP_CPQ:
-    return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.SAP;
-  case PIPELINE_TYPES.SOFTWARE_DEVELOPMENT:
-    return platformImageConstants.PLATFORM_IMAGE_LINKS.PIPELINES_GENERAL;
-  default:
-    return platformImageConstants.PLATFORM_IMAGE_LINKS.PIPELINES_GENERAL;
+    case PIPELINE_TYPES.APIGEE:
+      return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.APIGEE;
+    case PIPELINE_TYPES.INFORMATICA:
+      return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.INFORMATICA;
+    case PIPELINE_TYPES.MACHINE_LEARNING:
+      return undefined;
+    case PIPELINE_TYPES.SALESFORCE:
+      return platformImageConstants.PLATFORM_IMAGE_LINKS.SALESFORCE_GENERAL;
+    case PIPELINE_TYPES.SAP_CPQ:
+      return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.SAP;
+    case PIPELINE_TYPES.SOFTWARE_DEVELOPMENT:
+      return platformImageConstants.PLATFORM_IMAGE_LINKS.PIPELINES_GENERAL;
+    default:
+      return platformImageConstants.PLATFORM_IMAGE_LINKS.PIPELINES_GENERAL;
   }
 };
 

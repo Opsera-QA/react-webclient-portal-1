@@ -21,46 +21,46 @@ function DataMappingManagementSubNavigationBar({activeTab}) {
     }
 
     switch (tabSelection) {
-    case "dataMappingManagement":
-      history.push(`/settings/data_mapping`);
-      return;
+      case "dataMappingManagement":
+        history.push(`/settings/data_mapping`);
+        return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-    case "projectTagViewer":
-      return (
-        <NavigationTab
-          icon={faProjectDiagram}
-          tabName={"projectTagViewer"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          tabText={"Project Data Mapping Viewer"}
-        />
-      );
-    case "userTagViewer":
-      return (
-        <NavigationTab
-          icon={faUserTag}
-          tabName={"userTagViewer"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          tabText={"User Data Mapping Viewer"}
-        />
-      );
-    case "pipelineTagViewer":
-      return (
-        <NavigationTab
-          icon={faDraftingCompass}
-          tabName={"pipelineTagViewer"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          tabText={"Pipeline Data Mapping Viewer"}
-        />
-      );
-    default:
-      return null;
+      case "projectTagViewer":
+        return (
+          <NavigationTab
+            icon={faProjectDiagram}
+            tabName={"projectTagViewer"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+            tabText={"Project Data Mapping Viewer"}
+          />
+        );
+      case "userTagViewer":
+        return (
+          <NavigationTab
+            icon={faUserTag}
+            tabName={"userTagViewer"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+            tabText={"User Data Mapping Viewer"}
+          />
+        );
+      case "pipelineTagViewer":
+        return (
+          <NavigationTab
+            icon={faDraftingCompass}
+            tabName={"pipelineTagViewer"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+            tabText={"Pipeline Data Mapping Viewer"}
+          />
+        );
+      default:
+        return null;
     }
   };
 

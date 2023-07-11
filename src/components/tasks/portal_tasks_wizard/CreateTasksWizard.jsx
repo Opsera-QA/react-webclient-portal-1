@@ -51,28 +51,28 @@ export default function CreateTasksWizard({ loadData, backButtonFunction }) {
 
   useEffect(() => {
     switch (currentScreen) {
-    case REGISTRY_WIZARD_SCREENS.MODE_SELECT:
-      setOverlayTitle(REGISTRY_WIZARD_TITLES.MODE_SELECT);
-      return;
-    case REGISTRY_WIZARD_SCREENS.TASK_SELECT:
-      if (
-        taskModel?.getData("tool_identifier") == null ||
-          taskModel?.getData("tool_identifier") === ""
-      ) {
-        setOverlayTitle(REGISTRY_WIZARD_TITLES.TASK_SELECT);
+      case REGISTRY_WIZARD_SCREENS.MODE_SELECT:
+        setOverlayTitle(REGISTRY_WIZARD_TITLES.MODE_SELECT);
         return;
-      }
-      setOverlayTitle(REGISTRY_WIZARD_TITLES.BASIC_TOOL_INFO);
-      return;
-    case REGISTRY_WIZARD_SCREENS.CONNECTION_INFO:
-      setOverlayTitle(REGISTRY_WIZARD_TITLES.CONNECTION_INFO);
-      return;
-    case REGISTRY_WIZARD_SCREENS.CONNECTION_TEST:
-      setOverlayTitle(REGISTRY_WIZARD_TITLES.CONNECTION_TEST);
-      return;
-    case REGISTRY_WIZARD_SCREENS.TASK_CONFIGURATION:
-      setOverlayTitle(REGISTRY_WIZARD_TITLES.TASK_CONFIGURATION);
-      return;
+      case REGISTRY_WIZARD_SCREENS.TASK_SELECT:
+        if (
+          taskModel?.getData("tool_identifier") == null ||
+          taskModel?.getData("tool_identifier") === ""
+        ) {
+          setOverlayTitle(REGISTRY_WIZARD_TITLES.TASK_SELECT);
+          return;
+        }
+        setOverlayTitle(REGISTRY_WIZARD_TITLES.BASIC_TOOL_INFO);
+        return;
+      case REGISTRY_WIZARD_SCREENS.CONNECTION_INFO:
+        setOverlayTitle(REGISTRY_WIZARD_TITLES.CONNECTION_INFO);
+        return;
+      case REGISTRY_WIZARD_SCREENS.CONNECTION_TEST:
+        setOverlayTitle(REGISTRY_WIZARD_TITLES.CONNECTION_TEST);
+        return;
+      case REGISTRY_WIZARD_SCREENS.TASK_CONFIGURATION:
+        setOverlayTitle(REGISTRY_WIZARD_TITLES.TASK_CONFIGURATION);
+        return;
     }
   }, [currentScreen, taskModel?.getData("tool_identifier")]);
 
@@ -110,30 +110,30 @@ export default function CreateTasksWizard({ loadData, backButtonFunction }) {
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
-    case REGISTRY_WIZARD_SCREENS.MODE_SELECT:
-      return (
-        <TasksSetupModeSelect
-          setCurrentScreen={setCurrentScreen}
-          closeOverlayFunction={closeOverlayFunction}
-          setButtonContainer={setButtonContainer}
-          setSelectedFlow={setSelectedFlow}
-          selectedFlow={selectedFlow}
-          className={"py-5"}
-          backButtonFunction={backButtonFunction}
-        />
-      );
-    case REGISTRY_WIZARD_SCREENS.TASK_CONFIGURATION:
-      return getTaskConfigurationView();
-    case REGISTRY_WIZARD_SCREENS.TASK_SELECT:
-      return (
-        <TaskTypeSelect
-          selectedTaskType={selectedTaskType}
-          setSelectedTaskType={setSelectedTaskType}
-          setCurrentScreen={setCurrentScreen}
-          setButtonContainer={setButtonContainer}
-          backButtonFunction={() => {setCurrentScreen(REGISTRY_WIZARD_SCREENS.MODE_SELECT);}}
-        />
-      );
+      case REGISTRY_WIZARD_SCREENS.MODE_SELECT:
+        return (
+          <TasksSetupModeSelect
+            setCurrentScreen={setCurrentScreen}
+            closeOverlayFunction={closeOverlayFunction}
+            setButtonContainer={setButtonContainer}
+            setSelectedFlow={setSelectedFlow}
+            selectedFlow={selectedFlow}
+            className={"py-5"}
+            backButtonFunction={backButtonFunction}
+          />
+        );
+      case REGISTRY_WIZARD_SCREENS.TASK_CONFIGURATION:
+        return getTaskConfigurationView();
+      case REGISTRY_WIZARD_SCREENS.TASK_SELECT:
+        return (
+          <TaskTypeSelect
+            selectedTaskType={selectedTaskType}
+            setSelectedTaskType={setSelectedTaskType}
+            setCurrentScreen={setCurrentScreen}
+            setButtonContainer={setButtonContainer}
+            backButtonFunction={() => {setCurrentScreen(REGISTRY_WIZARD_SCREENS.MODE_SELECT);}}
+          />
+        );
     }
   };
 

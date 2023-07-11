@@ -19,27 +19,27 @@ export default function Following() {
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.DASHBOARD:
-      return (
-        <FollowedDashboardsPanel
-        />
-      );
-    case userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.PIPELINE:
-      return (
-        <FollowedPipelinesPanel
-        />
-      );
-    case userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.TAG:
-      return (
-        <FollowedTagsPanel
-        />
-      );
-    case userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.TASK:
-      return (
-        <FollowedTasksPanel />
-      );
-    default:
-      return null;
+      case userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.DASHBOARD:
+        return (
+          <FollowedDashboardsPanel
+          />
+        );
+      case userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.PIPELINE:
+        return (
+          <FollowedPipelinesPanel
+          />
+        );
+      case userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.TAG:
+        return (
+          <FollowedTagsPanel
+          />
+        );
+      case userSubscriptionConstants.SUPPORTED_OBJECT_TYPES.TASK:
+        return (
+          <FollowedTasksPanel />
+        );
+      default:
+        return null;
     }
   };
 

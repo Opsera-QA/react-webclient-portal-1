@@ -28,15 +28,15 @@ export default function RoleAccessInputInlineField(
     const value = accessRuleTypeModel?.getData(type);
 
     switch (type) {
-    case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.SITE_ROLE:
-      return (
-        <div>{siteRoleConstants.getSiteRoleLabel(value)}</div>
-      );
-    case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.GROUP:
-    case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.USER:
-      return (
-        <div>{value}</div>
-      );
+      case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.SITE_ROLE:
+        return (
+          <div>{siteRoleConstants.getSiteRoleLabel(value)}</div>
+        );
+      case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.GROUP:
+      case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.USER:
+        return (
+          <div>{value}</div>
+        );
     }
 
   };

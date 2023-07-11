@@ -7,18 +7,18 @@ function ToolAccountsPanel({ toolData, loadData, isLoading }) {
 
   const getAccountPanel = (toolIdentifier, loadData) => {
     switch (toolIdentifier) {
-    case "jenkins":
-      return (
-        <JenkinsToolAccounts
-          toolId={toolData?.getData("_id")}
-        />
-      );
-    case "gitlab":
-    case "github":
-    case "bitbucket":
-      return <ScmAccounts toolData={toolData} isLoading={isLoading} loadData={loadData}/>;
-    default:
-      return <div className="text-center p-5 text-muted mt-5">Opsera account management is not currently available for this tool.</div>;
+      case "jenkins":
+        return (
+          <JenkinsToolAccounts
+            toolId={toolData?.getData("_id")}
+          />
+        );
+      case "gitlab":
+      case "github":
+      case "bitbucket":
+        return <ScmAccounts toolData={toolData} isLoading={isLoading} loadData={loadData}/>;
+      default:
+        return <div className="text-center p-5 text-muted mt-5">Opsera account management is not currently available for this tool.</div>;
     }
   };
 

@@ -125,53 +125,53 @@ function FieldQueryComponent({
 
   const getDynamicInputField = () => {
     switch (ruleModel?.getData("type")) {
-    case "number":
-    case "double":
-      return (
-        <Col
-          xs={4}
-          className={"pr-1 pl-0"}
-        >
-          <NumberPickerInputBase
-            fieldName={"value"}
-            dataObject={ruleModel}
-            setDataObject={setRuleModel}
-            setDataFunction={handleValueChange}
-            showLabel={false}
-          />
-        </Col>
-      );
-    case "boolean":
-      return (
-        <Col
-          xs={4}
-          className={"pr-1 pl-0"}
-        >
-          <CustomSettingBooleanQuerySelectInput
-            model={ruleModel}
-            setModel={setRuleModel}
-            setDataFunction={handleValueChange}
-            fieldName={"value"}
-            showLabel={false}
-          />
-        </Col>
+      case "number":
+      case "double":
+        return (
+          <Col
+            xs={4}
+            className={"pr-1 pl-0"}
+          >
+            <NumberPickerInputBase
+              fieldName={"value"}
+              dataObject={ruleModel}
+              setDataObject={setRuleModel}
+              setDataFunction={handleValueChange}
+              showLabel={false}
+            />
+          </Col>
+        );
+      case "boolean":
+        return (
+          <Col
+            xs={4}
+            className={"pr-1 pl-0"}
+          >
+            <CustomSettingBooleanQuerySelectInput
+              model={ruleModel}
+              setModel={setRuleModel}
+              setDataFunction={handleValueChange}
+              fieldName={"value"}
+              showLabel={false}
+            />
+          </Col>
 
-      );
-    default:
-      return (
-        <Col
-          xs={4}
-          className={"pr-1 pl-0"}
-        >
-          <TextInputBase
-            setDataObject={setRuleModel}
-            dataObject={ruleModel}
-            fieldName={"value"}
-            setDataFunction={handleValueChange}
-            showLabel={false}
-          />
-        </Col>
-      );
+        );
+      default:
+        return (
+          <Col
+            xs={4}
+            className={"pr-1 pl-0"}
+          >
+            <TextInputBase
+              setDataObject={setRuleModel}
+              dataObject={ruleModel}
+              fieldName={"value"}
+              setDataFunction={handleValueChange}
+              showLabel={false}
+            />
+          </Col>
+        );
     }
   };
 

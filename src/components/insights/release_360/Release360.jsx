@@ -89,16 +89,16 @@ function Release360 () {
   // TODO: Make sub components
   const getCurrentView = () => {
     switch (activeTab) {
-    case "duration":
-      return (<OverallReleaseDurationMetrics />);
-    case "traceability":
-      return (<OverallReleaseTraceabilityMetrics />);
-    case "quality":
-      return (<OverallReleaseQualityMetrics />);
-    case "sandbox":
-      return (<MetricUiSandbox />);
-    default:
-      return null;
+      case "duration":
+        return (<OverallReleaseDurationMetrics />);
+      case "traceability":
+        return (<OverallReleaseTraceabilityMetrics />);
+      case "quality":
+        return (<OverallReleaseQualityMetrics />);
+      case "sandbox":
+        return (<MetricUiSandbox />);
+      default:
+        return null;
     }
   };
 

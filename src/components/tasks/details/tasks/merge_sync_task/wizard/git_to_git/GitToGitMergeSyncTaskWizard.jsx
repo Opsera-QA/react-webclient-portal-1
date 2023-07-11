@@ -79,66 +79,66 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
 
   const getBody = () => {
     switch (currentScreen) {
-    case MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-      return (
-        <MergeSyncTaskWizardInitializationScreen
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setCurrentScreen={setCurrentScreen}
-          handleClose={handleClose}
-          mergeSyncType={"Git to Git"}
-          skipConfig={taskModel?.getData("configuration.git.jiraIssueIds") && taskModel?.getData("configuration.git.jiraIssueIds").length > 0 ? true : false}
-        />
-      );
-    case MERGE_SYNC_WIZARD_SCREENS.CONFIGURATION_SCREEN:
-      return (
-        <GitToGitMergeSyncTaskWizardConfigurationScreen
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setCurrentScreen={setCurrentScreen}
-          handleClose={handleClose}
-        />
-      );
-    case MERGE_SYNC_WIZARD_SCREENS.FILE_SELECTION_SCREEN:
-      return (
-        <GitToGitMergeSyncTaskWizardFileSelectionScreen
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setCurrentScreen={setCurrentScreen}
-          handleClose={handleClose}
-        />
-      );
-    case MERGE_SYNC_WIZARD_SCREENS.COMMIT_SELECTION_SCREEN:
-      return (
-        <MergeSyncTaskWizardCommitSelectionScreen
-          handleClose={handleClose}
-          setCurrentScreen={setCurrentScreen}
-          setWizardModel={setWizardModel}
-          wizardModel={wizardModel}
-          skipConfig={taskModel?.getData("configuration.git.jiraIssueIds") && taskModel?.getData("configuration.git.jiraIssueIds").length > 0 ? true : false}
-        />
-      );
-    case MERGE_SYNC_WIZARD_SCREENS.CONFIRMATION_SCREEN:
-      return (
-        <MergeSyncTaskWizardConfirmationScreen
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          setCurrentScreen={setCurrentScreen}
-          handleClose={handleClose}
-        />
-      );
+      case MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+        return (
+          <MergeSyncTaskWizardInitializationScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+            mergeSyncType={"Git to Git"}
+            skipConfig={taskModel?.getData("configuration.git.jiraIssueIds") && taskModel?.getData("configuration.git.jiraIssueIds").length > 0 ? true : false}
+          />
+        );
+      case MERGE_SYNC_WIZARD_SCREENS.CONFIGURATION_SCREEN:
+        return (
+          <GitToGitMergeSyncTaskWizardConfigurationScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+          />
+        );
+      case MERGE_SYNC_WIZARD_SCREENS.FILE_SELECTION_SCREEN:
+        return (
+          <GitToGitMergeSyncTaskWizardFileSelectionScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+          />
+        );
+      case MERGE_SYNC_WIZARD_SCREENS.COMMIT_SELECTION_SCREEN:
+        return (
+          <MergeSyncTaskWizardCommitSelectionScreen
+            handleClose={handleClose}
+            setCurrentScreen={setCurrentScreen}
+            setWizardModel={setWizardModel}
+            wizardModel={wizardModel}
+            skipConfig={taskModel?.getData("configuration.git.jiraIssueIds") && taskModel?.getData("configuration.git.jiraIssueIds").length > 0 ? true : false}
+          />
+        );
+      case MERGE_SYNC_WIZARD_SCREENS.CONFIRMATION_SCREEN:
+        return (
+          <MergeSyncTaskWizardConfirmationScreen
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            setCurrentScreen={setCurrentScreen}
+            handleClose={handleClose}
+          />
+        );
     }
   };
 
   const getHelpComponentFunction = (setHelpIsShown) => {
     switch (currentScreen) {
-    case MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-      return null;
-    case MERGE_SYNC_WIZARD_SCREENS.CONFIGURATION_SCREEN:
-      return null;
-    case MERGE_SYNC_WIZARD_SCREENS.FILE_SELECTION_SCREEN:
-    default:
-      return null;
+      case MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+        return null;
+      case MERGE_SYNC_WIZARD_SCREENS.CONFIGURATION_SCREEN:
+        return null;
+      case MERGE_SYNC_WIZARD_SCREENS.FILE_SELECTION_SCREEN:
+      default:
+        return null;
     }
   };
 

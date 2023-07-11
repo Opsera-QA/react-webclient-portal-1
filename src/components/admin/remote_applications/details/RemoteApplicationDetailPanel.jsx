@@ -33,10 +33,10 @@ function RemoteApplicationDetailPanel({ telemetryData }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return <RemoteApplicationSummaryPanel telemetryData={telemetryData} setActiveTab={setActiveTab} />;
-    default:
-      return null;
+      case "summary":
+        return <RemoteApplicationSummaryPanel telemetryData={telemetryData} setActiveTab={setActiveTab} />;
+      default:
+        return null;
     }
   };
 

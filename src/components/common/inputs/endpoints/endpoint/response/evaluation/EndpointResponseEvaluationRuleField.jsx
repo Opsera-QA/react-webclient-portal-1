@@ -133,14 +133,14 @@ function EndpointResponseEvaluationRuleField(
     const option = responseEvaluationRule?.option;
 
     switch (option) {
-    case "status":
-      return formatTextForStatusRule(responseEvaluationRule);
-    case "response_evaluation":
-      return formatTextForResponseEvaluationRule(responseEvaluationRule);
-    case "field_evaluation":
-      return formatTextForFieldEvaluationRule(responseEvaluationRule);
-    default:
-      return "Invalid Evaluation Rule Type!";
+      case "status":
+        return formatTextForStatusRule(responseEvaluationRule);
+      case "response_evaluation":
+        return formatTextForResponseEvaluationRule(responseEvaluationRule);
+      case "field_evaluation":
+        return formatTextForFieldEvaluationRule(responseEvaluationRule);
+      default:
+        return "Invalid Evaluation Rule Type!";
     }
   };
 

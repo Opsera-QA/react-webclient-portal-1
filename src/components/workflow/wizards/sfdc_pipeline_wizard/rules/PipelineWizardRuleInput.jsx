@@ -71,30 +71,30 @@ function PipelineWizardRuleInput({pipelineWizardModel, ruleData, index, addRule,
 
   const getRuleValueInput = () => {
     switch (ruleModel.getData("fieldFilter")) {
-    case "startsWith":
-    case "endsWith":
-    case "contains":
-      return (
-        <MultiTextInputBase
-          dataObject={ruleModel}
-          setDataObject={updateData}
-          fieldName={"values"}
-          showLabel={false}
-        />
-      );
-    case "equals":
-    default:
-      return (
-        <RuleValueMultiSelectInput
-          ruleField={ruleModel?.getData("field")}
-          dataObject={ruleModel}
-          setDataObject={updateData}
-          showLabel={false}
-          fetchAttribute={fetchAttribute}
-          componentTypes={ruleModel?.getData("componentTypes")}
-          pipelineWizardModel={pipelineWizardModel}
-        />
-      );
+      case "startsWith":
+      case "endsWith":
+      case "contains":
+        return (
+          <MultiTextInputBase
+            dataObject={ruleModel}
+            setDataObject={updateData}
+            fieldName={"values"}
+            showLabel={false}
+          />
+        );
+      case "equals":
+      default:
+        return (
+          <RuleValueMultiSelectInput
+            ruleField={ruleModel?.getData("field")}
+            dataObject={ruleModel}
+            setDataObject={updateData}
+            showLabel={false}
+            fetchAttribute={fetchAttribute}
+            componentTypes={ruleModel?.getData("componentTypes")}
+            pipelineWizardModel={pipelineWizardModel}
+          />
+        );
     }
   };
 

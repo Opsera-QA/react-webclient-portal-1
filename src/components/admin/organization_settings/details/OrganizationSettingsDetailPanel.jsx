@@ -63,39 +63,39 @@ export default function OrganizationSettingsDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <OrganizationSettingsSummaryPanel
-          organizationSettingsModel={organizationSettingsModel}
-          setOrganizationSettingsModel={setOrganizationSettingsModel}
-        />
-      );
-    case "policies":
-      return (
-        <OrganizationSettingsPoliciesPanel
-          organizationSettingsModel={organizationSettingsModel}
-          organizationDomain={organizationDomain}
-          organizationAccountId={organizationAccountId}
-        />
-      );
-    case "featureFlags":
-      return (
-        <OrganizationSettingsFeatureFlagsPanel
-          organizationSettingsModel={organizationSettingsModel}
-          organizationDomain={organizationDomain}
-          organizationAccountId={organizationAccountId}
-        />
-      );
-    case "entitlements":
-      return (
-        <OrganizationSettingsEntitlementsPanel
-          organizationSettingsModel={organizationSettingsModel}
-          organizationDomain={organizationDomain}
-          organizationAccountId={organizationAccountId}
-        />
-      );
-    default:
-      return null;
+      case "summary":
+        return (
+          <OrganizationSettingsSummaryPanel
+            organizationSettingsModel={organizationSettingsModel}
+            setOrganizationSettingsModel={setOrganizationSettingsModel}
+          />
+        );
+      case "policies":
+        return (
+          <OrganizationSettingsPoliciesPanel
+            organizationSettingsModel={organizationSettingsModel}
+            organizationDomain={organizationDomain}
+            organizationAccountId={organizationAccountId}
+          />
+        );
+      case "featureFlags":
+        return (
+          <OrganizationSettingsFeatureFlagsPanel
+            organizationSettingsModel={organizationSettingsModel}
+            organizationDomain={organizationDomain}
+            organizationAccountId={organizationAccountId}
+          />
+        );
+      case "entitlements":
+        return (
+          <OrganizationSettingsEntitlementsPanel
+            organizationSettingsModel={organizationSettingsModel}
+            organizationDomain={organizationDomain}
+            organizationAccountId={organizationAccountId}
+          />
+        );
+      default:
+        return null;
     }
   };
 

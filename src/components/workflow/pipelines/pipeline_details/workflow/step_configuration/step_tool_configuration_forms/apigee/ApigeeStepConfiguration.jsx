@@ -60,45 +60,45 @@ function ApigeeStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdit
 
   const getDynamicFields = () => {
     switch (apigeeStepConfigurationDto.getData("type")) {
-    case "transfer":
-      return (
-        <>
-          <BooleanToggleInput
-            fieldName={"includeDependencies"}
-            dataObject={apigeeStepConfigurationDto}
-            setDataObject={setApigeeStepConfigurationDataDto}
-          />
-          <RoleRestrictedApigeeToolSelectInput 
-            fieldName={"targetToolConfigId"}
-            model={apigeeStepConfigurationDto}
-            setModel={setApigeeStepConfigurationDataDto}              
-          />            
-        </>
-      );      
-    case "deploy":
-      return (
-        <>
-          <ApigeeEnvironmentSelectInput 
-            model={apigeeStepConfigurationDto}
-            setModel={setApigeeStepConfigurationDataDto}
-            toolConfigId={apigeeStepConfigurationDto.getData("toolConfigId")}
-          />
-          <TextInputBase
-            dataObject={apigeeStepConfigurationDto}
-            setDataObject={setApigeeStepConfigurationDataDto}
-            fieldName={"delayTime"}
-          />
-          <BooleanToggleInput
-            fieldName={"override"}
-            dataObject={apigeeStepConfigurationDto}
-            setDataObject={setApigeeStepConfigurationDataDto}
-          />
-        </>
-      );
-    default:
-      return (
-        <></>
-      );
+      case "transfer":
+        return (
+          <>
+            <BooleanToggleInput
+              fieldName={"includeDependencies"}
+              dataObject={apigeeStepConfigurationDto}
+              setDataObject={setApigeeStepConfigurationDataDto}
+            />
+            <RoleRestrictedApigeeToolSelectInput 
+              fieldName={"targetToolConfigId"}
+              model={apigeeStepConfigurationDto}
+              setModel={setApigeeStepConfigurationDataDto}              
+            />            
+          </>
+        );      
+      case "deploy":
+        return (
+          <>
+            <ApigeeEnvironmentSelectInput 
+              model={apigeeStepConfigurationDto}
+              setModel={setApigeeStepConfigurationDataDto}
+              toolConfigId={apigeeStepConfigurationDto.getData("toolConfigId")}
+            />
+            <TextInputBase
+              dataObject={apigeeStepConfigurationDto}
+              setDataObject={setApigeeStepConfigurationDataDto}
+              fieldName={"delayTime"}
+            />
+            <BooleanToggleInput
+              fieldName={"override"}
+              dataObject={apigeeStepConfigurationDto}
+              setDataObject={setApigeeStepConfigurationDataDto}
+            />
+          </>
+        );
+      default:
+        return (
+          <></>
+        );
     }
   };
 

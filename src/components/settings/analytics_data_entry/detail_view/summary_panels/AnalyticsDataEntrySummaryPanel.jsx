@@ -20,64 +20,64 @@ import modelHelpers from "components/common/model/modelHelpers";
 function AnalyticsDataEntrySummary({ analyticsDataEntry, setActiveTab }) {
   const getAnalyticsDataEntrySummary = () => {
     switch (analyticsDataEntry?.getData("kpi_identifier")) {
-    case kpiIdentifierConstants.KPI_IDENTIFIERS.ADOPTION_PERCENTAGE:
-      return (
-        <AdoptionPercentageDataEntrySummaryPanel
-          analyticsDataEntry={analyticsDataEntry}
-          adoptionPercentageData={modelHelpers.parseObjectIntoModel(analyticsDataEntry?.getData("data"), adoptionPercentageMetadata)}
-          setActiveTab={setActiveTab}
-        />
-      );
-    case kpiIdentifierConstants.KPI_IDENTIFIERS.QA_MANUAL_TEST:
-      return (
-        <QaManualTestDataEntrySummaryPanel
-          analyticsDataEntry={analyticsDataEntry}
-          qaManualTestData={modelHelpers.parseObjectIntoModel(analyticsDataEntry?.getData("data"), qaManualTestMetadata)}
-          setActiveTab={setActiveTab}
-        />
-      );
-    case kpiIdentifierConstants.KPI_IDENTIFIERS.FIRST_PASS_YIELD:
-      return (
-        <FirstPassYieldDataEntrySummaryPanel
-          analyticsDataEntry={analyticsDataEntry}
-          firstPassYieldData={modelHelpers.parseObjectIntoModel(analyticsDataEntry?.getData("data"), firstPassYieldMetadata)}
-          setActiveTab={setActiveTab}
-        />
-      );
-    case kpiIdentifierConstants.KPI_IDENTIFIERS.CUMULATIVE_OPEN_DEFECTS:
-      return (
-        <CumulativeOpenDefectsDataEntrySummaryPanel
-          analyticsDataEntry={analyticsDataEntry}
-          cumulativeOpenDefectsData={modelHelpers.parseObjectIntoModel(analyticsDataEntry?.getData("data"), cumulativeOpenDefectsMetadata)}
-          setActiveTab={setActiveTab}
-        />
-      );
-    case kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATION_PERCENTAGE:
-      return (
-        <AutomationPercentageDataEntrySummaryPanel
-          analyticsDataEntry={analyticsDataEntry}
-          automationPercentageData={modelHelpers.parseObjectIntoModel(analyticsDataEntry?.getData("data"), automationPercentageMetadata)}
-          setActiveTab={setActiveTab}
-        />
-      );
-    case kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATED_TEST_RESULTS:
-      return (
-        <AutomatedTestResultsDataEntrySummaryPanel
-          analyticsDataEntry={analyticsDataEntry}
-          automatedTestResultsData={modelHelpers.parseObjectIntoModel(analyticsDataEntry?.getData("data"), automatedTestResultsConfigMetadata)}
-          setActiveTab={setActiveTab}
-        />
-      );
-    case kpiIdentifierConstants.KPI_IDENTIFIERS.DEFECT_REMOVAL_EFFICIENCY:
-      return (
-        <DefectRemovalEfficiencyDataEntrySummaryPanel
-          analyticsDataEntry={analyticsDataEntry}
-          defectRemovalEfficiencyData={modelHelpers.parseObjectIntoModel(analyticsDataEntry?.getData("data"), defectRemovalEfficiencyMetadata)}
-          setActiveTab={setActiveTab}
-        />
-      );
-    default:
-      return null;
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.ADOPTION_PERCENTAGE:
+        return (
+          <AdoptionPercentageDataEntrySummaryPanel
+            analyticsDataEntry={analyticsDataEntry}
+            adoptionPercentageData={modelHelpers.parseObjectIntoModel(analyticsDataEntry?.getData("data"), adoptionPercentageMetadata)}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.QA_MANUAL_TEST:
+        return (
+          <QaManualTestDataEntrySummaryPanel
+            analyticsDataEntry={analyticsDataEntry}
+            qaManualTestData={modelHelpers.parseObjectIntoModel(analyticsDataEntry?.getData("data"), qaManualTestMetadata)}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.FIRST_PASS_YIELD:
+        return (
+          <FirstPassYieldDataEntrySummaryPanel
+            analyticsDataEntry={analyticsDataEntry}
+            firstPassYieldData={modelHelpers.parseObjectIntoModel(analyticsDataEntry?.getData("data"), firstPassYieldMetadata)}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.CUMULATIVE_OPEN_DEFECTS:
+        return (
+          <CumulativeOpenDefectsDataEntrySummaryPanel
+            analyticsDataEntry={analyticsDataEntry}
+            cumulativeOpenDefectsData={modelHelpers.parseObjectIntoModel(analyticsDataEntry?.getData("data"), cumulativeOpenDefectsMetadata)}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATION_PERCENTAGE:
+        return (
+          <AutomationPercentageDataEntrySummaryPanel
+            analyticsDataEntry={analyticsDataEntry}
+            automationPercentageData={modelHelpers.parseObjectIntoModel(analyticsDataEntry?.getData("data"), automationPercentageMetadata)}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATED_TEST_RESULTS:
+        return (
+          <AutomatedTestResultsDataEntrySummaryPanel
+            analyticsDataEntry={analyticsDataEntry}
+            automatedTestResultsData={modelHelpers.parseObjectIntoModel(analyticsDataEntry?.getData("data"), automatedTestResultsConfigMetadata)}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.DEFECT_REMOVAL_EFFICIENCY:
+        return (
+          <DefectRemovalEfficiencyDataEntrySummaryPanel
+            analyticsDataEntry={analyticsDataEntry}
+            defectRemovalEfficiencyData={modelHelpers.parseObjectIntoModel(analyticsDataEntry?.getData("data"), defectRemovalEfficiencyMetadata)}
+            setActiveTab={setActiveTab}
+          />
+        );
+      default:
+        return null;
     }
   };
 

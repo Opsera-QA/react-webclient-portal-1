@@ -41,25 +41,25 @@ function PipelineTemplateDetailPanel({ templateData, setTemplateData }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return <PipelineTemplateSummaryPanel templateData={templateData} setActiveTab={setActiveTab} setTemplateData={setTemplateData} />;
-    case "details":
-      return (
-        <PipelineTemplatePlanOverviewContainer
-          pipelineTemplateModel={templateData}
-          className={"mt-1"}
-        />
-      );
-    case "settings":
-      return (
-        <PipelineTemplateEditorPanel
-          setTemplateModel={setTemplateData}
-          templateModel={templateData}
-          handleClose={toggleSummaryPanel}
-        />
-      );
-    default:
-      return null;
+      case "summary":
+        return <PipelineTemplateSummaryPanel templateData={templateData} setActiveTab={setActiveTab} setTemplateData={setTemplateData} />;
+      case "details":
+        return (
+          <PipelineTemplatePlanOverviewContainer
+            pipelineTemplateModel={templateData}
+            className={"mt-1"}
+          />
+        );
+      case "settings":
+        return (
+          <PipelineTemplateEditorPanel
+            setTemplateModel={setTemplateData}
+            templateModel={templateData}
+            handleClose={toggleSummaryPanel}
+          />
+        );
+      default:
+        return null;
     }
   };
 

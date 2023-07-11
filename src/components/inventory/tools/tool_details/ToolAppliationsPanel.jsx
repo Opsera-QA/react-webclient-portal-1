@@ -8,32 +8,32 @@ import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolId
 function ToolApplicationsPanel({ toolData, setToolData, loadData, isLoading }) {
   const getPanel = (toolIdentifier, loadData) => {
     switch (toolIdentifier) {
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
-      return (
-        <ArgoToolApplicationsPanel
-          toolData={toolData}
-        />
-      );
-    case "octopus":
-      return (
-        <OctopusToolApplicationsPanel
-          toolData={toolData}
-        />
-      );
-    case "azure":
-      return (
-        <AzureApplications
-          toolApplications={toolData?.getData("applications")}            
-          toolData={toolData}
-          loadData={loadData}
-        />
-      );
-    default:
-      return (
-        <div className="text-center p-5 text-muted mt-5">
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
+        return (
+          <ArgoToolApplicationsPanel
+            toolData={toolData}
+          />
+        );
+      case "octopus":
+        return (
+          <OctopusToolApplicationsPanel
+            toolData={toolData}
+          />
+        );
+      case "azure":
+        return (
+          <AzureApplications
+            toolApplications={toolData?.getData("applications")}            
+            toolData={toolData}
+            loadData={loadData}
+          />
+        );
+      default:
+        return (
+          <div className="text-center p-5 text-muted mt-5">
             Application management is not currently available for this tool.
-        </div>
-      );
+          </div>
+        );
     }
   };
 

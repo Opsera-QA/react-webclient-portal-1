@@ -53,14 +53,14 @@ const GitCustodianStandaloneRepositorySelectInput = ({ value,  disabled, setData
       setIsLoading(true);
 
       switch (service) {
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
-        return await loadBitbucketRepositories(cancelSource);
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
-        return await loadGitlabRepositories(cancelSource);
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
-        return await loadGithubRepositories(cancelSource);
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS:
-        return await loadAzureRepositories(cancelSource);
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
+          return await loadBitbucketRepositories(cancelSource);
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
+          return await loadGitlabRepositories(cancelSource);
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
+          return await loadGithubRepositories(cancelSource);
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS:
+          return await loadAzureRepositories(cancelSource);
       }
     } catch (error) {
       if (isMounted?.current === true) {

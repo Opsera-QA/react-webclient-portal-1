@@ -27,15 +27,15 @@ export default function CreateWorkspaceResourceWizardResourceSelectionScreen(
 
   const handleFlowSelectionButton = (selectedFlow) => {
     switch (selectedFlow) {
-    case WORKSPACE_RESOURCE_TYPES.PIPELINE:
-      setCurrentScreen(CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_PIPELINE_SCREEN);
-      return;
-    case WORKSPACE_RESOURCE_TYPES.TASK:
-      setCurrentScreen(CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TASK_SCREEN);
-      return;
-    case WORKSPACE_RESOURCE_TYPES.TOOL:
-      setCurrentScreen(CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TOOL_SCREEN);
-      return;
+      case WORKSPACE_RESOURCE_TYPES.PIPELINE:
+        setCurrentScreen(CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_PIPELINE_SCREEN);
+        return;
+      case WORKSPACE_RESOURCE_TYPES.TASK:
+        setCurrentScreen(CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TASK_SCREEN);
+        return;
+      case WORKSPACE_RESOURCE_TYPES.TOOL:
+        setCurrentScreen(CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TOOL_SCREEN);
+        return;
     }
   };
 

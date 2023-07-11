@@ -12,29 +12,29 @@ function PipelineStorageManagementSubNavigationBar({activeTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-    case "adminTools":
-      history.push(`/admin`);
-      return;
-    case "pipelineStorageManagement":
-      history.push(`/admin/pipeline-storage`);
-      return;
+      case "adminTools":
+        history.push(`/admin`);
+        return;
+      case "pipelineStorageManagement":
+        history.push(`/admin/pipeline-storage`);
+        return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-    case "pipelineStorageViewer":
-      return (
-        <NavigationTab
-          icon={faFileArchive}
-          tabName={"pipelineStorageViewer"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          tabText={"Pipeline Storage Viewer"}
-        />
-      );
-    default:
-      return null;
+      case "pipelineStorageViewer":
+        return (
+          <NavigationTab
+            icon={faFileArchive}
+            tabName={"pipelineStorageViewer"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+            tabText={"Pipeline Storage Viewer"}
+          />
+        );
+      default:
+        return null;
     }
   };
 

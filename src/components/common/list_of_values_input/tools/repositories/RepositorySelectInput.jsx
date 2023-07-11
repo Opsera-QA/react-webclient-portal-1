@@ -32,79 +32,79 @@ function RepositorySelectInput(
 
   const getRelevantInput = () => {
     switch(service) {
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS:
-      return (
-        <AzureDevOpsRepositorySelectInput
-          toolId={gitToolId}
-          model={dataObject}
-          setModel={setDataObject}
-          setDataFunction={setDataFunction}
-          fieldName={fieldName}
-          disabled={disabled}
-          clearDataFunction={clearDataFunction}
-          valueField={valueField}
-          textField={textField}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
-      return (
-        <BitbucketRepositorySelectInput
-          toolId={gitToolId}
-          model={dataObject}
-          setModel={setDataObject}
-          setDataFunction={setDataFunction}
-          fieldName={fieldName}
-          disabled={disabled}
-          clearDataFunction={clearDataFunction}
-          workspace={workspace}
-          valueField={valueField}
-          textField={textField}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
-      return (
-        <GithubRepositorySelectInput
-          toolId={gitToolId}
-          model={dataObject}
-          setModel={setDataObject}
-          setDataFunction={setDataFunction}
-          fieldName={fieldName}
-          disabled={disabled}
-          clearDataFunction={clearDataFunction}
-          valueField={valueField}
-          textField={textField}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
-      return (
-        <GitlabRepositorySelectInput
-          toolId={gitToolId}
-          model={dataObject}
-          setModel={setDataObject}
-          setDataFunction={setDataFunction}
-          fieldName={fieldName}
-          disabled={disabled}
-          clearDataFunction={clearDataFunction}
-          valueField={valueField}
-          textField={textField}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB_DEPLOY_KEY:
-      return (
-        <GithubMonoRepositorySelectInput
-          toolId={gitToolId}
-          model={dataObject}
-          setModel={setDataObject}
-          setDataFunction={setDataFunction}
-          fieldName={fieldName}
-          disabled={disabled}
-          clearDataFunction={clearDataFunction}
-          valueField={valueField}
-          textField={textField}
-        />
-      );
-    default:
-      return (<></>);
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS:
+        return (
+          <AzureDevOpsRepositorySelectInput
+            toolId={gitToolId}
+            model={dataObject}
+            setModel={setDataObject}
+            setDataFunction={setDataFunction}
+            fieldName={fieldName}
+            disabled={disabled}
+            clearDataFunction={clearDataFunction}
+            valueField={valueField}
+            textField={textField}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
+        return (
+          <BitbucketRepositorySelectInput
+            toolId={gitToolId}
+            model={dataObject}
+            setModel={setDataObject}
+            setDataFunction={setDataFunction}
+            fieldName={fieldName}
+            disabled={disabled}
+            clearDataFunction={clearDataFunction}
+            workspace={workspace}
+            valueField={valueField}
+            textField={textField}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
+        return (
+          <GithubRepositorySelectInput
+            toolId={gitToolId}
+            model={dataObject}
+            setModel={setDataObject}
+            setDataFunction={setDataFunction}
+            fieldName={fieldName}
+            disabled={disabled}
+            clearDataFunction={clearDataFunction}
+            valueField={valueField}
+            textField={textField}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
+        return (
+          <GitlabRepositorySelectInput
+            toolId={gitToolId}
+            model={dataObject}
+            setModel={setDataObject}
+            setDataFunction={setDataFunction}
+            fieldName={fieldName}
+            disabled={disabled}
+            clearDataFunction={clearDataFunction}
+            valueField={valueField}
+            textField={textField}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB_DEPLOY_KEY:
+        return (
+          <GithubMonoRepositorySelectInput
+            toolId={gitToolId}
+            model={dataObject}
+            setModel={setDataObject}
+            setDataFunction={setDataFunction}
+            fieldName={fieldName}
+            disabled={disabled}
+            clearDataFunction={clearDataFunction}
+            valueField={valueField}
+            textField={textField}
+          />
+        );
+      default:
+        return (<></>);
     }
   };
 

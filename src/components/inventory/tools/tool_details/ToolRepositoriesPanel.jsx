@@ -11,20 +11,20 @@ import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolId
 function ToolRepositoriesPanel({ toolData }) {
   const getToolRepositoriesPanel = () => {
     switch (toolData?.getData("tool_identifier")) {
-    case "jfrog_artifactory_maven":
-      return (
-        <JFrogToolRepositoriesPanel
-          toolId={toolData?.getData("_id")}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
-      return (
-        <ArgoToolRepositoriesPanel
-          toolId={toolData?.getData("_id")}
-        />
-      );
-    default:
-      return <LoadingDialog message={"Loading Tool Projects"} size={"sm"} />;
+      case "jfrog_artifactory_maven":
+        return (
+          <JFrogToolRepositoriesPanel
+            toolId={toolData?.getData("_id")}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
+        return (
+          <ArgoToolRepositoriesPanel
+            toolId={toolData?.getData("_id")}
+          />
+        );
+      default:
+        return <LoadingDialog message={"Loading Tool Projects"} size={"sm"} />;
     }
   };
 

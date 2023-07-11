@@ -42,28 +42,28 @@ function SiteRoleDetailPanel({ldapGroupData, orgDomain, loadData, isLoading }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "summary":
-      return (
-        <SiteRoleSummaryPanel
-          ldapGroupData={ldapGroupData}
-          domain={orgDomain}
-          setActiveTab={setActiveTab}
-          loadData={loadData}
-          isLoading={isLoading}
-        />
-      );
-    case "manage":
-      return (
-        <LdapGroupMembershipManagementPanel
-          orgDomain={orgDomain}
-          setActiveTab={setActiveTab}
-          ldapGroupData={ldapGroupData}
-          loadData={loadData}
-          type={"Site Role"}
-        />
-      );
-    default:
-      return null;
+      case "summary":
+        return (
+          <SiteRoleSummaryPanel
+            ldapGroupData={ldapGroupData}
+            domain={orgDomain}
+            setActiveTab={setActiveTab}
+            loadData={loadData}
+            isLoading={isLoading}
+          />
+        );
+      case "manage":
+        return (
+          <LdapGroupMembershipManagementPanel
+            orgDomain={orgDomain}
+            setActiveTab={setActiveTab}
+            ldapGroupData={ldapGroupData}
+            loadData={loadData}
+            type={"Site Role"}
+          />
+        );
+      default:
+        return null;
     }
   };
 

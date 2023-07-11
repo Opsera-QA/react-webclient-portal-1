@@ -15,15 +15,15 @@ export default function AccountSettingsSubNavigationBarBase({ activeTab }) {
     }
 
     switch (tabSelection) {
-    case "accountSettings":
-      history.push(`/settings`);
-      return;
-    case "insightsSettings":
-      history.push(`/settings/insights`);
-      return;
-    case "pipelineSettings":
-      history.push(`/settings/pipelines`);
-      return;
+      case "accountSettings":
+        history.push(`/settings`);
+        return;
+      case "insightsSettings":
+        history.push(`/settings/insights`);
+        return;
+      case "pipelineSettings":
+        history.push(`/settings/pipelines`);
+        return;
     }
   };
 

@@ -67,42 +67,42 @@ function DashboardMetricTabPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-    case "settings":
-      return (
-        <div className={"mx-3"}>
-          <TextInputBase
-            fieldName={"kpi_name"}
-            dataObject={metricModel}
-            setDataObject={setMetricModel}
-          />
-          <MetricSettingsInputPanel
-            metricModel={metricModel}
-            setMetricModel={setMetricModel}
-            metricSettings={metricModel?.getData("settings")}
-          />
-          {metricEditorPanel}
-        </div>
-      );
-    case "data-point-settings":
-      return (
-        <div>
-          <DashboardMetricDataPointsInputPanel
-            model={metricModel}
-            setModel={setMetricModel}
-          />
-        </div>
-      );
-    case "dashboard-notification-settings":
-      return (
-        <div>
-          <DashboardNotificationsEditorPanel
-            model={metricModel}
-            setModel={setMetricModel}
-          />
-        </div>
-      );
-    default:
-      return null;
+      case "settings":
+        return (
+          <div className={"mx-3"}>
+            <TextInputBase
+              fieldName={"kpi_name"}
+              dataObject={metricModel}
+              setDataObject={setMetricModel}
+            />
+            <MetricSettingsInputPanel
+              metricModel={metricModel}
+              setMetricModel={setMetricModel}
+              metricSettings={metricModel?.getData("settings")}
+            />
+            {metricEditorPanel}
+          </div>
+        );
+      case "data-point-settings":
+        return (
+          <div>
+            <DashboardMetricDataPointsInputPanel
+              model={metricModel}
+              setModel={setMetricModel}
+            />
+          </div>
+        );
+      case "dashboard-notification-settings":
+        return (
+          <div>
+            <DashboardNotificationsEditorPanel
+              model={metricModel}
+              setModel={setMetricModel}
+            />
+          </div>
+        );
+      default:
+        return null;
     }
   };
 

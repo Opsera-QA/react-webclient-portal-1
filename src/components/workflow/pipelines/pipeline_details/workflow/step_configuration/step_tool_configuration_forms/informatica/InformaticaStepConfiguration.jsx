@@ -120,69 +120,69 @@ function InformaticaStepConfiguration({ pipelineId, stepTool, plan, stepId, clos
 
   const getDynamicFields = () => {
     switch (informaticaStepConfigurationDto.getData("type")) {
-    case "export":
-      return (
-        <div>
-          <RoleRestrictedToolByIdentifierInputBase
-            toolIdentifier={"informatica"}
-            toolFriendlyName={"informatica"}
-            fieldName={"toolConfigId"}
-            model={informaticaStepConfigurationDto}
-            setModel={setInformaticaStepConfigurationDataDto}
-            placeholderText={"Select Source Informatica Tool"}
-          />
-          {getSourceSelection()}
-          <BooleanToggleInput
-            fieldName={"isNewBranch"}
-            dataObject={informaticaStepConfigurationDto}
-            setDataObject={setInformaticaStepConfigurationDataDto}
-          />
-          {getNewBranchHandler()}
-          <BooleanToggleInput
-            fieldName={"includeDependencies"}
-            dataObject={informaticaStepConfigurationDto}
-            setDataObject={setInformaticaStepConfigurationDataDto}
-          />
-        </div>
-      );
-    case "import":
-      return (
-        <div>
-          <RoleRestrictedToolByIdentifierInputBase
-            toolIdentifier={"informatica"}
-            toolFriendlyName={"informatica"}
-            fieldName={"toolConfigId"}
-            model={informaticaStepConfigurationDto}
-            setModel={setInformaticaStepConfigurationDataDto}
-            placeholderText={"Select Destination Informatica Tool"}
-          />
-          <BooleanToggleInput
-            fieldName={"deployFromGit"}
-            dataObject={informaticaStepConfigurationDto}
-            setDataObject={setInformaticaStepConfigurationDataDto}
-          />
-          {informaticaStepConfigurationDto.getData("deployFromGit") ? 
-            <>
-              {getSourceSelection()}
-              <TextInputBase fieldName={"gitFilePath"} dataObject={informaticaStepConfigurationDto} setDataObject={setInformaticaStepConfigurationDataDto}/>
-            </> :
-            <SelectInputBase
-              setDataObject={setInformaticaStepConfigurationDataDto}
-              textField={"name"}
-              valueField={"_id"}
-              dataObject={informaticaStepConfigurationDto}
-              filter={"contains"}
-              selectOptions={listOfSteps ? listOfSteps : []}
-              fieldName={"buildStepId"}
+      case "export":
+        return (
+          <div>
+            <RoleRestrictedToolByIdentifierInputBase
+              toolIdentifier={"informatica"}
+              toolFriendlyName={"informatica"}
+              fieldName={"toolConfigId"}
+              model={informaticaStepConfigurationDto}
+              setModel={setInformaticaStepConfigurationDataDto}
+              placeholderText={"Select Source Informatica Tool"}
             />
-          }
+            {getSourceSelection()}
+            <BooleanToggleInput
+              fieldName={"isNewBranch"}
+              dataObject={informaticaStepConfigurationDto}
+              setDataObject={setInformaticaStepConfigurationDataDto}
+            />
+            {getNewBranchHandler()}
+            <BooleanToggleInput
+              fieldName={"includeDependencies"}
+              dataObject={informaticaStepConfigurationDto}
+              setDataObject={setInformaticaStepConfigurationDataDto}
+            />
+          </div>
+        );
+      case "import":
+        return (
+          <div>
+            <RoleRestrictedToolByIdentifierInputBase
+              toolIdentifier={"informatica"}
+              toolFriendlyName={"informatica"}
+              fieldName={"toolConfigId"}
+              model={informaticaStepConfigurationDto}
+              setModel={setInformaticaStepConfigurationDataDto}
+              placeholderText={"Select Destination Informatica Tool"}
+            />
+            <BooleanToggleInput
+              fieldName={"deployFromGit"}
+              dataObject={informaticaStepConfigurationDto}
+              setDataObject={setInformaticaStepConfigurationDataDto}
+            />
+            {informaticaStepConfigurationDto.getData("deployFromGit") ? 
+              <>
+                {getSourceSelection()}
+                <TextInputBase fieldName={"gitFilePath"} dataObject={informaticaStepConfigurationDto} setDataObject={setInformaticaStepConfigurationDataDto}/>
+              </> :
+              <SelectInputBase
+                setDataObject={setInformaticaStepConfigurationDataDto}
+                textField={"name"}
+                valueField={"_id"}
+                dataObject={informaticaStepConfigurationDto}
+                filter={"contains"}
+                selectOptions={listOfSteps ? listOfSteps : []}
+                fieldName={"buildStepId"}
+              />
+            }
             
-        </div>
-      );
-    default :
-      return (
-        <></>
-      );
+          </div>
+        );
+      default :
+        return (
+          <></>
+        );
     }
   };
 

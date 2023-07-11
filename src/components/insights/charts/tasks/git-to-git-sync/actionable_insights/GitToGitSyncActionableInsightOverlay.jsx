@@ -31,17 +31,17 @@ export default function GitToGitSyncActionableInsightOverlay(
 
   const getBody = () => {
     switch (currentScreen) {
-    case GIT_TO_GIT_SYNC_ACTIONABLE_INSIGHT_SCREENS.GIT_TO_GIT_SYNC_RUN_SUMMARY:
-      return (
-        <GitToGitSyncDetailedRunSummaryOverlay
-          dashboardData={dashboardData}
-          kpiConfiguration={kpiConfiguration}
-          dashboardFilters={dashboardFilters}
-          taskId={taskId}
-          taskName={taskName}
-          breadcrumbBar={getBreadcrumbBar()}
-        />
-      );
+      case GIT_TO_GIT_SYNC_ACTIONABLE_INSIGHT_SCREENS.GIT_TO_GIT_SYNC_RUN_SUMMARY:
+        return (
+          <GitToGitSyncDetailedRunSummaryOverlay
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            dashboardFilters={dashboardFilters}
+            taskId={taskId}
+            taskName={taskName}
+            breadcrumbBar={getBreadcrumbBar()}
+          />
+        );
     }
   };
 

@@ -12,29 +12,29 @@ function LdapOrganizationAccountManagementSubNavigationBar({activeTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-    case "adminTools":
-      history.push(`/admin`);
-      return;
-    case "organizations":
-      history.push(`/admin/organizations`);
-      return;
+      case "adminTools":
+        history.push(`/admin`);
+        return;
+      case "organizations":
+        history.push(`/admin/organizations`);
+        return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-    case "organizationAccountViewer":
-      return (
-        <NavigationTab
-          icon={faUsers}
-          tabName={"organizationAccountViewer"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          tabText={"Organization Account Viewer"}
-        />
-      );
-    default:
-      return null;
+      case "organizationAccountViewer":
+        return (
+          <NavigationTab
+            icon={faUsers}
+            tabName={"organizationAccountViewer"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+            tabText={"Organization Account Viewer"}
+          />
+        );
+      default:
+        return null;
     }
   };
 

@@ -831,149 +831,149 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
 
   const getJsonDiffView = () => {
     switch (jsonViewModel?.getData("componentType")) {
-    case "applicationVisibilities":
-      return (
-        <MergeSyncTaskWizardCustomApplicationJsonEditPanel
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          comparisonFileModel={comparisonFileModel}
-          setComparisonFileModel={setComparisonFileModel}
-          fileName={comparisonFileModel?.getData("file")}
-        />
-      );
-    case "categoryGroupVisibilities":
-      return (
-        <MergeSyncTaskWizardDataCategoryJsonEditPanel
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          comparisonFileModel={comparisonFileModel}
-          setComparisonFileModel={setComparisonFileModel}
-          fileName={comparisonFileModel?.getData("file")}
-        />
-      );
-    case "classAccesses":
-      return (
-        <MergeSyncTaskWizardApexClassJsonEditPanel
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          comparisonFileModel={comparisonFileModel}
-          setComparisonFileModel={setComparisonFileModel}
-          fileName={comparisonFileModel?.getData("file")}
-        />
-      );
-    case "customMetadataTypeAccesses":
-      return (
-        <MergeSyncTaskWizardCustomMetadataJsonEditPanel
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          comparisonFileModel={comparisonFileModel}
-          setComparisonFileModel={setComparisonFileModel}
-          fileName={comparisonFileModel?.getData("file")}
-        />
-      );
-    case "customPermissions":
-      return (
-        <MergeSyncTaskWizardCustomPermissionsJsonEditPanel
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          comparisonFileModel={comparisonFileModel}
-          setComparisonFileModel={setComparisonFileModel}
-          fileName={comparisonFileModel?.getData("file")}
-        />
-      );
-    case "customSettingAccesses":
-      return (
-        <MergeSyncTaskWizardCustomSettingJsonEditPanel
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          comparisonFileModel={comparisonFileModel}
-          setComparisonFileModel={setComparisonFileModel}
-          fileName={comparisonFileModel?.getData("file")}
-        />
-      );
-    case "externalDataSourceAccesses":
-      return (
-        <MergeSyncTaskWizardExternalDataSourceJsonEditPanel
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          comparisonFileModel={comparisonFileModel}
-          setComparisonFileModel={setComparisonFileModel}
-          fileName={comparisonFileModel?.getData("file")}
-        />
-      );
-    case "fieldPermissions":
-      return (
-        <MergeSyncTaskWizardCustomFieldJsonEditPanel
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          comparisonFileModel={comparisonFileModel}
-          setComparisonFileModel={setComparisonFileModel}
-          fileName={comparisonFileModel?.getData("file")}
-        />
-      );
-    case "flowAccesses":
-      return (
-        <MergeSyncTaskWizardFlowJsonEditPanel
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          comparisonFileModel={comparisonFileModel}
-          setComparisonFileModel={setComparisonFileModel}
-          fileName={comparisonFileModel?.getData("file")}
-        />
-      );
-    case "layoutAssignments":
-      return (
-        <MergeSyncTaskWizardLayoutJsonEditPanel
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          comparisonFileModel={comparisonFileModel}
-          setComparisonFileModel={setComparisonFileModel}
-          fileName={comparisonFileModel?.getData("file")}
-        />
-      );
-    case "objectPermissions":
-      return (
-        <MergeSyncTaskWizardCustomObjectJsonEditPanel
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          comparisonFileModel={comparisonFileModel}
-          setComparisonFileModel={setComparisonFileModel}
-          fileName={comparisonFileModel?.getData("file")}
-        />
-      );
-    case "pageAccesses":
-      return (
-        <MergeSyncTaskWizardApexPageJsonEditPanel
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          comparisonFileModel={comparisonFileModel}
-          setComparisonFileModel={setComparisonFileModel}
-          fileName={comparisonFileModel?.getData("file")}
-        />
-      );
-    case "recordTypeVisibilities":
-      return (
-        <MergeSyncTaskWizardRecordTypeJsonEditPanel
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          comparisonFileModel={comparisonFileModel}
-          setComparisonFileModel={setComparisonFileModel}
-          fileName={comparisonFileModel?.getData("file")}
-        />
-      );
-    case "tabVisibilities":
-      return (
-        <MergeSyncTaskWizardCustomTabJsonEditPanel
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          comparisonFileModel={comparisonFileModel}
-          setComparisonFileModel={setComparisonFileModel}
-          fileName={comparisonFileModel?.getData("file")}
-        />
-      );
+      case "applicationVisibilities":
+        return (
+          <MergeSyncTaskWizardCustomApplicationJsonEditPanel
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName={comparisonFileModel?.getData("file")}
+          />
+        );
+      case "categoryGroupVisibilities":
+        return (
+          <MergeSyncTaskWizardDataCategoryJsonEditPanel
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName={comparisonFileModel?.getData("file")}
+          />
+        );
+      case "classAccesses":
+        return (
+          <MergeSyncTaskWizardApexClassJsonEditPanel
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName={comparisonFileModel?.getData("file")}
+          />
+        );
+      case "customMetadataTypeAccesses":
+        return (
+          <MergeSyncTaskWizardCustomMetadataJsonEditPanel
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName={comparisonFileModel?.getData("file")}
+          />
+        );
+      case "customPermissions":
+        return (
+          <MergeSyncTaskWizardCustomPermissionsJsonEditPanel
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName={comparisonFileModel?.getData("file")}
+          />
+        );
+      case "customSettingAccesses":
+        return (
+          <MergeSyncTaskWizardCustomSettingJsonEditPanel
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName={comparisonFileModel?.getData("file")}
+          />
+        );
+      case "externalDataSourceAccesses":
+        return (
+          <MergeSyncTaskWizardExternalDataSourceJsonEditPanel
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName={comparisonFileModel?.getData("file")}
+          />
+        );
+      case "fieldPermissions":
+        return (
+          <MergeSyncTaskWizardCustomFieldJsonEditPanel
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName={comparisonFileModel?.getData("file")}
+          />
+        );
+      case "flowAccesses":
+        return (
+          <MergeSyncTaskWizardFlowJsonEditPanel
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName={comparisonFileModel?.getData("file")}
+          />
+        );
+      case "layoutAssignments":
+        return (
+          <MergeSyncTaskWizardLayoutJsonEditPanel
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName={comparisonFileModel?.getData("file")}
+          />
+        );
+      case "objectPermissions":
+        return (
+          <MergeSyncTaskWizardCustomObjectJsonEditPanel
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName={comparisonFileModel?.getData("file")}
+          />
+        );
+      case "pageAccesses":
+        return (
+          <MergeSyncTaskWizardApexPageJsonEditPanel
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName={comparisonFileModel?.getData("file")}
+          />
+        );
+      case "recordTypeVisibilities":
+        return (
+          <MergeSyncTaskWizardRecordTypeJsonEditPanel
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName={comparisonFileModel?.getData("file")}
+          />
+        );
+      case "tabVisibilities":
+        return (
+          <MergeSyncTaskWizardCustomTabJsonEditPanel
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName={comparisonFileModel?.getData("file")}
+          />
+        );
 
-    default:
-      return <>Please select a component type</>;
+      default:
+        return <>Please select a component type</>;
     }
   };
 

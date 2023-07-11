@@ -18,20 +18,20 @@ export default function PipelineUserActionSummaryPanel(
 
   const getSummaryReportPanel = () => {
     switch (toolIdentifier) {
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
-      return (
-        <UserActionPipelineStepActionSummaryPanel
-          pipelineTaskModel={modelHelpers.parseObjectIntoModel(pipelineTaskData, pipelineTaskMetadata)}
-          setActiveTab={setActiveTab}
-        />
-      );
-    default:
-      return (
-        <PipelineTaskSummaryPanelBase
-          pipelineTaskData={modelHelpers.parseObjectIntoModel(pipelineTaskData, pipelineTaskMetadata)}
-          setActiveTab={setActiveTab}
-        />
-      );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
+        return (
+          <UserActionPipelineStepActionSummaryPanel
+            pipelineTaskModel={modelHelpers.parseObjectIntoModel(pipelineTaskData, pipelineTaskMetadata)}
+            setActiveTab={setActiveTab}
+          />
+        );
+      default:
+        return (
+          <PipelineTaskSummaryPanelBase
+            pipelineTaskData={modelHelpers.parseObjectIntoModel(pipelineTaskData, pipelineTaskMetadata)}
+            setActiveTab={setActiveTab}
+          />
+        );
     }
   };
 

@@ -18,39 +18,39 @@ function JenkinsStepConfigurationDockerEditorPanel({model, setModel, buildType, 
   const getDynamicTagFields = () => {
 
     switch (model?.getData("dockerTagType")) {
-    case "other":
-      return (
-        <TextInputBase
-          dataObject={model}
-          setDataObject={setModel}
-          fieldName={"dockerDynamicTagName"}
-        />
-      );
-    case "commit_sha":
-      return (
-        <>
-          <BooleanToggleInput 
+      case "other":
+        return (
+          <TextInputBase
             dataObject={model}
             setDataObject={setModel}
-            fieldName={"specifyCommitIdChar"}
+            fieldName={"dockerDynamicTagName"}
           />
-          {model?.getData("specifyCommitIdChar") && (
-            <>                
-              <DockerCommitShaTrimDirectionSelectionInput 
-                dataObject={model}
-                setDataObject={setModel}
-              />                
-              <NumberPickerInputBase
-                dataObject={model}
-                setDataObject={setModel}                  
-                fieldName={"commitIdCharLimit"}
-              />
-            </>
-          )}            
-        </>          
-      );
-    default:
-      return null;
+        );
+      case "commit_sha":
+        return (
+          <>
+            <BooleanToggleInput 
+              dataObject={model}
+              setDataObject={setModel}
+              fieldName={"specifyCommitIdChar"}
+            />
+            {model?.getData("specifyCommitIdChar") && (
+              <>                
+                <DockerCommitShaTrimDirectionSelectionInput 
+                  dataObject={model}
+                  setDataObject={setModel}
+                />                
+                <NumberPickerInputBase
+                  dataObject={model}
+                  setDataObject={setModel}                  
+                  fieldName={"commitIdCharLimit"}
+                />
+              </>
+            )}            
+          </>          
+        );
+      default:
+        return null;
     }
   };
 

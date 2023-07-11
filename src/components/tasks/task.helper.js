@@ -36,14 +36,14 @@ taskHelper.getTaskCompletionPercentage = (task) => {
 
 taskHelper.getTaskColor = (state, themeConstants) => {
   switch (state) {
-  case "paused":
-    return themeConstants.COLOR_PALETTE.WARNING;
-  case "running":
-    return themeConstants.COLOR_PALETTE.GREEN;
+    case "paused":
+      return themeConstants.COLOR_PALETTE.WARNING;
+    case "running":
+      return themeConstants.COLOR_PALETTE.GREEN;
     // case "failure":
     // case "failed":
     //   return themeConstants.COLOR_PALETTE.DANGER_RED;
-  default:
-    return themeConstants.RESOURCE_COLORS.TASKS;
+    default:
+      return themeConstants.RESOURCE_COLORS.TASKS;
   }
 };

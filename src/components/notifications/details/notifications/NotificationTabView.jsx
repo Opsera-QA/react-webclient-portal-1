@@ -40,55 +40,55 @@ function NotificationTabView(
 
   const getViewForTab = () => {
     switch (activeTab) {
-    case ORCHESTRATION_NOTIFICATION_TYPES.EMAIL:
-      return (
-        <EmailNotificationEditorPanel
-          emailNotificationModel={emailNotificationModel}
-          setEmailNotificationModel={setEmailNotificationModel}
-          showOrchestrationFields={false}
-        />
-      );
-    case ORCHESTRATION_NOTIFICATION_TYPES.JIRA:
-      return (
-        <JiraNotificationEditorPanel
-          jiraNotificationModel={jiraNotificationModel}
-          setJiraNotificationModel={setJiraNotificationModel}
-          isApprovalStep={false}
-          showOrchestrationFields={false}
-        />
-      );
-    case ORCHESTRATION_NOTIFICATION_TYPES.SLACK:
-      return (
-        <SlackNotificationEditorPanel
-          slackNotificationModel={slackNotificationModel}
-          setSlackNotificationModel={setSlackNotificationModel}
-          showOrchestrationFields={false}
-        />
-      );
-    case ORCHESTRATION_NOTIFICATION_TYPES.SERVICE_NOW:
-      return (
-        <ServiceNowNotificationEditorPanel
-          serviceNowNotificationModel={serviceNowNotificationModel}
-          setServiceNowNotificationModel={setServiceNowNotificationModel}
-          showOrchestrationFields={false}
-        />
-      );
-    case ORCHESTRATION_NOTIFICATION_TYPES.TEAMS:
-      return (
-        <MicrosoftTeamsNotificationEditorPanel
-          teamsNotificationModel={teamsNotificationModel}
-          setTeamsNotificationModel={setTeamsNotificationModel}
-          showOrchestrationFields={false}
-        />
-      );
-    case ORCHESTRATION_NOTIFICATION_TYPES.GCHAT:
-      return (
-        <GChatNotificationEditorPanel
-          gChatNotificationModel={gChatNotificationModel}
-          setGChatNotificationModel={setGChatNotificationModel}
-          showOrchestrationFields={false}
-        />
-      );
+      case ORCHESTRATION_NOTIFICATION_TYPES.EMAIL:
+        return (
+          <EmailNotificationEditorPanel
+            emailNotificationModel={emailNotificationModel}
+            setEmailNotificationModel={setEmailNotificationModel}
+            showOrchestrationFields={false}
+          />
+        );
+      case ORCHESTRATION_NOTIFICATION_TYPES.JIRA:
+        return (
+          <JiraNotificationEditorPanel
+            jiraNotificationModel={jiraNotificationModel}
+            setJiraNotificationModel={setJiraNotificationModel}
+            isApprovalStep={false}
+            showOrchestrationFields={false}
+          />
+        );
+      case ORCHESTRATION_NOTIFICATION_TYPES.SLACK:
+        return (
+          <SlackNotificationEditorPanel
+            slackNotificationModel={slackNotificationModel}
+            setSlackNotificationModel={setSlackNotificationModel}
+            showOrchestrationFields={false}
+          />
+        );
+      case ORCHESTRATION_NOTIFICATION_TYPES.SERVICE_NOW:
+        return (
+          <ServiceNowNotificationEditorPanel
+            serviceNowNotificationModel={serviceNowNotificationModel}
+            setServiceNowNotificationModel={setServiceNowNotificationModel}
+            showOrchestrationFields={false}
+          />
+        );
+      case ORCHESTRATION_NOTIFICATION_TYPES.TEAMS:
+        return (
+          <MicrosoftTeamsNotificationEditorPanel
+            teamsNotificationModel={teamsNotificationModel}
+            setTeamsNotificationModel={setTeamsNotificationModel}
+            showOrchestrationFields={false}
+          />
+        );
+      case ORCHESTRATION_NOTIFICATION_TYPES.GCHAT:
+        return (
+          <GChatNotificationEditorPanel
+            gChatNotificationModel={gChatNotificationModel}
+            setGChatNotificationModel={setGChatNotificationModel}
+            showOrchestrationFields={false}
+          />
+        );
     }
   };
 

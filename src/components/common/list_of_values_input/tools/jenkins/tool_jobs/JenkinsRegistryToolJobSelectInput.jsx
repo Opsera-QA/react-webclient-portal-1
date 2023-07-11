@@ -109,18 +109,18 @@ function JenkinsRegistryToolJobSelectInput(
 
       if (buildType) {
         switch (buildType) {
-        case toolIdentifierConstants.TOOL_IDENTIFIERS.DOT_NET:
-          buildJobs = jenkinsJobs.filter((job) => job?.configuration?.buildType === "msbuild");
-          setJenkinsJobs(buildJobs);
-          break;
-        case toolIdentifierConstants.TOOL_IDENTIFIERS.DOT_NET_CLI:
-          buildJobs = jenkinsJobs.filter((job) => job?.configuration?.buildType === "dotnet");
-          setJenkinsJobs(buildJobs);
-          break;
-        case toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS:
-          buildJobs = jenkinsJobs.filter((job) => job?.configuration?.buildType !== "msbuild" && job?.configuration?.buildType !== "dotnet");
-          setJenkinsJobs(buildJobs);
-          break;
+          case toolIdentifierConstants.TOOL_IDENTIFIERS.DOT_NET:
+            buildJobs = jenkinsJobs.filter((job) => job?.configuration?.buildType === "msbuild");
+            setJenkinsJobs(buildJobs);
+            break;
+          case toolIdentifierConstants.TOOL_IDENTIFIERS.DOT_NET_CLI:
+            buildJobs = jenkinsJobs.filter((job) => job?.configuration?.buildType === "dotnet");
+            setJenkinsJobs(buildJobs);
+            break;
+          case toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS:
+            buildJobs = jenkinsJobs.filter((job) => job?.configuration?.buildType !== "msbuild" && job?.configuration?.buildType !== "dotnet");
+            setJenkinsJobs(buildJobs);
+            break;
         }
       }
     }

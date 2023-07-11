@@ -27,62 +27,62 @@ export default function LdapGroupAssignedRolesTableBase(
 
   const getTable = () => {
     switch (assignedGroupResourcesFilterModel?.getData("type")) {
-    case "dashboards":
-      return (
-        <LdapGroupAssignedRolesDashboardsTable
-          dashboards={items}
-          isLoading={isLoading}
-          group={group}
-        />
-      );
-    case "parameters":
-      return (
-        <LdapGroupAssignedRolesParametersTable
-          parameters={items}
-          isLoading={isLoading}
-          group={group}
-        />
-      );
-    case "pipelines":
-      return (
-        <LdapGroupAssignedRolesPipelinesTable
-          pipelines={items}
-          isLoading={isLoading}
-          group={group}
-        />
-      );
-    case "pipeline_instructions":
-      return (
-        <LdapGroupAssignedRolesPipelineInstructionsTable
-          pipelineInstructions={items}
-          isLoading={isLoading}
-          group={group}
-        />
-      );
-    case "scripts":
-      return (
-        <LdapGroupAssignedRolesScriptsTable
-          scripts={items}
-          isLoading={isLoading}
-          group={group}
-        />
-      );
-    case "tools":
-      return (
-        <LdapGroupAssignedRolesToolsTable
-          tools={items}
-          isLoading={isLoading}
-          group={group}
-        />
-      );
-    case "tasks":
-      return (
-        <LdapGroupAssignedRolesTasksTable
-          tasks={items}
-          isLoading={isLoading}
-          group={group}
-        />
-      );
+      case "dashboards":
+        return (
+          <LdapGroupAssignedRolesDashboardsTable
+            dashboards={items}
+            isLoading={isLoading}
+            group={group}
+          />
+        );
+      case "parameters":
+        return (
+          <LdapGroupAssignedRolesParametersTable
+            parameters={items}
+            isLoading={isLoading}
+            group={group}
+          />
+        );
+      case "pipelines":
+        return (
+          <LdapGroupAssignedRolesPipelinesTable
+            pipelines={items}
+            isLoading={isLoading}
+            group={group}
+          />
+        );
+      case "pipeline_instructions":
+        return (
+          <LdapGroupAssignedRolesPipelineInstructionsTable
+            pipelineInstructions={items}
+            isLoading={isLoading}
+            group={group}
+          />
+        );
+      case "scripts":
+        return (
+          <LdapGroupAssignedRolesScriptsTable
+            scripts={items}
+            isLoading={isLoading}
+            group={group}
+          />
+        );
+      case "tools":
+        return (
+          <LdapGroupAssignedRolesToolsTable
+            tools={items}
+            isLoading={isLoading}
+            group={group}
+          />
+        );
+      case "tasks":
+        return (
+          <LdapGroupAssignedRolesTasksTable
+            tasks={items}
+            isLoading={isLoading}
+            group={group}
+          />
+        );
     }
   };
 

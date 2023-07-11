@@ -36,32 +36,32 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
 
   const getEditorPanel = () => {
     switch (gitToolOption) {
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
-      return (
-        <CreateWorkflowWizardCreateGithubToolEditorPanel
-          gitToolModel={gitToolModel}
-          setGitToolModel={setGitToolModel}
-          setGitToolId={setGitToolId}
-          onSuccessFunction={onSuccessFunction}
-          gitToolId={gitToolId}
-          backButtonFunction={backButtonFunction}
-          setButtonContainer={setButtonContainer}
-          toolType={toolType}
-        />
-      );
-    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
-      return (
-        <CreateWorkflowWizardCreateGitlabToolEditorPanel
-          gitToolModel={gitToolModel}
-          setGitToolModel={setGitToolModel}
-          setGitToolId={setGitToolId}
-          onSuccessFunction={onSuccessFunction}
-          gitToolId={gitToolId}
-          backButtonFunction={backButtonFunction}
-          setButtonContainer={setButtonContainer}
-          toolType={toolType}
-        />
-      );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
+        return (
+          <CreateWorkflowWizardCreateGithubToolEditorPanel
+            gitToolModel={gitToolModel}
+            setGitToolModel={setGitToolModel}
+            setGitToolId={setGitToolId}
+            onSuccessFunction={onSuccessFunction}
+            gitToolId={gitToolId}
+            backButtonFunction={backButtonFunction}
+            setButtonContainer={setButtonContainer}
+            toolType={toolType}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
+        return (
+          <CreateWorkflowWizardCreateGitlabToolEditorPanel
+            gitToolModel={gitToolModel}
+            setGitToolModel={setGitToolModel}
+            setGitToolId={setGitToolId}
+            onSuccessFunction={onSuccessFunction}
+            gitToolId={gitToolId}
+            backButtonFunction={backButtonFunction}
+            setButtonContainer={setButtonContainer}
+            toolType={toolType}
+          />
+        );
     }
   };
 

@@ -75,16 +75,16 @@ export default function PipelineTemplateSelectionScreen(
     }
 
     switch (activeTab) {
-    case "customer":
-    default:
-      return (
-        <CustomerPipelineTemplateCatalog
-          activeTemplates={activeTemplates}
-          selectTemplateFunction={setSelectedCustomerTemplate}
-          setupMode={setupMode}
-          cardTooltip={"Click to select Pipeline"}
-        />
-      );
+      case "customer":
+      default:
+        return (
+          <CustomerPipelineTemplateCatalog
+            activeTemplates={activeTemplates}
+            selectTemplateFunction={setSelectedCustomerTemplate}
+            setupMode={setupMode}
+            cardTooltip={"Click to select Pipeline"}
+          />
+        );
     }
   };
 
