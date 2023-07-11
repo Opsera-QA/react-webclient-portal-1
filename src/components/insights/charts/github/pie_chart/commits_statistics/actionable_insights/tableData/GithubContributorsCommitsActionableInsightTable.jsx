@@ -1,4 +1,4 @@
-import React, {useContext, useMemo} from "react";
+import React, { useContext, useMemo } from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import GithubCommitsActionableMetadata from "../github-commits-actionable-insight-metadata";
