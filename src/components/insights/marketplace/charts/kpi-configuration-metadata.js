@@ -257,6 +257,23 @@ export const kpiJiraIssueStartStatusFilterMetadata = {
   },
 };
 
+export const kpiJiraIssueStartStageFilterMetadata = {
+  type: "Jira Issue Start Stage Filter",
+  fields: [
+    {
+      label: "Type",
+      id: "type",
+    },
+    {
+      label: "Jira Issue Start Stage",
+      id: "value",
+    },
+  ],
+  newObjectFields: {
+    value: [],
+  },
+};
+
 export const kpiJiraIssueDoneStatusFilterMetadata = {
   type: "Jira Issue Done Status Filter",
   fields: [

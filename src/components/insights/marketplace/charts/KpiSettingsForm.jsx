@@ -18,6 +18,7 @@ import kpiConfigurationMetadata, {
   kpiJiraIssueLabelsFilterMetadata,
   kpiJiraIssueStatusFilterMetadata,
   kpiJiraIssueStartStatusFilterMetadata,
+  kpiJiraIssueStartStageFilterMetadata,
   kpiJiraIssueDoneStatusFilterMetadata,
   kpiSonarProjectKeyFilterMetadata,
   kpiDomainFilterMetadata,
@@ -77,6 +78,7 @@ import DeleteDashboardMetricConfirmationPanel
 import DashboardMetricEditorPanelContainer
   from "components/common/panels/detail_panel_container/dashboard_metrics/DashboardMetricEditorPanelContainer";
 import { kpiIdentifierConstants } from "components/admin/kpi_identifiers/kpiIdentifier.constants";
+import { KPI_FILTER_TYPES } from "components/common/list_of_values_input/admin/kpi_configurations/filters/kpiFilter.types";
 
 // TODO: There are a handful of issues with this we need to address.
 function KpiSettingsForm({
@@ -137,6 +139,13 @@ function KpiSettingsForm({
       kpiConfiguration,
       "jira-issue-start-status",
       kpiJiraIssueStartStatusFilterMetadata
+    )
+  );
+  const [kpiJiraIssueStartStageFilter, setKpiJiraIssueStartStageFilter] = useState(
+    modelHelpers.getDashboardFilterModel(
+      kpiConfiguration,
+      KPI_FILTER_TYPES.JIRA_ISSUE_START_STAGE,
+      kpiJiraIssueStartStageFilterMetadata
     )
   );
   const [kpiJiraIssueDoneStatusFilter, setKpiJiraIssueDoneStatusFilter] = useState(
@@ -504,6 +513,17 @@ function KpiSettingsForm({
             />
           </div>
         );
+      case KPI_FILTER_TYPES.JIRA_ISSUE_START_STAGE:
+        return (
+          <div>
+            <MultiTextInputBase
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiJiraIssueStartStageFilter}
+              dataObject={kpiJiraIssueStartStageFilter}
+            />
+          </div>
+        );
       case "jira-issue-done-status":
         return (
           <div>
@@ -801,6 +821,15 @@ function KpiSettingsForm({
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-start-status")
       ].value = kpiJiraIssueStartStatusFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === KPI_FILTER_TYPES.JIRA_ISSUE_START_STAGE)
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === KPI_FILTER_TYPES.JIRA_ISSUE_START_STAGE)
+      ].value = kpiJiraIssueStartStageFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[

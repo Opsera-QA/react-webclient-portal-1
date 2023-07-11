@@ -6,9 +6,12 @@ import TaskCardFooter from "temp-library-components/cards/tasks/TaskCardFooter";
 import PipelineCardFooter from "temp-library-components/cards/pipelines/PipelineCardFooter";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import ToolCardFooter from "temp-library-components/cards/tools/ToolCardFooter";
+import PipelineTemplateCardFooter
+  from "../../../../../temp-library-components/cards/templates/pipelines/PipelineTemplateCardFooter";
 
 export const WORKFLOW_OPTION_TYPES = {
   PIPELINE: "pipeline",
+  PIPELINE_TEMPLATE: "pipeline_template",
   TASK: "task",
   TOOL: "tool",
 };
@@ -61,6 +64,8 @@ export default function WorkflowOptionCardBase(
     switch (workflowOptionType) {
       case WORKFLOW_OPTION_TYPES.PIPELINE:
         return <PipelineCardFooter />;
+      case WORKFLOW_OPTION_TYPES.PIPELINE_TEMPLATE:
+        return <PipelineTemplateCardFooter />;
       case WORKFLOW_OPTION_TYPES.TASK:
         return <TaskCardFooter />;
       case WORKFLOW_OPTION_TYPES.TOOL:
@@ -74,6 +79,8 @@ export default function WorkflowOptionCardBase(
         return themeConstants.COLOR_PALETTE.SALESFORCE_BLUE;
       case WORKFLOW_OPTION_TYPES.PIPELINE:
         return themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE;
+      case WORKFLOW_OPTION_TYPES.PIPELINE_TEMPLATE:
+        return themeConstants.RESOURCE_COLORS.PIPELINES;
       case WORKFLOW_OPTION_TYPES.TOOL:
         return themeConstants.RESOURCE_COLORS.TOOLS;
     }
