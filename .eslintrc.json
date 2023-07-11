@@ -41,7 +41,8 @@
     "no-unsafe-optional-chaining": "off",
     "react-hooks/exhaustive-deps": "off",
     "indent": ["error", 2, {
-      "ignoredNodes": ["TemplateLiteral"]
+      "ignoredNodes": ["TemplateLiteral"],
+      "SwitchCase": 1
     }]
   }
 }
