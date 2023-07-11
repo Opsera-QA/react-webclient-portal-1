@@ -32,6 +32,7 @@ import {
   getGitlabExcludedUsersFromKpiConfiguration,
   getGithubRepositoryFromKpiConfiguration,
   getGithubBranchFromKpiConfiguration,
+  getGitscraperBranchFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 import { addDays } from "date-fns";
 
@@ -448,6 +449,8 @@ chartsActions.getGitScraperMetrics = async (
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
     getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+  const gitscraperBranches =
+      getGitscraperBranchFromKpiConfiguration(kpiConfiguration);
 
   if (!useKpiTags) {
     tags = null;
@@ -471,6 +474,7 @@ chartsActions.getGitScraperMetrics = async (
     size: tableFilterDto?.getData("pageSize"),
     type: type,
     repository,
+    gitscraperBranches: gitscraperBranches,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -498,6 +502,8 @@ chartsActions.getGitScraperIssues = async (
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
     getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+  const gitscraperBranches =
+      getGitscraperBranchFromKpiConfiguration(kpiConfiguration);
 
   if (!useKpiTags) {
     tags = null;
@@ -523,6 +529,7 @@ chartsActions.getGitScraperIssues = async (
     sortOption: tableFilterDto?.getData("sortOption")?.value,
     type: type,
     repository,
+    gitscraperBranches: gitscraperBranches,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -550,6 +557,8 @@ chartsActions.getGitScraperCleanRepos = async (
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
     getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+  const gitscraperBranches =
+      getGitscraperBranchFromKpiConfiguration(kpiConfiguration);
 
   if (!useKpiTags) {
     tags = null;
@@ -575,6 +584,7 @@ chartsActions.getGitScraperCleanRepos = async (
     sortOption: tableFilterDto?.getData("sortOption")?.value,
     type: type,
     repository,
+    gitscraperBranches: gitscraperBranches,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -603,6 +613,8 @@ chartsActions.getGitScraperIssuesActionableInsights = async (
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags =
     getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+  const gitscraperBranches =
+      getGitscraperBranchFromKpiConfiguration(kpiConfiguration);
 
   if (!useKpiTags) {
     tags = null;
@@ -626,6 +638,7 @@ chartsActions.getGitScraperIssuesActionableInsights = async (
     size: tableFilterDto?.getData("pageSize"),
     repository,
     branch,
+    gitscraperBranches: gitscraperBranches,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -822,7 +835,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
       getGitlabExcludedUsersFromKpiConfiguration(kpiConfiguration),
     githubRepository =
       getGithubRepositoryFromKpiConfiguration(kpiConfiguration),
-    githubBranch = getGithubBranchFromKpiConfiguration(kpiConfiguration);
+    githubBranch = getGithubBranchFromKpiConfiguration(kpiConfiguration),
+    gitscraperBranch = getGitscraperBranchFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
   let hierarchyFilters =
     getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
@@ -892,6 +906,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     gitlabExcludedUsers: gitlabExcludedUsers,
     githubRepository: githubRepository,
     githubBranch: githubBranch,
+    gitscraperBranch: gitscraperBranch,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(

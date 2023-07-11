@@ -6,6 +6,7 @@ import MetricGithubRepositoryFilterInput from "components/common/inputs/metric/f
 import MetricGithubBranchFilterInput from "components/common/inputs/metric/filters/MetricGithubBranchFilterInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import { gitScrapperEditorPanelMetadata } from "./gitScrapperEditorPanel.metadata";
+import MetricGitScraperBranchFilterInput from "../../../common/inputs/metric/filters/MetricGitScraperBranchFilterInput";
 
 function GitScrapperEditorPanel({
                                                 metricModel,
@@ -37,7 +38,7 @@ function GitScrapperEditorPanel({
                 metricFilterModel={metricFilterModel}
                 setMetricFilterModel={setMetricFilterModel}
             />
-            <MetricGithubBranchFilterInput
+            <MetricGitScraperBranchFilterInput
                 metricModel={metricModel}
                 metricFilterModel={metricFilterModel}
                 setMetricFilterModel={setMetricFilterModel}

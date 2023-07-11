@@ -11,13 +11,12 @@ export const gitScrapperEditorPanelMetadata = {
         },
         {
             label: "Branches",
-            id: "github-branch",
+            id: "gitscraper-branch",
         },
     ],
     newObjectFields: {
         tags: [],
         date: undefined,
-        repositories: [],
-        branches: [],
+        "gitscraper-branch": [],
     },
 };

@@ -4,6 +4,7 @@ import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSel
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import githubAction from "../../../../../insights/charts/github/github.action";
+import gitscaperActions from "../../../../../insights/charts/gitscrapper/gitscrapper.action";
 
 // This is used for gitlab kpis
 function GithubRepositoryFilterMultiSelectInput({
@@ -62,12 +63,13 @@ function GithubRepositoryFilterMultiSelectInput({
   };
 
   const loadRepositories = async (cancelSource = cancelTokenSource) => {
-    const response = await githubAction.githubRepositoryList(
+    const response = await gitscaperActions.gitScraperBranchList(
       getAccessToken,
       cancelSource,
     );
+    console.log("repos", response);
     if (response.data != null) {
-      setRepositories(response?.data?.data);
+      setRepositories(response?.data?.data?.data);
     }
   };
 
