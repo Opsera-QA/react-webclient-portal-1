@@ -4,7 +4,6 @@ import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSel
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import githubAction from "../../../../../insights/charts/github/github.action";
-import gitscaperActions from "../../../../../insights/charts/gitscrapper/gitscrapper.action";
 
 // This is used for gitlab kpis
 function GithubRepositoryFilterMultiSelectInput({
