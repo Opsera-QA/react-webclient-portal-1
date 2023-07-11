@@ -292,7 +292,7 @@ const CustomSettingSelector = ({
     <div>
       <Row className="mx-1">
         <H5FieldSubHeader
-          subheaderText={`Data Seeding Task : Custom Setting Selection Screen`}
+          subheaderText={`Data Seeding Task : Custom Object Selection Screen`}
         />
       </Row>
       {getSummaryView()}

@@ -150,6 +150,9 @@ const DataSeedingFieldMappingScreen = ({
       setIsSaving(true);
       wizardModel.setData("queryFilters", []);
       wizardModel.setData("filterQuery", "");
+
+      // TODO : Get Filterable Field List and save it to filteredFieldList
+
       const formattedFieldList = fieldsPropertiesList.reduce((list, item) => {
         list[item.name] = item.fieldList;
         return list;
@@ -161,11 +164,15 @@ const DataSeedingFieldMappingScreen = ({
       let finalSelectedFields = fieldsPropertiesList.find((obj) => obj.name === wizardModel?.getData("selectedCustomSetting")?.componentName);
       let newDataObject = { ...wizardModel };
 
-      const query = `SELECT ${finalSelectedFields?.fieldList
-        ?.map((ele) => ele.name)
-        .join(", ")} FROM ${
+      const query = `SELECT Id FROM ${
         wizardModel?.getData("selectedCustomSetting")?.componentName
       }`;
+
+      // const query = `SELECT ${finalSelectedFields?.fieldList
+      //   ?.map((ele) => ele.name)
+      //   .join(", ")} FROM ${
+      //   wizardModel?.getData("selectedCustomSetting")?.componentName
+      // }`;
 
       // console.log(query);
       newDataObject.setData("filteredFieldList", finalSelectedFields?.fieldList);
