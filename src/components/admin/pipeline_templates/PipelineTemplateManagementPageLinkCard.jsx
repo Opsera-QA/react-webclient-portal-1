@@ -1,9 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
 import BreadcrumbPageLinkCard from "components/common/card/link/BreadcrumbPageLinkCard";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function PipelineTemplateManagementPageLinkCard({accessRoleData}) {
-  if (accessRoleData?.OpseraAdministrator !== true) {
+export default function PipelineTemplateManagementPageLinkCard() {
+  const { isOpseraAdministrator } = useComponentStateReference();
+
+  if (isOpseraAdministrator !== true) {
     return null;
   }
 
@@ -14,8 +16,4 @@ function PipelineTemplateManagementPageLinkCard({accessRoleData}) {
   );
 }
 
-PipelineTemplateManagementPageLinkCard.propTypes = {
-  accessRoleData: PropTypes.object,
-};
-
-export default PipelineTemplateManagementPageLinkCard;
+PipelineTemplateManagementPageLinkCard.propTypes = {};
