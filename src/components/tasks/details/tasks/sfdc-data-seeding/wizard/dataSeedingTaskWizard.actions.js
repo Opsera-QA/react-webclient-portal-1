@@ -381,4 +381,25 @@ dataSeedingTaskWizardActions.setSelectedManagedPackageList = async (
   );
 };
 
+dataSeedingTaskWizardActions.getFilterableFieldsList = async (
+  getAccessToken,
+  cancelTokenSource,
+  wizardModel,
+) => {
+  const apiUrl = `/tasks/data-seeding/wizard/get-filterable-fields`;
+  const postBody = {
+    taskId: wizardModel?.getData("taskId"),
+    sfdcToolId: wizardModel?.getData("sourceToolId"),
+    pipelineStorageRecordId: wizardModel?.getData("recordId"),
+    objectName: wizardModel?.getData("selectedCustomSetting")?.componentName,
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 export default dataSeedingTaskWizardActions;

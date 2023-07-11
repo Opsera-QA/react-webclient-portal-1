@@ -94,6 +94,8 @@ const FieldPropertiesSelectorView = ({ wizardModel, setWizardModel, handleClose,
     const errorMessage = response?.data?.data?.errorMessage;
     const fieldList = response?.data?.data?.fieldList;
 
+    const formattedFieldList = fieldList.find(obj => obj.name === wizardModel?.getData("selectedCustomSetting")?.componentName);
+
     if (isMounted?.current === true) {
       if (errorMessage) {
         const parsedError = parseError(errorMessage);
@@ -102,9 +104,9 @@ const FieldPropertiesSelectorView = ({ wizardModel, setWizardModel, handleClose,
         );
       }
 
-      if (Array.isArray(fieldList)) {
-        setFieldsPropertiesList(fieldList);
-        wizardModel?.setData("fieldList", fieldList);
+      if (Array.isArray(formattedFieldList?.fieldList)) {
+        setFieldsPropertiesList(formattedFieldList?.fieldList);
+        wizardModel?.setData("fieldList", formattedFieldList?.fieldList);
         setIsLoading(false);
         setFilePullCompleted(true);
       }

@@ -11,6 +11,7 @@ export const KPI_FILTER_TYPES = {
   JIRA_ISSUE_LABELS: "jira-issue-labels",
   JIRA_ISSUE_STATUS: "jira-issue-status",
   JIRA_ISSUE_START_STATUS: "jira-issue-start-status",
+  JIRA_ISSUE_START_STAGE: "jira-issue-start-stage",
   JIRA_ISSUE_DONE_STATUS: "jira-issue-done-status",
   SONAR_PROJECT_KEY: "sonar-project-key",
   DOMAIN: "domain",
@@ -36,6 +37,7 @@ export const KPI_FILTER_TYPES = {
   GITLOG_AUTHORS: "gitLog-authors",
   GITLOG_REPOSITORIES: "gitLog-repositories",
   GITLOG_BRANCHES: "gitLog-branches",
+  GITSCRAPER_BRANCH: "gitscraper-branch",
   JIRA_PRIORITIES: "jira-priorities",
   JIRA_PROJECTS: "jira-projects",
   JIRA_CHANGE_TYPES: "jira-change-types",
@@ -83,6 +85,7 @@ export const KPI_FILTER_TYPE_LABELS = {
   GITLOG_AUTHORS: "Authors",
   GITLOG_REPOSITORIES: "Repositories",
   GITLOG_BRANCHES: "Branches",
+  GITSCRAPER_BRANCH: "Gitscraper Branches",
   JIRA_PRIORITIES: "Jira Priorities",
   JIRA_PROJECTS: "Jira Projects",
   JIRA_CHANGE_TYPES: "Jira Change Types",
@@ -169,6 +172,8 @@ export const getKpiFilterTypeLabel = (kpiFilterType) => {
       return KPI_FILTER_TYPE_LABELS.GITLOG_REPOSITORIES;
     case KPI_FILTER_TYPES.GITLOG_BRANCHES:
       return KPI_FILTER_TYPE_LABELS.GITLOG_BRANCHES;
+    case KPI_FILTER_TYPES.GITSCRAPER_BRANCH:
+      return KPI_FILTER_TYPE_LABELS.GITSCRAPER_BRANCH;
     case KPI_FILTER_TYPES.JIRA_PRIORITIES:
       return KPI_FILTER_TYPE_LABELS.JIRA_PRIORITIES;
     case KPI_FILTER_TYPES.JIRA_PROJECTS:
@@ -394,6 +399,11 @@ export const KPI_FILTER_SELECT_OPTIONS = [
   {
     type: KPI_FILTER_TYPES.GITLOG_REPOSITORIES,
     text: KPI_FILTER_TYPE_LABELS.GITLOG_REPOSITORIES,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.GITSCRAPER_BRANCH,
+    text: KPI_FILTER_TYPE_LABELS.GITSCRAPER_BRANCH,
     value: [],
   },
   {

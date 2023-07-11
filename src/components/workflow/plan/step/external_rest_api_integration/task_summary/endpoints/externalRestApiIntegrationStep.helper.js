@@ -7,7 +7,8 @@ externalRestApiIntegrationStepHelper.getLabelForRuleEvaluationStatus = (status) 
     case "success":
       return "Success";
     case "failure":
-      return "Failure";
+    case "failed":
+      return "Failed";
     case "running":
       return "In Progress";
     default:
@@ -20,6 +21,7 @@ externalRestApiIntegrationStepHelper.getStatusIcon = (status) => {
     case "success":
       return faCheckCircle;
     case "failure":
+    case "failed":
       return faExclamationCircle;
     default:
       return null;
