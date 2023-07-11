@@ -21,7 +21,8 @@
   },
   "plugins": [
     "react-hooks",
-    "react"
+    "react",
+    "import-newlines"
   ],
   "rules": {
     "semi": [
@@ -43,6 +44,7 @@
     "indent": ["error", 2, {
       "ignoredNodes": ["TemplateLiteral"],
       "SwitchCase": 1
-    }]
+    }],
+    "import-newlines/enforce": "error"
   }
 }
