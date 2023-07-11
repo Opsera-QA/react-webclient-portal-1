@@ -30,19 +30,19 @@ function TerraformProviderServiceSelectInput({model, setModel, isLoading, disabl
   };
 
   return (
-     <SelectInputBase
-       fieldName={"service"}
-       dataObject={model}
-       setDataObject={setModel}
-       selectOptions={TERRAFORM_PROVIDER_SERVICE_LIST}
-       valueField={"value"}
-       textField={"name"}
-       placeholderText={"Select a Service"}
-       setDataFunction={setDataFunction}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-       busy={isLoading}
-     />
+    <SelectInputBase
+      fieldName={"service"}
+      dataObject={model}
+      setDataObject={setModel}
+      selectOptions={TERRAFORM_PROVIDER_SERVICE_LIST}
+      valueField={"value"}
+      textField={"name"}
+      placeholderText={"Select a Service"}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+      busy={isLoading}
+    />
   );
 }
 

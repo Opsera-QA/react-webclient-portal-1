@@ -10,12 +10,12 @@ export const MERGE_SYNC_TASK_JOB_TYPE_LABELS = {
 
 export const getMergeSyncTaskJobTypeLabel = (jobType = "") => {
   switch (jobType) {
-    case MERGE_SYNC_TASK_JOB_TYPES.GIT_VS_GIT_SYNC:
-      return MERGE_SYNC_TASK_JOB_TYPE_LABELS.GIT_VS_GIT_SYNC;
-    case MERGE_SYNC_TASK_JOB_TYPES.SFDC_GIT_COMPARE_SYNC:
-      return MERGE_SYNC_TASK_JOB_TYPE_LABELS.SFDC_GIT_COMPARE_SYNC;
-    default:
-      return jobType;
+  case MERGE_SYNC_TASK_JOB_TYPES.GIT_VS_GIT_SYNC:
+    return MERGE_SYNC_TASK_JOB_TYPE_LABELS.GIT_VS_GIT_SYNC;
+  case MERGE_SYNC_TASK_JOB_TYPES.SFDC_GIT_COMPARE_SYNC:
+    return MERGE_SYNC_TASK_JOB_TYPE_LABELS.SFDC_GIT_COMPARE_SYNC;
+  default:
+    return jobType;
   }
 };
 

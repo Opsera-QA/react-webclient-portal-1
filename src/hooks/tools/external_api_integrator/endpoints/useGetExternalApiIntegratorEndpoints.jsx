@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import useExternalApiIntegratorEndpointActions
-  from "hooks/tools/external_api_integrator/endpoints/useExternalApiIntegratorEndpointActions";
+from "hooks/tools/external_api_integrator/endpoints/useExternalApiIntegratorEndpointActions";
 
 export default function useGetExternalApiIntegratorEndpoints(
   toolId,

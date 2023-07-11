@@ -4,14 +4,14 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { platformSettingFeatureActions }
-  from "components/admin/platform_settings/details/features/platformSettingFeature.actions";
+from "components/admin/platform_settings/details/features/platformSettingFeature.actions";
 import {
   platformSettingFeatureMetadata
 } from "components/admin/platform_settings/details/features/platformSettingFeature.metadata";
 import PlatformSettingFeatureEditorPanel
-  from "components/admin/platform_settings/details/features/PlatformSettingFeatureEditorPanel";
+from "components/admin/platform_settings/details/features/PlatformSettingFeatureEditorPanel";
 import PlatformSettingFeatureTable
-  from "components/admin/platform_settings/details/features/PlatformSettingFeatureTable";
+from "components/admin/platform_settings/details/features/PlatformSettingFeatureTable";
 
 export default function PlatformSettingFeaturesPanel({ platformSettingsId }) {
   const [features, setFeatures] = useState([]);

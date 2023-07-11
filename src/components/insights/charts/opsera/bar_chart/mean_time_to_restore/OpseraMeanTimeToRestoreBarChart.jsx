@@ -14,12 +14,12 @@ import {
 } from "../../../charts-views";
 import ChartTooltip from '../../../ChartTooltip';
 import DeploymentFrequencyInsightsTableMetadata
-  from "components/insights/charts/opsera/OpseraDeploymentFreqStats/deployment-frequency-actionable-metadata";
+from "components/insights/charts/opsera/OpseraDeploymentFreqStats/deployment-frequency-actionable-metadata";
 import Model from "../../../../../../core/data_model/model";
 import ChartDetailsOverlay from "../../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import MeanTimeToDeployHelpDocumentation
-  from "../../../../../common/help/documentation/insights/charts/MeanTimeToDeployHelpDocumentation";
+from "../../../../../common/help/documentation/insights/charts/MeanTimeToDeployHelpDocumentation";
 import { faMinus , faSquare} from "@fortawesome/pro-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 

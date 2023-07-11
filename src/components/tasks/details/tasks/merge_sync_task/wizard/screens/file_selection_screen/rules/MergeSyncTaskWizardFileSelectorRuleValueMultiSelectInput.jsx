@@ -4,7 +4,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import mergeSyncTaskWizardActions
-  from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
+from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
@@ -70,18 +70,18 @@ function MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput(
   };
 
   const getRuleValues = async (cancelSource = cancelTokenSource) => {
-      const response = await mergeSyncTaskWizardActions.pullSourceFileRuleValuesV2(
-        getAccessToken,
-        cancelSource,
-        pipelineStorageRecordId,
-        ruleFieldName,
-        componentTypes,
-      );
-      const newRuleValues = response?.data;
+    const response = await mergeSyncTaskWizardActions.pullSourceFileRuleValuesV2(
+      getAccessToken,
+      cancelSource,
+      pipelineStorageRecordId,
+      ruleFieldName,
+      componentTypes,
+    );
+    const newRuleValues = response?.data;
 
-      if (isMounted?.current === true && Array.isArray(newRuleValues)) {
-        setRuleValues(newRuleValues);
-      }
+    if (isMounted?.current === true && Array.isArray(newRuleValues)) {
+      setRuleValues(newRuleValues);
+    }
   };
 
   const getPlaceholderText = () => {

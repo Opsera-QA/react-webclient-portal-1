@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 const DIRECTION_TYPES = [
-    {name: "First N Characters", value: "prefix"},
-    {name: "Last N Characters", value: "suffix"},    
-  ];
+  {name: "First N Characters", value: "prefix"},
+  {name: "Last N Characters", value: "suffix"},    
+];
 
 const DockerCommitShaTrimDirectionSelectionInput = ({dataObject, setDataObject, fieldName, disabled}) => {
   return (
@@ -25,7 +25,7 @@ DockerCommitShaTrimDirectionSelectionInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
-    fieldName: PropTypes.string,
+  fieldName: PropTypes.string,
   listOfSteps: PropTypes.array,
 };
 

@@ -11,7 +11,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import sessionHelper from "utils/session.helper";
 import useGetSoftwareDevelopmentWorkflowResources from "hooks/landing/software_development/useGetSoftwareDevelopmentWorkflowResources";
 import WorkspaceWorkflowSelectionCardView
-  from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
+from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
 import SoftwareDevelopmentSocialMediaWidget from "components/landing/v2/widgets/unused/SoftwareDevelopmentSocialMediaWidget";
 import SearchFilter from "components/common/filters/search/SearchFilter";
 

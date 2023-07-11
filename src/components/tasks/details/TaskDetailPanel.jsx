@@ -6,7 +6,7 @@ import DetailTabPanelContainer from "components/common/panels/detail_view/Detail
 import CustomTab from "components/common/tabs/CustomTab";
 import {faTable, faKey, faComputerClassic} from "@fortawesome/pro-light-svg-icons";
 import TaskSummaryPanel
-  from "components/tasks/details/TaskSummaryPanel";
+from "components/tasks/details/TaskSummaryPanel";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import TaskActivityPanel from "components/tasks/activity_logs/TaskActivityPanel";
 import { AuthContext } from "contexts/AuthContext";
@@ -85,43 +85,43 @@ function TaskDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return (
-          <TaskSummaryPanel
-            gitTasksData={gitTasksData}
-            setActiveTab={setActiveTab}
-            accessRoleData={accessRoleData}
-            setGitTasksData={setGitTasksData}
-            loadData={loadData}
-            status={status}
-            runCount={runCount}
-            taskStartTime={taskStartTime}
-          />
-        );
-      case "settings":
-        return (
-          <TaskEditorPanel
-            handleClose={toggleSummaryPanel}
-            taskData={gitTasksData}
-            setGitTasksData={setGitTasksData}
-            loadData={loadData}
-            runTask={runTask}
-          />
-        );
-      case "details":
-        return (
-          <div className="px-3 mt-3">
-            <TaskConfigurationSummaryPanel taskModel={gitTasksData} />
-          </div>
-        );
+    case "summary":
+      return (
+        <TaskSummaryPanel
+          gitTasksData={gitTasksData}
+          setActiveTab={setActiveTab}
+          accessRoleData={accessRoleData}
+          setGitTasksData={setGitTasksData}
+          loadData={loadData}
+          status={status}
+          runCount={runCount}
+          taskStartTime={taskStartTime}
+        />
+      );
+    case "settings":
+      return (
+        <TaskEditorPanel
+          handleClose={toggleSummaryPanel}
+          taskData={gitTasksData}
+          setGitTasksData={setGitTasksData}
+          loadData={loadData}
+          runTask={runTask}
+        />
+      );
+    case "details":
+      return (
+        <div className="px-3 mt-3">
+          <TaskConfigurationSummaryPanel taskModel={gitTasksData} />
+        </div>
+      );
       // case "audit-logs":
       //   return (
       //     <TaskAuditLogPanel
       //       taskId={gitTasksData?.getMongoDbId()}
       //     />
       //   );
-      default:
-        return null;
+    default:
+      return null;
     }
   };
 

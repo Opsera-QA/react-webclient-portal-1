@@ -32,12 +32,12 @@ function PipelinesSummaryHelpDocumentation({pipelineRoleDefinitions}) {
             <li><b>Schedule</b> - Schedule pipeline to run at a specific time, date and frequency.</li>
           </ul>
           <div>In Pipeline Workflow view, manage pipeline steps and configurations.</div>
-            <ul style={{listStyleType: "none"}}>
-              <li><b>Start of Workflow</b> - Click the gear icon to configure Source Repository webhook trigger.</li>
-              <li><b>View Configuration</b> - View the Pipeline Configuration Viewer. This shows a read-only view of the entire pipeline, including individual step settings and JSON views.</li>
-              <li><b>Edit Workflow</b> - Add, copy or delete pipeline steps, or move them up or down in the workflow.</li>
-            </ul>
-          </div>
+          <ul style={{listStyleType: "none"}}>
+            <li><b>Start of Workflow</b> - Click the gear icon to configure Source Repository webhook trigger.</li>
+            <li><b>View Configuration</b> - View the Pipeline Configuration Viewer. This shows a read-only view of the entire pipeline, including individual step settings and JSON views.</li>
+            <li><b>Edit Workflow</b> - Add, copy or delete pipeline steps, or move them up or down in the workflow.</li>
+          </ul>
+        </div>
       </div>
     );
   };

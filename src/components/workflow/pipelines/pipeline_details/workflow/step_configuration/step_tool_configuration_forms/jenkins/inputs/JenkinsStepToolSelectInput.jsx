@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedJenkinsToolSelectInput
-  from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
+from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
 
 function JenkinsStepToolSelectInput({ model, setModel, disabled }) {
   const setDataFunction = (fieldName, selectedOption) => {

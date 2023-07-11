@@ -23,15 +23,15 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import OctopusCustomParametersInput from "../input/OctopusCustomParametersInput";
 
 function OctopusOpseraManagedProjectForm({
-    dataObject, 
-    setDataObject, 
-    isLoading, 
-    disabled, 
-    pipelineId, 
-    stepTool, 
-    listOfSteps,  
-    plan,
-    stepId        
+  dataObject, 
+  setDataObject, 
+  isLoading, 
+  disabled, 
+  pipelineId, 
+  stepTool, 
+  listOfSteps,  
+  plan,
+  stepId        
 }) {
 
   return (

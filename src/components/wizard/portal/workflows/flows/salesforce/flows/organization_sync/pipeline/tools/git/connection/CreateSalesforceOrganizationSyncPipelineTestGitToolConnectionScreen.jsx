@@ -5,7 +5,7 @@ import {
 } from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/CreateSalesforceOrganizationSyncPipelineWizard";
 import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
 import CreateWorkflowWizardTestGitToolConnectionScreen
-  from "components/wizard/portal/workflows/flows/tools/git/CreateWorkflowWizardTestGitToolConnectionScreen";
+from "components/wizard/portal/workflows/flows/tools/git/CreateWorkflowWizardTestGitToolConnectionScreen";
 
 export default function CreateSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen(
   {

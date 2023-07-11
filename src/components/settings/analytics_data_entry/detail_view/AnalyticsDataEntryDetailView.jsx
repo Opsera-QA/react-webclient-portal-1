@@ -6,19 +6,19 @@ import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import analyticsDataEntryMetadata
-  from "@opsera/definitions/constants/settings/analytics_data_entries/analyticsDataEntry.metadata";
+from "@opsera/definitions/constants/settings/analytics_data_entries/analyticsDataEntry.metadata";
 import AnalyticsDataEntryDetailPanel from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryDetailPanel";
 import AnalyticsDataEntryManagementSubNavigationBar
-  from "components/settings/analytics_data_entry/AnalyticsDataEntryManagementSubNavigationBar";
+from "components/settings/analytics_data_entry/AnalyticsDataEntryManagementSubNavigationBar";
 import useGetAnalyticsDataEntryModelById
-  from "hooks/settings/insights/analytics_data_entries/useGetAnalyticsDataEntryModelById";
+from "hooks/settings/insights/analytics_data_entries/useGetAnalyticsDataEntryModelById";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import {analyticsDataEntryHelper} from "components/settings/analytics_data_entry/analyticsDataEntry.helper";
 import DeleteAnalyticsDataEntryActionBarButton
-  from "components/settings/analytics_data_entry/actions/DeleteAnalyticsDataEntryActionBarButton";
+from "components/settings/analytics_data_entry/actions/DeleteAnalyticsDataEntryActionBarButton";
 import AnalyticsDataEntryRoleHelper
-  from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
+from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
 
 export default function AnalyticsDataEntryDetailView() {
   const {id} = useParams();

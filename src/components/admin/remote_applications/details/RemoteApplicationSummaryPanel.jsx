@@ -48,10 +48,10 @@ function RemoteApplicationSummaryPanel({ telemetryData }) {
         </Col>
         <Col lg={6}>
           <JsonField
-              dataObject={telemetryData}
-              fieldName={"platformsScanned"}
-              label={"Platforms Scanned"}
-              collapsed={true}
+            dataObject={telemetryData}
+            fieldName={"platformsScanned"}
+            label={"Platforms Scanned"}
+            collapsed={true}
           />
         </Col>
         <Col lg={6}>

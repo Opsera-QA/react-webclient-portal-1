@@ -73,28 +73,28 @@ export default function DeployBlankPipeline({
 
   const getBody = () => {
     switch (initializationState) {
-      case apiRequestHelper.API_REQUEST_STATES.BUSY:
-        createBlankPipeline();
-        return (
-          <CenterLoadingIndicator
-            customMessage={`Creating a new Pipeline with a Blank Pipeline Template`}
+    case apiRequestHelper.API_REQUEST_STATES.BUSY:
+      createBlankPipeline();
+      return (
+        <CenterLoadingIndicator
+          customMessage={`Creating a new Pipeline with a Blank Pipeline Template`}
+        />
+      );
+    case apiRequestHelper.API_REQUEST_STATES.ERROR:
+      return (
+        <CenteredContentWrapper>
+          <ErrorMessageFieldBase
+            showErrorLabel={false}
+            message={
+              "There was an issue finalizing the initialization for this Pipeline. Use the back button to re deploy the pipeline template."
+            }
           />
-        );
-      case apiRequestHelper.API_REQUEST_STATES.ERROR:
-        return (
-          <CenteredContentWrapper>
-            <ErrorMessageFieldBase
-              showErrorLabel={false}
-              message={
-                "There was an issue finalizing the initialization for this Pipeline. Use the back button to re deploy the pipeline template."
-              }
-            />
-          </CenteredContentWrapper>
-        );
-      case apiRequestHelper.API_REQUEST_STATES.SUCCESS:
-        toastContext.removeInlineMessage();
-        toastContext.clearOverlayPanel();
-        history.push(pipelineHelper.getDetailViewLink(pipelineId));
+        </CenteredContentWrapper>
+      );
+    case apiRequestHelper.API_REQUEST_STATES.SUCCESS:
+      toastContext.removeInlineMessage();
+      toastContext.clearOverlayPanel();
+      history.push(pipelineHelper.getDetailViewLink(pipelineId));
     }
   };
 

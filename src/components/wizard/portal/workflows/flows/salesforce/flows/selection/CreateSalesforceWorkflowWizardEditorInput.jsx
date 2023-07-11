@@ -41,7 +41,7 @@ export default function CreateSalesforceWorkflowWizardEditorInput({
       const newTaskTemplateModel = modelHelpers.parseObjectIntoNewModelBase(
         task,
         tasksMetadata,
-          true
+        true
       );
       await taskActions.updateGitTaskV2(
         getAccessToken,
@@ -62,9 +62,9 @@ export default function CreateSalesforceWorkflowWizardEditorInput({
 
   const toggleNextScreen = async () => {
     await taskActions.updateGitTaskV2(
-        getAccessToken,
-        cancelTokenSource,
-        taskData,
+      getAccessToken,
+      cancelTokenSource,
+      taskData,
     );
     await onSuccessFunction();
   };

@@ -5,7 +5,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import useGetPipelineInstructionsAttributesModel
-  from "components/workflow/instructions/hooks/attributes/useGetPipelineInstructionsAttributesModel";
+from "components/workflow/instructions/hooks/attributes/useGetPipelineInstructionsAttributesModel";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function PipelineInstructionsAttributesSummaryPanel(

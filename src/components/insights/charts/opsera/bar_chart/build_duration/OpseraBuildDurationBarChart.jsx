@@ -8,7 +8,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColorByData, assignStandardColors, capitalizeLegend,
-         adjustBarWidth } from '../../../charts-views';
+  adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 import { useHistory } from "react-router-dom";
 
@@ -83,15 +83,15 @@ function OpseraBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, da
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Duration (Minutes)", "Pipeline Run", 
-                      false, false, "wholeNumbers", "cutoffString")}
+            false, false, "wholeNumbers", "cutoffString")}
           {...config(getColorByData)}
           {...adjustBarWidth(metrics)}
           onClick={(data) => onRowSelect(data)}
           tooltip={({ data, value, color }) => <ChartTooltip 
-                                        titles = {["Pipeline ID", "Duration"]}
-                                        values = {[data.pipelineId, `${value} minutes`]}
-                                        style = {false}
-                                        color = {color} />}
+            titles = {["Pipeline ID", "Duration"]}
+            values = {[data.pipelineId, `${value} minutes`]}
+            style = {false}
+            color = {color} />}
         />
       </div>
     );

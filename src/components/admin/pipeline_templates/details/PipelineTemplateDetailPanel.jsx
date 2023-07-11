@@ -7,7 +7,7 @@ import PipelineTemplateSummaryPanel from "components/admin/pipeline_templates/de
 import PipelineTemplateEditorPanel from "components/admin/pipeline_templates/details/PipelineTemplateEditorPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import PipelineTemplatePlanOverviewContainer
-  from "components/workflow/catalog/overview/PipelineTemplatePlanOverviewContainer";
+from "components/workflow/catalog/overview/PipelineTemplatePlanOverviewContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faFileAlt} from "@fortawesome/pro-light-svg-icons";
 
@@ -41,25 +41,25 @@ function PipelineTemplateDetailPanel({ templateData, setTemplateData }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return <PipelineTemplateSummaryPanel templateData={templateData} setActiveTab={setActiveTab} setTemplateData={setTemplateData} />;
-      case "details":
-        return (
-          <PipelineTemplatePlanOverviewContainer
-            pipelineTemplateModel={templateData}
-            className={"mt-1"}
-          />
-        );
-      case "settings":
-        return (
-          <PipelineTemplateEditorPanel
-            setTemplateModel={setTemplateData}
-            templateModel={templateData}
-            handleClose={toggleSummaryPanel}
-          />
-        );
-      default:
-        return null;
+    case "summary":
+      return <PipelineTemplateSummaryPanel templateData={templateData} setActiveTab={setActiveTab} setTemplateData={setTemplateData} />;
+    case "details":
+      return (
+        <PipelineTemplatePlanOverviewContainer
+          pipelineTemplateModel={templateData}
+          className={"mt-1"}
+        />
+      );
+    case "settings":
+      return (
+        <PipelineTemplateEditorPanel
+          setTemplateModel={setTemplateData}
+          templateModel={templateData}
+          handleClose={toggleSummaryPanel}
+        />
+      );
+    default:
+      return null;
     }
   };
 

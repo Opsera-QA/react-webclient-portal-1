@@ -2,7 +2,7 @@ import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import salesforceSummaryLogUnitTestResultMetadata
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/metadata/salesforceSummaryLogUnitTestResult.metadata";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/metadata/salesforceSummaryLogUnitTestResult.metadata";
 import {
   getColumnHeader, getColumnId,
   getTableDateTimeColumn,

@@ -22,7 +22,7 @@ export default class KpiDataPointModel extends ModelBase {
   };
 
   deleteModel = async () => {
-   return await kpiDataPointActions.deleteKpiDataPointV2(this.getAccessToken, this.cancelTokenSource, this, this.kpiId);
+    return await kpiDataPointActions.deleteKpiDataPointV2(this.getAccessToken, this.cancelTokenSource, this, this.kpiId);
   };
 
   canCreate = () => {

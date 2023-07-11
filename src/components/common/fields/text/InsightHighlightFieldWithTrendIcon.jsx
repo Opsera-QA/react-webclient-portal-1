@@ -14,17 +14,17 @@ function InsightHighlightFieldWithTrendIcon({ dataObject, fieldName, className, 
 
   const getIcon = (status) => {
     switch (status) {
-        case "red":
-          return (<DangerMetricIcon />);
-        case "neutral":
-          return (<NoTrendMetricIcon />);
-        case "green":
-        return (<SuccessMetricIcon />);
-        case "-":
-          return null;
-        default:
-          return status;
-      }
+    case "red":
+      return (<DangerMetricIcon />);
+    case "neutral":
+      return (<NoTrendMetricIcon />);
+    case "green":
+      return (<SuccessMetricIcon />);
+    case "-":
+      return null;
+    default:
+      return status;
+    }
   };
 
   return (

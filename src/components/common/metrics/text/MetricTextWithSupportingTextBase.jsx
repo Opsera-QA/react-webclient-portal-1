@@ -11,12 +11,12 @@ function MetricTextWithSupportingTextBase({ formattedText, supportingText, quali
 
   const getQualityBasedClassName = () => {
     switch (qualityLevel) {
-      case METRIC_QUALITY_LEVELS.SUCCESS:
-        return "metric-success-text";
-      case METRIC_QUALITY_LEVELS.WARNING:
-        return "metric-warning-text";
-      case METRIC_QUALITY_LEVELS.DANGER:
-        return "metric-danger-text";
+    case METRIC_QUALITY_LEVELS.SUCCESS:
+      return "metric-success-text";
+    case METRIC_QUALITY_LEVELS.WARNING:
+      return "metric-warning-text";
+    case METRIC_QUALITY_LEVELS.DANGER:
+      return "metric-danger-text";
     }
   };
 

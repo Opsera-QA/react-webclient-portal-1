@@ -93,7 +93,7 @@ function GitlabMostActiveContributors({
         dashboardData?.data?.filters[
           dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
         ]?.value;
-        let dashboardOrgs =
+      let dashboardOrgs =
         dashboardData?.data?.filters[
           dashboardData?.data?.filters.findIndex(
             (obj) => obj.type === "organizations",

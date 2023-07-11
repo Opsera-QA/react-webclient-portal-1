@@ -2,23 +2,23 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
 import SlackNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/slack/SlackNotificationEditorPanel";
+from "components/workflow/plan/step/notifications/slack/SlackNotificationEditorPanel";
 import MicrosoftTeamsNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/teams/MicrosoftTeamsNotificationEditorPanel";
+from "components/workflow/plan/step/notifications/teams/MicrosoftTeamsNotificationEditorPanel";
 import JiraNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/jira/JiraNotificationEditorPanel";
+from "components/workflow/plan/step/notifications/jira/JiraNotificationEditorPanel";
 import ServiceNowNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/servicenow/ServiceNowNotificationEditorPanel";
+from "components/workflow/plan/step/notifications/servicenow/ServiceNowNotificationEditorPanel";
 import EmailNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/email/EmailNotificationEditorPanel";
+from "components/workflow/plan/step/notifications/email/EmailNotificationEditorPanel";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 import VanitySetTabAndViewContainer, {
   DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT,
 } from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import TaskNotificationVerticalTabContainer
-  from "components/tasks/details/tasks/notifications/TaskNotificationVerticalTabContainer";
+from "components/tasks/details/tasks/notifications/TaskNotificationVerticalTabContainer";
 import GChatNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/gchat/GChatNotificationEditorPanel";
+from "components/workflow/plan/step/notifications/gchat/GChatNotificationEditorPanel";
 
 const tabAndViewContainerHeight =`calc(${DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT} - 50px)`;
 
@@ -41,49 +41,49 @@ function TaskNotificationTabView(
 
   const getViewForTab = () => {
     switch (activeTab) {
-      case "email":
-        return (
-          <EmailNotificationEditorPanel
-            emailNotificationModel={emailNotificationModel}
-            setEmailNotificationModel={setEmailNotificationModel}
-          />
-        );
-      case "jira":
-        return (
-          <JiraNotificationEditorPanel
-            jiraNotificationModel={jiraNotificationModel}
-            setJiraNotificationModel={setJiraNotificationModel}
-            isApprovalStep={false}
-          />
-        );
-      case "slack":
-        return (
-          <SlackNotificationEditorPanel
-            slackNotificationModel={slackNotificationModel}
-            setSlackNotificationModel={setSlackNotificationModel}
-          />
-        );
-      case "service-now":
-        return (
-          <ServiceNowNotificationEditorPanel
-            serviceNowNotificationModel={serviceNowNotificationModel}
-            setServiceNowNotificationModel={setServiceNowNotificationModel}
-          />
-        );
-      case "teams":
-        return (
-          <MicrosoftTeamsNotificationEditorPanel
-            teamsNotificationModel={teamsNotificationModel}
-            setTeamsNotificationModel={setTeamsNotificationModel}
-          />
-        );
-      case "gchat":
-        return (
-          <GChatNotificationEditorPanel
-            gChatNotificationModel={gChatNotificationModel}
-            setGChatNotificationModel={setGChatNotificationModel}
-          />
-        );
+    case "email":
+      return (
+        <EmailNotificationEditorPanel
+          emailNotificationModel={emailNotificationModel}
+          setEmailNotificationModel={setEmailNotificationModel}
+        />
+      );
+    case "jira":
+      return (
+        <JiraNotificationEditorPanel
+          jiraNotificationModel={jiraNotificationModel}
+          setJiraNotificationModel={setJiraNotificationModel}
+          isApprovalStep={false}
+        />
+      );
+    case "slack":
+      return (
+        <SlackNotificationEditorPanel
+          slackNotificationModel={slackNotificationModel}
+          setSlackNotificationModel={setSlackNotificationModel}
+        />
+      );
+    case "service-now":
+      return (
+        <ServiceNowNotificationEditorPanel
+          serviceNowNotificationModel={serviceNowNotificationModel}
+          setServiceNowNotificationModel={setServiceNowNotificationModel}
+        />
+      );
+    case "teams":
+      return (
+        <MicrosoftTeamsNotificationEditorPanel
+          teamsNotificationModel={teamsNotificationModel}
+          setTeamsNotificationModel={setTeamsNotificationModel}
+        />
+      );
+    case "gchat":
+      return (
+        <GChatNotificationEditorPanel
+          gChatNotificationModel={gChatNotificationModel}
+          setGChatNotificationModel={setGChatNotificationModel}
+        />
+      );
     }
   };
 

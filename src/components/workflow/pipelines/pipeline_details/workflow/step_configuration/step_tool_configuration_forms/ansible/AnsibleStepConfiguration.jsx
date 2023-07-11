@@ -11,7 +11,7 @@ import AnsibleStepGitRepositorySelectInput from "./inputs/AnsibleStepGitReposito
 import AnsibleStepGitBranchSelectInput from "./inputs/AnsibleStepGitBranchSelectInput";
 import AnsibleStepScmRepositoryFileSelectInput from "./inputs/AnsibleStepScmRepositoryFileSelectInput";
 import RoleRestrictedToolByIdentifierInputBase
-  from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 import AnsibleStepBitbucketWorkspaceInput from "./inputs/AnsibleStepBitbucketWorkspaceInput";
 
 function AnsibleStepConfiguration({ stepTool, stepId, closeEditorPanel, parentCallback }) {
@@ -81,9 +81,9 @@ function AnsibleStepConfiguration({ stepTool, stepId, closeEditorPanel, parentCa
         disabled={ansibleStepModel.getData("service").length === 0}
       />
       <AnsibleStepBitbucketWorkspaceInput
-          gitToolId={ansibleStepModel?.getData("gitToolId")}
-          model={ansibleStepModel}
-          setModel={setAnsibleStepModel}
+        gitToolId={ansibleStepModel?.getData("gitToolId")}
+        model={ansibleStepModel}
+        setModel={setAnsibleStepModel}
       />
       <AnsibleStepGitRepositorySelectInput
         model={ansibleStepModel}

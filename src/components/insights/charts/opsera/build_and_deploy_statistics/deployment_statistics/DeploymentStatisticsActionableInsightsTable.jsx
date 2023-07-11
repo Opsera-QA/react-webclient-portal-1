@@ -22,9 +22,9 @@ import TotalDurationToResolve from "../data_blocks/TotalDurationToResolve";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import IconBase from "components/common/icons/IconBase";
 import SalesforceDurationByStageActionableInsightsTable
-    from "../../../sfdc/bar_chart/duration_by_stage/actionable_insights/SalesforceDurationByStageActionableInsightTable";
+from "../../../sfdc/bar_chart/duration_by_stage/actionable_insights/SalesforceDurationByStageActionableInsightTable";
 import SalesforceDurationByStageTasksActionableTable
-    from "../../../sfdc/bar_chart/duration_by_stage/actionable_insights/SalesforceDurationByStageTasksActionableTable";
+from "../../../sfdc/bar_chart/duration_by_stage/actionable_insights/SalesforceDurationByStageTasksActionableTable";
 import CustomTabContainer from "../../../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../../../common/tabs/CustomTab";
 import DeploymentStatisticsTasksActionableTable from "./DeploymentStatisticsActionableTasksTable";
@@ -40,14 +40,14 @@ function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboa
     )
   );
   const [tableFilterDto2, setTableFilterDto2] = useState(
-      new Model(
-          { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
-          actionableInsightsGenericChartFilterMetadata,
-          false
-      )
+    new Model(
+      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+      actionableInsightsGenericChartFilterMetadata,
+      false
+    )
   );
   const toastContext = useContext(DialogToastContext);
-    const [activeTab, setActiveTab] = useState("pipelines");
+  const [activeTab, setActiveTab] = useState("pipelines");
   const [isLoading, setIsLoading] = useState(false);
   const [deploymentStatsData, setDeploymentStatsData] = useState([]);
   const [quickDeployStats, setQuickDeployStats] = useState([]);
@@ -124,10 +124,10 @@ function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboa
         );
         const quickDeploy = response?.data?.data[0]?.opseraDeploymentActionableInsights?.data[0]?.quickdeploy[0].data;
         await setQuickDeployStats(
-            quickDeploy.map((dd, index) => ({
-              ...dd,
-              _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
-            }))
+          quickDeploy.map((dd, index) => ({
+            ...dd,
+            _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
+          }))
         );
 
         let newFilterDto = filterDto;
@@ -138,8 +138,8 @@ function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboa
         setTableFilterDto({ ...newFilterDto });
         let newFilterDto2 = filterDto;
         newFilterDto2.setData(
-            "totalCount",
-            response?.data?.data[0]?.opseraDeploymentActionableInsights?.data[0]?.quickdeploy[0]?.count[0]?.count
+          "totalCount",
+          response?.data?.data[0]?.opseraDeploymentActionableInsights?.data[0]?.quickdeploy[0]?.count[0]?.count
         );
         setTableFilterDto2({ ...newFilterDto2 });
         setDeploymentSummaryData(response?.data?.data[0]?.opseraDeploymentActionableInsights?.data[0]?.summaryData[0]);
@@ -156,69 +156,69 @@ function DeploymentStatisticsActionableInsightsTable({ kpiConfiguration, dashboa
     }
   };
 
-    const closePanel = () => {
-        toastContext.removeInlineMessage();
-        toastContext.clearOverlayPanel();
-    };
+  const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
 
 
-    const getTabs = () => {
-        if (activeTab == "pipelines") {
-            return (
-                <FilterContainer
-                    isLoading={isLoading}
-                    title={`Opsera Deployment Statistics Report`}
-                    titleIcon={faDraftingCompass}
-                    body={getTable()}
-                    className={"px-2 pb-2"}
-                />
-            );
-        } else if (activeTab == "jobs") {
-            return (
-                <DeploymentStatisticsTasksActionableTable
-                    dashboardData={dashboardData}
-                    kpiConfiguration={kpiConfiguration}
-                    data={quickDeployStats}
-                    isLoading={isLoading}
-                    loadData={loadData}
-                    filterModel={tableFilterDto2}
-                    setFilterModel={setTableFilterDto2}
-                />
-            );
-        }
-    };
+  const getTabs = () => {
+    if (activeTab == "pipelines") {
+      return (
+        <FilterContainer
+          isLoading={isLoading}
+          title={`Opsera Deployment Statistics Report`}
+          titleIcon={faDraftingCompass}
+          body={getTable()}
+          className={"px-2 pb-2"}
+        />
+      );
+    } else if (activeTab == "jobs") {
+      return (
+        <DeploymentStatisticsTasksActionableTable
+          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
+          data={quickDeployStats}
+          isLoading={isLoading}
+          loadData={loadData}
+          filterModel={tableFilterDto2}
+          setFilterModel={setTableFilterDto2}
+        />
+      );
+    }
+  };
 
-    const handleTabClick = (tabSelection) => (e) => {
-        e.preventDefault();
-        setActiveTab(tabSelection);
-    };
+  const handleTabClick = (tabSelection) => (e) => {
+    e.preventDefault();
+    setActiveTab(tabSelection);
+  };
 
-    const getTabContainer = () => {
-        return (
-            <CustomTabContainer>
-                <CustomTab
-                    activeTab={activeTab}
-                    tabText={"Pipelines"}
-                    handleTabClick={handleTabClick}
-                    tabName={"pipelines"}
-                />
-                <CustomTab
-                    activeTab={activeTab}
-                    tabText={"Tasks"}
-                    handleTabClick={handleTabClick}
-                    tabName={"jobs"}
-                />
-            </CustomTabContainer>
-        );
-    };
+  const getTabContainer = () => {
+    return (
+      <CustomTabContainer>
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Pipelines"}
+          handleTabClick={handleTabClick}
+          tabName={"pipelines"}
+        />
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Tasks"}
+          handleTabClick={handleTabClick}
+          tabName={"jobs"}
+        />
+      </CustomTabContainer>
+    );
+  };
 
   const getBody = () => {
     return (
       <>
         {getDeploymentSummaryDetails()}
-          <div className={"p-3"}>
-              <TabPanelContainer currentView={getTabs()} tabContainer={getTabContainer()} />
-          </div>
+        <div className={"p-3"}>
+          <TabPanelContainer currentView={getTabs()} tabContainer={getTabContainer()} />
+        </div>
       </>
     );
   };

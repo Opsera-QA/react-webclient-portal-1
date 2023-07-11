@@ -6,7 +6,7 @@ import {
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import customParametersMetadata
-  from "@opsera/definitions/constants/registry/custom_parameters/customParameters.metadata";
+from "@opsera/definitions/constants/registry/custom_parameters/customParameters.metadata";
 
 export default function UserAssignedRolesParametersTable(
   {

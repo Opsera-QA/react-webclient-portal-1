@@ -7,13 +7,13 @@ import VanitySetTabAndViewContainer, {
   DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT,
 } from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import LdapGroupAssignedRolesTabContainer
-  from "components/settings/ldap_groups/details/roles/LdapGroupAssignedRolesTabContainer";
+from "components/settings/ldap_groups/details/roles/LdapGroupAssignedRolesTabContainer";
 import useGetResourcesByAssignedGroup
-  from "components/settings/ldap_groups/details/roles/hooks/useGetResourcesByAssignedGroup";
+from "components/settings/ldap_groups/details/roles/hooks/useGetResourcesByAssignedGroup";
 import LdapGroupAssignedRolesTableBase
-  from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesTableBase";
+from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesTableBase";
 import LaunchRevokeGroupAccessRulesOverlayButton
-  from "components/settings/ldap_groups/details/roles/revoke/LaunchRevokeGroupAccessRulesOverlayButton";
+from "components/settings/ldap_groups/details/roles/revoke/LaunchRevokeGroupAccessRulesOverlayButton";
 
 const height = `calc(${DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT} - 110px)`;
 

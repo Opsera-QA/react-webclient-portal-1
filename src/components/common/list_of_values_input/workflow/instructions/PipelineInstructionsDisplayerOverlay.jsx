@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PipelineInstructionsFieldBase
-  from "components/common/list_of_values_input/workflow/instructions/PipelineInstructionsFieldBase";
+from "components/common/list_of_values_input/workflow/instructions/PipelineInstructionsFieldBase";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { faFileCheck } from "@fortawesome/pro-light-svg-icons";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetPipelineInstructionModelById
-  from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelById";
+from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelById";
 
 export default function PipelineInstructionsDisplayerOverlay(
   {

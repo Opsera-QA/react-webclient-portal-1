@@ -48,8 +48,8 @@ jiraActions.getJiraMTTR = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     jiraProjects: getJiraProjectsFromKpiConfiguration(kpiConfiguration),
     jiraPriorities: getJiraPrioritiesFromKpiConfiguration(kpiConfiguration),
@@ -227,8 +227,8 @@ jiraActions.getJiraChangeFailureRate = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     jiraProjects: [
       getResultFromKpiConfiguration(kpiConfiguration, "jira-projects"),

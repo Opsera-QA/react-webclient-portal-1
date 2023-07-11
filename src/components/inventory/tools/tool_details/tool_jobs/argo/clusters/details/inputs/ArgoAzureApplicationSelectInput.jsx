@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedRegistryToolApplicationSelectInput
-  from "components/common/list_of_values_input/tools/applications/RoleRestrictedRegistryToolApplicationSelectInput";
+from "components/common/list_of_values_input/tools/applications/RoleRestrictedRegistryToolApplicationSelectInput";
 
 function ArgoAzureApplicationSelectInput({fieldName, model, setModel}) {
   const setDataFunction = (fieldName, selectedOption) => {

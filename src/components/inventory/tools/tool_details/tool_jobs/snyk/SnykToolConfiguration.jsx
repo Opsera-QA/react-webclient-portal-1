@@ -10,7 +10,7 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import SnykConnectivityTypeSelectInput from "components/inventory/tools/tool_details/tool_jobs/snyk/inputs/SnykConnectivityTypeSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import toolIdentifierConnectionCheckConstants
-  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function SnykToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -72,9 +72,9 @@ function SnykToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       </Col>
       <Col sm={12}>
         <TextInputBase
-            dataObject={snykConfigurationModel}
-            setDataObject={setSnykConfigurationModel}
-            fieldName={"organization"}
+          dataObject={snykConfigurationModel}
+          setDataObject={setSnykConfigurationModel}
+          fieldName={"organization"}
         />
       </Col>
       <Col sm={12}>

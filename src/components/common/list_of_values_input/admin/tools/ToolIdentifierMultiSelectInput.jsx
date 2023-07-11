@@ -66,7 +66,7 @@ function ToolIdentifierMultiSelectInput(
       cancelSource,
       undefined,
       toolRegistryFilter,
-      );
+    );
 
     const identifiers = response?.data?.data;
 

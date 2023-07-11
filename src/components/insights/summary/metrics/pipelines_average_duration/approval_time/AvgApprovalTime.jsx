@@ -108,7 +108,7 @@ function AvgApprovalTimeDataBlock({ dashboardData, toggleDynamicPanel, selectedD
           title={
             !isLoading && metrics[0]?.count[0] ? (
             //   metrics[0]?.count[0]?.count
-                "-"
+              "-"
             ) : (
               <LoadingIcon className={"mr-1"}/>
             )

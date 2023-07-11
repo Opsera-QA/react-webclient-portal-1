@@ -5,7 +5,7 @@ import kpiFilterMetadata from "components/admin/kpi_identifiers/kpi-filter-metad
 import PipelineStorageActions from "components/admin/pipeline_storage/pipeline-storage-actions";
 import PipelineStorageTable from "components/admin/pipeline_storage/PipelineStorageTable";
 import PipelineStorageManagementSubNavigationBar
-  from "components/admin/pipeline_storage/PipelineStorageManagementSubNavigationBar";
+from "components/admin/pipeline_storage/PipelineStorageManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function PipelineStorageManagement() {

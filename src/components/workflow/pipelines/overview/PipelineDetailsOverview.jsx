@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import PropTypes from 'prop-types';
 import PipelineStepJsonPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepJsonPanel";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepJsonPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import JsonTab from "components/common/tabs/detail_view/JsonTab";
@@ -22,21 +22,21 @@ function PipelineDetailsOverview({ pipeline }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return (
-          <PipelineOverviewContainer
-            pipeline={pipeline}
-          />
-        );
-      case "json":
-        return (
-          <PipelineStepJsonPanel
-            pipelineStepData={pipeline}
-          />
-        );
-      case "yaml":
-      default:
-        return null;
+    case "summary":
+      return (
+        <PipelineOverviewContainer
+          pipeline={pipeline}
+        />
+      );
+    case "json":
+      return (
+        <PipelineStepJsonPanel
+          pipelineStepData={pipeline}
+        />
+      );
+    case "yaml":
+    default:
+      return null;
     }
   };
 

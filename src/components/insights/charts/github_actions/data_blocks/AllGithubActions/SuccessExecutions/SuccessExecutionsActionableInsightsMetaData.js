@@ -19,8 +19,8 @@ const SuccessExecutionsActionableInsightsMetaData = {
       id: "applicationDirector",
     },
     {
-    label: "SVP",
-    id: "applicationSVP"
+      label: "SVP",
+      id: "applicationSVP"
     },
     {
       label: "VP1",
@@ -63,26 +63,26 @@ const SuccessExecutionsActionableInsightsMetaData = {
       label: "Page Size",
       id: "pageSize",
     },
-     {
-       label: "Total Count",
-       id: "totalCount",
-     },
-     {
-       label: "Sort Option",
-       id: "sortOption",
-     },
-     {
-       label: "Search",
-       id: "search",
-     },
-     {
-       label: "Active Filters",
-       id: "activeFilters",
-     },
-     {
-       label: "Timestamp",
-       id: "stepCompletedAt"
-     },
+    {
+      label: "Total Count",
+      id: "totalCount",
+    },
+    {
+      label: "Sort Option",
+      id: "sortOption",
+    },
+    {
+      label: "Search",
+      id: "search",
+    },
+    {
+      label: "Active Filters",
+      id: "activeFilters",
+    },
+    {
+      label: "Timestamp",
+      id: "stepCompletedAt"
+    },
     {
       label: "Step",
       id:"stepName"
@@ -109,26 +109,26 @@ const SuccessExecutionsActionableInsightsMetaData = {
     }
   ],
   getActiveFilters(filterDto) {
-     let activeFilters = [];
+    let activeFilters = [];
 
-     if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
-       activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
-     }
+    if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
+      activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
+    }
 
-     return activeFilters;
+    return activeFilters;
   },
   newObjectFields: {
-     pageSize: 10,
-     currentPage: 1,
-     sortOption: {text: "Newest", value: ""},
-     search: "",
-     activeFilters: []
+    pageSize: 10,
+    currentPage: 1,
+    sortOption: {text: "Newest", value: ""},
+    search: "",
+    activeFilters: []
   },
-    sortOptions: [
-     {text: "Newest", option: ""},
-     {text: "Oldest", option: "oldest"},
-     {text: "Action Name", option: "actionName"},
-     {text: "Application Name", option: "applicationName"}
+  sortOptions: [
+    {text: "Newest", option: ""},
+    {text: "Oldest", option: "oldest"},
+    {text: "Action Name", option: "actionName"},
+    {text: "Application Name", option: "applicationName"}
   ]
 };
 

@@ -5,7 +5,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
 import JiraLeadTimeChartNoDataBlocks
-  from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks";
+from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function PipelineFailedSecurity({
@@ -116,10 +116,10 @@ function PipelineFailedSecurity({
         <InsightsSynopsisDataBlock
           title={
             !isLoading && metrics[0]? (
-                metrics[0].data[0].mean
+              metrics[0].data[0].mean
             ) : (
-                !isLoading ? 0 : (
-                    <LoadingIcon className={"mr-1"}/>
+              !isLoading ? 0 : (
+                <LoadingIcon className={"mr-1"}/>
               )
             )
           }

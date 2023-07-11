@@ -43,12 +43,12 @@ export default function TaskTypeSelect(
 
   return (
     <div className={"m-4"}>
-        <H5FieldSubHeader
-          className={"mb-3 mx-3"}
-          subheaderText={
-            "What kind of Salesforce Task would you like to create today?"
-          }
-        />
+      <H5FieldSubHeader
+        className={"mb-3 mx-3"}
+        subheaderText={
+          "What kind of Salesforce Task would you like to create today?"
+        }
+      />
       <Row>
         <Col xs={4}>
           <TaskCreationFlowSelectionCardBase

@@ -32,15 +32,15 @@ function DockerCliBitbucketWorkspaceInput({model, setModel, disabled}) {
   }
 
   return (
-     <BitbucketWorkspaceInput
-       fieldName={"workspaceName"}
-       gitToolId={model.getData("gitToolId")}
-       dataObject={model}
-       setDataObject={setModel}
-       setDataFunction={setWorkspace}
-       clearDataFunction={clearWorkspace}
-       disabled={disabled}
-     />
+    <BitbucketWorkspaceInput
+      fieldName={"workspaceName"}
+      gitToolId={model.getData("gitToolId")}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setWorkspace}
+      clearDataFunction={clearWorkspace}
+      disabled={disabled}
+    />
   );
 }
 

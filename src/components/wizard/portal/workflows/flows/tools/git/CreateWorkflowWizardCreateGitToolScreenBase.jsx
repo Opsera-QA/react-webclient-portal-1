@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import GitToolCreationSelectionOptionInput from "components/wizard/portal/workflows/flows/tools/git/GitToolCreationSelectionOptionInput";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import CreateWorkflowWizardCreateGithubToolEditorPanel
-  from "components/wizard/portal/workflows/flows/tools/git/github/CreateWorkflowWizardCreateGithubToolEditorPanel";
+from "components/wizard/portal/workflows/flows/tools/git/github/CreateWorkflowWizardCreateGithubToolEditorPanel";
 import CreateWorkflowWizardCreateGitlabToolEditorPanel
-  from "components/wizard/portal/workflows/flows/tools/git/gitlab/CreateWorkflowWizardCreateGitlabToolEditorPanel";
+from "components/wizard/portal/workflows/flows/tools/git/gitlab/CreateWorkflowWizardCreateGitlabToolEditorPanel";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import CreateWorkflowWizardRegisterAccountContainer
-  from "components/wizard/portal/workflows/flows/tools/CreateWorkflowWizardRegisterAccountContainer";
+from "components/wizard/portal/workflows/flows/tools/CreateWorkflowWizardRegisterAccountContainer";
 import VanityButtonBase from "../../../../../../../temp-library-components/button/VanityButtonBase";
 import {faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
@@ -21,7 +21,7 @@ import PortalRouteToWorkflowButton from "../../tasks/completion/PortalRouteToWor
 import {workspaceConstants} from "../../../../../../workspace/workspace.constants";
 import CenteredContentWrapper from "../../../../../../common/wrapper/CenteredContentWrapper";
 import CreateWorkflowWizardCreateBitbucketToolEditorPanel
-    from "./bitbucket/CreateWorkflowWizardCreateBitbucketToolEditorPanel";
+from "./bitbucket/CreateWorkflowWizardCreateBitbucketToolEditorPanel";
 import CreateWorkflowWizardCreateAzureDevopsToolEditorPanel from "./azure_devops/CreateWorkflowWizardCreateAzureDevopsToolEditorPanel";
 
 export default function CreateWorkflowWizardCreateGitToolScreenBase(
@@ -53,70 +53,70 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
 
   const getEditorPanel = () => {
     switch (gitToolOption) {
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
-        return (
-          <CreateWorkflowWizardCreateGithubToolEditorPanel
-            gitToolModel={gitToolModel}
-            setGitToolModel={setGitToolModel}
-            setGitToolId={setGitToolId}
-            onSuccessFunction={onSuccessFunction}
-            gitToolId={gitToolId}
-            backButtonFunction={backButtonFunction}
-            setButtonContainer={setButtonContainer}
-            toolType={toolType}
-            connectionFailure={connectionFailure}
-            onSkipConnectionTestFunction={onSkipConnectionTestFunction}
-            setConnectionFailure={setConnectionFailure}
-          />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
-        return (
-          <CreateWorkflowWizardCreateGitlabToolEditorPanel
-            gitToolModel={gitToolModel}
-            setGitToolModel={setGitToolModel}
-            setGitToolId={setGitToolId}
-            onSuccessFunction={onSuccessFunction}
-            gitToolId={gitToolId}
-            backButtonFunction={backButtonFunction}
-            setButtonContainer={setButtonContainer}
-            toolType={toolType}
-            connectionFailure={connectionFailure}
-            onSkipConnectionTestFunction={onSkipConnectionTestFunction}
-            setConnectionFailure={setConnectionFailure}
-          />
-        );
-        case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
-            return (
-                <CreateWorkflowWizardCreateBitbucketToolEditorPanel
-                    gitToolModel={gitToolModel}
-                    setGitToolModel={setGitToolModel}
-                    setGitToolId={setGitToolId}
-                    onSuccessFunction={onSuccessFunction}
-                    gitToolId={gitToolId}
-                    backButtonFunction={backButtonFunction}
-                    setButtonContainer={setButtonContainer}
-                    toolType={toolType}
-                    connectionFailure={connectionFailure}
-                    onSkipConnectionTestFunction={onSkipConnectionTestFunction}
-                    setConnectionFailure={setConnectionFailure}
-                />
-            );
-        case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS:
-          return (
-            <CreateWorkflowWizardCreateAzureDevopsToolEditorPanel 
-              gitToolModel={gitToolModel}
-              setGitToolModel={setGitToolModel}
-              setGitToolId={setGitToolId}
-              onSuccessFunction={onSuccessFunction}
-              gitToolId={gitToolId}
-              backButtonFunction={backButtonFunction}
-              setButtonContainer={setButtonContainer}
-              toolType={toolType}
-              connectionFailure={connectionFailure}
-              onSkipConnectionTestFunction={onSkipConnectionTestFunction}
-              setConnectionFailure={setConnectionFailure}
-            />
-          );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
+      return (
+        <CreateWorkflowWizardCreateGithubToolEditorPanel
+          gitToolModel={gitToolModel}
+          setGitToolModel={setGitToolModel}
+          setGitToolId={setGitToolId}
+          onSuccessFunction={onSuccessFunction}
+          gitToolId={gitToolId}
+          backButtonFunction={backButtonFunction}
+          setButtonContainer={setButtonContainer}
+          toolType={toolType}
+          connectionFailure={connectionFailure}
+          onSkipConnectionTestFunction={onSkipConnectionTestFunction}
+          setConnectionFailure={setConnectionFailure}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
+      return (
+        <CreateWorkflowWizardCreateGitlabToolEditorPanel
+          gitToolModel={gitToolModel}
+          setGitToolModel={setGitToolModel}
+          setGitToolId={setGitToolId}
+          onSuccessFunction={onSuccessFunction}
+          gitToolId={gitToolId}
+          backButtonFunction={backButtonFunction}
+          setButtonContainer={setButtonContainer}
+          toolType={toolType}
+          connectionFailure={connectionFailure}
+          onSkipConnectionTestFunction={onSkipConnectionTestFunction}
+          setConnectionFailure={setConnectionFailure}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
+      return (
+        <CreateWorkflowWizardCreateBitbucketToolEditorPanel
+          gitToolModel={gitToolModel}
+          setGitToolModel={setGitToolModel}
+          setGitToolId={setGitToolId}
+          onSuccessFunction={onSuccessFunction}
+          gitToolId={gitToolId}
+          backButtonFunction={backButtonFunction}
+          setButtonContainer={setButtonContainer}
+          toolType={toolType}
+          connectionFailure={connectionFailure}
+          onSkipConnectionTestFunction={onSkipConnectionTestFunction}
+          setConnectionFailure={setConnectionFailure}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS:
+      return (
+        <CreateWorkflowWizardCreateAzureDevopsToolEditorPanel 
+          gitToolModel={gitToolModel}
+          setGitToolModel={setGitToolModel}
+          setGitToolId={setGitToolId}
+          onSuccessFunction={onSuccessFunction}
+          gitToolId={gitToolId}
+          backButtonFunction={backButtonFunction}
+          setButtonContainer={setButtonContainer}
+          toolType={toolType}
+          connectionFailure={connectionFailure}
+          onSkipConnectionTestFunction={onSkipConnectionTestFunction}
+          setConnectionFailure={setConnectionFailure}
+        />
+      );
     }
   };
 

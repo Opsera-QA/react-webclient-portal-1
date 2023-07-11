@@ -8,9 +8,9 @@ function SuccessDialog({ successMessage, setSuccessMessage, alignment }) {
   const [messageBody, setMessageBody] = useState("");
 
   const clearSuccess = () => {
-      setSuccessMessage(() => {
-        return false;
-      });
+    setSuccessMessage(() => {
+      return false;
+    });
   };
 
   useEffect(() => {

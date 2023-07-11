@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import AzureToolApplicationSelectInput
-  from "components/common/list_of_values_input/tools/azure/credentials/AzureToolApplicationSelectInput";
+from "components/common/list_of_values_input/tools/azure/credentials/AzureToolApplicationSelectInput";
 
 function AzureCliStepApplicationSelectInput({fieldName, model, setModel, azureToolId}) {
   // TODO: We should be pulling the applications based on ID in next input

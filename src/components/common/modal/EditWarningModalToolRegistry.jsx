@@ -24,7 +24,7 @@ function EditWarningModalToolRegistry({ dataObject, showModal, setShowModal, han
       toastContext.showUpdateSuccessResultDialog(dataObject.getType());
       handleModalClose();
       handleClose();
-      }
+    }
     catch (error) {
       toastContext.showUpdateFailureResultDialog(dataObject.getType(), error);
     }
@@ -64,7 +64,7 @@ function EditWarningModalToolRegistry({ dataObject, showModal, setShowModal, han
       </Modal.Body>
       <Modal.Footer>
         <Button size="sm" variant="secondary" onClick={handleModalClose}>Cancel</Button>
-          <Button size="sm" variant="warning" onClick={editItem}>{getLabel()}</Button>
+        <Button size="sm" variant="warning" onClick={editItem}>{getLabel()}</Button>
       </Modal.Footer>
     </Modal>
   );

@@ -63,25 +63,25 @@ function DoraJiraGitlabRolledUpColumnDataBlock({
   };
 
   return (
-      <div>
-        <Row
-            className={`ml-3 mr-5 p-2 d-flex maturity-top-border ${maturityColor}`}
+    <div>
+      <Row
+        className={`ml-3 mr-5 p-2 d-flex maturity-top-border ${maturityColor}`}
+      >
+        <div
+          className={
+            "d-flex pr-1 dark-gray-text-primary metric-block-content-text font-inter-light-500 pointer"
+          }
+          onClick={() => onSelect(maturityScoreText)}
         >
-          <div
-              className={
-                "d-flex pr-1 dark-gray-text-primary metric-block-content-text font-inter-light-500 pointer"
-              }
-              onClick={() => onSelect(maturityScoreText)}
-          >
-            {maturityScore}
-          </div>
-        </Row>
-        <Row
-            className={`ml-3 w-100 h-100 text-center maturity-rolled-up-border ${maturityColor}`}
-        >
-          <div style={{ minHeight: "3rem" }}>{getOrgData()}</div>
-        </Row>
-      </div>
+          {maturityScore}
+        </div>
+      </Row>
+      <Row
+        className={`ml-3 w-100 h-100 text-center maturity-rolled-up-border ${maturityColor}`}
+      >
+        <div style={{ minHeight: "3rem" }}>{getOrgData()}</div>
+      </Row>
+    </div>
   );
 }
 

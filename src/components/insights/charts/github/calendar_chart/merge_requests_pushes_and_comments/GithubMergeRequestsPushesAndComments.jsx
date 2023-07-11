@@ -11,7 +11,7 @@ import { defaultConfig, gradationalColors } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import GithubMergeRequestsPushesCommentsActionableOverlay
-  from "./actionable_insights/GithubMergeRequestsPushedCommentsActionableOverlay";
+from "./actionable_insights/GithubMergeRequestsPushedCommentsActionableOverlay";
 function GithubMergeRequestsPushesAndComments({
   kpiConfiguration,
   setKpiConfiguration,
@@ -89,11 +89,11 @@ function GithubMergeRequestsPushesAndComments({
   const onRowSelect = (node) => {
     if(node?.value) {
       toastContext.showOverlayPanel(
-          <GithubMergeRequestsPushesCommentsActionableOverlay
-              kpiConfiguration={kpiConfiguration}
-              dashboardData={dashboardData}
-              date={node?.day.toString()}
-          />,
+        <GithubMergeRequestsPushesCommentsActionableOverlay
+          kpiConfiguration={kpiConfiguration}
+          dashboardData={dashboardData}
+          date={node?.day.toString()}
+        />,
       );
     }
   };

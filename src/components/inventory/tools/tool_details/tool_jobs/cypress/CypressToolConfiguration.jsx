@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
 import cypressConnectionMetadata from "./cypress-connection-metadata";
 import ToolConfigurationEditorPanelContainer
-  from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Col from "react-bootstrap/Col";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";

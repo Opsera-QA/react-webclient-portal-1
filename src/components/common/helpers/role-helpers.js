@@ -60,20 +60,20 @@ export const meetsRequirements = (requirement, accessRoleData) => {
   }
 
   switch (requirement) {
-    case ROLE_LEVELS.OPSERA_ADMINISTRATORS:
-      return isOpseraAdministrator(accessRoleData);
-    case ROLE_LEVELS.ADMINISTRATORS:
-      return isAdministrator(accessRoleData);
-    case ROLE_LEVELS.ADMINISTRATORS_AND_SASS:
-      return isAdministratorOrSass(accessRoleData);
-    case ROLE_LEVELS.POWER_USERS:
-      return isPowerUser(accessRoleData);
-    case ROLE_LEVELS.POWER_USERS_AND_SASS:
-      return isPowerUserOrSass(accessRoleData);
-    case ROLE_LEVELS.USERS:
-      return isUser(accessRoleData);
-    case ROLE_LEVELS.USERS_AND_SASS:
-      return isUserOrSassUser(accessRoleData);
+  case ROLE_LEVELS.OPSERA_ADMINISTRATORS:
+    return isOpseraAdministrator(accessRoleData);
+  case ROLE_LEVELS.ADMINISTRATORS:
+    return isAdministrator(accessRoleData);
+  case ROLE_LEVELS.ADMINISTRATORS_AND_SASS:
+    return isAdministratorOrSass(accessRoleData);
+  case ROLE_LEVELS.POWER_USERS:
+    return isPowerUser(accessRoleData);
+  case ROLE_LEVELS.POWER_USERS_AND_SASS:
+    return isPowerUserOrSass(accessRoleData);
+  case ROLE_LEVELS.USERS:
+    return isUser(accessRoleData);
+  case ROLE_LEVELS.USERS_AND_SASS:
+    return isUserOrSassUser(accessRoleData);
   }
 };
 
@@ -125,56 +125,56 @@ export const ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE = {
 
 export const getAccessRolePermissionMessage = (accessRole) => {
   switch (accessRole?.Role) {
-    case "administrator":
-      return ACCESS_ROLE_PERMISSION_MESSAGES.ADMINISTRATOR;
-    case "power_user":
-      return ACCESS_ROLE_PERMISSION_MESSAGES.POWER_USER;
-    case "user":
-      return ACCESS_ROLE_PERMISSION_MESSAGES.USER;
-    case "security_manager":
-      return ACCESS_ROLE_PERMISSION_MESSAGES.SECURITY_MANAGER;
-    case "auditor":
-      return ACCESS_ROLE_PERMISSION_MESSAGES.AUDITOR;
-    case "guest":
-    default:
-      return ACCESS_ROLE_PERMISSION_MESSAGES.GUEST;
+  case "administrator":
+    return ACCESS_ROLE_PERMISSION_MESSAGES.ADMINISTRATOR;
+  case "power_user":
+    return ACCESS_ROLE_PERMISSION_MESSAGES.POWER_USER;
+  case "user":
+    return ACCESS_ROLE_PERMISSION_MESSAGES.USER;
+  case "security_manager":
+    return ACCESS_ROLE_PERMISSION_MESSAGES.SECURITY_MANAGER;
+  case "auditor":
+    return ACCESS_ROLE_PERMISSION_MESSAGES.AUDITOR;
+  case "guest":
+  default:
+    return ACCESS_ROLE_PERMISSION_MESSAGES.GUEST;
   }
 };
 
 export const getAccessRolePermissionMessageWithoutRole = (accessRole) => {
   switch (accessRole?.Role) {
-    case "administrator":
-      return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.ADMINISTRATOR;
-    case "power_user":
-      return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.POWER_USER;
-    case "user":
-      return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.USER;
-    case "security_manager":
-      return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.SECURITY_MANAGER;
-    case "auditor":
-      return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.AUDITOR;
-    case "guest":
-    default:
-      return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.GUEST;
+  case "administrator":
+    return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.ADMINISTRATOR;
+  case "power_user":
+    return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.POWER_USER;
+  case "user":
+    return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.USER;
+  case "security_manager":
+    return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.SECURITY_MANAGER;
+  case "auditor":
+    return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.AUDITOR;
+  case "guest":
+  default:
+    return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.GUEST;
   }
 };
 
 export const getAccessRoleRequirementMessage = (requirement) => {
   switch (requirement) {
-    case ROLE_LEVELS.OPSERA_ADMINISTRATORS:
-      return "Only Opsera Administrators can access this screen.";
-    case ROLE_LEVELS.ADMINISTRATORS:
-      return "You must have a Site Administrator role to access this screen.";
-    case ROLE_LEVELS.POWER_USERS:
-      return "You must have a Power User role to access this screen.";
-    case ROLE_LEVELS.POWER_USERS_AND_SASS:
-      return "You must have a Power User role to access this screen.";
-    case ROLE_LEVELS.USERS:
-      return "Any level User can access this screen.";
-    case ROLE_LEVELS.USERS_AND_SASS:
-      return "Any level User can access this screen.";
-    default:
-      return "UNKNOWN ROLE REQUIREMENTS";
+  case ROLE_LEVELS.OPSERA_ADMINISTRATORS:
+    return "Only Opsera Administrators can access this screen.";
+  case ROLE_LEVELS.ADMINISTRATORS:
+    return "You must have a Site Administrator role to access this screen.";
+  case ROLE_LEVELS.POWER_USERS:
+    return "You must have a Power User role to access this screen.";
+  case ROLE_LEVELS.POWER_USERS_AND_SASS:
+    return "You must have a Power User role to access this screen.";
+  case ROLE_LEVELS.USERS:
+    return "Any level User can access this screen.";
+  case ROLE_LEVELS.USERS_AND_SASS:
+    return "Any level User can access this screen.";
+  default:
+    return "UNKNOWN ROLE REQUIREMENTS";
   }
 };
 
@@ -183,32 +183,32 @@ export const getUserRoleLevel = (accessRoleData, objectRoles, dataObject) => {
   const prefix = "Your access role for this page is: ";
 
   switch (roleLevel) {
-    case SITE_ROLES.OPSERA_ADMINISTRATOR:
-      return prefix + "Opsera Administrator";
-    case SITE_ROLES.ADMINISTRATOR:
-      return prefix + "Site Administrator";
-    case SITE_ROLES.POWER_USER:
-      return prefix + "Site Power User";
-    case ACCESS_ROLES.ADMINISTRATOR:
-      return prefix + "Administrator";
-    case ACCESS_ROLES.OWNER:
-      return prefix + "Owner";
-    case ACCESS_ROLES.SECOPS:
-      return prefix + "SecOps";
-    case ACCESS_ROLES.MANAGER:
-      return prefix + "Manager";
-    case ACCESS_ROLES.USER:
-      return prefix + "User";
-    case ACCESS_ROLES.GUEST:
-      return prefix + "Guest";
-    case ACCESS_ROLES.READ_ONLY:
-      return prefix + "Guest";
-    case ACCESS_ROLES.UNAUTHORIZED:
-      return "You are unauthorized to view this page.";
-    case ACCESS_ROLES.NO_ACCESS_RULES:
-      return "No Access Rules are currently applied.";
-    default:
-      return "UNKNOWN ROLE LEVEL";
+  case SITE_ROLES.OPSERA_ADMINISTRATOR:
+    return prefix + "Opsera Administrator";
+  case SITE_ROLES.ADMINISTRATOR:
+    return prefix + "Site Administrator";
+  case SITE_ROLES.POWER_USER:
+    return prefix + "Site Power User";
+  case ACCESS_ROLES.ADMINISTRATOR:
+    return prefix + "Administrator";
+  case ACCESS_ROLES.OWNER:
+    return prefix + "Owner";
+  case ACCESS_ROLES.SECOPS:
+    return prefix + "SecOps";
+  case ACCESS_ROLES.MANAGER:
+    return prefix + "Manager";
+  case ACCESS_ROLES.USER:
+    return prefix + "User";
+  case ACCESS_ROLES.GUEST:
+    return prefix + "Guest";
+  case ACCESS_ROLES.READ_ONLY:
+    return prefix + "Guest";
+  case ACCESS_ROLES.UNAUTHORIZED:
+    return "You are unauthorized to view this page.";
+  case ACCESS_ROLES.NO_ACCESS_RULES:
+    return "No Access Rules are currently applied.";
+  default:
+    return "UNKNOWN ROLE LEVEL";
   }
 };
 

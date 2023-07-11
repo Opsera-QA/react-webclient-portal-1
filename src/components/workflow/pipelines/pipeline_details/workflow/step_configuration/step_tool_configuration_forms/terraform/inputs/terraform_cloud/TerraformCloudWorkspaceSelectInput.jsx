@@ -5,7 +5,7 @@ import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import { AuthContext } from "../../../../../../../../../../contexts/AuthContext";
 import terraformCloudWorkspacesActions
-  from "components/inventory/tools/tool_details/tool_jobs/terraform_cloud/workspaces/terraformCloudWorkspaces.actions";
+from "components/inventory/tools/tool_details/tool_jobs/terraform_cloud/workspaces/terraformCloudWorkspaces.actions";
 
 function TerraformCloudWorkspaceSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, toolId}) {
   const toastContext = useContext(DialogToastContext);
@@ -77,17 +77,17 @@ function TerraformCloudWorkspaceSelectInput({ fieldName, dataObject, setDataObje
   };
 
   return (
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        selectOptions={workspaces}
-        busy={isLoading}
-        valueField={valueField}
-        textField={textField}
-        placeholderText={placeholder}
-        disabled={disabled || isLoading}
-      />
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      selectOptions={workspaces}
+      busy={isLoading}
+      valueField={valueField}
+      textField={textField}
+      placeholderText={placeholder}
+      disabled={disabled || isLoading}
+    />
   );
 }
 

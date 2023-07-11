@@ -26,8 +26,8 @@ function DateFieldBase(
   return (
     <FieldContainer className={className}>
       <FieldLabel field={field} fieldName={fieldName}/><span>
-      {DateFormatHelper.formatDate(dataObject?.getData(field.id), dateFormat)}
-    </span>
+        {DateFormatHelper.formatDate(dataObject?.getData(field.id), dateFormat)}
+      </span>
     </FieldContainer>
   );
 }

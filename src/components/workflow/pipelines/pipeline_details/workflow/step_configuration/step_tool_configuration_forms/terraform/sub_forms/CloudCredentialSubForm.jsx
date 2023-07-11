@@ -23,7 +23,7 @@ function CloudCredentialSubForm({ model, setModel}) {
     }
 
     if (!model?.getData('customScript'))
-      {
+    {
       return (
         <>
           <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"accessKeyParamName"} />
@@ -34,28 +34,28 @@ function CloudCredentialSubForm({ model, setModel}) {
     }
   };
 
-    const getAWSFields = () => {
-        if (model?.getData('cloudProvider') === "aws") {
-            return (
-                <>
-                    <TerraformAwsCredentialsSelectInput model={model} setModel={setModel} />
-                    <TerraformIAmRoleFlagToggleInput model={model} setModel={setModel} />
-                    {getIamRoleFields()}
-                </>
-            );
-        }
-    };
+  const getAWSFields = () => {
+    if (model?.getData('cloudProvider') === "aws") {
+      return (
+        <>
+          <TerraformAwsCredentialsSelectInput model={model} setModel={setModel} />
+          <TerraformIAmRoleFlagToggleInput model={model} setModel={setModel} />
+          {getIamRoleFields()}
+        </>
+      );
+    }
+  };
 
-    const getAzureFields = () => {
-        if (model?.getData('cloudProvider') === "azure") {
-            return (
-                <>
-                    <CloudProviderAzureToolSelect model={model} setModel={setModel}/>
-                    <CloudProviderAzureApplicationSelect model={model} setModel={setModel}/>
-                </>
-            );
-        }
-    };
+  const getAzureFields = () => {
+    if (model?.getData('cloudProvider') === "azure") {
+      return (
+        <>
+          <CloudProviderAzureToolSelect model={model} setModel={setModel}/>
+          <CloudProviderAzureApplicationSelect model={model} setModel={setModel}/>
+        </>
+      );
+    }
+  };
 
   return (
     <>

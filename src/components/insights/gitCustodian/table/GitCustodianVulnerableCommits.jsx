@@ -5,7 +5,7 @@ import { GitCustodianFilterMetadata } from "components/insights/gitCustodian/tab
 import useComponentStateReference from "hooks/useComponentStateReference";
 import modelHelpers from "components/common/model/modelHelpers";
 import GitCustodianVulnerableCommitsTable
-  from "components/insights/gitCustodian/table/GitCustodianVulnerableCommitsTable";
+from "components/insights/gitCustodian/table/GitCustodianVulnerableCommitsTable";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function GitCustodianVulnerableCommits({ gitCustodianData, gitCustodianFilterModel, setGitCustodianFilterModel }) {

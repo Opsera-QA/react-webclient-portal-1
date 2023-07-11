@@ -87,19 +87,19 @@ function TerraformVcsServiceSelectInput({ fieldName, dataObject, setDataObject, 
   };
 
   return (
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        selectOptions={vcsServiceTypes}
-        setDataFunction={setDataFunction}
-        clearDataFunction={clearDataFunction}
-        valueField={valueField}
-        textField={textField}
-        placeholderText={"Select VCS Service"}
-        disabled={disabled}
-        busy={isLoading}
-      />
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      selectOptions={vcsServiceTypes}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      valueField={valueField}
+      textField={textField}
+      placeholderText={"Select VCS Service"}
+      disabled={disabled}
+      busy={isLoading}
+    />
   );
 }
 

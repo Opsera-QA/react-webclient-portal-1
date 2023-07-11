@@ -129,7 +129,7 @@ function ArgoApplicationTargetRevisionSelectInput(
           singularTopic={singularTopic}
           pluralTopic={pluralTopic}
         />      
-    </div>
+      </div>
     </>    
   );
 }

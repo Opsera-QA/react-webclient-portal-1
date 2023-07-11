@@ -31,7 +31,7 @@ import GitHubCommitsOpenPullRequestDataBlock from "./data_blocks/GithubCommitsOp
 import GitHubCommitsTotalDeclinedDataBlock from "./data_blocks/GitHubCommitsTotalDeclinedDataBlock";
 import GithubCommitsTotalFixedDataBlock from "./data_blocks/GithubCommitsTotalFixedDataBlock";
 import GithubCommitStatisticsHelpDocumentation
-  from "../../../../../common/help/documentation/insights/charts/GithubCommitStatisticsHelpDocumentation";
+from "../../../../../common/help/documentation/insights/charts/GithubCommitStatisticsHelpDocumentation";
 // import GithubCommitStatisticsHelpDocumentation from "components/common/help/documentation/insights/charts/github/GithubCommitStatisticsHelpDocumentation";
 
 function GithubCommitsStatistics({
@@ -124,14 +124,14 @@ function GithubCommitsStatistics({
         ? response?.data?.data?.total_pull_request
         : 0;
       const total_activity = response?.data
-          ? response?.data?.data?.total_activity
-          : 0;
+        ? response?.data?.data?.total_activity
+        : 0;
       const open_pull_request = response?.data
-          ? response?.data?.data?.open_pull_request
-          : 0;
+        ? response?.data?.data?.open_pull_request
+        : 0;
       const fixed_pull_request = response?.data
-          ? response?.data?.data?.fixed_pull_request
-          : 0;
+        ? response?.data?.data?.fixed_pull_request
+        : 0;
       const total_commits = response?.data
         ? response?.data?.data?.total_commits
         : 0;
@@ -145,8 +145,8 @@ function GithubCommitsStatistics({
         ? response?.data?.data?.total_declined_merges
         : 0;
       const declined_actionable = response?.data
-          ? response?.data?.data?.declined_actionable
-          : [];
+        ? response?.data?.data?.declined_actionable
+        : [];
       const repositories_with_commits = response?.data
         ? response?.data?.data?.repositories_with_commits
         : [];
@@ -178,15 +178,15 @@ function GithubCommitsStatistics({
   };
 
   const onRowSelect = () => {
-      toastContext.showOverlayPanel(
-          <GithubCommitsActionableInsightOverlay
-              kpiConfiguration={kpiConfiguration}
-              dashboardData={dashboardData}
-              highestMergesMetric={highestMergesMetric}
-              totalDeclinedMerges={totalDeclinedActionable}
-              repositoriesWithCommits={repositoriesWithCommits}
-          />,
-      );
+    toastContext.showOverlayPanel(
+      <GithubCommitsActionableInsightOverlay
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+        highestMergesMetric={highestMergesMetric}
+        totalDeclinedMerges={totalDeclinedActionable}
+        repositoriesWithCommits={repositoriesWithCommits}
+      />,
+    );
   };
 
   const showGithubApprovedPullRequestModal = (node) => {
@@ -213,91 +213,91 @@ function GithubCommitsStatistics({
 
   const getChartBody = () => {
     if (
-        !Array.isArray(mostActiveUsersMetrics) ||
+      !Array.isArray(mostActiveUsersMetrics) ||
         mostActiveUsersMetrics.length === 0
     ) {
       return null;
     }
 
     return (
-        <div
-            className="new-chart mb-3"
-            style={{ minHeight: "300px" }}
-        >
-          <Container>
-            <Row className="p-2 gray justify-content-center">
-              <Col
-                  md={3}
-              >
-                <GitHubCommitsTotalActivityDataBlock data={totalActivity} />
-              </Col>
-              <Col
-                  md={3}
-              >
-                <GitHubCommitsTotalPullRequestsDataBlock data={totalPullRequest} />
-              </Col>
-              <Col
-                  md={3}
-              >
-                <GitHubCommitsOpenPullRequestDataBlock data={totalOpen} />
-              </Col>
-              <Col
-                  md={3}
-              >
-                <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
-              </Col>
-            </Row>
-            <Row className="p-2 gray justify-content-center">
-              <Col
-                  md={3}
-              >
-                <GitHubCommitsTotalCommitsDataBlock data={totalCommits} />
-              </Col>
-              <Col
-                  md={3}
-              >
-                <GitHubCommitsTotalDeclinedDataBlock data={totalDeclinedMerges} />
-              </Col>
-              <Col
-                  md={3}
-              >
-                <GithubCommitsTotalFixedDataBlock data={totalFixed} />
-              </Col>
-            </Row>
-          </Container>
-        </div>
+      <div
+        className="new-chart mb-3"
+        style={{ minHeight: "300px" }}
+      >
+        <Container>
+          <Row className="p-2 gray justify-content-center">
+            <Col
+              md={3}
+            >
+              <GitHubCommitsTotalActivityDataBlock data={totalActivity} />
+            </Col>
+            <Col
+              md={3}
+            >
+              <GitHubCommitsTotalPullRequestsDataBlock data={totalPullRequest} />
+            </Col>
+            <Col
+              md={3}
+            >
+              <GitHubCommitsOpenPullRequestDataBlock data={totalOpen} />
+            </Col>
+            <Col
+              md={3}
+            >
+              <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
+            </Col>
+          </Row>
+          <Row className="p-2 gray justify-content-center">
+            <Col
+              md={3}
+            >
+              <GitHubCommitsTotalCommitsDataBlock data={totalCommits} />
+            </Col>
+            <Col
+              md={3}
+            >
+              <GitHubCommitsTotalDeclinedDataBlock data={totalDeclinedMerges} />
+            </Col>
+            <Col
+              md={3}
+            >
+              <GithubCommitsTotalFixedDataBlock data={totalFixed} />
+            </Col>
+          </Row>
+        </Container>
+      </div>
     );
   };
 
   return (
-      <div>
-        <ChartContainer
-            title={kpiConfiguration?.kpi_name}
-            kpiConfiguration={kpiConfiguration}
-            setKpiConfiguration={setKpiConfiguration}
-            chart={getChartBody()}
-            loadChart={loadData}
-            dashboardData={dashboardData}
-            index={index}
-            error={error}
-            setKpis={setKpis}
-            isLoading={isLoading}
-            launchActionableInsightsFunction={onRowSelect}
-            chartHelpComponent={(closeHelpPanel) => (
-                <GithubCommitStatisticsHelpDocumentation
-                    closeHelpPanel={closeHelpPanel}
-                />
-            )}
-        />
-        <ModalLogs
-            header="Github Commits Statistics"
-            size="lg"
-            jsonMessage={mostActiveUsersMetrics}
-            dataType="bar"
-            show={showModal}
-            setParentVisibility={setShowModal}
-        />
-      </div>
+    <div>
+      <ChartContainer
+        title={kpiConfiguration?.kpi_name}
+        kpiConfiguration={kpiConfiguration}
+        setKpiConfiguration={setKpiConfiguration}
+        chart={getChartBody()}
+        loadChart={loadData}
+        dashboardData={dashboardData}
+        index={index}
+        error={error}
+        setKpis={setKpis}
+        isLoading={isLoading}
+        launchActionableInsightsFunction={onRowSelect}
+        chartHelpComponent={(closeHelpPanel) => (
+          <GithubCommitStatisticsHelpDocumentation
+            closeHelpPanel={closeHelpPanel}
+          />
+        )}
+      />
+      <ModalLogs
+        header="Github Commits Statistics"
+        size="lg"
+        jsonMessage={mostActiveUsersMetrics}
+        dataType="bar"
+        show={showModal}
+        setParentVisibility={setShowModal}
+      />
+    </div>
   );
 }
 GithubCommitsStatistics.propTypes = {

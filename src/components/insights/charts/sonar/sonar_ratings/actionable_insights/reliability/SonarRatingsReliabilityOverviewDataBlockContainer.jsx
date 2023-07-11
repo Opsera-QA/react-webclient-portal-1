@@ -2,17 +2,17 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import SonarCriticalItemCountDataBlock
-  from "components/common/metrics/data_blocks/tools/sonar/critical/SonarCriticalItemCountDataBlock";
+from "components/common/metrics/data_blocks/tools/sonar/critical/SonarCriticalItemCountDataBlock";
 import SonarBlockerCountDataBlock
-  from "components/common/metrics/data_blocks/tools/sonar/blocker/SonarBlockerCountDataBlock";
+from "components/common/metrics/data_blocks/tools/sonar/blocker/SonarBlockerCountDataBlock";
 import SonarMinorCountDataBlock
-  from "components/common/metrics/data_blocks/tools/sonar/minor/SonarMinorCountDataBlock";
+from "components/common/metrics/data_blocks/tools/sonar/minor/SonarMinorCountDataBlock";
 import SonarMajorCountDataBlock
-  from "components/common/metrics/data_blocks/tools/sonar/major/SonarMajorCountDataBlock";
+from "components/common/metrics/data_blocks/tools/sonar/major/SonarMajorCountDataBlock";
 import SonarInfoCountDataBlock
-  from "components/common/metrics/data_blocks/tools/sonar/info/SonarInfoCountDataBlock";
+from "components/common/metrics/data_blocks/tools/sonar/info/SonarInfoCountDataBlock";
 import SonarBugCountDataBlock
-  from "components/common/metrics/data_blocks/tools/sonar/bug/SonarBugCountDataBlock";
+from "components/common/metrics/data_blocks/tools/sonar/bug/SonarBugCountDataBlock";
 
 function SonarRatingsReliabilityOverviewDataBlockContainer({sonarMetric}) {
   const getCriticalColor = () => {

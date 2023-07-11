@@ -4,7 +4,7 @@ import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import {WORKFLOW_WIDGET_VIEWS} from "components/landing/v2/widgets/workspace/WorkflowWidgetNavigationBar";
 import WorkflowWidgetFilterModel from "hooks/workspace/workflowWidget.filter.model";
 import useSoftwareDevelopmentLandingActions
-  from "hooks/landing/software_development/useSoftwareDevelopmentLandingActions";
+from "hooks/landing/software_development/useSoftwareDevelopmentLandingActions";
 
 export default function useGetSoftwareDevelopmentWorkflowResources(
   currentView,
@@ -38,28 +38,28 @@ export default function useGetSoftwareDevelopmentWorkflowResources(
     let response;
 
     switch (currentView) {
-      case WORKFLOW_WIDGET_VIEWS.FOLLOWING:
-        response = await softwareDevelopmentLandingActions.getSubscribedWorkflowResources(
-          newFilterModel,
-          fields,
-          newFilterModel?.getData("active"),
-        );
-        break;
-      case WORKFLOW_WIDGET_VIEWS.RECENT_ACTIVITY:
-        response = await softwareDevelopmentLandingActions.getRecentWorkflowResources(
-          newFilterModel,
-          fields,
-          newFilterModel?.getData("active"),
-        );
-        break;
-      case WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS:
-      default:
-        response = await softwareDevelopmentLandingActions.getMyWorkspaceWorkflowResources(
-          newFilterModel,
-          fields,
-          newFilterModel?.getData("active"),
-        );
-        break;
+    case WORKFLOW_WIDGET_VIEWS.FOLLOWING:
+      response = await softwareDevelopmentLandingActions.getSubscribedWorkflowResources(
+        newFilterModel,
+        fields,
+        newFilterModel?.getData("active"),
+      );
+      break;
+    case WORKFLOW_WIDGET_VIEWS.RECENT_ACTIVITY:
+      response = await softwareDevelopmentLandingActions.getRecentWorkflowResources(
+        newFilterModel,
+        fields,
+        newFilterModel?.getData("active"),
+      );
+      break;
+    case WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS:
+    default:
+      response = await softwareDevelopmentLandingActions.getMyWorkspaceWorkflowResources(
+        newFilterModel,
+        fields,
+        newFilterModel?.getData("active"),
+      );
+      break;
     }
 
     const items = DataParsingHelper.parseNestedArray(response, "data.data", []);

@@ -6,7 +6,7 @@ import {getTableTextColumn, getTableDateTimeColumn, getExternalLinkIconColumnDef
 import {getField} from "../../../../../common/metadata/metadata-helpers";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer
-  from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
+from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import FilterContainer from "../../../../../common/table/FilterContainer";
 
 function GitlabTimeTakenToCompleteMergeRequestReviewActionableOverlay({ metrics}) {

@@ -7,7 +7,7 @@ import ButtonContainerBase from "components/common/buttons/saving/containers/But
 import CloseButton from "components/common/buttons/CloseButton";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 import GithubActionsDetailedWorkflowSummary
-  from "components/insights/charts/github_actions/workflows/actionable_insights/detailed_workflow_summary/GithubActionsDetailedWorkflowSummary";
+from "components/insights/charts/github_actions/workflows/actionable_insights/detailed_workflow_summary/GithubActionsDetailedWorkflowSummary";
 
 // TODO: Pick better names for components and state variables
 function GithubActionsDetailedWorkflowSummaryOverlay(

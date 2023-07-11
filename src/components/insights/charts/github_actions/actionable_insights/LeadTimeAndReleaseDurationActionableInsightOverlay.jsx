@@ -81,17 +81,17 @@ function LeadTimeAndReleaseDurationActionableInsightOverlay({
           ?.value;
       let goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")]?.value;
 
-        let summary = {
-          "total_commits": 80,
-          "total_repo_changes": 1000,
-          "total_merges": 25,
-          "total_deployments": 5,
-          "mean_time_to_build": 15,
-          "mean_time_to_commit": 10,
-          "mean_time_to_merge": 20,
-          "mean_time_to_deploy": 30
+      let summary = {
+        "total_commits": 80,
+        "total_repo_changes": 1000,
+        "total_merges": 25,
+        "total_deployments": 5,
+        "mean_time_to_build": 15,
+        "mean_time_to_commit": 10,
+        "mean_time_to_merge": 20,
+        "mean_time_to_deploy": 30
       };
-        let deploymentsResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
+      let deploymentsResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "githubActionsTotalDeployments",

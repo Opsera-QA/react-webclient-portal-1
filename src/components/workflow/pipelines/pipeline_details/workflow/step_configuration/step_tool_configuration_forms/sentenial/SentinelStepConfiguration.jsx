@@ -11,7 +11,7 @@ import SentinelGitRepositorySelectInput from "./inputs/SentinelGitRepositorySele
 import SentinelGitBranchSelectInput from "./inputs/SentinelGitBranchSelectInput";
 import TextAreaInput from "../../../../../../../common/inputs/text/TextAreaInput";
 import ParameterSelectListInputBase
-  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
+from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
 import { faHandshake } from "@fortawesome/pro-light-svg-icons";
 import SentinelTagsSelectInput from "./inputs/SentinalTagsSelectInput";
 
@@ -90,7 +90,7 @@ function SentinelStepConfiguration({ pipelineId, stepTool, stepId, createJob, cl
       <SentinelTagsSelectInput
         dataObject={sentinelStepConfigurationModel}
         setDataObject={setSentinelStepConfigurationModel}
-        />
+      />
     </PipelineStepEditorPanelContainer>
   );
 }

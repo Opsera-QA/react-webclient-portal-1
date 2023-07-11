@@ -6,19 +6,19 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import SourceRepositoryTypeSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/inputs/SourceRepositoryTypeSelectInput";
 import SourceRepositoryToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/inputs/SourceRepositoryToolSelectInput";
 import SourceRepositoryBitbucketWorkspaceSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/inputs/SourceRepositoryBitbucketWorkspaceSelectInput";
 import SourceRepositorySelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/inputs/SourceRepositorySelectInput";
 import SourceRepositoryPrimaryBranchSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/inputs/SourceRepositoryPrimaryBranchSelectInput";
 import RoleRestrictedToolByIdentifierInputBase
-  from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 import InformaticaConfigTypeSelectInput from "./inputs/InformaticaConfigTypeSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
-  function InformaticaStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEditorPanel, parentCallback }) {
+function InformaticaStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
   const [informaticaStepConfigurationDto, setInformaticaStepConfigurationDataDto] = useState(undefined);
@@ -50,7 +50,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
   };
 
   const handleSaveStepConfig = async () => {
-      await callbackFunction();
+    await callbackFunction();
   };
   const callbackFunction = async () => {
     let newDataObject = informaticaStepConfigurationDto;
@@ -120,66 +120,66 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 
   const getDynamicFields = () => {
     switch (informaticaStepConfigurationDto.getData("type")) {
-      case "export":
-        return (
-          <div>
-            <RoleRestrictedToolByIdentifierInputBase
-              toolIdentifier={"informatica"}
-              toolFriendlyName={"informatica"}
-              fieldName={"toolConfigId"}
-              model={informaticaStepConfigurationDto}
-              setModel={setInformaticaStepConfigurationDataDto}
-              placeholderText={"Select Source Informatica Tool"}
-            />
-            {getSourceSelection()}
-            <BooleanToggleInput
-              fieldName={"isNewBranch"}
-              dataObject={informaticaStepConfigurationDto}
+    case "export":
+      return (
+        <div>
+          <RoleRestrictedToolByIdentifierInputBase
+            toolIdentifier={"informatica"}
+            toolFriendlyName={"informatica"}
+            fieldName={"toolConfigId"}
+            model={informaticaStepConfigurationDto}
+            setModel={setInformaticaStepConfigurationDataDto}
+            placeholderText={"Select Source Informatica Tool"}
+          />
+          {getSourceSelection()}
+          <BooleanToggleInput
+            fieldName={"isNewBranch"}
+            dataObject={informaticaStepConfigurationDto}
+            setDataObject={setInformaticaStepConfigurationDataDto}
+          />
+          {getNewBranchHandler()}
+          <BooleanToggleInput
+            fieldName={"includeDependencies"}
+            dataObject={informaticaStepConfigurationDto}
+            setDataObject={setInformaticaStepConfigurationDataDto}
+          />
+        </div>
+      );
+    case "import":
+      return (
+        <div>
+          <RoleRestrictedToolByIdentifierInputBase
+            toolIdentifier={"informatica"}
+            toolFriendlyName={"informatica"}
+            fieldName={"toolConfigId"}
+            model={informaticaStepConfigurationDto}
+            setModel={setInformaticaStepConfigurationDataDto}
+            placeholderText={"Select Destination Informatica Tool"}
+          />
+          <BooleanToggleInput
+            fieldName={"deployFromGit"}
+            dataObject={informaticaStepConfigurationDto}
+            setDataObject={setInformaticaStepConfigurationDataDto}
+          />
+          {informaticaStepConfigurationDto.getData("deployFromGit") ? 
+            <>
+              {getSourceSelection()}
+              <TextInputBase fieldName={"gitFilePath"} dataObject={informaticaStepConfigurationDto} setDataObject={setInformaticaStepConfigurationDataDto}/>
+            </> :
+            <SelectInputBase
               setDataObject={setInformaticaStepConfigurationDataDto}
-            />
-            {getNewBranchHandler()}
-            <BooleanToggleInput
-              fieldName={"includeDependencies"}
+              textField={"name"}
+              valueField={"_id"}
               dataObject={informaticaStepConfigurationDto}
-              setDataObject={setInformaticaStepConfigurationDataDto}
+              filter={"contains"}
+              selectOptions={listOfSteps ? listOfSteps : []}
+              fieldName={"buildStepId"}
             />
-          </div>
-        );
-      case "import":
-        return (
-          <div>
-            <RoleRestrictedToolByIdentifierInputBase
-              toolIdentifier={"informatica"}
-              toolFriendlyName={"informatica"}
-              fieldName={"toolConfigId"}
-              model={informaticaStepConfigurationDto}
-              setModel={setInformaticaStepConfigurationDataDto}
-              placeholderText={"Select Destination Informatica Tool"}
-            />
-            <BooleanToggleInput
-              fieldName={"deployFromGit"}
-              dataObject={informaticaStepConfigurationDto}
-              setDataObject={setInformaticaStepConfigurationDataDto}
-            />
-            {informaticaStepConfigurationDto.getData("deployFromGit") ? 
-              <>
-                {getSourceSelection()}
-                <TextInputBase fieldName={"gitFilePath"} dataObject={informaticaStepConfigurationDto} setDataObject={setInformaticaStepConfigurationDataDto}/>
-              </> :
-              <SelectInputBase
-                setDataObject={setInformaticaStepConfigurationDataDto}
-                textField={"name"}
-                valueField={"_id"}
-                dataObject={informaticaStepConfigurationDto}
-                filter={"contains"}
-                selectOptions={listOfSteps ? listOfSteps : []}
-                fieldName={"buildStepId"}
-              />
-            }
+          }
             
-          </div>
-        );
-      default :
+        </div>
+      );
+    default :
       return (
         <></>
       );
@@ -202,8 +202,8 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
         setModel={setInformaticaStepConfigurationDataDto}
         fieldName="type"
       />
-     {getDynamicFields()}
-     </PipelineStepEditorPanelContainer>
+      {getDynamicFields()}
+    </PipelineStepEditorPanelContainer>
   );
 }
 

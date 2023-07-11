@@ -317,66 +317,66 @@ function ElasticBeanstalkDeployStepConfiguration({ stepTool, pipelineId, plan, s
   
   return (
     <Form>
-<Form.Group controlId="jenkinsList">
-            <Form.Label className="w-100">
+      <Form.Group controlId="jenkinsList">
+        <Form.Label className="w-100">
               AWS Credentials*
-              <OverlayTrigger
-                trigger="click"
-                rootClose
-                placement="left"
-                overlay={RegistryPopover(
-                  awsList[
-                    awsList.findIndex((x) => x.id === formData.awsToolConfigId)
-                  ]
-                )}
-              >
-                <IconBase
-                  icon={faEllipsisH}
-                  className={"fa-pull-right pointer pr-1"}
-                  onClickFunction={() => document.body.click()}
-                />
-              </OverlayTrigger>
-            </Form.Label>
-            {isAwsSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <LoadingIcon className={"text-muted mr-1"}/>
+          <OverlayTrigger
+            trigger="click"
+            rootClose
+            placement="left"
+            overlay={RegistryPopover(
+              awsList[
+                awsList.findIndex((x) => x.id === formData.awsToolConfigId)
+              ]
+            )}
+          >
+            <IconBase
+              icon={faEllipsisH}
+              className={"fa-pull-right pointer pr-1"}
+              onClickFunction={() => document.body.click()}
+            />
+          </OverlayTrigger>
+        </Form.Label>
+        {isAwsSearching ? (
+          <div className="form-text text-muted mt-2 p-2">
+            <LoadingIcon className={"text-muted mr-1"}/>
                 Loading AWS accounts from Tool Registry
-              </div>
+          </div>
+        ) : (
+          <>
+            {renderForm && awsList && awsList.length > 0 ? (
+              <>
+                <StandaloneSelectInput
+                  selectOptions={awsList}
+                  value={
+                    awsList[
+                      awsList.findIndex(
+                        (x) => x.id === formData.awsToolConfigId
+                      )
+                    ]
+                  }
+                  valueField="id"
+                  textField="name"
+                  setDataFunction={handleAWSChange}
+                />
+              </>
             ) : (
               <>
-                {renderForm && awsList && awsList.length > 0 ? (
-                  <>
-                    <StandaloneSelectInput
-                      selectOptions={awsList}
-                      value={
-                        awsList[
-                          awsList.findIndex(
-                            (x) => x.id === formData.awsToolConfigId
-                          )
-                        ]
-                      }
-                      valueField="id"
-                      textField="name"
-                      setDataFunction={handleAWSChange}
-                    />
-                  </>
-                ) : (
-                  <>
-                    <div className="form-text text-muted p-2">
-                      <IconBase
-                        icon={faExclamationCircle}
-                        className={"text-muted mr-1"}
-                      />
+                <div className="form-text text-muted p-2">
+                  <IconBase
+                    icon={faExclamationCircle}
+                    className={"text-muted mr-1"}
+                  />
                       No accounts have been registered for Code Scan. Please go
                       to
-                      <Link to="/inventory/tools">Tool Registry</Link> and add a
+                  <Link to="/inventory/tools">Tool Registry</Link> and add a
                       AWS Account entry in order to proceed.
-                    </div>
-                  </>
-                )}
+                </div>
               </>
             )}
-          </Form.Group>
+          </>
+        )}
+      </Form.Group>
 
       <Form.Group controlId="bucketName">
         <Form.Label>S3 Bucket Name*</Form.Label>

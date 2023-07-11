@@ -11,7 +11,7 @@ import ErrorDialog from "../../common/status_notifications/error";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
 import { defaultConfig, getColor, assignStandardColors,
-         shortenLegend } from "../../insights/charts/charts-views";
+  shortenLegend } from "../../insights/charts/charts-views";
 import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 import "./charts.css";
@@ -115,7 +115,7 @@ function SonarSecurityLineChart({ persona, sonarMeasure, date }) {
             :
             <ResponsiveLine
               {...defaultConfig("Average Quality Gate Value", "Date", 
-                                  false, true, "wholeNumbers", "monthDate")}
+                false, true, "wholeNumbers", "monthDate")}
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
               xScale={{
@@ -141,8 +141,8 @@ function SonarSecurityLineChart({ persona, sonarMeasure, date }) {
               tooltip={({ point, color }) => <ChartTooltip 
                 titles = {["Quality Gate", "Qualifier", "Date", originalIdHolder[point.serieId]]}
                 values = {[point.data.info._source.qualityGate.status,
-                           point.data.info._source.sonarqube_measures.component.qualifier,
-                           point.data.xFormatted, point.data.yFormatted]}
+                  point.data.info._source.sonarqube_measures.component.qualifier,
+                  point.data.xFormatted, point.data.yFormatted]}
                 color = {color} />
               }
             />

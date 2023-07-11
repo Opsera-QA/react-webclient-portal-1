@@ -6,11 +6,11 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import thresholdMetadata from "components/common/metadata/pipelines/thresholdMetadata";
 import {parallelProcessorStepMetadata}
-  from "components/workflow/plan/step/parallel_processor/parallelProcessorStep.metadata";
+from "components/workflow/plan/step/parallel_processor/parallelProcessorStep.metadata";
 import PipelineMultiSelectInput
-  from "components/common/list_of_values_input/workflow/pipelines/PipelineMultiSelectInput";
+from "components/common/list_of_values_input/workflow/pipelines/PipelineMultiSelectInput";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 
 function ParallelProcessPipelineStepConfiguration({ stepTool, pipelineId, parentCallback, closeEditorPanel }) {
   const toastContext = useContext(DialogToastContext);

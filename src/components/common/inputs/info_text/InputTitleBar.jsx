@@ -70,13 +70,13 @@ function InputTitleBar(
         //       />
         //     </Button>
         //   </InputGroup.Prepend>
-          <input
-            placeholder={"Search"}
-            disabled={disableSearch}
-            value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
-            className={"input-search-filter"}
-          />
+        <input
+          placeholder={"Search"}
+          disabled={disableSearch}
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+          className={"input-search-filter"}
+        />
         // </InputGroup>
       );
     }

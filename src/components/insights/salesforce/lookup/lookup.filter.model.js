@@ -104,9 +104,9 @@ export class LookupFilterModel extends FilterModelBase {
     if(type.length > 0) {
       if (hasDateValue(type) === true) {
         activeFilters.push({
-              filterId: "Type",
-              text: `Type : ${type}`
-            }
+          filterId: "Type",
+          text: `Type : ${type}`
+        }
         );
       }
     }

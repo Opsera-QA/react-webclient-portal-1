@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import ToolConfigurationEditorPanelContainer
-  from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Row from "react-bootstrap/Row";
 import modelHelpers from "components/common/model/modelHelpers";
 import spinnakerConnectionMetadata from "./spinnaker-connection-metadata";
@@ -10,7 +10,7 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import toolIdentifierConnectionCheckConstants
-  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function SpinnakerToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);

@@ -108,10 +108,10 @@ function GitlabTotalCountOfMergeReqAndPushPerDay({ persona, date }) {
               left: 40
             }}
             tooltip={({ day, value, color }) => <ChartTooltip 
-                                          titles = {[day]}
-                                          values = {[`${value || 0} contribution(s)`]}
-                                          style = {false}
-                                          color = {color} />}
+              titles = {[day]}
+              values = {[`${value || 0} contribution(s)`]}
+              style = {false}
+              color = {color} />}
           />
         )}
       </div>

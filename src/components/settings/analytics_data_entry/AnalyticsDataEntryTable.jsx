@@ -12,14 +12,14 @@ import FilterContainer from "components/common/table/FilterContainer";
 import { faUserChart } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import analyticsDataEntryMetadata
-  from "@opsera/definitions/constants/settings/analytics_data_entries/analyticsDataEntry.metadata";
+from "@opsera/definitions/constants/settings/analytics_data_entries/analyticsDataEntry.metadata";
 import NewAnalyticsDataEntryOverlay from "components/settings/analytics_data_entry/NewAnalyticsDataEntryOverlay";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import KpiIdentifierFilter from "components/common/filters/admin/kpis/kpi_identifier/KpiIdentifierFilter";
 import InlineKpiIdentifierFilter from "components/common/filters/admin/kpis/kpi_identifier/InlineKpiIdentifierFilter";
 import {analyticsDataEntryHelper} from "components/settings/analytics_data_entry/analyticsDataEntry.helper";
 import AnalyticsDataEntryRoleHelper
-  from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
+from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function AnalyticsDataEntryTable({

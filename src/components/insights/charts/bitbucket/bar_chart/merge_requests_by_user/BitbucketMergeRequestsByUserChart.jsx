@@ -8,7 +8,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColorByData, assignStandardColors, 
-         adjustBarWidth } from '../../../charts-views';
+  adjustBarWidth } from '../../../charts-views';
 import {METRIC_THEME_CHART_PALETTE_COLORS} from "../../../../../common/helpers/metrics/metricTheme.helpers";
 
 function BitbucketMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -74,7 +74,7 @@ function BitbucketMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, d
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Author", "Merge Requests", 
-                      true, false, "cutoffString", "wholeNumbers")}
+            true, false, "cutoffString", "wholeNumbers")}
           {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
           {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}

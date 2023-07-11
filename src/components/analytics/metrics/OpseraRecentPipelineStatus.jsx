@@ -63,7 +63,7 @@ function OpseraRecentPipelineStatus({ date }) {
           return row?.value ? (
             row?.value === "failure" || row?.value === "failed" ? (
               <FailIcon />
-              ) : (
+            ) : (
               <SuccessIcon />
             )
           ) : (
@@ -129,7 +129,7 @@ function OpseraRecentPipelineStatus({ date }) {
             </div>
             <div>
               <CustomTable columns={columns} data={data.data} noDataMessage={noDataMessage}
-                          noFooter={true} />
+                noFooter={true} />
             </div>
           </>
         )}

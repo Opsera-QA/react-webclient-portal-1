@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import EndpointResponseField
-  from "components/common/inputs/endpoints/endpoint/response/EndpointResponseField";
+from "components/common/inputs/endpoints/endpoint/response/EndpointResponseField";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary";
+from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary";
 import InfoContainer from "components/common/containers/InfoContainer";
 import {
   externalRestApiIntegrationStepHelper

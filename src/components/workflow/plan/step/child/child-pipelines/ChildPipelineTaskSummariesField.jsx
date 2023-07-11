@@ -4,10 +4,10 @@ import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 import Model from "core/data_model/model";
 import pipelineSummaryMetadata
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
 import ChildPipelineTaskSummaryCard
-  from "components/workflow/plan/step/child/child-pipelines/ChildPipelineTaskSummaryCard";
+from "components/workflow/plan/step/child/child-pipelines/ChildPipelineTaskSummaryCard";
 import FieldLabel from "components/common/fields/FieldLabel";
 import FieldContainer from "components/common/fields/FieldContainer";
 

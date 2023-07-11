@@ -10,9 +10,9 @@ import {
   MERGE_SYNC_WIZARD_SCREENS
 } from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
 import MergeSyncTaskWizardUpdateConfigurationButton
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/configuration_screen/MergeSyncTaskWizardUpdateConfigurationButton";
+from "components/tasks/details/tasks/merge_sync_task/wizard/screens/configuration_screen/MergeSyncTaskWizardUpdateConfigurationButton";
 import SfdcComponentListInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcComponentListInput";
+from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcComponentListInput";
 
 const SalesforceToGitMergeSyncTaskWizardConfigurationScreen = ({
   wizardModel,

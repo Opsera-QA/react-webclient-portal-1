@@ -4,9 +4,9 @@ import {ReactMarkdownWrapper} from "@opsera/react-vanity-set";
 
 export default function PipelinesFrequentlyAskedQuestions() {
   return (
-      <ReactMarkdownWrapper
-        markdownFile={pipelinesFaq}
-        className={"m-4"}
-      />
+    <ReactMarkdownWrapper
+      markdownFile={pipelinesFaq}
+      className={"m-4"}
+    />
   );
 }

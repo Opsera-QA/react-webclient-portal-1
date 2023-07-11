@@ -13,9 +13,9 @@ import StandardTwoGoalDataBlock from "components/common/metrics/goals/double/Sta
 import ThreeLineScoreDataBlock from "../../../../../common/metrics/score/ThreeLineScoreDataBlock";
 
 function SonarRatingsReliabilityDataBlockContainer({ reliabilityRating, bugCount, kpiConfiguration, dashboardData, dataPoint, className,
-                                                     lastScore,
-                                                     icon,
-                                                     iconOverlayBody,  }) {
+  lastScore,
+  icon,
+  iconOverlayBody,  }) {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect = () => {

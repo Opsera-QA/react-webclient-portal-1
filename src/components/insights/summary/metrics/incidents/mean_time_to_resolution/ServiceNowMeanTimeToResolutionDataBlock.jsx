@@ -6,9 +6,9 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
 import InsightsPipelineDetailsDurationTable
-  from "components/insights/summary/metrics/pipelines_average_duration/InsightsPipelineDetailsDurationTable";
+from "components/insights/summary/metrics/pipelines_average_duration/InsightsPipelineDetailsDurationTable";
 import ServiceNowMeanTimeToResolutionBarChart
-  from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionBarChart";
+from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionBarChart";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function ServiceNowMeanTimeToResolutionDataBlock({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {

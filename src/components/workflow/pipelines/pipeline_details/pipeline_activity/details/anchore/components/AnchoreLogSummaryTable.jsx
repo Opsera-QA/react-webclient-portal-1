@@ -82,7 +82,7 @@ function AnchoreLogSummaryTable({ anchoreObj }) {
 }
 
 AnchoreLogSummaryTable.propTypes = {
-    anchoreObj: PropTypes.array,
+  anchoreObj: PropTypes.array,
 };
 
 export default AnchoreLogSummaryTable;

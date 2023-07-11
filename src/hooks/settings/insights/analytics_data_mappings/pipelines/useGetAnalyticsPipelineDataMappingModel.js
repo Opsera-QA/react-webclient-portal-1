@@ -3,11 +3,11 @@ import {
   analyticsPipelineDataMappingHelper
 } from "components/settings/data_mapping/pipelines/analyticsPipelineDataMapping.helper";
 import pipelineDataMappingMetadata
-  from "@opsera/definitions/constants/settings/data_mapping/pipeline/pipelineDataMapping.metadata";
+from "@opsera/definitions/constants/settings/data_mapping/pipeline/pipelineDataMapping.metadata";
 import useAnalyticsPipelineDataMappingActions
-  from "hooks/settings/insights/analytics_data_mappings/pipelines/useAnalyticsPipelineDataMappingActions";
+from "hooks/settings/insights/analytics_data_mappings/pipelines/useAnalyticsPipelineDataMappingActions";
 import AnalyticsPipelineDataMappingRoleHelper
-  from "@opsera/know-your-role/roles/settings/analytics_data_mappings/pipelines/analyticsPipelineDataMappingRole.helper";
+from "@opsera/know-your-role/roles/settings/analytics_data_mappings/pipelines/analyticsPipelineDataMappingRole.helper";
 
 export default function useGetAnalyticsPipelineDataMappingModel() {
   const getModelBase = useGetModelBase();

@@ -72,35 +72,35 @@ function ServiceNowConfigurationItemsSelectInput({
 
   const loadConfigurationItems = async (searchTerm) => {
     // if (searchTerm) {
-      try {
-        setIsLoading(true);
-        // setToggleSelected(true);
-        const response = await pipelineStepNotificationActions.getServiceNowConfigurationItemsByNameV2(
-          serviceNowToolId,
-          searchTerm,
-          getAccessToken,
-          cancelTokenSource
-        );
+    try {
+      setIsLoading(true);
+      // setToggleSelected(true);
+      const response = await pipelineStepNotificationActions.getServiceNowConfigurationItemsByNameV2(
+        serviceNowToolId,
+        searchTerm,
+        getAccessToken,
+        cancelTokenSource
+      );
 
-        const results = response.data.message.result;
+      const results = response.data.message.result;
 
-        if (
-          Array.isArray(results)
-        ) {
-          setConfigurationItems(response.data.message.result);
-        }
-      } catch (error) {
-        if (isMounted?.current === true) {
-          toastContext.showErrorDialog(
-            "Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry."
-          );
-        }
-        console.error(error);
-      } finally {
-        if (isMounted?.current === true) {
-          setIsLoading(false);
-        }
+      if (
+        Array.isArray(results)
+      ) {
+        setConfigurationItems(response.data.message.result);
       }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showErrorDialog(
+          "Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry."
+        );
+      }
+      console.error(error);
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
     // }
   };
 

@@ -1,9 +1,9 @@
 import React from "react";
 import PropType from "prop-types";
 import PolicyManagementPageLinkCardBase
-  from "components/settings/organization_settings/policies/cards/PolicyManagementPageLinkCardBase";
+from "components/settings/organization_settings/policies/cards/PolicyManagementPageLinkCardBase";
 import PolicyManagementInactivePipelineStepTagRequirementPolicyPageLinkCard
-  from "components/settings/organization_settings/policies/cards/pipelines/steps/tags/PolicyManagementInactivePipelineStepTagRequirementPolicyPageLinkCard";
+from "components/settings/organization_settings/policies/cards/pipelines/steps/tags/PolicyManagementInactivePipelineStepTagRequirementPolicyPageLinkCard";
 
 export default function PolicyManagementPipelineStepTagRequirementPolicyPageLinkCard({ pipelineStepTagRequirementPolicy, }) {
   if (pipelineStepTagRequirementPolicy == null) {

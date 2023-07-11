@@ -4,7 +4,7 @@ import {INSIGHTS_HELP_DOCUMENT_TREE} from "components/common/help/documentation/
 import TreeBase from "components/common/tree/TreeBase";
 
 const HELP_DOCUMENTATION_TREE = [
-...INSIGHTS_HELP_DOCUMENT_TREE,
+  ...INSIGHTS_HELP_DOCUMENT_TREE,
 ];
 
 function HelpDocumentationTree({ setCurrentView }) {

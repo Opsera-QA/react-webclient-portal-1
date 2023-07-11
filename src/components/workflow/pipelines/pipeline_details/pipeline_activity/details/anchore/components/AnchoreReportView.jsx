@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import AnchoreLogSummaryTable
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/anchore/components/AnchoreLogSummaryTable";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/anchore/components/AnchoreLogSummaryTable";
 
 function AnchoreReportView({ anchoreObj }) {
 
@@ -17,7 +17,7 @@ function AnchoreReportView({ anchoreObj }) {
 
   return (
     <AnchoreLogSummaryTable
-        anchoreObj={anchoreObj}
+      anchoreObj={anchoreObj}
     />
   );
 }

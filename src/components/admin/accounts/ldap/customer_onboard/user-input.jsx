@@ -65,7 +65,7 @@ function UserInput({field, setData, formData}) {
             ))}
             <div className="text-right">
               <Button variant="primary" size="sm" onClick={() => setShowCreateUserModal(true)}
-                      className="ml-3">
+                className="ml-3">
                 <IconBase icon={faPlus}/>
                 <span className="ml-2">Add LDAP User</span></Button>
             </div>

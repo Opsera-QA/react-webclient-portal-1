@@ -46,7 +46,7 @@ function DashboardOrganizationsInlineInput({ model, loadData, disabled, visible 
       cancelTokenSource,
       newModel?.getMongoDbId(),
       newModel?.getData("filters"),
-      );
+    );
   };
 
   if (model == null) {

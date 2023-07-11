@@ -12,17 +12,17 @@ import CoverityStepJenkinsAccountSelectInput from "components/workflow/pipelines
 import CoverityJenkinsAccountInput from "./inputs/CoverityJenkinsAccountInput";
 import WorkspaceDeleteToggleInput from "./inputs/WorkspaceDeleteToggleInput";
 import CoverityStepJenkinsToolSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/coverity/inputs/CoverityStepJenkinsToolSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/coverity/inputs/CoverityStepJenkinsToolSelectInput";
 import CoverityStepCoverityToolSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/coverity/inputs/CoverityStepCoverityToolSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/coverity/inputs/CoverityStepCoverityToolSelectInput";
 import CoverityStepJenkinsJobSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/coverity/inputs/CoverityStepJenkinsJobSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/coverity/inputs/CoverityStepJenkinsJobSelectInput";
 import DotNetCliTypeSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliTypeSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliTypeSelectInput";
 import DotNetCliSdkVersionSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliSdkVersionSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliSdkVersionSelectInput";
 import ParameterSelectListInputBase
-  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
+from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import CoverityStepImpactThresholdInput from "./inputs/CoverityStepImpactThresholdInput";

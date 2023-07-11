@@ -10,17 +10,17 @@ function KafkaConnectGitBranchInput({dataObject, setDataObject, disabled}) {
     setDataObject({...newDataObject});
   };
   return (
-     <GitBranchInput
-       fieldName={"defaultBranch"}
-       service={dataObject.getData("service")}
-       gitToolId={dataObject.getData("gitToolId")}
-       workspace={dataObject.getData("workspace")}
-       repoId={dataObject.getData("repoId")}
-       dataObject={dataObject}
-       setDataFunction={setBranch}
-       setDataObject={setDataObject}
-       disabled={disabled}
-     />
+    <GitBranchInput
+      fieldName={"defaultBranch"}
+      service={dataObject.getData("service")}
+      gitToolId={dataObject.getData("gitToolId")}
+      workspace={dataObject.getData("workspace")}
+      repoId={dataObject.getData("repoId")}
+      dataObject={dataObject}
+      setDataFunction={setBranch}
+      setDataObject={setDataObject}
+      disabled={disabled}
+    />
   );
 }
 

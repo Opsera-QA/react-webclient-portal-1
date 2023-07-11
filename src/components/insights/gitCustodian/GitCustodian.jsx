@@ -8,7 +8,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import GitCustodianDetails from "./GitCustodianDetails";
 import GitCustodianLookUpHelpDocumentation
-  from "../../common/help/documentation/insights/GitCustodianLookUpHelpDocumentation";
+from "../../common/help/documentation/insights/GitCustodianLookUpHelpDocumentation";
 import EditGitCustodianFiltersIcon from "./filters/EditGitCustodianFiltersIcon";
 import {GitCustodianFilterMetadata} from "components/insights/gitCustodian/table/gitCustodianFilter.metadata";
 import useComponentStateReference from "../../../hooks/useComponentStateReference";

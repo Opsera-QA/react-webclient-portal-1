@@ -7,7 +7,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import FreeTrialLaunchSalesforceWorkflowWizardOverlay
-  from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
+from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
 import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
 import { faHandPointer } from "@fortawesome/pro-light-svg-icons";
 
@@ -67,7 +67,7 @@ export default function SoftwareDevelopmentLandingSalesforceWidget({ className }
         placement={"bottom"}
       >
         <div className={"marketingModulesText pointer mx-1"}
-             onClick={handleClick(url)}>
+          onClick={handleClick(url)}>
           <IconBase
             icon={icon}
             iconSize={"2xl"}
@@ -87,9 +87,9 @@ export default function SoftwareDevelopmentLandingSalesforceWidget({ className }
         titleBar={
           <div className={"mt-4 mb-3"}>
             <img alt="Get started with Salesforce Deployments with Opsera!"
-                 src="/img/salesforce/salesforce_logo_white_475x332.png"
-                 width="220"
-                 height="154"
+              src="/img/salesforce/salesforce_logo_white_475x332.png"
+              width="220"
+              height="154"
             />
           </div>
         }
@@ -115,9 +115,9 @@ export default function SoftwareDevelopmentLandingSalesforceWidget({ className }
             <div className={"m-auto"}>
               <span className={"focusText"}>Opsera On</span>
               <img alt="Opsera is available on Salesforce AppExchange!"
-                   src="/img/salesforce/salesforce_appexchange_240x80.png"
-                   width="240"
-                   height="80"
+                src="/img/salesforce/salesforce_appexchange_240x80.png"
+                width="240"
+                height="80"
               />
             </div>
           </div>

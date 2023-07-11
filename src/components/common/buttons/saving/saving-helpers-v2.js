@@ -67,8 +67,8 @@ export async function persistNewRecordAndAddAnother(
     toastContext,
     showSuccessToasts,
     true,
-      isIncomplete
-    );
+    isIncomplete
+  );
 
   if (response != null && response !== false && setModel) {
     let newModel = model.getNewInstance();
@@ -83,7 +83,7 @@ export async function persistNewRecord(
   showErrorToastsInline = true,
   isIncomplete,
   setModel
-  ) {
+) {
   try {
     let isModelValid = model.isModelValid();
     if (!isModelValid && !model.isLenient()) {

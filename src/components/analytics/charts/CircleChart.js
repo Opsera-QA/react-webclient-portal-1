@@ -76,20 +76,20 @@ function CircleChart({ persona, date }) {
           data.status !== 200 ||
           data.data.length == 0 ||
           typeof data.data[0].failureRate !== "number" ? (
-            <div
-              className="max-content-width p-5 mt-5"
-              style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-            >
-              <InfoDialog message="No Data is available for this chart at this time." />
-            </div>
-          ) : (
-            <div
-              className="circle"
-              style={{ backgroundColor: data.data && data.data[0].failureRate > 50 ? failColor : mainColor }}
-            >
-              {data.data && data.data[0].failureRate.toFixed(2) + "%"}
-            </div>
-          )}
+              <div
+                className="max-content-width p-5 mt-5"
+                style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+              >
+                <InfoDialog message="No Data is available for this chart at this time." />
+              </div>
+            ) : (
+              <div
+                className="circle"
+                style={{ backgroundColor: data.data && data.data[0].failureRate > 50 ? failColor : mainColor }}
+              >
+                {data.data && data.data[0].failureRate.toFixed(2) + "%"}
+              </div>
+            )}
         </div>
       </>
     );

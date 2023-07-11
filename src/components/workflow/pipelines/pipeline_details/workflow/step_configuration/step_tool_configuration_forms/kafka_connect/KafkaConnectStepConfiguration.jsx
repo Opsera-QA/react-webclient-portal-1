@@ -81,60 +81,60 @@ function KafkaConnectStepConfiguration({ pipelineId, stepTool, stepId, closeEdit
         kafkaConnectStepConfigurationDto.getData("kafkaConnectAction") === "restart" ||
         kafkaConnectStepConfigurationDto.getData("kafkaConnectAction") === "resume" ||
         kafkaConnectStepConfigurationDto.getData("kafkaConnectAction") === "pause") && (
-          <KafkaConnectConfigurationSelectInput
-            dataObject={kafkaConnectStepConfigurationDto}
-            setDataObject={setKafkaConnectStepConfigurationDataDto}
-            tool_prop={kafkaConnectStepConfigurationDto?.getData("kafkaConnectAction")}
-          />
-        )}
+        <KafkaConnectConfigurationSelectInput
+          dataObject={kafkaConnectStepConfigurationDto}
+          setDataObject={setKafkaConnectStepConfigurationDataDto}
+          tool_prop={kafkaConnectStepConfigurationDto?.getData("kafkaConnectAction")}
+        />
+      )}
       {kafkaConnectStepConfigurationDto &&
         kafkaConnectStepConfigurationDto.getData("kafkaConnectAction") &&
         (kafkaConnectStepConfigurationDto.getData("kafkaConnectAction") === "create" ||
         kafkaConnectStepConfigurationDto.getData("kafkaConnectAction") === "update" ||
         kafkaConnectStepConfigurationDto.getData("kafkaConnectAction") === "validate") && (
-          <>
-            <KafkaConnectSCMToolTypeSelectInput
-              dataObject={kafkaConnectStepConfigurationDto}
-              setDataObject={setKafkaConnectStepConfigurationDataDto}
-            />
-            <KafkaConnectStepSourceControlManagementToolSelectInput
-              model={kafkaConnectStepConfigurationDto}
-              setModel={setKafkaConnectStepConfigurationDataDto}
-              disabled={kafkaConnectStepConfigurationDto.getData("service").length === 0}
-            />
-            <KafkaConnectBitbucketWorkspaceInput
-              dataObject={kafkaConnectStepConfigurationDto}
-              setDataObject={setKafkaConnectStepConfigurationDataDto}
-            />
-            <KafkaConnectGitRepositoryInput
-              dataObject={kafkaConnectStepConfigurationDto}
-              setDataObject={setKafkaConnectStepConfigurationDataDto}
-            />
-            <KafkaConnectGitBranchInput
-              dataObject={kafkaConnectStepConfigurationDto}
-              setDataObject={setKafkaConnectStepConfigurationDataDto}
-            />
-            <TextInputBase
-              setDataObject={setKafkaConnectStepConfigurationDataDto}
-              dataObject={kafkaConnectStepConfigurationDto}
-              fieldName={"connectorFilePath"}
-            />
-            <KafkaConnectSCMRepoFiles
-              setDataObject={setKafkaConnectStepConfigurationDataDto}
-              dataObject={kafkaConnectStepConfigurationDto}
-              disabled={
-                kafkaConnectStepConfigurationDto && kafkaConnectStepConfigurationDto.getData("connectorFilePath")
-                  ? kafkaConnectStepConfigurationDto.getData("connectorFilePath").length === 0
-                  : true
-              }
-              tool_prop={
-                kafkaConnectStepConfigurationDto && kafkaConnectStepConfigurationDto.getData("kafkaToolId")
-                  ? kafkaConnectStepConfigurationDto.getData("kafkaToolId")
-                  : ""
-              }
-            />
-          </>
-        )}
+        <>
+          <KafkaConnectSCMToolTypeSelectInput
+            dataObject={kafkaConnectStepConfigurationDto}
+            setDataObject={setKafkaConnectStepConfigurationDataDto}
+          />
+          <KafkaConnectStepSourceControlManagementToolSelectInput
+            model={kafkaConnectStepConfigurationDto}
+            setModel={setKafkaConnectStepConfigurationDataDto}
+            disabled={kafkaConnectStepConfigurationDto.getData("service").length === 0}
+          />
+          <KafkaConnectBitbucketWorkspaceInput
+            dataObject={kafkaConnectStepConfigurationDto}
+            setDataObject={setKafkaConnectStepConfigurationDataDto}
+          />
+          <KafkaConnectGitRepositoryInput
+            dataObject={kafkaConnectStepConfigurationDto}
+            setDataObject={setKafkaConnectStepConfigurationDataDto}
+          />
+          <KafkaConnectGitBranchInput
+            dataObject={kafkaConnectStepConfigurationDto}
+            setDataObject={setKafkaConnectStepConfigurationDataDto}
+          />
+          <TextInputBase
+            setDataObject={setKafkaConnectStepConfigurationDataDto}
+            dataObject={kafkaConnectStepConfigurationDto}
+            fieldName={"connectorFilePath"}
+          />
+          <KafkaConnectSCMRepoFiles
+            setDataObject={setKafkaConnectStepConfigurationDataDto}
+            dataObject={kafkaConnectStepConfigurationDto}
+            disabled={
+              kafkaConnectStepConfigurationDto && kafkaConnectStepConfigurationDto.getData("connectorFilePath")
+                ? kafkaConnectStepConfigurationDto.getData("connectorFilePath").length === 0
+                : true
+            }
+            tool_prop={
+              kafkaConnectStepConfigurationDto && kafkaConnectStepConfigurationDto.getData("kafkaToolId")
+                ? kafkaConnectStepConfigurationDto.getData("kafkaToolId")
+                : ""
+            }
+          />
+        </>
+      )}
     </PipelineStepEditorPanelContainer>
   );
 }

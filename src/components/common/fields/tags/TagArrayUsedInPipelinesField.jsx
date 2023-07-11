@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import {AuthContext} from "contexts/AuthContext";
 import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
 import pipelineSummaryMetadata
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
@@ -91,7 +91,7 @@ function TagArrayUsedInPipelinesField({ tags, showTable }) {
     if (showTable) {
       return (
         <TagsUsedInPipelineTable data={pipelines} loadData={loadData} isLoading={isLoading} isMounted={isMounted}/>
-        );
+      );
     }
 
     return (getPipelineCards());

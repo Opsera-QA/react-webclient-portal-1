@@ -74,25 +74,25 @@ function SonarMaintainabilityRatingLineChart({ kpiConfiguration, setKpiConfigura
 
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
-          <ResponsiveLine
-            data={metrics}
-            {...defaultConfig("Average Quality Gate Value", "Date", 
-                      false, true, "wholeNumbers", "yearMonthDate")}
-            {...config(getColor)}
-            onClick={() => setShowModal(true)}
-            tooltip={({ point, color }) => <ChartTooltip 
-                titles = {["Timestamp", "Maintainability Rating", "Key"]}
-                values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(point.data.x)),
-                           point.data.y === 1 && "A" || 
+        <ResponsiveLine
+          data={metrics}
+          {...defaultConfig("Average Quality Gate Value", "Date", 
+            false, true, "wholeNumbers", "yearMonthDate")}
+          {...config(getColor)}
+          onClick={() => setShowModal(true)}
+          tooltip={({ point, color }) => <ChartTooltip 
+            titles = {["Timestamp", "Maintainability Rating", "Key"]}
+            values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(point.data.x)),
+              point.data.y === 1 && "A" || 
                            point.data.y === 2 && "B" ||
                            point.data.y === 3 && "C" ||
                            point.data.y === 4 && "D" ||
                            point.data.y === 5 && "E",
-                           point.data.key]}
-                color = {color} />}
-          />
+              point.data.key]}
+            color = {color} />}
+        />
       </div>
-  );
+    );
   };
   return (
     <div>

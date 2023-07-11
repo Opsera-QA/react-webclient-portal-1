@@ -13,7 +13,7 @@ function TempSelectInputBase(
     setDataFunction, busy, disabled, clearDataFunction,
     showClearValueButton, errorMessage, getCurrentValue,
     showLabel
-}) {
+  }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const containerRef = useRef(null);
 

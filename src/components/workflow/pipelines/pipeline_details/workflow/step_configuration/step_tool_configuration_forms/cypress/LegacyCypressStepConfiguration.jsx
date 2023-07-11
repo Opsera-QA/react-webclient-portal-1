@@ -200,10 +200,10 @@ function LegacyCypressStepConfiguration({
         setIsWorkspacesSearching(false);
         return;
       }
-        //console.log(results);
-        setWorkspacesList(results);
-        setIsWorkspacesSearching(false);
-      }
+      //console.log(results);
+      setWorkspacesList(results);
+      setIsWorkspacesSearching(false);
+    }
 
     if (
       formData.service === "bitbucket" &&
@@ -234,9 +234,9 @@ function LegacyCypressStepConfiguration({
         setIsRepoSearching(false);
         return;
       }
-        //console.log(results);
-        setRepoList(results);
-        setIsRepoSearching(false);
+      //console.log(results);
+      setRepoList(results);
+      setIsRepoSearching(false);
     }
 
     if (
@@ -270,8 +270,8 @@ function LegacyCypressStepConfiguration({
         setIsBranchSearching(false);
         return;
       }
-        setBranchList(results);
-        setIsBranchSearching(false);
+      setBranchList(results);
+      setIsBranchSearching(false);
     }
 
     if (
@@ -296,8 +296,8 @@ function LegacyCypressStepConfiguration({
       setAccountsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-          ] ? jenkinsList[
-          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+        ] ? jenkinsList[
+            jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
           ].accounts : [],
       );
     }
@@ -309,8 +309,8 @@ function LegacyCypressStepConfiguration({
       setJobsList(
         jenkinsList[
           jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-          ] ? jenkinsList[
-          jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
+        ] ? jenkinsList[
+            jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
           ].jobs : [],
       );
     }
@@ -319,7 +319,7 @@ function LegacyCypressStepConfiguration({
   
   useEffect(() => {
     if (jobsList && jobsList.length > 0 && formData.toolJobId && formData.toolJobId.length > 0 && !jobsList[jobsList.findIndex((x) => x._id === formData.toolJobId)]) {
-     let toast = getErrorDialog(
+      let toast = getErrorDialog(
         "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Registry.",
         setShowToast,
         "detailPanelTop"
@@ -425,29 +425,29 @@ function LegacyCypressStepConfiguration({
         let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
         setToast(toast);
         setShowToast(true);
-      return false;
+        return false;
       } else {
         return true;
       }
     }
     else  {
-    if (
-      toolConfigId.length === 0 ||
+      if (
+        toolConfigId.length === 0 ||
       jenkinsUrl.length === 0 ||
       jUserId.length === 0 ||
       jAuthToken.length === 0 ||
       (buildType === "docker"
         ? dockerName.length === 0 || dockerTagName.length === 0
         : false)
-    ) {
-      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
-      setToast(toast);
-      setShowToast(true);
-      return false;
-    } else {
-      return true;
+      ) {
+        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
+        setToast(toast);
+        setShowToast(true);
+        return false;
+      } else {
+        return true;
+      }
     }
-  }
   };
 
   //todo: can this use the initial value const above to reset everything?  Right now this means we have ot maintain the values in two places.
@@ -653,7 +653,7 @@ function LegacyCypressStepConfiguration({
               overlay={RegistryPopover(
                 jenkinsList[
                   jenkinsList.findIndex((x) => x.id === formData.toolConfigId)
-                  ],
+                ],
               )}
             >
               <IconBase
@@ -679,7 +679,7 @@ function LegacyCypressStepConfiguration({
                         jenkinsList.findIndex(
                           (x) => x.id === formData.toolConfigId,
                         )
-                        ]
+                      ]
                     }
                     valueField={"id"}
                     textField={"name"}
@@ -745,64 +745,64 @@ function LegacyCypressStepConfiguration({
             />
           </Form.Group>
         ) :
-        <>
-
-        {jobType === "opsera-job" && (
           <>
-            {formData.jenkinsUrl && jenkinsList.length > 0 && (
+
+            {jobType === "opsera-job" && (
               <>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label className="w-100">
+                {formData.jenkinsUrl && jenkinsList.length > 0 && (
+                  <>
+                    <Form.Group controlId="formBasicEmail">
+                      <Form.Label className="w-100">
                   Job*
-                  <OverlayTrigger
-                    trigger="click"
-                    rootClose
-                    placement="left"
-                    overlay={RegistryPopover(
-                      jobsList[
-                        jobsList.findIndex((x) => x._id === formData.toolJobId)
-                        ],
-                    )}
-                  >
-                    <IconBase
-                      icon={faEllipsisH}
-                      className={"fa-pull-right pointer pr-1"}
-                      onClickFunction={() => document.body.click()}
-                    />
-                  </OverlayTrigger>
-                </Form.Label>
-                {jobsList.length < 1 && (
-                  <div className="form-text text-muted p-2">
-                    <IconBase
-                      icon={faExclamationCircle}
-                      className={"text-muted mr-1"}
-                    />
+                        <OverlayTrigger
+                          trigger="click"
+                          rootClose
+                          placement="left"
+                          overlay={RegistryPopover(
+                            jobsList[
+                              jobsList.findIndex((x) => x._id === formData.toolJobId)
+                            ],
+                          )}
+                        >
+                          <IconBase
+                            icon={faEllipsisH}
+                            className={"fa-pull-right pointer pr-1"}
+                            onClickFunction={() => document.body.click()}
+                          />
+                        </OverlayTrigger>
+                      </Form.Label>
+                      {jobsList.length < 1 && (
+                        <div className="form-text text-muted p-2">
+                          <IconBase
+                            icon={faExclamationCircle}
+                            className={"text-muted mr-1"}
+                          />
                     No jobs have been created for{" "}
-                    <span>{formData.jenkinsUrl}</span>. Please go to
-                    <Link to={"/inventory/tools/details/" + formData.toolConfigId}>
-                      {" "}
+                          <span>{formData.jenkinsUrl}</span>. Please go to
+                          <Link to={"/inventory/tools/details/" + formData.toolConfigId}>
+                            {" "}
                       Tool Registry
-                    </Link>{" "}
+                          </Link>{" "}
                     and add credentials and register a job for this Jenkins in
                     order to proceed.{" "}
-                  </div>
-                )}
-                {jobsList !== undefined && jobsList.length > 0 ? (
-                  <StandaloneSelectInput
-                    selectOptions={jobsList}
-                    valueField={"id"}
-                    textField={"name"}
-                    value={
-                      jobsList && jobsList.length > 0 &&
+                        </div>
+                      )}
+                      {jobsList !== undefined && jobsList.length > 0 ? (
+                        <StandaloneSelectInput
+                          selectOptions={jobsList}
+                          valueField={"id"}
+                          textField={"name"}
+                          value={
+                            jobsList && jobsList.length > 0 &&
                       jobsList[
                         jobsList.findIndex((x) => x._id === formData.toolJobId)
-                        ]
-                    }
-                    setDataFunction={handleJobChange}
-                  />
-                ) : null}
-              </Form.Group>
-              {/* <Form.Group controlId="formJenkinsAgent">
+                      ]
+                          }
+                          setDataFunction={handleJobChange}
+                        />
+                      ) : null}
+                    </Form.Group>
+                    {/* <Form.Group controlId="formJenkinsAgent">
                 <Form.Label className="w-100">
                   Jenkins Agent
                 </Form.Label>
@@ -819,214 +819,214 @@ function LegacyCypressStepConfiguration({
                   setDataFunction={(item)=> setFormData({...formData, agentLabels: item.agentLabel }) }
                 />
               </Form.Group> */}
+                  </>
+                )}
               </>
             )}
-          </>
-        )}
 
 
-        {formData.jenkinsUrl && jenkinsList.length > 0 && (
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label className="w-100">
+            {formData.jenkinsUrl && jenkinsList.length > 0 && (
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label className="w-100">
               Account*
-              <OverlayTrigger
-                trigger="click"
-                rootClose
-                placement="left"
-                overlay={RegistryPopover(
-                  accountsList[
-                    accountsList.findIndex(
-                      (x) => x.gitCredential === formData.gitCredential,
-                    )
-                    ],
-                )}
-              >
-                <IconBase
-                  icon={faEllipsisH}
-                  className={"fa-pull-right pointer pr-1"}
-                  onClickFunction={() => document.body.click()}
-                />
-              </OverlayTrigger>
-            </Form.Label>
-            {accountsList.length < 1 && (
-              <div className="form-text text-muted p-2">
-                <IconBase
-                  icon={faExclamationCircle}
-                  className={"text-muted mr-1"}
-                />
+                  <OverlayTrigger
+                    trigger="click"
+                    rootClose
+                    placement="left"
+                    overlay={RegistryPopover(
+                      accountsList[
+                        accountsList.findIndex(
+                          (x) => x.gitCredential === formData.gitCredential,
+                        )
+                      ],
+                    )}
+                  >
+                    <IconBase
+                      icon={faEllipsisH}
+                      className={"fa-pull-right pointer pr-1"}
+                      onClickFunction={() => document.body.click()}
+                    />
+                  </OverlayTrigger>
+                </Form.Label>
+                {accountsList.length < 1 && (
+                  <div className="form-text text-muted p-2">
+                    <IconBase
+                      icon={faExclamationCircle}
+                      className={"text-muted mr-1"}
+                    />
                 No Credentials have been created for{" "}
-                <span>{formData.jenkinsUrl}</span>. Please go to
-                <Link to="/inventory/tools"> Tool Registry</Link> and add
+                    <span>{formData.jenkinsUrl}</span>. Please go to
+                    <Link to="/inventory/tools"> Tool Registry</Link> and add
                 credentials for this Jenkins in order to proceed.
-              </div>
-            )}
-            {accountsList !== undefined && accountsList.length > 0 ? (
-              <StandaloneSelectInput
-                selectOptions={accountsList}
-                valueField="gitCredential"
-                textField="gitCredential"
-                defaultValue={
-                  accountsList && accountsList.length > 0 &&
+                  </div>
+                )}
+                {accountsList !== undefined && accountsList.length > 0 ? (
+                  <StandaloneSelectInput
+                    selectOptions={accountsList}
+                    valueField="gitCredential"
+                    textField="gitCredential"
+                    defaultValue={
+                      accountsList && accountsList.length > 0 &&
                   accountsList[
                     accountsList.findIndex(
                       (x) => x.toolId === formData.gitToolId,
                     )
-                    ]
-                }
-                setDataFunction={handleAccountChange}
-              />
-            ) : null}
-          </Form.Group>
-        )}
-
-
-        {formData.service && formData.service === "bitbucket" && formData.gitToolId && (
-          <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Workspace*</Form.Label>
-            {isWorkspacesSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <LoadingIcon className={"text-muted mr-1"}/>
-                Loading workspaces from registry
-              </div>
-            ) : (
-              <>
-                {workspacesList ? (
-                  <StandaloneSelectInput
-                    selectOptions={workspacesList}
-                    value={
-                      workspacesList[
-                        workspacesList.findIndex(
-                          (x) => x.key === formData.workspace,
-                        )
-                        ]
+                  ]
                     }
-                    valueField="key"
-                    textField="name"
-                    setDataFunction={handleWorkspacesChange}
+                    setDataFunction={handleAccountChange}
                   />
-                ) : (
-                  <LoadingIcon className={"text-muted mr-1"}/>
-                )}
-              </>
+                ) : null}
+              </Form.Group>
             )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-        )}
 
-        {formData.service &&
+
+            {formData.service && formData.service === "bitbucket" && formData.gitToolId && (
+              <Form.Group controlId="account" className="mt-2">
+                <Form.Label>Workspace*</Form.Label>
+                {isWorkspacesSearching ? (
+                  <div className="form-text text-muted mt-2 p-2">
+                    <LoadingIcon className={"text-muted mr-1"}/>
+                Loading workspaces from registry
+                  </div>
+                ) : (
+                  <>
+                    {workspacesList ? (
+                      <StandaloneSelectInput
+                        selectOptions={workspacesList}
+                        value={
+                          workspacesList[
+                            workspacesList.findIndex(
+                              (x) => x.key === formData.workspace,
+                            )
+                          ]
+                        }
+                        valueField="key"
+                        textField="name"
+                        setDataFunction={handleWorkspacesChange}
+                      />
+                    ) : (
+                      <LoadingIcon className={"text-muted mr-1"}/>
+                    )}
+                  </>
+                )}
+                {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+              </Form.Group>
+            )}
+
+            {formData.service &&
         formData.gitToolId &&
         (formData.service === "bitbucket"?
           formData.workspace
           && formData.workspace.length > 0 : true ) && (
-          <Form.Group controlId="repo" className="mt-2">
-            <Form.Label>Repository*</Form.Label>
-            {isRepoSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <LoadingIcon className={"text-muted mr-1"}/>
+              <Form.Group controlId="repo" className="mt-2">
+                <Form.Label>Repository*</Form.Label>
+                {isRepoSearching ? (
+                  <div className="form-text text-muted mt-2 p-2">
+                    <LoadingIcon className={"text-muted mr-1"}/>
                 Loading repositories from registry
-              </div>
-            ) : (
-              <>
-                {repoList ? (
-                  <StandaloneSelectInput
-                    selectOptions={repoList}
-                    value={
-                      repoList[
-                        repoList.findIndex(
-                          (x) => x.name === formData.repository,
-                        )
-                        ]
-                    }
-                    valueField="value"
-                    textField="name"
-                    setDataFunction={handleRepoChange}
-                  />
+                  </div>
                 ) : (
-                  <LoadingIcon className={"text-muted mr-1"}/>
+                  <>
+                    {repoList ? (
+                      <StandaloneSelectInput
+                        selectOptions={repoList}
+                        value={
+                          repoList[
+                            repoList.findIndex(
+                              (x) => x.name === formData.repository,
+                            )
+                          ]
+                        }
+                        valueField="value"
+                        textField="name"
+                        setDataFunction={handleRepoChange}
+                      />
+                    ) : (
+                      <LoadingIcon className={"text-muted mr-1"}/>
+                    )}
+                  </>
                 )}
-              </>
+                {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+              </Form.Group>
             )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-        )}
 
-        {formData.service && formData.gitToolId && formData.repoId && (
-          <>
-          <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Branch*</Form.Label>
-            {isBranchSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <LoadingIcon className={"text-muted mr-1"}/>
+            {formData.service && formData.gitToolId && formData.repoId && (
+              <>
+                <Form.Group controlId="account" className="mt-2">
+                  <Form.Label>Branch*</Form.Label>
+                  {isBranchSearching ? (
+                    <div className="form-text text-muted mt-2 p-2">
+                      <LoadingIcon className={"text-muted mr-1"}/>
                 Loading branches from selected repository
-              </div>
-            ) : (
-              <>
-                {branchList ? (
-                  <StandaloneSelectInput
-                    selectOptions={branchList}
-                    value={
-                      branchList[
-                        branchList.findIndex((x) => x.value === formData.branch)
-                        ]
+                    </div>
+                  ) : (
+                    <>
+                      {branchList ? (
+                        <StandaloneSelectInput
+                          selectOptions={branchList}
+                          value={
+                            branchList[
+                              branchList.findIndex((x) => x.value === formData.branch)
+                            ]
+                          }
+                          valueField="value"
+                          textField="name"
+                          setDataFunction={handleBranchChange}
+                        />
+                      ) : (
+                        <LoadingIcon className={"text-muted mr-1"}/>
+                      )}
+                    </>
+                  )}
+                  {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+                </Form.Group>
+                <Form.Group controlId="workspaceDeleteFlag">
+                  <Form.Check inline
+                    type="checkbox"
+                    label={"Delete workspace before building"}
+                    id={`workspaceDeleteFlag`}
+                    checked={formData.workspaceDeleteFlag}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        workspaceDeleteFlag: e.target.checked
+                      })
                     }
-                    valueField="value"
-                    textField="name"
-                    setDataFunction={handleBranchChange}
                   />
-                ) : (
-                  <LoadingIcon className={"text-muted mr-1"}/>
-                )}
+                  <Form.Text className="text-muted">Deletes the Jenkins workspace before building.</Form.Text>
+                </Form.Group>
               </>
             )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-            <Form.Group controlId="workspaceDeleteFlag">
-              <Form.Check inline
-                          type="checkbox"
-                          label={"Delete workspace before building"}
-                          id={`workspaceDeleteFlag`}
-                          checked={formData.workspaceDeleteFlag}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              workspaceDeleteFlag: e.target.checked
-                            })
-                          }
-              />
-              <Form.Text className="text-muted">Deletes the Jenkins workspace before building.</Form.Text>
-            </Form.Group>
-          </>
-        )}
 
-        {formData.jobType === "CYPRESS UNIT TESTING" && (
-          <>
-            <Form.Group controlId="branchField">
-              <Form.Label>JSON Path</Form.Label>
+            {formData.jobType === "CYPRESS UNIT TESTING" && (
+              <>
+                <Form.Group controlId="branchField">
+                  <Form.Label>JSON Path</Form.Label>
+                  <Form.Control
+                    maxLength="250"
+                    type="text"
+                    placeholder=""
+                    value={formData.jsonPath || ""}
+                    onChange={(e) =>
+                      setFormData({ ...formData, jsonPath: e.target.value })
+                    }
+                  />
+                </Form.Group>
+              </>
+            )
+            }
+
+            <Form.Group controlId="threshold">
+              <Form.Label>Success Threshold</Form.Label>
               <Form.Control
-                maxLength="250"
                 type="text"
                 placeholder=""
-                value={formData.jsonPath || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, jsonPath: e.target.value })
-                }
+                value={thresholdVal || ""}
+                onChange={(e) => setThresholdValue(e.target.value)}
+                disabled={true}
               />
             </Form.Group>
-            </>
-          )
-          }
-
-        <Form.Group controlId="threshold">
-          <Form.Label>Success Threshold</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder=""
-            value={thresholdVal || ""}
-            onChange={(e) => setThresholdValue(e.target.value)}
-            disabled={true}
-          />
-        </Form.Group>
-        </>
+          </>
         }
 
         {jobType === "opsera-job" ? (

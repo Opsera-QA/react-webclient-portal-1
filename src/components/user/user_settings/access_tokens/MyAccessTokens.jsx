@@ -94,32 +94,32 @@ function MyAccessTokens() {
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return (
-          <>
-            <AccessTokenEditorPanel
-              cancelTokenSource={cancelTokenSource}
-              loadData={loadData}
-            />
-            <AccessTokenTable
-              loadData={loadData}
-              isLoading={isLoading}
-              accessTokenData={accessTokens}
-              isMounted={isMounted}
-              cancelTokenSource={cancelTokenSource}
-              filterModel={accessTokenFilterModel}
-              setFilterModel={setAccessTokenFilterModel}
-            />
-          </>
-        );
-      case "logs":
-        return (
-          <UserAccessTokenActivityLogPanel
-            userId={userData?._id}
+    case "summary":
+      return (
+        <>
+          <AccessTokenEditorPanel
+            cancelTokenSource={cancelTokenSource}
+            loadData={loadData}
           />
-        );
-      default:
-        return null;
+          <AccessTokenTable
+            loadData={loadData}
+            isLoading={isLoading}
+            accessTokenData={accessTokens}
+            isMounted={isMounted}
+            cancelTokenSource={cancelTokenSource}
+            filterModel={accessTokenFilterModel}
+            setFilterModel={setAccessTokenFilterModel}
+          />
+        </>
+      );
+    case "logs":
+      return (
+        <UserAccessTokenActivityLogPanel
+          userId={userData?._id}
+        />
+      );
+    default:
+      return null;
     }
   };
 

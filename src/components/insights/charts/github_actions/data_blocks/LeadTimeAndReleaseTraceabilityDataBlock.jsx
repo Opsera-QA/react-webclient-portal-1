@@ -138,50 +138,50 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
 
   const getIcon = (severity) => {
     switch (severity) {
-      case "Up":
-        return faArrowCircleUp;
-      case "Down":
-        return faArrowCircleDown;
-      case "Neutral":
-        return faMinusCircle;
-      default:
-        break;
+    case "Up":
+      return faArrowCircleUp;
+    case "Down":
+      return faArrowCircleDown;
+    case "Neutral":
+      return faMinusCircle;
+    default:
+      break;
     }
   };
 
   const getIconColor = (severity) => {
     switch (severity) {
-      case "Down":
-        return "red";
-      case "Up":
-        return "green";
-      case "Neutral":
-        return "light-gray-text-secondary";
-      case "-":
-        return "black";
-      default:
-        break;
+    case "Down":
+      return "red";
+    case "Up":
+      return "green";
+    case "Neutral":
+      return "light-gray-text-secondary";
+    case "-":
+      return "black";
+    default:
+      break;
     }
   };
 
   const getDescription = (severity) => {
     switch (severity) {
-      case "Up":
-        return "This project is trending upward.";
-      case "Down":
-        return "This project is trending downward.";
-      case "Neutral":
-        return "Neutral: This project has experienced no change.";
+    case "Up":
+      return "This project is trending upward.";
+    case "Down":
+      return "This project is trending downward.";
+    case "Neutral":
+      return "Neutral: This project has experienced no change.";
     }
   };
 
   const getChartBody = () => {
     const durationDataPoint = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints,
-        "lead-time-and-release-traceability-duration-data-point");
+      "lead-time-and-release-traceability-duration-data-point");
     const frequencyDataPoint = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints,
-        "lead-time-and-release-traceability-frequency-data-point");
+      "lead-time-and-release-traceability-frequency-data-point");
     const timeToFirstCommitDataPoint = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints,
-        "lead-time-and-release-traceability-time-to-first-commit-data-point");
+      "lead-time-and-release-traceability-time-to-first-commit-data-point");
     return (
       <>
         <div className="new-chart m-3 p-0 all-github-actions-data-block">

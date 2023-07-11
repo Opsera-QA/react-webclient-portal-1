@@ -61,8 +61,8 @@ export class PipelineModel extends ModelBase {
 
   clone = () => {
     return new PipelineModel(DataParsingHelper.cloneDeep(
-        { ...this.data }),
-      this.isNew(),
+      { ...this.data }),
+    this.isNew(),
     );
   };
 

@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import ToolConfigurationEditorPanelContainer
-  from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Row from "react-bootstrap/Row";
 import HashicorpVaultConnectionMetadata from "./hashicorpVault-connection-metadata";
 import toolsActions from "components/inventory/tools/tools-actions";
@@ -12,7 +12,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import WarningDialog from "../../../../../common/status_notifications/WarningDialog";
 import toolIdentifierConnectionCheckConstants
-  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function HashicorpVaultToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -58,23 +58,23 @@ function HashicorpVaultToolConfiguration({ toolData, setUpMode, setCurrentScreen
   return (
     <>
       {getWarningDialogs()}
-    <ToolConfigurationEditorPanelContainer
-      model={hashicorpVaultConfigurationDto}
-      setModel={setHashicorpVaultConfigurationDto}
-      persistRecord={saveHashicorpVaultToolConfiguration}
-      toolData={toolData}
-      toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.HASHICORP_VAULT}
-      setUpMode={setUpMode}
-    >
-      <Row>
-        <Col sm={12}>
-          <VaultTextInput dataObject={hashicorpVaultConfigurationDto} setDataObject={setHashicorpVaultConfigurationDto} fieldName={"vaultUri"} />
-          <VaultTextInput dataObject={hashicorpVaultConfigurationDto} setDataObject={setHashicorpVaultConfigurationDto} fieldName={"vaultKey"} />
-          <VaultTextInput dataObject={hashicorpVaultConfigurationDto} setDataObject={setHashicorpVaultConfigurationDto} fieldName={"vaultToken"}/>
-          <VaultTextInput dataObject={hashicorpVaultConfigurationDto} setDataObject={setHashicorpVaultConfigurationDto} fieldName={"vaultPath"}/>
-        </Col>
-      </Row>
-    </ToolConfigurationEditorPanelContainer>
+      <ToolConfigurationEditorPanelContainer
+        model={hashicorpVaultConfigurationDto}
+        setModel={setHashicorpVaultConfigurationDto}
+        persistRecord={saveHashicorpVaultToolConfiguration}
+        toolData={toolData}
+        toolConnectionCheckName={toolIdentifierConnectionCheckConstants.TOOL_CONNECTION_CHECK_NAMES.HASHICORP_VAULT}
+        setUpMode={setUpMode}
+      >
+        <Row>
+          <Col sm={12}>
+            <VaultTextInput dataObject={hashicorpVaultConfigurationDto} setDataObject={setHashicorpVaultConfigurationDto} fieldName={"vaultUri"} />
+            <VaultTextInput dataObject={hashicorpVaultConfigurationDto} setDataObject={setHashicorpVaultConfigurationDto} fieldName={"vaultKey"} />
+            <VaultTextInput dataObject={hashicorpVaultConfigurationDto} setDataObject={setHashicorpVaultConfigurationDto} fieldName={"vaultToken"}/>
+            <VaultTextInput dataObject={hashicorpVaultConfigurationDto} setDataObject={setHashicorpVaultConfigurationDto} fieldName={"vaultPath"}/>
+          </Col>
+        </Row>
+      </ToolConfigurationEditorPanelContainer>
     </>
   );
 }

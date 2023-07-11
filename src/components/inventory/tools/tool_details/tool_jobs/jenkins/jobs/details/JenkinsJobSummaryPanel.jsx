@@ -27,32 +27,32 @@ function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobType, setActiveTab, 
 
   const getDynamicJobTypeSummaryPanel = () => {
     switch (jenkinsJobData?.getArrayData("type", 0)) {
-      case JenkinsJobTypes.BUILD:
-        return <JenkinsBuildJobSummaryPanel dataObject={jenkinsJobConfigurationModel} />;
-      case JenkinsJobTypes.UNIT_TESTING:
-      case JenkinsJobTypes.FUNCTIONAL_TESTING:
-        return <JenkinsUnitTestingJobSummaryPanel dataObject={jenkinsJobConfigurationModel} />;
-      case JenkinsJobTypes.SHELL_SCRIPT:
-      case JenkinsJobTypes.DOCKER_PUSH:
-      case JenkinsJobTypes.COVERITY:
-      case JenkinsJobTypes.ARTIFACTORY_DOCKER_PUSH:
-        return (
-          <>
-            <Col lg={6}>
-              <TextFieldBase dataObject={jenkinsJobConfigurationModel} fieldName={"buildType"}/>
-            </Col>
-          </>
-        );
-      case "SFDC":
-        return (
-          <>
-            <Col lg={6}>
-              <TextFieldBase dataObject={jenkinsJobConfigurationModel} fieldName={"jobType"}/>
-            </Col>
-          </>
-        );
-      default:
-        return null;
+    case JenkinsJobTypes.BUILD:
+      return <JenkinsBuildJobSummaryPanel dataObject={jenkinsJobConfigurationModel} />;
+    case JenkinsJobTypes.UNIT_TESTING:
+    case JenkinsJobTypes.FUNCTIONAL_TESTING:
+      return <JenkinsUnitTestingJobSummaryPanel dataObject={jenkinsJobConfigurationModel} />;
+    case JenkinsJobTypes.SHELL_SCRIPT:
+    case JenkinsJobTypes.DOCKER_PUSH:
+    case JenkinsJobTypes.COVERITY:
+    case JenkinsJobTypes.ARTIFACTORY_DOCKER_PUSH:
+      return (
+        <>
+          <Col lg={6}>
+            <TextFieldBase dataObject={jenkinsJobConfigurationModel} fieldName={"buildType"}/>
+          </Col>
+        </>
+      );
+    case "SFDC":
+      return (
+        <>
+          <Col lg={6}>
+            <TextFieldBase dataObject={jenkinsJobConfigurationModel} fieldName={"jobType"}/>
+          </Col>
+        </>
+      );
+    default:
+      return null;
     }
   };
 

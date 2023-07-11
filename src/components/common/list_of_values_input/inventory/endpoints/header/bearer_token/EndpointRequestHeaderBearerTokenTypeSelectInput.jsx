@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import endpointRequestHeaderBearerTokenTypeConstants
-  from "@opsera/definitions/constants/api/request/header/endpointRequestHeaderBearerTokenType.constants";
+from "@opsera/definitions/constants/api/request/header/endpointRequestHeaderBearerTokenType.constants";
 
 function EndpointRequestHeaderBearerTokenTypeSelectInput(
   {

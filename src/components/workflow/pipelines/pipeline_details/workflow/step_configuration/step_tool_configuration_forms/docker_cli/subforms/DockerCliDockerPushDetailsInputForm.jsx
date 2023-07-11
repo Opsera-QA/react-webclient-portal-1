@@ -14,38 +14,38 @@ function DockerCliDockerPushDetailsInputForm({ model, setModel, stepId, plan }) 
       return null;
     }
     switch (model?.getData("registryType")) {
-      case "acr":
-        return (
-          <DockerCliAcrDetailsInputForm 
-            model={model}
-            setModel={setModel}
-          />
-        );
-      case "ecr":
-        return (
-          <DockerCliEcrDetailsInputForm 
-            model={model}
-            setModel={setModel}
-          />
-        );
-      case "jfrog":
-        return (
-          <DockerCliJFrogDetailsInputForm 
-            model={model}
-            setModel={setModel}
-            stepId={stepId}
-            plan={plan}
-          />
-        );
-      case "nexus":
-        return (
-          <DockerCliNexusDetailsInputForm 
-            model={model}
-            setModel={setModel}
-          />
-        );
-      default:
-        return null;
+    case "acr":
+      return (
+        <DockerCliAcrDetailsInputForm 
+          model={model}
+          setModel={setModel}
+        />
+      );
+    case "ecr":
+      return (
+        <DockerCliEcrDetailsInputForm 
+          model={model}
+          setModel={setModel}
+        />
+      );
+    case "jfrog":
+      return (
+        <DockerCliJFrogDetailsInputForm 
+          model={model}
+          setModel={setModel}
+          stepId={stepId}
+          plan={plan}
+        />
+      );
+    case "nexus":
+      return (
+        <DockerCliNexusDetailsInputForm 
+          model={model}
+          setModel={setModel}
+        />
+      );
+    default:
+      return null;
     }    
   };
 

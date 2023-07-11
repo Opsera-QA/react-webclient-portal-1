@@ -19,13 +19,13 @@ const SIGNUP_OPTIONS = {
 export default function FreeTrialRegistrationSelectSignupOptionScreen({ setCurrentScreen }) {
   const handleSelection = (selectedOption) => {
     switch (selectedOption) {
-      case SIGNUP_OPTIONS.GITHUB:
-      case SIGNUP_OPTIONS.GITLAB:
-      case SIGNUP_OPTIONS.LINKED_IN:
-        throw "Not supported yet";
-      case SIGNUP_OPTIONS.OPSERA:
-      default:
-        setCurrentScreen(FREE_TRIAL_REGISTRATION_SCREENS.SIGNUP_SCREEN);
+    case SIGNUP_OPTIONS.GITHUB:
+    case SIGNUP_OPTIONS.GITLAB:
+    case SIGNUP_OPTIONS.LINKED_IN:
+      throw "Not supported yet";
+    case SIGNUP_OPTIONS.OPSERA:
+    default:
+      setCurrentScreen(FREE_TRIAL_REGISTRATION_SCREENS.SIGNUP_SCREEN);
     }
   };
 
@@ -91,7 +91,7 @@ export default function FreeTrialRegistrationSelectSignupOptionScreen({ setCurre
       </div>
     </div>
   )
-    ;
+  ;
 }
 
 FreeTrialRegistrationSelectSignupOptionScreen.propTypes = {

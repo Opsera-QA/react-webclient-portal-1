@@ -3,9 +3,9 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import PropType from "prop-types";
 import SelectionCardBase from "components/common/card/selection/SelectionCardBase";
 import entitlementConstants
-  from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
+from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
 import OrganizationSettingsEntitlementActivationConfirmationOverlay
-  from "components/admin/organization_settings/details/entitlements/inactive/OrganizationSettingsEntitlementActivationConfirmationOverlay";
+from "components/admin/organization_settings/details/entitlements/inactive/OrganizationSettingsEntitlementActivationConfirmationOverlay";
 
 export default function EnableSalesforceFeaturesInactiveEntitlementPageLinkCard(
   {

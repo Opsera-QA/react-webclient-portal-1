@@ -5,7 +5,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
 import ServiceNowMeanTimeBetweenFailuresBarChart
-  from "components/insights/charts/servicenow/bar_chart/mean_time_between_failures/ServiceNowMeanTimeBetweenFailuresBarChart";
+from "components/insights/charts/servicenow/bar_chart/mean_time_between_failures/ServiceNowMeanTimeBetweenFailuresBarChart";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function ServiceNowMeanTimeBetweenFailuresDataBlock({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
@@ -45,11 +45,11 @@ function ServiceNowMeanTimeBetweenFailuresDataBlock({ dashboardData, toggleDynam
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
-        let dateRange = dashboardData?.data?.filters[
-          dashboardData?.data?.filters.findIndex(
-            (obj) => obj.type === "date"
-          )
-        ]?.value;
+      let dateRange = dashboardData?.data?.filters[
+        dashboardData?.data?.filters.findIndex(
+          (obj) => obj.type === "date"
+        )
+      ]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,

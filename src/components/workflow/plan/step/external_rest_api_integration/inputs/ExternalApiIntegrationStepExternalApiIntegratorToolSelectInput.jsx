@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedExternalApiIntegratorToolSelectInput
-  from "components/common/list_of_values_input/tools/extermal_api_integrator/tool/RoleRestrictedExternalApiIntegratorToolSelectInput";
+from "components/common/list_of_values_input/tools/extermal_api_integrator/tool/RoleRestrictedExternalApiIntegratorToolSelectInput";
 
 function ExternalApiIntegrationStepExternalApiIntegratorToolSelectInput(
   {

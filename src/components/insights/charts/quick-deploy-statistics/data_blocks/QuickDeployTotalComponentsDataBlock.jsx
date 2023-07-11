@@ -4,28 +4,28 @@ import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlo
 import ThreeLineScoreDataBlock from "components/common/metrics/score/ThreeLineScoreDataBlock";
 
 function QuickDeployTotalComponentsDataBlock({ score, icon, className, onSelect, lastScore, iconOverlayBody}) {
-    return (
-        <DataBlockBoxContainer showBorder={true} onClickFunction={onSelect}>
-            <ThreeLineScoreDataBlock
-                className={`${className} p-2`}
-                score={score}
-                topText={"Total Components"}
-                bottomText={"Last Scan: " + lastScore}
-                icon={icon}
-                iconOverlayBody = {iconOverlayBody}
+  return (
+    <DataBlockBoxContainer showBorder={true} onClickFunction={onSelect}>
+      <ThreeLineScoreDataBlock
+        className={`${className} p-2`}
+        score={score}
+        topText={"Total Components"}
+        bottomText={"Last Scan: " + lastScore}
+        icon={icon}
+        iconOverlayBody = {iconOverlayBody}
 
-            />
-        </DataBlockBoxContainer>
-    );
+      />
+    </DataBlockBoxContainer>
+  );
 }
 
 QuickDeployTotalComponentsDataBlock.propTypes = {
-    score: PropTypes.number,
-    icon: PropTypes.object,
-    className: PropTypes.string,
-    onSelect: PropTypes.func,
-    lastScore: PropTypes.number,
-    iconOverlayBody: PropTypes.any,
+  score: PropTypes.number,
+  icon: PropTypes.object,
+  className: PropTypes.string,
+  onSelect: PropTypes.func,
+  lastScore: PropTypes.number,
+  iconOverlayBody: PropTypes.any,
 };
 
 export default QuickDeployTotalComponentsDataBlock;

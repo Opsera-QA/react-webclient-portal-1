@@ -17,15 +17,15 @@ function ArgoCdStepAwsRepoSelectInput({model, setModel, disabled, awsToolConfigI
     setModel({...newModel});
   };
   return (
-     <AWSRepositoryInput
-       fieldName={"ecrRepoName"}
-       awsToolId={awsToolConfigId}
-       dataObject={model}
-       setDataFunction={setRepo}
-       setDataObject={setModel}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-     />
+    <AWSRepositoryInput
+      fieldName={"ecrRepoName"}
+      awsToolId={awsToolConfigId}
+      dataObject={model}
+      setDataFunction={setRepo}
+      setDataObject={setModel}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+    />
   );
 }
 

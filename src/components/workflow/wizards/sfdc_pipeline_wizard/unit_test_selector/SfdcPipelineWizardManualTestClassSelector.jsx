@@ -153,17 +153,17 @@ function SfdcPipelineWizardManualTestClassSelector({ unitTestRecordId, selectedS
   //TODO: Should this be a multiselect?
   return (
     <div>
-        <Form.Check
-          className="ml-2"
-          type="switch"
-          id="inputFLag"
-          checked={manuallyEnteringTestClasses}
-          label="Manually Enter Test Classes"
-          onChange={(e) => {
-            setManuallyEnteringTestClasses(e.target.checked);
-          }}
-        />
-        {getManualTestClassSelectionInput()}
+      <Form.Check
+        className="ml-2"
+        type="switch"
+        id="inputFLag"
+        checked={manuallyEnteringTestClasses}
+        label="Manually Enter Test Classes"
+        onChange={(e) => {
+          setManuallyEnteringTestClasses(e.target.checked);
+        }}
+      />
+      {getManualTestClassSelectionInput()}
     </div>
   );
 }

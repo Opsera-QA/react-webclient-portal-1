@@ -10,20 +10,20 @@ import {Button} from "react-bootstrap";
 import {faArrowLeft} from "@fortawesome/pro-light-svg-icons";
 import CancelButton from "components/common/buttons/CancelButton";
 import SfdcPipelineWizardOriginOrganizationFilesTable
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/org_to_org/SfdcPipelineWizardOriginOrganizationFilesTable";
+from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/org_to_org/SfdcPipelineWizardOriginOrganizationFilesTable";
 import SfdcPipelineWizardDestinationOrganizationFilesTable
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/org_to_org/SfdcPipelineWizardDestinationOrganizationFilesTable";
+from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/org_to_org/SfdcPipelineWizardDestinationOrganizationFilesTable";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SfdcPipelineWizardSubmitSfdcFilesButton
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSubmitSfdcFilesButton";
+from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSubmitSfdcFilesButton";
 import SfdcPipelineWizardSfdcRulesInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSfdcRulesInput";
+from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSfdcRulesInput";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 import IconBase from "components/common/icons/IconBase";
 import SfdcPipelineWizardBasicSummary
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardBasicSummary";
+from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardBasicSummary";
 
 const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -76,7 +76,7 @@ const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipeli
   const getPipelineOrTaskText = () => pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline';
 
   const pullOrgToOrgFiles = async (cancelSource = cancelTokenSource) => {
-   await sfdcPipelineActions.triggerOrgToOrgFilesPullV2(getAccessToken, cancelSource, pipelineWizardModel);
+    await sfdcPipelineActions.triggerOrgToOrgFilesPullV2(getAccessToken, cancelSource, pipelineWizardModel);
   };
 
   const getBody = () => {

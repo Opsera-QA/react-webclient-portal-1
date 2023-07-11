@@ -32,28 +32,28 @@ function ExportLogSearchButton(
   };
 
   const rawDataResults = () =>{
-   return searchResults.hits ? searchResults.hits.map(item => JSON.stringify(item)) : "export failure";
+    return searchResults.hits ? searchResults.hits.map(item => JSON.stringify(item)) : "export failure";
   };
 
   const formattedData = () => {
     let formattedData = [searchResults];
 
-     //formats each result to match results returned from search
-  // doc.autoTable({
-  //   showHead: "firstPage",
-  //   head:[["Logs Search Results"]],
-  //   body: data.map(item => [
-  //   "Date: " + parseISOString(item?._source[Object.keys(item._source)[0]]) + "\n" +
-  //   "id: " + item._source.data.tool_output.vulnerabilities.nvd_data[0].id + "\n" +
-  //   "package_path: " + item._source.data.tool_output.vulnerabilities.package_path + "\n" +
-  //   "url: " + item._source.data.tool_output.vulnerabilities.url + "\n" +
-  //   "pipeline_tags: " + item._source.data.pipeline_tags + "\n" +
-  //   "jobId: " + item._source.data.jobId + "\n" +
-  //   "stepId: " + item._source.data.stepId + "\n" +
-  //   "job_log: " + JSON.stringify(item._source.data.job_log) + "\n" +
-  //   "tags: " + item._source.tags[0] + "\n" +
-  //   "sort: " + item.sort[0]])
-  // })
+    //formats each result to match results returned from search
+    // doc.autoTable({
+    //   showHead: "firstPage",
+    //   head:[["Logs Search Results"]],
+    //   body: data.map(item => [
+    //   "Date: " + parseISOString(item?._source[Object.keys(item._source)[0]]) + "\n" +
+    //   "id: " + item._source.data.tool_output.vulnerabilities.nvd_data[0].id + "\n" +
+    //   "package_path: " + item._source.data.tool_output.vulnerabilities.package_path + "\n" +
+    //   "url: " + item._source.data.tool_output.vulnerabilities.url + "\n" +
+    //   "pipeline_tags: " + item._source.data.pipeline_tags + "\n" +
+    //   "jobId: " + item._source.data.jobId + "\n" +
+    //   "stepId: " + item._source.data.stepId + "\n" +
+    //   "job_log: " + JSON.stringify(item._source.data.job_log) + "\n" +
+    //   "tags: " + item._source.tags[0] + "\n" +
+    //   "sort: " + item.sort[0]])
+    // })
    
 
     // console.log(formattedData);

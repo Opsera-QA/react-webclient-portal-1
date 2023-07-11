@@ -5,11 +5,11 @@ import ActionBarBackButton from "components/common/actions/buttons/ActionBarBack
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import PipelineStorageActions from "components/admin/pipeline_storage/pipeline-storage-actions";
 import PipelineStorageDetailPanel
-  from "components/admin/pipeline_storage/details/PipelineStorageDetailPanel";
+from "components/admin/pipeline_storage/details/PipelineStorageDetailPanel";
 import ActionBarModelDeleteButton from "components/common/actions/buttons/ActionBarModelDeleteButton";
 import PipelineStorageModel from "components/admin/pipeline_storage/pipelineStorage.model";
 import PipelineStorageManagementSubNavigationBar
-  from "components/admin/pipeline_storage/PipelineStorageManagementSubNavigationBar";
+from "components/admin/pipeline_storage/PipelineStorageManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function PipelineStorageDetailView() {

@@ -6,7 +6,7 @@ import FreeTrialLandingWorkflowWidgetHeaderTabBarBase, {
   FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS,
 } from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
 import FreeTrialLandingPipelineWidgetHeaderTitleBar
-  from "components/trial/landing/widgets/pipelines/widgets/FreeTrialLandingPipelineWidgetHeaderTitleBar";
+from "components/trial/landing/widgets/pipelines/widgets/FreeTrialLandingPipelineWidgetHeaderTitleBar";
 
 export default function FreeTrialLandingPipelineWorkflowWidget(
   {

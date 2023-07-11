@@ -2,7 +2,7 @@ import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import pipelineSummaryMetadata
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import {getTableDateColumn} from "../../../common/table/table-column-helpers";
 import FilterContainer from "components/common/table/FilterContainer";

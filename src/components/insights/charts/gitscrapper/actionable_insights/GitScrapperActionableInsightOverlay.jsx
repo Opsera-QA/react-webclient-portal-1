@@ -80,7 +80,7 @@ function GitScrapperActionableInsightOverlay({ title, gitScrapperType, kpiConfig
       }
 
       const dataObjectRepoScorecardDataBlocks = responseRepoScorecardBlockValues?.data && responseRepoScorecardBlockValues?.status === 200 ? 
-                                                  responseRepoScorecardBlockValues?.data?.data?.data[0]?.data : [];
+        responseRepoScorecardBlockValues?.data?.data?.data[0]?.data : [];
 
       if (isMounted?.current === true && dataObjectRepoScorecardDataBlocks) {
         setDataScorecardMetrics(dataObjectRepoScorecardDataBlocks);

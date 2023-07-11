@@ -9,7 +9,7 @@ import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
 import { defaultConfig,colorPalette1, failColor, mainPurple, warningColor,
-         adjustBarWidth } from "../../insights/charts/charts-views";
+  adjustBarWidth } from "../../insights/charts/charts-views";
 import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function JenkinsStatusByJobNameBarChar({ persona, date }) {
@@ -92,7 +92,7 @@ function JenkinsStatusByJobNameBarChar({ persona, date }) {
           ) : (
             <ResponsiveBar
               {...defaultConfig("Build Tag", "Number of Builds", 
-                      true, false, "cutoffString", "wholeNumbers")}
+                true, false, "cutoffString", "wholeNumbers")}
               {...adjustBarWidth(data ? data.data : [], false)}
               data={data ? data.data : []}
               keys={["Successful", "Failed", "Aborted", "Unstable"]}
@@ -101,18 +101,18 @@ function JenkinsStatusByJobNameBarChar({ persona, date }) {
               layout="horizontal"
               colors={(bar) => {
                 switch (bar.id) {
-                  case "Successful": return colorPalette1;
-                  case "Failed": return failColor;
-                  case "Aborted": return mainPurple;
-                  default: return warningColor;
+                case "Successful": return colorPalette1;
+                case "Failed": return failColor;
+                case "Aborted": return mainPurple;
+                default: return warningColor;
                 }
               }}
               onClick={() => setShowModal(true)}
               tooltip={({ indexValue, color, value, id }) => <ChartTooltip 
-                              titles = {["Build Tag", `${id} Builds`]}
-                              values = {[indexValue, value]}
-                              style = {false}
-                              color = {color} />}
+                titles = {["Build Tag", `${id} Builds`]}
+                values = {[indexValue, value]}
+                style = {false}
+                color = {color} />}
             />
           )}
         </div>

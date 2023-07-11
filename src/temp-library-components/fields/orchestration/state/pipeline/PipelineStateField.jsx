@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import OrchestrationStateFieldBase
-  from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
+from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import FieldLabelBase from "components/common/fields/FieldLabelBase";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 

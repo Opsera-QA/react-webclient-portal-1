@@ -17,15 +17,15 @@ import JenkinsPythonPanel from "components/workflow/pipelines/pipeline_details/w
 import JenkinsGradleMavenScriptFilePathPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsGradleMavenScriptFilePathPanel";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import JenkinsStepToolJobSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepToolJobSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepToolJobSelectInput";
 import JenkinsStepDependencyTypeInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepDependencyTypeInput";
 import toolsActions from "components/inventory/tools/tools-actions";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import JenkinsStepJobTypeSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepJobTypeSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepJobTypeSelectInput";
 import JenkinsSfdcDataTransformerRulesSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsSfdcDataTransformerRulesSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsSfdcDataTransformerRulesSelectInput";
 import JenkinsNodeBuildTypePanel from "./inputs/JenkinsNodeBuildTypePanel";
 import JenkinsStepVersionSelectInput from "./inputs/JenkinsStepVersionSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
@@ -33,7 +33,7 @@ import {
   salesforceJenkinsJobConstants
 } from "components/common/list_of_values_input/tools/jenkins/jobs/sfdc/salesforceJenkinsJob.constants";
 import JenkinsXcodeBuildPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsXcodeBuildPanel";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsXcodeBuildPanel";
 
 // TODO: This should probably be moved to some helper function so we only need to update it in one spot
 //  and also use ENUMs to make it easier to ensure spelling it is correct and consistent everywhere.

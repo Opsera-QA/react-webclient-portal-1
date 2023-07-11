@@ -8,16 +8,16 @@ import gitscaperActions from "../../../../../insights/charts/gitscrapper/gitscra
 
 // This is used for gitlab kpis
 function GitScraperBranchFilterMultiSelectInput({
-    placeholderText,
-    valueField,
-    textField,
-    fieldName,
-    model,
-    setModel,
-    disabled,
-    setDataFunction,
-    clearDataFunction,
-    tags
+  placeholderText,
+  valueField,
+  textField,
+  fieldName,
+  model,
+  setModel,
+  disabled,
+  setDataFunction,
+  clearDataFunction,
+  tags
 }) {
   const { getAccessToken } = useContext(AuthContext);
   const [repositories, setRepositories] = useState([]);
@@ -77,40 +77,40 @@ function GitScraperBranchFilterMultiSelectInput({
 
   return (
     <MultiSelectInputBase
-        fieldName={fieldName}
-        dataObject={model}
-        setDataObject={setModel}
-        selectOptions={repositories}
-        busy={isLoading}
-        valueField={valueField}
-        error={error}
-        textField={textField}
-        placeholderText={placeholderText}
-        disabled={disabled}
-        setDataFunction={setDataFunction}
-        clearDataFunction={clearDataFunction}
+      fieldName={fieldName}
+      dataObject={model}
+      setDataObject={setModel}
+      selectOptions={repositories}
+      busy={isLoading}
+      valueField={valueField}
+      error={error}
+      textField={textField}
+      placeholderText={placeholderText}
+      disabled={disabled}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
     />
   );
 }
 
 GitScraperBranchFilterMultiSelectInput.propTypes = {
-    placeholderText: PropTypes.string,
-    fieldName: PropTypes.string,
-    textField: PropTypes.string,
-    valueField: PropTypes.string,
-    model: PropTypes.object,
-    setModel: PropTypes.func,
-    setDataFunction: PropTypes.func,
-    clearDataFunction: PropTypes.func,
-    visible: PropTypes.bool,
-    project: PropTypes.array,
-    disabled: PropTypes.bool,
-    tags: PropTypes.array
+  placeholderText: PropTypes.string,
+  fieldName: PropTypes.string,
+  textField: PropTypes.string,
+  valueField: PropTypes.string,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
+  setDataFunction: PropTypes.func,
+  clearDataFunction: PropTypes.func,
+  visible: PropTypes.bool,
+  project: PropTypes.array,
+  disabled: PropTypes.bool,
+  tags: PropTypes.array
 };
 
 GitScraperBranchFilterMultiSelectInput.defaultProps = {
-    textField: "text",
-    valueField: "value",
+  textField: "text",
+  valueField: "value",
 };
 
 export default GitScraperBranchFilterMultiSelectInput;

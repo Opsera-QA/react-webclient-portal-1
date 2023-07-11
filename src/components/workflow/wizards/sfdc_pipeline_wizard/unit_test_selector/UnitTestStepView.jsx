@@ -47,7 +47,7 @@ export function UnitTestStepView({ item, stateColorClass, isSelected }) {
             Salesforce Org: <ToolNameFieldDisplayer
               toolId={item.tool?.configuration?.sfdcToolId}
               loadToolInNewWindow={true}
-          />
+            />
           </div>
           <div className="p-1 text-muted small">
             <IconBase
@@ -59,9 +59,9 @@ export function UnitTestStepView({ item, stateColorClass, isSelected }) {
           </div>
           <div className="p-1 text-muted small">
             <IconBase
-                icon={faIdBadge}
-                iconSize={"sm"}
-                className={"mr-1"}
+              icon={faIdBadge}
+              iconSize={"sm"}
+              className={"mr-1"}
             />
             Unit Test Type: {item.tool?.configuration?.sfdcUnitTestType || ""}
           </div>

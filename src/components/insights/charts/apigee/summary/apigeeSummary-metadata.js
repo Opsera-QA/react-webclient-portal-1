@@ -5,18 +5,18 @@ export const apigeeSummaryMetadata = {
   idProperty: "_id",
   type: "APIGEE Summary",
   fields: [
-      {
-        label: "Tags",
-        id: "tags",
-      },
-      {
-        label: "Date Range",
-        id: "date",
-      }
-    ],
-    newObjectFields: {
-       activeFilters: [],
-       tags: [],
-       date: undefined,
+    {
+      label: "Tags",
+      id: "tags",
+    },
+    {
+      label: "Date Range",
+      id: "date",
     }
-  };
+  ],
+  newObjectFields: {
+    activeFilters: [],
+    tags: [],
+    date: undefined,
+  }
+};

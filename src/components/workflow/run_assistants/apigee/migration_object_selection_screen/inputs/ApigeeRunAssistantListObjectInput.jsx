@@ -33,7 +33,7 @@ function ApigeeRunAssistantListObjectInput(
     noDataMessage,
     customTitle,
     error,
-}) {
+  }) {
   const [field] = useState(model?.getFieldById(fieldName));
   const [list, setList] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState("");
@@ -164,17 +164,17 @@ function ApigeeRunAssistantListObjectInput(
       }
     }
 
-      const newOption = selectOptions.find((option) => option[valueField] === item);
-      const optionAlreadySelected = currentData.find((option) => option[valueField] === item);
+    const newOption = selectOptions.find((option) => option[valueField] === item);
+    const optionAlreadySelected = currentData.find((option) => option[valueField] === item);
 
-      if (newOption != null && optionAlreadySelected == null) {
-        if (currentData.length + 1 > field.maxItems) {
-          setErrorMessage("You have reached the maximum allowed number of values. Please remove one to add another.");
-          return false;
-        }
-
-        processDataFunction(field?.id, newOption);
+    if (newOption != null && optionAlreadySelected == null) {
+      if (currentData.length + 1 > field.maxItems) {
+        setErrorMessage("You have reached the maximum allowed number of values. Please remove one to add another.");
+        return false;
       }
+
+      processDataFunction(field?.id, newOption);
+    }
   };
 
   const removeItem = (item) => {

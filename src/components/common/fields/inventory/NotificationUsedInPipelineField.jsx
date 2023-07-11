@@ -8,7 +8,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
 import pipelineSummaryMetadata
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
@@ -71,7 +71,7 @@ function NotificationUsedInPipelineField(
   const loadPipelines = async (cancelSource = cancelTokenSource) => {
     if (isMongoDbId(toolId)) {
       const response = await toolsActions.getPipelinesUsingNotificationTool(getAccessToken, cancelSource, toolId);
-        console.log(response);
+      console.log(response);
       if (isMounted?.current === true && response?.data != null) {
         setPipelines(response?.data?.data);
       }

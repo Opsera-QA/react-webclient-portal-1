@@ -42,7 +42,7 @@ function LdapIdpAccountSummaryPanel({ldapIdpAccountData, setShowIdpEditPanel, au
           <TextFieldBase dataObject={ldapIdpAccountData} fieldName={"configEntryType"} />
         </Col>
         <Col lg={6}>
-            <TextFieldBase dataObject={ldapIdpAccountData} fieldName={"idpNameIDMapping"} />
+          <TextFieldBase dataObject={ldapIdpAccountData} fieldName={"idpNameIDMapping"} />
         </Col>
       </Row>
     </SummaryPanelContainer>

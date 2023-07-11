@@ -3,17 +3,17 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { freeTrialWorkspaceActions } from "components/workspace/trial/freeTrialWorkspace.actions";
 import FreeTrialUserActivityReportSubNavigationBar
-  from "components/settings/trial/activity_report/FreeTrialUserActivityReportSubNavigationBar";
+from "components/settings/trial/activity_report/FreeTrialUserActivityReportSubNavigationBar";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import FreeTrialUserActivityReportFilterModel
-  from "components/settings/trial/activity_report/freeTrialUserActivityReport.filter.model";
+from "components/settings/trial/activity_report/freeTrialUserActivityReport.filter.model";
 import { useParams } from "react-router-dom";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { ssoUserActions } from "components/settings/users/ssoUser.actions";
 import FreeTrialUserActivityViewerDetailPanel
-  from "components/settings/trial/activity_report/user_activity/FreeTrialUserActivityViewerDetailPanel";
+from "components/settings/trial/activity_report/user_activity/FreeTrialUserActivityViewerDetailPanel";
 import FreeTrialUserActivityReportPlatformSsoUserSelectInput
-  from "components/settings/trial/activity_report/user_activity/FreeTrialUserActivityReportPlatformSsoUserSelectInput";
+from "components/settings/trial/activity_report/user_activity/FreeTrialUserActivityReportPlatformSsoUserSelectInput";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 

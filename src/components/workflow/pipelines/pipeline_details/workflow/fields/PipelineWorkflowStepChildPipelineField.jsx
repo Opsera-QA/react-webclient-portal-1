@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PipelineWorkflowItemFieldBase
-  from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
+from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";

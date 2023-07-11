@@ -14,19 +14,19 @@ function RoleRestrictedFortifyToolSelectInput(
     clearDataFunction,
   }) {
   return (
-     <RoleRestrictedToolByIdentifierInputBase
-       toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY}
-       toolFriendlyName={"Fortify"}
-       fieldName={fieldName}
-       placeholderText={"Select Fortify Tool"}
-       configurationRequired={true}
-       model={model}
-       setModel={setModel}
-       setDataFunction={setDataFunction}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-       className={className}
-     />
+    <RoleRestrictedToolByIdentifierInputBase
+      toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY}
+      toolFriendlyName={"Fortify"}
+      fieldName={fieldName}
+      placeholderText={"Select Fortify Tool"}
+      configurationRequired={true}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+      className={className}
+    />
   );
 }
 

@@ -9,7 +9,7 @@ import AnalyticsDataEntrySummaryPanel from "components/settings/analytics_data_e
 import AnalyticsDataEntryEditorPanel from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryEditorPanel";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import AnalyticsDataEntryRoleHelper
-  from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
+from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
 
 function AnalyticsDataEntryDetailPanel({ analyticsDataEntry }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -49,22 +49,22 @@ function AnalyticsDataEntryDetailPanel({ analyticsDataEntry }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return (
-          <AnalyticsDataEntrySummaryPanel
-            analyticsDataEntry={analyticsDataEntry}
-            setActiveTab={getActiveTabSetter()}
-          />
-        );
-      case "settings":
-        return (
-          <AnalyticsDataEntryEditorPanel
-            handleClose={toggleSummaryPanel}
-            analyticsDataEntry={analyticsDataEntry}
-          />
-        );
-      default:
-        return null;
+    case "summary":
+      return (
+        <AnalyticsDataEntrySummaryPanel
+          analyticsDataEntry={analyticsDataEntry}
+          setActiveTab={getActiveTabSetter()}
+        />
+      );
+    case "settings":
+      return (
+        <AnalyticsDataEntryEditorPanel
+          handleClose={toggleSummaryPanel}
+          analyticsDataEntry={analyticsDataEntry}
+        />
+      );
+    default:
+      return null;
     }
   };
 

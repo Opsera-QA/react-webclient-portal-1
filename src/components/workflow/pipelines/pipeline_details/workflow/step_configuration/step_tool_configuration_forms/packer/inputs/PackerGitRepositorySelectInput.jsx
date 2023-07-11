@@ -16,16 +16,16 @@ function PackerGitRepositorySelectInput({model, setModel, disabled}) {
   };
 
   return (
-     <RepositorySelectInput
-       fieldName={"gitRepositoryID"}
-       service={model?.getData("type")}
-       gitToolId={model?.getData("gitToolId")}
-       workspace={model?.getData("bitbucketWorkspace")}
-       dataObject={model}
-       setDataObject={setModel}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-     />
+    <RepositorySelectInput
+      fieldName={"gitRepositoryID"}
+      service={model?.getData("type")}
+      gitToolId={model?.getData("gitToolId")}
+      workspace={model?.getData("bitbucketWorkspace")}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+    />
   );
 }
 

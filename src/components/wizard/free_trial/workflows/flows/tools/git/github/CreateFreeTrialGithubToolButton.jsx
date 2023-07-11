@@ -39,7 +39,7 @@ export default function CreateFreeTrialGithubToolButton(
       toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
       "secretPrivateKey",
       configuration?.secretPrivateKey,
-      );
+    );
     configuration.secretAccessTokenKey = await toolsActions.saveThreePartToolPasswordToVaultV3(
       getAccessToken,
       cancelTokenSource,

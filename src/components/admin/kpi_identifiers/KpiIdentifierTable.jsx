@@ -16,7 +16,7 @@ import FilterContainer from "components/common/table/FilterContainer";
 import { faFileInvoice } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import KpiPolicySupportFilterSelectInput
-  from "components/common/filters/insights/kpi/policy_support/KpiPolicySupportFilterSelectInput";
+from "components/common/filters/insights/kpi/policy_support/KpiPolicySupportFilterSelectInput";
 
 function KpiIdentifierTable({ data, loadData, isLoading, kpiFilterDto, setKpiFilterDto, isMounted }) {
   const toastContext = useContext(DialogToastContext);

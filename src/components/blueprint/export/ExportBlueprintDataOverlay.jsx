@@ -35,9 +35,9 @@ function ExportBlueprintDataOverlay({ formattedData, rawData, isLoading, summary
             colSpan: 3
           }
         },
-          [`ID: ${summaryData?.pipelineId}`, `Pipeline Run Count: ${summaryData?.runCount}`, `Number of Steps: ${summaryData?.numberOfSteps}`],
-          [`Status: ${capitalizeFirstLetter(logData[0]?.status)}`, `Last Run: ${logData[0]?.createdAt}`, `Report Date: ${new Date().toLocaleDateString('en-US')}`],
-          ...stepSummary],
+        [`ID: ${summaryData?.pipelineId}`, `Pipeline Run Count: ${summaryData?.runCount}`, `Number of Steps: ${summaryData?.numberOfSteps}`],
+        [`Status: ${capitalizeFirstLetter(logData[0]?.status)}`, `Last Run: ${logData[0]?.createdAt}`, `Report Date: ${new Date().toLocaleDateString('en-US')}`],
+        ...stepSummary],
       });
 
       formattedData.forEach((step, index) => {

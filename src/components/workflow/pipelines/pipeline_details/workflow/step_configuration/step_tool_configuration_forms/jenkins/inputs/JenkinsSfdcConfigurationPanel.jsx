@@ -21,12 +21,12 @@ function JenkinsSfdcConfigurationPanel({ dataObject, setDataObject }) {
 
   const getJenkinsSfdcInput = () => {
     if (dataObject.getData("jobType") !== "SFDC PUSH ARTIFACTS") {
-     return (
-       <JenkinsStepSalesforceConfiguratorToolSelectInput
-         model={dataObject}
-         setModel={setDataObject}
-       />
-     );
+      return (
+        <JenkinsStepSalesforceConfiguratorToolSelectInput
+          model={dataObject}
+          setModel={setDataObject}
+        />
+      );
     }
   };
 

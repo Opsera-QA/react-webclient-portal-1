@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 const CLUSTER_TYPES = [
-    {name : "Private", value: "PRIVATE"},
-    {name : "Public", value: "PUBLIC"},
+  {name : "Private", value: "PRIVATE"},
+  {name : "Public", value: "PUBLIC"},
 ];
 
 function ArgoAzureClusterTypeSelectInput({ fieldName, model, setModel, disabled, textField, valueField}) {

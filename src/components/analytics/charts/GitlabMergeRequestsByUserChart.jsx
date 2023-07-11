@@ -10,7 +10,7 @@ import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
 import { defaultConfig, getColorByData, assignStandardColors,
-         adjustBarWidth } from "../../insights/charts/charts-views";
+  adjustBarWidth } from "../../insights/charts/charts-views";
 
 function GitlabMergeRequestsByUser({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -90,7 +90,7 @@ function GitlabMergeRequestsByUser({ persona, date }) {
         ) : (
           <ResponsiveBar
             {...defaultConfig("Author", "Merge Requests", 
-                    false, true, "wholeNumbers", "cutoffString")}
+              false, true, "wholeNumbers", "cutoffString")}
             {...adjustBarWidth(data ? data.data : [])}
             data={data ? data.data : []}
             onClick={() => setShowModal(true)}

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import OpseraInfinityLogoSelectionCardBase
-  from "temp-library-components/cards/opsera/OpseraInfinityLogoSelectionCardBase";
+from "temp-library-components/cards/opsera/OpseraInfinityLogoSelectionCardBase";
 import GitSelectionCardBase from "temp-library-components/cards/git/GitSelectionCardBase";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
@@ -27,15 +27,15 @@ export default function CreateWorkspaceResourceWizardResourceSelectionScreen(
 
   const handleFlowSelectionButton = (selectedFlow) => {
     switch (selectedFlow) {
-      case WORKSPACE_RESOURCE_TYPES.PIPELINE:
-        setCurrentScreen(CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_PIPELINE_SCREEN);
-        return;
-      case WORKSPACE_RESOURCE_TYPES.TASK:
-        setCurrentScreen(CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TASK_SCREEN);
-        return;
-      case WORKSPACE_RESOURCE_TYPES.TOOL:
-        setCurrentScreen(CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TOOL_SCREEN);
-        return;
+    case WORKSPACE_RESOURCE_TYPES.PIPELINE:
+      setCurrentScreen(CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_PIPELINE_SCREEN);
+      return;
+    case WORKSPACE_RESOURCE_TYPES.TASK:
+      setCurrentScreen(CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TASK_SCREEN);
+      return;
+    case WORKSPACE_RESOURCE_TYPES.TOOL:
+      setCurrentScreen(CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TOOL_SCREEN);
+      return;
     }
   };
 
@@ -61,10 +61,10 @@ export default function CreateWorkspaceResourceWizardResourceSelectionScreen(
       buttonContainer={getButtonContainer()}
     >
       <div className={"m-4"}>
-          <H5FieldSubHeader
-            className={"mb-3 mx-3"}
-            subheaderText={"What kind of Resource would you like to create today?"}
-          />
+        <H5FieldSubHeader
+          className={"mb-3 mx-3"}
+          subheaderText={"What kind of Resource would you like to create today?"}
+        />
         <Row>
           <Col xs={12} sm={12} md={6} lg={6} xl={4}>
             <WorkspaceResourceOptionCardBase

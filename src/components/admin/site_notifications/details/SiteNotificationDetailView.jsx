@@ -7,10 +7,10 @@ import ActionBarBackButton from "components/common/actions/buttons/ActionBarBack
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import SiteNotificationDetailPanel
-  from "components/admin/site_notifications/details/SiteNotificationDetailPanel";
+from "components/admin/site_notifications/details/SiteNotificationDetailPanel";
 import Model from "core/data_model/model";
 import SiteNotificationManagementSubNavigationBar
-  from "components/admin/site_notifications/SiteNotificationManagementSubNavigationBar";
+from "components/admin/site_notifications/SiteNotificationManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function SiteNotificationDetailView() {

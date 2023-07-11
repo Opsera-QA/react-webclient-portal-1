@@ -86,7 +86,7 @@ function InformaticaRunAssistantSelectConfigurationButton(
     }
 
     if (
-         hasStringValue(configuration.location) !== true
+      hasStringValue(configuration.location) !== true
       && (!Array.isArray(configuration.types) || configuration.types.length === 0)
       && hasStringValue(configuration.updateBy) !== true
       && hasDateValue(configuration.updateTime) !== true

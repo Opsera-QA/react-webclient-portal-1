@@ -100,26 +100,26 @@ function MaintainabilityLineChart({ persona, date }) {
           ) : (
             <ResponsiveLine
               {...defaultConfig("Number of Deployments", "Date", 
-                                false, true, "wholeNumbers", "monthDate")}
+                false, true, "wholeNumbers", "monthDate")}
               data={data ? data.data : []}
               indexBy="date"
               xScale={{
-                        type: "time",
-                        format: "%Y-%m-%d",
-                        precision: "day",
-                      }}
+                type: "time",
+                format: "%Y-%m-%d",
+                precision: "day",
+              }}
               yScale={{ 
-                        type: "linear", 
-                        min: 0, 
-                        max: "auto", 
-                        stacked: false
-                      }}
+                type: "linear", 
+                min: 0, 
+                max: "auto", 
+                stacked: false
+              }}
               colors={getColor}  
               onClick={() => setShowModal(true)}
               tooltip={({ point, color }) => <ChartTooltip 
-                              titles = {["Number of Deployments"]}
-                              values = {[point.data.y]}
-                              color = {color} />}
+                titles = {["Number of Deployments"]}
+                values = {[point.data.y]}
+                color = {color} />}
             />
           )}
         </div>

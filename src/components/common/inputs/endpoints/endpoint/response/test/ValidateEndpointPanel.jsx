@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ValidateEndpointButton
-  from "components/common/inputs/endpoints/endpoint/ValidateEndpointButton";
+from "components/common/inputs/endpoints/endpoint/ValidateEndpointButton";
 import StandaloneConsoleLogField from "components/common/fields/log/StandaloneConsoleLogField";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import {

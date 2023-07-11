@@ -608,28 +608,28 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
 
   return (
     <>
-    <EditorPanelContainer
-      handleClose={handleClose}
-      isLoading={isLoading}
-      recordDto={octopusApplicationDataDto}
-      updateRecord={appID ? updateApplicationCaller : createApplication}
-      createRecord={createApplication}
-      setRecordDto={setOctopusApplicationDataDto}
-      extraButtons={getDeleteButton()}
-      className={""}
-    >
-      {getCreateMessage()}
-      <div>
-        {appID && octopusApplicationDataDto.getData("id") && type && (type !== "environment") && (
-          <TestConnectionButton toolDataDto={octopusApplicationDataDto} />
+      <EditorPanelContainer
+        handleClose={handleClose}
+        isLoading={isLoading}
+        recordDto={octopusApplicationDataDto}
+        updateRecord={appID ? updateApplicationCaller : createApplication}
+        createRecord={createApplication}
+        setRecordDto={setOctopusApplicationDataDto}
+        extraButtons={getDeleteButton()}
+        className={""}
+      >
+        {getCreateMessage()}
+        <div>
+          {appID && octopusApplicationDataDto.getData("id") && type && (type !== "environment") && (
+            <TestConnectionButton toolDataDto={octopusApplicationDataDto} />
           )}
-      </div>
-      {getEnvironmentEditorFields()}
-      {getAccountEditorFields()}
-      {getTargetEditorFields()}
-      {getFeedEditorForm()}
-      {getTomcatEditorFields()}
-    </EditorPanelContainer>
+        </div>
+        {getEnvironmentEditorFields()}
+        {getAccountEditorFields()}
+        {getTargetEditorFields()}
+        {getFeedEditorForm()}
+        {getTomcatEditorFields()}
+      </EditorPanelContainer>
       <DeleteModal
         showModal={showDeleteModal}
         setShowModal={setShowDeleteModal}

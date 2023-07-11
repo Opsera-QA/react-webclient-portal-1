@@ -18,14 +18,14 @@ export const DATA_POINT_EVALUATION_RULE_TYPE_LABELS = {
 
 export const getDataPointEvaluationRuleTypeLabel = (dataPointEvaluationRuleType) => {
   switch (dataPointEvaluationRuleType) {
-    case DATA_POINT_EVALUATION_RULE_TYPES.SUCCESS:
-      return DATA_POINT_EVALUATION_RULE_TYPE_LABELS.SUCCESS;
-    case DATA_POINT_EVALUATION_RULE_TYPES.WARNING:
-      return DATA_POINT_EVALUATION_RULE_TYPE_LABELS.WARNING;
-    case DATA_POINT_EVALUATION_RULE_TYPES.FAILURE:
-      return DATA_POINT_EVALUATION_RULE_TYPE_LABELS.FAILURE;
-    default:
-      return dataPointEvaluationRuleType;
+  case DATA_POINT_EVALUATION_RULE_TYPES.SUCCESS:
+    return DATA_POINT_EVALUATION_RULE_TYPE_LABELS.SUCCESS;
+  case DATA_POINT_EVALUATION_RULE_TYPES.WARNING:
+    return DATA_POINT_EVALUATION_RULE_TYPE_LABELS.WARNING;
+  case DATA_POINT_EVALUATION_RULE_TYPES.FAILURE:
+    return DATA_POINT_EVALUATION_RULE_TYPE_LABELS.FAILURE;
+  default:
+    return dataPointEvaluationRuleType;
   }
 };
 
@@ -37,12 +37,12 @@ export const SUPPORTED_DATA_POINT_EVALUATION_RULE_TYPES = [
 
 export const getDataPointEvaluationRuleTypeIcon = (dataPointEvaluationRuleType) => {
   switch (dataPointEvaluationRuleType) {
-    case DATA_POINT_EVALUATION_RULE_TYPES.SUCCESS:
-      return faCheckCircle;
-    case DATA_POINT_EVALUATION_RULE_TYPES.WARNING:
-      return faExclamationTriangle;
-    case DATA_POINT_EVALUATION_RULE_TYPES.FAILURE:
-      return faExclamationCircle;
+  case DATA_POINT_EVALUATION_RULE_TYPES.SUCCESS:
+    return faCheckCircle;
+  case DATA_POINT_EVALUATION_RULE_TYPES.WARNING:
+    return faExclamationTriangle;
+  case DATA_POINT_EVALUATION_RULE_TYPES.FAILURE:
+    return faExclamationCircle;
   }
 };
 
@@ -67,19 +67,19 @@ export const getFormattedDataPointEvaluationText = (dataPointEvaluationRule, dat
   }
 
   switch (triggerFilter) {
-    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.BETWEEN_INCLUSIVE:
-      return `The ${ruleLabel} rule will trigger when the value is between ${primaryValue} and ${secondaryValue} (inclusive).`;
-    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.EQUAL_TO:
-      return `The ${ruleLabel} rule will trigger when the value is equal to ${primaryValue}.`;
-    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.GREATER_THAN:
-      return `The ${ruleLabel} rule will trigger when the value is greater than ${primaryValue}.`;
-    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.GREATER_THAN_OR_EQUAL_TO:
-      return `The ${ruleLabel} rule will trigger when the value is greater than or equal to ${primaryValue}.`;
-    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.LESS_THAN:
-      return `The ${ruleLabel} rule will trigger when the value is less than ${primaryValue}.`;
-    case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.LESS_THAN_OR_EQUAL_TO:
-      return `The ${ruleLabel} rule will trigger when the value is less than or equal to ${primaryValue}.`;
-    default:
-      return `The ${ruleLabel} rule assigned to this data point is invalid and will not take effect.`;
+  case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.BETWEEN_INCLUSIVE:
+    return `The ${ruleLabel} rule will trigger when the value is between ${primaryValue} and ${secondaryValue} (inclusive).`;
+  case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.EQUAL_TO:
+    return `The ${ruleLabel} rule will trigger when the value is equal to ${primaryValue}.`;
+  case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.GREATER_THAN:
+    return `The ${ruleLabel} rule will trigger when the value is greater than ${primaryValue}.`;
+  case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.GREATER_THAN_OR_EQUAL_TO:
+    return `The ${ruleLabel} rule will trigger when the value is greater than or equal to ${primaryValue}.`;
+  case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.LESS_THAN:
+    return `The ${ruleLabel} rule will trigger when the value is less than ${primaryValue}.`;
+  case DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.LESS_THAN_OR_EQUAL_TO:
+    return `The ${ruleLabel} rule will trigger when the value is less than or equal to ${primaryValue}.`;
+  default:
+    return `The ${ruleLabel} rule assigned to this data point is invalid and will not take effect.`;
   }
 };

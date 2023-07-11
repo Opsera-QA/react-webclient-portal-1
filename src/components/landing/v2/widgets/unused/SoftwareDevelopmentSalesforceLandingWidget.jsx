@@ -5,7 +5,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import FreeTrialLaunchSalesforceWorkflowWizardOverlay
-  from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
+from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
 
 const EXTERNAL_LINKS = {
   YOUTUBE_CHANNEL: "https://youtube.com/channel/UCJJFTWPkGfK8Kq4nPbNAtaQ",
@@ -42,12 +42,12 @@ export default function SoftwareDevelopmentSalesforceLandingWidget({ className }
             placement={"bottom"}
           >
             <div className={"pointer focusText"}
-                 onClick={launchWorkflowCreationWizard}>
+              onClick={launchWorkflowCreationWizard}>
               <img alt="Get started with Salesforce on Opsera!"
-                   src="/img/salesforce/salesforce_logo_white_475x332.png"
-                   width="220"
-                   height="154"
-                   style={{ marginRight: "10px" }}
+                src="/img/salesforce/salesforce_logo_white_475x332.png"
+                width="220"
+                height="154"
+                style={{ marginRight: "10px" }}
               />
               Get Started by clicking here!
             </div>
@@ -63,11 +63,11 @@ export default function SoftwareDevelopmentSalesforceLandingWidget({ className }
               <div>
                 <span className={"focusText"}>Opsera On</span>
                 <img alt="Opsera is available on Salesforce AppExchange!"
-                     src="/img/salesforce/salesforce_appexchange_240x80.png"
-                     width="240"
-                     height="80"
-                     onClick={handleClick(EXTERNAL_LINKS.SALESFORCE_APPEXCHANGE)}
-                     className={"pointer"}
+                  src="/img/salesforce/salesforce_appexchange_240x80.png"
+                  width="240"
+                  height="80"
+                  onClick={handleClick(EXTERNAL_LINKS.SALESFORCE_APPEXCHANGE)}
+                  className={"pointer"}
                 />
               </div>
             </TooltipWrapper>

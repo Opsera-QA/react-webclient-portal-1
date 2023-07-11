@@ -8,17 +8,17 @@ import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
 import Col from "react-bootstrap/Col";
 import SuccessfulBuildsContainedDataBlock
-  from "components/common/metrics/data_blocks/build/successful_builds/SuccessfulBuildsContainedDataBlock";
+from "components/common/metrics/data_blocks/build/successful_builds/SuccessfulBuildsContainedDataBlock";
 import FailedBuildsContainedDataBlock
-  from "components/common/metrics/data_blocks/build/failed_builds/FailedBuildsContainedDataBlock";
+from "components/common/metrics/data_blocks/build/failed_builds/FailedBuildsContainedDataBlock";
 import SuccessRateContainedDataBlock
-  from "components/common/metrics/data_blocks/success/success_rate/SuccessRateContainedDataBlock";
+from "components/common/metrics/data_blocks/success/success_rate/SuccessRateContainedDataBlock";
 import AverageDailyBuildsContainedDataBlock
-  from "components/common/metrics/data_blocks/build/average_daily/AverageDailyBuildsContainedDataBlock";
+from "components/common/metrics/data_blocks/build/average_daily/AverageDailyBuildsContainedDataBlock";
 import AverageBuildDurationContainedDataBlock
-  from "components/common/metrics/data_blocks/build/average_duration/AverageBuildDurationContainedDataBlock";
+from "components/common/metrics/data_blocks/build/average_duration/AverageBuildDurationContainedDataBlock";
 import FailureRateContainedDataBlock
-  from "components/common/metrics/data_blocks/failure/failure_rate/FailureRateContainedDataBlock";
+from "components/common/metrics/data_blocks/failure/failure_rate/FailureRateContainedDataBlock";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function AllBuildStatisticsDataBlockContainer({ dashboardData, kpiConfiguration }) {

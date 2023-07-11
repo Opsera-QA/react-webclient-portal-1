@@ -7,9 +7,9 @@ import BooleanField from "components/common/fields/boolean/BooleanField";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import LdapAccountRegistrationLinkField
-  from "components/common/fields/link/standalone/ldap/LdapAccountRegistrationLinkField";
+from "components/common/fields/link/standalone/ldap/LdapAccountRegistrationLinkField";
 import SpecificOrganizationAccountSettingsPageLinkCard
-  from "components/admin/organization_settings/SpecificOrganizationAccountSettingsPageLinkCard";
+from "components/admin/organization_settings/SpecificOrganizationAccountSettingsPageLinkCard";
 
 function LdapOrganizationAccountSummaryPanel({ ldapOrganizationAccountData, setActiveTab }) {
 

@@ -61,16 +61,16 @@ function OverallReleaseQualityMetrics() {
   };
 
   // const getOverallReleaseQualityMetrics = async (cancelSource = cancelTokenSource) => {
-    // const kpiResponse = await KpiActions.getKpisV2(getAccessToken, cancelSource, filterModel);
-    // const kpis = kpiResponse?.data?.data;
-    //
-    // if (isMounted?.current === true && kpiResponse && kpis) {
-    //   setKpis(kpis);
-    //   let newFilterDto = filterModel;
-    //   newFilterDto.setData("totalCount", kpiResponse?.data?.count);
-    //   newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-    //   setMarketplaceFilterDto({...newFilterDto});
-    // }
+  // const kpiResponse = await KpiActions.getKpisV2(getAccessToken, cancelSource, filterModel);
+  // const kpis = kpiResponse?.data?.data;
+  //
+  // if (isMounted?.current === true && kpiResponse && kpis) {
+  //   setKpis(kpis);
+  //   let newFilterDto = filterModel;
+  //   newFilterDto.setData("totalCount", kpiResponse?.data?.count);
+  //   newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+  //   setMarketplaceFilterDto({...newFilterDto});
+  // }
   // };
 
   const getMetricBlocks = () => {

@@ -22,7 +22,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {buttonLabelHelper} from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import PipelineRuntimeSettingsPipelineStepDynamicSettingsPanel
-  from "components/workflow/pipelines/action_controls/start/step/PipelineRuntimeSettingsPipelineStepDynamicSettingsPanel";
+from "components/workflow/pipelines/action_controls/start/step/PipelineRuntimeSettingsPipelineStepDynamicSettingsPanel";
 
 export default function PipelineActionRuntimeSettingsSelectionOverlay(
   {

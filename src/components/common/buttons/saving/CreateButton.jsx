@@ -121,7 +121,7 @@ function CreateButton(
         <div className="d-flex mr-3 mt-auto">
           <div><span className="text-muted mr-2">Add Another</span></div>
           <div><input className="mt-1" type="checkbox" checked={addAnother}
-                      onChange={() => setAddAnother(!addAnother)} /></div>
+            onChange={() => setAddAnother(!addAnother)} /></div>
         </div>
       );
     }

@@ -18,7 +18,7 @@ import {
 import { DialogToastContext } from "contexts/DialogToastContext";
 import ExportReportPanel from "../ExportReportPanel";
 import GitToGitSyncActionableInsightOverlay
-  from "./actionable_insights/GitToGitSyncActionableInsightOverlay";
+from "./actionable_insights/GitToGitSyncActionableInsightOverlay";
 import {gitToGitSyncMetadata} from "./gitToGitSync.metadata";
 import TaskExportReportButton from "../TaskExportReportButton";
 import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";

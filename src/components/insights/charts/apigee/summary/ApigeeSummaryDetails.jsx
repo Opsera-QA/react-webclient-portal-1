@@ -35,53 +35,53 @@ function ApigeeSummaryDetails({ kpiConfiguration, summaryData, isLoading, type }
 
   const getIcon = (severity) => {
     switch (severity) {
-      case "Green":
-        return faArrowCircleUp;
-      case "Red":
-        return faArrowCircleDown;
-      case "Neutral":
-        return faMinusCircle;
-      default:
-        break;
+    case "Green":
+      return faArrowCircleUp;
+    case "Red":
+      return faArrowCircleDown;
+    case "Neutral":
+      return faMinusCircle;
+    default:
+      break;
     }
   };
 
   const getDurationIcon = (severity) => {
     switch (severity) {
-      case "Green":
-        return faArrowCircleDown;
-      case "Red":
-        return faArrowCircleUp;
-      case "Neutral":
-        return faMinusCircle;
-      default:
-        break;
+    case "Green":
+      return faArrowCircleDown;
+    case "Red":
+      return faArrowCircleUp;
+    case "Neutral":
+      return faMinusCircle;
+    default:
+      break;
     }
   };
 
   const getIconColor = (severity) => {
     switch (severity) {
-      case "Red":
-        return "red";
-      case "Green":
-        return "green";
-      case "Neutral":
-        return "light-gray-text-secondary";
-      case "-":
-        return "black";
-      default:
-        break;
+    case "Red":
+      return "red";
+    case "Green":
+      return "green";
+    case "Neutral":
+      return "light-gray-text-secondary";
+    case "-":
+      return "black";
+    default:
+      break;
     }
   };
 
   const getDescription = (severity) => {
     switch (severity) {
-      case "Green":
-        return "This project is trending upward.";
-      case "Red":
-        return "This project is trending downward.";
-      case "Neutral":
-        return "Neutral: This project has experienced no change";
+    case "Green":
+      return "This project is trending upward.";
+    case "Red":
+      return "This project is trending downward.";
+    case "Neutral":
+      return "Neutral: This project has experienced no change";
     }
   };
 

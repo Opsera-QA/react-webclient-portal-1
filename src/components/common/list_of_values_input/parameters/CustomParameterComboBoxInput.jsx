@@ -62,7 +62,7 @@ function CustomParameterComboBoxInput(
       undefined,
       requireVaultSavedParameters,
       requireInsensitiveParameters,
-      );
+    );
     const parameters = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(parameters)) {

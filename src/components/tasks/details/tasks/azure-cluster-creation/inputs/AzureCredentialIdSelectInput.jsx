@@ -39,18 +39,18 @@ function AzureCredentialIdSelectInput({ fieldName, dataObject, setDataObject , a
   };
 
   return (
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        setDataFunction={handleChange}
-        selectOptions={applicationsList}
-        clearDataFunction={clearDataFunction}
-        valueField={"_id"}
-        textField={'name'}
-        disabled={applicationsList.length === 0}
-        placeholder={'Select Azure Application Credential'}
-      />
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      setDataFunction={handleChange}
+      selectOptions={applicationsList}
+      clearDataFunction={clearDataFunction}
+      valueField={"_id"}
+      textField={'name'}
+      disabled={applicationsList.length === 0}
+      placeholder={'Select Azure Application Credential'}
+    />
   );
 }
 

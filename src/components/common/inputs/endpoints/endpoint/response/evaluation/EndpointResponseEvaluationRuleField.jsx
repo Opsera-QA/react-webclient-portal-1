@@ -4,7 +4,7 @@ import InfoContainer from "components/common/containers/InfoContainer";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import FieldContainer from "components/common/fields/FieldContainer";
 import apiResponseEvaluationOptionConstants
-  from "@opsera/definitions/constants/api/response/apiResponseEvaluationOption.constants";
+from "@opsera/definitions/constants/api/response/apiResponseEvaluationOption.constants";
 
 function EndpointResponseEvaluationRuleField(
   {
@@ -133,14 +133,14 @@ function EndpointResponseEvaluationRuleField(
     const option = responseEvaluationRule?.option;
 
     switch (option) {
-      case "status":
-        return formatTextForStatusRule(responseEvaluationRule);
-      case "response_evaluation":
-        return formatTextForResponseEvaluationRule(responseEvaluationRule);
-      case "field_evaluation":
-        return formatTextForFieldEvaluationRule(responseEvaluationRule);
-      default:
-        return "Invalid Evaluation Rule Type!";
+    case "status":
+      return formatTextForStatusRule(responseEvaluationRule);
+    case "response_evaluation":
+      return formatTextForResponseEvaluationRule(responseEvaluationRule);
+    case "field_evaluation":
+      return formatTextForFieldEvaluationRule(responseEvaluationRule);
+    default:
+      return "Invalid Evaluation Rule Type!";
     }
   };
 

@@ -14,7 +14,7 @@ import StepConfigJenkinsToolInput from "../common/inputs/StepConfigJenkinsToolIn
 import modelHelpers from "components/common/model/modelHelpers";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 
 function SeleniumStepConfiguration({
   stepTool,
@@ -62,18 +62,18 @@ function SeleniumStepConfiguration({
     let seleniumConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, seleniumPipelineStepConfigurationMetadata);
 
     if (seleniumConfigurationData.getData("sourceScript") === true) {
-        seleniumConfigurationData.setMetaDataFields(seleniumPipelineStepConfigurationMetadata.fields);
+      seleniumConfigurationData.setMetaDataFields(seleniumPipelineStepConfigurationMetadata.fields);
     }        
 
     setSeleniumStepConfigurationDto(seleniumConfigurationData);
 
     if (job_type) {
-        setJobType(job_type);
+      setJobType(job_type);
     }
 
     if (threshold) {
-        setThresholdType(threshold?.type);
-        setThresholdValue(threshold?.value);
+      setThresholdType(threshold?.type);
+      setThresholdValue(threshold?.value);
     }
 
     setIsLoading(false);
@@ -119,12 +119,12 @@ function SeleniumStepConfiguration({
         seleniumStepConfigurationDto.getData("dockerTagName").length === 0
         : false)
     ) {
-        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
-        setToast(toast);
-        setShowToast(true);        
-        return false;
+      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
+      setToast(toast);
+      setShowToast(true);        
+      return false;
     } else {
-        return true;
+      return true;
     }
 
   };

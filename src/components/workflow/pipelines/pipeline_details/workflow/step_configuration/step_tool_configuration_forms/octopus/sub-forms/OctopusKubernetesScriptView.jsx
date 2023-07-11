@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import TextInputBase from "../../../../../../../../common/inputs/text/TextInputBase";
 import ScriptLibrarySelectInput
-  from "../../../../../../../../common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
+from "../../../../../../../../common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
 
 function OctopusKubernetesScriptView({dataObject, setDataObject, isLoading, disabled, tool_prop}) {
 

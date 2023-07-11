@@ -5,9 +5,9 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
 import ServiceNowMeanTimeToResolutionBarChart
-  from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionBarChart";
+from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionBarChart";
 import ServiceNowMeanTimeToAcknowledgeBarChart
-  from "components/insights/charts/servicenow/bar_chart/mean_time_to_acknowledge/ServiceNowMeanTimeToAcknowledgeBarChart";
+from "components/insights/charts/servicenow/bar_chart/mean_time_to_acknowledge/ServiceNowMeanTimeToAcknowledgeBarChart";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function ServiceNowMeanTimeToAcknowledgeDataBlock({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {

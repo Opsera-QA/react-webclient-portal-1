@@ -54,7 +54,7 @@ export default function EnableEditingIcon(
             icon={faPencil}
             className={"mr-1"}
           />
-         {getLabel()}
+          {getLabel()}
         </div>
       </div>
     </div>

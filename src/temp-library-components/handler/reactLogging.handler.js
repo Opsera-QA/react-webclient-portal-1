@@ -10,7 +10,7 @@ ReactLoggingHandler.logApiErrorMessage = (
   error,
   prependedMessage = "API Response Error:",
   defaultErrorMessage,
-  ) => {
+) => {
   return ReactLoggingHandler.logErrorMessage(
     originComponentName,
     functionName,

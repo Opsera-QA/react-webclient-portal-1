@@ -24,7 +24,7 @@ function CreateSalesforceQuickDeployInputFields({
     modelHelpers.parseObjectIntoNewModelBase(
       taskModel?.configuration,
       salesforceQuickDeployTaskConfigurationMetadata,
-        true
+      true
     ),
   );
   const [parentConfig, setParentConfig] =    useState(modelHelpers.parseObjectIntoNewModelBase(taskModel, tasksMetadata, true));

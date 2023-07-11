@@ -14,10 +14,10 @@ import { getField } from "components/common/metadata/metadata-helpers";
 
 const getFormattedTextLabel = (fieldName) => {
   switch (fieldName) {
-    case "destinationContent":
-      return "Keeping Destination Branch Changes";
-    case "sourceContent":
-      return "Merging in Source Branch Changes";
+  case "destinationContent":
+    return "Keeping Destination Branch Changes";
+  case "sourceContent":
+    return "Merging in Source Branch Changes";
   }
 
   return fieldName;

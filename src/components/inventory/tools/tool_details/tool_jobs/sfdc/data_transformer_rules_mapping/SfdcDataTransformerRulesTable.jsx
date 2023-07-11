@@ -49,7 +49,7 @@ function SfdcDataTransformerRulesTable({
       const ruleId = selectedRow?._id;
       const parsedModel = modelHelpers.parseObjectIntoModel(
         selectedRow?.configuration,
-          sfdcDataTransformerRulesMapMetadata,
+        sfdcDataTransformerRulesMapMetadata,
       );
       parsedModel?.setData("ruleId", ruleId);
       setSelectedRule({ ...parsedModel });

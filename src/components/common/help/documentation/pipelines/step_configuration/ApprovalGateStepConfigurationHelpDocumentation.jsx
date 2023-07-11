@@ -15,15 +15,15 @@ function ApprovalGateStepConfigurationHelpDocumentation() {
       <div>
         <div className={"ml-2 mb-2"}>The Approval Gate step will halt the running pipeline and notify the configured user in order to allow the pipeline to proceed. There are 2 steps required in this workflow: configuring the Approval Gate step and adding a pipeline step notification to the configured step. For more detailed information on Approval Gate setup, view the <b><a href="https://docs.opsera.io/approval-gate" target="_blank" rel="noreferrer">Approval Gate Step Configuration Help Documentation</a></b>.
         </div>
-          <div className={"ml-4 mb-2"}>
-            <div><h6>Approval Gate Step Configuration:</h6></div>
-            <ol>
-              <li>In the <b>Custom Step Message</b> field, provide a unique message to send to the configured user.</li>
-              <li>In the <b>Point of Contact</b> field, enter a name to be used if the configured user has any questions.</li>
-              <li>Select the <b>Save</b> button to proceed with configuring the pipeline step notification.</li>
-              <li>To proceed to pipeline step notification, select the mail icon from the Approval Gate Step and continue with setup.</li>
-            </ol>
-          </div>
+        <div className={"ml-4 mb-2"}>
+          <div><h6>Approval Gate Step Configuration:</h6></div>
+          <ol>
+            <li>In the <b>Custom Step Message</b> field, provide a unique message to send to the configured user.</li>
+            <li>In the <b>Point of Contact</b> field, enter a name to be used if the configured user has any questions.</li>
+            <li>Select the <b>Save</b> button to proceed with configuring the pipeline step notification.</li>
+            <li>To proceed to pipeline step notification, select the mail icon from the Approval Gate Step and continue with setup.</li>
+          </ol>
+        </div>
         <div className={"ml-4"}>
           <b>Note</b>: The Approval Gate step setup is not complete until pipeline step notification has been configured following this step setup.
         </div>

@@ -9,14 +9,14 @@ import azureTaskActions from "../azure-cluster-actions";
 import IconBase from "components/common/icons/IconBase";
 
 function AzureRegionSelectInput({
-                                               fieldName,
-                                               dataObject,
-                                               setDataObject,
-                                               azureToolConfigId,
-                                               azureConfig,
-                                               azureApplication,
-                                               applicationData,
-                                             }) {
+  fieldName,
+  dataObject,
+  setDataObject,
+  azureToolConfigId,
+  azureConfig,
+  azureApplication,
+  applicationData,
+}) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [azureRegionList, setAzureRegionList] = useState([]);
@@ -33,9 +33,9 @@ function AzureRegionSelectInput({
     setCancelTokenSource(source);
     setAzureRegionList([]);
     if (isValidToolConfig() && isValidApplication()) {
-        loadData(source).catch((error) => {
-          throw error;
-        });
+      loadData(source).catch((error) => {
+        throw error;
+      });
     }
   }, [azureToolConfigId, azureApplication, azureConfig, applicationData]);
 

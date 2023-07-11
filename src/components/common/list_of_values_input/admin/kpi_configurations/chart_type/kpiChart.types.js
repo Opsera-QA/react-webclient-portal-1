@@ -18,20 +18,20 @@ export const KPI_CHART_TYPE_LABELS = {
 
 export const getKpiChartTypeLabel = (kpiCategoryType) => {
   switch (kpiCategoryType) {
-    case KPI_CHART_TYPES.BAR_CHART:
-      return KPI_CHART_TYPE_LABELS.BAR_CHART;
-    case KPI_CHART_TYPES.LINE_CHART:
-      return KPI_CHART_TYPE_LABELS.LINE_CHART;
-    case KPI_CHART_TYPES.PIE_CHART:
-      return KPI_CHART_TYPE_LABELS.PIE_CHART;
-    case KPI_CHART_TYPES.CALENDAR:
-      return KPI_CHART_TYPE_LABELS.CALENDAR;
-    case KPI_CHART_TYPES.TABLE:
-      return KPI_CHART_TYPE_LABELS.TABLE;
-    case KPI_CHART_TYPES.NUMBER:
-      return KPI_CHART_TYPE_LABELS.NUMBER;
-    default:
-      return kpiCategoryType;
+  case KPI_CHART_TYPES.BAR_CHART:
+    return KPI_CHART_TYPE_LABELS.BAR_CHART;
+  case KPI_CHART_TYPES.LINE_CHART:
+    return KPI_CHART_TYPE_LABELS.LINE_CHART;
+  case KPI_CHART_TYPES.PIE_CHART:
+    return KPI_CHART_TYPE_LABELS.PIE_CHART;
+  case KPI_CHART_TYPES.CALENDAR:
+    return KPI_CHART_TYPE_LABELS.CALENDAR;
+  case KPI_CHART_TYPES.TABLE:
+    return KPI_CHART_TYPE_LABELS.TABLE;
+  case KPI_CHART_TYPES.NUMBER:
+    return KPI_CHART_TYPE_LABELS.NUMBER;
+  default:
+    return kpiCategoryType;
   }
 };
 

@@ -24,18 +24,18 @@ function OracleFusionReportMigrationScmToolTypeSelectInput({model, setModel, isL
   };
 
   return (
-     <SelectInputBase
-       fieldName={"service"}
-       dataObject={model}
-       setDataObject={setModel}
-       selectOptions={SCM_TOOL_LIST}
-       valueField={"value"}
-       textField={"name"}
-       placeholderText={"Select a Tool Type"}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-       busy={isLoading}
-     />
+    <SelectInputBase
+      fieldName={"service"}
+      dataObject={model}
+      setDataObject={setModel}
+      selectOptions={SCM_TOOL_LIST}
+      valueField={"value"}
+      textField={"name"}
+      placeholderText={"Select a Tool Type"}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+      busy={isLoading}
+    />
   );
 }
 

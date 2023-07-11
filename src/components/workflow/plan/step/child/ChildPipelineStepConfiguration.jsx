@@ -4,9 +4,9 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import thresholdMetadata from "components/common/metadata/pipelines/thresholdMetadata";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import ChildPipelineSelectInput
-  from "components/workflow/plan/step/child/ChildPipelineSelectInput";
+from "components/workflow/plan/step/child/ChildPipelineSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {

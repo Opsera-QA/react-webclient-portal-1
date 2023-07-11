@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 export const groupTypeOptions = [
-    {value: "project", text: "project"},
-    {value: "tag", text: "tag"},
-    {value: "user", text: "user"}
-  ];
+  {value: "project", text: "project"},
+  {value: "tag", text: "tag"},
+  {value: "user", text: "user"}
+];
 
 function GroupTypeSelectInput({ fieldName, dataObject, setDataObject, disabled}) {
   return (

@@ -5,9 +5,9 @@ import { githubActions } from "components/inventory/tools/tool_details/tool_jobs
 import { gitlabActions } from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput
-  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput";
+from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput";
 import SalesforceToGitMergeSyncTaskTargetBranchSelectInput
-  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskTargetBranchSelectInput";
+from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskTargetBranchSelectInput";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import Col from "react-bootstrap/Col";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
@@ -50,36 +50,36 @@ function SalesforceToGitMergeSyncTaskWithJiraTargetBranchInput(
       setIsLoading(true);      
       let response = {};
       switch (service) {
-        case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
-          response = await bitbucketActions.getBranch(
-            getAccessToken,
-            cancelTokenSource,
-            toolId,
-            workspace,
-            repositoryId,
-            jiraIssueId,
-          );
-          break;
-        case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
-          response = await githubActions.getBranch(
-            getAccessToken,
-            cancelTokenSource,
-            toolId,
-            repositoryId,
-            jiraIssueId,
-          );
-          break;
-        case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
-          response = await gitlabActions.getBranch(
-            getAccessToken,
-            cancelTokenSource,
-            toolId,
-            repositoryId,
-            jiraIssueId,
-          );
-          break;
-        default:
-          response = {};
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
+        response = await bitbucketActions.getBranch(
+          getAccessToken,
+          cancelTokenSource,
+          toolId,
+          workspace,
+          repositoryId,
+          jiraIssueId,
+        );
+        break;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
+        response = await githubActions.getBranch(
+          getAccessToken,
+          cancelTokenSource,
+          toolId,
+          repositoryId,
+          jiraIssueId,
+        );
+        break;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
+        response = await gitlabActions.getBranch(
+          getAccessToken,
+          cancelTokenSource,
+          toolId,
+          repositoryId,
+          jiraIssueId,
+        );
+        break;
+      default:
+        response = {};
       }
 
       const data = DataParsingHelper.parseObject(response?.data?.data, false);

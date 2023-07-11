@@ -6,11 +6,11 @@ import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySet
 import InfoContainer from "components/common/containers/InfoContainer";
 import SideBySideViewBase from "components/common/tabs/SideBySideViewBase";
 import ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationSummaryBase";
+from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationSummaryBase";
 import ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary";
+from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary";
 import ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary";
+from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const SUMMARY_LOG_VIEWS = {
@@ -149,44 +149,44 @@ export default function ExternalRestApiIntegrationActivityLogSummaryPanelBase(
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case SUMMARY_LOG_VIEWS.STATUS_CHECK_SUMMARY:
-        return (
-          <ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
-            endpoint={statusCheckStatusCheckEndpoint}
-          />
-        );
-      case SUMMARY_LOG_VIEWS.STATUS_CHECK_API_TOKEN_GENERATION:
-        return (
-          <ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary
-            endpoint={statusCheckHeaderTokenEndpoint}
-          />
-        );
-      case SUMMARY_LOG_VIEWS.STATUS_CHECK_CONNECTION_VALIDATION:
-        return (
-          <ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary
-            endpoint={statusCheckConnectionCheckEndpoint}
-          />
-        );
-      case SUMMARY_LOG_VIEWS.CALL_OPERATION_SUMMARY:
-        return (
-          <ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
-            endpoint={runRequestCallOperationEndpoint}
-          />
-        );
-      case SUMMARY_LOG_VIEWS.CALL_OPERATION_API_TOKEN_GENERATION:
-        return (
-          <ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary
-            endpoint={runRequestHeaderTokenEndpoint}
-          />
-        );
-      case SUMMARY_LOG_VIEWS.CALL_OPERATION_CONNECTION_VALIDATION:
-        return (
-          <ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary
-            endpoint={runRequestConnectionCheckEndpoint}
-          />
-        );
-      default:
-        return null;
+    case SUMMARY_LOG_VIEWS.STATUS_CHECK_SUMMARY:
+      return (
+        <ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
+          endpoint={statusCheckStatusCheckEndpoint}
+        />
+      );
+    case SUMMARY_LOG_VIEWS.STATUS_CHECK_API_TOKEN_GENERATION:
+      return (
+        <ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary
+          endpoint={statusCheckHeaderTokenEndpoint}
+        />
+      );
+    case SUMMARY_LOG_VIEWS.STATUS_CHECK_CONNECTION_VALIDATION:
+      return (
+        <ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary
+          endpoint={statusCheckConnectionCheckEndpoint}
+        />
+      );
+    case SUMMARY_LOG_VIEWS.CALL_OPERATION_SUMMARY:
+      return (
+        <ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
+          endpoint={runRequestCallOperationEndpoint}
+        />
+      );
+    case SUMMARY_LOG_VIEWS.CALL_OPERATION_API_TOKEN_GENERATION:
+      return (
+        <ExternalRestApiIntegrationHeaderTokenEndpointOrchestrationSummary
+          endpoint={runRequestHeaderTokenEndpoint}
+        />
+      );
+    case SUMMARY_LOG_VIEWS.CALL_OPERATION_CONNECTION_VALIDATION:
+      return (
+        <ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary
+          endpoint={runRequestConnectionCheckEndpoint}
+        />
+      );
+    default:
+      return null;
     }
   };
 

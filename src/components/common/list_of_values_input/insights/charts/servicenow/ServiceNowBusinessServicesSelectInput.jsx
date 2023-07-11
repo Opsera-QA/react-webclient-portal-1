@@ -62,45 +62,45 @@ function ServiceNowBusinessServicesSelectInput({
   useEffect(() => {
     setBusinessServices([]);
     if (serviceNowToolId !== "" && serviceNowToolId != null) {
-    loadBusinessServices("", serviceNowToolId).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+      loadBusinessServices("", serviceNowToolId).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
     }
   }, [serviceNowToolId]);
 
   const loadBusinessServices = async (searchTerm) => {
     // if (searchTerm) {
-      try {
-        setIsLoading(true);
-        // setToggleSelected(true);
-        const response = await pipelineStepNotificationActions.getServiceNowBusinessServicesByNameV2(
-          serviceNowToolId,
-          searchTerm,
-          getAccessToken,
-          cancelTokenSource
-        );
+    try {
+      setIsLoading(true);
+      // setToggleSelected(true);
+      const response = await pipelineStepNotificationActions.getServiceNowBusinessServicesByNameV2(
+        serviceNowToolId,
+        searchTerm,
+        getAccessToken,
+        cancelTokenSource
+      );
 
-        const results = response.data.message.result;
+      const results = response.data.message.result;
 
-        if (
-          Array.isArray(results)
-        ) {
-          setBusinessServices(response.data.message.result);
-        }
-      } catch (error) {
-        if (isMounted?.current === true) {
-          toastContext.showErrorDialog(
-            "Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry."
-          );
-        }
-        console.error(error);
-      } finally {
-        if (isMounted?.current === true) {
-          setIsLoading(false);
-        }
+      if (
+        Array.isArray(results)
+      ) {
+        setBusinessServices(response.data.message.result);
       }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        toastContext.showErrorDialog(
+          "Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry."
+        );
+      }
+      console.error(error);
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
     // }
   };
 

@@ -30,12 +30,12 @@ function SsoUserDetailPanel({ ssoUserData, authorizedActions, hideSettings }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return <SsoUserSummaryPanel ssoUserData={ssoUserData} setActiveTab={!hideSettings ? setActiveTab : null} />;
-      case "settings":
-        return <SsoUserEditorPanel ssoUserData={ssoUserData} handleClose={toggleSummaryPanel} />;
-      default:
-        return null;
+    case "summary":
+      return <SsoUserSummaryPanel ssoUserData={ssoUserData} setActiveTab={!hideSettings ? setActiveTab : null} />;
+    case "settings":
+      return <SsoUserEditorPanel ssoUserData={ssoUserData} handleClose={toggleSummaryPanel} />;
+    default:
+      return null;
     }
   };
 

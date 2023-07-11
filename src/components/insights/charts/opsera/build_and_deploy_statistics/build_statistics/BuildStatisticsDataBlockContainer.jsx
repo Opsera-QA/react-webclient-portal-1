@@ -60,11 +60,11 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
         className={"build-and-deployment-statistics-kpi"}
         topText={"Success Rate"}
         middleText={
-        <MetricPercentageText
-          percentage={metricData?.build?.successPercent}
-          dataPoint={dataPoint}
-          className={"metric-block-content-text"}
-        />}
+          <MetricPercentageText
+            percentage={metricData?.build?.successPercent}
+            dataPoint={dataPoint}
+            className={"metric-block-content-text"}
+          />}
         dataPoint={dataPoint}
       />
     );
@@ -84,7 +84,7 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
           <ResponsiveLine
             data={successChartData}
             {...defaultConfig("", "Date", 
-                  false, true, "wholeNumbers", "monthDate2")}          
+              false, true, "wholeNumbers", "monthDate2")}          
             {...config()}
             tooltip={(node) => (            
               <ChartTooltip
@@ -95,10 +95,10 @@ function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfigura
             )}
             markers={[
               {
-                  axis: 'y',
-                  value: goalsData,
-                  lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
-                  legend: '',
+                axis: 'y',
+                value: goalsData,
+                lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
+                legend: '',
               }         
             ]}
           />

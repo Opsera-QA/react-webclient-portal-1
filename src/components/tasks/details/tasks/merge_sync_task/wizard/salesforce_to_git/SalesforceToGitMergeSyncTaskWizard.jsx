@@ -9,19 +9,19 @@ import {
 } from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import MergeSyncTaskWizardInitializationScreen
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/initialization_screen/MergeSyncTaskWizardInitializationScreen";
+from "components/tasks/details/tasks/merge_sync_task/wizard/screens/initialization_screen/MergeSyncTaskWizardInitializationScreen";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import MergeSyncTaskWizardConfirmationScreen
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/MergeSyncTaskWizardConfirmationScreen";
+from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/MergeSyncTaskWizardConfirmationScreen";
 import {
   MERGE_SYNC_WIZARD_SCREENS
 } from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
 import MergeSyncTaskWizardCommitSelectionScreen
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitSelectionScreen";
+from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitSelectionScreen";
 import SalesforceToGitMergeSyncTaskWizardConfigurationScreen
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/configuration_screen/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardConfigurationScreen";
+from "components/tasks/details/tasks/merge_sync_task/wizard/screens/configuration_screen/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardConfigurationScreen";
 import SalesforceToGitMergeSyncTaskWizardFileSelectionScreen
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardFileSelectionScreen";
+from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardFileSelectionScreen";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { TASK_TYPES } from "components/tasks/task.types";
@@ -130,64 +130,64 @@ const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
 
   const getBody = () => {
     switch (currentScreen) {
-      case MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-        return (
-          <MergeSyncTaskWizardInitializationScreen
-            wizardModel={wizardModel}
-            setWizardModel={setWizardModel}
-            setCurrentScreen={setCurrentScreen}
-            handleClose={handleClose}
-            mergeSyncType={"Salesforce to Git"}
-          />
-        );
-      case MERGE_SYNC_WIZARD_SCREENS.CONFIGURATION_SCREEN:
-        return (
-          <SalesforceToGitMergeSyncTaskWizardConfigurationScreen
-            wizardModel={wizardModel}
-            setWizardModel={setWizardModel}
-            setCurrentScreen={setCurrentScreen}
-            handleClose={handleClose}
-          />
-        );
-      case MERGE_SYNC_WIZARD_SCREENS.FILE_SELECTION_SCREEN:
-        return (
-          <SalesforceToGitMergeSyncTaskWizardFileSelectionScreen
-            wizardModel={wizardModel}
-            setWizardModel={setWizardModel}
-            setCurrentScreen={setCurrentScreen}
-            handleClose={handleClose}
-          />
-        );
-      case MERGE_SYNC_WIZARD_SCREENS.COMMIT_SELECTION_SCREEN:
-        return (
-          <MergeSyncTaskWizardCommitSelectionScreen
-            handleClose={handleClose}
-            setCurrentScreen={setCurrentScreen}
-            setWizardModel={setWizardModel}
-            wizardModel={wizardModel}
-          />
-        );
-      case MERGE_SYNC_WIZARD_SCREENS.CONFIRMATION_SCREEN:
-        return (
-          <MergeSyncTaskWizardConfirmationScreen
-            wizardModel={wizardModel}
-            setWizardModel={setWizardModel}
-            setCurrentScreen={setCurrentScreen}
-            handleClose={handleClose}
-          />
-        );
+    case MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+      return (
+        <MergeSyncTaskWizardInitializationScreen
+          wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
+          setCurrentScreen={setCurrentScreen}
+          handleClose={handleClose}
+          mergeSyncType={"Salesforce to Git"}
+        />
+      );
+    case MERGE_SYNC_WIZARD_SCREENS.CONFIGURATION_SCREEN:
+      return (
+        <SalesforceToGitMergeSyncTaskWizardConfigurationScreen
+          wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
+          setCurrentScreen={setCurrentScreen}
+          handleClose={handleClose}
+        />
+      );
+    case MERGE_SYNC_WIZARD_SCREENS.FILE_SELECTION_SCREEN:
+      return (
+        <SalesforceToGitMergeSyncTaskWizardFileSelectionScreen
+          wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
+          setCurrentScreen={setCurrentScreen}
+          handleClose={handleClose}
+        />
+      );
+    case MERGE_SYNC_WIZARD_SCREENS.COMMIT_SELECTION_SCREEN:
+      return (
+        <MergeSyncTaskWizardCommitSelectionScreen
+          handleClose={handleClose}
+          setCurrentScreen={setCurrentScreen}
+          setWizardModel={setWizardModel}
+          wizardModel={wizardModel}
+        />
+      );
+    case MERGE_SYNC_WIZARD_SCREENS.CONFIRMATION_SCREEN:
+      return (
+        <MergeSyncTaskWizardConfirmationScreen
+          wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
+          setCurrentScreen={setCurrentScreen}
+          handleClose={handleClose}
+        />
+      );
     }
   };
 
   const getHelpComponentFunction = (setHelpIsShown) => {
     switch (currentScreen) {
-      case MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-        return null;
-      case MERGE_SYNC_WIZARD_SCREENS.CONFIGURATION_SCREEN:
-        return null;
-      case MERGE_SYNC_WIZARD_SCREENS.FILE_SELECTION_SCREEN:
-      default:
-        return null;
+    case MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+      return null;
+    case MERGE_SYNC_WIZARD_SCREENS.CONFIGURATION_SCREEN:
+      return null;
+    case MERGE_SYNC_WIZARD_SCREENS.FILE_SELECTION_SCREEN:
+    default:
+      return null;
     }
   };
 

@@ -109,12 +109,12 @@ function ApprovalGatesExecutedActionableInsightOverlay({
         <ApprovalGatesExecutedDataBlocks metrics={metrics} />
       </div>
       
-        <div className={"p-3"}>
-          <TabPanelContainer
-            currentView={getTabs()}
-            tabContainer={getTabContainer()}
-          />
-        </div>
+      <div className={"p-3"}>
+        <TabPanelContainer
+          currentView={getTabs()}
+          tabContainer={getTabContainer()}
+        />
+      </div>
       
     </FullScreenCenterOverlayContainer>
   );

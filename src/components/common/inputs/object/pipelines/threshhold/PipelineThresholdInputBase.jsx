@@ -118,7 +118,7 @@ function PipelineThresholdInputBase({ fieldName, model, setModel, helpComponent,
       const disabledThresholdLevels = [];
 
       thresholdRows.map((property) => {
-          disabledThresholdLevels.push(property?.level);
+        disabledThresholdLevels.push(property?.level);
       });
 
       return disabledThresholdLevels;

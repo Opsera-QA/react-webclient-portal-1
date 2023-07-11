@@ -7,7 +7,7 @@ import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBl
 import IconBase from "components/common/icons/IconBase";
 import { ExternalLink } from "temp-library-components/link/ExternalLink";
 import FreetrialWizardHelpDocumentation
-    from "../../../common/help/documentation/freetrial/FreetrialWizardHelpDocumentation";
+from "../../../common/help/documentation/freetrial/FreetrialWizardHelpDocumentation";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {EXTERNAL_LINKS} from "assets/links/externalLinks";
 
@@ -30,19 +30,19 @@ export default function SalesforceLandingWelcomeWidget({ className }) {
   };
 
   const closePanel = () => {
-      toastContext.clearOverlayPanel();
+    toastContext.clearOverlayPanel();
   };
 
   const toggleVideosView = () => {
-      toastContext.showOverlayPanel(
-          <CenterOverlayContainer
-              closePanel={closePanel}
-              titleText={"Getting Started Videos"}
-              // titleIcon={titleIcon}
-          >
-              <FreetrialWizardHelpDocumentation/>
-          </CenterOverlayContainer>
-      );
+    toastContext.showOverlayPanel(
+      <CenterOverlayContainer
+        closePanel={closePanel}
+        titleText={"Getting Started Videos"}
+        // titleIcon={titleIcon}
+      >
+        <FreetrialWizardHelpDocumentation/>
+      </CenterOverlayContainer>
+    );
   };
 
   const getHowToLinks = () => {
@@ -87,9 +87,9 @@ export default function SalesforceLandingWelcomeWidget({ className }) {
         <div className={"d-flex h-100 w-100"}>
           <div className={"m-auto"}>
             <iframe width="250" height="220" src="https://www.youtube.com/embed/8oeBwmapAHU"
-                    title="YouTube video player" frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen></iframe>
+              title="YouTube video player" frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen></iframe>
           </div>
         </div>
       </div>
@@ -103,7 +103,7 @@ export default function SalesforceLandingWelcomeWidget({ className }) {
 
     return (
       <div className={"pointer"}
-           onClick={handleClick(EXTERNAL_LINKS.HOW_TO_VIDEO)}>
+        onClick={handleClick(EXTERNAL_LINKS.HOW_TO_VIDEO)}>
         <IconBase
           icon={faYoutube}
           iconSize={"lg"}

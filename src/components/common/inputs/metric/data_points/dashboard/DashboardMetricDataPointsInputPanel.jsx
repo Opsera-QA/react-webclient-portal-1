@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import InfoContainer from "components/common/containers/InfoContainer";
 import DashboardMetricDataPointTabPanel
-  from "components/common/inputs/metric/data_points/dashboard/DashboardMetricDataPointTabPanel";
+from "components/common/inputs/metric/data_points/dashboard/DashboardMetricDataPointTabPanel";
 
 function DashboardMetricDataPointsInputPanel(
   {

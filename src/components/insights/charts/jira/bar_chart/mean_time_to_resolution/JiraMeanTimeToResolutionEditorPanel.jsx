@@ -5,13 +5,13 @@ import MetricDateRangeFilterInput from "components/common/inputs/metric/filters/
 import modelHelpers from "components/common/model/modelHelpers";
 import {jiraMeanTimeToResolutionMetadata} from "./jiraMeanTimeToResolution.metadata";
 import MetricJiraProjectsFilterInput
-  from "../../../../../common/inputs/metric/filters/jira/MetricJiraProjectsFilterInput";
+from "../../../../../common/inputs/metric/filters/jira/MetricJiraProjectsFilterInput";
 import MetricJiraServiceComponentsFilterInput
-    from "../../../../../common/inputs/metric/filters/jira/MetricJiraServiceComponentsFilterInput";
+from "../../../../../common/inputs/metric/filters/jira/MetricJiraServiceComponentsFilterInput";
 import MetricJiraPrioritiesFilterInput
-    from "../../../../../common/inputs/metric/filters/jira/MetricJiraPrioritiesFilterInput";
+from "../../../../../common/inputs/metric/filters/jira/MetricJiraPrioritiesFilterInput";
 import MetricJiraTeamNamesFilterInput
-  from "components/common/inputs/metric/filters/jira/MetricJiraTeamNamesFilterInput";
+from "components/common/inputs/metric/filters/jira/MetricJiraTeamNamesFilterInput";
 
 function JiraMeanTimeToResolutionEditorPanel(
   {

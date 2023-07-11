@@ -13,45 +13,45 @@ function InventorySubNavigationBar({currentTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-      case "tools":
-        history.push(`/inventory/tools`);
-        return;
-      case "platform":
-        history.push(`/inventory/platform`);
-        return;
-      case "parameters":
-        history.push(`/inventory/parameters`);
-        return;
-      case "scripts":
-        history.push(`/inventory/scripts`);
-        return;
+    case "tools":
+      history.push(`/inventory/tools`);
+      return;
+    case "platform":
+      history.push(`/inventory/platform`);
+      return;
+    case "parameters":
+      history.push(`/inventory/parameters`);
+      return;
+    case "scripts":
+      history.push(`/inventory/scripts`);
+      return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (currentTab) {
-      case "toolViewer":
-        return (
-          <NavigationTab
-            icon={faTools}
-            tabName={currentTab}
-            handleTabClick={handleTabClick}
-            activeTab={"toolViewer"}
-            tabText={"Tool Viewer"}
-          />
-        );
-      case "toolProjectViewer":
-        return (
-          <NavigationTab
-            icon={faProjectDiagram}
-            tabName={currentTab}
-            handleTabClick={handleTabClick}
-            activeTab={"toolProjectViewer"}
-            tabText={"Tool Project Viewer"}
-          />
-        );
-      default:
-        return null;
+    case "toolViewer":
+      return (
+        <NavigationTab
+          icon={faTools}
+          tabName={currentTab}
+          handleTabClick={handleTabClick}
+          activeTab={"toolViewer"}
+          tabText={"Tool Viewer"}
+        />
+      );
+    case "toolProjectViewer":
+      return (
+        <NavigationTab
+          icon={faProjectDiagram}
+          tabName={currentTab}
+          handleTabClick={handleTabClick}
+          activeTab={"toolProjectViewer"}
+          tabText={"Tool Project Viewer"}
+        />
+      );
+    default:
+      return null;
     }
   };
 

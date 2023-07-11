@@ -6,7 +6,7 @@ function H3MetricSubHeader({ subheaderText, className }) {
   return (
     <div className={className}>
       <h3>
-       <MetricSubHeaderTextBase subheaderText={subheaderText} />
+        <MetricSubHeaderTextBase subheaderText={subheaderText} />
       </h3>
     </div>
   );

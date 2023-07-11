@@ -103,32 +103,32 @@ function JiraIssuesAssignedToMe() {
     return (
 
       <>
-      {(typeof data.jiraTicketsAssignedToMe !== "object" || data.jiraTicketsAssignedToMe === undefined || Object.keys(data.jiraTicketsAssignedToMe).length === 1 || data.jiraTicketsAssignedToMe.status !== 200) ?
-      <>
-        <div className="chart mb-3" style={{ height: "300px" }}>
-        <div className="chart-label-text">Jira: Issues Assigned To Me</div>
-          <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
-            <InfoDialog message="No Data is available for this chart at this time." />
-          </div>
-        </div>
-      </>
-  :
-    <>
-  <div className="d-flex justify-content-between">
-  <div className="h6 activity-label-text mb-2">Jira: Issues Assigned To Me</div>
+        {(typeof data.jiraTicketsAssignedToMe !== "object" || data.jiraTicketsAssignedToMe === undefined || Object.keys(data.jiraTicketsAssignedToMe).length === 1 || data.jiraTicketsAssignedToMe.status !== 200) ?
+          <>
+            <div className="chart mb-3" style={{ height: "300px" }}>
+              <div className="chart-label-text">Jira: Issues Assigned To Me</div>
+              <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+                <InfoDialog message="No Data is available for this chart at this time." />
+              </div>
+            </div>
+          </>
+          :
+          <>
+            <div className="d-flex justify-content-between">
+              <div className="h6 activity-label-text mb-2">Jira: Issues Assigned To Me</div>
 
-</div>
-      <CustomTable 
-        columns={columns} 
-        data={data.jiraTicketsAssignedToMe.data}
-        rowStyling={""}
-        noDataMessage={noDataMessage}
-        noFooter={true}
-      >
-      </CustomTable>
-    </>
-}
-</>
+            </div>
+            <CustomTable 
+              columns={columns} 
+              data={data.jiraTicketsAssignedToMe.data}
+              rowStyling={""}
+              noDataMessage={noDataMessage}
+              noFooter={true}
+            >
+            </CustomTable>
+          </>
+        }
+      </>
     );}
 }
 

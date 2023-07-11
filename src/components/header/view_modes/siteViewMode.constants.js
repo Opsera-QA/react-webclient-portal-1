@@ -10,12 +10,12 @@ export const SITE_VIEW_MODE_LABELS = {
 
 export const getSiteViewModeLabel = (siteViewMode) => {
   switch (siteViewMode) {
-    case SITE_VIEW_MODES.BUSINESS:
-      return SITE_VIEW_MODE_LABELS.BUSINESS;
-    case SITE_VIEW_MODES.ENGINEERING:
-      return SITE_VIEW_MODE_LABELS.ENGINEERING;
-    default:
-      return siteViewMode;
+  case SITE_VIEW_MODES.BUSINESS:
+    return SITE_VIEW_MODE_LABELS.BUSINESS;
+  case SITE_VIEW_MODES.ENGINEERING:
+    return SITE_VIEW_MODE_LABELS.ENGINEERING;
+  default:
+    return siteViewMode;
   }
 };
 

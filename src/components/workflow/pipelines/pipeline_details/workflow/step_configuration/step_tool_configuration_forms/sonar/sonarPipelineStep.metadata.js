@@ -110,7 +110,7 @@ const sonarPipelineStepMetadata = {
       dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
       isRequiredFunction: (model) => {
         return (
-            model?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB
+          model?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB
             && model?.getData("isScanArtifact") !== true
         );
       },

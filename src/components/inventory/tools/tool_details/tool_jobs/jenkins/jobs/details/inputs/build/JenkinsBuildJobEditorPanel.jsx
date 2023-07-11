@@ -5,13 +5,13 @@ import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
 import JenkinsJobsBuildMetadata
-  from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/build/jenkins-jobs-build-metadata";
+from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/build/jenkins-jobs-build-metadata";
 import JenkinsJobsGenericAgentTypeSelectInput
-  from "components/common/list_of_values_input/tools/jenkins/jobs/JenkinsJobsGenericAgentTypeSelectInput";
+from "components/common/list_of_values_input/tools/jenkins/jobs/JenkinsJobsGenericAgentTypeSelectInput";
 import JenkinsJobsBuildTypeSelectInput
-  from "components/common/list_of_values_input/tools/jenkins/jobs/build/JenkinsJobsBuildTypeSelectInput";
+from "components/common/list_of_values_input/tools/jenkins/jobs/build/JenkinsJobsBuildTypeSelectInput";
 import JenkinsJobsPythonAgentLabelSelectInput
-  from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobsPythonAgentLabelSelectInput";
+from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobsPythonAgentLabelSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import ScriptLibrarySelectInput from "components/common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
 import PasswordInput from "components/common/inputs/text/PasswordInput";
@@ -24,12 +24,12 @@ import {
 
 export const getMetadataForJenkinsJobBuildType = (buildType) => {
   switch (buildType) {
-    case "xcode":
-      return jenkinsXcodeBuildJobMetadata;
-    case "msbuild":
-      return jenkinsMSBuildJobMetadata;
-    default:
-      return JenkinsJobsBuildMetadata;
+  case "xcode":
+    return jenkinsXcodeBuildJobMetadata;
+  case "msbuild":
+    return jenkinsMSBuildJobMetadata;
+  default:
+    return JenkinsJobsBuildMetadata;
   }
 };
 
@@ -55,26 +55,26 @@ function JenkinsBuildJobEditorPanel(
 
   const getDynamicBuildTypeFields = () => {
     switch (model?.getData("buildType")) {
-      case "gradle":
-        return (
+    case "gradle":
+      return (
+        <Col lg={6}>
+          <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"gradleTask"}/>
+        </Col>
+      );
+    case "maven":
+      return (
+        <>
           <Col lg={6}>
-            <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"gradleTask"}/>
+            <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"mavenTask"}/>
           </Col>
-        );
-      case "maven":
-        return (
-          <>
-            <Col lg={6}>
-              <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"mavenTask"}/>
-            </Col>
-            <Col lg={12}>
-              <BooleanToggleInput 
-                dataObject={model}
-                setDataObject={setModel}
-                fieldName={"customMavenSettings"}
-              />
-            </Col>
-            {model?.getData("customMavenSettings") === true && 
+          <Col lg={12}>
+            <BooleanToggleInput 
+              dataObject={model}
+              setDataObject={setModel}
+              fieldName={"customMavenSettings"}
+            />
+          </Col>
+          {model?.getData("customMavenSettings") === true && 
               <Col lg={12}>
                 <ScriptLibrarySelectInput
                   fieldName={"scriptId"}
@@ -82,34 +82,34 @@ function JenkinsBuildJobEditorPanel(
                   setModel={setModel}
                 />
               </Col>
-            }            
-          </>          
-        );
-      case "msbuild":
-        return (
-          <Col lg={6}>
-            <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"commandLineArgs"}/>
+          }            
+        </>          
+      );
+    case "msbuild":
+      return (
+        <Col lg={6}>
+          <TextInputBase dataObject={model} setDataObject={setModel} fieldName={"commandLineArgs"}/>
+        </Col>
+      );
+    case "xcode":
+      return (
+        <>
+          <Col lg={12}>
+            <ScriptLibrarySelectInput
+              fieldName={"scriptId"}
+              model={model}
+              setModel={setModel}
+            />
+          </Col>            
+          <Col lg={12}>
+            <PasswordInput 
+              dataObject={model} 
+              setDataObject={setModel} 
+              fieldName={"developerTeamId"}
+            />
           </Col>
-        );
-      case "xcode":
-        return (
-          <>
-            <Col lg={12}>
-              <ScriptLibrarySelectInput
-                fieldName={"scriptId"}
-                model={model}
-                setModel={setModel}
-              />
-            </Col>            
-            <Col lg={12}>
-              <PasswordInput 
-                dataObject={model} 
-                setDataObject={setModel} 
-                fieldName={"developerTeamId"}
-              />
-            </Col>
-          </>          
-        );        
+        </>          
+      );        
     }
   };
 

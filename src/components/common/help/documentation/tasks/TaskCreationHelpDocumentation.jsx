@@ -25,13 +25,13 @@ function TaskCreationHelpDocumentation({closeHelpPanel}) {
                 <li><b>{getTaskTypeLabel(TASK_TYPES.SALESFORCE_BULK_MIGRATION)}</b> - Migrate the entire SFDC org metadata components to a GIT repository branch. </li>
                 <li><b>{getTaskTypeLabel(TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC)}</b> - Use this task to selectively merge Salesforce components to a target branch.</li>
                 <li><b>{getTaskTypeLabel(TASK_TYPES.SALESFORCE_QUICK_DEPLOY)}</b> - Use this task to quickly deploy any already successfully validated and unit-tested packages (which are not older than 10 days or 240 hours) to a Salesforce Org by providing the Deploy/Job ID corresponding to the validation.</li>
-            </ul></li>
-        <li><b>Tags</b> - Select any tags to be associated with your Task. Applying tags at this level will associate that tag with this Task.</li>
-        <li><b>Description</b> - Provide a description for the Task.</li>
-        <li><b>Roles</b> - Assign access rules for the Task by selecting Group or User, an Assignee and Access Type.</li>
-      </ul>
+              </ul></li>
+            <li><b>Tags</b> - Select any tags to be associated with your Task. Applying tags at this level will associate that tag with this Task.</li>
+            <li><b>Description</b> - Provide a description for the Task.</li>
+            <li><b>Roles</b> - Assign access rules for the Task by selecting Group or User, an Assignee and Access Type.</li>
+          </ul>
         </li>
-      <li>Select <b>Create</b> to save. Following save, a Task may require run.</li>
+        <li>Select <b>Create</b> to save. Following save, a Task may require run.</li>
       </ol>
     </HelpDocumentationContainer>
   );

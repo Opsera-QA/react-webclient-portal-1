@@ -20,8 +20,8 @@ const GitCustodianMetaData = {
       id: "origin",
     },
     {
-    label: "Exposed For",
-    id: "exposedFor"
+      label: "Exposed For",
+      id: "exposedFor"
     },
     {
       label: "Type",
@@ -41,30 +41,30 @@ const GitCustodianMetaData = {
     }
   ],
   getActiveFilters(filterDto) {
-     let activeFilters = [];
+    let activeFilters = [];
 
-     if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
-       activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
-     }
+    if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
+      activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
+    }
 
-     return activeFilters;
+    return activeFilters;
   },
-   newObjectFields: {
-     name: "",
-     description: "",
-     visibility: "private",
-     type: "",
-     active: true,
-     isFavorite: false,
-     tags: [],
-     configuration: [],
-     attributes: {},
-     filters: [],
-     roles: [],
-     owner: "",
-     owner_name: "",
-     comment:"",
-   }
+  newObjectFields: {
+    name: "",
+    description: "",
+    visibility: "private",
+    type: "",
+    active: true,
+    isFavorite: false,
+    tags: [],
+    configuration: [],
+    attributes: {},
+    filters: [],
+    roles: [],
+    owner: "",
+    owner_name: "",
+    comment:"",
+  }
 };
 
 export const gitCustodianFiltersMetadata = {

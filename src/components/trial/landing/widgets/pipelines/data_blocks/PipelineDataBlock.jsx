@@ -28,13 +28,13 @@ function PipelineDataBlock(
           >
             {metric}
           </span>
-            <span
-              className={"mt-auto ml-2"}
-              style={{
-                fontSize: "13px",
-                fontWeight: 400,
-              }}
-            >
+          <span
+            className={"mt-auto ml-2"}
+            style={{
+              fontSize: "13px",
+              fontWeight: 400,
+            }}
+          >
             {metricText}
           </span>
         </div>

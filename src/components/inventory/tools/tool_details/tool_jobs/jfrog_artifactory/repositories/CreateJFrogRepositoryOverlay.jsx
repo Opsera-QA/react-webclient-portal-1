@@ -1,7 +1,7 @@
 import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
 import JFrogRepositoryEditorPanel
-  from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/details/JFrogRepositoryEditorPanel";
+from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/details/JFrogRepositoryEditorPanel";
 import Model from "core/data_model/model";
 import jfrogMavenRepositoryMetadata from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jfrogMavenRepository.metadata";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
@@ -11,7 +11,7 @@ function CreateJFrogRepositoryOverlay({
   toolId,
   loadData, 
   isMounted,
- } ) {
+} ) {
   const toastContext = useContext(DialogToastContext);
   const [jFrogRepositoryModel, setJFrogRepositoryModel] = useState(new Model({...jfrogMavenRepositoryMetadata.newObjectFields}, jfrogMavenRepositoryMetadata, true));
 

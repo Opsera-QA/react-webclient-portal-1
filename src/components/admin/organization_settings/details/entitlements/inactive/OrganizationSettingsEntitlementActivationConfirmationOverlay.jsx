@@ -7,12 +7,12 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import entitlementConstants
-  from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
+from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
 import OrganizationSettingsActivateEntitlementButton
-  from "components/admin/organization_settings/details/entitlements/inactive/OrganizationSettingsActivateEntitlementButton";
+from "components/admin/organization_settings/details/entitlements/inactive/OrganizationSettingsActivateEntitlementButton";
 import useGetNewEntitlementModel from "hooks/settings/organization_settings/entitlements/useGetNewEntitlementModel";
 import SalesforceFeaturesChildEntitlementEditorPanel
-  from "components/admin/organization_settings/details/entitlements/cards/salesforce_landing/SalesforceFeaturesChildEntitlementEditorPanel";
+from "components/admin/organization_settings/details/entitlements/cards/salesforce_landing/SalesforceFeaturesChildEntitlementEditorPanel";
 
 export default function OrganizationSettingsEntitlementActivationConfirmationOverlay(
   {
@@ -52,13 +52,13 @@ export default function OrganizationSettingsEntitlementActivationConfirmationOve
 
   const getChildEntitlementEditorPanel = () => {
     switch (entitlementName) {
-      case entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_FEATURES:
-        return (
-          <SalesforceFeaturesChildEntitlementEditorPanel
-            childEntitlementModel={childEntitlementModel}
-            updateParentModel={updateParentModel}
-          />
-        );
+    case entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_FEATURES:
+      return (
+        <SalesforceFeaturesChildEntitlementEditorPanel
+          childEntitlementModel={childEntitlementModel}
+          updateParentModel={updateParentModel}
+        />
+      );
     }
   };
 

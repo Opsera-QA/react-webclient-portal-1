@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 const dockerNameTypes = [
-    {name: "Branch Name", value: "branch_name"},    
-  ];
+  {name: "Branch Name", value: "branch_name"},    
+];
 
 const DockerDynamicNameTypeSelectionInput = ({model, setModel, fieldName, disabled}) => {
   return (

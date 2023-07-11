@@ -21,7 +21,7 @@ function OverviewLandingToolchainContentBlock() {
         || isOpseraAdministrator === true
         || isPowerUser === true
         || isSiteAdministrator === true
-      ) {
+    ) {
       return true;
     }
   };

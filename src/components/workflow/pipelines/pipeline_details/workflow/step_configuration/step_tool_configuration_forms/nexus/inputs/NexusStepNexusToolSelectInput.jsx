@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedNexusToolSelectInput
-  from "components/common/list_of_values_input/tools/nexus/RoleRestrictedNexusToolSelectInput";
+from "components/common/list_of_values_input/tools/nexus/RoleRestrictedNexusToolSelectInput";
 
 const NexusStepNexusToolSelectInput = ({model, setModel, disabled, fieldName}) => {
   const setDataFunction = (fieldName, selectedOption) => {

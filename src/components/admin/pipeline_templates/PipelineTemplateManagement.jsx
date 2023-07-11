@@ -3,7 +3,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import PipelineTemplatesTable from "components/admin/pipeline_templates/PipelineTemplatesTable";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import PipelineTemplateManagementSubNavigationBar
-  from "components/admin/pipeline_templates/PipelineTemplateManagementSubNavigationBar";
+from "components/admin/pipeline_templates/PipelineTemplateManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetPlatformPipelineTemplates from "hooks/workflow/catalog/platform/useGetPlatformPipelineTemplates";
 

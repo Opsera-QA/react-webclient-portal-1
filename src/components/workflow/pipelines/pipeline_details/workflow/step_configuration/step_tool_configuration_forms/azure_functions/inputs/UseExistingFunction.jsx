@@ -4,34 +4,34 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 
 function UseExistingFunction({dataObject, setDataObject, disabled}) {
 
-    const setDataFunction = (fieldName, selectedOption) => {
-        let newDataObject = {...dataObject};
-        let sourceScriptFlag = !dataObject.getData(fieldName);
-        newDataObject.setData(fieldName, sourceScriptFlag);
-        newDataObject.setData("azureFunctionName", "");
-        newDataObject.setData("resourceGroupName", "");
-        newDataObject.setData("useCustomResourceGroup", "");
-        newDataObject.setData("applicationType", "");
-        newDataObject.setData("azureRegion", "");
-        newDataObject.setData("dynamicServiceName", "");
-        setDataObject({...newDataObject});
-    };
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newDataObject = {...dataObject};
+    let sourceScriptFlag = !dataObject.getData(fieldName);
+    newDataObject.setData(fieldName, sourceScriptFlag);
+    newDataObject.setData("azureFunctionName", "");
+    newDataObject.setData("resourceGroupName", "");
+    newDataObject.setData("useCustomResourceGroup", "");
+    newDataObject.setData("applicationType", "");
+    newDataObject.setData("azureRegion", "");
+    newDataObject.setData("dynamicServiceName", "");
+    setDataObject({...newDataObject});
+  };
 
-    return (
-        <BooleanToggleInput
-            fieldName={"existingFunctionName"}
-            setDataFunction={setDataFunction}
-            dataObject={dataObject}
-            setDataObject={setDataObject}
-            disabled={disabled}
-        />
-    );
+  return (
+    <BooleanToggleInput
+      fieldName={"existingFunctionName"}
+      setDataFunction={setDataFunction}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      disabled={disabled}
+    />
+  );
 }
 
 UseExistingFunction.propTypes = {
-    dataObject: PropTypes.object,
-    setDataObject: PropTypes.func,
-    disabled: PropTypes.bool,
+  dataObject: PropTypes.object,
+  setDataObject: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default UseExistingFunction;

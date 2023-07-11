@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SourceControlManagementToolIdentifierSelectInput
-  from "components/common/list_of_values_input/tools/source_control/SourceControlManagementToolIdentifierSelectInput";
+from "components/common/list_of_values_input/tools/source_control/SourceControlManagementToolIdentifierSelectInput";
 
-  function AnsibleStepScmServiceTypeSelectInput({model, fieldName, setModel, disabled}) {
+function AnsibleStepScmServiceTypeSelectInput({model, fieldName, setModel, disabled}) {
   const setDataFunction = async (fieldName, selectedOption) => {
     let newModel = {...model};
     await newModel.setData(fieldName, selectedOption?.value);

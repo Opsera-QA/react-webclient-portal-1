@@ -187,12 +187,12 @@ function JiraChangeFailureRate({
       getResultFromKpiConfiguration(kpiConfiguration, "jira-resolution-names")?.length || 0;
     if (!jiraResolutionNames) {
       return (
-          <div className="new-chart mb-3" style={{ height: "300px" }}>
-            <div className="max-content-width p-5 mt-5"
-                 style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <InfoDialog message="No Failure Status Applied. Please select a Change Failure Status(Resolution Name) on filters to proceed further." />
-            </div>
+        <div className="new-chart mb-3" style={{ height: "300px" }}>
+          <div className="max-content-width p-5 mt-5"
+            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <InfoDialog message="No Failure Status Applied. Please select a Change Failure Status(Resolution Name) on filters to proceed further." />
           </div>
+        </div>
       );
     }
 
@@ -267,15 +267,15 @@ function JiraChangeFailureRate({
               className={"px-1"}
             >
               <JiraChangeFailureRateTrendDataBlock
-                  value={getMedian(chartData, metricData?.total)}
-                  prevValue={getMedian(prevChartData, metricData?.prevTotal) + "%"}
-                  trend={getReverseTrend(
-                      getMedian(chartData),
-                      getMedian(prevChartData),
-                  )}
-                  getTrendIcon={getReverseTrendIcon}
-                  topText={"Median Change Failure Rate"}
-                  bottomText={"Prev Median: "}
+                value={getMedian(chartData, metricData?.total)}
+                prevValue={getMedian(prevChartData, metricData?.prevTotal) + "%"}
+                trend={getReverseTrend(
+                  getMedian(chartData),
+                  getMedian(prevChartData),
+                )}
+                getTrendIcon={getReverseTrendIcon}
+                topText={"Median Change Failure Rate"}
+                bottomText={"Prev Median: "}
               />
             </Col>
             <Col

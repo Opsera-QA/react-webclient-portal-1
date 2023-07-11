@@ -35,16 +35,16 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
   const noDataMessage = "No Data is available for this chart at this time";
 
   const columns = useMemo(
-      () => [
-        getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
-        getTableTextColumn(getField(fields, "AssigneeName")),
-        getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 20),
-        getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
-        getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
-        getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
-        getTableHourDurationTextColumn(getField(fields, "MergeRequestTimeTaken"))
-      ],
-      []
+    () => [
+      getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
+      getTableTextColumn(getField(fields, "AssigneeName")),
+      getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 20),
+      getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
+      getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
+      getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
+      getTableHourDurationTextColumn(getField(fields, "MergeRequestTimeTaken"))
+    ],
+    []
   );
   useEffect(() => {
     if (cancelTokenSource) {
@@ -176,15 +176,15 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
   };
   const getFilterContainer = () => {
     return (
-        <TabAndViewContainer
-            verticalTabContainer={getVerticalTabContainer()}
-            currentView={getTabContentContainer()}
-            defaultActiveKey={metrics && Array.isArray(metrics) && metrics[0]?.id && metrics[0]?.id}
-            bodyClassName="mx-0"
-            maximumHeight="calc(100vh - 264px)"
-            overflowYContainerStyle={"hidden"}
-            overflowYBodyStyle="auto"
-        />
+      <TabAndViewContainer
+        verticalTabContainer={getVerticalTabContainer()}
+        currentView={getTabContentContainer()}
+        defaultActiveKey={metrics && Array.isArray(metrics) && metrics[0]?.id && metrics[0]?.id}
+        bodyClassName="mx-0"
+        maximumHeight="calc(100vh - 264px)"
+        overflowYContainerStyle={"hidden"}
+        overflowYBodyStyle="auto"
+      />
     );
   };
   return (

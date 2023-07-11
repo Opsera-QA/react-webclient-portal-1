@@ -52,24 +52,24 @@ function ConnectedAssetsPipelinesTabContainer({ dashboardData }) {
 
   const getTabContentContainer = () => {
     switch (currentTab) {
-      case CONNECTED_ASSETS_PIPELINES_TABS.RECENT:
-        return (
-          <ConnectedAssetsPipelinesRecentTable
-            dashboardData={dashboardData}
-          />
-        );
-      case CONNECTED_ASSETS_PIPELINES_TABS.DELETED:
-        return (
-          <ConnectedAssetsPipelinesDeletedTable
-            dashboardData={dashboardData}
-          />
-        );
-      case CONNECTED_ASSETS_PIPELINES_TABS.INACTIVE:
-        return (
-          <ConnectedAssetsPipelinesInactiveTable
-            dashboardData={dashboardData}
-          />
-        );
+    case CONNECTED_ASSETS_PIPELINES_TABS.RECENT:
+      return (
+        <ConnectedAssetsPipelinesRecentTable
+          dashboardData={dashboardData}
+        />
+      );
+    case CONNECTED_ASSETS_PIPELINES_TABS.DELETED:
+      return (
+        <ConnectedAssetsPipelinesDeletedTable
+          dashboardData={dashboardData}
+        />
+      );
+    case CONNECTED_ASSETS_PIPELINES_TABS.INACTIVE:
+      return (
+        <ConnectedAssetsPipelinesInactiveTable
+          dashboardData={dashboardData}
+        />
+      );
     }
   };
 
@@ -80,24 +80,24 @@ function ConnectedAssetsPipelinesTabContainer({ dashboardData }) {
           className={"h-100"}
           supportSearch={false}
         >
-            <VanitySetVerticalTab
-              tabText={'Recent'}
-              tabName={'recent'}
-              activeTab={currentTab}
-              handleTabClick={setCurrentTab}
-            />
-            <VanitySetVerticalTab
-              tabText={'Inactive'}
-              tabName={'inactive'}
-              activeTab={currentTab}
-              handleTabClick={setCurrentTab}
-            />
-            <VanitySetVerticalTab
-              tabText={'Deleted'}
-              tabName={'deleted'}
-              activeTab={currentTab}
-              handleTabClick={setCurrentTab}
-            />
+          <VanitySetVerticalTab
+            tabText={'Recent'}
+            tabName={'recent'}
+            activeTab={currentTab}
+            handleTabClick={setCurrentTab}
+          />
+          <VanitySetVerticalTab
+            tabText={'Inactive'}
+            tabName={'inactive'}
+            activeTab={currentTab}
+            handleTabClick={setCurrentTab}
+          />
+          <VanitySetVerticalTab
+            tabText={'Deleted'}
+            tabName={'deleted'}
+            activeTab={currentTab}
+            handleTabClick={setCurrentTab}
+          />
         </VanitySetVerticalTabContainer>
       </div>
     );

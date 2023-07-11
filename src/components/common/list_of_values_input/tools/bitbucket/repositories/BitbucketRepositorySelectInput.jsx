@@ -7,18 +7,18 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function BitbucketRepositorySelectInput(
-    {
-      fieldName,
-      model,
-      setModel,
-      toolId,
-      disabled,
-      setDataFunction,
-      clearDataFunction,
-      workspace,
-      valueField,
-      textField,
-    }) {
+  {
+    fieldName,
+    model,
+    setModel,
+    toolId,
+    disabled,
+    setDataFunction,
+    clearDataFunction,
+    workspace,
+    valueField,
+    textField,
+  }) {
   const [isLoading, setIsLoading] = useState(false);
   const [bitbucketRepositories, setBitbucketRepositories] = useState([]);
   const [error, setError] = useState(undefined);

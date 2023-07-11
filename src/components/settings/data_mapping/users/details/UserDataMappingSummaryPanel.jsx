@@ -9,10 +9,10 @@ import EmailAddressField from "components/common/fields/text/email/EmailAddressF
 import ToolIdentifierNameField from "components/common/fields/tool_identifier/ToolIdentifierNameField";
 import ExternalToolPropertyCacheField from "components/common/fields/cache/ExternalToolPropertyCacheField";
 import JiraProjectUserCacheField
-  from "components/common/list_of_values_input/tools/jira/users/JiraProjectUserCacheField";
+from "components/common/list_of_values_input/tools/jira/users/JiraProjectUserCacheField";
 import toolIdentifierConstants from "@opsera/definitions/constants/tool_identifiers/toolIdentifier.constants";
 import AnalyticsUserDataMappingRoleHelper
-  from "@opsera/know-your-role/roles/settings/analytics_data_mappings/users/analyticsUserDataMappingRole.helper";
+from "@opsera/know-your-role/roles/settings/analytics_data_mappings/users/analyticsUserDataMappingRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function UserDataMappingSummaryPanel({ userDataMappingModel, setActiveTab }) {
@@ -20,27 +20,27 @@ export default function UserDataMappingSummaryPanel({ userDataMappingModel, setA
 
   const getUserField = () => {
     switch (userDataMappingModel?.getData("tool_identifier")) {
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.JIRA:
-        return (
-          <Col lg={6}>
-            <JiraProjectUserCacheField
-              model={userDataMappingModel}
-              fieldName={"tool_user_id"}
-              jiraToolIdFieldName={"tool_id"}
-            />
-          </Col>
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
-        return (
-          <Col lg={6}>
-            <ExternalToolPropertyCacheField
-              model={userDataMappingModel}
-              fieldName={"tool_user_id"}
-              toolIdFieldName={"tool_id"}
-            />
-          </Col>
-        );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.JIRA:
+      return (
+        <Col lg={6}>
+          <JiraProjectUserCacheField
+            model={userDataMappingModel}
+            fieldName={"tool_user_id"}
+            jiraToolIdFieldName={"tool_id"}
+          />
+        </Col>
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
+      return (
+        <Col lg={6}>
+          <ExternalToolPropertyCacheField
+            model={userDataMappingModel}
+            fieldName={"tool_user_id"}
+            toolIdFieldName={"tool_id"}
+          />
+        </Col>
+      );
     }
   };
 

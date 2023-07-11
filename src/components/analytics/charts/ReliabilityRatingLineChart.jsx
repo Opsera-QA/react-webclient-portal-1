@@ -100,7 +100,7 @@ function ReliabilityRatingLineChart({ persona, date }) {
           ) : (
             <ResponsiveLine
               {...defaultConfig("Reliability Rating", "Date", 
-                        false, true, "", "monthDate2")}
+                false, true, "", "monthDate2")}
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
               xScale={{ type: "point" }}
@@ -109,12 +109,12 @@ function ReliabilityRatingLineChart({ persona, date }) {
               tooltip={({ point, color }) => <ChartTooltip 
                 titles = {["Timestamp", "Rating", "Project Key"]}
                 values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(point.data.x)),
-                           point.data.y === 1 && "A" || 
+                  point.data.y === 1 && "A" || 
                            point.data.y === 2 && "B" ||
                            point.data.y === 3 && "C" ||
                            point.data.y === 4 && "D" ||
                            point.data.y === 5 && "E",
-                           point.data.key]}
+                  point.data.key]}
                 color = {color} />}
             />
           )}

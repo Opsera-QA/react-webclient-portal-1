@@ -7,9 +7,9 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import LdapOrganizationAccountDetailPanel
-  from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountDetailPanel";
+from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountDetailPanel";
 import LdapOrganizationAccountManagementSubNavigationBar
-  from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountManagementSubNavigationBar";
+from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function LdapOrganizationAccountDetailView() {
@@ -55,11 +55,11 @@ function LdapOrganizationAccountDetailView() {
   };
 
   const loadOrganizationAccount = async () => {
-      const response = await accountsActions.getOrganizationAccountByDomainV2(getAccessToken, cancelTokenSource, organizationDomain);
+    const response = await accountsActions.getOrganizationAccountByDomainV2(getAccessToken, cancelTokenSource, organizationDomain);
 
-      if (response?.data != null) {
-        setLdapOrganizationAccountData(new Model(response.data, ldapOrganizationAccountMetaData, false));
-      }
+    if (response?.data != null) {
+      setLdapOrganizationAccountData(new Model(response.data, ldapOrganizationAccountMetaData, false));
+    }
   };
 
   const getActionBar = () => {

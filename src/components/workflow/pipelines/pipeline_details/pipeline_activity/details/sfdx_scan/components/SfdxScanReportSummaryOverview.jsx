@@ -25,17 +25,17 @@ function SfdxScanReportSummaryOverview({ statusSummaryModel, sfdxScanResults }) 
       <Col lg={12}>
         <TextFieldBase dataObject={statusSummaryModel} fieldName={"message"} />
       </Col>
-        <Col lg={12}>
-            <SfdxScanLogSummaryTable summaryQGObject={sfdxScanResults}/>
-        </Col>
+      <Col lg={12}>
+        <SfdxScanLogSummaryTable summaryQGObject={sfdxScanResults}/>
+      </Col>
     </Row>
   );
 }
 
 
 SfdxScanReportSummaryOverview.propTypes = {
-    statusSummaryModel: PropTypes.object,
-    sfdxScanResults: PropTypes.object,
+  statusSummaryModel: PropTypes.object,
+  sfdxScanResults: PropTypes.object,
 };
 
 export default SfdxScanReportSummaryOverview;

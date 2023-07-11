@@ -25,14 +25,14 @@ function DockerEcrPushStepConfigurationHelpDocumentation() {
         <div className={"ml-2"}>
           <ol>
             <li>Once the initial Step Setup is configured with the Azure AKS tool, set the following values:
-            <ul style={{listStyleType: "none"}}>
-              <li><b>Jenkins Tool</b> - Select a configured tool from the Tool Registry.</li>
-              <li><b>Jenkins Job</b> - Select Docker Push. This must be created in Jobs section of the selected Jenkins tool. </li>
-              <li><b>AWS Credentials</b> - Select a configured tool from the Tool Registry. </li>
-              <li><b>Build Step</b> - The drop down displays the step name given to the build step in the pipeline.</li>
-              <li><b>Want to use an existing repository?</b> - To use an existing repository, turn the toggle on. A list of existing repositories will be fetched to select from. </li>
-              <li><b>ECR Repository</b> - To use a new repository, provide a value for the repository name. </li>
-            </ul>
+              <ul style={{listStyleType: "none"}}>
+                <li><b>Jenkins Tool</b> - Select a configured tool from the Tool Registry.</li>
+                <li><b>Jenkins Job</b> - Select Docker Push. This must be created in Jobs section of the selected Jenkins tool. </li>
+                <li><b>AWS Credentials</b> - Select a configured tool from the Tool Registry. </li>
+                <li><b>Build Step</b> - The drop down displays the step name given to the build step in the pipeline.</li>
+                <li><b>Want to use an existing repository?</b> - To use an existing repository, turn the toggle on. A list of existing repositories will be fetched to select from. </li>
+                <li><b>ECR Repository</b> - To use a new repository, provide a value for the repository name. </li>
+              </ul>
             </li>
             <li>Select <b>Save</b> and proceed to setting up the next pipeline steps.</li>
           </ol>

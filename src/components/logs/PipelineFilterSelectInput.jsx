@@ -106,25 +106,25 @@ function PipelineFilterSelectInput({ pipelineFilter, opseraPipelineSelectChange,
 
   return (
     <>
-    <Col className="custom-select-input my-2">
-      <label><span>Pipeline</span></label>
-      {/* eslint-disable-next-line react/jsx-no-undef */}
-      <StandaloneSelectInput
-        selectOptions={pipelineFilters}
-        busy={isLoading}
-        disabled={disabledPipelines}
-        valueField={"value"}
-        textField={"label"}
-        value={pipelineFilter}
-        placeholderText={"Select Pipeline Name"}
-        setDataFunction={opseraPipelineSelectChange}
-      />
-      <small className="text-muted form-text">
-        <div>Pipelines with no runs are visible in the dropdown but disabled.</div>
-      </small>
+      <Col className="custom-select-input my-2">
+        <label><span>Pipeline</span></label>
+        {/* eslint-disable-next-line react/jsx-no-undef */}
+        <StandaloneSelectInput
+          selectOptions={pipelineFilters}
+          busy={isLoading}
+          disabled={disabledPipelines}
+          valueField={"value"}
+          textField={"label"}
+          value={pipelineFilter}
+          placeholderText={"Select Pipeline Name"}
+          setDataFunction={opseraPipelineSelectChange}
+        />
+        <small className="text-muted form-text">
+          <div>Pipelines with no runs are visible in the dropdown but disabled.</div>
+        </small>
       </Col>
       <Col className="custom-select-input my-2">
-      <label><span>Step</span></label>
+        <label><span>Step</span></label>
         <StandaloneSelectInput
           selectOptions={pipelineFilter.steps}
           busy={Object.keys(pipelineFilters).length === 0}

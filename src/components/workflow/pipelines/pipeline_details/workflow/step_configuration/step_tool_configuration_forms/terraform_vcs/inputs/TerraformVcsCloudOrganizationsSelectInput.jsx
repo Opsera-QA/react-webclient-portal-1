@@ -5,7 +5,7 @@ import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import terraformCloudOrganizationsActions
-  from "components/inventory/tools/tool_details/tool_jobs/terraform_cloud/organizations/terraformCloudOrganizations.actions";
+from "components/inventory/tools/tool_details/tool_jobs/terraform_cloud/organizations/terraformCloudOrganizations.actions";
 
 function TerraformVcsCloudOrganizationsSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, toolId}) {
   const toastContext = useContext(DialogToastContext);
@@ -92,19 +92,19 @@ function TerraformVcsCloudOrganizationsSelectInput({ fieldName, dataObject, setD
   };
 
   return (
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        selectOptions={organizations}
-        setDataFunction={setDataFunction}
-        clearDataFunction={clearDataFunction}
-        busy={isLoading}
-        valueField={valueField}
-        textField={textField}
-        placeholderText={placeholder}
-        disabled={disabled || isLoading}
-      />
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      selectOptions={organizations}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      busy={isLoading}
+      valueField={valueField}
+      textField={textField}
+      placeholderText={placeholder}
+      disabled={disabled || isLoading}
+    />
   );
 }
 

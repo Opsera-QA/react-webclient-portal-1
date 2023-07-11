@@ -100,7 +100,7 @@ function ReliabilityRemediationEffortLineChart({ persona, date }) {
           ) : (
             <ResponsiveLine
               {...defaultConfig("Timeline in Minutes", "Date", 
-                      false, true, "wholeNumbers", "monthDate2")}
+                false, true, "wholeNumbers", "monthDate2")}
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
               xScale={{ type: "point" }}
@@ -109,7 +109,7 @@ function ReliabilityRemediationEffortLineChart({ persona, date }) {
               tooltip={({ point, color }) => <ChartTooltip 
                 titles = {["Timestamp", "Time", "Project Key"]}
                 values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(point.data.x)),
-                          point.data.y, point.data.key]}
+                  point.data.y, point.data.key]}
                 color = {color} />}
             />
           )}

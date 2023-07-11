@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import verboseLoggingConstants
-  from "@opsera/definitions/constants/platform/system_parameters/logging/verboseLogging.constants";
+from "@opsera/definitions/constants/platform/system_parameters/logging/verboseLogging.constants";
 import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import StandaloneCheckboxInput from "components/common/inputs/boolean/checkbox/StandaloneCheckboxInput";

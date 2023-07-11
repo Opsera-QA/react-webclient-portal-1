@@ -5,7 +5,7 @@ import axios from "axios";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {AuthContext} from "contexts/AuthContext";
 import SpinnakerStepActions
-  from "components/workflow/plan/step/spinnaker/spinnaker-step-actions";
+from "components/workflow/plan/step/spinnaker/spinnaker-step-actions";
 
 function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, fieldName, model, setModel, setDataFunction, disabled, clearDataFunction}) {
   const { getAccessToken } = useContext(AuthContext);

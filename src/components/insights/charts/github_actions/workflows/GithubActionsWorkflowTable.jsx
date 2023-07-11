@@ -13,7 +13,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import ExportGithubActionsWorkflowReportButton from "components/insights/charts/github_actions/workflows/export/ExportGithubActionWorkflowReportButton";
 import ExportGithubActionsWorkflowReportPanel from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportPanel";
 import GithubActionsWorkflowActionableInsightOverlay
-  from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
+from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 
 function GithubActionsWorkflowTable({
   kpiConfiguration,

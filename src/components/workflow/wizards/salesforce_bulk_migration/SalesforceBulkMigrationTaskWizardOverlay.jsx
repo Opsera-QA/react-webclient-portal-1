@@ -4,9 +4,9 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import SalesforceBulkMigrationWizard
-  from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationWizard";
+from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationWizard";
 import SalesforceBulkMigrationTaskWizardPreRunTaskScreen
-  from "components/workflow/wizards/salesforce_bulk_migration/pre_run/SalesforceBulkMigrationTaskWizardPreRunTaskScreen";
+from "components/workflow/wizards/salesforce_bulk_migration/pre_run/SalesforceBulkMigrationTaskWizardPreRunTaskScreen";
 
 export const SALESFORCE_BULK_MIGRATION_TASK_WIZARD_SCREENS = {
   PRE_RUN_TASK_SCREEN: "pre_run_task_screen",

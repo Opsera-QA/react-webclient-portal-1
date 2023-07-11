@@ -26,7 +26,7 @@ function BannerMessageContainer({ bannerMessages }) {
 
   return (
     <div>
-        {currentBannerMessages[currentIndex]?.bannerMessage}
+      {currentBannerMessages[currentIndex]?.bannerMessage}
       {/*<div>*/}
       {/*  {getNavigation()}*/}
       {/*</div>*/}

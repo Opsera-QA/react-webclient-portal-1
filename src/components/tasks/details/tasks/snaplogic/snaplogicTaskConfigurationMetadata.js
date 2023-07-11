@@ -95,4 +95,4 @@ const snaplogicTaskConfigurationMetadata = {
   },
 };
   
-  export default snaplogicTaskConfigurationMetadata;
+export default snaplogicTaskConfigurationMetadata;

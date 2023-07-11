@@ -60,9 +60,9 @@ export default function NewDateRangeInput(
   return (
     <InputContainer>
       <div style={{
-          width: "525px",
-          maxWidth: "525px",
-        }}
+        width: "525px",
+        maxWidth: "525px",
+      }}
       >
         <InfoContainer
           titleText={title}

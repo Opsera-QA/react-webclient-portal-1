@@ -12,29 +12,29 @@ function LdapOrganizationManagementSubNavigationBar({activeTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-      case "adminTools":
-        history.push(`/admin`);
-        return;
-      case "organizations":
-        history.push(`/admin/organizations`);
-        return;
+    case "adminTools":
+      history.push(`/admin`);
+      return;
+    case "organizations":
+      history.push(`/admin/organizations`);
+      return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-      case "organizationViewer":
-        return (
-          <NavigationTab
-            icon={faSitemap}
-            tabName={"organizationViewer"}
-            handleTabClick={handleTabClick}
-            activeTab={activeTab}
-            tabText={"Organization Viewer"}
-          />
-        );
-      default:
-        return null;
+    case "organizationViewer":
+      return (
+        <NavigationTab
+          icon={faSitemap}
+          tabName={"organizationViewer"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Organization Viewer"}
+        />
+      );
+    default:
+      return null;
     }
   };
 

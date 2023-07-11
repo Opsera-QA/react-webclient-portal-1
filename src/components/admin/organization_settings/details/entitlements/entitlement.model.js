@@ -1,9 +1,9 @@
 import ModelBase from "core/data_model/model.base";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import entitlementMetadata
-  from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.metadata";
+from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.metadata";
 import entitlementConstants
-  from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
+from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
 
 export default class EntitlementModel extends ModelBase {
   constructor(

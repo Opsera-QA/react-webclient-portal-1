@@ -22,7 +22,7 @@ import {isMongoDbId} from "../../../../common/helpers/mongo/mongoDb.helpers";
 import {pipelineHelper} from "../../../pipeline.helper";
 import {useHistory} from "react-router-dom";
 import PipelineCreationFlowSelectionCardBase
-  from "../../../../../temp-library-components/cards/pipelines/PipelineCreationFlowSelectionCardBase";
+from "../../../../../temp-library-components/cards/pipelines/PipelineCreationFlowSelectionCardBase";
 import {WORKFLOW_OPTION_TYPES} from "../../../../wizard/portal/workflows/flows/WorkflowOptionCardBase";
 
 export const TOOL_CREATION_OPTIONS = {
@@ -66,12 +66,12 @@ function TemplateTypeSelectInput({
 
   return (
     <div className={"m-4"}>
-        <H5FieldSubHeader
-          className={"mb-3 mx-3"}
-          subheaderText={
-            "Select a template category or start from scratch with a blank Opsera pipeline template."
-          }
-        />
+      <H5FieldSubHeader
+        className={"mb-3 mx-3"}
+        subheaderText={
+          "Select a template category or start from scratch with a blank Opsera pipeline template."
+        }
+      />
 
       <Row>
         <Col md={4}>
@@ -98,10 +98,10 @@ function TemplateTypeSelectInput({
                 subTitleClassName={"mx-auto"}
               />
             }
-          description={
-            "Create pipeline using a predefined SFDC Pipeline Template"
-          }
-          workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE_TEMPLATE}
+            description={
+              "Create pipeline using a predefined SFDC Pipeline Template"
+            }
+            workflowOptionType={WORKFLOW_OPTION_TYPES.PIPELINE_TEMPLATE}
           />
         </Col>
         <Col md={4}>

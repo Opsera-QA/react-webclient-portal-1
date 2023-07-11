@@ -14,7 +14,7 @@ function PipelineConditionsField({ dataObject, fieldName }) {
     }
 
     return (
-        <ul className="list-group content-block-body">
+      <ul className="list-group content-block-body">
         {conditions.map((condition, index) => {
           return (
             <div key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
@@ -23,7 +23,7 @@ function PipelineConditionsField({ dataObject, fieldName }) {
             </div>
           );
         })}
-        </ul>
+      </ul>
     );
   };
 

@@ -20,30 +20,30 @@ export default function FreeTrialLanding() {
         includeSubNavigationGap={false}
       >
       */}
-        <div className={"my-3"}>
-          <Row>
-            <Col xs={12} sm={12} md={12} lg={12} xl={6} className={"my-3"}>
-              <div className={"mr-3 d-xs-none d-sm-none d-md-none d-lg-block"} />
-              <WelcomeWidget
-              />
-            </Col>
-            <Col xs={12} sm={12} md={12} lg={12} xl={6} className={"my-3"}>
-              <div className={"mr-3 d-xs-none d-sm-none d-md-none d-lg-block"} />
-              {/*<AccountStatusWidget*/}
-              {/*/>*/}
-              <FreeTrialLandingAccountStatsWidget
-              />
-            </Col>
-          </Row>
-          <div className={"py-3"}>
-            <FreeTrialLandingWorkflowWidget
+      <div className={"my-3"}>
+        <Row>
+          <Col xs={12} sm={12} md={12} lg={12} xl={6} className={"my-3"}>
+            <div className={"mr-3 d-xs-none d-sm-none d-md-none d-lg-block"} />
+            <WelcomeWidget
             />
-          </div>
-          <div className={"py-3"}>
-            &nbsp;
-            {/* placeholder for some marketing icons and maybe some contant cinfo but for now just giving it some space*/}
-          </div>
+          </Col>
+          <Col xs={12} sm={12} md={12} lg={12} xl={6} className={"my-3"}>
+            <div className={"mr-3 d-xs-none d-sm-none d-md-none d-lg-block"} />
+            {/*<AccountStatusWidget*/}
+            {/*/>*/}
+            <FreeTrialLandingAccountStatsWidget
+            />
+          </Col>
+        </Row>
+        <div className={"py-3"}>
+          <FreeTrialLandingWorkflowWidget
+          />
         </div>
+        <div className={"py-3"}>
+            &nbsp;
+          {/* placeholder for some marketing icons and maybe some contant cinfo but for now just giving it some space*/}
+        </div>
+      </div>
       {/*</ScreenContainer>*/}
     </div>
   );

@@ -1,15 +1,15 @@
 import React from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SiteRoleActivationConfirmationOverlay
-  from "components/settings/ldap_site_roles/cards/inactive/SiteRoleActivationConfirmationOverlay";
+from "components/settings/ldap_site_roles/cards/inactive/SiteRoleActivationConfirmationOverlay";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 import SelectionCardBase from "components/common/card/selection/SelectionCardBase";
 import {accountSettingsTrails} from "components/settings/accountSettings.trails";
 import SiteRoleAccessRuleMatrixTable
-  from "components/settings/ldap_site_roles/cards/inactive/SiteRoleAccessRuleMatrixTable";
+from "components/settings/ldap_site_roles/cards/inactive/SiteRoleAccessRuleMatrixTable";
 import HelpInfoOverlayIcon from "components/common/icons/general/HelpInfoOverlayIcon";
 import LdapSiteRoleGroupRoleHelper
-  from "@opsera/know-your-role/roles/accounts/groups/role/ldapSiteRoleGroupRole.helper";
+from "@opsera/know-your-role/roles/accounts/groups/role/ldapSiteRoleGroupRole.helper";
 
 export default function InactiveAuditorsRolePageLinkCard() {
   const {

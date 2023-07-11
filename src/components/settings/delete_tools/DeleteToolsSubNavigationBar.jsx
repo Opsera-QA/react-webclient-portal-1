@@ -17,9 +17,9 @@ function DeleteToolsSubNavigationBar({activeTab}) {
     }
 
     switch (tabSelection) {
-      case "deleteTools":
-        history.push(`/settings/delete`);
-        return;
+    case "deleteTools":
+      history.push(`/settings/delete`);
+      return;
     }
   };
 

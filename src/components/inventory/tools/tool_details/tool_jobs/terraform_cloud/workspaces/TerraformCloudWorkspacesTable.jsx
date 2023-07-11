@@ -13,12 +13,12 @@ import terraformCloudWorkspacesActions from "./terraformCloudWorkspaces.actions"
 import {AuthContext} from "contexts/AuthContext";
 
 function TerraformCloudWorkspacesTable({
-    toolId,
-    organizationName,
-    terraformCloudWorkspacesList,
-    setTerraformCloudWorkspacesList,
-    handleRowSelect
-  }) {
+  toolId,
+  organizationName,
+  terraformCloudWorkspacesList,
+  setTerraformCloudWorkspacesList,
+  handleRowSelect
+}) {
 
   const fields = terraformCloudWorkspacesMetadata.fields;
   const toastContext = useContext(DialogToastContext);

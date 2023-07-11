@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import ResetConfirmationPanel from "components/common/panels/general/reset/ResetConfirmationPanel";
 import ResetMetricOptionsEditorPanel
-  from "components/insights/marketplace/dashboards/metrics/reset/ResetMetricOptionsEditorPanel";
+from "components/insights/marketplace/dashboards/metrics/reset/ResetMetricOptionsEditorPanel";
 import Model from "core/data_model/model";
 import {resetMetricMetadata} from "components/insights/marketplace/dashboards/metrics/reset/resetMetric.metadata";
 import axios from "axios";

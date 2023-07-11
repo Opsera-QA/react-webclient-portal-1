@@ -99,10 +99,10 @@ function PlanningView_Executive ({ persona, date, index }) {
   } else if (!index.includes("jira") && !index.includes("gitlab")) {
     return (
       <div className="mt-3 bordered-content-block p-3 max-content-width" style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}> 
-      <Row>
+        <Row>
           <InfoDialog message="No activity data has been captured for this dashboard. In order to activate planning metrics contact support@opsera.io" />
-      </Row>  
-    </div>);
+        </Row>  
+      </div>);
   } else {
     return (
       <> 

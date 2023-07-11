@@ -6,7 +6,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import ErrorDialog from "components/common/status_notifications/error";
 import { apigeeRunParametersActions } from "components/workflow/run_assistants/apigee/apigeeRunParameters.actions";
 import ApigeeRunAssistantMigrationObjectSelector
-  from "components/workflow/run_assistants/apigee/migration_object_selection_screen/ApigeeRunAssistantMigrationObjectSelector";
+from "components/workflow/run_assistants/apigee/migration_object_selection_screen/ApigeeRunAssistantMigrationObjectSelector";
 import LoadingDialog from "components/common/status_notifications/loading";
 
 const ApigeeRunAssistantMigrationObjectSelectionScreen = (

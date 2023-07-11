@@ -5,7 +5,7 @@ import { faLaptopMedical } from "@fortawesome/pro-light-svg-icons";
 import {faExclamationTriangle} from "@fortawesome/pro-solid-svg-icons/faExclamationTriangle";
 import {AuthContext} from "contexts/AuthContext";
 import OctopusStepActions
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
 import { isObject } from "@okta/okta-auth-js";
 import OctopusFeedPackageIdInputModal from "./OctopusFeedPackageIdInputModal";
 import Model from "core/data_model/model";
@@ -49,8 +49,8 @@ function TestConnectionButton({ toolDataDto, disable }) {
       if (toolDataDto != null) {
         response = await OctopusStepActions.validateItems(toolDataDto.getData("toolId"), toolDataDto.getData("spaceId"), toolDataDto.getData("type"), feedPackageDto.getData("packageId"), toolDataDto, getAccessToken);
         message = isObject(response?.data?.message)
-        ? JSON.stringify(response?.data?.message)
-        : response?.data?.message;
+          ? JSON.stringify(response?.data?.message)
+          : response?.data?.message;
         status = response?.data?.status;
       }
 
@@ -159,11 +159,11 @@ function TestConnectionButton({ toolDataDto, disable }) {
 
   return (
     <div className="px-2">
-        <Button size="sm" variant={getVariant()} disabled={isTesting || disable} onClick={() => testConnection()}>
-          {getLabel()}
-        </Button>
-        { getConnectionModal() }
-        { getAdditionalDetailsForm() }
+      <Button size="sm" variant={getVariant()} disabled={isTesting || disable} onClick={() => testConnection()}>
+        {getLabel()}
+      </Button>
+      { getConnectionModal() }
+      { getAdditionalDetailsForm() }
     </div>
   );
 }

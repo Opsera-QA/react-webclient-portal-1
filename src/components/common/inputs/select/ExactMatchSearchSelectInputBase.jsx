@@ -94,35 +94,35 @@ function ExactMatchSearchSelectInputBase(
     setDataObject({...dataObject});
   };
 
-    const updateValue = async (newValue) => {
-      setInternalErrorMessage("");
-      const parsedNewValue = DataParsingHelper.parseObject(newValue);
-      const parsedValueField = DataParsingHelper.parseString(valueField);
-      const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
+  const updateValue = async (newValue) => {
+    setInternalErrorMessage("");
+    const parsedNewValue = DataParsingHelper.parseObject(newValue);
+    const parsedValueField = DataParsingHelper.parseString(valueField);
+    const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
     
-      if (parsedNewValue && parsedNewValue.OPSERA_DIRECT_LOOKUP_NEEDED === true) {
-        const searchedItem = await exactMatchSearch(parsedNewValue);
+    if (parsedNewValue && parsedNewValue.OPSERA_DIRECT_LOOKUP_NEEDED === true) {
+      const searchedItem = await exactMatchSearch(parsedNewValue);
 
-        if (!searchedItem){
-          let error = "There was no exact match of this branch name. Please search for another branch.";
+      if (!searchedItem){
+        let error = "There was no exact match of this branch name. Please search for another branch.";
 
-          if (hasStringValue(dataObject.getData(field.id)) === true) {
-            error += " Please Note: The currently selected value will remain selected until another branch is set.";
-          }
-
-          setInternalErrorMessage(error);
-          const clearValueFunction = getClearDataFunction();
-
-          if (clearValueFunction) {
-            clearValueFunction();
-          }
-          return;
+        if (hasStringValue(dataObject.getData(field.id)) === true) {
+          error += " Please Note: The currently selected value will remain selected until another branch is set.";
         }
-      }
 
-      if (parsedNewValue && parsedValueField && (externalCacheToolIdentifier || externalCacheToolId)) {
-        const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
-        parameters.cache = newValue;
+        setInternalErrorMessage(error);
+        const clearValueFunction = getClearDataFunction();
+
+        if (clearValueFunction) {
+          clearValueFunction();
+        }
+        return;
+      }
+    }
+
+    if (parsedNewValue && parsedValueField && (externalCacheToolIdentifier || externalCacheToolId)) {
+      const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
+      parameters.cache = newValue;
 
       if (typeof textField === "string") {
         parameters.textField = textField;

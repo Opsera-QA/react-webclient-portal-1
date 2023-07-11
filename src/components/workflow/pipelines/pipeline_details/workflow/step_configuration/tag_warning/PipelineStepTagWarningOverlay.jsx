@@ -7,9 +7,9 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import CancelButton from "components/common/buttons/CancelButton";
 import PipelineStepTagWarningSkipButton
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/tag_warning/PipelineStepTagWarningSkipButton";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/tag_warning/PipelineStepTagWarningSkipButton";
 import PipelineStepTagWarningApplyTagButton
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/tag_warning/PipelineStepTagWarningApplyTagButton";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/tag_warning/PipelineStepTagWarningApplyTagButton";
 import WarningMessageFieldBase from "components/common/fields/text/message/WarningMessageFieldBase";
 import {Col, Row} from "react-bootstrap";
 import TextInputBase from "components/common/inputs/text/TextInputBase";

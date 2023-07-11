@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import WorkflowOrchestrationProgressBarBase
-  from "temp-library-components/fields/orchestration/progress/WorkflowOrchestrationProgressBarBase";
+from "temp-library-components/fields/orchestration/progress/WorkflowOrchestrationProgressBarBase";
 
 export default function PipelineOrchestrationProgressBarBase(
   {

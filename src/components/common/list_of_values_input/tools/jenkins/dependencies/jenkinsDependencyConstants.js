@@ -1,11 +1,11 @@
 export const getJenkinsDependencies = (buildType) => {
   switch (buildType) {
-    case "node":
-      return nodeDependencies;
-    case "gradle":
-      return gradleDependencies;
-    default:
-      return jenkinsDependencies;
+  case "node":
+    return nodeDependencies;
+  case "gradle":
+    return gradleDependencies;
+  default:
+    return jenkinsDependencies;
   }
 };
 

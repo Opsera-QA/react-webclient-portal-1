@@ -8,7 +8,7 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faUser} from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import NewOrganizationAccountUserOverlay
-  from "components/admin/accounts/ldap/organization_accounts/NewOrganizationAccountUserOverlay";
+from "components/admin/accounts/ldap/organization_accounts/NewOrganizationAccountUserOverlay";
 import {getField} from "components/common/metadata/metadata-helpers";
 
 function LdapUsersTable({ userData, orgDomain, isLoading, loadData }) {

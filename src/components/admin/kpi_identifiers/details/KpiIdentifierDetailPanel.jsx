@@ -50,29 +50,29 @@ function KpiIdentifierDetailPanel({ kpiData, setKpiData }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return (
-          <KpiIdentifierSummaryPanel
-            kpiData={kpiData}
-            setActiveTab={setActiveTab}
-          />
-        );
-      case "settings":
-        return (
-          <KpiIdentifierEditorPanel
-            setKpiData={setKpiData}
-            kpiData={kpiData}
-            handleClose={toggleSummaryPanel}
-          />
-        );
-      case "dataPoints":
-        return (
-          <KpiDataPointsPanel
-            kpiId={kpiData?.getData("_id")}
-          />
-        );
-      default:
-        return null;
+    case "summary":
+      return (
+        <KpiIdentifierSummaryPanel
+          kpiData={kpiData}
+          setActiveTab={setActiveTab}
+        />
+      );
+    case "settings":
+      return (
+        <KpiIdentifierEditorPanel
+          setKpiData={setKpiData}
+          kpiData={kpiData}
+          handleClose={toggleSummaryPanel}
+        />
+      );
+    case "dataPoints":
+      return (
+        <KpiDataPointsPanel
+          kpiId={kpiData?.getData("_id")}
+        />
+      );
+    default:
+      return null;
     }
   };
 

@@ -2,16 +2,16 @@ import React, {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import SfdcPipelineWizardSubmitFileTypeButton
-  from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardSubmitFileTypeButton";
+from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardSubmitFileTypeButton";
 import CancelButton from "components/common/buttons/CancelButton";
 import axios from "axios";
 import StandalonePackageXmlField from "components/common/fields/pipelines/sfdc/StandalonePackageXmlField";
 import PipelineRunSelectInput
-  from "components/common/list_of_values_input/workflow/pipelines/run/PipelineRunSelectInput";
+from "components/common/list_of_values_input/workflow/pipelines/run/PipelineRunSelectInput";
 import SfdcPipelineWizardIncludeDependenciesToggle
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
+from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
 import SfdcPipelineWizardUploadComponentSummary
-  from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardUploadComponentSummary";
+from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardUploadComponentSummary";
 
 function SfdcPipelineWizardPastRunComponent(
   {

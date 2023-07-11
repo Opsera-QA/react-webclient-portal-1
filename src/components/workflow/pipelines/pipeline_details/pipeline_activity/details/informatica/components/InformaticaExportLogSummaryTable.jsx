@@ -2,7 +2,7 @@ import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import {faCheckCircle, faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import informaticaExportObjectLogResultMetaData
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/metadata/informaticaExportObjectLogResult.metadata";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/metadata/informaticaExportObjectLogResult.metadata";
 import {
   getColumnHeader, getColumnId,
   getTableTextColumn

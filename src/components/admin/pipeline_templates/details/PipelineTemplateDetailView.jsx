@@ -9,15 +9,15 @@ import DetailScreenContainer from "components/common/panels/detail_view_containe
 import PipelineTemplateDetailPanel from "components/admin/pipeline_templates/details/PipelineTemplateDetailPanel";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import PipelineTemplateManagementSubNavigationBar
-  from "components/admin/pipeline_templates/PipelineTemplateManagementSubNavigationBar";
+from "components/admin/pipeline_templates/PipelineTemplateManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetPlatformPipelineTemplateModelById
-  from "hooks/workflow/catalog/platform/useGetPlatformPipelineTemplateModelById";
+from "hooks/workflow/catalog/platform/useGetPlatformPipelineTemplateModelById";
 import {
   platformPipelineTemplateCatalogActions
 } from "components/workflow/catalog/platform/platformPipelineTemplateCatalog.actions";
 import ViewPlatformPipelineTemplateAuditLogsActionBarButton
-  from "components/workflow/catalog/platform/action_bar/ViewPlatformPipelineTemplateAuditLogsActionBarButton";
+from "components/workflow/catalog/platform/action_bar/ViewPlatformPipelineTemplateAuditLogsActionBarButton";
 
 function PipelineTemplateDetailView() {
   const {templateId} = useParams();

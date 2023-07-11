@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase
-  from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
 function JenkinsAccountToolSelectInput({ visible, model, setModel, disabled, fieldName }) {
   const setDataFunction = (fieldName, selectedOption) => {

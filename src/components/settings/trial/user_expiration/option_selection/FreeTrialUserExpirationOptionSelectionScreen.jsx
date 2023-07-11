@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import FreeTrialUserExpirationRevokeAccessSelectionCard
-  from "components/settings/trial/user_expiration/option_selection/FreeTrialUserExpirationRevokeAccessSelectionCard";
+from "components/settings/trial/user_expiration/option_selection/FreeTrialUserExpirationRevokeAccessSelectionCard";
 import { Col, Row } from "react-bootstrap";
 import FreeTrialUserExpirationExtendUserExpirationSelectionCard
-  from "components/settings/trial/user_expiration/option_selection/FreeTrialUserExpirationExtendUserExpirationSelectionCard";
+from "components/settings/trial/user_expiration/option_selection/FreeTrialUserExpirationExtendUserExpirationSelectionCard";
 import FreeTrialUserExpirationReinstateUserSelectionCard
-  from "components/settings/trial/user_expiration/option_selection/FreeTrialUserExpirationReinstateUserSelectionCard";
+from "components/settings/trial/user_expiration/option_selection/FreeTrialUserExpirationReinstateUserSelectionCard";
 
 export const FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREEN_LINKS = {
   OPTION_SELECTION_SCREEN: "/settings/trial/user-expiration-management",

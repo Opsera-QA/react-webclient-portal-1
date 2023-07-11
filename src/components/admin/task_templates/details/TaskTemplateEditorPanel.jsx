@@ -122,7 +122,7 @@ export default function TaskTemplateEditorPanel({ templateModel, setTemplateMode
         </Col>
       </Row>
     </EditorPanelContainer>
-    );
+  );
 }
 
 TaskTemplateEditorPanel.propTypes = {

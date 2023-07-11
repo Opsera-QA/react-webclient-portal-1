@@ -5,7 +5,7 @@ export const policyHelper = {};
 
 policyHelper.getDetailViewLink = (
   policiesId,
-  ) => {
+) => {
   if (isMongoDbId(policiesId) !== true) {
     return null;
   }

@@ -39,7 +39,7 @@ export default function CreateFreeTrialGitlabToolButton(
       toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB,
       "secretPrivateKey",
       configuration?.secretPrivateKey,
-      );
+    );
     configuration.secretAccessTokenKey = await toolsActions.saveThreePartToolPasswordToVaultV3(
       getAccessToken,
       cancelTokenSource,

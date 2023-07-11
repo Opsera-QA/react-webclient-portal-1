@@ -94,7 +94,7 @@ function JiraIssuesCreatedByDateLineChart({ persona, date }) {
         ) : (
           <ResponsiveLine
             {...defaultConfig("Number of Issues", "Date", 
-                        false, true, "wholeNumbers", "monthDate2")}
+              false, true, "wholeNumbers", "monthDate2")}
             data={data ? data.data : []}
             onClick={() => setShowModal(true)}
             xScale={{
@@ -108,8 +108,8 @@ function JiraIssuesCreatedByDateLineChart({ persona, date }) {
             }}
             colors={getColor}
             tooltip={(node) => <ChartTooltip 
-                                  titles = {["Date", node.point.serieId]}
-                                  values = {[node.point.data.xFormatted, node.point.data.yFormatted]} />}
+              titles = {["Date", node.point.serieId]}
+              values = {[node.point.data.xFormatted, node.point.data.yFormatted]} />}
           />
         )}
       </div>

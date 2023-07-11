@@ -28,26 +28,26 @@ function RegistrationLanding() {
               <div className="row mx-n2 mt-3" style={{ minWidth: "1020px" }}>
                 <div className="col-md px-2 landing-content-module">
                   <img alt="OpsERA"
-                       src="/img/platform.png"
-                       width="195"
-                       height="225"
-                       className="d-inline-block align-top"
+                    src="/img/platform.png"
+                    width="195"
+                    height="225"
+                    className="d-inline-block align-top"
                   />
                 </div>
                 <div className="col-md px-2 landing-content-module">
                   <img alt="OpsERA"
-                       src="/img/pipeline.png"
-                       width="195"
-                       height="225"
-                       className="d-inline-block align-top"
+                    src="/img/pipeline.png"
+                    width="195"
+                    height="225"
+                    className="d-inline-block align-top"
                   />
                 </div>
                 <div className="col-md px-2 landing-content-module2">
                   <img alt="OpsERA"
-                       src="/img/analytics.png"
-                       width="195"
-                       height="225"
-                       className="d-inline-block align-top"
+                    src="/img/analytics.png"
+                    width="195"
+                    height="225"
+                    className="d-inline-block align-top"
                   />
                 </div>
 

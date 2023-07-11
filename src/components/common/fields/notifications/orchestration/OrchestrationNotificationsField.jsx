@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 import OrchestrationNotificationSettingsDisplayer
-  from "components/common/fields/notifications/orchestration/displayer/OrchestrationNotificationSettingsDisplayer";
+from "components/common/fields/notifications/orchestration/displayer/OrchestrationNotificationSettingsDisplayer";
 
 function OrchestrationNotificationsField({model, fieldName, noDataMessage, className}) {
   const [field] = useState(model?.getFieldById(fieldName));

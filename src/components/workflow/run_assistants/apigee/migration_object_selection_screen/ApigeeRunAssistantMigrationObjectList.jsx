@@ -61,20 +61,20 @@ const ApigeeRunAssistantMigrationObjectList = (
 
   return (
     <ApigeeRunAssistantListObjectInput
-        setDataFunction={setDataFunction}
-        processDataFunction={processSelectedData}
-        fieldName={"selectedMigrationObjects"}
-        model={apigeeRunParametersModel}
-        setModel={setApigeeRunParametersModel}
-        selectOptions={migrationObjects}
-        searchFunction={searchFunction}
-        // clearDataFunction={clearDataFunction}
-        customTemplate={customTemplate}
-        isLoading={isLoading}
-        valueField={"id"}
-        noDataMessage={migrationObjectPullCompleted ? noDataFilesPulledMessage : noDataFilesNotPulledMessage}        
-        disabled={hasStringValue(updateVersionMode)}
-      />
+      setDataFunction={setDataFunction}
+      processDataFunction={processSelectedData}
+      fieldName={"selectedMigrationObjects"}
+      model={apigeeRunParametersModel}
+      setModel={setApigeeRunParametersModel}
+      selectOptions={migrationObjects}
+      searchFunction={searchFunction}
+      // clearDataFunction={clearDataFunction}
+      customTemplate={customTemplate}
+      isLoading={isLoading}
+      valueField={"id"}
+      noDataMessage={migrationObjectPullCompleted ? noDataFilesPulledMessage : noDataFilesNotPulledMessage}        
+      disabled={hasStringValue(updateVersionMode)}
+    />
   );
 
 };

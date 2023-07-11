@@ -4,27 +4,27 @@ import PipelineTaskSummaryPanelBase from "components/workflow/pipelines/pipeline
 import Model from "core/data_model/model";
 import pipelineTaskMetadata from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/pipeline-task-metadata";
 import parallelProcessorPipelineTaskMetadata
-  from "components/workflow/plan/step/parallel_processor/parallel-processor-pipeline-task-metadata";
+from "components/workflow/plan/step/parallel_processor/parallel-processor-pipeline-task-metadata";
 import ParallelProcessorPipelineTaskSummaryPanel
-  from "components/workflow/plan/step/parallel_processor/ParallelProcessorPipelineTaskSummaryPanel";
+from "components/workflow/plan/step/parallel_processor/ParallelProcessorPipelineTaskSummaryPanel";
 import pipelineActions from "components/workflow/pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ChildPipelineTaskSummaryPanel
-  from "components/workflow/plan/step/child/ChildPipelineTaskSummaryPanel";
+from "components/workflow/plan/step/child/ChildPipelineTaskSummaryPanel";
 import childPipelineTaskMetadata
-  from "components/workflow/plan/step/child/child-pipeline-task-metadata";
+from "components/workflow/plan/step/child/child-pipeline-task-metadata";
 import PipelineSummaryReportPanel
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineSummaryReportPanel";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineSummaryReportPanel";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import ExternalRestApiIntegrationActivityLogSummaryPanel
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/ExternalRestApiIntegrationActivityLogSummaryPanel";
+from "components/workflow/plan/step/external_rest_api_integration/task_summary/ExternalRestApiIntegrationActivityLogSummaryPanel";
 import axios from "axios";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import PipelineUserActionSummaryPanel
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/user_action/PipelineUserActionSummaryPanel";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/user_action/PipelineUserActionSummaryPanel";
 import RuntimeSettingsTaskSummaryPanel
-  from "components/workflow/plan/step/runtime_settings/RuntimeSettingsTaskSummaryPanel";
+from "components/workflow/plan/step/runtime_settings/RuntimeSettingsTaskSummaryPanel";
 
 const PIPELINE_TASK_ACTIONS = {
   REPORT: "report",
@@ -91,20 +91,20 @@ function PipelineActivityLogSummaryPanel(
 
   const getSummaryPanel = () => {
     switch (pipelineTaskData?.action) {
-      case PIPELINE_TASK_ACTIONS.REPORT:
-        return (
-          <PipelineSummaryReportPanel
-            pipelineTaskData={pipelineTaskData}
-            setActiveTab={setActiveTab}
-          />
-        );
-      case PIPELINE_TASK_ACTIONS.USER_ACTION:
-        return (
-          <PipelineUserActionSummaryPanel
-            pipelineTaskData={pipelineTaskData}
-            setActiveTab={setActiveTab}
-          />
-        );
+    case PIPELINE_TASK_ACTIONS.REPORT:
+      return (
+        <PipelineSummaryReportPanel
+          pipelineTaskData={pipelineTaskData}
+          setActiveTab={setActiveTab}
+        />
+      );
+    case PIPELINE_TASK_ACTIONS.USER_ACTION:
+      return (
+        <PipelineUserActionSummaryPanel
+          pipelineTaskData={pipelineTaskData}
+          setActiveTab={setActiveTab}
+        />
+      );
     }
 
     const apiResponseStepIdentifier = pipelineTaskData?.api_response?.stepIdentifier;
@@ -120,31 +120,31 @@ function PipelineActivityLogSummaryPanel(
     }
 
     switch (pipelineTaskData.tool_identifier) {
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.PARALLEL_PROCESSOR:
-        return (<ParallelProcessorPipelineTaskSummaryPanel pipelineTaskData={wrapObject(parallelProcessorPipelineTaskMetadata)}/>);
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.CHILD_PIPELINE:
-        return (<ChildPipelineTaskSummaryPanel pipelineTaskData={wrapObject(childPipelineTaskMetadata)} />);
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
-        return (
-          <ExternalRestApiIntegrationActivityLogSummaryPanel
-            externalRestApiIntegrationStepTaskModel={wrapObject(pipelineTaskMetadata)}
-            endpoint={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoint")}
-            endpoints={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoints")}
-          />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.RUNTIME_SETTINGS:
-        return (
-          <RuntimeSettingsTaskSummaryPanel
-            pipelineTaskModel={wrapObject(pipelineTaskMetadata)}
-          />
-        );
-      default:
-        return (
-          <PipelineTaskSummaryPanelBase
-            pipelineTaskData={wrapObject(pipelineTaskMetadata)}
-            setActiveTab={setActiveTab}
-          />
-        );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.PARALLEL_PROCESSOR:
+      return (<ParallelProcessorPipelineTaskSummaryPanel pipelineTaskData={wrapObject(parallelProcessorPipelineTaskMetadata)}/>);
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.CHILD_PIPELINE:
+      return (<ChildPipelineTaskSummaryPanel pipelineTaskData={wrapObject(childPipelineTaskMetadata)} />);
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
+      return (
+        <ExternalRestApiIntegrationActivityLogSummaryPanel
+          externalRestApiIntegrationStepTaskModel={wrapObject(pipelineTaskMetadata)}
+          endpoint={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoint")}
+          endpoints={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoints")}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.RUNTIME_SETTINGS:
+      return (
+        <RuntimeSettingsTaskSummaryPanel
+          pipelineTaskModel={wrapObject(pipelineTaskMetadata)}
+        />
+      );
+    default:
+      return (
+        <PipelineTaskSummaryPanelBase
+          pipelineTaskData={wrapObject(pipelineTaskMetadata)}
+          setActiveTab={setActiveTab}
+        />
+      );
     }
   };
 

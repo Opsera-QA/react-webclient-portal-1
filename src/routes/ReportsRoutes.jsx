@@ -54,7 +54,7 @@ export default function ReportsRoutes() {
       <SecureRoute path="/reports/tags/tags-used-in-pipeline" exact component={TagsUsedInPipelineReport} />
       <SecureRoute path="/reports/tags/tags-used-in-tools" exact component={TagsUsedInToolsReport} />
       <SecureRoute path="/reports/tags/tags-used-in-dashboards" exact
-                   component={TagsUsedInDashboardsReport} />
+        component={TagsUsedInDashboardsReport} />
       <SecureRoute path="/reports/tags/tags-used-in-projects" exact component={TagsUsedInProjectsReport} />
 
       <SecureRoute path="/reports/users/group-membership" exact component={UserGroupMembershipReport} />

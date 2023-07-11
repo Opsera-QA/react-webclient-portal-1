@@ -5,11 +5,11 @@ import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import PipelineInstructionsPipelineUsageField
-  from "components/common/list_of_values_input/workflow/instructions/usage/PipelineInstructionsPipelineUsageField";
+from "components/common/list_of_values_input/workflow/instructions/usage/PipelineInstructionsPipelineUsageField";
 import CustomTab from "components/common/tabs/CustomTab";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import PipelineInstructionsSummaryPanel
-  from "components/workflow/instructions/details/PipelineInstructionsSummaryPanel";
+from "components/workflow/instructions/details/PipelineInstructionsSummaryPanel";
 import PipelineInstructionsEditorPanel from "components/workflow/instructions/details/PipelineInstructionsEditorPanel";
 
 export default function PipelineInstructionsDetailPanel(
@@ -56,29 +56,29 @@ export default function PipelineInstructionsDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return (
-          <PipelineInstructionsSummaryPanel
-            pipelineInstructionsModel={pipelineInstructionsModel}
-            setPipelineInstructionsModel={setPipelineInstructionsModel}
-            setActiveTab={setActiveTab}
-          />
-        );
-      case "usage":
-        return (
-          <PipelineInstructionsPipelineUsageField
-            pipelineInstructionsId={pipelineInstructionsModel?.getMongoDbId()}
-          />
-        );
-      case "settings":
-        return (
-          <PipelineInstructionsEditorPanel
-            pipelineInstructionsModel={pipelineInstructionsModel}
-            setPipelineInstructionsModel={setPipelineInstructionsModel}
-          />
-        );
-      default:
-        return null;
+    case "summary":
+      return (
+        <PipelineInstructionsSummaryPanel
+          pipelineInstructionsModel={pipelineInstructionsModel}
+          setPipelineInstructionsModel={setPipelineInstructionsModel}
+          setActiveTab={setActiveTab}
+        />
+      );
+    case "usage":
+      return (
+        <PipelineInstructionsPipelineUsageField
+          pipelineInstructionsId={pipelineInstructionsModel?.getMongoDbId()}
+        />
+      );
+    case "settings":
+      return (
+        <PipelineInstructionsEditorPanel
+          pipelineInstructionsModel={pipelineInstructionsModel}
+          setPipelineInstructionsModel={setPipelineInstructionsModel}
+        />
+      );
+    default:
+      return null;
     }
   };
 

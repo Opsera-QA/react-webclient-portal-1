@@ -4,42 +4,42 @@ const analyticsProfileMetadata = {
   idProperty: "_id",
   fields: [
     {
-    label: "Enabled Tools",
-    id: "enabledTools",
-  },
-  {
-    label: "Default Persona",
-    id: "defaultPersona",
-  },
-  {
-    label: "Data Usage",
-    id: "dataUsage",
-  },
-  {
-    label: "Active",
-    id: "active",
-  },
-  {
-    label: "Hits Index",
-    id: "hitsIndex",
-  },
-  {
-    label: "Server Url",
-    id: "analyticsServerUrl",
-  },
-  {
-    label: "Allow Data",
-    id: "allowData",
-  },
+      label: "Enabled Tools",
+      id: "enabledTools",
+    },
     {
-    label: "Workflow: Infrastructure",
-    id: "Infrastructure",
-  },
-  {
-    label: "Workflow: Pipeline",
-    id: "Pipeline",
-  },
-    ],
+      label: "Default Persona",
+      id: "defaultPersona",
+    },
+    {
+      label: "Data Usage",
+      id: "dataUsage",
+    },
+    {
+      label: "Active",
+      id: "active",
+    },
+    {
+      label: "Hits Index",
+      id: "hitsIndex",
+    },
+    {
+      label: "Server Url",
+      id: "analyticsServerUrl",
+    },
+    {
+      label: "Allow Data",
+      id: "allowData",
+    },
+    {
+      label: "Workflow: Infrastructure",
+      id: "Infrastructure",
+    },
+    {
+      label: "Workflow: Pipeline",
+      id: "Pipeline",
+    },
+  ],
   newObjectFields: {
     "Infrastructure": false,
     "Pipeline": false,

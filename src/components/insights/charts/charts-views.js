@@ -369,37 +369,37 @@ export const adjustBarWidth = (data, isVertical = true) => {
 
   if (isVertical) {
     switch (true) {
-      case x === 1:
-        padding = 0.85;
-        break;
-      case x === 2:
-        padding = 0.75;
-        break;
-      case x === 3:
-        padding = 0.7;
-        break;
-      case x <= 8:
-        padding = 0.45;
-        break;
-      case x <= 10:
-        padding = 0.35;
-        break;
-      default:
-        padding = 0.25;
+    case x === 1:
+      padding = 0.85;
+      break;
+    case x === 2:
+      padding = 0.75;
+      break;
+    case x === 3:
+      padding = 0.7;
+      break;
+    case x <= 8:
+      padding = 0.45;
+      break;
+    case x <= 10:
+      padding = 0.35;
+      break;
+    default:
+      padding = 0.25;
     }
   } else {
     switch (true) {
-      case x === 1:
-        padding = 0.5;
-        break;
-      case x === 2:
-        padding = 0.35;
-        break;
-      case x === 3:
-        padding = 0.3;
-        break;
-      default:
-        padding = 0.25;
+    case x === 1:
+      padding = 0.5;
+      break;
+    case x === 2:
+      padding = 0.35;
+      break;
+    case x === 3:
+      padding = 0.3;
+      break;
+    default:
+      padding = 0.25;
     }
   }
 

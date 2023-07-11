@@ -4,9 +4,9 @@ import FilterContainer from "components/common/table/FilterContainer";
 import Model from "core/data_model/model";
 import GitlabPipelineStatisticsActionableInsightsMetadata from "./gitlabPipelineStatisticsActionableInsights.metadata";
 import {
-    getTableDateTimeColumn,
-    getTableDurationTextColumn,
-    getTableTextColumn,
+  getTableDateTimeColumn,
+  getTableDurationTextColumn,
+  getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { Row, Col } from "react-bootstrap";
@@ -188,6 +188,6 @@ GitlabPipelineStatisticsActionableInsightsTable.propTypes = {
 };
 
 GitlabPipelineStatisticsActionableInsightsTable.defaultProps = {
-    activeTab: "success",
+  activeTab: "success",
 };
 export default GitlabPipelineStatisticsActionableInsightsTable;

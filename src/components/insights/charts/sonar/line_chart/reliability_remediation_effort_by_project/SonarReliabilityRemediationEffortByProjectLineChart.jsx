@@ -109,7 +109,7 @@ function SonarReliabilityRemediationEffortByProjectLineChart({
         response?.data?.data[0]?.sonarReliabilityRemediationEffortByProject
           .status === 200
           ? response?.data?.data[0]?.sonarReliabilityRemediationEffortByProject
-              ?.data
+            ?.data
           : [];
       assignStandardColors(dataObject);
       shortenLegend(dataObject);

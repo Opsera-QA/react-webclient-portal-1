@@ -9,7 +9,7 @@ import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 import {getLargeVendorIconComponentFromPipeline} from "components/common/helpers/icon-helpers";
 import CustomerPipelineTemplateCardHeader from "temp-library-components/cards/templates/pipelines/customer/CustomerPipelineTemplateCardHeader";
 import CustomerPipelineTemplateCardBody
-  from "temp-library-components/cards/templates/pipelines/customer/CustomerPipelineTemplateCardBody";
+from "temp-library-components/cards/templates/pipelines/customer/CustomerPipelineTemplateCardBody";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import PipelineTemplateCardFooter from "temp-library-components/cards/templates/pipelines/PipelineTemplateCardFooter";
 

@@ -65,15 +65,15 @@ function GitCustodianTotalRepositoriesChart({ dashboardData, data }) {
     const totalUncleanRepo = totalRepo - totalCleanRepo;
 
     const chartData = [{
-        "totalRepos": totalRepo,
-        "value": totalCleanRepo,
-        "id": "Clean Repositories"
-      },
-      {
-        "totalRepos": totalRepo,
-        "value": totalUncleanRepo,
-        "id": "Unclean Repositories"
-      }
+      "totalRepos": totalRepo,
+      "value": totalCleanRepo,
+      "id": "Clean Repositories"
+    },
+    {
+      "totalRepos": totalRepo,
+      "value": totalUncleanRepo,
+      "id": "Unclean Repositories"
+    }
     ];
 
     return (

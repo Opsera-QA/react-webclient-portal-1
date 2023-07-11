@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import ToolConfigurationEditorPanelContainer
-  from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Row from "react-bootstrap/Row";
 import TerraformCloudMetadata from "./terraform-cloud-metadata";
 import toolsActions from "components/inventory/tools/tools-actions";
@@ -13,7 +13,7 @@ import TextInputBase from "../../../../../common/inputs/text/TextInputBase";
 import axios from "axios";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import toolIdentifierConnectionCheckConstants
-  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function TerraformCloudToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);

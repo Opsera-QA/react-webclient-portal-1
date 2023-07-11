@@ -33,7 +33,7 @@ export default function ActiveFilterDisplayer(
           <span className="mr-1"><IconBase icon={faFilter} /></span>
           <span>{filter?.text}</span>
           {getFilterCloseButton(filter)}
-       </span>
+        </span>
       );
     }
   };

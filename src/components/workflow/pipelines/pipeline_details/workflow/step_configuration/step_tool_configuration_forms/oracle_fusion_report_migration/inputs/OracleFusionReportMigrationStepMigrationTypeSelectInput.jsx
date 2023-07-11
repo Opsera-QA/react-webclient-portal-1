@@ -49,18 +49,18 @@ function OracleFusionReportMigrationStepMigrationTypeSelectInput({model, setMode
   };
 
   return (
-     <SelectInputBase
-       fieldName={"migrationType"}
-       dataObject={model}
-       setDataObject={setModel}
-       selectOptions={MIGRATION_TYPES}
-       valueField={"value"}
-       textField={"name"}
-       placeholderText={"Select a Migration Type"}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-       busy={isLoading}
-     />
+    <SelectInputBase
+      fieldName={"migrationType"}
+      dataObject={model}
+      setDataObject={setModel}
+      selectOptions={MIGRATION_TYPES}
+      valueField={"value"}
+      textField={"name"}
+      placeholderText={"Select a Migration Type"}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+      busy={isLoading}
+    />
   );
 }
 

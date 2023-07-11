@@ -4,7 +4,7 @@ import ActionBarDeleteButtonBase from "components/common/actions/buttons/ActionB
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import DeletePlatformDashboardTemplateConfirmationOverlay
-  from "components/insights/marketplace/dashboards/templates/platform/DeletePlatformDashboardTemplateConfirmationOverlay";
+from "components/insights/marketplace/dashboards/templates/platform/DeletePlatformDashboardTemplateConfirmationOverlay";
 
 export default function ActionBarDeletePlatformDashboardTemplateButton(
   {

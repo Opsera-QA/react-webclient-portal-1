@@ -36,14 +36,14 @@ function MaintainabilityLineChart({ data, persona }) {
           <ResponsiveLine
             data={sonarMaintainability ? sonarMaintainability.data : []}
             {...defaultConfig("Average Quality Gate Value", "Date", 
-                                false, true, "wholeNumbers", "yearMonthDate")}
+              false, true, "wholeNumbers", "yearMonthDate")}
             onClick={() => setShowModal(true)}
             colors={getColor}
             keys={["Maintainability Rating", ""]}
             tooltip={({ point, color }) => <ChartTooltip 
-                      titles={["Timestamp", "SQALE", "Key"]}
-                      values={[point.data.x, point.data.y, point.data.key]}
-                      color = {color} />}
+              titles={["Timestamp", "SQALE", "Key"]}
+              values={[point.data.x, point.data.y, point.data.key]}
+              color = {color} />}
           />
         )}
       </div>

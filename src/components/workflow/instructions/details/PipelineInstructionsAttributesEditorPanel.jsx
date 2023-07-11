@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import useGetPipelineInstructionsAttributesModel
-  from "components/workflow/instructions/hooks/attributes/useGetPipelineInstructionsAttributesModel";
+from "components/workflow/instructions/hooks/attributes/useGetPipelineInstructionsAttributesModel";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TagManager from "components/common/inputs/tags/TagManager";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 import PipelineInstructionsStatusSelectInput
-  from "components/common/list_of_values_input/workflow/instructions/status/PipelineInstructionsStatusSelectInput";
+from "components/common/list_of_values_input/workflow/instructions/status/PipelineInstructionsStatusSelectInput";
 import DateInput from "components/common/inputs/date/DateInput";
 
 export default function PipelineInstructionsAttributesEditorPanel(

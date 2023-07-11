@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import sapCpqSummaryLogResultMetadata
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/sap_cpq/metadata/sapCpqSummaryLogResult.metadata";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/sap_cpq/metadata/sapCpqSummaryLogResult.metadata";
 import LoadingDialog from "components/common/status_notifications/loading";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
@@ -61,10 +61,10 @@ function SapCpqLogSummaryReportPanel({ pipelineTaskData }) {
         <VanitySetTabView tabKey={"summary"}>
           <SummaryPanelContainer className={"mx-3 mt-3"}>
             <SapCpqReportSummaryOverview
-                sapCpqResultsModel={sapCpqResultsModel}
+              sapCpqResultsModel={sapCpqResultsModel}
             />
             <SapCpqReportView
-                sapCpqReportObjs={sapCpqReportObjs}
+              sapCpqReportObjs={sapCpqReportObjs}
             />
           </SummaryPanelContainer>
         </VanitySetTabView>

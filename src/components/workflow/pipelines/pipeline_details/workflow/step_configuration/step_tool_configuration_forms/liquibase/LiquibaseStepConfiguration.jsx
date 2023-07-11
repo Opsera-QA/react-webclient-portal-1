@@ -4,7 +4,7 @@ import LiquibaseStepFormMetadata from "./liquibase-stepForm-metadata";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import LiquibaseToolSelectInput from "./inputs/LiquibaseToolSelectInput";
@@ -62,31 +62,31 @@ function LiquibaseStepConfiguration({ pipelineId, stepTool, plan, stepId, closeE
 
   const getDynamicFields = () => {
     switch (liquibaseStepConfigurationDto?.getData("dbType")) {
-      case "redshift":
-        return (          
+    case "redshift":
+      return (          
+        <TextInputBase
+          dataObject={liquibaseStepConfigurationDto}
+          setDataObject={setLiquibaseConfigurationDataDto}
+          fieldName={"database"}
+        />
+      );
+    case "snowflake":
+      return (
+        <>
           <TextInputBase
             dataObject={liquibaseStepConfigurationDto}
             setDataObject={setLiquibaseConfigurationDataDto}
             fieldName={"database"}
           />
-        );
-      case "snowflake":
-        return (
-          <>
-            <TextInputBase
-              dataObject={liquibaseStepConfigurationDto}
-              setDataObject={setLiquibaseConfigurationDataDto}
-              fieldName={"database"}
-            />
-            <TextInputBase
-              dataObject={liquibaseStepConfigurationDto}
-              setDataObject={setLiquibaseConfigurationDataDto}
-              fieldName={"warehouse"}
-            />
-          </>
-        );
-      default:
-        return null;
+          <TextInputBase
+            dataObject={liquibaseStepConfigurationDto}
+            setDataObject={setLiquibaseConfigurationDataDto}
+            fieldName={"warehouse"}
+          />
+        </>
+      );
+    default:
+      return null;
     }    
   };
 

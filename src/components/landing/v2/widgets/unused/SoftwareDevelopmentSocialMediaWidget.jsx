@@ -45,7 +45,7 @@ export default function SoftwareDevelopmentSocialMediaWidget({ className }) {
         placement={"bottom"}
       >
         <div className={"marketingModulesText pointer"} style={{ float: "left", bottom: "20px" }}
-             onClick={handleClick(url)}>
+          onClick={handleClick(url)}>
           <IconBase
             icon={icon}
             iconSize={"2xl"}

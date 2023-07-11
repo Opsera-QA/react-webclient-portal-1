@@ -11,7 +11,7 @@ import ChartDetailsOverlay from "components/insights/charts/detail_overlay/Chart
 import axios from "axios";
 import Model from "core/data_model/model";
 import { defaultConfig, getColorById, assignBooleanColors,
-         adjustBarWidth } from '../../../charts-views';
+  adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 import SFDCPipelinesInsightsTableMetadata from "components/insights/charts/sfdc/sfdc-pipelines-actionable-metadata.js";
 
@@ -77,12 +77,12 @@ function SFDCProfileMigrationsBarChart({ kpiConfiguration, setKpiConfiguration, 
     if (data.id === "Failure") {kpiName = "sfdc-profile-migrations-failure";}
     const chartModel = new Model({...SFDCPipelinesInsightsTableMetadata.newObjectFields}, SFDCPipelinesInsightsTableMetadata, false);
     toastContext.showOverlayPanel(
-    <ChartDetailsOverlay
-      dashboardData={dashboardData} 
-      kpiConfiguration={kpiConfiguration} 
-      chartModel={chartModel} 
-      kpiIdentifier={kpiName}
-      pipelineName={pipeline} />);
+      <ChartDetailsOverlay
+        dashboardData={dashboardData} 
+        kpiConfiguration={kpiConfiguration} 
+        chartModel={chartModel} 
+        kpiIdentifier={kpiName}
+        pipelineName={pipeline} />);
   };
 
   const getChartBody = () => {
@@ -95,36 +95,36 @@ function SFDCProfileMigrationsBarChart({ kpiConfiguration, setKpiConfiguration, 
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Pipeline Name", "Number of Pipeline Runs", 
-                      true, false, "cutoffString", "wholeNumbers")}
+            true, false, "cutoffString", "wholeNumbers")}
           {...config(getColorById)}
           {...adjustBarWidth(metrics, false)}
           // onClick={(data) => onRowSelect(data)}
           tooltip={({indexValue, color, value, id}) => <ChartTooltip 
-                                        titles = {["Pipeline", `${id} Profile Migrations`]}
-                                        values = {[indexValue, value]}
-                                        style = {false}
-                                        color = {color} />}
+            titles = {["Pipeline", `${id} Profile Migrations`]}
+            values = {[indexValue, value]}
+            style = {false}
+            color = {color} />}
         />
       </div>
     );
   };
 
   return (
-      <div>
-        <ChartContainer
-          kpiConfiguration={kpiConfiguration}
-          setKpiConfiguration={setKpiConfiguration}
-          chart={getChartBody()}
-          loadChart={loadData}
-          dashboardData={dashboardData}
-          index={index}
-          error={error}
-          setKpis={setKpis}
-          isLoading={isLoading}
-        />
-        <ModalLogs header="Status by Pipeline" size="lg" jsonMessage={metrics} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
-      </div>
-    );
+    <div>
+      <ChartContainer
+        kpiConfiguration={kpiConfiguration}
+        setKpiConfiguration={setKpiConfiguration}
+        chart={getChartBody()}
+        loadChart={loadData}
+        dashboardData={dashboardData}
+        index={index}
+        error={error}
+        setKpis={setKpis}
+        isLoading={isLoading}
+      />
+      <ModalLogs header="Status by Pipeline" size="lg" jsonMessage={metrics} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+    </div>
+  );
 }
 
 SFDCProfileMigrationsBarChart.propTypes = {

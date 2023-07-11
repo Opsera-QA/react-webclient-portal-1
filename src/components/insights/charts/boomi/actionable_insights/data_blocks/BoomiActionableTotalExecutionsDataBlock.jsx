@@ -4,21 +4,21 @@ import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlo
 import TwoLineScoreDataBlock from "../../../../../common/metrics/score/TwoLineScoreDataBlock";
 
 function BoomiActionableFreqDataBlock({ data, icon, className }) {
-    return (
-        <DataBlockBoxContainer showBorder={true}>
-            <TwoLineScoreDataBlock
-                className={className}
-                score={data}
-                subtitle={"Total Executions"}
-            />
-        </DataBlockBoxContainer>
-    );
+  return (
+    <DataBlockBoxContainer showBorder={true}>
+      <TwoLineScoreDataBlock
+        className={className}
+        score={data}
+        subtitle={"Total Executions"}
+      />
+    </DataBlockBoxContainer>
+  );
 }
 
 BoomiActionableFreqDataBlock.propTypes = {
-    data: PropTypes.number,
-    icon: PropTypes.object,
-    className: PropTypes.string,
+  data: PropTypes.number,
+  icon: PropTypes.object,
+  className: PropTypes.string,
 };
 
 export default BoomiActionableFreqDataBlock;

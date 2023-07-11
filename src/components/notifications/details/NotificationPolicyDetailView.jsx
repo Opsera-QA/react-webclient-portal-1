@@ -6,12 +6,12 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import NotificationPolicySubNavigationBar from "components/notifications/NotificationPolicySubNavigationBar";
 import NotificationDetailViewHelpDocumentation
-  from "components/common/help/documentation/notifications/NotificationDetailViewHelpDocumentation";
+from "components/common/help/documentation/notifications/NotificationDetailViewHelpDocumentation";
 import useGetNotificationPolicyModelById from "hooks/notification_policies/model/useGetNotificationPolicyModelById";
 import DeleteNotificationPolicyActionBarButton
-  from "components/notifications/actions/DeleteNotificationPolicyActionBarButton";
+from "components/notifications/actions/DeleteNotificationPolicyActionBarButton";
 import notificationPolicyMetadata
-  from "@opsera/definitions/constants/notification_policies/notificationPolicy.metadata";
+from "@opsera/definitions/constants/notification_policies/notificationPolicy.metadata";
 
 function NotificationPolicyDetailView() {
   const { id } = useParams();

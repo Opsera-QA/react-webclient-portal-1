@@ -4,13 +4,13 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import SpyglassBadge from "components/common/badges/spyglass/SpyglassBadge";
 import {accessRuleTypeConstants} from "components/common/inputs/access_rules/constants/AccessRuleType.constants";
 import AllowedSsoUserOrganizationNamesBadgeDisplayer
-  from "components/common/inputs/access_rules/field/AllowedSsoUserOrganizationNamesBadgeDisplayer";
+from "components/common/inputs/access_rules/field/AllowedSsoUserOrganizationNamesBadgeDisplayer";
 
 function AccessRuleOverlayField({rules, className, noDataMessage}) {
   const [ssoUserOrganizations, setSsoUserOrganizations] = useState([]);
 
   useEffect(() => {
-      unpackRoles();
+    unpackRoles();
   }, [JSON.stringify(rules)]);
 
   const unpackRoles = () => {
@@ -20,9 +20,9 @@ function AccessRuleOverlayField({rules, className, noDataMessage}) {
         const type = accessRule?.type;
 
         switch (type) {
-          case accessRuleTypeConstants.ACCESS_RULE_TYPES.ALLOWED_SSO_USER_ORGANIZATIONS:
-            unpackAllowedSsoUserOrganizationNames(accessRule?.value);
-            break;
+        case accessRuleTypeConstants.ACCESS_RULE_TYPES.ALLOWED_SSO_USER_ORGANIZATIONS:
+          unpackAllowedSsoUserOrganizationNames(accessRule?.value);
+          break;
         }
       });
     }

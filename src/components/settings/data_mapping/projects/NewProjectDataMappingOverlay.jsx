@@ -1,13 +1,13 @@
 import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
 import ProjectDataMappingEditorPanel
-  from "components/settings/data_mapping/projects/details/ProjectDataMappingEditorPanel";
+from "components/settings/data_mapping/projects/details/ProjectDataMappingEditorPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import projectDataMappingMetadata
-  from "@opsera/definitions/constants/settings/data_mapping/project/projectDataMapping.metadata";
+from "@opsera/definitions/constants/settings/data_mapping/project/projectDataMapping.metadata";
 import useGetAnalyticsProjectDataMappingModel
-  from "hooks/settings/insights/analytics_data_mappings/projects/useGetAnalyticsProjectDataMappingModel";
+from "hooks/settings/insights/analytics_data_mappings/projects/useGetAnalyticsProjectDataMappingModel";
 
 function NewProjectDataMappingOverlay({loadData, isMounted,}) {
   const toastContext = useContext(DialogToastContext);

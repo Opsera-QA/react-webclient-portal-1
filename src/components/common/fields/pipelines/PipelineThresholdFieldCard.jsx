@@ -19,7 +19,7 @@ function PipelineThresholdFieldCard({ model, fieldName, isLoading, className }) 
       <div className="object-properties-input">
         <div className="content-container">
           <FieldTitleBar field={field} icon={faClipboardListCheck} isLoading={isLoading} />
-            <PipelineThresholdTable thresholdRows={model?.getData(fieldName)} />
+          <PipelineThresholdTable thresholdRows={model?.getData(fieldName)} />
         </div>
       </div>
     </FieldContainer>

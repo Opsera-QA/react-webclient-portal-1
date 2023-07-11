@@ -8,11 +8,11 @@ import axios from "axios";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import MetricDataPointTypeSelectInput
-  from "components/common/list_of_values_input/insights/data_points/type/MetricDataPointTypeSelectInput";
+from "components/common/list_of_values_input/insights/data_points/type/MetricDataPointTypeSelectInput";
 import MetricDataPointStrategicCriteriaPanel
-  from "components/common/inputs/metric/data_points/admin/strategic_criteria/MetricDataPointStrategicCriteriaPanel";
+from "components/common/inputs/metric/data_points/admin/strategic_criteria/MetricDataPointStrategicCriteriaPanel";
 import MetricDataPointVisibilityInput
-  from "components/common/inputs/metric/data_points/visibility/MetricDataPointVisibilityInput";
+from "components/common/inputs/metric/data_points/visibility/MetricDataPointVisibilityInput";
 import DataPointAllowCustomMappingInput from "components/common/inputs/metric/data_points/custom_fields/DataPointAllowCustomMappingInput";
 
 function KpiDataPointEditorPanel({ dataPointModel, closeEditorPanel }) {

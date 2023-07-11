@@ -139,43 +139,43 @@ function ConnectedAssetsRepositoriesPipelinesTab({ dashboardData }) {
   const getVerticalTabContainer = () => {
     return (
       <div className={"h-100"}>
-          <VanitySetVerticalTabContainer
-            className={"h-100"}
-            title={
+        <VanitySetVerticalTabContainer
+          className={"h-100"}
+          title={
             <div>
               <IconBase icon={faDatabase} className={'pr-2'}/>
               List Of Repositories
             </div>
-            }
-            supportSearch={true}
+          }
+          supportSearch={true}
+          isLoading={isLoading}
+          filterModel={tableFilterDto}
+          setFilterModel={setTableFilterDto}
+          loadData={loadData}
+        >
+          <PaginationContainer
             isLoading={isLoading}
-            filterModel={tableFilterDto}
-            setFilterModel={setTableFilterDto}
+            filterDto={tableFilterDto}
+            setFilterDto={setTableFilterDto}
             loadData={loadData}
+            paginationStyle={"stackedVerticalTab"}
+            topPaginationStyle={"stackedVerticalTab"}
+            bodyClassName={'connected-assets-modal-body'}
           >
-            <PaginationContainer
-              isLoading={isLoading}
-              filterDto={tableFilterDto}
-              setFilterDto={setTableFilterDto}
-              loadData={loadData}
-              paginationStyle={"stackedVerticalTab"}
-              topPaginationStyle={"stackedVerticalTab"}
-              bodyClassName={'connected-assets-modal-body'}
-            >
-              {responseData && responseData.length > 0
-                ? responseData?.map((data, index) => {
-                  return (<VanitySetVerticalTab
-                    key={index}
-                    tabText={data?.repository_name}
-                    tabName={data?._id}
-                    handleTabClick={handleTabClick}
-                    activeTab={activeTab}
-                  />);
-                })
-                : <div>No repositories found.</div>
-              }
-            </PaginationContainer>
-          </VanitySetVerticalTabContainer>
+            {responseData && responseData.length > 0
+              ? responseData?.map((data, index) => {
+                return (<VanitySetVerticalTab
+                  key={index}
+                  tabText={data?.repository_name}
+                  tabName={data?._id}
+                  handleTabClick={handleTabClick}
+                  activeTab={activeTab}
+                />);
+              })
+              : <div>No repositories found.</div>
+            }
+          </PaginationContainer>
+        </VanitySetVerticalTabContainer>
       </div>
     );
   };

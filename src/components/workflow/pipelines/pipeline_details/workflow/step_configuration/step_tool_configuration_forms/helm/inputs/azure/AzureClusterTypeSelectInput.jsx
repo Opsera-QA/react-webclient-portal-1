@@ -16,17 +16,17 @@ export const AZURE_CLUSTER_TYPES = [
 function AzureClusterTypeSelectInput({model, setModel, isLoading, disabled}) {
 
   return (
-     <SelectInputBase
-       fieldName={"clusterType"}
-       dataObject={model}
-       setDataObject={setModel}
-       selectOptions={AZURE_CLUSTER_TYPES}
-       valueField={"value"}
-       textField={"name"}
-       placeholderText={"Select a Cluster Type"}
-       disabled={disabled}
-       busy={isLoading}
-     />
+    <SelectInputBase
+      fieldName={"clusterType"}
+      dataObject={model}
+      setDataObject={setModel}
+      selectOptions={AZURE_CLUSTER_TYPES}
+      valueField={"value"}
+      textField={"name"}
+      placeholderText={"Select a Cluster Type"}
+      disabled={disabled}
+      busy={isLoading}
+    />
   );
 }
 

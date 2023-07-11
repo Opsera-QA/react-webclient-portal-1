@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import PropTypes from "prop-types";
 import GithubActionsWorkflowDataBlocks
-  from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowDataBlocks";
+from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowDataBlocks";
 import GithubActionsWorkflowTableOverlay
-  from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowTableOverlay";
+from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowTableOverlay";
 
 function GithubActionsWorkflowChart(
   {

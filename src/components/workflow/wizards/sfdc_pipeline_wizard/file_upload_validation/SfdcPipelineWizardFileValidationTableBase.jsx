@@ -25,13 +25,13 @@ const SfdcPipelineWizardFileValidationTableBase = ({ pipelineWizardModel, loadDa
     [],
   );
   const reasonColumns = useMemo(
-      () => [
-        getTableTextColumn(getField(fields, "commitAction")),
-        getTableTextColumn(getField(fields, "componentType")),
-        getTableTextColumn(getField(fields, "componentName")),
-        getTableTextColumn(getField(fields, "errorReason")),
-      ],
-      [],
+    () => [
+      getTableTextColumn(getField(fields, "commitAction")),
+      getTableTextColumn(getField(fields, "componentType")),
+      getTableTextColumn(getField(fields, "componentName")),
+      getTableTextColumn(getField(fields, "errorReason")),
+    ],
+    [],
   );
 
   const getFilesTable = () => {

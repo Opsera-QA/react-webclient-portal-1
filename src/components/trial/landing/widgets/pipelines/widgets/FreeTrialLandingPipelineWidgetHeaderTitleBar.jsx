@@ -4,7 +4,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import pipelineActions from "components/workflow/pipeline-actions";
 import PipelineActionControls from "components/workflow/pipelines/action_controls/PipelineActionControls";
 import useGetPollingPipelineOrchestrationStatusById
-  from "hooks/workflow/pipelines/orchestration/useGetPollingPipelineOrchestrationStatusById";
+from "hooks/workflow/pipelines/orchestration/useGetPollingPipelineOrchestrationStatusById";
 
 export default function FreeTrialLandingPipelineWidgetHeaderTitleBar(
   {

@@ -7,7 +7,7 @@ import OverviewLanding from "components/landing/OverviewLanding";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetPlatformSettingsFeatureFlagByName from "hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
 import platformSettingFeatureConstants
-  from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
+from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
 import SoftwareDevelopmentLandingScreen from "components/landing/v2/software_development/SoftwareDevelopmentLandingScreen";
 
 export default function Home() {

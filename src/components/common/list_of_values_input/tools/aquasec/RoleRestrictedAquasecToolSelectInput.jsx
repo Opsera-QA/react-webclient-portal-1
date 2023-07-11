@@ -14,19 +14,19 @@ function RoleRestrictedAquasecToolSelectInput(
     clearDataFunction,
   }) {
   return (
-     <RoleRestrictedToolByIdentifierInputBase
-       toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC}
-       toolFriendlyName={"Aquasec"}
-       fieldName={fieldName}
-       placeholderText={"Select Aquasec Tool"}
-       configurationRequired={true}
-       model={model}
-       setModel={setModel}
-       setDataFunction={setDataFunction}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-       className={className}
-     />
+    <RoleRestrictedToolByIdentifierInputBase
+      toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC}
+      toolFriendlyName={"Aquasec"}
+      fieldName={fieldName}
+      placeholderText={"Select Aquasec Tool"}
+      configurationRequired={true}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+      className={className}
+    />
   );
 }
 

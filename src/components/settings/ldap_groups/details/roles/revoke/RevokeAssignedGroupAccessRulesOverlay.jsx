@@ -4,7 +4,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import RevokeGroupAccessRulesButton
-  from "components/settings/ldap_groups/details/roles/revoke/RevokeGroupAccessRulesButton";
+from "components/settings/ldap_groups/details/roles/revoke/RevokeGroupAccessRulesButton";
 import CancelButtonBase from "components/common/buttons/cancel/CancelButtonBase";
 
 export default function RevokeAssignedGroupAccessRulesOverlay(

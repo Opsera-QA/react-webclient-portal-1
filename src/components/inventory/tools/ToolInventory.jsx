@@ -1,14 +1,14 @@
 import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import ToolRegistryHelpDocumentation
-  from "components/common/help/documentation/tool_registry/ToolRegistryHelpDocumentation";
+from "components/common/help/documentation/tool_registry/ToolRegistryHelpDocumentation";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 import useGetRegistryTools from "hooks/tools/useGetRegistryTools";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetPlatformSettingsFeatureFlagByName from "hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
 import platformSettingFeatureConstants
-  from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
+from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
 import CreateToolRegistryWizard from "components/inventory/tools/tool_details/wizards/CreateToolRegistryWizard";
 import NewToolOverlay from "components/inventory/tools/create_overlay/NewToolOverlay";
 import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";

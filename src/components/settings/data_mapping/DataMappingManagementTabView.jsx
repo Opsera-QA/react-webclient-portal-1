@@ -46,20 +46,20 @@ export default function DataMappingManagementTabView() {
   const getDetailView = () => {
     if (activeTab) {
       switch (activeTab) {
-        case "projects":
-          return (
-            <ProjectDataMappingManagement />
-          );
-        case "users":
-          return (
-            <UserDataMappingManagement />
-          );
-        case "pipeline":
-          return (
-            <PipelineDataMappingManagement />
-          );
-        default:
-          return null;
+      case "projects":
+        return (
+          <ProjectDataMappingManagement />
+        );
+      case "users":
+        return (
+          <UserDataMappingManagement />
+        );
+      case "pipeline":
+        return (
+          <PipelineDataMappingManagement />
+        );
+      default:
+        return null;
       }
     }
   };

@@ -15,10 +15,10 @@ import {
   pipelineTemplateIdentifierConstants
 } from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
 import WorkspaceWorkflowSelectionCardView
-  from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
+from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import FreeTrialLaunchWorkflowButton
-  from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
+from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
 import DeleteButtonBase from "temp-library-components/button/delete/DeleteButtonBase";
 
 export default function FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen(

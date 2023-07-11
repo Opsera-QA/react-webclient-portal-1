@@ -4,16 +4,16 @@ import GitBranchInput from "components/common/list_of_values_input/tools/git/Git
 
 function BlackDuckGitBranchInput({model, setModel, disabled}) {
   return (
-     <GitBranchInput
-       fieldName={"defaultBranch"}
-       service={model.getData("type")}
-       gitToolId={model.getData("gitToolId")}
-       workspace={model.getData("workspace")}
-       repoId={model.getData("gitRepositoryID")}
-       dataObject={model}
-       setDataObject={setModel}
-       disabled={disabled}
-     />
+    <GitBranchInput
+      fieldName={"defaultBranch"}
+      service={model.getData("type")}
+      gitToolId={model.getData("gitToolId")}
+      workspace={model.getData("workspace")}
+      repoId={model.getData("gitRepositoryID")}
+      dataObject={model}
+      setDataObject={setModel}
+      disabled={disabled}
+    />
   );
 }
 

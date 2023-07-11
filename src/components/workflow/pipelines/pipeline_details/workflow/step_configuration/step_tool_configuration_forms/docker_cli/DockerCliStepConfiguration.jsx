@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
 import dockerCliStepFormMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_cli/dockercli-stepForm-metadata";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_cli/dockercli-stepForm-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import DockerCliDependenciesInputForm from "./subforms/DockerCliDependenciesInputForm";
 import DockerCliDockerBuildDetailsInputForm from "./subforms/DockerCliDockerBuildDetailsInputForm";

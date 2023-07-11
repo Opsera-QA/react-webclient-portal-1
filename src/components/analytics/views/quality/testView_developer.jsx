@@ -208,10 +208,10 @@ function TestView_Developer ({ persona, date, index }) {
   } else if (!index.includes("xunit") && !index.includes("cypress") && !index.includes("junit")) {
     return (
       <div className="mt-3 bordered-content-block p-3 max-content-width" style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}> 
-      <Row>
+        <Row>
           <InfoDialog message="No activity data has been captured for this dashboard. In order to activate quality metrics contact support@opsera.io" />
-      </Row>
-    </div>);
+        </Row>
+      </div>);
   } else {
     return (
       <>
@@ -227,21 +227,21 @@ function TestView_Developer ({ persona, date, index }) {
         </div> : ""} */}
 
 
-          {index.includes("cypress") ?
+        {index.includes("cypress") ?
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
               <CypressTestResultsTable persona={persona} date={date}/>
             </div>
           </div> : ""}
 
-          {index.includes("junit") ?
+        {index.includes("junit") ?
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
               <JunitTestResultsTable persona={persona} date={date}/>
             </div>
           </div> : ""}
 
-          {index.includes("xunit") ?
+        {index.includes("xunit") ?
           <div className="d-flex">
             <div className="align-self-stretch p-2 w-100">
               <XunitTestResultsTable persona={persona} date={date}/>

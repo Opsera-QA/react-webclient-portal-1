@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase
-  from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
 function GitToGitSyncTaskScmToolSelectInput({model, setModel, disabled, toolIdentifier}) {
   const setDataFunction = (fieldName, selectedOption) => {
@@ -43,17 +43,17 @@ function GitToGitSyncTaskScmToolSelectInput({model, setModel, disabled, toolIden
   };
 
   return (
-     <RoleRestrictedToolByIdentifierInputBase
-       toolIdentifier={toolIdentifier}
-       toolFriendlyName={"SCM"}
-       fieldName={"gitToolId"}
-       configurationRequired={true}
-       model={model}
-       setModel={setModel}
-       setDataFunction={setDataFunction}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-     />
+    <RoleRestrictedToolByIdentifierInputBase
+      toolIdentifier={toolIdentifier}
+      toolFriendlyName={"SCM"}
+      fieldName={"gitToolId"}
+      configurationRequired={true}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+    />
   );
 }
 

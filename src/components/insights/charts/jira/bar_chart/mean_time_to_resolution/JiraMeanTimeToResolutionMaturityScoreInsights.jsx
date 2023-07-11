@@ -74,13 +74,13 @@ function JiraMeanTimeToResolutionMaturityScoreInsights({
   );
 
   const projectColumns = useMemo(
-      () => [
-        getTableTextColumn(getField(fields, "issueProjectName")),
-        getTableTextColumn(getField(fields, "totalResolvedIncidents")),
-        getTableTextColumn(getField(fields, "maturityScoreText")),
-        getTableTextColumn(getField(fields, "maturityScoreValue")),
-      ],
-      [],
+    () => [
+      getTableTextColumn(getField(fields, "issueProjectName")),
+      getTableTextColumn(getField(fields, "totalResolvedIncidents")),
+      getTableTextColumn(getField(fields, "maturityScoreText")),
+      getTableTextColumn(getField(fields, "maturityScoreValue")),
+    ],
+    [],
   );
 
   const getDateRange = () => {

@@ -36,18 +36,18 @@ function TagDetailPanel({ tagData, setTagData, accessRoleData }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return <TagSummaryPanel tagData={tagData} setActiveTab={setActiveTab} accessRoleData={accessRoleData} />;
-      case "settings":
-        return <TagEditorPanel setTagData={setTagData} tagData={tagData} handleClose={toggleSummaryPanel} />;
-      case "tools":
-        return <SingleTagUsedInToolsField tag={tagData?.getPersistData()} className={"m-2"} />;
-      case "pipelines":
-        return <SingleTagUsedInPipelinesField tag={tagData?.getPersistData()} className={"m-2"} />;
-      case "dashboards":
-        return <SingleTagUsedInDashboardsField tag={tagData?.getPersistData()} className={"m-2"} />;
-      default:
-        return null;
+    case "summary":
+      return <TagSummaryPanel tagData={tagData} setActiveTab={setActiveTab} accessRoleData={accessRoleData} />;
+    case "settings":
+      return <TagEditorPanel setTagData={setTagData} tagData={tagData} handleClose={toggleSummaryPanel} />;
+    case "tools":
+      return <SingleTagUsedInToolsField tag={tagData?.getPersistData()} className={"m-2"} />;
+    case "pipelines":
+      return <SingleTagUsedInPipelinesField tag={tagData?.getPersistData()} className={"m-2"} />;
+    case "dashboards":
+      return <SingleTagUsedInDashboardsField tag={tagData?.getPersistData()} className={"m-2"} />;
+    default:
+      return null;
     }
   };
 

@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import PropTypes from "prop-types";
 import dotNetStepFormMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/dotnet-stepForm-metadata";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/dotnet-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DotNetStepJenkinsToolSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetStepJenkinsToolSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetStepJenkinsToolSelectInput";
 import DotNetStepJenkinsJobSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetStepJenkinsJobSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetStepJenkinsJobSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import DotNetJenkinsAccountInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetJenkinsAccountInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetJenkinsAccountInput";
 import DotNetGitRepositoryInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetGitRepositoryInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetGitRepositoryInput";
 import DotNetGitBranchInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetGitBranchInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetGitBranchInput";
 import DotNetBitbucketWorkspaceInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetBitbucketWorkspaceInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnet/inputs/DotNetBitbucketWorkspaceInput";
 import WorkspaceDeleteToggleInput from "./inputs/WorkspaceDeleteToggleInput";
 import ScriptLibrarySelectInput
-  from "components/common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
+from "components/common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
 import ParameterSelectListInputBase
-  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
+from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
 
 function DotNetStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);

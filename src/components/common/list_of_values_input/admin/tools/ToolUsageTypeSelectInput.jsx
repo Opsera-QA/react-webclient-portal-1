@@ -19,7 +19,7 @@ function ToolUsageTypeSelectInput({ fieldName, dataObject, setDataObject, disabl
       valueField={"value"}
       textField={"text"}
       disabled={disabled}
-   />
+    />
   );
 }
 

@@ -10,7 +10,7 @@ import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
 import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
-         spaceOutTimeTakenLegend } from "../../insights/charts/charts-views";
+  spaceOutTimeTakenLegend } from "../../insights/charts/charts-views";
 
 function GitlabMergeReqWithMaxTimeChart({ persona, date }) {
   const contextType = useContext(AuthContext);

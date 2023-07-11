@@ -7,11 +7,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import NumberPickerInputBase from "components/common/inputs/number/picker/base/NumberPickerInputBase";
 import NotificationConditionSelectInput
-  from "components/common/list_of_values_input/notifications/NotificationConditionSelectInput";
+from "components/common/list_of_values_input/notifications/NotificationConditionSelectInput";
 import  MetricDataPointTypeSelectInput
-  from "components/common/list_of_values_input/insights/data_points/type/MetricDataPointTypeSelectInput";
+from "components/common/list_of_values_input/insights/data_points/type/MetricDataPointTypeSelectInput";
 import MetricNotificationConfigurationCardContainer
-  from "components/notifications/details/configuration/metric/MetricNotificationConfigurationCardContainer";
+from "components/notifications/details/configuration/metric/MetricNotificationConfigurationCardContainer";
 
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 

@@ -14,19 +14,19 @@ function RoleRestrictedSnaplogicToolSelectInput(
     clearDataFunction,
   }) {
   return (
-     <RoleRestrictedToolByIdentifierInputBase
-       toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC}
-       toolFriendlyName={"Snaplogic"}
-       fieldName={fieldName}
-       placeholderText={"Select Snaplogic Tool"}
-       configurationRequired={true}
-       model={model}
-       setModel={setModel}
-       setDataFunction={setDataFunction}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-       className={className}
-     />
+    <RoleRestrictedToolByIdentifierInputBase
+      toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC}
+      toolFriendlyName={"Snaplogic"}
+      fieldName={fieldName}
+      placeholderText={"Select Snaplogic Tool"}
+      configurationRequired={true}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+      className={className}
+    />
   );
 }
 

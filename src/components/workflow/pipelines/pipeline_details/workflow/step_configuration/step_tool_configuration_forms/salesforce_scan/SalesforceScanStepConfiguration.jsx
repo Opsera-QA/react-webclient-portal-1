@@ -7,10 +7,10 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import SalesforceScanGatesMultiSelectInput from "./inputs/SalesforceScanGatesMultiSelectInput";
 import RoleRestrictedToolByIdentifierInputBase
-  from "../../../../../../../common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+from "../../../../../../../common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
   
 function SalesforceScanStepConfiguration({
   stepTool,
@@ -59,12 +59,12 @@ function SalesforceScanStepConfiguration({
     setSfdxScanStepConfigurationDto(scanConfigurationData);
 
     if (job_type) {
-        setJobType(job_type);
+      setJobType(job_type);
     }
 
     if (threshold) {
-        setThresholdType(threshold?.type);
-        setThresholdValue(threshold?.value);
+      setThresholdType(threshold?.type);
+      setThresholdValue(threshold?.value);
     }
 
     setIsLoading(false);
@@ -117,15 +117,15 @@ function SalesforceScanStepConfiguration({
         fieldName={"stepIdXML"}
       />
       <RoleRestrictedToolByIdentifierInputBase
-          toolIdentifier={"salesforce-code-analyzer"}
-          toolFriendlyName={"Salesforce Code Analyzer"}
-          fieldName={"sfdxScanToolId"}
-          model={sfdxScanStepConfigurationDto}
-          setModel={setSfdxScanStepConfigurationDto}
-          configurationRequired={false}
+        toolIdentifier={"salesforce-code-analyzer"}
+        toolFriendlyName={"Salesforce Code Analyzer"}
+        fieldName={"sfdxScanToolId"}
+        model={sfdxScanStepConfigurationDto}
+        setModel={setSfdxScanStepConfigurationDto}
+        configurationRequired={false}
       />
       <SalesforceScanGatesMultiSelectInput
-          dataObject={sfdxScanStepConfigurationDto} setDataObject={setSfdxScanStepConfigurationDto} fieldName={"qualityGateIds"}
+        dataObject={sfdxScanStepConfigurationDto} setDataObject={setSfdxScanStepConfigurationDto} fieldName={"qualityGateIds"}
       />
     </PipelineStepEditorPanelContainer>
   );

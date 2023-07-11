@@ -70,20 +70,20 @@ function JiraIssuesCreatedVsResolvedLineChart({ kpiConfiguration, setKpiConfigur
       return null;
     }
 
-  return (
-    <div className="new-chart mb-3" style={{height: "300px"}}>
-          <ResponsiveLine
-            data={metrics}
-            {...defaultConfig("Number of Issues", "Date", 
-                      false, true, "wholeNumbers", "monthDate2")}
-            {...config(getColor)}
-            onClick={() => setShowModal(true)}
-            tooltip={(node) => <ChartTooltip 
-                                  titles = {["Date", node.point.serieId]}
-                                  values = {[node.point.data.xFormatted, node.point.data.yFormatted]} />}
-          />
+    return (
+      <div className="new-chart mb-3" style={{height: "300px"}}>
+        <ResponsiveLine
+          data={metrics}
+          {...defaultConfig("Number of Issues", "Date", 
+            false, true, "wholeNumbers", "monthDate2")}
+          {...config(getColor)}
+          onClick={() => setShowModal(true)}
+          tooltip={(node) => <ChartTooltip 
+            titles = {["Date", node.point.serieId]}
+            values = {[node.point.data.xFormatted, node.point.data.yFormatted]} />}
+        />
       </div>
-  );
+    );
   };
   return (
     <div>

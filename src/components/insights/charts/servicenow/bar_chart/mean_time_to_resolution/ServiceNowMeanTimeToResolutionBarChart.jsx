@@ -38,13 +38,13 @@ import DataPointVisibilityWrapper from "../../../../../common/metrics/data_point
 // import { DialogToastContext } from "contexts/DialogToastContext";
 
 function ServiceNowMeanTimeToResolutionBarChart({
-                                                  kpiConfiguration,
-                                                  setKpiConfiguration,
-                                                  dashboardData,
-                                                  index,
-                                                  setKpis,
-                                                  showSettingsToggle,
-                                                }) {
+  kpiConfiguration,
+  setKpiConfiguration,
+  dashboardData,
+  index,
+  setKpis,
+  showSettingsToggle,
+}) {
   const { getAccessToken } = useContext(AuthContext);
   // const toastContext = useContext(DialogToastContext);
   const [error, setError] = useState(undefined);
@@ -225,32 +225,32 @@ function ServiceNowMeanTimeToResolutionBarChart({
     const averageMTTRDataBlockDataPoint = dataPointHelpers.getDataPoint(dataPoints, dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.AVERAGE_MTTR_DATA_BLOCK_DATA_POINT);
     const isOneChartVisible = dataPointHelpers.isDataPointVisible(mttrChartDataPoint) || dataPointHelpers.isDataPointVisible(numberOfIncidentsDataPoint);
     return (
-        <>
-          <div className={"chart-footer-text"} style={{marginTop: '10px'}}>
-            <MetricBadgeBase className={"mx-2"} badgeText={"Chart depicts recent 15 results"} />
-          </div>
-          <div className="new-chart m-3 p-0" style={isOneChartVisible ? { minHeight: "450px", display: "flex" } : { display: "flex" }}>
-            <Row>
-              <Row xl={6} lg={6} md={7} className={"mb-3 d-flex justify-content-center"}>
-                  <Col md={12} >
-                    <ServiceNowTotalIncidentsDataBlock data={totalIncidents} />
-                  </Col>
-                  <Col md={12} >
-                    <ServiceNowTotalResolvedIncidentsDataBlock data={totalResolvedIncidents} />
-                  </Col>
-                <DataPointVisibilityWrapper dataPoint={averageMTTRDataBlockDataPoint} >
-                  <Col md={12} >
-                    <ServiceNowAverageTimeToResolveDataBlock data={overallMean} dataPoint={averageMTTRDataBlockDataPoint}/>
-                  </Col>
-                </DataPointVisibilityWrapper>
-                  <Col md={12} >
-                    <ServiceNowMinMTTRDataBlock data={minMTTR} />
-                  </Col>
-                  <Col md={12} >
-                    <ServiceNowMaxMTTRDataBlock data={maxMTTR} />
-                  </Col>
-              </Row>
-              {dataPointHelpers.isDataPointVisible(mttrChartDataPoint) &&
+      <>
+        <div className={"chart-footer-text"} style={{marginTop: '10px'}}>
+          <MetricBadgeBase className={"mx-2"} badgeText={"Chart depicts recent 15 results"} />
+        </div>
+        <div className="new-chart m-3 p-0" style={isOneChartVisible ? { minHeight: "450px", display: "flex" } : { display: "flex" }}>
+          <Row>
+            <Row xl={6} lg={6} md={7} className={"mb-3 d-flex justify-content-center"}>
+              <Col md={12} >
+                <ServiceNowTotalIncidentsDataBlock data={totalIncidents} />
+              </Col>
+              <Col md={12} >
+                <ServiceNowTotalResolvedIncidentsDataBlock data={totalResolvedIncidents} />
+              </Col>
+              <DataPointVisibilityWrapper dataPoint={averageMTTRDataBlockDataPoint} >
+                <Col md={12} >
+                  <ServiceNowAverageTimeToResolveDataBlock data={overallMean} dataPoint={averageMTTRDataBlockDataPoint}/>
+                </Col>
+              </DataPointVisibilityWrapper>
+              <Col md={12} >
+                <ServiceNowMinMTTRDataBlock data={minMTTR} />
+              </Col>
+              <Col md={12} >
+                <ServiceNowMaxMTTRDataBlock data={maxMTTR} />
+              </Col>
+            </Row>
+            {dataPointHelpers.isDataPointVisible(mttrChartDataPoint) &&
                 <Col xl={6} lg={6} md={3} className={"my-2 p-0 d-flex flex-column align-items-end"}>
                   <ResponsiveBar
                     data={metrics}
@@ -269,30 +269,30 @@ function ServiceNowMeanTimeToResolutionBarChart({
                     markers={[]}
                   />
                 </Col>}
-              {dataPointHelpers.isDataPointVisible(numberOfIncidentsDataPoint) &&
+            {dataPointHelpers.isDataPointVisible(numberOfIncidentsDataPoint) &&
                 <Col xl={6} lg={6} md={3} className={"my-2 p-0 d-flex flex-column align-items-end"}>
-                <ResponsiveBar
-                  data={sevMetrics}
-                  {...defaultConfig("Number of Incidents", "Severity", false, false, "wholeNumbers")}
-                  {...config2(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
-                  {...adjustBarWidth(sevMetrics)}
-                  // onClick={(data) => onRowSelect(data)}
-                  tooltip={({ indexValue, value }) => (
-                    <ChartTooltip
-                      titles={["Severity", "Number of Incidents"]}
-                      values={[indexValue, `${value}`]}
-                      style={false}
+                  <ResponsiveBar
+                    data={sevMetrics}
+                    {...defaultConfig("Number of Incidents", "Severity", false, false, "wholeNumbers")}
+                    {...config2(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
+                    {...adjustBarWidth(sevMetrics)}
+                    // onClick={(data) => onRowSelect(data)}
+                    tooltip={({ indexValue, value }) => (
+                      <ChartTooltip
+                        titles={["Severity", "Number of Incidents"]}
+                        values={[indexValue, `${value}`]}
+                        style={false}
                       // color={color}
-                    />
-                  )}
-                />
+                      />
+                    )}
+                  />
                 </Col>}
-                </Row>
-          </div>
-          <div className="ml-2 p-0">
-            {getMetricTopRow()}
-          </div>
-        </>
+          </Row>
+        </div>
+        <div className="ml-2 p-0">
+          {getMetricTopRow()}
+        </div>
+      </>
     );
   };
 

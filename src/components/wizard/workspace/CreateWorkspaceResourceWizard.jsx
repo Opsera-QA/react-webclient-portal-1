@@ -1,13 +1,13 @@
 import React, {useState} from "react";
 import CreateWorkspaceResourceWizardResourceSelectionScreen
-  from "components/wizard/workspace/CreateWorkspaceResourceWizardResourceSelectionScreen";
+from "components/wizard/workspace/CreateWorkspaceResourceWizardResourceSelectionScreen";
 import NewTaskOverlay from "components/tasks/NewTaskOverlay";
 import PropTypes from "prop-types";
 import NewToolOverlay from "components/inventory/tools/create_overlay/NewToolOverlay";
 import NewPipelineOverlay from "components/workflow/create/NewPipelineOverlay";
 import useGetPlatformSettingsFeatureFlagByName from "hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
 import platformSettingFeatureConstants
-  from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
+from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
 import CreateToolRegistryWizard from "components/inventory/tools/tool_details/wizards/CreateToolRegistryWizard";
 import CreateTasksWizard from "components/tasks/portal_tasks_wizard/CreateTasksWizard";
 import CreateNewPipelineWizard from "../../workflow/wizards/updated_pipeline_wizard/CreateNewPipelineWizard";
@@ -29,62 +29,62 @@ export default function CreateWorkspaceResourceWizard({loadDataFunction}) {
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
-      case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.RESOURCE_SELECTION_SCREEN:
+    case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.RESOURCE_SELECTION_SCREEN:
+      return (
+        <CreateWorkspaceResourceWizardResourceSelectionScreen
+          setCurrentScreen={setCurrentScreen}
+        />
+      );
+    case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_PIPELINE_SCREEN:
+      if (isActive === true) {
         return (
-          <CreateWorkspaceResourceWizardResourceSelectionScreen
-            setCurrentScreen={setCurrentScreen}
-          />
-        );
-      case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_PIPELINE_SCREEN:
-        if (isActive === true) {
-          return (
-            <CreateNewPipelineWizard
-              loadData={loadDataFunction}
-              backButtonFunction={backButtonFunction}
-            />
-          );
-        }
-
-        return (
-          <NewPipelineOverlay
-            backButtonFunction={backButtonFunction}
-            loadData={loadDataFunction}
-          />
-        );
-      case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TASK_SCREEN:
-        if (isActive === true) {
-          return (
-            <CreateTasksWizard
-              loadData={loadDataFunction}
-              backButtonFunction={backButtonFunction}
-            />
-          );
-        }
-
-        return (
-          <NewTaskOverlay
-            backButtonFunction={backButtonFunction}
-            loadData={loadDataFunction}
-          />
-        );
-      case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TOOL_SCREEN:
-        if (isActive) {
-          return (
-            <CreateToolRegistryWizard
-              loadData={loadDataFunction}
-              backButtonFunction={backButtonFunction}
-            />
-          );
-        }
-
-        return (
-          <NewToolOverlay
+          <CreateNewPipelineWizard
             loadData={loadDataFunction}
             backButtonFunction={backButtonFunction}
           />
         );
-      default:
-        return null;
+      }
+
+      return (
+        <NewPipelineOverlay
+          backButtonFunction={backButtonFunction}
+          loadData={loadDataFunction}
+        />
+      );
+    case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TASK_SCREEN:
+      if (isActive === true) {
+        return (
+          <CreateTasksWizard
+            loadData={loadDataFunction}
+            backButtonFunction={backButtonFunction}
+          />
+        );
+      }
+
+      return (
+        <NewTaskOverlay
+          backButtonFunction={backButtonFunction}
+          loadData={loadDataFunction}
+        />
+      );
+    case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TOOL_SCREEN:
+      if (isActive) {
+        return (
+          <CreateToolRegistryWizard
+            loadData={loadDataFunction}
+            backButtonFunction={backButtonFunction}
+          />
+        );
+      }
+
+      return (
+        <NewToolOverlay
+          loadData={loadDataFunction}
+          backButtonFunction={backButtonFunction}
+        />
+      );
+    default:
+      return null;
     }
   };
 

@@ -6,7 +6,7 @@ import departmentActions from "components/settings/ldap_departments/department-f
 import LdapDepartmentsTable from "components/settings/ldap_departments/LdapDepartmentsTable";
 import {useHistory, useParams} from "react-router-dom";
 import LdapDepartmentManagementSubNavigationBar
-  from "components/settings/ldap_departments/LdapDepartmentManagementSubNavigationBar";
+from "components/settings/ldap_departments/LdapDepartmentManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 // TODO: Instead of rerouting if we have no orgDomain,

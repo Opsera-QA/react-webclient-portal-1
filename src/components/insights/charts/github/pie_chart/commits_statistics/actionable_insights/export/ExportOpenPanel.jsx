@@ -46,38 +46,38 @@ export default function ExportOpenPanel({showExportPanel, setShowExportPanel, Lo
     return pdfExporter;
   };
 
-const getCsvData = () => {
+  const getCsvData = () => {
     return [
-        [
-            "Collaborator Name",
-            "Request created at",
-            "Commit Message",
-            "Merge Request Id",
-            "MR Url"
-        ],
-        ...LookupDetailsData.map((item) => [
-            item.collaboratorName,
-            DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(item.createdAt)),
-            item.mergeRequestTitle,
-            item.mergeRequestsId,
-            item.mergeRequestUrl,
-        ]),
+      [
+        "Collaborator Name",
+        "Request created at",
+        "Commit Message",
+        "Merge Request Id",
+        "MR Url"
+      ],
+      ...LookupDetailsData.map((item) => [
+        item.collaboratorName,
+        DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(item.createdAt)),
+        item.mergeRequestTitle,
+        item.mergeRequestsId,
+        item.mergeRequestUrl,
+      ]),
     ];
-};
+  };
 
-if (LookupDetailsData == null || !Array.isArray(LookupDetailsData)) {
+  if (LookupDetailsData == null || !Array.isArray(LookupDetailsData)) {
     return null;
-}
+  }
 
-return (
+  return (
     <ExportDataPanel
-        isLoading={isLoading}
-        getRawData={getRawData}
-        getCsvData={getCsvData}
-        getPdfExporter={getPdfExporter}
-        closePanelFunction={() => setShowExportPanel(!showExportPanel)}
+      isLoading={isLoading}
+      getRawData={getRawData}
+      getCsvData={getCsvData}
+      getPdfExporter={getPdfExporter}
+      closePanelFunction={() => setShowExportPanel(!showExportPanel)}
     />
-);
+  );
 }
 
 ExportOpenPanel.propTypes = {

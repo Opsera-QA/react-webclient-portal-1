@@ -77,24 +77,24 @@ function ReliabilityRatingLineChart({ kpiConfiguration, setKpiConfiguration, das
 
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
-            <ResponsiveLine
-              data={metrics}
-              {...defaultConfig("Reliability Rating", "Date", 
-                      false, true, "", "monthDate2")}
-              {...config(getColor)}
-              onClick={() => setShowModal(true)}
-              tooltip={({ point, color }) => <ChartTooltip 
-                titles = {["Timestamp", "Rating", "Project Key"]}
-                values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(point.data.x)),
-                           point.data.y === 1 && "A" || 
+        <ResponsiveLine
+          data={metrics}
+          {...defaultConfig("Reliability Rating", "Date", 
+            false, true, "", "monthDate2")}
+          {...config(getColor)}
+          onClick={() => setShowModal(true)}
+          tooltip={({ point, color }) => <ChartTooltip 
+            titles = {["Timestamp", "Rating", "Project Key"]}
+            values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(point.data.x)),
+              point.data.y === 1 && "A" || 
                            point.data.y === 2 && "B" ||
                            point.data.y === 3 && "C" ||
                            point.data.y === 4 && "D" ||
                            point.data.y === 5 && "E",
-                           point.data.key]}
-                color = {color} />}
-            />
-        </div>
+              point.data.key]}
+            color = {color} />}
+        />
+      </div>
     );
   };
   return (

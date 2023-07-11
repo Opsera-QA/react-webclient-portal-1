@@ -8,12 +8,12 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import JFrogMavenPackageTypeInput from "components/common/list_of_values_input/tools/jfrog/package_type/JFrogMavenPackageTypeInput";
 import axios from "axios";
 import jFrogToolRepositoriesActions
-  from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jFrogToolRepositories.actions";
+from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jFrogToolRepositories.actions";
 import StandaloneDeleteButtonWithConfirmationModal
-  from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
+from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import JFrogRepositoryKeyTextInput
-  from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/details/inputs/JFrogRepositoryKeyTextInput";
+from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/details/inputs/JFrogRepositoryKeyTextInput";
 
 function JFrogRepositoryEditorPanel(
   {

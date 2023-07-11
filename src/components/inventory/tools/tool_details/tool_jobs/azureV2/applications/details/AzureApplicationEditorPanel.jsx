@@ -13,7 +13,7 @@ import axios from "axios";
 import VaultTextInput from "../../../../../../../common/inputs/text/VaultTextInput";
 import toolsActions from "../../../../../tools-actions";
 import DeleteButtonWithInlineConfirmation
-  from "../../../../../../../common/buttons/delete/DeleteButtonWithInlineConfirmation";
+from "../../../../../../../common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import { generateUUID, hasStringValue } from "components/common/helpers/string-helpers";
 
 function AzureApplicationEditorPanel({ azureApplicationData, toolData, applicationId, handleClose }) {
@@ -101,10 +101,10 @@ function AzureApplicationEditorPanel({ azureApplicationData, toolData, applicati
       isLoading={isLoading}
       extraButtons={
         applicationId ?
-        <DeleteButtonWithInlineConfirmation
-          dataObject={azureApplicationModel}
-          deleteRecord={deleteApplication}
-        /> : undefined
+          <DeleteButtonWithInlineConfirmation
+            dataObject={azureApplicationModel}
+            deleteRecord={deleteApplication}
+          /> : undefined
       }
       handleClose={handleClose}
     >

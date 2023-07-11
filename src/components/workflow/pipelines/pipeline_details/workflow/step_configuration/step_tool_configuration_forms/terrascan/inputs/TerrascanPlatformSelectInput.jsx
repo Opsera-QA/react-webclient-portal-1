@@ -36,17 +36,17 @@ function TerrascanPlatformSelectInput({ fieldName, dataObject, setDataObject, di
 
   return (
     <div className={"mb-3"}>
-    <SelectInputBase
-      fieldName={fieldName}
-      dataObject={dataObject}
-      setDataFunction={handleDTOChange}
-      setDataObject={setDataObject}
-      placeholderText={"Select Cloud Provider"}
-      selectOptions={TOOL_TYPES}
-      valueField="value"
-      textField="label"
-      disabled={disabled}
-    />
+      <SelectInputBase
+        fieldName={fieldName}
+        dataObject={dataObject}
+        setDataFunction={handleDTOChange}
+        setDataObject={setDataObject}
+        placeholderText={"Select Cloud Provider"}
+        selectOptions={TOOL_TYPES}
+        valueField="value"
+        textField="label"
+        disabled={disabled}
+      />
     </div>
   );
 }

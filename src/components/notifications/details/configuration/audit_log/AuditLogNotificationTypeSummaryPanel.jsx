@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import AuditLogNotificationTargetField
-  from "components/notifications/details/configuration/audit_log/fields/AuditLogNotificationTargetField";
+from "components/notifications/details/configuration/audit_log/fields/AuditLogNotificationTargetField";
 import { Row, Col } from "react-bootstrap";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import {faEnvelope} from "@fortawesome/pro-light-svg-icons";

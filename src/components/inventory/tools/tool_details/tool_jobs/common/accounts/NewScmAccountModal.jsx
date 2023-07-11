@@ -3,7 +3,7 @@ import ScmAccountsEditorPanel from "./ScmAccountsEditorPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import scmCreateAccountMetadata
-  from "components/inventory/tools/tool_details/tool_jobs/common/accounts/scm-create-account-metadata";
+from "components/inventory/tools/tool_details/tool_jobs/common/accounts/scm-create-account-metadata";
 import PropTypes from "prop-types";
 
 function NewScmAccountModal({ 
@@ -16,7 +16,7 @@ function NewScmAccountModal({
   // TODO: Pass isMounted from Accounts panel
   const closePanel = () => {
     // if (isMounted?.current === true) {
-      loadData();
+    loadData();
     // }
 
     toastContext.removeInlineMessage();

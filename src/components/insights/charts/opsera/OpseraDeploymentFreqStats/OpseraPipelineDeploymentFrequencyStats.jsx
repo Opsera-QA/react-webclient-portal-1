@@ -9,11 +9,11 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { faEllipsisH } from "@fortawesome/pro-solid-svg-icons";
 import Model from "../../../../../core/data_model/model";
 import DeploymentFrequencyInsightsTableMetadata
-  from "./deployment-frequency-actionable-metadata.js";
+from "./deployment-frequency-actionable-metadata.js";
 import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import OpseraDeploymentFrequencyHelpDocumentation
-  from "../../../../common/help/documentation/insights/charts/OpseraDeploymentFrequencyHelpDocumentation";
+from "../../../../common/help/documentation/insights/charts/OpseraDeploymentFrequencyHelpDocumentation";
 import genericChartFilterMetadata from "../../generic_filters/genericChartFilterMetadata";
 import IconBase from "components/common/icons/IconBase";
 
@@ -155,8 +155,8 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
                   icon={faEllipsisH}
                   className="fa-pull-right pointer pr-1"
                   onClickFunction={() => document.body.click()}
-                  />
-                </OverlayTrigger>
+                />
+              </OverlayTrigger>
               <div className="w-100 text-muted mb-1">Min Deployments</div>
             </div></Col>
           </Row>

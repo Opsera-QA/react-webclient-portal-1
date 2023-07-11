@@ -33,4 +33,4 @@ export default (METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY) => ({
     "legendOffset": 60,
     "legendPosition": "middle",
   },
-  });
+});

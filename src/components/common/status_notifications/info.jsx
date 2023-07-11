@@ -12,9 +12,9 @@ function InformationDialog ({ message, setInformationMessage, alignment }) {
   }, [message]);
 
   const clearInformationMessage = () => {
-      setInformationMessage(() => {
-        return false;
-      });
+    setInformationMessage(() => {
+      return false;
+    });
   };
 
   if (alignment === "dialogToast") {

@@ -10,9 +10,9 @@ import ClusterTemplateSelectInput from "./inputs/ClusterTemplateSelectInput";
 import NetworkingOnlySubForm from "./sub_forms/NetworkingOnlySubForm";
 import EcsClusterCreationTaskConfigurationEc2EditorPanel from "components/tasks/details/tasks/ecs-cluster-creation/sub_forms/EcsClusterCreationTaskConfigurationEc2EditorPanel";
 import RoleRestrictedAwsAccountToolSelectInput
-  from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
+from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 import AwsCloudProviderRegionSelectInput
-  from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
+from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
@@ -30,24 +30,24 @@ function Ec2ClusterCreationTaskConfigurationPanel({ gitTasksDataDto, gitTasksCon
 
   const getDynamicFields = () => {
     switch (gitTasksConfigurationData?.getData("clusterTemplate")) {
-      case "fargate":
-        return (
-          <Col lg={12}>
-            <NetworkingOnlySubForm
-              dataObject={gitTasksConfigurationData}
-              setDataObject={setGitTasksConfigurationData}
-            />
-          </Col>
-        );
-      case "ec2":
-        return (
-          <Col lg={12}>
-            <EcsClusterCreationTaskConfigurationEc2EditorPanel
-              dataObject={gitTasksConfigurationData}
-              setDataObject={setGitTasksConfigurationData}
-            />
-          </Col>
-        );
+    case "fargate":
+      return (
+        <Col lg={12}>
+          <NetworkingOnlySubForm
+            dataObject={gitTasksConfigurationData}
+            setDataObject={setGitTasksConfigurationData}
+          />
+        </Col>
+      );
+    case "ec2":
+      return (
+        <Col lg={12}>
+          <EcsClusterCreationTaskConfigurationEc2EditorPanel
+            dataObject={gitTasksConfigurationData}
+            setDataObject={setGitTasksConfigurationData}
+          />
+        </Col>
+      );
     }
   };
 

@@ -36,7 +36,7 @@ const ansibleConnectionMetadata = {
       id: "publicKey",
       maxLength: 10000,
     }
-],
+  ],
   newObjectFields: {
     hostName: "",
     port: "",

@@ -4,7 +4,7 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import ScraperCommonInputBase from "./ScraperCommonInputBase";
 import { faFileCode, faHandshake, faUserSecret } from "@fortawesome/pro-light-svg-icons";
 import ParameterSelectListInputBase
-  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
+from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
 
 function GitIgnoreToggleInput({model, setModel, fieldName, disabled, plan}) {
 
@@ -19,17 +19,17 @@ function GitIgnoreToggleInput({model, setModel, fieldName, disabled, plan}) {
   const getParametersInput = () => {
     if (model?.getData("secretsException") === true && fieldName === "secretsException") {
       return (
-      <ParameterSelectListInputBase
-        titleIcon={faUserSecret}
-        dataObject={model}
-        setDataObject={setModel}
-        fieldName={"excludeSecrets"}
-        allowIncompleteItems={true}
-        type={"Secret"}
-        regexValidationRequired={false}
-        titleText={"Secrets To Ignore"}
-        plan={plan}
-      />
+        <ParameterSelectListInputBase
+          titleIcon={faUserSecret}
+          dataObject={model}
+          setDataObject={setModel}
+          fieldName={"excludeSecrets"}
+          allowIncompleteItems={true}
+          type={"Secret"}
+          regexValidationRequired={false}
+          titleText={"Secrets To Ignore"}
+          plan={plan}
+        />
       );
     }
     if (model?.getData("filesException") === true && fieldName === "filesException") {

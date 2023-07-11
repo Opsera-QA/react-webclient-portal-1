@@ -13,7 +13,7 @@ import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineR
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 import DuplicatePipelineButton
-  from "components/workflow/pipelines/summary/action_bar/buttons/duplicate/DuplicatePipelineButton";
+from "components/workflow/pipelines/summary/action_bar/buttons/duplicate/DuplicatePipelineButton";
 import modelHelpers from "components/common/model/modelHelpers";
 import {
   duplicatePipelineMetadata

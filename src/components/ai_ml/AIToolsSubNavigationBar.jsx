@@ -6,33 +6,33 @@ import {faTools} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 
 function AIToolsSubNavigationBar({activeTab}) {
-    const history = useHistory();
+  const history = useHistory();
 
-    const handleTabClick = (tabSelection) => e => {
-        e.preventDefault();
+  const handleTabClick = (tabSelection) => e => {
+    e.preventDefault();
 
-        switch (tabSelection) {
-            case "aiTools":
-                history.push(`/ai`);
-                return;
-        }
-    };
+    switch (tabSelection) {
+    case "aiTools":
+      history.push(`/ai`);
+      return;
+    }
+  };
 
-    return (
-        <NavigationTabContainer>
-            <NavigationTab
-                icon={faTools}
-                tabName={"aiTools"}
-                handleTabClick={handleTabClick}
-                activeTab={activeTab}
-                tabText={"Opsera AI Chatbot Prototype"}
-            />
-        </NavigationTabContainer>
-    );
+  return (
+    <NavigationTabContainer>
+      <NavigationTab
+        icon={faTools}
+        tabName={"aiTools"}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+        tabText={"Opsera AI Chatbot Prototype"}
+      />
+    </NavigationTabContainer>
+  );
 }
 
 AIToolsSubNavigationBar.propTypes = {
-    activeTab: PropTypes.string,
+  activeTab: PropTypes.string,
 };
 
 export default AIToolsSubNavigationBar;

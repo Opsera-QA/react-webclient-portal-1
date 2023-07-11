@@ -69,7 +69,7 @@ function VanitySetVerticalTabContainer(
       }}
     >
       <div className={"h-100 w-100"}
-           style={{display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
+        style={{display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
         {getTitleBar()}
         {getSearchBar()}
         <Nav variant={"pills"} style={{flex: "1 1 auto", overflow: 'hidden'}} className={"h-100"}>

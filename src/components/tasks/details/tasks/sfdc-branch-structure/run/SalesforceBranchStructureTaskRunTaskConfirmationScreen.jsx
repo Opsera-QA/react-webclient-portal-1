@@ -4,7 +4,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import TriggerSalesforceBranchStructureTaskRunButton
-  from "components/tasks/details/tasks/sfdc-branch-structure/run/TriggerSalesforceBranchStructureTaskRunButton";
+from "components/tasks/details/tasks/sfdc-branch-structure/run/TriggerSalesforceBranchStructureTaskRunButton";
 import CancelButton from "components/common/buttons/CancelButton";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 import {

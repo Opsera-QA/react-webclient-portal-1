@@ -68,7 +68,7 @@ function ToolCategoryDetailView() {
       getAccessToken,
       cancelTokenSource,
       toolTypeId,
-      );
+    );
   };
 
   const getActionBar = () => {
@@ -78,7 +78,7 @@ function ToolCategoryDetailView() {
           <ActionBarBackButton path={"/admin/tools/categories"} />
         </div>
         <div>
-        <ActionBarDeleteButton2 dataObject={toolCategoryData} handleDelete={deleteToolCategory} relocationPath={"/admin/tools/categories"} />
+          <ActionBarDeleteButton2 dataObject={toolCategoryData} handleDelete={deleteToolCategory} relocationPath={"/admin/tools/categories"} />
         </div>
       </ActionBarContainer>
     );
@@ -106,7 +106,7 @@ function ToolCategoryDetailView() {
       isLoading={isLoading}
       actionBar={getActionBar()}
       detailPanel={getDetailPanel()}
-      />
+    />
   );
 }
 

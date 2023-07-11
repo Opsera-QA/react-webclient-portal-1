@@ -28,17 +28,17 @@ function FortifyGitRepositoryInput({model, setModel, disabled}) {
   };
 
   return (
-     <RepositorySelectInput
-       fieldName={"repoId"}
-       service={model.getData("service")}
-       gitToolId={model.getData("gitToolId")}
-       workspace={model.getData("workspace")}
-       dataObject={model}
-       setDataObject={setModel}
-       setDataFunction={setDataFunction}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-     />
+    <RepositorySelectInput
+      fieldName={"repoId"}
+      service={model.getData("service")}
+      gitToolId={model.getData("gitToolId")}
+      workspace={model.getData("workspace")}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+    />
   );
 }
 

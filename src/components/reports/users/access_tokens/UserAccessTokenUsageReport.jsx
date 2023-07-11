@@ -6,7 +6,7 @@ import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar"
 import useGetAccessTokenActivityLogs from "hooks/access_tokens/logs/useGetAccessTokenActivityLogs";
 import AccessTokenLogTable from "components/user/user_settings/access_tokens/details/logs/AccessTokenLogTable";
 import InlineAccessTokenUsageUserSelectInput
-  from "components/common/list_of_values_input/access_tokens/InlineAccessTokenUsageUserSelectInput";
+from "components/common/list_of_values_input/access_tokens/InlineAccessTokenUsageUserSelectInput";
 
 export default function UserAccessTokenUsageReport() {
   const {

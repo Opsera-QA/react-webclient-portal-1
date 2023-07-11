@@ -28,17 +28,17 @@ function ArgoGitRepositoryInput({dataObject, setDataObject, disabled}) {
   };
 
   return (
-     <RepositorySelectInput
-       fieldName={"projectId"}
-       service={dataObject.getData("service")}
-       gitToolId={dataObject.getData("gitToolId")}
-       workspace={dataObject.getData("workspace")}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       setDataFunction={setRepository}
-       disabled={disabled}
-       clearDataFunction={clearData}
-     />
+    <RepositorySelectInput
+      fieldName={"projectId"}
+      service={dataObject.getData("service")}
+      gitToolId={dataObject.getData("gitToolId")}
+      workspace={dataObject.getData("workspace")}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      setDataFunction={setRepository}
+      disabled={disabled}
+      clearDataFunction={clearData}
+    />
   );
 }
 

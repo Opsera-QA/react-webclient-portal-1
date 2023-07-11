@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import ActionBarDeleteButtonBase from "components/common/actions/buttons/ActionBarDeleteButtonBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DeletePipelineConfirmationOverlay
-  from "components/workflow/pipelines/summary/action_bar/buttons/DeletePipelineConfirmationOverlay";
+from "components/workflow/pipelines/summary/action_bar/buttons/DeletePipelineConfirmationOverlay";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 
 export default function ActionBarDeletePipelineButton(

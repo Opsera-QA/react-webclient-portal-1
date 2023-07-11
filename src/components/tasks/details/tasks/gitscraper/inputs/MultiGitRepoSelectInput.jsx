@@ -21,18 +21,18 @@ const SAMPLE_DATA = {
 
 // TODO: Refactor further.
 function MultiGitRepoSelectInput({
-                                     dataObject,
-                                     setDataObject,
-                                     fieldName,
-                                     disabledFields,
-                                     type,
-                                     titleIcon,
-                                     allowIncompleteItems,
-                                     titleText,
-                                     nameMaxLength,
-                                     regexValidationRequired,
-                                     disabled,
-                                   }) {
+  dataObject,
+  setDataObject,
+  fieldName,
+  disabledFields,
+  type,
+  titleIcon,
+  allowIncompleteItems,
+  titleText,
+  nameMaxLength,
+  regexValidationRequired,
+  disabled,
+}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [properties, setProperties] = useState([]);

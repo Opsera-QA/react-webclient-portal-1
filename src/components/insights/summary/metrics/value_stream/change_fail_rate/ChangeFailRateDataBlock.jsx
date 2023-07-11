@@ -114,7 +114,7 @@ function ChangeFailRateDataBlock({ dashboardData, toggleDynamicPanel, selectedDa
           title={
             !isLoading && metrics[0]?.count[0] ? (
             //   metrics[0]?.count[0]?.count
-                "-"
+              "-"
             ) : (
               <LoadingIcon className={"mr-1"} />
             )

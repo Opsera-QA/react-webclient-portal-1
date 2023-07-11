@@ -10,7 +10,7 @@ import usePipelineActivityLogActions from "hooks/workflow/pipelines/logs/usePipe
 export default function useGetPipelineActivityLogById(
   pipelineActivityLogId,
   handleErrorFunction,
-  ) {
+) {
   const pipelineActivityLogActions = usePipelineActivityLogActions();
   const [pipelineActivityLog, setPipelineActivityLog] = useState(undefined);
   const {

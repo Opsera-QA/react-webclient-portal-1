@@ -32,8 +32,8 @@ export default function FreeTrialWorkspaceItemCard({ toolData, isLoading, loadTo
   const getDescription = () => {
     return (
       <div className="description-height small pl-1">
-      <DescriptionField dataObject={toolData} fieldName={"description"} />
-    </div>
+        <DescriptionField dataObject={toolData} fieldName={"description"} />
+      </div>
     );
   };
 

@@ -37,38 +37,38 @@ function JenkinsJobsGenericAgentTypeSelectInput({ fieldName, model, setModel, se
 
     if (jenkinsJobType === JenkinsJobTypes.BUILD) {
       switch (model?.getData("buildType")) {
-        case "dotnet":
-          return JENKINS_JOBS_WINDOWS_AGENT_TYPE;
-        case "gradle":
-        case "maven":
-        case "docker":
-        case "node":
-          return JENKINS_JOBS_UBUNTU_AGENT_TYPE;
-        case "msbuild":
-          return [];
-        default:
-          return JENKINS_JOBS_GENERIC_AGENT_TYPES;
+      case "dotnet":
+        return JENKINS_JOBS_WINDOWS_AGENT_TYPE;
+      case "gradle":
+      case "maven":
+      case "docker":
+      case "node":
+        return JENKINS_JOBS_UBUNTU_AGENT_TYPE;
+      case "msbuild":
+        return [];
+      default:
+        return JENKINS_JOBS_GENERIC_AGENT_TYPES;
       }
     }
 
     switch (jenkinsJobType) {
-      case JenkinsJobTypes.SFDC:
-      case JenkinsJobTypes.PMD_SCAN:
-      case JenkinsJobTypes.SFDC_CODE_SCAN:
-      case JenkinsJobTypes.CODE_SCAN:
-      case JenkinsJobTypes.UNIT_TESTING:
-      case JenkinsJobTypes.FUNCTIONAL_TESTING:
-      case JenkinsJobTypes.PERFORMANCE_TESTING:
-      case JenkinsJobTypes.CYPRESS_UNIT_TESTING:
-      case JenkinsJobTypes.NUNIT_UNIT_TESTING:
-      case JenkinsJobTypes.DOCKER_PUSH:
-      case JenkinsJobTypes.ARTIFACTORY_DOCKER_PUSH:
-      case JenkinsJobTypes.SFDC_PUSH_ARTIFACTS:
-      case JenkinsJobTypes.POWERSHELL_SCRIPT:
-      case JenkinsJobTypes.AZURE_DOCKER_PUSH:
-        return JENKINS_JOBS_UBUNTU_AGENT_TYPE;
-      case JenkinsJobTypes.COVERITY:
-        return JENKINS_JOBS_GENERIC_AGENT_TYPES;
+    case JenkinsJobTypes.SFDC:
+    case JenkinsJobTypes.PMD_SCAN:
+    case JenkinsJobTypes.SFDC_CODE_SCAN:
+    case JenkinsJobTypes.CODE_SCAN:
+    case JenkinsJobTypes.UNIT_TESTING:
+    case JenkinsJobTypes.FUNCTIONAL_TESTING:
+    case JenkinsJobTypes.PERFORMANCE_TESTING:
+    case JenkinsJobTypes.CYPRESS_UNIT_TESTING:
+    case JenkinsJobTypes.NUNIT_UNIT_TESTING:
+    case JenkinsJobTypes.DOCKER_PUSH:
+    case JenkinsJobTypes.ARTIFACTORY_DOCKER_PUSH:
+    case JenkinsJobTypes.SFDC_PUSH_ARTIFACTS:
+    case JenkinsJobTypes.POWERSHELL_SCRIPT:
+    case JenkinsJobTypes.AZURE_DOCKER_PUSH:
+      return JENKINS_JOBS_UBUNTU_AGENT_TYPE;
+    case JenkinsJobTypes.COVERITY:
+      return JENKINS_JOBS_GENERIC_AGENT_TYPES;
     }
   };
 

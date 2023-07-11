@@ -71,22 +71,22 @@ function SonarCodeSmellsLineChart({ kpiConfiguration, setKpiConfiguration, dashb
       return null;
     }
 
-  return (
-    <div className="new-chart mb-3" style={{height: "300px"}}>
-          <ResponsiveLine
-            data={metrics}
-            {...defaultConfig("Code Smells", "Date", 
-                      false, true, "wholeNumbers", "yearMonthDate")}
-            {...config(getColor)}
-            onClick={() => setShowModal(true)}
-            tooltip={({ point, color }) => <ChartTooltip 
-                titles = {["Timestamp", "Code Smells", "Key"]}
-                values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(point.data.x)),
-                          point.data.y, point.data.key]}
-                color = {color} />}
-          />
+    return (
+      <div className="new-chart mb-3" style={{height: "300px"}}>
+        <ResponsiveLine
+          data={metrics}
+          {...defaultConfig("Code Smells", "Date", 
+            false, true, "wholeNumbers", "yearMonthDate")}
+          {...config(getColor)}
+          onClick={() => setShowModal(true)}
+          tooltip={({ point, color }) => <ChartTooltip 
+            titles = {["Timestamp", "Code Smells", "Key"]}
+            values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(point.data.x)),
+              point.data.y, point.data.key]}
+            color = {color} />}
+        />
       </div>
-  );
+    );
   };
   return (
     <div>

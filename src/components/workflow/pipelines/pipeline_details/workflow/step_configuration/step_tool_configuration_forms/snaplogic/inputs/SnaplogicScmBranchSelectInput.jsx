@@ -15,15 +15,15 @@ function SnaplogicScmBranchSelectInput({model, setModel, fieldName, disabled, di
   };
 
   return (
-     <GitBranchInput
-       fieldName={fieldName}
-       service={model?.getData("service")}
-       gitToolId={model?.getData("gitToolId")}
-       repoId={model?.getData("repoId")}
-       dataObject={model}
-       setDataObject={setModel}
-       disabled={getDisabledOptions()}
-     />
+    <GitBranchInput
+      fieldName={fieldName}
+      service={model?.getData("service")}
+      gitToolId={model?.getData("gitToolId")}
+      repoId={model?.getData("repoId")}
+      dataObject={model}
+      setDataObject={setModel}
+      disabled={getDisabledOptions()}
+    />
   );
 }
 

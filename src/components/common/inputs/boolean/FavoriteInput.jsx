@@ -16,14 +16,14 @@ function FavoriteInput({fieldName, dataObject, setDataObject, disabled}) {
 
   return (
     <div className="mr-2">
-        <span className="action-bar-icon">
-          <IconBase
-            iconSize={"lg"}
-            className={"opsera-yellow pointer"}
-            icon={dataObject.getData(field.id) ? faStarSolid : faStar}
-            onClickFunction={() => {validateAndSetData(!dataObject.getData(field.id));}}
-          />
-        </span>
+      <span className="action-bar-icon">
+        <IconBase
+          iconSize={"lg"}
+          className={"opsera-yellow pointer"}
+          icon={dataObject.getData(field.id) ? faStarSolid : faStar}
+          onClickFunction={() => {validateAndSetData(!dataObject.getData(field.id));}}
+        />
+      </span>
       <InfoText
         field={field}
         fieldName={fieldName}

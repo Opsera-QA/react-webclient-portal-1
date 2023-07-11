@@ -1,15 +1,15 @@
 const JenkinsJobTypeMeta = {
-    type: "Jenkins Build Job",
-    fields: [
-      {
-        label: "Agent Label",
-        id: "agentLabels",
-      },
-    ],
-    newObjectFields: {
-      agentLabels: ""
+  type: "Jenkins Build Job",
+  fields: [
+    {
+      label: "Agent Label",
+      id: "agentLabels",
     },
-  };
+  ],
+  newObjectFields: {
+    agentLabels: ""
+  },
+};
   
-  export default JenkinsJobTypeMeta;
+export default JenkinsJobTypeMeta;
   

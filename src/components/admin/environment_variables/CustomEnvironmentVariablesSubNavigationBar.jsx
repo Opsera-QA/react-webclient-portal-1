@@ -12,12 +12,12 @@ function CustomEnvironmentVariablesSubNavigationBar({activeTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-      case "adminTools":
-        history.push(`/admin`);
-        return;
-      case "customEnvironmentVariableManagement":
-        history.push(`/admin/custom-environment-variables`);
-        return;
+    case "adminTools":
+      history.push(`/admin`);
+      return;
+    case "customEnvironmentVariableManagement":
+      history.push(`/admin/custom-environment-variables`);
+      return;
     }
   };
 

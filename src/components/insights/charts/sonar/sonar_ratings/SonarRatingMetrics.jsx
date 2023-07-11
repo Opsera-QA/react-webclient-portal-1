@@ -5,7 +5,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import SonarRatingsV2ChartHelpDocumentation
-  from "../../../../common/help/documentation/insights/charts/SonarRatingsV2ChartHelpDocumentation";
+from "../../../../common/help/documentation/insights/charts/SonarRatingsV2ChartHelpDocumentation";
 import SonarRatingsMaintainabilityDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsMaintainabilityDataBlockContainer";
 import SonarRatingsVulnerabilityDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsVulnerabilityDataBlockContainer";
 import {SONAR_RATING_METRIC_CONSTANTS as dataPointConstants} from "./SonarRatingMetrics_kpi_datapoint_identifiers";
@@ -16,7 +16,7 @@ import { Col, Row } from "react-bootstrap";
 import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/pro-solid-svg-icons";
 import SonarRatingsCodeCoverageBlockContainer
-  from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsCodeCoverageBlockContainer";
+from "components/insights/charts/sonar/sonar_ratings/data_blocks/SonarRatingsCodeCoverageBlockContainer";
 
 function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -108,53 +108,53 @@ function SonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardDa
 
     const getIcon = (severity) => {
       switch (severity) {
-        case "Red":
-          return faArrowCircleUp;
-        case "Green":
-          return faArrowCircleDown;
-        case "Neutral":
-          return faMinusCircle;
-        default:
-          break;
+      case "Red":
+        return faArrowCircleUp;
+      case "Green":
+        return faArrowCircleDown;
+      case "Neutral":
+        return faMinusCircle;
+      default:
+        break;
       }
     };
 
     const getReverseIcon = (severity) => {
       switch (severity) {
-        case "Red":
-          return faArrowCircleDown;
-        case "Green":
-          return faArrowCircleUp;
-        case "Neutral":
-          return faMinusCircle;
-        default:
-          break;
+      case "Red":
+        return faArrowCircleDown;
+      case "Green":
+        return faArrowCircleUp;
+      case "Neutral":
+        return faMinusCircle;
+      default:
+        break;
       }
     };
 
     const getIconColor = (severity) => {
       switch (severity) {
-        case "Red":
-          return "red";
-        case "Green":
-          return "green";
-        case "Neutral":
-          return "light-gray-text-secondary";
-        case "-":
-          return "black";
-        default:
-          break;
+      case "Red":
+        return "red";
+      case "Green":
+        return "green";
+      case "Neutral":
+        return "light-gray-text-secondary";
+      case "-":
+        return "black";
+      default:
+        break;
       }
     };
 
     const getDescription = (severity) => {
       switch (severity) {
-        case "Red":
-          return "This project's issues are trending upward";
-        case "Green":
-          return "This project's issues are trending downward";
-        case "Neutral":
-          return "Neutral: This project's issues have experienced no change";
+      case "Red":
+        return "This project's issues are trending upward";
+      case "Green":
+        return "This project's issues are trending downward";
+      case "Neutral":
+        return "Neutral: This project's issues have experienced no change";
       }
     };
 

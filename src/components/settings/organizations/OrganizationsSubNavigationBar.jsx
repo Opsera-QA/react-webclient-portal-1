@@ -17,26 +17,26 @@ function OrganizationsSubNavigationBar({activeTab}) {
     }
 
     switch (tabSelection) {
-      case "organizations":
-        history.push(`/settings/organizations`);
-        return;
+    case "organizations":
+      history.push(`/settings/organizations`);
+      return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-      case "organizationViewer":
-        return (
-          <NavigationTab
-            icon={faSitemap}
-            tabName={"organizationViewer"}
-            handleTabClick={handleTabClick}
-            activeTab={activeTab}
-            tabText={"Organization Viewer"}
-          />
-        );
-      default:
-        return null;
+    case "organizationViewer":
+      return (
+        <NavigationTab
+          icon={faSitemap}
+          tabName={"organizationViewer"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Organization Viewer"}
+        />
+      );
+    default:
+      return null;
     }
   };
 

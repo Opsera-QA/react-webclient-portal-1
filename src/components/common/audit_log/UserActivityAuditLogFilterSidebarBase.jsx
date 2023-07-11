@@ -2,9 +2,9 @@ import PropTypes from "prop-types";
 import React from "react";
 import InlineUserFilterSelectInput from "components/common/filters/ldap/owner/InlineUserFilterSelectInput";
 import InlineAuditLogActionsMultiSelectCheckboxFilter
-  from "components/common/audit_log/inputs/InlineAuditLogActionsMultiSelectCheckboxFilter";
+from "components/common/audit_log/inputs/InlineAuditLogActionsMultiSelectCheckboxFilter";
 import InlineSiteRoleMultiSelectCheckboxFilterInput
-  from "components/common/list_of_values_input/ldap/site_roles/InlineSiteRoleMultiSelectCheckboxFilterInput";
+from "components/common/list_of_values_input/ldap/site_roles/InlineSiteRoleMultiSelectCheckboxFilterInput";
 import InlineDateTimeRangeFilterInput from "components/common/inputs/date/range/pickers/InlineDateTimeRangeFilterInput";
 
 export default function UserActivityAuditLogFilterSidebarBase(

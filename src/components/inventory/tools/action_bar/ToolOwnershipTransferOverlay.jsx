@@ -6,7 +6,7 @@ import OwnershipTransferOverlayBase from "components/common/overlays/center/owne
 import { useHistory } from "react-router-dom";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import OwnershipTransferConfirmationOverlay
-  from "components/common/overlays/center/ownership/OwnershipTransferConfirmationOverlay";
+from "components/common/overlays/center/ownership/OwnershipTransferConfirmationOverlay";
 
 export default function ToolOwnershipTransferOverlay(
   {

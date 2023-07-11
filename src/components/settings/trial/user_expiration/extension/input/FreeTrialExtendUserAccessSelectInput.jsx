@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import ExtendableFreeTrialSsoUserSelectInput
-  from "components/common/list_of_values_input/users/sso/extendable/ExtendableFreeTrialSsoUserSelectInput";
+from "components/common/list_of_values_input/users/sso/extendable/ExtendableFreeTrialSsoUserSelectInput";
 
 export default function FreeTrialExtendUserAccessSelectInput(
   {
@@ -27,15 +27,15 @@ export default function FreeTrialExtendUserAccessSelectInput(
   };
 
   return (
-     <ExtendableFreeTrialSsoUserSelectInput
-       fieldName={fieldName}
-       model={model}
-       setModel={setModel}
-       setDataFunction={setDataFunction}
-       clearDataFunction={clearDataFunction}
-       textField={textFieldFunction}
-       className={className}
-     />
+    <ExtendableFreeTrialSsoUserSelectInput
+      fieldName={fieldName}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      textField={textFieldFunction}
+      className={className}
+    />
   );
 }
 

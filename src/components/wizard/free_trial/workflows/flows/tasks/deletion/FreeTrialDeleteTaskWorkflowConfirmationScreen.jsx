@@ -9,7 +9,7 @@ import { faWarning } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import FreeTrialConfirmTaskWorkflowDeletionButton
-  from "components/wizard/free_trial/workflows/flows/tasks/deletion/FreeTrialConfirmTaskWorkflowDeletionButton";
+from "components/wizard/free_trial/workflows/flows/tasks/deletion/FreeTrialConfirmTaskWorkflowDeletionButton";
 
 export default function FreeTrialDeleteTaskWorkflowConfirmationScreen(
   {

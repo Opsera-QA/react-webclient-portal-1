@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase
-  from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 import RoleRestrictedJenkinsToolSelectInput
-  from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
+from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
 
 // TODO: There should be a base component. Each step form should be only setting the relevant fields
 //  instead of setting all of these fields for every instance of the dropdown.

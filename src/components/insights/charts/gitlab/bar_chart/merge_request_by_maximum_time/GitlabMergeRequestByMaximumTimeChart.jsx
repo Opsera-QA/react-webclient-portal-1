@@ -87,18 +87,18 @@ function GitlabMergeRequestByMaximumTimeChart({ kpiConfiguration, setKpiConfigur
       return null;
     }
 
-  return (
-    <div className="new-chart mb-3" style={{height: METRIC_CHART_STANDARD_HEIGHT}}>
-          <ResponsiveBar
-            data={metrics}
-            {...defaultConfig("Time (Hours)", "Project Name",
-                        false, false, "values", "cutoffString")}
-            {...config()}
-            {...adjustBarWidth(metrics)}
-            onClick={onChartClick}
-          />
+    return (
+      <div className="new-chart mb-3" style={{height: METRIC_CHART_STANDARD_HEIGHT}}>
+        <ResponsiveBar
+          data={metrics}
+          {...defaultConfig("Time (Hours)", "Project Name",
+            false, false, "values", "cutoffString")}
+          {...config()}
+          {...adjustBarWidth(metrics)}
+          onClick={onChartClick}
+        />
       </div>
-  );
+    );
   };
 
   return (

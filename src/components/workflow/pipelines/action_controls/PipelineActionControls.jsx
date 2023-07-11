@@ -8,9 +8,9 @@ import {
   faInfoCircle, faRepeat1, faClock,
 } from "@fortawesome/pro-light-svg-icons";
 import CancelPipelineQueueConfirmationOverlay
-  from "components/workflow/pipelines/pipeline_details/queuing/cancellation/CancelPipelineQueueConfirmationOverlay";
+from "components/workflow/pipelines/pipeline_details/queuing/cancellation/CancelPipelineQueueConfirmationOverlay";
 import InformaticaPipelineRunAssistantOverlay
-  from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistantOverlay";
+from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistantOverlay";
 import ApigeePipelineRunAssistantOverlay from "components/workflow/run_assistants/apigee/ApigeePipelineRunAssistantOverlay";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
@@ -23,15 +23,15 @@ import PipelineStartWizard from "components/workflow/pipelines/pipeline_details/
 import PipelineActionControlsUserApprovalButton from "components/workflow/pipelines/action_controls/PipelineActionControlsUserApprovalButton";
 import PipelineActionControlsStopButton from "components/workflow/pipelines/action_controls/PipelineActionControlsStopButton";
 import PipelineActionControlsRefreshButton
-  from "components/workflow/pipelines/action_controls/PipelineActionControlsRefreshButton";
+from "components/workflow/pipelines/action_controls/PipelineActionControlsRefreshButton";
 import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import PipelineActionControlsStartPipelineButton
-  from "components/workflow/pipelines/action_controls/start/PipelineActionControlsStartPipelineButton";
+from "components/workflow/pipelines/action_controls/start/PipelineActionControlsStartPipelineButton";
 import useGetPlatformFeatureFlags from "hooks/platform/useGetPlatformFeatureFlags";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 import {buttonLabelHelper} from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import PipelineActionControlButtonBase
-  from "components/workflow/pipelines/action_controls/PipelineActionControlButtonBase";
+from "components/workflow/pipelines/action_controls/PipelineActionControlButtonBase";
 import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 import {sleep} from "utils/helpers";
 import PipelineStartConfirmationOverlay from "components/workflow/pipelines/PipelineStartConfirmationOverlay";
@@ -448,11 +448,11 @@ function PipelineActionControls(
           delay={{ show: 250, hide: 400 }}
           overlay={renderTooltip({ message: "A queued request to start this pipeline is pending.  Upon successful completion of this run, the pipeline will restart." })}>
           <Button variant="secondary"
-                  size="sm"
-                  disabled={startPipeline || stopPipeline || resetPipeline}
-                  onClick={() => {
-                    showCancelQueueOverlay();
-                  }}>
+            size="sm"
+            disabled={startPipeline || stopPipeline || resetPipeline}
+            onClick={() => {
+              showCancelQueueOverlay();
+            }}>
             <IconBase icon={faClock} /> Queued Request</Button>
         </OverlayTrigger>
       );
@@ -465,11 +465,11 @@ function PipelineActionControls(
           delay={{ show: 250, hide: 400 }}
           overlay={renderTooltip({ message: "Request a re-start of this pipeline after the successful completion of the current run." })}>
           <Button variant="success"
-                  size="sm"
-                  disabled={startPipeline || stopPipeline || resetPipeline}
-                  onClick={() => {
-                    runPipelineLight(pipeline._id);
-                  }}>
+            size="sm"
+            disabled={startPipeline || stopPipeline || resetPipeline}
+            onClick={() => {
+              runPipelineLight(pipeline._id);
+            }}>
             <IconBase icon={faRepeat1} /> Repeat Once</Button>
         </OverlayTrigger>
       );
@@ -510,12 +510,12 @@ function PipelineActionControls(
               delay={{ show: 250, hide: 400 }}
               overlay={renderTooltip({ message: "Will resume the pipeline on the next step.  It will not rerun the last step, even if that step failed. To clear a failed step, reset the pipeline and run it from the start." })}>
               <Button variant="success"
-                      className="btn-default"
-                      size="sm"
-                      onClick={() => {
-                        handleResumeWorkflowClick(pipeline._id);
-                      }}
-                      disabled={PipelineRoleHelper.canStartPipeline(userData, pipeline) !== true || startPipeline || stopPipeline || resetPipeline}>
+                className="btn-default"
+                size="sm"
+                onClick={() => {
+                  handleResumeWorkflowClick(pipeline._id);
+                }}
+                disabled={PipelineRoleHelper.canStartPipeline(userData, pipeline) !== true || startPipeline || stopPipeline || resetPipeline}>
                 <IconBase isLoading={startPipeline} icon={faRedo} className={ "mr-1"} />
                 <span className="d-none d-sm-inline d-md-inline">Resume</span></Button>
             </OverlayTrigger>}
@@ -527,12 +527,12 @@ function PipelineActionControls(
               delay={{ show: 250, hide: 400 }}
               overlay={renderTooltip({ message: "Reset current pipeline run state." })}>
               <Button variant="secondary"
-                      className="btn-default"
-                      size="sm"
-                      onClick={() => {
-                        resetPipelineState();
-                      }}
-                      disabled={PipelineRoleHelper.canResetPipeline(userData, pipeline) !== true || startPipeline || stopPipeline || resetPipeline}>
+                className="btn-default"
+                size="sm"
+                onClick={() => {
+                  resetPipelineState();
+                }}
+                disabled={PipelineRoleHelper.canResetPipeline(userData, pipeline) !== true || startPipeline || stopPipeline || resetPipeline}>
                 <IconBase isLoading={resetPipeline} icon={faRedo} fixedWidth className="mr-1" />
                 <span className="d-none d-sm-inline d-md-inline">Reset Pipeline</span></Button>
             </OverlayTrigger>

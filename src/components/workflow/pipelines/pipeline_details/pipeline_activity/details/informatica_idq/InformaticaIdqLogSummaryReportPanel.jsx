@@ -5,12 +5,12 @@ import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/V
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
 import InformaticaSummaryLogVerticalTabContainer
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/InformaticaSummaryLogVerticalTabContainer";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/InformaticaSummaryLogVerticalTabContainer";
 import { faClipboardListCheck, faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import InformaticaIdqReportView
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica_idq/components/InformaticaIdqReportView";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica_idq/components/InformaticaIdqReportView";
 
 function InformaticaIdqLogSummaryReportPanel({ pipelineTaskData }) {
   const [informaticaResultsModel, setInformaticaResultsModel] = useState(undefined);

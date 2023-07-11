@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import EndpointResponseEvaluationRuleInput
-  from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/EndpointResponseEvaluationRuleInput";
+from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/EndpointResponseEvaluationRuleInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import endpointResponseEvaluationRulesMetadata
-  from "@opsera/definitions/constants/api/evaluation/endpointResponseEvaluationRules.metadata";
+from "@opsera/definitions/constants/api/evaluation/endpointResponseEvaluationRules.metadata";
 
 function EndpointResponseEvaluationRulesInputBase(
   {

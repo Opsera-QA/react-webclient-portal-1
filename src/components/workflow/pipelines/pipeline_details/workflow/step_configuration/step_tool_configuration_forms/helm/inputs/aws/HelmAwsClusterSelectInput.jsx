@@ -63,15 +63,15 @@ function HelmAwsClusterSelectInput({
   };
 
   const loadAwsClusters = async (cancelSource) => {
-      setClusters([]);
-      const res = await argoActions.getAwsEksClusters(getAccessToken, cancelSource, awsToolConfigId);
-      if (res && res.status === 200) {
-        if (res.data.length === 0) {
-          return;
-        }
-        setClusters(res.data);
+    setClusters([]);
+    const res = await argoActions.getAwsEksClusters(getAccessToken, cancelSource, awsToolConfigId);
+    if (res && res.status === 200) {
+      if (res.data.length === 0) {
         return;
       }
+      setClusters(res.data);
+      return;
+    }
   };
 
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PipelineUsageToolSelectInput
-  from "components/common/list_of_values_input/workflow/pipelines/PipelineUsageToolSelectInput";
+from "components/common/list_of_values_input/workflow/pipelines/PipelineUsageToolSelectInput";
 
 function StepConfigurationToolIdentifierSelectInput(
   {

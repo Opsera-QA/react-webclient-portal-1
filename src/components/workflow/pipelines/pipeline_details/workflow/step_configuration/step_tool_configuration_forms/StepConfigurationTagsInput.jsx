@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import StepConfigurationEnvironmentTagInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/StepConfigurationEnvironmentTagInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/StepConfigurationEnvironmentTagInput";
 import TagManager from "components/common/inputs/tags/TagManager";
 
 export default function StepConfigurationTagsInput(

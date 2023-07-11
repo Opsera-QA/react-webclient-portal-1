@@ -16,14 +16,14 @@ function HelmBitbucketWorkspaceSelectInput({model, setModel, disabled}) {
   }
 
   return (
-     <BitbucketWorkspaceInput
-       fieldName={"bitbucketWorkspaceName"}
-       gitToolId={model?.getData("gitToolId")}
-       dataObject={model}
-       setDataObject={setModel}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-     />
+    <BitbucketWorkspaceInput
+      fieldName={"bitbucketWorkspaceName"}
+      gitToolId={model?.getData("gitToolId")}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+    />
   );
 }
 

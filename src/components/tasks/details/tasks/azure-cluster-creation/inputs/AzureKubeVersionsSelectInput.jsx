@@ -9,15 +9,15 @@ import azureTaskActions from "../azure-cluster-actions";
 import IconBase from "components/common/icons/IconBase";
 
 function AzureKubeVersionsSelectInput({
-                                        fieldName,
-                                        dataObject,
-                                        setDataObject,
-                                        azureToolConfigId,
-                                        azureConfig,
-                                        azureApplication,
-                                        applicationData,
-                                        region
-                                      }) {
+  fieldName,
+  dataObject,
+  setDataObject,
+  azureToolConfigId,
+  azureConfig,
+  azureApplication,
+  applicationData,
+  region
+}) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [azureKubeVersions, setAzureKubeVersions] = useState([]);

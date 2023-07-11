@@ -32,7 +32,7 @@ import PageLinkIcon from "components/common/icons/general/PageLinkIcon";
 import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";
 import PipelineTypeIconBase from "components/common/fields/pipelines/types/PipelineTypeIconBase";
 import OrchestrationStateFieldBase
-  from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
+from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
 import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
@@ -340,26 +340,26 @@ export const getTableDateAndTimeUntilValueColumn = (
 
 export const getAssociatedPipelineStatusIcon = (pipelineStatus) => {
   switch (pipelineStatus) {
-    case "failure":
-    case "failed":
-      return (<IconBase icon={faTimesCircle} className={"red"} />);
-    case "error":
-      return (<IconBase icon={faExclamationCircle} className={"red"} />);
-    case "unknown":
-      return (<IconBase icon={faCircle} className={"yellow"}/>);
-    case "rejected":
-      return (<IconBase icon={faStopCircle} className={"red"}/>);
-    case "running":
-    case "processing event":
-      return (<IconBase icon={faPlayCircle} className={"green"}/>);
-    case "queued":
-    case "pending":
-      return (<IconBase icon={faPauseCircle} className={"yellow"}/>);
-    case "stopped":
-    case "halted":
-      return (<IconBase icon={faOctagon} className={"red"}/>);
-    default:
-      return (<IconBase icon={faCheckCircle} className={"green"}/>);
+  case "failure":
+  case "failed":
+    return (<IconBase icon={faTimesCircle} className={"red"} />);
+  case "error":
+    return (<IconBase icon={faExclamationCircle} className={"red"} />);
+  case "unknown":
+    return (<IconBase icon={faCircle} className={"yellow"}/>);
+  case "rejected":
+    return (<IconBase icon={faStopCircle} className={"red"}/>);
+  case "running":
+  case "processing event":
+    return (<IconBase icon={faPlayCircle} className={"green"}/>);
+  case "queued":
+  case "pending":
+    return (<IconBase icon={faPauseCircle} className={"yellow"}/>);
+  case "stopped":
+  case "halted":
+    return (<IconBase icon={faOctagon} className={"red"}/>);
+  default:
+    return (<IconBase icon={faCheckCircle} className={"green"}/>);
   }
 };
 
@@ -406,17 +406,17 @@ export const getChartPipelineStatusColumn = (field, className) => {
     Cell: function parseStatus(row) {
       let status = typeof row?.value === "string" ? row.value.toLowerCase() : status;
       switch (status) {
-        case "failure":
-        case "failed":
-          return (<FailIcon />);
-        case "unknown":
-          return (<WarningIcon/>);
-        case "passed":
-        case "success":
-        case "successful":
-          return (<SuccessIcon/>);
-        default:
-          return status;
+      case "failure":
+      case "failed":
+        return (<FailIcon />);
+      case "unknown":
+        return (<WarningIcon/>);
+      case "passed":
+      case "success":
+      case "successful":
+        return (<SuccessIcon/>);
+      default:
+        return status;
       }
     },
     class: className ? className :  undefined
@@ -431,16 +431,16 @@ export const getChartTrendStatusColumn = (field, className) => {
       let status = typeof row?.value === "string" ? row.value.toLowerCase() : "";
 
       switch (status) {
-        case "red":
-          return (<DangerMetricIcon />);
-        case "neutral":
-          return null;
-        case "green":
+      case "red":
+        return (<DangerMetricIcon />);
+      case "neutral":
+        return null;
+      case "green":
         return (<SuccessMetricIcon />);
-        case "-":
-          return (<NoTrendMetricIcon />);
-        default:
-          return status;
+      case "-":
+        return (<NoTrendMetricIcon />);
+      default:
+        return status;
       }
     },
     class: className ? className :  undefined
@@ -469,66 +469,66 @@ export const getGitCustodianOriginColumn = (field, className) => {
     Cell: function parseStatus(row) {
       let status = typeof row?.value === "string" ? row.value.toLowerCase() : "";
 
-        switch (status) {
-          case "gitlab":
-            return (
-              <TooltipWrapper innerText={"Gitlab"}>
-                <div style={{ marginLeft: '15%' }}>
-                  <IconBase
-                    icon={faGitlab}
-                    iconClassName={"opsera-yellow cell-icon vertical-align-item"}
-                  />
-                </div>
-              </TooltipWrapper>
-            );
-          case "github":
-             return (
-               <TooltipWrapper innerText={"GitHub"}>
-                 <div style={{ marginLeft: '15%' }}>
-                   <IconBase
-                     icon={faGithub}
-                     iconClassName={"black cell-icon vertical-align-item"}
-                   />
-                 </div>
-               </TooltipWrapper>
-             );
-          case "bitbucket":
-            return (
-               <TooltipWrapper innerText={"Bitbucket"}>
-                 <div style={{ marginLeft: '15%' }}>
-                   <IconBase
-                     icon={faBitbucket}
-                     iconClassName={"bitbucket-color cell-icon vertical-align-item"}
-                   />
-                 </div>
-               </TooltipWrapper>
-             );
-          case "jira":
-            return (
-               <TooltipWrapper innerText={"Jira"}>
-                 <div style={{ marginLeft: '15%' }}>
-                   <IconBase
-                     icon={faJira}
-                     iconClassName={"bitbucket-color cell-icon vertical-align-item"}
-                   />
-                 </div>
-               </TooltipWrapper>
-            );
-            case "slack":
-                return (
-                   <TooltipWrapper innerText={"Slack"}>
-                     <div style={{ marginLeft: '15%' }}>
-                       <IconBase
-                         icon={faSlack}
-                         iconClassName={"opsera-yellow cell-icon vertical-align-item"}
-                       />
-                     </div>
-                   </TooltipWrapper>
-                );
-          default:
-            return status;
-          }
-        },
+      switch (status) {
+      case "gitlab":
+        return (
+          <TooltipWrapper innerText={"Gitlab"}>
+            <div style={{ marginLeft: '15%' }}>
+              <IconBase
+                icon={faGitlab}
+                iconClassName={"opsera-yellow cell-icon vertical-align-item"}
+              />
+            </div>
+          </TooltipWrapper>
+        );
+      case "github":
+        return (
+          <TooltipWrapper innerText={"GitHub"}>
+            <div style={{ marginLeft: '15%' }}>
+              <IconBase
+                icon={faGithub}
+                iconClassName={"black cell-icon vertical-align-item"}
+              />
+            </div>
+          </TooltipWrapper>
+        );
+      case "bitbucket":
+        return (
+          <TooltipWrapper innerText={"Bitbucket"}>
+            <div style={{ marginLeft: '15%' }}>
+              <IconBase
+                icon={faBitbucket}
+                iconClassName={"bitbucket-color cell-icon vertical-align-item"}
+              />
+            </div>
+          </TooltipWrapper>
+        );
+      case "jira":
+        return (
+          <TooltipWrapper innerText={"Jira"}>
+            <div style={{ marginLeft: '15%' }}>
+              <IconBase
+                icon={faJira}
+                iconClassName={"bitbucket-color cell-icon vertical-align-item"}
+              />
+            </div>
+          </TooltipWrapper>
+        );
+      case "slack":
+        return (
+          <TooltipWrapper innerText={"Slack"}>
+            <div style={{ marginLeft: '15%' }}>
+              <IconBase
+                icon={faSlack}
+                iconClassName={"opsera-yellow cell-icon vertical-align-item"}
+              />
+            </div>
+          </TooltipWrapper>
+        );
+      default:
+        return status;
+      }
+    },
     class: className ? className :  undefined
   };
 };
@@ -578,10 +578,10 @@ export const getGitTaskTableRunButtonColumn = (accessor = "row", headerText, var
     Cell: function getRunButton(row) {
       return (
         <Button size={"sm"} variant={variant} disabled={row?.data[row?.row?.index].status === "running"} onClick={() => {buttonFunction(row?.data[row?.row?.index]);}} >
-        {row?.data[row?.row?.index].status === "running"
-          ? (<span><IconBase isLoading={true} className={"mr-1"} />Running</span>)
-          : (<span><IconBase icon={faPlay} className={"mr-1"}/>{buttonText}</span>)
-        }
+          {row?.data[row?.row?.index].status === "running"
+            ? (<span><IconBase isLoading={true} className={"mr-1"} />Running</span>)
+            : (<span><IconBase icon={faPlay} className={"mr-1"}/>{buttonText}</span>)
+          }
         </Button>
       );
     },
@@ -595,8 +595,8 @@ export const getDeletePlatformToolTableButtonColumn = (accessor = "row", headerT
     accessor: accessor,
     Cell: function getDeleteButton(row) {
       return <Button size={"sm"} variant={variant} disabled={row?.data[row?.row?.index].toolStatus !== "ACTIVE"} onClick={() => {buttonFunction(row?.data[row?.row?.index]);}} >
-                {buttonText}
-            </Button>;
+        {buttonText}
+      </Button>;
     },
     class: className ? className :  "no-wrap-inline py-1"
   };
@@ -611,9 +611,9 @@ export const getPipelineActivityStatusColumn = (field, className) => {
       if (!parsedText) {
         return (
           <span>
-          <i className={"fal fa-question-circle cell-icon vertical-align-item"} />
-          <span className={"ml-1"}>Unknown</span>
-        </span>
+            <i className={"fal fa-question-circle cell-icon vertical-align-item"} />
+            <span className={"ml-1"}>Unknown</span>
+          </span>
         );
       }
 
@@ -816,13 +816,13 @@ export const getGitCustodianExternalLinkIconColumnDefinition = (field, className
     accessor: getCustomTableAccessor(field),
     Cell: function getPageLink(row){
       return row?.value?.url ?
-      (
-        <PageLinkIcon
-          pageLink={row?.value?.url}
-          externalLink={true}
-          pageLinkText={row?.value?.key}
-        />
-      ) : (row?.value?.key || "");
+        (
+          <PageLinkIcon
+            pageLink={row?.value?.url}
+            externalLink={true}
+            pageLinkText={row?.value?.key}
+          />
+        ) : (row?.value?.key || "");
     },
     class: className ? className : undefined
   };
@@ -881,11 +881,11 @@ export const getGitCustodianScmLinkIconColumnDefinition = (field, className) => 
     Cell: function getPageLink(row){
 
       return (
-          <PageLinkIcon
-              pageLink={row?.value}
-              externalLink={true}
-              pageLinkText={""}
-          />
+        <PageLinkIcon
+          pageLink={row?.value}
+          externalLink={true}
+          pageLinkText={""}
+        />
       );
     },
     class: className ? className : undefined

@@ -9,7 +9,7 @@ import RegisterButton from "components/common/buttons/saving/RegisterButton";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import awsAccountRegistrationMetadata from "components/user/aws_registration/aws_account_registration_metadata";
 import SignupCloudProviderSelectInput
-  from "components/common/list_of_values_input/general/SignupCloudProviderSelectInput";
+from "components/common/list_of_values_input/general/SignupCloudProviderSelectInput";
 import UsStateSelectInput from "components/common/list_of_values_input/general/UsStateSelectInput";
 import useUserActions from "hooks/users/useUserActions";
 

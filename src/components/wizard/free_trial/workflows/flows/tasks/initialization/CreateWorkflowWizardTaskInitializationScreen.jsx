@@ -42,9 +42,9 @@ export default function CreateWorkflowWizardTaskInitializationScreen(
     try {
       setStatus(buttonLabelHelper.BUTTON_STATES.BUSY);
       const response = await taskTemplateActions.deployTemplate(
-          getAccessToken,
-          cancelTokenSource,
-          templateIdentifier,
+        getAccessToken,
+        cancelTokenSource,
+        templateIdentifier,
       );
       const newTask = response?.data;
 

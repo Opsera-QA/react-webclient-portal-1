@@ -5,11 +5,11 @@ import ExportDataPanel from "components/common/modal/export_data/ExportDataPanel
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 export default function ExportInsightsLookupDetailsPanel({
-                                                           showExportPanel,
-                                                           setShowExportPanel,
-                                                           LookupDetailsData,
-                                                           isLoading,
-                                                         }) {
+  showExportPanel,
+  setShowExportPanel,
+  LookupDetailsData,
+  isLoading,
+}) {
   const getRawData = () => {
     const rawData = Array.isArray(LookupDetailsData)
       ? LookupDetailsData?.map((item) => JSON.stringify(item))

@@ -57,19 +57,19 @@ export default function ToolIdentifierTableCardView(
   };
 
   return (
-      <FilterContainer
-        loadData={loadData}
-        addRecordFunction={createToolIdentifier}
-        filterDto={toolIdentifierFilterModel}
-        setFilterDto={setToolIdentifierFilterModel}
-        supportViewToggle={true}
-        isLoading={isLoading}
-        body={getTableCardView()}
-        titleIcon={faTools}
-        title={"Tool Identifiers"}
-        type={"Tool Identifier"}
-        className={"px-2 pb-2"}
-      />
+    <FilterContainer
+      loadData={loadData}
+      addRecordFunction={createToolIdentifier}
+      filterDto={toolIdentifierFilterModel}
+      setFilterDto={setToolIdentifierFilterModel}
+      supportViewToggle={true}
+      isLoading={isLoading}
+      body={getTableCardView()}
+      titleIcon={faTools}
+      title={"Tool Identifiers"}
+      type={"Tool Identifier"}
+      className={"px-2 pb-2"}
+    />
   );
 }
 

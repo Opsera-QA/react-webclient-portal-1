@@ -51,7 +51,7 @@ function ToolCategoryEditorPanel({ toolCategoryData, setToolCategoryData, handle
       getAccessToken,
       cancelTokenSource,
       toolCategoryModel,
-      );
+    );
   };
 
   const updateToolType = async () => {
@@ -59,7 +59,7 @@ function ToolCategoryEditorPanel({ toolCategoryData, setToolCategoryData, handle
       getAccessToken,
       cancelTokenSource,
       toolCategoryModel,
-      );
+    );
   };
 
   if (isLoading || toolCategoryModel == null) {

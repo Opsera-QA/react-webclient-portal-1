@@ -76,44 +76,44 @@ function JMeterResponseTimeLineChart({ kpiConfiguration, setKpiConfiguration, da
     }
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
-            <ResponsiveLine
-              data={metrics}
-              {...defaultConfig("Response Time (ms)", "Build Number", 
-                      true, false, "wholeNumbers", "wholeNumbers")}
-              {...config(getColor)}
-              onClick={() => setShowModal(true)}
-              tooltip={({ point, color }) => <ChartTooltip 
-                              titles = {["Build ID", "Response Time"]}
-                              values = {[point.data.x, point.data.y]}
-                              color = {color} />}
-            />
-        </div>
-    );
-  };
-    return (
-      <div>
-        <ChartContainer
-          title={kpiConfiguration?.kpi_name}
-          kpiConfiguration={kpiConfiguration}
-          setKpiConfiguration={setKpiConfiguration}
-          chart={getChartBody()}
-          loadChart={loadData}
-          dashboardData={dashboardData}
-          index={index}
-          error={error}
-          setKpis={setKpis}
-          isLoading={isLoading}
-        />
-        <ModalLogs
-          header="Hits"
-          size="lg"
-          jsonMessage={metrics}
-          dataType="bar"
-          show={showModal}
-          setParentVisibility={setShowModal}
+        <ResponsiveLine
+          data={metrics}
+          {...defaultConfig("Response Time (ms)", "Build Number", 
+            true, false, "wholeNumbers", "wholeNumbers")}
+          {...config(getColor)}
+          onClick={() => setShowModal(true)}
+          tooltip={({ point, color }) => <ChartTooltip 
+            titles = {["Build ID", "Response Time"]}
+            values = {[point.data.x, point.data.y]}
+            color = {color} />}
         />
       </div>
     );
+  };
+  return (
+    <div>
+      <ChartContainer
+        title={kpiConfiguration?.kpi_name}
+        kpiConfiguration={kpiConfiguration}
+        setKpiConfiguration={setKpiConfiguration}
+        chart={getChartBody()}
+        loadChart={loadData}
+        dashboardData={dashboardData}
+        index={index}
+        error={error}
+        setKpis={setKpis}
+        isLoading={isLoading}
+      />
+      <ModalLogs
+        header="Hits"
+        size="lg"
+        jsonMessage={metrics}
+        dataType="bar"
+        show={showModal}
+        setParentVisibility={setShowModal}
+      />
+    </div>
+  );
 }
 JMeterResponseTimeLineChart.propTypes = {
   kpiConfiguration: PropTypes.object,

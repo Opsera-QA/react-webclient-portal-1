@@ -6,46 +6,46 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {salesforceCodeAnalyserChartFilterMetadata} from "./SalesforceCodeAnalyserChartFilter.metadata";
 
 function SalesforceCodeAnalyserChartEditorPanel(
-    {
-        metricModel,
-        unpackedFilterData,
-        metricFilterModel,
-        setMetricFilterModel,
-    }) {
-    useEffect(() => {
-        setMetricFilterModel(undefined);
+  {
+    metricModel,
+    unpackedFilterData,
+    metricFilterModel,
+    setMetricFilterModel,
+  }) {
+  useEffect(() => {
+    setMetricFilterModel(undefined);
 
-        if (unpackedFilterData) {
-            setMetricFilterModel(modelHelpers.parseObjectIntoModel(unpackedFilterData, salesforceCodeAnalyserChartFilterMetadata));
-        }
-
-    }, [unpackedFilterData]);
-
-    if (metricFilterModel == null) {
-        return null;
+    if (unpackedFilterData) {
+      setMetricFilterModel(modelHelpers.parseObjectIntoModel(unpackedFilterData, salesforceCodeAnalyserChartFilterMetadata));
     }
 
-    return (
-        <div>
-            <MetricTagFilterInput
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-            />
-            <MetricDateRangeFilterInput
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-            />
-        </div>
-    );
+  }, [unpackedFilterData]);
+
+  if (metricFilterModel == null) {
+    return null;
+  }
+
+  return (
+    <div>
+      <MetricTagFilterInput
+        metricModel={metricModel}
+        metricFilterModel={metricFilterModel}
+        setMetricFilterModel={setMetricFilterModel}
+      />
+      <MetricDateRangeFilterInput
+        metricModel={metricModel}
+        metricFilterModel={metricFilterModel}
+        setMetricFilterModel={setMetricFilterModel}
+      />
+    </div>
+  );
 }
 
 SalesforceCodeAnalyserChartEditorPanel.propTypes = {
-    metricModel: PropTypes.object,
-    unpackedFilterData: PropTypes.object,
-    metricFilterModel: PropTypes.object,
-    setMetricFilterModel: PropTypes.func,
+  metricModel: PropTypes.object,
+  unpackedFilterData: PropTypes.object,
+  metricFilterModel: PropTypes.object,
+  setMetricFilterModel: PropTypes.func,
 };
 
 export default SalesforceCodeAnalyserChartEditorPanel;

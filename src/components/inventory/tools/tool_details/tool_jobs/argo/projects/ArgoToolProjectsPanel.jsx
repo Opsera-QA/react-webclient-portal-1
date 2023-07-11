@@ -2,7 +2,7 @@ import React, {useEffect, useState, useContext, useRef} from "react";
 import ArgoToolProjectsTable from "components/inventory/tools/tool_details/tool_jobs/argo/projects/ArgoToolProjectsTable";
 import PropTypes from "prop-types";
 import ArgoProjectEditorPanel
-  from "components/inventory/tools/tool_details/tool_jobs/argo/projects/details/ArgoProjectEditorPanel";
+from "components/inventory/tools/tool_details/tool_jobs/argo/projects/details/ArgoProjectEditorPanel";
 import modelHelpers from "components/common/model/modelHelpers";
 import argoProjectMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/argo-project-metadata";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -85,7 +85,7 @@ function ArgoToolProjectsPanel({ toolId }) {
   const searchFilter = (project) => {
     const searchTerm = filterModel?.getFilterValue("search");
     return (
-         stringIncludesValue(project?.name, searchTerm)
+      stringIncludesValue(project?.name, searchTerm)
       || stringIncludesValue(project?.description, searchTerm)
     );
   };

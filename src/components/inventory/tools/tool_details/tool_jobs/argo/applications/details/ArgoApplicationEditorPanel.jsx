@@ -139,61 +139,61 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
       return null;
     }
     switch (type) {
-      case "Directory":
-        return (
+    case "Directory":
+      return (
+        <Col lg={12}>
+          <BooleanToggleInput
+            dataObject={argoApplicationModel}
+            fieldName={"recursive"}
+            setDataObject={setArgoApplicationModel}
+            disabled={!argoApplicationData?.isNew()}
+          />
+        </Col>
+      );
+    case "Helm":
+      return (
+        <>
           <Col lg={12}>
-            <BooleanToggleInput
+            <MultiTextInputBase
               dataObject={argoApplicationModel}
-              fieldName={"recursive"}
+              fieldName={"valueFiles"}
               setDataObject={setArgoApplicationModel}
               disabled={!argoApplicationData?.isNew()}
             />
           </Col>
-        );
-      case "Helm":
-        return (
-          <>
-            <Col lg={12}>
-              <MultiTextInputBase
-                dataObject={argoApplicationModel}
-                fieldName={"valueFiles"}
-                setDataObject={setArgoApplicationModel}
-                disabled={!argoApplicationData?.isNew()}
-              />
-            </Col>
-            <Col lg={12}>
-              <TextAreaInput
-                dataObject={argoApplicationModel}
-                fieldName={"values"}
-                setDataObject={setArgoApplicationModel}
-                disabled={!argoApplicationData?.isNew()}
-              />
-            </Col>
-          </>
-        );
-      case "Kustomize":
-        return (
-          <>
-            <Col lg={12}>
-              <TextInputBase
-                dataObject={argoApplicationModel}
-                fieldName={"namePrefix"}
-                setDataObject={setArgoApplicationModel}
-                disabled={!argoApplicationData?.isNew()}
-              />
-            </Col>
-            <Col lg={12}>
-              <TextInputBase
-                dataObject={argoApplicationModel}
-                fieldName={"nameSuffix"}
-                setDataObject={setArgoApplicationModel}
-                disabled={!argoApplicationData?.isNew()}
-              />
-            </Col>
-          </>
-        );
-      default:
-        return null;
+          <Col lg={12}>
+            <TextAreaInput
+              dataObject={argoApplicationModel}
+              fieldName={"values"}
+              setDataObject={setArgoApplicationModel}
+              disabled={!argoApplicationData?.isNew()}
+            />
+          </Col>
+        </>
+      );
+    case "Kustomize":
+      return (
+        <>
+          <Col lg={12}>
+            <TextInputBase
+              dataObject={argoApplicationModel}
+              fieldName={"namePrefix"}
+              setDataObject={setArgoApplicationModel}
+              disabled={!argoApplicationData?.isNew()}
+            />
+          </Col>
+          <Col lg={12}>
+            <TextInputBase
+              dataObject={argoApplicationModel}
+              fieldName={"nameSuffix"}
+              setDataObject={setArgoApplicationModel}
+              disabled={!argoApplicationData?.isNew()}
+            />
+          </Col>
+        </>
+      );
+    default:
+      return null;
     }
   };
 

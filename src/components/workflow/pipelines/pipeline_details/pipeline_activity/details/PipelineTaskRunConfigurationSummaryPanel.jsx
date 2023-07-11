@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pipelineTaskMetadata
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/pipeline-task-metadata";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/pipeline-task-metadata";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import modelHelpers from "components/common/model/modelHelpers";
 import ExternalRestApiIntegrationTaskRunConfigurationSummaryPanel
-  from "components/workflow/plan/step/external_rest_api_integration/task_summary/run_configuration/ExternalRestApiIntegrationTaskRunConfigurationSummaryPanel";
+from "components/workflow/plan/step/external_rest_api_integration/task_summary/run_configuration/ExternalRestApiIntegrationTaskRunConfigurationSummaryPanel";
 
 export const RUN_CONFIGURATION_SUMMARY_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION,
@@ -19,12 +19,12 @@ function PipelineTaskRunConfigurationSummaryPanel({ pipelineTaskData }) {
         : pipelineTaskData.tool_identifier;
 
     switch (toolIdentifier) {
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
-        return (
-          <ExternalRestApiIntegrationTaskRunConfigurationSummaryPanel
-            externalRestApiIntegrationStepTaskModel={modelHelpers.parseObjectIntoModel(pipelineTaskData, pipelineTaskMetadata)}
-          />
-        );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
+      return (
+        <ExternalRestApiIntegrationTaskRunConfigurationSummaryPanel
+          externalRestApiIntegrationStepTaskModel={modelHelpers.parseObjectIntoModel(pipelineTaskData, pipelineTaskMetadata)}
+        />
+      );
     }
   };
 

@@ -4,7 +4,7 @@ import { DialogToastContext } from 'contexts/DialogToastContext';
 import { AuthContext } from 'contexts/AuthContext';
 import axios from 'axios';
 import OctopusStepActions
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 // TODO: Refactor when refactoring Octopus step
@@ -39,7 +39,7 @@ const OctopusTenantStandaloneSelectInput = (
     setTenants([]);
 
     if (
-         octopusToolId !== "" && octopusToolId != null
+      octopusToolId !== "" && octopusToolId != null
       && spaceId !== "" && spaceId != null
       && projectId !== "" && projectId != null
       && environmentId !== "" && environmentId != null

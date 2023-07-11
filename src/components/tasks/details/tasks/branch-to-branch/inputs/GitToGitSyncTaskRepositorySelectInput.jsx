@@ -34,17 +34,17 @@ function GitToGitSyncTaskRepositorySelectInput({model, setModel, disabled}) {
   };
 
   return (
-     <RepositorySelectInput
-       fieldName={"projectId"}
-       service={model?.getData("service")}
-       gitToolId={model?.getData("gitToolId")}
-       workspace={model?.getData("workspace")}
-       dataObject={model}
-       setDataObject={setModel}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-       clearDataFunction={clearDataFunction}
-     />
+    <RepositorySelectInput
+      fieldName={"projectId"}
+      service={model?.getData("service")}
+      gitToolId={model?.getData("gitToolId")}
+      workspace={model?.getData("workspace")}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+      clearDataFunction={clearDataFunction}
+    />
   );
 }
 

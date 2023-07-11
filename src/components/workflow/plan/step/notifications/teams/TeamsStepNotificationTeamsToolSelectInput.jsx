@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedMicrosoftTeamsToolSelectInput
-  from "components/common/list_of_values_input/tools/teams/RoleRestrictedMicrosoftTeamsToolSelectInput";
+from "components/common/list_of_values_input/tools/teams/RoleRestrictedMicrosoftTeamsToolSelectInput";
 
 function TeamsStepNotificationTeamsToolSelectInput(
   {
@@ -17,7 +17,7 @@ function TeamsStepNotificationTeamsToolSelectInput(
       setModel={setModel}
       visible={visible}
       disabled={disabled || model?.getData("enabled") === false}
-   />
+    />
   );
 }
 

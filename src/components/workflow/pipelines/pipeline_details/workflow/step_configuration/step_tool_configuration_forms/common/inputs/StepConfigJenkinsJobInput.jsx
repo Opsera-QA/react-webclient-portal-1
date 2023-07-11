@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import JenkinsRegistryToolJobSelectInput
-  from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
+from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 
 // TODO: This shouldn't be used. We should be using context-specific inputs to not set invalid object properties.
 const StepConfigJenkinsJobInput = ({dataObject, setDataObject, disabled, typeFilter}) => {

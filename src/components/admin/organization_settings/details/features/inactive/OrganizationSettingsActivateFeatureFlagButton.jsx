@@ -6,7 +6,7 @@ import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import {useHistory} from "react-router-dom";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useFeatureFlagAdministrationActions
-  from "hooks/settings/organization_settings/feature_flags/useFeatureFlagAdministrationActions";
+from "hooks/settings/organization_settings/feature_flags/useFeatureFlagAdministrationActions";
 
 export default function OrganizationSettingsActivateFeatureFlagButton(
   {

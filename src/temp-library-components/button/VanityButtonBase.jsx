@@ -50,11 +50,11 @@ export default function VanityButtonBase(
 
   const getCountBadge = () => {
     if (badgeText || badgeText === 0) {
-     return (
-       <div className={"badge badge-secondary ml-2"}>
-         {badgeText}
-       </div>
-     );
+      return (
+        <div className={"badge badge-secondary ml-2"}>
+          {badgeText}
+        </div>
+      );
     }
   };
 

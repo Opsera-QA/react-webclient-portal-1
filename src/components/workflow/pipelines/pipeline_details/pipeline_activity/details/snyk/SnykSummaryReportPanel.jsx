@@ -7,9 +7,9 @@ import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabV
 import { faClipboardListCheck } from "@fortawesome/pro-light-svg-icons";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import SnykReportView
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/snyk/components/SnykReportView";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/snyk/components/SnykReportView";
 import SnykSummaryVerticalTabContainer
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/snyk/SnykSummaryVerticalTabContainer";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/snyk/SnykSummaryVerticalTabContainer";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function SnykSummaryReportPanel({ pipelineTaskData }) {
@@ -58,8 +58,8 @@ function SnykSummaryReportPanel({ pipelineTaskData }) {
         <VanitySetTabView tabKey={"summary"}>
           <SummaryPanelContainer className={"mx-3 mt-3"}>
             <SnykReportView
-                openSourceReport={openSourceReport}
-                sastScanReport={sastScanReport}
+              openSourceReport={openSourceReport}
+              sastScanReport={sastScanReport}
             />
           </SummaryPanelContainer>
         </VanitySetTabView>

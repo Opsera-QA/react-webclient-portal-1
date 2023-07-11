@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 const dockerTagTypes = [
-    {name: "Run Count", value: "run_count"},
-    {name: "Date", value: "date"},
-    {name: "Timestamp", value: "timestamp"},
-    {name: "Commit SHA", value: "commit_sha"},
-    {name: "Custom Tag", value: "other"},
-  ];
+  {name: "Run Count", value: "run_count"},
+  {name: "Date", value: "date"},
+  {name: "Timestamp", value: "timestamp"},
+  {name: "Commit SHA", value: "commit_sha"},
+  {name: "Custom Tag", value: "other"},
+];
 
 const DockerTagTypeSelectionInput = ({dataObject, setDataObject, fieldName, disabled}) => {
   return (
@@ -28,7 +28,7 @@ DockerTagTypeSelectionInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
-    fieldName: PropTypes.string,
+  fieldName: PropTypes.string,
   listOfSteps: PropTypes.array,
 };
 

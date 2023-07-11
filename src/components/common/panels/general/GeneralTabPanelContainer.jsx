@@ -5,7 +5,7 @@ function GeneralTabPanelContainer({ tabContainer, currentView, tabContainerClass
   return (
     <div>
       <div className={tabContainerClassName}>
-          {tabContainer}
+        {tabContainer}
       </div>
       <div className={bodyClassName}>
         {currentView}

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedSnykToolSelectInput
-  from "components/common/list_of_values_input/tools/snyk/RoleRestrictedSnykToolSelectInput";
+from "components/common/list_of_values_input/tools/snyk/RoleRestrictedSnykToolSelectInput";
 
 function SnykToolSelectInput({ fieldName, model, setModel, disabled }) {
   const setDataFunction=(fieldName,selectedOption)=>{

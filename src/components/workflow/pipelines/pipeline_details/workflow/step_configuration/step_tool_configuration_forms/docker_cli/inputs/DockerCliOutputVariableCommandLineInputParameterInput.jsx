@@ -12,9 +12,9 @@ import DockerCliOutputVariableCommandLineInputParameterInputRow from "./DockerCl
 import DockerCliParameterSelectListHeaderField from "../parameters/DockerCliParameterSelectListHeaderField";
 import DockerCliParameterSelectListInlineField from "../parameters/DockerCliParameterSelectListInlineField";
 import PipelineStepSaveEnvironmentVariablesBooleanToggle
-  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepSaveEnvironmentVariablesBooleanToggle";
+from "components/common/list_of_values_input/parameters/pipeline/PipelineStepSaveEnvironmentVariablesBooleanToggle";
 import PipelineStepParameterInputBaseHelpText
-  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBaseHelpText";
+from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBaseHelpText";
 
 export default function DockerCliOutputVariableCommandLineInputParameterInput(
   {

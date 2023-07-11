@@ -4,9 +4,9 @@ import Home from "Home";
 import EntitlementRoute from "temp-library-components/routes/EntitlementRoute";
 import SalesforceLandingScreen from "components/landing/v2/salesforce/SalesforceLandingScreen";
 import entitlementConstants
-  from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
+from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
 import salesforceFeatureEntitlementConstants
-  from "@opsera/definitions/constants/settings/organization-settings/entitlements/salesforce/salesforceFeatureEntitlement.constants";
+from "@opsera/definitions/constants/settings/organization-settings/entitlements/salesforce/salesforceFeatureEntitlement.constants";
 import GitCustodianLandingScreen from "components/landing/v2/git_custodian/GitCustodianLandingScreen";
 import BreadcrumbRoute from "temp-library-components/routes/BreadcrumbRoute";
 import {breadcrumbs} from "components/common/navigation/trails";

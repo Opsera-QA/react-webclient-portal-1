@@ -11,13 +11,13 @@ function MetricGitLogAuthorFilterInput(
     fieldName
   }) {
   return (
-      <GitLogAuthorsList
-        fieldName={fieldName}
-        valueField={"value"}
-        textField={"text"}
-        model={metricFilterModel}
-        setModel={setMetricFilterModel}
-      />
+    <GitLogAuthorsList
+      fieldName={fieldName}
+      valueField={"value"}
+      textField={"text"}
+      model={metricFilterModel}
+      setModel={setMetricFilterModel}
+    />
   );
 }
 

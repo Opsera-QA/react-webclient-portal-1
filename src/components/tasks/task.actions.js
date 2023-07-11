@@ -99,7 +99,7 @@ taskActions.getTaskOrchestrationStatus = async (
   getAccessToken,
   cancelTokenSource,
   taskId,
-  ) => {
+) => {
   const apiUrl = `/tasks/${taskId}/status`;
   return await baseActions.apiGetCallV3(
     getAccessToken,
@@ -116,7 +116,7 @@ taskActions.runTaskV3 = async (getAccessToken, cancelTokenSource, taskId, postBo
     cancelTokenSource,
     apiUrl,
     postBody,
-    );
+  );
 };
 
 taskActions.stopTaskV3 = async (getAccessToken, cancelTokenSource, taskId) => {

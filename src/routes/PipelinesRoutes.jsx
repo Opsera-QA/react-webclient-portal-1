@@ -9,9 +9,9 @@ import PipelineInstructionsManagement from "components/workflow/instructions/Pip
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import PipelineInstructionsDetailView from "components/workflow/instructions/details/PipelineInstructionsDetailView";
 import CustomerPipelineTemplateDetailView
-  from "components/workflow/catalog/private/details/CustomerPipelineTemplateDetailView";
+from "components/workflow/catalog/private/details/CustomerPipelineTemplateDetailView";
 import PlatformPipelineTemplateDetailView
-  from "components/workflow/catalog/platform/details/PlatformPipelineTemplateDetailView";
+from "components/workflow/catalog/platform/details/PlatformPipelineTemplateDetailView";
 
 export default function PipelinesRoutes() {
   return (

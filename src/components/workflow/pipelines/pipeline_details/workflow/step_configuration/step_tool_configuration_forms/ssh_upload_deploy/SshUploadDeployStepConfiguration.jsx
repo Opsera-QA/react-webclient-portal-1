@@ -212,7 +212,7 @@ function SshUploadDeployStepConfiguration({ data, pipelineId, stepId, parentCall
       // accessKey.length === 0 || 
       // secretKey.length === 0 || 
       Object.keys(sshKey).length === 0) {
-        console.log(Object.keys(sshKey).length);
+      console.log(Object.keys(sshKey).length);
       let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
       setShowToast(true);
@@ -340,10 +340,10 @@ function SshUploadDeployStepConfiguration({ data, pipelineId, stepId, parentCall
                   value={
                     formData.toolConfigId
                       ? jenkinsList[
-                          jenkinsList.findIndex(
-                            (x) => x.id === formData.toolConfigId
-                          )
-                        ]
+                        jenkinsList.findIndex(
+                          (x) => x.id === formData.toolConfigId
+                        )
+                      ]
                       : jenkinsList[0]
                   }
                   valueField={"id"}
@@ -351,10 +351,10 @@ function SshUploadDeployStepConfiguration({ data, pipelineId, stepId, parentCall
                   defaultValue={
                     formData.toolConfigId
                       ? jenkinsList[
-                          jenkinsList.findIndex(
-                            (x) => x.id === formData.toolConfigId
-                          )
-                        ]
+                        jenkinsList.findIndex(
+                          (x) => x.id === formData.toolConfigId
+                        )
+                      ]
                       : jenkinsList[0]
                   }
                   setDataFunction={handleJenkinsChange}

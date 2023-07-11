@@ -12,10 +12,10 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faStream} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import NewPlatformSystemParameterOverlay
-  from "components/admin/system_parameters/create/NewPlatformSystemParameterOverlay";
+from "components/admin/system_parameters/create/NewPlatformSystemParameterOverlay";
 import { platformSystemParametersMetadata } from "components/admin/system_parameters/platformSystemParameters.metadata";
 import platformSystemParameterConstants
-  from "@opsera/definitions/constants/platform/system_parameters/platformSystemParameter.constants";
+from "@opsera/definitions/constants/platform/system_parameters/platformSystemParameter.constants";
 
 export default function PlatformSystemParameterTable(
   {
@@ -63,16 +63,16 @@ export default function PlatformSystemParameterTable(
   };
 
   return (
-      <FilterContainer
-        loadData={loadData}
-        addRecordFunction={addRecordFunction}
-        isLoading={isLoading}
-        body={getTable()}
-        titleIcon={faStream}
-        title={"System Parameters"}
-        type={"System Parameter"}
-        className={"px-2 pb-2"}
-      />
+    <FilterContainer
+      loadData={loadData}
+      addRecordFunction={addRecordFunction}
+      isLoading={isLoading}
+      body={getTable()}
+      titleIcon={faStream}
+      title={"System Parameters"}
+      type={"System Parameter"}
+      className={"px-2 pb-2"}
+    />
   );
 }
 

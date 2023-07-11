@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import InfoContainer from "components/common/containers/InfoContainer";
 import FieldContainer from "components/common/fields/FieldContainer";
 import EndpointResponseEvaluationRuleField
-  from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRuleField";
+from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRuleField";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { faCheckCircle, faSync } from "@fortawesome/pro-light-svg-icons";
 

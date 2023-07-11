@@ -12,29 +12,29 @@ function RemoteApplicationTelemetryManagementSubNavigationBar({activeTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-      case "adminTools":
-        history.push(`/admin`);
-        return;
-      case "remoteApplicationManagement":
-        history.push(`/admin/remote-applications`);
-        return;
+    case "adminTools":
+      history.push(`/admin`);
+      return;
+    case "remoteApplicationManagement":
+      history.push(`/admin/remote-applications`);
+      return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-      case "telemetryViewer":
-        return (
-          <NavigationTab
-            icon={faFileArchive}
-            tabName={"telemetryViewer"}
-            handleTabClick={handleTabClick}
-            activeTab={activeTab}
-            tabText={"Remote Application Telemetry Viewer"}
-          />
-        );
-      default:
-        return null;
+    case "telemetryViewer":
+      return (
+        <NavigationTab
+          icon={faFileArchive}
+          tabName={"telemetryViewer"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Remote Application Telemetry Viewer"}
+        />
+      );
+    default:
+      return null;
     }
   };
 

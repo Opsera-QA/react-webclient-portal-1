@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedJenkinsToolSelectInput
-  from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
+from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
 
 function SalesforceBulkMigrationTaskJenkinsToolSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
@@ -43,15 +43,15 @@ function SalesforceBulkMigrationTaskJenkinsToolSelectInput({model, setModel, dis
   };
 
   return (
-     <RoleRestrictedJenkinsToolSelectInput
-       fieldName={"toolConfigId"}
-       configurationRequired={true}
-       model={model}
-       setModel={setModel}
-       setDataFunction={setDataFunction}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-     />
+    <RoleRestrictedJenkinsToolSelectInput
+      fieldName={"toolConfigId"}
+      configurationRequired={true}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+    />
   );
 }
 

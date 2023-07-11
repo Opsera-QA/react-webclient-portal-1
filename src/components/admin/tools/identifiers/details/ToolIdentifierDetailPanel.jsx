@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ToolIdentifierSummaryPanel
-  from "components/admin/tools/identifiers/details/ToolIdentifierSummaryPanel";
+from "components/admin/tools/identifiers/details/ToolIdentifierSummaryPanel";
 import ToolIdentifierEditorPanel
-  from "components/admin/tools/identifiers/details/ToolIdentifierEditorPanel";
+from "components/admin/tools/identifiers/details/ToolIdentifierEditorPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
@@ -23,12 +23,12 @@ function ToolIdentifierDetailPanel({ toolIdentifierData, setToolIdentifierData }
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return <ToolIdentifierSummaryPanel toolIdentifierData={toolIdentifierData} setActiveTab={setActiveTab} />;
-      case "settings":
-        return <ToolIdentifierEditorPanel setToolIdentifierData={setToolIdentifierData} toolIdentifierData={toolIdentifierData} handleClose={toggleSummaryPanel} />;
-      default:
-        return null;
+    case "summary":
+      return <ToolIdentifierSummaryPanel toolIdentifierData={toolIdentifierData} setActiveTab={setActiveTab} />;
+    case "settings":
+      return <ToolIdentifierEditorPanel setToolIdentifierData={setToolIdentifierData} toolIdentifierData={toolIdentifierData} handleClose={toggleSummaryPanel} />;
+    default:
+      return null;
     }
   };
 

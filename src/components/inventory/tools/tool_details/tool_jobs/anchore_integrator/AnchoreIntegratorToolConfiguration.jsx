@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {Row} from "react-bootstrap";
 import modelHelpers from "components/common/model/modelHelpers";
 import ToolConfigurationEditorPanelContainer
-  from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Col from "react-bootstrap/Col";
 import anchoreIntegratorConnectionMetadata from "./anchore-integrator-connection-metadata";
 import {AuthContext} from "contexts/AuthContext";
@@ -11,7 +11,7 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import toolIdentifierConnectionCheckConstants
-  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function AnchoreIntegratorToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -26,12 +26,12 @@ function AnchoreIntegratorToolConfiguration({ toolData, setUpMode, setCurrentScr
   };
 
   const saveAnchoreIntegratorToolConfiguration = async () => {
-      let newConfiguration = anchoreIntegratorConfigurationDto.getPersistData();
-      const vaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`;
-      newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(anchoreIntegratorConfigurationDto, "accountPassword", newConfiguration.accountPassword, vaultKey, getAccessToken, toolData.getData("_id"));
-      const item = { configuration: newConfiguration };
-      await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
-      if (setUpMode === "wizard") setCurrentScreen("connection_test");
+    let newConfiguration = anchoreIntegratorConfigurationDto.getPersistData();
+    const vaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`;
+    newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(anchoreIntegratorConfigurationDto, "accountPassword", newConfiguration.accountPassword, vaultKey, getAccessToken, toolData.getData("_id"));
+    const item = { configuration: newConfiguration };
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   return (
@@ -56,8 +56,8 @@ function AnchoreIntegratorToolConfiguration({ toolData, setUpMode, setCurrentScr
 
 AnchoreIntegratorToolConfiguration.propTypes = {
   toolData: PropTypes.object,
-    setUpMode: PropTypes.string,
-    setCurrentScreen: PropTypes.func
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default AnchoreIntegratorToolConfiguration;

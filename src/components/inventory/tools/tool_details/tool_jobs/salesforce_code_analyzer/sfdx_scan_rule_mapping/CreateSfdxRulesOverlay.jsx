@@ -52,7 +52,7 @@ function CreateSfdxRulesOverlay({ loadData, toolData, pmdDataObject, ruleId }) {
   return (
     <CreateCenterPanel closePanel={closePanel} objectType={pmdRulesMapMetadata.type} loadData={loadData}>
       <SfdxRulesEditorPanel
-          pmdRuleData={pmdRuleData}
+        pmdRuleData={pmdRuleData}
         toolData={toolData}
         loadData={loadData}
         handleClose={closePanel}

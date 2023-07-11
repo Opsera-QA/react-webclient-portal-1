@@ -9,9 +9,9 @@ import {
 import BackButton from "components/common/buttons/back/BackButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import FreeTrialWorkflowItemSelectionCardView
-  from "components/wizard/portal/workflows/flows/selection/card/FreeTrialWorkflowItemSelectionCardView";
+from "components/wizard/portal/workflows/flows/selection/card/FreeTrialWorkflowItemSelectionCardView";
 import FreeTrialLaunchWorkflowButton
-  from "components/wizard/portal/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
+from "components/wizard/portal/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 
 // TODO: Rename

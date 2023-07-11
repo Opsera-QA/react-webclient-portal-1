@@ -39,98 +39,98 @@ function ToastContextProvider({children, navBar}) {
   const [infoOverlayPanel, setInfoOverlayPanel] = useState(undefined);
 
   const removeAllBanners = useCallback(() => {
-      setBannerMessages([]);
-    }, [setBannerMessages]
+    setBannerMessages([]);
+  }, [setBannerMessages]
   );
 
   const removeFormBanners = useCallback(() => {
-      setBannerMessages(bannerMessages => [...bannerMessages.filter(banner => banner.type !== notificationTypes.FORM)]);
-    }, [setBannerMessages]
+    setBannerMessages(bannerMessages => [...bannerMessages.filter(banner => banner.type !== notificationTypes.FORM)]);
+  }, [setBannerMessages]
   );
 
   const removeAllToasts = useCallback(() => {
-      setToasts([]);
-    }, [setToasts]
+    setToasts([]);
+  }, [setToasts]
   );
 
   const removeFormToasts = useCallback(() => {
-      setToasts(toasts => [...toasts.filter(toast => toast.type !== notificationTypes.FORM)]);
-    }, [setToasts]
+    setToasts(toasts => [...toasts.filter(toast => toast.type !== notificationTypes.FORM)]);
+  }, [setToasts]
   );
 
   const addBannerMessage = useCallback((bannerMessage, id, notificationType) => {
-      let newBannerMessage = {id: id, bannerMessage: bannerMessage, type: notificationType};
-      setBannerMessages(bannerMessages => [...bannerMessages, newBannerMessage]);
-    }, [setBannerMessages]
+    let newBannerMessage = {id: id, bannerMessage: bannerMessage, type: notificationType};
+    setBannerMessages(bannerMessages => [...bannerMessages, newBannerMessage]);
+  }, [setBannerMessages]
   );
 
   const addOverlayPanel = useCallback((overlayPanel) => {
-      if (overlayPanel != null) {
-        document.body.style.overflow = 'hidden';
-      }
+    if (overlayPanel != null) {
+      document.body.style.overflow = 'hidden';
+    }
 
-      setOverlayPanel(overlayPanel);
-    }, [setOverlayPanel]
+    setOverlayPanel(overlayPanel);
+  }, [setOverlayPanel]
   );
 
   const addInfoOverlayPanel = useCallback((infoOverlayPanel) => {
-      if (infoOverlayPanel != null) {
-        document.body.style.overflow = 'hidden';
-      }
+    if (infoOverlayPanel != null) {
+      document.body.style.overflow = 'hidden';
+    }
 
-      setInfoOverlayPanel(infoOverlayPanel);
-    }, [setInfoOverlayPanel]
+    setInfoOverlayPanel(infoOverlayPanel);
+  }, [setInfoOverlayPanel]
   );
 
   const clearOverlayPanel = useCallback(() => {
-      document.body.style.overflow = 'unset';
-      setOverlayPanel(undefined);
-    }, [setOverlayPanel]
+    document.body.style.overflow = 'unset';
+    setOverlayPanel(undefined);
+  }, [setOverlayPanel]
   );
 
   const clearInfoOverlayPanel = useCallback(() => {
-      document.body.style.overflow = 'unset';
-      setInfoOverlayPanel(undefined);
-    }, [setInfoOverlayPanel]
+    document.body.style.overflow = 'unset';
+    setInfoOverlayPanel(undefined);
+  }, [setInfoOverlayPanel]
   );
 
   const showModal = useCallback((modal) => {
-      setOverlayPanel(modal);
-    }, [setOverlayPanel]
+    setOverlayPanel(modal);
+  }, [setOverlayPanel]
   );
 
   const clearModal = useCallback(() => {
-      setOverlayPanel(undefined);
-    }, [setOverlayPanel]
+    setOverlayPanel(undefined);
+  }, [setOverlayPanel]
   );
 
   const setInlineMessage = useCallback((bannerMessage, id, notificationType) => {
-      let newBannerMessage = {id: id, bannerMessage: bannerMessage, type: notificationType};
-      setInlineBanner(newBannerMessage);
-    }, [setInlineBanner]
+    let newBannerMessage = {id: id, bannerMessage: bannerMessage, type: notificationType};
+    setInlineBanner(newBannerMessage);
+  }, [setInlineBanner]
   );
 
   const removeInlineMessage = useCallback(() => {
-      setInlineBanner(undefined);
-    }, [setInlineBanner]
+    setInlineBanner(undefined);
+  }, [setInlineBanner]
   );
 
   const removeBannerMessage = useCallback((id) => {
-      setBannerMessages(bannerMessages => bannerMessages.filter((item) => { return item.id !== id; }));
-    }, [setBannerMessages]
+    setBannerMessages(bannerMessages => bannerMessages.filter((item) => { return item.id !== id; }));
+  }, [setBannerMessages]
   );
 
   const addToast = useCallback((toast, id, notificationType) => {
-      // TODO: For now, only show one toast. But, revisit in the future
-      removeAllToasts();
-      let newToast = {id: id, toast: toast, type: notificationType};
-      setToasts(toasts => [...toasts, newToast]);
-    }, [setToasts]
+    // TODO: For now, only show one toast. But, revisit in the future
+    removeAllToasts();
+    let newToast = {id: id, toast: toast, type: notificationType};
+    setToasts(toasts => [...toasts, newToast]);
+  }, [setToasts]
   );
 
   const removeToast = useCallback((id) => {
-      setToasts(toasts => toasts.filter((item) => { return item.id !== id; }));
-    }, [setToasts]
+    setToasts(toasts => toasts.filter((item) => { return item.id !== id; }));
+  }, [setToasts]
   );
 
   const showSystemErrorBanner = (error, prependMessage = "") => {

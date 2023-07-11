@@ -4,10 +4,10 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer
-  from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
+from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import Model from "../../../../../../core/data_model/model";
 import actionableInsightsGenericChartFilterMetadata
-  from "../../../generic_filters/actionableInsightsGenericChartFilterMetadata";
+from "../../../generic_filters/actionableInsightsGenericChartFilterMetadata";
 import GitlabCommitsByAuthorActionableTable from "./GitlabCommitsByAuthorActionableTable";
 import gitlabActions from "../../gitlab.action";
 
@@ -99,8 +99,8 @@ function GitlabCommitsByAuthorOverlay({ author, dashboardData, kpiConfiguration 
           setFilterModel={setFilterModel}
           loadData={loadData}
         />
-      </div>)
-  }
+      </div>);
+  };
   return (
     <div className={"p-3"}>
       <GitlabCommitsByAuthorActionableTable

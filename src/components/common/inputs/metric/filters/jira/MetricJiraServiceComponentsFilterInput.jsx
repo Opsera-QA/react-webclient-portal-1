@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SupportedMetricFilterInputContainer
-  from "components/common/metrics/container/SupportedMetricFilterInputContainer";
+from "components/common/metrics/container/SupportedMetricFilterInputContainer";
 import {KPI_FILTER_TYPES} from "components/common/list_of_values_input/admin/kpi_configurations/filters/kpiFilter.types";
 import JiraServiceComponentsFilterSelectInput
-    from "../../../../list_of_values_input/insights/charts/jira/JiraServiceComponentsFilterSelectInput";
+from "../../../../list_of_values_input/insights/charts/jira/JiraServiceComponentsFilterSelectInput";
 
 function MetricJiraServiceComponentsFilterInput(
   {
@@ -15,19 +15,19 @@ function MetricJiraServiceComponentsFilterInput(
   }) {
   return (
     <>
-    <SupportedMetricFilterInputContainer
-      filterType={KPI_FILTER_TYPES.JIRA_SERVICE_COMPONENTS}
-      supportedFilters={metricModel?.getData("filters")}
-    >
-      <JiraServiceComponentsFilterSelectInput
-        fieldName={fieldName}
-        valueField={"value"}
-        textField={"text"}
-        model={metricFilterModel}
-        setModel={setMetricFilterModel}
-        project={metricFilterModel?.getData('jira-projects')}
-      />
-    </SupportedMetricFilterInputContainer>
+      <SupportedMetricFilterInputContainer
+        filterType={KPI_FILTER_TYPES.JIRA_SERVICE_COMPONENTS}
+        supportedFilters={metricModel?.getData("filters")}
+      >
+        <JiraServiceComponentsFilterSelectInput
+          fieldName={fieldName}
+          valueField={"value"}
+          textField={"text"}
+          model={metricFilterModel}
+          setModel={setMetricFilterModel}
+          project={metricFilterModel?.getData('jira-projects')}
+        />
+      </SupportedMetricFilterInputContainer>
     </>
   );
 }

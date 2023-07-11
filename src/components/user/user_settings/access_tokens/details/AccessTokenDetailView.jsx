@@ -75,7 +75,7 @@ function AccessTokenDetailView() {
       dataObject={accessToken}
       navigationTabContainer={
         <UserSettingsSubNavigationBar activeTab={USER_SETTINGS_PAGES.ACCESS_TOKEN_DETAIL_VIEW} />
-    }
+      }
       isLoading={isLoading}
       actionBar={getActionBar()}
       detailPanel={

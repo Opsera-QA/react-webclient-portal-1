@@ -29,9 +29,9 @@ export default function DockerCliCommandLineInputParameterInputRow(
     let successfulAdd = false;
     const newParameter = commandLineInputParameterModel?.getPersistData();
 
-      successfulAdd = saveEnvironmentVariables !== true
-        ? addGlobalCustomParameterFunction(newParameter)
-        : addEnvironmentParameterFunction(newParameter);
+    successfulAdd = saveEnvironmentVariables !== true
+      ? addGlobalCustomParameterFunction(newParameter)
+      : addEnvironmentParameterFunction(newParameter);
 
     if (successfulAdd === true) {
       commandLineInputParameterModel.resetData();
@@ -61,26 +61,26 @@ export default function DockerCliCommandLineInputParameterInputRow(
   const isDuplicate = hasDuplicateName();
 
   const getInputFields = () => {
-        return (
-          <>
-            <Col xs={5}>
-              <CustomParameterSelectInput
-                model={commandLineInputParameterModel}
-                fieldName={"parameterId"} 
-                disabled={disabled}
-                setDataFunction={setParameterFunction}
-              />
-            </Col>
-            <Col xs={5}>
-              <TextInputBase
-                fieldName={"outputKey"}
-                dataObject={commandLineInputParameterModel}
-                setDataObject={setCommandLineInputParameterModel}
-                disabled={disabled}
-              />
-            </Col>
-          </>
-        );
+    return (
+      <>
+        <Col xs={5}>
+          <CustomParameterSelectInput
+            model={commandLineInputParameterModel}
+            fieldName={"parameterId"} 
+            disabled={disabled}
+            setDataFunction={setParameterFunction}
+          />
+        </Col>
+        <Col xs={5}>
+          <TextInputBase
+            fieldName={"outputKey"}
+            dataObject={commandLineInputParameterModel}
+            setDataObject={setCommandLineInputParameterModel}
+            disabled={disabled}
+          />
+        </Col>
+      </>
+    );
   };
 
   return (

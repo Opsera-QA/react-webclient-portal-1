@@ -40,9 +40,9 @@ function PipelineMappingEnvironmentInputRow(
         <Row>
           <Col sm={6} className={"pr-1"}>
             <StandaloneTextInputBase
-             value={environment?.key}
-             setDataFunction={setKeyFunction}
-             disabled={disabled}
+              value={environment?.key}
+              setDataFunction={setKeyFunction}
+              disabled={disabled}
             />
           </Col>
           <Col sm={6} className={"pl-2 pr-2"}>

@@ -182,20 +182,20 @@ const CustomSettingSelector = ({
       return (
         <div className={`p-3 message-field info-message-field`}>
           <div className={"px-3 d-flex"}>
-              <Col xs={6}>
-                <ToolNameField
-                  model={wizardModel}
-                  fieldName={"sourceToolId"}
-                  loadToolInNewWindow={true}
-                />
-              </Col>
-              <Col xs={6}>
-                <ToolNameField
-                  model={wizardModel}
-                  fieldName={"targetToolId"}
-                  loadToolInNewWindow={true}
-                />
-              </Col>
+            <Col xs={6}>
+              <ToolNameField
+                model={wizardModel}
+                fieldName={"sourceToolId"}
+                loadToolInNewWindow={true}
+              />
+            </Col>
+            <Col xs={6}>
+              <ToolNameField
+                model={wizardModel}
+                fieldName={"targetToolId"}
+                loadToolInNewWindow={true}
+              />
+            </Col>
           </div>
         </div>
       );

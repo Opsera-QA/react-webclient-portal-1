@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import {ldapOrganizationMetaData} from "components/admin/accounts/ldap/organizations/ldap-organizations-metadata";
 import LdapOrganizationEditorPanel
-  from "components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationEditorPanel";
+from "components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationEditorPanel";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 

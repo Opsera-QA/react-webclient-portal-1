@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import snykIntegratorLanguageOptionConstants
-  from "@opsera/definitions/constants/java/service/snyk/snykIntegratorLanguageOption.constants";
+from "@opsera/definitions/constants/java/service/snyk/snykIntegratorLanguageOption.constants";
 
 export default function SnykLanguageSelectInput({
   fieldName,

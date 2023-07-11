@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import ParameterSelectListInputBase
-  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
+from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
 import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 
 function JenkinsNodeBuildTypePanel({plan, stepId, dataObject, setDataObject, buildType}) {

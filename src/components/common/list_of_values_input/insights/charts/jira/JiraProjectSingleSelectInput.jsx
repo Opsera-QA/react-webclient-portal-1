@@ -82,7 +82,7 @@ function JiraProjectSingleSelectInput({
       setDataObject={setModel}
       selectOptions={projects}
       setDataFunction={setDataFunction}
-     // clearDataFunction={clearDataFunction}
+      // clearDataFunction={clearDataFunction}
       busy={isLoading}
       valueField={valueField}
       textField={textField}

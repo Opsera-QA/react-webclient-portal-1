@@ -51,24 +51,24 @@ function ConnectedAssetsTasksTabContainer({ dashboardData }) {
 
   const getCurrentView = () => {
     switch (currentTab) {
-      case CONNECTED_ASSETS_TASK_TABS.RECENT:
-        return (
-          <ConnectedAssetsTasksRecentTable
-            dashboardData={dashboardData}
-          />
-        );
-      case CONNECTED_ASSETS_TASK_TABS.DELETED:
-        return (
-          <ConnectedAssetsTasksDeletedTable
-            dashboardData={dashboardData}
-          />
-        );
-      case CONNECTED_ASSETS_TASK_TABS.INACTIVE:
-        return (
-          <ConnectedAssetsTasksInactiveTable
-            dashboardData={dashboardData}
-          />
-        );
+    case CONNECTED_ASSETS_TASK_TABS.RECENT:
+      return (
+        <ConnectedAssetsTasksRecentTable
+          dashboardData={dashboardData}
+        />
+      );
+    case CONNECTED_ASSETS_TASK_TABS.DELETED:
+      return (
+        <ConnectedAssetsTasksDeletedTable
+          dashboardData={dashboardData}
+        />
+      );
+    case CONNECTED_ASSETS_TASK_TABS.INACTIVE:
+      return (
+        <ConnectedAssetsTasksInactiveTable
+          dashboardData={dashboardData}
+        />
+      );
     }
   };
 

@@ -7,10 +7,10 @@ function ApprovalGatesDataBlockBase({ score, subtitle, onClickFunction }) {
   return (
     <DataBlockBoxContainer showBorder={true} onClickFunction={onClickFunction}>
       <TwoLineScoreDataBlock
-          className="m-3 defect-removal-efficiency"
-          score={score} 
-          subtitle={subtitle}
-        />
+        className="m-3 defect-removal-efficiency"
+        score={score} 
+        subtitle={subtitle}
+      />
     </DataBlockBoxContainer>
   );
 }

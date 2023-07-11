@@ -4,7 +4,7 @@ import InfoContainer from "components/common/containers/InfoContainer";
 import FieldContainer from "components/common/fields/FieldContainer";
 import StandaloneSourceDeltaDiffFieldBase from "components/common/fields/file/diff/delta/StandaloneSourceDeltaDiffFieldBase";
 import StandaloneDestinationDeltaDiffFieldBase
-  from "components/common/fields/file/diff/delta/StandaloneDestinationDeltaDiffFieldBase";
+from "components/common/fields/file/diff/delta/StandaloneDestinationDeltaDiffFieldBase";
 import { commitDiffConstants } from "components/common/fields/file/diff/commitDiff.constants";
 
 function StandaloneDeltaDiffField(

@@ -7,15 +7,15 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import CancelButton from "components/common/buttons/CancelButton";
 import { parseError } from "components/common/helpers/error-helpers";
 import mergeSyncTaskWizardActions
-  from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
+from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 import BackButton from "components/common/buttons/back/BackButton";
 import {
   MERGE_SYNC_WIZARD_SCREENS
 } from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
 import MergeSyncTaskWizardCommitSelectorVerticalTabContainer
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitSelectorVerticalTabContainer";
+from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitSelectorVerticalTabContainer";
 import MergeSyncTaskWizardConfirmationButton
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardConfirmationButton";
+from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardConfirmationButton";
 
 const MergeSyncTaskWizardCommitSelector = ({
   wizardModel,

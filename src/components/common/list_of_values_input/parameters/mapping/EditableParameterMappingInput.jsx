@@ -15,7 +15,7 @@ import StandaloneSelectInput from "components/common/inputs/select/StandaloneSel
 import IconBase from "components/common/icons/IconBase";
 import parametersActions from "components/inventory/parameters/parameters-actions";
 import EditableParameterMappingHeaderField
-  from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingHeaderField";
+from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingHeaderField";
 
 function EditableParameterMappingInput({ fieldName, model, setModel, helpComponent, disabled, nameMaxLength, titleText, type }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -180,27 +180,27 @@ function EditableParameterMappingInput({ fieldName, model, setModel, helpCompone
         <Col sm={11}>
           <Row>            
             <Col sm={6} className={"pl-1 pr-0"}>
-            <StandaloneSelectInput
-              selectOptions={parametersList ? parametersList : []}
-              valueField={"_id"}
-              textField={"name"}
-              value={property["parameterName"]}
-              busy={isParametersSearching}
-              placeholderText={placeholder}
-              setDataFunction={(value) => updateParameterDetails(property, value)}
-              disabled={isLoading || (!isLoading && (parametersList == null || parametersList.length === 0))}
-            />
+              <StandaloneSelectInput
+                selectOptions={parametersList ? parametersList : []}
+                valueField={"_id"}
+                textField={"name"}
+                value={property["parameterName"]}
+                busy={isParametersSearching}
+                placeholderText={placeholder}
+                setDataFunction={(value) => updateParameterDetails(property, value)}
+                disabled={isLoading || (!isLoading && (parametersList == null || parametersList.length === 0))}
+              />
             </Col>
             <Col sm={6} className={"pl-2 pr-2"}>
-            <input
-              className="form-control"
-              type={"text"}
-              placeholder={"Key Name"}
-              maxLength={nameMaxLength}
-              style={{height: "99%"}}
-              onChange={(event) => updateProperty(property, "outputKey", event.target.value)}
-              value={property["outputKey"]}
-            />
+              <input
+                className="form-control"
+                type={"text"}
+                placeholder={"Key Name"}
+                maxLength={nameMaxLength}
+                style={{height: "99%"}}
+                onChange={(event) => updateProperty(property, "outputKey", event.target.value)}
+                value={property["outputKey"]}
+              />
             </Col>
           </Row>
         </Col>

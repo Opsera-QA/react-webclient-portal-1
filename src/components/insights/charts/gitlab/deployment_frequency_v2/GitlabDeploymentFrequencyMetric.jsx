@@ -128,10 +128,10 @@ function GitlabDeploymentFrequencyV2({
     setBuildFrequencyDataPoint(dataPoint);
   };
 
- const closePanel = () => {
-  toastContext.removeInlineMessage();
-  toastContext.clearOverlayPanel();
-};
+  const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
 
   const getMedian = (data) => {
     let vals = [];
@@ -150,24 +150,24 @@ function GitlabDeploymentFrequencyV2({
     }
   };
 
-const onRowSelect = () => {
-  toastContext.showOverlayPanel(
-    <FullScreenCenterOverlayContainer
-      closePanel={closePanel}
-      showPanel={true}
-      titleText={`Deployment Maturity Score Statistics`}
-      showToasts={true}
-      titleIcon={faTable}
-    >
-      <div className={"p-3"}>
-        <GitlabDeploymentFrequencyMaturityScoreInsights
-          kpiConfiguration={kpiConfiguration}
-          insightsData={metricData}
-        />
-      </div>
-    </FullScreenCenterOverlayContainer>,
-  );
-};
+  const onRowSelect = () => {
+    toastContext.showOverlayPanel(
+      <FullScreenCenterOverlayContainer
+        closePanel={closePanel}
+        showPanel={true}
+        titleText={`Deployment Maturity Score Statistics`}
+        showToasts={true}
+        titleIcon={faTable}
+      >
+        <div className={"p-3"}>
+          <GitlabDeploymentFrequencyMaturityScoreInsights
+            kpiConfiguration={kpiConfiguration}
+            insightsData={metricData}
+          />
+        </div>
+      </FullScreenCenterOverlayContainer>,
+    );
+  };
 
   const getChartBody = () => {
     const selectedDeploymentStages =
@@ -175,12 +175,12 @@ const onRowSelect = () => {
 
     if (!selectedDeploymentStages) {
       return (
-          <div className="new-chart mb-3" style={{ height: "300px" }}>
-            <div className="max-content-width p-5 mt-5"
-                 style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <InfoDialog message="No Stages selected. Please select a deployment stage on filters to proceed further." />
-            </div>
+        <div className="new-chart mb-3" style={{ height: "300px" }}>
+          <div className="max-content-width p-5 mt-5"
+            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <InfoDialog message="No Stages selected. Please select a deployment stage on filters to proceed further." />
           </div>
+        </div>
       );
     }
 
@@ -239,15 +239,15 @@ const onRowSelect = () => {
             </Col>
             <Col md={12} className={"px-1"}>
               <GitlabDeploymentFrequencyTrendDataBlock
-                  value={getMedian(chartData)}
-                  prevValue={
-                    getMedian(prevChartData)
-                  }
-                  trend={getTrend(getMedian(chartData),
-                      getMedian(prevChartData))}
-                  getTrendIcon={getTrendIcon}
-                  topText={"Median Daily Deployments"}
-                  bottomText={"Prev Median: "}
+                value={getMedian(chartData)}
+                prevValue={
+                  getMedian(prevChartData)
+                }
+                trend={getTrend(getMedian(chartData),
+                  getMedian(prevChartData))}
+                getTrendIcon={getTrendIcon}
+                topText={"Median Daily Deployments"}
+                bottomText={"Prev Median: "}
               />
             </Col>
             <Col md={12} className={"pl-1 pr-2"}>

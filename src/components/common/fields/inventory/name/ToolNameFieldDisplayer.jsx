@@ -121,7 +121,7 @@ function ToolNameFieldDisplayer(
 
   return (
     <span>
-        <span>{getToolName()}</span>
+      <span>{getToolName()}</span>
       {/*// TODO: Determine if worth using*/}
       {/*<EllipsisIcon*/}
       {/*  overlay={getToolInfoOverlay()}*/}

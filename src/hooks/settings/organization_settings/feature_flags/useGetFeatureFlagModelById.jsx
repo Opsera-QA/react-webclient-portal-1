@@ -5,7 +5,7 @@ import useFeatureFlagActions from "hooks/settings/organization_settings/policies
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useGetFeatureFlagModel from "hooks/settings/organization_settings/feature_flags/useGetFeatureFlagModel";
 import useFeatureFlagAdministrationActions
-  from "hooks/settings/organization_settings/feature_flags/useFeatureFlagAdministrationActions";
+from "hooks/settings/organization_settings/feature_flags/useFeatureFlagAdministrationActions";
 
 export default function useGetFeatureFlagModelById(
   featureFlagId,

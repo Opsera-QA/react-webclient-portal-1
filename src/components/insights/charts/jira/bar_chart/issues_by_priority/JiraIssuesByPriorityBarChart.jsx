@@ -9,7 +9,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getTaskColor, assignTaskColors,
-         adjustBarWidth } from '../../../charts-views';
+  adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 
 
@@ -75,24 +75,24 @@ function JiraIssuesByPriorityBarChart({ kpiConfiguration, setKpiConfiguration, d
 
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
-            <ResponsiveBar
-              data={metrics}
-              {...defaultConfig("Project", "Number of Issues", 
-                                true, false, "cutoffString", "wholeNumbers")}
-              {...config(getTaskColor)}
-              {...adjustBarWidth(metrics)}
-              onClick={() => setShowModal(true)}
-              tooltip={({ indexValue, id, data }) => <ChartTooltip 
-                  titles={["Project", "Issue Type", 
-                            "Number. of Low Priority Issues", "Number of Medium Priority Issues",
-                            "Number of High Priority Issues", 
-                            "Number of Urgent Issues", "Number of Blocker Issues"]}
-                  values={[indexValue, id, data[id + "-Low"] ? data[id + "-Low"] : 0,
-                           data[id + "-Medium"] ? data[id + "-Medium"] : 0, data[id + "-High"] ? data[id + "-High"] : 0, 
-                           data[id + "-Urgent"] ? data[id + "-Urgent"] : 0, data[id + "-Blocker"] ? data[id + "-Blocker"] : 0]} 
-                  style={false} />}
-            />
-        </div>
+        <ResponsiveBar
+          data={metrics}
+          {...defaultConfig("Project", "Number of Issues", 
+            true, false, "cutoffString", "wholeNumbers")}
+          {...config(getTaskColor)}
+          {...adjustBarWidth(metrics)}
+          onClick={() => setShowModal(true)}
+          tooltip={({ indexValue, id, data }) => <ChartTooltip 
+            titles={["Project", "Issue Type", 
+              "Number. of Low Priority Issues", "Number of Medium Priority Issues",
+              "Number of High Priority Issues", 
+              "Number of Urgent Issues", "Number of Blocker Issues"]}
+            values={[indexValue, id, data[id + "-Low"] ? data[id + "-Low"] : 0,
+              data[id + "-Medium"] ? data[id + "-Medium"] : 0, data[id + "-High"] ? data[id + "-High"] : 0, 
+              data[id + "-Urgent"] ? data[id + "-Urgent"] : 0, data[id + "-Blocker"] ? data[id + "-Blocker"] : 0]} 
+            style={false} />}
+        />
+      </div>
     );
   };
 

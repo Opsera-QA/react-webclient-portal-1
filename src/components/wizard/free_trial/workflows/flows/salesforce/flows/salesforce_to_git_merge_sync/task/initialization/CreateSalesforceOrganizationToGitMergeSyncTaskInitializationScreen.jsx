@@ -4,7 +4,7 @@ import {
   salesforceWorkflowFlowConstants
 } from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
 import CreateWorkflowWizardTaskInitializationScreen
-  from "components/wizard/free_trial/workflows/flows/tasks/initialization/CreateWorkflowWizardTaskInitializationScreen";
+from "components/wizard/free_trial/workflows/flows/tasks/initialization/CreateWorkflowWizardTaskInitializationScreen";
 import {
   taskTemplateIdentifierConstants
 } from "components/admin/task_templates/taskTemplateIdentifier.constants";

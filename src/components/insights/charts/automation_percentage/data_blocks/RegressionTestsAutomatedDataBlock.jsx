@@ -6,12 +6,12 @@ import TwoLineScoreDataBlock from "../../../../common/metrics/score/TwoLineScore
 function RegressionTestsAutomated({ defects, dataPoint }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
-        <TwoLineScoreDataBlock
-          className="p-2"
-          style={{minHeight: '100px'}}
-          score={defects}
-          dataPoint={dataPoint}
-          subtitle={"Regression Test Cases Automated"} />
+      <TwoLineScoreDataBlock
+        className="p-2"
+        style={{minHeight: '100px'}}
+        score={defects}
+        dataPoint={dataPoint}
+        subtitle={"Regression Test Cases Automated"} />
     </DataBlockBoxContainer>
   );
 }

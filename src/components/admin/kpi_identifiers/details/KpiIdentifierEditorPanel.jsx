@@ -17,7 +17,7 @@ import MetricDataPointTypeSelectInput from "components/common/list_of_values_inp
 import axios from "axios";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import PipelineUsageToolIdentifierMultiSelectInput
-  from "components/common/list_of_values_input/workflow/pipelines/PipelineUsageToolIdentifierMultiSelectInput";
+from "components/common/list_of_values_input/workflow/pipelines/PipelineUsageToolIdentifierMultiSelectInput";
 import RuleBasedAccessInput from "components/common/inputs/access_rules/input/RuleBasedAccessInput";
 
 function KpiIdentifierEditorPanel({ kpiData, handleClose }) {

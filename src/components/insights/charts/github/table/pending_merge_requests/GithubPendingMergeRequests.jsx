@@ -122,27 +122,27 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
   };
   const getVerticalTabContainer = () => {
     return <GithubPendingMergeRequestVerticalTabContainer
-        kpiConfiguration={kpiConfiguration}
-        setKpiConfiguration={setKpiConfiguration}
-        dashboardData={dashboardData}
-        setKpis={setKpis}
-        metric={metrics}
-        handleTabClick={handleTabClick}
-        activeTab={activeTab}/>;
+      kpiConfiguration={kpiConfiguration}
+      setKpiConfiguration={setKpiConfiguration}
+      dashboardData={dashboardData}
+      setKpis={setKpis}
+      metric={metrics}
+      handleTabClick={handleTabClick}
+      activeTab={activeTab}/>;
   };
 
   const getTabContentContainer = () => {
     return (
-        <VanitySetTabViewContainer className={"mb-3"}>
-          <FilterContainer
-              filterDto={tableFilterDto}
-              setFilterDto={setTableFilterDto}
-              body={getBody()}
-              isLoading={isLoading}
-              loadData={loadData}
-              supportSearch={true}
-          />
-        </VanitySetTabViewContainer>
+      <VanitySetTabViewContainer className={"mb-3"}>
+        <FilterContainer
+          filterDto={tableFilterDto}
+          setFilterDto={setTableFilterDto}
+          body={getBody()}
+          isLoading={isLoading}
+          loadData={loadData}
+          supportSearch={true}
+        />
+      </VanitySetTabViewContainer>
     );
   };
   const getBody = () => {
@@ -174,15 +174,15 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
   };
   const getFilterContainer = () => {
     return (
-        <TabAndViewContainer
-            verticalTabContainer={getVerticalTabContainer()}
-            currentView={getTabContentContainer()}
-            defaultActiveKey={metrics && Array.isArray(metrics) && metrics[0]?.id && metrics[0]?.id}
-            bodyClassName="mx-0"
-            maximumHeight="calc(100vh - 264px)"
-            overflowYContainerStyle={"hidden"}
-            overflowYBodyStyle="auto"
-        />
+      <TabAndViewContainer
+        verticalTabContainer={getVerticalTabContainer()}
+        currentView={getTabContentContainer()}
+        defaultActiveKey={metrics && Array.isArray(metrics) && metrics[0]?.id && metrics[0]?.id}
+        bodyClassName="mx-0"
+        maximumHeight="calc(100vh - 264px)"
+        overflowYContainerStyle={"hidden"}
+        overflowYBodyStyle="auto"
+      />
     );
   };
   return (

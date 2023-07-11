@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import JenkinsRegistryToolJobSelectInput
-  from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
+from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 
 function SfdcStepJenkinsJobSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {

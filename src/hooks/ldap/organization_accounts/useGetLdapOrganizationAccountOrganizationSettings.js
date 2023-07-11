@@ -9,7 +9,7 @@ export default function useGetLdapOrganizationAccountOrganizationSettings(
   organizationDomain,
   organizationAccountName,
   handleErrorFunction,
-  ) {
+) {
   const [organizationSettings, setOrganizationSettings] = useState(undefined);
   const ldapOrganizationAccountActions = useLdapOrganizationAccountActions();
   const {

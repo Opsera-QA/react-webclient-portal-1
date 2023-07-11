@@ -6,11 +6,11 @@ import { Button } from "react-bootstrap";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SalesforcePipelineWizardOverlay
-  from "components/workflow/wizards/sfdc_pipeline_wizard/SalesforcePipelineWizardOverlay";
+from "components/workflow/wizards/sfdc_pipeline_wizard/SalesforcePipelineWizardOverlay";
 import SalesforceOrganizationSyncTaskWizardOverlay from "components/tasks/wizard/organization_sync/SalesforceOrganizationSyncTaskWizardOverlay";
 import { TASK_TYPES } from "components/tasks/task.types";
 import SalesforceToGitMergeSyncTaskWizardOverlay
-  from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";
+from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";
 import RunTaskOverlay from "components/tasks/details/RunTaskOverlay";
 import modelHelpers from "components/common/model/modelHelpers";
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
@@ -27,47 +27,47 @@ export default function FreeTrialLaunchWorkflowButton(
 
   const launchWorkflow = () => {
     switch (workspaceType) {
-      case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
-        switch (workspaceItem?.type) {
-          case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
-            toastContext.showOverlayPanel(
-              <SalesforceToGitMergeSyncTaskWizardOverlay
-                taskModel={modelHelpers.parseObjectIntoModel(workspaceItem, tasksMetadata)}
-              />,
-            );
-            break;
-          case TASK_TYPES.SYNC_SALESFORCE_REPO:
-            toastContext.showOverlayPanel(
-              <SalesforceOrganizationSyncTaskWizardOverlay
-                taskModel={modelHelpers.parseObjectIntoModel(workspaceItem, tasksMetadata)}
-              />,
-            );
-            break;
-          default:
-            toastContext.showOverlayPanel(
-              <RunTaskOverlay
-                taskModel={workspaceItem}
-                setTaskModel={setWorkspaceItem}
-              />
-            );
-        }
-        break;
-      case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
+      switch (workspaceItem?.type) {
+      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
         toastContext.showOverlayPanel(
-          <SalesforcePipelineWizardOverlay
-            pipeline={workspaceItem}
+          <SalesforceToGitMergeSyncTaskWizardOverlay
+            taskModel={modelHelpers.parseObjectIntoModel(workspaceItem, tasksMetadata)}
           />,
         );
         break;
+      case TASK_TYPES.SYNC_SALESFORCE_REPO:
+        toastContext.showOverlayPanel(
+          <SalesforceOrganizationSyncTaskWizardOverlay
+            taskModel={modelHelpers.parseObjectIntoModel(workspaceItem, tasksMetadata)}
+          />,
+        );
+        break;
+      default:
+        toastContext.showOverlayPanel(
+          <RunTaskOverlay
+            taskModel={workspaceItem}
+            setTaskModel={setWorkspaceItem}
+          />
+        );
+      }
+      break;
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
+      toastContext.showOverlayPanel(
+        <SalesforcePipelineWizardOverlay
+          pipeline={workspaceItem}
+        />,
+      );
+      break;
     }
   };
 
   const getButtonText = () => {
     switch (workspaceType) {
-      case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
-        return "Start Task Now!";
-      case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
-        return "Start Pipeline Now!";
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
+      return "Start Task Now!";
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
+      return "Start Pipeline Now!";
     }
   };
 
@@ -78,13 +78,13 @@ export default function FreeTrialLaunchWorkflowButton(
         disabled={workspaceItem == null}
         onClick={launchWorkflow}
       >
-          <span>
-            <IconBase
-              icon={faArrowRight}
-              className={"mr-2"}
-            />
-            {getButtonText()}
-          </span>
+        <span>
+          <IconBase
+            icon={faArrowRight}
+            className={"mr-2"}
+          />
+          {getButtonText()}
+        </span>
       </Button>
     </div>
   );

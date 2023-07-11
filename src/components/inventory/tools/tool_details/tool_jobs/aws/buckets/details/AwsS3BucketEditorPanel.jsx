@@ -15,7 +15,7 @@ import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete
 import modelHelpers from "components/common/model/modelHelpers";
 import awsS3BucketMetadata from "../aws-s3-bucket-metadata";
 import AwsCloudProviderRegionSelectInput
-  from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
+from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
 
 function AwsS3BucketEditorPanel({ awsS3BucketsData, toolData, handleClose, editMode, editRowData }) {
   const { getAccessToken } = useContext(AuthContext);

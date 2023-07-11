@@ -8,7 +8,7 @@ import NexusRepoSelectInput from "./inputs/NexusRepoSelectInput";
 import NexusRepoFormatSelectInput from "./inputs/NexusRepoFormatSelectInput";
 import NexusStepJenkinsToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nexus/inputs/NexusStepJenkinsToolSelectInput";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import NexusStepNexusToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nexus/inputs/NexusStepNexusToolSelectInput";
 import NexusArtifactStepSelectInput from "./inputs/NexusArtifactStepSelectInput";
 import NexusStepTypeSelectInput from "./inputs/NexusStepTypeSelectInput";
@@ -58,7 +58,7 @@ function NexusStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdito
 
   const handleCreateAndSave = async () => {
     // console.log("saving and creating job for toolID: ", toolId);    
-      // setLoading(true);
+    // setLoading(true);
     let newDataObject = nexusStepConfigurationDto;
     const packageId = nexusStepConfigurationDto.getData("groupName") + ":" + nexusStepConfigurationDto.getData("artifactName");
     newDataObject.setData("packageId", packageId);
@@ -102,42 +102,42 @@ function NexusStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdito
 
   const getAdditionalFields = () => {
     switch(nexusStepConfigurationDto.getData("repositoryFormat")) {
-      case "docker" : 
-        return (
-          <>          
-            <NexusStepJenkinsToolSelectInput
-              setModel={setNexusStepConfigurationDataDto}
-              model={nexusStepConfigurationDto}
-            />
-            <TextInputBase
-              setDataObject={setNexusStepConfigurationDataDto}
-              dataObject={nexusStepConfigurationDto}
-              fieldName={"dockerPort"}
-              key="dockerPort"
-            />
-          </>
-        );
-      case "maven2" :
-        return (
-          <>
-            <TextInputBase                      
-              setDataObject={setNexusStepConfigurationDataDto}
-              dataObject={nexusStepConfigurationDto}
-              fieldName={"groupName"}
-              key="groupName"
-            />
-            <TextInputBase                      
-              setDataObject={setNexusStepConfigurationDataDto}
-              dataObject={nexusStepConfigurationDto}
-              fieldName={"artifactName"}
-              key="artifactName"
-            />
-          </>
-        );
-      case "nuget" :
-        return (<></>);
-      default:
-        return (<></>);
+    case "docker" : 
+      return (
+        <>          
+          <NexusStepJenkinsToolSelectInput
+            setModel={setNexusStepConfigurationDataDto}
+            model={nexusStepConfigurationDto}
+          />
+          <TextInputBase
+            setDataObject={setNexusStepConfigurationDataDto}
+            dataObject={nexusStepConfigurationDto}
+            fieldName={"dockerPort"}
+            key="dockerPort"
+          />
+        </>
+      );
+    case "maven2" :
+      return (
+        <>
+          <TextInputBase                      
+            setDataObject={setNexusStepConfigurationDataDto}
+            dataObject={nexusStepConfigurationDto}
+            fieldName={"groupName"}
+            key="groupName"
+          />
+          <TextInputBase                      
+            setDataObject={setNexusStepConfigurationDataDto}
+            dataObject={nexusStepConfigurationDto}
+            fieldName={"artifactName"}
+            key="artifactName"
+          />
+        </>
+      );
+    case "nuget" :
+      return (<></>);
+    default:
+      return (<></>);
     }    
   };
 

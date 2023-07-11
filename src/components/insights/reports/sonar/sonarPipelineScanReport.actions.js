@@ -9,7 +9,7 @@ sonarPipelineScanReportActions.getAllSonarScanIssues = async(
   stepId,
   runCount,
   issueType,
-  ) => {
+) => {
   const apiUrl = `reports/scans/sonar/all-issues/${pipelineId}`;
   const postData = {
     runCount: runCount,
@@ -22,7 +22,7 @@ sonarPipelineScanReportActions.getAllSonarScanIssues = async(
     cancelTokenSource,
     apiUrl,
     postData,
-    );
+  );
 };
 
 sonarPipelineScanReportActions.getSonarScanIssuesByPage = async (
@@ -34,7 +34,7 @@ sonarPipelineScanReportActions.getSonarScanIssuesByPage = async (
   pageNumber,
   pageSize,
   issueType,
-  ) => {
+) => {
   const apiUrl = `reports/scans/sonar/issues-by-page/${pipelineId}`;
   const postData = {
     runCount: runCount,
@@ -49,5 +49,5 @@ sonarPipelineScanReportActions.getSonarScanIssuesByPage = async (
     cancelTokenSource,
     apiUrl,
     postData,
-    );
+  );
 };

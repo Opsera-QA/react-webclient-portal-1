@@ -119,8 +119,8 @@ function DashboardViewer({ dashboardModel, loadData }) {
           />
         </div>
         <div className={"d-flex"}>
-           {getActiveFilters()}
-         </div>
+          {getActiveFilters()}
+        </div>
       </div>
       {getKpiView()}
     </div>

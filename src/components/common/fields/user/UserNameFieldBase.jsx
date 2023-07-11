@@ -92,12 +92,12 @@ function UserNameFieldBase({ userId, label, className, showLabel }) {
   const getClipboardButtons = () => {
     if (userData) {
       return (
-          <CopyToClipboardIconBase
-            copyString={userData?.email}
-            copyText={`Copy User's Email ${userData?.email} to clipboard`}
-            copiedText={`Copied User's Email ${userData?.email} to clipboard!`}
-            className={"ml-2"}
-          />
+        <CopyToClipboardIconBase
+          copyString={userData?.email}
+          copyText={`Copy User's Email ${userData?.email} to clipboard`}
+          copiedText={`Copied User's Email ${userData?.email} to clipboard!`}
+          className={"ml-2"}
+        />
       );
     }
   };

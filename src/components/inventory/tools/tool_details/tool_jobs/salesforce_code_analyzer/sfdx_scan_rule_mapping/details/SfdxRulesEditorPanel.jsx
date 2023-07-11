@@ -13,7 +13,7 @@ import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete
 import SfdxMapRuleSetSelectInput from "./inputs/SfdxMapRuleSetSelectInput";
 import SfdxScanThresholdInputBase from "./inputs/SfdxScanThresholdInputBase";
 import PositiveIntegerNumberPickerInput
-  from "../../../../../../../common/inputs/number/picker/PositiveIntegerNumberPickerInput";
+from "../../../../../../../common/inputs/number/picker/PositiveIntegerNumberPickerInput";
 
 function SfdxRulesEditorPanel({ pmdRuleData, toolData, ruleId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -99,26 +99,26 @@ function SfdxRulesEditorPanel({ pmdRuleData, toolData, ruleId, handleClose }) {
           </Col>
           <Col lg={12}>
             <SfdxMapRuleSetSelectInput
-                setModel={setPmdRuleModel}
-                model={pmdRuleModel}
-                fieldName={"category"}
-                disabled={!pmdRuleData?.isNew()}
+              setModel={setPmdRuleModel}
+              model={pmdRuleModel}
+              fieldName={"category"}
+              disabled={!pmdRuleData?.isNew()}
             />
           </Col>
           <Col lg={12}>
             <PositiveIntegerNumberPickerInput
-                dataObject={pmdRuleModel}
-                setDataObject={setPmdRuleModel}
-                fieldName={"threshold"}
+              dataObject={pmdRuleModel}
+              setDataObject={setPmdRuleModel}
+              fieldName={"threshold"}
             />
           </Col>
           <Col lg={12}>
-              <SfdxScanThresholdInputBase
-                  fieldName={"qualityGates"}
-                  model={pmdRuleModel}
-                  className={"mb-3"}
-                  setModel={setPmdRuleModel}
-              />
+            <SfdxScanThresholdInputBase
+              fieldName={"qualityGates"}
+              model={pmdRuleModel}
+              className={"mb-3"}
+              setModel={setPmdRuleModel}
+            />
           </Col>
         </Row>
       </div>

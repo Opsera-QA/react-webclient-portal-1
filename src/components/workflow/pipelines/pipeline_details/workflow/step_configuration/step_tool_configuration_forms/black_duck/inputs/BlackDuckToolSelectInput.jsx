@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedBlackDuckToolSelectInput
-  from "components/common/list_of_values_input/tools/black_duck/RoleRestrictedBlackDuckToolSelectInput";
+from "components/common/list_of_values_input/tools/black_duck/RoleRestrictedBlackDuckToolSelectInput";
 
 function BlackDuckToolSelectInput({ model, setModel, className, disabled }) {
 

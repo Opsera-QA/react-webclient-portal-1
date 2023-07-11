@@ -30,7 +30,7 @@ apiServiceV2.axiosApiGetCallV2 = async (getAccessToken, cancelTokenSource, apiUr
       .get(
         apiUrl,
         { params: parsedUrlParams, }
-    );
+      );
   }
   catch (error) {
     const parsedError = parseAxiosError(error);
@@ -152,8 +152,8 @@ export const parseAxiosError = (error) => {
   if (!axios.isCancel(error)) {
     if (typeof error === "object" && hasStringValue(error?.message) === true) {
       switch (error?.message) {
-        case "Network Error":
-          return "Please check your network connectivity and try again.";
+      case "Network Error":
+        return "Please check your network connectivity and try again.";
       }
     }
 

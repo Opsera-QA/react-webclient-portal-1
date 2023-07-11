@@ -13,7 +13,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColor, assignStandardColors,
-         shortenLegend } from "../../../charts-views";
+  shortenLegend } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 
 function JiraSprintBurndownLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -80,18 +80,18 @@ function JiraSprintBurndownLineChart({ kpiConfiguration, setKpiConfiguration, da
 
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
-            <ResponsiveLine
-              data={metrics}
-              {...defaultConfig("Number of Pending Issues", "Date", 
-                      false, true, "wholeNumbers", "monthDate2")}
-              {...config(getColor)}   
-              onClick={() => setShowModal(true)}
-              tooltip={({ point, color }) => <ChartTooltip 
-                              titles = {["Issues Remaining"]}
-                              values = {[point.data.y]}
-                              color = {color} />}
-            />
-        </div>
+        <ResponsiveLine
+          data={metrics}
+          {...defaultConfig("Number of Pending Issues", "Date", 
+            false, true, "wholeNumbers", "monthDate2")}
+          {...config(getColor)}   
+          onClick={() => setShowModal(true)}
+          tooltip={({ point, color }) => <ChartTooltip 
+            titles = {["Issues Remaining"]}
+            values = {[point.data.y]}
+            color = {color} />}
+        />
+      </div>
     );
   };
 

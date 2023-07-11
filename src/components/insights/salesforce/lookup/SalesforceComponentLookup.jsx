@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import SalesforceLookUpHelpDocumentation
-  from "../../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation";
+from "../../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {insightsLookupActions} from "components/insights/salesforce/lookup/insightsLookup.actions";
 import LookupResults from "components/insights/salesforce/lookup/LookupResults";
@@ -42,16 +42,16 @@ function SalesforceComponentLookup() {
       const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
       const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
       const response = await insightsLookupActions.getComponentNames(
-          getAccessToken,
-          cancelTokenSource,
-          formattedStartDate,
-          formattedEndDate,
-          newFilterModel.getData("selectedComponentNames"),
-          newFilterModel.getData("selectedComponentFilterData"),
-          newFilterModel.getData("pipelineComponentFilterData"),
-          newFilterModel.getData("orgsComponentFilterData"),
-          newFilterModel
-          // newFilterModel.getData("tasksComponentFilterData"),
+        getAccessToken,
+        cancelTokenSource,
+        formattedStartDate,
+        formattedEndDate,
+        newFilterModel.getData("selectedComponentNames"),
+        newFilterModel.getData("selectedComponentFilterData"),
+        newFilterModel.getData("pipelineComponentFilterData"),
+        newFilterModel.getData("orgsComponentFilterData"),
+        newFilterModel
+        // newFilterModel.getData("tasksComponentFilterData"),
       );
       const names = DataParsingHelper.parseArray(response?.data?.data?.componentNames, []);
 
@@ -94,7 +94,7 @@ function SalesforceComponentLookup() {
 
       if (!startDate || !endDate) {
         toastContext.showInlineErrorMessage(
-            "Please select start and end dates.",
+          "Please select start and end dates.",
         );
         return;
       }
@@ -103,18 +103,18 @@ function SalesforceComponentLookup() {
       const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
       const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
       const response = await insightsLookupActions.searchComponents(
-          getAccessToken,
-          cancelTokenSource,
-          formattedStartDate,
-          formattedEndDate,
-          [componentName],
-          newFilterModel.getData("selectedComponentFilterData"),
-          newFilterModel.getData("pipelineComponentFilterData"),
-          newFilterModel.getData("orgsComponentFilterData"),
+        getAccessToken,
+        cancelTokenSource,
+        formattedStartDate,
+        formattedEndDate,
+        [componentName],
+        newFilterModel.getData("selectedComponentFilterData"),
+        newFilterModel.getData("pipelineComponentFilterData"),
+        newFilterModel.getData("orgsComponentFilterData"),
       );
 
       const searchResults = insightsLookupActions.generateTransformedResults(
-          response?.data?.data?.data,
+        response?.data?.data?.data,
       );
       const parsedSearchResults = DataParsingHelper.parseArray(searchResults, []);
 
@@ -146,23 +146,23 @@ function SalesforceComponentLookup() {
   const getBody = () => {
     if (isLoadingSalesforceComponentNames) {
       return (
-          <CenterLoadingIndicator
-          />
+        <CenterLoadingIndicator
+        />
       );
     }
 
     return (
-        <LookupResults
-            isLoading={isLoading}
-            filterModel={filterModel}
-            setFilterModel={setFilterModel}
-            loadData={loadData}
-            searchResults={searchResults}
-            salesforceComponentNames={salesforceComponentNames}
-            selectedComponentName={selectedComponentName}
-            setSelectedComponentName={setSelectedComponentName}
-            noDataMessage={getNoDataMessage()}
-        />
+      <LookupResults
+        isLoading={isLoading}
+        filterModel={filterModel}
+        setFilterModel={setFilterModel}
+        loadData={loadData}
+        searchResults={searchResults}
+        salesforceComponentNames={salesforceComponentNames}
+        selectedComponentName={selectedComponentName}
+        setSelectedComponentName={setSelectedComponentName}
+        noDataMessage={getNoDataMessage()}
+      />
     );
   };
 
@@ -171,25 +171,25 @@ function SalesforceComponentLookup() {
   }
 
   return (
-      <ScreenContainer
-          navigationTabContainer={
-            <InsightsSubNavigationBar currentTab={"lookup"}/>
-          }
-          breadcrumbDestination={"lookup"}
-          isLoading={isLoading}
-          helpComponent={<SalesforceLookUpHelpDocumentation/>}
-          filterModel={filterModel}
+    <ScreenContainer
+      navigationTabContainer={
+        <InsightsSubNavigationBar currentTab={"lookup"}/>
+      }
+      breadcrumbDestination={"lookup"}
+      isLoading={isLoading}
+      helpComponent={<SalesforceLookUpHelpDocumentation/>}
+      filterModel={filterModel}
+      loadDataFunction={loadComponentNames}
+      filterOverlay={
+        <SalesforceLookupFilters
+          salesforceLookupFilterModel={filterModel}
           loadDataFunction={loadComponentNames}
-          filterOverlay={
-            <SalesforceLookupFilters
-                salesforceLookupFilterModel={filterModel}
-                loadDataFunction={loadComponentNames}
-                salesforceComponentNames={salesforceComponentNames}
-            />
-          }
-      >
-        {getBody()}
-      </ScreenContainer>
+          salesforceComponentNames={salesforceComponentNames}
+        />
+      }
+    >
+      {getBody()}
+    </ScreenContainer>
   );
 }
 

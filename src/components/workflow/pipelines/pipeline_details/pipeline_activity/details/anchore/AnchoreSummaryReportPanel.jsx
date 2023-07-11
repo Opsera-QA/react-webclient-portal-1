@@ -7,9 +7,9 @@ import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabV
 import { faClipboardListCheck } from "@fortawesome/pro-light-svg-icons";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import AnchoreReportView
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/anchore/components/AnchoreReportView";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/anchore/components/AnchoreReportView";
 import AnchoreSummaryVerticalTabContainer
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/anchore/AnchoreSummaryVerticalTabContainer";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/anchore/AnchoreSummaryVerticalTabContainer";
 
 function AnchoreSummaryReportPanel({ pipelineTaskData }) {
   const [anchoreObj, setAnchoreObj] = useState(undefined);
@@ -54,7 +54,7 @@ function AnchoreSummaryReportPanel({ pipelineTaskData }) {
         <VanitySetTabView tabKey={"summary"}>
           <SummaryPanelContainer className={"mx-3 mt-3"}>
             <AnchoreReportView
-                anchoreObj={anchoreObj}
+              anchoreObj={anchoreObj}
             />
           </SummaryPanelContainer>
         </VanitySetTabView>

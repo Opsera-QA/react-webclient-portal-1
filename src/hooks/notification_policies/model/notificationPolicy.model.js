@@ -2,7 +2,7 @@ import ModelBase from "core/data_model/model.base";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {notificationPolicyHelper} from "hooks/notification_policies/notificationPolicy.helper";
 import notificationPolicyMetadata
-  from "@opsera/definitions/constants/notification_policies/notificationPolicy.metadata";
+from "@opsera/definitions/constants/notification_policies/notificationPolicy.metadata";
 
 export default class NotificationPolicyModel extends ModelBase {
   constructor(

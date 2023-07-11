@@ -182,11 +182,11 @@ function MultiTaskSelectInputBase({
     }
 
     for (let item in properties) {
-        if (Object.values(properties[item]).includes(taskId)) {
-          setErrorMessage("Existing Lambda Tasks cannot be mapping twice");
-          return;
-        }
+      if (Object.values(properties[item]).includes(taskId)) {
+        setErrorMessage("Existing Lambda Tasks cannot be mapping twice");
+        return;
       }
+    }
 
     setProperties([
       ...properties,

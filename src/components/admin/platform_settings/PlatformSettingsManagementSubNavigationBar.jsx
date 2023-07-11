@@ -12,12 +12,12 @@ export default function PlatformSettingsManagementSubNavigationBar({activeTab}) 
     e.preventDefault();
 
     switch (tabSelection) {
-      case "adminTools":
-        history.push(`/admin`);
-        return;
-      case "platformSettingsManagement":
-        history.push(`/admin/platform/system-parameters`);
-        return;
+    case "adminTools":
+      history.push(`/admin`);
+      return;
+    case "platformSettingsManagement":
+      history.push(`/admin/platform/system-parameters`);
+      return;
     }
   };
 

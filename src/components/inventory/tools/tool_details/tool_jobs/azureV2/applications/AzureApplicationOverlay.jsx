@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import azureApplicationsMetadata from "components/inventory/tools/tool_details/tool_jobs/azureV2/applications/azure-application-metadata";
 import AzureApplicationEditorPanel
-  from "components/inventory/tools/tool_details/tool_jobs/azureV2/applications/details/AzureApplicationEditorPanel";
+from "components/inventory/tools/tool_details/tool_jobs/azureV2/applications/details/AzureApplicationEditorPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";

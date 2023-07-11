@@ -15,12 +15,12 @@ import SalesforceOrganizationSyncTaskGitBranchSelectInput from "../../../../../.
 import TextInputBase from "../../../../../../../common/inputs/text/TextInputBase";
 import AgentLabelsSelectInput from "../../../../../../../common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
 import SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
-  from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput";
+from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput";
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 import SalesforceOrganizationSyncTaskBranchTypeSelectInput
-  from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBranchTypeSelectInput";
+from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBranchTypeSelectInput";
 import SalesforceOrganizationSyncTaskJenkinsAccountSelectInput
-  from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsAccountSelectInput";
+from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsAccountSelectInput";
 
 function CreateSalesforceBranchStructureInputFields({
   taskModel,
@@ -33,7 +33,7 @@ function CreateSalesforceBranchStructureInputFields({
     modelHelpers.parseObjectIntoNewModelBase(
       taskModel?.configuration,
       sfdcGitBranchTaskConfigurationMetadata,
-        true
+      true
     ),
   );
   const [parentConfig, setParentConfig] =    useState(modelHelpers.parseObjectIntoNewModelBase(taskModel, tasksMetadata, true));
@@ -108,20 +108,20 @@ function CreateSalesforceBranchStructureInputFields({
         </Col>
         <Col lg={12}>
           <SalesforceOrganizationSyncTaskBranchTypeSelectInput
-              dataObject={taskConfigurationModel}
-              setDataObject={setTaskConfigurationModel} />
+            dataObject={taskConfigurationModel}
+            setDataObject={setTaskConfigurationModel} />
         </Col>
         <Col lg={12}>
           <SalesforceOrganizationSyncTaskJenkinsAccountSelectInput
-              model={taskConfigurationModel}
-              setModel={setTaskConfigurationModel}
-              taskModel={parentConfig}
+            model={taskConfigurationModel}
+            setModel={setTaskConfigurationModel}
+            taskModel={parentConfig}
           />
         </Col>
         <Col lg={12}>
           <SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
-              model={taskConfigurationModel}
-              setModel={setTaskConfigurationModel}
+            model={taskConfigurationModel}
+            setModel={setTaskConfigurationModel}
           />
         </Col>
         <Col lg={12}>

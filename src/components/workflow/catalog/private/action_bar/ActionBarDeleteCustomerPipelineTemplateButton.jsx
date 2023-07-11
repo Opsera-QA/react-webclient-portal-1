@@ -6,7 +6,7 @@ import {
 } from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import CustomerPipelineTemplateRoleHelper
-  from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
+from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
 import ActionBarDeleteButtonBase from "components/common/actions/buttons/ActionBarDeleteButtonBase";
 import {useHistory} from "react-router-dom";
 import {pipelineCatalogHelper} from "components/workflow/catalog/pipelineCatalog.helper";

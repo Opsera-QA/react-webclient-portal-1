@@ -54,38 +54,38 @@ function ToolReadOnlyDetailPanel({ toolModel, loadData, isLoading, tab }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return <ToolSummaryPanel toolData={toolModel} />;
-      case "attributes":
-        return <ToolAttributesPanel toolData={toolModel}  />;
-      case "configuration":
-        return (
-          <ToolConfigurationSummaryPanel
-            toolIdentifier={toolModel?.getData("tool_identifier")}
-            toolConfiguration={toolModel?.getData("configuration")}
-            loadData={loadData}
-          />
-        );
-      case "jobs":
-        return <ToolJobsPanel toolData={toolModel} loadData={loadData} isLoading={isLoading}/>;
-      case "applications":
-        return <ToolApplicationsPanel toolData={toolModel} loadData={loadData} isLoading={isLoading}/>;
-      case "accounts":
-        return <ToolAccountsPanel isLoading={isLoading} toolData={toolModel} loadData={loadData} />;
-      case "logs":
-        return <ToolLogsPanel toolData={toolModel}/>;
-      case "tagging":
-        return <ToolTaggingPanel toolData={toolModel} />;
-      case "projects":
-        return <ToolProjectsPanel toolData={toolModel} isLoading={isLoading} loadData={loadData} />;
-      case "usage":
-        return <ToolUsagePanel toolData={toolModel} closePanelFunction={closePanelFunction} />;
-      case "vault":
-        return <ToolVaultSummaryPanel toolModel={toolModel} />;
-      case "repositories":
-        return <ToolRepositoriesPanel toolData={toolModel} />;
-      default:
-        return null;
+    case "summary":
+      return <ToolSummaryPanel toolData={toolModel} />;
+    case "attributes":
+      return <ToolAttributesPanel toolData={toolModel}  />;
+    case "configuration":
+      return (
+        <ToolConfigurationSummaryPanel
+          toolIdentifier={toolModel?.getData("tool_identifier")}
+          toolConfiguration={toolModel?.getData("configuration")}
+          loadData={loadData}
+        />
+      );
+    case "jobs":
+      return <ToolJobsPanel toolData={toolModel} loadData={loadData} isLoading={isLoading}/>;
+    case "applications":
+      return <ToolApplicationsPanel toolData={toolModel} loadData={loadData} isLoading={isLoading}/>;
+    case "accounts":
+      return <ToolAccountsPanel isLoading={isLoading} toolData={toolModel} loadData={loadData} />;
+    case "logs":
+      return <ToolLogsPanel toolData={toolModel}/>;
+    case "tagging":
+      return <ToolTaggingPanel toolData={toolModel} />;
+    case "projects":
+      return <ToolProjectsPanel toolData={toolModel} isLoading={isLoading} loadData={loadData} />;
+    case "usage":
+      return <ToolUsagePanel toolData={toolModel} closePanelFunction={closePanelFunction} />;
+    case "vault":
+      return <ToolVaultSummaryPanel toolModel={toolModel} />;
+    case "repositories":
+      return <ToolRepositoriesPanel toolData={toolModel} />;
+    default:
+      return null;
     }
   };
 

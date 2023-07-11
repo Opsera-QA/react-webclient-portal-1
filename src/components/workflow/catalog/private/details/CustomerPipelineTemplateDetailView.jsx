@@ -4,17 +4,17 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import useGetCustomerPipelineTemplateModelById
-  from "hooks/workflow/catalog/customer/useGetCustomerPipelineTemplateModelById";
+from "hooks/workflow/catalog/customer/useGetCustomerPipelineTemplateModelById";
 import pipelineTemplateMetadata from "components/admin/pipeline_templates/pipelineTemplate.metadata";
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 import CustomerPipelineTemplateDetailPanel
-  from "components/workflow/catalog/private/details/CustomerPipelineTemplateDetailPanel";
+from "components/workflow/catalog/private/details/CustomerPipelineTemplateDetailPanel";
 import ActionBarTransferCustomerPipelineTemplateButton
-  from "components/workflow/catalog/private/action_bar/ActionBarTransferCustomerPipelineTemplateButton";
+from "components/workflow/catalog/private/action_bar/ActionBarTransferCustomerPipelineTemplateButton";
 import ActionBarDeleteCustomerPipelineTemplateButton
-  from "components/workflow/catalog/private/action_bar/ActionBarDeleteCustomerPipelineTemplateButton";
+from "components/workflow/catalog/private/action_bar/ActionBarDeleteCustomerPipelineTemplateButton";
 import ViewCustomerPipelineTemplateAuditLogsActionBarButton
-  from "components/workflow/catalog/private/action_bar/ViewCustomerPipelineTemplateAuditLogsActionBarButton";
+from "components/workflow/catalog/private/action_bar/ViewCustomerPipelineTemplateAuditLogsActionBarButton";
 
 export default function CustomerPipelineTemplateDetailView() {
   const {id} = useParams();

@@ -120,25 +120,25 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
       <div className="new-chart mb-3" style={{height: "300px", display:"flex"}}>
         <Col><InputPopover tooltipTitle={"Info"} tooltipBody={getPopoverBody()} /></Col>
         <Col xl={9} md={12} className="p-2">
-        <ResponsiveScatterPlot
-          data={metrics}
-          {...defaultConfig("Elapsed Time (Days)", "Completion Date", 
-                      false, true, "wholeNumbers", "monthDate", false, "circle")}
-          {...config(getColor, MeanLineLayer, RollingMeanLineLayer)}
-          onClick={(node) => onNodeSelect(node)}
-          tooltip={({node, color}) => <ChartTooltip 
-                                        titles = {["Date Completed", "Lead Time", "Issues Completed"]}
-                                        values = {[String(node.data.date_finished), 
+          <ResponsiveScatterPlot
+            data={metrics}
+            {...defaultConfig("Elapsed Time (Days)", "Completion Date", 
+              false, true, "wholeNumbers", "monthDate", false, "circle")}
+            {...config(getColor, MeanLineLayer, RollingMeanLineLayer)}
+            onClick={(node) => onNodeSelect(node)}
+            tooltip={({node, color}) => <ChartTooltip 
+              titles = {["Date Completed", "Lead Time", "Issues Completed"]}
+              values = {[String(node.data.date_finished), 
                                                   `${node.data.y} ${node.data.y > 1 ? "days" : "day"}`, String(node.data.count)]}
-                                        color = {color} />}
-        />
+              color = {color} />}
+          />
 
         </Col>
         <Container>
           <Row>
             <div className="p-2">
-            <IconBase icon={faMinus} iconColor={mainPurple} iconSize={"lg"}/> Mean Lead Time<br />
-            <IconBase icon={faMinus} iconColor={accentColor} iconSize={"lg"}/> Rolling Mean Lead Time
+              <IconBase icon={faMinus} iconColor={mainPurple} iconSize={"lg"}/> Mean Lead Time<br />
+              <IconBase icon={faMinus} iconColor={accentColor} iconSize={"lg"}/> Rolling Mean Lead Time
             </div>
           </Row>
         </Container>

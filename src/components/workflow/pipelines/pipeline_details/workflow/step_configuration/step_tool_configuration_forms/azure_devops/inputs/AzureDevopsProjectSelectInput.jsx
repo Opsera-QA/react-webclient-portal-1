@@ -4,7 +4,7 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import azurePipelineActions
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_devops/azure-pipeline-actions";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_devops/azure-pipeline-actions";
 import {processError} from "utils/helpers";
 import { DialogToastContext } from "contexts/DialogToastContext";
 

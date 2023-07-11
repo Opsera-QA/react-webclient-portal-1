@@ -8,16 +8,16 @@ import {
   pipelineStepParameterMetadata
 } from "components/common/list_of_values_input/parameters/pipeline/pipelineStepParameter.metadata";
 import PipelineStepAddLocalParameterButton
-  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepAddLocalParameterButton";
+from "components/common/list_of_values_input/parameters/pipeline/PipelineStepAddLocalParameterButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import PipelineStepAddCustomParameterButton
-  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepAddCustomParameterButton";
+from "components/common/list_of_values_input/parameters/pipeline/PipelineStepAddCustomParameterButton";
 import PipelineStepInputParameterTypeSelectInput
-  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepInputParameterTypeSelectInput";
+from "components/common/list_of_values_input/parameters/pipeline/PipelineStepInputParameterTypeSelectInput";
 import PipelineStepAddEnvironmentVariableParameterButton
-  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepAddEnvironmentVariableParameterButton";
+from "components/common/list_of_values_input/parameters/pipeline/PipelineStepAddEnvironmentVariableParameterButton";
 import PipelineStepParameterInputRowInputs
-  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputRowInputs";
+from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputRowInputs";
 
 export default function PipelineStepInputParameterInputRow(
   {

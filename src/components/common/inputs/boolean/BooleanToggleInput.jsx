@@ -125,12 +125,12 @@ function BooleanToggleInput(
     if (showLabel !== false) {
       return (
         <div className={"d-flex my-auto"}>
-            <span
-              className={getLabelClassNames()}
-              onClick={() => {updateValue(!dataObject.getData(fieldName));}}
-            >
-              {field?.label}
-            </span>
+          <span
+            className={getLabelClassNames()}
+            onClick={() => {updateValue(!dataObject.getData(fieldName));}}
+          >
+            {field?.label}
+          </span>
           {getInputHelpIcon()}
         </div>
       );
@@ -142,28 +142,28 @@ function BooleanToggleInput(
   }
 
   return (
-      <InputContainer fieldName={fieldName} className={className}>
-        <div className={"d-flex"}>
-          <Form.Check
-            type={"switch"}
-            className={getClassNames()}
-            id={getUniqueId()}
-            checked={!!dataObject.getData(fieldName)}
-            disabled={disabled}
-            label={<span className={getLabelClassNames()}> </span>}
-            onChange={() => {
-              updateValue(!dataObject.getData(fieldName));
-            }}
-          />
-          {getLabel()}
-        </div>
-        <InfoText
-          field={field}
-          model={dataObject}
-          fieldName={fieldName}
-          customMessage={customInfoText}
+    <InputContainer fieldName={fieldName} className={className}>
+      <div className={"d-flex"}>
+        <Form.Check
+          type={"switch"}
+          className={getClassNames()}
+          id={getUniqueId()}
+          checked={!!dataObject.getData(fieldName)}
+          disabled={disabled}
+          label={<span className={getLabelClassNames()}> </span>}
+          onChange={() => {
+            updateValue(!dataObject.getData(fieldName));
+          }}
         />
-      </InputContainer>
+        {getLabel()}
+      </div>
+      <InfoText
+        field={field}
+        model={dataObject}
+        fieldName={fieldName}
+        customMessage={customInfoText}
+      />
+    </InputContainer>
   );
 }
 

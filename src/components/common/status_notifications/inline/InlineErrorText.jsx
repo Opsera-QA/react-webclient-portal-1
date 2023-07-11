@@ -12,7 +12,7 @@ function InlineErrorText({ error, prependMessage, className }) {
 
   return (
     <div className={`error-text ${className}`}>      
-        {prependMessage} {messageBody}      
+      {prependMessage} {messageBody}      
     </div>
   );
 }

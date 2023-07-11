@@ -10,7 +10,7 @@ export default function DoneButtonBase({
   className,
   buttonText,
   disabled,
-    style
+  style
 }) {
   if (onClickFunction == null && disabled !== true) {
     return null;

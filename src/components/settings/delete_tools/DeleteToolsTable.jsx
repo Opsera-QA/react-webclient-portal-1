@@ -32,8 +32,8 @@ function DeleteToolsTable({ data, loadData, isLoading, className }) {
 
   const toggleDeleteModal = async (dataObject) => {
     setSelectedTool(
-        new Model(dataObject, ToolMetadata, false)
-      );
+      new Model(dataObject, ToolMetadata, false)
+    );
     setShowConfirmationModal(true);
   };
 
@@ -44,8 +44,8 @@ function DeleteToolsTable({ data, loadData, isLoading, className }) {
 
       if (result) {
         if (result?.error == null) {
-            await loadData();
-            toastContext.showSuccessDialog("Deletion in Progress, It may take few minutes to complete the process");
+          await loadData();
+          toastContext.showSuccessDialog("Deletion in Progress, It may take few minutes to complete the process");
         }
         else
         {
@@ -56,7 +56,7 @@ function DeleteToolsTable({ data, loadData, isLoading, className }) {
     catch (error) {
       toastContext.showDeleteFailureResultDialog(selectedTool.getType());
     } finally {
-        setShowConfirmationModal(false);
+      setShowConfirmationModal(false);
     }
   };
 
@@ -71,26 +71,26 @@ function DeleteToolsTable({ data, loadData, isLoading, className }) {
     []
   );
 
-    return (
-        <>
-            <CustomTable
-            isLoading={isLoading}
-            data={data}
-            columns={columns}
-            // loadData={loadData}
-            />
-            {selectedTool &&
+  return (
+    <>
+      <CustomTable
+        isLoading={isLoading}
+        data={data}
+        columns={columns}
+        // loadData={loadData}
+      />
+      {selectedTool &&
                 <DestructiveDeleteModal deleteDetails={<DeleteToolDependenciesView selectedTool={selectedTool}/>} showModal={confirmationModal} setShowModal={setShowConfirmationModal} dataObject={selectedTool} handleDelete={deleteTool} modalSize={"lg"}/>
-            }
-        </>
-    );
+      }
+    </>
+  );
 }
 
 DeleteToolsTable.propTypes = {
-    data: PropTypes.array,
-    isLoading: PropTypes.bool,
-    loadData: PropTypes.func,
-    className: PropTypes.string,
+  data: PropTypes.array,
+  isLoading: PropTypes.bool,
+  loadData: PropTypes.func,
+  className: PropTypes.string,
 };
 
 export default DeleteToolsTable;

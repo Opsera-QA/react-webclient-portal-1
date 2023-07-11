@@ -9,7 +9,7 @@ import ErrorDialog from "components/common/status_notifications/error";
 import axios from "axios";
 import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
 import OverlayWizardButtonContainerBase
-  from "../../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+from "../../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import VanityButtonBase from "../../../../../../temp-library-components/button/VanityButtonBase";
 import {faArrowRight} from "@fortawesome/pro-light-svg-icons";
 import WarningMessageFieldBase from "../../../../../common/fields/text/message/WarningMessageFieldBase";
@@ -40,19 +40,19 @@ function SlackToolConfiguration({ toolData, setUpMode, setCurrentScreen, setButt
 
     if (setUpMode && setCurrentScreen) {
       setButtonContainer(
-          <OverlayWizardButtonContainerBase>
-            <VanityButtonBase
-                normalText={"View Tool Details"}
-                disabled={false}
-                buttonState={"ready"}
-                onClickFunction={() => {
-                  handleClose();
-                  setCurrentScreen("tool_detail");
-                }}
-                variant={"outline-secondary"}
-                icon={faArrowRight}
-            />
-          </OverlayWizardButtonContainerBase>,
+        <OverlayWizardButtonContainerBase>
+          <VanityButtonBase
+            normalText={"View Tool Details"}
+            disabled={false}
+            buttonState={"ready"}
+            onClickFunction={() => {
+              handleClose();
+              setCurrentScreen("tool_detail");
+            }}
+            variant={"outline-secondary"}
+            icon={faArrowRight}
+          />
+        </OverlayWizardButtonContainerBase>,
       );
     }
 
@@ -125,10 +125,10 @@ function SlackToolConfiguration({ toolData, setUpMode, setCurrentScreen, setButt
 
     return (
       <img alt="Add to Slack" className="pointer"
-         height="40"
-         width="139"
-         src="/img/btn-add-to-slack.svg"
-         onClick={() => addSlackCredentials()}
+        height="40"
+        width="139"
+        src="/img/btn-add-to-slack.svg"
+        onClick={() => addSlackCredentials()}
       />
     );
   };

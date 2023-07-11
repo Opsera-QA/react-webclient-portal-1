@@ -33,17 +33,17 @@ function AnsibleStepGitRepositorySelectInput({model, setModel, disabled}) {
   }
 
   return (
-     <RepositorySelectInput
-       fieldName={"repoId"}
-       service={model?.getData("service")}
-       gitToolId={model?.getData("gitToolId")}
-       workspace={model?.getData("workspace")}
-       dataObject={model}
-       setDataObject={setModel}
-       clearDataFunction={clearDataFunction}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-     />
+    <RepositorySelectInput
+      fieldName={"repoId"}
+      service={model?.getData("service")}
+      gitToolId={model?.getData("gitToolId")}
+      workspace={model?.getData("workspace")}
+      dataObject={model}
+      setDataObject={setModel}
+      clearDataFunction={clearDataFunction}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+    />
   );
 }
 

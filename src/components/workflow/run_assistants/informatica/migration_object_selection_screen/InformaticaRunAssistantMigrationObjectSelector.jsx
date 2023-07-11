@@ -9,11 +9,11 @@ import CancelButton from "components/common/buttons/CancelButton";
 import {parseError} from "components/common/helpers/error-helpers";
 import {informaticaRunParametersActions} from "components/workflow/run_assistants/informatica/informaticaRunParameters.actions";
 import InformaticaRunAssistantMigrationObjectList
-  from "components/workflow/run_assistants/informatica/migration_object_selection_screen/InformaticaRunAssistantMigrationObjectList";
+from "components/workflow/run_assistants/informatica/migration_object_selection_screen/InformaticaRunAssistantMigrationObjectList";
 import {INFORMATICA_RUN_ASSISTANT_SCREENS} from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistant";
 import BackButton from "components/common/buttons/back/BackButton";
 import InformaticaRunAssistantSubmitMigrationObjectsButton
-  from "components/workflow/run_assistants/informatica/migration_object_selection_screen/InformaticaRunAssistantSubmitMigrationObjectsButton";
+from "components/workflow/run_assistants/informatica/migration_object_selection_screen/InformaticaRunAssistantSubmitMigrationObjectsButton";
 
 const InformaticaRunAssistantMigrationObjectSelector = (
   { 

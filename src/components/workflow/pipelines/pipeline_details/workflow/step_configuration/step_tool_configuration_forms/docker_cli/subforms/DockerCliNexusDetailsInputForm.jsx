@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import RoleRestrictedNexusToolSelectInput
-  from "components/common/list_of_values_input/tools/nexus/RoleRestrictedNexusToolSelectInput";
+from "components/common/list_of_values_input/tools/nexus/RoleRestrictedNexusToolSelectInput";
 import DockerCliNexusRepoSelectInput from "../inputs/DockerCliNexusRepoSelectInput";
 
 function DockerCliNexusDetailsInputForm({ model, setModel }) {

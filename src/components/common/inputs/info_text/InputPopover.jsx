@@ -21,12 +21,12 @@ function InputPopover({ tooltipBody, isLoading, trigger, tooltipTitle }) {
 
   const getPopover = () => {
     return (
-    <Popover id="popover-basic" >
-      {getPopoverTitle()}
-      <Popover.Content>
-        {tooltipBody}
-      </Popover.Content>
-    </Popover>
+      <Popover id="popover-basic" >
+        {getPopoverTitle()}
+        <Popover.Content>
+          {tooltipBody}
+        </Popover.Content>
+      </Popover>
     );
   };
 

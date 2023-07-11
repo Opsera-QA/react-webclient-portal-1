@@ -7,7 +7,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import IconBase from "components/common/icons/IconBase";
 import salesforceBulkMigrationWizardActions
-  from "components/workflow/wizards/salesforce_bulk_migration/salesforceBulkMigrationWizard.actions";
+from "components/workflow/wizards/salesforce_bulk_migration/salesforceBulkMigrationWizard.actions";
 
 const SalesforceBulkMigrationTriggerTaskButton = ({pipelineWizardModel, handleClose, setError}) => {
   const { getAccessToken } = useContext(AuthContext);

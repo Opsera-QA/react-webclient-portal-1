@@ -45,9 +45,9 @@ function LdapUserByDomainSelectInput(
       }
 
       setIsLoading(true);
-        const domainToCheck =
+      const domainToCheck =
           hasStringValue(organizationDomain) && isOpseraAdministrator === true ? organizationDomain : domain;
-        await getUsers(cancelSource, domainToCheck);
+      await getUsers(cancelSource, domainToCheck);
     }
     catch (error) {
       setError(error);

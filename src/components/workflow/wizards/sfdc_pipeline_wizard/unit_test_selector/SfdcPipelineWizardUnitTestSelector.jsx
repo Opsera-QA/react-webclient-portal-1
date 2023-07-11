@@ -16,7 +16,7 @@ import CancelButton from "components/common/buttons/CancelButton";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import axios from "axios";
 import SfdcPipelineWizardManualTestClassSelector
-  from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/SfdcPipelineWizardManualTestClassSelector";
+from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/SfdcPipelineWizardManualTestClassSelector";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import IconBase from "components/common/icons/IconBase";
 import {UnitTestStepView} from "./UnitTestStepView";
@@ -79,11 +79,11 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
   const getUnitTestList = async (filterDto = testClassFilterDto, step = selectedStep) => {
     setUnitTestListLoading(true);
     try {
-       let newFilterDto = filterDto;
-       newFilterDto.setData("pageSize", 500);
-       setTestClassFilterDto({...newFilterDto});
+      let newFilterDto = filterDto;
+      newFilterDto.setData("pageSize", 500);
+      setTestClassFilterDto({...newFilterDto});
 
-       setSelectedUnitTestClassesList([]);
+      setSelectedUnitTestClassesList([]);
       const response = await sfdcPipelineActions.getUnitTestClassesListV2(getAccessToken, cancelTokenSource, pipelineWizardModel, step);
       const testClasses = response?.data?.testClasses?.data;
       const selectedTestClasses = response?.data?.selectedTestClasses?.data;
@@ -115,15 +115,15 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
       setIsLoading(true);
       stopPolling();
       setFilePullCompleted(false);
-        setSelectedStep(unitClassStep);
+      setSelectedStep(unitClassStep);
 
-        if (Object.keys(unitClassStep).length > 0) {
-          setSelectedUnitTestClassesList([]);
-          setUnitTestClassesList([]);
-          // start polling
-          await unitTestPolling(testClassFilterDto, unitClassStep);
-          // await getUnitTestList(testClassFilterDto, unitClassStep);
-        }
+      if (Object.keys(unitClassStep).length > 0) {
+        setSelectedUnitTestClassesList([]);
+        setUnitTestClassesList([]);
+        // start polling
+        await unitTestPolling(testClassFilterDto, unitClassStep);
+        // await getUnitTestList(testClassFilterDto, unitClassStep);
+      }
     } catch (error) {
       console.error("Error getting API Data: ", error);
       toastContext.showLoadingErrorDialog(error);
@@ -204,7 +204,7 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
     const isUnitTestSelectedResponse = await sfdcPipelineActions.checkTestClassesCount(getAccessToken, cancelTokenSource, pipelineWizardModel, unitTestSteps);
     if(!isUnitTestSelectedResponse?.data?.status) {
       isUnitTestSelectedResponse?.data?.message ? toastContext.showSystemErrorToast(isUnitTestSelectedResponse?.data?.message) :
-      toastContext.showSystemErrorToast("No Test Classes were selected, Please select test classes for above steps to proceed further.");
+        toastContext.showSystemErrorToast("No Test Classes were selected, Please select test classes for above steps to proceed further.");
       return;
     }
     setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.XML_VIEWER);
@@ -228,31 +228,31 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
 
           {getUnitTestSelection()}
 
-          </div>
-          <SaveButtonContainer>
-             <Button
-              variant="secondary"
-              size="sm"
-              className="mr-2"
-              onClick={() => { handleBackButtonClick(); }}
-            >
-              <IconBase icon={faArrowLeft} className={"mr-1"}/>
+        </div>
+        <SaveButtonContainer>
+          <Button
+            variant="secondary"
+            size="sm"
+            className="mr-2"
+            onClick={() => { handleBackButtonClick(); }}
+          >
+            <IconBase icon={faArrowLeft} className={"mr-1"}/>
               Back
-            </Button>
+          </Button>
 
-            <Button
-              variant="success"
-              size="sm"
-              onClick={() => {
-                handleNextClick();
-              }}
-            >
-              <IconBase icon={faArrowRight} className={"mr-1"}/>
+          <Button
+            variant="success"
+            size="sm"
+            onClick={() => {
+              handleNextClick();
+            }}
+          >
+            <IconBase icon={faArrowRight} className={"mr-1"}/>
               Next
-            </Button>
+          </Button>
 
-            <CancelButton className={"ml-2"} cancelFunction={handleClose} />
-          </SaveButtonContainer>
+          <CancelButton className={"ml-2"} cancelFunction={handleClose} />
+        </SaveButtonContainer>
       </div>
     </div>
   );

@@ -31,9 +31,9 @@ function ModalXML({ header, size, jsonMessage, dataType, show, setParentVisibili
           <div style={{position: "absolute", fontSize: "1.1rem", top: "20px", right: "30px"}}>
             <CopyToClipboardIcon copyString={jsonMessage && jsonMessage.xml ? jsonMessage.xml : jsonMessage ? jsonMessage : "N/A"} />
           </div>
-            <SyntaxHighlighter language="xml" style={docco}>
-              {jsonMessage && jsonMessage.xml ? jsonMessage.xml : jsonMessage ? jsonMessage : "N/A"}
-             </SyntaxHighlighter>
+          <SyntaxHighlighter language="xml" style={docco}>
+            {jsonMessage && jsonMessage.xml ? jsonMessage.xml : jsonMessage ? jsonMessage : "N/A"}
+          </SyntaxHighlighter>
         </div>
       </Modal.Body>
       <Modal.Footer>

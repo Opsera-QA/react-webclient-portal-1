@@ -77,7 +77,7 @@ function LegacySonarRatingsMaintainabilityDataBlockContainer({ dashboardData, kp
     <HorizontalDataBlocksContainer
       title={"Sonar Ratings: Maintainability"}
       onClick={() => onRowSelect()}
-     >
+    >
       <Col sm={4}>
         {getLeftDataBlock()}
       </Col>

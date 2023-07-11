@@ -6,7 +6,7 @@ import axios from "axios";
 import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ArgoApplicationEditorPanel
-  from "components/inventory/tools/tool_details/tool_jobs/argo/applications/details/ArgoApplicationEditorPanel";
+from "components/inventory/tools/tool_details/tool_jobs/argo/applications/details/ArgoApplicationEditorPanel";
 import argoFiltersMetadata from "../argo-filters-metadata";
 import Model from "core/data_model/model";
 import {stringIncludesValue} from "components/common/helpers/string-helpers";
@@ -83,7 +83,7 @@ function ArgoToolApplicationsPanel({ toolData }) {
   const searchFilter = (application) => {
     const searchTerm = filterModel?.getFilterValue("search");
     return (
-         stringIncludesValue(application?.name, searchTerm)
+      stringIncludesValue(application?.name, searchTerm)
       || stringIncludesValue(application?.namespace, searchTerm)
       || stringIncludesValue(application?.syncStatus, searchTerm)
       || stringIncludesValue(application?.healthStatus, searchTerm)

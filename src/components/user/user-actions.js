@@ -120,7 +120,7 @@ userActions.getLoggedInUser = async (
   token,
   cancelTokenSource,
   expectedEmailAddress,
-  ) => {
+) => {
   const apiUrl = "/users";
   const queryParameters = {
     emailAddress: expectedEmailAddress,

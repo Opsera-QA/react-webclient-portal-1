@@ -19,7 +19,7 @@ import VanitySetVerticalTabContainer from "../../../../../../common/tabs/vertica
 import VanitySetVerticalTab from "../../../../../../common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetTabView from "../../../../../../common/tabs/vertical_tabs/VanitySetTabView";import VanitySetTabViewContainer from "../../../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import SuccessExecutionsActionableInsightsMetaData
-  from "../SuccessExecutions/SuccessExecutionsActionableInsightsMetaData";
+from "../SuccessExecutions/SuccessExecutionsActionableInsightsMetaData";
 import {DialogToastContext} from "../../../../../../../contexts/DialogToastContext";
 import FailedExecutionsDetailedActionableInsights from "./FailedExecutionsDetailedActionableInsights";
 

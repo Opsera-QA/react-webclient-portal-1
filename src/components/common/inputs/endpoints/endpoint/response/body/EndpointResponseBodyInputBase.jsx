@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import EndpointResponseBodyFieldInputRow
-  from "components/common/inputs/endpoints/endpoint/response/body/field/EndpointResponseBodyFieldInputRow";
+from "components/common/inputs/endpoints/endpoint/response/body/field/EndpointResponseBodyFieldInputRow";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import InfoText from "components/common/inputs/info_text/InfoText";
@@ -13,12 +13,12 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import InfoContainer from "components/common/containers/InfoContainer";
 import EndpointResponseBodyTypeSelectInput
-  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyTypeSelectInput";
+from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyTypeSelectInput";
 import {
   EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS
 } from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
 import endpointResponseFieldMetadata
-  from "@opsera/definitions/constants/api/response/body/field/endpointResponseField.metadata";
+from "@opsera/definitions/constants/api/response/body/field/endpointResponseField.metadata";
 
 function EndpointResponseBodyInputBase(
   {
@@ -189,37 +189,37 @@ function EndpointResponseBodyInputBase(
 
   const getBody = () => {
     switch (model?.getData("responseBodyType")) {
-      case "object":
-        if (!Array.isArray(fields) || fields.length === 0) {
-          return (
-            <InfoContainer
-              titleText={field?.label}
-              titleIcon={faBracketsCurly}
-              minimumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_RESPONSE_BODY_FIELD_INPUT_HEIGHT}
-              maximumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_RESPONSE_BODY_FIELD_INPUT_HEIGHT}
-              titleRightSideButton={getAddFieldButton()}
-            >
-              <CenteredContentWrapper>
-                <div className={"mt-5"}>No fields have been added</div>
-              </CenteredContentWrapper>
-            </InfoContainer>
-          );
-        }
-
+    case "object":
+      if (!Array.isArray(fields) || fields.length === 0) {
         return (
-          <div>
-            <VanitySetTabAndViewContainer
-              title={field?.label}
-              icon={faBracketsCurly}
-              verticalTabContainer={getVerticalTabContainer()}
-              currentView={getCurrentView()}
-              minimumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_RESPONSE_BODY_FIELD_INPUT_HEIGHT}
-              maximumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_RESPONSE_BODY_FIELD_INPUT_HEIGHT}
-              tabColumnSize={3}
-              titleRightSideButton={getAddFieldButton()}
-            />
-          </div>
+          <InfoContainer
+            titleText={field?.label}
+            titleIcon={faBracketsCurly}
+            minimumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_RESPONSE_BODY_FIELD_INPUT_HEIGHT}
+            maximumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_RESPONSE_BODY_FIELD_INPUT_HEIGHT}
+            titleRightSideButton={getAddFieldButton()}
+          >
+            <CenteredContentWrapper>
+              <div className={"mt-5"}>No fields have been added</div>
+            </CenteredContentWrapper>
+          </InfoContainer>
         );
+      }
+
+      return (
+        <div>
+          <VanitySetTabAndViewContainer
+            title={field?.label}
+            icon={faBracketsCurly}
+            verticalTabContainer={getVerticalTabContainer()}
+            currentView={getCurrentView()}
+            minimumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_RESPONSE_BODY_FIELD_INPUT_HEIGHT}
+            maximumHeight={EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS.ENDPOINT_RESPONSE_BODY_FIELD_INPUT_HEIGHT}
+            tabColumnSize={3}
+            titleRightSideButton={getAddFieldButton()}
+          />
+        </div>
+      );
     }
   };
 

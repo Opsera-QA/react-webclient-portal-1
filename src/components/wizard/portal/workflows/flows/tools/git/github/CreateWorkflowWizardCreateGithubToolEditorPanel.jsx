@@ -131,7 +131,7 @@ export default function CreateWorkflowWizardCreateGithubToolEditorPanel({
 
   const canCreateTool = () => {
     return RegistryToolRoleHelper.canCreateRegistryTool(
-        userData,
+      userData,
     );
   };
 

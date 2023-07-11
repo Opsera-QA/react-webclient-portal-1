@@ -73,7 +73,7 @@ function BlueprintSearchResult({ searchResults }) {
         </tbody>
       </Table> */}
       <ModalLogs header={"Build: " + modalMessage.full_name} size="lg" jsonMessage={modalMessage} dataType="bar"
-                 show={showModal} setParentVisibility={setShowModal}/>
+        show={showModal} setParentVisibility={setShowModal}/>
     </div>
   );
 }

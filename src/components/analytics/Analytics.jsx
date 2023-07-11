@@ -265,17 +265,17 @@ function Analytics() {
   const getBody = () => {
     return (
       <>
-      <div className="mt-3">
-        {error && <ErrorDialog error={error} align="top"/>}
+        <div className="mt-3">
+          {error && <ErrorDialog error={error} align="top"/>}
 
-        {
-          !error && profile && !profile.enabledToolsOn &&
+          {
+            !error && profile && !profile.enabledToolsOn &&
           <div className="p-2 mt-1 max-content-width mb-1">
             <AnalyticsProfileSettings />
           </div>
-        }
+          }
 
-        {profile.enabledToolsOn && !error &&
+          {profile.enabledToolsOn && !error &&
         <div className="p-2">
           <div className="mt-1">
             <Row>
@@ -343,8 +343,8 @@ function Analytics() {
             <ChartView token={token} selection={selection} persona={null} date={date} index={index}/>
           </div>
         </div>}
-      </div>
-  </>
+        </div>
+      </>
     );
 
   };
@@ -559,32 +559,32 @@ function ChartView({ selection, persona, date, index }) {
         </>
       );
 
-      case "operations":
-        return (
-          <>
-            {index.includes("metricbeat") ? (
-              <div className="mt-2">
-                <OperationsView persona={persona} date={date} />
-              </div>
-            ) : (
-              <div
-                className="mt-3 bordered-content-block p-3 max-content-width"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Row>
-                  <InfoDialog message="No activity data has been captured for this dashboard. In order to activate source code metrics contact support@opsera.io" />
-                </Row>
-              </div>
-            )}
-          </>
-        );
+    case "operations":
+      return (
+        <>
+          {index.includes("metricbeat") ? (
+            <div className="mt-2">
+              <OperationsView persona={persona} date={date} />
+            </div>
+          ) : (
+            <div
+              className="mt-3 bordered-content-block p-3 max-content-width"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Row>
+                <InfoDialog message="No activity data has been captured for this dashboard. In order to activate source code metrics contact support@opsera.io" />
+              </Row>
+            </div>
+          )}
+        </>
+      );
 
-      default:
-        return null;
+    default:
+      return null;
     }
   }
 }

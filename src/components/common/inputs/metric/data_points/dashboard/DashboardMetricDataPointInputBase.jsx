@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import DashboardMetricStrategicCriteriaPanel
-  from "components/common/inputs/metric/data_points/dashboard/strategic_criteria/DashboardMetricStrategicCriteriaPanel";
+from "components/common/inputs/metric/data_points/dashboard/strategic_criteria/DashboardMetricStrategicCriteriaPanel";
 import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import DashboardMetricDataPointVisibilityInput
-  from "components/common/inputs/metric/data_points/dashboard/visibility/DashboardMetricDataPointVisibilityInput";
+from "components/common/inputs/metric/data_points/dashboard/visibility/DashboardMetricDataPointVisibilityInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import kpiDataPointMetadata from "components/common/inputs/metric/data_points/kpiDataPoint.metadata";
 import DataPointStrategicCriteriaInfoPanel
-  from "components/common/metrics/panels/strategic_criteria/data_point/DataPointStrategicCriteriaInfoPanel";
+from "components/common/metrics/panels/strategic_criteria/data_point/DataPointStrategicCriteriaInfoPanel";
 import DashboardDefaultNotificationInput from "./visibility/DashboardDefaultNotificationInput";
 import DashboardMetricCustomFieldsMappingForm from "./custom_fields/DashboardMetricCustomFieldsMappingForm";
 

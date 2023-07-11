@@ -81,13 +81,13 @@ function BugsCountLineChart({ kpiConfiguration, setKpiConfiguration, dashboardDa
         <ResponsiveLine
           data={metrics}
           {...defaultConfig("Number of Bugs", "Date", 
-                    false, true, "wholeNumbers", "monthDate2")}
+            false, true, "wholeNumbers", "monthDate2")}
           {...config(getColor)}
           onClick={() => setShowModal(true)}
           tooltip={({ point, color }) => <ChartTooltip 
             titles = {["Timestamp", "Bugs", "Project Key"]}
             values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(point.data.x)),
-                      point.data.y, point.data.key]}
+              point.data.y, point.data.key]}
             color = {color} />}
         />
       </div>

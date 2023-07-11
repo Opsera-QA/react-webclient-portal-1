@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import EnabledNotificationBooleanToggle from "components/workflow/plan/step/notifications/EnabledNotificationBooleanToggle";
 import OrchestrationNotificationLevelSelectInput from "components/workflow/plan/step/notifications/OrchestrationNotificationLevelSelectInput";
 import ServiceNowStepNotificationToolSelectInput
-  from "components/workflow/plan/step/notifications/servicenow/ServiceNowStepNotificationToolSelectInput";
+from "components/workflow/plan/step/notifications/servicenow/ServiceNowStepNotificationToolSelectInput";
 import ServiceNowGroupSelectInput
-  from "components/common/list_of_values_input/tools/service_now/groups/ServiceNowGroupSelectInput";
+from "components/common/list_of_values_input/tools/service_now/groups/ServiceNowGroupSelectInput";
 import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";

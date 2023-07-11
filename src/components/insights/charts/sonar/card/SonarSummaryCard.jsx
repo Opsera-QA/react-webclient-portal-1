@@ -24,17 +24,17 @@ function SonarSummaryCard({ sonarData, loadData, type }) {
 
   const initializeDto = async () => {    
     switch (type) {
-        case "bugs":         
-            setSonarMetricScorecardDto(new Model({...sonarData}, SonarBugsMetricScorecardMetaData, false));
-            return;
-        case "vulnerabilities":            
-            setSonarMetricScorecardDto(new Model({...sonarData}, SonarVulnerabilitiesMetricScorecardMetaData, false));
-            return;
-        case "code-smells":
-            setSonarMetricScorecardDto(new Model({...sonarData}, SonarCodeSmellsMetricScorecardMetaData, false));
-            return;
-        default:
-            return;
+    case "bugs":         
+      setSonarMetricScorecardDto(new Model({...sonarData}, SonarBugsMetricScorecardMetaData, false));
+      return;
+    case "vulnerabilities":            
+      setSonarMetricScorecardDto(new Model({...sonarData}, SonarVulnerabilitiesMetricScorecardMetaData, false));
+      return;
+    case "code-smells":
+      setSonarMetricScorecardDto(new Model({...sonarData}, SonarCodeSmellsMetricScorecardMetaData, false));
+      return;
+    default:
+      return;
     }    
   };
 
@@ -57,27 +57,27 @@ function SonarSummaryCard({ sonarData, loadData, type }) {
         <small>
           <Row className="d-flex align-items-center">            
             <Col sm={12} md={5} lg={3}>                
-                <InsightHighlightFieldWithTrendIcon 
-                    dataObject={sonarMetricScorecardDto} 
-                    fieldName="sonarLatestMeasureValue"
-                    trendFieldName="status"
-                />                
+              <InsightHighlightFieldWithTrendIcon 
+                dataObject={sonarMetricScorecardDto} 
+                fieldName="sonarLatestMeasureValue"
+                trendFieldName="status"
+              />                
             </Col>
             <Col sm={12} md={7} lg={9}>
-                <Row>
-                    <Col sm={12} md={6} lg={6}>
-                        <TextFieldBase dataObject={sonarMetricScorecardDto} fieldName={"sonarPrimaryLanguage"} className="insight-detail-label my-2" />
-                    </Col>
-                    <Col sm={12} md={6} lg={6}>
-                        <TextFieldBase dataObject={sonarMetricScorecardDto} fieldName={"run_count"} className="insight-detail-label my-2" />
-                    </Col>
-                    <Col sm={12} md={6} lg={6}>
-                        <TextFieldBase dataObject={sonarMetricScorecardDto} fieldName={"pipelineName"} className="insight-detail-label my-2" />
-                    </Col>
-                    <Col sm={12} md={6} lg={6}>
-                        <DateTimeField dataObject={sonarMetricScorecardDto} fieldName={"timestamp"} className="insight-detail-label my-2" />
-                    </Col>
-                </Row>
+              <Row>
+                <Col sm={12} md={6} lg={6}>
+                  <TextFieldBase dataObject={sonarMetricScorecardDto} fieldName={"sonarPrimaryLanguage"} className="insight-detail-label my-2" />
+                </Col>
+                <Col sm={12} md={6} lg={6}>
+                  <TextFieldBase dataObject={sonarMetricScorecardDto} fieldName={"run_count"} className="insight-detail-label my-2" />
+                </Col>
+                <Col sm={12} md={6} lg={6}>
+                  <TextFieldBase dataObject={sonarMetricScorecardDto} fieldName={"pipelineName"} className="insight-detail-label my-2" />
+                </Col>
+                <Col sm={12} md={6} lg={6}>
+                  <DateTimeField dataObject={sonarMetricScorecardDto} fieldName={"timestamp"} className="insight-detail-label my-2" />
+                </Col>
+              </Row>
             </Col>            
           </Row>          
         </small>

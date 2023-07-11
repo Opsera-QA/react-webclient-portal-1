@@ -22,15 +22,15 @@ function GitToGitSyncTaskBitbucketWorkspaceSelectInput({model, setModel, disable
   }
 
   return (
-     <BitbucketWorkspaceInput
-       fieldName={"workspace"}
-       gitToolId={model?.getData("gitToolId")}
-       dataObject={model}
-       setDataObject={setModel}
-       setDataFunction={setWorkspace}
-       disabled={disabled}
-       clearDataFunction={clearData}
-     />
+    <BitbucketWorkspaceInput
+      fieldName={"workspace"}
+      gitToolId={model?.getData("gitToolId")}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setWorkspace}
+      disabled={disabled}
+      clearDataFunction={clearData}
+    />
   );
 }
 

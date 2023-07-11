@@ -36,7 +36,7 @@ function TransferDashboardOwnershipButton({ dashboardModel, className }) {
         cancelTokenSource,
         dashboardModelCopy?.getMongoDbId(),
         dashboardModel?.getData("owner")
-        );
+      );
       toastContext.showUpdateSuccessResultDialog("Dashboard Owner");
       document.body.click();
     }

@@ -48,9 +48,9 @@ function GitToGitMergeSyncTaskSourceControlTypeSelectInput({
 }
 
 GitToGitMergeSyncTaskSourceControlTypeSelectInput.propTypes = {
-    model: PropTypes.object,
-    setModel: PropTypes.func,
-    disabled: PropTypes.bool,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default GitToGitMergeSyncTaskSourceControlTypeSelectInput;

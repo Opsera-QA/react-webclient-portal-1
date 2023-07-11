@@ -7,13 +7,13 @@ import TextInputBase from "../../../../../../../common/inputs/text/TextInputBase
 import aksStepFormMetadata from "./aks-stepForm-metadata";
 import AksServiceDeployStepAzureToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/aks_service_deploy/inputs/AksServiceDeployStepAzureToolSelectInput";
 import AksServiceDeployStepApplicationSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/aks_service_deploy/inputs/AksServiceDeployStepApplicationSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/aks_service_deploy/inputs/AksServiceDeployStepApplicationSelectInput";
 import DynamicNameToggleInput from "./inputs/DynamicNameToggleInput";
 import DockerPushStepSelectInput from "./inputs/DockerPushStepSelectInput";
 import AzureResourceGroupSelect from "./inputs/AzureResourceGroupSelect";
 import ResourceGroupToggleInput from "./inputs/ResourceGroupToggleInput";
 import AksServiceDeployStepClusterSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/aks_service_deploy/inputs/AksServiceDeployStepClusterSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/aks_service_deploy/inputs/AksServiceDeployStepClusterSelectInput";
 
 function AksServiceDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan, stepId, pipelineId }) {
   const [isLoading, setIsLoading] = useState(false);

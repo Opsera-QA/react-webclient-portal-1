@@ -11,9 +11,9 @@ import {
   GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS
 } from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 import GithubActionsWorkflowWarningMessage
-  from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowWarningMessage";
+from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowWarningMessage";
 import ExportGithubActionWorkflowReportActionalbeInsights2Panel
-    from "../../../export/ExportGithubActionsWorkflowReportActionableInsights2Panel";
+from "../../../export/ExportGithubActionsWorkflowReportActionableInsights2Panel";
 
 function GithubActionsUniqueRunSummaryJobsTable(
   {
@@ -22,10 +22,10 @@ function GithubActionsUniqueRunSummaryJobsTable(
     loadData,
     filterModel,
     setFilterModel,
-      mostFailed,
-      mostSkipped,
-      mostSuccessTime,
-      mostFailedTime,
+    mostFailed,
+    mostSkipped,
+    mostSuccessTime,
+    mostFailedTime,
     setCurrentScreen,
     setSelectedJobName,
   }) {
@@ -85,18 +85,18 @@ function GithubActionsUniqueRunSummaryJobsTable(
     <div className={"mt-2"}>
       <div>
         <div className={"d-flex details-title-text"}>
-            <div className={'mr-4'}>
-                <b>Most Failed Job (by counts):</b> {mostFailed}
-            </div>
-            <div className={'mr-4'}>
-                <b>Most Skipped Job (by counts):</b> {mostSkipped}
-            </div>
-            <div className={'mr-4'}>
-                <b>Job With Most Time Consuming Successful Runs:</b> {mostSuccessTime}
-            </div>
-            <div className={'mr-4'}>
-                <b>Job With Most Time Consuming Failed Runs:</b> {mostFailedTime}
-            </div>
+          <div className={'mr-4'}>
+            <b>Most Failed Job (by counts):</b> {mostFailed}
+          </div>
+          <div className={'mr-4'}>
+            <b>Most Skipped Job (by counts):</b> {mostSkipped}
+          </div>
+          <div className={'mr-4'}>
+            <b>Job With Most Time Consuming Successful Runs:</b> {mostSuccessTime}
+          </div>
+          <div className={'mr-4'}>
+            <b>Job With Most Time Consuming Failed Runs:</b> {mostFailedTime}
+          </div>
         </div>
       </div>
       <div>

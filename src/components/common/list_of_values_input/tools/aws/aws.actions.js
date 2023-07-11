@@ -7,7 +7,7 @@ awsActions.getLogGroups = async (
   cancelTokenSource,
   awsToolId,
   region,
-  ) => {
+) => {
   const queryParameters = {
     region: region
   };
@@ -17,7 +17,7 @@ awsActions.getLogGroups = async (
     cancelTokenSource,
     apiUrl,
     queryParameters,
-    );
+  );
 };
 
 awsActions.getAwsRegionsV2 = async (cancelTokenSource) => {

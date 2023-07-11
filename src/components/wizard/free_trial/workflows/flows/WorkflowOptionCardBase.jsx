@@ -7,7 +7,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 import ToolCardFooter from "../../../../../temp-library-components/cards/tools/ToolCardFooter";
 import PipelineTemplateCardFooter
-  from "../../../../../temp-library-components/cards/templates/pipelines/PipelineTemplateCardFooter";
+from "../../../../../temp-library-components/cards/templates/pipelines/PipelineTemplateCardFooter";
 
 export const WORKFLOW_OPTION_TYPES = {
   PIPELINE: "pipeline",
@@ -63,27 +63,27 @@ export default function WorkflowOptionCardBase(
 
   const getCardFooterForWorkflowOptionType = () => {
     switch (workflowOptionType) {
-      case WORKFLOW_OPTION_TYPES.PIPELINE:
-        return <PipelineCardFooter />;
-      case WORKFLOW_OPTION_TYPES.PIPELINE_TEMPLATE:
-        return <PipelineTemplateCardFooter />;
-      case WORKFLOW_OPTION_TYPES.TASK:
-        return <TaskCardFooter />;
-      case WORKFLOW_OPTION_TYPES.TOOL:
-        return <ToolCardFooter />;
+    case WORKFLOW_OPTION_TYPES.PIPELINE:
+      return <PipelineCardFooter />;
+    case WORKFLOW_OPTION_TYPES.PIPELINE_TEMPLATE:
+      return <PipelineTemplateCardFooter />;
+    case WORKFLOW_OPTION_TYPES.TASK:
+      return <TaskCardFooter />;
+    case WORKFLOW_OPTION_TYPES.TOOL:
+      return <ToolCardFooter />;
     }
   };
 
   const getHighlightedBorderColorForWorkflowOptionType = () => {
     switch (workflowOptionType) {
-      case WORKFLOW_OPTION_TYPES.TASK:
-        return themeConstants.COLOR_PALETTE.SALESFORCE_BLUE;
-      case WORKFLOW_OPTION_TYPES.PIPELINE:
-        return themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE;
-      case WORKFLOW_OPTION_TYPES.PIPELINE_TEMPLATE:
-        return themeConstants.RESOURCE_COLORS.PIPELINES;
-      case WORKFLOW_OPTION_TYPES.TOOL:
-        return themeConstants.RESOURCE_COLORS.TOOLS;
+    case WORKFLOW_OPTION_TYPES.TASK:
+      return themeConstants.COLOR_PALETTE.SALESFORCE_BLUE;
+    case WORKFLOW_OPTION_TYPES.PIPELINE:
+      return themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE;
+    case WORKFLOW_OPTION_TYPES.PIPELINE_TEMPLATE:
+      return themeConstants.RESOURCE_COLORS.PIPELINES;
+    case WORKFLOW_OPTION_TYPES.TOOL:
+      return themeConstants.RESOURCE_COLORS.TOOLS;
     }
   };
 

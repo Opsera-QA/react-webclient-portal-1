@@ -26,10 +26,10 @@ function OracleFusionReportMigrationNexusRepoGroupSelectInput({visible, model, s
     setNexusGroupsList([]);
     if (hasStringValue(nexusToolConfigId) && hasStringValue(repositoryName)) {
       loadGroups(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
     }
     
     return () => {
@@ -50,9 +50,9 @@ function OracleFusionReportMigrationNexusRepoGroupSelectInput({visible, model, s
         setError(error);
       }
     } finally {
-        if (isMounted?.current === true) {
-          setIsLoading(false);
-        }
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
     
   };

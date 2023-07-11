@@ -10,7 +10,7 @@ import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import OverlayWizardButtonContainerBase
-  from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 
 function ToolEditorPanel(
   {
@@ -29,13 +29,13 @@ function ToolEditorPanel(
   useEffect(() => {
     if (setButtonContainer && setCurrentScreen) {
       setButtonContainer(
-          <OverlayWizardButtonContainerBase
-              backButtonFunction={() => {
-                toolData?.setData("tool_identifier", "");
-                setToolData({...toolData});
-                setCurrentScreen("tool_identifier_select");
-              }}
-          />,
+        <OverlayWizardButtonContainerBase
+          backButtonFunction={() => {
+            toolData?.setData("tool_identifier", "");
+            setToolData({...toolData});
+            setCurrentScreen("tool_identifier_select");
+          }}
+        />,
       );
     }
   }, []);

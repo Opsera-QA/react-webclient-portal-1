@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import GitToGitSyncDetailedRunSummaryOverlay
-  from "./detailed_run_summary/GitToGitSyncDetailedRunSummaryOverlay";
+from "./detailed_run_summary/GitToGitSyncDetailedRunSummaryOverlay";
 import GitToGitSyncActionableInsightSubNavigationBar
-  from "./GitToGitSyncActionableInsightSubNavigationBar";
+from "./GitToGitSyncActionableInsightSubNavigationBar";
 
 export const GIT_TO_GIT_SYNC_ACTIONABLE_INSIGHT_SCREENS = {
   GIT_TO_GIT_SYNC_RUN_SUMMARY: "git_to_git_sync_run_summary",
@@ -31,17 +31,17 @@ export default function GitToGitSyncActionableInsightOverlay(
 
   const getBody = () => {
     switch (currentScreen) {
-      case GIT_TO_GIT_SYNC_ACTIONABLE_INSIGHT_SCREENS.GIT_TO_GIT_SYNC_RUN_SUMMARY:
-        return (
-          <GitToGitSyncDetailedRunSummaryOverlay
-            dashboardData={dashboardData}
-            kpiConfiguration={kpiConfiguration}
-            dashboardFilters={dashboardFilters}
-            taskId={taskId}
-            taskName={taskName}
-            breadcrumbBar={getBreadcrumbBar()}
-          />
-        );
+    case GIT_TO_GIT_SYNC_ACTIONABLE_INSIGHT_SCREENS.GIT_TO_GIT_SYNC_RUN_SUMMARY:
+      return (
+        <GitToGitSyncDetailedRunSummaryOverlay
+          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
+          dashboardFilters={dashboardFilters}
+          taskId={taskId}
+          taskName={taskName}
+          breadcrumbBar={getBreadcrumbBar()}
+        />
+      );
     }
   };
 

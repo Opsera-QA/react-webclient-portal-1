@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
 import ToolConfigurationEditorPanelContainer
-  from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import toolsActions from "components/inventory/tools/tools-actions";
 import { AuthContext } from "contexts/AuthContext";
 import modelHelpers from "components/common/model/modelHelpers";
@@ -14,7 +14,7 @@ import { toolIdentifierConstants } from "components/admin/tools/identifiers/tool
 import FortifyScanToolSelectInput from "./inputs/FortifyScanToolSelectInput";
 import FortifyPortalSelectInput from "./inputs/FortifyPortalSelectInput";
 import toolIdentifierConnectionCheckConstants
-  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 const FortifyToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -50,48 +50,48 @@ const FortifyToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) => 
   const saveFortifyToolConfiguration = async () => {
     const newConfiguration = fortifyConfigurationModel.getPersistData();
     switch (fortifyConfigurationModel?.getData("scanToolType")) {
-      case "Fortify On Demand":
-        newConfiguration.accessKey = await toolsActions.saveThreePartToolPasswordToVaultV3(
-          getAccessToken,
-          cancelTokenSource,
-          toolData?.getMongoDbId(),
-          toolData.getData("tool_identifier"),
-          "accessKey",
-          newConfiguration?.accessKey
-        );
-        newConfiguration.secretKey = await toolsActions.saveThreePartToolPasswordToVaultV3(
-          getAccessToken,
-          cancelTokenSource,
-          toolData?.getMongoDbId(),
-          toolData.getData("tool_identifier"),
-          "secretKey",
-          newConfiguration?.secretKey
-        );
-        newConfiguration.token = {};
-        newConfiguration.password = {};
-        break;
-      case "Fortify On-Prem ScanCentral":
-        newConfiguration.token = await toolsActions.saveThreePartToolPasswordToVaultV3(
-          getAccessToken,
-          cancelTokenSource,
-          toolData?.getMongoDbId(),
-          toolData.getData("tool_identifier"),
-          "token",
-          newConfiguration?.token
-        );
-        newConfiguration.password = await toolsActions.saveThreePartToolPasswordToVaultV3(
-          getAccessToken,
-          cancelTokenSource,
-          toolData?.getMongoDbId(),
-          toolData.getData("tool_identifier"),
-          "password",
-          newConfiguration?.password
-        );
-        newConfiguration.accessKey = {};
-        newConfiguration.secretKey = {};
-        break;
-      default:
-        break;
+    case "Fortify On Demand":
+      newConfiguration.accessKey = await toolsActions.saveThreePartToolPasswordToVaultV3(
+        getAccessToken,
+        cancelTokenSource,
+        toolData?.getMongoDbId(),
+        toolData.getData("tool_identifier"),
+        "accessKey",
+        newConfiguration?.accessKey
+      );
+      newConfiguration.secretKey = await toolsActions.saveThreePartToolPasswordToVaultV3(
+        getAccessToken,
+        cancelTokenSource,
+        toolData?.getMongoDbId(),
+        toolData.getData("tool_identifier"),
+        "secretKey",
+        newConfiguration?.secretKey
+      );
+      newConfiguration.token = {};
+      newConfiguration.password = {};
+      break;
+    case "Fortify On-Prem ScanCentral":
+      newConfiguration.token = await toolsActions.saveThreePartToolPasswordToVaultV3(
+        getAccessToken,
+        cancelTokenSource,
+        toolData?.getMongoDbId(),
+        toolData.getData("tool_identifier"),
+        "token",
+        newConfiguration?.token
+      );
+      newConfiguration.password = await toolsActions.saveThreePartToolPasswordToVaultV3(
+        getAccessToken,
+        cancelTokenSource,
+        toolData?.getMongoDbId(),
+        toolData.getData("tool_identifier"),
+        "password",
+        newConfiguration?.password
+      );
+      newConfiguration.accessKey = {};
+      newConfiguration.secretKey = {};
+      break;
+    default:
+      break;
     }    
     await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
     if (setUpMode === "wizard") setCurrentScreen("connection_test");
@@ -161,12 +161,12 @@ const FortifyToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) => 
     }
 
     switch (fortifyConfigurationModel?.getData("scanToolType")) {
-      case "Fortify On Demand":
-        return (<>{getFortifyOnDemandFields()}</>);
-      case "Fortify On-Prem ScanCentral":
-        return (<>{getFortifyOnPremFields()}</>);
-      default:
-        return null;
+    case "Fortify On Demand":
+      return (<>{getFortifyOnDemandFields()}</>);
+    case "Fortify On-Prem ScanCentral":
+      return (<>{getFortifyOnPremFields()}</>);
+    default:
+      return null;
     }
 
   };

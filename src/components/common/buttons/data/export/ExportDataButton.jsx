@@ -31,7 +31,7 @@ function ExportDataButton(
         icon={faFileExport}
         tooltipText={"Export Data"}
       >
-    </ButtonBase>
+      </ButtonBase>
     </div>
   );
 }

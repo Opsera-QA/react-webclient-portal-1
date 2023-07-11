@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
 import taskActions from "components/tasks/task.actions";
 import GitRoleAccessHelpDocumentation
-  from "components/common/help/documentation/tasks/GitRoleAccessHelpDocumentation";
+from "components/common/help/documentation/tasks/GitRoleAccessHelpDocumentation";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 import {taskHelper} from "components/tasks/task.helper";

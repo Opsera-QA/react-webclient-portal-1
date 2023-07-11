@@ -5,7 +5,7 @@ function OverlayTabPanelContainer({ tabContainer, currentView }) {
   return (
     <>
       <div>
-          {tabContainer}
+        {tabContainer}
       </div>
       <div>
         {currentView}

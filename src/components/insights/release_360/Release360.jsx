@@ -7,9 +7,9 @@ import CustomTab from "components/common/tabs/CustomTab";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import OverallReleaseDurationMetrics
-  from "components/insights/release_360/views/duration/OverallReleaseDurationMetrics";
+from "components/insights/release_360/views/duration/OverallReleaseDurationMetrics";
 import OverallReleaseTraceabilityMetrics
-  from "components/insights/release_360/views/traceability/OverallReleaseTraceabilityMetrics";
+from "components/insights/release_360/views/traceability/OverallReleaseTraceabilityMetrics";
 import OverallReleaseQualityMetrics from "components/insights/release_360/views/quality/OverallReleaseQualityMetrics";
 import {AuthContext} from "contexts/AuthContext";
 import MetricUiSandbox from "components/insights/release_360/views/sandbox/MetricUiSandbox";
@@ -89,16 +89,16 @@ function Release360 () {
   // TODO: Make sub components
   const getCurrentView = () => {
     switch (activeTab) {
-      case "duration":
-        return (<OverallReleaseDurationMetrics />);
-      case "traceability":
-        return (<OverallReleaseTraceabilityMetrics />);
-      case "quality":
-        return (<OverallReleaseQualityMetrics />);
-      case "sandbox":
-        return (<MetricUiSandbox />);
-      default:
-        return null;
+    case "duration":
+      return (<OverallReleaseDurationMetrics />);
+    case "traceability":
+      return (<OverallReleaseTraceabilityMetrics />);
+    case "quality":
+      return (<OverallReleaseQualityMetrics />);
+    case "sandbox":
+      return (<MetricUiSandbox />);
+    default:
+      return null;
     }
   };
 

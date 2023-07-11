@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";

@@ -56,7 +56,7 @@ function TerraformCloudProviderSelectInput({dataObject, setDataObject, disabled,
       valueField="value"
       textField="name"
       disabled={disabled}
-  />
+    />
   );
 }
 

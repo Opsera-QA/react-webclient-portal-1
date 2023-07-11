@@ -7,7 +7,7 @@ import {
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import StandalonePositiveIntegerNumberTextInput
-  from "components/common/inputs/text/number/integer/StandalonePositiveIntegerNumberTextInput";
+from "components/common/inputs/text/number/integer/StandalonePositiveIntegerNumberTextInput";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import IconBase from "components/common/icons/IconBase";
 

@@ -12,9 +12,9 @@ function AdminToolsSubNavigationBar({activeTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-      case "adminTools":
-        history.push(`/admin`);
-        return;
+    case "adminTools":
+      history.push(`/admin`);
+      return;
     }
   };
 

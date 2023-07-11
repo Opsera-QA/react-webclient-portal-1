@@ -7,11 +7,11 @@ import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 import {faSync} from "@fortawesome/pro-light-svg-icons";
 import ParameterSelectListHeaderField
-  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListHeaderField";
+from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListHeaderField";
 import ParameterSelectListInlineField
-  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInlineField";
+from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInlineField";
 import PipelineStepSaveEnvironmentVariablesBooleanToggle
-  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepSaveEnvironmentVariablesBooleanToggle";
+from "components/common/list_of_values_input/parameters/pipeline/PipelineStepSaveEnvironmentVariablesBooleanToggle";
 
 export default function GlobalParameterFields(
   {
@@ -139,13 +139,13 @@ export default function GlobalParameterFields(
   );
 }
 
-  GlobalParameterFields.propTypes = {
-    model: PropTypes.object,
-    setModel: PropTypes.func,
-    fieldName: PropTypes.string,
-    disabled: PropTypes.bool,
-    plan: PropTypes.array,
-    allowTerraformParametersSync: PropTypes.bool,
-    environmentVariablesFieldName: PropTypes.string,
-    showSaveEnvironmentVariablesToggle: PropTypes.bool,
-  };
+GlobalParameterFields.propTypes = {
+  model: PropTypes.object,
+  setModel: PropTypes.func,
+  fieldName: PropTypes.string,
+  disabled: PropTypes.bool,
+  plan: PropTypes.array,
+  allowTerraformParametersSync: PropTypes.bool,
+  environmentVariablesFieldName: PropTypes.string,
+  showSaveEnvironmentVariablesToggle: PropTypes.bool,
+};

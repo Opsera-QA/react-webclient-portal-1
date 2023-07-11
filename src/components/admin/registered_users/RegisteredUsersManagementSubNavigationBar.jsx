@@ -12,29 +12,29 @@ function RegisteredUsersManagementSubNavigationBar({activeTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-      case "adminTools":
-        history.push(`/admin`);
-        return;
-      case "registeredUsersManagement":
-        history.push(`/admin/registered-users`);
-        return;
+    case "adminTools":
+      history.push(`/admin`);
+      return;
+    case "registeredUsersManagement":
+      history.push(`/admin/registered-users`);
+      return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-      case "registeredUserViewer":
-        return (
-          <NavigationTab
-            icon={faUserCircle}
-            tabName={"registeredUserViewer"}
-            handleTabClick={handleTabClick}
-            activeTab={activeTab}
-            tabText={"Registered User Viewer"}
-          />
-        );
-      default:
-        return null;
+    case "registeredUserViewer":
+      return (
+        <NavigationTab
+          icon={faUserCircle}
+          tabName={"registeredUserViewer"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Registered User Viewer"}
+        />
+      );
+    default:
+      return null;
     }
   };
 

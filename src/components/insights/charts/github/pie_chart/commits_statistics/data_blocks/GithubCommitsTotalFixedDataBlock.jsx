@@ -4,20 +4,20 @@ import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlo
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 
 function GitHubCommitsTotalFixedDataBlock({ data, onSelect }) {
-    return (
-        <DataBlockBoxContainer showBorder={true}  onClickFunction={onSelect}>
-            <TwoLineScoreDataBlock
-                className={"p-3 h-100"}
-                score={data}
-                subtitle={"Total Fixed Pull Requests"}
-            />
-        </DataBlockBoxContainer>
-    );
+  return (
+    <DataBlockBoxContainer showBorder={true}  onClickFunction={onSelect}>
+      <TwoLineScoreDataBlock
+        className={"p-3 h-100"}
+        score={data}
+        subtitle={"Total Fixed Pull Requests"}
+      />
+    </DataBlockBoxContainer>
+  );
 }
 
 GitHubCommitsTotalFixedDataBlock.propTypes = {
-    data: PropTypes.number,
-    onSelect: PropTypes.func,
+  data: PropTypes.number,
+  onSelect: PropTypes.func,
 };
 
 export default GitHubCommitsTotalFixedDataBlock;

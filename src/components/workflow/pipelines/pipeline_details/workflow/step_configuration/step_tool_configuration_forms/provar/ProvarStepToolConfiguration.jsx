@@ -116,9 +116,9 @@ function ProvarConfiguration({
         fieldName={"buildXmlPath"}
       />
       <BooleanToggleInput
-          setDataObject={setProvarConfigurationDataDto}
-          dataObject={provarStepConfigurationDto}
-          fieldName={"isEnvironmentVariables"}
+        setDataObject={setProvarConfigurationDataDto}
+        dataObject={provarStepConfigurationDto}
+        fieldName={"isEnvironmentVariables"}
       />
       <ProvarEnvironmentVariablesInput
         setDataObject={setProvarConfigurationDataDto}

@@ -5,7 +5,7 @@ import CreateCenterPanel from "components/common/overlays/center/CreateCenterPan
 import useComponentStateReference from "hooks/useComponentStateReference";
 import modelHelpers from "components/common/model/modelHelpers";
 import PlatformSystemParameterEditorPanel
-  from "components/admin/system_parameters/details/PlatformSystemParameterEditorPanel";
+from "components/admin/system_parameters/details/PlatformSystemParameterEditorPanel";
 import { platformSystemParametersMetadata } from "components/admin/system_parameters/platformSystemParameters.metadata";
 
 export default function NewPlatformSystemParameterOverlay({ loadData} ) {

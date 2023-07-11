@@ -12,19 +12,19 @@ function ExportTagReportButton({isLoading, tagData, className}) {
 
   const launchOverlayFunction = () => {
     toastContext.showOverlayPanel(
-        <ExportReportsDataOverlay
-            showModal={showExportModal}
-            setParentVisibility={setShowExportModal}
-            isLoading={isLoading}
-            formattedData={formatTagData()}
-            rawData={rawDataResults()}
-        />
+      <ExportReportsDataOverlay
+        showModal={showExportModal}
+        setParentVisibility={setShowExportModal}
+        isLoading={isLoading}
+        formattedData={formatTagData()}
+        rawData={rawDataResults()}
+      />
     );
   };
 
   const rawDataResults = () =>{
     return tagData ? tagData.map(item => JSON.stringify(item)) : "export failure";
-   };
+  };
 
   const formatTagData = () => {
     let formattedData = tagData;
@@ -36,11 +36,11 @@ function ExportTagReportButton({isLoading, tagData, className}) {
 
   // TODO: Refine when more is complete
   return (
-      <ExportDataButtonBase
-          isLoading={isLoading}
-          className={className}
-          launchOverlayFunction={launchOverlayFunction}
-      />
+    <ExportDataButtonBase
+      isLoading={isLoading}
+      className={className}
+      launchOverlayFunction={launchOverlayFunction}
+    />
   );
 }
 

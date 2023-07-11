@@ -5,11 +5,11 @@ import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import PlatformSystemParameterEditorPanel
-  from "components/admin/system_parameters/details/PlatformSystemParameterEditorPanel";
+from "components/admin/system_parameters/details/PlatformSystemParameterEditorPanel";
 import PlatformSettingsSummaryPanel from "components/admin/platform_settings/details/PlatformSettingsSummaryPanel";
 import PlatformSettingsEditorPanel from "components/admin/platform_settings/details/PlatformSettingsEditorPanel";
 import PlatformSettingFeaturesPanel
-  from "components/admin/platform_settings/details/features/PlatformSettingFeaturesPanel";
+from "components/admin/platform_settings/details/features/PlatformSettingFeaturesPanel";
 import { faFileAlt, faFileBinary } from "@fortawesome/pro-light-svg-icons";
 import CustomTab from "components/common/tabs/CustomTab";
 
@@ -47,29 +47,29 @@ export default function PlatformSettingsDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return (
-          <PlatformSettingsSummaryPanel
-            platformSettingsModel={platformSettingsModel}
-            setActiveTab={setActiveTab}
-          />
-        );
-      case "features":
-        return (
-          <PlatformSettingFeaturesPanel
-            platformSettingsId={platformSettingsModel?.getMongoDbId()}
-          />
-        );
-      case "settings":
-        return (
-          <PlatformSettingsEditorPanel
-            platformSettingsModel={platformSettingsModel}
-            setPlatformSettingsModel={setPlatformSettingsModel}
-            handleClose={toggleSummaryPanel}
-          />
-        );
-      default:
-        return null;
+    case "summary":
+      return (
+        <PlatformSettingsSummaryPanel
+          platformSettingsModel={platformSettingsModel}
+          setActiveTab={setActiveTab}
+        />
+      );
+    case "features":
+      return (
+        <PlatformSettingFeaturesPanel
+          platformSettingsId={platformSettingsModel?.getMongoDbId()}
+        />
+      );
+    case "settings":
+      return (
+        <PlatformSettingsEditorPanel
+          platformSettingsModel={platformSettingsModel}
+          setPlatformSettingsModel={setPlatformSettingsModel}
+          handleClose={toggleSummaryPanel}
+        />
+      );
+    default:
+      return null;
     }
   };
 

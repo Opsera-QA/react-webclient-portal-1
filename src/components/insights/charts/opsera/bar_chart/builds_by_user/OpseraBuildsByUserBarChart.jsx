@@ -9,7 +9,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColorByData, assignStandardColors, capitalizeLegend,
-         adjustBarWidth } from '../../../charts-views';
+  adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 function OpseraBuildsByUserBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -77,43 +77,43 @@ function OpseraBuildsByUserBarChart({ kpiConfiguration, setKpiConfiguration, das
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Users", "Number of Builds", 
-                      true, false, "cutoffString", "wholeNumbers")}
+            true, false, "cutoffString", "wholeNumbers")}
           {...config(getColorByData)}
           {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}
           tooltip={({ indexValue, value, color }) => <ChartTooltip 
-                                        titles = {["User", "Number of Builds"]}
-                                        values = {[indexValue, `${value} builds`]}
-                                        style = {false}
-                                        color = {color} />}
+            titles = {["User", "Number of Builds"]}
+            values = {[indexValue, `${value} builds`]}
+            style = {false}
+            color = {color} />}
         />
       </div>
     );
   };
 
-    return (
-      <>
-        <ChartContainer
-          kpiConfiguration={kpiConfiguration}
-          setKpiConfiguration={setKpiConfiguration}
-          chart={getChartBody()}
-          loadChart={loadData}
-          dashboardData={dashboardData}
-          index={index}
-          error={error}
-          setKpis={setKpis}
-          isLoading={isLoading}
-        />
-        <ModalLogs
-          header="Builds By User"
-          size="lg"
-          jsonMessage={metrics}
-          dataType="bar"
-          show={showModal}
-          setParentVisibility={setShowModal}
-        />
-      </>
-    );
+  return (
+    <>
+      <ChartContainer
+        kpiConfiguration={kpiConfiguration}
+        setKpiConfiguration={setKpiConfiguration}
+        chart={getChartBody()}
+        loadChart={loadData}
+        dashboardData={dashboardData}
+        index={index}
+        error={error}
+        setKpis={setKpis}
+        isLoading={isLoading}
+      />
+      <ModalLogs
+        header="Builds By User"
+        size="lg"
+        jsonMessage={metrics}
+        dataType="bar"
+        show={showModal}
+        setParentVisibility={setShowModal}
+      />
+    </>
+  );
 }
 
 OpseraBuildsByUserBarChart.propTypes = {

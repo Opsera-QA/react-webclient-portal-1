@@ -4,27 +4,27 @@ import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlo
 import ThreeLineScoreDataBlock from "components/common/metrics/score/ThreeLineScoreDataBlock";
 
 function SalesforceCodeAnalyserCategoryDataBlock({ data, dataPoint, lastScore, icon, className, onSelect  }) {
-    return (
-        <DataBlockBoxContainer showBorder={true} onClickFunction={() => onSelect()}>
-            <ThreeLineScoreDataBlock
-                className={`${className} p-2 h-70`}
-                icon={icon}
-                score={data}
-                bottomText={`Previous: ${lastScore || lastScore === 0? lastScore : "NA"}`}
-                topText={"Total Categories with Issues"}
-                dataPoint={dataPoint}
-            />
-        </DataBlockBoxContainer>
-    );
+  return (
+    <DataBlockBoxContainer showBorder={true} onClickFunction={() => onSelect()}>
+      <ThreeLineScoreDataBlock
+        className={`${className} p-2 h-70`}
+        icon={icon}
+        score={data}
+        bottomText={`Previous: ${lastScore || lastScore === 0? lastScore : "NA"}`}
+        topText={"Total Categories with Issues"}
+        dataPoint={dataPoint}
+      />
+    </DataBlockBoxContainer>
+  );
 }
 
 SalesforceCodeAnalyserCategoryDataBlock.propTypes = {
-    data: PropTypes.number,
-    lastScore: PropTypes.number,
-    dataPoint: PropTypes.object,
-    icon: PropTypes.object,
-    className: PropTypes.string,
-    onSelect: PropTypes.func.isRequired,
+  data: PropTypes.number,
+  lastScore: PropTypes.number,
+  dataPoint: PropTypes.object,
+  icon: PropTypes.object,
+  className: PropTypes.string,
+  onSelect: PropTypes.func.isRequired,
 };
 
 export default SalesforceCodeAnalyserCategoryDataBlock;

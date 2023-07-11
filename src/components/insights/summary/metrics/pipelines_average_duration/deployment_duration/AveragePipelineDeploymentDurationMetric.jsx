@@ -8,7 +8,7 @@ import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSyno
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import InsightsPipelineDetailsDurationTable
-  from "components/insights/summary/metrics/pipelines_average_duration/InsightsPipelineDetailsDurationTable";
+from "components/insights/summary/metrics/pipelines_average_duration/InsightsPipelineDetailsDurationTable";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function AveragePipelineDeploymentDurationMetric({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
@@ -107,7 +107,7 @@ function AveragePipelineDeploymentDurationMetric({ dashboardData, toggleDynamicP
   const getAverage = ()=>{
     let sum = 0;
     for(let pipeline of metrics){
-        sum += pipeline.duration;
+      sum += pipeline.duration;
     }
     return (sum / metrics.length).toFixed(2);
   };

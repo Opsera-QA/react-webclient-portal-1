@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SourceControlManagementToolIdentifierSelectInput
-  from "components/common/list_of_values_input/tools/source_control/SourceControlManagementToolIdentifierSelectInput";
+from "components/common/list_of_values_input/tools/source_control/SourceControlManagementToolIdentifierSelectInput";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
 function ArgoCdStepSourceControlManagementToolIdentifierSelectInput({ fieldName, model, setModel, disabled }) {

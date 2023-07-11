@@ -8,7 +8,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, mainColor, failColor, mainPurple, warningColor,colorPalette1,
-         adjustBarWidth } from '../../../charts-views';
+  adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 
 function JenkinsStatusByJobNameBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -75,38 +75,38 @@ function JenkinsStatusByJobNameBarChart({ kpiConfiguration, setKpiConfiguration,
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Build Tag", "Number of Builds", 
-                      true, false, "cutoffString", "wholeNumbers")}
+            true, false, "cutoffString", "wholeNumbers")}
           {...config(colorPalette1, failColor, mainPurple, warningColor)}
           axisLeft={{
-              format: (d) => {
-                return d.length > 10 ? (
-                  <tspan>
-                    {d.substring(0, 10) + "..."}
-                    <title>{d}</title>
-                  </tspan>
-                ) : (
-                  d
-                );
-              },
-              tickSize: 5,
-              tickPadding: 5,
-              tickRotation: 0,
-              legend: "Build Tag",
-              legendPosition: "middle",
-              legendOffset: -80,
-            }}
+            format: (d) => {
+              return d.length > 10 ? (
+                <tspan>
+                  {d.substring(0, 10) + "..."}
+                  <title>{d}</title>
+                </tspan>
+              ) : (
+                d
+              );
+            },
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: "Build Tag",
+            legendPosition: "middle",
+            legendOffset: -80,
+          }}
             
           {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}
           tooltip={({ indexValue, color, value, id }) => <ChartTooltip 
-                              titles = {["Build Tag", `${id} Builds`]}
-                              values = {[indexValue, value]}
-                              style = {false}
-                              color = {color} />}
+            titles = {["Build Tag", `${id} Builds`]}
+            values = {[indexValue, value]}
+            style = {false}
+            color = {color} />}
         />
-    </div>
+      </div>
     );
-};
+  };
 
   return (
     <div>

@@ -7,7 +7,7 @@ import IconBase from "components/common/icons/IconBase";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import jenkinsAccountActions
-  from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/jenkinsToolAccounts.actions";
+from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/jenkinsToolAccounts.actions";
 
 function RotateJenkinsKeyButton ({toolId}){
   const { getAccessToken } = useContext(AuthContext);

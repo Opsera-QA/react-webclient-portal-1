@@ -6,9 +6,9 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import modelHelpers from "components/common/model/modelHelpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import NewPipelineTemplateWizardFlowSelectionScreen
-  from "components/admin/pipeline_templates/create/wizard/flow_selection/NewPipelineTemplateWizardFlowSelectionScreen";
+from "components/admin/pipeline_templates/create/wizard/flow_selection/NewPipelineTemplateWizardFlowSelectionScreen";
 import PipelineTemplateManagementWizardImportPipelineSelectionScreen
-  from "components/admin/pipeline_templates/create/wizard/import_pipeline/PipelineTemplateManagementWizardImportPipelineSelectionScreen";
+from "components/admin/pipeline_templates/create/wizard/import_pipeline/PipelineTemplateManagementWizardImportPipelineSelectionScreen";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import CenterOverlayContainer, { CENTER_OVERLAY_SIZES } from "components/common/overlays/center/CenterOverlayContainer";
 
@@ -41,29 +41,29 @@ function NewPipelineTemplateWizard({ loadData } ) {
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
-      case NEW_PIPELINE_TEMPLATE_WIZARD_SCREENS.NEW_TEMPLATE_FLOW_SELECTION_SCREEN:
-        return (
-          <NewPipelineTemplateWizardFlowSelectionScreen
-            setPipelineTemplateWizardScreen={setCurrentScreen}
-          />
-        );
-      case NEW_PIPELINE_TEMPLATE_WIZARD_SCREENS.IMPORT_FROM_PIPELINE:
-        return (
-          <PipelineTemplateManagementWizardImportPipelineSelectionScreen
-            pipelineTemplateModel={pipelineTemplateModel}
-            setPipelineTemplateModel={setPipelineTemplateModel}
-            setPipelineTemplateWizardScreen={setCurrentScreen}
-          />
-        );
-      case NEW_PIPELINE_TEMPLATE_WIZARD_SCREENS.PIPELINE_TEMPLATE_EDITOR_PANEL:
-      default:
-        return (
-          <PipelineTemplateEditorPanel
-            templateModel={pipelineTemplateModel}
-            setTemplateModel={setPipelineTemplateModel}
-            handleClose={closePanel}
-          />
-        );
+    case NEW_PIPELINE_TEMPLATE_WIZARD_SCREENS.NEW_TEMPLATE_FLOW_SELECTION_SCREEN:
+      return (
+        <NewPipelineTemplateWizardFlowSelectionScreen
+          setPipelineTemplateWizardScreen={setCurrentScreen}
+        />
+      );
+    case NEW_PIPELINE_TEMPLATE_WIZARD_SCREENS.IMPORT_FROM_PIPELINE:
+      return (
+        <PipelineTemplateManagementWizardImportPipelineSelectionScreen
+          pipelineTemplateModel={pipelineTemplateModel}
+          setPipelineTemplateModel={setPipelineTemplateModel}
+          setPipelineTemplateWizardScreen={setCurrentScreen}
+        />
+      );
+    case NEW_PIPELINE_TEMPLATE_WIZARD_SCREENS.PIPELINE_TEMPLATE_EDITOR_PANEL:
+    default:
+      return (
+        <PipelineTemplateEditorPanel
+          templateModel={pipelineTemplateModel}
+          setTemplateModel={setPipelineTemplateModel}
+          handleClose={closePanel}
+        />
+      );
     }
   };
 

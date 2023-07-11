@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase
-  from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
 // TODO: Add support for filtering list. Make another base class more suited for User/Project mapping?
 function UserMappingToolSelectInput({visible, dataObject, setDataObject, disabled, fieldName}) {

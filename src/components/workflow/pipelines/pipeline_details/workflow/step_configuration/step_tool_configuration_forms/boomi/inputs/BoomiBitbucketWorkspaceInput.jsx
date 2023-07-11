@@ -18,14 +18,14 @@ function BoomiBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
   }
 
   return (
-     <BitbucketWorkspaceInput
-       fieldName={"workspaceName"}
-       gitToolId={dataObject.getData("gitToolId")}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       setDataFunction={setWorkspace}
-       disabled={disabled}
-     />
+    <BitbucketWorkspaceInput
+      fieldName={"workspaceName"}
+      gitToolId={dataObject.getData("gitToolId")}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      setDataFunction={setWorkspace}
+      disabled={disabled}
+    />
   );
 }
 

@@ -4,21 +4,21 @@ import PropTypes from "prop-types";
 import LdapOrganizationAccountEditorPanel from "./LdapOrganizationAccountEditorPanel";
 import {faUsers, faUsersClass, faBuilding, faServer} from "@fortawesome/pro-light-svg-icons";
 import LdapOrganizationAccountSummaryPanel
-  from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountSummaryPanel";
+from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountSummaryPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import LdapOrganizationAccountUsersPanel
-  from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountUsersPanel";
+from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountUsersPanel";
 import LdapOrganizationAccountGroupsPanel
-  from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountGroupsPanel";
+from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountGroupsPanel";
 import LdapOrganizationAccountIdpPanel
-  from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountIdpPanel";
+from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountIdpPanel";
 import LdapOrganizationAccountDepartmentsPanel
-  from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountDepartmentsPanel";
+from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountDepartmentsPanel";
 import LdapOrganizationAccountSiteRolesPanel
-  from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountSiteRolesPanel";
+from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountSiteRolesPanel";
 
 function LdapOrganizationAccountDetailPanel(
   {
@@ -44,57 +44,57 @@ function LdapOrganizationAccountDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return <LdapOrganizationAccountSummaryPanel ldapOrganizationAccountData={ldapOrganizationAccountData} setActiveTab={setActiveTab}/>;
-      case "users":
-        return (
-          <LdapOrganizationAccountUsersPanel
-            loadData={loadData}
-            ldapOrganizationAccountData={ldapOrganizationAccountData}
-          />
-        );
-      case "groups":
-        return (
-          <LdapOrganizationAccountGroupsPanel
-            ldapOrganizationAccountData={ldapOrganizationAccountData}
-            currentUser={currentUser}
-            organizationDomain={organizationDomain}
-          />
-        );
-      case "site-roles":
-        return (
-          <LdapOrganizationAccountSiteRolesPanel
-            ldapOrganizationAccountData={ldapOrganizationAccountData}
-            organizationDomain={organizationDomain}
-          />
-        );
-      case "idpAccounts":
-        return(
-          <LdapOrganizationAccountIdpPanel
-            ldapOrganizationAccountData={ldapOrganizationAccountData}
-            loadData={loadData}
-            isMounted={isMounted}
-            currentUser={currentUser}
-          />
-        );
-      case "departments":
-        return (
-          <LdapOrganizationAccountDepartmentsPanel
-            ldapOrganizationAccountData={ldapOrganizationAccountData}
-            organizationDomain={organizationDomain}
-          />
-        );
-      case "settings":
-        return (
-          <LdapOrganizationAccountEditorPanel
-            ldapOrganizationAccountData={ldapOrganizationAccountData}
-            setLdapOrganizationAccountData={setLdapOrganizationAccountData}
-            loadData={loadData}
-            handleClose={toggleSummaryPanel}
-          />
+    case "summary":
+      return <LdapOrganizationAccountSummaryPanel ldapOrganizationAccountData={ldapOrganizationAccountData} setActiveTab={setActiveTab}/>;
+    case "users":
+      return (
+        <LdapOrganizationAccountUsersPanel
+          loadData={loadData}
+          ldapOrganizationAccountData={ldapOrganizationAccountData}
+        />
       );
-      default:
-        return null;
+    case "groups":
+      return (
+        <LdapOrganizationAccountGroupsPanel
+          ldapOrganizationAccountData={ldapOrganizationAccountData}
+          currentUser={currentUser}
+          organizationDomain={organizationDomain}
+        />
+      );
+    case "site-roles":
+      return (
+        <LdapOrganizationAccountSiteRolesPanel
+          ldapOrganizationAccountData={ldapOrganizationAccountData}
+          organizationDomain={organizationDomain}
+        />
+      );
+    case "idpAccounts":
+      return(
+        <LdapOrganizationAccountIdpPanel
+          ldapOrganizationAccountData={ldapOrganizationAccountData}
+          loadData={loadData}
+          isMounted={isMounted}
+          currentUser={currentUser}
+        />
+      );
+    case "departments":
+      return (
+        <LdapOrganizationAccountDepartmentsPanel
+          ldapOrganizationAccountData={ldapOrganizationAccountData}
+          organizationDomain={organizationDomain}
+        />
+      );
+    case "settings":
+      return (
+        <LdapOrganizationAccountEditorPanel
+          ldapOrganizationAccountData={ldapOrganizationAccountData}
+          setLdapOrganizationAccountData={setLdapOrganizationAccountData}
+          loadData={loadData}
+          handleClose={toggleSummaryPanel}
+        />
+      );
+    default:
+      return null;
     }
   };
 

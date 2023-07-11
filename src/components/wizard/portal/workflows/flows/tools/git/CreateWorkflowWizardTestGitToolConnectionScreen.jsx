@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
 import WorkflowWizardToolConnectionScreenBase
-  from "components/wizard/portal/workflows/flows/tools/test_connection/WorkflowWizardToolConnectionScreenBase";
+from "components/wizard/portal/workflows/flows/tools/test_connection/WorkflowWizardToolConnectionScreenBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 export default function CreateWorkflowWizardTestGitToolConnectionScreen({
@@ -53,17 +53,17 @@ export default function CreateWorkflowWizardTestGitToolConnectionScreen({
 
   if (gitToolOption === toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET) {
     return (
-        <WorkflowWizardToolConnectionScreenBase
-            className={className}
-            onSuccessFunction={onSuccessFunction}
-            toolId={gitToolId}
-            onFailureFunction={onFailureFunction}
-            toolName={capitalizeFirstLetter(gitToolOption)}
-            title={"Bitbucket Account Connection Test"}
-            setButtonContainer={setButtonContainer}
-            successText={successText}
-            failureText={failureText}
-        />
+      <WorkflowWizardToolConnectionScreenBase
+        className={className}
+        onSuccessFunction={onSuccessFunction}
+        toolId={gitToolId}
+        onFailureFunction={onFailureFunction}
+        toolName={capitalizeFirstLetter(gitToolOption)}
+        title={"Bitbucket Account Connection Test"}
+        setButtonContainer={setButtonContainer}
+        successText={successText}
+        failureText={failureText}
+      />
     );
   }
 

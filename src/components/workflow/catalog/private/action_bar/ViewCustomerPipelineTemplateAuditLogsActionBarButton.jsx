@@ -4,7 +4,7 @@ import {faShieldCheck} from "@fortawesome/pro-light-svg-icons";
 import ActionBarPopoverButton from "components/common/actions/buttons/ActionBarPopoverButton";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import CustomerPipelineTemplateAuditLogOverlay
-  from "components/workflow/catalog/private/audit/CustomerPipelineTemplateAuditLogOverlay";
+from "components/workflow/catalog/private/audit/CustomerPipelineTemplateAuditLogOverlay";
 
 export default function ViewCustomerPipelineTemplateAuditLogsActionBarButton(
   {

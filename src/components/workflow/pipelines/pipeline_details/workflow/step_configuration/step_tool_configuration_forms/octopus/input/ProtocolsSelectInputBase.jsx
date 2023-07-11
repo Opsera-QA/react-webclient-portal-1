@@ -26,30 +26,30 @@ function ProtocolsSelectInputBase({
   
   const [localProperties, setLocalProperties] = useState(new Model({protocols: []}, {
     fields: [
-        {
-            label: "Protocol",
-            id: "protocol",
-            maxLength: 5,
-            isRequired: true
-          },
-          {
-            label: "Thumbprint",
-            id: "thumbprint"
-          },
-          {
-            label: "Host",
-            id: "host",
-            regexDefinitionName: "hostnameRegex",
-            maxLength: 255,
-            // isRequired: true
-          },
-          {
-            label: "Binding Port",
-            id: "port",
-            regexDefinitionName: "numericalField",
-            maxLength: 4,
-            isRequired: true
-          },
+      {
+        label: "Protocol",
+        id: "protocol",
+        maxLength: 5,
+        isRequired: true
+      },
+      {
+        label: "Thumbprint",
+        id: "thumbprint"
+      },
+      {
+        label: "Host",
+        id: "host",
+        regexDefinitionName: "hostnameRegex",
+        maxLength: 255,
+        // isRequired: true
+      },
+      {
+        label: "Binding Port",
+        id: "port",
+        regexDefinitionName: "numericalField",
+        maxLength: 4,
+        isRequired: true
+      },
     ]
   }, true));
 
@@ -103,11 +103,11 @@ function ProtocolsSelectInputBase({
     return (
       <div className="m-2">
         <OctopusProtocolInput 
-                  dataObject={localProperties}
-                  setDataObject={setLocalProperties}
-                  fieldName={"protocol"}
-                />
-                {localProperties &&
+          dataObject={localProperties}
+          setDataObject={setLocalProperties}
+          fieldName={"protocol"}
+        />
+        {localProperties &&
                   localProperties.getData("protocol") &&
                   localProperties.getData("protocol") === "https" && 
                   <OctopusCertificateInputSelect 
@@ -117,17 +117,17 @@ function ProtocolsSelectInputBase({
                     setParentDataObject={setDataObject}
                     fieldName={"thumbprint"}
                   />
-                }
-                <TextInputBase
-                  setDataObject={setLocalProperties}
-                  dataObject={localProperties}
-                  fieldName={"port"}
-                />
-                <TextInputBase
-                  setDataObject={setLocalProperties}
-                  dataObject={localProperties}
-                  fieldName={"host"}
-                />
+        }
+        <TextInputBase
+          setDataObject={setLocalProperties}
+          dataObject={localProperties}
+          fieldName={"port"}
+        />
+        <TextInputBase
+          setDataObject={setLocalProperties}
+          dataObject={localProperties}
+          fieldName={"host"}
+        />
         <Button size="sm" className="my-1 ml-2" variant="success" 
           disabled={ localProperties == null || !localProperties.checkCurrentValidity() }
           onClick={() => { addProperty();}}
@@ -170,7 +170,7 @@ function ProtocolsSelectInputBase({
           })}
         </div>
         <div className="flex-fill">
-            {getInputRow()}
+          {getInputRow()}
         </div>
       </>      
     );

@@ -16,7 +16,7 @@ import StepConfigWorkspaceDeleteToggleInput from "../common/inputs/StepConfigWor
 import modelHelpers from "components/common/model/modelHelpers";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function JmeterStepConfiguration({
@@ -65,18 +65,18 @@ function JmeterStepConfiguration({
     let jmeterConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, jmeterPipelineStepConfigurationMetadata);
 
     if (jmeterConfigurationData.getData("sourceScript") === true) {
-        jmeterConfigurationData.setMetaDataFields(jmeterPipelineStepConfigurationMetadata.fields);
+      jmeterConfigurationData.setMetaDataFields(jmeterPipelineStepConfigurationMetadata.fields);
     }        
 
     setJmeterStepConfigurationDto(jmeterConfigurationData);
 
     if (job_type) {
-        setJobType(job_type);
+      setJobType(job_type);
     }
 
     if (threshold) {
-        setThresholdType(threshold?.type);
-        setThresholdValue(threshold?.value);
+      setThresholdType(threshold?.type);
+      setThresholdValue(threshold?.value);
     }
 
     setIsLoading(false);
@@ -91,12 +91,12 @@ function JmeterStepConfiguration({
       jmeterStepConfigurationDto.getData("jmeterExportFileName").length === 0 ||
       jmeterStepConfigurationDto.getData("jmeterFileName").length === 0
     ) {
-        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
-        setToast(toast);
-        setShowToast(true);
-        return false;
+      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
+      setToast(toast);
+      setShowToast(true);
+      return false;
     } else {
-        return true;
+      return true;
     }
   };
 

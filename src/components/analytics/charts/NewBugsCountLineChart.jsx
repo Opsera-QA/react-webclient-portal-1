@@ -99,7 +99,7 @@ function NewBugsCountLineChart({ persona, date }) {
           ) : (
             <ResponsiveLine
               {...defaultConfig("Number of Bugs", "Date", 
-                      false, true, "wholeNumbers", "monthDate2")}
+                false, true, "wholeNumbers", "monthDate2")}
               data={data ? data.data : []}
               xScale={{ type: "point" }}
               yScale={{ 
@@ -111,11 +111,11 @@ function NewBugsCountLineChart({ persona, date }) {
               }}
               colors={getColor}
               onClick={() => setShowModal(true)}
-                tooltip={({ point, color }) => <ChartTooltip 
-                    titles = {["Timestamp", "New Bugs", "Project Key"]}
-                    values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(point.data.x)),
-                              point.data.y, point.data.key]}
-                    color = {color} />}
+              tooltip={({ point, color }) => <ChartTooltip 
+                titles = {["Timestamp", "New Bugs", "Project Key"]}
+                values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(point.data.x)),
+                  point.data.y, point.data.key]}
+                color = {color} />}
             />
           )}
         </div>

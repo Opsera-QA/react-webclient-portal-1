@@ -397,24 +397,24 @@ function LogSearch({ tools, sideBySide }) {
 
       if (Object.keys(logData).length > 0) {
         switch (filterType) {
-          case "blueprint":
-            return <BlueprintSearchResult searchResults={logData?.hits} />;
-          case "commit":
-            return (
-              // TODO: Not sure if we want to show both, but this was a bug in legacy code if not
-              <>
-                <LogSearchResult searchResults={logData?.hits} submittedSearchTerm={submittedSearchTerm} />
-                <CommitSearchResult searchResults={logData?.hits} />
-              </>
-            );
-          default:
-            return (
-              <LogSearchResult
-                searchResults={logData?.hits}
-                submittedSearchTerm={submittedSearchTerm}
-                getPaginator={getPaginator}
-              />
-            );
+        case "blueprint":
+          return <BlueprintSearchResult searchResults={logData?.hits} />;
+        case "commit":
+          return (
+          // TODO: Not sure if we want to show both, but this was a bug in legacy code if not
+            <>
+              <LogSearchResult searchResults={logData?.hits} submittedSearchTerm={submittedSearchTerm} />
+              <CommitSearchResult searchResults={logData?.hits} />
+            </>
+          );
+        default:
+          return (
+            <LogSearchResult
+              searchResults={logData?.hits}
+              submittedSearchTerm={submittedSearchTerm}
+              getPaginator={getPaginator}
+            />
+          );
         }
       }
     }
@@ -540,40 +540,40 @@ function LogSearch({ tools, sideBySide }) {
   const getSearchButtons = () => {
     return (
       <ButtonContainerBase className={"mx-3"}>
-          <Button
-            variant={"outline-secondary"}
-            type={"button"}
-            onClick={toggleCalendar}
-          >
-            <IconBase icon={faCalendar} iconClassName={"mr-1 d-none d-lg-inline"} />
-            {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
-          </Button>
-          <Button
-            variant={"primary"}
-            className={"ml-2"}
-            onClick={() => {
-              searchLogs();
-            }}
-            disabled={
-              (filterType === "blueprint" &&
+        <Button
+          variant={"outline-secondary"}
+          type={"button"}
+          onClick={toggleCalendar}
+        >
+          <IconBase icon={faCalendar} iconClassName={"mr-1 d-none d-lg-inline"} />
+          {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
+        </Button>
+        <Button
+          variant={"primary"}
+          className={"ml-2"}
+          onClick={() => {
+            searchLogs();
+          }}
+          disabled={
+            (filterType === "blueprint" &&
                 (!jenkinsProjectDto?.getData("tool_id") || !jenkinsProjectDto?.getData("key"))) ||
               !searchTerm
-            }
-          >
+          }
+        >
             Search
-          </Button>
-          {getNewTabButton()}
-          <Button variant={"outline-secondary"} className={"ml-2"} type="button" onClick={cancelSearchClicked}>
+        </Button>
+        {getNewTabButton()}
+        <Button variant={"outline-secondary"} className={"ml-2"} type="button" onClick={cancelSearchClicked}>
             Clear
-          </Button>
-          <ExportLogSearchButton
-            exportDisabled={exportDisabled}
-            isLoading={isLoading}
-            variant="primary"
-            className={"ml-2"}
-            searchResults={exportData}
-          />
-          {getDateRangeButton()}
+        </Button>
+        <ExportLogSearchButton
+          exportDisabled={exportDisabled}
+          isLoading={isLoading}
+          variant="primary"
+          className={"ml-2"}
+          searchResults={exportData}
+        />
+        {getDateRangeButton()}
       </ButtonContainerBase>
     );
   };

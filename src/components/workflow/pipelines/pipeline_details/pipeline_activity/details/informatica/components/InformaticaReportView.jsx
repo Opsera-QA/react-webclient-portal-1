@@ -4,9 +4,9 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import {Col, Row} from "react-bootstrap";
 
 import InformaticaExportLogSummaryTable
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/components/InformaticaExportLogSummaryTable";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/components/InformaticaExportLogSummaryTable";
 import InformaticaImportLogSummaryTable
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/components/InformaticaImportLogSummaryTable";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/components/InformaticaImportLogSummaryTable";
 
 function InformaticaReportView({ informaticaDeployObjs, isImportObj }) {
 

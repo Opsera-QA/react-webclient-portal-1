@@ -4,7 +4,7 @@ import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import StepToolConfiguration
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/StepToolConfiguration";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/StepToolConfiguration";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 
 function PipelineStepEditorOverlay(

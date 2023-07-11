@@ -6,10 +6,10 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PipelineTypeMultiSelectInput
-  from "components/common/list_of_values_input/admin/pipeline_templates/PipelineTypeMultiSelectInput";
+from "components/common/list_of_values_input/admin/pipeline_templates/PipelineTypeMultiSelectInput";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import LdapOrganizationAccountSelectInput
-  from "components/common/list_of_values_input/admin/accounts/ldap_accounts/LdapOrganizationAccountSelectInput";
+from "components/common/list_of_values_input/admin/accounts/ldap_accounts/LdapOrganizationAccountSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import JsonInput from "components/common/inputs/object/JsonInput";
 import TagManager from "components/common/inputs/tags/TagManager";

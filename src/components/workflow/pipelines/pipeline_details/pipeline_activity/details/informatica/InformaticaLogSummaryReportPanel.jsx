@@ -2,20 +2,20 @@ import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import InformaticaReportSummaryOverview
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/components/InformaticaReportSummaryOverview";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/components/InformaticaReportSummaryOverview";
 import informaticaSummaryLogResultMetaData
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/metadata/informaticaSummaryLogResult.metadata";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/metadata/informaticaSummaryLogResult.metadata";
 import LoadingDialog from "components/common/status_notifications/loading";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
 import InformaticaSummaryLogVerticalTabContainer
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/InformaticaSummaryLogVerticalTabContainer";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/InformaticaSummaryLogVerticalTabContainer";
 import { faClipboardListCheck, faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import InformaticaReportView
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/components/InformaticaReportView";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/components/InformaticaReportView";
 
 function InformaticaLogSummaryReportPanel({ pipelineTaskData }) {
   const [informaticaResultsModel, setInformaticaResultsModel] = useState(undefined);

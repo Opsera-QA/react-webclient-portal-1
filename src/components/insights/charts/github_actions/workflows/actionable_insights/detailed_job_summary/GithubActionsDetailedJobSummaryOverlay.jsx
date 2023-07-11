@@ -53,9 +53,9 @@ function GithubActionsDetailedJobSummaryOverlay(
             <div className={"mr-4"}>
               <b>Job Name:</b> {jobName}
             </div>
-              {/*<div className={"mr-4"}>*/}
-              {/*    <b>Job Runs:</b> {runs}*/}
-              {/*</div>*/}
+            {/*<div className={"mr-4"}>*/}
+            {/*    <b>Job Runs:</b> {runs}*/}
+            {/*</div>*/}
           </div>
         </div>
         <div>

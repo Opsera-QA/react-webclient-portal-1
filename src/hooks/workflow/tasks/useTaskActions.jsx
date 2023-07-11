@@ -7,7 +7,7 @@ export default function useTaskActions() {
   taskActions.getTasks = async (
     taskFilterModel,
     fields,
- ) => {
+  ) => {
     const apiUrl = `/tasks`;
     const queryParameters = {
       sort: taskFilterModel?.getFilterValue("sortOption"),

@@ -5,7 +5,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import JsonField from "components/common/fields/json/JsonField";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function ApigeePipelineStepConfigurationSummaryPanel({ apigeePipelineDataObject, pipelineData, setActiveTab }) {

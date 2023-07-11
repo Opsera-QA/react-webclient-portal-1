@@ -25,13 +25,13 @@ export default function GitToGitSyncActionableInsightSubNavigationBar(
     }
 
     switch (tabSelection) {
-      case "insights":
-        toastContext.removeInlineMessage();
-        toastContext.clearInfoOverlayPanel();
-        return;
-      case GIT_TO_GIT_SYNC_ACTIONABLE_INSIGHT_SCREENS.GIT_TO_GIT_SYNC_RUN_SUMMARY:
-        setCurrentScreen(GIT_TO_GIT_SYNC_ACTIONABLE_INSIGHT_SCREENS.GIT_TO_GIT_SYNC_RUN_SUMMARY);
-        return;
+    case "insights":
+      toastContext.removeInlineMessage();
+      toastContext.clearInfoOverlayPanel();
+      return;
+    case GIT_TO_GIT_SYNC_ACTIONABLE_INSIGHT_SCREENS.GIT_TO_GIT_SYNC_RUN_SUMMARY:
+      setCurrentScreen(GIT_TO_GIT_SYNC_ACTIONABLE_INSIGHT_SCREENS.GIT_TO_GIT_SYNC_RUN_SUMMARY);
+      return;
     }
   };
 

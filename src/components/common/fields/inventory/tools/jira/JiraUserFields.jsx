@@ -42,16 +42,16 @@ function JiraUserFields(
   };
 
   const loadJiraUsers = async () => {
-      const response = await jiraActions.getJiraProjectUsersV2(
-        getAccessToken,
-        cancelTokenSource,
-        jiraToolId,
-        jiraProjectKey,
-      );
-      const users = DataParsingHelper.parseNestedArray(response, "data.data");
-      if (Array.isArray(users)) {
-        setJiraUsers(users);
-      }
+    const response = await jiraActions.getJiraProjectUsersV2(
+      getAccessToken,
+      cancelTokenSource,
+      jiraToolId,
+      jiraProjectKey,
+    );
+    const users = DataParsingHelper.parseNestedArray(response, "data.data");
+    if (Array.isArray(users)) {
+      setJiraUsers(users);
+    }
   };
 
   return (

@@ -5,7 +5,7 @@ import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import RemoteApplicationTelemetryActions from "components/admin/remote_applications/remote-application-actions";
 import RemoteApplicationTelemetryTable from "components/admin/remote_applications/RemoteApplicationTelemetryTable";
 import RemoteApplicationTelemetryManagementSubNavigationBar
-  from "components/admin/remote_applications/RemoteApplicationTelemetryManagementSubNavigationBar";
+from "components/admin/remote_applications/RemoteApplicationTelemetryManagementSubNavigationBar";
 import kpiFilterMetadata from "../kpi_identifiers/kpi-filter-metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
@@ -14,7 +14,7 @@ function RemoteApplicationManagement() {
   const [isLoading, setIsLoading] = useState(true);
   const [remoteApplicationRecords, setRemoteApplicationTelemetryRecords] = useState([]);
   const [remoteApplicationPaginationModel, setRemoteApplicationTelemetryPaginationModel] = useState(
-      new Model({ ...kpiFilterMetadata.newObjectFields }, kpiFilterMetadata, false)
+    new Model({ ...kpiFilterMetadata.newObjectFields }, kpiFilterMetadata, false)
   );
   const {
     isMounted,

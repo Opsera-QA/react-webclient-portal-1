@@ -14,15 +14,15 @@ function DockerPushAwsRepoInput({dataObject, setDataObject, disabled}) {
     setDataObject({...newDataObject});
   };
   return (
-     <AWSRepositoryInput
-       fieldName={"ecrRepoName"}
-       awsToolId={dataObject.getData("awsToolConfigId")}
-       dataObject={dataObject}
-       setDataFunction={setRepo}
-       setDataObject={setDataObject}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-     />
+    <AWSRepositoryInput
+      fieldName={"ecrRepoName"}
+      awsToolId={dataObject.getData("awsToolConfigId")}
+      dataObject={dataObject}
+      setDataFunction={setRepo}
+      setDataObject={setDataObject}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+    />
   );
 }
 

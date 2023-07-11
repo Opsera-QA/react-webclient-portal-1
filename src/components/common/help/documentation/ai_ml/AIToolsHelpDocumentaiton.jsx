@@ -4,34 +4,34 @@ import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayB
 
 
 function AIToolsHelpDocumentation() {
-    const toastContext = useContext(DialogToastContext);
+  const toastContext = useContext(DialogToastContext);
 
-    const closePanel = () => {
-        toastContext.clearOverlayPanel();
-    };
+  const closePanel = () => {
+    toastContext.clearOverlayPanel();
+  };
 
-    const getHelpDocumentation = () => {
-        return (
-            <div>View new developments powered by the Opsera AI Engine.
-                <div className={"mt-2"}>
-                    <ul style={{listStyleType: "none"}}>
-                        <li><b>Opsera Conversational AI</b> - View data about your Devops Environment in a conversational manner by sending messages to the Opsera ML Engine.</li>
-                    </ul>
-                </div>
-            </div>
-
-        );
-    };
-
+  const getHelpDocumentation = () => {
     return (
-        <HelpOverlayBase
-            closePanel={closePanel}
-            showPanel={true}
-            helpTopic={"Opsera AI Chatbot Prototype"}
-            helpDocumentation={getHelpDocumentation()}
-        >
-        </HelpOverlayBase>
+      <div>View new developments powered by the Opsera AI Engine.
+        <div className={"mt-2"}>
+          <ul style={{listStyleType: "none"}}>
+            <li><b>Opsera Conversational AI</b> - View data about your Devops Environment in a conversational manner by sending messages to the Opsera ML Engine.</li>
+          </ul>
+        </div>
+      </div>
+
     );
+  };
+
+  return (
+    <HelpOverlayBase
+      closePanel={closePanel}
+      showPanel={true}
+      helpTopic={"Opsera AI Chatbot Prototype"}
+      helpDocumentation={getHelpDocumentation()}
+    >
+    </HelpOverlayBase>
+  );
 }
 
 

@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import PipelineDataMappingEditorPanel
-  from "components/settings/data_mapping/pipelines/details/PipelineDataMappingEditorPanel";
+from "components/settings/data_mapping/pipelines/details/PipelineDataMappingEditorPanel";
 import useGetAnalyticsPipelineDataMappingModel
-  from "hooks/settings/insights/analytics_data_mappings/pipelines/useGetAnalyticsPipelineDataMappingModel";
+from "hooks/settings/insights/analytics_data_mappings/pipelines/useGetAnalyticsPipelineDataMappingModel";
 
 function NewPipelineDataMappingOverlay({loadData, isMounted, pipelineDataMappingMetadata,}) {
   const toastContext = useContext(DialogToastContext);

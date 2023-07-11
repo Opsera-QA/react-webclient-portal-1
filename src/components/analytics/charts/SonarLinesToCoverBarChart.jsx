@@ -12,7 +12,7 @@ import ModalLogs from "../../common/modal/modalLogs";
 import InfoDialog from "../../common/status_notifications/info";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import { defaultConfig, assignLineColors, capitalizeLegend, adjustBarWidth } from "../../insights/charts/charts-views";
-         import ChartTooltip from "../../insights/charts/ChartTooltip";
+import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function SonarLinesToCoverBarChart({ data, persona }) {
   const [showModal, setShowModal] = useState(false);
@@ -34,7 +34,7 @@ function SonarLinesToCoverBarChart({ data, persona }) {
           : 
           <ResponsiveBar
             {...defaultConfig("Value", "Code Coverage Metric", 
-                    false, true, "", "monthDate2")}
+              false, true, "", "monthDate2")}
             {...adjustBarWidth(data?.data)}
             data={data ? data.data : []}
             onClick={() => setShowModal(true)}
@@ -47,10 +47,10 @@ function SonarLinesToCoverBarChart({ data, persona }) {
             colorBy="id"
             colors={({ id, data }) => data[`${id}_color`]}
             tooltip={({ indexValue, value, id, color, data }) => <ChartTooltip 
-                titles = {["Timestamp", capitalizeFirstLetter(id) , "Project Key"]}
-                values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(indexValue)), value, data.key]}
-                style = {false}
-                color = {color} />}
+              titles = {["Timestamp", capitalizeFirstLetter(id) , "Project Key"]}
+              values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(indexValue)), value, data.key]}
+              style = {false}
+              color = {color} />}
           />
         }
       </div>

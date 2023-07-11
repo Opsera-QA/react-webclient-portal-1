@@ -4,7 +4,7 @@ import {faWandMagic} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import ApigeePipelineRunAssistant
-  from "components/workflow/run_assistants/apigee/ApigeePipelineRunAssistant";
+from "components/workflow/run_assistants/apigee/ApigeePipelineRunAssistant";
 
 function ApigeePipelineRunAssistantOverlay( { pipeline, startPipelineRunFunction }) {
   const toastContext = useContext(DialogToastContext);

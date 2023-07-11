@@ -9,10 +9,10 @@ import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import PipelineStepParameterInputBaseHelpText
-  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBaseHelpText";
+from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBaseHelpText";
 import DockerCliCommandLineInputParameterInputRow from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_cli/inputs/DockerCliCommandLineInputParameterInputRow";
 import PipelineStepSaveEnvironmentVariablesBooleanToggle
-  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepSaveEnvironmentVariablesBooleanToggle";
+from "components/common/list_of_values_input/parameters/pipeline/PipelineStepSaveEnvironmentVariablesBooleanToggle";
 import DockerCliParameterSelectListInlineField from "../parameters/DockerCliParameterSelectListInlineField";
 import DockerCliParameterSelectListHeaderField from "../parameters/DockerCliParameterSelectListHeaderField";
 

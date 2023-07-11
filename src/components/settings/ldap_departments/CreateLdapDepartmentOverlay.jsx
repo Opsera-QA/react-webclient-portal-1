@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import ldapDepartmentMetadata from "components/settings/ldap_departments/ldapDepartment.metadata";
 import LdapDepartmentEditorPanel
-  from "components/settings/ldap_departments/details/LdapDepartmentEditorPanel";
+from "components/settings/ldap_departments/details/LdapDepartmentEditorPanel";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import {CENTER_OVERLAY_SIZES} from "components/common/overlays/center/CenterOverlayContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";

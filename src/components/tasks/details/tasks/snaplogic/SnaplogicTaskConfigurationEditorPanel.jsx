@@ -32,37 +32,37 @@ function SnaplogicTaskConfigurationEditorPanel({ taskModel, taskConfigurationMod
     return (
       <>
         <Col lg={12}>
-            <SnaplogicScmToolTypeSelectInput
-                model={taskConfigurationModel}
-                setModel={setTaskConfigurationModel}
-            />
+          <SnaplogicScmToolTypeSelectInput
+            model={taskConfigurationModel}
+            setModel={setTaskConfigurationModel}
+          />
         </Col>
         <Col lg={12}>
-            <SnaplogicScmToolSelectInput
-                model={taskConfigurationModel}
-                setModel={setTaskConfigurationModel}
-            />
+          <SnaplogicScmToolSelectInput
+            model={taskConfigurationModel}
+            setModel={setTaskConfigurationModel}
+          />
         </Col>
         <Col lg={12}>
-            <SnaplogicScmRepositorySelectInput
-                model={taskConfigurationModel}
-                setModel={setTaskConfigurationModel}
-            />
+          <SnaplogicScmRepositorySelectInput
+            model={taskConfigurationModel}
+            setModel={setTaskConfigurationModel}
+          />
         </Col>
         <Col lg={12}>
-            <SnaplogicScmBranchSelectInput
-                model={taskConfigurationModel}
-                setModel={setTaskConfigurationModel}
-                disableBranch={taskConfigurationModel.getData("targetBranch")}
-            />
+          <SnaplogicScmBranchSelectInput
+            model={taskConfigurationModel}
+            setModel={setTaskConfigurationModel}
+            disableBranch={taskConfigurationModel.getData("targetBranch")}
+          />
         </Col>
         <Col lg={12}>
-            <SnaplogicScmBranchSelectInput
-                model={taskConfigurationModel}
-                setModel={setTaskConfigurationModel}
-                fieldName={"targetBranch"}
-                disableBranch={taskConfigurationModel.getData("gitBranch")}
-            />
+          <SnaplogicScmBranchSelectInput
+            model={taskConfigurationModel}
+            setModel={setTaskConfigurationModel}
+            fieldName={"targetBranch"}
+            disableBranch={taskConfigurationModel.getData("gitBranch")}
+          />
         </Col>
       </>
     );
@@ -79,18 +79,18 @@ function SnaplogicTaskConfigurationEditorPanel({ taskModel, taskConfigurationMod
     return (
       <>
         <Col lg={12}>
-           <SnaplogicProjectSpaceSelectInput
+          <SnaplogicProjectSpaceSelectInput
             model={taskConfigurationModel}
             setModel={setTaskConfigurationModel}
-            />
+          />
         </Col>
         <Col lg={12}>
-            <SnaplogicProjectSelectInput
-                model={taskConfigurationModel}
-                setModel={setTaskConfigurationModel}
-                toolConfigId={taskConfigurationModel.getData("toolConfigId")}
-                projectSpace={taskConfigurationModel.getData("projectSpace")}
-            />
+          <SnaplogicProjectSelectInput
+            model={taskConfigurationModel}
+            setModel={setTaskConfigurationModel}
+            toolConfigId={taskConfigurationModel.getData("toolConfigId")}
+            projectSpace={taskConfigurationModel.getData("projectSpace")}
+          />
         </Col>
       </>
     );
@@ -105,11 +105,11 @@ function SnaplogicTaskConfigurationEditorPanel({ taskModel, taskConfigurationMod
     return (
       <>
         <Col lg={12}>
-            <TextInputBase 
-                dataObject={taskConfigurationModel}
-                setDataObject={setTaskConfigurationModel}
-                fieldName={"validationURL"}
-            />
+          <TextInputBase 
+            dataObject={taskConfigurationModel}
+            setDataObject={setTaskConfigurationModel}
+            fieldName={"validationURL"}
+          />
         </Col>
         <Col lg={12}>
           <VaultTextInput
@@ -124,22 +124,22 @@ function SnaplogicTaskConfigurationEditorPanel({ taskModel, taskConfigurationMod
 
   return (
     <Row>
-        <Col lg={12}>
+      <Col lg={12}>
         <SnaplogicToolSelectInput
-                model={taskConfigurationModel}
-                setModel={setTaskConfigurationModel}
-            /> 
-        </Col>
-        {getSourceSelection()}
-        {getProjectFields()}
-        <Col lg={12}>
-            <BooleanToggleInput
-                dataObject={taskConfigurationModel}
-                setDataObject={setTaskConfigurationModel}
-                fieldName={"iValidatorScan"}
-            />
-        </Col>
-        {getValidationFields()}
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
+        /> 
+      </Col>
+      {getSourceSelection()}
+      {getProjectFields()}
+      <Col lg={12}>
+        <BooleanToggleInput
+          dataObject={taskConfigurationModel}
+          setDataObject={setTaskConfigurationModel}
+          fieldName={"iValidatorScan"}
+        />
+      </Col>
+      {getValidationFields()}
     </Row>
   );
 }

@@ -4,7 +4,7 @@ import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import axios from "axios";
 import OctopusStepActions
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 const OctopusStandaloneVariablesTypeSelectInput = ({ dataObject, value,  disabled, setDataFunction }) => {

@@ -8,12 +8,12 @@ function PipelineSourceRepositoryGitExportEnabledInput({className, model, setMod
   const getDynamicFields = () => {
     if (model?.getData("gitExportEnabled") === true) {
       return (
-         <TextInputBase
-           fieldName={"gitExportPath"}
-           dataObject={model}
-           setDataObject={setModel}
-           disabled={disabled}
-         />
+        <TextInputBase
+          fieldName={"gitExportPath"}
+          dataObject={model}
+          setDataObject={setModel}
+          disabled={disabled}
+        />
       );
     }
   };

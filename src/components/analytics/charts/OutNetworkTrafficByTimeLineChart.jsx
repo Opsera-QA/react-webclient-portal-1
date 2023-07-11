@@ -10,7 +10,7 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
 import { defaultConfig, getColor, assignStandardColors,
-         shortenLegend } from "../../insights/charts/charts-views";
+  shortenLegend } from "../../insights/charts/charts-views";
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 
 function OutNetworkTrafficByTimeLineChart({ persona, date }) {
@@ -100,9 +100,9 @@ function OutNetworkTrafficByTimeLineChart({ persona, date }) {
             xScale={{ type: "point" }}
             yScale={{ type: "linear", min: "auto", max: "auto", stacked: false, reverse: false }}
             tooltip={({ point, color }) => <ChartTooltip 
-                                  titles = {["Date & Time", "Node name", "Out network usage"]}
-                                  values = {[String(point.data.xFormatted), point.serieId, point.data.y + "MB"]}
-                                  color={color} />}
+              titles = {["Date & Time", "Node name", "Out network usage"]}
+              values = {[String(point.data.xFormatted), point.serieId, point.data.y + "MB"]}
+              color={color} />}
           />
         )}
       </div>

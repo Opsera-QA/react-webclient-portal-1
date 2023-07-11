@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import OrchestrationNotificationLevelSelectInput
-  from "components/workflow/plan/step/notifications/OrchestrationNotificationLevelSelectInput";
+from "components/workflow/plan/step/notifications/OrchestrationNotificationLevelSelectInput";
 import EmailNotificationToggle
-  from "components/workflow/plan/step/notifications/email/EmailNotificationToggle";
+from "components/workflow/plan/step/notifications/email/EmailNotificationToggle";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import MultiEmailListInput from "components/common/inputs/list/text/email/MultiEmailListInput";

@@ -14,9 +14,9 @@ import {
 } from "components/common/list_of_values_input/parameters/pipeline/pipelineStepParameter.metadata";
 
 const DOCKER_CLI_OUTPUT_VARIABLE_SELECT_OPTIONS = [
-{text: "Docker Registry Name", value: "docker_registry_name"},
-{text: "Docker Tag Name", value:"docker_tag_name"},
-{text: "Docker Name", value:"docker_name"},
+  {text: "Docker Registry Name", value: "docker_registry_name"},
+  {text: "Docker Tag Name", value:"docker_tag_name"},
+  {text: "Docker Name", value:"docker_name"},
 ];
 
 
@@ -36,9 +36,9 @@ export default function DockerCliOutputVariableCommandLineInputParameterInputRow
     let successfulAdd = false;
     const newParameter = commandLineInputParameterModel?.getPersistData();
 
-      successfulAdd = saveEnvironmentVariables !== true
-        ? addGlobalCustomParameterFunction(newParameter)
-        : addEnvironmentParameterFunction(newParameter);
+    successfulAdd = saveEnvironmentVariables !== true
+      ? addGlobalCustomParameterFunction(newParameter)
+      : addEnvironmentParameterFunction(newParameter);
 
     if (successfulAdd === true) {
       commandLineInputParameterModel.resetData();
@@ -85,29 +85,29 @@ export default function DockerCliOutputVariableCommandLineInputParameterInputRow
   const isDuplicateValue = hasDuplicateValue();
 
   const getInputFields = () => {
-        return (
-          <>
-            <Col xs={5}>
-              <CustomParameterSelectInput
-                model={commandLineInputParameterModel}
-                fieldName={"parameterId"} 
-                disabled={disabled}
-                setDataFunction={setParameterFunction}
-              />
-            </Col>
-            <Col xs={5}>
-              <SelectInputBase
-                fieldName={"outputKey"}
-                dataObject={commandLineInputParameterModel}
-                setDataObject={setCommandLineInputParameterModel}
-                disabled={disabled}
-                selectOptions={DOCKER_CLI_OUTPUT_VARIABLE_SELECT_OPTIONS}
-                textField="text"
-                valueField="value"
-              />
-            </Col>
-          </>
-        );
+    return (
+      <>
+        <Col xs={5}>
+          <CustomParameterSelectInput
+            model={commandLineInputParameterModel}
+            fieldName={"parameterId"} 
+            disabled={disabled}
+            setDataFunction={setParameterFunction}
+          />
+        </Col>
+        <Col xs={5}>
+          <SelectInputBase
+            fieldName={"outputKey"}
+            dataObject={commandLineInputParameterModel}
+            setDataObject={setCommandLineInputParameterModel}
+            disabled={disabled}
+            selectOptions={DOCKER_CLI_OUTPUT_VARIABLE_SELECT_OPTIONS}
+            textField="text"
+            valueField="value"
+          />
+        </Col>
+      </>
+    );
   };
 
   return (

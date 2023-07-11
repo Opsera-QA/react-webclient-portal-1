@@ -5,14 +5,14 @@ import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks
 import Col from "react-bootstrap/Col";
 import TwoLineScoreDataBlock from "../../../../../common/metrics/score/TwoLineScoreDataBlock";
 import SonarRatingCodeCoverageActionableInsightOverlay
-  from "../actionable_insights/coverage/SonarRatingCodeCoverageActionableInsightOverlay";
+from "../actionable_insights/coverage/SonarRatingCodeCoverageActionableInsightOverlay";
 import TwoLinePercentageDataBlock from "../../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
 import ThreeLinePercentageBlockBase from "../../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
 function SonarRatingsCodeCoverageBlockContainer({ tests, lineCoverage, duplicate, kpiConfiguration, dashboardData, dataPoint, className,
-                                                  lastScore,
-                                                  icon,
-                                                  iconOverlayBody,
-                                                       }) {
+  lastScore,
+  icon,
+  iconOverlayBody,
+}) {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect = () => {

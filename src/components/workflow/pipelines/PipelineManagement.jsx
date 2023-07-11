@@ -121,7 +121,7 @@ function PipelineManagement() {
   const addPipeline = () => {
     // history.push(`/workflow/catalog/library`);
     toastContext.showOverlayPanel(
-        <CreateNewPipelineWizard loadData={loadData}/>
+      <CreateNewPipelineWizard loadData={loadData}/>
     );
   };
 

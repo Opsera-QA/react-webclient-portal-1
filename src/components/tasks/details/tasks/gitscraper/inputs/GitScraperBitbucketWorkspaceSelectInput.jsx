@@ -15,14 +15,14 @@ function GitScraperBitbucketWorkspaceSelectInput({model, setModel, disabled, ser
   }
 
   return (
-     <BitbucketWorkspaceInput
-       fieldName={"bitbucketWorkspaceName"}
-       gitToolId={gitToolId}
-       dataObject={model}
-       setDataObject={setModel}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-     />
+    <BitbucketWorkspaceInput
+      fieldName={"bitbucketWorkspaceName"}
+      gitToolId={gitToolId}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+    />
   );
 }
 

@@ -34,7 +34,7 @@ function SonarCodeCoverageBarChart( { data, persona } ) {
           : 
           <ResponsiveBar
             {...defaultConfig("Value", "Code Coverage Metric", 
-                    false, true, "", "monthDate2")}
+              false, true, "", "monthDate2")}
             data={data ? data.data : []}
             onClick={() => setShowModal(true)}
             keys={[
@@ -47,10 +47,10 @@ function SonarCodeCoverageBarChart( { data, persona } ) {
             colorBy="id"
             colors={({ id, data }) => data[`${id}_color`]}
             tooltip={({ indexValue, value, id, color, data }) => <ChartTooltip 
-                titles = {["Timestamp", capitalizeFirstLetter(id) , "Project Key"]}
-                values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(indexValue)), value, data.key]}
-                style = {false}
-                color = {color} />}
+              titles = {["Timestamp", capitalizeFirstLetter(id) , "Project Key"]}
+              values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(indexValue)), value, data.key]}
+              style = {false}
+              color = {color} />}
           />
         }
       </div>

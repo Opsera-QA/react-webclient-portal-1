@@ -25,18 +25,18 @@ function ExportSonarQubeScanDataOverlay({ formattedData, rawData, isLoading }) {
 
   const getCsvData = () => {
     return [["Project", "Severity", "Type", "Line", "Status", "Author", "Component", "Message"],
-    ...formattedData.map(item =>
-      [
-        item.project,
-        item.severity,
-        item.type,
-        item.line,
-        item.status,
-        item.author,
-        item?.component.substring(item.component.lastIndexOf('/') + 1),
-        item.message
-      ]
-    )];
+      ...formattedData.map(item =>
+        [
+          item.project,
+          item.severity,
+          item.type,
+          item.line,
+          item.status,
+          item.author,
+          item?.component.substring(item.component.lastIndexOf('/') + 1),
+          item.message
+        ]
+      )];
   };
 
   return (

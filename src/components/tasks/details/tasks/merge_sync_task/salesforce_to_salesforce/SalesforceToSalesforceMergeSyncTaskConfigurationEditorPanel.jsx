@@ -12,7 +12,7 @@ import {
   mergeSyncTaskSalesforceConfigurationMetadata
 } from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/mergeSyncTaskSalesforceConfiguration.metadata";
 import SalesforceMergeSyncTaskSalesforceToolSelectInput
-  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceMergeSyncTaskSalesforceToolSelectInput";
+from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceMergeSyncTaskSalesforceToolSelectInput";
 
 function SalesforceToSalesforceMergeSyncTaskConfigurationEditorPanel({
   taskModel,

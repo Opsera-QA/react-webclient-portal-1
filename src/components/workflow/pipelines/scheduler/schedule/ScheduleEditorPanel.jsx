@@ -8,7 +8,7 @@ import ScheduleCalendarInput from "components/workflow/pipelines/scheduler/sched
 import modelHelpers from "components/common/model/modelHelpers";
 import ScheduleTimeInput from "components/workflow/pipelines/scheduler/schedule/ScheduleTimeInput";
 import ScheduleFrequencyRadioInput
-  from "components/common/list_of_values_input/workflow/scheduler/ScheduleFrequencyRadioInput";
+from "components/common/list_of_values_input/workflow/scheduler/ScheduleFrequencyRadioInput";
 
 // TODO: Jim, when this is all done and working, I will probably make a component out of the schedule component and hook it up here.
 function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleModel, setSchedulerTaskModel, updateScheduleName }) {
@@ -47,12 +47,12 @@ function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleMode
     setIsLoading(false);
   };
 
-const updateModel = (newDataModel) => {
-  setScheduleModel(newDataModel);
+  const updateModel = (newDataModel) => {
+    setScheduleModel(newDataModel);
 
-  scheduledTaskData.setData("schedule",scheduleModel?.getPersistData() );
-  setSchedulerTaskModel({...scheduledTaskData});
-};
+    scheduledTaskData.setData("schedule",scheduleModel?.getPersistData() );
+    setSchedulerTaskModel({...scheduledTaskData});
+  };
 
   if (scheduleModel == null) {
     return null;

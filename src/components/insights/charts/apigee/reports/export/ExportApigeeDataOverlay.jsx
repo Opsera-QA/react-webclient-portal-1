@@ -92,15 +92,15 @@ function ExportApigeeDataOverlay({ kpiConfiguration, dashboardTags, dashboardOrg
 
   const getCsvData = () => {
     return [["Organization", "Environment", "Total Assets Deployed", "New Assets", "Updated Assets"],
-    ...formattedData.map(item =>
-      [
-        item.organization,
-        item.environment,
-        item.totalAssetsDeployed,
-        item.newAssets,
-        item.updatedAssets,
-      ]
-    )];
+      ...formattedData.map(item =>
+        [
+          item.organization,
+          item.environment,
+          item.totalAssetsDeployed,
+          item.newAssets,
+          item.updatedAssets,
+        ]
+      )];
   };
 
   return (

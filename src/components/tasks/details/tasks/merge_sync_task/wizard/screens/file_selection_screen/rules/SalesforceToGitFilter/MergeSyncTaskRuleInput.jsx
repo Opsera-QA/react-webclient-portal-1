@@ -10,11 +10,11 @@ import Model from "core/data_model/model";
 import sfdcRuleMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/rules/sfdc-rule-metadata";
 import MergeSyncGitRuleFieldSelectInput from "./MergeSyncGitRuleFieldSelectInput";
 import SfdcPipelineWizardRuleFieldFilterSelectInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/rules/SfdcPipelineWizardRuleFieldFilterSelectInput";
+from "components/workflow/wizards/sfdc_pipeline_wizard/rules/SfdcPipelineWizardRuleFieldFilterSelectInput";
 import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
 import IconBase from "components/common/icons/IconBase";
 import MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/rules/MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput";
+from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/rules/MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput";
 
 function MergeSyncTaskRuleInput({ wizardModel, ruleData, index, addRule, deleteRule, updateRule, fetchAttribute }) {
   const [ruleModel, setRuleModel] = useState(undefined);
@@ -69,31 +69,31 @@ function MergeSyncTaskRuleInput({ wizardModel, ruleData, index, addRule, deleteR
 
   const getRuleValueInput = () => {
     switch (ruleModel.getData("fieldFilter")) {
-      case "startsWith":
-      case "endsWith":
-      case "contains":
-        return (
-          <MultiTextInputBase
-            dataObject={ruleModel}
-            setDataObject={updateData}
-            fieldName={"values"}
-            showLabel={false}
-          />
-        );
-      case "equals":
-      default:
-        return (
-          <MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput
-            ruleFieldName={ruleModel?.getData("field")}
-            fieldName="values"
-            ruleModel={ruleModel}
-            showLabel={false}
-            setRuleModel={updateData}
-            fetchAttribute={fetchAttribute}
-            componentTypes={ruleModel?.getData("componentTypes")}
-            pipelineStorageRecordId={wizardModel?.getData("recordId")}
-          />
-        );
+    case "startsWith":
+    case "endsWith":
+    case "contains":
+      return (
+        <MultiTextInputBase
+          dataObject={ruleModel}
+          setDataObject={updateData}
+          fieldName={"values"}
+          showLabel={false}
+        />
+      );
+    case "equals":
+    default:
+      return (
+        <MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput
+          ruleFieldName={ruleModel?.getData("field")}
+          fieldName="values"
+          ruleModel={ruleModel}
+          showLabel={false}
+          setRuleModel={updateData}
+          fetchAttribute={fetchAttribute}
+          componentTypes={ruleModel?.getData("componentTypes")}
+          pipelineStorageRecordId={wizardModel?.getData("recordId")}
+        />
+      );
     }
   };
 

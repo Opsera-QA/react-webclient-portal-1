@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedJenkinsToolSelectInput
-  from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
+from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
 
 function DotNetStepJenkinsToolSelectInput({dataObject, setDataObject, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
@@ -25,14 +25,14 @@ function DotNetStepJenkinsToolSelectInput({dataObject, setDataObject, disabled})
   };
 
   return (
-     <RoleRestrictedJenkinsToolSelectInput
-       fieldName={"toolConfigId"}
-       configurationRequired={true}
-       model={dataObject}
-       setModel={setDataObject}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-     />
+    <RoleRestrictedJenkinsToolSelectInput
+      fieldName={"toolConfigId"}
+      configurationRequired={true}
+      model={dataObject}
+      setModel={setDataObject}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+    />
   );
 }
 

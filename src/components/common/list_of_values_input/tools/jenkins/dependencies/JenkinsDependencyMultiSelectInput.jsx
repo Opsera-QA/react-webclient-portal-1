@@ -79,8 +79,8 @@ function JenkinsDependencyMultiSelectInput({
       (dependency) => dependency.dependencyType,
     );
     const filteredArr = dependencies.filter(
-        (dependency) =>
-            !selectedDependencyTypes.includes(dependency.dependencyType),
+      (dependency) =>
+        !selectedDependencyTypes.includes(dependency.dependencyType),
     );
     return [...filteredArr, ...currentData];
   };

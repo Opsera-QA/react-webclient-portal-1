@@ -39,9 +39,9 @@ function CodeSmellLineChart({ data, persona }) {
             onClick={() => setShowModal(true)}
             colors={getColor}
             tooltip={({ point, color }) => <ChartTooltip 
-                      titles={["Timestamp", "Code Smells", "Key"]}
-                      values={[point.data.x, point.data.y, point.data.key]}
-                      color = {color} />}
+              titles={["Timestamp", "Code Smells", "Key"]}
+              values={[point.data.x, point.data.y, point.data.key]}
+              color = {color} />}
           />
         )}
       </div>

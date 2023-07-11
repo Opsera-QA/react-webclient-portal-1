@@ -91,52 +91,52 @@ function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountD
 
   return (
     <>
-        <EditorPanelContainer
-          recordDto={ldapIdpAccountDataDto}
-          setRecordDto={setLdapIdpAccountDataDto}
-          updateRecord={updateLdapIdpAccount}
-          createRecord={createIdpAccount}
-          addAnotherOption={false}
-          disable={ldapIdpAccountDataDto.isNew()}
-        >
-          {ldapIdpAccountDataDto.isNew() && showWarningMessage && <WarningDialog setWarningMessage={setShowWarningMessage} autoCloseDialog={false} warningMessage="IDP Account Creation is not currently available" />}
-          {!ldapIdpAccountDataDto.isNew() && <div className="mb-2 text-muted">
-            <TooltipWrapper innerText={"Edit this Account"}>
-              <IconBase icon={faCogs} className="pointer float-right ml-3" onClickFunction={() => {
-                setShowIdpEditPanel(false);
-              }}/>
-            </TooltipWrapper>
-          </div>}
-          <Row>
-            <Col lg={12}>
-              <TextInputBase disabled={!ldapIdpAccountDataDto.isNew()} fieldName={"name"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
-            </Col>
-            <Col lg={12}>
-              <TextInputBase disabled={true} fieldName={"domain"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
-            </Col>
-            <Col lg={12}>
-              <TextInputBase fieldName={"idpRedirectURI"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
-            </Col>
-            <Col lg={12}>
-              <TextInputBase fieldName={"clientID"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
-            </Col>
-            <Col lg={12}>
-              <TextInputBase fieldName={"issuer"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
-            </Col>
-            <Col lg={12}>
-              <TextInputBase fieldName={"baseUrl"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
-            </Col>
-            <Col lg={12}>
-              <TextInputBase fieldName={"idpVendor"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
-            </Col>
-            <Col lg={12}>
-              <TextInputBase fieldName={"configEntryType"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
-            </Col>
-            <Col lg={12}>
-              <TextInputBase fieldName={"idpNameIDMapping"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
-            </Col>
-          </Row>
-        </EditorPanelContainer>
+      <EditorPanelContainer
+        recordDto={ldapIdpAccountDataDto}
+        setRecordDto={setLdapIdpAccountDataDto}
+        updateRecord={updateLdapIdpAccount}
+        createRecord={createIdpAccount}
+        addAnotherOption={false}
+        disable={ldapIdpAccountDataDto.isNew()}
+      >
+        {ldapIdpAccountDataDto.isNew() && showWarningMessage && <WarningDialog setWarningMessage={setShowWarningMessage} autoCloseDialog={false} warningMessage="IDP Account Creation is not currently available" />}
+        {!ldapIdpAccountDataDto.isNew() && <div className="mb-2 text-muted">
+          <TooltipWrapper innerText={"Edit this Account"}>
+            <IconBase icon={faCogs} className="pointer float-right ml-3" onClickFunction={() => {
+              setShowIdpEditPanel(false);
+            }}/>
+          </TooltipWrapper>
+        </div>}
+        <Row>
+          <Col lg={12}>
+            <TextInputBase disabled={!ldapIdpAccountDataDto.isNew()} fieldName={"name"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+          </Col>
+          <Col lg={12}>
+            <TextInputBase disabled={true} fieldName={"domain"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+          </Col>
+          <Col lg={12}>
+            <TextInputBase fieldName={"idpRedirectURI"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+          </Col>
+          <Col lg={12}>
+            <TextInputBase fieldName={"clientID"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+          </Col>
+          <Col lg={12}>
+            <TextInputBase fieldName={"issuer"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+          </Col>
+          <Col lg={12}>
+            <TextInputBase fieldName={"baseUrl"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+          </Col>
+          <Col lg={12}>
+            <TextInputBase fieldName={"idpVendor"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+          </Col>
+          <Col lg={12}>
+            <TextInputBase fieldName={"configEntryType"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+          </Col>
+          <Col lg={12}>
+            <TextInputBase fieldName={"idpNameIDMapping"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+          </Col>
+        </Row>
+      </EditorPanelContainer>
     </>
   );
 }

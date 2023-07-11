@@ -7,7 +7,7 @@ import {useHistory} from "react-router-dom";
 import {policyHelper} from "components/settings/organization_settings/policies/policy.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import usePolicyAdministrationActions
-  from "hooks/settings/organization_settings/policies/usePolicyAdministrationActions";
+from "hooks/settings/organization_settings/policies/usePolicyAdministrationActions";
 
 export default function OrganizationSettingsActivatePolicyButton(
   {

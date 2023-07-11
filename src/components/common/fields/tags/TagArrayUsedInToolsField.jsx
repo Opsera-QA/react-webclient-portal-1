@@ -89,7 +89,7 @@ function TagArrayUsedInToolsField({ tags, showTable }) {
     if (showTable) {
       return (
         <TagsUsedInToolsTable data={tools} loadData={loadData} isLoading={isLoading} isMounted={isMounted}/>
-        );
+      );
     }
 
     return (getToolCards());

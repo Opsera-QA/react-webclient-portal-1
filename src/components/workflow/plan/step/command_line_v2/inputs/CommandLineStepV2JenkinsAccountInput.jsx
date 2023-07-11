@@ -20,16 +20,16 @@ function CommandLineStepV2JenkinsAccountInput({dataObject, setDataObject, disabl
   };
 
   return (
-     <RoleRestrictedJenkinsAccountSelectInput
-       fieldName={"gitCredential"}
-       jenkinsToolId={dataObject?.getData("toolConfigId")}
-       className={className}
-       requireConfiguration={true}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       setDataFunction={setJenkinsAccount}
-       disabled={disabled || dataObject?.getData("toolJobId") === ""}
-     />
+    <RoleRestrictedJenkinsAccountSelectInput
+      fieldName={"gitCredential"}
+      jenkinsToolId={dataObject?.getData("toolConfigId")}
+      className={className}
+      requireConfiguration={true}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      setDataFunction={setJenkinsAccount}
+      disabled={disabled || dataObject?.getData("toolJobId") === ""}
+    />
   );
 }
 

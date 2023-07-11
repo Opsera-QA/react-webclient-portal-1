@@ -15,94 +15,94 @@ function DeploymentFrequencyConfigurationItemsSelectInput({
   setDataFunction,
   disabled,
 }) {
-    const [field] = useState(model?.getFieldById(fieldName));
-    const { getAccessToken } = useContext(AuthContext);
-    const [stages, setStages] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(undefined);
-    const isMounted = useRef(false);
-    const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [field] = useState(model?.getFieldById(fieldName));
+  const { getAccessToken } = useContext(AuthContext);
+  const [stages, setStages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-    useEffect(() => {
-        if (cancelTokenSource) {
-            cancelTokenSource.cancel();
-        }
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
 
-        const source = axios.CancelToken.source();
-        setCancelTokenSource(source);
-        isMounted.current = true;
-        loadData().catch((error) => {
-            if (isMounted?.current === true) {
-                setError(error);
-            }
-        });
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        setError(error);
+      }
+    });
 
-        return () => {
-            source.cancel();
-            isMounted.current = false;
-        };
-    }, []);
-
-    const loadData = async (cancelSource = cancelTokenSource) => {
-        try {
-            setError(undefined);
-            setIsLoading(true);
-            await loadStages(cancelSource);
-        } catch (error) {
-            if (isMounted?.current === true) {
-                setError(error);
-            }
-        } finally {
-            if (isMounted?.current === true) {
-                setIsLoading(false);
-            }
-        }
+    return () => {
+      source.cancel();
+      isMounted.current = false;
     };
+  }, []);
 
-    const loadStages = async (cancelSource = cancelTokenSource) => {
-        const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-            getAccessToken,
-            cancelSource,
-            "gitlabDeploymentStagesList"
-        );
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    try {
+      setError(undefined);
+      setIsLoading(true);
+      await loadStages(cancelSource);
+    } catch (error) {
+      if (isMounted?.current === true) {
+        setError(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
 
-        if (response.data != null) {
-            setStages(response?.data?.data[0]?.gitlabDeploymentStagesList?.data);
-        }
-    };
-    return (
-        <MultiSelectInputBase
-            fieldName={fieldName}
-            dataObject={model}
-            setDataObject={setModel}
-            setDataFunction={setDataFunction}
-            selectOptions={stages}
-            busy={isLoading}
-            valueField={valueField}
-            error={error}
-            textField={textField}
-            placeholderText={placeholderText}
-            disabled={disabled || isLoading}
-            pluralTopic={"Stages"}
-        />
+  const loadStages = async (cancelSource = cancelTokenSource) => {
+    const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+      getAccessToken,
+      cancelSource,
+      "gitlabDeploymentStagesList"
     );
+
+    if (response.data != null) {
+      setStages(response?.data?.data[0]?.gitlabDeploymentStagesList?.data);
+    }
+  };
+  return (
+    <MultiSelectInputBase
+      fieldName={fieldName}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setDataFunction}
+      selectOptions={stages}
+      busy={isLoading}
+      valueField={valueField}
+      error={error}
+      textField={textField}
+      placeholderText={placeholderText}
+      disabled={disabled || isLoading}
+      pluralTopic={"Stages"}
+    />
+  );
 }
 
 DeploymentFrequencyConfigurationItemsSelectInput.propTypes = {
-    placeholderText: PropTypes.string,
-    fieldName: PropTypes.string,
-    textField: PropTypes.string,
-    valueField: PropTypes.string,
-    model: PropTypes.object,
-    setModel: PropTypes.func,
-    setDataFunction: PropTypes.func,
-    disabled: PropTypes.bool,
-    visible: PropTypes.bool,
+  placeholderText: PropTypes.string,
+  fieldName: PropTypes.string,
+  textField: PropTypes.string,
+  valueField: PropTypes.string,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
+  setDataFunction: PropTypes.func,
+  disabled: PropTypes.bool,
+  visible: PropTypes.bool,
 };
 
 DeploymentFrequencyConfigurationItemsSelectInput.defaultProps = {
-    textField: "text",
-    valueField: "value",
+  textField: "text",
+  valueField: "value",
 };
 
 export default DeploymentFrequencyConfigurationItemsSelectInput;

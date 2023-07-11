@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import CreateSalesforceWorkflowWizardFlowSelectionScreen
-  from "components/wizard/portal/workflows/flows/salesforce/flows/selection/CreateSalesforceWorkflowWizardFlowSelectionScreen";
+from "components/wizard/portal/workflows/flows/salesforce/flows/selection/CreateSalesforceWorkflowWizardFlowSelectionScreen";
 import CreateSalesforceWorkflowWizardFlowWrapper
-  from "components/wizard/portal/workflows/flows/salesforce/flows/wizards/CreateSalesforceWorkflowWizardFlowWrapper";
+from "components/wizard/portal/workflows/flows/salesforce/flows/wizards/CreateSalesforceWorkflowWizardFlowWrapper";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import accountsActions from "components/admin/accounts/accounts-actions";
@@ -11,13 +11,13 @@ import {
   OVERLAY_PANEL_MIN_HEIGHT_MINUS_TITLE,
 } from "components/common/overlays/center/CenterOverlayContainer";
 import FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen
-  from "components/wizard/portal/workflows/flows/pipeline/limitation/FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen";
+from "components/wizard/portal/workflows/flows/pipeline/limitation/FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen";
 import FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
-  from "components/wizard/portal/workflows/flows/tasks/limitation/FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen";
+from "components/wizard/portal/workflows/flows/tasks/limitation/FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen";
 import FreeTrialDeletePipelineWorkflowConfirmationScreen
-  from "components/wizard/portal/workflows/flows/pipeline/deletion/FreeTrialDeletePipelineWorkflowConfirmationScreen";
+from "components/wizard/portal/workflows/flows/pipeline/deletion/FreeTrialDeletePipelineWorkflowConfirmationScreen";
 import FreeTrialDeleteTaskWorkflowConfirmationScreen
-  from "components/wizard/portal/workflows/flows/tasks/deletion/FreeTrialDeleteTaskWorkflowConfirmationScreen";
+from "components/wizard/portal/workflows/flows/tasks/deletion/FreeTrialDeleteTaskWorkflowConfirmationScreen";
 
 export const CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS = {
   SELECT_FLOW_SCREEN: "select_flow_screen",
@@ -87,74 +87,74 @@ export default function CreateSalesforceWorkflowWizard(
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
-      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_FLOW_SCREEN:
-        return (
-          <CreateSalesforceWorkflowWizardFlowSelectionScreen
-            selectedFlow={selectedFlow}
-            setSelectedFlow={setSelectedFlow}
-            setCurrentScreen={setCurrentScreen}
-            setButtonContainer={setButtonContainer}
-            backButtonFunction={backButtonFunction}
-            accountMetrics={accountMetrics}
-            className={"m-4"}
-          />
-        );
-      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.WIZARD_FLOW_SCREEN:
-        return (
-          <CreateSalesforceWorkflowWizardFlowWrapper
-            flow={selectedFlow}
-            setButtonContainer={setButtonContainer}
-            backButtonFunction={goBackToFlowSelectionScreenFunction}
-          />
-        );
-      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.PIPELINE_LIMIT_REACHED_SCREEN:
-        return (
-          <FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen
-            selectedFlow={selectedFlow}
-            setSelectedFlow={setSelectedFlow}
-            pipelineCounts={accountMetrics?.pipelineCounts}
-            isAccountWhitelisted={accountMetrics != null && accountMetrics?.expiration == null}
-            setButtonContainer={setButtonContainer}
-            setCurrentScreen={setCurrentScreen}
-            setSelectedWorkflowId={setSelectedWorkflowId}
-            selectedWorkflowId={selectedWorkflowId}
-          />
-        );
-      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.DELETE_PIPELINE_CONFIRMATION_SCREEN:
-        return (
-          <FreeTrialDeletePipelineWorkflowConfirmationScreen
-            setSelectedFlow={setSelectedFlow}
-            setCurrentScreen={setCurrentScreen}
-            setSelectedWorkflowId={setSelectedWorkflowId}
-            selectedWorkflowId={selectedWorkflowId}
-            setButtonContainer={setButtonContainer}
-            loadData={loadData}
-          />
-        );
-      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TASK_LIMIT_REACHED_SCREEN:
-        return (
-          <FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
-            selectedFlow={selectedFlow}
-            setSelectedFlow={setSelectedFlow}
-            taskCounts={accountMetrics?.taskCounts}
-            isAccountWhitelisted={accountMetrics != null && accountMetrics?.expiration == null}
-            setButtonContainer={setButtonContainer}
-            setCurrentScreen={setCurrentScreen}
-            setSelectedWorkflowId={setSelectedWorkflowId}
-            selectedWorkflowId={selectedWorkflowId}
-          />
-        );
-      case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.DELETE_TASK_CONFIRMATION_SCREEN:
-        return (
-          <FreeTrialDeleteTaskWorkflowConfirmationScreen
-            setSelectedFlow={setSelectedFlow}
-            setCurrentScreen={setCurrentScreen}
-            setSelectedWorkflowId={setSelectedWorkflowId}
-            selectedWorkflowId={selectedWorkflowId}
-            setButtonContainer={setButtonContainer}
-            loadData={loadData}
-          />
-        );
+    case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.SELECT_FLOW_SCREEN:
+      return (
+        <CreateSalesforceWorkflowWizardFlowSelectionScreen
+          selectedFlow={selectedFlow}
+          setSelectedFlow={setSelectedFlow}
+          setCurrentScreen={setCurrentScreen}
+          setButtonContainer={setButtonContainer}
+          backButtonFunction={backButtonFunction}
+          accountMetrics={accountMetrics}
+          className={"m-4"}
+        />
+      );
+    case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.WIZARD_FLOW_SCREEN:
+      return (
+        <CreateSalesforceWorkflowWizardFlowWrapper
+          flow={selectedFlow}
+          setButtonContainer={setButtonContainer}
+          backButtonFunction={goBackToFlowSelectionScreenFunction}
+        />
+      );
+    case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.PIPELINE_LIMIT_REACHED_SCREEN:
+      return (
+        <FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen
+          selectedFlow={selectedFlow}
+          setSelectedFlow={setSelectedFlow}
+          pipelineCounts={accountMetrics?.pipelineCounts}
+          isAccountWhitelisted={accountMetrics != null && accountMetrics?.expiration == null}
+          setButtonContainer={setButtonContainer}
+          setCurrentScreen={setCurrentScreen}
+          setSelectedWorkflowId={setSelectedWorkflowId}
+          selectedWorkflowId={selectedWorkflowId}
+        />
+      );
+    case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.DELETE_PIPELINE_CONFIRMATION_SCREEN:
+      return (
+        <FreeTrialDeletePipelineWorkflowConfirmationScreen
+          setSelectedFlow={setSelectedFlow}
+          setCurrentScreen={setCurrentScreen}
+          setSelectedWorkflowId={setSelectedWorkflowId}
+          selectedWorkflowId={selectedWorkflowId}
+          setButtonContainer={setButtonContainer}
+          loadData={loadData}
+        />
+      );
+    case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.TASK_LIMIT_REACHED_SCREEN:
+      return (
+        <FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
+          selectedFlow={selectedFlow}
+          setSelectedFlow={setSelectedFlow}
+          taskCounts={accountMetrics?.taskCounts}
+          isAccountWhitelisted={accountMetrics != null && accountMetrics?.expiration == null}
+          setButtonContainer={setButtonContainer}
+          setCurrentScreen={setCurrentScreen}
+          setSelectedWorkflowId={setSelectedWorkflowId}
+          selectedWorkflowId={selectedWorkflowId}
+        />
+      );
+    case CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.DELETE_TASK_CONFIRMATION_SCREEN:
+      return (
+        <FreeTrialDeleteTaskWorkflowConfirmationScreen
+          setSelectedFlow={setSelectedFlow}
+          setCurrentScreen={setCurrentScreen}
+          setSelectedWorkflowId={setSelectedWorkflowId}
+          selectedWorkflowId={selectedWorkflowId}
+          setButtonContainer={setButtonContainer}
+          loadData={loadData}
+        />
+      );
     }
   };
 

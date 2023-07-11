@@ -3,9 +3,9 @@ import PropType from "prop-types";
 import SelectionCardBase from "components/common/card/selection/SelectionCardBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import entitlementConstants
-  from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
+from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
 import EditOrganizationSettingsEntitlementOverlay
-  from "components/admin/organization_settings/details/entitlements/active/EditOrganizationSettingsEntitlementOverlay";
+from "components/admin/organization_settings/details/entitlements/active/EditOrganizationSettingsEntitlementOverlay";
 
 export default function OrganizationSettingsEntitlementPageLinkCardBase(
   {

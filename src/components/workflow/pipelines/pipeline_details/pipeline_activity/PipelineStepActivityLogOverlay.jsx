@@ -6,7 +6,7 @@ import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import PipelineTaskTabPanel
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskTabPanel";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskTabPanel";
 import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 

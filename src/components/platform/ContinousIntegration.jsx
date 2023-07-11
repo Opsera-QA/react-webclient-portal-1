@@ -87,19 +87,19 @@ function ContinousIntegration(props) {
             </div>
 
             <div
-                className={`newApp__service-logo ${tools.includes("TeamCity") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
-                onClick={() => selectCard("TeamCity")}
-              >
-                <input type="checkbox"
-                  disabled={tools.includes("TeamCity") ? true : false}
-                  checked={isChecked.TeamCity && data["TeamCity"]}
-                  className="newApp__checkbox"
-                /> 
-                <img src={"/img/tools/team-city.png"} alt="Team City"/>
-                <span className="newApp__service-title">Team City</span>
-              </div>
+              className={`newApp__service-logo ${tools.includes("TeamCity") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
+              onClick={() => selectCard("TeamCity")}
+            >
+              <input type="checkbox"
+                disabled={tools.includes("TeamCity") ? true : false}
+                checked={isChecked.TeamCity && data["TeamCity"]}
+                className="newApp__checkbox"
+              /> 
+              <img src={"/img/tools/team-city.png"} alt="Team City"/>
+              <span className="newApp__service-title">Team City</span>
+            </div>
 
-              <div
+            <div
               className={`newApp__service-logo ${tools.includes("Argocd") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
               onClick={() => selectCard("Argocd")}
             >
@@ -136,20 +136,20 @@ function ContinousIntegration(props) {
                 </Tooltip>
               }
             >
-            <div
+              <div
               // className={`newApp__service-logo ${tools.includes("FluxCD") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`} 
-              className="newApp__service-logo newApp__service-logo--disabledButAvailable"
+                className="newApp__service-logo newApp__service-logo--disabledButAvailable"
               // onClick={() => selectCard("FluxCD")}
               >
-              <input type="checkbox"
-                disabled={tools.includes("FluxCD") ? true : false}
-                checked={isChecked.FluxCD && data["FluxCD"]}
-                className="newApp__checkbox"
+                <input type="checkbox"
+                  disabled={tools.includes("FluxCD") ? true : false}
+                  checked={isChecked.FluxCD && data["FluxCD"]}
+                  className="newApp__checkbox"
                 // onClick={() => selectCard("FluxCD")}
-              />
-              <img src={"/img/tools/flux.png"} />
-              <span className="newApp__service-title">FluxCD</span>
-            </div> 
+                />
+                <img src={"/img/tools/flux.png"} />
+                <span className="newApp__service-title">FluxCD</span>
+              </div> 
             </OverlayTrigger>
                        
           </div>

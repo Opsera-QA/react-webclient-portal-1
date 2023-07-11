@@ -5,9 +5,9 @@ import modelHelpers from "components/common/model/modelHelpers";
 import FreeTrialRegistrationWelcomeScreen from "components/trial/registration/FreeTrialRegistrationWelcomeScreen";
 import FreeTrialRegistrationSignupScreen from "components/trial/registration/FreeTrialRegistrationSignupScreen";
 import FreeTrialRegistrationSelectSignupOptionScreen
-  from "components/trial/registration/FreeTrialRegistrationSelectSignupOptionScreen";
+from "components/trial/registration/FreeTrialRegistrationSelectSignupOptionScreen";
 import FreeTrialRegistrationCongratulationsScreen
-  from "components/trial/registration/FreeTrialRegistrationCongratulationsScreen";
+from "components/trial/registration/FreeTrialRegistrationCongratulationsScreen";
 import useBackgroundColorReference from "hooks/useBackgroundColorReference";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
@@ -40,30 +40,30 @@ const FreeTrialRegistration = () => {
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
-      case FREE_TRIAL_REGISTRATION_SCREENS.WELCOME_SCREEN:
-        return (
-          <FreeTrialRegistrationWelcomeScreen
-            setCurrentScreen={setCurrentScreen}
-          />
-        );
-      case FREE_TRIAL_REGISTRATION_SCREENS.SELECT_SIGNUP_OPTION_SCREEN:
-        return (
-          <FreeTrialRegistrationSelectSignupOptionScreen
-            setCurrentScreen={setCurrentScreen}
-          />
-        );
-      case FREE_TRIAL_REGISTRATION_SCREENS.SIGNUP_SCREEN:
-        return (
-          <FreeTrialRegistrationSignupScreen
-            registrationModel={registrationModel}
-            setRegistrationModel={setRegistrationModel}
-            setCurrentScreen={setCurrentScreen}
-          />
-        );
-      case FREE_TRIAL_REGISTRATION_SCREENS.CONGRATULATIONS_SCREEN:
-        return (
-          <FreeTrialRegistrationCongratulationsScreen />
-        );
+    case FREE_TRIAL_REGISTRATION_SCREENS.WELCOME_SCREEN:
+      return (
+        <FreeTrialRegistrationWelcomeScreen
+          setCurrentScreen={setCurrentScreen}
+        />
+      );
+    case FREE_TRIAL_REGISTRATION_SCREENS.SELECT_SIGNUP_OPTION_SCREEN:
+      return (
+        <FreeTrialRegistrationSelectSignupOptionScreen
+          setCurrentScreen={setCurrentScreen}
+        />
+      );
+    case FREE_TRIAL_REGISTRATION_SCREENS.SIGNUP_SCREEN:
+      return (
+        <FreeTrialRegistrationSignupScreen
+          registrationModel={registrationModel}
+          setRegistrationModel={setRegistrationModel}
+          setCurrentScreen={setCurrentScreen}
+        />
+      );
+    case FREE_TRIAL_REGISTRATION_SCREENS.CONGRATULATIONS_SCREEN:
+      return (
+        <FreeTrialRegistrationCongratulationsScreen />
+      );
     }
   };
 

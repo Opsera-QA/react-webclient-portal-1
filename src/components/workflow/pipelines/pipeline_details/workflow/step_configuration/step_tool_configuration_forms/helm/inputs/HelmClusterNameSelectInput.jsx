@@ -17,22 +17,22 @@ export default function HelmClusterNameSelectInput(
     region,
   }) {
 
-    if(model.getData("cloudProvider") === "aws") {
-      return (
-        <AwsClusterSelectInput
-          fieldName={fieldName}
-          model={model}
-          setModel={setModel}
-          disabled={disabled}
-          textField={textField}
-          valueField={valueField}
-          awsToolId={awsToolId}
-          type={type}
-          region={region}
-        />
-      );
-    }
-return null;
+  if(model.getData("cloudProvider") === "aws") {
+    return (
+      <AwsClusterSelectInput
+        fieldName={fieldName}
+        model={model}
+        setModel={setModel}
+        disabled={disabled}
+        textField={textField}
+        valueField={valueField}
+        awsToolId={awsToolId}
+        type={type}
+        region={region}
+      />
+    );
+  }
+  return null;
 }
 
 HelmClusterNameSelectInput.propTypes = {

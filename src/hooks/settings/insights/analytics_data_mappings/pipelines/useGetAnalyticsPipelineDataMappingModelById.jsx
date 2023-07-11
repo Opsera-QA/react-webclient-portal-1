@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
 import useGetAnalyticsPipelineDataMappingModel
-  from "hooks/settings/insights/analytics_data_mappings/pipelines/useGetAnalyticsPipelineDataMappingModel";
+from "hooks/settings/insights/analytics_data_mappings/pipelines/useGetAnalyticsPipelineDataMappingModel";
 import useGetAnalyticsPipelineDataMappingById
-  from "hooks/settings/insights/analytics_data_mappings/pipelines/useGetAnalyticsPipelineDataMappingById";
+from "hooks/settings/insights/analytics_data_mappings/pipelines/useGetAnalyticsPipelineDataMappingById";
 
 export default function useGetAnalyticsPipelineDataMappingModelById(analyticsDataPipelineMappingId, handleErrorFunction) {
   const [analyticsPipelineDataMappingModel, setAnalyticsPipelineDataMappingModel] = useState(undefined);

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SiteRoleMultiSelectCheckboxInput
-  from "components/common/list_of_values_input/ldap/site_roles/SiteRoleMultiSelectCheckboxInput";
+from "components/common/list_of_values_input/ldap/site_roles/SiteRoleMultiSelectCheckboxInput";
 
 export default function InlineSiteRoleMultiSelectCheckboxFilterInput(
   {

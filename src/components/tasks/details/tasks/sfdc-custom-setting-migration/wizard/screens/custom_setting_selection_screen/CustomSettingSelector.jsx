@@ -188,36 +188,36 @@ const CustomSettingSelector = ({
           <div className={"px-3 d-flex"}>
             {wizardModel?.getData("taskType") !==
             MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG ? (
-              <Col xs={6}>
-                <ToolNameField
-                  model={wizardModel}
-                  fieldName={"sourceToolId"}
-                  loadToolInNewWindow={true}
-                  visible={
-                    wizardModel?.getData("taskType") !==
+                <Col xs={6}>
+                  <ToolNameField
+                    model={wizardModel}
+                    fieldName={"sourceToolId"}
+                    loadToolInNewWindow={true}
+                    visible={
+                      wizardModel?.getData("taskType") !==
                     MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG
-                  }
-                />
-              </Col>
-            ) : null}
+                    }
+                  />
+                </Col>
+              ) : null}
             {wizardModel?.getData("taskType") ===
               MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG ||
             wizardModel?.getData("taskType") ===
               MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG ? (
-              <Col xs={6}>
-                <ToolNameField
-                  model={wizardModel}
-                  fieldName={"targetToolId"}
-                  loadToolInNewWindow={true}
-                  visible={
-                    wizardModel?.getData("taskType") ===
+                <Col xs={6}>
+                  <ToolNameField
+                    model={wizardModel}
+                    fieldName={"targetToolId"}
+                    loadToolInNewWindow={true}
+                    visible={
+                      wizardModel?.getData("taskType") ===
                       MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_ORG ||
                     wizardModel?.getData("taskType") ===
                       MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG
-                  }
-                />
-              </Col>
-            ) : null}
+                    }
+                  />
+                </Col>
+              ) : null}
           </div>
         </div>
       );

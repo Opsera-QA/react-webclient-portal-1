@@ -15,9 +15,9 @@ import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import DoraJiraOrgsActionableOverlay from "./actionable_insights/DoraJiraOrgsActionableOverlay";
 import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
 import CoverityIssuesByCategoryHelpDocumentation
-  from "../../../../common/help/documentation/insights/charts/CoverityIssuesByCategoryHelpDocumentation";
+from "../../../../common/help/documentation/insights/charts/CoverityIssuesByCategoryHelpDocumentation";
 import DoraJiraGitlabHelpDocumentation
-  from "../../../../common/help/documentation/insights/charts/DoraJiraGitlabHelpDocumentation";
+from "../../../../common/help/documentation/insights/charts/DoraJiraGitlabHelpDocumentation";
 
 function DoraJiraGitlabRolledUpChart({
   kpiConfiguration,
@@ -84,7 +84,7 @@ function DoraJiraGitlabRolledUpChart({
         const metrics = response?.data?.data;
 
         if (
-            isMounted?.current === true && metrics?.length
+          isMounted?.current === true && metrics?.length
         ) {
           setMetricData(metrics);
         } else {
@@ -107,11 +107,11 @@ function DoraJiraGitlabRolledUpChart({
 
   const onRowSelect = (stat) => {
     toastContext.showOverlayPanel(
-        <DoraJiraOrgsActionableOverlay
-            kpiConfiguration={kpiConfiguration}
-            dashboardData={dashboardData}
-            data={metricData?.filter(item=> item.overallMaturityScoreText == stat)}
-        />
+      <DoraJiraOrgsActionableOverlay
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+        data={metricData?.filter(item=> item.overallMaturityScoreText == stat)}
+      />
     );
   };
 
@@ -123,18 +123,18 @@ function DoraJiraGitlabRolledUpChart({
     const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
     let dashboardOrgs =
         dashboardData?.data?.filters[
-            dashboardData?.data?.filters.findIndex(
-                (obj) => obj.type === "organizations",
-            )
-            ]?.value;
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "organizations",
+          )
+        ]?.value;
     if (!selectedDeploymentStages || !jiraResolutionNames?.length || !useDashboardTags || !dashboardOrgs?.length) {
       return (
-          <div className="new-chart mb-3" style={{ height: "300px" }}>
-            <div className="max-content-width p-5 mt-5"
-                 style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <InfoDialog message="Missing Required Filters. Dashboard Organization tags,Deployment Stages and Jira Resolution Names are Mandatory" />
-            </div>
+        <div className="new-chart mb-3" style={{ height: "300px" }}>
+          <div className="max-content-width p-5 mt-5"
+            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <InfoDialog message="Missing Required Filters. Dashboard Organization tags,Deployment Stages and Jira Resolution Names are Mandatory" />
           </div>
+        </div>
       );
     }
 
@@ -144,19 +144,19 @@ function DoraJiraGitlabRolledUpChart({
 
     // add color to each org tag (cycling through 5 NIVO theme colors and sorted by category, then alphabetrically)
     const coloredMetricData = [...metricData]
-    .sort((
-      { name: nameA, overallMaturityScoreText: scoreA },
-      { name: nameB, overallMaturityScoreText: scoreB }
-    ) => {
-      if (scoreA === scoreB) {
+      .sort((
+        { name: nameA, overallMaturityScoreText: scoreA },
+        { name: nameB, overallMaturityScoreText: scoreB }
+      ) => {
+        if (scoreA === scoreB) {
         // equal score, sort alphabetically, ascending
-        if (nameA === nameB) {
-          return 0;
+          if (nameA === nameB) {
+            return 0;
+          }
+          return nameA < nameB ? -1 : 1;
         }
-        return nameA < nameB ? -1 : 1;
-      }
 
-      switch (scoreA) {
+        switch (scoreA) {
         case MATURITY_SCORE_TEXT.ELITE:
           return -1;
         case MATURITY_SCORE_TEXT.HIGH:
@@ -173,50 +173,50 @@ function DoraJiraGitlabRolledUpChart({
           return 1;
         default:
           return 0;
-      }
-    }).map((data, index) => ({
-      ...data,
-      color: METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY[index % 5]
-    }));
+        }
+      }).map((data, index) => ({
+        ...data,
+        color: METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY[index % 5]
+      }));
 
     return (
-        <div
-            className="m-3"
-            style={{ minHeight: "450px" }}
+      <div
+        className="m-3"
+        style={{ minHeight: "450px" }}
+      >
+        <Row
+          className={`w-100`}
         >
-          <Row
-              className={`w-100`}
-          >
-            <Col md={12} className={"mb-2"}>
-              <DoraJiraGitlabRolledUpColumnDataBlock
-                  onSelect={onRowSelect}
-                  maturityScoreText={'elite'}
-                  overlayData={coloredMetricData}
-              />
-            </Col>
-            <Col md={12} className={"mb-2"}>
-              <DoraJiraGitlabRolledUpColumnDataBlock
-                  onSelect={onRowSelect}
-                  maturityScoreText={'high'}
-                  overlayData={coloredMetricData}
-              />
-            </Col>
-            <Col md={12} className={"mb-2"}>
-              <DoraJiraGitlabRolledUpColumnDataBlock
-                  onSelect={onRowSelect}
-                  maturityScoreText={'medium'}
-                  overlayData={coloredMetricData}
-              />
-            </Col>
-            <Col md={12}>
-              <DoraJiraGitlabRolledUpColumnDataBlock
-                  onSelect={onRowSelect}
-                  maturityScoreText={'low'}
-                  overlayData={coloredMetricData}
-              />
-            </Col>
-          </Row>
-        </div>
+          <Col md={12} className={"mb-2"}>
+            <DoraJiraGitlabRolledUpColumnDataBlock
+              onSelect={onRowSelect}
+              maturityScoreText={'elite'}
+              overlayData={coloredMetricData}
+            />
+          </Col>
+          <Col md={12} className={"mb-2"}>
+            <DoraJiraGitlabRolledUpColumnDataBlock
+              onSelect={onRowSelect}
+              maturityScoreText={'high'}
+              overlayData={coloredMetricData}
+            />
+          </Col>
+          <Col md={12} className={"mb-2"}>
+            <DoraJiraGitlabRolledUpColumnDataBlock
+              onSelect={onRowSelect}
+              maturityScoreText={'medium'}
+              overlayData={coloredMetricData}
+            />
+          </Col>
+          <Col md={12}>
+            <DoraJiraGitlabRolledUpColumnDataBlock
+              onSelect={onRowSelect}
+              maturityScoreText={'low'}
+              overlayData={coloredMetricData}
+            />
+          </Col>
+        </Row>
+      </div>
     );
   };
 
@@ -236,7 +236,7 @@ function DoraJiraGitlabRolledUpChart({
         chartHelpComponent={(closeHelpPanel) => (
           <DoraJiraGitlabHelpDocumentation
             closeHelpPanel={closeHelpPanel}
-            />
+          />
         )}
       />
     </div>

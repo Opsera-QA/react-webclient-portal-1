@@ -18,7 +18,7 @@ export default function Reports() {
   } = useComponentStateReference();
 
   const getHelpComponent = () => {
-      return (<ReportsHelpDocumentation/>);
+    return (<ReportsHelpDocumentation/>);
   };
 
   if (

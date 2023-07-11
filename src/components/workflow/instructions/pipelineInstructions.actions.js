@@ -11,7 +11,7 @@ pipelineInstructionsActions.getPipelineInstructions = async (
   tag,
   owner,
   release_date_range,
-  ) => {
+) => {
   const apiUrl = "/settings/pipelines/instructions";
   const queryParameters = {
     search: searchKeyword,

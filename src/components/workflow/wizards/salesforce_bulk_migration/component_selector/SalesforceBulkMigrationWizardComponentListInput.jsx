@@ -9,7 +9,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import salesforceBulkMigrationWizardActions
-  from "components/workflow/wizards/salesforce_bulk_migration/salesforceBulkMigrationWizard.actions";
+from "components/workflow/wizards/salesforce_bulk_migration/salesforceBulkMigrationWizard.actions";
 
 const SalesforceBulkMigrationWizardComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel }) => {
   const { getAccessToken } = useContext(AuthContext);

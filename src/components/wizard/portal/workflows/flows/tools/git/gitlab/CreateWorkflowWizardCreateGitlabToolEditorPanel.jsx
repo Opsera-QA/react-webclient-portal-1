@@ -130,7 +130,7 @@ export default function CreateWorkflowWizardCreateGitlabToolEditorPanel({
 
   const canCreateTool = () => {
     return RegistryToolRoleHelper.canCreateRegistryTool(
-        userData,
+      userData,
     );
   };
 

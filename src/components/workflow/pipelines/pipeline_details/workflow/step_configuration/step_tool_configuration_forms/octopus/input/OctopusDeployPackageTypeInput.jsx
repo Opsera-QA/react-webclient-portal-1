@@ -16,7 +16,7 @@ function OctopusDeployPackageTypeInput({dataObject, setDataObject, fieldName, di
 
   const getPackageFileNameInput = () => {
     if(dataObject.getData("deployExtractedPackage")){
-        return null;
+      return null;
     }
     return (
       <TextInputBase
@@ -34,9 +34,9 @@ function OctopusDeployPackageTypeInput({dataObject, setDataObject, fieldName, di
   return (
     <>      
       <BooleanToggleInput disabled={disabled} fieldName={field.id}
-          dataObject={dataObject}
-          setDataObject={setDataObject}
-          setDataFunction={setDataFunction}
+        dataObject={dataObject}
+        setDataObject={setDataObject}
+        setDataFunction={setDataFunction}
       />
       {getPackageFileNameInput()}
     </>

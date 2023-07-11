@@ -53,14 +53,14 @@ export default function WizardSelectionRadioOption(
 
   const getOptionFontColor = () => {
     if (disabled === true) {
-     return themeConstants.COLOR_PALETTE.DARK_GRAY;
+      return themeConstants.COLOR_PALETTE.DARK_GRAY;
     }
 
     switch (type) {
-      case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.PRIMARY:
-        return themeConstants.COLOR_PALETTE.DEEP_PURPLE;
-      case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.SECONDARY:
-        return themeConstants.COLOR_PALETTE.DEEP_PURPLE;
+    case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.PRIMARY:
+      return themeConstants.COLOR_PALETTE.DEEP_PURPLE;
+    case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.SECONDARY:
+      return themeConstants.COLOR_PALETTE.DEEP_PURPLE;
     }
   };
 
@@ -70,10 +70,10 @@ export default function WizardSelectionRadioOption(
     }
 
     switch (type) {
-      case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.PRIMARY:
-        return themeConstants.COLOR_PALETTE.DEEP_PURPLE;
-      case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.SECONDARY:
-        return themeConstants.COLOR_PALETTE.BACKGROUND_LAVENDER;
+    case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.PRIMARY:
+      return themeConstants.COLOR_PALETTE.DEEP_PURPLE;
+    case SUPPORTED_WIZARD_SELECTION_OPTION_TYPES.SECONDARY:
+      return themeConstants.COLOR_PALETTE.BACKGROUND_LAVENDER;
     }
   };
 

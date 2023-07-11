@@ -21,14 +21,14 @@ import GitCustodianSidebarNavigationLink from "components/sidebar/links/GitCusto
 import useLocationReference from "hooks/useLocationReference";
 import InnovationLabsNavigationLinks from "components/sidebar/links/InnovationLabsNavigationLinks";
 import useGetOrganizationSettingsFeatureFlagModelByName
-  from "hooks/settings/organization_settings/feature_flags/useGetOrganizationSettingsFeatureFlagModelByName";
+from "hooks/settings/organization_settings/feature_flags/useGetOrganizationSettingsFeatureFlagModelByName";
 import featureFlagConstants
-  from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
+from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
 import AIMLSidebarNavigationLink from "./links/AIMLSidebarNavigationLink";
 import useGetPlatformSettingsFeatureFlagByName
-  from "../../hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
+from "../../hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
 import platformSettingFeatureConstants
-  from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
+from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
 import CreateToolRegistryWizard from "../inventory/tools/tool_details/wizards/CreateToolRegistryWizard";
 
 export default function Sidebar({ hideSideBar }) {
@@ -93,7 +93,7 @@ export default function Sidebar({ hideSideBar }) {
           isSidebarCollapsed={isSidebarCollapsed}
         />
         <AIMLSidebarNavigationLink
-            isSidebarCollapsed={isSidebarCollapsed}
+          isSidebarCollapsed={isSidebarCollapsed}
         />
         {getVnextSidebarLink()}
         <SidebarSubheaderText

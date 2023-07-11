@@ -22,7 +22,7 @@ const getFormattedTextLabel = (ignoreIncoming) => {
 const MergeSyncTaskWizardSelectedDeltasTable = (
   {
     delta,
-}) => {
+  }) => {
   const fields = mergeSyncTaskWizardSelectedDeltaCommitMetadata.fields;
 
   const columns = useMemo(

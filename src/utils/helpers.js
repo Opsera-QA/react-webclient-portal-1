@@ -27,8 +27,8 @@ export function validateEmail(email) {
 
 // TODO: Add better regex for domain checking
 export function isDomain(domain) {
- var re =  /^[A-Za-z0-9]?[A-Za-z0-9-]*[A-Za-z0-9]$/;
- return re.test(String(domain).toLowerCase());
+  var re =  /^[A-Za-z0-9]?[A-Za-z0-9-]*[A-Za-z0-9]$/;
+  return re.test(String(domain).toLowerCase());
 }
 
 export function isOpseraPassword(password) {

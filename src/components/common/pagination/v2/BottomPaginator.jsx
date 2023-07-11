@@ -49,13 +49,13 @@ function BottomPaginator({ paginationModel, nextGeneration, loadData, isLoading 
     const onLastPage = currentPage === getTotalPages();
 
     return (
-        <Pagination disabled={paginationDisabled} className="justify-content-center my-1">
-          <Pagination.Item disabled={onFirstPage || paginationDisabled} onClick={() => setPage(1)}>First</Pagination.Item>
-          <Pagination.Item disabled={onFirstPage || paginationDisabled} onClick={() => setPage(currentPage - 1)}>Previous</Pagination.Item>
-          {getPaginationItems()}
-          <Pagination.Item disabled={onLastPage || paginationDisabled} onClick={() => setPage(currentPage + 1)}>Next</Pagination.Item>
-          <Pagination.Item disabled={onLastPage || paginationDisabled} onClick={() => setPage(getTotalPages())}>Last</Pagination.Item>
-        </Pagination>
+      <Pagination disabled={paginationDisabled} className="justify-content-center my-1">
+        <Pagination.Item disabled={onFirstPage || paginationDisabled} onClick={() => setPage(1)}>First</Pagination.Item>
+        <Pagination.Item disabled={onFirstPage || paginationDisabled} onClick={() => setPage(currentPage - 1)}>Previous</Pagination.Item>
+        {getPaginationItems()}
+        <Pagination.Item disabled={onLastPage || paginationDisabled} onClick={() => setPage(currentPage + 1)}>Next</Pagination.Item>
+        <Pagination.Item disabled={onLastPage || paginationDisabled} onClick={() => setPage(getTotalPages())}>Last</Pagination.Item>
+      </Pagination>
     );
   };
 

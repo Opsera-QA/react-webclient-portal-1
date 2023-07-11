@@ -3,15 +3,15 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetPolicies from "hooks/settings/organization_settings/policies/useGetPolicies";
 import PolicyManagementSubNavigationBar
-  from "components/settings/organization_settings/policies/PolicyManagementSubNavigationBar";
+from "components/settings/organization_settings/policies/PolicyManagementSubNavigationBar";
 import PolicyManagementPageLinkCards
-  from "components/settings/organization_settings/policies/cards/PolicyManagementPageLinkCards";
+from "components/settings/organization_settings/policies/cards/PolicyManagementPageLinkCards";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import VanityInlineError from "temp-library-components/fields/info/VanityInlineError";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import PolicyRoleHelper from "@opsera/know-your-role/roles/settings/policies/policyRole.helper";
 import PolicyManagementHelpDocumentation
-  from "../../../common/help/documentation/settings/PolicyManagementHelpDocumentation";
+from "../../../common/help/documentation/settings/PolicyManagementHelpDocumentation";
 
 export default function PolicyManagement() {
   const {

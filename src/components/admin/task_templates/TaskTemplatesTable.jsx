@@ -66,16 +66,16 @@ export default function TaskTemplatesTable(
   };
 
   return (
-      <FilterContainer
-        loadData={loadData}
-        addRecordFunction={createTemplate}
-        isLoading={isLoading}
-        body={getTemplateTable()}
-        titleIcon={faStream}
-        title={"Task Templates"}
-        type={"Task Template"}
-        className={"px-2 pb-2"}
-      />
+    <FilterContainer
+      loadData={loadData}
+      addRecordFunction={createTemplate}
+      isLoading={isLoading}
+      body={getTemplateTable()}
+      titleIcon={faStream}
+      title={"Task Templates"}
+      type={"Task Template"}
+      className={"px-2 pb-2"}
+    />
   );
 }
 

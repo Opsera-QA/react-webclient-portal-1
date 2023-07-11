@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import H4MetricSubHeader from "components/common/fields/subheader/metric/H4MetricSubHeader";
 import AverageMttrCustomFieldsMappingInput from "./inputs/average_mttr/AverageMttrCustomFieldsMappingInput";
 import dataPointCustomFieldsMappingMetadata
-  from "components/common/inputs/metric/data_points/custom_fields/dataPointCustomFieldsMapping.metadata";
+from "components/common/inputs/metric/data_points/custom_fields/dataPointCustomFieldsMapping.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import DashboardMetricUseCustomFieldsToggleInput from "./DashboardMetricUseCustomFieldsToggleInput";
 
@@ -47,16 +47,16 @@ function DashboardMetricCustomFieldsMappingForm(
     }
     const identifier = dataPoint?.identifier;
     switch (identifier) {
-      case "average-mttr-data-block-data-point":
-        return (
-          <AverageMttrCustomFieldsMappingInput
-            fieldName={"mappedFields"}
-            model={customFieldsMappingModel}
-            setModel={setDataFunction}
-          />
-        );
-      default:
-        return null;
+    case "average-mttr-data-block-data-point":
+      return (
+        <AverageMttrCustomFieldsMappingInput
+          fieldName={"mappedFields"}
+          model={customFieldsMappingModel}
+          setModel={setDataFunction}
+        />
+      );
+    default:
+      return null;
     }
   };
 

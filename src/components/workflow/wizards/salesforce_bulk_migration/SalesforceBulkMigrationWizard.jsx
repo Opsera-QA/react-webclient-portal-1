@@ -7,11 +7,11 @@ import OverlayPanelBodyContainer from "components/common/panels/detail_panel_con
 import Model from "core/data_model/model";
 import sfdcPipelineWizardMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-wizard-metadata";
 import SalesforceBulkMigrationWizardInitializationScreen
-  from "components/workflow/wizards/salesforce_bulk_migration/initialization_screen/SalesforceBulkMigrationWizardInitializationScreen";
+from "components/workflow/wizards/salesforce_bulk_migration/initialization_screen/SalesforceBulkMigrationWizardInitializationScreen";
 import SalesforceBulkMigrationWizardComponentSelectionScreen
-  from "components/workflow/wizards/salesforce_bulk_migration/component_selector/SalesforceBulkMigrationWizardComponentSelectionScreen";
+from "components/workflow/wizards/salesforce_bulk_migration/component_selector/SalesforceBulkMigrationWizardComponentSelectionScreen";
 import SalesforceBulkMigrationWizardConfirmationScreen
-  from "components/workflow/wizards/salesforce_bulk_migration/confirmation_screen/SalesforceBulkMigrationWizardConfirmationScreen";
+from "components/workflow/wizards/salesforce_bulk_migration/confirmation_screen/SalesforceBulkMigrationWizardConfirmationScreen";
 
 export const SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
@@ -47,55 +47,55 @@ const SalesforceBulkMigrationWizard = ({ handleClose, taskModel }) => {
 
   const getBody = () => {
     switch (bulkMigrationWizardScreen) {
-      case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-        return (
-          <SalesforceBulkMigrationWizardInitializationScreen
-            pipelineWizardModel={wizardModel}
-            setPipelineWizardModel={setWizardModel}
-            setPipelineWizardScreen={setBulkMigrationWizardScreen}
-            handleClose={handleClose}
-            taskModel={taskModel}
-            setError={setError}
-          />
-        );
-      case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.COMPONENT_SELECTION_SCREEN:
-        return (
-          <SalesforceBulkMigrationWizardComponentSelectionScreen
-            pipelineWizardModel={wizardModel}
-            setPipelineWizardModel={setWizardModel}
-            setPipelineWizardScreen={setBulkMigrationWizardScreen}
-            handleClose={handleClose}
-          />
-        );
-      case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN:
-        return (
-          <SalesforceBulkMigrationWizardConfirmationScreen
-            pipelineWizardModel={wizardModel}
-            setPipelineWizardModel={setWizardModel}
-            setPipelineWizardScreen={setBulkMigrationWizardScreen}
-            handleClose={handleClose}
-            setError={setError}
-          />
-        );
+    case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+      return (
+        <SalesforceBulkMigrationWizardInitializationScreen
+          pipelineWizardModel={wizardModel}
+          setPipelineWizardModel={setWizardModel}
+          setPipelineWizardScreen={setBulkMigrationWizardScreen}
+          handleClose={handleClose}
+          taskModel={taskModel}
+          setError={setError}
+        />
+      );
+    case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.COMPONENT_SELECTION_SCREEN:
+      return (
+        <SalesforceBulkMigrationWizardComponentSelectionScreen
+          pipelineWizardModel={wizardModel}
+          setPipelineWizardModel={setWizardModel}
+          setPipelineWizardScreen={setBulkMigrationWizardScreen}
+          handleClose={handleClose}
+        />
+      );
+    case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.CONFIRMATION_SCREEN:
+      return (
+        <SalesforceBulkMigrationWizardConfirmationScreen
+          pipelineWizardModel={wizardModel}
+          setPipelineWizardModel={setWizardModel}
+          setPipelineWizardScreen={setBulkMigrationWizardScreen}
+          handleClose={handleClose}
+          setError={setError}
+        />
+      );
     }
   };
 
   const getHelpComponentFunction = (setHelpIsShown) => {
     switch (bulkMigrationWizardScreen) {
-      // case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-      //   return (
-      //     <SfdcWizardInitializationHelpDocumentation
-      //       closeHelpPanel={() => setHelpIsShown(false)}
-      //     />
-      //   );
-      // case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.COMPONENT_SELECTOR:
-      //   return (
-      //     <SfdcWizardComponentTypeSelectionHelpDocumentation
-      //       closeHelpPanel={() => setHelpIsShown(false)}
-      //     />
-      //   );
-      default:
-        return null;
+    // case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+    //   return (
+    //     <SfdcWizardInitializationHelpDocumentation
+    //       closeHelpPanel={() => setHelpIsShown(false)}
+    //     />
+    //   );
+    // case SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS.COMPONENT_SELECTOR:
+    //   return (
+    //     <SfdcWizardComponentTypeSelectionHelpDocumentation
+    //       closeHelpPanel={() => setHelpIsShown(false)}
+    //     />
+    //   );
+    default:
+      return null;
     }
   };
 

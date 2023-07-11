@@ -6,14 +6,14 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import entitlementConstants
-  from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
+from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
 import SalesforceFeaturesChildEntitlementEditorPanel
-  from "components/admin/organization_settings/details/entitlements/cards/salesforce_landing/SalesforceFeaturesChildEntitlementEditorPanel";
+from "components/admin/organization_settings/details/entitlements/cards/salesforce_landing/SalesforceFeaturesChildEntitlementEditorPanel";
 import UpdateOrganizationSettingsEntitlementButton
-  from "components/admin/organization_settings/details/entitlements/active/UpdateOrganizationSettingsEntitlementButton";
+from "components/admin/organization_settings/details/entitlements/active/UpdateOrganizationSettingsEntitlementButton";
 import DeleteConfirmationOverlay from "components/common/overlays/center/delete/DeleteConfirmationOverlay";
 import useEntitlementAdministrationActions
-  from "hooks/settings/organization_settings/entitlements/useEntitlementAdministrationActions";
+from "hooks/settings/organization_settings/entitlements/useEntitlementAdministrationActions";
 import useGetEntitlementModel from "hooks/settings/organization_settings/entitlements/useGetEntitlementModel";
 import DeleteButtonBase from "temp-library-components/button/delete/DeleteButtonBase";
 import {useHistory} from "react-router-dom";
@@ -52,13 +52,13 @@ export default function EditOrganizationSettingsEntitlementOverlay(
 
   const getChildEntitlementEditorPanel = () => {
     switch (entitlementModel?.getData("name")) {
-      case entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_FEATURES:
-        return (
-          <SalesforceFeaturesChildEntitlementEditorPanel
-            childEntitlementModel={childEntitlementModel}
-            updateParentModel={updateParentModel}
-          />
-        );
+    case entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_FEATURES:
+      return (
+        <SalesforceFeaturesChildEntitlementEditorPanel
+          childEntitlementModel={childEntitlementModel}
+          updateParentModel={updateParentModel}
+        />
+      );
     }
   };
 

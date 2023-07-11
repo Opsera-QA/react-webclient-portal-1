@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SfdcPipelineWizardRulesInputContainerBase
-  from "components/workflow/wizards/sfdc_pipeline_wizard/rules/SfdcPipelineWizardRulesInputContainerBase";
+from "components/workflow/wizards/sfdc_pipeline_wizard/rules/SfdcPipelineWizardRulesInputContainerBase";
 
 function DependencyAnalyserRuleInput({pipelineWizardModel, setPipelineWizardModel, sfdcFiles, isLoading, filePullCompleted}) {
   return (

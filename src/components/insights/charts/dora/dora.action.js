@@ -49,8 +49,8 @@ doraActions.jiraGitlabRolledUp = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -70,11 +70,11 @@ doraActions.jiraGitlabRolledUp = async (
 };
 
 doraActions.doraJiraActionableDashboards = async (
-    getAccessToken,
-    cancelTokenSource,
-    kpiConfiguration,
-    tableFilterDto,
-    org
+  getAccessToken,
+  cancelTokenSource,
+  kpiConfiguration,
+  tableFilterDto,
+  org
 ) => {
   const apiUrl = doraBaseURL + "doraJiraActionableDashboards";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
@@ -98,10 +98,10 @@ doraActions.doraJiraActionableDashboards = async (
     org: org,
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
-      getAccessToken,
-      cancelTokenSource,
-      apiUrl,
-      postBody,
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
   );
 };
 
@@ -139,8 +139,8 @@ doraActions.systemDrivenMaturityGroups = async ({
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -194,8 +194,8 @@ doraActions.systemDrivenMaturityOrgTags = async ({
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -250,8 +250,8 @@ doraActions.systemDrivenMaturityProjects = async ({
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),

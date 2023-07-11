@@ -7,10 +7,10 @@ import TwoLineScoreDataBlock from "../../../../../../common/metrics/score/TwoLin
 function SeleniumTestsCasesNotExecutedBlock({ score }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
-        <TwoLineScoreDataBlock
-          className={"p-3"}
-          score={score}
-          subtitle={"Test Cases Not Executed"} />
+      <TwoLineScoreDataBlock
+        className={"p-3"}
+        score={score}
+        subtitle={"Test Cases Not Executed"} />
     </DataBlockBoxContainer>
   );
 }

@@ -28,17 +28,17 @@ function ScmRepositoryInput({dataObject, setDataObject, disabled}) {
   };
 
   return (
-     <RepositorySelectInput
-       fieldName={"repoId"}
-       service={dataObject.getData("service")}
-       gitToolId={dataObject.getData("toolId")}
-       workspace={dataObject.getData("workspace")}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       setDataFunction={setDataFunction}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-     />
+    <RepositorySelectInput
+      fieldName={"repoId"}
+      service={dataObject.getData("service")}
+      gitToolId={dataObject.getData("toolId")}
+      workspace={dataObject.getData("workspace")}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+    />
   );
 }
 

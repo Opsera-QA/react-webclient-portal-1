@@ -116,7 +116,7 @@ function AllGithubActionsDataBlockEditorPanel(
         metricFilterModel={metricFilterModel}
         setMetricFilterModel={setMetricFilterModel}
       />
-     <MultiSelectInputBase
+      <MultiSelectInputBase
         dataObject={hierarchyFiltersDto}
         setDataObject={setHierarchyFiltersDto}
         fieldName={"filter1"}

@@ -7,12 +7,12 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
 import PlatformPipelineTemplateRoleAccessInput
-  from "components/admin/pipeline_templates/details/inputs/PlatformPipelineTemplateRoleAccessInput";
+from "components/admin/pipeline_templates/details/inputs/PlatformPipelineTemplateRoleAccessInput";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import CreatePlatformPipelineButton from "temp-library-components/cards/templates/pipelines/platform/deploy/CreatePlatformPipelineButton";
 import PrimaryPipelineTypeField
-  from "components/common/list_of_values_input/admin/pipeline_templates/PrimaryPipelineTypeField";
+from "components/common/list_of_values_input/admin/pipeline_templates/PrimaryPipelineTypeField";
 
 export default function PlatformPipelineTemplateSummaryPanel(
   {

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {Form} from "react-bootstrap";
 import InputContainer from "components/common/inputs/InputContainer";
 import jenkinsConnectionMetadata
-  from "components/inventory/tools/tool_details/tool_jobs/jenkins/jenkins-connection-metadata";
+from "components/inventory/tools/tool_details/tool_jobs/jenkins/jenkins-connection-metadata";
 
 function JenkinsProxyToggle({dataObject, setDataObject, fieldName, disabled}) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));

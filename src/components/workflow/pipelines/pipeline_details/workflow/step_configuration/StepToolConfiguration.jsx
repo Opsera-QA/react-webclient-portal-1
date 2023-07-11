@@ -30,61 +30,61 @@ import TerraformVcsStepConfiguration from "./step_tool_configuration_forms/terra
 import OctopusStepConfiguration from "./step_tool_configuration_forms/octopus/OctopusStepConfiguration";
 import EBSStepConfiguration from "./step_tool_configuration_forms/ebs/EBSStepConfiguration";
 import AnchoreIntegratorStepConfiguration
-  from "./step_tool_configuration_forms/anchore_integrator/AnchoreIntegratorStepConfiguration";
+from "./step_tool_configuration_forms/anchore_integrator/AnchoreIntegratorStepConfiguration";
 import ChildPipelineStepConfiguration from "../../../../plan/step/child/ChildPipelineStepConfiguration";
 import MockPipelineStepConfiguration from "./step_tool_configuration_forms/mock/MockPipelineStepConfiguration";
 import ParallelProcessPipelineStepConfiguration
-  from "../../../../plan/step/parallel_processor/ParallelProcessPipelineStepConfiguration";
+from "../../../../plan/step/parallel_processor/ParallelProcessPipelineStepConfiguration";
 import ConditionalOperationPipelineStepConfiguration
-  from "./step_tool_configuration_forms/conditional_operation/ConditionalOperationPipelineStepConfiguration";
+from "./step_tool_configuration_forms/conditional_operation/ConditionalOperationPipelineStepConfiguration";
 import PowershellStepConfiguration from "./step_tool_configuration_forms/powershell/PowershellStepConfiguration";
 import DotNetStepConfiguration from "./step_tool_configuration_forms/dotnet/DotNetStepConfiguration";
 import DotNetCliStepConfiguration from "./step_tool_configuration_forms/dotnetcli/DotNetCliStepConfiguration";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import NUnitStepConfiguration from "./step_tool_configuration_forms/nunit/NUnitStepConfiguration";
 import JFrogDockerStepConfiguration
-  from "./step_tool_configuration_forms/jfrog_artifactory_docker/JFrogDockerStepConfiguration";
+from "./step_tool_configuration_forms/jfrog_artifactory_docker/JFrogDockerStepConfiguration";
 import TerrascanStepConfiguration from "./step_tool_configuration_forms/terrascan/TerrascanStepConfiguration";
 import AzureDevopsStepConfiguration
-  from "./step_tool_configuration_forms/azure_devops/AzureDevopsStepToolConfiguration";
+from "./step_tool_configuration_forms/azure_devops/AzureDevopsStepToolConfiguration";
 import KafkaConnectStepConfiguration from "./step_tool_configuration_forms/kafka_connect/KafkaConnectStepConfiguration";
 import AwsEcsDeployStepConfiguration
-  from "./step_tool_configuration_forms/aws_ecs_deploy/AwsEcsDeployStepConfiguration";
+from "./step_tool_configuration_forms/aws_ecs_deploy/AwsEcsDeployStepConfiguration";
 import CoverityStepConfiguration from "./step_tool_configuration_forms/coverity/CoverityStepConfiguration";
 import AzureAcrPushStepConfiguration from "./step_tool_configuration_forms/azure_acr_push/AzureAcrPushStepConfiguration";
 import JFrogMavenStepConfiguration 
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_maven/JFrogMavenStepConfiguration";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_maven/JFrogMavenStepConfiguration";
 import AwsLambdaDeployStepConfiguration
-  from "./step_tool_configuration_forms/aws_lambda_publish/AwsLambdaDeployStepConfiguration";
+from "./step_tool_configuration_forms/aws_lambda_publish/AwsLambdaDeployStepConfiguration";
 import MongodbRealmStepConfiguration from "./step_tool_configuration_forms/mongodb_realm/MongodbRealmStepConfiguration";
 import AksServiceDeployStepConfiguration
-  from "./step_tool_configuration_forms/aks_service_deploy/AksServiceDeployStepConfiguration";
+from "./step_tool_configuration_forms/aks_service_deploy/AksServiceDeployStepConfiguration";
 import AzureFunctionsStepConfiguration from "./step_tool_configuration_forms/azure_functions/AzureFunctionsStepConfiguration";
 import AnsibleStepConfiguration from "./step_tool_configuration_forms/ansible/AnsibleStepConfiguration";
 import JenkinsStepConfiguration
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
 import CypressStepConfiguration
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/CypressStepConfiguration";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/CypressStepConfiguration";
 import FlywayDatabaseStepConfiguration
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/FlywayDatabaseStepConfiguration";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/FlywayDatabaseStepConfiguration";
 import InformaticaStepConfiguration from "./step_tool_configuration_forms/informatica/InformaticaStepConfiguration";
 import PmdScanStepConfiguration
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/PmdScanStepConfiguration";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/PmdScanStepConfiguration";
 import AzureZipDeploymentStepConfiguration
-  from "./step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfiguration";
+from "./step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfiguration";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import SentinelStepConfiguration from "./step_tool_configuration_forms/sentenial/SentinelStepConfiguration";
 import BuildkiteStepConfiguration from "./step_tool_configuration_forms/buildkite/BuildkiteStepConfiguration";
 import PackerStepConfiguration from "./step_tool_configuration_forms/packer/PackerStepConfiguration";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import ExternalRestApiIntegrationStepEditorPanel
-  from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationStepEditorPanel";
+from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationStepEditorPanel";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import AzureScriptsStepEditorPanel from "components/workflow/plan/step/azure_scripts/AzureScriptsStepEditorPanel";
 import GitScraperStepFormConfiguration
-  from "./step_tool_configuration_forms/gitscraper/GitScraperStepFormConfiguration";
+from "./step_tool_configuration_forms/gitscraper/GitScraperStepFormConfiguration";
 import SalesforceScanStepConfiguration
-  from "./step_tool_configuration_forms/salesforce_scan/SalesforceScanStepConfiguration";
+from "./step_tool_configuration_forms/salesforce_scan/SalesforceScanStepConfiguration";
 import GitOperationStepConfiguration from "./step_tool_configuration_forms/git_operation/GitOperationStepConfiguration";
 import ApigeeStepConfiguration from "./step_tool_configuration_forms/apigee/ApigeeStepConfiguration";
 import SnaplogicStepConfiguration from "./step_tool_configuration_forms/snaplogic/SnaplogicStepConfiguration";
@@ -94,22 +94,22 @@ import AzureWebappsStepConfiguration from "./step_tool_configuration_forms/azure
 import AzureCliStepConfiguration from "./step_tool_configuration_forms/azure_cli/AzureCliStepConfiguration";
 import BoomiStepConfiguration from "./step_tool_configuration_forms/boomi/BoomiStepConfiguration";
 import InformaticaIdqStepConfiguration
-  from "./step_tool_configuration_forms/informatica_idq/InformaticaIdqStepConfiguration";
+from "./step_tool_configuration_forms/informatica_idq/InformaticaIdqStepConfiguration";
 import LiquibaseStepConfiguration
-  from "./step_tool_configuration_forms/liquibase/LiquibaseStepConfiguration";
+from "./step_tool_configuration_forms/liquibase/LiquibaseStepConfiguration";
 import BlackDuckStepConfiguration from "./step_tool_configuration_forms/black_duck/BlackDuckStepConfiguration";
 import FortifyStepConfiguration from "./step_tool_configuration_forms/fortify/FortifyStepConfiguration";
 import DockerCliStepConfiguration from "./step_tool_configuration_forms/docker_cli/DockerCliStepConfiguration";
 import SnykStepConfiguration from "./step_tool_configuration_forms/snyk/SnykStepConfiguration";
 import AquasecStepConfiguration from "./step_tool_configuration_forms/aquasec/AquasecStepConfiguration";
 import UserActionsPipelineStepEditorPanel
-  from "components/workflow/plan/step/user_actions/UserActionsPipelineStepEditorPanel";
+from "components/workflow/plan/step/user_actions/UserActionsPipelineStepEditorPanel";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import HelmStepConfiguration from "./step_tool_configuration_forms/helm/HelmStepConfiguration";
 import ServiceNowStepConfiguration from "./step_tool_configuration_forms/service_now/ServiceNowStepConfiguration";
 import OracleFusionReportMigrationStepConfiguration 
-  from "./step_tool_configuration_forms/oracle_fusion_report_migration/OracleFusionReportMigrationStepConfiguration";
+from "./step_tool_configuration_forms/oracle_fusion_report_migration/OracleFusionReportMigrationStepConfiguration";
 import CommandLineStepV2EditorPanel from "components/workflow/plan/step/command_line_v2/CommandLineStepV2EditorPanel";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
@@ -504,209 +504,209 @@ function StepToolConfiguration({
     }
 
     switch (parsedToolIdentifier) {
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
-        return (
-          <ExternalRestApiIntegrationStepEditorPanel
-            pipelineId={pipeline._id}
-            pipelineStep={pipelineStep}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS:
-        return (
-          <AzureScriptsStepEditorPanel
-            pipelineId={pipeline._id}
-            pipelineStep={pipelineStep}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
-        return (
-          <UserActionsPipelineStepEditorPanel
-            pipelineId={pipeline._id}
-            pipelineStep={pipelineStep}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "jenkins":
-        return (
-          <JenkinsStepConfiguration
-            stepTool={stepTool}
-            plan={pipeline?.workflow?.plan}
-            stepId={stepId}            
-            closeEditorPanel={closeEditorPanel}
-            createJob={createJob}
-            pipelineId={pipeline._id}
-            parentCallback={callbackFunction}
-          />
-        );
-      case "junit":
-        return (
-          <JUnitStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-          />
-        );
-      case "xunit":
-        return (
-          <XUnitStepConfiguration
-            pipelineId={pipeline._id}
-            stepId={stepId}
-            stepTool={stepTool}
-            createJob={createJob}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "sonar":
-        return (
-          <SonarStepConfiguration
-            pipelineId={pipeline?._id}
-            plan={pipeline?.workflow?.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            createJob={createJob}
-            handleCloseFunction={closeEditorPanel}
-          />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.COMMAND_LINE:
-        return (
-          <CommandLineStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.COMMAND_LINE_V2:
-        return (
-          <CommandLineStepV2EditorPanel
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            createJob={createJob}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "npm":
-        return(
-          <NpmStepConfiguration
-            pipelineStep={stepTool}
-            parentCallback={callbackFunction}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "teamcity":
-        return (
-          <TeamCityStepConfiguration
-            configurationData={stepTool}
-            parentCallback={callbackFunction}
-          />
-        );
-      case "jmeter":
-        return (
-          <JmeterStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-          />
-        );
-      case "selenium":
-        return (
-          <SeleniumStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-          />
-        );
-      case "twistlock":
-        return (
-          <TwistlockStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createTwistlockJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "aws-deploy":
-        return (
-          <AwsDeployStepConfiguration
-            data={stepTool}
-            parentCallback={callbackFunction}
-            setToast={setToast}
-            setShowToast={setShowToast}
-          />
-        );
-      case "gcp-deploy":
-        return (
-          <GcpDeployStepConfiguration
-            data={stepTool}
-            parentCallback={callbackFunction}
-            setToast={setToast}
-            setShowToast={setShowToast}
-          />
-        );
-      case "s3":
-        return (
-          <S3StepConfiguration
-            plan={pipeline?.workflow?.plan}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            closeEditorPanel={closeEditorPanel}
-            stepId={stepId}
-          />
-        );
-      case "databricks-notebook":
-        return (
-          <DatabricksNotebookStepConfiguration
-            data={stepTool}
-            parentCallback={callbackFunction}
-            setToast={setToast}
-            setShowToast={setShowToast}
-          />
-        );
-      case "ssh-upload":
-        return (
-          <SshUploadDeployStepConfiguration
-            pipelineId={pipeline._id}
-            stepId={stepId}
-            data={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            setToast={setToast}
-            setShowToast={setShowToast}
-          />
-        );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
+      return (
+        <ExternalRestApiIntegrationStepEditorPanel
+          pipelineId={pipeline._id}
+          pipelineStep={pipelineStep}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS:
+      return (
+        <AzureScriptsStepEditorPanel
+          pipelineId={pipeline._id}
+          pipelineStep={pipelineStep}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
+      return (
+        <UserActionsPipelineStepEditorPanel
+          pipelineId={pipeline._id}
+          pipelineStep={pipelineStep}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "jenkins":
+      return (
+        <JenkinsStepConfiguration
+          stepTool={stepTool}
+          plan={pipeline?.workflow?.plan}
+          stepId={stepId}            
+          closeEditorPanel={closeEditorPanel}
+          createJob={createJob}
+          pipelineId={pipeline._id}
+          parentCallback={callbackFunction}
+        />
+      );
+    case "junit":
+      return (
+        <JUnitStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+        />
+      );
+    case "xunit":
+      return (
+        <XUnitStepConfiguration
+          pipelineId={pipeline._id}
+          stepId={stepId}
+          stepTool={stepTool}
+          createJob={createJob}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "sonar":
+      return (
+        <SonarStepConfiguration
+          pipelineId={pipeline?._id}
+          plan={pipeline?.workflow?.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          createJob={createJob}
+          handleCloseFunction={closeEditorPanel}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.COMMAND_LINE:
+      return (
+        <CommandLineStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.COMMAND_LINE_V2:
+      return (
+        <CommandLineStepV2EditorPanel
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          createJob={createJob}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "npm":
+      return(
+        <NpmStepConfiguration
+          pipelineStep={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "teamcity":
+      return (
+        <TeamCityStepConfiguration
+          configurationData={stepTool}
+          parentCallback={callbackFunction}
+        />
+      );
+    case "jmeter":
+      return (
+        <JmeterStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+        />
+      );
+    case "selenium":
+      return (
+        <SeleniumStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+        />
+      );
+    case "twistlock":
+      return (
+        <TwistlockStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createTwistlockJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "aws-deploy":
+      return (
+        <AwsDeployStepConfiguration
+          data={stepTool}
+          parentCallback={callbackFunction}
+          setToast={setToast}
+          setShowToast={setShowToast}
+        />
+      );
+    case "gcp-deploy":
+      return (
+        <GcpDeployStepConfiguration
+          data={stepTool}
+          parentCallback={callbackFunction}
+          setToast={setToast}
+          setShowToast={setShowToast}
+        />
+      );
+    case "s3":
+      return (
+        <S3StepConfiguration
+          plan={pipeline?.workflow?.plan}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+          stepId={stepId}
+        />
+      );
+    case "databricks-notebook":
+      return (
+        <DatabricksNotebookStepConfiguration
+          data={stepTool}
+          parentCallback={callbackFunction}
+          setToast={setToast}
+          setShowToast={setShowToast}
+        />
+      );
+    case "ssh-upload":
+      return (
+        <SshUploadDeployStepConfiguration
+          pipelineId={pipeline._id}
+          stepId={stepId}
+          data={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          setToast={setToast}
+          setShowToast={setShowToast}
+        />
+      );
       // case "elastic-beanstalk":
       //   return (
       //     <ElasticBeanstalkDeployStepConfiguration
@@ -720,423 +720,423 @@ function StepToolConfiguration({
       //       setShowToast={setShowToast}
       //     />
       //   );
-      case "spinnaker":
-        return (
-          <SpinnakerStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            setToast={setToast}
-            setShowToast={setShowToast}
-          />
-        );
-      case "approval":
-        return (
-          <ApprovalGateStepConfiguration
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            closeEditorPanel={closeEditorPanel}
-            pipelineId={pipeline?.id}
-            pipelineStep={pipelineStep}
-            pipeline={pipeline}
-          />
-        );
-      case "cypress":
-        return (
-          // <CypressStepConfiguration
-          //   pipelineId={pipeline._id}
-          //   stepId={stepId}
-          //   stepTool={stepTool}
-          //   parentCallback={callbackFunction}
-          //   createJob={createJob}
-          //   closeEditorPanel={closeEditorPanel}
-          // />
+    case "spinnaker":
+      return (
+        <SpinnakerStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          setToast={setToast}
+          setShowToast={setShowToast}
+        />
+      );
+    case "approval":
+      return (
+        <ApprovalGateStepConfiguration
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+          pipelineId={pipeline?.id}
+          pipelineStep={pipelineStep}
+          pipeline={pipeline}
+        />
+      );
+    case "cypress":
+      return (
+      // <CypressStepConfiguration
+      //   pipelineId={pipeline._id}
+      //   stepId={stepId}
+      //   stepTool={stepTool}
+      //   parentCallback={callbackFunction}
+      //   createJob={createJob}
+      //   closeEditorPanel={closeEditorPanel}
+      // />
 
-          <LegacyCypressStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-          />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.DOCKER_PUSH:
-        return (
-          <DockerPushStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            createJob={createJob}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
-        return (
-          <ArgoCdStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline?.workflow?.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "anchore-scan":
-        return (
-          <AnchoreScanStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            setToast={setToast}
-            setShowToast={setShowToast}
-          />
-        );
-      case "anchore-integrator":
-        return (
-          <AnchoreIntegratorStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-        case "ansible":
-          return (
-            <AnsibleStepConfiguration
-              stepTool={stepTool}
-              stepId={stepId}
-              parentCallback={callbackFunction}
-              callbackSaveToVault={saveToVault}
-              closeEditorPanel={closeEditorPanel}
-            />
-          );
-      case "sfdc-configurator":
-        return (
-          <SFDCStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-          />
-        );
-      case "nexus":
-        return (
-          <NexusStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            closeEditorPanel={closeEditorPanel}
-            createJob={createJob}
-          />
-        );
-      case "octopus":
-        return (
-          <OctopusStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "terraform": 
-        return (
-          <TerraformStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "helm": 
-        return (
-          <HelmStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_VCS: 
-        return (
-          <TerraformVcsStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-            createJob={createTerraformPipeline}
-          />
-        );
-      case "elastic-beanstalk":
-        return (
-          <EBSStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "child-pipeline":
-        return (
-          <ChildPipelineStepConfiguration
-            pipelineId={pipeline._id}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "mock-step":
-        return (
-          <MockPipelineStepConfiguration
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "parallel-processor":
-        return (
-          <ParallelProcessPipelineStepConfiguration
-            pipelineId={pipeline._id}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "conditional-operator":
-        return (
-          <ConditionalOperationPipelineStepConfiguration
-            pipelineId={pipeline._id}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "powershell":
-        return (
-          <PowershellStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "dotnet":
-        return (
-          <DotNetStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "dotnet-cli":
-        return (
-          <DotNetCliStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "nunit":
-        return (
-          <NUnitStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "jfrog_artifactory_docker":
-        return (
-          <JFrogDockerStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-            />
-        );
-      case "jfrog_artifactory_maven":
-        return (
-          <JFrogMavenStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-            />
-        );
-      case "terrascan":
-        return (
-          <TerrascanStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "azure-devops":
-        return (
-          <AzureDevopsStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "kafka_connect":
-        return (
-          <KafkaConnectStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "aws_ecs_deploy":
-        return (
-          <AwsEcsDeployStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "coverity":
-        return (
-          <CoverityStepConfiguration 
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createCoverityJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "azure_acr_push":
-        return(<AzureAcrPushStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
+        <LegacyCypressStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.DOCKER_PUSH:
+      return (
+        <DockerPushStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          createJob={createJob}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
+      return (
+        <ArgoCdStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline?.workflow?.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "anchore-scan":
+      return (
+        <AnchoreScanStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          setToast={setToast}
+          setShowToast={setShowToast}
+        />
+      );
+    case "anchore-integrator":
+      return (
+        <AnchoreIntegratorStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "ansible":
+      return (
+        <AnsibleStepConfiguration
+          stepTool={stepTool}
+          stepId={stepId}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "sfdc-configurator":
+      return (
+        <SFDCStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+        />
+      );
+    case "nexus":
+      return (
+        <NexusStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+          createJob={createJob}
+        />
+      );
+    case "octopus":
+      return (
+        <OctopusStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "terraform": 
+      return (
+        <TerraformStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "helm": 
+      return (
+        <HelmStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_VCS: 
+      return (
+        <TerraformVcsStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+          createJob={createTerraformPipeline}
+        />
+      );
+    case "elastic-beanstalk":
+      return (
+        <EBSStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "child-pipeline":
+      return (
+        <ChildPipelineStepConfiguration
+          pipelineId={pipeline._id}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "mock-step":
+      return (
+        <MockPipelineStepConfiguration
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "parallel-processor":
+      return (
+        <ParallelProcessPipelineStepConfiguration
+          pipelineId={pipeline._id}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "conditional-operator":
+      return (
+        <ConditionalOperationPipelineStepConfiguration
+          pipelineId={pipeline._id}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "powershell":
+      return (
+        <PowershellStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "dotnet":
+      return (
+        <DotNetStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "dotnet-cli":
+      return (
+        <DotNetCliStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "nunit":
+      return (
+        <NUnitStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "jfrog_artifactory_docker":
+      return (
+        <JFrogDockerStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "jfrog_artifactory_maven":
+      return (
+        <JFrogMavenStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "terrascan":
+      return (
+        <TerrascanStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "azure-devops":
+      return (
+        <AzureDevopsStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "kafka_connect":
+      return (
+        <KafkaConnectStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "aws_ecs_deploy":
+      return (
+        <AwsEcsDeployStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "coverity":
+      return (
+        <CoverityStepConfiguration 
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createCoverityJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "azure_acr_push":
+      return(<AzureAcrPushStepConfiguration
+        pipelineId={pipeline._id}
+        plan={pipeline.workflow.plan}
+        stepId={stepId}
+        stepTool={stepTool}
+        parentCallback={callbackFunction}
+        callbackSaveToVault={saveToVault}
+        createJob={createJob}
+        setToast={setToast}
+        setShowToast={setShowToast}
+        closeEditorPanel={closeEditorPanel}
+      />
+      );
     case "aws_lambda":
       return (
         <AwsLambdaDeployStepConfiguration
@@ -1233,295 +1233,295 @@ function StepToolConfiguration({
           closeEditorPanel={closeEditorPanel}
         />
       );
-      case "azure-zip-deployment":
-        return (
-          <AzureZipDeploymentStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "sentinel":
-        return (
-          <SentinelStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "buildkite":
-        return (
-          <BuildkiteStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "packer":
-        return (
-          <PackerStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case "gitscraper":
-        return (
-          <GitScraperStepFormConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
-        return (
-            <SalesforceScanStepConfiguration
-                pipelineId={pipeline._id}
-                plan={pipeline.workflow.plan}
-                stepId={stepId}
-                stepTool={stepTool}
-                parentCallback={callbackFunction}
-                callbackSaveToVault={saveToVault}
-                createJob={createJob}
-                setToast={setToast}
-                setShowToast={setShowToast}
-                closeEditorPanel={closeEditorPanel}
-            />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.GIT_OPERATION:
-        return (
-            <GitOperationStepConfiguration
-                pipelineId={pipeline._id}
-                plan={pipeline.workflow.plan}
-                stepId={stepId}
-                stepTool={stepTool}
-                parentCallback={callbackFunction}
-                callbackSaveToVault={saveToVault}
-                createJob={createJob}
-                setToast={setToast}
-                setShowToast={setShowToast}
-                closeEditorPanel={closeEditorPanel}
-            />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE:
-        return (
-          <ApigeeStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC:
-        return (
-          <SnaplogicStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );   
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.PROVAR:
-        return (
-            <ProvarStepToolConfiguration
-                pipelineId={pipeline._id}
-                plan={pipeline.workflow.plan}
-                stepId={stepId}
-                stepTool={stepTool}
-                parentCallback={callbackFunction}
-                closeEditorPanel={closeEditorPanel}
-            />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ:
-        return (
-            <SapCpqStepConfiguration
-                pipelineId={pipeline._id}
-                plan={pipeline.workflow.plan}
-                stepId={stepId}
-                stepTool={stepTool}
-                parentCallback={callbackFunction}
-                closeEditorPanel={closeEditorPanel}
-            />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_WEBAPPS:
-        return (
-          <AzureWebappsStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );      
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_CLI:
-        return (
-          <AzureCliStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );  
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI:
-        return (
-            <BoomiStepConfiguration
-                pipelineId={pipeline._id}
-                plan={pipeline.workflow.plan}
-                stepId={stepId}
-                stepTool={stepTool}
-                parentCallback={callbackFunction}
-                closeEditorPanel={closeEditorPanel}
-              />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA_IDQ:
-        return (
-            <InformaticaIdqStepConfiguration
-                pipelineId={pipeline._id}
-                plan={pipeline.workflow.plan}
-                stepId={stepId}
-                stepTool={stepTool}
-                parentCallback={callbackFunction}
-                closeEditorPanel={closeEditorPanel}
-            />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE:
-        return (
-            <LiquibaseStepConfiguration
-              pipelineId={pipeline._id}
-              plan={pipeline.workflow.plan}
-              stepId={stepId}
-              stepTool={stepTool}
-              parentCallback={callbackFunction}
-              closeEditorPanel={closeEditorPanel}
-            />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK:
-        return (
-          <BlackDuckStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY:
-        return (
-            <FortifyStepConfiguration
-              pipelineId={pipeline._id}
-              plan={pipeline.workflow.plan}
-              stepId={stepId}
-              stepTool={stepTool}
-              parentCallback={callbackFunction}
-              closeEditorPanel={closeEditorPanel}
-            />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.DOCKER_CLI:
-        return (
-            <DockerCliStepConfiguration
-              pipelineId={pipeline._id}
-              plan={pipeline.workflow.plan}
-              stepId={stepId}
-              stepTool={stepTool}
-              parentCallback={callbackFunction}
-              closeEditorPanel={closeEditorPanel}
-              pipelineStep={pipelineStep}
-            />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK:
-        return (
-            <SnykStepConfiguration
-              pipelineId={pipeline._id}
-              plan={pipeline.workflow.plan}
-              stepId={stepId}
-              stepTool={stepTool}
-              parentCallback={callbackFunction}
-              closeEditorPanel={closeEditorPanel}
-            />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC:
-        return (
-          <AquasecStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            closeEditorPanel={closeEditorPanel}
-            createJob={createTwistlockJob}
-          />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.SERVICE_NOW:
-        return (
-          <ServiceNowStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );     
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.ORACLE_FUSION_REPORT_MIGRATION:
-        return (
-          <OracleFusionReportMigrationStepConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
-            stepTool={stepTool}
-            parentCallback={callbackFunction}
-            closeEditorPanel={closeEditorPanel}
-          />
-        );           
+    case "azure-zip-deployment":
+      return (
+        <AzureZipDeploymentStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "sentinel":
+      return (
+        <SentinelStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "buildkite":
+      return (
+        <BuildkiteStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "packer":
+      return (
+        <PackerStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case "gitscraper":
+      return (
+        <GitScraperStepFormConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER:
+      return (
+        <SalesforceScanStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.GIT_OPERATION:
+      return (
+        <GitOperationStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE:
+      return (
+        <ApigeeStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC:
+      return (
+        <SnaplogicStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );   
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.PROVAR:
+      return (
+        <ProvarStepToolConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ:
+      return (
+        <SapCpqStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_WEBAPPS:
+      return (
+        <AzureWebappsStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );      
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_CLI:
+      return (
+        <AzureCliStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          callbackSaveToVault={saveToVault}
+          createJob={createJob}
+          setToast={setToast}
+          setShowToast={setShowToast}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );  
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI:
+      return (
+        <BoomiStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA_IDQ:
+      return (
+        <InformaticaIdqStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE:
+      return (
+        <LiquibaseStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK:
+      return (
+        <BlackDuckStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY:
+      return (
+        <FortifyStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.DOCKER_CLI:
+      return (
+        <DockerCliStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+          pipelineStep={pipelineStep}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK:
+      return (
+        <SnykStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC:
+      return (
+        <AquasecStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+          createJob={createTwistlockJob}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.SERVICE_NOW:
+      return (
+        <ServiceNowStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );     
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.ORACLE_FUSION_REPORT_MIGRATION:
+      return (
+        <OracleFusionReportMigrationStepConfiguration
+          pipelineId={pipeline._id}
+          plan={pipeline.workflow.plan}
+          stepId={stepId}
+          stepTool={stepTool}
+          parentCallback={callbackFunction}
+          closeEditorPanel={closeEditorPanel}
+        />
+      );           
     }
   };
 

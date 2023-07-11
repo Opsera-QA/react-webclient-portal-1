@@ -4,7 +4,7 @@ import ProjectDataMappingsTable from "components/settings/data_mapping/projects/
 import Model from "../../../../core/data_model/model";
 import projectMappingMetadata from "components/settings/data_mapping/projects/projectDataMappingFilter.metadata.js";
 import useAnalyticsProjectDataMappingActions
-  from "hooks/settings/insights/analytics_data_mappings/projects/useAnalyticsProjectDataMappingActions";
+from "hooks/settings/insights/analytics_data_mappings/projects/useAnalyticsProjectDataMappingActions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function ProjectDataMappingManagement() {

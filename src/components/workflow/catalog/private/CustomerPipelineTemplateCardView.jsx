@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CustomerPipelineTemplateCard
-  from "temp-library-components/cards/templates/pipelines/customer/CustomerPipelineTemplateCard";
+from "temp-library-components/cards/templates/pipelines/customer/CustomerPipelineTemplateCard";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
 

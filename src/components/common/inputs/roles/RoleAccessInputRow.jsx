@@ -9,13 +9,13 @@ import Row from "react-bootstrap/Row";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import AccessControlRoleSelectInput from "components/common/inputs/roles/type/AccessControlRoleSelectInput";
 import RoleAccessInputLdapUserSelectInput
-  from "components/common/inputs/roles/users/RoleAccessInputLdapUserSelectInput";
+from "components/common/inputs/roles/users/RoleAccessInputLdapUserSelectInput";
 import RoleAccessInputLdapGroupSelectInput
-  from "components/common/inputs/roles/groups/RoleAccessInputLdapGroupSelectInput";
+from "components/common/inputs/roles/groups/RoleAccessInputLdapGroupSelectInput";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import RoleAccessInputSiteRoleSelectInput
-  from "components/common/inputs/roles/site_roles/RoleAccessInputSiteRoleSelectInput";
+from "components/common/inputs/roles/site_roles/RoleAccessInputSiteRoleSelectInput";
 import accessControlRuleTypeConstants from "@opsera/know-your-role/constants/accessControlRuleType.constants";
 
 export default function RoleAccessInputRow(
@@ -79,33 +79,33 @@ export default function RoleAccessInputRow(
     const type = accessRuleModel?.getType();
 
     switch (type) {
-      case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.USER:
-        return (
-          <RoleAccessInputLdapUserSelectInput
-            model={accessRuleModel}
-            setModel={setAccessRuleModel}
-            roles={roles}
-            disabled={disabled}
-          />
-        );
-      case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.GROUP:
-        return (
-          <RoleAccessInputLdapGroupSelectInput
-            model={accessRuleModel}
-            setModel={setAccessRuleModel}
-            roles={roles}
-            disabled={disabled}
-          />
-        );
-      case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.SITE_ROLE:
-        return (
-          <RoleAccessInputSiteRoleSelectInput
-            model={accessRuleModel}
-            setModel={setAccessRuleModel}
-            roles={roles}
-            disabled={disabled}
-          />
-        );
+    case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.USER:
+      return (
+        <RoleAccessInputLdapUserSelectInput
+          model={accessRuleModel}
+          setModel={setAccessRuleModel}
+          roles={roles}
+          disabled={disabled}
+        />
+      );
+    case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.GROUP:
+      return (
+        <RoleAccessInputLdapGroupSelectInput
+          model={accessRuleModel}
+          setModel={setAccessRuleModel}
+          roles={roles}
+          disabled={disabled}
+        />
+      );
+    case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.SITE_ROLE:
+      return (
+        <RoleAccessInputSiteRoleSelectInput
+          model={accessRuleModel}
+          setModel={setAccessRuleModel}
+          roles={roles}
+          disabled={disabled}
+        />
+      );
     }
   };
 

@@ -10,13 +10,13 @@ function ExportProjectsByTagsReportDataOverlay({ formattedData, rawData, isLoadi
 
   const formattedDataBody = Array.isArray(formattedData)
     ? formattedData.map(item => [
-        item._id,
-        item.key,
-        item.tool_identifier,
-        DateFormatHelper.formatDateAsTimestampWithoutSeconds(item.createdAt),
-        DateFormatHelper.formatDateAsTimestampWithoutSeconds(item.updatedAt),
-        item.value.map(({ type, value }) => `${type}/${value}`)
-      ])
+      item._id,
+      item.key,
+      item.tool_identifier,
+      DateFormatHelper.formatDateAsTimestampWithoutSeconds(item.createdAt),
+      DateFormatHelper.formatDateAsTimestampWithoutSeconds(item.updatedAt),
+      item.value.map(({ type, value }) => `${type}/${value}`)
+    ])
     : [];
 
   const getRawData = () => {

@@ -12,29 +12,29 @@ export default function TaskTemplateManagementSubNavigationBar({activeTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-      case "adminTools":
-        history.push(`/admin`);
-        return;
-      case "taskTemplateManagement":
-        history.push(`/admin/templates/tasks`);
-        return;
+    case "adminTools":
+      history.push(`/admin`);
+      return;
+    case "taskTemplateManagement":
+      history.push(`/admin/templates/tasks`);
+      return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-      case "taskTemplateViewer":
-        return (
-          <NavigationTab
-            icon={faStream}
-            tabName={"taskTemplateViewer"}
-            handleTabClick={handleTabClick}
-            activeTab={activeTab}
-            tabText={"Task Template Viewer"}
-          />
-        );
-      default:
-        return null;
+    case "taskTemplateViewer":
+      return (
+        <NavigationTab
+          icon={faStream}
+          tabName={"taskTemplateViewer"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Task Template Viewer"}
+        />
+      );
+    default:
+      return null;
     }
   };
 

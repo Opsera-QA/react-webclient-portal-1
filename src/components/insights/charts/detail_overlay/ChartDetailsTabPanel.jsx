@@ -27,14 +27,14 @@ function ChartDetailsTabPanel({ dashboardData, kpiConfiguration, chartModel, kpi
   // TODO: Wire up settings view
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return <ChartSummaryPanelWrapper dashboardData={dashboardData} kpiConfiguration={kpiConfiguration} chartModel={chartModel} kpiIdentifier={kpiIdentifier} pipelineName={pipelineName} currentDate={currentDate}/>;
-      case "json":
-        return <ChartJsonPanel chartModel={chartModel.getPersistData()} />;
+    case "summary":
+      return <ChartSummaryPanelWrapper dashboardData={dashboardData} kpiConfiguration={kpiConfiguration} chartModel={chartModel} kpiIdentifier={kpiIdentifier} pipelineName={pipelineName} currentDate={currentDate}/>;
+    case "json":
+      return <ChartJsonPanel chartModel={chartModel.getPersistData()} />;
       // case "settings":
       //   return <KpiSettingsForm chartModel={chartModel.getPersistData()} />;
-      default:
-        return null;
+    default:
+      return null;
     }
   };
 

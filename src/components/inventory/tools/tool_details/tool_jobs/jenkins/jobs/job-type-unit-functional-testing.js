@@ -1,5 +1,5 @@
 const JenkinsJobTypeUnitFunctionalTest = {
- buildType: {
+  buildType: {
     label: "Build Type",
     id: "buildType",
     type: "select",

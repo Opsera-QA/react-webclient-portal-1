@@ -2,13 +2,13 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import sfdcComponentFilterMetadata
-  from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-component-filter-metadata";
+from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-component-filter-metadata";
 import axios from "axios";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SfdcPipelineWizardFileValidationTableBase
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/SfdcPipelineWizardFileValidationTableBase";
+from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/SfdcPipelineWizardFileValidationTableBase";
 
 const SfdcPipelineWizardInvalidGitFilesTable = ({ pipelineWizardModel}) => {
   const {getAccessToken} = useContext(AuthContext);

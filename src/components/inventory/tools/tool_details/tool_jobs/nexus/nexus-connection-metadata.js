@@ -1,12 +1,12 @@
 const nexusConnectionMetadata = {
   type: "Nexus Tool Configuration",
   fields: [
-  {
-    label: "Nexus Container URL",
-    id: "toolURL",
-    isRequired: true,
-    isSecureUrl: true,
-  },
+    {
+      label: "Nexus Container URL",
+      id: "toolURL",
+      isRequired: true,
+      isSecureUrl: true,
+    },
     {
       label: "Nexus User ID",
       id: "userName",
@@ -17,7 +17,7 @@ const nexusConnectionMetadata = {
       id: "secretKey",
       isRequired: true
     }
-],
+  ],
   newObjectFields: {
     toolURL: "",
     userName: "",

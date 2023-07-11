@@ -4,7 +4,7 @@ export const pipelineInstructionsHelper = {};
 
 pipelineInstructionsHelper.getDetailViewLink = (
   pipelineInstructionsId,
-  ) => {
+) => {
   if (isMongoDbId(pipelineInstructionsId) !== true) {
     return null;
   }

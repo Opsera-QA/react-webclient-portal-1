@@ -52,7 +52,7 @@ import GithubPendingMergeRequestsEditorPanel from "../../charts/github/table/pen
 import GithubRecentMergeRequestsEditorPanel from "../../charts/github/table/recent_merge_requests/GithubRecentMergeRequestsEditorPanel";
 import GithubCommitsStatisticsEditorPanel from "../../charts/github/pie_chart/commits_statistics/GithubCommitsStatisticsEditorPanel";
 import JenkinsChangeFailureRateEditorPanel
-  from "../../charts/jenkins/pie_chart/change_failure_rate/JenkinsChangeFailureRateEditorPanel";
+from "../../charts/jenkins/pie_chart/change_failure_rate/JenkinsChangeFailureRateEditorPanel";
 import GitScrapperEditorPanel from "../../charts/gitscrapper/GitScrapperEditorPanel";
 
 // TODO: combine with chart settings overlay?
@@ -135,419 +135,419 @@ function DashboardMetricOverlayContainer({
   // TODO: Move this into a separate component after we can remove KpiSettingsForm
   const getMetricEditorPanel = () => {
     switch (kpiConfiguration?.kpi_identifier) {
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS:
-        return (
-          <SdlcDurationByStageMetricsEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_DURATION_BY_STAGE:
-        return (
-          <SalesforceDurationByStageMetricsEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.BUILD_DEPLOYMENT_STATISTICS:
-        return (
-          <SalesforceDurationByStageMetricsEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATION_PERCENTAGE:
-        return (
-          <AutomationPercentageMetricEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.FIRST_PASS_YIELD:
-        return (
-          <FirstPassYieldMetricsEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.SONAR_RATINGS:
-        return (
-          <SonarRatingMetricsEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS
-        .SERVICE_NOW_MEAN_TIME_TO_RESOLUTION:
-        return (
-          <ServiceNowMeanTimeToResolutionEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.DORA_JIRA_GITLAB_ROLLED_UP:
-        return (
-          <DoraJiraGitlabRolledUpEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.SYSTEM_DRIVEN_MATURITY:
-        return (
-          <SystemDrivenMaturityEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_LOG_DEVELOPER_360:
-        return (
-          <GitLogDeveloper360EditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_PIPELINE_STATISTICS:
-        return (
-          <GitlabPipelineStatisticsEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.QUICK_DEPLOY_STATISTICS:
-        return (
-          <QuickDeployStatisticsEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_COMPONENTS_CHART:
-        return (
-          <SalesforceComponentsEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_REPORT:
-        return (
-          <ApigeeReportsEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_DEPLOYMENT_FREQUENCY:
-        return (
-          <GitlabDeploymentFrequencyEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS
-        .GITLAB_DEPLOYMENT_FREQUENCY_V2:
-        return (
-          <GitlabDeploymentFrequencyEditorPanelV2
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME:
-        return (
-          <GitlabLeadTimeEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME_V2:
-        return (
-          <GitlabLeadTimeEditorPanelV2
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_SUMMARY:
-        return (
-          <ApigeeSummaryEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
-        return (
-          <BoomiBarChartEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_MEAN_TIME_TO_RESOLUTION:
-        return (
-          <JiraMeanTimeToResolutionEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
-        return (
-          <JiraChangeFailureRateEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_MERGE_STATISTICS:
-        return (
-          <GitlabMergeRequestStatisticsEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_ACTIONS_WORKFLOW:
-        return (
-          <GithubActionsWorkflowEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS
-        .GITLAB_MOST_ACTIVE_CONTRIBUTOR:
-        return (
-          <GitlabMostActiveContributorsEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS
-        .GITLAB_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW:
-        return (
-          <GitlabTimeTakenToCompleteMergeRequestReviewEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_MERGE_REQUESTS_BY_USER:
-        return (
-          <GitlabMergeRequestsByUserEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_COMMITS_BY_AUTHOR:
-        return (
-          <GitlabCommitsByAuthorEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_CODE_ANALYSER:
-        return (
-          <SalesforceCodeAnalyserChartEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS
-        .GITHUB_MERGE_REQUESTS_PUSHES_AND_COMMENTS:
-        return (
-          <GithubMergeRequestsPushesAndCommentsChartEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS
-        .GITHUB_MERGE_REQUESTS_BY_MAXIMUM_TIME:
-        return (
-          <GithubMergeRequestByMaximumTimeEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_MERGE_REQUESTS_BY_USER:
-        return (
-          <GithubMergeRequestsByUserEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS
-        .GITHUB_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW:
-        return (
-          <GithubTimeTakenToCompleteMergeRequestReviewEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_COMMITS_BY_AUTHOR:
-        return (
-          <GithubCommitsByAuthorEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS
-        .GITHUB_TOTAL_COMMITS_BY_PROJECT:
-        return (
-          <GithubTotalCommitsByProjectEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS
-        .GITHUB_MOST_ACTIVE_CONTRIBUTORS:
-        return (
-          <GithubMostActiveContributorsEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_PENDING_MERGE_REQUESTS:
-        return (
-          <GithubPendingMergeRequestsEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_RECENT_MERGE_REQUESTS:
-        return (
-          <GithubRecentMergeRequestsEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_COMMITS_STATISTICS:
-        return (
-          <GithubCommitsStatisticsEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.JENKINS_CHANGE_FAILURE_RATE_V2:
-        return (
-            <JenkinsChangeFailureRateEditorPanel
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-                unpackedFilterData={unpackedFilterData}
-                kpiConfiguration={kpiConfiguration}
-            />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_SCRAPER_METRICS:
-        return (
-            <GitScrapperEditorPanel
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-                unpackedFilterData={unpackedFilterData}
-                kpiConfiguration={kpiConfiguration}
-            />
-        );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS:
+      return (
+        <SdlcDurationByStageMetricsEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_DURATION_BY_STAGE:
+      return (
+        <SalesforceDurationByStageMetricsEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.BUILD_DEPLOYMENT_STATISTICS:
+      return (
+        <SalesforceDurationByStageMetricsEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATION_PERCENTAGE:
+      return (
+        <AutomationPercentageMetricEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.FIRST_PASS_YIELD:
+      return (
+        <FirstPassYieldMetricsEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.SONAR_RATINGS:
+      return (
+        <SonarRatingMetricsEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS
+      .SERVICE_NOW_MEAN_TIME_TO_RESOLUTION:
+      return (
+        <ServiceNowMeanTimeToResolutionEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.DORA_JIRA_GITLAB_ROLLED_UP:
+      return (
+        <DoraJiraGitlabRolledUpEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.SYSTEM_DRIVEN_MATURITY:
+      return (
+        <SystemDrivenMaturityEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_LOG_DEVELOPER_360:
+      return (
+        <GitLogDeveloper360EditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_PIPELINE_STATISTICS:
+      return (
+        <GitlabPipelineStatisticsEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.QUICK_DEPLOY_STATISTICS:
+      return (
+        <QuickDeployStatisticsEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_COMPONENTS_CHART:
+      return (
+        <SalesforceComponentsEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_REPORT:
+      return (
+        <ApigeeReportsEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_DEPLOYMENT_FREQUENCY:
+      return (
+        <GitlabDeploymentFrequencyEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS
+      .GITLAB_DEPLOYMENT_FREQUENCY_V2:
+      return (
+        <GitlabDeploymentFrequencyEditorPanelV2
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME:
+      return (
+        <GitlabLeadTimeEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME_V2:
+      return (
+        <GitlabLeadTimeEditorPanelV2
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_SUMMARY:
+      return (
+        <ApigeeSummaryEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
+      return (
+        <BoomiBarChartEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_MEAN_TIME_TO_RESOLUTION:
+      return (
+        <JiraMeanTimeToResolutionEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
+      return (
+        <JiraChangeFailureRateEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_MERGE_STATISTICS:
+      return (
+        <GitlabMergeRequestStatisticsEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_ACTIONS_WORKFLOW:
+      return (
+        <GithubActionsWorkflowEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS
+      .GITLAB_MOST_ACTIVE_CONTRIBUTOR:
+      return (
+        <GitlabMostActiveContributorsEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS
+      .GITLAB_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW:
+      return (
+        <GitlabTimeTakenToCompleteMergeRequestReviewEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_MERGE_REQUESTS_BY_USER:
+      return (
+        <GitlabMergeRequestsByUserEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_COMMITS_BY_AUTHOR:
+      return (
+        <GitlabCommitsByAuthorEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_CODE_ANALYSER:
+      return (
+        <SalesforceCodeAnalyserChartEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS
+      .GITHUB_MERGE_REQUESTS_PUSHES_AND_COMMENTS:
+      return (
+        <GithubMergeRequestsPushesAndCommentsChartEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS
+      .GITHUB_MERGE_REQUESTS_BY_MAXIMUM_TIME:
+      return (
+        <GithubMergeRequestByMaximumTimeEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_MERGE_REQUESTS_BY_USER:
+      return (
+        <GithubMergeRequestsByUserEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS
+      .GITHUB_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW:
+      return (
+        <GithubTimeTakenToCompleteMergeRequestReviewEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_COMMITS_BY_AUTHOR:
+      return (
+        <GithubCommitsByAuthorEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS
+      .GITHUB_TOTAL_COMMITS_BY_PROJECT:
+      return (
+        <GithubTotalCommitsByProjectEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS
+      .GITHUB_MOST_ACTIVE_CONTRIBUTORS:
+      return (
+        <GithubMostActiveContributorsEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_PENDING_MERGE_REQUESTS:
+      return (
+        <GithubPendingMergeRequestsEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_RECENT_MERGE_REQUESTS:
+      return (
+        <GithubRecentMergeRequestsEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_COMMITS_STATISTICS:
+      return (
+        <GithubCommitsStatisticsEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.JENKINS_CHANGE_FAILURE_RATE_V2:
+      return (
+        <JenkinsChangeFailureRateEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
+    case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_SCRAPER_METRICS:
+      return (
+        <GitScrapperEditorPanel
+          metricModel={metricModel}
+          metricFilterModel={metricFilterModel}
+          setMetricFilterModel={setMetricFilterModel}
+          unpackedFilterData={unpackedFilterData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      );
     }
   };
 

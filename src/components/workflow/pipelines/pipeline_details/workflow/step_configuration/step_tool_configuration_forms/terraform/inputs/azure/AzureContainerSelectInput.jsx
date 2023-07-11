@@ -105,18 +105,18 @@ function AzureContainerSelectInput(
   };
 
   return (
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={dataObject}
-        textField={textField}
-        valueField={valueField}
-        setDataObject={setDataObject}
-        selectOptions={azureRegionList}
-        busy={isLoading}
-        disabled={isLoading}
-        placeholder={placeholder}
-        errorMessage={errorMessage}
-      />
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={dataObject}
+      textField={textField}
+      valueField={valueField}
+      setDataObject={setDataObject}
+      selectOptions={azureRegionList}
+      busy={isLoading}
+      disabled={isLoading}
+      placeholder={placeholder}
+      errorMessage={errorMessage}
+    />
   );
 }
 

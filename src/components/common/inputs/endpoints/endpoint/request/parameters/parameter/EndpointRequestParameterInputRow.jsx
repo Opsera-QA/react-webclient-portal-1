@@ -4,12 +4,12 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {faCode} from "@fortawesome/pro-light-svg-icons";
 import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
 import EndpointRequestParameterManualValueEntryInput
-  from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/EndpointRequestParameterManualValueEntryInput";
+from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/EndpointRequestParameterManualValueEntryInput";
 import ExternalApiIntegrationStepRunResponseParameterSelectInput
-  from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegrationStepRunResponseParameterSelectInput";
+from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegrationStepRunResponseParameterSelectInput";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import endpointRequestParameterMetadata
-  from "@opsera/definitions/constants/api/request/parameters/endpointRequestParameter.metadata";
+from "@opsera/definitions/constants/api/request/parameters/endpointRequestParameter.metadata";
 
 export default function EndpointRequestParameterInputRow(
   {

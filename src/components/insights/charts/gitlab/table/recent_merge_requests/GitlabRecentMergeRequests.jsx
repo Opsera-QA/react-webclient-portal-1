@@ -105,24 +105,24 @@ function GitlabRecentMergeRequests({
     // This can be called only when there is an active tab selected in left panel or a valid search string.
     if(projectName || search) {
       const response = await gitlabActions.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime(
-          getAccessToken,
-          cancelSource,
-          kpiConfiguration,
-          dashboardTags,
-          filterDto,
-          projectName,
-          dashboardOrgs
+        getAccessToken,
+        cancelSource,
+        kpiConfiguration,
+        dashboardTags,
+        filterDto,
+        projectName,
+        dashboardOrgs
       );
       let dataObject =
           response?.data?.data
-              ?.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime?.data;
+            ?.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime?.data;
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;
         newFilterDto.setData(
-            "totalCount",
-            response?.data?.data
-                ?.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime?.count,
+          "totalCount",
+          response?.data?.data
+            ?.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime?.count,
         );
         setTableFilterDto({...newFilterDto});
       }

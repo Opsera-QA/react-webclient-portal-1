@@ -1,10 +1,10 @@
 import ModelBase from "core/data_model/model.base";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import analyticsDataEntryMetadata
-  from "@opsera/definitions/constants/settings/analytics_data_entries/analyticsDataEntry.metadata";
+from "@opsera/definitions/constants/settings/analytics_data_entries/analyticsDataEntry.metadata";
 import {analyticsDataEntryHelper} from "components/settings/analytics_data_entry/analyticsDataEntry.helper";
 import AnalyticsDataEntryRoleHelper
-  from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
+from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
 
 export default class AnalyticsDataEntryModel extends ModelBase {
   constructor(
@@ -88,8 +88,8 @@ export default class AnalyticsDataEntryModel extends ModelBase {
 
   clone = () => {
     return new AnalyticsDataEntryModel(DataParsingHelper.cloneDeep(
-        { ...this.data }),
-      this.isNew(),
+      { ...this.data }),
+    this.isNew(),
     );
   };
 }

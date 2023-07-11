@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedSpinnakerToolSelectInput
-  from "components/common/list_of_values_input/tools/spinnaker/tool/RoleRestrictedSpinnakerToolSelectInput";
+from "components/common/list_of_values_input/tools/spinnaker/tool/RoleRestrictedSpinnakerToolSelectInput";
 
 function SpinnakerStepSpinnakerToolSelectInput({model, setModel, fieldName, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {

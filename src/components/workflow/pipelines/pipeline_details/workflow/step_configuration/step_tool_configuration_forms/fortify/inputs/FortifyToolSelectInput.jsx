@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedFortifyToolSelectInput
-  from "components/common/list_of_values_input/tools/fortify/RoleRestrictedFortifyToolSelectInput";
+from "components/common/list_of_values_input/tools/fortify/RoleRestrictedFortifyToolSelectInput";
 
 function FortifyToolSelectInput({ model, setModel, className, disabled }) {
 

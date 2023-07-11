@@ -4,9 +4,9 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import FreeTrialUserActivityReportUsersTable
-  from "components/settings/trial/activity_report/users/FreeTrialUserActivityReportUsersTable";
+from "components/settings/trial/activity_report/users/FreeTrialUserActivityReportUsersTable";
 import FreeTrialUserActivityReportSubNavigationBar
-  from "components/settings/trial/activity_report/FreeTrialUserActivityReportSubNavigationBar";
+from "components/settings/trial/activity_report/FreeTrialUserActivityReportSubNavigationBar";
 
 export default function FreeTrialUserActivityReport() {
   const [freeTrialActivityReportUsers, setFreeTrialActivityReportUsers] = useState([]);

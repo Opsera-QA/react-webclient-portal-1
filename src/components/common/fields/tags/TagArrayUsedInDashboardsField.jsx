@@ -83,7 +83,7 @@ function TagArrayUsedInDashboardsField({ tags, showTable }) {
     if (showTable) {
       return (
         <TagsUsedInDashboardTable data={dashboards} loadData={loadData} isLoading={isLoading} isMounted={isMounted}/>
-        );
+      );
     }
 
     return (getDashboardCards());

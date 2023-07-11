@@ -11,13 +11,13 @@ function AzureAcrPushNewRepoBooleanInput({dataObject, setDataObject, disabled}) 
   };
 
   return (
-      <BooleanToggleInput
-        fieldName={"newRepo"}
-        dataObject={dataObject}       
-        setDataObject={setDataObject}
-        setDataFunction={setDataFunction}
-        disabled={disabled}
-      />
+    <BooleanToggleInput
+      fieldName={"newRepo"}
+      dataObject={dataObject}       
+      setDataObject={setDataObject}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+    />
   );
 }
 

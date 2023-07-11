@@ -27,22 +27,22 @@ function PipelineExportToGitButtonContainer({ pipeline, handleClose }) {
     } catch (error) {
       toastContext.showErrorDialog(error, `Unable to export pipeline configuration to ${service}. Please check your repository configuration and try again.`);
       setIsLoading(false);
-  }
+    }
   };
   
   return (
-      <Row>
-            <ButtonBase
-              onClickFunction={exportToGit}
-              buttonText={"Export to Git"}
-              size={"md"}
-              className={"ml-4 mr-2 mb-2"}
-              isLoading={isLoading}
-            />
-          <CloseEditorButton
-            closeEditorCallback={handleClose}
-          />
-      </Row>
+    <Row>
+      <ButtonBase
+        onClickFunction={exportToGit}
+        buttonText={"Export to Git"}
+        size={"md"}
+        className={"ml-4 mr-2 mb-2"}
+        isLoading={isLoading}
+      />
+      <CloseEditorButton
+        closeEditorCallback={handleClose}
+      />
+    </Row>
   );
 }
 

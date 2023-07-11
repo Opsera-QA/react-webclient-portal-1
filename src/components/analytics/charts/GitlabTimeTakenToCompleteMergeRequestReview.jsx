@@ -9,7 +9,7 @@ import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
 import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
-         spaceOutMergeRequestTimeTakenLegend } from "../../insights/charts/charts-views";
+  spaceOutMergeRequestTimeTakenLegend } from "../../insights/charts/charts-views";
 import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function GitlabTimeTakenToCompleteMergeRequestReview({ persona, date }) {
@@ -100,10 +100,10 @@ function GitlabTimeTakenToCompleteMergeRequestReview({ persona, date }) {
             colorBy="id"
             colors={getColorByData}
             tooltip={({ indexValue, color, value, id }) => <ChartTooltip 
-                    titles={["Reviewer", "Merge Request Time Taken"]}
-                    values={[indexValue, value]}
-                    style={false}
-                    color={color} />}
+              titles={["Reviewer", "Merge Request Time Taken"]}
+              values={[indexValue, value]}
+              style={false}
+              color={color} />}
           />
         )}
       </div>

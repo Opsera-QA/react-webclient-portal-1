@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import SfdcComponentListInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcComponentListInput";
+from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcComponentListInput";
 import SfdcPipelineWizardFileSelectionDateTimeRange
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardFileSelectionDateTimeRange";
+from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardFileSelectionDateTimeRange";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import {faArrowLeft} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";

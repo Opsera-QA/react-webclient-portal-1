@@ -10,7 +10,7 @@ import {roleAccessInputMetadata} from "components/common/inline_inputs/roles/ove
 import RoleHelper from "@opsera/know-your-role/roles/role.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import AccessRoleLoseAccessConfirmationOverlay
-  from "components/common/inline_inputs/roles/overlay/AccessRoleLoseAccessConfirmationOverlay";
+from "components/common/inline_inputs/roles/overlay/AccessRoleLoseAccessConfirmationOverlay";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import StandaloneSaveButton from "components/common/buttons/saving/StandaloneSaveButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
@@ -61,13 +61,13 @@ function EditRolesOverlay(
       );
 
       if (willLoseAccess === true) {
-       toastContext.showOverlayPanel(
-         <AccessRoleLoseAccessConfirmationOverlay
-          closePanelFunction={closePanelFunction}
-          lostAccessRerouteRoute={lostAccessRerouteRoute}
-          saveAccessRolesFunction={() => handleSave(true)}
-         />
-       );
+        toastContext.showOverlayPanel(
+          <AccessRoleLoseAccessConfirmationOverlay
+            closePanelFunction={closePanelFunction}
+            lostAccessRerouteRoute={lostAccessRerouteRoute}
+            saveAccessRolesFunction={() => handleSave(true)}
+          />
+        );
         return;
       }
     }

@@ -9,7 +9,7 @@ import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
 import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
-         capitalizeLegend } from "../../insights/charts/charts-views";
+  capitalizeLegend } from "../../insights/charts/charts-views";
 import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function JenkinsBuildsByUserBarChart({ persona, date }) {
@@ -94,7 +94,7 @@ function JenkinsBuildsByUserBarChart({ persona, date }) {
           ) : (
             <ResponsiveBar
               {...defaultConfig("Users", "Number of Builds", 
-                      true, false, "subString", "")}
+                true, false, "subString", "")}
               {...adjustBarWidth(data ? data.data : [], false)}
               data={data ? data.data : []}
               keys={["Build Count"]}
@@ -104,10 +104,10 @@ function JenkinsBuildsByUserBarChart({ persona, date }) {
               colors={getColorByData}
               onClick={() => setShowModal(true)}
               tooltip={({ indexValue, value, color }) => <ChartTooltip 
-                              titles = {["User", "Number of Builds"]}
-                              values = {[indexValue, `${value} builds`]}
-                              style = {false}
-                              color = {color} />}
+                titles = {["User", "Number of Builds"]}
+                values = {[indexValue, `${value} builds`]}
+                style = {false}
+                color = {color} />}
             />
           )}
         </div>

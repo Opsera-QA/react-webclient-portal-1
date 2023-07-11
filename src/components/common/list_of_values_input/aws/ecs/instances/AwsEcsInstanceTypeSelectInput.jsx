@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import useGetAwsEcsInstanceTypes
-  from "components/common/list_of_values_input/aws/ecs/instances/useGetAwsEcsInstanceTypes";
+from "components/common/list_of_values_input/aws/ecs/instances/useGetAwsEcsInstanceTypes";
 
 export default function AwsEcsInstanceTypeSelectInput(
   {

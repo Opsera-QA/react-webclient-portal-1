@@ -16,12 +16,12 @@ import {ldapUserMetadata} from "components/admin/accounts/ldap/users/ldapUser.me
 import {ssoUserMetadata} from "components/settings/users/ssoUser.metadata";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import LdapGroupMultiSelectInput
-  from "components/common/list_of_values_input/settings/groups/LdapGroupMultiSelectInput";
+from "components/common/list_of_values_input/settings/groups/LdapGroupMultiSelectInput";
 import InlineActiveLogTerminalBase from "components/common/logging/InlineActiveLogTerminalBase";
 import {parseError} from "components/common/helpers/error-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import LdapGroupForDomainMultiSelectInput
-  from "components/common/list_of_values_input/settings/groups/LdapGroupForDomainMultiSelectInput";
+from "components/common/list_of_values_input/settings/groups/LdapGroupForDomainMultiSelectInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import useLdapGroupActions from "hooks/ldap/groups/useLdapGroupActions";
 
@@ -171,7 +171,7 @@ function UserEditorPanel(
       cancelTokenSource,
       orgDomain,
       newLdapUser,
-      );
+    );
   };
 
   const createSsoUser = async () => {
@@ -247,13 +247,13 @@ function UserEditorPanel(
   };
 
   const addLog = useCallback((newLog) => {
-      setLogs(existingLogs => [...existingLogs, `${newLog}\n`]);
-    }, [setLogs]
+    setLogs(existingLogs => [...existingLogs, `${newLog}\n`]);
+  }, [setLogs]
   );
 
   const eraseLogs = useCallback(() => {
-      setLogs([]);
-    }, [setLogs]
+    setLogs([]);
+  }, [setLogs]
   );
 
   const getGroupMultiselectInput = () => {

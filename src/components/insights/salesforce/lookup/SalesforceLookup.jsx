@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import SalesforceLookUpHelpDocumentation
-  from "../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation";
+from "../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {insightsLookupActions} from "components/insights/lookup/insightsLookup.actions";
 import LookupResults from "components/insights/lookup/LookupResults";
@@ -45,8 +45,8 @@ function SalesforceLookup() {
       const response = await insightsLookupActions.getComponentNames(
         getAccessToken,
         cancelTokenSource,
-          formattedStartDate,
-          formattedEndDate,
+        formattedStartDate,
+        formattedEndDate,
         newFilterModel.getData("selectedComponentNames"),
         newFilterModel.getData("selectedComponentFilterData"),
         newFilterModel.getData("pipelineComponentFilterData"),
@@ -107,8 +107,8 @@ function SalesforceLookup() {
       const response = await insightsLookupActions.searchComponents(
         getAccessToken,
         cancelTokenSource,
-          formattedStartDate,
-          formattedEndDate,
+        formattedStartDate,
+        formattedEndDate,
         [componentName],
         newFilterModel.getData("selectedComponentFilterData"),
         newFilterModel.getData("pipelineComponentFilterData"),
@@ -190,7 +190,7 @@ function SalesforceLookup() {
         />
       }
     >
-     {getBody()}
+      {getBody()}
     </ScreenContainer>
   );
 }

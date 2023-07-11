@@ -6,9 +6,9 @@ import { capitalizeFirstLetter } from "components/common/helpers/string-helpers"
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
 import ActionBarDeleteCustomerDashboardTemplateButton
-  from "components/insights/marketplace/dashboards/templates/private/ActionBarDeleteCustomerDashboardTemplateButton";
+from "components/insights/marketplace/dashboards/templates/private/ActionBarDeleteCustomerDashboardTemplateButton";
 import AddCustomerDashboardButton
-  from "components/insights/marketplace/dashboards/templates/private/AddCustomerDashboardButton";
+from "components/insights/marketplace/dashboards/templates/private/AddCustomerDashboardButton";
 import AccessRoleDisplayerField from "components/common/fields/multiple_items/roles/displayer/AccessRoleDisplayerField";
 import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
 
@@ -69,7 +69,7 @@ export default function CustomerDashboardTemplateCard(
         {getOwnerNameField()}
         <CustomBadgeContainer>
           <CustomBadge icon={faUsers} className="mr-1 upper-case-first"
-                       badgeText={dashboardTemplate.attributes?.persona} />
+            badgeText={dashboardTemplate.attributes?.persona} />
           <CustomBadge icon={faClipboard} className={"upper-case-first"} badgeText={dashboardTemplate.type} />
         </CustomBadgeContainer>
         {getTagsField()}

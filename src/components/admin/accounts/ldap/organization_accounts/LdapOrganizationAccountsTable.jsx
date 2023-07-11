@@ -5,7 +5,7 @@ import {ldapOrganizationAccountMetaData} from "components/admin/accounts/ldap/or
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import CreateLdapOrganizationAccountOverlay
-  from "components/admin/accounts/ldap/organization_accounts/CreateLdapOrganizationAccountOverlay";
+from "components/admin/accounts/ldap/organization_accounts/CreateLdapOrganizationAccountOverlay";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faSitemap} from "@fortawesome/pro-light-svg-icons";

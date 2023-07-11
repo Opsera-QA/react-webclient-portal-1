@@ -120,7 +120,7 @@ const DependencyAnalyserInitializationScreen = ({
         {getInputContainer()}
         <SaveButtonContainer>
           <Button variant="secondary" size="sm" className="mr-2" onClick={() => backButtonClick()}>
-          <IconBase icon={faArrowLeft} className={"mr-1"}/>Back
+            <IconBase icon={faArrowLeft} className={"mr-1"}/>Back
           </Button>
           <Button
             className={"mr-2"}
@@ -208,10 +208,10 @@ const DependencyAnalyserInitializationScreen = ({
 
   const getView = () => {
     switch (activeTab) {
-      case "manual":
-        return getBody();
-      case "automatic":
-        return getFileUploadBody();
+    case "manual":
+      return getBody();
+    case "automatic":
+      return getFileUploadBody();
     }
   };
 

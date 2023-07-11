@@ -5,10 +5,10 @@ import ActionBarBackButton from "components/common/actions/buttons/ActionBarBack
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import RemoteApplicationTelemetryActions from "components/admin/remote_applications/remote-application-actions";
 import RemoteApplicationDetailPanel
-  from "components/admin/remote_applications/details/RemoteApplicationDetailPanel";
+from "components/admin/remote_applications/details/RemoteApplicationDetailPanel";
 import RemoteApplicationModel from "components/admin/remote_applications/remoteApplication.model";
 import RemoteApplicationTelemetryManagementSubNavigationBar
-  from "components/admin/remote_applications/RemoteApplicationTelemetryManagementSubNavigationBar";
+from "components/admin/remote_applications/RemoteApplicationTelemetryManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function RemoteApplicationDetailView() {

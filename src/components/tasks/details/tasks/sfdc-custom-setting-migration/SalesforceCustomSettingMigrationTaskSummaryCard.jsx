@@ -41,32 +41,32 @@ function SalesforceCustomSettingMigrationTaskSummaryCard({
         </Col>
         {taskConfigDataModel?.getData("taskType") !==
           MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG ? (
-          <Col xs={6}>
-            <ToolNameField
-              model={salesforceConfigurationModel}
-              fieldName={"sourceToolId"}
-              loadToolInNewWindow={true}
-              visible={
-                taskConfigDataModel?.getData("taskType") !==
+            <Col xs={6}>
+              <ToolNameField
+                model={salesforceConfigurationModel}
+                fieldName={"sourceToolId"}
+                loadToolInNewWindow={true}
+                visible={
+                  taskConfigDataModel?.getData("taskType") !==
                 MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG
-              }
-            />
-          </Col>
-        ) : null}
+                }
+              />
+            </Col>
+          ) : null}
         {taskConfigDataModel?.getData("taskType") !==
           MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV ? (
-          <Col xs={6}>
-            <ToolNameField
-              model={salesforceConfigurationModel}
-              fieldName={"targetToolId"}
-              loadToolInNewWindow={true}
-              visible={
-                taskConfigDataModel?.getData("taskType") !==
+            <Col xs={6}>
+              <ToolNameField
+                model={salesforceConfigurationModel}
+                fieldName={"targetToolId"}
+                loadToolInNewWindow={true}
+                visible={
+                  taskConfigDataModel?.getData("taskType") !==
                 MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV
-              }
-            />
-          </Col>
-        ) : null }
+                }
+              />
+            </Col>
+          ) : null }
       </Row>
     </TaskSummaryCardContainer>
   );

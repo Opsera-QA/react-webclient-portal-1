@@ -8,22 +8,22 @@ import IconBase from "components/common/icons/IconBase";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function TextInputWithButtonAWSLambda({
-                                   fieldName,
-                                   dataObject,
-                                   setDataObject,
-                                   disabled,
-                                   type,
-                                   extraActionButtons,
-                                   inputClasses,
-                                   btnVariant,
-                                   btnText,
-                                   btnIcon,
-                                   btnDisabled,
-                                   btnClickHandler,
-                                   btnToolTipText,
-                                   errorMsg,
-                                   successMsg
-                                 }) {
+  fieldName,
+  dataObject,
+  setDataObject,
+  disabled,
+  type,
+  extraActionButtons,
+  inputClasses,
+  btnVariant,
+  btnText,
+  btnIcon,
+  btnDisabled,
+  btnClickHandler,
+  btnToolTipText,
+  errorMsg,
+  successMsg
+}) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState(errorMsg);
 
@@ -95,9 +95,9 @@ function TextInputWithButtonAWSLambda({
             onChange={(event) => validateAndSetData(event.target.value)}
             className={getInputClasses()}
           />
-            <div className="input-group-append">
-              {getButton()}
-            </div>
+          <div className="input-group-append">
+            {getButton()}
+          </div>
         </div>
       </Row>
       <InfoText

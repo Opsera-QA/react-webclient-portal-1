@@ -21,7 +21,7 @@ function LogsHelpDocumentation() {
             <li>Click the <b>Search</b> button to view results.</li>
             <li>Once the results are displayed, click the magnifying glass icon to expand the associated logs in JSON format. </li>
             <li>To export the results to PDF, click the PDF icon, provide a <b>File Name</b>, select an Export Option and click <b>Export Data</b>.</li>
-            </ol>
+          </ol>
         </div>
       </div>
     );

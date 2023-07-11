@@ -13,14 +13,14 @@ import {
   githubActionsWorkflowMetadata,
 } from "components/insights/charts/github_actions/workflows/githubActionsWorkflow.metadata";
 import ExportGithubActionsWorkflowReportPanel
-  from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportPanel";
+from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportPanel";
 import ExportGithubActionsWorkflowReportButton
-  from "components/insights/charts/github_actions/workflows/export/ExportGithubActionWorkflowReportButton";
+from "components/insights/charts/github_actions/workflows/export/ExportGithubActionWorkflowReportButton";
 import GithubActionsWorkflowActionableInsightOverlay
-  from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
+from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 import { Col, Row } from "react-bootstrap";
 import GithubActionsWorkflowWarningMessage
-  from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowWarningMessage";
+from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowWarningMessage";
 
 // TODO: Convert to cards
 function GithubActionsBottomTable(

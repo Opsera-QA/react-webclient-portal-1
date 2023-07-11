@@ -4,7 +4,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import OctopusStepActions
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
 import {AuthContext} from "contexts/AuthContext";
 
 function OctopusDeploymentTypeSelectInput({ fieldName, dataObject, setDataObject, setDataFunction, disabled, textField, valueField, className, tool_prop}) {

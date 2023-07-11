@@ -43,7 +43,7 @@ function TagManager(
   const tagActions = useTagActions();
 
   useEffect(() => {
-      loadTagOptions(customerTags);
+    loadTagOptions(customerTags);
   }, [customerTags]);
 
   useEffect(() => {

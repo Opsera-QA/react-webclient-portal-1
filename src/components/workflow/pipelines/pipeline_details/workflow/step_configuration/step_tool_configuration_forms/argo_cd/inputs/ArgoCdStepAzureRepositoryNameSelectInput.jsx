@@ -4,7 +4,7 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import azurePipelineActions 
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_acr_push/azure-pipeline-actions";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_acr_push/azure-pipeline-actions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import toolsActions from "components/inventory/tools/tools-actions";
 

@@ -3,7 +3,7 @@ import siteNotificationActions from "./site-notification-actions";
 import SiteNotificationTable from "./SiteNotificationTable";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import SiteNotificationManagementSubNavigationBar
-  from "components/admin/site_notifications/SiteNotificationManagementSubNavigationBar";
+from "components/admin/site_notifications/SiteNotificationManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function SiteNotificationManagement() {
@@ -41,7 +41,7 @@ function SiteNotificationManagement() {
     }
     finally {
       if(isMounted?.current === true){
-      setIsLoading(false);
+        setIsLoading(false);
       }
     }
   };

@@ -1,7 +1,7 @@
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
 import useGetPolicyModelByName from "hooks/settings/organization_settings/policies/useGetPolicyModelByName";
 import useGetSalesforceFeatureOrganizationSettingsEntitlement
-  from "hooks/settings/organization_settings/entitlements/useGetSalesforceFeatureOrganizationSettingsEntitlement";
+from "hooks/settings/organization_settings/entitlements/useGetSalesforceFeatureOrganizationSettingsEntitlement";
 
 export default function useGetSalesforceDataMigrationPolicy() {
   const {

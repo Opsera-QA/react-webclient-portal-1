@@ -7,13 +7,13 @@ function DataBlockAndChartContainer({ chart, dataBlock, className, onClickFuncti
   return (
     <div className={className} onClick={onClickFunction}>
       <Row className="align-items-center" >
-          <Col sm={3} className={"p-2"}>
-            {dataBlock}        
-          </Col>      
-          <Col sm={9} className={"p-2"}>
-            {chart}
-          </Col>
-        </Row>
+        <Col sm={3} className={"p-2"}>
+          {dataBlock}        
+        </Col>      
+        <Col sm={9} className={"p-2"}>
+          {chart}
+        </Col>
+      </Row>
     </div>
   );
 }

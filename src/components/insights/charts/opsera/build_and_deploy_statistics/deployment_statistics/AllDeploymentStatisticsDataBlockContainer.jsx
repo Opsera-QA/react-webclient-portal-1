@@ -7,19 +7,19 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
 import Col from "react-bootstrap/Col";
 import SuccessfulDeploymentsContainedDataBlock
-  from "components/common/metrics/data_blocks/deployment/successful_deployments/SuccessfulDeploymentsContainedDataBlock";
+from "components/common/metrics/data_blocks/deployment/successful_deployments/SuccessfulDeploymentsContainedDataBlock";
 import FailedDeploymentsContainedDataBlock
-  from "components/common/metrics/data_blocks/deployment/failed_deployments/FailedDeploymentsContainedDataBlock";
+from "components/common/metrics/data_blocks/deployment/failed_deployments/FailedDeploymentsContainedDataBlock";
 import AverageDailyDeploymentsContainedDataBlock
-  from "components/common/metrics/data_blocks/deployment/average_daily/AverageDailyDeploymentsContainedDataBlock";
+from "components/common/metrics/data_blocks/deployment/average_daily/AverageDailyDeploymentsContainedDataBlock";
 import AverageDeploymentDurationContainedDataBlock
-  from "components/common/metrics/data_blocks/deployment/average_duration/AverageDeploymentDurationContainedDataBlock";
+from "components/common/metrics/data_blocks/deployment/average_duration/AverageDeploymentDurationContainedDataBlock";
 import SuccessRateContainedDataBlock
-  from "components/common/metrics/data_blocks/success/success_rate/SuccessRateContainedDataBlock";
+from "components/common/metrics/data_blocks/success/success_rate/SuccessRateContainedDataBlock";
 import HorizontalDataBlocksContainer
-  from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
+from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import FailureRateContainedDataBlock
-  from "components/common/metrics/data_blocks/failure/failure_rate/FailureRateContainedDataBlock";
+from "components/common/metrics/data_blocks/failure/failure_rate/FailureRateContainedDataBlock";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function AllDeploymentStatisticsDataBlockContainer({ dashboardData, kpiConfiguration }) {

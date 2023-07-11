@@ -16,13 +16,13 @@ const SfdcPipelineWizardBasicSummary = ({pipelineWizardModel}) => (
     </Col>
     {pipelineWizardModel.getData('isOrgToOrg') 
       ? 
-         pipelineWizardModel.getData("jobTypeId") === 'sfdc-ant-profile' ? <Col xs={12} sm={6}>
-          <ToolNameField
-            model={pipelineWizardModel}
-            fieldName={"sfdcDestToolId"}
-            loadToolInNewWindow={true}
-          />
-        </Col> : null 
+      pipelineWizardModel.getData("jobTypeId") === 'sfdc-ant-profile' ? <Col xs={12} sm={6}>
+        <ToolNameField
+          model={pipelineWizardModel}
+          fieldName={"sfdcDestToolId"}
+          loadToolInNewWindow={true}
+        />
+      </Col> : null 
       : 
       <>
         <Col md="auto">

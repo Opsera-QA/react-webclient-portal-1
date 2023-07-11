@@ -17,7 +17,7 @@ const cypressConnectionMetadata = {
       label: "Jenkins User ID",
       id: "jUserId",
       isRequired: true,
-    maxLength: 50
+      maxLength: 50
     },
     {
       label: "Jenkins Token",

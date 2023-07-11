@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase
-  from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
 function AzureCliScmToolSelectInput({model, setModel, className, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
@@ -16,16 +16,16 @@ function AzureCliScmToolSelectInput({model, setModel, className, disabled}) {
   };
 
   return (
-     <RoleRestrictedToolByIdentifierInputBase
-       fieldName={"gitToolId"}
-       toolIdentifier={model?.getData("type")}
-       setDataFunction={setDataFunction}
-       className={className}
-       model={model}
-       setModel={setModel}
-       disabled={disabled}
-       configurationRequired={true}
-     />
+    <RoleRestrictedToolByIdentifierInputBase
+      fieldName={"gitToolId"}
+      toolIdentifier={model?.getData("type")}
+      setDataFunction={setDataFunction}
+      className={className}
+      model={model}
+      setModel={setModel}
+      disabled={disabled}
+      configurationRequired={true}
+    />
   );
 }
 

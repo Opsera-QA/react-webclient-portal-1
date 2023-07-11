@@ -94,7 +94,7 @@ function StandaloneDiffFieldBase(
         showLineNumbers={true}
         showInlineLineNumbers={true}
       >
-          {visibleCodeOption === VISIBLE_CODE_OPTIONS.ORIGINAL ? originalCode : changedCode}
+        {visibleCodeOption === VISIBLE_CODE_OPTIONS.ORIGINAL ? originalCode : changedCode}
       </SyntaxHighlighter>
     </div>
   );

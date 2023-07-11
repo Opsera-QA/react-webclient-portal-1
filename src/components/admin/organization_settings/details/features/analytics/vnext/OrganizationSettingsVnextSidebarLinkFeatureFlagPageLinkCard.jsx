@@ -1,9 +1,9 @@
 import React from "react";
 import PropType from "prop-types";
 import OrganizationSettingsInactiveVnextSidebarLinkFeatureFlagPageLinkCard
-  from "components/admin/organization_settings/details/features/analytics/vnext/OrganizationSettingsInactiveVnextSidebarLinkFeatureFlagPageLinkCard";
+from "components/admin/organization_settings/details/features/analytics/vnext/OrganizationSettingsInactiveVnextSidebarLinkFeatureFlagPageLinkCard";
 import OrganizationSettingsFeatureFlagsPageLinkCardBase
-  from "components/admin/organization_settings/details/features/OrganizationSettingsFeatureFlagsPageLinkCardBase";
+from "components/admin/organization_settings/details/features/OrganizationSettingsFeatureFlagsPageLinkCardBase";
 
 export default function OrganizationSettingsVnextSidebarLinkFeatureFlagPageLinkCard(
   {

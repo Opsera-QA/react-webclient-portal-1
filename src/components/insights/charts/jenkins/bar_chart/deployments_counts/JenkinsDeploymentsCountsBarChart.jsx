@@ -15,7 +15,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ModalLogs from "components/common/modal/modalLogs";
 import { defaultConfig, getColorByData, assignBooleanColors, adjustBarWidth,
-         capitalizeLegend } from "../../../charts-views";
+  capitalizeLegend } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
@@ -105,15 +105,15 @@ function JenkinsDeploymentsStackedBarChart({ persona, date }) {
             <ResponsiveBar
               data={data ? data.data : []}
               {...defaultConfig("Deployment Count", "Date", 
-                      false, true, "values", "yearMonthDate")}
+                false, true, "values", "yearMonthDate")}
               {...config(getColorByData)}
               {...adjustBarWidth(data?.data)}
               onClick={() => setShowModal(true)}
               tooltip={({ indexValue, color, value, id, data }) => <ChartTooltip 
-                              titles = {["Build Time", `${capitalizeFirstLetter(id)} Builds`, "Failure Rate"]}
-                              values = {[indexValue, value, data?.failureRate?.toFixed(2) + "%"]}
-                              style = {false}
-                              color = {color} />}
+                titles = {["Build Time", `${capitalizeFirstLetter(id)} Builds`, "Failure Rate"]}
+                values = {[indexValue, value, data?.failureRate?.toFixed(2) + "%"]}
+                style = {false}
+                color = {color} />}
             />
           )}
         </div>

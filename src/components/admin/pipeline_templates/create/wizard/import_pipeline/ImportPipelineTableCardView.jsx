@@ -6,7 +6,7 @@ import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import pipelineSummaryMetadata
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 import PipelineStatusFilter from "components/common/filters/pipelines/status/PipelineStatusFilter";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -14,7 +14,7 @@ import TableCardView from "components/common/table/TableCardView";
 import PipelineVerticalTabContainer from "components/workflow/pipelines/PipelineVerticalTabContainer";
 import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 import ImportPipelineSelectionCardView
-  from "components/admin/pipeline_templates/create/wizard/import_pipeline/ImportPipelineSelectionCardView";
+from "components/admin/pipeline_templates/create/wizard/import_pipeline/ImportPipelineSelectionCardView";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import {
   NEW_PIPELINE_TEMPLATE_WIZARD_SCREENS

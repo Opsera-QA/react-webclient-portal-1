@@ -22,7 +22,7 @@ function SfdxScanThresholdInputBase({ fieldName, model, setModel, helpComponent,
 
   const { getAccessToken } = useContext(AuthContext);
   const [placeholder, setPlaceholderText] = useState(
-      "Select rule",
+    "Select rule",
   );
 
   useEffect(() => {
@@ -75,8 +75,8 @@ function SfdxScanThresholdInputBase({ fieldName, model, setModel, helpComponent,
 
   const loadPmdRules = async (cancelSource = cancelTokenSource) => {
     const response = await toolsActions.getSfdxScanRules(
-        getAccessToken,
-        cancelTokenSource,
+      getAccessToken,
+      cancelTokenSource,
     );
     const rules = response?.data?.data;
 
@@ -194,7 +194,7 @@ function SfdxScanThresholdInputBase({ fieldName, model, setModel, helpComponent,
     if (thresholdRows.length > 0) {
       const disabledThresholdLevels = [];
       thresholdRows.map((property) => {
-          disabledThresholdLevels.push(property?.level);
+        disabledThresholdLevels.push(property?.level);
       });
       return disabledThresholdLevels;
     }

@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 const dotnetType = [
-    {name : ".Net (core)", value: "dotnet"},
-    {name : ".Net Framework", value: "dotnet-framework"},
+  {name : ".Net (core)", value: "dotnet"},
+  {name : ".Net Framework", value: "dotnet-framework"},
 ];
 
 function DotNetCliTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField}) {

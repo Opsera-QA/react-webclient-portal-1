@@ -10,7 +10,7 @@ function DefectRemovalEfficiencyDataBlockBase({ score, subtitle, onClickFunction
         className="p-2 defect-removal-efficiency"
         score={score}
         subtitle={subtitle}
-        />
+      />
     </DataBlockBoxContainer>
   );
 }

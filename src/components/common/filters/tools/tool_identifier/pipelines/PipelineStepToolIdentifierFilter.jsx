@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import useGetPipelineAppliedToolIdentifiers
-  from "hooks/workflow/pipelines/tool_identifiers/useGetPipelineAppliedToolIdentifiers";
+from "hooks/workflow/pipelines/tool_identifiers/useGetPipelineAppliedToolIdentifiers";
 
 export default function PipelineStepToolIdentifierFilter(
   {

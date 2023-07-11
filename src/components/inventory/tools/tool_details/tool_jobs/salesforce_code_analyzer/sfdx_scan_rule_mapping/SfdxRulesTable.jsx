@@ -48,7 +48,7 @@ function SfdxRulesTable({
       const ruleId = selectedRow?._id;
       const parsedModel = modelHelpers.parseObjectIntoModel(
         selectedRow?.configuration,
-          sfdxRulesMapMetadata,
+        sfdxRulesMapMetadata,
       );
       parsedModel?.setData("ruleId", ruleId);
       setSelectedRule({ ...parsedModel });

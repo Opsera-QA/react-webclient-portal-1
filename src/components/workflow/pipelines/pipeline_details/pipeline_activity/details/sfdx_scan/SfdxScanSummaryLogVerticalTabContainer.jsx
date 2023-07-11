@@ -11,11 +11,11 @@ function SfdxScanSummaryLogVerticalTabContainer() {
         tabText={"Summary Details"}
         tabName={"summary"}
       />
-        <VanitySetVerticalTab
-            icon={faClipboardListCheck}
-            tabText={"Execution Details"}
-            tabName={"execDetails"}
-        />
+      <VanitySetVerticalTab
+        icon={faClipboardListCheck}
+        tabText={"Execution Details"}
+        tabName={"execDetails"}
+      />
     </VanitySetVerticalTabContainer>
   );
 }

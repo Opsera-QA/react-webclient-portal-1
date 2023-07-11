@@ -4,7 +4,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {websocketLiveUpdateHelper} from "core/websocket/websocket.helper";
 import useGetPipelineActivityLogById from "hooks/workflow/pipelines/logs/useGetPipelineActivityLogById";
 import pipelineTaskMetadata
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/pipeline-task-metadata";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/pipeline-task-metadata";
 
 export default function useGetPipelineActivityLogModelById(pipelineActivityLogId, handleErrorFunction) {
   const [pipelineActivityLogModel, setPipelineActivityLogModel] = useState(undefined);

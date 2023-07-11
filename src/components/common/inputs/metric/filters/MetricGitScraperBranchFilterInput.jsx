@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import GitScraperBranchFilterMultiSelectInput
-    from "../../../list_of_values_input/insights/charts/gitscraper/GitScraperBranchFilterMultiSelectInput";
+from "../../../list_of_values_input/insights/charts/gitscraper/GitScraperBranchFilterMultiSelectInput";
 
 function MetricGitScraperBranchFilterInput({
-   metricFilterModel,
-   setMetricFilterModel,
-   metricModel,
-   fieldName,
-   tags,
+  metricFilterModel,
+  setMetricFilterModel,
+  metricModel,
+  fieldName,
+  tags,
 }) {
   return(
     <GitScraperBranchFilterMultiSelectInput

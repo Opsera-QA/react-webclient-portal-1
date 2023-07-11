@@ -79,18 +79,18 @@ function PipelineTemplatesTable(
   };
 
   return (
-      <FilterContainer
-        loadData={loadData}
-        addRecordFunction={createTemplate}
-        filterDto={pipelineTemplateFilterModel}
-        setFilterDto={setPipelineTemplateFilterModel}
-        isLoading={isLoading}
-        body={getTemplateTable()}
-        titleIcon={faStream}
-        title={"Pipeline Templates"}
-        type={"Pipeline Template"}
-        className={"px-2 pb-2"}
-      />
+    <FilterContainer
+      loadData={loadData}
+      addRecordFunction={createTemplate}
+      filterDto={pipelineTemplateFilterModel}
+      setFilterDto={setPipelineTemplateFilterModel}
+      isLoading={isLoading}
+      body={getTemplateTable()}
+      titleIcon={faStream}
+      title={"Pipeline Templates"}
+      type={"Pipeline Template"}
+      className={"px-2 pb-2"}
+    />
   );
 }
 

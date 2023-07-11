@@ -9,14 +9,14 @@ import TextInputBase from "../../../../common/inputs/text/TextInputBase";
 import ClusterTemplateSelectInput from "./inputs/ClusterTemplateSelectInput";
 import AwsLogGroupSelectInput from "components/common/list_of_values_input/tools/aws/log_groups/AwsLogGroupSelectInput";
 import RoleRestrictedAwsAccountToolSelectInput
-  from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
+from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 import AwsCloudProviderRegionSelectInput
-  from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
+from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
 import AwsVpcSelectInput from "components/common/list_of_values_input/aws/vpcs/AwsVpcSelectInput";
 import AwsSubnetMultiSelectInput from "components/common/list_of_values_input/aws/subnets/AwsSubnetMultiSelectInput";
 import AwsClusterSelectInput from "components/common/list_of_values_input/aws/cluster/AwsClusterSelectInput";
 import AwsLoadBalancerSelectInput
-  from "components/common/list_of_values_input/aws/load_balancers/AwsLoadBalancerSelectInput";
+from "components/common/list_of_values_input/aws/load_balancers/AwsLoadBalancerSelectInput";
 import AwsIamRoleSelectInput from "components/common/list_of_values_input/aws/iam_roles/AwsIamRoleSelectInput";
 
 function ECSServiceCreationTaskConfigurationPanel({

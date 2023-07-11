@@ -14,11 +14,11 @@ import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline
 import LoadingDialog from "components/common/status_notifications/loading";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 import SfdcPipelineWizardValidatedGitFilesTable
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/git/SfdcPipelineWizardValidatedGitFilesTable";
+from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/git/SfdcPipelineWizardValidatedGitFilesTable";
 import SfdcPipelineWizardInvalidGitFilesTable
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/git/SfdcPipelineWizardInvalidGitFilesTable";
+from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/git/SfdcPipelineWizardInvalidGitFilesTable";
 import SfdcPipelineWizardSubmitGitFilesButton
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardSubmitGitFilesButton";
+from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardSubmitGitFilesButton";
 import IconBase from "components/common/icons/IconBase";
 
 const SfdcPipelineWizardValidatedGitFileViewer = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {

@@ -42,16 +42,16 @@ function SalesforceOrganizationSyncTaskJenkinsAccountSelectInput({model, setMode
   };
 
   return (
-     <RoleRestrictedJenkinsAccountSelectInput
-       fieldName={"gitCredential"}
-       jenkinsToolId={model?.getData("toolConfigId")}
-       requireConfiguration={true}
-       dataObject={model}
-       setDataObject={setModel}
-       setDataFunction={setDataFunction}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-     />
+    <RoleRestrictedJenkinsAccountSelectInput
+      fieldName={"gitCredential"}
+      jenkinsToolId={model?.getData("toolConfigId")}
+      requireConfiguration={true}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+    />
   );
 }
 

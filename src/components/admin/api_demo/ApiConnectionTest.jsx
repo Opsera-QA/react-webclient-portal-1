@@ -6,7 +6,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
 import Model from "core/data_model/model";
 import registeredUserToolsMetadata
-  from "components/admin/registered_users/details/tools/registered-user-tools-form-fields";
+from "components/admin/registered_users/details/tools/registered-user-tools-form-fields";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import JsonField from "components/common/fields/json/JsonField";
@@ -195,35 +195,35 @@ function ApiConnectionTest() {
       }
     >
       <div className="m-3">
-      <h6 style={{marginTop: 20}}>Response Package Breakdown:<br/>
-        <small className="text-muted">This is confirmation the data is returned from the server and an example of
+        <h6 style={{marginTop: 20}}>Response Package Breakdown:<br/>
+          <small className="text-muted">This is confirmation the data is returned from the server and an example of
           breaking it down
           into their individual components. The Response Token is not typically returned, however in this demo, the
           API Server is
           programmed to return it to confirm it was sent and received properly.</small></h6>
-      <br/>
-      <div><i>OPSERA_API_SERVER_URL:</i> {NODE_API_ORCHESTRATOR_SERVER_URL}</div>
-      <div><i>OPSERA_CLIENT_HOST:</i> {process.env.REACT_APP_OPSERA_CLIENT_HOST}</div>
-      <div><i>OKTA_BASEURL:</i> {process.env.REACT_APP_OKTA_BASEURL}</div>
-      <br/>
-      {/* <div><i>Response Message Data:</i> {authData ? authData.message : ""}</div>
+        <br/>
+        <div><i>OPSERA_API_SERVER_URL:</i> {NODE_API_ORCHESTRATOR_SERVER_URL}</div>
+        <div><i>OPSERA_CLIENT_HOST:</i> {process.env.REACT_APP_OPSERA_CLIENT_HOST}</div>
+        <div><i>OKTA_BASEURL:</i> {process.env.REACT_APP_OKTA_BASEURL}</div>
+        <br/>
+        {/* <div><i>Response Message Data:</i> {authData ? authData.message : ""}</div>
         <div style={{ marginTop: 20 }}><i>Response Token:</i> <br />
           <span className="code">{authData ? authData.authorization : ""}</span>
         </div> */}
-      {/* <div style={{ marginTop: 20 }}>Component getApiData() State Message: {JSON.stringify(messages)}</div> */}
+        {/* <div style={{ marginTop: 20 }}>Component getApiData() State Message: {JSON.stringify(messages)}</div> */}
 
-      {getUserFields()}
+        {getUserFields()}
         {getAnalyticsProfileContainer()}
         {getApiResponseDataPackageContainer()}
-      {/*{getOldToolsDisplayer()}*/}
-      {getToolDetails()}
-      {showModal ? <Modal header="Log Details"
-                          jsonMessage={modalMessage}
-                          jsonView="true"
-                          button="OK"
-                          size="lg"
-                          handleCancelModal={() => setShowModal(false)}
-                          handleConfirmModal={() => setShowModal(false)}/> : null}
+        {/*{getOldToolsDisplayer()}*/}
+        {getToolDetails()}
+        {showModal ? <Modal header="Log Details"
+          jsonMessage={modalMessage}
+          jsonView="true"
+          button="OK"
+          size="lg"
+          handleCancelModal={() => setShowModal(false)}
+          handleConfirmModal={() => setShowModal(false)}/> : null}
       </div>
     </ScreenContainer>
   );

@@ -11,7 +11,7 @@ import {faGear, faWandMagicSparkles} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "../../../common/icons/IconBase";
 import OpseraInfinityLogo from "../../../logo/OpseraInfinityLogo";
 import OverlayWizardButtonContainerBase
-  from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import SelectionCardColumn from "../../../../temp-library-components/cards/SelectionCardColumn";
 import {platformImageConstants} from "../../../../temp-library-components/image/platformImage.constants";
 import {ImageBase} from "@opsera/react-vanity-set";
@@ -65,69 +65,69 @@ function TasksSetupModeSelect(
 
   return (
     <div className={"m-4"}>
-        <H5FieldSubHeader
-          className={"mb-3 mx-3"}
-          subheaderText={
-            "Pick between the new Opsera Salesforce Tasks Creation Wizard or the SDLC Tasks Classic view to setup your tasks."
-          }
-        />
-        <Row>
-          <Col md={6}>
-            <TaskCreationFlowSelectionCardBase
-              option={TOOL_CREATION_OPTIONS.WIZARD}
-              handleFlowSelection={handleFlowSelection}
-              selectedFlow={selectedFlow}
-              icon={
-                <IconTitleBar
-                  icon={
-                    <ImageBase
-                      height={96}
-                      imageSource={
-                        platformImageConstants.PLATFORM_IMAGE_LINKS
-                          .WIZARD_GENERAL
-                      }
-                    />
-                  }
-                  title={TASKS_CREATION_OPTION_LABELS.WIZARD}
-                  titleClassName={"mx-auto"}
-                  subTitleClassName={"mx-auto"}
-                />
-              }
-              description={
-                "New Salesforce task creation wizard"
-              }
-              workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
-            />
-          </Col>
-          <Col md={6}>
-            <TaskCreationFlowSelectionCardBase
-              option={TOOL_CREATION_OPTIONS.ADVANCED}
-              handleFlowSelection={handleFlowSelection}
-              selectedFlow={selectedFlow}
-              icon={
-                <IconTitleBar
-                  className={""}
-                  icon={
-                    <ImageBase
-                      height={96}
-                      imageSource={
-                        platformImageConstants.PLATFORM_IMAGE_LINKS
-                          .ADVANCED_OPTION
-                      }
-                    />
-                  }
-                  title={TASKS_CREATION_OPTION_LABELS.ADVANCED}
-                  titleClassName={"mx-auto"}
-                  subTitleClassName={"mx-auto"}
-                />
-              }
-              description={
-                "Classic view"
-              }
-              workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
-            />
-          </Col>
-        </Row>
+      <H5FieldSubHeader
+        className={"mb-3 mx-3"}
+        subheaderText={
+          "Pick between the new Opsera Salesforce Tasks Creation Wizard or the SDLC Tasks Classic view to setup your tasks."
+        }
+      />
+      <Row>
+        <Col md={6}>
+          <TaskCreationFlowSelectionCardBase
+            option={TOOL_CREATION_OPTIONS.WIZARD}
+            handleFlowSelection={handleFlowSelection}
+            selectedFlow={selectedFlow}
+            icon={
+              <IconTitleBar
+                icon={
+                  <ImageBase
+                    height={96}
+                    imageSource={
+                      platformImageConstants.PLATFORM_IMAGE_LINKS
+                        .WIZARD_GENERAL
+                    }
+                  />
+                }
+                title={TASKS_CREATION_OPTION_LABELS.WIZARD}
+                titleClassName={"mx-auto"}
+                subTitleClassName={"mx-auto"}
+              />
+            }
+            description={
+              "New Salesforce task creation wizard"
+            }
+            workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
+          />
+        </Col>
+        <Col md={6}>
+          <TaskCreationFlowSelectionCardBase
+            option={TOOL_CREATION_OPTIONS.ADVANCED}
+            handleFlowSelection={handleFlowSelection}
+            selectedFlow={selectedFlow}
+            icon={
+              <IconTitleBar
+                className={""}
+                icon={
+                  <ImageBase
+                    height={96}
+                    imageSource={
+                      platformImageConstants.PLATFORM_IMAGE_LINKS
+                        .ADVANCED_OPTION
+                    }
+                  />
+                }
+                title={TASKS_CREATION_OPTION_LABELS.ADVANCED}
+                titleClassName={"mx-auto"}
+                subTitleClassName={"mx-auto"}
+              />
+            }
+            description={
+              "Classic view"
+            }
+            workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
+          />
+        </Col>
+      </Row>
     </div>
   );
 }

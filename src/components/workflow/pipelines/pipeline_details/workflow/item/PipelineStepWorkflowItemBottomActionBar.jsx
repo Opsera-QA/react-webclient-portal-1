@@ -7,10 +7,10 @@ import {
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import PipelineWorkflowItemActionField
-  from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemActionField";
+from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemActionField";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import PipelineWorkflowItemFieldBase
-  from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
+from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
 
 // TODO: Implement
 export default function PipelineStepWorkflowItemBottomActionBar(

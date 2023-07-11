@@ -8,7 +8,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import axios from "axios";
 import { defaultConfig, getColorById, assignBooleanColors,
-         adjustBarWidth } from '../../../charts-views';
+  adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 import Model from "../../../../../../core/data_model/model";
 import PipelineByStatusTableMetadata from "components/insights/charts/opsera/bar_chart/pipeline_by_status/pipeline-by-status-table-metadata";
@@ -96,36 +96,36 @@ function OpseraPipelineByStatusBarChart({ kpiConfiguration, setKpiConfiguration,
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Pipeline Name", "Number of Pipelines", 
-                      true, false, "cutoffString", "wholeNumbers")}
+            true, false, "cutoffString", "wholeNumbers")}
           {...config(getColorById)}
           {...adjustBarWidth(metrics, false)}
           onClick={(data) => onRowSelect(data)}
           tooltip={({indexValue, color, value, id}) => <ChartTooltip 
-                                        titles = {["Pipeline", `${id} Builds`]}
-                                        values = {[indexValue, value]}
-                                        style = {false}
-                                        color = {color} />}
+            titles = {["Pipeline", `${id} Builds`]}
+            values = {[indexValue, value]}
+            style = {false}
+            color = {color} />}
         />
       </div>
     );
   };
 
   return (
-      <div>
-        <ChartContainer
-          kpiConfiguration={kpiConfiguration}
-          setKpiConfiguration={setKpiConfiguration}
-          chart={getChartBody()}
-          loadChart={loadData}
-          dashboardData={dashboardData}
-          index={index}
-          error={error}
-          setKpis={setKpis}
-          isLoading={isLoading}
-        />
-        <ModalLogs header="Status by Pipeline" size="lg" jsonMessage={metrics} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
-      </div>
-    );
+    <div>
+      <ChartContainer
+        kpiConfiguration={kpiConfiguration}
+        setKpiConfiguration={setKpiConfiguration}
+        chart={getChartBody()}
+        loadChart={loadData}
+        dashboardData={dashboardData}
+        index={index}
+        error={error}
+        setKpis={setKpis}
+        isLoading={isLoading}
+      />
+      <ModalLogs header="Status by Pipeline" size="lg" jsonMessage={metrics} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+    </div>
+  );
 }
 
 OpseraPipelineByStatusBarChart.propTypes = {

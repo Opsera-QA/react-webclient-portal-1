@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ApiResponseBodyTypeSelectInput
-  from "components/common/list_of_values_input/api/response/body/type/ApiResponseBodyTypeSelectInput";
+from "components/common/list_of_values_input/api/response/body/type/ApiResponseBodyTypeSelectInput";
 
 function EndpointResponseBodyTypeSelectInput(
   {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import teamcityStepConfigurationMetadata from "./teamcity-step-configuration-metadata";
 import stepConfigurationThresholdMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/common/step-configuration-threshold-metadata";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/common/step-configuration-threshold-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Model from "core/data_model/model";

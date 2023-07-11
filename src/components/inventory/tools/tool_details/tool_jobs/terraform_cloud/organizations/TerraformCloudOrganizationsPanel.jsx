@@ -69,7 +69,7 @@ function TerraformCloudOrganizationsPanel({ toolId }) {
         setTerraformCloudOrganizationsModel={setTerraformCloudOrganizationsModel}
         toolId={toolId}
         handleClose={togglePanel}
-    />
+      />
     );
   }
   

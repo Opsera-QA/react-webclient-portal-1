@@ -11,13 +11,13 @@ import {terraformCloudOrganizationsMetadata} from "./terraformCloudOrganizations
 import CreateTerraformCloudOrganizationOverlay from "./CreateTerraformCloudOrganizationOverlay";
 
 function TerraformCloudOrganizationsTable({ 
-    terraformCloudOrganizationsList,
-    toolId,  
-    loadData, 
-    isLoading, 
-    isMounted, 
-    setTerraformCloudOrganizationsModel,
-  }) { 
+  terraformCloudOrganizationsList,
+  toolId,  
+  loadData, 
+  isLoading, 
+  isMounted, 
+  setTerraformCloudOrganizationsModel,
+}) { 
 
   const fields = terraformCloudOrganizationsMetadata.fields;
   const toastContext = useContext(DialogToastContext);

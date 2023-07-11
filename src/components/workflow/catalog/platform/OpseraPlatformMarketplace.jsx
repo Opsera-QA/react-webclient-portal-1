@@ -30,11 +30,11 @@ export default function OpseraPipelineMarketplace(
   useEffect(() => {
     if (setupMode && pipelineTemplates?.length > 0) {
       wizardsHelper.filterTemplateByCategory(
-          pipelineTemplates,
-          setupMode,
-          setTemplates,
-          setPipelineTemplateFilterModel,
-          pipelineTemplateFilterModel,
+        pipelineTemplates,
+        setupMode,
+        setTemplates,
+        setPipelineTemplateFilterModel,
+        pipelineTemplateFilterModel,
       );
     } else {
       setTemplates(pipelineTemplates);

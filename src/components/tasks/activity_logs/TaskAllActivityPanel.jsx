@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import taskActivityLogHelpers
-  from "components/tasks/activity_logs/taskActivityLog.helpers";
+from "components/tasks/activity_logs/taskActivityLog.helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";

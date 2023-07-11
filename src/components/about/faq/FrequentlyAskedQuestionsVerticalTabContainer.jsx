@@ -59,22 +59,22 @@ function FrequentlyAskedQuestionsVerticalTabContainer() {
 
   const getCurrentScreen = () => {
     switch (activeTab) {
-      case "general":
-        return (
-          <GeneralFrequentlyAskedQuestions />
-        );
-      case "insights":
-        return (
-          <InsightsFrequentlyAskedQuestions />
-        );
-      case "toolRegistry":
-        return (
-          <ToolRegistryFrequentlyAskedQuestions />
-        );
-      case "pipelines":
-        return (
-          <PipelinesFrequentlyAskedQuestions />
-        );
+    case "general":
+      return (
+        <GeneralFrequentlyAskedQuestions />
+      );
+    case "insights":
+      return (
+        <InsightsFrequentlyAskedQuestions />
+      );
+    case "toolRegistry":
+      return (
+        <ToolRegistryFrequentlyAskedQuestions />
+      );
+    case "pipelines":
+      return (
+        <PipelinesFrequentlyAskedQuestions />
+      );
     }
   };
 

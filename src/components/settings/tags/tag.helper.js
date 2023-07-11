@@ -4,7 +4,7 @@ export const tagHelper = {};
 
 tagHelper.getDetailViewLink = (
   tagId,
-  ) => {
+) => {
   if (isMongoDbId(tagId) !== true) {
     return null;
   }

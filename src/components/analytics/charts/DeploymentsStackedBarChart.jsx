@@ -14,7 +14,7 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
 import { defaultConfig, assignBooleanColors, adjustBarWidth,
-         capitalizeLegend } from "../../insights/charts/charts-views";
+  capitalizeLegend } from "../../insights/charts/charts-views";
 import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function DeploymentsStackedBarChart({ persona, date }) {
@@ -103,7 +103,7 @@ function DeploymentsStackedBarChart({ persona, date }) {
           ) : (
             <ResponsiveBar
               {...defaultConfig("Deployment Count", "Date", 
-                        false, true, "values", "yearMonthDate")}
+                false, true, "values", "yearMonthDate")}
               {...adjustBarWidth(data?.data)}
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
@@ -114,10 +114,10 @@ function DeploymentsStackedBarChart({ persona, date }) {
               colors={({ id, data }) => data[`${id}_color`]}
               colorBy="id"
               tooltip={({ indexValue, color, value, id, data }) => <ChartTooltip 
-                              titles = {["Build Time", `${id} Builds`, "Failure Rate"]}
-                              values = {[indexValue, value, data?.failureRate?.toFixed(2) + "%"]}
-                              style = {false}
-                              color = {color} />}
+                titles = {["Build Time", `${id} Builds`, "Failure Rate"]}
+                values = {[indexValue, value, data?.failureRate?.toFixed(2) + "%"]}
+                style = {false}
+                color = {color} />}
             />
           )}
         </div>

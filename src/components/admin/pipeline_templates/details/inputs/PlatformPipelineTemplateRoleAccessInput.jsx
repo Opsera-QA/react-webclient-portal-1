@@ -6,7 +6,7 @@ import {
 } from "components/workflow/catalog/platform/platformPipelineTemplateCatalog.actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PlatformPipelineTemplateRoleHelper
-  from "@opsera/know-your-role/roles/pipelines/templates/platform/platformPipelineTemplateRole.helper";
+from "@opsera/know-your-role/roles/pipelines/templates/platform/platformPipelineTemplateRole.helper";
 
 export default function PlatformPipelineTemplateRoleAccessInput(
   {

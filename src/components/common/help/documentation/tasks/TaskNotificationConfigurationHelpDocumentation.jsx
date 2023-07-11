@@ -12,9 +12,9 @@ function TaskNotificationConfigurationHelpDocumentation({closeHelpPanel}) {
       </div>
       <div>
         <ul style={{listStyleType: "none"}}><li><b>Email Notification Configuration</b>
-        <ul>
-          <li><b>Email Addresses</b> - Provide email address(es) where you would like to receive a notification then click <b>+ Add Email Address</b>.</li>
-        </ul></li>
+          <ul>
+            <li><b>Email Addresses</b> - Provide email address(es) where you would like to receive a notification then click <b>+ Add Email Address</b>.</li>
+          </ul></li>
         </ul>
         <ul style={{listStyleType: "none"}}><li><b>Microsoft Teams Notification Configuration</b>
           <ul>

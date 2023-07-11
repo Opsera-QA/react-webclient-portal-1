@@ -144,7 +144,7 @@ function GitLabLeadTimeChartV2({
       constants.SUPPORTED_DATA_POINT_IDENTIFIERS.MEDIAN_TIME_DATA_POINT,
     ));
   };
- const closePanel = () => {
+  const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
   };
@@ -175,12 +175,12 @@ function GitLabLeadTimeChartV2({
 
     if (!selectedDeploymentStages) {
       return (
-          <div className="new-chart mb-3" style={{ height: "300px" }}>
-            <div className="max-content-width p-5 mt-5"
-                 style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <InfoDialog message="No Stages selected. Please select a deployment stage on filters to proceed further." />
-            </div>
+        <div className="new-chart mb-3" style={{ height: "300px" }}>
+          <div className="max-content-width p-5 mt-5"
+            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <InfoDialog message="No Stages selected. Please select a deployment stage on filters to proceed further." />
           </div>
+        </div>
       );
     }
 
@@ -263,8 +263,8 @@ function GitLabLeadTimeChartV2({
                 value={totalMedianTimeDisplay[0]}
                 prevValue={`${previousTotalMedianTimeDisplay[0]}`}
                 trend={getReverseTrend(
-                    metricData?.totalMedianTime,
-                    metricData?.previousTotalMedianTime,
+                  metricData?.totalMedianTime,
+                  metricData?.previousTotalMedianTime,
                 )}
                 getTrendIcon={getReverseTrendIcon}
                 topText={"Median LTFC"}

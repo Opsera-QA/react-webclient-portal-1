@@ -67,19 +67,19 @@ terraformStepActions.getAzureStorageAccounts = async (getAccessToken, cancelToke
 };
 
 terraformStepActions.getAzureContainers = async (getAccessToken, cancelTokenSource, config, applicationData, storageName, resourceGroup) => {
-    const apiUrl = `tools/azure/management/storageContainers`;
-    const cfg = config?.configuration;
-    const owner = config?.owner;
-    const postBody = {
-      "owner": owner,
-      "clientId": applicationData?.clientId?.vaultKey,
-      "clientSecret": applicationData?.clientSecret?.vaultKey,
-      "tenantId": cfg?.azureTenantId,
-      "subscriptionId": cfg?.azureSubscriptionId,
-      "resource": applicationData?.resource,
-      "storageAccountName" : storageName,
-      "resourceGroup":resourceGroup
-    };
+  const apiUrl = `tools/azure/management/storageContainers`;
+  const cfg = config?.configuration;
+  const owner = config?.owner;
+  const postBody = {
+    "owner": owner,
+    "clientId": applicationData?.clientId?.vaultKey,
+    "clientSecret": applicationData?.clientSecret?.vaultKey,
+    "tenantId": cfg?.azureTenantId,
+    "subscriptionId": cfg?.azureSubscriptionId,
+    "resource": applicationData?.resource,
+    "storageAccountName" : storageName,
+    "resourceGroup":resourceGroup
+  };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };

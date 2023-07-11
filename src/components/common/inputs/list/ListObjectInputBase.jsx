@@ -33,7 +33,7 @@ function ListObjectInputBase(
     noDataMessage,
     customTitle,
     error,
-}) {
+  }) {
   const [field] = useState(model?.getFieldById(fieldName));
   const [list, setList] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState("");
@@ -164,7 +164,7 @@ function ListObjectInputBase(
 
       // TODO: Implement validation on this side.
       // if (typeof newModel === "object") {
-        // validateData(newModel);
+      // validateData(newModel);
       // }
     }
     else {

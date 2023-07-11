@@ -5,37 +5,37 @@ import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/V
 import GitlabDeploymentActionableDeployOverlay from "../GitlabDeploymentActionableDeployOverlay";
 
 function GitlabDeploymentFreqDeployTab({dashboardData, kpiConfiguration, start, end, range, icon, average}) {
-    const getTabContentContainer = () => {
-        return (
-            <VanitySetTabViewContainer className={"mb-3"}>
-                <GitlabDeploymentActionableDeployOverlay
-                    dashboardData={dashboardData}
-                    kpiConfiguration={kpiConfiguration}
-                    start={start}
-                    end={end}
-                    range={range}
-                    icon={icon}
-                    average={average}
-                />
-            </VanitySetTabViewContainer>
-        );
-    };
-
-
+  const getTabContentContainer = () => {
     return (
-        <VanitySetTabContentContainer>
-            {getTabContentContainer()}
-        </VanitySetTabContentContainer>
+      <VanitySetTabViewContainer className={"mb-3"}>
+        <GitlabDeploymentActionableDeployOverlay
+          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
+          start={start}
+          end={end}
+          range={range}
+          icon={icon}
+          average={average}
+        />
+      </VanitySetTabViewContainer>
     );
+  };
+
+
+  return (
+    <VanitySetTabContentContainer>
+      {getTabContentContainer()}
+    </VanitySetTabContentContainer>
+  );
 
 }
 GitlabDeploymentFreqDeployTab.propTypes = {
-    dashboardData: PropTypes.object,
-    kpiConfiguration: PropTypes.object,
-    start: PropTypes.string,
-    end: PropTypes.string,
-    range: PropTypes.string,
-    average: PropTypes.number,
-    icon: PropTypes.object
+  dashboardData: PropTypes.object,
+  kpiConfiguration: PropTypes.object,
+  start: PropTypes.string,
+  end: PropTypes.string,
+  range: PropTypes.string,
+  average: PropTypes.number,
+  icon: PropTypes.object
 };
 export default GitlabDeploymentFreqDeployTab;

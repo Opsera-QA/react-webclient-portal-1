@@ -47,8 +47,8 @@ gitlabActions.gitlabPendingMergeRequests = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     page: tableFilterDto?.getData("currentPage")
       ? tableFilterDto?.getData("currentPage")
       : 1,
@@ -103,8 +103,8 @@ gitlabActions.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     page: tableFilterDto?.getData("currentPage")
       ? tableFilterDto?.getData("currentPage")
       : 1,
@@ -156,8 +156,8 @@ gitlabActions.gitlabProjects = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     page: tableFilterDto?.getData("currentPage")
       ? tableFilterDto?.getData("currentPage")
       : 1,
@@ -209,8 +209,8 @@ gitlabActions.gitlabDeploymentStatistics = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -256,8 +256,8 @@ gitlabActions.gitlabDeploymentStatisticsV2 = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -376,8 +376,8 @@ gitlabActions.getActionablePipelinesChartData = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -400,14 +400,14 @@ gitlabActions.getActionablePipelinesChartData = async (
 };
 
 gitlabActions.getActionablePipelinesChartDataV2 = async (
-    getAccessToken,
-    cancelTokenSource,
-    kpiConfiguration,
-    dashboardTags,
-    dashboardOrgs,
-    tableFilterDto,
-    start,
-    end,
+  getAccessToken,
+  cancelTokenSource,
+  kpiConfiguration,
+  dashboardTags,
+  dashboardOrgs,
+  tableFilterDto,
+  start,
+  end,
 ) => {
   const apiUrl = gitlabBaseURL + "getActionablePipelinesChartDataV2";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
@@ -439,28 +439,28 @@ gitlabActions.getActionablePipelinesChartDataV2 = async (
     endDate: endDate.toISOString(),
     tags:
         tags && dashboardTags
-            ? tags.concat(dashboardTags)
-            : dashboardTags?.length > 0
-                ? dashboardTags
-                : tags,
+          ? tags.concat(dashboardTags)
+          : dashboardTags?.length > 0
+            ? dashboardTags
+            : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
     page: tableFilterDto?.getData("currentPage")
-        ? tableFilterDto?.getData("currentPage")
-        : 1,
+      ? tableFilterDto?.getData("currentPage")
+      : 1,
     size: tableFilterDto?.getData("pageSize")
-        ? tableFilterDto?.getData("pageSize")
-        : 5,
+      ? tableFilterDto?.getData("pageSize")
+      : 5,
     start: start,
     end: end,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
-      getAccessToken,
-      cancelTokenSource,
-      apiUrl,
-      postBody,
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
   );
 };
 
@@ -506,8 +506,8 @@ gitlabActions.getActionableDeploymentsChartData = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -530,14 +530,14 @@ gitlabActions.getActionableDeploymentsChartData = async (
 };
 
 gitlabActions.getActionableDeploymentsChartDataV2 = async (
-    getAccessToken,
-    cancelTokenSource,
-    kpiConfiguration,
-    dashboardTags,
-    dashboardOrgs,
-    tableFilterDto,
-    start,
-    end,
+  getAccessToken,
+  cancelTokenSource,
+  kpiConfiguration,
+  dashboardTags,
+  dashboardOrgs,
+  tableFilterDto,
+  start,
+  end,
 ) => {
   const apiUrl = gitlabBaseURL + "getActionableDeploymentsChartDataV2";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
@@ -569,28 +569,28 @@ gitlabActions.getActionableDeploymentsChartDataV2 = async (
     endDate: endDate.toISOString(),
     tags:
         tags && dashboardTags
-            ? tags.concat(dashboardTags)
-            : dashboardTags?.length > 0
-                ? dashboardTags
-                : tags,
+          ? tags.concat(dashboardTags)
+          : dashboardTags?.length > 0
+            ? dashboardTags
+            : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
     page: tableFilterDto?.getData("currentPage")
-        ? tableFilterDto?.getData("currentPage")
-        : 1,
+      ? tableFilterDto?.getData("currentPage")
+      : 1,
     size: tableFilterDto?.getData("pageSize")
-        ? tableFilterDto?.getData("pageSize")
-        : 5,
+      ? tableFilterDto?.getData("pageSize")
+      : 5,
     start: start,
     end: end,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
-      getAccessToken,
-      cancelTokenSource,
-      apiUrl,
-      postBody,
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
   );
 };
 
@@ -629,8 +629,8 @@ gitlabActions.getActionablePipelinesChartData = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -687,8 +687,8 @@ gitlabActions.getActionableDeploymentsChartData = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -742,8 +742,8 @@ gitlabActions.gitlabLeadTimeForChange = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -789,8 +789,8 @@ gitlabActions.gitlabLeadTimeForChangeV2 = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -852,8 +852,8 @@ gitlabActions.gitlabAverageCommitTimeToMerge = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -911,8 +911,8 @@ gitlabActions.gitlabPipelineData = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -962,8 +962,8 @@ gitlabActions.gitlabMergeRequestStatistics = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -1009,8 +1009,8 @@ gitlabActions.getStatsMergeActionable = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -1057,8 +1057,8 @@ gitlabActions.getReviewerMergeActionable = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -1111,8 +1111,8 @@ gitlabActions.getTagsMergeActionable = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -1165,8 +1165,8 @@ gitlabActions.getRepoMergeActionable = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -1218,8 +1218,8 @@ gitlabActions.getStatsOpenActionable = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -1266,8 +1266,8 @@ gitlabActions.getReviewerOpenActionable = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -1320,8 +1320,8 @@ gitlabActions.getTagsOpenActionable = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
@@ -1374,8 +1374,8 @@ gitlabActions.getRepoOpenActionable = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),

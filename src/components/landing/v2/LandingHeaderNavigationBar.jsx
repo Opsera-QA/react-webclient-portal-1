@@ -7,15 +7,15 @@ import {SubMenuContainer, SubMenuItem} from "@opsera/react-vanity-set";
 import GitCustodianRoleHelper from "@opsera/know-your-role/roles/compliance/git_custodian/gitCustodianRole.helper";
 import useGetPlatformSettingsFeatureFlagByName from "hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
 import platformSettingFeatureConstants
-  from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
+from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
 import sessionHelper from "utils/session.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import entitlementConstants
-  from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
+from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
 import useGetOrganizationSettingsEntitlementByName
-  from "hooks/settings/organization_settings/entitlements/useGetOrganizationSettingsEntitlementByName";
+from "hooks/settings/organization_settings/entitlements/useGetOrganizationSettingsEntitlementByName";
 import useGetSalesforceFeatureOrganizationSettingsEntitlement
-  from "hooks/settings/organization_settings/entitlements/useGetSalesforceFeatureOrganizationSettingsEntitlement";
+from "hooks/settings/organization_settings/entitlements/useGetSalesforceFeatureOrganizationSettingsEntitlement";
 
 const HEADER_NAVIGATION_SCREENS = {
   HOME: "home",
@@ -70,37 +70,37 @@ export default function LandingHeaderNavigationBar() {
 
   const handleScreenClick = (newScreen) => {
     switch (newScreen) {
-      case HEADER_NAVIGATION_SCREENS.HOME:
-        if (currentPath !== "/") {
-          history.push("/");
-        }
-        break;
-      case HEADER_NAVIGATION_SCREENS.WORKSPACE:
-        if (currentPath !== "/workspace") {
-          history.push("/workspace");
-        }
-        break;
-      case HEADER_NAVIGATION_SCREENS.SALESFORCE_LANDING:
-        // if (currentPath !== "/unified-insights") {
-        //   history.push("/unified-insights");
-        // }
-        if (currentPath !== "/salesforce") {
-          history.push("/salesforce");
-        }
-        break;
-      case HEADER_NAVIGATION_SCREENS.UNIFIED_INSIGHTS:
-        // if (currentPath !== "/unified-insights") {
-        //   history.push("/unified-insights");
-        // }
-        if (currentPath !== "/insights") {
-          history.push("/insights");
-        }
-        break;
-      case HEADER_NAVIGATION_SCREENS.GIT_CUSTODIAN:
-        if (currentPath !== "/git-custodian") {
-          history.push("/git-custodian");
-        }
-        break;
+    case HEADER_NAVIGATION_SCREENS.HOME:
+      if (currentPath !== "/") {
+        history.push("/");
+      }
+      break;
+    case HEADER_NAVIGATION_SCREENS.WORKSPACE:
+      if (currentPath !== "/workspace") {
+        history.push("/workspace");
+      }
+      break;
+    case HEADER_NAVIGATION_SCREENS.SALESFORCE_LANDING:
+      // if (currentPath !== "/unified-insights") {
+      //   history.push("/unified-insights");
+      // }
+      if (currentPath !== "/salesforce") {
+        history.push("/salesforce");
+      }
+      break;
+    case HEADER_NAVIGATION_SCREENS.UNIFIED_INSIGHTS:
+      // if (currentPath !== "/unified-insights") {
+      //   history.push("/unified-insights");
+      // }
+      if (currentPath !== "/insights") {
+        history.push("/insights");
+      }
+      break;
+    case HEADER_NAVIGATION_SCREENS.GIT_CUSTODIAN:
+      if (currentPath !== "/git-custodian") {
+        history.push("/git-custodian");
+      }
+      break;
     }
   };
 

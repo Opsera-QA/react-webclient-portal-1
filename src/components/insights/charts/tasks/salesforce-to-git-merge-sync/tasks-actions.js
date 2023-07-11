@@ -38,8 +38,8 @@ tasksActions.sfdcToGitMergeSyncKPIDataBlocks = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
   };
 
@@ -82,8 +82,8 @@ tasksActions.sfdcToGitMergeSyncBaseKPITable = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -126,8 +126,8 @@ tasksActions.sfdcToGitMergeSyncActionableOneDataBlocks = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     taskId: taskId,
@@ -175,8 +175,8 @@ tasksActions.sfdcToGitMergeSyncActionableOneTable = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     taskId,
@@ -220,8 +220,8 @@ tasksActions.sfdcToGitMergeSyncActionableTwoDataBlocks = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     runId: runId,
   };
@@ -266,8 +266,8 @@ tasksActions.sfdcToGitMergeSyncActionableTwoTable = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     runId: runId,

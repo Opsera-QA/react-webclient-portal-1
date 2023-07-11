@@ -289,11 +289,11 @@ function DependencyAnalyserFileUploadScreen({ pipelineWizardModel, setPipelineWi
     if (pipelineWizardModel.getData("xmlFileContent").length === 0 && pipelineWizardModel.getData("csvFileContent").length === 0) {
       return (
         <div className="drop-container"
-             onDragOver={dragOver}
-             onDragEnter={dragEnter}
-             onDragLeave={dragLeave}
-             onDrop={fileDrop}
-             onClick={fileInputClicked}
+          onDragOver={dragOver}
+          onDragEnter={dragEnter}
+          onDragLeave={dragLeave}
+          onDrop={fileDrop}
+          onClick={fileInputClicked}
         >
           <div className="drop-message">
             <div className="upload-icon"><i className="fa fa-upload" aria-hidden="true" /></div>

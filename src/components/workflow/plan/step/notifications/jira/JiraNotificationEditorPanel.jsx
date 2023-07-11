@@ -2,28 +2,28 @@ import React from "react";
 import PropTypes from "prop-types";
 import EnabledNotificationBooleanToggle from "components/workflow/plan/step/notifications/EnabledNotificationBooleanToggle";
 import JiraStepNotificationJiraToolSelectInput
-  from "components/workflow/plan/step/notifications/jira/JiraStepNotificationJiraToolSelectInput";
+from "components/workflow/plan/step/notifications/jira/JiraStepNotificationJiraToolSelectInput";
 import JiraPrioritySelectInput
-  from "components/common/list_of_values_input/tools/jira/priorities/JiraPrioritySelectInput";
+from "components/common/list_of_values_input/tools/jira/priorities/JiraPrioritySelectInput";
 import JiraStepNotificationProjectSelectInput
-  from "components/workflow/plan/step/notifications/jira/JiraStepNotificationProjectSelectInput";
+from "components/workflow/plan/step/notifications/jira/JiraStepNotificationProjectSelectInput";
 import JiraProjectUserSelectInput
-  from "components/common/list_of_values_input/tools/jira/users/JiraProjectUserSelectInput";
+from "components/common/list_of_values_input/tools/jira/users/JiraProjectUserSelectInput";
 import JiraProjectUsersMultiSelectInput
-  from "components/common/list_of_values_input/tools/jira/users/JiraProjectUsersMultiSelectInput";
+from "components/common/list_of_values_input/tools/jira/users/JiraProjectUsersMultiSelectInput";
 import JiraStepNotificationBoardSelectInput
-  from "components/workflow/plan/step/notifications/jira/JiraStepNotificationBoardSelectInput";
+from "components/workflow/plan/step/notifications/jira/JiraStepNotificationBoardSelectInput";
 import JiraStepNotificationSprintInput
-  from "components/workflow/plan/step/notifications/jira/JiraStepNotificationSprintInput";
+from "components/workflow/plan/step/notifications/jira/JiraStepNotificationSprintInput";
 import JiraSprintTicketSelectInput
-  from "components/common/list_of_values_input/tools/jira/tickets/JiraSprintTicketSelectInput";
+from "components/common/list_of_values_input/tools/jira/tickets/JiraSprintTicketSelectInput";
 import JiraProjectWorkflowStepSelectInput
-  from "components/common/list_of_values_input/tools/jira/workflow_steps/JiraProjectWorkflowStepSelectInput";
+from "components/common/list_of_values_input/tools/jira/workflow_steps/JiraProjectWorkflowStepSelectInput";
 import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import OrchestrationNotificationLevelSelectInput
-  from "components/workflow/plan/step/notifications/OrchestrationNotificationLevelSelectInput";
+from "components/workflow/plan/step/notifications/OrchestrationNotificationLevelSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function JiraNotificationEditorPanel(

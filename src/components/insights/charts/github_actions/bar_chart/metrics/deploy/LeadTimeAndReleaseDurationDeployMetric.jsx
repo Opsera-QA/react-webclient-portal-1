@@ -14,7 +14,7 @@ function LeadTimeAndReleaseDurationDeployMetric({ kpiConfiguration, dashboardDat
   const getDataBlock = () => {
     // TODO
     const deployDataPoint = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints,
-    constants.SUPPORTED_DATA_POINT_IDENTIFIERS.DEPLOY_DURATION_DATA_POINT);
+      constants.SUPPORTED_DATA_POINT_IDENTIFIERS.DEPLOY_DURATION_DATA_POINT);
     
     return (
       <LeadTimeAndReleaseDurationDataBlockBase

@@ -6,7 +6,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import EndpointRequestTypeField
-  from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/EndpointRequestTypeField";
+from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/EndpointRequestTypeField";
 import InfoContainer from "components/common/containers/InfoContainer";
 import DescriptionField from "components/common/fields/text/DescriptionField";
 import EndpointTypeField from "components/common/list_of_values_input/inventory/endpoints/type/EndpointTypeField";

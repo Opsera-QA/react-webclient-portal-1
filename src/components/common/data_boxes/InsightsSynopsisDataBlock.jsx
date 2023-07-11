@@ -5,7 +5,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 // TODO: I need to remember to rewrite this
 function InsightsSynopsisDataBlock({ title, subTitle, toolTipText, clickAction, statusColor,
-                   ellipsesContent, footerText, modal, view, className, disable }) {
+  ellipsesContent, footerText, modal, view, className, disable }) {
   const statusColors = {
     success: "#00897b", 
     danger: "#E57373",
@@ -31,11 +31,11 @@ function InsightsSynopsisDataBlock({ title, subTitle, toolTipText, clickAction, 
     <>
       <TooltipWrapper innerText={toolTipText}>
         <Card className={getCardClassNames()}
-              style={ disable? { ...cardStyle, opacity:".5", background:"#ededed" } : cardStyle}
-              onClick={ disable? null : clickAction}>
+          style={ disable? { ...cardStyle, opacity:".5", background:"#ededed" } : cardStyle}
+          onClick={ disable? null : clickAction}>
           <Card.Body className="data-blocks-body">
             <div className="data-blocks-status"
-                style={{backgroundColor: statusColors[statusColor]}}>      
+              style={{backgroundColor: statusColors[statusColor]}}>      
             </div>
             <Card.Title className="data-blocks-title">
               {title}

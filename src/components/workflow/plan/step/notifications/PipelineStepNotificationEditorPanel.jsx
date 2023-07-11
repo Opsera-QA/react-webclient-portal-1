@@ -21,9 +21,9 @@ import {
 } from "components/workflow/plan/step/notifications/jira/jiraStepNotification.metadata";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 import PipelineStepNotificationConfigurationHelpDocumentation
-  from "../../../../common/help/documentation/pipelines/step_configuration/PipelineStepNotificationConfigurationHelpDocumentation";
+from "../../../../common/help/documentation/pipelines/step_configuration/PipelineStepNotificationConfigurationHelpDocumentation";
 import gChatStepNotificationMetadata 
-  from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
+from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 
 function PipelineStepNotificationEditorPanel(
@@ -108,7 +108,7 @@ function PipelineStepNotificationEditorPanel(
         pipelineId,
         pipelineStep?._id,
         newNotificationConfiguration,
-        );
+      );
       toastContext.showSaveSuccessToast("Pipeline Notification Configuration");
     }
   };
@@ -164,7 +164,7 @@ function PipelineStepNotificationEditorPanel(
     return (
       <PipelineStepNotificationConfigurationHelpDocumentation
         closeHelpPanel={() => setHelpIsShown(false)}
-        />
+      />
     );
   };
 

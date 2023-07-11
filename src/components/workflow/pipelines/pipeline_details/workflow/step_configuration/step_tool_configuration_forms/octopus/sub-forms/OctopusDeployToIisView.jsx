@@ -52,8 +52,8 @@ function OctopusDeployToIisView({dataObject, setDataObject, isLoading, disabled,
           <VaultTextInput dataObject={dataObject} setDataObject={setDataObject} fieldName={"applicationPoolIdentityPassword"} />
         </>
       )}
-       <BooleanToggleInput dataObject={dataObject} setDataObject={setDataObject} fieldName={"startApplicationPool"} />
-       <OctopusCustomDeploymentDirectoryDetailsInput
+      <BooleanToggleInput dataObject={dataObject} setDataObject={setDataObject} fieldName={"startApplicationPool"} />
+      <OctopusCustomDeploymentDirectoryDetailsInput
         dataObject={dataObject}
         setDataObject={setDataObject}
         fieldName={"useCustomDeploymentDirectory"}

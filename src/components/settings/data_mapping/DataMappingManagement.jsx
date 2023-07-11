@@ -5,11 +5,11 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import toolsActions from "components/inventory/tools/tools-actions";
 import DataMappingManagementSubNavigationBar
-  from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
+from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
 import DataMappingManagementTabView from "components/settings/data_mapping/DataMappingManagementTabView";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import AnalyticsProjectDataMappingRoleHelper
-  from "@opsera/know-your-role/roles/settings/analytics_data_mappings/projects/analyticsProjectDataMappingRole.helper";
+from "@opsera/know-your-role/roles/settings/analytics_data_mappings/projects/analyticsProjectDataMappingRole.helper";
 
 export default function DataMappingManagement() {
   const [isLoading, setIsLoading] = useState(true);

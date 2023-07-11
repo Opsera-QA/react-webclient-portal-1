@@ -16,16 +16,16 @@ function SentenialGitRepositorySelectInput({model, setModel, disabled}) {
   };
 
   return (
-     <RepositorySelectInput
-       fieldName={"repoId"}
-       service={model?.getData("service")}
-       gitToolId={model?.getData("gitToolId")}
-       workspace={model?.getData("bitbucketWorkspace")}
-       dataObject={model}
-       setDataObject={setModel}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-     />
+    <RepositorySelectInput
+      fieldName={"repoId"}
+      service={model?.getData("service")}
+      gitToolId={model?.getData("gitToolId")}
+      workspace={model?.getData("bitbucketWorkspace")}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+    />
   );
 }
 

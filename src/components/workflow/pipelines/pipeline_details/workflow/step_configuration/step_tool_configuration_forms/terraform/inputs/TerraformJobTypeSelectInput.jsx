@@ -21,17 +21,17 @@ function TerraformJobTypeSelectInput({dataObject, setDataObject, disabled}) {
 
   return (
     
-     <SelectInputBase
-       fieldName={"toolActionType"}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       selectOptions={JOB_TYPES}
-       valueField={"value"}
-       textField={"name"}
-       placeholderText={"Select a Job Type"}
-       disabled={disabled}
-       busy={disabled}
-     />
+    <SelectInputBase
+      fieldName={"toolActionType"}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      selectOptions={JOB_TYPES}
+      valueField={"value"}
+      textField={"name"}
+      placeholderText={"Select a Job Type"}
+      disabled={disabled}
+      busy={disabled}
+    />
   );
 }
 

@@ -1,7 +1,7 @@
 import baseActions from "utils/actionsBase";
 import {axiosApiService} from "api/apiService";
 import pipelineActivityLogsActions
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineActivityLogs.actions";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineActivityLogs.actions";
 import {parsePackageXml} from "components/common/helpers/code-helpers";
 
 const sfdcPipelineActions = {};
@@ -458,16 +458,16 @@ sfdcPipelineActions.getPackageXmlFromRun = async (getAccessToken, cancelTokenSou
 
   if (Array.isArray(logs) && logs.length > 0) {
     for (let i = 0; i < logs.length; i++) {
-     try {
-       const packageXml = parsePackageXml(logs[i]);
+      try {
+        const packageXml = parsePackageXml(logs[i]);
 
-       if (packageXml != null) {
-         return packageXml;
-       }
-     }
-     catch (error) {
-       console.error(error);
-     }
+        if (packageXml != null) {
+          return packageXml;
+        }
+      }
+      catch (error) {
+        console.error(error);
+      }
     }
   }
 
@@ -502,10 +502,10 @@ sfdcPipelineActions.updateIgnoreWarning = async (getAccessToken, cancelTokenSour
 sfdcPipelineActions.getApiVersions = async (getAccessToken, cancelTokenSource, sfdcToolId) => {
   const apiUrl = `/pipelines/sfdc/wizard/get_api_versions`;
   const urlParams = {
-  params: {
-    sfdcToolId: sfdcToolId,
-  }
-};
+    params: {
+      sfdcToolId: sfdcToolId,
+    }
+  };
 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };

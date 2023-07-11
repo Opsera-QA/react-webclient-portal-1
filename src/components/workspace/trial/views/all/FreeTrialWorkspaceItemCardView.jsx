@@ -16,24 +16,24 @@ export default function FreeTrialWorkspaceItemCardView(
   }) {
   const getWorkspaceItemCard = (workspaceItem) => {
     switch (workspaceItem?.workspaceType) {
-      case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
-        return (
-          <WorkspacePipelineCard
-            pipeline={workspaceItem}
-          />
-        );
-      case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
-        return (
-          <WorkspaceTaskCard
-            task={workspaceItem}
-          />
-        );
-      case workspaceConstants.WORKSPACE_ITEM_TYPES.TOOL:
-        return (
-          <WorkspaceToolCard
-            tool={workspaceItem}
-          />
-        );
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
+      return (
+        <WorkspacePipelineCard
+          pipeline={workspaceItem}
+        />
+      );
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
+      return (
+        <WorkspaceTaskCard
+          task={workspaceItem}
+        />
+      );
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.TOOL:
+      return (
+        <WorkspaceToolCard
+          tool={workspaceItem}
+        />
+      );
     }
   };
 

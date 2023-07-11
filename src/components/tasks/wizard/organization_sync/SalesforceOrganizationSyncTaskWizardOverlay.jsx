@@ -5,7 +5,7 @@ import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
 import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import SalesforceOrganizationSyncTaskWizardPreRunTaskScreen
-  from "components/tasks/wizard/organization_sync/pre_run_tasks/SalesforceOrganizationSyncTaskWizardPreRunTaskScreen";
+from "components/tasks/wizard/organization_sync/pre_run_tasks/SalesforceOrganizationSyncTaskWizardPreRunTaskScreen";
 
 export const SALESFORCE_ORGANIZATION_TASK_WIZARD_SCREENS = {
   PRE_RUN_TASK_SCREEN: "pre_run_task_screen",

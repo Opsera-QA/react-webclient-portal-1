@@ -52,10 +52,10 @@ function CustomerSystemStatus() {
 
     return (
       customerSystemStatusData.map((customerSystemStatus, key) => (
-          <Col key={key} md={3} sm={6}>
-            <SystemStatusCard systemStatus={customerSystemStatus}/>
-          </Col>
-        )
+        <Col key={key} md={3} sm={6}>
+          <SystemStatusCard systemStatus={customerSystemStatus}/>
+        </Col>
+      )
       )
     );
   };

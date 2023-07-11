@@ -1,11 +1,11 @@
 import React, {useContext, useState} from "react";
 import PropTypes from "prop-types";
 import OctopusEnvironmentMultiSelectInput
-  from "components/common/list_of_values_input/tools/octopus/environments/OctopusEnvironmentMultiSelectInput";
+from "components/common/list_of_values_input/tools/octopus/environments/OctopusEnvironmentMultiSelectInput";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {AuthContext} from "contexts/AuthContext";
 import OctopusEnvironmentListInput
-  from "components/common/list_of_values_input/tools/octopus/environments/OctopusEnvironmentListInput";
+from "components/common/list_of_values_input/tools/octopus/environments/OctopusEnvironmentListInput";
 
 // TODO: Remove after validation
 function OctopusStepOctopusEnvironmentMultiSelectInput({ fieldName, model, setModel, disabled}) {

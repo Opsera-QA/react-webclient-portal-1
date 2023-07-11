@@ -28,17 +28,17 @@ function BlackDuckGitRepositoryInput({model, setModel, disabled}) {
   };
 
   return (
-     <RepositorySelectInput
-       fieldName={"gitRepositoryID"}
-       service={model.getData("type")}
-       gitToolId={model.getData("gitToolId")}
-       workspace={model.getData("workspace")}
-       dataObject={model}
-       setDataObject={setModel}
-       setDataFunction={setDataFunction}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-     />
+    <RepositorySelectInput
+      fieldName={"gitRepositoryID"}
+      service={model.getData("type")}
+      gitToolId={model.getData("gitToolId")}
+      workspace={model.getData("workspace")}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+    />
   );
 }
 

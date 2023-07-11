@@ -95,7 +95,7 @@ function JiraIssuesByPriorityBarChart({ persona, date }) {
             <ResponsiveBar
               data={data ? data.data : []}
               {...defaultConfig('Project', 'Number of Issues', 
-                                true, false, 'cutoffString', 'wholeNumbers')}
+                true, false, 'cutoffString', 'wholeNumbers')}
               onClick={() => setShowModal(true)}
               keys={["Story", "Task", "Subtask", "Bug"]}
               indexBy="project"
@@ -103,14 +103,14 @@ function JiraIssuesByPriorityBarChart({ persona, date }) {
               colors={({ id, data }) => data[`${id}_color`]}
               colorBy="id"
               tooltip={({ indexValue, id, data }) => <ChartTooltip 
-                      titles={["Project", "Issue Type", "Number of Lowest Priority Issues",
-                              "Number of Low Priority Issues", "Number of Medium Priority Issues",
-                              "Number of High Priority Issues", "Number of Highest Priority Issues",
-                              "Number of Blocker Issues"]}
-                      values={[indexValue, id, data[id + "-Lowest"], data[id + "-Low"],
-                              data[id + "-Medium"], data[id + "-High"], data[id + "-Highest"],
-                              data[id + "-Blocker"]]}
-                      style = {false} />}
+                titles={["Project", "Issue Type", "Number of Lowest Priority Issues",
+                  "Number of Low Priority Issues", "Number of Medium Priority Issues",
+                  "Number of High Priority Issues", "Number of Highest Priority Issues",
+                  "Number of Blocker Issues"]}
+                values={[indexValue, id, data[id + "-Lowest"], data[id + "-Low"],
+                  data[id + "-Medium"], data[id + "-High"], data[id + "-Highest"],
+                  data[id + "-Blocker"]]}
+                style = {false} />}
             />
           )}
         </div>

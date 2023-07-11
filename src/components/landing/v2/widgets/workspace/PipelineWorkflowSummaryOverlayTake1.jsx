@@ -23,7 +23,7 @@ import {VanityLabelBase} from "temp-library-components/label/VanityLabelBase";
 import VanityTextField from "temp-library-components/fields/text/VanityTextField";
 import VanityTextFieldBase from "temp-library-components/fields/text/VanityTextFieldBase";
 import PipelineOrchestrationProgressBarBase
-  from "temp-library-components/fields/orchestration/progress/PipelineOrchestrationProgressBarBase";
+from "temp-library-components/fields/orchestration/progress/PipelineOrchestrationProgressBarBase";
 import ViewPipelineButton from "temp-library-components/button/pipeline/ViewPipelineButton";
 import {VanityFocusTextBase} from "temp-library-components/label/VanityFocusTextBase";
 import ViewPipelineLogsButton from "temp-library-components/button/pipeline/ViewPipelineLogsButton";

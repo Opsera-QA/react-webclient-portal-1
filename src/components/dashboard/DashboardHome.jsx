@@ -406,20 +406,20 @@ function DashboardView({ selection, persona, date, index }) {
 
   if (selection) {
     switch (selection) {
-      case "logs":
-        return <LogsDashboard persona={persona} />;
-      case "pipeline":
-        return <PipelineDashboard_v2 persona={persona} date={date} index={index} />;
-      case "secops_v2":
-        return <SecOpsDashboard_v2 persona={persona} date={date} index={index} />;
-      case "quality_v2":
-        return <QualityDashboard persona={persona} date={date} index={index} />;
-      case "operations_v2":
-        return <OperationsDashboard persona={persona} index={index} />;
-      case "planning":
-        return <PlanningDashboard persona={persona} date={date} index={index} />;
-      default:
-        return null;
+    case "logs":
+      return <LogsDashboard persona={persona} />;
+    case "pipeline":
+      return <PipelineDashboard_v2 persona={persona} date={date} index={index} />;
+    case "secops_v2":
+      return <SecOpsDashboard_v2 persona={persona} date={date} index={index} />;
+    case "quality_v2":
+      return <QualityDashboard persona={persona} date={date} index={index} />;
+    case "operations_v2":
+      return <OperationsDashboard persona={persona} index={index} />;
+    case "planning":
+      return <PlanningDashboard persona={persona} date={date} index={index} />;
+    default:
+      return null;
     }
   }
 }

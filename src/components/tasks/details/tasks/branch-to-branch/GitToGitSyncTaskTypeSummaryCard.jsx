@@ -27,7 +27,7 @@ function GitToGitSyncTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationDat
 
   return (
     <TaskSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
-       <Row className="mx-0 mb-2">
+      <Row className="mx-0 mb-2">
         <Col xs={12} sm={6} md={4}>
           <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"service"} />
         </Col>
@@ -52,7 +52,7 @@ function GitToGitSyncTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationDat
         <Col xs={12} sm={6} md={4}>
           <BooleanField dataObject={gitTaskConfigurationData} fieldName={"autoApprove"} />
         </Col>
-         {getReviewerNamesField()}
+        {getReviewerNamesField()}
       </Row>
     </TaskSummaryCardContainer>
   );

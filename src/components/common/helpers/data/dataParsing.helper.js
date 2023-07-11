@@ -99,20 +99,20 @@ dataParsingHelper.parseJson = (json) => {
 // TODO: Wire up constants
 dataParsingHelper.parseObjectValue = (type, value) => {
   switch (type) {
-    case "string":
-      return dataParsingHelper.parseString(value, "");
-    case "array":
-      return dataParsingHelper.parseArray(value, []);
-    case "date":
-      return dataParsingHelper.parseDate(value, undefined);
-    case "boolean":
-      return dataParsingHelper.parseBoolean(value, false);
-    case "number":
-      return DataParsingHelper.parseNumber(value, undefined);
-    case "integer":
-      return DataParsingHelper.parseInteger(value, undefined);
-    case "object":
-      return DataParsingHelper.parseObject(value, {});
+  case "string":
+    return dataParsingHelper.parseString(value, "");
+  case "array":
+    return dataParsingHelper.parseArray(value, []);
+  case "date":
+    return dataParsingHelper.parseDate(value, undefined);
+  case "boolean":
+    return dataParsingHelper.parseBoolean(value, false);
+  case "number":
+    return DataParsingHelper.parseNumber(value, undefined);
+  case "integer":
+    return DataParsingHelper.parseInteger(value, undefined);
+  case "object":
+    return DataParsingHelper.parseObject(value, {});
   }
 };
 

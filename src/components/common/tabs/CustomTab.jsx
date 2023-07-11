@@ -92,11 +92,11 @@ function CustomTab({activeTab, tabName, tabText, handleTabClick, icon, visible, 
 
 
   if (toolTipText) {
-   return (
-     <TooltipWrapper innerText={toolTipText}>
-       {getTab()}
-     </TooltipWrapper>
-   );
+    return (
+      <TooltipWrapper innerText={toolTipText}>
+        {getTab()}
+      </TooltipWrapper>
+    );
   }
 
   return (getTab());

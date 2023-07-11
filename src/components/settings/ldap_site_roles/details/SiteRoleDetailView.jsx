@@ -7,7 +7,7 @@ import SiteRoleManagementSubNavigationBar from "components/settings/ldap_site_ro
 import SiteRoleDetailPanel from "components/settings/ldap_site_roles/details/SiteRoleDetailPanel";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 import LdapSiteRoleGroupRoleHelper
-  from "@opsera/know-your-role/roles/accounts/groups/role/ldapSiteRoleGroupRole.helper";
+from "@opsera/know-your-role/roles/accounts/groups/role/ldapSiteRoleGroupRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetLdapSiteRoleModelByNameForDomain from "hooks/ldap/site_roles/useGetLdapSiteRoleModelByNameForDomain";
 import ldapSiteRoleMetadata from "@opsera/definitions/constants/accounts/groups/role/ldapSiteRoles.metadata";

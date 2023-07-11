@@ -7,11 +7,11 @@ import OwnerNameField from "components/common/fields/text/general/OwnerNameField
 import TagField from "components/common/fields/multiple_items/tags/TagField";
 import RichTextField from "components/common/fields/rich_text/RichTextField";
 import PipelineInstructionsTypeField
-  from "components/common/list_of_values_input/workflow/instructions/type/PipelineInstructionsTypeField";
+from "components/common/list_of_values_input/workflow/instructions/type/PipelineInstructionsTypeField";
 import PipelineInstructionsRoleAccessInlineInput
-  from "components/workflow/instructions/details/inputs/PipelineInstructionsRoleAccessInlineInput";
+from "components/workflow/instructions/details/inputs/PipelineInstructionsRoleAccessInlineInput";
 import PipelineInstructionsAttributesSummaryPanel
-  from "components/workflow/instructions/details/PipelineInstructionsAttributesSummaryPanel";
+from "components/workflow/instructions/details/PipelineInstructionsAttributesSummaryPanel";
 
 export default function PipelineInstructionsSummaryPanel(
   {

@@ -8,7 +8,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, assignStandardColors,
-         shortenPieChartLegend } from '../../../charts-views';
+  shortenPieChartLegend } from '../../../charts-views';
 import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import GitlabTotalCommitsByProjectActionableOverlay from "./GitlabTotalCommitsByProjectActionableOverlay";
@@ -88,16 +88,16 @@ function GitlabTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
       return null;
     }
 
-  return (
-    <div className="new-chart mb-3" style={{height: METRIC_CHART_STANDARD_HEIGHT}}>
-      <ResponsivePie
-        data={metrics}
-        {...defaultConfig()}
-        {...config()}
-        onClick={onChartClick}
-      />
-    </div>
-  );
+    return (
+      <div className="new-chart mb-3" style={{height: METRIC_CHART_STANDARD_HEIGHT}}>
+        <ResponsivePie
+          data={metrics}
+          {...defaultConfig()}
+          {...config()}
+          onClick={onChartClick}
+        />
+      </div>
+    );
   };
 
   return (

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import RevocableFreeTrialSsoUserSelectInput
-  from "components/common/list_of_values_input/users/sso/revocable/RevocableFreeTrialSsoUserSelectInput";
+from "components/common/list_of_values_input/users/sso/revocable/RevocableFreeTrialSsoUserSelectInput";
 
 export default function FreeTrialRevokeUserSelectInput(
   {
@@ -22,15 +22,15 @@ export default function FreeTrialRevokeUserSelectInput(
   };
 
   return (
-     <RevocableFreeTrialSsoUserSelectInput
-       fieldName={fieldName}
-       model={model}
-       setModel={setModel}
-       setDataFunction={setDataFunction}
-       clearDataFunction={clearDataFunction}
-       textField={textFieldFunction}
-       className={className}
-     />
+    <RevocableFreeTrialSsoUserSelectInput
+      fieldName={fieldName}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      textField={textFieldFunction}
+      className={className}
+    />
   );
 }
 

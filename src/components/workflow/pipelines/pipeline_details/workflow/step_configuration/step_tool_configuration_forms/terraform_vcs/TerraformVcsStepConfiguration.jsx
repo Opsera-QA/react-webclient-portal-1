@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
 import terraformVcsStepFormMetadata from "./terraform-vcs-stepForm-metadata";
 import TerraformCustomParametersInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformCustomParametersInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformCustomParametersInput";
 import TerraformVcsCloudOrganizationsSelectInput from "./inputs/TerraformVcsCloudOrganizationsSelectInput";
 import TerraformEnterpriseToolSelectInput from "../terraform/inputs/terraform_cloud/TerraformEnterpriseToolSelectInput";
 import TerraformEnvironmentVariables from "../terraform/inputs/custom_scripts/TerraformEnvironmentVariables";
@@ -79,12 +79,12 @@ function TerraformVcsStepConfiguration({ pipelineId, stepTool, stepId, createJob
       terraformVcsStepConfigurationModel.getData("organizationName").length === 0 ||
       terraformVcsStepConfigurationModel.getData("workspaceName").length === 0
     ) {
-        let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
-        setToast(toast);
-        setShowToast(true);        
-        return false;
+      let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
+      setToast(toast);
+      setShowToast(true);        
+      return false;
     } else {
-        return true;
+      return true;
     }
   };
 

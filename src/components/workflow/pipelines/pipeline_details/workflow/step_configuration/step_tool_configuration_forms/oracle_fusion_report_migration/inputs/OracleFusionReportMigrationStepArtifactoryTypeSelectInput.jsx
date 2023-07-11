@@ -22,18 +22,18 @@ function OracleFusionReportMigrationStepArtifactoryTypeSelectInput({model, setMo
   };
 
   return (
-     <SelectInputBase
-       fieldName={"artifactoryType"}
-       dataObject={model}
-       setDataObject={setModel}
-       selectOptions={ARTIFACTORY_TYPES}
-       valueField={"value"}
-       textField={"name"}
-       placeholderText={"Select a Artifactory Type"}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-       busy={isLoading}
-     />
+    <SelectInputBase
+      fieldName={"artifactoryType"}
+      dataObject={model}
+      setDataObject={setModel}
+      selectOptions={ARTIFACTORY_TYPES}
+      valueField={"value"}
+      textField={"name"}
+      placeholderText={"Select a Artifactory Type"}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+      busy={isLoading}
+    />
   );
 }
 

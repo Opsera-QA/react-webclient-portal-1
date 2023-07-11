@@ -27,47 +27,47 @@ export default function FreeTrialWorkspaceViewContainer(
 
   const getCurrentView = () => {
     switch (workspaceFilterModel?.getData("type")) {
-      case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
-        return (
-          <FreeTrialWorkspacePipelineViews
-            pipelines={workspaceItems}
-            isLoading={isLoading}
-            workspaceFilterModel={workspaceFilterModel}
-            setWorkspaceFilterModel={setWorkspaceFilterModel}
-            loadData={loadData}
-          />
-        );
-      case workspaceConstants.WORKSPACE_ITEM_TYPES.TOOL:
-        return (
-          <FreeTrialWorkspaceRegistryViews
-            isLoading={isLoading}
-            loadData={loadData}
-            tools={workspaceItems}
-            workspaceFilterModel={workspaceFilterModel}
-            setWorkspaceFilterModel={setWorkspaceFilterModel}
-          />
-        );
-      case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
-        return (
-          <FreeTrialWorkspaceTaskViews
-            tasks={workspaceItems}
-            loadData={loadData}
-            isLoading={isLoading}
-            workspaceFilterModel={workspaceFilterModel}
-            setWorkspaceFilterModel={setWorkspaceFilterModel}
-          />
-        );
-      case workspaceConstants.WORKSPACE_ITEM_TYPES.ALL:
-      default:
-        return (
-          <FreeTrialWorkspaceItemViews
-            workspaceItems={workspaceItems}
-            isLoading={isLoading}
-            workspaceFilterModel={workspaceFilterModel}
-            setWorkspaceFilterModel={setWorkspaceFilterModel}
-            loadData={loadData}
-          />
-        );
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
+      return (
+        <FreeTrialWorkspacePipelineViews
+          pipelines={workspaceItems}
+          isLoading={isLoading}
+          workspaceFilterModel={workspaceFilterModel}
+          setWorkspaceFilterModel={setWorkspaceFilterModel}
+          loadData={loadData}
+        />
+      );
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.TOOL:
+      return (
+        <FreeTrialWorkspaceRegistryViews
+          isLoading={isLoading}
+          loadData={loadData}
+          tools={workspaceItems}
+          workspaceFilterModel={workspaceFilterModel}
+          setWorkspaceFilterModel={setWorkspaceFilterModel}
+        />
+      );
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
+      return (
+        <FreeTrialWorkspaceTaskViews
+          tasks={workspaceItems}
+          loadData={loadData}
+          isLoading={isLoading}
+          workspaceFilterModel={workspaceFilterModel}
+          setWorkspaceFilterModel={setWorkspaceFilterModel}
+        />
+      );
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.ALL:
+    default:
+      return (
+        <FreeTrialWorkspaceItemViews
+          workspaceItems={workspaceItems}
+          isLoading={isLoading}
+          workspaceFilterModel={workspaceFilterModel}
+          setWorkspaceFilterModel={setWorkspaceFilterModel}
+          loadData={loadData}
+        />
+      );
     }
   };
 

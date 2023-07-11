@@ -27,13 +27,13 @@ export const SCRIPT_TYPE_SELECT_OPTIONS = [
 
 export const getScriptTypeLabel = (scriptType) => {
   switch (scriptType) {
-    case SCRIPT_TYPES.INLINE:
-      return SCRIPT_TYPE_LABELS.INLINE;
-    case SCRIPT_TYPES.PACKAGE:
-      return SCRIPT_TYPE_LABELS.PACKAGE;
-    case SCRIPT_TYPES.SCRIPT:
-      return SCRIPT_TYPE_LABELS.SCRIPT;
-    default:
-      return scriptType;
+  case SCRIPT_TYPES.INLINE:
+    return SCRIPT_TYPE_LABELS.INLINE;
+  case SCRIPT_TYPES.PACKAGE:
+    return SCRIPT_TYPE_LABELS.PACKAGE;
+  case SCRIPT_TYPES.SCRIPT:
+    return SCRIPT_TYPE_LABELS.SCRIPT;
+  default:
+    return scriptType;
   }
 };

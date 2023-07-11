@@ -3,7 +3,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import useCustomerPipelineTemplateAuditLogActions
-  from "hooks/audit_logs/pipelines/templates/customer/useCustomerPipelineTemplateAuditLogActions";
+from "hooks/audit_logs/pipelines/templates/customer/useCustomerPipelineTemplateAuditLogActions";
 
 export default function useGetCustomerPipelineTemplateAuditLogById(
   templateId,

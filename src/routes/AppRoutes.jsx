@@ -44,7 +44,7 @@ export default function AppRoutes() {
       <WorkspaceRoutes/>
       <AIMLRoutes />
 
-        {/*TODO: These are legacy routes that should probably be removed*/}
+      {/*TODO: These are legacy routes that should probably be removed*/}
       <SecureRoute path="/dashboard" component={Dashboard}/>
       <SecureRoute path="/tools/:id?" component={ApiConnector}/>
       <SecureRoute path="/update" component={Update}/>

@@ -6,17 +6,17 @@ import BuildView_Executive from "../../analytics/views/pipeline/buildView_execut
 
 function PipelineDashboard({ persona, date, index }) {
   switch (persona) {
-    case "developer":
-      return <BuildView_Developer persona={persona} date={date} index={index} />;
+  case "developer":
+    return <BuildView_Developer persona={persona} date={date} index={index} />;
 
-    case "manager":
-      return <BuildView_Manager persona={persona} date={date} index={index} />;
+  case "manager":
+    return <BuildView_Manager persona={persona} date={date} index={index} />;
 
-    case "executive":
-      return <BuildView_Executive persona={persona} date={date} index={index} />;
+  case "executive":
+    return <BuildView_Executive persona={persona} date={date} index={index} />;
 
-    default:
-      return <BuildView_Developer persona={persona} date={date} index={index} />;
+  default:
+    return <BuildView_Developer persona={persona} date={date} index={index} />;
   }
 }
 

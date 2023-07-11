@@ -24,7 +24,7 @@ import BooleanToggleInput from "../../../../../../../common/inputs/boolean/Boole
 import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
 import useComponentStateReference from "../../../../../../../../hooks/useComponentStateReference";
 import bitbucketConnectionMetadata
-  from "../../../../../../../inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket-connection-metadata";
+from "../../../../../../../inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket-connection-metadata";
 
 const bitBucketApiTypeArray = [
   {
@@ -153,7 +153,7 @@ export default function CreateWorkflowWizardCreateBitbucketToolEditorPanel({
 
   const canCreateTool = () => {
     return RegistryToolRoleHelper.canCreateRegistryTool(
-        userData,
+      userData,
     );
   };
 

@@ -103,7 +103,7 @@ StandaloneMultiSelectInput.propTypes = {
 };
 
 StandaloneMultiSelectInput.defaultProps = {
-    filterOption: "contains"
+  filterOption: "contains"
 };
 
 export default StandaloneMultiSelectInput;

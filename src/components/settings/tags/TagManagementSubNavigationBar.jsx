@@ -17,26 +17,26 @@ function TagManagementSubNavigationBar({activeTab}) {
     }
 
     switch (tabSelection) {
-      case "tags":
-        history.push(`/settings/tags`);
-        return;
+    case "tags":
+      history.push(`/settings/tags`);
+      return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-      case "tagViewer":
-        return (
-          <NavigationTab
-            icon={faTags}
-            tabName={"tagViewer"}
-            handleTabClick={handleTabClick}
-            activeTab={activeTab}
-            tabText={"Tag Viewer"}
-          />
-        );
-      default:
-        return null;
+    case "tagViewer":
+      return (
+        <NavigationTab
+          icon={faTags}
+          tabName={"tagViewer"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Tag Viewer"}
+        />
+      );
+    default:
+      return null;
     }
   };
 

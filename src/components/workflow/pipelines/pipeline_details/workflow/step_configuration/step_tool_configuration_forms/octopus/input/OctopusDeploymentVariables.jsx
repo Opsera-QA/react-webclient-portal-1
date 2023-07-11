@@ -43,11 +43,11 @@ function OctopusDeploymentVariables({ fieldName, dataObject, setDataObject, disa
                   <div className={"mt-2"}>
                     Sample:
                     <StandaloneJsonField
-                    className={"mt-1"}
-                    json={SAMPLE_DATA}
-                    displayDataTypes={false}
-                    showInContainer={false}
-                  />
+                      className={"mt-1"}
+                      json={SAMPLE_DATA}
+                      displayDataTypes={false}
+                      showInContainer={false}
+                    />
                   </div>
                 }
               </div>

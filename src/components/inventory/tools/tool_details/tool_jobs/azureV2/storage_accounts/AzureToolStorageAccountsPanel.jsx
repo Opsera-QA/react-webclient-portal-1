@@ -69,7 +69,7 @@ function AzureToolStoragePanel({ toolId }) {
         setAzureStorageAccountsModel={setAzureStorageAccountsModel}
         toolId={toolId}
         handleClose={togglePanel}
-    />
+      />
     );
   }
   

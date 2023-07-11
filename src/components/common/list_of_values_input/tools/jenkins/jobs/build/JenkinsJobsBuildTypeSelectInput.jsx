@@ -3,39 +3,39 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 const JENKINS_BUILD_OPTIONS = [
-    {
-      name: "Gradle",
-      value: "gradle",
-    },
-    {
-      name: "Maven",
-      value: "maven",
-    },
-    {
-      name: "Docker",
-      value: "docker",
-    },
-    {
-      name: "MS Build",
-      value: "msbuild",
-    },
-    {
-      name: ".NET",
-      value: "dotnet",
-    },
-    {
-      name: "Python",
-      value: "python",
-    },
-    {
-        name: "Node",
-        value: "node",
-    },
-    {
-      name: "Xcode",
-      value: "xcode",
+  {
+    name: "Gradle",
+    value: "gradle",
   },
-  ];
+  {
+    name: "Maven",
+    value: "maven",
+  },
+  {
+    name: "Docker",
+    value: "docker",
+  },
+  {
+    name: "MS Build",
+    value: "msbuild",
+  },
+  {
+    name: ".NET",
+    value: "dotnet",
+  },
+  {
+    name: "Python",
+    value: "python",
+  },
+  {
+    name: "Node",
+    value: "node",
+  },
+  {
+    name: "Xcode",
+    value: "xcode",
+  },
+];
 
 function JenkinsJobsBuildTypeSelectInput({ fieldName, model, setModel }) {
   const setDataFunction = (fieldName, selectedOption) => {

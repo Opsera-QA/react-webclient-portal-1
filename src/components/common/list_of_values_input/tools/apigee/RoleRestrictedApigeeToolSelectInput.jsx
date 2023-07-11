@@ -14,19 +14,19 @@ function RoleRestrictedApigeeToolSelectInput(
     clearDataFunction,
   }) {
   return (
-     <RoleRestrictedToolByIdentifierInputBase
-       toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE}
-       toolFriendlyName={"Apigee"}
-       fieldName={fieldName}
-       placeholderText={"Select Apigee Tool"}
-       configurationRequired={true}
-       model={model}
-       setModel={setModel}
-       setDataFunction={setDataFunction}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-       className={className}
-     />
+    <RoleRestrictedToolByIdentifierInputBase
+      toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE}
+      toolFriendlyName={"Apigee"}
+      fieldName={fieldName}
+      placeholderText={"Select Apigee Tool"}
+      configurationRequired={true}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+      className={className}
+    />
   );
 }
 

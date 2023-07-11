@@ -7,9 +7,9 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import LdapOrganizationDetailPanel
-  from "components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationDetailPanel";
+from "components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationDetailPanel";
 import LdapOrganizationManagementSubNavigationBar
-  from "components/admin/accounts/ldap/organizations/LdapOrganizationManagementSubNavigationBar";
+from "components/admin/accounts/ldap/organizations/LdapOrganizationManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function LdapOrganizationDetailView() {

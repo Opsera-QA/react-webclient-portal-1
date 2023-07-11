@@ -19,11 +19,11 @@ function ScheduleFrequencyRadioInput({ fieldName, dataObject, setDataObject, dis
             value={"NONE"}
             label={
               <span>
-              <div>
-                <strong>Once</strong>
-              </div>
+                <div>
+                  <strong>Once</strong>
+                </div>
               This pipeline will run once at the scheduled time.
-            </span>
+              </span>
             }
           />
           <RadioButtonOption
@@ -34,11 +34,11 @@ function ScheduleFrequencyRadioInput({ fieldName, dataObject, setDataObject, dis
             value={"DAY"}
             label={
               <span>
-              <div>
-                <strong>Daily</strong>
-              </div>
+                <div>
+                  <strong>Daily</strong>
+                </div>
               If active, the pipeline will run daily at the scheduled time.
-            </span>
+              </span>
             }
           />
           <RadioButtonOption
@@ -49,11 +49,11 @@ function ScheduleFrequencyRadioInput({ fieldName, dataObject, setDataObject, dis
             value={"WEEK"}
             label={
               <span>
-              <div>
-                <strong>Weekly</strong>
-              </div>
+                <div>
+                  <strong>Weekly</strong>
+                </div>
               If active, the pipeline will run weekly at the scheduled time.
-            </span>
+              </span>
             }
           />
           <RadioButtonOption
@@ -64,11 +64,11 @@ function ScheduleFrequencyRadioInput({ fieldName, dataObject, setDataObject, dis
             value={"MONTH"}
             label={
               <span>
-              <div>
-                <strong>Monthly</strong>
-              </div>
+                <div>
+                  <strong>Monthly</strong>
+                </div>
               If active, the pipeline will run monthly at the scheduled time.
-            </span>
+              </span>
             }
           />
         </div>

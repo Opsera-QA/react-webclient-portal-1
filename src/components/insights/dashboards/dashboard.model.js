@@ -117,8 +117,8 @@ export default class DashboardModel extends ModelBase {
 
   clone = () => {
     return new DashboardModel(DataParsingHelper.cloneDeep(
-        { ...this.data }),
-      this.isNew(),
+      { ...this.data }),
+    this.isNew(),
     );
   };
 }

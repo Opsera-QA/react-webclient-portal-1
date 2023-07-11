@@ -9,7 +9,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import RuntimeSettingsTaskApiResponseSettingsSummaryPanel
-  from "components/workflow/plan/step/runtime_settings/api_response/settings/RuntimeSettingsTaskApiResponseSettingsSummaryPanel";
+from "components/workflow/plan/step/runtime_settings/api_response/settings/RuntimeSettingsTaskApiResponseSettingsSummaryPanel";
 import LogArrayField from "components/common/fields/log/LogArrayField";
 import {Row} from "react-bootstrap";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";

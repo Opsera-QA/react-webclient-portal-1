@@ -11,7 +11,7 @@ import BooleanField from "components/common/fields/boolean/BooleanField";
 import EndpointField from "components/common/fields/inventory/tools/endpoints/EndpointField";
 import JsonField from "components/common/fields/json/JsonField";
 import EndpointResponseEvaluationRulesField
-  from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesField";
+from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesField";
 import Row from "react-bootstrap/Row";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
@@ -69,132 +69,132 @@ function ExternalApiRestIntegrationStepSummaryVerticalTabContainer(
   // TODO: These views should probably be separate components
   const getCurrentView = () => {
     switch (activeTab) {
-      case EXTERNAL_API_REST_INTEGRATION_TABS.CONNECTION_VALIDATION_CONFIGURATION:
-        return (
-          <>
-            <div className={"mx-3 mt-2"}>
-              <H5FieldSubHeader
-                subheaderText={"Connection Validation API Request Configuration"}
-              />
-              <Row>
-                <Col lg={6}>
-                  <BooleanField
-                    dataObject={externalRestApiIntegrationModel}
-                    fieldName={"useConnectionCheck"}
-                  />
-                </Col>
-                <Col lg={12}>
-                  <EndpointField
-                    model={externalRestApiIntegrationModel}
-                    fieldName={"connectionCheckEndpointId"}
-                    toolId={externalRestApiIntegrationModel?.getData("toolId")}
-                    endpointId={externalRestApiIntegrationModel?.getData("connectionCheckEndpointId")}
-                  />
-                </Col>
-                <Col xs={12}>
-                  <JsonField
-                    dataObject={externalRestApiIntegrationModel}
-                    fieldName={"connectionCheckRequestParameters"}
-                  />
-                </Col>
-              </Row>
-            </div>
-            <div className={"mx-3 mt-2"}>
-              <H5FieldSubHeader
-                subheaderText={"Connection Validation Response Evaluation Rules"}
-                className={"mb-3"}
-              />
-              <Row>
-                <Col xs={12}>
-                  <EndpointResponseEvaluationRulesField
-                    model={externalRestApiIntegrationModel}
-                    fieldName={"connectionCheckResponseEvaluationRules"}
-                    successRuleType={"Successful Connection validation"}
-                  />
-                </Col>
-              </Row>
-            </div>
-          </>
-        );
-      case EXTERNAL_API_REST_INTEGRATION_TABS.CALL_OPERATION_CONFIGURATION:
-        return (
-          <>
-            <div className={"mx-3 mt-2"}>
-              <H5FieldSubHeader
-                subheaderText={"Call Operation API Request Configuration"}
-              />
-              <Row>
-                <Col lg={12}>
-                  <EndpointField
-                    model={externalRestApiIntegrationModel}
-                    fieldName={"runEndpointId"}
-                    toolId={externalRestApiIntegrationModel?.getData("toolId")}
-                    endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
-                  />
-                </Col>
-                <Col xs={12}>
-                  <JsonField
-                    dataObject={externalRestApiIntegrationModel}
-                    fieldName={"runEndpointRequestParameters"}
-                  />
-                </Col>
-              </Row>
-            </div>
-            <div className={"mx-3 mt-2"}>
-              <H5FieldSubHeader
-                subheaderText={"Call Operation Response Evaluation Rules"}
-                className={"mb-3"}
-              />
-              <Row>
-                <Col xs={12}>
-                  <EndpointResponseEvaluationRulesField
-                    model={externalRestApiIntegrationModel}
-                    fieldName={"runEndpointResponseEvaluationRules"}
-                    successRuleType={"Successful Call Operation"}
-                  />
-                </Col>
-              </Row>
-            </div>
-          </>
-        );
-      case EXTERNAL_API_REST_INTEGRATION_TABS.STATUS_CHECK_CONFIGURATION:
-        return (
-          <>
-            <div className={"mx-3 mt-2"}>
-              <H5FieldSubHeader
-                subheaderText={"Status Check API Request Configuration"}
-              />
-              <Row>
-                <Col lg={12}>
-                  <EndpointField
-                    model={externalRestApiIntegrationModel}
-                    fieldName={"statusEndpointId"}
-                    toolId={externalRestApiIntegrationModel?.getData("toolId")}
-                    endpointId={externalRestApiIntegrationModel?.getData("statusEndpointId")}
-                  />
-                </Col>
-                <Col xs={12}>
-                  <JsonField
-                    dataObject={externalRestApiIntegrationModel}
-                    fieldName={"statusEndpointRequestParameters"}
-                  />
-                </Col>
-              </Row>
-            </div>
-            <div className={"mx-3 mt-2"}>
-              <Row>
-                <Col xs={12}>
-                  <EndpointResponseEvaluationRulesField
-                    model={externalRestApiIntegrationModel}
-                    fieldName={"statusEndpointResponseEvaluationRules"}
-                    successRuleType={"Successful Completion"}
-                    inProgressRuleType={"In Progress"}
-                  />
-                </Col>
-              </Row>
-            </div>
-          </>
-        );
+    case EXTERNAL_API_REST_INTEGRATION_TABS.CONNECTION_VALIDATION_CONFIGURATION:
+      return (
+        <>
+          <div className={"mx-3 mt-2"}>
+            <H5FieldSubHeader
+              subheaderText={"Connection Validation API Request Configuration"}
+            />
+            <Row>
+              <Col lg={6}>
+                <BooleanField
+                  dataObject={externalRestApiIntegrationModel}
+                  fieldName={"useConnectionCheck"}
+                />
+              </Col>
+              <Col lg={12}>
+                <EndpointField
+                  model={externalRestApiIntegrationModel}
+                  fieldName={"connectionCheckEndpointId"}
+                  toolId={externalRestApiIntegrationModel?.getData("toolId")}
+                  endpointId={externalRestApiIntegrationModel?.getData("connectionCheckEndpointId")}
+                />
+              </Col>
+              <Col xs={12}>
+                <JsonField
+                  dataObject={externalRestApiIntegrationModel}
+                  fieldName={"connectionCheckRequestParameters"}
+                />
+              </Col>
+            </Row>
+          </div>
+          <div className={"mx-3 mt-2"}>
+            <H5FieldSubHeader
+              subheaderText={"Connection Validation Response Evaluation Rules"}
+              className={"mb-3"}
+            />
+            <Row>
+              <Col xs={12}>
+                <EndpointResponseEvaluationRulesField
+                  model={externalRestApiIntegrationModel}
+                  fieldName={"connectionCheckResponseEvaluationRules"}
+                  successRuleType={"Successful Connection validation"}
+                />
+              </Col>
+            </Row>
+          </div>
+        </>
+      );
+    case EXTERNAL_API_REST_INTEGRATION_TABS.CALL_OPERATION_CONFIGURATION:
+      return (
+        <>
+          <div className={"mx-3 mt-2"}>
+            <H5FieldSubHeader
+              subheaderText={"Call Operation API Request Configuration"}
+            />
+            <Row>
+              <Col lg={12}>
+                <EndpointField
+                  model={externalRestApiIntegrationModel}
+                  fieldName={"runEndpointId"}
+                  toolId={externalRestApiIntegrationModel?.getData("toolId")}
+                  endpointId={externalRestApiIntegrationModel?.getData("runEndpointId")}
+                />
+              </Col>
+              <Col xs={12}>
+                <JsonField
+                  dataObject={externalRestApiIntegrationModel}
+                  fieldName={"runEndpointRequestParameters"}
+                />
+              </Col>
+            </Row>
+          </div>
+          <div className={"mx-3 mt-2"}>
+            <H5FieldSubHeader
+              subheaderText={"Call Operation Response Evaluation Rules"}
+              className={"mb-3"}
+            />
+            <Row>
+              <Col xs={12}>
+                <EndpointResponseEvaluationRulesField
+                  model={externalRestApiIntegrationModel}
+                  fieldName={"runEndpointResponseEvaluationRules"}
+                  successRuleType={"Successful Call Operation"}
+                />
+              </Col>
+            </Row>
+          </div>
+        </>
+      );
+    case EXTERNAL_API_REST_INTEGRATION_TABS.STATUS_CHECK_CONFIGURATION:
+      return (
+        <>
+          <div className={"mx-3 mt-2"}>
+            <H5FieldSubHeader
+              subheaderText={"Status Check API Request Configuration"}
+            />
+            <Row>
+              <Col lg={12}>
+                <EndpointField
+                  model={externalRestApiIntegrationModel}
+                  fieldName={"statusEndpointId"}
+                  toolId={externalRestApiIntegrationModel?.getData("toolId")}
+                  endpointId={externalRestApiIntegrationModel?.getData("statusEndpointId")}
+                />
+              </Col>
+              <Col xs={12}>
+                <JsonField
+                  dataObject={externalRestApiIntegrationModel}
+                  fieldName={"statusEndpointRequestParameters"}
+                />
+              </Col>
+            </Row>
+          </div>
+          <div className={"mx-3 mt-2"}>
+            <Row>
+              <Col xs={12}>
+                <EndpointResponseEvaluationRulesField
+                  model={externalRestApiIntegrationModel}
+                  fieldName={"statusEndpointResponseEvaluationRules"}
+                  successRuleType={"Successful Completion"}
+                  inProgressRuleType={"In Progress"}
+                />
+              </Col>
+            </Row>
+          </div>
+        </>
+      );
     }
   };
 

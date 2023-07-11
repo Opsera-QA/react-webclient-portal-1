@@ -111,14 +111,14 @@ function GitToGitMergeSyncTaskSummaryCard({ taskConfigurationModel, isLoading })
           </Col>) : null
         }
         {taskConfigurationModel?.getData("isSalesforce") !== true ? 
-        (
-          <Col xs={6}>
-            <TextFieldBase
-              dataObject={taskConfigurationModel}
-              fieldName={"sourceBranch"}
-            />
-          </Col>
-        ) : null }        
+          (
+            <Col xs={6}>
+              <TextFieldBase
+                dataObject={taskConfigurationModel}
+                fieldName={"sourceBranch"}
+              />
+            </Col>
+          ) : null }        
         <Col xs={6}>
           <BooleanField
             dataObject={taskConfigurationModel}

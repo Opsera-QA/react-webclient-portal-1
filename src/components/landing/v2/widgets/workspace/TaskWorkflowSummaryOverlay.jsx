@@ -13,7 +13,7 @@ import useGetPollingTaskModelById from "hooks/workflow/tasks/useGetPollingTaskMo
 import OverlayContainer from "components/common/overlays/OverlayContainer";
 import {orchestrationHelper} from "temp-library-components/helpers/orchestration/orchestration.helper";
 import TaskOrchestrationProgressBarBase
-  from "temp-library-components/fields/orchestration/progress/TaskOrchestrationProgressBarBase";
+from "temp-library-components/fields/orchestration/progress/TaskOrchestrationProgressBarBase";
 import ViewTaskButton from "temp-library-components/button/task/ViewTaskButton";
 import ViewTaskLogsButton from "temp-library-components/button/task/ViewTaskLogsButton";
 import {PlacementHelperDiv} from "@opsera/react-vanity-set";
@@ -24,12 +24,12 @@ import {
 } from "components/common/helpers/icon-helpers";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import OrchestrationLastRunDurationDataBlock
-  from "temp-library-components/fields/orchestration/metrics/OrchestrationLastRunDurationDataBlock";
+from "temp-library-components/fields/orchestration/metrics/OrchestrationLastRunDurationDataBlock";
 import OrchestrationAverageRunDurationDataBlock
-  from "temp-library-components/fields/orchestration/metrics/OrchestrationAverageRunDurationDataBlock";
+from "temp-library-components/fields/orchestration/metrics/OrchestrationAverageRunDurationDataBlock";
 import useGetTaskRunMetricsById from "hooks/workflow/tasks/orchestration/metrics/useGetTaskRunMetricsById";
 import OrchestrationNoRunsDataBlock
-  from "temp-library-components/fields/orchestration/metrics/OrchestrationNoRunsDataBlock";
+from "temp-library-components/fields/orchestration/metrics/OrchestrationNoRunsDataBlock";
 
 // TODO: Should this be two separate panels?
 export default function TaskWorkflowSummaryOverlay({ taskId }) {

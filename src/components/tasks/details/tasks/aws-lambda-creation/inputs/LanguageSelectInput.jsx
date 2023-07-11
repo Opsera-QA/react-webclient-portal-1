@@ -7,15 +7,15 @@ import axios from "axios";
 import AWSLambdaFunctionActions from "../aws-lambda-actions";
 
 function LanguageSelectInput({
-                               fieldName,
-                               dataObject,
-                               setDataObject,
-                               disabled,
-                               textField,
-                               valueField,
-                               toolConfigId,
-                               pipelineId,
-                             }) {
+  fieldName,
+  dataObject,
+  setDataObject,
+  disabled,
+  textField,
+  valueField,
+  toolConfigId,
+  pipelineId,
+}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [languages, setLanguages] = useState([]);

@@ -2,7 +2,7 @@ import React from "react";
 import CardHeaderBase from "temp-library-components/cards/CardHeaderBase";
 import PropTypes from "prop-types";
 import OrchestrationStateFieldBase
-  from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
+from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function PreferredTaskCardHeader(

@@ -12,19 +12,19 @@ function AnchoreIntegratorPipelineToolSelectInput({className, fieldName, model, 
   };
 
   return (
-     <RoleRestrictedToolByIdentifierInputBase
-       toolIdentifier={"anchore-integrator"}
-       toolFriendlyName={"Anchore Integrator"}
-       fieldName={fieldName}
-       placeholderText={"Select Anchore Integrator Tool"}
-       configurationRequired={true}
-       model={model}
-       setModel={setModel}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-       className={className}
-       fields={["_id", "configuration", "name", "tool_identifier"]}
-     />
+    <RoleRestrictedToolByIdentifierInputBase
+      toolIdentifier={"anchore-integrator"}
+      toolFriendlyName={"Anchore Integrator"}
+      fieldName={fieldName}
+      placeholderText={"Select Anchore Integrator Tool"}
+      configurationRequired={true}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+      className={className}
+      fields={["_id", "configuration", "name", "tool_identifier"]}
+    />
   );
 }
 

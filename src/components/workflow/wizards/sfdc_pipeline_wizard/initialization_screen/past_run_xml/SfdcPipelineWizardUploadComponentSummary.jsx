@@ -8,7 +8,7 @@ const SfdcPipelineWizardUploadComponentSummary = ({pipelineWizardModel}) => (
     <span>
     Components will be Retrieved from 
       {pipelineWizardModel.getData('isOrgToOrg') === true 
-      ?
+        ?
         <>
           <span>{` Salesforce Org : `}</span>
           <ToolNameFieldDisplayer 
@@ -16,7 +16,7 @@ const SfdcPipelineWizardUploadComponentSummary = ({pipelineWizardModel}) => (
             loadToolInNewWindow={true} 
           />
         </>
-      : ` ${pipelineWizardModel.getData('repository')} Git repository and ${pipelineWizardModel.getData('gitBranch')} branch`}
+        : ` ${pipelineWizardModel.getData('repository')} Git repository and ${pipelineWizardModel.getData('gitBranch')} branch`}
     </span>
   </div>
 );

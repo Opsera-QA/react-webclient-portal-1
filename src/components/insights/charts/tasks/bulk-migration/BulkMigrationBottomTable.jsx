@@ -17,7 +17,7 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BulkMigrationActionableInsightOverlay
-  from "./actionable_insights/BulkMigrationActionableInsightOverlay";
+from "./actionable_insights/BulkMigrationActionableInsightOverlay";
 import { bulkMigrationMetadata } from "./bulkMigration.metadata";
 import TaskExportReportButton from "../TaskExportReportButton";
 import ExportReportPanel from "../ExportReportPanel";

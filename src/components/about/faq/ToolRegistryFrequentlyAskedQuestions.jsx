@@ -4,10 +4,10 @@ import {ReactMarkdownWrapper} from "@opsera/react-vanity-set";
 
 const ToolRegistryFrequentlyAskedQuestions = () => {
   return (
-      <ReactMarkdownWrapper
-        markdownFile={toolregistryFaq}
-        className={"m-4"}
-      />
+    <ReactMarkdownWrapper
+      markdownFile={toolregistryFaq}
+      className={"m-4"}
+    />
   );
 };
 

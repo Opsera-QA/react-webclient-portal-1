@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedSlackToolSelectInput
-  from "components/common/list_of_values_input/tools/slack/RoleRestrictedSlackToolSelectInput";
+from "components/common/list_of_values_input/tools/slack/RoleRestrictedSlackToolSelectInput";
 
 function SlackStepNotificationToolInput({visible, dataObject, setDataObject, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
@@ -26,7 +26,7 @@ function SlackStepNotificationToolInput({visible, dataObject, setDataObject, dis
       placeholderText={getPlaceholderText()}
       visible={visible}
       disabled={disabled || dataObject.getData("enabled") === false}
-   />
+    />
   );
 }
 

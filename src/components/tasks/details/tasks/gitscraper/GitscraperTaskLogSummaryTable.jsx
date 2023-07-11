@@ -6,10 +6,10 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import gitScraperReportMetaData from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/metadata/gitScraperReport.metadata";
 import {
-    getTableTextColumn,
-    getTableDateTimeColumn,
-    getGitCustodianScmLinkIconColumnDefinition,
-    getPathDefinition,
+  getTableTextColumn,
+  getTableDateTimeColumn,
+  getGitCustodianScmLinkIconColumnDefinition,
+  getPathDefinition,
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";

@@ -24,16 +24,16 @@ function SnaplogicScmRepositorySelectInput({model, setModel, disabled}) {
   };
 
   return (
-     <RepositorySelectInput
-       fieldName={"repoId"}
-       service={model?.getData("service")}
-       gitToolId={model?.getData("gitToolId")}
-       dataObject={model}
-       setDataObject={setModel}
-       setDataFunction={setDataFunction}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-     />
+    <RepositorySelectInput
+      fieldName={"repoId"}
+      service={model?.getData("service")}
+      gitToolId={model?.getData("gitToolId")}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+    />
   );
 }
 

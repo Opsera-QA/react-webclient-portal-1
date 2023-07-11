@@ -39,18 +39,18 @@ function GitScraperScmToolTypeSelectInput({model, setModel, isLoading, disabled}
   };
 
   return (
-     <SelectInputBase
-       fieldName={"service"}
-       dataObject={model}
-       setDataObject={setModel}
-       selectOptions={SCRAPER_SCM_TOOL_LIST}
-       valueField={"value"}
-       textField={"name"}
-       placeholderText={"Select a Tool Type"}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-       busy={isLoading}
-     />
+    <SelectInputBase
+      fieldName={"service"}
+      dataObject={model}
+      setDataObject={setModel}
+      selectOptions={SCRAPER_SCM_TOOL_LIST}
+      valueField={"value"}
+      textField={"name"}
+      placeholderText={"Select a Tool Type"}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+      busy={isLoading}
+    />
   );
 }
 

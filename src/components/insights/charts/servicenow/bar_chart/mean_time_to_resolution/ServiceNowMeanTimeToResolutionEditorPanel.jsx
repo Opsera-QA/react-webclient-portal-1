@@ -5,19 +5,19 @@ import MetricDateRangeFilterInput from "components/common/inputs/metric/filters/
 import modelHelpers from "components/common/model/modelHelpers";
 import {serviceNowMeanTimeToResolutionMetadata} from "./serviceNowMeanTimeToResolution.metadata";
 import MetricServiceNowPrioritiesMultiSelectFilter
-  from "components/common/inputs/metric/filters/service_now/MetricServiceNowPrioritiesMultiSelectFilter";
+from "components/common/inputs/metric/filters/service_now/MetricServiceNowPrioritiesMultiSelectFilter";
 import MetricServiceNowToolsSelectInput
-  from "../../../../../common/inputs/metric/filters/service_now/MetricServiceNowToolsSelectInput";
+from "../../../../../common/inputs/metric/filters/service_now/MetricServiceNowToolsSelectInput";
 import MetricServiceNowAssignmentGroupSelectInput
-  from "../../../../../common/inputs/metric/filters/service_now/MetricServiceNowAssignmentGroupSelectInput";
+from "../../../../../common/inputs/metric/filters/service_now/MetricServiceNowAssignmentGroupSelectInput";
 import MetricServiceNowServiceOfferingsSelectInput
-  from "../../../../../common/inputs/metric/filters/service_now/MetricServiceNowServiceOfferingsSelectInput";
+from "../../../../../common/inputs/metric/filters/service_now/MetricServiceNowServiceOfferingsSelectInput";
 import ServiceNowToolSelectInput
-  from "../../../../../common/list_of_values_input/insights/charts/servicenow/ServiceNowToolSelectInput";
+from "../../../../../common/list_of_values_input/insights/charts/servicenow/ServiceNowToolSelectInput";
 import MetricServiceNowConfigurationItemsSelectInput
-  from "../../../../../common/inputs/metric/filters/service_now/MetricServiceNowConfigurationItemsSelectInput";
+from "../../../../../common/inputs/metric/filters/service_now/MetricServiceNowConfigurationItemsSelectInput";
 import MetricServiceNowBusinessServicesSelectInput
-  from "../../../../../common/inputs/metric/filters/service_now/MetricServiceNowBusinessServicesSelectInput";
+from "../../../../../common/inputs/metric/filters/service_now/MetricServiceNowBusinessServicesSelectInput";
 
 function ServiceNowMeanTimeToResolutionEditorPanel(
   {

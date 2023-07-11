@@ -13,10 +13,10 @@ import {
   platformSettingFeatureMetadata
 } from "components/admin/platform_settings/details/features/platformSettingFeature.metadata";
 import NewPlatformSettingFeatureOverlay
-  from "components/admin/platform_settings/details/features/NewPlatformSettingFeatureOverlay";
+from "components/admin/platform_settings/details/features/NewPlatformSettingFeatureOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import platformSettingFeatureConstants
-  from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
+from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
 
 export default function PlatformSettingFeatureTable(
   {

@@ -2,11 +2,11 @@ import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import RoleRestrictedJFrogArtifactoryDockerToolSelectInput
-  from "components/common/list_of_values_input/tools/jfrog/RoleRestrictedJFrogArtifactoryDockerToolSelectInput";
+from "components/common/list_of_values_input/tools/jfrog/RoleRestrictedJFrogArtifactoryDockerToolSelectInput";
 import JFrogRepositoryTypeSelectInput 
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_docker/inputs/JFrogRepositoryTypeSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_docker/inputs/JFrogRepositoryTypeSelectInput";
 import JfrogRepoSelectInput 
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_docker/inputs/JfrogRepoSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_docker/inputs/JfrogRepoSelectInput";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 
 
@@ -26,29 +26,29 @@ function DockerCliJFrogDetailsInputForm({ model, setModel, stepId, plan }) {
       return null;
     }
     switch (model?.getData("type")) {
-      case "PORTPERREPO":
-        return (
-          <TextInputBase 
-            dataObject={model}             
-            setDataObject={setModel} 
-            fieldName="port"
-          />
-        );
-      default:
-        return (
-          <JfrogRepoSelectInput
-            fieldName={"repositoryName"}
-            dataObject={model}
-            setDataObject={setModel}
-            options={listOfSteps}
-            disabled={model && model.getData("jfrogToolConfigId")?.length === 0}
-            tool_prop={
-              model && model.getData("jfrogToolConfigId")
-                ? model.getData("jfrogToolConfigId")
-                : ""
-            }
-          />
-        );
+    case "PORTPERREPO":
+      return (
+        <TextInputBase 
+          dataObject={model}             
+          setDataObject={setModel} 
+          fieldName="port"
+        />
+      );
+    default:
+      return (
+        <JfrogRepoSelectInput
+          fieldName={"repositoryName"}
+          dataObject={model}
+          setDataObject={setModel}
+          options={listOfSteps}
+          disabled={model && model.getData("jfrogToolConfigId")?.length === 0}
+          tool_prop={
+            model && model.getData("jfrogToolConfigId")
+              ? model.getData("jfrogToolConfigId")
+              : ""
+          }
+        />
+      );
     }
   };
 

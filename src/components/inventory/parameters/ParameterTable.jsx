@@ -7,7 +7,7 @@ import VanitySelectionTable from "components/common/table/VanitySelectionTable";
 import VanityDataContainer from "components/common/containers/VanityDataContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import customParametersMetadata
-  from "@opsera/definitions/constants/registry/custom_parameters/customParameters.metadata";
+from "@opsera/definitions/constants/registry/custom_parameters/customParameters.metadata";
 import CustomParameterRoleHelper from "@opsera/know-your-role/roles/registry/parameters/customParameterRole.helper";
 import useGetParameterModel from "components/inventory/parameters/hooks/useGetParameterModel";
 import {

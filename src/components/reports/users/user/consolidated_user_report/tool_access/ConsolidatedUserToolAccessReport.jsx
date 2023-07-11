@@ -8,7 +8,7 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import ConsolidatedUserReportToolAccessTable
-  from "components/reports/users/user/consolidated_user_report/tool_access/ConsolidatedUserReportToolAccessTable";
+from "components/reports/users/user/consolidated_user_report/tool_access/ConsolidatedUserReportToolAccessTable";
 import genericFilterMetadata from "components/common/filters/generic-filter-metadata";
 import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
 

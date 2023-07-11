@@ -8,7 +8,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import LdapOrganizationOpseraUserSelectInput
-  from "components/common/list_of_values_input/admin/accounts/ldap_accounts/LdapOrganizationOpseraUserSelectInput";
+from "components/common/list_of_values_input/admin/accounts/ldap_accounts/LdapOrganizationOpseraUserSelectInput";
 import axios from "axios";
 
 function LdapOrganizationEditorPanel({ ldapOrganizationData, handleClose }) {

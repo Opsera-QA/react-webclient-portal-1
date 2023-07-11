@@ -26,23 +26,23 @@ function PipelinesHelpDocumentation({pipelineRoleDefinitions}) {
                 <li>Filter - Using filter icon, filter pipeline by status, tag or owner.</li>
               </ul></li>
             <li>Once the pipeline is located, click on it to view more details and options:
-            <ul>
-              <li>To run the pipeline, select <b>Start Pipeline</b> button.</li>
-              <li>To access logs from past pipeline logs, view Pipeline Logs in Summary tab.</li>
-              <li>To edit pipeline details including Type, Tags an RBAC, navigate to Summary tab.</li>
-              <li>To edit pipeline configurations, navigate to Workflow.</li>
-            </ul></li>
+              <ul>
+                <li>To run the pipeline, select <b>Start Pipeline</b> button.</li>
+                <li>To access logs from past pipeline logs, view Pipeline Logs in Summary tab.</li>
+                <li>To edit pipeline details including Type, Tags an RBAC, navigate to Summary tab.</li>
+                <li>To edit pipeline configurations, navigate to Workflow.</li>
+              </ul></li>
           </ol>
           <div><h5>Create a new pipeline:</h5></div>
-            <ol>
-              <li>Click on the Catalog tab or <b>+ New Pipeline</b> button to be directed to the Marketplace where you can choose a pipeline template from the publicly available ones provided by Opsera. Navigate to Private if you wish to choose a pipeline template from your organization’s private catalog. </li>
-              <li>Once you’ve chosen the template you wish to build a pipeline from, click the <b>Create Pipeline</b> button.</li>
-              <li>In the Summary view, provide a unique name and any other required information for the new pipeline including Tags, Type, and any Access Rules. Here you can also access Pipeline Logs from pipeline runs.</li>
-              <li>In the Workflow view, configure pipeline steps by clicking on the gear icon within the step. This will take you to the step configuration form.</li>
-              <li>To add or delete pipeline steps, select the <b>Edit Workflow</b> button.</li>
-            </ol>
-          </div>
+          <ol>
+            <li>Click on the Catalog tab or <b>+ New Pipeline</b> button to be directed to the Marketplace where you can choose a pipeline template from the publicly available ones provided by Opsera. Navigate to Private if you wish to choose a pipeline template from your organization’s private catalog. </li>
+            <li>Once you’ve chosen the template you wish to build a pipeline from, click the <b>Create Pipeline</b> button.</li>
+            <li>In the Summary view, provide a unique name and any other required information for the new pipeline including Tags, Type, and any Access Rules. Here you can also access Pipeline Logs from pipeline runs.</li>
+            <li>In the Workflow view, configure pipeline steps by clicking on the gear icon within the step. This will take you to the step configuration form.</li>
+            <li>To add or delete pipeline steps, select the <b>Edit Workflow</b> button.</li>
+          </ol>
         </div>
+      </div>
 
     );
   };

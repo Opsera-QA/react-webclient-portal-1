@@ -7,7 +7,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import PolicyRoleHelper from "@opsera/know-your-role/roles/settings/policies/policyRole.helper";
 import {useHistory} from "react-router-dom";
 import usePolicyAdministrationActions
-  from "hooks/settings/organization_settings/policies/usePolicyAdministrationActions";
+from "hooks/settings/organization_settings/policies/usePolicyAdministrationActions";
 
 export default function DeleteOrganizationAccountPolicyActionBarButton(
   {

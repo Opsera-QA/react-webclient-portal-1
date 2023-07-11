@@ -88,7 +88,7 @@ function SfdxRuleSetSelectInput({
       const existingRule = model?.getData(fieldName);
 
       if (
-          Array.isArray(result) &&
+        Array.isArray(result) &&
           existingRule != null &&
           existingRule !== ""
       ) {
@@ -96,7 +96,7 @@ function SfdxRuleSetSelectInput({
 
         if (existingRepositoryExists == null) {
           setErrorMessage(
-              "Previously saved rule is no longer available. It may have been deleted. Please select another rule from the list.",
+            "Previously saved rule is no longer available. It may have been deleted. Please select another rule from the list.",
           );
         }
       }

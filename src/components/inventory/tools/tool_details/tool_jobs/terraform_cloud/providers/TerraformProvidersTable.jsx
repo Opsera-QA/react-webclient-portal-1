@@ -14,12 +14,12 @@ import {AuthContext} from "contexts/AuthContext";
 import modelHelpers from "components/common/model/modelHelpers";
 
 function TerraformProvidersTable({
-    toolId,
-    organizationName,
-    terraformProvidersList,
-    setTerraformProvidersList,
-    setTerraformProvidersModel
-  }) {
+  toolId,
+  organizationName,
+  terraformProvidersList,
+  setTerraformProvidersList,
+  setTerraformProvidersModel
+}) {
 
   const fields = terraformProvidersMetadata.fields;
   const toastContext = useContext(DialogToastContext);

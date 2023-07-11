@@ -5,9 +5,9 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import mergeSyncTaskWizardActions
-  from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
+from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 import MergeSyncTaskWizardCommitSelector
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitSelector";
+from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitSelector";
 
 const MergeSyncTaskWizardCommitSelectionScreen = ({
   wizardModel,

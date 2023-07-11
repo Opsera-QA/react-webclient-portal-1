@@ -74,13 +74,13 @@ function TopFiveDashboards({ loadDashboardById }) {
       <div className="row">
         <div className="col-12">
           <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
-               aria-orientation="vertical">
+            aria-orientation="vertical">
 
             {dashboardsList && dashboardsList.length > 0 && dashboardsList.map((item, key) => (
               <a key={key} className="nav-link pointer" data-toggle="pill"
-                 role="tab" aria-controls="v-pills-home" aria-selected="true" onClick={() => {
-                loadDashboardById(item._id);
-              }}>{item.name.substring(0, 50)}
+                role="tab" aria-controls="v-pills-home" aria-selected="true" onClick={() => {
+                  loadDashboardById(item._id);
+                }}>{item.name.substring(0, 50)}
                 {item.name.length > 30 && <>...</>}
                 {new Date(item.createdAt) > d &&
                 <span className={"opsera-yellow"} style={{ fontStyle: "italic", fontSize: "smaller", paddingLeft:"5px"}}>New</span>

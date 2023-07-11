@@ -17,26 +17,26 @@ function SiteRoleManagementSubNavigationBar({ activeTab }) {
     }
 
     switch (tabSelection) {
-      case "siteRoles":
-        history.push(`/settings/site-roles`);
-        return;
+    case "siteRoles":
+      history.push(`/settings/site-roles`);
+      return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-      case "siteRoleViewer":
-        return (
-          <NavigationTab
-            icon={faServer}
-            tabName={"siteRoleViewer"}
-            handleTabClick={handleTabClick}
-            activeTab={activeTab}
-            tabText={"Site Role Viewer"}
-          />
-        );
-      default:
-        return null;
+    case "siteRoleViewer":
+      return (
+        <NavigationTab
+          icon={faServer}
+          tabName={"siteRoleViewer"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Site Role Viewer"}
+        />
+      );
+    default:
+      return null;
     }
   };
 

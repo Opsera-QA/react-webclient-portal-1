@@ -4,7 +4,7 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import JiraProjectsDetailPanel
-  from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/JiraProjectsDetailPanel";
+from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/JiraProjectsDetailPanel";
 import ActionBarDestructiveDeleteButton from "components/common/actions/buttons/ActionBarDestructiveDeleteButton";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";

@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import JenkinsDependencyMultiSelectInput
-  from "components/common/list_of_values_input/tools/jenkins/dependencies/JenkinsDependencyMultiSelectInput";
+from "components/common/list_of_values_input/tools/jenkins/dependencies/JenkinsDependencyMultiSelectInput";
 import {getJenkinsDependencies}
-  from "components/common/list_of_values_input/tools/jenkins/dependencies/jenkinsDependencyConstants";
+from "components/common/list_of_values_input/tools/jenkins/dependencies/jenkinsDependencyConstants";
 
 const excludeArr = ["SFDC DATA TRANSFORM"];
 

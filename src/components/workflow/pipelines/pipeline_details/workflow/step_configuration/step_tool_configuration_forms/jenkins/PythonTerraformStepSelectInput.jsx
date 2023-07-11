@@ -50,26 +50,26 @@ function PythonTerraformStepSelectInput({ fieldName, dataObject, setDataObject, 
     }
   };
 
-const formatStepOptions = (plan, stepId) => {
-  return plan.slice(
-    0,
-    plan.findIndex((element) => element._id === stepId)
-  );
-};
+  const formatStepOptions = (plan, stepId) => {
+    return plan.slice(
+      0,
+      plan.findIndex((element) => element._id === stepId)
+    );
+  };
 
 
   return (
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        selectOptions={terraformList ? terraformList : []}
-        busy={isPythonTerraformSearching}
-        valueField={valueField}
-        textField={textField}
-        placeholderText={placeholder}
-        disabled={disabled || isLoading || (!isLoading && (terraformList == null || terraformList.length === 0))}
-      />
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      selectOptions={terraformList ? terraformList : []}
+      busy={isPythonTerraformSearching}
+      valueField={valueField}
+      textField={textField}
+      placeholderText={placeholder}
+      disabled={disabled || isLoading || (!isLoading && (terraformList == null || terraformList.length === 0))}
+    />
   );
 }
 

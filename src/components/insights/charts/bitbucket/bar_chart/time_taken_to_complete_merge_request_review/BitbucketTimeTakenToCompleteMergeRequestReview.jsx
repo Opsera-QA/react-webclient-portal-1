@@ -83,15 +83,15 @@ function BitbucketTimeTakenToCompleteMergeRequestReview({
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Reviewer", "Time (Hours)", 
-                      true, false, "subString", "values")}
+            true, false, "subString", "values")}
           {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
           {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}
           tooltip={({ indexValue, color, value }) => <ChartTooltip 
-                                        titles = {["Reviewer", "Merge Request Time Taken"]}
-                                        values = {[indexValue, value]}
-                                        style = {false}
-                                        color = {color} />}
+            titles = {["Reviewer", "Merge Request Time Taken"]}
+            values = {[indexValue, value]}
+            style = {false}
+            color = {color} />}
         />
       </div>
     );

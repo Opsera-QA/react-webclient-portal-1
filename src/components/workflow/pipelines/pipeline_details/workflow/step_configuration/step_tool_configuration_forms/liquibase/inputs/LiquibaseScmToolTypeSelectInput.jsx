@@ -34,18 +34,18 @@ function LiquibaseScmToolTypeSelectInput({model, setModel, isLoading, disabled})
   };
 
   return (
-     <SelectInputBase
-       fieldName={"service"}
-       dataObject={model}
-       setDataObject={setModel}
-       selectOptions={SCM_TOOL_LIST}
-       valueField={"value"}
-       textField={"name"}
-       placeholderText={"Select a SCM Type"}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-       busy={isLoading}
-     />
+    <SelectInputBase
+      fieldName={"service"}
+      dataObject={model}
+      setDataObject={setModel}
+      selectOptions={SCM_TOOL_LIST}
+      valueField={"value"}
+      textField={"name"}
+      placeholderText={"Select a SCM Type"}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+      busy={isLoading}
+    />
   );
 }
 

@@ -127,58 +127,58 @@ function InformaticaIdqStepConfiguration({
 
   const getDynamicFields = () => {
     switch (informaticaIdqStepConfigurationDto.getData("jobType")) {
-      case "export":
-        return (
-          <div>
-            {getSourceSelection()}
-            <TextInputBase
-              fieldName={"sourceProject"}
-              dataObject={informaticaIdqStepConfigurationDto}
-              setDataObject={setInformaticaIdqStepConfigurationDataDto}
-            />
-            <MultiTextInputBase
-                type={"sourcePaths"}
-                fieldName={"sourcePaths"}
-                setDataObject={setInformaticaIdqStepConfigurationDataDto}
-                dataObject={informaticaIdqStepConfigurationDto}
-            />
-          </div>
-        );
-      case "import":
-        return (
-          <div>
-            <SelectInputBase
-              setDataObject={setInformaticaIdqStepConfigurationDataDto}
-              textField={"name"}
-              valueField={"_id"}
-              dataObject={informaticaIdqStepConfigurationDto}
-              filter={"contains"}
-              selectOptions={listOfSteps ? listOfSteps : []}
-              fieldName={"exportStepId"}
-            />
-            <TextInputBase
-              fieldName={"targetProject"}
-              dataObject={informaticaIdqStepConfigurationDto}
-              setDataObject={setInformaticaIdqStepConfigurationDataDto}
-            />
-          </div>
-        );
-      case "deploy":
-        return (
-          <div>
-            <SelectInputBase
-              setDataObject={setInformaticaIdqStepConfigurationDataDto}
-              textField={"name"}
-              valueField={"_id"}
-              dataObject={informaticaIdqStepConfigurationDto}
-              filter={"contains"}
-              selectOptions={listOfSteps ? listOfSteps : []}
-              fieldName={"importStepId"}
-            />
-          </div>
-        );
-      default:
-        return <></>;
+    case "export":
+      return (
+        <div>
+          {getSourceSelection()}
+          <TextInputBase
+            fieldName={"sourceProject"}
+            dataObject={informaticaIdqStepConfigurationDto}
+            setDataObject={setInformaticaIdqStepConfigurationDataDto}
+          />
+          <MultiTextInputBase
+            type={"sourcePaths"}
+            fieldName={"sourcePaths"}
+            setDataObject={setInformaticaIdqStepConfigurationDataDto}
+            dataObject={informaticaIdqStepConfigurationDto}
+          />
+        </div>
+      );
+    case "import":
+      return (
+        <div>
+          <SelectInputBase
+            setDataObject={setInformaticaIdqStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"_id"}
+            dataObject={informaticaIdqStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={listOfSteps ? listOfSteps : []}
+            fieldName={"exportStepId"}
+          />
+          <TextInputBase
+            fieldName={"targetProject"}
+            dataObject={informaticaIdqStepConfigurationDto}
+            setDataObject={setInformaticaIdqStepConfigurationDataDto}
+          />
+        </div>
+      );
+    case "deploy":
+      return (
+        <div>
+          <SelectInputBase
+            setDataObject={setInformaticaIdqStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"_id"}
+            dataObject={informaticaIdqStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={listOfSteps ? listOfSteps : []}
+            fieldName={"importStepId"}
+          />
+        </div>
+      );
+    default:
+      return <></>;
     }
   };
 

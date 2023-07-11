@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import GitToolCreationSelectionOptionInput from "components/wizard/free_trial/workflows/flows/tools/git/GitToolCreationSelectionOptionInput";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import CreateWorkflowWizardCreateGithubToolEditorPanel
-  from "components/wizard/free_trial/workflows/flows/tools/git/github/CreateWorkflowWizardCreateGithubToolEditorPanel";
+from "components/wizard/free_trial/workflows/flows/tools/git/github/CreateWorkflowWizardCreateGithubToolEditorPanel";
 import CreateWorkflowWizardCreateGitlabToolEditorPanel
-  from "components/wizard/free_trial/workflows/flows/tools/git/gitlab/CreateWorkflowWizardCreateGitlabToolEditorPanel";
+from "components/wizard/free_trial/workflows/flows/tools/git/gitlab/CreateWorkflowWizardCreateGitlabToolEditorPanel";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import CreateWorkflowWizardRegisterAccountContainer
-  from "components/wizard/free_trial/workflows/flows/tools/CreateWorkflowWizardRegisterAccountContainer";
+from "components/wizard/free_trial/workflows/flows/tools/CreateWorkflowWizardRegisterAccountContainer";
 
 export default function CreateWorkflowWizardCreateGitToolScreenBase(
   {
@@ -36,32 +36,32 @@ export default function CreateWorkflowWizardCreateGitToolScreenBase(
 
   const getEditorPanel = () => {
     switch (gitToolOption) {
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
-        return (
-          <CreateWorkflowWizardCreateGithubToolEditorPanel
-            gitToolModel={gitToolModel}
-            setGitToolModel={setGitToolModel}
-            setGitToolId={setGitToolId}
-            onSuccessFunction={onSuccessFunction}
-            gitToolId={gitToolId}
-            backButtonFunction={backButtonFunction}
-            setButtonContainer={setButtonContainer}
-            toolType={toolType}
-          />
-        );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
-        return (
-          <CreateWorkflowWizardCreateGitlabToolEditorPanel
-            gitToolModel={gitToolModel}
-            setGitToolModel={setGitToolModel}
-            setGitToolId={setGitToolId}
-            onSuccessFunction={onSuccessFunction}
-            gitToolId={gitToolId}
-            backButtonFunction={backButtonFunction}
-            setButtonContainer={setButtonContainer}
-            toolType={toolType}
-          />
-        );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
+      return (
+        <CreateWorkflowWizardCreateGithubToolEditorPanel
+          gitToolModel={gitToolModel}
+          setGitToolModel={setGitToolModel}
+          setGitToolId={setGitToolId}
+          onSuccessFunction={onSuccessFunction}
+          gitToolId={gitToolId}
+          backButtonFunction={backButtonFunction}
+          setButtonContainer={setButtonContainer}
+          toolType={toolType}
+        />
+      );
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
+      return (
+        <CreateWorkflowWizardCreateGitlabToolEditorPanel
+          gitToolModel={gitToolModel}
+          setGitToolModel={setGitToolModel}
+          setGitToolId={setGitToolId}
+          onSuccessFunction={onSuccessFunction}
+          gitToolId={gitToolId}
+          backButtonFunction={backButtonFunction}
+          setButtonContainer={setButtonContainer}
+          toolType={toolType}
+        />
+      );
     }
   };
 

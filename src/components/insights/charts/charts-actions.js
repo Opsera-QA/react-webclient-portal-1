@@ -92,8 +92,8 @@ chartsActions.getSonarUnitTestsMetrics = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
@@ -145,8 +145,8 @@ chartsActions.getGithubPullRequestsMetrics = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
@@ -198,8 +198,8 @@ chartsActions.getGithubTotalCommitsPerContributorsAndRepositories = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
@@ -248,8 +248,8 @@ chartsActions.getGithubTotalCommitsMetrics = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     githubRepository: githubRepository,
     githubBranch: githubBranch,
@@ -468,8 +468,8 @@ chartsActions.getGitScraperMetrics = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
@@ -521,8 +521,8 @@ chartsActions.getGitScraperIssues = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
@@ -576,8 +576,8 @@ chartsActions.getGitScraperCleanRepos = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
@@ -632,8 +632,8 @@ chartsActions.getGitScraperIssuesActionableInsights = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
@@ -677,8 +677,8 @@ chartsActions.getMetadataInfo = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -720,8 +720,8 @@ chartsActions.getDeploymentAnalytics = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -762,8 +762,8 @@ chartsActions.getSfdcMetrics = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
   };
 
@@ -862,8 +862,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     jenkinsResult: jenkinsResult,
     jenkinsJobUrl: jenkinsJobUrl,
     jenkinsBuildNumber: jenkinsBuildNumber,
@@ -954,8 +954,8 @@ chartsActions.getGithubListOfRepositories = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),

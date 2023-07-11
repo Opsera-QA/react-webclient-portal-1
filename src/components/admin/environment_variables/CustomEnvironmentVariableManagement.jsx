@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import CustomEnvironmentVariablesSubNavigationBar
-  from "components/admin/environment_variables/CustomEnvironmentVariablesSubNavigationBar";
+from "components/admin/environment_variables/CustomEnvironmentVariablesSubNavigationBar";
 import customEnvironmentVariableActions
-  from "components/admin/environment_variables/customEnvironmentVariables.actions";
+from "components/admin/environment_variables/customEnvironmentVariables.actions";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import {NODE_ANALYTICS_API_SERVER_URL, NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
 import useComponentStateReference from "hooks/useComponentStateReference";

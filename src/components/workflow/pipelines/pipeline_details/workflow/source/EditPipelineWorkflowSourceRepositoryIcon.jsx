@@ -5,7 +5,7 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineSourceRepositoryEditorOverlay
-  from "components/workflow/plan/source/PipelineSourceRepositoryEditorOverlay";
+from "components/workflow/plan/source/PipelineSourceRepositoryEditorOverlay";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 
 export default function EditPipelineWorkflowSourceRepositoryIcon(

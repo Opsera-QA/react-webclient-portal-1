@@ -10,7 +10,7 @@ import {
 } from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 import GithubActionsUniqueRunSummaryDetailPanel
-  from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/GithubActionsUniqueRunSummaryDetailPanel";
+from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/GithubActionsUniqueRunSummaryDetailPanel";
 
 function GithubActionsUniqueRunSummaryOverlay(
   {

@@ -8,7 +8,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
-         capitalizeLegend } from '../../../charts-views';
+  capitalizeLegend } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 
 function JenkinsBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -74,20 +74,20 @@ function JenkinsBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, d
 
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
-            <ResponsiveBar
-              data={metrics}
-              {...defaultConfig("Build Duration (Minutes)", "Build Number", 
-                      false, false, "wholeNumbers", "numbers")}
-              {...config(getColorByData)}
-              {...adjustBarWidth(metrics)}
-              onClick={() => setShowModal(true)}
-              tooltip={({ data, value, color }) => <ChartTooltip 
-                              titles = {["Duration", "Build Number", "Job Name"]}
-                              values = {[`${value} minutes`, data.buildNum, data.jobName]}
-                              style = {false}
-                              color = {color} />}
-            />
-        </div>
+        <ResponsiveBar
+          data={metrics}
+          {...defaultConfig("Build Duration (Minutes)", "Build Number", 
+            false, false, "wholeNumbers", "numbers")}
+          {...config(getColorByData)}
+          {...adjustBarWidth(metrics)}
+          onClick={() => setShowModal(true)}
+          tooltip={({ data, value, color }) => <ChartTooltip 
+            titles = {["Duration", "Build Number", "Job Name"]}
+            values = {[`${value} minutes`, data.buildNum, data.jobName]}
+            style = {false}
+            color = {color} />}
+        />
+      </div>
     );
   };
 

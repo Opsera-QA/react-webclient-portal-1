@@ -32,15 +32,15 @@ function ScmWorkspaceInput({dataObject, setDataObject, disabled}) {
   }
 
   return (
-     <BitbucketWorkspaceInput
-       fieldName={"workspaceName"}
-       gitToolId={dataObject.getData("toolId")}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       setDataFunction={setWorkspace}
-       clearDataFunction={clearWorkspace}
-       disabled={disabled}
-     />
+    <BitbucketWorkspaceInput
+      fieldName={"workspaceName"}
+      gitToolId={dataObject.getData("toolId")}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      setDataFunction={setWorkspace}
+      clearDataFunction={clearWorkspace}
+      disabled={disabled}
+    />
   );
 }
 

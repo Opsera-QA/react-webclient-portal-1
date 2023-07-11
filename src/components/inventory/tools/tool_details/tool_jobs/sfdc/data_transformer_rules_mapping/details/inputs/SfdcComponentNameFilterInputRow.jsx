@@ -86,9 +86,9 @@ function SfdcComponentNameFilterInputRow({
             className={"px-3"}
           >
             <StandaloneTextInputBase
-             value={filterValue}
-             setDataFunction={updateFilterValue}
-             disabled={disabled}
+              value={filterValue}
+              setDataFunction={updateFilterValue}
+              disabled={disabled}
             />
           </Col>          
         </Row>

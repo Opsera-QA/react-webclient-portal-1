@@ -11,11 +11,11 @@ import { faWarning } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import FreeTrialWorkflowItemSelectionCardView
-  from "components/wizard/portal/workflows/flows/selection/card/FreeTrialWorkflowItemSelectionCardView";
+from "components/wizard/portal/workflows/flows/selection/card/FreeTrialWorkflowItemSelectionCardView";
 import { taskTemplateIdentifierConstants } from "components/admin/task_templates/taskTemplateIdentifier.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import FreeTrialLaunchWorkflowButton
-  from "components/wizard/portal/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
+from "components/wizard/portal/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import DeleteButtonBase from "temp-library-components/button/delete/DeleteButtonBase";
 

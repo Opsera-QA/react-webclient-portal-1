@@ -10,9 +10,9 @@ import { dataParsingHelper } from "components/common/helpers/data/dataParsing.he
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { TASK_TYPES } from "components/tasks/task.types";
 import DataSeedingTaskWizardInitializationScreen
-  from "./screens/initialization_screen/DataSeedingTaskWizardInitializationScreen";
+from "./screens/initialization_screen/DataSeedingTaskWizardInitializationScreen";
 import CustomSettingTaskWizardConfigScreen
-  from "./screens/custom_setting_selection_screen/CustomSettingTaskWizardConfigScreen";
+from "./screens/custom_setting_selection_screen/CustomSettingTaskWizardConfigScreen";
 import CustomSettingQueryBuilderScreen from "./screens/query_builder_screen/CustomSettingQueryBuilderScreen";
 import CustomSettingTaskConfirmationScreen from "./screens/confirmation_screen/CustomSettingTaskConfirmationScreen";
 import { DATA_SEEDING_WIZARD_SCREENS } from "./dataSeedingTaskWizard.constants";
@@ -73,67 +73,67 @@ const SalesforceDataSeedingTaskWizard = ({ handleClose, taskModel }) => {
 
   const getBody = () => {
     switch (currentScreen) {
-      case DATA_SEEDING_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-        return (
-          <DataSeedingTaskWizardInitializationScreen
-            wizardModel={wizardModel}
-            setWizardModel={setWizardModel}
-            setCurrentScreen={setCurrentScreen}
-            handleClose={handleClose}
-          />
-        );
-      case DATA_SEEDING_WIZARD_SCREENS.CONFIGURATION_SCREEN:
-        return (
-          <CustomSettingTaskWizardConfigScreen
-            wizardModel={wizardModel}
-            setWizardModel={setWizardModel}
-            setCurrentScreen={setCurrentScreen}
-            handleClose={handleClose}
-            taskType={wizardModel?.getData("taskType")}
-          />
-        );
-      case DATA_SEEDING_WIZARD_SCREENS.MAPPING_SCREEN:
-        return (
-          <DataSeedingFieldMappingScreen
-            wizardModel={wizardModel}
-            setWizardModel={setWizardModel}
-            setCurrentScreen={setCurrentScreen}
-            handleClose={handleClose}
-          />
-        );
-      case DATA_SEEDING_WIZARD_SCREENS.QUERY_BUILDER_SCREEN:
-        return (
-          <CustomSettingQueryBuilderScreen
-            wizardModel={wizardModel}
-            setWizardModel={setWizardModel}
-            setCurrentScreen={setCurrentScreen}
-            handleClose={handleClose}
-            taskType={wizardModel?.getData("taskType")}
-          />
-        );
-      case DATA_SEEDING_WIZARD_SCREENS.CONFIRMATION_SCREEN:
-        return (
-          <CustomSettingTaskConfirmationScreen
-            wizardModel={wizardModel}
-            setWizardModel={setWizardModel}
-            setCurrentScreen={setCurrentScreen}
-            handleClose={handleClose}
-            taskType={wizardModel?.getData("taskType")}
-          />
-        );
+    case DATA_SEEDING_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+      return (
+        <DataSeedingTaskWizardInitializationScreen
+          wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
+          setCurrentScreen={setCurrentScreen}
+          handleClose={handleClose}
+        />
+      );
+    case DATA_SEEDING_WIZARD_SCREENS.CONFIGURATION_SCREEN:
+      return (
+        <CustomSettingTaskWizardConfigScreen
+          wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
+          setCurrentScreen={setCurrentScreen}
+          handleClose={handleClose}
+          taskType={wizardModel?.getData("taskType")}
+        />
+      );
+    case DATA_SEEDING_WIZARD_SCREENS.MAPPING_SCREEN:
+      return (
+        <DataSeedingFieldMappingScreen
+          wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
+          setCurrentScreen={setCurrentScreen}
+          handleClose={handleClose}
+        />
+      );
+    case DATA_SEEDING_WIZARD_SCREENS.QUERY_BUILDER_SCREEN:
+      return (
+        <CustomSettingQueryBuilderScreen
+          wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
+          setCurrentScreen={setCurrentScreen}
+          handleClose={handleClose}
+          taskType={wizardModel?.getData("taskType")}
+        />
+      );
+    case DATA_SEEDING_WIZARD_SCREENS.CONFIRMATION_SCREEN:
+      return (
+        <CustomSettingTaskConfirmationScreen
+          wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
+          setCurrentScreen={setCurrentScreen}
+          handleClose={handleClose}
+          taskType={wizardModel?.getData("taskType")}
+        />
+      );
     }
   };
 
   const getHelpComponentFunction = (setHelpIsShown) => {
     switch (currentScreen) {
-      case DATA_SEEDING_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-        return null;
-      case DATA_SEEDING_WIZARD_SCREENS.CONFIGURATION_SCREEN:
-        return null;
-      case DATA_SEEDING_WIZARD_SCREENS.MAPPING_SCREEN:
-      case DATA_SEEDING_WIZARD_SCREENS.QUERY_BUILDER_SCREEN:
-      default:
-        return null;
+    case DATA_SEEDING_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+      return null;
+    case DATA_SEEDING_WIZARD_SCREENS.CONFIGURATION_SCREEN:
+      return null;
+    case DATA_SEEDING_WIZARD_SCREENS.MAPPING_SCREEN:
+    case DATA_SEEDING_WIZARD_SCREENS.QUERY_BUILDER_SCREEN:
+    default:
+      return null;
     }
   };
 

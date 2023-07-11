@@ -11,7 +11,7 @@ import StepConfigWorkspaceDeleteToggleInput from "../common/inputs/StepConfigWor
 import modelHelpers from "components/common/model/modelHelpers";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
 function XUnitStepConfiguration({
@@ -37,7 +37,7 @@ function XUnitStepConfiguration({
     let xunitConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, xunitPipelineStepConfigurationMetadata);
 
     if (xunitConfigurationData.getData("sourceScript") === true) {
-        xunitConfigurationData.setMetaDataFields(xunitPipelineStepConfigurationMetadata.fields);
+      xunitConfigurationData.setMetaDataFields(xunitPipelineStepConfigurationMetadata.fields);
     }        
 
     setXunitStepConfigurationDto(xunitConfigurationData);
@@ -89,9 +89,9 @@ function XUnitStepConfiguration({
         : false)
     ) {
       toastContext.showMissingRequiredFieldsErrorDialog();
-        return false;
+      return false;
     } else {
-        return true;
+      return true;
     }
 
   };

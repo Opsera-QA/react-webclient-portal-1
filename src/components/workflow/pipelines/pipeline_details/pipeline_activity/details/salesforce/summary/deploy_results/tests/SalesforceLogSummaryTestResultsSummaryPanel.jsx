@@ -5,10 +5,10 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import {Col, Row} from "react-bootstrap";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SalesforceLogSummarySuccessfulTestsTable
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummarySuccessfulTestsTable";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummarySuccessfulTestsTable";
 import H4FieldSubHeader from "components/common/fields/subheader/H4FieldSubHeader";
 import SalesforceLogSummaryFailedTestsTable
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummaryFailedTestsTable";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummaryFailedTestsTable";
 import SalesforceLogSummaryCodeCoverageTable from "../../components/SalesforceLogSummaryCodeCoverageTable";
 
 function SalesforceLogSummaryTestResultsSummaryPanel({ salesforceDeployResultsModel, successfulTests, unsuccessfulTests, codeCoverageWarnings }) {

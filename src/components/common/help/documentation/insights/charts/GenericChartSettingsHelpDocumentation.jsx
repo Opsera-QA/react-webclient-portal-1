@@ -9,7 +9,7 @@ function GenericChartSettingsHelpDocumentation({closeHelpPanel}) {
       closeHelpPanel={closeHelpPanel}
     >
       <div>
-      <div className={"mb-1 ml-2"}>Set custom filters and date range for the selected KPI. To apply the settings and view the KPI with the reflected data, click <b>Save</b>. To remove any selected settings, select <b>Clear Value</b> in respective field.</div>
+        <div className={"mb-1 ml-2"}>Set custom filters and date range for the selected KPI. To apply the settings and view the KPI with the reflected data, click <b>Save</b>. To remove any selected settings, select <b>Clear Value</b> in respective field.</div>
         <ul style={{listStyleType: "none"}}>
           <li><b>Name</b> - Customize KPI display name. </li>
           <li><b>Use KPI Tags</b> - Enable toggle to apply tags to selected KPI.</li>

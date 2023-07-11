@@ -42,16 +42,16 @@ function StepConfigJenkinsAccountInput({dataObject, setDataObject, disabled}) {
   };
 
   return (
-     <RoleRestrictedJenkinsAccountSelectInput
-       fieldName={"gitCredential"}
-       jenkinsToolId={dataObject?.getData("toolConfigId")}
-       requireConfiguration={true}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       setDataFunction={setJenkinsAccount}
-       clearDataFunction={clearJenkinsAccount}
-       disabled={disabled}
-     />
+    <RoleRestrictedJenkinsAccountSelectInput
+      fieldName={"gitCredential"}
+      jenkinsToolId={dataObject?.getData("toolConfigId")}
+      requireConfiguration={true}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      setDataFunction={setJenkinsAccount}
+      clearDataFunction={clearJenkinsAccount}
+      disabled={disabled}
+    />
   );
 }
 

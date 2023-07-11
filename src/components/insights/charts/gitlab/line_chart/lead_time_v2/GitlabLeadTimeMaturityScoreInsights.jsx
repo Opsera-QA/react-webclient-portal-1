@@ -4,21 +4,21 @@ import FilterContainer from "components/common/table/FilterContainer";
 import Model from "core/data_model/model";
 import GitlabLeadTimeMaturityScoreInsightsMetadata from "./gitlabLeadTimeMaturityScoreInsights.metadata";
 import {
-    getTableDateTimeColumn,
-    getTableDurationTextColumn,
-    getTableTextColumn,
+  getTableDateTimeColumn,
+  getTableDurationTextColumn,
+  getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { Row, Col } from "react-bootstrap";
 import CustomTable from "components/common/table/CustomTable";
 
 import {
-    faDraftingCompass,
-    faCircleInfo,
-    faTimer,
-    faLightbulbOn,
-    faDatabase,
-    faTable
+  faDraftingCompass,
+  faCircleInfo,
+  faTimer,
+  faLightbulbOn,
+  faDatabase,
+  faTable
 } from "@fortawesome/pro-light-svg-icons";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
@@ -33,10 +33,10 @@ import GitlabLeadTimeInsightsDataBlock from "./GitlabLeadTimeInsightsDataBlock";
 import {getMaturityScoreText} from "../../../charts-helpers";
 
 function GitlabLeadTimeMaturityScoreInsights({ kpiConfiguration, insightsData }) {
-    const [activeHorizontalTab, setActiveHorizontalTab] = useState("one");
-    const [activeVerticalTab, setActiveVerticalTab] = useState(null);
+  const [activeHorizontalTab, setActiveHorizontalTab] = useState("one");
+  const [activeVerticalTab, setActiveVerticalTab] = useState(null);
 
-    const [tableFilterDto, setTableFilterDto] = useState(
+  const [tableFilterDto, setTableFilterDto] = useState(
     new Model(
       { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
       actionableInsightsGenericChartFilterMetadata,
@@ -74,36 +74,36 @@ function GitlabLeadTimeMaturityScoreInsights({ kpiConfiguration, insightsData })
       </>
     );
   };
-    const getTable = () => {
-        let data;
-        if(activeHorizontalTab == "one") {
-            return (
-                <CustomTable
-                    columns={columns}
-                    data={maturityScoreByRepositories}
-                    noDataMessage={noDataMessage}
-                    paginationDto={tableFilterDto}
-                    setPaginationDto={setTableFilterDto}
-                />
-            );
-        } else if(activeHorizontalTab == "two") {
-            if(activeVerticalTab) {
-                data = maturityScoreByTag.filter(tag => tag.name === activeVerticalTab);
-            } else {
-                data = maturityScoreByTag.filter(tag => tag.name === maturityScoreByTag[0].name);
-            }
-            return (
-                <CustomTable
-                    columns={columns}
-                    data={data[0]?.values || []}
-                    noDataMessage={noDataMessage}
-                    paginationDto={tableFilterDto}
-                    setPaginationDto={setTableFilterDto}
-                />
-            );
-        }
+  const getTable = () => {
+    let data;
+    if(activeHorizontalTab == "one") {
+      return (
+        <CustomTable
+          columns={columns}
+          data={maturityScoreByRepositories}
+          noDataMessage={noDataMessage}
+          paginationDto={tableFilterDto}
+          setPaginationDto={setTableFilterDto}
+        />
+      );
+    } else if(activeHorizontalTab == "two") {
+      if(activeVerticalTab) {
+        data = maturityScoreByTag.filter(tag => tag.name === activeVerticalTab);
+      } else {
+        data = maturityScoreByTag.filter(tag => tag.name === maturityScoreByTag[0].name);
+      }
+      return (
+        <CustomTable
+          columns={columns}
+          data={data[0]?.values || []}
+          noDataMessage={noDataMessage}
+          paginationDto={tableFilterDto}
+          setPaginationDto={setTableFilterDto}
+        />
+      );
+    }
 
-    };
+  };
 
   const getBuildSummaryDetails = () => {
     if (!insightsData) {
@@ -112,111 +112,111 @@ function GitlabLeadTimeMaturityScoreInsights({ kpiConfiguration, insightsData })
     return (
       <Row className="pb-3 px-2">
         <Col lg={4} md={6} className="mt-3">
-            <GitlabLeadTimeInsightsDataBlock
-                displayValue={getMaturityScoreText(insightsData?.overallMaturityScoreText)}
-                displayText="Overall Maturity Score"
-                icon={faCircleInfo}
-            />
+          <GitlabLeadTimeInsightsDataBlock
+            displayValue={getMaturityScoreText(insightsData?.overallMaturityScoreText)}
+            displayText="Overall Maturity Score"
+            icon={faCircleInfo}
+          />
         </Col>
         <Col lg={4} md={6} className="mt-3">
-            <GitlabLeadTimeInsightsDataBlock
-                displayValue={insightsData?.lowLeadTime}
-                displayText="Low Lead Time"
-                icon={faCircleInfo}
-            />
+          <GitlabLeadTimeInsightsDataBlock
+            displayValue={insightsData?.lowLeadTime}
+            displayText="Low Lead Time"
+            icon={faCircleInfo}
+          />
         </Col>
         <Col lg={4} md={6} className="mt-3">
-            <GitlabLeadTimeInsightsDataBlock
-                displayValue={insightsData?.highLeadTime}
-                displayText="High Lead Time"
-                icon={faCircleInfo}
-            />
+          <GitlabLeadTimeInsightsDataBlock
+            displayValue={insightsData?.highLeadTime}
+            displayText="High Lead Time"
+            icon={faCircleInfo}
+          />
         </Col>
       </Row>
     );
   };
 
-    const handleVerticalTabClick = (tabSelection) => {
-        setActiveVerticalTab(tabSelection);
-    };
+  const handleVerticalTabClick = (tabSelection) => {
+    setActiveVerticalTab(tabSelection);
+  };
 
-    const handleHorizontalTabClick = (tabSelection) => (e) => {
-        e.preventDefault();
-        setActiveHorizontalTab(tabSelection);
-        setActiveVerticalTab(null);
-    };
-    const getVerticalTabContainer = () => {
-        let tabs = [];
-            if (maturityScoreByTag && maturityScoreByTag.length) {
-                for (let i = 0; i <= maturityScoreByTag.length - 1; i++) {
-                    tabs.push(
-                        <VanitySetVerticalTab
-                            key={i}
-                            tabText={maturityScoreByTag[i]?.name}
-                            tabName={maturityScoreByTag[i]?.name}
-                            handleTabClick={handleVerticalTabClick}
-                            activeTab={activeVerticalTab || maturityScoreByTag[0]?.name}
-                        />,
-                    );
-                }
-            }
-
-        return (
-            <div>
-                <VanitySetVerticalTabContainer
-                    filterModel={tableFilterDto}
-                    setFilterModel={setTableFilterDto}
-                >
-                {tabs}
-                </VanitySetVerticalTabContainer>
-            </div>
+  const handleHorizontalTabClick = (tabSelection) => (e) => {
+    e.preventDefault();
+    setActiveHorizontalTab(tabSelection);
+    setActiveVerticalTab(null);
+  };
+  const getVerticalTabContainer = () => {
+    let tabs = [];
+    if (maturityScoreByTag && maturityScoreByTag.length) {
+      for (let i = 0; i <= maturityScoreByTag.length - 1; i++) {
+        tabs.push(
+          <VanitySetVerticalTab
+            key={i}
+            tabText={maturityScoreByTag[i]?.name}
+            tabName={maturityScoreByTag[i]?.name}
+            handleTabClick={handleVerticalTabClick}
+            activeTab={activeVerticalTab || maturityScoreByTag[0]?.name}
+          />,
         );
-    };
+      }
+    }
 
-    const getTabNav = () => {
-        return (
-            <CustomTabContainer>
-                <CustomTab
-                    activeTab={activeHorizontalTab}
-                    tabText={"Repositories"}
-                    handleTabClick={handleHorizontalTabClick}
-                    tabName={"one"}
-                    icon={faTable}
-                />
-                <CustomTab
-                    activeTab={activeHorizontalTab}
-                    tabText={"Tags"}
-                    handleTabClick={handleHorizontalTabClick}
-                    tabName={"two"}
-                    icon={faTable}
-                />
-            </CustomTabContainer>
-        );
-    };
-    const getTabBody = () => {
-        if(activeHorizontalTab == "two") {
-            return (
-                <TabAndViewContainer
-                    verticalTabContainer={getVerticalTabContainer()}
-                    currentView={getTable()}
-                    bodyClassName="mx-0"
-                    maximumHeight="calc(100vh - 264px)"
-                    overflowYContainerStyle={"hidden"}
-                    overflowYBodyStyle="auto"
-                />
-            );
-        } else {
-            return (getTable());
-        }
-    };
-    const getFilterContainer = () => {
     return (
-        <>
-            <div className={"p-3"}>
-                <TabPanelContainer currentView={getTabBody()} tabContainer={getTabNav()} />
-            </div>
+      <div>
+        <VanitySetVerticalTabContainer
+          filterModel={tableFilterDto}
+          setFilterModel={setTableFilterDto}
+        >
+          {tabs}
+        </VanitySetVerticalTabContainer>
+      </div>
+    );
+  };
 
-        </>
+  const getTabNav = () => {
+    return (
+      <CustomTabContainer>
+        <CustomTab
+          activeTab={activeHorizontalTab}
+          tabText={"Repositories"}
+          handleTabClick={handleHorizontalTabClick}
+          tabName={"one"}
+          icon={faTable}
+        />
+        <CustomTab
+          activeTab={activeHorizontalTab}
+          tabText={"Tags"}
+          handleTabClick={handleHorizontalTabClick}
+          tabName={"two"}
+          icon={faTable}
+        />
+      </CustomTabContainer>
+    );
+  };
+  const getTabBody = () => {
+    if(activeHorizontalTab == "two") {
+      return (
+        <TabAndViewContainer
+          verticalTabContainer={getVerticalTabContainer()}
+          currentView={getTable()}
+          bodyClassName="mx-0"
+          maximumHeight="calc(100vh - 264px)"
+          overflowYContainerStyle={"hidden"}
+          overflowYBodyStyle="auto"
+        />
+      );
+    } else {
+      return (getTable());
+    }
+  };
+  const getFilterContainer = () => {
+    return (
+      <>
+        <div className={"p-3"}>
+          <TabPanelContainer currentView={getTabBody()} tabContainer={getTabNav()} />
+        </div>
+
+      </>
     );
   };
 

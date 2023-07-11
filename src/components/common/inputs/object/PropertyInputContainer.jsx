@@ -62,7 +62,7 @@ function PropertyInputContainer(
           isLoading={isLoading}
           helpComponent={helpComponent}
           customTitle={titleText}
-          />
+        />
         {children}
         <Row className={"d-flex justify-content-between mx-0"}>
           <div className={"mt-auto"}>

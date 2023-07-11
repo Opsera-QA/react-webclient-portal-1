@@ -7,7 +7,7 @@ import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/Vani
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import PipelineTemplatePlanOverviewStepVerticalTabContainer
-  from "components/workflow/catalog/overview/PipelineTemplatePlanOverviewStepVerticalTabContainer";
+from "components/workflow/catalog/overview/PipelineTemplatePlanOverviewStepVerticalTabContainer";
 
 export default function PipelineTemplatePlanOverviewContainer(
   {

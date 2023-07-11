@@ -16,10 +16,10 @@ import CancelButton from "components/common/buttons/CancelButton";
 import IconBase from "components/common/icons/IconBase";
 import { PIPELINE_WIZARD_SCREENS } from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import SalesforcePipelineComponentCountsViewer
-  from "components/workflow/wizards/sfdc_pipeline_wizard/xml_viewer/counts/SalesforcePipelineComponentCountsViewer";
+from "components/workflow/wizards/sfdc_pipeline_wizard/xml_viewer/counts/SalesforcePipelineComponentCountsViewer";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import SfdcPipelineWizardBasicSummary
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardBasicSummary";
+from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardBasicSummary";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 
 // TODO: This should be refactored and cleaned up.
@@ -188,28 +188,28 @@ const SfdcPipelineWizardXmlViewer = (
 
   const getView = () => {
     switch (activeTab) {
-      case "pxml":
-        return (
-          <PackageXmlViewer
-            isLoading={isLoading}
-            isSaving={isSaving}
-            pipelineWizardModel={pipelineWizardModel}
-            setPipelineWizardModel={setPipelineWizardModel}
-          />
-        );
-      case "utc":
-        return (
-          <UnitTestClassesViewer
-            pipelineWizardModel={pipelineWizardModel}
-          />
-        );
-      case "counts":
-        return (
-          <SalesforcePipelineComponentCountsViewer
-            pipelineWizardModel={pipelineWizardModel}
-            setPipelineWizardModel={setPipelineWizardModel}
-          />
-        );
+    case "pxml":
+      return (
+        <PackageXmlViewer
+          isLoading={isLoading}
+          isSaving={isSaving}
+          pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardModel={setPipelineWizardModel}
+        />
+      );
+    case "utc":
+      return (
+        <UnitTestClassesViewer
+          pipelineWizardModel={pipelineWizardModel}
+        />
+      );
+    case "counts":
+      return (
+        <SalesforcePipelineComponentCountsViewer
+          pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardModel={setPipelineWizardModel}
+        />
+      );
     }
   };
 

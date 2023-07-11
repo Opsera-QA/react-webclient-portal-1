@@ -10,7 +10,7 @@ import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
 import { defaultConfig, getColor, assignStandardColors,
-         capitalizeLegend } from '../../insights/charts/charts-views';
+  capitalizeLegend } from '../../insights/charts/charts-views';
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 
 function JiraTicketsAssignedByUserBarChart( { persona, date } ) {
@@ -94,7 +94,7 @@ function JiraTicketsAssignedByUserBarChart( { persona, date } ) {
             <ResponsiveBar
               data={data ? data.data : []}
               {...defaultConfig("Users", "Number of Tickets Assigned", 
-                                true, false, "cutoffString", "wholeNumbers")}
+                true, false, "cutoffString", "wholeNumbers")}
               onClick={() => setShowModal(true)}
               keys={["Count"]}
               indexBy="user"
@@ -102,10 +102,10 @@ function JiraTicketsAssignedByUserBarChart( { persona, date } ) {
               colors={d => getColor(d.data)}
               colorBy="id"
               tooltip={({ indexValue, value, color }) => <ChartTooltip 
-                                            titles={["User", "Number of Tickets"]}
-                                            values={[indexValue, value]}
-                                            color = {color}
-                                            style={false} />}
+                titles={["User", "Number of Tickets"]}
+                values={[indexValue, value]}
+                color = {color}
+                style={false} />}
             />
           }
         </div>

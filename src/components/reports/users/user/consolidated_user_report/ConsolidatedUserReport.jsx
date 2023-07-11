@@ -7,12 +7,12 @@ import userReportsMetadata from "components/reports/users/user-reports-metadata"
 import LdapUserByDomainSelectInput from "components/common/list_of_values_input/users/LdapUserByDomainSelectInput";
 import ConsolidatedUserToolAccessReport from "components/reports/users/user/consolidated_user_report/tool_access/ConsolidatedUserToolAccessReport";
 import ConsolidatedUserGroupMembershipReport
-  from "components/reports/users/user/consolidated_user_report/group_membership/ConsolidatedUserGroupMembershipReport";
+from "components/reports/users/user/consolidated_user_report/group_membership/ConsolidatedUserGroupMembershipReport";
 import InformationDialog from "components/common/status_notifications/info";
 import ConsolidatedUserPipelineAccessReport
-  from "components/reports/users/user/consolidated_user_report/pipeline_access/ConsolidatedUserPipelineAccessReport";
+from "components/reports/users/user/consolidated_user_report/pipeline_access/ConsolidatedUserPipelineAccessReport";
 import ConsolidatedUserTaskAccessReport
-  from "components/reports/users/user/consolidated_user_report/task_access/ConsolidatedUserTaskAccessReport";
+from "components/reports/users/user/consolidated_user_report/task_access/ConsolidatedUserTaskAccessReport";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
@@ -77,7 +77,7 @@ function ConsolidatedUserReport() {
           <Col className={"mx-0"} md={12} lg={12}>
             <ConsolidatedUserTaskAccessReport
               userEmailAddress={ldapUserModel?.getData("emailAddress")}
-              />
+            />
           </Col>
         </Row>
       </div>

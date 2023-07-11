@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Badge, Col, Row} from "react-bootstrap";
 import MetricDataPointEvaluationSuccessRuleInput
-  from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationSuccessRuleInput";
+from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationSuccessRuleInput";
 import MetricDataPointEvaluationWarningRuleInput
-  from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationWarningRuleInput";
+from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationWarningRuleInput";
 import MetricDataPointEvaluationFailureRuleInput
-  from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationFailureRuleInput";
+from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationFailureRuleInput";
 import MetricDataPointStrategicCriteriaUserEditabilityBooleanToggle
-  from "components/common/inputs/metric/data_points/admin/strategic_criteria/MetricDataPointStrategicCriteriaUserEditabilityBooleanToggle";
+from "components/common/inputs/metric/data_points/admin/strategic_criteria/MetricDataPointStrategicCriteriaUserEditabilityBooleanToggle";
 import H4MetricSubHeader from "components/common/fields/subheader/metric/H4MetricSubHeader";
 import {getDataPointTypeLabel} from "../../../../../list_of_values_input/insights/data_points/type/dataPoint.types";
 

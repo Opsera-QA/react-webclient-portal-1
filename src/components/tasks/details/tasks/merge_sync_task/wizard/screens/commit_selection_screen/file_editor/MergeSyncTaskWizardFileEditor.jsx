@@ -12,7 +12,7 @@ import {
 } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import MergeSyncTaskWizardSubmitEditedFileButton
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/file_editor/MergeSyncTaskWizardSubmitEditedFileButton";
+from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/file_editor/MergeSyncTaskWizardSubmitEditedFileButton";
 import CopyToClipboardIcon from "components/common/icons/CopyToClipboardIcon";
 import SyntaxHighlighterCodeFieldBase from "components/common/fields/code/syntax_highlighter/SyntaxHighlighterCodeFieldBase";
 

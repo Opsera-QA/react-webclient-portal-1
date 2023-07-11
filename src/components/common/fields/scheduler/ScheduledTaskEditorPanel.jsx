@@ -104,7 +104,7 @@ function ScheduledTaskEditorPanel({ scheduledTaskData, handleClose, taskList }) 
           schedulerTaskModel={schedulerTaskModel}
           setSchedulerTaskModel={setSchedulerTaskModel}
         />
-         <Col lg={12}>
+        <Col lg={12}>
           <BooleanToggleInput setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"active"}/>
         </Col>
         <Col lg={12}>

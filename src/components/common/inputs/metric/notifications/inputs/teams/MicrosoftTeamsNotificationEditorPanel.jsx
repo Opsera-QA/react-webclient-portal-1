@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import EnabledNotificationBooleanToggle from "components/workflow/plan/step/notifications/EnabledNotificationBooleanToggle";
 import TeamsStepNotificationTeamsToolSelectInput
-  from "components/workflow/plan/step/notifications/teams/TeamsStepNotificationTeamsToolSelectInput";
+from "components/workflow/plan/step/notifications/teams/TeamsStepNotificationTeamsToolSelectInput";
 import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -35,7 +35,7 @@ function MicrosoftTeamsNotificationEditorPanel(
         />
       </Col>
     </Row>
-);
+  );
 }
 
 MicrosoftTeamsNotificationEditorPanel.propTypes = {

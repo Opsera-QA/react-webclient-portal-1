@@ -51,20 +51,20 @@ export default function WorkspaceWorkflowSelectionCardView(
 
   const getWorkspaceItemCard = (workspaceItem) => {
     switch (workspaceItem?.workspaceType) {
-      case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
-        return (
-          <WorkflowPipelineCard
-            pipeline={workspaceItem}
-            setSelectedFlow={onPipelineSelectFunction}
-          />
-        );
-      case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
-        return (
-          <WorkflowTaskCard
-            setSelectedFlow={onTaskSelectFunction}
-            task={workspaceItem}
-          />
-        );
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
+      return (
+        <WorkflowPipelineCard
+          pipeline={workspaceItem}
+          setSelectedFlow={onPipelineSelectFunction}
+        />
+      );
+    case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
+      return (
+        <WorkflowTaskCard
+          setSelectedFlow={onTaskSelectFunction}
+          task={workspaceItem}
+        />
+      );
     }
   };
 
@@ -99,34 +99,34 @@ export default function WorkspaceWorkflowSelectionCardView(
       }
 
       switch (currentView){
-        case WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS:
-          return (
-            <NoRegisteredWorkflowsCard
-              loadDataFunction={loadData}
-              className={"m-3"}
-            />
-          );
-        case WORKFLOW_WIDGET_VIEWS.FOLLOWING:
-          return (
-            <CenteredContentWrapper minHeight={"250px"}>
-              <InfoMessageFieldBase
-                message={<>
+      case WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS:
+        return (
+          <NoRegisteredWorkflowsCard
+            loadDataFunction={loadData}
+            className={"m-3"}
+          />
+        );
+      case WORKFLOW_WIDGET_VIEWS.FOLLOWING:
+        return (
+          <CenteredContentWrapper minHeight={"250px"}>
+            <InfoMessageFieldBase
+              message={<>
                   No subscribed Workflows. A Pipeline/Task can be subscribed to by clicking the follow icon.
                   All workflows that have been subscribed to will appear here. <br></br>View <a href="https://docs.opsera.io/readme/set-your-homepage" target="_blank" rel="noopener noreferrer"><b>Set Your Homepage Help Documentation</b> for more info</a>.
-                </>}
-                showInformationLabel={false}
-              />
-            </CenteredContentWrapper>
-          );
-        case WORKFLOW_WIDGET_VIEWS.RECENT_ACTIVITY:
-          return (
-            <CenteredContentWrapper minHeight={"250px"}>
-              <InfoMessageFieldBase
-                message={"There are no recent Workflow runs"}
-                showInformationLabel={false}
-              />
-            </CenteredContentWrapper>
-          );
+              </>}
+              showInformationLabel={false}
+            />
+          </CenteredContentWrapper>
+        );
+      case WORKFLOW_WIDGET_VIEWS.RECENT_ACTIVITY:
+        return (
+          <CenteredContentWrapper minHeight={"250px"}>
+            <InfoMessageFieldBase
+              message={"There are no recent Workflow runs"}
+              showInformationLabel={false}
+            />
+          </CenteredContentWrapper>
+        );
       }
     }
 

@@ -4,16 +4,16 @@ import GitBranchInput from "components/common/list_of_values_input/tools/git/Git
 
 function LiquibaseGitBranchInput({model, setModel, disabled}) {
   return (
-     <GitBranchInput
-       fieldName={"gitBranch"}
-       service={model.getData("service")}
-       gitToolId={model.getData("gitToolId")}
-       workspace={model.getData("workspace")}
-       repoId={model.getData("repoId")}
-       dataObject={model}
-       setDataObject={setModel}
-       disabled={disabled}
-     />
+    <GitBranchInput
+      fieldName={"gitBranch"}
+      service={model.getData("service")}
+      gitToolId={model.getData("gitToolId")}
+      workspace={model.getData("workspace")}
+      repoId={model.getData("repoId")}
+      dataObject={model}
+      setDataObject={setModel}
+      disabled={disabled}
+    />
   );
 }
 

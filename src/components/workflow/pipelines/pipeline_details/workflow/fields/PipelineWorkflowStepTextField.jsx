@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PipelineWorkflowItemFieldBase
-  from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
+from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 
 export default function PipelineWorkflowStepTextField(

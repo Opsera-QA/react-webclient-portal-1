@@ -5,16 +5,16 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import DataMappingManagementSubNavigationBar
-  from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
+from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
 import useGetAnalyticsProjectDataMappingModelById
-  from "hooks/settings/insights/analytics_data_mappings/projects/useGetAnalyticsProjectDataMappingModelById";
+from "hooks/settings/insights/analytics_data_mappings/projects/useGetAnalyticsProjectDataMappingModelById";
 import {
   analyticsProjectDataMappingHelper
 } from "components/settings/data_mapping/projects/analyticsProjectDataMapping.helper";
 import DeleteAnalyticsProjectDataMappingActionBarButton
-  from "components/settings/data_mapping/projects/actions/DeleteAnalyticsProjectDataMappingActionBarButton";
+from "components/settings/data_mapping/projects/actions/DeleteAnalyticsProjectDataMappingActionBarButton";
 import projectDataMappingMetadata
-  from "@opsera/definitions/constants/settings/data_mapping/project/projectDataMapping.metadata";
+from "@opsera/definitions/constants/settings/data_mapping/project/projectDataMapping.metadata";
 
 function ProjectDataMappingDetailView() {
   const { projectMappingId } = useParams();

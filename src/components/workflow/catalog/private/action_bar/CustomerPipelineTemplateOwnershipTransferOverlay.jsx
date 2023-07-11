@@ -5,7 +5,7 @@ import OwnershipTransferOverlayBase from "components/common/overlays/center/owne
 import { useHistory } from "react-router-dom";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import OwnershipTransferConfirmationOverlay
-  from "components/common/overlays/center/ownership/OwnershipTransferConfirmationOverlay";
+from "components/common/overlays/center/ownership/OwnershipTransferConfirmationOverlay";
 import {
   customerPipelineTemplateCatalogActions
 } from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
@@ -36,7 +36,7 @@ export default function CustomerPipelineTemplateOwnershipTransferOverlay(
       cancelTokenSource,
       templateModel?.getMongoDbId(),
       pipelineTemplateCopy?.getData("owner"),
-      );
+    );
 
     if (willLoseAccess !== true) {
       await loadTemplate();

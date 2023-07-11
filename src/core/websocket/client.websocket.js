@@ -3,12 +3,12 @@ import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {ReactLoggingHandler} from "temp-library-components/handler/reactLogging.handler";
 import websocketEventNameConstants
-  from "@opsera/definitions/constants/websocket/constants/websocketEventName.constants";
+from "@opsera/definitions/constants/websocket/constants/websocketEventName.constants";
 import liveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessageTopic.constants";
 import WebsocketSubscriptionRequestHelper
-  from "@opsera/definitions/constants/websocket/helpers/websocketSubscriptionRequest.helper";
+from "@opsera/definitions/constants/websocket/helpers/websocketSubscriptionRequest.helper";
 import websocketSubscriptionTypeConstants
-  from "@opsera/definitions/constants/websocket/constants/websocketSubscriptionType.constants";
+from "@opsera/definitions/constants/websocket/constants/websocketSubscriptionType.constants";
 const websocketEnabled = DataParsingHelper.parseBooleanV2(process.env.REACT_APP_WEBSOCKET_ENABLED);
 const isDevelopmentEnvironment = process.env.REACT_APP_ENVIRONMENT === "development";
 const isMismatchedEnvironment = NODE_API_ORCHESTRATOR_SERVER_URL !== process.env.REACT_APP_OPSERA_API_SERVER_URL;
@@ -29,14 +29,14 @@ export const WEBSOCKET_STATE_LABELS = {
 
 export const getWebsocketStateLabel = (state) => {
   switch (state) {
-    case WEBSOCKET_STATE.CONNECTING:
-      return WEBSOCKET_STATE_LABELS.CONNECTING;
-    case WEBSOCKET_STATE.CONNECTED:
-      return WEBSOCKET_STATE_LABELS.CONNECTED;
-    case WEBSOCKET_STATE.DISCONNECTING:
-      return WEBSOCKET_STATE_LABELS.DISCONNECTING;
-    case WEBSOCKET_STATE.DISCONNECTED:
-      return WEBSOCKET_STATE_LABELS.DISCONNECTED;
+  case WEBSOCKET_STATE.CONNECTING:
+    return WEBSOCKET_STATE_LABELS.CONNECTING;
+  case WEBSOCKET_STATE.CONNECTED:
+    return WEBSOCKET_STATE_LABELS.CONNECTED;
+  case WEBSOCKET_STATE.DISCONNECTING:
+    return WEBSOCKET_STATE_LABELS.DISCONNECTING;
+  case WEBSOCKET_STATE.DISCONNECTED:
+    return WEBSOCKET_STATE_LABELS.DISCONNECTED;
   }
 };
 
@@ -181,34 +181,34 @@ export default class ClientWebsocket {
       const objectId = subscription.objectId;
 
       switch (subscriptionType) {
-        case websocketSubscriptionTypeConstants.WEBSOCKET_SUBSCRIPTION_TYPES.ITEM_SUBSCRIPTION:
-          ReactLoggingHandler.logDebugMessage(
-            "clientWebsocket",
-            "resubscribe",
+      case websocketSubscriptionTypeConstants.WEBSOCKET_SUBSCRIPTION_TYPES.ITEM_SUBSCRIPTION:
+        ReactLoggingHandler.logDebugMessage(
+          "clientWebsocket",
+          "resubscribe",
             `resubscribing to topic: [${topicName}] for item [${objectId}]`,
-          );
-          this.websocketClient.emit(
-            websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST,
-            WebsocketSubscriptionRequestHelper.generateLiveMessageForItemSubscriptionRequest(topicName, objectId),
-          );
-          break;
-        case websocketSubscriptionTypeConstants.WEBSOCKET_SUBSCRIPTION_TYPES.COLLECTION_SUBSCRIPTION:
-          ReactLoggingHandler.logDebugMessage(
-            "clientWebsocket",
-            "resubscribe",
+        );
+        this.websocketClient.emit(
+          websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST,
+          WebsocketSubscriptionRequestHelper.generateLiveMessageForItemSubscriptionRequest(topicName, objectId),
+        );
+        break;
+      case websocketSubscriptionTypeConstants.WEBSOCKET_SUBSCRIPTION_TYPES.COLLECTION_SUBSCRIPTION:
+        ReactLoggingHandler.logDebugMessage(
+          "clientWebsocket",
+          "resubscribe",
             `resubscribing to topic: [${topicName}].`,
-          );
-          this.websocketClient.emit(
-            websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST,
-            WebsocketSubscriptionRequestHelper.generateLiveMessageForCollectionSubscriptionRequest(topicName),
-          );
-          break;
-        default:
-          ReactLoggingHandler.logWarningMessage(
-            "clientWebsocket",
-            "resubscribe",
+        );
+        this.websocketClient.emit(
+          websocketEventNameConstants.WEBSOCKET_EVENT_NAMES.SUBSCRIPTION_REQUEST,
+          WebsocketSubscriptionRequestHelper.generateLiveMessageForCollectionSubscriptionRequest(topicName),
+        );
+        break;
+      default:
+        ReactLoggingHandler.logWarningMessage(
+          "clientWebsocket",
+          "resubscribe",
             `Cannot resubscribe to unknown subscription type [${JSON.stringify(subscriptionType)}].`,
-          );
+        );
       }
     });
   };

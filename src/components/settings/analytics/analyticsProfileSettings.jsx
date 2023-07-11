@@ -10,7 +10,7 @@ import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggle
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import AnalyticsDefaultPersonaSelectInput
-  from "components/common/list_of_values_input/analytics_profile/AnalyticsDefaultPersonaSelectInput";
+from "components/common/list_of_values_input/analytics_profile/AnalyticsDefaultPersonaSelectInput";
 import AnalyticsProfileSubNavigationBar from "components/settings/analytics/AnalyticsProfileSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
@@ -172,92 +172,92 @@ function AnalyticsProfileSettings() {
       navigationTabContainer={<AnalyticsProfileSubNavigationBar activeTab={"analyticsProfile"} />}
     >
       <div className={"p-2"}>
-      {analyticsProfileData.getData("ldapAccount") && !analyticsProfileData.getData("ldapOwner") && (
-        <Card>
-          <Card.Body>
-            <Card.Subtitle className="text-muted">
+        {analyticsProfileData.getData("ldapAccount") && !analyticsProfileData.getData("ldapOwner") && (
+          <Card>
+            <Card.Body>
+              <Card.Subtitle className="text-muted">
               The Analytics settings are currently in a view only state, in order to update any of the settings please
               contact your account administrator.
-            </Card.Subtitle>
-          </Card.Body>
-        </Card>
-      )}
-      {process.env.REACT_APP_STACK.toString() === "free-trial" && (
-        <Card>
-          <Card.Body>
-            <Card.Subtitle className="text-muted">
+              </Card.Subtitle>
+            </Card.Body>
+          </Card>
+        )}
+        {process.env.REACT_APP_STACK.toString() === "free-trial" && (
+          <Card>
+            <Card.Body>
+              <Card.Subtitle className="text-muted">
               The Analytics settings are currently in a view only state, in order to update any of the settings please
               contact Opsera support.
-            </Card.Subtitle>
-          </Card.Body>
-        </Card>
-      )}
-      {analyticsProfileData && analyticsProfileData.getData("active") && (
-        <div className="px-2 pb-2">
-          <Row>
-            <Col lg={3}>
-              <OverlayTrigger
-                overlay={<Tooltip id="tooltip-disabled">Contact Opsera Support to disable analytics.</Tooltip>}
-              >
-                <span className="mr-3">
-                  <ActivityToggleInput
-                    setDataObject={setAnalyticsProfileData}
-                    fieldName={"active"}
-                    dataObject={analyticsProfileData}
-                    disabled={true}
-                  />
-                </span>
-              </OverlayTrigger>
-            </Col>
-            <Col lg={12}>
-              <TextInputBase
-                setDataObject={setAnalyticsProfileData}
-                dataObject={analyticsProfileData}
-                fieldName={"enabledToolsOn"}
-                disabled={true}
+              </Card.Subtitle>
+            </Card.Body>
+          </Card>
+        )}
+        {analyticsProfileData && analyticsProfileData.getData("active") && (
+          <div className="px-2 pb-2">
+            <Row>
+              <Col lg={3}>
+                <OverlayTrigger
+                  overlay={<Tooltip id="tooltip-disabled">Contact Opsera Support to disable analytics.</Tooltip>}
+                >
+                  <span className="mr-3">
+                    <ActivityToggleInput
+                      setDataObject={setAnalyticsProfileData}
+                      fieldName={"active"}
+                      dataObject={analyticsProfileData}
+                      disabled={true}
+                    />
+                  </span>
+                </OverlayTrigger>
+              </Col>
+              <Col lg={12}>
+                <TextInputBase
+                  setDataObject={setAnalyticsProfileData}
+                  dataObject={analyticsProfileData}
+                  fieldName={"enabledToolsOn"}
+                  disabled={true}
+                />
+              </Col>
+              <Col lg={12}>
+                <TextInputBase
+                  setDataObject={setAnalyticsProfileData}
+                  dataObject={analyticsProfileData}
+                  fieldName={"esInstanceURL"}
+                  disabled={true}
+                />
+              </Col>
+              <Col lg={12}>
+                <AnalyticsDefaultPersonaSelectInput
+                  setModel={setAnalyticsProfileData}
+                  model={analyticsProfileData}
+                  fieldName={"defaultPersona"}
+                  disabled={analyticsProfileData.getData("ldapAccount") && !analyticsProfileData.getData("ldapOwner")}
+                />
+              </Col>
+              <Col lg={12}>
+                <MultiSelectInputBase
+                  setDataObject={setAnalyticsProfileData}
+                  textField={"name"}
+                  valueField={"id"}
+                  dataObject={analyticsProfileData}
+                  filter={"contains"}
+                  selectOptions={[]}
+                  fieldName={"enabledIndexes"}
+                  busy={isLoading}
+                  disabled={true}
+                />
+              </Col>
+            </Row>
+            <Row className="ml-auto mt-3">
+              <SaveButtonBase
+                updateRecord={updateProfile}
+                setRecordDto={setAnalyticsProfileData}
+                setData={setAnalyticsProfileData}
+                // createRecord={createApplication}
+                recordDto={analyticsProfileData}
               />
-            </Col>
-            <Col lg={12}>
-              <TextInputBase
-                setDataObject={setAnalyticsProfileData}
-                dataObject={analyticsProfileData}
-                fieldName={"esInstanceURL"}
-                disabled={true}
-              />
-            </Col>
-            <Col lg={12}>
-              <AnalyticsDefaultPersonaSelectInput
-                setModel={setAnalyticsProfileData}
-                model={analyticsProfileData}
-                fieldName={"defaultPersona"}
-                disabled={analyticsProfileData.getData("ldapAccount") && !analyticsProfileData.getData("ldapOwner")}
-              />
-            </Col>
-            <Col lg={12}>
-              <MultiSelectInputBase
-                setDataObject={setAnalyticsProfileData}
-                textField={"name"}
-                valueField={"id"}
-                dataObject={analyticsProfileData}
-                filter={"contains"}
-                selectOptions={[]}
-                fieldName={"enabledIndexes"}
-                busy={isLoading}
-                disabled={true}
-              />
-            </Col>
-          </Row>
-          <Row className="ml-auto mt-3">
-            <SaveButtonBase
-              updateRecord={updateProfile}
-              setRecordDto={setAnalyticsProfileData}
-              setData={setAnalyticsProfileData}
-              // createRecord={createApplication}
-              recordDto={analyticsProfileData}
-            />
-          </Row>
-        </div>
-      )}
+            </Row>
+          </div>
+        )}
       </div>
     </ScreenContainer>
   );

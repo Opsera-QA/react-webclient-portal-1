@@ -8,7 +8,7 @@ import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import {generateUUID} from "components/common/helpers/string-helpers";
 import JiraProjectConfigurationPanel
-  from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraProjectConfigurationPanel";
+from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraProjectConfigurationPanel";
 import axios from "axios";
 
 function JiraToolProjectEditorPanel({ toolData, jiraProjectData, setJiraProjectData, handleClose }) {

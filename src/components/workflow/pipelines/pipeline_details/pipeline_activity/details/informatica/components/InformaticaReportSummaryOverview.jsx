@@ -44,7 +44,7 @@ function InformaticaReportSummaryOverview({ informaticaResultsModel }) {
 
 
 InformaticaReportSummaryOverview.propTypes = {
-    informaticaResultsModel: PropTypes.object,
+  informaticaResultsModel: PropTypes.object,
 };
 
 export default InformaticaReportSummaryOverview;

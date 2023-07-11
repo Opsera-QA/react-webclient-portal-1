@@ -14,7 +14,7 @@ export default function ExportGitCustodianReportPanel(
     const rawData = Array.isArray(gitCustodianData) ? gitCustodianData?.map(item => JSON.stringify(item)) : "export failure";
     return new Blob([rawData], { type: "text/plain" });
   };
-console.log(gitCustodianData);
+  console.log(gitCustodianData);
   const getPdfExporter = () => {
     const pdfExporter = new jsPDF({ orientation: "landscape" });
     pdfExporter.autoTable({

@@ -70,9 +70,9 @@ function ConnectedAssetsRepositoryTabContainer({ dashboardData }) {
   };
 
   return (
-      <div className={"p-3"}>
-        <TabPanelContainer currentView={getBody()} tabContainer={getTabContainer()} />
-      </div>
+    <div className={"p-3"}>
+      <TabPanelContainer currentView={getBody()} tabContainer={getTabContainer()} />
+    </div>
   );
 }
 

@@ -64,13 +64,13 @@ function DeploymentAnalytics({
     let dashboardTags =
         dashboardData?.data?.filters[
           dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
-          ]?.value;
-      let dashboardOrgs =
+        ]?.value;
+    let dashboardOrgs =
         dashboardData?.data?.filters[
           dashboardData?.data?.filters.findIndex(
             (obj) => obj.type === "organizations",
           )
-          ]?.value;
+        ]?.value;
 
 
     const response = await chartsActions.getMetadataInfo(
@@ -120,8 +120,8 @@ function DeploymentAnalytics({
             key={item.metadataName}
             tabKey={item.metadataName}
             
-        handleTabClick={handleTabClick}
-        activeTab={activeTab}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
           >
             <DeploymentAnalyticsTable metadataName={item.metadataName} dashboardData={dashboardData} kpiConfiguration={kpiConfiguration} />
           </VanitySetTabView>

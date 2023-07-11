@@ -7,7 +7,7 @@ import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import ProjectDataMappingSummaryPanel
-  from "components/settings/data_mapping/projects/details/ProjectDataMappingSummaryPanel";
+from "components/settings/data_mapping/projects/details/ProjectDataMappingSummaryPanel";
 
 function ProjectDataMappingDetailPanel(
   {
@@ -27,23 +27,23 @@ function ProjectDataMappingDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return (
-          <ProjectDataMappingSummaryPanel
-            projectDataMappingModel={projectDataMappingModel}
-            setActiveTab={setActiveTab}
-          />
-        );
-      case "settings":
-        return (
-          <ProjectDataMappingEditorPanel
-            projectDataMappingModel={projectDataMappingModel}
-            setProjectDataMappingModel={setProjectDataMappingModel}
-            handleClose={toggleSummaryPanel}
-          />
-        );
-      default:
-        return null;
+    case "summary":
+      return (
+        <ProjectDataMappingSummaryPanel
+          projectDataMappingModel={projectDataMappingModel}
+          setActiveTab={setActiveTab}
+        />
+      );
+    case "settings":
+      return (
+        <ProjectDataMappingEditorPanel
+          projectDataMappingModel={projectDataMappingModel}
+          setProjectDataMappingModel={setProjectDataMappingModel}
+          handleClose={toggleSummaryPanel}
+        />
+      );
+    default:
+      return null;
     }
   };
 

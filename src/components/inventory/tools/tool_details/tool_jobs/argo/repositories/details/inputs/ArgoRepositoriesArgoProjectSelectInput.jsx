@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ArgoProjectSelectInput
-  from "components/common/list_of_values_input/tools/argo_cd/projects/ArgoProjectSelectInput";
+from "components/common/list_of_values_input/tools/argo_cd/projects/ArgoProjectSelectInput";
 
 function ArgoRepositoriesArgoProjectSelectInput(
   {

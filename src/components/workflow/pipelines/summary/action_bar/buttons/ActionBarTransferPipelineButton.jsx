@@ -35,11 +35,11 @@ function ActionBarTransferPipelineButton(
 
   useEffect(() => {
     if (isSaasUser !== true)
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    });
+      loadData().catch((error) => {
+        if (isMounted?.current === true) {
+          toastContext.showLoadingErrorDialog(error);
+        }
+      });
   }, []);
 
   const loadData = async () => {
@@ -87,31 +87,31 @@ function ActionBarTransferPipelineButton(
   };
 
   const popoverContent = (
-      <div>
-        <div className="pb-2">
-          <StandaloneSelectInput
-            selectOptions={userList}
-            valueField="_id"
-            value={user}
-            busy={isLoading}
-            disabled={isLoading}
-            textField={data => data != null ? `${data["firstName"]} ${data["lastName"]} (${data["email"]})` : ``}
-            setDataFunction={(data) => setUser(data)}
-          />
+    <div>
+      <div className="pb-2">
+        <StandaloneSelectInput
+          selectOptions={userList}
+          valueField="_id"
+          value={user}
+          busy={isLoading}
+          disabled={isLoading}
+          textField={data => data != null ? `${data["firstName"]} ${data["lastName"]} (${data["email"]})` : ``}
+          setDataFunction={(data) => setUser(data)}
+        />
+      </div>
+      <div className="d-flex justify-content-between">
+        <div className="w-50 mr-1">
+          <Button type="primary" size="sm" disabled={transferringPipeline} onClick={() => changePipelineOwner()}
+            className="w-100">
+            <span className="pr-3"><IconBase icon={faShareAlt} className={"mr-2"}/>Transfer</span>
+          </Button>
         </div>
-        <div className="d-flex justify-content-between">
-          <div className="w-50 mr-1">
-            <Button type="primary" size="sm" disabled={transferringPipeline} onClick={() => changePipelineOwner()}
-                    className="w-100">
-              <span className="pr-3"><IconBase icon={faShareAlt} className={"mr-2"}/>Transfer</span>
-            </Button>
-          </div>
-          <div className="w-50 ml-1">
-            <CancelButton size={"sm"} className={"w-100"} cancelFunction={() => document.body.click()} />
-          </div>
+        <div className="w-50 ml-1">
+          <CancelButton size={"sm"} className={"w-100"} cancelFunction={() => document.body.click()} />
         </div>
       </div>
-    );
+    </div>
+  );
 
   if (
     isSaasUser !== false

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedSalesforceConfiguratorToolSelectInput
-  from "components/common/list_of_values_input/tools/salesforce/sfdc-configurator/RoleRestrictedSalesforceConfiguratorToolSelectInput";
+from "components/common/list_of_values_input/tools/salesforce/sfdc-configurator/RoleRestrictedSalesforceConfiguratorToolSelectInput";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function JenkinsStepDestinationSalesforceCredentialsSelectInput(

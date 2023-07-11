@@ -59,14 +59,14 @@ export default function MergeSyncTaskWizardAdvancedFileEditingButton(
               }
               onClick={triggerInlineEditingFunction}
             >
-          <span>
-            <IconBase
-              isLoading={isLoading}
-              icon={faPencil}
-              className={"mr-2"}
-            />
-            {getButtonText()}
-          </span>
+              <span>
+                <IconBase
+                  isLoading={isLoading}
+                  icon={faPencil}
+                  className={"mr-2"}
+                />
+                {getButtonText()}
+              </span>
             </Button>
           </div>
         </TooltipWrapper>

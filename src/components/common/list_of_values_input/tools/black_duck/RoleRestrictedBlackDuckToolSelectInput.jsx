@@ -14,19 +14,19 @@ function RoleRestrictedBlackDuckToolSelectInput(
     clearDataFunction,
   }) {
   return (
-     <RoleRestrictedToolByIdentifierInputBase
-       toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK}
-       toolFriendlyName={"BlackDuck"}
-       fieldName={fieldName}
-       placeholderText={"Select BlackDuck Tool"}
-       configurationRequired={true}
-       model={model}
-       setModel={setModel}
-       setDataFunction={setDataFunction}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-       className={className}
-     />
+    <RoleRestrictedToolByIdentifierInputBase
+      toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK}
+      toolFriendlyName={"BlackDuck"}
+      fieldName={fieldName}
+      placeholderText={"Select BlackDuck Tool"}
+      configurationRequired={true}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+      className={className}
+    />
   );
 }
 

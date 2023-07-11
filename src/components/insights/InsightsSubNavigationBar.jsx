@@ -30,60 +30,60 @@ function InsightsSubNavigationBar({currentTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-      /*case "analytics":
+    /*case "analytics":
         history.push(`/insights/analytics`);
         return;*/
-      case "salesforce":
-        history.push(`/insights/salesforce`);
-        return;
-      case "lookup":
-        history.push(`/insights/salesforce/lookup`);
-        return;
-      case "marketplace":
-        history.push(`/insights/marketplace`);
-        return;
-      case "dashboards":
-        history.push(`/insights/`);
-        return;
-      case "synopsis":
-        history.push(`/insights/synopsis`);
-        return;
-      case "release360":
-        history.push(`/insights/release360`);
-        return;
-      case "connectedAssets":
-        history.push(`/insights/connected-assets`);
-        return;
-      case "gitCustodian":
-        history.push(`/insights/git-custodian`);
-        return;
+    case "salesforce":
+      history.push(`/insights/salesforce`);
+      return;
+    case "lookup":
+      history.push(`/insights/salesforce/lookup`);
+      return;
+    case "marketplace":
+      history.push(`/insights/marketplace`);
+      return;
+    case "dashboards":
+      history.push(`/insights/`);
+      return;
+    case "synopsis":
+      history.push(`/insights/synopsis`);
+      return;
+    case "release360":
+      history.push(`/insights/release360`);
+      return;
+    case "connectedAssets":
+      history.push(`/insights/connected-assets`);
+      return;
+    case "gitCustodian":
+      history.push(`/insights/git-custodian`);
+      return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (currentTab) {
-      case "dashboardViewer":
-        return (
-          <NavigationTab
-            icon={faUserChart}
-            tabName={"dashboardViewer"}
-            handleTabClick={handleTabClick}
-            activeTab={"dashboardViewer"}
-            tabText={"Dashboard Viewer"}
-          />
-        );
-      case "reportsViewer":
-        return (
-          <NavigationTab
-            icon={faUserChart}
-            tabName={"reportsViewer"}
-            handleTabClick={handleTabClick}
-            activeTab={"reportsViewer"}
-            tabText={"Reports Viewer"}
-          />
-        );
-      default:
-        return null;
+    case "dashboardViewer":
+      return (
+        <NavigationTab
+          icon={faUserChart}
+          tabName={"dashboardViewer"}
+          handleTabClick={handleTabClick}
+          activeTab={"dashboardViewer"}
+          tabText={"Dashboard Viewer"}
+        />
+      );
+    case "reportsViewer":
+      return (
+        <NavigationTab
+          icon={faUserChart}
+          tabName={"reportsViewer"}
+          handleTabClick={handleTabClick}
+          activeTab={"reportsViewer"}
+          tabText={"Reports Viewer"}
+        />
+      );
+    default:
+      return null;
     }
   };
 

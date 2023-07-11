@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase
-  from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
 function GChatStepNotificationToolSelectInput(
   {
@@ -11,7 +11,7 @@ function GChatStepNotificationToolSelectInput(
     disabled,
   }) {
   return (
-   <RoleRestrictedToolByIdentifierInputBase
+    <RoleRestrictedToolByIdentifierInputBase
       toolIdentifier={"gchat"}
       toolFriendlyName={"Google Chat"}
       fieldName={"toolId"}

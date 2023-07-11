@@ -63,14 +63,14 @@ function GitlabPendingMergeRequestVerticalTabContainer({
         ]?.value;
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-        ?.value;
+          ?.value;
       const response = await gitlabActions.gitlabProjects(
-          getAccessToken,
-          cancelSource,
-          kpiConfiguration,
-          dashboardTags,
-          filterDto,
-          dashboardOrgs
+        getAccessToken,
+        cancelSource,
+        kpiConfiguration,
+        dashboardTags,
+        filterDto,
+        dashboardOrgs
       );
       let dataObject = response?.data?.data?.gitlabProjects?.data;
 

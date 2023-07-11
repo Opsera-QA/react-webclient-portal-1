@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ExternalRestApiIntegrationStepSummaryPanel
-  from "components/workflow/plan/step/external_rest_api_integration/step_summary/ExternalRestApiIntegrationStepSummaryPanel";
+from "components/workflow/plan/step/external_rest_api_integration/step_summary/ExternalRestApiIntegrationStepSummaryPanel";
 import InfoContainer from "components/common/containers/InfoContainer";
 import modelHelpers from "components/common/model/modelHelpers";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import FieldContainer from "components/common/fields/FieldContainer";
 import InlineInformation from "components/common/status_notifications/inline/InlineInformation";
 import externalRestApiIntegrationStepMetadata
-  from "@opsera/definitions/constants/pipelines/steps/definitions/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
+from "@opsera/definitions/constants/pipelines/steps/definitions/external_rest_api_integration/externalRestApiIntegrationStep.metadata";
 
 function ExternalRestApiIntegrationTaskRunConfigurationSummaryPanel({ externalRestApiIntegrationStepTaskModel }) {
   const getStepConfigurationData = () => {

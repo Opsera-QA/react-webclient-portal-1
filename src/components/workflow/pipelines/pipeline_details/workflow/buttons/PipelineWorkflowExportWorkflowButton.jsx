@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { faGitAlt } from "@fortawesome/free-brands-svg-icons";
 import PipelineExportToGitOverlay
-  from "components/workflow/pipelines/pipeline_details/workflow/PipelineExportToGitOverlay";
+from "components/workflow/pipelines/pipeline_details/workflow/PipelineExportToGitOverlay";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 

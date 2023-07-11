@@ -3,9 +3,9 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import FreeTrialUserExpirationManagementSubNavigationBar
-  from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagementSubNavigationBar";
+from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagementSubNavigationBar";
 import FreeTrialUserExpirationOptionSelectionScreen
-  from "components/settings/trial/user_expiration/option_selection/FreeTrialUserExpirationOptionSelectionScreen";
+from "components/settings/trial/user_expiration/option_selection/FreeTrialUserExpirationOptionSelectionScreen";
 
 export default function FreeTrialUserExpirationManagement() {
   const {

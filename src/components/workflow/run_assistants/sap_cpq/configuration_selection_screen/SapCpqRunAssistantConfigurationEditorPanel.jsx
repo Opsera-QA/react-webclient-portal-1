@@ -28,10 +28,10 @@ const SapCpqRunAssistantConfigurationEditorPanel = ({
           : null;
       const newModel = configuration
         ? new Model(
-            { ...configuration },
-            sapCpqRunParameterConfigurationMetadata,
-            false,
-          )
+          { ...configuration },
+          sapCpqRunParameterConfigurationMetadata,
+          false,
+        )
         : null;
       setSapCpqRunParameterConfigurationModel(newModel);
     }

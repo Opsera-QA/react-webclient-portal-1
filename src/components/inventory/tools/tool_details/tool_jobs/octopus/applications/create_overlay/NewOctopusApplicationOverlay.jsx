@@ -4,7 +4,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import axios from "axios";
 import OctopusApplicationWrapper
-  from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/OctopusApplicationWrapper";
+from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/OctopusApplicationWrapper";
 
 function NewOctopusApplicationOverlay({ toolData, loadData, isMounted, type }) {
   const toastContext = useContext(DialogToastContext);

@@ -4,7 +4,7 @@ import { faShareSquare } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import PublishDashboardToPrivateCatalogButton
-  from "components/insights/marketplace/dashboards/templates/private/publish/PublishDashboardToPrivateCatalogButton";
+from "components/insights/marketplace/dashboards/templates/private/publish/PublishDashboardToPrivateCatalogButton";
 import CancelButton from "components/common/buttons/CancelButton";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";

@@ -3,9 +3,9 @@ import { RMProvider } from "./RMContext";
 import Pipeline from './Pipeline';
 
 export default function index() {
-    return (
-        <RMProvider>
-            <Pipeline />
-        </RMProvider>
-    );
+  return (
+    <RMProvider>
+      <Pipeline />
+    </RMProvider>
+  );
 }

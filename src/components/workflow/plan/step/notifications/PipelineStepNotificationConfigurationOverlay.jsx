@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {faEnvelope, faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import PipelineStepNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/PipelineStepNotificationEditorPanel";
+from "components/workflow/plan/step/notifications/PipelineStepNotificationEditorPanel";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
@@ -42,7 +42,7 @@ export default function PipelineStepNotificationConfigurationOverlay(
     return (
       <PipelineStepNotificationConfigurationHelpDocumentation
         closeHelpPanel={() => setHelpIsShown(false)}
-        />
+      />
     );
   };
 

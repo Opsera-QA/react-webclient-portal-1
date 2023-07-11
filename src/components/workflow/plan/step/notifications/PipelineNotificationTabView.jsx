@@ -5,20 +5,20 @@ import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import PipelineNotificationVerticalTabContainer
-  from "components/workflow/plan/step/notifications/PipelineNotificationVerticalTabContainer";
+from "components/workflow/plan/step/notifications/PipelineNotificationVerticalTabContainer";
 import SlackNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/slack/SlackNotificationEditorPanel";
+from "components/workflow/plan/step/notifications/slack/SlackNotificationEditorPanel";
 import MicrosoftTeamsNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/teams/MicrosoftTeamsNotificationEditorPanel";
+from "components/workflow/plan/step/notifications/teams/MicrosoftTeamsNotificationEditorPanel";
 import JiraNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/jira/JiraNotificationEditorPanel";
+from "components/workflow/plan/step/notifications/jira/JiraNotificationEditorPanel";
 import ServiceNowNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/servicenow/ServiceNowNotificationEditorPanel";
+from "components/workflow/plan/step/notifications/servicenow/ServiceNowNotificationEditorPanel";
 import EmailNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/email/EmailNotificationEditorPanel";
+from "components/workflow/plan/step/notifications/email/EmailNotificationEditorPanel";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 import GChatNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/gchat/GChatNotificationEditorPanel";
+from "components/workflow/plan/step/notifications/gchat/GChatNotificationEditorPanel";
 
 function PipelineNotificationTabView(
   {
@@ -40,49 +40,49 @@ function PipelineNotificationTabView(
   
   const getCurrentView = () => {
     switch (activeTab) {
-      case "email":
-        return (
-          <EmailNotificationEditorPanel
-            emailNotificationModel={emailNotificationModel}
-            setEmailNotificationModel={setEmailNotificationModel}
-          />
-        );
-      case "jira":
-        return (
-          <JiraNotificationEditorPanel
-            jiraNotificationModel={jiraNotificationModel}
-            setJiraNotificationModel={setJiraNotificationModel}
-            isApprovalStep={pipelineStep?.tool?.tool_identifier === "approval"}
-          />
-        );
-      case "slack":
-        return (
-          <SlackNotificationEditorPanel
-            slackNotificationModel={slackNotificationModel}
-            setSlackNotificationModel={setSlackNotificationModel}
-          />
-        );
-      case "service-now":
-        return (
-          <ServiceNowNotificationEditorPanel
-            serviceNowNotificationModel={serviceNowNotificationModel}
-            setServiceNowNotificationModel={setServiceNowNotificationModel}
-          />
-        );
-      case "teams":
-        return (
-          <MicrosoftTeamsNotificationEditorPanel
-            teamsNotificationModel={teamsNotificationModel}
-            setTeamsNotificationModel={setTeamsNotificationModel}
-          />
-        );
-      case "gchat":
-        return (
-          <GChatNotificationEditorPanel
-            gChatNotificationModel={gChatNotificationModel}
-            setGChatNotificationModel={setGChatNotificationModel}
-          />
-        );
+    case "email":
+      return (
+        <EmailNotificationEditorPanel
+          emailNotificationModel={emailNotificationModel}
+          setEmailNotificationModel={setEmailNotificationModel}
+        />
+      );
+    case "jira":
+      return (
+        <JiraNotificationEditorPanel
+          jiraNotificationModel={jiraNotificationModel}
+          setJiraNotificationModel={setJiraNotificationModel}
+          isApprovalStep={pipelineStep?.tool?.tool_identifier === "approval"}
+        />
+      );
+    case "slack":
+      return (
+        <SlackNotificationEditorPanel
+          slackNotificationModel={slackNotificationModel}
+          setSlackNotificationModel={setSlackNotificationModel}
+        />
+      );
+    case "service-now":
+      return (
+        <ServiceNowNotificationEditorPanel
+          serviceNowNotificationModel={serviceNowNotificationModel}
+          setServiceNowNotificationModel={setServiceNowNotificationModel}
+        />
+      );
+    case "teams":
+      return (
+        <MicrosoftTeamsNotificationEditorPanel
+          teamsNotificationModel={teamsNotificationModel}
+          setTeamsNotificationModel={setTeamsNotificationModel}
+        />
+      );
+    case "gchat":
+      return (
+        <GChatNotificationEditorPanel
+          gChatNotificationModel={gChatNotificationModel}
+          setGChatNotificationModel={setGChatNotificationModel}
+        />
+      );
     }
   };
 

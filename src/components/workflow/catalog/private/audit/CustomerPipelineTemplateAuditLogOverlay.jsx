@@ -5,9 +5,9 @@ import FullScreenCenterOverlayContainer from "components/common/overlays/center/
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import CustomerPipelineTemplateAuditLogDetailOverlay
-  from "components/workflow/catalog/private/audit/CustomerPipelineTemplateAuditLogDetailOverlay";
+from "components/workflow/catalog/private/audit/CustomerPipelineTemplateAuditLogDetailOverlay";
 import CustomerPipelineTemplateAuditLogsDisplayer
-  from "components/workflow/catalog/private/audit/CustomerPipelineTemplateAuditLogsDisplayer";
+from "components/workflow/catalog/private/audit/CustomerPipelineTemplateAuditLogsDisplayer";
 
 export default function CustomerPipelineTemplateAuditLogOverlay({templateId}) {
   const [selectedAuditLogId, setSelectedAuditLogId] = useState(undefined);

@@ -25,19 +25,19 @@ function ExportCoverityScanDataOverlay({ formattedData, rawData, isLoading }) {
 
   const getCsvData = () => {
     return [["Project", "Severity", "Owner", "Issue Category", "Issue Type", "Action", "Status", "Date", "File"],
-    ...formattedData.map(item =>
-      [
-        item.project,
-        item.severity,
-        item.owner,
-        item.issue_category,
-        item.issue_type,
-        item.action,
-        item.status,
-        item.date,
-        item.file
-      ]
-    )];
+      ...formattedData.map(item =>
+        [
+          item.project,
+          item.severity,
+          item.owner,
+          item.issue_category,
+          item.issue_type,
+          item.action,
+          item.status,
+          item.date,
+          item.file
+        ]
+      )];
   };
 
   return (

@@ -4,10 +4,10 @@ import {ReactMarkdownWrapper} from "@opsera/react-vanity-set";
 
 const InsightsFrequentlyAskedQuestions = () => {
   return (
-      <ReactMarkdownWrapper
-        markdownFile={insightsFaq}
-        className={"m-4"}
-      />
+    <ReactMarkdownWrapper
+      markdownFile={insightsFaq}
+      className={"m-4"}
+    />
   );
 };
 

@@ -6,14 +6,14 @@ import conditionalOperationStepConfigurationMetadata from "./conditional-operati
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import thresholdMetadata from "components/common/metadata/pipelines/thresholdMetadata";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PipelineConditionMultiSelectInput
-  from "components/common/list_of_values_input/workflow/pipelines/conditional_operation/PipelineConditionMultiSelectInput";
+from "components/common/list_of_values_input/workflow/pipelines/conditional_operation/PipelineConditionMultiSelectInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import PipelineSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineSelectInput";
 import ConditionalOperationPipelineSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/conditional_operation/ConditionalOperationPipelineSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/conditional_operation/ConditionalOperationPipelineSelectInput";
 
 function ConditionalOperationPipelineStepConfiguration({ stepTool, pipelineId, parentCallback, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);

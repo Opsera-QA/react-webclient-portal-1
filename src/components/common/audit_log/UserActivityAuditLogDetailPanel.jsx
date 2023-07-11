@@ -32,20 +32,20 @@ export default function UserActivityAuditLogDetailPanel({ auditLogModel }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return (
-          <UserActivityAuditLogSummaryPanelBase
-            auditLogModel={auditLogModel}
-            className={"mt-2 mx-2"}
-          />
-        );
-      case "json":
-        return (
-          <UserActivityAuditLogObjectView
-            auditLogModel={auditLogModel}
-            className={"m-2"}
-          />
-        );
+    case "summary":
+      return (
+        <UserActivityAuditLogSummaryPanelBase
+          auditLogModel={auditLogModel}
+          className={"mt-2 mx-2"}
+        />
+      );
+    case "json":
+      return (
+        <UserActivityAuditLogObjectView
+          auditLogModel={auditLogModel}
+          className={"m-2"}
+        />
+      );
     }
   };
 

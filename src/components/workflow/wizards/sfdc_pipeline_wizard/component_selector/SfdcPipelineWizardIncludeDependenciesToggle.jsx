@@ -5,7 +5,7 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 function SfdcPipelineWizardIncludeDependenciesToggle({pipelineWizardModel, setPipelineWizardModel}) {
 
   if (
-       pipelineWizardModel?.getData("isSfdx") !== true
+    pipelineWizardModel?.getData("isSfdx") !== true
     || pipelineWizardModel.getData("isProfiles") === true
     || pipelineWizardModel.getData("fromGitTasks") === true
   ) {

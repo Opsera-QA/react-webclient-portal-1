@@ -5,10 +5,10 @@ export default (defaultColor, failColor, accentColor, warningColor) => ({
   layout: "horizontal",
   colors: (bar) => {
     switch (bar.id) {
-      case "Successful": return defaultColor;
-      case "Failed": return failColor;
-      case "Aborted": return accentColor;
-      default: return warningColor;
+    case "Successful": return defaultColor;
+    case "Failed": return failColor;
+    case "Aborted": return accentColor;
+    default: return warningColor;
     }
   }
 });

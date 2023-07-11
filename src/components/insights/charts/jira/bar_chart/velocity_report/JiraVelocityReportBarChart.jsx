@@ -13,7 +13,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColor, assignVelocityColors, adjustBarWidth,
-        capitalizeLegend } from "../../../charts-views";
+  capitalizeLegend } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 
 function JiraVelocityBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -79,19 +79,19 @@ function JiraVelocityBarChart({ kpiConfiguration, setKpiConfiguration, dashboard
 
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
-            <ResponsiveBar
-              data={metrics}
-              {...defaultConfig("Number of Issues", "Sprint Name", 
-                      false, true, "wholeNumbers", "cutoffString")}
-              {...config(getColor)}
-              {...adjustBarWidth(metrics)}
-              onClick={() => setShowModal(true)}
-              tooltip={({ indexValue, value, id, data }) => <ChartTooltip 
-                                  titles = {["Sprint Name", "Issue State", "Number of Issues", "Percent Completed"]}
-                                  values = {[indexValue, id, value, `${data.percentage}%`]}
-                                  style={false} />}
-            />
-        </div>
+        <ResponsiveBar
+          data={metrics}
+          {...defaultConfig("Number of Issues", "Sprint Name", 
+            false, true, "wholeNumbers", "cutoffString")}
+          {...config(getColor)}
+          {...adjustBarWidth(metrics)}
+          onClick={() => setShowModal(true)}
+          tooltip={({ indexValue, value, id, data }) => <ChartTooltip 
+            titles = {["Sprint Name", "Issue State", "Number of Issues", "Percent Completed"]}
+            values = {[indexValue, id, value, `${data.percentage}%`]}
+            style={false} />}
+        />
+      </div>
     );
   };
 

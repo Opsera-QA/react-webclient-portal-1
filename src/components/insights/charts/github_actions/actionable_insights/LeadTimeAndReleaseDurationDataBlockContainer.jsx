@@ -6,7 +6,7 @@ import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import { getTimeDisplay } from "../github_actions-utility";
 import DeploymentFrequencyStatisticsDataBlockContainer
-  from "../bar_chart/metrics/deployment_frequency_statistics/DeploymentFrequencyStatisticsDataBlockContainer";
+from "../bar_chart/metrics/deployment_frequency_statistics/DeploymentFrequencyStatisticsDataBlockContainer";
 import LeadTimeAndReleaseDurationDeployMetric from "../bar_chart/metrics/deploy/LeadTimeAndReleaseDurationDeployMetric";
 
 function LeadTimeAndReleaseDurationDataBlockContainer({ data, kpiConfiguration, dashboardData, meanData, countData, metric, statisticsData, chartData }) {
@@ -106,7 +106,7 @@ function LeadTimeAndReleaseDurationDataBlockContainer({ data, kpiConfiguration, 
 
       {/* <HorizontalDataBlocksContainer title={"Deployment Duration"} className="mt-3">
         <div className="container-fluid"> */}
-          {/* <Row className="d-flex align-items-center">
+      {/* <Row className="d-flex align-items-center">
             <Col xs={12} className={"p-2 mr-2"}>
               <LeadTimeAndReleaseDurationDeployMetric
                 metric={metric}
@@ -119,7 +119,7 @@ function LeadTimeAndReleaseDurationDataBlockContainer({ data, kpiConfiguration, 
               />
             </Col>
           </Row> */}
-              {/* <LeadTimeAndReleaseDurationDeployMetric
+      {/* <LeadTimeAndReleaseDurationDeployMetric
                 metric={metric}
                 kpiConfiguration={kpiConfiguration}
                 meanData={meanData}
@@ -128,7 +128,7 @@ function LeadTimeAndReleaseDurationDataBlockContainer({ data, kpiConfiguration, 
                 dashboardData={dashboardData}
                 className={"lead-time-deployment-duration-chart-container mr-4"}
               /> */}
-        {/* </div>
+      {/* </div>
       </HorizontalDataBlocksContainer> */}
     </>
   );

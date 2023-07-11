@@ -93,8 +93,8 @@ function JiraProjectNameField(
       <FieldLabel field={field}/>
       <span>
         <IconBase
-        isLoading={isLoading}
-        className={"mr-1"}
+          isLoading={isLoading}
+          className={"mr-1"}
         />
         {getProjectName()}
       </span>

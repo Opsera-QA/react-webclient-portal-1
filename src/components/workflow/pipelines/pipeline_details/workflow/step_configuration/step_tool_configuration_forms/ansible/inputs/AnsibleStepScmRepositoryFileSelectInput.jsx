@@ -32,20 +32,20 @@ function AnsibleStepScmRepositoryFileSelectInput({
   
   useEffect(() => {
     
-      if (cancelTokenSource) {
-        cancelTokenSource.cancel();
-      }
-      const source = axios.CancelToken.source();
-      setCancelTokenSource(source);
-      isMounted.current = true;
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
       
-      if(!isEmpty(defaultBranch) && !isEmpty(gitToolId) && !isEmpty(projectId)  && !isEmpty(service) && !isEmpty(playbookFilePath)){
-        loadData(source).catch((error) => {
-          if (isMounted?.current === true) {
-            throw error;
-          }
-        });
-      }
+    if(!isEmpty(defaultBranch) && !isEmpty(gitToolId) && !isEmpty(projectId)  && !isEmpty(service) && !isEmpty(playbookFilePath)){
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
     
     return () => {
       source.cancel();
@@ -131,7 +131,7 @@ function AnsibleStepScmRepositoryFileSelectInput({
         placeholderText={placeholderText}
         disabled={repoFiles == null || repoFiles.length === 0}
       />
-       <div onClick={() => loadData()} className="text-muted ml-3 dropdown-data-fetch">
+      <div onClick={() => loadData()} className="text-muted ml-3 dropdown-data-fetch">
         {getInfoText()}
       </div>
     </div>

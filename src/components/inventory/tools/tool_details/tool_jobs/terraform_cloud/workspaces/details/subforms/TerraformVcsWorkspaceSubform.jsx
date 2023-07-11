@@ -34,7 +34,7 @@ const TerraformVcsWorkspaceSubform = ({terraformCloudWorkspacesModel, setTerrafo
     if (terraformCloudWorkspacesModel.getData("repository") !== null && 
         terraformCloudWorkspacesModel.getData("repository") !== "" && 
         terraformCloudWorkspacesModel.getData("repository") === "Others"
-      ) 
+    ) 
     {      
       return (
         <TextInputBase

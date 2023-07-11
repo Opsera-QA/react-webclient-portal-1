@@ -14,7 +14,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import {parseError} from "components/common/helpers/error-helpers";
 import SfdcPipelineWizardBasicSummary
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardBasicSummary";
+from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardBasicSummary";
 
 const SfdcPipelineWizardStandardFileSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -118,21 +118,21 @@ const SfdcPipelineWizardStandardFileSelector = ({ pipelineWizardModel, setPipeli
     return (
       <CustomTabContainer>
         {pipelineWizardModel.getData("isOrgToOrg") && <CustomTab
-            activeTab={"sfdc"}
-            tabText={"Salesforce Files"}
-            handleTabClick={handleTabClick}
-            tabName={"sfdc"}
-            toolTipText={"Salesforce Files"}
-            icon={faSalesforce}
-          />}
-         {!pipelineWizardModel.getData("isOrgToOrg") && <CustomTab
-            activeTab={"git"}
-            tabText={"Git Files"}
-            handleTabClick={handleTabClick}
-            tabName={"git"}
-            toolTipText={"Git Files"}
-            icon={faCode}
-          />}
+          activeTab={"sfdc"}
+          tabText={"Salesforce Files"}
+          handleTabClick={handleTabClick}
+          tabName={"sfdc"}
+          toolTipText={"Salesforce Files"}
+          icon={faSalesforce}
+        />}
+        {!pipelineWizardModel.getData("isOrgToOrg") && <CustomTab
+          activeTab={"git"}
+          tabText={"Git Files"}
+          handleTabClick={handleTabClick}
+          tabName={"git"}
+          toolTipText={"Git Files"}
+          icon={faCode}
+        />}
       </CustomTabContainer>
     );
   };

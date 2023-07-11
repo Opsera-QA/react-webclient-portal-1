@@ -10,11 +10,11 @@ import IconBase from "components/common/icons/IconBase";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import ChartTooltip from "../../ChartTooltip";
 import GitlabDeploymentFreqActionableMasterTab
-    from "./actionable_insights/tabs/GitlabDeploymentFreqActionableMasterTab";
+from "./actionable_insights/tabs/GitlabDeploymentFreqActionableMasterTab";
 
 function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfiguration, dashboardData }) {
   const [maxCharVal, setMaxChartVal] = useState(0);
-    const toastContext = useContext(DialogToastContext);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     let dataStepHigh = _.maxBy(chartData.step, "y");
@@ -35,18 +35,18 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfigurati
     },
   ];
 
-    const onNodeSelect = (node) => {
-        toastContext.showOverlayPanel(
-            <GitlabDeploymentFreqActionableMasterTab
-                kpiConfiguration={kpiConfiguration}
-                dashboardData={dashboardData}
-                start={node?.data?.x}
-                end={node?.data?.upperBound}
-                range={node?.data?.range}
-                type={node?.data?.type}
-            />
-        );
-    };
+  const onNodeSelect = (node) => {
+    toastContext.showOverlayPanel(
+      <GitlabDeploymentFreqActionableMasterTab
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+        start={node?.data?.x}
+        end={node?.data?.upperBound}
+        range={node?.data?.range}
+        type={node?.data?.type}
+      />
+    );
+  };
 
   const getTrendChart = () => {
     return (
@@ -90,10 +90,10 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfigurati
           }}
           onClick={(node) => onNodeSelect(node)}
           tooltip={(node) => (
-              <ChartTooltip
-                  titles={["Type", "Date Range", "Total Runs", "Average"]}
-                  values={[node.point.data.type, node.point.data.range, node.point.data.total, node.point.data.y]}
-              />
+            <ChartTooltip
+              titles={["Type", "Date Range", "Total Runs", "Average"]}
+              values={[node.point.data.type, node.point.data.range, node.point.data.total, node.point.data.y]}
+            />
           )}
         />
       </>

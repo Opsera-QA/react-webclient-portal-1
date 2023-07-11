@@ -8,7 +8,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import CancelButtonBase from "components/common/buttons/cancel/CancelButtonBase";
 import ActivateSiteRoleButton from "components/settings/ldap_site_roles/cards/inactive/ActivateSiteRoleButton";
 import SiteRoleAccessRuleMatrixTable
-  from "components/settings/ldap_site_roles/cards/inactive/SiteRoleAccessRuleMatrixTable";
+from "components/settings/ldap_site_roles/cards/inactive/SiteRoleAccessRuleMatrixTable";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 

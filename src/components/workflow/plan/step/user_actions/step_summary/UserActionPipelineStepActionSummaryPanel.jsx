@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import PipelineTaskSummaryPanelBase
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskSummaryPanelBase";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskSummaryPanelBase";
 import RichTextField from "components/common/fields/rich_text/RichTextField";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {
@@ -15,7 +15,7 @@ import DateTimeField from "components/common/fields/date/DateTimeField";
 import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
 import useGetPipelineInstructionsModel from "components/workflow/instructions/hooks/useGetPipelineInstructionsModel";
 import PipelineInstructionsFieldBase
-  from "components/common/list_of_values_input/workflow/instructions/PipelineInstructionsFieldBase";
+from "components/common/list_of_values_input/workflow/instructions/PipelineInstructionsFieldBase";
 
 export default function UserActionPipelineStepActionSummaryPanel(
   {

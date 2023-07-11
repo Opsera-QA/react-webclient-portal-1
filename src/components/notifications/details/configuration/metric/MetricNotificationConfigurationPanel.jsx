@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
 import metricNotificationConfigurationMetadata
-  from "components/notifications/details/configuration/metric/metric-notification-configuration-metadata";
+from "components/notifications/details/configuration/metric/metric-notification-configuration-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import MetricKpiConfigurationSelectInput
-  from "components/notifications/details/configuration/metric/MetricKpiConfigurationSelectInput";
+from "components/notifications/details/configuration/metric/MetricKpiConfigurationSelectInput";
 import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 
 export default function MetricNotificationConfigurationPanel(

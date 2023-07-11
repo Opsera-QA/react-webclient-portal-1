@@ -10,7 +10,7 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import xunitTestResultsTableMetadata
-  from "./xunit-test-results-metadata.js";
+from "./xunit-test-results-metadata.js";
 import {getField} from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";

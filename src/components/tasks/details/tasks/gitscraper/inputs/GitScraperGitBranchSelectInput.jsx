@@ -10,18 +10,18 @@ function GitScraperGitBranchSelectInput({model, setModel, disabled, service, git
   };
 
   return (
-     <GitBranchInput
-       fieldName={"gitBranch"}
-       service={service}
-       gitToolId={gitToolId}
-       workspace={model?.getData("workspace")}
-       repoId={model?.getData("repoId")}
-       dataObject={model}
-       setDataFunction={setDataFunction}
-       setDataObject={setModel}
-       disabled={disabled}
-       multi={true}
-     />
+    <GitBranchInput
+      fieldName={"gitBranch"}
+      service={service}
+      gitToolId={gitToolId}
+      workspace={model?.getData("workspace")}
+      repoId={model?.getData("repoId")}
+      dataObject={model}
+      setDataFunction={setDataFunction}
+      setDataObject={setModel}
+      disabled={disabled}
+      multi={true}
+    />
   );
 }
 

@@ -9,7 +9,7 @@ import WorkflowWidgetNavigationBar, {
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import sessionHelper from "utils/session.helper";
 import WorkspaceWorkflowSelectionCardView
-  from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
+from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
 import SoftwareDevelopmentSocialMediaWidget from "components/landing/v2/widgets/unused/SoftwareDevelopmentSocialMediaWidget";
 import useGetSalesforceWorkflowResources from "hooks/landing/salesforce/useGetSalesforceWorkflowResources";
 import SearchFilter from "components/common/filters/search/SearchFilter";

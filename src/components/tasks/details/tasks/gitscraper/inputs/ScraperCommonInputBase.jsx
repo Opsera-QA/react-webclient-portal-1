@@ -82,17 +82,17 @@ function ScraperCommonInputBase({
               <div>{errorMessage}</div>
             </small>
           </>
-            <Button
-              size="sm"
-              variant="primary"
-              disabled={!allowIncompleteItems && (!property || property.length === 0)}
-              onClick={() => {
-                addProperty();
-              }}
-              className={"ml-2"}
-            >
-              <IconBase icon={faPlus} fixedWidth /> Add
-            </Button>
+          <Button
+            size="sm"
+            variant="primary"
+            disabled={!allowIncompleteItems && (!property || property.length === 0)}
+            onClick={() => {
+              addProperty();
+            }}
+            className={"ml-2"}
+          >
+            <IconBase icon={faPlus} fixedWidth /> Add
+          </Button>
         </InputGroup>
       </div>
     );

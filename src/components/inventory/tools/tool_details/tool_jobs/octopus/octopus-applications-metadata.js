@@ -43,7 +43,7 @@ export const octopusApplicationsMetadata = {
       label: "ID",
       id: "id"
     }
-],
+  ],
   newObjectFields: {
     _id: "",
     type: "environment",

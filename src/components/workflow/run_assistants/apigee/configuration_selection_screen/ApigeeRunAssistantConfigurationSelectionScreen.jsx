@@ -2,14 +2,14 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import ApigeeRunAssistantConfigurationEditorPanel
-  from "components/workflow/run_assistants/apigee/configuration_selection_screen/ApigeeRunAssistantConfigurationEditorPanel";
+from "components/workflow/run_assistants/apigee/configuration_selection_screen/ApigeeRunAssistantConfigurationEditorPanel";
 import ApigeeRunParameterConfigurationIndexSelectInput
-  from "components/workflow/run_assistants/apigee/configuration_selection_screen/inputs/ApigeeRunParameterConfigurationIndexSelectInput";
+from "components/workflow/run_assistants/apigee/configuration_selection_screen/inputs/ApigeeRunParameterConfigurationIndexSelectInput";
 import Col from "react-bootstrap/Col";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import CancelButton from "components/common/buttons/CancelButton";
 import ApigeeRunAssistantSelectConfigurationButton
-  from "components/workflow/run_assistants/apigee/configuration_selection_screen/ApigeeRunAssistantSelectConfigurationButton";
+from "components/workflow/run_assistants/apigee/configuration_selection_screen/ApigeeRunAssistantSelectConfigurationButton";
 
 const ApigeeRunAssistantConfigurationSelectionScreen = (
   {

@@ -32,12 +32,12 @@ export default function InsightsRoutes() {
       <SecureRoute path="/insights/git-custodian" component={GitCustodian} />
       {/* Reports */}
       <SecureRoute path="/insights/reports/scans/sonar/:pipelineId/:stepId/:runCount/:issueType"
-                   component={SonarPipelineScanReport} />
+        component={SonarPipelineScanReport} />
       <SecureRoute path="/insights/reports/scans/coverity/:pipelineId/:projectName/:runCount/:coveritySeverity"
-                   component={CoverityScanReport} />
+        component={CoverityScanReport} />
       <SecureRoute path="/insights/reports/scans/aquasec/:pipelineId/:imageName/:severity" component={AquasecReport} />
       <SecureRoute path="/insights/reports/scans/gitscraper/:repository/:branch"
-                   component={GitScraperScanReport} />
+        component={GitScraperScanReport} />
       <SecureRoute path="/insights/reports/scans/aquasec/:pipelineId/:imageName/:severity" component={AquasecReport} />
     </>
   );

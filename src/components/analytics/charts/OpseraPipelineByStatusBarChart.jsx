@@ -9,7 +9,7 @@ import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
 import { defaultConfig, getColorById, assignBooleanColors,
-         adjustBarWidth } from '../../insights/charts/charts-views';
+  adjustBarWidth } from '../../insights/charts/charts-views';
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 
 function OpseraPipelineByStatusBarChart( { persona, date  } ) {
@@ -90,7 +90,7 @@ function OpseraPipelineByStatusBarChart( { persona, date  } ) {
             <ResponsiveBar
               data={data ? data.data : []}
               {...defaultConfig('Pipeline Name', 'Number of Pipelines', 
-                                true, false, 'cutoffString', 'wholeNumbers')}
+                true, false, 'cutoffString', 'wholeNumbers')}
               {...adjustBarWidth(data ? data.data : [], false)}
               keys={["Successful", "Failed"]}
               indexBy="pipeline_id"
@@ -99,10 +99,10 @@ function OpseraPipelineByStatusBarChart( { persona, date  } ) {
               colorBy="id"
               colors={getColorById}
               tooltip={({ indexValue, value, id, color }) => <ChartTooltip 
-                                            titles = {["Pipeline", `${id} Builds`]}
-                                            values = {[indexValue, value]}
-                                            color = {color}
-                                            style = {false} />}
+                titles = {["Pipeline", `${id} Builds`]}
+                values = {[indexValue, value]}
+                color = {color}
+                style = {false} />}
             />
           }
         </div>

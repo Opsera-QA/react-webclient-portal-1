@@ -27,13 +27,13 @@ export const NOTIFICATION_TYPE_SELECT_OPTIONS = [
 
 export const getNotificationTypeLabel = (notificationType) => {
   switch (notificationType) {
-    case NOTIFICATION_TYPES.PIPELINE:
-      return NOTIFICATION_TYPE_LABELS.PIPELINE;
-    case NOTIFICATION_TYPES.METRIC:
-      return NOTIFICATION_TYPE_LABELS.METRIC;
-    case NOTIFICATION_TYPES.AUDIT_LOG:
-      return NOTIFICATION_TYPE_LABELS.AUDIT_LOG;
-    default:
-      return notificationType;
+  case NOTIFICATION_TYPES.PIPELINE:
+    return NOTIFICATION_TYPE_LABELS.PIPELINE;
+  case NOTIFICATION_TYPES.METRIC:
+    return NOTIFICATION_TYPE_LABELS.METRIC;
+  case NOTIFICATION_TYPES.AUDIT_LOG:
+    return NOTIFICATION_TYPE_LABELS.AUDIT_LOG;
+  default:
+    return notificationType;
   }
 };

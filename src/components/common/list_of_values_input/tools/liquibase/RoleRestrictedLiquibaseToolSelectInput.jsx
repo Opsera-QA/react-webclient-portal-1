@@ -14,19 +14,19 @@ function RoleRestrictedLiquibaseToolSelectInput(
     clearDataFunction,
   }) {
   return (
-     <RoleRestrictedToolByIdentifierInputBase
-       toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE}
-       toolFriendlyName={"Liquibase"}
-       fieldName={fieldName}
-       placeholderText={"Select Liquibase Tool"}
-       configurationRequired={true}
-       model={model}
-       setModel={setModel}
-       setDataFunction={setDataFunction}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-       className={className}
-     />
+    <RoleRestrictedToolByIdentifierInputBase
+      toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE}
+      toolFriendlyName={"Liquibase"}
+      fieldName={fieldName}
+      placeholderText={"Select Liquibase Tool"}
+      configurationRequired={true}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+      className={className}
+    />
   );
 }
 

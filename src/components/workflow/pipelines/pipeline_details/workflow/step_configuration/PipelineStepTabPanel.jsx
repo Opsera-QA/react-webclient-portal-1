@@ -35,12 +35,12 @@ function PipelineStepTabPanel({ pipelineStepData }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return <PipelineStepConfigurationSummary pipelineData={pipelineStepData} />;
-      case "json":
-        return <PipelineStepJsonPanel pipelineStepData={pipelineStepData} />;
-      default:
-        return null;
+    case "summary":
+      return <PipelineStepConfigurationSummary pipelineData={pipelineStepData} />;
+    case "json":
+      return <PipelineStepJsonPanel pipelineStepData={pipelineStepData} />;
+    default:
+      return null;
     }
   };
 

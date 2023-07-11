@@ -10,13 +10,13 @@ import IconBase from "components/common/icons/IconBase";
 import {faSync} from "@fortawesome/pro-light-svg-icons";
 import {SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS} from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationWizard";
 import salesforceBulkMigrationWizardActions
-  from "components/workflow/wizards/salesforce_bulk_migration/salesforceBulkMigrationWizard.actions";
+from "components/workflow/wizards/salesforce_bulk_migration/salesforceBulkMigrationWizard.actions";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import SalesforcePackageVersionSelectionInput
-  from "../../sfdc_pipeline_wizard/xml_viewer/xml/SalesforcePackageVersionSelectionInput";
+from "../../sfdc_pipeline_wizard/xml_viewer/xml/SalesforcePackageVersionSelectionInput";
 import sfdcPipelineActions from "../../sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { parseError } from "../../../../common/helpers/error-helpers";

@@ -10,7 +10,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import { defaultConfig, getColorByData, assignStandardColors,
-         adjustBarWidth } from "../../../charts-views";
+  adjustBarWidth } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 
 function SonarLinesToCoverBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -75,25 +75,25 @@ function SonarLinesToCoverBarChart({ kpiConfiguration, setKpiConfiguration, dash
       return null;
     }
 
-  return (
-    <>
-      <div className="new-chart mb-3" style={{height: "300px"}}>
-      <ResponsiveBar
-        data={metrics}
-        {...defaultConfig("Value", "Code Coverage Metric", 
-                  false, false, "", "monthDate2")}
-        {...config(getColorByData)}
-        {...adjustBarWidth(metrics)}
-        onClick={() => setShowModal(true)}
-        tooltip={({ indexValue, value, color, data }) => <ChartTooltip 
-                titles = {["Timestamp", "Uncovered Lines", "Project Key"]}
-                values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(indexValue)), value, data.key]}
-                style = {false}
-                color = {color} />}
+    return (
+      <>
+        <div className="new-chart mb-3" style={{height: "300px"}}>
+          <ResponsiveBar
+            data={metrics}
+            {...defaultConfig("Value", "Code Coverage Metric", 
+              false, false, "", "monthDate2")}
+            {...config(getColorByData)}
+            {...adjustBarWidth(metrics)}
+            onClick={() => setShowModal(true)}
+            tooltip={({ indexValue, value, color, data }) => <ChartTooltip 
+              titles = {["Timestamp", "Uncovered Lines", "Project Key"]}
+              values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(indexValue)), value, data.key]}
+              style = {false}
+              color = {color} />}
           />
-      </div>
-    </>
-  );
+        </div>
+      </>
+    );
   };
 
   return (

@@ -158,30 +158,30 @@ export default function PipelineSelectionList(
         }}
         className={"w-100 p-3"}
       >
-          <AddAllButtonBase
-            onClickFunction={addAllPipelines}
-            itemCount={unselectedPipelineCount}
-            buttonSize={"sm"}
-            buttonClassName={"w-100"}
-            className={"my-2"}
-            disabled={isLoading}
-          />
-          <AddSelectedButtonBase
-            onClickFunction={addSelectedPipelines}
-            itemCount={selectedPipelines.length}
-            buttonSize={"sm"}
-            buttonClassName={"w-100"}
-            className={"my-2"}
-            disabled={isLoading}
-          />
-          <AddShownButtonBase
-            onClickFunction={addAllShownPipelines}
-            itemCount={filteredPipelines.length}
-            buttonSize={"sm"}
-            buttonClassName={"w-100"}
-            className={"my-2"}
-            disabled={isLoading}
-          />
+        <AddAllButtonBase
+          onClickFunction={addAllPipelines}
+          itemCount={unselectedPipelineCount}
+          buttonSize={"sm"}
+          buttonClassName={"w-100"}
+          className={"my-2"}
+          disabled={isLoading}
+        />
+        <AddSelectedButtonBase
+          onClickFunction={addSelectedPipelines}
+          itemCount={selectedPipelines.length}
+          buttonSize={"sm"}
+          buttonClassName={"w-100"}
+          className={"my-2"}
+          disabled={isLoading}
+        />
+        <AddShownButtonBase
+          onClickFunction={addAllShownPipelines}
+          itemCount={filteredPipelines.length}
+          buttonSize={"sm"}
+          buttonClassName={"w-100"}
+          className={"my-2"}
+          disabled={isLoading}
+        />
       </div>
     );
   };

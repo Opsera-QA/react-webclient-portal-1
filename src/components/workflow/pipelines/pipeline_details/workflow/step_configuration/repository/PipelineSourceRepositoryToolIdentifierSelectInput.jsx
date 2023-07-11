@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SourceRepositoryToolIdentifierSelectInput
-  from "components/common/list_of_values_input/workflow/pipelines/source_repository/SourceRepositoryToolIdentifierSelectInput";
+from "components/common/list_of_values_input/workflow/pipelines/source_repository/SourceRepositoryToolIdentifierSelectInput";
 
 function PipelineSourceRepositoryToolIdentifierSelectInput({ fieldName, model, setModel, disabled }) {
   const setDataFunction = (fieldName, selectedOption) => {

@@ -6,12 +6,12 @@ function SystemStatusCard({ systemStatus }) {
 
   const getStatusIcon = () => {
     switch (systemStatus.status) {
-      case "Healthy":
-        return <SystemStatusIcon type={"Healthy"}/>;
-      case "Unhealthy":
-        return <SystemStatusIcon type={"Unhealthy"}/>;
-      default:
-        return <SystemStatusIcon type={"Warning"}/>;
+    case "Healthy":
+      return <SystemStatusIcon type={"Healthy"}/>;
+    case "Unhealthy":
+      return <SystemStatusIcon type={"Unhealthy"}/>;
+    default:
+      return <SystemStatusIcon type={"Warning"}/>;
     }
   };
 

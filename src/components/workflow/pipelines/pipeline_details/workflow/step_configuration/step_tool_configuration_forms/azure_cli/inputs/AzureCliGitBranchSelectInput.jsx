@@ -10,17 +10,17 @@ function AzureCliGitBranchSelectInput({model, setModel, disabled}) {
   };
 
   return (
-     <GitBranchInput
-       fieldName={"defaultBranch"}
-       service={model?.getData("type")}
-       gitToolId={model?.getData("gitToolId")}
-       workspace={model?.getData("bitbucketWorkspace")}
-       repoId={model?.getData("gitRepositoryID")}
-       dataObject={model}
-       setDataFunction={setDataFunction}
-       setDataObject={setModel}
-       disabled={disabled}
-     />
+    <GitBranchInput
+      fieldName={"defaultBranch"}
+      service={model?.getData("type")}
+      gitToolId={model?.getData("gitToolId")}
+      workspace={model?.getData("bitbucketWorkspace")}
+      repoId={model?.getData("gitRepositoryID")}
+      dataObject={model}
+      setDataFunction={setDataFunction}
+      setDataObject={setModel}
+      disabled={disabled}
+    />
   );
 }
 

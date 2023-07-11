@@ -7,21 +7,21 @@ function OctopusScriptTypeSelectInput({dataObject, setDataObject, isLoading, dis
   const ACTION_LIST =
     dataObject?.getData("octopusPlatformType") === "Kubernetes"
       ? [
-          {
-            name: "Inline",
-            value: "inline",
-          },
-        ]
+        {
+          name: "Inline",
+          value: "inline",
+        },
+      ]
       : [
-          {
-            name: "Inline",
-            value: "inline",
-          },
-          {
-            name: "Package",
-            value: "package",
-          },
-        ];
+        {
+          name: "Inline",
+          value: "inline",
+        },
+        {
+          name: "Package",
+          value: "package",
+        },
+      ];
 
   if (!tool_prop || (tool_prop && tool_prop.length === 0) || (tool_prop && tool_prop !== "Script")) {
     return null;

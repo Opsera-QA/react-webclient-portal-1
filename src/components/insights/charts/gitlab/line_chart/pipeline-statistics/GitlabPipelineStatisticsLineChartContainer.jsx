@@ -114,15 +114,15 @@ function GitlabPipelineStatisticsLineChartContainer({ chartData }) {
                 </div>
                 <div className={'py-1'}
                   style={{
-                   color: slice?.points[1]?.serieColor,
+                    color: slice?.points[1]?.serieColor,
                   }}
                 >
                   Skipped Pipelines: <strong>{slice?.points[1]?.data?.y}</strong>
                 </div>
                 <div className={'py-1'}
-                 style={{
-                   color: slice?.points[0]?.serieColor,
-                 }}
+                  style={{
+                    color: slice?.points[0]?.serieColor,
+                  }}
                 >
                   Cancelled Pipelines: <strong>{slice?.points[0]?.data?.y}</strong>
                 </div>

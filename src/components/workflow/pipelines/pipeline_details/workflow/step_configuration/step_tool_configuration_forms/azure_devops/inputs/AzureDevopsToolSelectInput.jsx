@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedAzureDevopsToolSelectInput
-  from "components/common/list_of_values_input/tools/azure/tools/RoleRestrictedAzureDevopsToolSelectInput";
+from "components/common/list_of_values_input/tools/azure/tools/RoleRestrictedAzureDevopsToolSelectInput";
 
 function AzureDevopsToolSelectInput({ fieldName, model, setModel, disabled, textField, valueField}) {
   const setDataFunction = async (fieldName, selectedOption) => {

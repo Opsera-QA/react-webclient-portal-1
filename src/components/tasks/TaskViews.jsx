@@ -120,23 +120,23 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
   };
 
   return (
-      <FilterContainer
-        loadData={loadData}
-        filterDto={taskFilterModel}
-        setFilterDto={setTaskFilterModel}
-        addRecordFunction={TaskRoleHelper.canCreateTask(userData) === true ? createNewTask : undefined}
-        supportSearch={true}
-        supportViewToggle={true}
-        isLoading={isLoading}
-        metadata={tasksMetadata}
-        body={getTableCardView()}
-        dropdownFilters={getDropdownFilters()}
-        inlineFilters={getInlineFilters()}
-        titleIcon={faTasks}
-        title={"Tasks"}
-        type={"Task"}
-        className={"px-2 pb-2"}
-      />
+    <FilterContainer
+      loadData={loadData}
+      filterDto={taskFilterModel}
+      setFilterDto={setTaskFilterModel}
+      addRecordFunction={TaskRoleHelper.canCreateTask(userData) === true ? createNewTask : undefined}
+      supportSearch={true}
+      supportViewToggle={true}
+      isLoading={isLoading}
+      metadata={tasksMetadata}
+      body={getTableCardView()}
+      dropdownFilters={getDropdownFilters()}
+      inlineFilters={getInlineFilters()}
+      titleIcon={faTasks}
+      title={"Tasks"}
+      type={"Task"}
+      className={"px-2 pb-2"}
+    />
   );
 }
 

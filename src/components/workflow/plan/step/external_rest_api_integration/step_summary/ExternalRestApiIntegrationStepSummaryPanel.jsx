@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import PipelineStepSummaryPanelContainer from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
 import ExternalApiRestIntegrationStepSummaryVerticalTabContainer
-  from "components/workflow/plan/step/external_rest_api_integration/step_summary/ExternalApiRestIntegrationStepSummaryVerticalTabContainer";
+from "components/workflow/plan/step/external_rest_api_integration/step_summary/ExternalApiRestIntegrationStepSummaryVerticalTabContainer";
 
 function ExternalRestApiIntegrationStepSummaryPanel({ pipelineData, externalRestApiIntegrationModel, setActiveTab }) {
   const getBody = () => {

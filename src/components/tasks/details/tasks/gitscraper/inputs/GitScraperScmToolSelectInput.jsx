@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase
-  from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
 function GitScraperScmToolSelectInput({model, setModel, className, disabled}) {
 
@@ -16,16 +16,16 @@ function GitScraperScmToolSelectInput({model, setModel, className, disabled}) {
   };
 
   return (
-     <RoleRestrictedToolByIdentifierInputBase
-       fieldName={"gitToolId"}
-       toolIdentifier={model?.getData("service")}
-       className={className}
-       setDataFunction={setDataFunction}
-       model={model}
-       setModel={setModel}
-       disabled={disabled}
-       configurationRequired={true}
-     />
+    <RoleRestrictedToolByIdentifierInputBase
+      fieldName={"gitToolId"}
+      toolIdentifier={model?.getData("service")}
+      className={className}
+      setDataFunction={setDataFunction}
+      model={model}
+      setModel={setModel}
+      disabled={disabled}
+      configurationRequired={true}
+    />
   );
 }
 

@@ -14,7 +14,7 @@ export default function useGetTagById(
   tagId,
   handleErrorFunction,
   rerouteOnDeletion,
-  ) {
+) {
   const {toastContext} = useComponentStateReference();
   const history = useHistory();
   const tagActions = useTagActions();

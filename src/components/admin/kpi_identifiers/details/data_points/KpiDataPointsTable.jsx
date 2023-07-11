@@ -15,7 +15,7 @@ import {getDataPointTypeLabel} from "components/common/list_of_values_input/insi
 import kpiDataPointMetadata from "components/common/inputs/metric/data_points/kpiDataPoint.metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetKpiDataPointModel
-  from "components/admin/kpi_identifiers/details/data_points/hooks/useGetKpiDataPointModel";
+from "components/admin/kpi_identifiers/details/data_points/hooks/useGetKpiDataPointModel";
 
 export default function KpiDataPointsTable(
   {
@@ -52,7 +52,7 @@ export default function KpiDataPointsTable(
       dataPoint,
       kpiId,
       false,
-      );
+    );
 
     setDataPointModel(newDataPointModel);
   };

@@ -35,7 +35,7 @@ export default function useGetPlatformSsoUsers(handleErrorFunction) {
     const response = await ssoUserActions.getPlatformUsers(
       getAccessToken,
       cancelTokenSource,
-      );
+    );
 
     const users = DataParsingHelper.parseArray(response?.data?.data, []);
 

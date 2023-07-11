@@ -181,9 +181,9 @@ function VanityMetricContainer(
               className={"mr-2 my-auto"}
             />
             <span className={"my-auto"}>
-            <IconBase isLoading={true} className={"mr-2"} />
+              <IconBase isLoading={true} className={"mr-2"} />
             Loading Chart
-          </span>
+            </span>
           </div>
         </div>
       );
@@ -198,9 +198,9 @@ function VanityMetricContainer(
               className={"mr-2 my-auto"}
             />
             <span className={"my-auto"}>
-            <IconBase isLoading={true} className={"mr-2"} />
+              <IconBase isLoading={true} className={"mr-2"} />
             Moving Chart
-          </span>
+            </span>
           </div>
         </div>
       );
@@ -255,7 +255,7 @@ function VanityMetricContainer(
       return (
         <div className="new-chart mb-3" style={{ height: "300px" }}>
           <div className="max-content-width p-5 mt-5"
-               style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <span className={"-5"}>There was an error loading this chart: {parseError(error?.message)}. Please check logs for more details.</span>
           </div>
         </div>
@@ -275,7 +275,7 @@ function VanityMetricContainer(
       return (
         <div className="new-chart mb-3" style={{ height: "300px" }}>
           <div className="max-content-width p-5 mt-5"
-               style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <InfoDialog message="No Data is available for this chart at this time." />
           </div>
         </div>

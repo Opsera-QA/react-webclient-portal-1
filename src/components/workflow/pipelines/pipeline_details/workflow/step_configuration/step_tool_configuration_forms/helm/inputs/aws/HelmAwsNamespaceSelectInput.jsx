@@ -62,15 +62,15 @@ function HelmAwsNamespaceSelectInput({
   };
 
   const loadAwsNamespaces = async (cancelSource) => {
-      setNamespaces([]);
-      const res = await helmStepActions.getAwsNamespaces(getAccessToken, cancelSource, awsToolConfigId, clusterName);
-      if (res && res.status === 200) {
-        if (res.data.length === 0) {
-          return;
-        }
-        setNamespaces(res.data);
+    setNamespaces([]);
+    const res = await helmStepActions.getAwsNamespaces(getAccessToken, cancelSource, awsToolConfigId, clusterName);
+    if (res && res.status === 200) {
+      if (res.data.length === 0) {
         return;
       }
+      setNamespaces(res.data);
+      return;
+    }
   };
 
   return (

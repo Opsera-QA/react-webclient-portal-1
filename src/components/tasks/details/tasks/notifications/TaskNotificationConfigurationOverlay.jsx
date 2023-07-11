@@ -28,7 +28,7 @@ function TaskNotificationConfigurationOverlay(
     return (
       <TaskNotificationConfigurationHelpDocumentation
         closeHelpPanel={() => setHelpIsShown(false)}
-        />
+      />
     );
   };
 

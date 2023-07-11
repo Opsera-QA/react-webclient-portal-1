@@ -6,42 +6,42 @@ import {
 
 const getIconColor = (severity) => {
   switch (severity) {
-    case "up":
-      return "red";
-    case "down":
-      return "green";
-    case "neutral":
-      return "light-gray-text-secondary";
-    case "black":
-      return "black";
-    default:
-      break;
+  case "up":
+    return "red";
+  case "down":
+    return "green";
+  case "neutral":
+    return "light-gray-text-secondary";
+  case "black":
+    return "black";
+  default:
+    break;
   }
 };
 
 const getIcon = (severity) => {
   switch (severity) {
-    case "up":
-      return faArrowCircleUp;
-    case "down":
-      return faArrowCircleDown;
-    case "neutral":
-      return faMinusCircle;
-    default:
-      break;
+  case "up":
+    return faArrowCircleUp;
+  case "down":
+    return faArrowCircleDown;
+  case "neutral":
+    return faMinusCircle;
+  default:
+    break;
   }
 };
 
 const getDescription = (severity) => {
   switch (severity) {
-    case "up":
-      return "This parameter is trending upward";
-    case "down":
-      return "This parameter is trending downward";
-    case "neutral":
-      return "Neutral: This parameter experienced no change";
-    case "black":
-      return "No Trend";
+  case "up":
+    return "This parameter is trending upward";
+  case "down":
+    return "This parameter is trending downward";
+  case "neutral":
+    return "Neutral: This parameter experienced no change";
+  case "black":
+    return "No Trend";
   }
 };
 

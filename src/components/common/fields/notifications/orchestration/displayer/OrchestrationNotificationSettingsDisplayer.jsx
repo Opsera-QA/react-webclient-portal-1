@@ -12,7 +12,7 @@ function OrchestrationNotificationSettingsDisplayer({notifications, className, n
   const [gChatSettings, setGChatSettings] = useState(undefined);
 
   useEffect(() => {
-      unpackRoles();
+    unpackRoles();
   }, [JSON.stringify(notifications)]);
 
   const unpackRoles = () => {
@@ -21,24 +21,24 @@ function OrchestrationNotificationSettingsDisplayer({notifications, className, n
         const type = notificationConfiguration?.type;
 
         switch (type) {
-          case ORCHESTRATION_NOTIFICATION_TYPES.EMAIL:
-            setEmailSettings({...notificationConfiguration});
-            break;
-          case ORCHESTRATION_NOTIFICATION_TYPES.JIRA:
-            setJiraSettings({...notificationConfiguration});
-            break;
-          case ORCHESTRATION_NOTIFICATION_TYPES.SERVICE_NOW:
-            setServiceNowSettings({...notificationConfiguration});
-            break;
-          case ORCHESTRATION_NOTIFICATION_TYPES.SLACK:
-            setSlackSettings({...notificationConfiguration});
-            break;
-          case ORCHESTRATION_NOTIFICATION_TYPES.TEAMS:
-            setMicrosoftTeamsSettings({...notificationConfiguration});
-            break;
-          case ORCHESTRATION_NOTIFICATION_TYPES.GCHAT:
-            setGChatSettings({...notificationConfiguration});
-            break;
+        case ORCHESTRATION_NOTIFICATION_TYPES.EMAIL:
+          setEmailSettings({...notificationConfiguration});
+          break;
+        case ORCHESTRATION_NOTIFICATION_TYPES.JIRA:
+          setJiraSettings({...notificationConfiguration});
+          break;
+        case ORCHESTRATION_NOTIFICATION_TYPES.SERVICE_NOW:
+          setServiceNowSettings({...notificationConfiguration});
+          break;
+        case ORCHESTRATION_NOTIFICATION_TYPES.SLACK:
+          setSlackSettings({...notificationConfiguration});
+          break;
+        case ORCHESTRATION_NOTIFICATION_TYPES.TEAMS:
+          setMicrosoftTeamsSettings({...notificationConfiguration});
+          break;
+        case ORCHESTRATION_NOTIFICATION_TYPES.GCHAT:
+          setGChatSettings({...notificationConfiguration});
+          break;
         }
       });
     }

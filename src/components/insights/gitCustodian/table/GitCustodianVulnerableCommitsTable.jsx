@@ -40,10 +40,10 @@ const getGitCustodianExternalLinkIconOrCheckboxColumnDefinition = (
 ) => {
   return {
     Header: <TooltipWrapper innerText={`${selectAllValue ? "Unselect" : "Select" } all issues on this page`}>
-              <div className="mt-1">
-                <StandaloneCheckboxInput value={selectAllValue} setDataFunction={(newValue) => handleSelectAll(newValue)} />
-              </div>
-            </TooltipWrapper>,
+      <div className="mt-1">
+        <StandaloneCheckboxInput value={selectAllValue} setDataFunction={(newValue) => handleSelectAll(newValue)} />
+      </div>
+    </TooltipWrapper>,
     accessor: getCustomTableAccessor(field),
     Cell: function getIcon(row) {
       const issue = row?.row?.original;
@@ -174,26 +174,26 @@ function GitCustodianVulnerableCommitsTable({
     //     "Resolved"
     //     "Open"
     switch (activeTab) {
-      case "open":
-        newFilterModel.setData("status", ["Open"]);
-        setTableFilterModel({ ...newFilterModel });
-        break;
-      case "falsePositives":
-        newFilterModel.setData("status", ["False Positive"]);
-        setTableFilterModel({ ...newFilterModel });
-        break;
-      case "resolved":
-        newFilterModel.setData("status", ["Resolved"]);
-        setTableFilterModel({ ...newFilterModel });
-        break;
-      case "commitRemoved":
-        newFilterModel.setData("status", ["Commit Removed"]);
-        setTableFilterModel({ ...newFilterModel });
-        break;
-      default:
-        newFilterModel.setData("status", []);
-        setTableFilterModel({ ...newFilterModel });
-        break;
+    case "open":
+      newFilterModel.setData("status", ["Open"]);
+      setTableFilterModel({ ...newFilterModel });
+      break;
+    case "falsePositives":
+      newFilterModel.setData("status", ["False Positive"]);
+      setTableFilterModel({ ...newFilterModel });
+      break;
+    case "resolved":
+      newFilterModel.setData("status", ["Resolved"]);
+      setTableFilterModel({ ...newFilterModel });
+      break;
+    case "commitRemoved":
+      newFilterModel.setData("status", ["Commit Removed"]);
+      setTableFilterModel({ ...newFilterModel });
+      break;
+    default:
+      newFilterModel.setData("status", []);
+      setTableFilterModel({ ...newFilterModel });
+      break;
     }
     loadData(newFilterModel);
     setActiveTab(activeTab);

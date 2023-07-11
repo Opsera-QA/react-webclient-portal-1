@@ -3,39 +3,39 @@ import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadi
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import PropTypes from "prop-types";
 import commandLineStepFormMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/commandline-stepForm-metadata";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/commandline-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import CommandLineStepV2JenkinsJobSelectInput
-  from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepV2JenkinsJobSelectInput";
+from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepV2JenkinsJobSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import CommandLineStepV2JenkinsAccountInput
-  from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepV2JenkinsAccountInput";
+from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepV2JenkinsAccountInput";
 import CommandLineStepV2GitRepositoryInput
-  from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepV2GitRepositoryInput";
+from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepV2GitRepositoryInput";
 import CommandLineStepV2GitBranchInput
-  from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepV2GitBranchInput";
+from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepV2GitBranchInput";
 import CommandLineStepV2BitbucketWorkspaceSelectInput
-  from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepV2BitbucketWorkspaceSelectInput";
+from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepV2BitbucketWorkspaceSelectInput";
 import CommandLineStepV2DependencyTypeInput
-  from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepV2DependencyTypeInput";
+from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepV2DependencyTypeInput";
 import CommandLineStepV2SourceScriptToggleInput
-  from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepV2SourceScriptToggleInput";
+from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepV2SourceScriptToggleInput";
 import StepConfigTerraformStepSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/common/inputs/StepConfigTerraformStepSelectInput";
 import { faHandshake } from "@fortawesome/pro-light-svg-icons";
 import ParameterSelectListInputBase
-  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
+from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
 import CommandLineStepV2SonarScannerToggleInput from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepV2SonarScannerToggleInput";
 import RoleRestrictedSonarToolSelectInput
-  from "components/common/list_of_values_input/tools/sonar/tool/RoleRestrictedSonarToolSelectInput";
+from "components/common/list_of_values_input/tools/sonar/tool/RoleRestrictedSonarToolSelectInput";
 import CommandLineStepV2SonarCustomParametersToggle from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepV2SonarCustomParametersToggle";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import PipelineStepParameterInputBase
-  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBase";
+from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import CommandLineStepV2JenkinsToolSelectInput
-  from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepV2JenkinsToolSelectInput";
+from "components/workflow/plan/step/command_line_v2/inputs/CommandLineStepV2JenkinsToolSelectInput";
 import StepConfigUseTerraformOutput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/common/inputs/StepConfigUseTerraformOutput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/common/inputs/StepConfigUseTerraformOutput";
 
 // TODO: This is largely just copied from the V1 step and needs to be rewritten
 function CommandLineStepV2EditorPanel(

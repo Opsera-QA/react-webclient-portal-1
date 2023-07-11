@@ -7,7 +7,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ToolConfigurationEditorPanelContainer
-  from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import JenkinsProxyToggle from "components/inventory/tools/tool_details/tool_jobs/jenkins/JenkinsProxyToggle";
@@ -15,7 +15,7 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import RotateJenkinsKeyButton from "components/common/buttons/inventory/RotateJenkinsKeyButton";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import toolIdentifierConnectionCheckConstants
-  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function JenkinsToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -68,7 +68,7 @@ function JenkinsToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
         setDataObject={setJenkinsConfigurationDto} 
         fieldName={"jAuthToken"} 
         rightSideInputButton={getRotateJenkinsKeyButton()}
-        />
+      />
     );
   };
 

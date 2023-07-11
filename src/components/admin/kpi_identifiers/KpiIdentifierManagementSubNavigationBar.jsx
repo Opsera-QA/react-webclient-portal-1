@@ -12,29 +12,29 @@ function KpiIdentifierManagementSubNavigationBar({activeTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-      case "adminTools":
-        history.push(`/admin`);
-        return;
-      case "kpiIdentifierManagement":
-        history.push(`/admin/kpis`);
-        return;
+    case "adminTools":
+      history.push(`/admin`);
+      return;
+    case "kpiIdentifierManagement":
+      history.push(`/admin/kpis`);
+      return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-      case "kpiIdentifierViewer":
-        return (
-          <NavigationTab
-            icon={faFileInvoice}
-            tabName={"kpiIdentifierViewer"}
-            handleTabClick={handleTabClick}
-            activeTab={activeTab}
-            tabText={"KPI Identifier Viewer"}
-          />
-        );
-      default:
-        return null;
+    case "kpiIdentifierViewer":
+      return (
+        <NavigationTab
+          icon={faFileInvoice}
+          tabName={"kpiIdentifierViewer"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"KPI Identifier Viewer"}
+        />
+      );
+    default:
+      return null;
     }
   };
 

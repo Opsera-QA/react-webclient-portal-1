@@ -7,13 +7,13 @@ import TwoLineScoreDataBlock from "../../../../common/metrics/score/TwoLineScore
 function TotalFunctionalTestsDataBlock({ defects, dataPoint }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
-        <TwoLineScoreDataBlock
-          className="p-2"
-          style={{minHeight: '100px'}}
-          score={defects}
-          dataPoint={dataPoint}
-          subtitle={"Total Number of Functional Test Cases"}
-        />
+      <TwoLineScoreDataBlock
+        className="p-2"
+        style={{minHeight: '100px'}}
+        score={defects}
+        dataPoint={dataPoint}
+        subtitle={"Total Number of Functional Test Cases"}
+      />
     </DataBlockBoxContainer>
   );
 }

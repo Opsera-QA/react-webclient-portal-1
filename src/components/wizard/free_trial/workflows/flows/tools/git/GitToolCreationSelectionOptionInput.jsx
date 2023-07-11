@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import modelHelpers from "components/common/model/modelHelpers";
 import githubConnectionMetadata
-  from "components/inventory/tools/tool_details/tool_jobs/github/github-connection-metadata";
+from "components/inventory/tools/tool_details/tool_jobs/github/github-connection-metadata";
 import gitlabConnectionMetadata
-  from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab-connection-metadata";
+from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab-connection-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { getLargeVendorIconFromToolIdentifier } from "components/common/helpers/icon-helpers";
@@ -40,12 +40,12 @@ function GitToolCreationSelectionOptionInput(
     setGitToolId(undefined);
 
     switch (newValue) {
-      case GIT_TOOL_CREATION_OPTIONS.GITHUB:
-        setGitToolModel({...modelHelpers.getNewModelForMetadata(githubConnectionMetadata)});
-        return;
-      case GIT_TOOL_CREATION_OPTIONS.GITLAB:
-        setGitToolModel({...modelHelpers.getNewModelForMetadata(gitlabConnectionMetadata)});
-        return;
+    case GIT_TOOL_CREATION_OPTIONS.GITHUB:
+      setGitToolModel({...modelHelpers.getNewModelForMetadata(githubConnectionMetadata)});
+      return;
+    case GIT_TOOL_CREATION_OPTIONS.GITLAB:
+      setGitToolModel({...modelHelpers.getNewModelForMetadata(gitlabConnectionMetadata)});
+      return;
     }
   };
 

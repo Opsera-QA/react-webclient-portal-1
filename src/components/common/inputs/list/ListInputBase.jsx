@@ -36,7 +36,7 @@ function ListInputBase(
     loadDataFunction,
     lazyLoadSearchFunction,
     disableSearch,
-}) {
+  }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [list, setList] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState("");

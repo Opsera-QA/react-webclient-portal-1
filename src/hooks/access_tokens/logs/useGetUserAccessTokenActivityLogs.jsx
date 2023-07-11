@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import useAccessTokenActivityLogActions from "hooks/access_tokens/logs/useAccessTokenActivityLogActions";
 import Model from "core/data_model/model";
 import accessTokenLogFilterMetadata
-  from "components/user/user_settings/access_tokens/details/logs/access-token-log-filter-metadata";
+from "components/user/user_settings/access_tokens/details/logs/access-token-log-filter-metadata";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";

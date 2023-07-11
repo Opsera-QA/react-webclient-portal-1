@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { SecureRoute } from "@okta/okta-react";
 import useGetOrganizationSettingsEntitlementByName
-  from "hooks/settings/organization_settings/entitlements/useGetOrganizationSettingsEntitlementByName";
+from "hooks/settings/organization_settings/entitlements/useGetOrganizationSettingsEntitlementByName";
 import entitlementConstants
-  from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
+from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 
 export default function EntitlementRoute(

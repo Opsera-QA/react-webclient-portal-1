@@ -7,7 +7,7 @@ export default function useRegistryToolActions() {
   registryToolActions.getRegistryTools = async (
     toolFilterModel,
     fields,
- ) => {
+  ) => {
     const apiUrl = `/registry/configs/v2`;
     const queryParameters = {
       sortOption: toolFilterModel?.getData("sortOption"),

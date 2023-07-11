@@ -10,7 +10,7 @@ export default function usePipelineActions() {
     pipelineFilterModel,
     fields,
     active = true,
- ) => {
+  ) => {
     const apiUrl = `/pipelines/v2`;
     const type = pipelineFilterModel?.getFilterValue("type");
     const queryParameters = {

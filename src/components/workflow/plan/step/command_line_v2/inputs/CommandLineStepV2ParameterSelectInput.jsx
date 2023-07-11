@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 import ParameterMappingInputBase
-  from "../../../../../../../../common/list_of_values_input/parameters/ParameterMappingInputBase";
+from "../../../../../../../../common/list_of_values_input/parameters/ParameterMappingInputBase";
 
 function CommandLineStepV2ParameterSelectInput({ dataObject, setDataObject, disabled, fieldName}) {
 

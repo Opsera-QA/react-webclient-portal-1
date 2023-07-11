@@ -14,15 +14,15 @@ function EBSBucketInput({dataObject, setDataObject, disabled}) {
     setDataObject({...newDataObject});
   };
   return (
-     <AwsS3BucketNameSelectInput
-       fieldName={"bucketName"}
-       awsToolId={dataObject.getData("awsToolConfigId")}
-       model={dataObject}
-       setDataFunction={setBucketName}
-       setModel={setDataObject}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-     />
+    <AwsS3BucketNameSelectInput
+      fieldName={"bucketName"}
+      awsToolId={dataObject.getData("awsToolConfigId")}
+      model={dataObject}
+      setDataFunction={setBucketName}
+      setModel={setDataObject}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+    />
   );
 }
 

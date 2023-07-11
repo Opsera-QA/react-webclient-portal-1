@@ -57,7 +57,7 @@ const OctopusAccountMetadata = {
       label: "ID",
       id: "id"
     }
-],
+  ],
   newObjectFields: {
     _id: "",
     type: "account",

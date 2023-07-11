@@ -15,17 +15,17 @@ function WorkspaceDeleteToggleInput({dataObject, setDataObject, fieldName, disab
 
   return (
     <>
-    <InputContainer fieldName={fieldName}>
-      <Form.Check
-        type="switch"
-        id={field.id}
-        checked={!!dataObject.getData(fieldName)}
-        disabled={disabled}
-        label={field.label}
-        onChange={() => handleChange()}
-      />
-    </InputContainer>
-</>
+      <InputContainer fieldName={fieldName}>
+        <Form.Check
+          type="switch"
+          id={field.id}
+          checked={!!dataObject.getData(fieldName)}
+          disabled={disabled}
+          label={field.label}
+          onChange={() => handleChange()}
+        />
+      </InputContainer>
+    </>
   );
 }
 

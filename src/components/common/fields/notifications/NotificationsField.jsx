@@ -4,26 +4,26 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {ORCHESTRATION_NOTIFICATION_TYPES} from "components/common/fields/notifications/notificationTypes.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import EmailNotificationMethodSummaryCard
-  from "components/common/fields/notifications/methods/email/EmailNotificationMethodSummaryCard";
+from "components/common/fields/notifications/methods/email/EmailNotificationMethodSummaryCard";
 import SlackNotificationMethodSummaryCard
-  from "components/common/fields/notifications/methods/slack/SlackNotificationMethodSummaryCard";
+from "components/common/fields/notifications/methods/slack/SlackNotificationMethodSummaryCard";
 import TeamsNotificationMethodSummaryCard
-  from "components/common/fields/notifications/methods/teams/TeamsNotificationMethodSummaryCard";
+from "components/common/fields/notifications/methods/teams/TeamsNotificationMethodSummaryCard";
 import JiraNotificationMethodSummaryCard
-  from "components/common/fields/notifications/methods/jira/JiraNotificationMethodSummaryCard";
+from "components/common/fields/notifications/methods/jira/JiraNotificationMethodSummaryCard";
 import GChatNotificationMethodSummaryCard
-  from "components/common/fields/notifications/methods/gchat/GChatNotificationMethodSummaryCard";
+from "components/common/fields/notifications/methods/gchat/GChatNotificationMethodSummaryCard";
 import emailStepNotificationMetadata
-  from "components/workflow/plan/step/notifications/email/emailStepNotification.metadata";
+from "components/workflow/plan/step/notifications/email/emailStepNotification.metadata";
 import slackStepNotificationMetadata
-  from "components/workflow/plan/step/notifications/slack/slackStepNotificationMetadata";
+from "components/workflow/plan/step/notifications/slack/slackStepNotificationMetadata";
 import teamsStepNotificationMetadata
-  from "components/workflow/plan/step/notifications/teams/teamsStepNotificationMetadata";
+from "components/workflow/plan/step/notifications/teams/teamsStepNotificationMetadata";
 import {
   jiraStepNotificationMetadata
 } from "components/workflow/plan/step/notifications/jira/jiraStepNotification.metadata";
 import gChatStepNotificationMetadata
-  from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
+from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
 
 // TODO: Move the checks into the fields
 export default function NotificationsField(

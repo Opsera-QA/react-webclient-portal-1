@@ -43,8 +43,8 @@ githubActionsWorkflowActions.githubActionsBaseKPIDataBlocks = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     projectTags: dashboardFilters,
     hierarchyFilters: useKpiTags ? hierarchyFilters : null,
@@ -92,8 +92,8 @@ githubActionsWorkflowActions.githubActionsBaseKPIDataBlocksPrev = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     projectTags: dashboardFilters,
     hierarchyFilters: useKpiTags ? hierarchyFilters : null,
@@ -140,8 +140,8 @@ githubActionsWorkflowActions.githubActionsBaseKPITable = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     projectTags: dashboardFilters,
     hierarchyFilters: useKpiTags ? hierarchyFilters : null,
@@ -188,8 +188,8 @@ githubActionsWorkflowActions.githubActionsActionableOneDataBlocks = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     workflowName: workflowName,
@@ -238,8 +238,8 @@ githubActionsWorkflowActions.githubActionsActionableOneTable = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     workflowName: workflowName,
@@ -290,8 +290,8 @@ githubActionsWorkflowActions.githubActionsActionableTwoDataBlocks = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     workflowName: workflowName,
@@ -346,8 +346,8 @@ githubActionsWorkflowActions.githubActionsActionableTwoTable = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     workflowName: workflowName,
@@ -403,8 +403,8 @@ githubActionsWorkflowActions.getGithubActionsActionableOneTableWorkflowRunDetail
         tags && dashboardTags
           ? tags.concat(dashboardTags)
           : dashboardTags?.length > 0
-          ? dashboardTags
-          : tags,
+            ? dashboardTags
+            : tags,
       dashboardOrgs: dashboardOrgs,
       dashboardFilters: dashboardFilters,
       workflowName: workflowName,
@@ -459,8 +459,8 @@ githubActionsWorkflowActions.githubActionsActionableThreeDataBlocks = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     workflowName: workflowName,
@@ -518,8 +518,8 @@ githubActionsWorkflowActions.githubActionsActionableThreeTable = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     workflowName: workflowName,
@@ -569,8 +569,8 @@ githubActionsWorkflowActions.githubRepoStatistics = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     hierarchyFilters: useKpiTags ? hierarchyFilters : null,
@@ -617,8 +617,8 @@ githubActionsWorkflowActions.githubRepoStatisticsOverlay = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     hierarchyFilters: useKpiTags ? hierarchyFilters : null,
@@ -666,8 +666,8 @@ githubActionsWorkflowActions.githubMergedPullRequestStatistics = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     hierarchyFilters: useKpiTags ? hierarchyFilters : null,
@@ -715,8 +715,8 @@ githubActionsWorkflowActions.githubMergedPullRequestStatisticsOverlay = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     hierarchyFilters: useKpiTags ? hierarchyFilters : null,
@@ -765,8 +765,8 @@ githubActionsWorkflowActions.githubOpenPullRequestStatisticsOverlay = async (
       tags && dashboardTags
         ? tags.concat(dashboardTags)
         : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
+          ? dashboardTags
+          : tags,
     dashboardOrgs: dashboardOrgs,
     dashboardFilters: dashboardFilters,
     hierarchyFilters: useKpiTags ? hierarchyFilters : null,

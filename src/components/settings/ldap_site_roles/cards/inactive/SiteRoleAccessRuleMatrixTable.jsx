@@ -12,7 +12,7 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faShieldCross} from "@fortawesome/pro-light-svg-icons";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 import securityManagerSiteRoleAccessMatrix
-  from "@opsera/know-your-role/roles/site_roles/securityManagerSiteRole.accessMatrix";
+from "@opsera/know-your-role/roles/site_roles/securityManagerSiteRole.accessMatrix";
 import auditorSiteRoleAccessMatrix from "@opsera/know-your-role/roles/site_roles/auditorSiteRole.accessMatrix";
 
 export default function SiteRoleAccessRuleMatrixTable({ siteRole }) {
@@ -33,10 +33,10 @@ export default function SiteRoleAccessRuleMatrixTable({ siteRole }) {
 
   const getData = () => {
     switch (siteRole) {
-      case SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER:
-        return securityManagerSiteRoleAccessMatrix;
-      case SiteRoleHelper.SITE_ROLES.AUDITOR:
-        return auditorSiteRoleAccessMatrix;
+    case SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER:
+      return securityManagerSiteRoleAccessMatrix;
+    case SiteRoleHelper.SITE_ROLES.AUDITOR:
+      return auditorSiteRoleAccessMatrix;
     }
   };
 

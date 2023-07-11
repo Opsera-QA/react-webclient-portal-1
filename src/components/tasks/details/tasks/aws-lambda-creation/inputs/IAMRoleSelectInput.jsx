@@ -7,15 +7,15 @@ import axios from "axios";
 import AWSLambdaFunctionActions from "../aws-lambda-actions";
 
 function IAMRolesSelectInput({
-                                   fieldName,
-                                   dataObject,
-                                   setDataObject,
-                                   disabled,
-                                   textField,
-                                   valueField,
-                               toolConfigId,
-                                   regions,
-                                 }) {
+  fieldName,
+  dataObject,
+  setDataObject,
+  disabled,
+  textField,
+  valueField,
+  toolConfigId,
+  regions,
+}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [loadBalancers, setIAMRoless] = useState([]);

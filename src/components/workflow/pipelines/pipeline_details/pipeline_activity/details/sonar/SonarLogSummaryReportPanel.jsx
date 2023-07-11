@@ -5,11 +5,11 @@ import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/V
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
 import SonarSummaryLogVerticalTabContainer
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/sonar/SonarSummaryLogVerticalTabContainer";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/sonar/SonarSummaryLogVerticalTabContainer";
 import { faClipboardListCheck } from "@fortawesome/pro-light-svg-icons";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import SonarReportView
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/sonar/components/SonarReportView";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/sonar/components/SonarReportView";
 import {Col, Row} from "react-bootstrap";
 import H4FieldSubHeader from "components/common/fields/subheader/H4FieldSubHeader";
 

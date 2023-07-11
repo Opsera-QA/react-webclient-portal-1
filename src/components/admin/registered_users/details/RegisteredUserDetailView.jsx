@@ -10,7 +10,7 @@ import ActionBarShowDetailsButton from "components/common/actions/buttons/Action
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import Model from "core/data_model/model";
 import RegisteredUsersManagementSubNavigationBar
-  from "components/admin/registered_users/RegisteredUsersManagementSubNavigationBar";
+from "components/admin/registered_users/RegisteredUsersManagementSubNavigationBar";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 

@@ -7,10 +7,10 @@ import {
   githubActionsWorkflowMetadata,
 } from "components/insights/charts/github_actions/workflows/githubActionsWorkflow.metadata";
 import GithubActionsBottomTable
-  from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowBottomTable";
+from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowBottomTable";
 import { metricHelpers } from "components/insights/metric.helpers";
 import githubActionsWorkflowActions
-  from "components/insights/charts/github_actions/workflows/github-actions-workflow-actions";
+from "components/insights/charts/github_actions/workflows/github-actions-workflow-actions";
 
 function GithubActionsWorkflowTableOverlay({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);

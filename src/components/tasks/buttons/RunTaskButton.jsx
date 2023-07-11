@@ -10,21 +10,21 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {TASK_TYPES} from "components/tasks/task.types";
 import CancelTaskButton from "components/tasks/buttons/CancelTaskButton";
 import GitToGitMergeSyncTaskWizardOverlay
-  from "components/tasks/details/tasks/merge_sync_task/wizard/git_to_git/GitToGitMergeSyncTaskWizardOverlay";
+from "components/tasks/details/tasks/merge_sync_task/wizard/git_to_git/GitToGitMergeSyncTaskWizardOverlay";
 import SalesforceToGitMergeSyncTaskWizardOverlay
-  from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";
+from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";
 import SalesforceOrganizationSyncTaskWizardOverlay from "components/tasks/wizard/organization_sync/SalesforceOrganizationSyncTaskWizardOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SalesforceBulkMigrationTaskWizardOverlay
-  from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationTaskWizardOverlay";
+from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationTaskWizardOverlay";
 import SalesforceBranchStructureTaskInitializationOverlay
-  from "components/tasks/details/tasks/sfdc-branch-structure/run/SalesforceBranchStructureTaskInitializationOverlay";
+from "components/tasks/details/tasks/sfdc-branch-structure/run/SalesforceBranchStructureTaskInitializationOverlay";
 import GitToGitSyncTaskInitializationOverlay
-  from "components/tasks/details/tasks/branch-to-branch/run/GitToGitSyncTaskInitializationOverlay";
+from "components/tasks/details/tasks/branch-to-branch/run/GitToGitSyncTaskInitializationOverlay";
 import SalesforceCustomSettingMigrationTaskWizardOverlay
-  from "../details/tasks/sfdc-custom-setting-migration/wizard/SalesforceCustomSettingMigrationTaskWizardOverlay";
+from "../details/tasks/sfdc-custom-setting-migration/wizard/SalesforceCustomSettingMigrationTaskWizardOverlay";
 import SalesforceDataSeedingTaskWizardOverlay
-  from "../details/tasks/sfdc-data-seeding/wizard/SalesforceDataSeedingTaskWizardOverlay";
+from "../details/tasks/sfdc-data-seeding/wizard/SalesforceDataSeedingTaskWizardOverlay";
 
 const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_GIT_BRANCHES,
@@ -126,107 +126,107 @@ function RunTaskButton(
     setIsStarting(true);
     switch (taskModel?.getData("type")) {
 
-      case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
-        try{
-          setIsStarting(true);
-          handleClose();
-          toastContext.showOverlayPanel(
-            <GitToGitMergeSyncTaskWizardOverlay
-              taskModel={taskModel}
-            />
-          );
-        } catch (error) {
-          if (isMounted?.current === true) {
-            toastContext.showLoadingErrorDialog(error);
-          }
-        }
-        break;
-      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
-        try{
-          setIsStarting(true);
-          handleClose();
-          toastContext.showOverlayPanel(
-            <SalesforceToGitMergeSyncTaskWizardOverlay
-              taskModel={taskModel}
-            />
-          );
-        } catch (error) {
-          if (isMounted?.current === true) {
-            toastContext.showLoadingErrorDialog(error);
-          }
-        }
-        break;
-      case TASK_TYPES.SYNC_SALESFORCE_REPO:
+    case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
+      try{
+        setIsStarting(true);
         handleClose();
         toastContext.showOverlayPanel(
-          <SalesforceOrganizationSyncTaskWizardOverlay
+          <GitToGitMergeSyncTaskWizardOverlay
             taskModel={taskModel}
           />
         );
-        break;
-      case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
-        handleClose();
-        toastContext.showOverlayPanel(
-          <SalesforceBulkMigrationTaskWizardOverlay
-            taskModel={taskModel}
-          />
-        );
-        break;
-      case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
-        handleClose();
-        toastContext.showOverlayPanel(
-          <SalesforceBranchStructureTaskInitializationOverlay
-            taskModel={taskModel}
-          />
-        );
-        break;
-      case TASK_TYPES.SYNC_GIT_BRANCHES:
-        handleClose();
-        toastContext.showOverlayPanel(
-          <GitToGitSyncTaskInitializationOverlay
-            taskModel={taskModel}
-          />
-        );
-        break;
-      case TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION:
-        try{
-          setIsStarting(true);
-          handleClose();
-          toastContext.showOverlayPanel(
-            <SalesforceCustomSettingMigrationTaskWizardOverlay
-              taskModel={taskModel}
-            />
-          );
-        } catch (error) {
-          if (isMounted?.current === true) {
-            toastContext.showLoadingErrorDialog(error);
-          }
+      } catch (error) {
+        if (isMounted?.current === true) {
+          toastContext.showLoadingErrorDialog(error);
         }
-        break;
-      case TASK_TYPES.SALESFORCE_DATA_SEEDING:
-        try{
-          setIsStarting(true);
-          handleClose();
-          toastContext.showOverlayPanel(
-            <SalesforceDataSeedingTaskWizardOverlay
-              taskModel={taskModel}
-            />
-          );
-        } catch (error) {
-          if (isMounted?.current === true) {
-            toastContext.showLoadingErrorDialog(error);
-          }
-        }
-        break;
-      default:
-        return toastContext.showOverlayPanel(
-          <RunTaskOverlay
-            handleClose={handleClose}
+      }
+      break;
+    case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+      try{
+        setIsStarting(true);
+        handleClose();
+        toastContext.showOverlayPanel(
+          <SalesforceToGitMergeSyncTaskWizardOverlay
             taskModel={taskModel}
-            setTaskModel={setTaskModel}
-            loadData={loadData}
           />
         );
+      } catch (error) {
+        if (isMounted?.current === true) {
+          toastContext.showLoadingErrorDialog(error);
+        }
+      }
+      break;
+    case TASK_TYPES.SYNC_SALESFORCE_REPO:
+      handleClose();
+      toastContext.showOverlayPanel(
+        <SalesforceOrganizationSyncTaskWizardOverlay
+          taskModel={taskModel}
+        />
+      );
+      break;
+    case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+      handleClose();
+      toastContext.showOverlayPanel(
+        <SalesforceBulkMigrationTaskWizardOverlay
+          taskModel={taskModel}
+        />
+      );
+      break;
+    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+      handleClose();
+      toastContext.showOverlayPanel(
+        <SalesforceBranchStructureTaskInitializationOverlay
+          taskModel={taskModel}
+        />
+      );
+      break;
+    case TASK_TYPES.SYNC_GIT_BRANCHES:
+      handleClose();
+      toastContext.showOverlayPanel(
+        <GitToGitSyncTaskInitializationOverlay
+          taskModel={taskModel}
+        />
+      );
+      break;
+    case TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION:
+      try{
+        setIsStarting(true);
+        handleClose();
+        toastContext.showOverlayPanel(
+          <SalesforceCustomSettingMigrationTaskWizardOverlay
+            taskModel={taskModel}
+          />
+        );
+      } catch (error) {
+        if (isMounted?.current === true) {
+          toastContext.showLoadingErrorDialog(error);
+        }
+      }
+      break;
+    case TASK_TYPES.SALESFORCE_DATA_SEEDING:
+      try{
+        setIsStarting(true);
+        handleClose();
+        toastContext.showOverlayPanel(
+          <SalesforceDataSeedingTaskWizardOverlay
+            taskModel={taskModel}
+          />
+        );
+      } catch (error) {
+        if (isMounted?.current === true) {
+          toastContext.showLoadingErrorDialog(error);
+        }
+      }
+      break;
+    default:
+      return toastContext.showOverlayPanel(
+        <RunTaskOverlay
+          handleClose={handleClose}
+          taskModel={taskModel}
+          setTaskModel={setTaskModel}
+          loadData={loadData}
+        />
+      );
     }
   };
 

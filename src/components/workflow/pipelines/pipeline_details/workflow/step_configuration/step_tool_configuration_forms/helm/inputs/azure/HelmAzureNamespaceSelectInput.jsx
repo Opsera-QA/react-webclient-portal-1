@@ -65,15 +65,15 @@ function HelmAzureNamespaceSelectInput({
   };
 
   const loadAzureNamespaces = async (cancelSource) => {
-      setNamespaces([]);
-      const res = await helmStepActions.getAzureNamespaces(getAccessToken, cancelSource, clusterName, clusterType, azureToolConfigId, azureCredentialId, resourceGroup);
-      if (res && res.status === 200) {
-        if (res.data.length === 0) {
-          return;
-        }
-        setNamespaces(res.data);
+    setNamespaces([]);
+    const res = await helmStepActions.getAzureNamespaces(getAccessToken, cancelSource, clusterName, clusterType, azureToolConfigId, azureCredentialId, resourceGroup);
+    if (res && res.status === 200) {
+      if (res.data.length === 0) {
         return;
       }
+      setNamespaces(res.data);
+      return;
+    }
   };
 
   return (

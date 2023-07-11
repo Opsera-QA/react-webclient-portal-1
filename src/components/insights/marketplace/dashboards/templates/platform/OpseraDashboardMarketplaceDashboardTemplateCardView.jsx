@@ -44,7 +44,7 @@ function OpseraDashboardMarketplaceDashboardTemplateCardView(
               dashboardTemplate={dashboardTemplate}
               loadData={loadData}
             />
-         );
+          );
         })}
       </CardColumns>
     );

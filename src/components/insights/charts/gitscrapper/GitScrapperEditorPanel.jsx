@@ -20,8 +20,8 @@ function GitScrapperEditorPanel({
     if (unpackedFilterData) {
       setMetricFilterModel(
         modelHelpers.parseObjectIntoModel(
-            unpackedFilterData,
-            gitScrapperEditorPanelMetadata,
+          unpackedFilterData,
+          gitScrapperEditorPanelMetadata,
         ),
       );
     }

@@ -84,20 +84,20 @@ orchestrationHelper.getStatusLabel = (status) => {
   const parsedStatus = DataParsingHelper.parseString(status, "");
 
   switch (parsedStatus) {
-    case "failed":
-    case "failure":
-      return "failed";
-    case "running":
-      return "running";
-    case "paused":
-      return "paused";
-    case "success":
-    case "successful":
-      return "successful";
-    case "created":
-      return "created";
-    default:
-      return "stopped";
+  case "failed":
+  case "failure":
+    return "failed";
+  case "running":
+    return "running";
+  case "paused":
+    return "paused";
+  case "success":
+  case "successful":
+    return "successful";
+  case "created":
+    return "created";
+  default:
+    return "stopped";
   }
 };
 
@@ -105,19 +105,19 @@ orchestrationHelper.getStatusLabelVerb = (status) => {
   const parsedStatus = DataParsingHelper.parseString(status, "");
 
   switch (parsedStatus) {
-    case "failed":
-    case "failure":
-      return "failed";
-    case "running":
-      return "ran";
-    case "paused":
-      return "paused";
-    case "success":
-    case "successful":
-      return "succeeded";
-    case "created":
-      return "created";
-    default:
-      return "stopped";
+  case "failed":
+  case "failure":
+    return "failed";
+  case "running":
+    return "ran";
+  case "paused":
+    return "paused";
+  case "success":
+  case "successful":
+    return "succeeded";
+  case "created":
+    return "created";
+  default:
+    return "stopped";
   }
 };

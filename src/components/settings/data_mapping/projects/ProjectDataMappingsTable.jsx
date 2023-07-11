@@ -15,13 +15,13 @@ import InLineToolTypeFilter from "../../../common/filters/data_mapping/InLineToo
 import ToolTypeFilter from "../../../common/filters/data_mapping/ToolTypeFilter";
 import ProjectDataMappingActiveFilter from "../../../common/filters/status/ProjectDataMappingActiveFilter";
 import projectDataMappingMetadata
-  from "@opsera/definitions/constants/settings/data_mapping/project/projectDataMapping.metadata";
+from "@opsera/definitions/constants/settings/data_mapping/project/projectDataMapping.metadata";
 import {
   analyticsProjectDataMappingHelper
 } from "components/settings/data_mapping/projects/analyticsProjectDataMapping.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import AnalyticsProjectDataMappingRoleHelper
-  from "@opsera/know-your-role/roles/settings/analytics_data_mappings/projects/analyticsProjectDataMappingRole.helper";
+from "@opsera/know-your-role/roles/settings/analytics_data_mappings/projects/analyticsProjectDataMappingRole.helper";
 
 function ProjectDataMappingsTable(
   {

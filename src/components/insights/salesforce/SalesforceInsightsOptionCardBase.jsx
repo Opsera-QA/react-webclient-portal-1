@@ -59,40 +59,40 @@ export default function SalesforceInsightsOptionCardBase(
 
   const getIconForWorkspaceResourceType = () => {
     switch (option) {
-      case SALESFORCE_INSIGHTS_TYPES.LOOKUP:
-        return faSearch;
-      case SALESFORCE_INSIGHTS_TYPES.DEPENDENCY_ANALYSER:
-        return faSitemap;
+    case SALESFORCE_INSIGHTS_TYPES.LOOKUP:
+      return faSearch;
+    case SALESFORCE_INSIGHTS_TYPES.DEPENDENCY_ANALYSER:
+      return faSitemap;
     }
   };
 
   const getCardFooter = () => {
     switch (option) {
-      case SALESFORCE_INSIGHTS_TYPES.LOOKUP:
-        return (
-          <CardFooterBase
-            backgroundColor={themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE}
-            color={themeConstants.COLOR_PALETTE.WHITE}
-            text={"Component Lookup"}
-          />
-        );
-      case SALESFORCE_INSIGHTS_TYPES.DEPENDENCY_ANALYSER:
-        return (
-          <CardFooterBase
-            backgroundColor={themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE}
-            color={themeConstants.COLOR_PALETTE.WHITE}
-            text={"Dependency Analyser"}
-          />
-        );
+    case SALESFORCE_INSIGHTS_TYPES.LOOKUP:
+      return (
+        <CardFooterBase
+          backgroundColor={themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE}
+          color={themeConstants.COLOR_PALETTE.WHITE}
+          text={"Component Lookup"}
+        />
+      );
+    case SALESFORCE_INSIGHTS_TYPES.DEPENDENCY_ANALYSER:
+      return (
+        <CardFooterBase
+          backgroundColor={themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE}
+          color={themeConstants.COLOR_PALETTE.WHITE}
+          text={"Dependency Analyser"}
+        />
+      );
     }
   };
 
   const getHighlightedBorderColor = () => {
     switch (option) {
-      case SALESFORCE_INSIGHTS_TYPES.LOOKUP:
-        return themeConstants.COLOR_PALETTE.SALESFORCE_BLUE;
-      case SALESFORCE_INSIGHTS_TYPES.DEPENDENCY_ANALYSER:
-        return themeConstants.COLOR_PALETTE.SALESFORCE_BLUE;
+    case SALESFORCE_INSIGHTS_TYPES.LOOKUP:
+      return themeConstants.COLOR_PALETTE.SALESFORCE_BLUE;
+    case SALESFORCE_INSIGHTS_TYPES.DEPENDENCY_ANALYSER:
+      return themeConstants.COLOR_PALETTE.SALESFORCE_BLUE;
     }
   };
 

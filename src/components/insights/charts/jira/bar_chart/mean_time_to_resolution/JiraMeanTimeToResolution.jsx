@@ -88,12 +88,12 @@ function JiraMeanTimeToResolution({
             dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
           ]?.value;
       const response = await jiraAction.getJiraMTTR(
-          getAccessToken,
-          cancelSource,
-          kpiConfiguration,
-          dashboardTags,
-          dashboardOrgs,
-        );
+        getAccessToken,
+        cancelSource,
+        kpiConfiguration,
+        dashboardTags,
+        dashboardOrgs,
+      );
       const responseData = response?.data;
 
       setDataBlock(responseData);
@@ -225,16 +225,16 @@ function JiraMeanTimeToResolution({
         >
           <Row className={"w-100"}>
             <JiraMeanTimeToResolutionMaturityBlock
-                maturityScore={getMaturityScoreText(maturityScore)}
-                maturityColor={maturityColor}
-                iconOverlayBody={constants.MATURITY_TOOL_TIP[maturityScore]}
-                onClick={onRowSelect}
+              maturityScore={getMaturityScoreText(maturityScore)}
+              maturityColor={maturityColor}
+              iconOverlayBody={constants.MATURITY_TOOL_TIP[maturityScore]}
+              onClick={onRowSelect}
             />
             <Row
-                xl={4}
-                lg={4}
-                md={4}
-                className={`mb-2 ml-3 py-2 d-flex justify-content-center ${maturityColor}`}
+              xl={4}
+              lg={4}
+              md={4}
+              className={`mb-2 ml-3 py-2 d-flex justify-content-center ${maturityColor}`}
             >
               <Col md={12} className={"pl-2 pr-1"}>
                 <JiraMTTRDataBlock
@@ -276,12 +276,12 @@ function JiraMeanTimeToResolution({
               </Col>
               <Col md={12} className={"pl-1 pr-2"}>
                 <JiraMTTRDataBlock
-                    value={getMedian(metrics)}
-                    previousValue={getMedian(prevMetrics)}
-                    trend={getReverseTrend(getMedian(metrics),getMedian(prevMetrics))}
-                    getIcon = {getReverseTrendIcon}
-                    topText={"Median MTTR (Hours)"}
-                    bottomText={"Prev Median MTTR"}
+                  value={getMedian(metrics)}
+                  previousValue={getMedian(prevMetrics)}
+                  trend={getReverseTrend(getMedian(metrics),getMedian(prevMetrics))}
+                  getIcon = {getReverseTrendIcon}
+                  topText={"Median MTTR (Hours)"}
+                  bottomText={"Prev Median MTTR"}
                 />
               </Col>
             </Row>
@@ -305,7 +305,7 @@ function JiraMeanTimeToResolution({
                   paddingLeft: '5rem'
                 }}
               >
-              <JiraMeanTimeToResolutionLineChart metrics={metrics}/>
+                <JiraMeanTimeToResolutionLineChart metrics={metrics}/>
               </Col>
             )}
           </Row>

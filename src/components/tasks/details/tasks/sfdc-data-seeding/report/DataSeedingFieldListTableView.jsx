@@ -10,7 +10,7 @@ const DataSeedingFieldListTableView = ({ listOfFields }) => {
     return [state, toggle];
   };
 
-console.log(listOfFields);
+  console.log(listOfFields);
   const [toggle, setToggle] = useToggle();
   const listItems = listOfFields?.map((item, index) => {
     if (item?.isExternalId || item?.isMock) {

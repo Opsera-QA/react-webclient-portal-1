@@ -6,30 +6,30 @@ import SfdcPipelineWizardXmlViewer from "components/workflow/wizards/sfdc_pipeli
 import SfdcPipelineWizardUnitTestSelector from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/SfdcPipelineWizardUnitTestSelector";
 import SfdcPipelineWizardProfileComponentSelector from "components/workflow/wizards/sfdc_pipeline_wizard/profile_component_selector/SfdcPipelineWizardProfileComponentSelector";
 import SfdcPipelineWizardStandardFileSelector
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/SfdcPipelineWizardStandardFileSelector";
+from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/SfdcPipelineWizardStandardFileSelector";
 import SfdcPipelineWizardGitTasksFileSelector
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/SfdcPipelineWizardGitTasksFileSelector";
+from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/SfdcPipelineWizardGitTasksFileSelector";
 import SfdcPipelineWizardOrgToOrgFileSelector
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/SfdcPipelineWizardOrgToOrgFileSelector";
+from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/SfdcPipelineWizardOrgToOrgFileSelector";
 import SfdcPipelineWizardInitializationScreen
-  from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/SfdcPipelineWizardInitializationScreen";
+from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/SfdcPipelineWizardInitializationScreen";
 import axios from "axios";
 import sfdcPipelineWizardMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-wizard-metadata";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 import SfdcWizardInitializationHelpDocumentation
-  from "components/common/help/documentation/pipelines/wizard/SfdcWizardInitializationHelpDocumentation";
+from "components/common/help/documentation/pipelines/wizard/SfdcWizardInitializationHelpDocumentation";
 import SfdcWizardComponentTypeSelectionHelpDocumentation
-  from "components/common/help/documentation/pipelines/wizard/SfdcWizardComponentTypeSelectionHelpDocumentation";
+from "components/common/help/documentation/pipelines/wizard/SfdcWizardComponentTypeSelectionHelpDocumentation";
 import SfdcWizardUnitTestSelectionViewHelpDocumentation
-  from "components/common/help/documentation/pipelines/wizard/SfdcWizardUnitTestSelectionViewHelpDocumentation";
+from "components/common/help/documentation/pipelines/wizard/SfdcWizardUnitTestSelectionViewHelpDocumentation";
 import SfdcWizardFileSelectionHelpDocumentation
-  from "components/common/help/documentation/pipelines/wizard/SfdcWizardFileSelectionHelpDocumentation";
+from "components/common/help/documentation/pipelines/wizard/SfdcWizardFileSelectionHelpDocumentation";
 import SfdcWizardXmlViewerHelpDocumentation
-  from "components/common/help/documentation/pipelines/wizard/SfdcWizardXmlViewerHelpDocumentation";
+from "components/common/help/documentation/pipelines/wizard/SfdcWizardXmlViewerHelpDocumentation";
 import SfdcPipelineWizardValidatedFileViewer
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/SfdcPipelineWizardValidatedFileViewer";
+from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/SfdcPipelineWizardValidatedFileViewer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -82,137 +82,137 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
 
   const getBody = () => {
     switch (pipelineWizardScreen) {
-      case PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-        return (
-          <SfdcPipelineWizardInitializationScreen
-            pipelineWizardModel={pipelineWizardModel}
-            setPipelineWizardModel={setPipelineWizardModel}
-            setPipelineWizardScreen={setPipelineWizardScreen}
-            handleClose={handleClose}
-            pipeline={pipeline}
-            gitTaskData={gitTaskData}
-            setError={setError}
-          />
-        );
-      case PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR:
-        return (
-          <SfdcPipelineWizardComponentSelector
-            pipelineWizardModel={pipelineWizardModel}
-            setPipelineWizardModel={setPipelineWizardModel}
-            setPipelineWizardScreen={setPipelineWizardScreen}
-            handleClose={handleClose}
-          />
-        );
+    case PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+      return (
+        <SfdcPipelineWizardInitializationScreen
+          pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardModel={setPipelineWizardModel}
+          setPipelineWizardScreen={setPipelineWizardScreen}
+          handleClose={handleClose}
+          pipeline={pipeline}
+          gitTaskData={gitTaskData}
+          setError={setError}
+        />
+      );
+    case PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR:
+      return (
+        <SfdcPipelineWizardComponentSelector
+          pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardModel={setPipelineWizardModel}
+          setPipelineWizardScreen={setPipelineWizardScreen}
+          handleClose={handleClose}
+        />
+      );
 
-      case PIPELINE_WIZARD_SCREENS.STANDARD_FILE_SELECTOR:
-        return (
-          <SfdcPipelineWizardStandardFileSelector
-            pipelineWizardModel={pipelineWizardModel}
-            setPipelineWizardModel={setPipelineWizardModel}
-            setPipelineWizardScreen={setPipelineWizardScreen}
-            handleClose={handleClose}
-          />
-        );
-      case PIPELINE_WIZARD_SCREENS.GIT_TASKS_FILE_SELECTOR:
-        return (
-          <SfdcPipelineWizardGitTasksFileSelector
-            pipelineWizardModel={pipelineWizardModel}
-            setPipelineWizardModel={setPipelineWizardModel}
-            setPipelineWizardScreen={setPipelineWizardScreen}
-            handleClose={handleClose}
-          />
-        );
-      case PIPELINE_WIZARD_SCREENS.ORG_TO_ORG_FILE_SELECTOR:
-        return (
-          <SfdcPipelineWizardOrgToOrgFileSelector
-            pipelineWizardModel={pipelineWizardModel}
-            setPipelineWizardModel={setPipelineWizardModel}
-            setPipelineWizardScreen={setPipelineWizardScreen}
-            handleClose={handleClose}
-          />
-        );
-      case PIPELINE_WIZARD_SCREENS.PROFILE_COMPONENT_SELECTOR:
-        return (
-          <SfdcPipelineWizardProfileComponentSelector
-            pipelineWizardModel={pipelineWizardModel}
-            setPipelineWizardModel={setPipelineWizardModel}
-            handleClose={handleClose}
-            setPipelineWizardScreen={setPipelineWizardScreen}
-          />
-        );
-      case PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER:
-        return (
-          <SfdcPipelineWizardValidatedFileViewer
-            pipelineWizardModel={pipelineWizardModel}
-            setPipelineWizardModel={setPipelineWizardModel}
-            handleClose={handleClose}
-            setPipelineWizardScreen={setPipelineWizardScreen}
-          />
-        );
-      case PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR:
-        return (
-          <SfdcPipelineWizardUnitTestSelector
-            pipelineWizardModel={pipelineWizardModel}
-            handleClose={handleClose}
-            setPipelineWizardScreen={setPipelineWizardScreen}
-          />
-        );
-      case PIPELINE_WIZARD_SCREENS.XML_VIEWER:
-        return (
-          <SfdcPipelineWizardXmlViewer
-            pipelineWizardModel={pipelineWizardModel}
-            setPipelineWizardModel={setPipelineWizardModel}
-            handleClose={handleClose}
-            setPipelineWizardScreen={setPipelineWizardScreen}
-            setError={setError}
-            handlePipelineWizardRequest={handlePipelineWizardRequest}
-          />
-        );
+    case PIPELINE_WIZARD_SCREENS.STANDARD_FILE_SELECTOR:
+      return (
+        <SfdcPipelineWizardStandardFileSelector
+          pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardModel={setPipelineWizardModel}
+          setPipelineWizardScreen={setPipelineWizardScreen}
+          handleClose={handleClose}
+        />
+      );
+    case PIPELINE_WIZARD_SCREENS.GIT_TASKS_FILE_SELECTOR:
+      return (
+        <SfdcPipelineWizardGitTasksFileSelector
+          pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardModel={setPipelineWizardModel}
+          setPipelineWizardScreen={setPipelineWizardScreen}
+          handleClose={handleClose}
+        />
+      );
+    case PIPELINE_WIZARD_SCREENS.ORG_TO_ORG_FILE_SELECTOR:
+      return (
+        <SfdcPipelineWizardOrgToOrgFileSelector
+          pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardModel={setPipelineWizardModel}
+          setPipelineWizardScreen={setPipelineWizardScreen}
+          handleClose={handleClose}
+        />
+      );
+    case PIPELINE_WIZARD_SCREENS.PROFILE_COMPONENT_SELECTOR:
+      return (
+        <SfdcPipelineWizardProfileComponentSelector
+          pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardModel={setPipelineWizardModel}
+          handleClose={handleClose}
+          setPipelineWizardScreen={setPipelineWizardScreen}
+        />
+      );
+    case PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER:
+      return (
+        <SfdcPipelineWizardValidatedFileViewer
+          pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardModel={setPipelineWizardModel}
+          handleClose={handleClose}
+          setPipelineWizardScreen={setPipelineWizardScreen}
+        />
+      );
+    case PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR:
+      return (
+        <SfdcPipelineWizardUnitTestSelector
+          pipelineWizardModel={pipelineWizardModel}
+          handleClose={handleClose}
+          setPipelineWizardScreen={setPipelineWizardScreen}
+        />
+      );
+    case PIPELINE_WIZARD_SCREENS.XML_VIEWER:
+      return (
+        <SfdcPipelineWizardXmlViewer
+          pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardModel={setPipelineWizardModel}
+          handleClose={handleClose}
+          setPipelineWizardScreen={setPipelineWizardScreen}
+          setError={setError}
+          handlePipelineWizardRequest={handlePipelineWizardRequest}
+        />
+      );
     }
   };
 
   const getHelpComponentFunction = (setHelpIsShown) => {
     switch (pipelineWizardScreen) {
-      case PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
-        return (
-          <SfdcWizardInitializationHelpDocumentation
-            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
-            closeHelpPanel={() => setHelpIsShown(false)}
-          />
-        );
-      case PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR:
-        return (
-          <SfdcWizardComponentTypeSelectionHelpDocumentation
-            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
-            closeHelpPanel={() => setHelpIsShown(false)}
-          />
-        );
-      case PIPELINE_WIZARD_SCREENS.STANDARD_FILE_SELECTOR:
-      case PIPELINE_WIZARD_SCREENS.GIT_TASKS_FILE_SELECTOR:
-      case PIPELINE_WIZARD_SCREENS.ORG_TO_ORG_FILE_SELECTOR:
-      case PIPELINE_WIZARD_SCREENS.PROFILE_COMPONENT_SELECTOR:
-        return (
-          <SfdcWizardFileSelectionHelpDocumentation
-            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
-            closeHelpPanel={() => setHelpIsShown(false)}
-          />
-        );
-      case PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR:
-        return (
-          <SfdcWizardUnitTestSelectionViewHelpDocumentation
-            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
-            closeHelpPanel={() => setHelpIsShown(false)}
-          />
-        );
-      case PIPELINE_WIZARD_SCREENS.XML_VIEWER:
-        return (
-          <SfdcWizardXmlViewerHelpDocumentation
-            componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
-            closeHelpPanel={() => setHelpIsShown(false)}
-          />
-        );
-      default:
-        return null;
+    case PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+      return (
+        <SfdcWizardInitializationHelpDocumentation
+          componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
+          closeHelpPanel={() => setHelpIsShown(false)}
+        />
+      );
+    case PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR:
+      return (
+        <SfdcWizardComponentTypeSelectionHelpDocumentation
+          componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
+          closeHelpPanel={() => setHelpIsShown(false)}
+        />
+      );
+    case PIPELINE_WIZARD_SCREENS.STANDARD_FILE_SELECTOR:
+    case PIPELINE_WIZARD_SCREENS.GIT_TASKS_FILE_SELECTOR:
+    case PIPELINE_WIZARD_SCREENS.ORG_TO_ORG_FILE_SELECTOR:
+    case PIPELINE_WIZARD_SCREENS.PROFILE_COMPONENT_SELECTOR:
+      return (
+        <SfdcWizardFileSelectionHelpDocumentation
+          componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
+          closeHelpPanel={() => setHelpIsShown(false)}
+        />
+      );
+    case PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR:
+      return (
+        <SfdcWizardUnitTestSelectionViewHelpDocumentation
+          componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
+          closeHelpPanel={() => setHelpIsShown(false)}
+        />
+      );
+    case PIPELINE_WIZARD_SCREENS.XML_VIEWER:
+      return (
+        <SfdcWizardXmlViewerHelpDocumentation
+          componentType={pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline'}
+          closeHelpPanel={() => setHelpIsShown(false)}
+        />
+      );
+    default:
+      return null;
     }
   };
 

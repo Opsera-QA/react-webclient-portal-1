@@ -96,16 +96,16 @@ export const CSVtoArray = (CSVstring) => {
 
   var arr = []; // Initialize array to receive values.
   CSVstring.replace(re_value, // "Walk" the string using replace with callback.
-      function(m0, m1, m2, m3) {
+    function(m0, m1, m2, m3) {
 
-          // Remove backslash from \' in single quoted values.
-          if (m1 !== undefined) arr.push(m1.replace(/\\'/g, "'"));
+      // Remove backslash from \' in single quoted values.
+      if (m1 !== undefined) arr.push(m1.replace(/\\'/g, "'"));
 
-          // Remove backslash from \" in double quoted values.
-          else if (m2 !== undefined) arr.push(m2.replace(/\\"/g, '"'));
-          else if (m3 !== undefined) arr.push(m3);
-          return ''; // Return empty string.
-      });
+      // Remove backslash from \" in double quoted values.
+      else if (m2 !== undefined) arr.push(m2.replace(/\\"/g, '"'));
+      else if (m3 !== undefined) arr.push(m3);
+      return ''; // Return empty string.
+    });
 
   // Handle special case of empty last value.
   if (/,\s*$/.test(CSVstring)) arr.push('');
@@ -123,7 +123,7 @@ export const differentItems = (arr1, arr2) => {
 // getting symmetric difference values from both arrays
 export const symmetricDiff = (arr1, arr2) => {
   return arr1.filter(x => !arr2.includes(x))
-             .concat(arr2.filter(x => !arr1.includes(x)));
+    .concat(arr2.filter(x => !arr1.includes(x)));
 };
 // get a unique array obj based on a key
 export const getUniqueListBy = (arr, key) => {

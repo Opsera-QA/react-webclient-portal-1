@@ -89,42 +89,42 @@ function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, d
           <Row className="p-0">
             <Col lg={4} md={6}>
               <TwoLineScoreDataBlock className={"test-percentage"}
-                                     score={metrics[0]?.totalTests}
-                                     subtitle={"Total Number of Automation Candidates"}
+                score={metrics[0]?.totalTests}
+                subtitle={"Total Number of Automation Candidates"}
               />
             </Col>
             <Col lg={4} md={6}>
               <TwoLineScoreDataBlock className={"test-percentage"}
-                                     score={metrics[0]?.functionalTests}
-                                     subtitle={"Total Number of Functional Test Cases"}
+                score={metrics[0]?.functionalTests}
+                subtitle={"Total Number of Functional Test Cases"}
               />
             </Col>
             <Col lg={4} md={6}>
               <TwoLineScoreDataBlock className={"test-percentage"}
-                                     score={metrics[0]?.regressionTests}
-                                     subtitle={"Total Number of Regression Test Cases"}
+                score={metrics[0]?.regressionTests}
+                subtitle={"Total Number of Regression Test Cases"}
               />
             </Col>
           </Row>
           <Row className="p-0">
             <Col lg={4} md={6}>
               <TwoLineScoreDataBlock className={"test-percentage"}
-                                     score={metrics[0]?.automatedTests}
-                                     subtitle={"Regression Test Cases Automated"}
+                score={metrics[0]?.automatedTests}
+                subtitle={"Regression Test Cases Automated"}
               />
             </Col>
             <Col lg={4} md={6}>
               <TwoLineScoreDataBlock className={"test-percentage"}
-                                     score={metrics[0]?.manualTests}
-                                     subtitle={"Regression Test Cases To Be Automated"}
+                score={metrics[0]?.manualTests}
+                subtitle={"Regression Test Cases To Be Automated"}
               />
             </Col>
             <Col lg={4} md={6}>
               <NewPercentageDataBlock className={"test-percentage"}
-                                      percentage={metrics[0].automationRate}
-                                      subtitle={"Automation Percentage"}
-                                      qualityLevel={metrics[0]?.automationRate < 90 ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS}
-                                      goal={"Goal: Automation Percentage > 90%"}
+                percentage={metrics[0].automationRate}
+                subtitle={"Automation Percentage"}
+                qualityLevel={metrics[0]?.automationRate < 90 ? METRIC_QUALITY_LEVELS.DANGER : METRIC_QUALITY_LEVELS.SUCCESS}
+                goal={"Goal: Automation Percentage > 90%"}
               />
             </Col>
           </Row>

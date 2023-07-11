@@ -53,7 +53,7 @@ function NavigationTab(
       <li className="mr-1">
         <TooltipWrapper innerText={tabAccessRestricted} placement={"bottom"}>
           <div className={"nav-link disabled-tab"}>
-           <span className="ml-2 d-none d-lg-inline">{tabText}</span>
+            <span className="ml-2 d-none d-lg-inline">{tabText}</span>
           </div>
         </TooltipWrapper>
       </li>

@@ -6,11 +6,11 @@ import Col from "react-bootstrap/Col";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import OverlayWizardButtonContainerBase
-  from "../../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+from "../../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import {platformImageConstants} from "../../../../../../temp-library-components/image/platformImage.constants";
 import {ImageBase} from "@opsera/react-vanity-set";
 import ToolCreationFlowSelectionCardBase
-  from "../../../../../../temp-library-components/cards/tools/ToolCreationFlowSelectionCardBase";
+from "../../../../../../temp-library-components/cards/tools/ToolCreationFlowSelectionCardBase";
 import {WORKFLOW_OPTION_TYPES} from "../../../../../wizard/portal/workflows/flows/WorkflowOptionCardBase";
 
 export const TOOL_CREATION_OPTIONS = {
@@ -53,14 +53,14 @@ function ToolSetupModeSelect(
 
   return (
     <div className={"m-4"}>
-        <H5FieldSubHeader
-          className={"mb-3 mx-3"}
-          subheaderText={
-            "Pick between the new Opsera Tool Creation Wizard or the legacy advanced settings view to setup your tool."
-          }
-        />
-        <Row>
-          <Col md={6}>
+      <H5FieldSubHeader
+        className={"mb-3 mx-3"}
+        subheaderText={
+          "Pick between the new Opsera Tool Creation Wizard or the legacy advanced settings view to setup your tool."
+        }
+      />
+      <Row>
+        <Col md={6}>
           <ToolCreationFlowSelectionCardBase
             option={TOOL_CREATION_OPTIONS.WIZARD}
             handleFlowSelection={setDataFunction}
@@ -82,38 +82,38 @@ function ToolSetupModeSelect(
               />
             }
             description={
-            "Configure your tool and test its connection with the new Tool Creation Wizard"
-          }
+              "Configure your tool and test its connection with the new Tool Creation Wizard"
+            }
             workflowOptionType={WORKFLOW_OPTION_TYPES.TOOL}
           />
-          </Col>
-          <Col md={6}>
-            <ToolCreationFlowSelectionCardBase
-              option={TOOL_CREATION_OPTIONS.WIZARD}
-              handleFlowSelection={setDataFunction}
-              selectedFlow={setupMode}
-              icon={
-                <IconTitleBar
-                  icon={
-                    <ImageBase
-                      height={96}
-                      imageSource={
-                        platformImageConstants.PLATFORM_IMAGE_LINKS
-                          .ADVANCED_OPTION
-                      }
-                    />
-                  }
-                  title={TOOL_CREATION_OPTION_LABELS.ADVANCED}
-                  titleClassName={"mx-auto"}
-                  subTitleClassName={"mx-auto"}
-                />
-              }
-              description={
-                "Classic create view. Use this workflow to register your tool's details with Opsera"}
-              workflowOptionType={WORKFLOW_OPTION_TYPES.TOOL}
-            />
-          </Col>
-        </Row>
+        </Col>
+        <Col md={6}>
+          <ToolCreationFlowSelectionCardBase
+            option={TOOL_CREATION_OPTIONS.WIZARD}
+            handleFlowSelection={setDataFunction}
+            selectedFlow={setupMode}
+            icon={
+              <IconTitleBar
+                icon={
+                  <ImageBase
+                    height={96}
+                    imageSource={
+                      platformImageConstants.PLATFORM_IMAGE_LINKS
+                        .ADVANCED_OPTION
+                    }
+                  />
+                }
+                title={TOOL_CREATION_OPTION_LABELS.ADVANCED}
+                titleClassName={"mx-auto"}
+                subTitleClassName={"mx-auto"}
+              />
+            }
+            description={
+              "Classic create view. Use this workflow to register your tool's details with Opsera"}
+            workflowOptionType={WORKFLOW_OPTION_TYPES.TOOL}
+          />
+        </Col>
+      </Row>
     </div>
   );
 }

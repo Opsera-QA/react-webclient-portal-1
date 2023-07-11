@@ -11,95 +11,95 @@ import BoomiActionableInsightsDeployOverlay from "./BoomiActionableInsightsDeplo
 import BoomiActionableInsightsMigrateOverlay from "./BoomiActionableInsightsMigrateOverlay";
 
 function BoomiActionableTabOverlay({ kpiConfiguration, dashboardData }) {
-    const toastContext = useContext(DialogToastContext);
-    const [activeTab, setActiveTab] = useState("create");
+  const toastContext = useContext(DialogToastContext);
+  const [activeTab, setActiveTab] = useState("create");
 
-    const closePanel = () => {
-        toastContext.removeInlineMessage();
-        toastContext.clearOverlayPanel();
-    };
+  const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
 
-    const getBody = () => {
-        if (activeTab == "create") {
-            return (
-                <BoomiActionableInsightsCreateOverlay
-                    dashboardData={dashboardData}
-                    kpiConfiguration={kpiConfiguration}
-                    icon={faCodePullRequest}
-                />
-            );
-        } else if (activeTab == "deploy") {
-            return (
-                <BoomiActionableInsightsDeployOverlay
-                    dashboardData={dashboardData}
-                    kpiConfiguration={kpiConfiguration}
-                    icon={faCodePullRequestClosed}
-                />
-            );
-        } else if (activeTab == "migrate") {
-            return (
-                <BoomiActionableInsightsMigrateOverlay
-                    dashboardData={dashboardData}
-                    kpiConfiguration={kpiConfiguration}
-                    icon={faCodeMerge}
-                />
-            );
-        }
-    };
+  const getBody = () => {
+    if (activeTab == "create") {
+      return (
+        <BoomiActionableInsightsCreateOverlay
+          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
+          icon={faCodePullRequest}
+        />
+      );
+    } else if (activeTab == "deploy") {
+      return (
+        <BoomiActionableInsightsDeployOverlay
+          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
+          icon={faCodePullRequestClosed}
+        />
+      );
+    } else if (activeTab == "migrate") {
+      return (
+        <BoomiActionableInsightsMigrateOverlay
+          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
+          icon={faCodeMerge}
+        />
+      );
+    }
+  };
 
-    const handleTabClick = (tabSelection) => (e) => {
-        e.preventDefault();
-        setActiveTab(tabSelection);
-    };
+  const handleTabClick = (tabSelection) => (e) => {
+    e.preventDefault();
+    setActiveTab(tabSelection);
+  };
 
-    const getTabContainer = () => {
-        return (
-            <CustomTabContainer>
-                <CustomTab
-                    activeTab={activeTab}
-                    tabText={"CreatePackage"}
-                    handleTabClick={handleTabClick}
-                    tabName={"create"}
-                    icon={faCodePullRequest}
-                />
-                <CustomTab
-                    activeTab={activeTab}
-                    tabText={"Deploy Package"}
-                    handleTabClick={handleTabClick}
-                    tabName={"deploy"}
-                    icon={faCodeMerge}
-                />
-                <CustomTab
-                    activeTab={activeTab}
-                    tabText={"Migrate Package"}
-                    handleTabClick={handleTabClick}
-                    tabName={"migrate"}
-                    icon={faUsers}
-                />
-            </CustomTabContainer>
-        );
-    };
-
+  const getTabContainer = () => {
     return (
-        <FullScreenCenterOverlayContainer
-            closePanel={closePanel}
-            showPanel={true}
-            titleText={"Boomi Actionable Insights"}
-            showToasts={true}
-            titleIcon={faTable}
-            // isLoading={isLoading}
-            linkTooltipText={"View Full Blueprint"}
-        >
-            <div className={"p-3"}>
-                <TabPanelContainer currentView={getBody()} tabContainer={getTabContainer()} />
-            </div>
-        </FullScreenCenterOverlayContainer>
+      <CustomTabContainer>
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"CreatePackage"}
+          handleTabClick={handleTabClick}
+          tabName={"create"}
+          icon={faCodePullRequest}
+        />
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Deploy Package"}
+          handleTabClick={handleTabClick}
+          tabName={"deploy"}
+          icon={faCodeMerge}
+        />
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Migrate Package"}
+          handleTabClick={handleTabClick}
+          tabName={"migrate"}
+          icon={faUsers}
+        />
+      </CustomTabContainer>
     );
+  };
+
+  return (
+    <FullScreenCenterOverlayContainer
+      closePanel={closePanel}
+      showPanel={true}
+      titleText={"Boomi Actionable Insights"}
+      showToasts={true}
+      titleIcon={faTable}
+      // isLoading={isLoading}
+      linkTooltipText={"View Full Blueprint"}
+    >
+      <div className={"p-3"}>
+        <TabPanelContainer currentView={getBody()} tabContainer={getTabContainer()} />
+      </div>
+    </FullScreenCenterOverlayContainer>
+  );
 }
 
 BoomiActionableTabOverlay.propTypes = {
-    kpiConfiguration: PropTypes.object,
-    dashboardData: PropTypes.object,
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
 };
 
 export default BoomiActionableTabOverlay;

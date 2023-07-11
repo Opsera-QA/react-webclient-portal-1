@@ -7,18 +7,18 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import CancelButton from "components/common/buttons/CancelButton";
 import {parseError} from "components/common/helpers/error-helpers";
 import mergeSyncTaskWizardActions
-  from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
+from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 import BackButton from "components/common/buttons/back/BackButton";
 import {
   MERGE_SYNC_WIZARD_SCREENS
 } from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
 import GitToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/git_to_git/GitToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable";
+from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/git_to_git/GitToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable";
 import MergeSyncTaskWizardSubmitSelectedFilesButton
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/MergeSyncTaskWizardSubmitSelectedFilesButton";
+from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/MergeSyncTaskWizardSubmitSelectedFilesButton";
 import { TASK_TYPES } from "components/tasks/task.types";
 import SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable";
+from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable";
 import MergeSyncTaskRulesInputContainerBase from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/rules/SalesforceToGitFilter/MergeSyncTaskRulesInputContainerBase";
 
 const MergeSyncTaskWizardFileSelector = ({
@@ -146,27 +146,27 @@ const MergeSyncTaskWizardFileSelector = ({
 
   const getCommitListTable = () => {
     switch (wizardModel?.getData("taskType")) {
-      case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
-        return (
-          <SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable
-            filePullCompleted={filePullCompleted}
-            sourceCommitList={sourceCommitList}
-            isLoading={isLoading}
-            loadData={loadData}
-            ruleCount={wizardModel?.getArrayData("fileSelectionRules")?.length}
-          />
-        );
-      case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
-        return (
-          <GitToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable
-            filePullCompleted={filePullCompleted}
-            sourceCommitList={sourceCommitList}
-            isLoading={isLoading}
-            loadData={loadData}
-            wizardModel={wizardModel}
-            ruleCount={wizardModel?.getArrayData("fileSelectionRules")?.length}
-          />
-        );
+    case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
+      return (
+        <SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable
+          filePullCompleted={filePullCompleted}
+          sourceCommitList={sourceCommitList}
+          isLoading={isLoading}
+          loadData={loadData}
+          ruleCount={wizardModel?.getArrayData("fileSelectionRules")?.length}
+        />
+      );
+    case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
+      return (
+        <GitToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable
+          filePullCompleted={filePullCompleted}
+          sourceCommitList={sourceCommitList}
+          isLoading={isLoading}
+          loadData={loadData}
+          wizardModel={wizardModel}
+          ruleCount={wizardModel?.getArrayData("fileSelectionRules")?.length}
+        />
+      );
     }
   };
 

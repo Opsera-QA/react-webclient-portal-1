@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import CancelButton from "components/common/buttons/CancelButton";
 import MergeSyncTaskWizardCreateNewRecordButton
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/initialization_screen/MergeSyncTaskWizardCreateNewRecordButton";
+from "components/tasks/details/tasks/merge_sync_task/wizard/screens/initialization_screen/MergeSyncTaskWizardCreateNewRecordButton";
 import BooleanToggleInput from "../../../../../../../common/inputs/boolean/BooleanToggleInput";
 import { Row, Col } from "react-bootstrap";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
@@ -11,7 +11,7 @@ import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import SalesforcePackageVersionSelectionInput
-  from "../../../../../../../workflow/wizards/sfdc_pipeline_wizard/xml_viewer/xml/SalesforcePackageVersionSelectionInput";
+from "../../../../../../../workflow/wizards/sfdc_pipeline_wizard/xml_viewer/xml/SalesforcePackageVersionSelectionInput";
 
 const MergeSyncTaskWizardInitializationScreen = ({
   wizardModel,

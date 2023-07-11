@@ -21,13 +21,13 @@ function ToolConfigurationEditorPanelContainer(
   }) {
   const getToolConnectionCheckButton = () => {
     if (toolConnectionCheckName != null && toolData != null && !setUpMode) {
-     return (
+      return (
         <TestToolConnectionButton
           toolModel={toolData}
           toolName={toolConnectionCheckName}
           disabled={model?.checkCurrentValidity() !== true || model?.isChanged()}
         />
-     );
+      );
     }
   };
 

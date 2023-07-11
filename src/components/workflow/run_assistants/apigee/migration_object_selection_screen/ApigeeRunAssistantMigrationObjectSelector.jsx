@@ -10,9 +10,9 @@ import {parseError} from "components/common/helpers/error-helpers";
 import {apigeeRunParametersActions} from "components/workflow/run_assistants/apigee/apigeeRunParameters.actions";
 import {APIGEE_RUN_ASSISTANT_SCREENS} from "components/workflow/run_assistants/apigee/ApigeePipelineRunAssistant";
 import ApigeeRunAssistantMigrationObjectList
-  from "components/workflow/run_assistants/apigee/migration_object_selection_screen/ApigeeRunAssistantMigrationObjectList";
+from "components/workflow/run_assistants/apigee/migration_object_selection_screen/ApigeeRunAssistantMigrationObjectList";
 import ApigeeRunAssistantSubmitMigrationObjectsButton
-  from "components/workflow/run_assistants/apigee/migration_object_selection_screen/ApigeeRunAssistantSubmitMigrationObjectsButton";
+from "components/workflow/run_assistants/apigee/migration_object_selection_screen/ApigeeRunAssistantSubmitMigrationObjectsButton";
 import BackButton from "components/common/buttons/back/BackButton";
 import ApigeeMigrationObjectVersionSelectionPanel from "./ApigeeMigrationObjectVersionSelectionPanel";
 import {hasStringValue} from "components/common/helpers/string-helpers";

@@ -8,30 +8,30 @@ import ServicenowMeanTimeToAcknowledgementGoals from "./servicenow_mean_time_to_
 import DeploymentFrequencyGoals from "./gitlab_deployment_freqnency_statistics/DeploymentFrequencyGoals";
 function GoalsInputBase({ dataObject, setDataObject, kpiName }) {
   switch (kpiName) {
-    case "salesforce-duration-by-stage":
-      return (
-        <SalesforceDurationByStageGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />
-      );
-    case "sdlc-duration-statistics":
-      return <SdlcDurationStatisticsGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />;
-    case "build-deployment-statistics":
-      return <BuildAndDeployGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />;
-    case "servicenow-mean-time-to-resolution":
-      return (
-        <ServicenowMeanTimeToResolutionGoals
-          kpiConfigurationData={dataObject}
-          setKpiConfigurationData={setDataObject}
-        />
-      );
-    case "servicenow-mean-time-to-acknowledge":
-      return (
-        <ServicenowMeanTimeToAcknowledgementGoals
-          kpiConfigurationData={dataObject}
-          setKpiConfigurationData={setDataObject}
-        />
-      );
-      case "gitlab-deployment-frequency":
-        return <DeploymentFrequencyGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />;
+  case "salesforce-duration-by-stage":
+    return (
+      <SalesforceDurationByStageGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />
+    );
+  case "sdlc-duration-statistics":
+    return <SdlcDurationStatisticsGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />;
+  case "build-deployment-statistics":
+    return <BuildAndDeployGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />;
+  case "servicenow-mean-time-to-resolution":
+    return (
+      <ServicenowMeanTimeToResolutionGoals
+        kpiConfigurationData={dataObject}
+        setKpiConfigurationData={setDataObject}
+      />
+    );
+  case "servicenow-mean-time-to-acknowledge":
+    return (
+      <ServicenowMeanTimeToAcknowledgementGoals
+        kpiConfigurationData={dataObject}
+        setKpiConfigurationData={setDataObject}
+      />
+    );
+  case "gitlab-deployment-frequency":
+    return <DeploymentFrequencyGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />;
   }
 }
 

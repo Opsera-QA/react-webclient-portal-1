@@ -2,21 +2,21 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
 import SlackNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/slack/SlackNotificationEditorPanel";
+from "components/workflow/plan/step/notifications/slack/SlackNotificationEditorPanel";
 import MicrosoftTeamsNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/teams/MicrosoftTeamsNotificationEditorPanel";
+from "components/workflow/plan/step/notifications/teams/MicrosoftTeamsNotificationEditorPanel";
 import JiraNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/jira/JiraNotificationEditorPanel";
+from "components/workflow/plan/step/notifications/jira/JiraNotificationEditorPanel";
 import ServiceNowNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/servicenow/ServiceNowNotificationEditorPanel";
+from "components/workflow/plan/step/notifications/servicenow/ServiceNowNotificationEditorPanel";
 import EmailNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/email/EmailNotificationEditorPanel";
+from "components/workflow/plan/step/notifications/email/EmailNotificationEditorPanel";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import GChatNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/gchat/GChatNotificationEditorPanel";
+from "components/workflow/plan/step/notifications/gchat/GChatNotificationEditorPanel";
 import NotificationVerticalTabContainer
-  from "components/notifications/details/notifications/NotificationVerticalTabContainer";
+from "components/notifications/details/notifications/NotificationVerticalTabContainer";
 import {ORCHESTRATION_NOTIFICATION_TYPES} from "components/common/fields/notifications/notificationTypes.constants";
 
 const tabAndViewContainerHeight =`500px`;
@@ -40,55 +40,55 @@ function NotificationTabView(
 
   const getViewForTab = () => {
     switch (activeTab) {
-      case ORCHESTRATION_NOTIFICATION_TYPES.EMAIL:
-        return (
-          <EmailNotificationEditorPanel
-            emailNotificationModel={emailNotificationModel}
-            setEmailNotificationModel={setEmailNotificationModel}
-            showOrchestrationFields={false}
-          />
-        );
-      case ORCHESTRATION_NOTIFICATION_TYPES.JIRA:
-        return (
-          <JiraNotificationEditorPanel
-            jiraNotificationModel={jiraNotificationModel}
-            setJiraNotificationModel={setJiraNotificationModel}
-            isApprovalStep={false}
-            showOrchestrationFields={false}
-          />
-        );
-      case ORCHESTRATION_NOTIFICATION_TYPES.SLACK:
-        return (
-          <SlackNotificationEditorPanel
-            slackNotificationModel={slackNotificationModel}
-            setSlackNotificationModel={setSlackNotificationModel}
-            showOrchestrationFields={false}
-          />
-        );
-      case ORCHESTRATION_NOTIFICATION_TYPES.SERVICE_NOW:
-        return (
-          <ServiceNowNotificationEditorPanel
-            serviceNowNotificationModel={serviceNowNotificationModel}
-            setServiceNowNotificationModel={setServiceNowNotificationModel}
-            showOrchestrationFields={false}
-          />
-        );
-      case ORCHESTRATION_NOTIFICATION_TYPES.TEAMS:
-        return (
-          <MicrosoftTeamsNotificationEditorPanel
-            teamsNotificationModel={teamsNotificationModel}
-            setTeamsNotificationModel={setTeamsNotificationModel}
-            showOrchestrationFields={false}
-          />
-        );
-      case ORCHESTRATION_NOTIFICATION_TYPES.GCHAT:
-        return (
-          <GChatNotificationEditorPanel
-            gChatNotificationModel={gChatNotificationModel}
-            setGChatNotificationModel={setGChatNotificationModel}
-            showOrchestrationFields={false}
-          />
-        );
+    case ORCHESTRATION_NOTIFICATION_TYPES.EMAIL:
+      return (
+        <EmailNotificationEditorPanel
+          emailNotificationModel={emailNotificationModel}
+          setEmailNotificationModel={setEmailNotificationModel}
+          showOrchestrationFields={false}
+        />
+      );
+    case ORCHESTRATION_NOTIFICATION_TYPES.JIRA:
+      return (
+        <JiraNotificationEditorPanel
+          jiraNotificationModel={jiraNotificationModel}
+          setJiraNotificationModel={setJiraNotificationModel}
+          isApprovalStep={false}
+          showOrchestrationFields={false}
+        />
+      );
+    case ORCHESTRATION_NOTIFICATION_TYPES.SLACK:
+      return (
+        <SlackNotificationEditorPanel
+          slackNotificationModel={slackNotificationModel}
+          setSlackNotificationModel={setSlackNotificationModel}
+          showOrchestrationFields={false}
+        />
+      );
+    case ORCHESTRATION_NOTIFICATION_TYPES.SERVICE_NOW:
+      return (
+        <ServiceNowNotificationEditorPanel
+          serviceNowNotificationModel={serviceNowNotificationModel}
+          setServiceNowNotificationModel={setServiceNowNotificationModel}
+          showOrchestrationFields={false}
+        />
+      );
+    case ORCHESTRATION_NOTIFICATION_TYPES.TEAMS:
+      return (
+        <MicrosoftTeamsNotificationEditorPanel
+          teamsNotificationModel={teamsNotificationModel}
+          setTeamsNotificationModel={setTeamsNotificationModel}
+          showOrchestrationFields={false}
+        />
+      );
+    case ORCHESTRATION_NOTIFICATION_TYPES.GCHAT:
+      return (
+        <GChatNotificationEditorPanel
+          gChatNotificationModel={gChatNotificationModel}
+          setGChatNotificationModel={setGChatNotificationModel}
+          showOrchestrationFields={false}
+        />
+      );
     }
   };
 

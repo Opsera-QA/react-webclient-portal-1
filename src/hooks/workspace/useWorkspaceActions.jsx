@@ -10,7 +10,7 @@ export default function useWorkspaceActions() {
     workspaceFilterModel,
     fields,
     active,
- ) => {
+  ) => {
     const apiUrl = `/workspace/items`;
 
     const queryParameters = {

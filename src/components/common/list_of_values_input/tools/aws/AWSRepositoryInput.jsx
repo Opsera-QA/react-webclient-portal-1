@@ -4,7 +4,7 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import AWSActionsHelper
-  from "components/common/list_of_values_input/tools/aws/aws-actions-helper";
+from "components/common/list_of_values_input/tools/aws/aws-actions-helper";
 import axios from "axios";
 function AWSRepositoryInput({  awsToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);

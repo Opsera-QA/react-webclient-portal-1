@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import EnabledNotificationBooleanToggle from "components/workflow/plan/step/notifications/EnabledNotificationBooleanToggle";
 import OrchestrationNotificationLevelSelectInput from "components/workflow/plan/step/notifications/OrchestrationNotificationLevelSelectInput";
 import GChatStepNotificationToolSelectInput
-  from "components/workflow/plan/step/notifications/gchat/GChatStepNotificationToolSelectInput";
+from "components/workflow/plan/step/notifications/gchat/GChatStepNotificationToolSelectInput";
 import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import Row from "react-bootstrap/Row";
@@ -61,7 +61,7 @@ function GChatNotificationEditorPanel(
       </Col>
       {getOrchestrationFields()}
     </Row>
-);
+  );
 }
 
 GChatNotificationEditorPanel.propTypes = {

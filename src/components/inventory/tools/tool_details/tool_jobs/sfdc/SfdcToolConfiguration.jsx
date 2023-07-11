@@ -4,7 +4,7 @@ import {Alert, Row} from "react-bootstrap";
 import modelHelpers from "components/common/model/modelHelpers";
 import sfdcConnectionMetadata from "./sfdc-connection-metadata";
 import ToolConfigurationEditorPanelContainer
-  from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Col from "react-bootstrap/Col";
 import { AuthContext } from "contexts/AuthContext";
 import toolsActions from "components/inventory/tools/tools-actions";
@@ -17,7 +17,7 @@ import axios from "axios";
 import IconBase from "../../../../../common/icons/IconBase";
 import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
 import toolIdentifierConnectionCheckConstants
-  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function SfdcToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);

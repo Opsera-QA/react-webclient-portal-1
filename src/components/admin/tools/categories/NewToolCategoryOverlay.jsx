@@ -20,17 +20,17 @@ function NewToolCategoryOverlay({ loadData, isMounted } ) {
   };
 
   return (
-      <CreateCenterPanel
-        objectType={toolCategoryMetadata.type}
-        loadData={loadData}
-        closePanel={closePanel}
-      >
-        <ToolCategoryEditorPanel
-          toolCategoryData={toolCategoryData}
-          setToolCategoryData={setToolCategoryData}
-          handleClose={closePanel}
-        />
-      </CreateCenterPanel>
+    <CreateCenterPanel
+      objectType={toolCategoryMetadata.type}
+      loadData={loadData}
+      closePanel={closePanel}
+    >
+      <ToolCategoryEditorPanel
+        toolCategoryData={toolCategoryData}
+        setToolCategoryData={setToolCategoryData}
+        handleClose={closePanel}
+      />
+    </CreateCenterPanel>
   );
 }
 

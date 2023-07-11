@@ -7,7 +7,7 @@ import {
   CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS
 } from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/CreateSalesforceOrganizationSyncPipelineWizard";
 import CreateWorkflowWizardPipelineInitializationScreen
-  from "components/wizard/portal/workflows/flows/pipeline/initialization/CreateWorkflowWizardPipelineInitializationScreen";
+from "components/wizard/portal/workflows/flows/pipeline/initialization/CreateWorkflowWizardPipelineInitializationScreen";
 import {
   pipelineTemplateIdentifierConstants
 } from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";

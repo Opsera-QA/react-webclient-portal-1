@@ -110,18 +110,18 @@ function SfdcComponentTypeSelectInput({ fieldName, model, setModel, disabled, te
   };
 
   return (
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={model}
-        setDataObject={setModel}
-        selectOptions={transformedComponentTypes}
-        busy={isLoading}
-        valueField={valueField}
-        textField={textField}
-        placeholderText={placeholder}
-        disabled={disabled || isLoading}
-        setDataFunction={setDataFunction}
-      />
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={model}
+      setDataObject={setModel}
+      selectOptions={transformedComponentTypes}
+      busy={isLoading}
+      valueField={valueField}
+      textField={textField}
+      placeholderText={placeholder}
+      disabled={disabled || isLoading}
+      setDataFunction={setDataFunction}
+    />
   );
 }
 

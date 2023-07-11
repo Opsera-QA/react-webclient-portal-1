@@ -81,9 +81,9 @@ function SystemStatus() {
           <Row>
             {systemStatusData && systemStatusData.map((systemStatus, key) => (
               systemStatus.instance && systemStatus.instance[0] && systemStatus.instance[0].status ?
-              <Col key={key} md={3} sm={6}>
-                <SystemStatusCard systemStatus={systemStatus}/>
-              </Col> : null
+                <Col key={key} md={3} sm={6}>
+                  <SystemStatusCard systemStatus={systemStatus}/>
+                </Col> : null
             ))
             }
           </Row>

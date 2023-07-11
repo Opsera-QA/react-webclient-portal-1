@@ -16,9 +16,9 @@ function SapCpqReportView({ sapCpqReportObjs }) {
 
   return (
     <>
-        <SapCpqLogSummaryTable
-            sapCpqReportObjs={sapCpqReportObjs}
-        />
+      <SapCpqLogSummaryTable
+        sapCpqReportObjs={sapCpqReportObjs}
+      />
 
     </>
   );

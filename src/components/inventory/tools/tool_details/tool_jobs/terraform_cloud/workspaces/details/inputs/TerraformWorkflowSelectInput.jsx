@@ -43,18 +43,18 @@ function TerraformWorkflowSelectInput({ fieldName, dataObject, setDataObject, di
   };
 
   return (
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        selectOptions={TERRAFORM_WORKFLOW_TYPES}
-        setDataFunction={setDataFunction}
-        clearDataFunction={clearDataFunction}
-        valueField={valueField}
-        textField={textField}
-        placeholderText={"Select Workflow Type"}
-        disabled={disabled}
-      />
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      selectOptions={TERRAFORM_WORKFLOW_TYPES}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      valueField={valueField}
+      textField={textField}
+      placeholderText={"Select Workflow Type"}
+      disabled={disabled}
+    />
   );
 }
 

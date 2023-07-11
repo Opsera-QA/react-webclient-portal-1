@@ -10,17 +10,17 @@ function SentenialGitBranchSelectInput({model, setModel, disabled}) {
   };
 
   return (
-     <GitBranchInput
-       fieldName={"gitBranch"}
-       service={model?.getData("service")}
-       gitToolId={model?.getData("gitToolId")}
-       workspace={model?.getData("bitbucketWorkspace")}
-       repoId={model?.getData("repoId")}
-       dataObject={model}
-       setDataFunction={setDataFunction}
-       setDataObject={setModel}
-       disabled={disabled}
-     />
+    <GitBranchInput
+      fieldName={"gitBranch"}
+      service={model?.getData("service")}
+      gitToolId={model?.getData("gitToolId")}
+      workspace={model?.getData("bitbucketWorkspace")}
+      repoId={model?.getData("repoId")}
+      dataObject={model}
+      setDataFunction={setDataFunction}
+      setDataObject={setModel}
+      disabled={disabled}
+    />
   );
 }
 

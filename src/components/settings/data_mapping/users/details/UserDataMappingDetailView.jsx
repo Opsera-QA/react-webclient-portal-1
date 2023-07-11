@@ -5,12 +5,12 @@ import ActionBarBackButton from "components/common/actions/buttons/ActionBarBack
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import DataMappingManagementSubNavigationBar
-  from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
+from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
 import DeleteAnalyticsUserDataMappingActionBarButton
-  from "components/settings/data_mapping/users/actions/DeleteAnalyticsUserDataMappingActionBarButton";
+from "components/settings/data_mapping/users/actions/DeleteAnalyticsUserDataMappingActionBarButton";
 import {analyticsUserDataMappingHelper} from "components/settings/data_mapping/users/analyticsUserDataMapping.helper";
 import useGetAnalyticsUserDataMappingModelById
-  from "hooks/settings/insights/analytics_data_mappings/users/useGetAnalyticsUserDataMappingModelById";
+from "hooks/settings/insights/analytics_data_mappings/users/useGetAnalyticsUserDataMappingModelById";
 import userDataMappingMetadata from "@opsera/definitions/constants/settings/data_mapping/user/userDataMapping.metadata";
 
 function UserDataMappingDetailView() {

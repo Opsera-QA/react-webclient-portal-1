@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import FortifyLogSummaryTable
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/fortify/components/FortifyLogSummaryTable";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/fortify/components/FortifyLogSummaryTable";
 
 function FortifyReportView({ fortifyObj }) {
 

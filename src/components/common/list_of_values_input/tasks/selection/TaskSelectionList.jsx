@@ -157,30 +157,30 @@ export default function TaskSelectionList(
         }}
         className={"w-100 p-3"}
       >
-          <AddAllButtonBase
-            onClickFunction={addAllTasks}
-            itemCount={unselectedTaskCount}
-            buttonSize={"sm"}
-            buttonClassName={"w-100"}
-            className={"my-2"}
-            disabled={isLoading}
-          />
-          <AddSelectedButtonBase
-            onClickFunction={addSelectedTasks}
-            itemCount={selectedTasks.length}
-            buttonSize={"sm"}
-            buttonClassName={"w-100"}
-            className={"my-2"}
-            disabled={isLoading}
-          />
-          <AddShownButtonBase
-            onClickFunction={addAllShownTasks}
-            itemCount={filteredTasks.length}
-            buttonSize={"sm"}
-            buttonClassName={"w-100"}
-            className={"my-2"}
-            disabled={isLoading}
-          />
+        <AddAllButtonBase
+          onClickFunction={addAllTasks}
+          itemCount={unselectedTaskCount}
+          buttonSize={"sm"}
+          buttonClassName={"w-100"}
+          className={"my-2"}
+          disabled={isLoading}
+        />
+        <AddSelectedButtonBase
+          onClickFunction={addSelectedTasks}
+          itemCount={selectedTasks.length}
+          buttonSize={"sm"}
+          buttonClassName={"w-100"}
+          className={"my-2"}
+          disabled={isLoading}
+        />
+        <AddShownButtonBase
+          onClickFunction={addAllShownTasks}
+          itemCount={filteredTasks.length}
+          buttonSize={"sm"}
+          buttonClassName={"w-100"}
+          className={"my-2"}
+          disabled={isLoading}
+        />
       </div>
     );
   };

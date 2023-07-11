@@ -109,10 +109,10 @@ function GitOperationStepConfiguration({
           }
         />
         <GitOperationSourceBranchSelectInput
-            model={gitOperationModel}
-            setModel={setGitOperationModel}
-            fieldName={"gitBranch"}
-            targetBranch={gitOperationModel?.getData("targetBranch")}
+          model={gitOperationModel}
+          setModel={setGitOperationModel}
+          fieldName={"gitBranch"}
+          targetBranch={gitOperationModel?.getData("targetBranch")}
         />
       </div>
     );
@@ -120,46 +120,46 @@ function GitOperationStepConfiguration({
 
   const getDynamicFields = () => {
     switch (gitOperationModel.getData("action")) {
-      case "pr-creation":
-        return (
-          <>
-            <GitOperationDestinationBranchSelectInput
-              model={gitOperationModel}
-              setModel={setGitOperationModel}
-              fieldName={"targetBranch"}
-              sourceBranch={gitOperationModel?.getData("gitBranch")}
-            />
-            <TextInputBase
-              dataObject={gitOperationModel}
-              setDataObject={setGitOperationModel}
-              fieldName={"description"}
-            />
-            <BooleanToggleInput
-              dataObject={gitOperationModel}
-              setDataObject={setGitOperationModel}
-              setDataFunction={setAddReviewerFlag}
-              fieldName={"addReviewers"}
-            />
-            {gitOperationModel.getData("addReviewers") && (
-              <GitOperationReviewerSelectInput
-                setDataObject={setGitOperationModel}
-                dataObject={gitOperationModel}
-                source={gitOperationModel?.getData("source")}
-                repository={gitOperationModel?.getData("repository")}
-              />
-            )}
-          </>
-        );
-      case "tag-creation":
-        return (
+    case "pr-creation":
+      return (
+        <>
+          <GitOperationDestinationBranchSelectInput
+            model={gitOperationModel}
+            setModel={setGitOperationModel}
+            fieldName={"targetBranch"}
+            sourceBranch={gitOperationModel?.getData("gitBranch")}
+          />
           <TextInputBase
             dataObject={gitOperationModel}
             setDataObject={setGitOperationModel}
-            fieldName={"tag"}
+            fieldName={"description"}
           />
-        );
-      default:
-        return null;
+          <BooleanToggleInput
+            dataObject={gitOperationModel}
+            setDataObject={setGitOperationModel}
+            setDataFunction={setAddReviewerFlag}
+            fieldName={"addReviewers"}
+          />
+          {gitOperationModel.getData("addReviewers") && (
+            <GitOperationReviewerSelectInput
+              setDataObject={setGitOperationModel}
+              dataObject={gitOperationModel}
+              source={gitOperationModel?.getData("source")}
+              repository={gitOperationModel?.getData("repository")}
+            />
+          )}
+        </>
+      );
+    case "tag-creation":
+      return (
+        <TextInputBase
+          dataObject={gitOperationModel}
+          setDataObject={setGitOperationModel}
+          fieldName={"tag"}
+        />
+      );
+    default:
+      return null;
     }
   };
 

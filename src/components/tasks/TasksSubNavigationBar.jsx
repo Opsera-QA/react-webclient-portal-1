@@ -13,29 +13,29 @@ function TasksSubNavigationBar({currentTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-      case "tasks":
-        history.push(`/task`);
-        return;
-      case "activity":
-        history.push(`/task/activity`);
-        return;
+    case "tasks":
+      history.push(`/task`);
+      return;
+    case "activity":
+      history.push(`/task/activity`);
+      return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (currentTab) {
-      case "taskViewer":
-        return (
-          <NavigationTab
-            icon={faTasks}
-            tabName={currentTab}
-            handleTabClick={handleTabClick}
-            activeTab={"taskViewer"}
-            tabText={"Task Viewer"}
-          />
-        );
-      default:
-        return null;
+    case "taskViewer":
+      return (
+        <NavigationTab
+          icon={faTasks}
+          tabName={currentTab}
+          handleTabClick={handleTabClick}
+          activeTab={"taskViewer"}
+          tabText={"Task Viewer"}
+        />
+      );
+    default:
+      return null;
     }
   };
 

@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import JFrogToolRepositoryTable from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/JFrogToolRepositoryTable";
 import axios from "axios";
 import jFrogToolRepositoriesActions
-  from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jFrogToolRepositories.actions";
+from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jFrogToolRepositories.actions";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import JFrogRepositoryEditorPanel
-  from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/details/JFrogRepositoryEditorPanel";
+from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/details/JFrogRepositoryEditorPanel";
 
 function JFrogToolRepositoriesPanel({ toolId }) {
   const { getAccessToken } = useContext(AuthContext);

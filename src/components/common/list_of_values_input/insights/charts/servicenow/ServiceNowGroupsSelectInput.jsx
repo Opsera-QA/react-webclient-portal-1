@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import pipelineStepNotificationActions
-  from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
+from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import _ from "lodash";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";

@@ -98,18 +98,18 @@ function AksResourceGroupSelectInput(
   };
 
   return (
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={model}
-        setDataObject={setModel}
-        selectOptions={azureRegionList}
-        busy={isLoading}
-        disabled={isLoading || disabled}
-        placeholder={placeholder}
-        textField={textField}
-        valueField={valueField}
-        errorMessage={errorMessage}
-      />
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={model}
+      setDataObject={setModel}
+      selectOptions={azureRegionList}
+      busy={isLoading}
+      disabled={isLoading || disabled}
+      placeholder={placeholder}
+      textField={textField}
+      valueField={valueField}
+      errorMessage={errorMessage}
+    />
   );
 }
 

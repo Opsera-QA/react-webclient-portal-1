@@ -30,24 +30,24 @@ export default function TaskTemplateDetailPanel({ templateModel, setTemplateMode
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return (
-          <TaskTemplateSummaryPanel
-            templateModel={templateModel}
-            setTemplateModel={setTemplateModel}
-            setActiveTab={setActiveTab}
-          />
-        );
-      case "settings":
-        return (
-          <TaskTemplateEditorPanel
-            templateModel={templateModel}
-            setTemplateModel={setTemplateModel}
-            handleClose={toggleSummaryPanel}
-          />
-        );
-      default:
-        return null;
+    case "summary":
+      return (
+        <TaskTemplateSummaryPanel
+          templateModel={templateModel}
+          setTemplateModel={setTemplateModel}
+          setActiveTab={setActiveTab}
+        />
+      );
+    case "settings":
+      return (
+        <TaskTemplateEditorPanel
+          templateModel={templateModel}
+          setTemplateModel={setTemplateModel}
+          handleClose={toggleSummaryPanel}
+        />
+      );
+    default:
+      return null;
     }
   };
 

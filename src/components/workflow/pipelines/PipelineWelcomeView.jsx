@@ -19,9 +19,9 @@ function PipelineWelcomeView () {
       <div className="row mx-n2 mt-1 pl-2">
         <div className="col-md-1 px-2 landing-content-module">
           <img alt="OpsERA"
-               src="/img/pipeline.png"
-               style={{ width:"auto", height:"150px" }}
-               className="d-inline-block align-top ml-2"
+            src="/img/pipeline.png"
+            style={{ width:"auto", height:"150px" }}
+            className="d-inline-block align-top ml-2"
           />
         </div>
         <div className="col-md-6 px-2 text-muted pt-5">
@@ -35,8 +35,8 @@ function PipelineWelcomeView () {
         <div className="col-md px-2 landing-content-module">
           <div className="text-muted mb-3">
             At this time you do not have any pipelines configured for this section.  Please visit the Catalog in order to add a workflow template to your pipeline.</div>
-            <Button variant="success" className="px-2" onClick={() => goToPipelineCatalog("catalog")}>
-              <IconBase icon={faPlay} className={"mr-1"}/>Get Started!</Button>
+          <Button variant="success" className="px-2" onClick={() => goToPipelineCatalog("catalog")}>
+            <IconBase icon={faPlay} className={"mr-1"}/>Get Started!</Button>
         </div>
       </div>
     </div>

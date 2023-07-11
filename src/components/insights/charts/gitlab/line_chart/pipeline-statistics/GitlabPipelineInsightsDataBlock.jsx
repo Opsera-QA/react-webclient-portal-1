@@ -21,15 +21,15 @@ function GitlabPipelineInsightsDataBlock({ displayValue, displayText, icon, trun
 
   if (shouldTruncate) {
     return (
-     <TooltipWrapper innerText={displayValue}>
-       <div className="w-100">
-         {dataBlock}
-       </div>
-     </TooltipWrapper>
+      <TooltipWrapper innerText={displayValue}>
+        <div className="w-100">
+          {dataBlock}
+        </div>
+      </TooltipWrapper>
     );
-   }
+  }
  
-   return dataBlock;
+  return dataBlock;
 }
 
 GitlabPipelineInsightsDataBlock.propTypes = {

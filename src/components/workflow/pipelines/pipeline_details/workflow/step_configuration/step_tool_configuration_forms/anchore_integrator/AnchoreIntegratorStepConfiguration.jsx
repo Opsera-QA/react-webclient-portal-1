@@ -4,11 +4,11 @@ import PipelineStepSelectInput from "components/common/list_of_values_input/work
 import modelHelpers from "components/common/model/modelHelpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import AnchoreIntegratorPipelineToolSelectInput
-  from "components/common/list_of_values_input/tools/anchore_integrator/AnchoreIntegratorPipelineToolSelectInput";
+from "components/common/list_of_values_input/tools/anchore_integrator/AnchoreIntegratorPipelineToolSelectInput";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import anchoreIntegratorStepConfigurationMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/anchore_integrator/anchore-integrator-step-configuration-metadata";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/anchore_integrator/anchore-integrator-step-configuration-metadata";
 import BooleanToggleInput from "../../../../../../../common/inputs/boolean/BooleanToggleInput";
 import CoverityStepImpactThresholdInput from "../coverity/inputs/CoverityStepImpactThresholdInput";
 
@@ -77,15 +77,15 @@ function AnchoreIntegratorStepConfiguration({ stepTool, plan, stepId, parentCall
         disabled={anchoreIntegratorModel?.getData("anchoreToolConfigId")?.length === 0}
       />
       <BooleanToggleInput
-          dataObject={anchoreIntegratorModel}
-          setDataObject={setAnchoreIntegratorModel}
-          fieldName={"clientSideThreshold"}
+        dataObject={anchoreIntegratorModel}
+        setDataObject={setAnchoreIntegratorModel}
+        fieldName={"clientSideThreshold"}
       />
       <CoverityStepImpactThresholdInput
-          model={anchoreIntegratorModel}
-          setModel={setAnchoreIntegratorModel}
-          fieldName={"thresholdCompliance"}
-          visible={anchoreIntegratorModel?.getData("clientSideThreshold")}
+        model={anchoreIntegratorModel}
+        setModel={setAnchoreIntegratorModel}
+        fieldName={"thresholdCompliance"}
+        visible={anchoreIntegratorModel?.getData("clientSideThreshold")}
       />
     </PipelineStepEditorPanelContainer>
   );

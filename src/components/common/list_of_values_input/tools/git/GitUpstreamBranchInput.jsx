@@ -69,7 +69,7 @@ function GitUpstreamBranchInput({ dataObject, setDataObject, gitToolId, service,
         setDataFunction={setDataFunction}
         setDataObject={setDataObject}
         clearDataFunction={clearDataFunction}
-        />
+      />
     );
   };
 

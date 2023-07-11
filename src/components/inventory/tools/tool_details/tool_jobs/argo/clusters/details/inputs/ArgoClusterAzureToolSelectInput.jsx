@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedAzureToolSelectInput
-  from "components/common/list_of_values_input/tools/azure/tools/RoleRestrictedAzureToolSelectInput";
+from "components/common/list_of_values_input/tools/azure/tools/RoleRestrictedAzureToolSelectInput";
 
 function ArgoClusterAzureToolSelectInput({ fieldName, model, setModel, disabled, textField, valueField }) {
 

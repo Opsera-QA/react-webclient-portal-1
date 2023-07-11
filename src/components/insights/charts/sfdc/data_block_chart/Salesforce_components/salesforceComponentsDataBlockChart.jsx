@@ -151,55 +151,55 @@ function SalesforceComponentsDataBlockChart({
 
   const getIcon = (severity) => {
     switch (severity) {
-      case "Green":
-        return faArrowCircleUp;
-      case "Red":
-        return faArrowCircleDown;
-      case "Neutral":
-        return faMinusCircle;
-      default:
-        break;
+    case "Green":
+      return faArrowCircleUp;
+    case "Red":
+      return faArrowCircleDown;
+    case "Neutral":
+      return faMinusCircle;
+    default:
+      break;
     }
   };
 
   const getIconColor = (severity) => {
     switch (severity) {
-      case "Red":
-        return "red";
-      case "Green":
-        return "green";
-      case "Neutral":
-        return "light-gray-text-secondary";
-      case "-":
-        return "black";
-      default:
-        break;
+    case "Red":
+      return "red";
+    case "Green":
+      return "green";
+    case "Neutral":
+      return "light-gray-text-secondary";
+    case "-":
+      return "black";
+    default:
+      break;
     }
   };
 
   const getIconTitle = (severity) => {
     switch (severity) {
-      case "Red":
-        return "Risk";
-      case "Green":
-        return "Success";
-      case "Neutral":
-        return "Same as Earlier";
-      case "-":
-        return "No Trend";
-      default:
-        break;
+    case "Red":
+      return "Risk";
+    case "Green":
+      return "Success";
+    case "Neutral":
+      return "Same as Earlier";
+    case "-":
+      return "No Trend";
+    default:
+      break;
     }
   };
 
   const getDescription = (severity) => {
     switch (severity) {
-      case "Green":
-        return "This project's issues are trending upward";
-      case "Red":
-        return "This project's issues are trending downward";
-      case "Neutral":
-        return "Neutral: This project's issues have experienced no change";
+    case "Green":
+      return "This project's issues are trending upward";
+    case "Red":
+      return "This project's issues are trending downward";
+    case "Neutral":
+      return "Neutral: This project's issues have experienced no change";
     }
   };
 
@@ -243,7 +243,7 @@ function SalesforceComponentsDataBlockChart({
                   score={
                     metrics[0]?.currentResults?.totalUniqueComponentsDeployed
                       ? metrics[0]?.currentResults
-                          ?.totalUniqueComponentsDeployed
+                        ?.totalUniqueComponentsDeployed
                       : 0
                   }
                   icon={getIcon(
@@ -269,7 +269,7 @@ function SalesforceComponentsDataBlockChart({
                     metrics[0]?.currentResults
                       ?.totalSalesforcePipelineExecutions
                       ? metrics[0]?.currentResults
-                          ?.totalSalesforcePipelineExecutions
+                        ?.totalSalesforcePipelineExecutions
                       : 0
                   }
                   icon={getIcon(
@@ -298,7 +298,7 @@ function SalesforceComponentsDataBlockChart({
                     metrics[0]?.currentResults
                       ?.totalPipelineExecutionsWithDeployment
                       ? metrics[0]?.currentResults
-                          ?.totalPipelineExecutionsWithDeployment
+                        ?.totalPipelineExecutionsWithDeployment
                       : 0
                   }
                   icon={getIcon(
@@ -325,7 +325,7 @@ function SalesforceComponentsDataBlockChart({
                     metrics[0]?.currentResults
                       ?.totalPipelineExecutionsWithValidation
                       ? metrics[0]?.currentResults
-                          ?.totalPipelineExecutionsWithValidation
+                        ?.totalPipelineExecutionsWithValidation
                       : 0
                   }
                   icon={getIcon(
@@ -352,7 +352,7 @@ function SalesforceComponentsDataBlockChart({
                     metrics[0]?.currentResults
                       ?.totalPipelineExecutionsWithUnitTests
                       ? metrics[0]?.currentResults
-                          ?.totalPipelineExecutionsWithUnitTests
+                        ?.totalPipelineExecutionsWithUnitTests
                       : 0
                   }
                   icon={getIcon(

@@ -4,9 +4,9 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import SiteNotificationSummaryPanel
-  from "components/admin/site_notifications/details/SiteNotificationSummaryPanel";
+from "components/admin/site_notifications/details/SiteNotificationSummaryPanel";
 import SiteNotificationEditorPanel
-  from "components/admin/site_notifications/details/SiteNotificationEditorPanel";
+from "components/admin/site_notifications/details/SiteNotificationEditorPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
 function SiteNotificationDetailPanel({ siteNotificationData, setSiteNotificationData }) {
@@ -28,12 +28,12 @@ function SiteNotificationDetailPanel({ siteNotificationData, setSiteNotification
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return <SiteNotificationSummaryPanel siteNotificationData={siteNotificationData} setSiteNotificationData={setSiteNotificationData} setActiveTab={setActiveTab} />;
-      case "settings":
+    case "summary":
+      return <SiteNotificationSummaryPanel siteNotificationData={siteNotificationData} setSiteNotificationData={setSiteNotificationData} setActiveTab={setActiveTab} />;
+    case "settings":
       return <SiteNotificationEditorPanel setSiteNotificationData={setSiteNotificationData} siteNotificationData={siteNotificationData} />;
-      default:
-        return null;
+    default:
+      return null;
     }
   };
 

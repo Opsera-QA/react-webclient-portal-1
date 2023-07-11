@@ -27,7 +27,7 @@ function PipelineScheduledTaskTable(
     "DAY": "daily",
     "WEEK": "weekly",
     "MONTH": "monthly"
-};
+  };
 
   let newData = data;
   newData.forEach(item => {

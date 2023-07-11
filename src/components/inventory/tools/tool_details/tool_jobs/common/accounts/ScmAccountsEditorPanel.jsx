@@ -7,15 +7,15 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ScmWorkspaceInput
-  from "components/inventory/tools/tool_details/tool_jobs/common/accounts/inputs/ScmWorkspaceInput";
+from "components/inventory/tools/tool_details/tool_jobs/common/accounts/inputs/ScmWorkspaceInput";
 import ScmRepositoryInput
-  from "components/inventory/tools/tool_details/tool_jobs/common/accounts/inputs/ScmRepositoryInput";
+from "components/inventory/tools/tool_details/tool_jobs/common/accounts/inputs/ScmRepositoryInput";
 import ScmAccountReviewerInput
-  from "components/inventory/tools/tool_details/tool_jobs/common/accounts/inputs/ScmAccountReviewerInput";
+from "components/inventory/tools/tool_details/tool_jobs/common/accounts/inputs/ScmAccountReviewerInput";
 import ScmAccountTypeInput
-  from "components/inventory/tools/tool_details/tool_jobs/common/accounts/inputs/ScmAccountTypeInput";
+from "components/inventory/tools/tool_details/tool_jobs/common/accounts/inputs/ScmAccountTypeInput";
 import ScmTwoFactorToggle
-  from "components/inventory/tools/tool_details/tool_jobs/common/accounts/inputs/ScmTwoFactorToggle";
+from "components/inventory/tools/tool_details/tool_jobs/common/accounts/inputs/ScmTwoFactorToggle";
 import axios from "axios";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import DeleteModal from "components/common/modal/DeleteModal";

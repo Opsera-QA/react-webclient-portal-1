@@ -4,7 +4,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import pipelineSummaryMetadata
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 import {getTableTextColumn, getTableButtonColumn, getTableDateColumn, getTagColumn } from "components/common/table/table-column-helpers";
 import Model from "core/data_model/model";
 import toolsActions from "components/inventory/tools/tools-actions";

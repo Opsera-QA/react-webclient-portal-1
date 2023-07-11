@@ -6,7 +6,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import NotificationConfigurationPanel
-  from "components/notifications/details/configuration/NotificationConfigurationPanel";
+from "components/notifications/details/configuration/NotificationConfigurationPanel";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TagManager from "components/common/inputs/tags/TagManager";
 import useNotificationPolicyActions from "hooks/notification_policies/useNotificationPolicyActions";

@@ -60,7 +60,7 @@ function SfdxScanLogSummaryTable({ summaryQGObject }) {
 }
 
 SfdxScanLogSummaryTable.propTypes = {
-    summaryQGObject: PropTypes.array,
+  summaryQGObject: PropTypes.array,
 };
 
 export default SfdxScanLogSummaryTable;

@@ -17,7 +17,7 @@ import TagMultiSelectInput from "components/common/list_of_values_input/settings
 import OrganizationMultiSelectInput from "components/common/list_of_values_input/settings/organizations/OrganizationMultiSelectInput";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DashboardFiltersHelpDocumentation
-  from "../../../../help/documentation/insights/DashboardFiltersHelpDocumentation";
+from "../../../../help/documentation/insights/DashboardFiltersHelpDocumentation";
 
 function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFunction, type}) {
   const toastContext = useContext(DialogToastContext);

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase
-  from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
 function BuildkiteSCMToolSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
@@ -20,18 +20,18 @@ function BuildkiteSCMToolSelectInput({model, setModel, disabled}) {
     return;
   };
   return (
-     <RoleRestrictedToolByIdentifierInputBase
-       fieldName={"gitToolId"}
-       toolFriendlyName={"gitToolId"}
-       toolIdentifier={model?.getData("service")}
-       model={model}
-       setModel={setModel}
-       setDataFunction={setDataFunction}
-       valueField={"_id"}
-       textField={"name"}
-       placeholderText={"Select a Tool"}
-       disabled={disabled}
-     />
+    <RoleRestrictedToolByIdentifierInputBase
+      fieldName={"gitToolId"}
+      toolFriendlyName={"gitToolId"}
+      toolIdentifier={model?.getData("service")}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      valueField={"_id"}
+      textField={"name"}
+      placeholderText={"Select a Tool"}
+      disabled={disabled}
+    />
   );
 }
 

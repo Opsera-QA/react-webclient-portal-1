@@ -77,18 +77,18 @@ function JMeterErrorsLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
 
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
-            <ResponsiveLine
-              data={metrics}
-              {...defaultConfig("Errors", "Build Number", 
-                  true, false, "wholeNumbers", "wholeNumbers")}
-              {...config(getColor)}
-              onClick={() => setShowModal(true)}
-              tooltip={({ point, color }) => <ChartTooltip 
-                              titles = {["Build ID", "Errors"]}
-                              values = {[point.data.x, point.data.y]}
-                              color = {color} />}
-            />
-        </div>
+        <ResponsiveLine
+          data={metrics}
+          {...defaultConfig("Errors", "Build Number", 
+            true, false, "wholeNumbers", "wholeNumbers")}
+          {...config(getColor)}
+          onClick={() => setShowModal(true)}
+          tooltip={({ point, color }) => <ChartTooltip 
+            titles = {["Build ID", "Errors"]}
+            values = {[point.data.x, point.data.y]}
+            color = {color} />}
+        />
+      </div>
     );
   };
 

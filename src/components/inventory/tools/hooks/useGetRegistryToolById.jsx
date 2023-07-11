@@ -14,7 +14,7 @@ export default function useGetRegistryToolById(
   toolId,
   handleErrorFunction,
   rerouteOnDeletion,
-  ) {
+) {
   const {toastContext} = useComponentStateReference();
   const history = useHistory();
   const registryToolActions = useRegistryToolActions();

@@ -10,12 +10,12 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faLink} from "@fortawesome/pro-light-svg-icons";
 import externalApiIntegratorEndpointMetadata
-  from "@opsera/definitions/constants/registry/tools/external_api_integrator/externalApiIntegratorEndpoint.metadata";
+from "@opsera/definitions/constants/registry/tools/external_api_integrator/externalApiIntegratorEndpoint.metadata";
 import NewExternalApiIntegratorEndpointOverlay
-  from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/NewExternalApiIntegratorEndpointOverlay";
+from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/NewExternalApiIntegratorEndpointOverlay";
 import endpointTypeConstants from "@opsera/definitions/constants/api/request/endpoint/endpointType.constants";
 import endpointRequestTypeConstants
-  from "@opsera/definitions/constants/api/request/endpoint/endpointRequestType.constants";
+from "@opsera/definitions/constants/api/request/endpoint/endpointRequestType.constants";
 
 function ExternalApiIntegratorEndpointsTable(
   {

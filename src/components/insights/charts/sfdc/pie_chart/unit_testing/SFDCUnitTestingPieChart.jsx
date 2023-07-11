@@ -80,11 +80,11 @@ function SFDCUnitTestingPieChart({ kpiConfiguration, setKpiConfiguration, dashbo
     if (data.label === "Failure") {kpiName = "sfdc-unit-testing-failure";}
     const chartModel = new Model({...SFDCPipelinesInsightsTableMetadata.newObjectFields}, SFDCPipelinesInsightsTableMetadata, false);
     toastContext.showOverlayPanel(
-    <ChartDetailsOverlay
-      dashboardData={dashboardData} 
-      kpiConfiguration={kpiConfiguration} 
-      chartModel={chartModel} 
-      kpiIdentifier={kpiName} />);
+      <ChartDetailsOverlay
+        dashboardData={dashboardData} 
+        kpiConfiguration={kpiConfiguration} 
+        chartModel={chartModel} 
+        kpiIdentifier={kpiName} />);
   };
 
   const getChartBody = () => {

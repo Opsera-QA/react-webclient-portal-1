@@ -4,14 +4,14 @@ import AquasecStepFormMetadata from "./aquasec-stepForm-metadata";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import RoleRestrictedAquasecToolSelectInput from "components/common/list_of_values_input/tools/aquasec/RoleRestrictedAquasecToolSelectInput";
 import AquasecDockerBuildStepSelectInput from "./inputs/AquasecDockerBuildStepSelectInput";
 import RoleRestrictedJFrogArtifactoryDockerToolSelectInput
-  from "components/common/list_of_values_input/tools/jfrog/RoleRestrictedJFrogArtifactoryDockerToolSelectInput";
+from "components/common/list_of_values_input/tools/jfrog/RoleRestrictedJFrogArtifactoryDockerToolSelectInput";
 import RoleRestrictedJenkinsToolSelectInput
-  from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
+from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
 
 function AquasecStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEditorPanel, parentCallback, createJob }) {
   const [isLoading, setIsLoading] = useState(false);

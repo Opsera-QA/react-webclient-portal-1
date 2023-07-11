@@ -28,13 +28,13 @@ function PipelineTaskTabPanel({ pipelineTaskData }) {
 
   const getActionSpecificTab = () => {
     switch (pipelineTaskData?.action) {
-      case ("console output"):
-        return (
-          <ConsoleLogTab
-            activeTab={activeTab}
-            handleTabClick={handleTabClick}
-          />
-        );
+    case ("console output"):
+      return (
+        <ConsoleLogTab
+          activeTab={activeTab}
+          handleTabClick={handleTabClick}
+        />
+      );
     }
   };
 
@@ -84,39 +84,39 @@ function PipelineTaskTabPanel({ pipelineTaskData }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return (
-          <PipelineActivityLogSummaryPanel
-            pipelineTaskData={pipelineTaskData}
-            setActiveTab={setActiveTab}
-          />
-        );
-      case "configuration":
-        return (
-          <PipelineTaskRunConfigurationSummaryPanel
-            pipelineTaskData={pipelineTaskData}
-          />
-        );
-      case "audit":
-        return (
-          <PipelineTaskAuditLogSummaryPanel
-            pipelineTaskData={pipelineTaskData}
-          />
-        );
-      case "log":
-        return (
-          <PipelineTaskConsoleLogPanel
-            pipelineTaskData={pipelineTaskData}
-          />
-        );
-      case "json":
-        return (
-          <PipelineTaskJsonPanel
-            pipelineTaskData={pipelineTaskData}
-          />
-        );
-      default:
-        return null;
+    case "summary":
+      return (
+        <PipelineActivityLogSummaryPanel
+          pipelineTaskData={pipelineTaskData}
+          setActiveTab={setActiveTab}
+        />
+      );
+    case "configuration":
+      return (
+        <PipelineTaskRunConfigurationSummaryPanel
+          pipelineTaskData={pipelineTaskData}
+        />
+      );
+    case "audit":
+      return (
+        <PipelineTaskAuditLogSummaryPanel
+          pipelineTaskData={pipelineTaskData}
+        />
+      );
+    case "log":
+      return (
+        <PipelineTaskConsoleLogPanel
+          pipelineTaskData={pipelineTaskData}
+        />
+      );
+    case "json":
+      return (
+        <PipelineTaskJsonPanel
+          pipelineTaskData={pipelineTaskData}
+        />
+      );
+    default:
+      return null;
     }
   };
 

@@ -5,7 +5,7 @@ function TabPanelContainer({ tabContainer, currentView }) {
   return (
     <div>
       <div>
-          {tabContainer}
+        {tabContainer}
       </div>
       <div className="shaded-panel detail-panel-body">
         <div className="pt-1">{currentView}</div>

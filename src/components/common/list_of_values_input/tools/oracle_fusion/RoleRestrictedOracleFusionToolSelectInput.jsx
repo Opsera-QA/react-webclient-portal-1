@@ -14,19 +14,19 @@ function RoleRestrictedOracleFusionToolSelectInput(
     clearDataFunction,
   }) {
   return (
-     <RoleRestrictedToolByIdentifierInputBase
-       toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.ORACLE_FUSION}
-       toolFriendlyName={"Oracle Fusion"}
-       fieldName={fieldName}
-       placeholderText={"Select Oracle Fusion Tool"}
-       configurationRequired={true}
-       model={model}
-       setModel={setModel}
-       setDataFunction={setDataFunction}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-       className={className}
-     />
+    <RoleRestrictedToolByIdentifierInputBase
+      toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.ORACLE_FUSION}
+      toolFriendlyName={"Oracle Fusion"}
+      fieldName={fieldName}
+      placeholderText={"Select Oracle Fusion Tool"}
+      configurationRequired={true}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+      className={className}
+    />
   );
 }
 

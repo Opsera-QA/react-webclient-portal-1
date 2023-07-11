@@ -7,9 +7,9 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import NotificationPolicySubNavigationBar from "components/notifications/NotificationPolicySubNavigationBar";
 import axios from "axios";
 import NotificationActivityLogsTable
-  from "components/notifications/activity_logs/NotificationActivityLogsTable";
+from "components/notifications/activity_logs/NotificationActivityLogsTable";
 import notificationActivityLogFilterMetadata
-  from "components/notifications/activity_logs/notifications-activity-log-filter-metadata";
+from "components/notifications/activity_logs/notifications-activity-log-filter-metadata";
 
 function NotificationPoliciesActivityLogs() {
   const { getAccessToken } = useContext(AuthContext);

@@ -8,7 +8,7 @@ import RoleRequirementField from "components/common/fields/access/RoleRequiremen
 import {meetsRequirements} from "components/common/helpers/role-helpers";
 import AccessRoleLevelField from "components/common/fields/access/AccessRoleLevelField";
 import ScreenContainerBodyLoadingDialog
-  from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
+from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
 import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import RoleHelper from "@opsera/know-your-role/roles/role.helper";

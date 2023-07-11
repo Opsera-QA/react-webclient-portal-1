@@ -34,11 +34,11 @@ function LogsExportManagementScheduleFrequencyRadioInput({ fieldName, model, set
             value={"HOUR"}
             label={
               <span>
-              <div>
-                <strong>Hourly</strong>
-              </div>
+                <div>
+                  <strong>Hourly</strong>
+                </div>
               If active, pipeline activity logs will be backed up hourly starting at the selected time.
-            </span>
+              </span>
             }
           />
           <RadioButtonOption
@@ -50,11 +50,11 @@ function LogsExportManagementScheduleFrequencyRadioInput({ fieldName, model, set
             value={"6HOURS"}
             label={
               <span>
-              <div>
-                <strong>6 Hours</strong>
-              </div>
+                <div>
+                  <strong>6 Hours</strong>
+                </div>
               If active, pipeline activity logs will be backed up every 6 hours starting at the selected time.
-            </span>
+              </span>
             }
           />
           <RadioButtonOption
@@ -66,11 +66,11 @@ function LogsExportManagementScheduleFrequencyRadioInput({ fieldName, model, set
             value={"DAY"}
             label={
               <span>
-              <div>
-                <strong>Daily</strong>
-              </div>
+                <div>
+                  <strong>Daily</strong>
+                </div>
               If active, pipeline activity logs will be backed up daily starting at the selected time.
-            </span>
+              </span>
             }
           />
         </div>

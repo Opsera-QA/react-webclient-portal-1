@@ -6,11 +6,11 @@ import DetailScreenContainer from "components/common/panels/detail_view_containe
 import pipelineTemplateMetadata from "components/admin/pipeline_templates/pipelineTemplate.metadata";
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 import PlatformPipelineTemplateDetailPanel
-  from "components/workflow/catalog/platform/details/PlatformPipelineTemplateDetailPanel";
+from "components/workflow/catalog/platform/details/PlatformPipelineTemplateDetailPanel";
 import useGetPlatformPipelineTemplateModelById
-  from "hooks/workflow/catalog/platform/useGetPlatformPipelineTemplateModelById";
+from "hooks/workflow/catalog/platform/useGetPlatformPipelineTemplateModelById";
 import ViewPlatformPipelineTemplateAuditLogsActionBarButton
-  from "components/workflow/catalog/platform/action_bar/ViewPlatformPipelineTemplateAuditLogsActionBarButton";
+from "components/workflow/catalog/platform/action_bar/ViewPlatformPipelineTemplateAuditLogsActionBarButton";
 
 export default function PlatformPipelineTemplateDetailView() {
   const {id} = useParams();

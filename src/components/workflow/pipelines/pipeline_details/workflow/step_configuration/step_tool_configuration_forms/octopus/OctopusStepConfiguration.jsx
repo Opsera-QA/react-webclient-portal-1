@@ -10,12 +10,12 @@ import octopusActions from "../../../../../../../inventory/tools/tool_details/to
 import OctopusToolSelectInput from "./input/OctopusToolSelectInput";
 import OctopusSpaceNameSelectInput from "./input/OctopusSpaceNameSelectInput";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import OctopusProjectTypeSelectInput from "./input/OctopusProjectTypeSelectInput";
 import OctopusCustomProjectForm from "./sub-forms/OctopusCustomProjectForm";
 import OctopusOpseraManagedProjectForm from "./sub-forms/OctopusOpseraManagedProjectForm";
 import OctopusStepOctopusEnvironmentListInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/input/OctopusStepOctopusEnvironmentListInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/input/OctopusStepOctopusEnvironmentListInput";
 
 // TODO: This needs a refactor. I plan on doing it soon.
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, callbackSaveToVault, closeEditorPanel, pipelineId }) {
@@ -222,16 +222,16 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
     if (octopusStepConfigurationDto &&
       octopusStepConfigurationDto.getData("projectType") &&
       octopusStepConfigurationDto.getData("projectType") === "CUSTOM") {
-        return (
-          <OctopusCustomProjectForm
-            dataObject={octopusStepConfigurationDto}
-            setDataObject={setOctopusStepConfigurationDataDto}
-            disabled={false}
-            pipelineId={pipelineId}
-            listOfSteps={listOfSteps}
-          />
-        );
-      }
+      return (
+        <OctopusCustomProjectForm
+          dataObject={octopusStepConfigurationDto}
+          setDataObject={setOctopusStepConfigurationDataDto}
+          disabled={false}
+          pipelineId={pipelineId}
+          listOfSteps={listOfSteps}
+        />
+      );
+    }
 
     return (
       <OctopusOpseraManagedProjectForm

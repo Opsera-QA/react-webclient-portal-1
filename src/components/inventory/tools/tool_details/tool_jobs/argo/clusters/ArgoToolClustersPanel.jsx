@@ -8,7 +8,7 @@ import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/
 import modelHelpers from "components/common/model/modelHelpers";
 import argoClusterMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/argo-cluster-metadata";
 import ArgoClusterEditorPanel
-  from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/details/ArgoClusterEditorPanel";
+from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/details/ArgoClusterEditorPanel";
 import argoFiltersMetadata from "../argo-filters-metadata";
 import Model from "core/data_model/model";
 import {stringIncludesValue} from "components/common/helpers/string-helpers";
@@ -84,7 +84,7 @@ function ArgoToolClustersPanel({ toolId }) {
   const searchFilter = (cluster) => {
     const searchTerm = filterModel?.getFilterValue("search");
     return (
-         stringIncludesValue(cluster?.name, searchTerm)
+      stringIncludesValue(cluster?.name, searchTerm)
       || stringIncludesValue(cluster?.server, searchTerm)
       || stringIncludesValue(cluster?.connectionState?.status, searchTerm)
     );

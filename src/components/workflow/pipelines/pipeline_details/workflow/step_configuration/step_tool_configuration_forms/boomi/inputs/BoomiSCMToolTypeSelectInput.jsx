@@ -38,18 +38,18 @@ function BoomiSCMToolTypeSelectInput({dataObject, setDataObject, isLoading, disa
 
   return (
     
-     <SelectInputBase
-       fieldName={"service"}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       selectOptions={SCM_TOOL_LIST}
-       valueField={"value"}
-       textField={"name"}
-       placeholderText={"Select a SCM Tool Type"}
-       setDataFunction={handleDTOChange}
-       disabled={disabled}
-       busy={isLoading}
-     />
+    <SelectInputBase
+      fieldName={"service"}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      selectOptions={SCM_TOOL_LIST}
+      valueField={"value"}
+      textField={"name"}
+      placeholderText={"Select a SCM Tool Type"}
+      setDataFunction={handleDTOChange}
+      disabled={disabled}
+      busy={isLoading}
+    />
   );
 }
 

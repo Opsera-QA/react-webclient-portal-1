@@ -140,7 +140,7 @@ export default function CreateWorkflowWizardCreateJenkinsTool({
 
   const canCreateTool = () => {
     return RegistryToolRoleHelper.canCreateRegistryTool(
-        userData,
+      userData,
     );
   };
 

@@ -11,7 +11,7 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import jenkinsRecentPipelineStatusMetadata
-  from "components/insights/charts/jenkins/table/recent_pipeline_status/jenkins-recent-pipeline-status-metadata";
+from "components/insights/charts/jenkins/table/recent_pipeline_status/jenkins-recent-pipeline-status-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";

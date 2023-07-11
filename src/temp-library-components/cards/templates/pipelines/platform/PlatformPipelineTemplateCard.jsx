@@ -9,9 +9,9 @@ import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 import {getLargeVendorIconComponentFromPipeline} from "components/common/helpers/icon-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import PlatformPipelineTemplateCardBody
-  from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCardBody";
+from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCardBody";
 import PlatformPipelineTemplateCardHeader
-  from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCardHeader";
+from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCardHeader";
 import PipelineTemplateCardFooter from "temp-library-components/cards/templates/pipelines/PipelineTemplateCardFooter";
 
 // TODO: Rewrite to use model

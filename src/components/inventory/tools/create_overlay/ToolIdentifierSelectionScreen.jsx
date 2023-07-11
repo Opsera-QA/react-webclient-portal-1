@@ -11,7 +11,7 @@ import ToolIdentifierSelectionTable from "components/admin/tools/identifiers/Too
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {CreateToolFilterModel} from "components/inventory/tools/create_overlay/createTool.filter.model";
 import OverlayWizardButtonContainerBase
-  from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 
 function ToolIdentifierSelectionScreen(
   {
@@ -97,7 +97,7 @@ function ToolIdentifierSelectionScreen(
         const description = toolIdentifier?.description;
 
         return (
-             stringIncludesValue(name, searchTerm)
+          stringIncludesValue(name, searchTerm)
           || stringIncludesValue(identifier, searchTerm)
           || stringIncludesValue(description, searchTerm)
         );

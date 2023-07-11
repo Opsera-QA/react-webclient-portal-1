@@ -4,29 +4,29 @@ import { Card, Col, Row } from "react-bootstrap";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import ProjectMappingToolIdentifierSelectInput
-  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolIdentifierSelectInput";
+from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolIdentifierSelectInput";
 import ProjectMappingWorkspaceSelectInput
-  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingWorkspaceSelectInput";
+from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingWorkspaceSelectInput";
 import ProjectDataMappingGitlabRepositorySelectInput
-  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingGitlabRepositorySelectInput";
+from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingGitlabRepositorySelectInput";
 import ProjectMappingToolSelectInput
-  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolSelectInput";
+from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolSelectInput";
 import SonarProjectSelectInput
-  from "../../../../common/list_of_values_input/settings/data_tagging/projects/SonarProjectSelectInput";
+from "../../../../common/list_of_values_input/settings/data_tagging/projects/SonarProjectSelectInput";
 import TagManager from "components/common/inputs/tags/TagManager";
 import JenkinsRegistryToolJobSelectInput
-  from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
+from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 import JiraCustomTagFieldSelectInput from "components/common/list_of_values_input/tools/jira/custom_fields/JiraCustomTagFieldSelectInput";
 import JiraCustomFieldMappingSelectInput from "components/common/list_of_values_input/tools/jira/custom_fields/JiraCustomFieldMappingSelectInput";
 import AnalyticsDataMappingEditWarningMessage
-  from "components/settings/data_mapping/AnalyticsDataMappingEditWarningMessage";
+from "components/settings/data_mapping/AnalyticsDataMappingEditWarningMessage";
 import ProjectDataMappingGithubRepositorySelectInput
-  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingGithubRepositorySelectInput";
+from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingGithubRepositorySelectInput";
 import ProjectDataMappingJiraProjectSelectInput
-  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingJiraProjectSelectInput";
+from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingJiraProjectSelectInput";
 import ProjectDataMappingBitbucketRepositorySelectInput
-  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingBitbucketRepositorySelectInput";
+from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingBitbucketRepositorySelectInput";
 import GitlabProjectDataMappingSubform from "../../tools/gitlab/subforms/GitlabProjectDataMappingSubform";
 import GithubDataMappingSubform from "../../tools/github/subforms/GithubDataMappingSubform";
 

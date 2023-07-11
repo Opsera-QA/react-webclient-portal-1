@@ -11,7 +11,7 @@ function SfdcWizardUnitTestSelectionViewHelpDocumentation({closeHelpPanel, compo
     >
       <div>During the unit testing process, the testing classes must be specified per step. Please select each step
         below and then apply the required testing classes before proceeding. Please note, without this step, the
-        {componentType.toLowerCase()} cannot complete successfully.
+      {componentType.toLowerCase()} cannot complete successfully.
       </div>
       <div>Enable the toggle to Manually Enter Test Classes. Write the values in the given field separated by a comma
         and select Save Test Classes to apply.

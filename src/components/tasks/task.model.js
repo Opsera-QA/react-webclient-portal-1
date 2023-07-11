@@ -89,12 +89,12 @@ export class TaskModel extends ModelBase {
 
   clone = () => {
     return new TaskModel(DataParsingHelper.cloneDeep(
-        { ...this.data }),
-      this.isNew(),
-      this.getAccessToken,
-      this.cancelTokenSource,
-      this.loadData,
-      this.setStateFunction,
+      { ...this.data }),
+    this.isNew(),
+    this.getAccessToken,
+    this.cancelTokenSource,
+    this.loadData,
+    this.setStateFunction,
     );
   };
 

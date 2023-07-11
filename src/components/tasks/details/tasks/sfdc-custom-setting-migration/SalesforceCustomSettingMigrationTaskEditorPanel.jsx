@@ -80,34 +80,34 @@ function SalesforceCustomSettingMigrationTaskEditorPanel({
       </Col>
       {taskConfigurationModel.getData("taskType") !==
       MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG ? (
-        <Col lg={12}>
-          <SalesforceMergeSyncTaskSalesforceToolSelectInput
-            model={salesforceConfigurationModel}
-            setModel={setSalesforceModelFunction}
-            fieldName={"sourceToolId"}
-          />
-        </Col>
-      ) : null}
+          <Col lg={12}>
+            <SalesforceMergeSyncTaskSalesforceToolSelectInput
+              model={salesforceConfigurationModel}
+              setModel={setSalesforceModelFunction}
+              fieldName={"sourceToolId"}
+            />
+          </Col>
+        ) : null}
       {taskConfigurationModel.getData("taskType") !==
       MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV ? (
-        <Col lg={12}>
-          <SalesforceMergeSyncTaskSalesforceToolSelectInput
-            model={salesforceConfigurationModel}
-            setModel={setSalesforceModelFunction}
-            fieldName={"targetToolId"}
-          />
-        </Col>
-      ) : null}
+          <Col lg={12}>
+            <SalesforceMergeSyncTaskSalesforceToolSelectInput
+              model={salesforceConfigurationModel}
+              setModel={setSalesforceModelFunction}
+              fieldName={"targetToolId"}
+            />
+          </Col>
+        ) : null}
       {taskConfigurationModel.getData("taskType") !==
       MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV ? (
-        <Col lg={12}>
-          <SalesforceCustomSettingTaskActionSelectInput
-            model={taskConfigurationModel}
-            setModel={setTaskConfigurationModel}
-            fieldName={"action"}
-          />
-        </Col>
-      ) : null}
+          <Col lg={12}>
+            <SalesforceCustomSettingTaskActionSelectInput
+              model={taskConfigurationModel}
+              setModel={setTaskConfigurationModel}
+              fieldName={"action"}
+            />
+          </Col>
+        ) : null}
     </Row>
   );
 }

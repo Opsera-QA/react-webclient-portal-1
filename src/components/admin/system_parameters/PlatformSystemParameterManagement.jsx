@@ -3,7 +3,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PlatformSystemParameterManagementSubNavigationBar
-  from "components/admin/system_parameters/PlatformSystemParameterManagementSubNavigationBar";
+from "components/admin/system_parameters/PlatformSystemParameterManagementSubNavigationBar";
 import { platformSystemParameterActions } from "components/admin/system_parameters/platformSystemParameter.actions";
 import PlatformSystemParameterTable from "components/admin/system_parameters/PlatformSystemParameterTable";
 

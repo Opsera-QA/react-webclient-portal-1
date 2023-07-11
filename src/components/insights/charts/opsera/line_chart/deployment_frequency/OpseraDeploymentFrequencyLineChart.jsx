@@ -74,13 +74,13 @@ function OpseraDeploymentFrequencyLineChart({ kpiConfiguration, setKpiConfigurat
         <ResponsiveLine
           data={metrics}
           {...defaultConfig("Number of Deployments", "Date", 
-                      false, false, "wholeNumbers", "monthDate")}
+            false, false, "wholeNumbers", "monthDate")}
           {...config(getColor)}
           onClick={() => setShowModal(true)}
           tooltip={({point, color}) => <ChartTooltip 
-                                        titles = {["Date", "Number of Deployments"]}
-                                        values = {[String(point.data.xFormatted), point.data.y]}
-                                        color = {color} />}
+            titles = {["Date", "Number of Deployments"]}
+            values = {[String(point.data.xFormatted), point.data.y]}
+            color = {color} />}
         />
       </div>
     );

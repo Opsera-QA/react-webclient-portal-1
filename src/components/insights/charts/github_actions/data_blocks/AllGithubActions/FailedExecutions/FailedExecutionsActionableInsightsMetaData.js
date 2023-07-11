@@ -27,8 +27,8 @@ const FailedExecutionsActionableInsightsMetaData = {
       id: "applicationDirector",
     },
     {
-    label: "SVP",
-    id: "applicationSVP"
+      label: "SVP",
+      id: "applicationSVP"
     },
     {
       label: "VP1",
@@ -78,62 +78,62 @@ const FailedExecutionsActionableInsightsMetaData = {
       label: "Page Size",
       id: "pageSize",
     },
-     {
-       label: "Total Count",
-       id: "totalCount",
-     },
-     {
-       label: "Sort Option",
-       id: "sortOption",
-     },
-     {
-       label: "Search",
-       id: "search",
-     },
-     {
-       label: "Active Filters",
-       id: "activeFilters",
-     },
-     {
-       label: "Commit ID",
-       id: "checkoutSha",
-     },
-     {
-       label: "Commit Message",
-       id: "commitTitle",
-     },
-     {
-       label: "Branch Name",
-       id: "branch",
-     },
-     {
-       label: "Author",
-       id: "authorName",
-     }
-   ],
-       getActiveFilters(filterDto) {
-         let activeFilters = [];
+    {
+      label: "Total Count",
+      id: "totalCount",
+    },
+    {
+      label: "Sort Option",
+      id: "sortOption",
+    },
+    {
+      label: "Search",
+      id: "search",
+    },
+    {
+      label: "Active Filters",
+      id: "activeFilters",
+    },
+    {
+      label: "Commit ID",
+      id: "checkoutSha",
+    },
+    {
+      label: "Commit Message",
+      id: "commitTitle",
+    },
+    {
+      label: "Branch Name",
+      id: "branch",
+    },
+    {
+      label: "Author",
+      id: "authorName",
+    }
+  ],
+  getActiveFilters(filterDto) {
+    let activeFilters = [];
 
-         if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
-           activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
-         }
+    if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
+      activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
+    }
 
-         return activeFilters;
-       },
-       newObjectFields: {
-         pageSize: 10,
-         currentPage: 1,
-         sortOption: {text: "Newest", value: ""},
-         search: "",
-         activeFilters: [],
-         stepCompletedAt: null
-       },
-       sortOptions: [
-         {text: "Newest", option: ""},
-         {text: "Oldest", option: "oldest"},
-         {text: "Action Name", option: "actionName"},
-         {text: "Application Name", option: "applicationName"}
-       ]
+    return activeFilters;
+  },
+  newObjectFields: {
+    pageSize: 10,
+    currentPage: 1,
+    sortOption: {text: "Newest", value: ""},
+    search: "",
+    activeFilters: [],
+    stepCompletedAt: null
+  },
+  sortOptions: [
+    {text: "Newest", option: ""},
+    {text: "Oldest", option: "oldest"},
+    {text: "Action Name", option: "actionName"},
+    {text: "Application Name", option: "applicationName"}
+  ]
 };
 
 export default FailedExecutionsActionableInsightsMetaData;

@@ -4,18 +4,18 @@ import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_v
 
 function RoleRestrictedSpinnakerToolSelectInput({className, fieldName, model, setModel, setDataFunction, disabled}) {
   return (
-     <RoleRestrictedToolByIdentifierInputBase
-       toolIdentifier={"spinnaker"}
-       toolFriendlyName={"Spinnaker"}
-       fieldName={fieldName}
-       placeholderText={"Select Spinnaker Tool"}
-       configurationRequired={true}
-       model={model}
-       setModel={setModel}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-       className={className}
-     />
+    <RoleRestrictedToolByIdentifierInputBase
+      toolIdentifier={"spinnaker"}
+      toolFriendlyName={"Spinnaker"}
+      fieldName={fieldName}
+      placeholderText={"Select Spinnaker Tool"}
+      configurationRequired={true}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+      className={className}
+    />
   );
 }
 

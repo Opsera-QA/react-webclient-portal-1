@@ -39,11 +39,11 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
         className={"build-and-deployment-statistics-kpi"}
         topText={"Average Daily Deployments"}
         middleText={
-        <MetricScoreText
-          score={metricData?.deploy?.perDayAverage}
-          dataPoint={dataPoint}
-          className={"metric-block-content-text"}
-        />}
+          <MetricScoreText
+            score={metricData?.deploy?.perDayAverage}
+            dataPoint={dataPoint}
+            className={"metric-block-content-text"}
+          />}
         dataPoint={dataPoint}
       />
     );
@@ -62,7 +62,7 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
         <ResponsiveLine
           data={dailyDeploymentsChartData}
           {...defaultConfig("", "Date", 
-                false, true, "numbers", "monthDate2")}
+            false, true, "numbers", "monthDate2")}
           {...config()}
           yScale={{ type: 'linear', min: '0', max: maxVal, stacked: false, reverse: false }}
           axisLeft={{            
@@ -79,10 +79,10 @@ function DeploymentFrequencyStatisticsDataBlockContainer({ metricData, chartData
           )}
           markers={[
             {
-                axis: 'y',
-                value: goalsData,
-                lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
-                legend: '',
+              axis: 'y',
+              value: goalsData,
+              lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
+              legend: '',
             }            
           ]}
         />

@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
 import dockerPushStepFormMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/dockerpush-stepForm-metadata";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/dockerpush-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DockerPushStepJenkinsToolSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushStepJenkinsToolSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushStepJenkinsToolSelectInput";
 import DockerPushStepJenkinsJobSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushStepJenkinsJobSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushStepJenkinsJobSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import DockerPushNewRepoToggleInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushNewRepoToggleInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushNewRepoToggleInput";
 import _ from "lodash";
 import DockerPushAwsRepoInput from "./inputs/DockerPushAwsRepoInput";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import RoleRestrictedAwsAccountToolSelectInput
-  from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
+from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 
 function DockerPushStepConfiguration({ pipelineId, plan, stepTool, stepId, createJob, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -40,8 +40,8 @@ function DockerPushStepConfiguration({ pipelineId, plan, stepTool, stepId, creat
         Object.keys(groupedSteps).length > 0
           ? (groupedSteps.jenkins  || groupedSteps["command-line"])
             ? ( (groupedSteps.jenkins  && groupedSteps["command-line"]) ?  [...groupedSteps.jenkins, ...groupedSteps["command-line"]] : groupedSteps.jenkins ? groupedSteps.jenkins : groupedSteps["command-line"] ? groupedSteps["command-line"] 
-            : [{ _id: "", name: "Please configure a jenkins build step", isDisabled: "yes" }]
-             )
+              : [{ _id: "", name: "Please configure a jenkins build step", isDisabled: "yes" }]
+            )
             : [{ _id: "", name: "Please configure a jenkins build step", isDisabled: "yes" }]
           : [{ _id: "", name: "Please configure a jenkins build step", isDisabled: "yes" }];
       

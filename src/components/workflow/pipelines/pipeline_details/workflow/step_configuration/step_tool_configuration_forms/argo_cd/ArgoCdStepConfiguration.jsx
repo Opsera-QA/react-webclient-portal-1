@@ -5,31 +5,31 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import ArgoCdStepSourceControlManagementToolIdentifierSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepSourceControlManagementToolIdentifierSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepSourceControlManagementToolIdentifierSelectInput";
 import {ArgoCdStepConfigurationMetadata}
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/argoCdStepConfiguration.metadata";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/argoCdStepConfiguration.metadata";
 import ArgoCdStepSourceControlManagementToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepSourceControlManagementToolSelectInput";
 import ArgoCdStepBitbucketWorkspaceInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepBitbucketWorkspaceInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepBitbucketWorkspaceInput";
 import ArgoCdStepGitRepositorySelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepGitRepositorySelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepGitRepositorySelectInput";
 import ArgoCdStepGitBranchSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepGitBranchSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepGitBranchSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import ArgoCdApplicationSelectInput
-  from "components/common/list_of_values_input/tools/argo_cd/application/ArgoCdApplicationSelectInput";
+from "components/common/list_of_values_input/tools/argo_cd/application/ArgoCdApplicationSelectInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import ArgoCdStepArgoToolSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepArgoToolSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepArgoToolSelectInput";
 import ArgoCdStepPipelineStepSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepPipelineStepSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepPipelineStepSelectInput";
 import ArgoCdRepositoryTagSelectInput
-  from "components/common/list_of_values_input/tools/argo_cd/tags/ArgoCdRepositoryTagSelectInput";
+from "components/common/list_of_values_input/tools/argo_cd/tags/ArgoCdRepositoryTagSelectInput";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import ArgoBlueGreenDeploymentHelpDocumentation 
-  from "components/common/help/documentation/pipelines/step_configuration/fields/ArgoBlueGreenDeploymentHelpDocumentation";
+from "components/common/help/documentation/pipelines/step_configuration/fields/ArgoBlueGreenDeploymentHelpDocumentation";
 import ArgoCdStepKustomizeBooleanInput from "./inputs/ArgoCdStepKustomizeBooleanInput";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
 import ArgoClusterSelectInput from "components/common/list_of_values_input/tools/argo_cd/cluster/ArgoClusterSelectInput";
@@ -153,11 +153,11 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
   const getCommandLineSpecificInput = () => {
     if(argoCdModel?.getData("dockerStepType") === "command-line") {
       return (
-          <CustomParameterSelectInput
-              model={argoCdModel}
-              setModel={setArgoCdModel}
-              fieldName={"customParameterId"}
-          />
+        <CustomParameterSelectInput
+          model={argoCdModel}
+          setModel={setArgoCdModel}
+          fieldName={"customParameterId"}
+        />
       );
     }
   };
@@ -199,29 +199,29 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
     );
   };
 
-const getKustomizationInputFields = () => {
-  return (
+  const getKustomizationInputFields = () => {
+    return (
       <>
         <ArgoCdStepKustomizeBooleanInput
-            model={argoCdModel}
-            setModel={setArgoCdModel}
+          model={argoCdModel}
+          setModel={setArgoCdModel}
         />
         { argoCdModel?.getData("kustomizeFlag") &&
             <TextInputBase
-                setDataObject={setArgoCdModel}
-                dataObject={argoCdModel}
-                fieldName={"imageReference"}
+              setDataObject={setArgoCdModel}
+              dataObject={argoCdModel}
+              fieldName={"imageReference"}
             />
         }
       </>
-  );
-};
+    );
+  };
 
-const getPlatformSpecificInputFields = () => {
-  if (hasStringValue(argoCdModel?.getData("platform")) !== true) {
-    return null;
-  }
-  switch (argoCdModel?.getData("platform")) {
+  const getPlatformSpecificInputFields = () => {
+    if (hasStringValue(argoCdModel?.getData("platform")) !== true) {
+      return null;
+    }
+    switch (argoCdModel?.getData("platform")) {
     case "azure":
       return (
         <AzureCustomImageDetailsSubForm 
@@ -238,40 +238,40 @@ const getPlatformSpecificInputFields = () => {
       );
     default:
       return null;
-  }
-};
+    }
+  };
 
-const getCustomImageFields = () => {
-  if (argoCdModel?.getData("customImageTag") !== true) {
-    return null;
-  }
-  return (
-    <>
-      <ArgoCdStepPlatformSelectInput 
+  const getCustomImageFields = () => {
+    if (argoCdModel?.getData("customImageTag") !== true) {
+      return null;
+    }
+    return (
+      <>
+        <ArgoCdStepPlatformSelectInput 
+          model={argoCdModel}
+          setModel={setArgoCdModel}
+        />
+        {getPlatformSpecificInputFields()}
+      </>    
+    );
+  };
+
+  const getPipelineStepSelectField = () => {
+    if (argoCdModel?.getData("customImageTag") === true) {
+      return null;
+    }
+    return (
+      <ArgoCdStepPipelineStepSelectInput
         model={argoCdModel}
         setModel={setArgoCdModel}
+        stepId={stepId}
+        plan={plan}
+        disabled={
+          hasStringValue(argoCdModel?.getData("applicationName")) !== true
+        }
       />
-      {getPlatformSpecificInputFields()}
-    </>    
-  );
-};
-
-const getPipelineStepSelectField = () => {
-  if (argoCdModel?.getData("customImageTag") === true) {
-    return null;
-  }
-  return (
-    <ArgoCdStepPipelineStepSelectInput
-      model={argoCdModel}
-      setModel={setArgoCdModel}
-      stepId={stepId}
-      plan={plan}
-      disabled={
-        hasStringValue(argoCdModel?.getData("applicationName")) !== true
-      }
-    />
-  );
-};
+    );
+  };
 
   if (isLoading || argoCdModel === undefined) {
     return <LoadingDialog size="sm"/>;

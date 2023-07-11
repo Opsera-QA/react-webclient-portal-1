@@ -51,11 +51,11 @@ export default function LdapUserManagement() {
   };
 
   const getUsersByDomain = async () => {
-      const response = await accountsActions.getOrganizationAccountByDomainV2(getAccessToken, cancelTokenSource, ldapDomain);
-      const parsedUsers = DataParsingHelper.parseNestedArray(response, "data.users");
+    const response = await accountsActions.getOrganizationAccountByDomainV2(getAccessToken, cancelTokenSource, ldapDomain);
+    const parsedUsers = DataParsingHelper.parseNestedArray(response, "data.users");
 
-      if (isMounted?.current === true && parsedUsers) {
-        setUserList([...parsedUsers]);
+    if (isMounted?.current === true && parsedUsers) {
+      setUserList([...parsedUsers]);
     }
   };
 

@@ -12,29 +12,29 @@ function PipelineTemplateManagementSubNavigationBar({activeTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-      case "adminTools":
-        history.push(`/admin`);
-        return;
-      case "pipelineTemplateManagement":
-        history.push(`/admin/templates`);
-        return;
+    case "adminTools":
+      history.push(`/admin`);
+      return;
+    case "pipelineTemplateManagement":
+      history.push(`/admin/templates`);
+      return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-      case "pipelineTemplateViewer":
-        return (
-          <NavigationTab
-            icon={faStream}
-            tabName={"pipelineTemplateViewer"}
-            handleTabClick={handleTabClick}
-            activeTab={activeTab}
-            tabText={"Pipeline Template Viewer"}
-          />
-        );
-      default:
-        return null;
+    case "pipelineTemplateViewer":
+      return (
+        <NavigationTab
+          icon={faStream}
+          tabName={"pipelineTemplateViewer"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Pipeline Template Viewer"}
+        />
+      );
+    default:
+      return null;
     }
   };
 

@@ -94,7 +94,7 @@ function JiraHealthBySprintBarChart( { persona, date } ) {
             <ResponsiveBar
               data={data ? data.data : []}
               {...defaultConfig("Project", "Number of Issues", 
-                                false, false, "cutoffString", "wholeNumbers", false)}
+                false, false, "cutoffString", "wholeNumbers", false)}
               {...adjustBarWidth(data ? data.data : [])}
               onClick={() => setShowModal(true)}
               keys={["To Do", "In Development", "In Progress", "Peer Review", "Testing", "Done", "Selected for Development", "Production Deployment"]}
@@ -103,9 +103,9 @@ function JiraHealthBySprintBarChart( { persona, date } ) {
               colors={({ id, data }) => data[`${id}_color`]}
               colorBy="id"
               tooltip={({ indexValue, value, id }) => <ChartTooltip 
-                      titles={["Project", "Issue Stage", "Number of Issues"]}
-                      values={[indexValue, id, value]}
-                      style = {false} />}
+                titles={["Project", "Issue Stage", "Number of Issues"]}
+                values={[indexValue, id, value]}
+                style = {false} />}
             />
           }
         </div>

@@ -4,19 +4,19 @@ import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlo
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 
 function ServiceNowTotalIncidentsDataBlock({ data }) {
-    return (
-        <DataBlockBoxContainer showBorder={true}>
-            <TwoLineScoreDataBlock
-                className={"p-1"}
-                score={data}
-                subtitle={"Total Incidents"}
-            />
-        </DataBlockBoxContainer>
-    );
+  return (
+    <DataBlockBoxContainer showBorder={true}>
+      <TwoLineScoreDataBlock
+        className={"p-1"}
+        score={data}
+        subtitle={"Total Incidents"}
+      />
+    </DataBlockBoxContainer>
+  );
 }
 
 ServiceNowTotalIncidentsDataBlock.propTypes = {
-    data: PropTypes.number,
+  data: PropTypes.number,
 };
 
 export default ServiceNowTotalIncidentsDataBlock;

@@ -3,11 +3,11 @@ import {
   analyticsUserDataMappingHelper
 } from "components/settings/data_mapping/users/analyticsUserDataMapping.helper";
 import userDataMappingMetadata
-  from "@opsera/definitions/constants/settings/data_mapping/user/userDataMapping.metadata";
+from "@opsera/definitions/constants/settings/data_mapping/user/userDataMapping.metadata";
 import useAnalyticsUserDataMappingActions
-  from "hooks/settings/insights/analytics_data_mappings/users/useAnalyticsUserDataMappingActions";
+from "hooks/settings/insights/analytics_data_mappings/users/useAnalyticsUserDataMappingActions";
 import AnalyticsUserDataMappingRoleHelper
-  from "@opsera/know-your-role/roles/settings/analytics_data_mappings/users/analyticsUserDataMappingRole.helper";
+from "@opsera/know-your-role/roles/settings/analytics_data_mappings/users/analyticsUserDataMappingRole.helper";
 
 export default function useGetAnalyticsUserDataMappingModel() {
   const getModelBase = useGetModelBase();

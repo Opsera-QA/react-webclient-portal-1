@@ -268,34 +268,34 @@ function Application(props) {
             ) : null}
 
             { fetching && showEditTools ? <LoadingDialog size={"sm"} message={"Loading Applications"} />
-            : showEditTools && dropdownData && savingStatus !== "success" && (
-              <>
-                {dropdownData.length > 0 ? (
-                  <div className="col ml-auto">
-                    <Form>
-                      <Form.Group>
-                        <Form.Control as="select"
-                          defaultValue=""
-                          hidden={(!(!fetching && dropdownData.length > 0))}
-                          onChange={handleDropdownChange}
-                          style={{ marginTop: 25 }}>
-                          <option value="" disabled>{fetching ? "loading..." : "Select Application to Edit"}</option>
-                          {!fetching && (
-                            <>
-                              {dropdownData.map(application => (
-                                <option key={application.name} value={application._id}>{application.name}</option>
-                              ))}
-                            </>
-                          )}
-                        </Form.Control>
-                      </Form.Group>
-                    </Form>
-                  </div>
-                ): (
-                  <InfoDialog message="No applications are saved yet. Please try adding a new application." />
-                )}
-              </>
-            )}
+              : showEditTools && dropdownData && savingStatus !== "success" && (
+                <>
+                  {dropdownData.length > 0 ? (
+                    <div className="col ml-auto">
+                      <Form>
+                        <Form.Group>
+                          <Form.Control as="select"
+                            defaultValue=""
+                            hidden={(!(!fetching && dropdownData.length > 0))}
+                            onChange={handleDropdownChange}
+                            style={{ marginTop: 25 }}>
+                            <option value="" disabled>{fetching ? "loading..." : "Select Application to Edit"}</option>
+                            {!fetching && (
+                              <>
+                                {dropdownData.map(application => (
+                                  <option key={application.name} value={application._id}>{application.name}</option>
+                                ))}
+                              </>
+                            )}
+                          </Form.Control>
+                        </Form.Group>
+                      </Form>
+                    </div>
+                  ): (
+                    <InfoDialog message="No applications are saved yet. Please try adding a new application." />
+                  )}
+                </>
+              )}
           </div>
 
           {createAppStatus.error ? <ErrorDialog error={createAppStatus.error} /> : null}
@@ -326,7 +326,7 @@ function Application(props) {
               <div className="text-right">
                 <Button variant="outline-primary" onClick={cancelTools} 
                   // disabled={Object.keys(data).length === 0} 
-                className="m-2">
+                  className="m-2">
                 Cancel
                 </Button>
                 <Button variant="primary" onClick={saveTools} disabled={Object.keys(data).length === 0}>

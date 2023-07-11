@@ -157,7 +157,7 @@ const DataSeedingFieldMappingScreen = ({
         getAccessToken,
         null,
         wizardModel,
-        );
+      );
 
       const finalFilterableFieldsList = DataParsingHelper.parseArray(filterableFieldsList?.data?.message, false, true);
 

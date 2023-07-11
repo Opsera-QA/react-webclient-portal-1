@@ -7,12 +7,12 @@ import TwoLineScoreDataBlock from "../../../../common/metrics/score/TwoLineScore
 function TotalAutomationCandidatesDataBlock({ defects, dataPoint }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
-        <TwoLineScoreDataBlock
-          className="p-2"
-          style={{minHeight: '100px'}}
-          score={defects}
-          dataPoint={dataPoint}
-          subtitle={"Total Number of Automation Candidates"} />
+      <TwoLineScoreDataBlock
+        className="p-2"
+        style={{minHeight: '100px'}}
+        score={defects}
+        dataPoint={dataPoint}
+        subtitle={"Total Number of Automation Candidates"} />
     </DataBlockBoxContainer>
   );
 }

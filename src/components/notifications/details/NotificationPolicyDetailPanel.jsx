@@ -6,11 +6,11 @@ import DetailTabPanelContainer from "components/common/panels/detail_view/Detail
 import CustomTab from "components/common/tabs/CustomTab";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 import NotificationPolicySummaryPanel
-  from "components/notifications/details/NotificationPolicySummaryPanel";
+from "components/notifications/details/NotificationPolicySummaryPanel";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import NotificationPolicyActivityLogs
-  from "components/notifications/details/NotificationPolicyActivityLogs";
+from "components/notifications/details/NotificationPolicyActivityLogs";
 
 function NotificationPolicyDetailPanel({ notificationData, setNotificationData, loadData, isLoading }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -35,32 +35,32 @@ function NotificationPolicyDetailPanel({ notificationData, setNotificationData, 
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return (
-          <NotificationPolicySummaryPanel
-            notificationData={notificationData}
-            setActiveTab={setActiveTab}
+    case "summary":
+      return (
+        <NotificationPolicySummaryPanel
+          notificationData={notificationData}
+          setActiveTab={setActiveTab}
+        />
+      );
+    case "settings":
+      return (
+        <NotificationPolicyEditorPanel
+          handleClose={toggleSummaryPanel}
+          notificationData={notificationData}
+          setNotificationData={setNotificationData}
+          loadData={loadData}
+        />
+      );
+    case "logs":
+      return (
+        <DetailPanelContainer>
+          <NotificationPolicyActivityLogs
+            notificationId={notificationData?.getData("_id")}
           />
-        );
-      case "settings":
-        return (
-          <NotificationPolicyEditorPanel
-            handleClose={toggleSummaryPanel}
-            notificationData={notificationData}
-            setNotificationData={setNotificationData}
-            loadData={loadData}
-          />
-        );
-      case "logs":
-        return (
-          <DetailPanelContainer>
-            <NotificationPolicyActivityLogs
-              notificationId={notificationData?.getData("_id")}
-            />
-          </DetailPanelContainer>
-        );
-      default:
-        return null;
+        </DetailPanelContainer>
+      );
+    default:
+      return null;
     }
   };
 

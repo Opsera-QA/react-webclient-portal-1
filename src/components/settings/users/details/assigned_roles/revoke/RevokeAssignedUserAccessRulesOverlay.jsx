@@ -5,7 +5,7 @@ import ConfirmationOverlay from "components/common/overlays/center/ConfirmationO
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import CancelButtonBase from "components/common/buttons/cancel/CancelButtonBase";
 import RevokeUserAccessRulesButton
-  from "components/settings/users/details/assigned_roles/revoke/RevokeUserAccessRulesButton";
+from "components/settings/users/details/assigned_roles/revoke/RevokeUserAccessRulesButton";
 
 export default function RevokeAssignedUserAccessRulesOverlay(
   {

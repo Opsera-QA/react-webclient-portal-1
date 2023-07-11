@@ -15,29 +15,29 @@ import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 
 // TODO: Convert to cards
 function SalesforceDurationByStageActionableInsightTable({
-                                                           data,
-                                                           isLoading,
-                                                           loadData,
-                                                           filterModel,
-                                                           setFilterModel,
-                                                           title,
-                                                         }) {
+  data,
+  isLoading,
+  loadData,
+  filterModel,
+  setFilterModel,
+  title,
+}) {
   const toastContext = useContext(DialogToastContext);
   const fields = SonarPipelineTableMetadata.fields;
   const tableTitle = "Pipeline Deployments Report";
   const noDataMessage = "Pipeline report is currently unavailable at this time";
 
   const columns = useMemo(
-      () => [
-        getTableTextColumn(getField(fields, "name"), "name"),
-        getTableTextColumn(getField(fields, "total"), "total"),
-        getTableTextColumn(getField(fields, "total_success"), "total_success"),
-        getTableTextColumn(getField(fields, "total_failed"), "total_failed"),
-        getTableDurationTextColumn(getField(fields, "duration"), "duration"),
-        getTableDurationTextColumn(getField(fields, "time_to_resolve"), "time_to_resolve"),
-        //getTableTextColumnWithoutField("Actions", "_blueprint", "text-center"),
-      ],
-      []
+    () => [
+      getTableTextColumn(getField(fields, "name"), "name"),
+      getTableTextColumn(getField(fields, "total"), "total"),
+      getTableTextColumn(getField(fields, "total_success"), "total_success"),
+      getTableTextColumn(getField(fields, "total_failed"), "total_failed"),
+      getTableDurationTextColumn(getField(fields, "duration"), "duration"),
+      getTableDurationTextColumn(getField(fields, "time_to_resolve"), "time_to_resolve"),
+      //getTableTextColumnWithoutField("Actions", "_blueprint", "text-center"),
+    ],
+    []
   );
 
   // const onRowSelect = (rowData) => {
@@ -51,30 +51,30 @@ function SalesforceDurationByStageActionableInsightTable({
 
   const getTable = () => {
     return (
-        <CustomTable
-            isLoading={isLoading}
-            loadData={loadData}
-            columns={columns}
-            data={data}
-            noDataMessage={noDataMessage}
-            paginationDto={filterModel}
-            setPaginationDto={setFilterModel}
-            //onRowSelect={onRowSelect}
-        />
+      <CustomTable
+        isLoading={isLoading}
+        loadData={loadData}
+        columns={columns}
+        data={data}
+        noDataMessage={noDataMessage}
+        paginationDto={filterModel}
+        setPaginationDto={setFilterModel}
+        //onRowSelect={onRowSelect}
+      />
     );
   };
 
   return (
-      <FilterContainer
-          isLoading={isLoading}
-          title={tableTitle}
-          titleIcon={faDraftingCompass}
-          body={getTable()}
-          className={"px-2 pb-2"}
-          loadData={loadData}
-          setFilterDto={setFilterModel}
-          filterDto={filterModel}
-      />
+    <FilterContainer
+      isLoading={isLoading}
+      title={tableTitle}
+      titleIcon={faDraftingCompass}
+      body={getTable()}
+      className={"px-2 pb-2"}
+      loadData={loadData}
+      setFilterDto={setFilterModel}
+      filterDto={filterModel}
+    />
   );
 }
 

@@ -34,7 +34,7 @@ const ArgoAwsClusterEditorForm = ({ model, setModel, clusterData, disabled }) =>
               />
             </Col>
           }
-      </>
+        </>
       );
     } else {
       return (

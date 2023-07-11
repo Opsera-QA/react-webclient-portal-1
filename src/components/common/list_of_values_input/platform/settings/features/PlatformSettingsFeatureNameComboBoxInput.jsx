@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ComboBoxInputBase from "components/common/inputs/combo_box/ComboBoxInputBase";
 import platformSettingFeatureConstants
-  from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
+from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
 
 export default function PlatformSettingsFeatureNameComboBoxInput(
   {

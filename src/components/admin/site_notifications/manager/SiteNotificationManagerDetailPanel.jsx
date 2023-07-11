@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import SiteNotificationEditorPanel
-  from "components/admin/site_notifications/details/SiteNotificationEditorPanel";
+from "components/admin/site_notifications/details/SiteNotificationEditorPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faSitemap} from "@fortawesome/pro-light-svg-icons";
@@ -26,10 +26,10 @@ function SiteNotificationManagerDetailPanel({ siteWideNotificationData, setSiteW
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "site":
-        return <SiteNotificationEditorPanel siteNotificationData={siteWideNotificationData} setSiteNotificationData={setSiteWideNotificationData} />;
-      default:
-        return null;
+    case "site":
+      return <SiteNotificationEditorPanel siteNotificationData={siteWideNotificationData} setSiteNotificationData={setSiteWideNotificationData} />;
+    default:
+      return null;
     }
   };
 

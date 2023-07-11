@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ExternalApiIntegratorToolEndpointResponseBodyFieldSelectInput
-  from "components/common/list_of_values_input/tools/extermal_api_integrator/endpoints/fields/ExternalApiIntegratorToolEndpointResponseBodyFieldSelectInput";
+from "components/common/list_of_values_input/tools/extermal_api_integrator/endpoints/fields/ExternalApiIntegratorToolEndpointResponseBodyFieldSelectInput";
 
 export default function ExternalApiIntegrationStepRunResponseParameterSelectInput(
   {

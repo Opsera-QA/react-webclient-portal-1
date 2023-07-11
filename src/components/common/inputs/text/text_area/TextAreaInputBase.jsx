@@ -90,14 +90,14 @@ function TextAreaInputBase(
   const getInput = () => {
     return (
       <div className={"d-flex" + getErrorStyling()}>
-          <textarea
-            disabled={disabled}
-            value={model?.getData(fieldName)}
-            onChange={(event) => updateValue(event.target.value)}
-            className={getInputClasses()}
-            rows={rowCount}
-            id={fieldName}
-          />
+        <textarea
+          disabled={disabled}
+          value={model?.getData(fieldName)}
+          onChange={(event) => updateValue(event.target.value)}
+          className={getInputClasses()}
+          rows={rowCount}
+          id={fieldName}
+        />
       </div>
     );
   };

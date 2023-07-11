@@ -1,15 +1,15 @@
 
 const informaticaTypeMappingMetadata = {
-    type: "Informatica Mapping",
-    fields: [
-      {
-        label: "Rule Mapping",
-        id: "mapping",
-      },
-    ],
-    newObjectFields: {
-      mapping: [],
-    }
-  };
+  type: "Informatica Mapping",
+  fields: [
+    {
+      label: "Rule Mapping",
+      id: "mapping",
+    },
+  ],
+  newObjectFields: {
+    mapping: [],
+  }
+};
   
-  export default informaticaTypeMappingMetadata;
+export default informaticaTypeMappingMetadata;

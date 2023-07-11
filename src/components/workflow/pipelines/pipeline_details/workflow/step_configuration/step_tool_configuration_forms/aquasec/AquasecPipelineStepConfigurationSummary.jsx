@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function AquasecPipelineStepConfigurationSummary({ aquasecPipelineDataObject, pipelineData, setActiveTab }) {
@@ -15,7 +15,7 @@ function AquasecPipelineStepConfigurationSummary({ aquasecPipelineDataObject, pi
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
-      <Col lg={6}>
+        <Col lg={6}>
           <ToolNameField model={aquasecPipelineDataObject} fieldName={"toolConfigId"} />
         </Col>
         <Col lg={6}>

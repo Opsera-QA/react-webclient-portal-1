@@ -10,7 +10,7 @@ function ContainerScan(props) {
   const { tools, isEKS } = props;
   const [isChecked, setCheckbox] = useState({
     Anchore: tools.includes("Anchore") ? true : false,
-   });
+  });
 
   useEffect(() => {
     setCheckbox({ 
@@ -59,19 +59,19 @@ function ContainerScan(props) {
       <Card.Body className="text-center">
         <Card.Title>Container Scan</Card.Title>
           
-          <div
-            className={`newApp__service-logo ${tools.includes("Anchore") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
+        <div
+          className={`newApp__service-logo ${tools.includes("Anchore") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
+          onClick={() => selectCard("Anchore")}
+        >
+          <input type="checkbox"
+            disabled={tools.includes("Anchore") ? true : false}
+            checked={isChecked.Anchore && data["Anchore"]}
+            className="newApp__checkbox"
             onClick={() => selectCard("Anchore")}
-          >
-            <input type="checkbox"
-              disabled={tools.includes("Anchore") ? true : false}
-              checked={isChecked.Anchore && data["Anchore"]}
-              className="newApp__checkbox"
-              onClick={() => selectCard("Anchore")}
-            />
-            <img src={"/img/tools/anchore.png"} />
-            <span className="newApp__service-title">Anchore</span>
-          </div>
+          />
+          <img src={"/img/tools/anchore.png"} />
+          <span className="newApp__service-title">Anchore</span>
+        </div>
 
       </Card.Body>
     </Card>

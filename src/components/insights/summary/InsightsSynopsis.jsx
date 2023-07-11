@@ -117,14 +117,14 @@ function InsightsSynopsis() {
   };
 
   const validate = (startDate,endDate)=>{
-      let sDate = startDate ? new Date(startDate).toISOString() : undefined;
-      let eDate = endDate ? new Date(endDate).toISOString() : undefined;
-      let newDashboardFilterTagsModel = dashboardFilterTagsModel;
-      newDashboardFilterTagsModel.setData( "date" , { startDate: sDate , endDate: eDate, key: "selection" } );
-      setDashboardFilterTagsModel({...newDashboardFilterTagsModel});
+    let sDate = startDate ? new Date(startDate).toISOString() : undefined;
+    let eDate = endDate ? new Date(endDate).toISOString() : undefined;
+    let newDashboardFilterTagsModel = dashboardFilterTagsModel;
+    newDashboardFilterTagsModel.setData( "date" , { startDate: sDate , endDate: eDate, key: "selection" } );
+    setDashboardFilterTagsModel({...newDashboardFilterTagsModel});
   
-      let newDataModel = modelHelpers.setDashboardFilterModelField(dashboardData, "date", { startDate: sDate , endDate: eDate, key: "selection" });
-      loadData(newDataModel);
+    let newDataModel = modelHelpers.setDashboardFilterModelField(dashboardData, "date", { startDate: sDate , endDate: eDate, key: "selection" });
+    loadData(newDataModel);
   };
 
   const clearCalendar = () => {
@@ -191,34 +191,34 @@ function InsightsSynopsis() {
   };
 
   const getSynopsisActionBarContainer = () => {
-      return (
-        <ActionBarContainer>
-          <div className="d-flex">
-            <DashboardFiltersInput
-              dataObject={dashboardFilterTagsModel}
-              setDataObject={setDashboardFilterTagsModel}
-              loadData={loadData}
-              className={"mx-2"}
-              dashboardData={dashboardData}
-            />
-            <DashboardFilterOrganizationInput
-              className={"mx-2"}
-              dataObject={dashboardFilterTagsModel}
-              setDataObject={setDashboardFilterTagsModel}
-              dashboardData={dashboardData}
-              fieldName={"organizations"}
-              loadData={loadData}
-            />
-            {/* <p>this is a test</p> */}
-            <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
-              <IconBase icon={faCalendar} className={"mr-1 d-none d-lg-inline"} />
-              {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
-            </Button>
-            {getDateRangeButton()}
-            {/* <DateRangeInput dataObject={dashboardFilterTagsModel} setDataObject={setDashboardFilterTagsModel} fieldName={"date"} />  */}
-          </div>
-        </ActionBarContainer>
-      );
+    return (
+      <ActionBarContainer>
+        <div className="d-flex">
+          <DashboardFiltersInput
+            dataObject={dashboardFilterTagsModel}
+            setDataObject={setDashboardFilterTagsModel}
+            loadData={loadData}
+            className={"mx-2"}
+            dashboardData={dashboardData}
+          />
+          <DashboardFilterOrganizationInput
+            className={"mx-2"}
+            dataObject={dashboardFilterTagsModel}
+            setDataObject={setDashboardFilterTagsModel}
+            dashboardData={dashboardData}
+            fieldName={"organizations"}
+            loadData={loadData}
+          />
+          {/* <p>this is a test</p> */}
+          <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
+            <IconBase icon={faCalendar} className={"mr-1 d-none d-lg-inline"} />
+            {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
+          </Button>
+          {getDateRangeButton()}
+          {/* <DateRangeInput dataObject={dashboardFilterTagsModel} setDataObject={setDashboardFilterTagsModel} fieldName={"date"} />  */}
+        </div>
+      </ActionBarContainer>
+    );
   };
 
   if (!accessRoleData) {

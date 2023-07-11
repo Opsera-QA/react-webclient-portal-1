@@ -32,7 +32,7 @@ function SapCpqReportSummaryOverview({ sapCpqResultsModel }) {
 
 
 SapCpqReportSummaryOverview.propTypes = {
-    sapCpqResultsModel: PropTypes.object,
+  sapCpqResultsModel: PropTypes.object,
 };
 
 export default SapCpqReportSummaryOverview;

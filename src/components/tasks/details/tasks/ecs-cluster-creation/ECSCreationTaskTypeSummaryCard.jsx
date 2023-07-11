@@ -47,18 +47,18 @@ function EC2ClusterCreationTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurat
 
   const getFargateFields = () => {
     if (gitTaskConfigurationData.getData("clusterTemplate") === "fargate") {
-        if (gitTaskConfigurationData.getData("createVpc")) {
-          return (
-            <>
-              <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"vpcCidrBlock"} />
-              <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"public_subnet_cidr_1"} />
-              <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"public_subnet_cidr_2"} />
-              <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"private_subnet_cidr_1"} />
-              <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"private_subnet_cidr_2"} />
-            </>
-          );
-        }
+      if (gitTaskConfigurationData.getData("createVpc")) {
+        return (
+          <>
+            <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"vpcCidrBlock"} />
+            <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"public_subnet_cidr_1"} />
+            <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"public_subnet_cidr_2"} />
+            <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"private_subnet_cidr_1"} />
+            <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"private_subnet_cidr_2"} />
+          </>
+        );
       }
+    }
   };
 
   return (

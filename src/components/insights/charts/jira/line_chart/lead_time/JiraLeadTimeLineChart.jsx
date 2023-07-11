@@ -152,45 +152,45 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
 
     const getIcon = (data, previousData) => {
       if (data > previousData) {
-          return faArrowCircleUp;
+        return faArrowCircleUp;
       } else 
       if (data < previousData) {
         return faArrowCircleDown;
       } else
       if (data === previousData) {
-          return faMinusCircle;
+        return faMinusCircle;
       } else {
-          return undefined;
+        return undefined;
       }
-      };
+    };
   
-      const getIconColor = (data, previousData) => {
-        if (data > previousData) {
-          return "green";
-        } else 
-        if (data < previousData) {
-          return "red";
-        } else
-        if (data === previousData) {
-          return "light-gray-text-secondary";
-        } else {
-          return "black";
-        }
-        };
+    const getIconColor = (data, previousData) => {
+      if (data > previousData) {
+        return "green";
+      } else 
+      if (data < previousData) {
+        return "red";
+      } else
+      if (data === previousData) {
+        return "light-gray-text-secondary";
+      } else {
+        return "black";
+      }
+    };
 
-        const getLeadTimeIconColor = (data, previousData) => {
-          if (data > previousData) {
-            return "red";
-          } else 
-          if (data < previousData) {
-            return "green";
-          } else
-          if (data === previousData) {
-            return "light-gray-text-secondary";
-          } else {
-            return "black";
-          }
-          };
+    const getLeadTimeIconColor = (data, previousData) => {
+      if (data > previousData) {
+        return "red";
+      } else 
+      if (data < previousData) {
+        return "green";
+      } else
+      if (data === previousData) {
+        return "light-gray-text-secondary";
+      } else {
+        return "black";
+      }
+    };
 
     return (
       <>

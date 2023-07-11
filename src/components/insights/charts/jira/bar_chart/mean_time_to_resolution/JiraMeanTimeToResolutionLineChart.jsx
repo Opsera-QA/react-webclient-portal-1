@@ -39,7 +39,7 @@ function JiraMeanTimeToResolutionLineChart({ metrics }) {
     );
   };
 
-    const getTrendChart = () => {
+  const getTrendChart = () => {
     return (
       <>
         <div

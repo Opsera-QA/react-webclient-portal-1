@@ -122,13 +122,13 @@ function DataSeedingManagedPackageListSelectInput({
       />
       {wizardModel?.getData("selectedManagedPackageKey") &&
       wizardModel?.getData("selectedManagedPackageKey")?.length > 0 ? (
-        <>
-          <NameSpacePrefixListView
-            wizardModel={wizardModel}
-            setWizardModel={setWizardModel}
-          />
-        </>
-      ) : null}
+          <>
+            <NameSpacePrefixListView
+              wizardModel={wizardModel}
+              setWizardModel={setWizardModel}
+            />
+          </>
+        ) : null}
     </>
   );
 }

@@ -6,7 +6,7 @@ import CreateCenterPanel from "components/common/overlays/center/CreateCenterPan
 import {CENTER_OVERLAY_SIZES} from "components/common/overlays/center/CenterOverlayContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import JenkinsAccountEditorPanel
-  from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/JenkinsAccountEditorPanel";
+from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/JenkinsAccountEditorPanel";
 
 function CreateJenkinsAccountOverlay(
   {

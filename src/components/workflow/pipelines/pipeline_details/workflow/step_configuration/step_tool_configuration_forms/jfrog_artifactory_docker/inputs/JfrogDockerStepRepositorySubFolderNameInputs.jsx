@@ -15,20 +15,20 @@ export default function JfrogDockerStepRepositorySubFolderNameInputs(
   };
 
   return (
-     <>
-       <BooleanToggleInput
-         fieldName={"useRepositorySubFolderName"}
-         dataObject={model}
-         setDataObject={setModel}
-         setDataFunction={setDataFunction}
-       />
-       <TextInputBase
-         fieldName={"repositorySubFolderName"}
-         dataObject={model}
-         setDataObject={setModel}
-         visible={model?.getData("useRepositorySubFolderName") === true}
-       />
-     </>
+    <>
+      <BooleanToggleInput
+        fieldName={"useRepositorySubFolderName"}
+        dataObject={model}
+        setDataObject={setModel}
+        setDataFunction={setDataFunction}
+      />
+      <TextInputBase
+        fieldName={"repositorySubFolderName"}
+        dataObject={model}
+        setDataObject={setModel}
+        visible={model?.getData("useRepositorySubFolderName") === true}
+      />
+    </>
   );
 }
 

@@ -185,23 +185,23 @@ function AccountRegistration() {
             <Row>
               <Col md={12}>
                 <TextInputBase disabled={true} fieldName={"company"} dataObject={registrationDataDto}
-                               setDataObject={setRegistrationDataDto} />
+                  setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={12}>
                 <TextInputBase fieldName={"firstName"} dataObject={registrationDataDto}
-                               setDataObject={setRegistrationDataDto} />
+                  setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={12}>
                 <TextInputBase fieldName={"lastName"} dataObject={registrationDataDto}
-                               setDataObject={setRegistrationDataDto} />
+                  setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={12}>
                 <TempTextInput fieldName={"email"} dataObject={registrationDataDto}
-                               setDataObject={setRegistrationDataDto} />
+                  setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={12}>
                 <TempTextInput fieldName={"confirmEmail"} dataObject={registrationDataDto}
-                               setDataObject={setRegistrationDataDto} />
+                  setDataObject={setRegistrationDataDto} />
               </Col>
             </Row>
             {getWarning()}

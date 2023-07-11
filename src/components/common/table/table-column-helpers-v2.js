@@ -351,30 +351,30 @@ export const getPipelineThresholdLevelColumn = (field, className) => {
 
 export const getPipelineStatusIconCss = (value) => {
   switch (value) {
-    case "failure":
-    case "failed":
-      return ("fa-times-circle red");
-    case "pending":
-      return ("fa-pause-circle yellow");
-    case "unknown":
-      return ("fa-circle yellow");
-    case "rejected":
-      return ("fa-stop-circle red");
-    case "running":
-    case "processing event":
-    case "created":
-      return ("fa-play-circle green");
-    case "queued":
-      return ("fa-pause-circle green");
-    case "stopped":
-    case "aborted":
-    case "halted":
-      return ("fa-octagon red");
-    case "passed":
-    case "success":
-    case "successful":
-    default:
-      return ("fa-check-circle green");
+  case "failure":
+  case "failed":
+    return ("fa-times-circle red");
+  case "pending":
+    return ("fa-pause-circle yellow");
+  case "unknown":
+    return ("fa-circle yellow");
+  case "rejected":
+    return ("fa-stop-circle red");
+  case "running":
+  case "processing event":
+  case "created":
+    return ("fa-play-circle green");
+  case "queued":
+    return ("fa-pause-circle green");
+  case "stopped":
+  case "aborted":
+  case "halted":
+    return ("fa-octagon red");
+  case "passed":
+  case "success":
+  case "successful":
+  default:
+    return ("fa-check-circle green");
   }
 };
 
@@ -411,14 +411,14 @@ const getPipelineTypeColumnCss = (type) => {
   }
 
   switch (type[0]) {
-    case "sfdc":
-      return ("fab fa-salesforce");
-    case "ai-ml":
-      return ("fal fa-microchip");
-    case "sdlc":
-      return ("fal fa-brackets-curly");
-    default:
-      return ("fal fa-drafting-compass");
+  case "sfdc":
+    return ("fab fa-salesforce");
+  case "ai-ml":
+    return ("fal fa-microchip");
+  case "sdlc":
+    return ("fal fa-brackets-curly");
+  default:
+    return ("fal fa-drafting-compass");
   }
 };
 
@@ -474,43 +474,43 @@ export const getTablePipelineStatusColumn = (field, className) => {
       let pipelineStatus = pipelineHelpers.getPipelineStatus(text);
 
       switch (pipelineStatus) {
-        case "failed":
-          return (`
+      case "failed":
+        return (`
             <span class="red">
               <i class="fal fa-times-circle cell-icon vertical-align-item"></i>
               <span class="ml-1">${capitalizeFirstLetter(text)}</span>
             </span>
           `);
-        case "error":
-          return (`
+      case "error":
+        return (`
             <span class="red">
               <i class="fal fa-exclamation-circle cell-icon vertical-align-item"></i>
               <span class="ml-1">${capitalizeFirstLetter(text)}</span>
             </span>
           `);
-        case "running":
-          return (`
+      case "running":
+        return (`
             <span class="green">
               <i class="fal fa-spinner cell-icon vertical-align-item"></i>
               <span class="ml-1">${capitalizeFirstLetter(text)}</span>
             </span>
           `);
-        case "paused":
-          return (`
+      case "paused":
+        return (`
             <span class="yellow">
               <i class="fal fa-pause cell-icon vertical-align-item"></i>
               <span class="ml-1">${capitalizeFirstLetter(text)}</span>
             </span>
           `);
-        case "success":
-          return (`
+      case "success":
+        return (`
             <span class="green">
               <i class="fal fa-check-circle cell-icon vertical-align-item"></i>
               <span class="ml-1">${capitalizeFirstLetter(text)}</span>
             </span>
           `);
-        default:
-          return (`
+      default:
+        return (`
             <span>
               <i class="fal fa-stop cell-icon vertical-align-item"></i>
               <span class="ml-1">Stopped</span>

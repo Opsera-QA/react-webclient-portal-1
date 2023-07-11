@@ -12,7 +12,7 @@ import {
 import { DialogToastContext } from "contexts/DialogToastContext";
 import ExportReportPanel from "../ExportReportPanel";
 import SalesforceOrgSyncActionableInsightOverlay
-  from "./actionable_insights/SalesforceOrgSyncActionableInsightOverlay";
+from "./actionable_insights/SalesforceOrgSyncActionableInsightOverlay";
 import {salesforceOrgSyncMetadata} from "./salesforceOrgSync.metadata";
 import TaskExportReportButton from "../TaskExportReportButton";
 import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";

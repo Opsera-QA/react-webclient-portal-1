@@ -8,13 +8,13 @@ import TabPanelContainer from "components/common/panels/general/TabPanelContaine
 import PendingUsersTable from "components/settings/users/PendingUsersTable";
 import UserManagementSubNavigationBar from "components/settings/users/UserManagementSubNavigationBar";
 import UserManagementHelpDocumentation
-  from "../../common/help/documentation/settings/UserManagementHelpDocumentation";
+from "../../common/help/documentation/settings/UserManagementHelpDocumentation";
 import useGetLdapUsersInCurrentUserDomain from "hooks/ldap/users/useGetLdapUsersInCurrentUserDomain";
 import useGetPendingUsers from "hooks/platform/users/useGetPendingUsers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useGetDeactivatedLdapUsersInCurrentUserDomain
-  from "hooks/ldap/users/useGetDeactivatedLdapUsersInCurrentUserDomain";
+from "hooks/ldap/users/useGetDeactivatedLdapUsersInCurrentUserDomain";
 import DeactivatedUsersTable from "components/settings/users/DeactivatedUsersTable";
 
 const USER_MANAGEMENT_VIEWS = {
@@ -38,31 +38,31 @@ function UserManagement() {
 
   const getBody = () => {
     switch (activeTab) {
-      case USER_MANAGEMENT_VIEWS.PENDING_USERS:
-        return (
-          <PendingUsersTable
-            loadData={getPendingUsers.loadData}
-            isLoading={getPendingUsers.isLoading}
-            pendingUserData={getPendingUsers.pendingUsers}
-          />
-        );
-      case USER_MANAGEMENT_VIEWS.DEACTIVATED_USERS:
-        return (
-          <DeactivatedUsersTable
-            isLoading={getDeactivatedLdapUsersInCurrentUserDomain.isLoading}
-            users={getDeactivatedLdapUsersInCurrentUserDomain.users}
-            loadData={getDeactivatedLdapUsersInCurrentUserDomain.loadData}
-          />
-        );
-      case USER_MANAGEMENT_VIEWS.ACTIVE_USERS:
-        return (
-          <UsersTable
-            orgDomain={DataParsingHelper.parseNestedString(userData, "ldap.domain")}
-            isLoading={getLdapUsersInCurrentUserDomain.isLoading}
-            users={getLdapUsersInCurrentUserDomain.users}
-            loadData={getLdapUsersInCurrentUserDomain.loadData}
-          />
-        );
+    case USER_MANAGEMENT_VIEWS.PENDING_USERS:
+      return (
+        <PendingUsersTable
+          loadData={getPendingUsers.loadData}
+          isLoading={getPendingUsers.isLoading}
+          pendingUserData={getPendingUsers.pendingUsers}
+        />
+      );
+    case USER_MANAGEMENT_VIEWS.DEACTIVATED_USERS:
+      return (
+        <DeactivatedUsersTable
+          isLoading={getDeactivatedLdapUsersInCurrentUserDomain.isLoading}
+          users={getDeactivatedLdapUsersInCurrentUserDomain.users}
+          loadData={getDeactivatedLdapUsersInCurrentUserDomain.loadData}
+        />
+      );
+    case USER_MANAGEMENT_VIEWS.ACTIVE_USERS:
+      return (
+        <UsersTable
+          orgDomain={DataParsingHelper.parseNestedString(userData, "ldap.domain")}
+          isLoading={getLdapUsersInCurrentUserDomain.isLoading}
+          users={getLdapUsersInCurrentUserDomain.users}
+          loadData={getLdapUsersInCurrentUserDomain.loadData}
+        />
+      );
     }
   };
 

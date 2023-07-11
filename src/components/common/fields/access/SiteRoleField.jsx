@@ -18,12 +18,12 @@ export default function SiteRoleField(
   }
 
   return (
-   <SiteRoleFieldBase
-    className={className}
-    userData={userData}
-    showDescription={showDescription}
-    showExternalHelpDocumentationLink={showExternalHelpDocumentationLink}
-   />
+    <SiteRoleFieldBase
+      className={className}
+      userData={userData}
+      showDescription={showDescription}
+      showExternalHelpDocumentationLink={showExternalHelpDocumentationLink}
+    />
   );
 }
 

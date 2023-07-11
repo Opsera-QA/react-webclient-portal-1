@@ -40,23 +40,23 @@ export default function PolicyDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return (
-          <PolicySummaryPanel
-            policyModel={policyModel}
-            setPolicyModel={setPolicyModel}
-            setActiveTab={setActiveTab}
-          />
-        );
-      case "settings":
-        return (
-          <PolicyEditorPanel
-            policyModel={policyModel}
-            setPolicyModel={setPolicyModel}
-          />
-        );
-      default:
-        return null;
+    case "summary":
+      return (
+        <PolicySummaryPanel
+          policyModel={policyModel}
+          setPolicyModel={setPolicyModel}
+          setActiveTab={setActiveTab}
+        />
+      );
+    case "settings":
+      return (
+        <PolicyEditorPanel
+          policyModel={policyModel}
+          setPolicyModel={setPolicyModel}
+        />
+      );
+    default:
+      return null;
     }
   };
 

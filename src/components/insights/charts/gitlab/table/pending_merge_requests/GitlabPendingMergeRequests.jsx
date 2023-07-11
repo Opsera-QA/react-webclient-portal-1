@@ -103,13 +103,13 @@ function GitlabPendingMergeRequests({
     // This can be called only when there is an active tab selected in left panel or a valid search string.
     if(projectName || search){
       const response = await gitlabActions.gitlabPendingMergeRequests(
-          getAccessToken,
-          cancelSource,
-          kpiConfiguration,
-          dashboardTags,
-          filterDto,
-          projectName,
-          dashboardOrgs
+        getAccessToken,
+        cancelSource,
+        kpiConfiguration,
+        dashboardTags,
+        filterDto,
+        projectName,
+        dashboardOrgs
       );
 
       let dataObject = response?.data?.data?.gitlabPendingMergeRequests?.data;
@@ -117,8 +117,8 @@ function GitlabPendingMergeRequests({
         setMetrics(dataObject);
         let newFilterDto = filterDto;
         newFilterDto.setData(
-            "totalCount",
-            response?.data?.data?.gitlabPendingMergeRequests?.count,
+          "totalCount",
+          response?.data?.data?.gitlabPendingMergeRequests?.count,
         );
         setTableFilterDto({ ...newFilterDto });
       }

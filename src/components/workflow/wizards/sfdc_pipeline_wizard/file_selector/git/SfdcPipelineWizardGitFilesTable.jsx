@@ -11,7 +11,7 @@ import InlineSfdcComponentTypesFilter from "components/common/filters/sfdc/sfdc_
 import VanityTable from "components/common/table/VanityTable";
 import {getField} from "components/common/metadata/metadata-helpers";
 import SfdcPipelineWizardGitRulesInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardGitRulesInput";
+from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardGitRulesInput";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
 const SfdcPipelineWizardGitFilesTable = ({ pipelineWizardModel, setPipelineWizardModel, loadData, gitFiles, isLoading, gitFilesPaginationModel, setGitFilesPaginationModel, filePullCompleted }) => {

@@ -6,9 +6,9 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import mergeSyncTaskWizardActions
-  from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
+from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 import MergeSyncTaskWizardFileSelector
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/MergeSyncTaskWizardFileSelector";
+from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/MergeSyncTaskWizardFileSelector";
 
 const SalesforceToGitMergeSyncTaskWizardFileSelectionScreen = ({
   wizardModel,
@@ -70,7 +70,7 @@ const SalesforceToGitMergeSyncTaskWizardFileSelectionScreen = ({
         cancelSource,
         wizardModel,
       );
-      setTriggeredSourceFilePull(true);
+    setTriggeredSourceFilePull(true);
   };
 
   const getBody = () => {

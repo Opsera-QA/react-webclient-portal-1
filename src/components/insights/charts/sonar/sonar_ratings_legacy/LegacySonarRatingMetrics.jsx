@@ -5,15 +5,15 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import SonarRatingsChartHelpDocumentation
-  from "components/common/help/documentation/insights/charts/SonarRatingsV2ChartHelpDocumentation";
+from "components/common/help/documentation/insights/charts/SonarRatingsV2ChartHelpDocumentation";
 import LegacySonarRatingsMaintainabilityDataBlockContainer
-  from "components/insights/charts/sonar/sonar_ratings_legacy/data_blocks/LegacySonarRatingsMaintainabilityDataBlockContainer";
+from "components/insights/charts/sonar/sonar_ratings_legacy/data_blocks/LegacySonarRatingsMaintainabilityDataBlockContainer";
 import LegacySonarRatingsVulnerabilityDataBlockContainer
-  from "components/insights/charts/sonar/sonar_ratings_legacy/data_blocks/LegacySonarRatingsVulnerabilityDataBlockContainer";
+from "components/insights/charts/sonar/sonar_ratings_legacy/data_blocks/LegacySonarRatingsVulnerabilityDataBlockContainer";
 import ThreeStackedHorizontalMetricsContainer
-  from "components/common/metrics/data_blocks/horizontal/ThreeStackedHorizontalMetricsContainer";
+from "components/common/metrics/data_blocks/horizontal/ThreeStackedHorizontalMetricsContainer";
 import LegacySonarRatingsReliabilityDataBlockContainer
-  from "components/insights/charts/sonar/sonar_ratings_legacy/data_blocks/LegacySonarRatingsReliabilityDataBlockContainer";
+from "components/insights/charts/sonar/sonar_ratings_legacy/data_blocks/LegacySonarRatingsReliabilityDataBlockContainer";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 
 function LegacySonarRatingMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {

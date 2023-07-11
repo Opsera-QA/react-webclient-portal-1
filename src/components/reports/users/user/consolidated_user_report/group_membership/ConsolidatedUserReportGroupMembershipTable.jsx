@@ -66,13 +66,13 @@ function UserGroupMembershipReportTable({ groups, isLoading, loadData, userDisti
 
   return (
     <FilterContainer
-    loadData={loadData}
-    isLoading={isLoading}
-    body={getGroupMembershipTable()}
-    metaData={ldapGroupMetadata}
-    titleIcon={faUserFriends}
-    title={"Group Membership"}
-  />
+      loadData={loadData}
+      isLoading={isLoading}
+      body={getGroupMembershipTable()}
+      metaData={ldapGroupMetadata}
+      titleIcon={faUserFriends}
+      title={"Group Membership"}
+    />
   );
 }
 

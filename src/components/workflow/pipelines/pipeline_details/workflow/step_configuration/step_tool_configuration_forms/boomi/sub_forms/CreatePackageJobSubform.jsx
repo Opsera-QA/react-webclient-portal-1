@@ -18,46 +18,46 @@ function CreatePackageJobSubform({ model, setModel, plan, stepId }) {
 
   return (
     <>
-        <BoomiSCMToolTypeSelectInput
-            dataObject={model}
-            setDataObject={setModel}
-        />
-        <ProvarSourceControlManagementToolSelectInput
-            model={model}
-            setModel={setModel}
-            disabled={model.getData("service").length === 0}
-        />
-        <BoomiBitbucketWorkspaceInput
-            dataObject={model}
-            setDataObject={setModel}
-        />
-        <BoomiGitRepositoryInput
-            dataObject={model}
-            setDataObject={setModel}
-        />
-        <BoomiGitBranchInput
-            dataObject={model}
-            setDataObject={setModel}
-        />
-        <TextInputBase
-            dataObject={model}
-            setDataObject={setModel}
-            fieldName={"filePath"}
-        />
-        <BoomiSCMRepoFilesSelectInput
-            setDataObject={setModel}
-            dataObject={model}
-            disabled={
-                model && model.getData("filePath")
-                    ? model.getData("filePath").length === 0
-                    : true
-            }
-            tool_prop={
-                model && model.getData("boomiToolId")
-                    ? model.getData("boomiToolId")
-                    : ""
-            }
-        />
+      <BoomiSCMToolTypeSelectInput
+        dataObject={model}
+        setDataObject={setModel}
+      />
+      <ProvarSourceControlManagementToolSelectInput
+        model={model}
+        setModel={setModel}
+        disabled={model.getData("service").length === 0}
+      />
+      <BoomiBitbucketWorkspaceInput
+        dataObject={model}
+        setDataObject={setModel}
+      />
+      <BoomiGitRepositoryInput
+        dataObject={model}
+        setDataObject={setModel}
+      />
+      <BoomiGitBranchInput
+        dataObject={model}
+        setDataObject={setModel}
+      />
+      <TextInputBase
+        dataObject={model}
+        setDataObject={setModel}
+        fieldName={"filePath"}
+      />
+      <BoomiSCMRepoFilesSelectInput
+        setDataObject={setModel}
+        dataObject={model}
+        disabled={
+          model && model.getData("filePath")
+            ? model.getData("filePath").length === 0
+            : true
+        }
+        tool_prop={
+          model && model.getData("boomiToolId")
+            ? model.getData("boomiToolId")
+            : ""
+        }
+      />
     </>
   );
 }

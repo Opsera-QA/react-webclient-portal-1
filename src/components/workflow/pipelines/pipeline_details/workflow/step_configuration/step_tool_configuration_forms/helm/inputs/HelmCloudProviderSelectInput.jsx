@@ -58,7 +58,7 @@ function HelmCloudProviderSelectInput({dataObject, setDataObject, disabled, fiel
       valueField="value"
       textField="name"
       disabled={disabled}
-  />
+    />
   );
 }
 

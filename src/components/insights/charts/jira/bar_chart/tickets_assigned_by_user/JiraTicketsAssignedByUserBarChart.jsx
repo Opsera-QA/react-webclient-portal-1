@@ -9,7 +9,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColorByData, assignStandardColors, capitalizeLegend,
-         adjustBarWidth } from '../../../charts-views';
+  adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 
 function JiraTicketsAssignedByUserBarChart( { kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis } ) {
@@ -75,20 +75,20 @@ function JiraTicketsAssignedByUserBarChart( { kpiConfiguration, setKpiConfigurat
 
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
-            <ResponsiveBar
-              data={metrics}
-              {...defaultConfig("Users", "Number of Tickets Assigned", 
-                      true, true, "subString", "wholeNumbers")}
-              {...config(getColorByData)}
-              {...adjustBarWidth(metrics)}
-              onClick={() => setShowModal(true)}
-              tooltip={({ indexValue, value, color }) => <ChartTooltip 
-                              titles = {["User", "Number of Tickets"]}
-                              values = {[indexValue, value]}
-                              style = {false}
-                              color = {color} />}
-            />
-        </div>
+        <ResponsiveBar
+          data={metrics}
+          {...defaultConfig("Users", "Number of Tickets Assigned", 
+            true, true, "subString", "wholeNumbers")}
+          {...config(getColorByData)}
+          {...adjustBarWidth(metrics)}
+          onClick={() => setShowModal(true)}
+          tooltip={({ indexValue, value, color }) => <ChartTooltip 
+            titles = {["User", "Number of Tickets"]}
+            values = {[indexValue, value]}
+            style = {false}
+            color = {color} />}
+        />
+      </div>
     );
   };
 

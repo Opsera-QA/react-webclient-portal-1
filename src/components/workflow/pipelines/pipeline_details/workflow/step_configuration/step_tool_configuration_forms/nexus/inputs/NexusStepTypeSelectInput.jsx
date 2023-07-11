@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 const NEXUS_STEP_TYPES = [
-{
-  name: "Push Artifacts",
-  value: "push",
-}
+  {
+    name: "Push Artifacts",
+    value: "push",
+  }
 // {
 //   name: "Pull Artifact",
 //   value: "pull",

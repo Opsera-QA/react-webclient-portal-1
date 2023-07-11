@@ -2,11 +2,11 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {faUsers} from "@fortawesome/pro-light-svg-icons";
 import LdapOrganizationSummaryPanel
-  from "components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationSummaryPanel";
+from "components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationSummaryPanel";
 import LdapOrganizationAccountsTable
-  from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountsTable";
+from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountsTable";
 import LdapOrganizationEditorPanel
-  from "components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationEditorPanel";
+from "components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationEditorPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import CustomTab from "components/common/tabs/CustomTab";
@@ -28,31 +28,31 @@ function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationDat
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return (
-          <LdapOrganizationSummaryPanel
-            ldapOrganizationData={ldapOrganizationData}
-            setActiveTab={setActiveTab}
-          />
-        );
-      case "accounts":
-        return (
-          <LdapOrganizationAccountsTable
-            className={"mt-2"}
-            ldapOrganizationAccounts={organizationAccounts}
-            ldapOrganizationData={ldapOrganizationData}
-            loadData={loadData}
-          />
-        );
-      case "settings":
-        return (
-          <LdapOrganizationEditorPanel
-            handleClose={toggleSummaryPanel}
-            ldapOrganizationData={ldapOrganizationData}
-          />
-        );
-      default:
-        return null;
+    case "summary":
+      return (
+        <LdapOrganizationSummaryPanel
+          ldapOrganizationData={ldapOrganizationData}
+          setActiveTab={setActiveTab}
+        />
+      );
+    case "accounts":
+      return (
+        <LdapOrganizationAccountsTable
+          className={"mt-2"}
+          ldapOrganizationAccounts={organizationAccounts}
+          ldapOrganizationData={ldapOrganizationData}
+          loadData={loadData}
+        />
+      );
+    case "settings":
+      return (
+        <LdapOrganizationEditorPanel
+          handleClose={toggleSummaryPanel}
+          ldapOrganizationData={ldapOrganizationData}
+        />
+      );
+    default:
+      return null;
     }
   };
 

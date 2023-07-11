@@ -6,9 +6,9 @@ import Model from "core/data_model/model";
 import {informaticaRunParameterConfigurationMetadata} from "components/workflow/run_assistants/informatica/configuration_selection_screen/informaticaRunParameterConfiguration.metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import InformaticaIntelligentCloudServiceTypeMultiSelectInputBase
-  from "components/common/list_of_values_input/tools/informatica/iics_types/InformaticaIntelligentCloudServiceTypeMultiSelectInputBase";
+from "components/common/list_of_values_input/tools/informatica/iics_types/InformaticaIntelligentCloudServiceTypeMultiSelectInputBase";
 import InformaticaRunParameterUpdateTimeDateTimeInput
-  from "components/workflow/run_assistants/informatica/configuration_selection_screen/inputs/InformaticaRunParameterUpdateTimeDateTimeInput";
+from "components/workflow/run_assistants/informatica/configuration_selection_screen/inputs/InformaticaRunParameterUpdateTimeDateTimeInput";
 
 const InformaticaRunAssistantConfigurationEditorPanel = (
   {

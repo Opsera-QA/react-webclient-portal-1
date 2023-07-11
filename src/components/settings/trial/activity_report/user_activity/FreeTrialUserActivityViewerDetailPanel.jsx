@@ -5,9 +5,9 @@ import DetailTabPanelContainer from "components/common/panels/detail_view/Detail
 import CustomTab from "components/common/tabs/CustomTab";
 import { faDraftingCompass, faTools } from "@fortawesome/pro-light-svg-icons";
 import FreeTrialUserActivityReportWorkflowsTable
-  from "components/settings/trial/activity_report/user_activity/workflows/FreeTrialUserActivityReportWorkflowsTable";
+from "components/settings/trial/activity_report/user_activity/workflows/FreeTrialUserActivityReportWorkflowsTable";
 import FreeTrialUserActivityReportToolsTable
-  from "components/settings/trial/activity_report/user_activity/tools/FreeTrialUserActivityReportToolsTable";
+from "components/settings/trial/activity_report/user_activity/tools/FreeTrialUserActivityReportToolsTable";
 
 export default function FreeTrialUserActivityViewerDetailPanel(
   {
@@ -49,28 +49,28 @@ export default function FreeTrialUserActivityViewerDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "workflows":
-        return (
-          <FreeTrialUserActivityReportWorkflowsTable
-            activityReportFilterModel={activityReportFilterModel}
-            setActivityReportFilterModel={setActivityReportFilterModel}
-            activityReportWorkflows={activityReportWorkflows}
-            loadData={loadData}
-            isLoading={isLoading}
-            userData={userData}
-          />
-        );
-      case "tools":
-        return (
-          <FreeTrialUserActivityReportToolsTable
-            isLoading={isLoading}
-            loadData={loadData}
-            tools={tools}
-            userData={userData}
-          />
-        );
-      default:
-        return null;
+    case "workflows":
+      return (
+        <FreeTrialUserActivityReportWorkflowsTable
+          activityReportFilterModel={activityReportFilterModel}
+          setActivityReportFilterModel={setActivityReportFilterModel}
+          activityReportWorkflows={activityReportWorkflows}
+          loadData={loadData}
+          isLoading={isLoading}
+          userData={userData}
+        />
+      );
+    case "tools":
+      return (
+        <FreeTrialUserActivityReportToolsTable
+          isLoading={isLoading}
+          loadData={loadData}
+          tools={tools}
+          userData={userData}
+        />
+      );
+    default:
+      return null;
     }
   };
 

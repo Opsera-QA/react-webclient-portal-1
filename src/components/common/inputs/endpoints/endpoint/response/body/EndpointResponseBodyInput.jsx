@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import EndpointResponseBodyTypeSelectInput
-  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyTypeSelectInput";
+from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyTypeSelectInput";
 import EndpointResponseBodyInputBase
-  from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyInputBase";
+from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyInputBase";
 
 function EndpointResponseBodyInput(
   {

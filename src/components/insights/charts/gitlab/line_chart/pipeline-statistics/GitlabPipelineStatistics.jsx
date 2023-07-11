@@ -107,7 +107,7 @@ function GitlabPipelineStatistics({
     const dataPoint = dataPointHelpers.getDataPoint(
       dataPoints,
       constants.SUPPORTED_DATA_POINT_IDENTIFIERS
-          .PIPELINE_STATISTICS_DATA_POINT,
+        .PIPELINE_STATISTICS_DATA_POINT,
     );
     setPipelineStatsDataPoint(dataPoint);
     setFailurePercentDataPoint(dataPointHelpers.getDataPoint(
@@ -181,7 +181,7 @@ function GitlabPipelineStatistics({
                 }
                 dataPoint={pipelineStatsDataPoint}
                 trend={getTrend(metricData?.pipeline?.successPercentage,
-                    metricData?.pipeline?.previousSuccessPercentage)}
+                  metricData?.pipeline?.previousSuccessPercentage)}
                 getTrendIcon={getTrendIcon}
                 topText={"Success"}
                 bottomText={"Prev: "}
@@ -212,7 +212,7 @@ function GitlabPipelineStatistics({
                   metricData?.pipeline?.previousSkippedPercentage
                 }
                 trend={getReverseTrend(metricData?.pipeline?.skippedPercentage,
-                    metricData?.pipeline?.previousSkippedPercentage)}
+                  metricData?.pipeline?.previousSkippedPercentage)}
                 getTrendIcon={getReverseTrendIcon}
                 topText={"Skipped"}
                 bottomText={"Prev: "}

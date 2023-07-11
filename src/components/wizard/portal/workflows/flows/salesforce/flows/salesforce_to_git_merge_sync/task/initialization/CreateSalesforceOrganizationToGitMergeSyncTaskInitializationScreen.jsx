@@ -4,7 +4,7 @@ import {
   salesforceWorkflowFlowConstants
 } from "components/wizard/portal/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
 import CreateWorkflowWizardTaskInitializationScreen
-  from "components/wizard/portal/workflows/flows/tasks/initialization/CreateWorkflowWizardTaskInitializationScreen";
+from "components/wizard/portal/workflows/flows/tasks/initialization/CreateWorkflowWizardTaskInitializationScreen";
 import {
   taskTemplateIdentifierConstants
 } from "components/admin/task_templates/taskTemplateIdentifier.constants";
@@ -26,7 +26,7 @@ export default function CreateSalesforceOrganizationToGitMergeSyncTaskInitializa
   }) {
 
   const setTaskFunction = (task) => {
-      const updatedTask = SalesforceTaskHelper.configureSalesforceToGitMergeSyncTask(
+    const updatedTask = SalesforceTaskHelper.configureSalesforceToGitMergeSyncTask(
       task,
       salesforceWorkflowFlowConstants.SALESFORCE_FLOW_OPTIONS.SALESFORCE_TO_GIT_MERGE_SYNC,
       salesforceToolId,

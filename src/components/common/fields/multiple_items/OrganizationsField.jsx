@@ -30,11 +30,11 @@ export default function OrganizationsField(
             {parsedIdArray.map((organization, i) => {
               return (
                 <span key={i} className={`mx-1 mb-1 badge badge-light item-badge`}>
-                    <IconBase
-                      icon={faSitemap}
-                      isLoading={isLoading}
-                      className={"mr-1"}
-                    />
+                  <IconBase
+                    icon={faSitemap}
+                    isLoading={isLoading}
+                    className={"mr-1"}
+                  />
                   {`${organization}`}
                 </span>
               );

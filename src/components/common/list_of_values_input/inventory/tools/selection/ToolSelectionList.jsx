@@ -157,30 +157,30 @@ export default function ToolSelectionList(
         }}
         className={"w-100 p-3"}
       >
-          <AddAllButtonBase
-            onClickFunction={addAllTools}
-            itemCount={unselectedToolCount}
-            buttonSize={"sm"}
-            buttonClassName={"w-100"}
-            className={"my-2"}
-            disabled={isLoading}
-          />
-          <AddSelectedButtonBase
-            onClickFunction={addSelectedTools}
-            itemCount={selectedTools.length}
-            buttonSize={"sm"}
-            buttonClassName={"w-100"}
-            className={"my-2"}
-            disabled={isLoading}
-          />
-          <AddShownButtonBase
-            onClickFunction={addAllShownTools}
-            itemCount={filteredTools.length}
-            buttonSize={"sm"}
-            buttonClassName={"w-100"}
-            className={"my-2"}
-            disabled={isLoading}
-          />
+        <AddAllButtonBase
+          onClickFunction={addAllTools}
+          itemCount={unselectedToolCount}
+          buttonSize={"sm"}
+          buttonClassName={"w-100"}
+          className={"my-2"}
+          disabled={isLoading}
+        />
+        <AddSelectedButtonBase
+          onClickFunction={addSelectedTools}
+          itemCount={selectedTools.length}
+          buttonSize={"sm"}
+          buttonClassName={"w-100"}
+          className={"my-2"}
+          disabled={isLoading}
+        />
+        <AddShownButtonBase
+          onClickFunction={addAllShownTools}
+          itemCount={filteredTools.length}
+          buttonSize={"sm"}
+          buttonClassName={"w-100"}
+          className={"my-2"}
+          disabled={isLoading}
+        />
       </div>
     );
   };

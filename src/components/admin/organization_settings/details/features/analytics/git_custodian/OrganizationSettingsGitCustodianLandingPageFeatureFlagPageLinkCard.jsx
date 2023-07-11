@@ -1,9 +1,9 @@
 import React from "react";
 import PropType from "prop-types";
 import OrganizationSettingsFeatureFlagsPageLinkCardBase
-  from "components/admin/organization_settings/details/features/OrganizationSettingsFeatureFlagsPageLinkCardBase";
+from "components/admin/organization_settings/details/features/OrganizationSettingsFeatureFlagsPageLinkCardBase";
 import OrganizationSettingsInactiveGitCustodianLandingPageFeatureFlagPageLinkCard
-  from "components/admin/organization_settings/details/features/analytics/git_custodian/OrganizationSettingsInactiveGitCustodianLandingPageFeatureFlagPageLinkCard";
+from "components/admin/organization_settings/details/features/analytics/git_custodian/OrganizationSettingsInactiveGitCustodianLandingPageFeatureFlagPageLinkCard";
 
 export default function OrganizationSettingsGitCustodianLandingPageFeatureFlagPageLinkCard(
   {

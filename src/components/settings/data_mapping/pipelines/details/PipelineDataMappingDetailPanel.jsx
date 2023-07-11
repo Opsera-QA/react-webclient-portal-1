@@ -5,9 +5,9 @@ import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import PipelineDataMappingSummaryPanel
-  from "components/settings/data_mapping/pipelines/details/PipelineDataMappingSummaryPanel";
+from "components/settings/data_mapping/pipelines/details/PipelineDataMappingSummaryPanel";
 import PipelineDataMappingEditorPanel
-  from "components/settings/data_mapping/pipelines/details/PipelineDataMappingEditorPanel";
+from "components/settings/data_mapping/pipelines/details/PipelineDataMappingEditorPanel";
 
 function PipelineDataMappingDetailPanel(
   {
@@ -27,23 +27,23 @@ function PipelineDataMappingDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return (
-          <PipelineDataMappingSummaryPanel
-            pipelineDataMappingModel={pipelineDataMappingModel}
-            setActiveTab={setActiveTab}
-          />
-        );
-      case "settings":
-        return (
-          <PipelineDataMappingEditorPanel
-            pipelineDataMappingModel={pipelineDataMappingModel}
-            setPipelineDataMappingModel={setPipelineDataMappingModel}
-            handleClose={toggleSummaryPanel}
-          />
-        );
-      default:
-        return null;
+    case "summary":
+      return (
+        <PipelineDataMappingSummaryPanel
+          pipelineDataMappingModel={pipelineDataMappingModel}
+          setActiveTab={setActiveTab}
+        />
+      );
+    case "settings":
+      return (
+        <PipelineDataMappingEditorPanel
+          pipelineDataMappingModel={pipelineDataMappingModel}
+          setPipelineDataMappingModel={setPipelineDataMappingModel}
+          handleClose={toggleSummaryPanel}
+        />
+      );
+    default:
+      return null;
     }
   };
 

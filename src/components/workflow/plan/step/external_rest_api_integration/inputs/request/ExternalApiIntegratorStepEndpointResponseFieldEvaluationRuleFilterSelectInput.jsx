@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import EndpointResponseFieldEvaluationRuleFilterSelectInput
-  from "components/common/list_of_values_input/tools/extermal_api_integrator/endpoints/rules/field_evaluation/EndpointResponseFieldEvaluationRuleFilterSelectInput";
+from "components/common/list_of_values_input/tools/extermal_api_integrator/endpoints/rules/field_evaluation/EndpointResponseFieldEvaluationRuleFilterSelectInput";
 import {dataParsingHelper} from "components/common/helpers/data/dataParsing.helper";
 
 function ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput(

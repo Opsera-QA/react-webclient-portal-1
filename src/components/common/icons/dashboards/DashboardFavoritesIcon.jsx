@@ -31,8 +31,8 @@ function DashboardFavoritesIcon({dashboard, dashboardsActions}) {
 }
 
 DashboardFavoritesIcon.propTypes = {
-    dashboard: PropTypes.object,
-    dashboardsActions: PropTypes.object,
-  };
+  dashboard: PropTypes.object,
+  dashboardsActions: PropTypes.object,
+};
 
 export default DashboardFavoritesIcon;

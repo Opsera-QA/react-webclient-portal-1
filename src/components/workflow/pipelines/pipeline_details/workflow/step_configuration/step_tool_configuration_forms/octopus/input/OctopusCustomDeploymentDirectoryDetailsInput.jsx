@@ -17,7 +17,7 @@ function OctopusCustomDeploymentDirectoryDetailsInput({dataObject, setDataObject
 
   const getSupportingInputs = () => {
     if(!dataObject.getData(fieldName)){
-        return null;
+      return null;
     }
     return (
       <>
@@ -42,9 +42,9 @@ function OctopusCustomDeploymentDirectoryDetailsInput({dataObject, setDataObject
   return (
     <>      
       <BooleanToggleInput disabled={disabled} fieldName={field.id}
-          dataObject={dataObject}
-          setDataObject={setDataObject}
-          setDataFunction={setDataFunction}
+        dataObject={dataObject}
+        setDataObject={setDataObject}
+        setDataFunction={setDataFunction}
       />
       {getSupportingInputs()}
     </>

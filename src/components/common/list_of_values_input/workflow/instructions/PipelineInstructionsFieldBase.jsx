@@ -11,20 +11,20 @@ import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import { faPencilAlt } from "@fortawesome/pro-light-svg-icons";
 import InfoContainer from "components/common/containers/InfoContainer";
 import PipelineInstructionsInlineInput
-  from "components/common/list_of_values_input/workflow/instructions/inline/PipelineInstructionsInlineInput";
+from "components/common/list_of_values_input/workflow/instructions/inline/PipelineInstructionsInlineInput";
 import PipelineInstructionsTypeField
-  from "components/common/list_of_values_input/workflow/instructions/type/PipelineInstructionsTypeField";
+from "components/common/list_of_values_input/workflow/instructions/type/PipelineInstructionsTypeField";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useGetPipelineInstructionsAttributesModel
-  from "components/workflow/instructions/hooks/attributes/useGetPipelineInstructionsAttributesModel";
+from "components/workflow/instructions/hooks/attributes/useGetPipelineInstructionsAttributesModel";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import PipelineInstructionsStatusField
-  from "components/common/list_of_values_input/workflow/instructions/status/PipelineInstructionsStatusField";
+from "components/common/list_of_values_input/workflow/instructions/status/PipelineInstructionsStatusField";
 
 export default function PipelineInstructionsFieldBase(
   {

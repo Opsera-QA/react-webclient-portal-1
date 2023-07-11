@@ -143,8 +143,8 @@ function CodeView_Executive({ persona, date, index }) {
               ? "danger"
               : vulnerabilityCounts.data[0].count[item].key === "Medium" ||
                 vulnerabilityCounts.data[0].count[item].key === "Low"
-              ? "warning"
-              : null,
+                ? "warning"
+                : null,
         });
       }
     }

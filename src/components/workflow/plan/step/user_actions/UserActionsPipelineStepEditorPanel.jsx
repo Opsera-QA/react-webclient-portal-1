@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { faEnvelope } from "@fortawesome/pro-light-svg-icons";
 import modelHelpers from "components/common/model/modelHelpers";
 import approvalGatePipelineStepThresholdMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/approval_gate/approval-gate-pipeline-step-threshold-metadata";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/approval_gate/approval-gate-pipeline-step-threshold-metadata";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import IconBase from "components/common/icons/IconBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
@@ -11,13 +11,13 @@ import {
   userActionsPipelineStepMetadata
 } from "components/workflow/plan/step/user_actions/userActionsPipelineStep.metadata";
 import PipelineInstructionsSelectInput
-  from "components/common/list_of_values_input/workflow/instructions/PipelineInstructionsSelectInput";
+from "components/common/list_of_values_input/workflow/instructions/PipelineInstructionsSelectInput";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import pipelineActions from "components/workflow/pipeline-actions";
 import { Col, Row } from "react-bootstrap";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import PipelineInstructionsField
-  from "components/common/list_of_values_input/workflow/instructions/PipelineInstructionsField";
+from "components/common/list_of_values_input/workflow/instructions/PipelineInstructionsField";
 
 export default function UserActionsPipelineStepEditorPanel(
   {

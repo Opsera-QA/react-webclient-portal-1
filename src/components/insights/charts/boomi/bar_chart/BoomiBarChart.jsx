@@ -26,9 +26,9 @@ import { ResponsiveLine } from "@nivo/line";
 import chartsActions from "../../charts-actions";
 import BoomiActionableTabOverlay from "../actionable_insights/BoomiActionableTabOverlay";
 import AutomationPercentageChartHelpDocumentation
-  from "../../../../common/help/documentation/insights/charts/AutomationPercentageChartHelpDocumentation";
+from "../../../../common/help/documentation/insights/charts/AutomationPercentageChartHelpDocumentation";
 import BoomiChartHelpDocumentation
-  from "../../../../common/help/documentation/insights/charts/BoomiChartHelpDocumentation";
+from "../../../../common/help/documentation/insights/charts/BoomiChartHelpDocumentation";
 import BoomiAverageDurationDataBlock from "../data_blocks/BoomiAverageDurationDataBlock";
 
 function BoomiBarChart({
@@ -89,7 +89,7 @@ function BoomiBarChart({
           ]?.value;
       setGoalsData(goals);
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "boomiChartandBlocksData", kpiConfiguration, dashboardTags, null, null, dashboardOrgs);
-        let dataObject = response?.data?.data[0]?.ChartData?.boomiDeploymentLineChartFrequency?.data,
+      let dataObject = response?.data?.data[0]?.ChartData?.boomiDeploymentLineChartFrequency?.data,
         datablock = response?.data?.data[0]?.DataBlockStats?.boomiTrendBlockStatistics?.data[0]?.statisticsData;
 
       setGoalsData(goals);
@@ -116,10 +116,10 @@ function BoomiBarChart({
 
   const onRowSelect = () => {
     toastContext.showOverlayPanel(
-        <BoomiActionableTabOverlay
-            kpiConfiguration={kpiConfiguration}
-            dashboardData={dashboardData}
-        />
+      <BoomiActionableTabOverlay
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+      />
     );
   };
  
@@ -143,29 +143,29 @@ function BoomiBarChart({
 
     const getIcon = (severity) => {
       switch (severity) {
-        case "green":
-          return faArrowCircleUp;
-        case "red":
-          return faArrowCircleDown;
-        case "neutral":
-          return faMinusCircle;
-        default:
-          break;
+      case "green":
+        return faArrowCircleUp;
+      case "red":
+        return faArrowCircleDown;
+      case "neutral":
+        return faMinusCircle;
+      default:
+        break;
       }
     };
   
     const getIconColor = (severity) => {
       switch (severity) {
-        case "red":
-          return "red";
-        case "green":
-          return "green";
-        case "neutral":
-          return "light-gray-text-secondary";
-        case "-":
-          return "black";
-        default:
-          break;
+      case "red":
+        return "red";
+      case "green":
+        return "green";
+      case "neutral":
+        return "light-gray-text-secondary";
+      case "-":
+        return "black";
+      default:
+        break;
       }
     };
 
@@ -198,11 +198,11 @@ function BoomiBarChart({
         <Col>
           <DataPointVisibilityWrapper dataPoint={boomiFrequencyPercentageDataPoint} >
             <BoomiAverageDurationDataBlock
-                data={dataBlockValues?.totalDeployments}
-                dataPoint={boomiFrequencyPercentageDataPoint}
-                lastScore={ dataBlockValues?.prevDeployments}
-                icon={getIcon(dataBlockValues?.deploymentsTrend?.trend)}
-                className={getIconColor(dataBlockValues?.deploymentsTrend?.trend)}
+              data={dataBlockValues?.totalDeployments}
+              dataPoint={boomiFrequencyPercentageDataPoint}
+              lastScore={ dataBlockValues?.prevDeployments}
+              icon={getIcon(dataBlockValues?.deploymentsTrend?.trend)}
+              className={getIconColor(dataBlockValues?.deploymentsTrend?.trend)}
             />
           </DataPointVisibilityWrapper>
         </Col>
@@ -225,9 +225,9 @@ function BoomiBarChart({
               {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
               {...adjustBarWidth(metrics)}
               tooltip={({point, color}) => <ChartTooltip
-                  titles = {["Date", "Deployments"]}
-                  values = {[String(point.data.xFormatted), point.data.y]}
-                  color = {color} />}
+                titles = {["Date", "Deployments"]}
+                values = {[String(point.data.xFormatted), point.data.y]}
+                color = {color} />}
             />
           </div>
         </Col>
@@ -262,7 +262,7 @@ function BoomiBarChart({
         showSettingsToggle={showSettingsToggle}
         launchActionableInsightsFunction={onRowSelect}
         chartHelpComponent={(closeHelpPanel) => (
-            <BoomiChartHelpDocumentation closeHelpPanel={closeHelpPanel} />
+          <BoomiChartHelpDocumentation closeHelpPanel={closeHelpPanel} />
         )}
       />
       <ModalLogs

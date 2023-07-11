@@ -10,7 +10,7 @@ import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 import MembersPanel from "components/common/inputs/user/membership/manager/user_panel/MembersPanel";
 import NonMembersPanel
-  from "components/common/inputs/user/membership/manager/user_panel/NonMembersPanel";
+from "components/common/inputs/user/membership/manager/user_panel/NonMembersPanel";
 import {faSearch} from "@fortawesome/pro-light-svg-icons";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";

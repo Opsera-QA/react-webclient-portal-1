@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase
-  from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
 function ArgoRepositorySourceControlToolSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
@@ -16,16 +16,16 @@ function ArgoRepositorySourceControlToolSelectInput({model, setModel, disabled})
   };
 
   return (
-     <RoleRestrictedToolByIdentifierInputBase
-       toolIdentifier={model?.getData("service")}
-       toolFriendlyName={"Source Control Tool"}
-       fieldName={"gitToolId"}
-       configurationRequired={true}
-       model={model}
-       setModel={setModel}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-     />
+    <RoleRestrictedToolByIdentifierInputBase
+      toolIdentifier={model?.getData("service")}
+      toolFriendlyName={"Source Control Tool"}
+      fieldName={"gitToolId"}
+      configurationRequired={true}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+    />
   );
 }
 

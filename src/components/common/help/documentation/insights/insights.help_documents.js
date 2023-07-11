@@ -16,8 +16,8 @@ export const INSIGHTS_HELP_DOCUMENTS = {
 
 const getInsightsHelpDocumentTree = () => {
   const insightsDocumentTreeItems = [
-      ...INSIGHTS_CHARTS_HELP_DOCUMENT_TREE,
-      ...INSIGHTS_SYNOPSIS_HELP_DOCUMENT_TREE,
+    ...INSIGHTS_CHARTS_HELP_DOCUMENT_TREE,
+    ...INSIGHTS_SYNOPSIS_HELP_DOCUMENT_TREE,
   ];
 
   return [getBaseTreeItem("insights", "Insights", insightsDocumentTreeItems, "fa-chart-network")];

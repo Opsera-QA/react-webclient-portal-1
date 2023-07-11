@@ -6,16 +6,16 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 
 function SfdcPipelineWizardTranslationToggleInput({ fieldName, pipelineWizardModel, setPipelineWizardModel, disabled}) {
   return (
-      <Row className={"py-1"}>
-        <Col sm={12} md={4}>
-          <BooleanToggleInput
-            disabled={disabled} 
-            fieldName={fieldName}
-            dataObject={pipelineWizardModel}
-            setDataObject={setPipelineWizardModel}
-          />
-        </Col>
-      </Row>
+    <Row className={"py-1"}>
+      <Col sm={12} md={4}>
+        <BooleanToggleInput
+          disabled={disabled} 
+          fieldName={fieldName}
+          dataObject={pipelineWizardModel}
+          setDataObject={setPipelineWizardModel}
+        />
+      </Col>
+    </Row>
   );
 }
 

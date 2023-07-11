@@ -4,15 +4,15 @@ import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/
 import { faFileAlt } from "@fortawesome/pro-light-svg-icons";
 
 function ProvarSummaryLogVerticalTabContainer() {
-    return (
-        <VanitySetVerticalTabContainer>
-            <VanitySetVerticalTab
-                icon={faFileAlt}
-                tabText={"Overview"}
-                tabName={"summary"}
-            />
-        </VanitySetVerticalTabContainer>
-    );
+  return (
+    <VanitySetVerticalTabContainer>
+      <VanitySetVerticalTab
+        icon={faFileAlt}
+        tabText={"Overview"}
+        tabName={"summary"}
+      />
+    </VanitySetVerticalTabContainer>
+  );
 }
 
 export default ProvarSummaryLogVerticalTabContainer;

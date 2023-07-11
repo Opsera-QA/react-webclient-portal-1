@@ -12,9 +12,9 @@ function DtoPropertiesInput({dataObject, setDataObject, fieldName}) {
 
   useEffect(() => {
     //When it's a new form, defaultValue will be undefined
-      if(Object.keys(dataObject.getData(fieldName)).length > 0) {
-        prePopulateData();
-      }
+    if(Object.keys(dataObject.getData(fieldName)).length > 0) {
+      prePopulateData();
+    }
   }, []);
 
   const prePopulateData = () => {

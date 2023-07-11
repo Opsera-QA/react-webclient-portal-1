@@ -6,7 +6,7 @@ import {policyHelper} from "components/settings/organization_settings/policies/p
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
 import useGetPolicyModel from "hooks/settings/organization_settings/policies/useGetPolicyModel";
 import PolicyParametersSummaryPanel
-  from "components/settings/organization_settings/policies/details/PolicyParametersSummaryPanel";
+from "components/settings/organization_settings/policies/details/PolicyParametersSummaryPanel";
 
 export default function PolicyManagementPageLinkCardBase(
   {

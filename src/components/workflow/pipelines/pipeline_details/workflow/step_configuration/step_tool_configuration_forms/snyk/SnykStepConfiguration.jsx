@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
 import SnykToolSelectInput from "./inputs/SnykToolSelectInput";
@@ -17,7 +17,7 @@ import GitBranchInput from "components/common/list_of_values_input/tools/git/Git
 import SnykScmRepositorySelectInput from "./inputs/SnykScmRepositorySelectInput";
 import SnykBitbucketWorkspaceInput from "./inputs/SnykBitbucketWorkspaceInput";
 import SnykPipelineStepLanguageSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snyk/inputs/SnykPipelineStepLanguageSelectInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snyk/inputs/SnykPipelineStepLanguageSelectInput";
 import SourceRepositoryTypeSelectInput from "../sap_cpq/inputs/SourceRepositoryTypeSelectInput";
  
 function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
@@ -72,49 +72,49 @@ function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
         setModel={setSnykModel}
       />
       <SourceRepositoryTypeSelectInput
-          fieldName={"service"}
-          model={snykModel}
-          setModel={setSnykModel}
+        fieldName={"service"}
+        model={snykModel}
+        setModel={setSnykModel}
       />
       <SnykScmToolSelectInput
-          model={snykModel}
-          setModel={setSnykModel}
-          service={snykModel.getData("service")}
+        model={snykModel}
+        setModel={setSnykModel}
+        service={snykModel.getData("service")}
       />
       <SnykBitbucketWorkspaceInput
-          dataObject={snykModel}
-          setDataObject={setSnykModel}
+        dataObject={snykModel}
+        setDataObject={setSnykModel}
       />
       <SnykScmRepositorySelectInput
-          dataObject={snykModel}
-          setDataObject={setSnykModel}
+        dataObject={snykModel}
+        setDataObject={setSnykModel}
       />
       <GitBranchInput
-          fieldName={"gitBranch"}
-          service={snykModel.getData("service")}
-          gitToolId={snykModel.getData("gitToolId")}
-          workspace={snykModel.getData("workspace")}
-          dataObject={snykModel}
-          setDataObject={setSnykModel}
-          repoId={snykModel.getData("repoId")}
+        fieldName={"gitBranch"}
+        service={snykModel.getData("service")}
+        gitToolId={snykModel.getData("gitToolId")}
+        workspace={snykModel.getData("workspace")}
+        dataObject={snykModel}
+        setDataObject={setSnykModel}
+        repoId={snykModel.getData("repoId")}
       />
       <SnykPipelineStepLanguageSelectInput
-          fieldName={"languageLevelId"}
-          model={snykModel}
-          setModel={setSnykModel}
+        fieldName={"languageLevelId"}
+        model={snykModel}
+        setModel={setSnykModel}
       />
       <SnykLanguageVersionSelectInput
-          fieldName={"version"}
-          model={snykModel}
-          setModel={setSnykModel}
-          language={snykModel.getData("languageLevelId")}
+        fieldName={"version"}
+        model={snykModel}
+        setModel={setSnykModel}
+        language={snykModel.getData("languageLevelId")}
       />
       <SnykPackageManagerSelectInput
-          fieldName={"packagerNameOrBuildTool"}
-          model={snykModel}
-          setModel={setSnykModel}
-          language={snykModel.getData("languageLevelId")}
-          version={snykModel?.getData("version")}
+        fieldName={"packagerNameOrBuildTool"}
+        model={snykModel}
+        setModel={setSnykModel}
+        language={snykModel.getData("languageLevelId")}
+        version={snykModel?.getData("version")}
       />
       <BooleanToggleInput
         fieldName={"multiModuleProject"}
@@ -122,9 +122,9 @@ function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
         setDataObject={setSnykModel}
       />
       <BooleanToggleInput
-          dataObject={snykModel}
-          setDataObject={setSnykModel}
-          fieldName={"clientSideThreshold"}
+        dataObject={snykModel}
+        setDataObject={setSnykModel}
+        fieldName={"clientSideThreshold"}
       />
       <SnykVulnerabilityThresholdInput 
         fieldName={"thresholdVulnerability"}

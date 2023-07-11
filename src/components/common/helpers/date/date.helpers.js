@@ -208,18 +208,18 @@ export function smartTimeFormatter(value, timeFormat) {
   }
 
   switch (timeFormat) {
-    case SUPPORTED_SMART_TIME_FORMATS.SECONDS:
-      return smartSecondsFormatter(value);
-    case SUPPORTED_SMART_TIME_FORMATS.MINUTES:
-      return smartMinutesFormatter(value);
-    case SUPPORTED_SMART_TIME_FORMATS.HOURS:
-      return smartHoursFormatter(value);
-    case SUPPORTED_SMART_TIME_FORMATS.DAYS:
-      return smartDaysFormatter(value);
-    case SUPPORTED_SMART_TIME_FORMATS.MONTHS:
-      return smartMonthsFormatter(value);
-    default:
-      return "Unsupported Time Format";
+  case SUPPORTED_SMART_TIME_FORMATS.SECONDS:
+    return smartSecondsFormatter(value);
+  case SUPPORTED_SMART_TIME_FORMATS.MINUTES:
+    return smartMinutesFormatter(value);
+  case SUPPORTED_SMART_TIME_FORMATS.HOURS:
+    return smartHoursFormatter(value);
+  case SUPPORTED_SMART_TIME_FORMATS.DAYS:
+    return smartDaysFormatter(value);
+  case SUPPORTED_SMART_TIME_FORMATS.MONTHS:
+    return smartMonthsFormatter(value);
+  default:
+    return "Unsupported Time Format";
   }
 }
 
@@ -294,92 +294,92 @@ export function handleDateAdditionForTimeScale(startDate, timeScale, timeLength)
   }
 
   switch (parsedTimeScale) {
-    case DATE_FN_TIME_SCALES.SECONDS:
-      return (
-        {
-          start: parsedStartDate,
-          end: add(
-            parsedStartDate,
-            {
-              seconds: parsedTimeLength,
-            },
-          ),
-        }
-      );
-    case DATE_FN_TIME_SCALES.MINUTES:
-      return (
-        {
-          start: parsedStartDate,
-          end: add(
-            parsedStartDate,
-            {
-              minutes: parsedTimeLength,
-            },
-          ),
-        }
-      );
-    case DATE_FN_TIME_SCALES.HOURS:
-      return (
-        {
-          start: parsedStartDate,
-          end: add(
-            parsedStartDate,
-            {
-              hours: parsedTimeLength,
-            },
-          ),
-        }
-      );
-    case DATE_FN_TIME_SCALES.DAYS:
-      return (
-        {
-          start: parsedStartDate,
-          end: add(
-            parsedStartDate,
-            {
-              days: parsedTimeLength,
-            },
-          ),
-        }
-      );
-    case DATE_FN_TIME_SCALES.WEEKS:
-      return (
-        {
-          start: parsedStartDate,
-          end: add(
-            parsedStartDate,
-            {
-              weeks: parsedTimeLength,
-            },
-          ),
-        }
-      );
-    case DATE_FN_TIME_SCALES.MONTHS:
-      return (
-        {
-          start: parsedStartDate,
-          end: add(
-            parsedStartDate,
-            {
-              months: parsedTimeLength,
-            },
-          ),
-        }
-      );
-    case DATE_FN_TIME_SCALES.YEARS:
-      return (
-        {
-          start: parsedStartDate,
-          end: add(
-            parsedStartDate,
-            {
-              years: parsedTimeLength,
-            },
-          ),
-        }
-      );
-    default:
-      console.info("The Date Range given is invalid.");
-      return;
+  case DATE_FN_TIME_SCALES.SECONDS:
+    return (
+      {
+        start: parsedStartDate,
+        end: add(
+          parsedStartDate,
+          {
+            seconds: parsedTimeLength,
+          },
+        ),
+      }
+    );
+  case DATE_FN_TIME_SCALES.MINUTES:
+    return (
+      {
+        start: parsedStartDate,
+        end: add(
+          parsedStartDate,
+          {
+            minutes: parsedTimeLength,
+          },
+        ),
+      }
+    );
+  case DATE_FN_TIME_SCALES.HOURS:
+    return (
+      {
+        start: parsedStartDate,
+        end: add(
+          parsedStartDate,
+          {
+            hours: parsedTimeLength,
+          },
+        ),
+      }
+    );
+  case DATE_FN_TIME_SCALES.DAYS:
+    return (
+      {
+        start: parsedStartDate,
+        end: add(
+          parsedStartDate,
+          {
+            days: parsedTimeLength,
+          },
+        ),
+      }
+    );
+  case DATE_FN_TIME_SCALES.WEEKS:
+    return (
+      {
+        start: parsedStartDate,
+        end: add(
+          parsedStartDate,
+          {
+            weeks: parsedTimeLength,
+          },
+        ),
+      }
+    );
+  case DATE_FN_TIME_SCALES.MONTHS:
+    return (
+      {
+        start: parsedStartDate,
+        end: add(
+          parsedStartDate,
+          {
+            months: parsedTimeLength,
+          },
+        ),
+      }
+    );
+  case DATE_FN_TIME_SCALES.YEARS:
+    return (
+      {
+        start: parsedStartDate,
+        end: add(
+          parsedStartDate,
+          {
+            years: parsedTimeLength,
+          },
+        ),
+      }
+    );
+  default:
+    console.info("The Date Range given is invalid.");
+    return;
   }
 }

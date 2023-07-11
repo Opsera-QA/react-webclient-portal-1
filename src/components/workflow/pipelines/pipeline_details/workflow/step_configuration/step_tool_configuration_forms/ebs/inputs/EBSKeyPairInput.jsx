@@ -14,15 +14,15 @@ function EBSKeyPairInput({dataObject, setDataObject, disabled}) {
     setDataObject({...newDataObject});
   };
   return (
-     <AWSKeyPairSelectionInput
-       fieldName={"ec2KeyName"}
-       awsToolId={dataObject.getData("awsToolConfigId")}
-       dataObject={dataObject}
-       setDataFunction={setKeyPair}
-       setDataObject={setDataObject}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-     />
+    <AWSKeyPairSelectionInput
+      fieldName={"ec2KeyName"}
+      awsToolId={dataObject.getData("awsToolConfigId")}
+      dataObject={dataObject}
+      setDataFunction={setKeyPair}
+      setDataObject={setDataObject}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+    />
   );
 }
 

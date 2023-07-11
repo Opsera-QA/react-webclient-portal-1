@@ -39,18 +39,18 @@ function DockerCliRegistryTypeSelectInput({model, setModel, isLoading, disabled}
   };
 
   return (
-     <SelectInputBase
-       fieldName={"registryType"}
-       dataObject={model}
-       setDataObject={setModel}
-       selectOptions={REGISTRY_LIST}
-       valueField={"value"}
-       textField={"name"}
-       placeholderText={"Select a Registry Type"}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-       busy={isLoading}
-     />
+    <SelectInputBase
+      fieldName={"registryType"}
+      dataObject={model}
+      setDataObject={setModel}
+      selectOptions={REGISTRY_LIST}
+      valueField={"value"}
+      textField={"name"}
+      placeholderText={"Select a Registry Type"}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+      busy={isLoading}
+    />
   );
 }
 

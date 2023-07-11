@@ -83,8 +83,8 @@ function ServiceNowStepApprovalOverlay(
 
     loadFormData(source)
       .then(res => {
-          setIsLoading(false);
-        },
+        setIsLoading(false);
+      },
       )
       .catch(err => {
         toastContext.showLoadingErrorDialog(err);
@@ -103,7 +103,7 @@ function ServiceNowStepApprovalOverlay(
       getAccessToken,
       cancelSource,
       pipelineId,
-      )
+    )
       .catch(err => {
         toastContext.showLoadingErrorDialog(err);
       });
@@ -301,7 +301,7 @@ function ServiceNowStepApprovalOverlay(
           delay={{ show: 250, hide: 400 }}
           overlay={renderTooltip({ message: "Approve this pipeline using the switch above in order for it to proceed." })}>
           <Button className={"mr-2"} variant="success" onClick={() => handleConfirm("approve")}
-                  disabled={isLoading || !formData.approved || isSaving || !approvalStep}>
+            disabled={isLoading || !formData.approved || isSaving || !approvalStep}>
             <IconBase isLoading={isSaving} icon={faCheck} className={"mr-1"} fixedWidth/>
             Approve
           </Button>
@@ -311,7 +311,7 @@ function ServiceNowStepApprovalOverlay(
           delay={{ show: 250, hide: 400 }}
           overlay={renderTooltip({ message: "Stop this pipeline from proceeding further" })}>
           <Button className={"mr-2"} variant="danger" onClick={() => handleConfirm("deny")}
-                  disabled={isLoading || formData.approved || isSavingDeny || !approvalStep}>
+            disabled={isLoading || formData.approved || isSavingDeny || !approvalStep}>
             <IconBase isLoading={isSavingDeny} icon={faTimes} className={"mr-1"} fixedWidth/>
             Deny
           </Button>
@@ -331,9 +331,9 @@ function ServiceNowStepApprovalOverlay(
 
   if (!approvalStep) {
     return (<CommonModal header="Approval Step Not Found"
-                         message="No approval step has been found for this pipeline."
-                         button="OK"
-                         handleCancelModal={() => handleClose()}/>);
+      message="No approval step has been found for this pipeline."
+      button="OK"
+      handleCancelModal={() => handleClose()}/>);
   }
 
 
@@ -344,84 +344,84 @@ function ServiceNowStepApprovalOverlay(
       titleIcon={faFileCheck}
       buttonContainer={getButtonContainer()}
     >
-          <div className="m-3">
+      <div className="m-3">
 
-            <div>
+        <div>
               Approval of this interaction is required in order for the pipeline to proceed. Please review the
               details below as well as the Pipeline Activity Logs and confirm that this pipeline can complete its
               operations.  Only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this
               action.
-            </div>
+        </div>
 
-            {isLoading && <LoadingDialog/>}
+        {isLoading && <LoadingDialog/>}
 
-            {childPipelinemessage && <div className="title-text-6 mt-3">{childPipelinemessage}</div>}
+        {childPipelinemessage && <div className="title-text-6 mt-3">{childPipelinemessage}</div>}
 
-            <div className="d-flex m-3 justify-content-center">
-              <div className="p-1">
-                {priorToApprovalStep &&
+        <div className="d-flex m-3 justify-content-center">
+          <div className="p-1">
+            {priorToApprovalStep &&
                 <RenderWorkflowItem item={priorToApprovalStep}/>
-                }
-              </div>
-              <div className="p-1 my-auto">
-                {priorToApprovalStep &&
+            }
+          </div>
+          <div className="p-1 my-auto">
+            {priorToApprovalStep &&
                   <IconBase
                     icon={faArrowRight}
                     iconSize={"2x"}
                     className={"p-1"}
                   />
-                }
-              </div>
-              <div className="p-1">
-                {approvalStep &&
+            }
+          </div>
+          <div className="p-1">
+            {approvalStep &&
                 <RenderWorkflowItem item={approvalStep} stateColorClass={"workflow-step-warning"}/>
-                }
-              </div>
-              <div className="p-1 my-auto">
-                {nextToApprovalStep &&
+            }
+          </div>
+          <div className="p-1 my-auto">
+            {nextToApprovalStep &&
                   <IconBase
                     icon={faArrowRight}
                     iconSize={"2x"}
                     className={"p-1"}
                   />
-                }
-              </div>
-              <div className="p-1">
-                {nextToApprovalStep &&
+            }
+          </div>
+          <div className="p-1">
+            {nextToApprovalStep &&
                 <RenderWorkflowItem item={nextToApprovalStep}/>
-                }
-              </div>
-            </div>
+            }
+          </div>
+        </div>
 
 
-            {message &&
+        {message &&
             <div className="m-3 p-3 text-muted italic" style={{ backgroundColor: "#f2f4f8" }}>{message}</div>}
 
 
-            <Form>
-              <Form.Group controlId="repoField">
-                <Form.Label>Approval Comments:</Form.Label>
-                <Form.Control as="textarea" type="text" placeholder="" value={formData.message || ""}
-                              onChange={e => setFormData({ ...formData, message: e.target.value })}/>
-              </Form.Group>
-              <small className="form-text text-muted text-left">Optional message to include in approval
+        <Form>
+          <Form.Group controlId="repoField">
+            <Form.Label>Approval Comments:</Form.Label>
+            <Form.Control as="textarea" type="text" placeholder="" value={formData.message || ""}
+              onChange={e => setFormData({ ...formData, message: e.target.value })}/>
+          </Form.Group>
+          <small className="form-text text-muted text-left">Optional message to include in approval
                 log which will be visible in the Activity logs for this pipeline</small>
 
-              <div className="my-4 pt-1 text-right">
-                <Form.Check
-                  type="switch"
-                  id="approval-switch"
-                  label="Approved"
-                  checked={formData?.approved === true}
-                  onChange={() => setFormData({ ...formData, approved: !formData.approved })}
-                />
-                <small className="form-text text-muted">Flip the switch to approve this step</small>
-              </div>
-            </Form>
-
-
+          <div className="my-4 pt-1 text-right">
+            <Form.Check
+              type="switch"
+              id="approval-switch"
+              label="Approved"
+              checked={formData?.approved === true}
+              onChange={() => setFormData({ ...formData, approved: !formData.approved })}
+            />
+            <small className="form-text text-muted">Flip the switch to approve this step</small>
           </div>
-        </FullScreenCenterOverlayContainer>
+        </Form>
+
+
+      </div>
+    </FullScreenCenterOverlayContainer>
   );
 }
 
@@ -433,9 +433,9 @@ export function RenderWorkflowItem({ item, stateColorClass, isSelected }) {
         <div className="workflow-module-container-height flex-row" style={{ width: "275px" }}>
           <Row>
             <Col sm={9}>
-               <div className="text-muted mr-1">{item.name}</div>
+              <div className="text-muted mr-1">{item.name}</div>
             </Col>
-             <Col sm={1}>
+            <Col sm={1}>
               <span className="flex-grow-1 text-right">
                 {isSelected &&
                       <IconBase icon={faCheckCircle} className={"mr-2 green"}/>

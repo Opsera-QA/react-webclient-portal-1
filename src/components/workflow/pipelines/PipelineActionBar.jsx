@@ -13,29 +13,29 @@ function PipelineActionBar({pipeline, handleShareClick, handleScheduleClick, han
   // TODO: Be sure to add pointer and enable hover color when wiring up functions
   return (
     <>
-        <div className="action-bar p-0 my-auto">
-          {handleDeleteClick && <OverlayTriggerWrapper message={`Delete this Pipeline`}>
-            <IconBase icon={faTrash} className={"pipeline-text float-right ml-3"} onClickFunction={() => handleDeleteClick()}/>
-          </OverlayTriggerWrapper>}
-          {handleShareClick && <OverlayTriggerWrapper message={`Share this Pipeline`}>
-            <IconBase icon={faShareAlt} className={"pipeline-text float-right ml-3"} onClickFunction={() => handleShareClick()}/>
-          </OverlayTriggerWrapper>}
-          {handleScheduleClick && <OverlayTriggerWrapper message={`Schedule this Pipeline`}>
-            <IconBase icon={faCalendarDay} className={"pipeline-text float-right ml-3"} onClickFunction={() => handleScheduleClick()}/>
-          </OverlayTriggerWrapper>}
-          {handleHelpClick && <OverlayTriggerWrapper message={`Help`}>
-            <IconBase icon={faQuestion} className={"pipeline-text float-right ml-3"} onClickFunction={() => handleHelpClick()}/>
-          </OverlayTriggerWrapper>}
-          {handleSettingsClick && <OverlayTriggerWrapper message={`Configure This Pipeline`}>
-            <IconBase icon={faCog} className={"pipeline-text float-right ml-3"} onClickFunction={() => handleSettingsClick()}/>
-          </OverlayTriggerWrapper>}
-          {handleRedoClick && <OverlayTriggerWrapper message={`Rerun This Pipeline`}>
-            <IconBase icon={faRedo} className={"pipeline-text float-right ml-3"} onClickFunction={() => handleRedoClick()}/>
-          </OverlayTriggerWrapper>}
-          {handleUnlinkClick && <OverlayTriggerWrapper message={`Unlink This Pipeline`}>
-            <IconBase icon={faUnlink} className={"pipeline-text float-right ml-3"} onClickFunction={() => handleUnlinkClick()}/>
-          </OverlayTriggerWrapper>}
-        </div>
+      <div className="action-bar p-0 my-auto">
+        {handleDeleteClick && <OverlayTriggerWrapper message={`Delete this Pipeline`}>
+          <IconBase icon={faTrash} className={"pipeline-text float-right ml-3"} onClickFunction={() => handleDeleteClick()}/>
+        </OverlayTriggerWrapper>}
+        {handleShareClick && <OverlayTriggerWrapper message={`Share this Pipeline`}>
+          <IconBase icon={faShareAlt} className={"pipeline-text float-right ml-3"} onClickFunction={() => handleShareClick()}/>
+        </OverlayTriggerWrapper>}
+        {handleScheduleClick && <OverlayTriggerWrapper message={`Schedule this Pipeline`}>
+          <IconBase icon={faCalendarDay} className={"pipeline-text float-right ml-3"} onClickFunction={() => handleScheduleClick()}/>
+        </OverlayTriggerWrapper>}
+        {handleHelpClick && <OverlayTriggerWrapper message={`Help`}>
+          <IconBase icon={faQuestion} className={"pipeline-text float-right ml-3"} onClickFunction={() => handleHelpClick()}/>
+        </OverlayTriggerWrapper>}
+        {handleSettingsClick && <OverlayTriggerWrapper message={`Configure This Pipeline`}>
+          <IconBase icon={faCog} className={"pipeline-text float-right ml-3"} onClickFunction={() => handleSettingsClick()}/>
+        </OverlayTriggerWrapper>}
+        {handleRedoClick && <OverlayTriggerWrapper message={`Rerun This Pipeline`}>
+          <IconBase icon={faRedo} className={"pipeline-text float-right ml-3"} onClickFunction={() => handleRedoClick()}/>
+        </OverlayTriggerWrapper>}
+        {handleUnlinkClick && <OverlayTriggerWrapper message={`Unlink This Pipeline`}>
+          <IconBase icon={faUnlink} className={"pipeline-text float-right ml-3"} onClickFunction={() => handleUnlinkClick()}/>
+        </OverlayTriggerWrapper>}
+      </div>
     </>
   );
 }

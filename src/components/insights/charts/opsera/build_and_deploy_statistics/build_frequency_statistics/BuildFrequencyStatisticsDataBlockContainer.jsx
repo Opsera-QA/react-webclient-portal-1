@@ -40,10 +40,10 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
         className={"build-and-deployment-statistics-kpi"}
         topText={"Average Daily Builds"}
         middleText={
-        <MetricScoreText
-          score={metricData?.build?.perDayAverage}
-          dataPoint={dataPoint}
-        />}
+          <MetricScoreText
+            score={metricData?.build?.perDayAverage}
+            dataPoint={dataPoint}
+          />}
         dataPoint={dataPoint}
       />
     );
@@ -62,7 +62,7 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
         <ResponsiveLine
           data={dailyBuildsChartData}
           {...defaultConfig("Count", "Date", 
-                false, true, "numbers", "monthDate2")}
+            false, true, "numbers", "monthDate2")}
           {...config()}
           yScale={{ type: 'linear', min: '0', max: maxVal, stacked: false, reverse: false }}
           axisLeft={{
@@ -79,10 +79,10 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
           )}
           markers={[
             {
-                axis: 'y',
-                value: goalsData,
-                lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
-                legend: '',
+              axis: 'y',
+              value: goalsData,
+              lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
+              legend: '',
             }            
           ]}
         />
@@ -94,7 +94,7 @@ function BuildFrequencyStatisticsDataBlockContainer({ metricData, chartData, goa
     <HorizontalDataBlocksContainer
       title={"Build Frequency Statistics"}      
     >
-       <Container>
+      <Container>
         <Row className="align-items-center">
           <Col sm={3} className={"p-2"}>
             {getLeftDataBlock()}        

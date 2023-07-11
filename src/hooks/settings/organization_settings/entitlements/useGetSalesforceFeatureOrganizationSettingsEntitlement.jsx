@@ -1,10 +1,10 @@
 import useGetOrganizationSettingsEntitlementByName
-  from "hooks/settings/organization_settings/entitlements/useGetOrganizationSettingsEntitlementByName";
+from "hooks/settings/organization_settings/entitlements/useGetOrganizationSettingsEntitlementByName";
 import entitlementConstants
-  from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
+from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import salesforceFeatureEntitlementConstants
-  from "@opsera/definitions/constants/settings/organization-settings/entitlements/salesforce/salesforceFeatureEntitlement.constants";
+from "@opsera/definitions/constants/settings/organization-settings/entitlements/salesforce/salesforceFeatureEntitlement.constants";
 
 export default function useGetSalesforceFeatureOrganizationSettingsEntitlement() {
   const {

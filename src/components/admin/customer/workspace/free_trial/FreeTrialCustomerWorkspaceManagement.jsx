@@ -3,7 +3,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { ssoUserActions } from "components/settings/users/ssoUser.actions";
 import FreeTrialCustomerWorkspaceUsersTable
-  from "components/admin/customer/workspace/free_trial/FreeTrialCustomerWorkspaceUsersTable";
+from "components/admin/customer/workspace/free_trial/FreeTrialCustomerWorkspaceUsersTable";
 
 export default function FreeTrialCustomerWorkspaceManagement() {
   const [ssoUsers, setSsoUsers] = useState([]);

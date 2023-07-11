@@ -124,9 +124,9 @@ function BuildDetails({data, dashboardData, setDashboardData}) {
     );
   };
 
-//   if (isLoading) {
-//     return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading</span>);
-//   }
+  //   if (isLoading) {
+  //     return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading</span>);
+  //   }
 
   return (
     getChartBody()

@@ -10,7 +10,7 @@ import {
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import twistlockSecurityReportMetadata
-  from "components/blueprint/security_reports/twistlock/twistlockSecurityReport.metadata";
+from "components/blueprint/security_reports/twistlock/twistlockSecurityReport.metadata";
 import RiskFactorDisplayer from "components/blueprint/security_reports/twistlock/RiskFactorDisplayer";
 
 export const getRiskFactorColumnDefinition = (field, className) => {

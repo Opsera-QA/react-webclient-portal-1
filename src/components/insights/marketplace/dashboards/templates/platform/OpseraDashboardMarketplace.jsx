@@ -3,14 +3,14 @@ import Model from "core/data_model/model";
 import FilterContainer from "components/common/table/FilterContainer";
 import { faChartSimple } from "@fortawesome/pro-light-svg-icons";
 import dashboardTemplateFilterMetadata
-  from "components/insights/marketplace/dashboards/dashboard-template-filter-metadata";
+from "components/insights/marketplace/dashboards/dashboard-template-filter-metadata";
 import InlineDashboardTypeFilter from "components/common/filters/dashboards/dashboard_type/InlineDashboardTypeFilter";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {
   platformDashboardTemplateActions
 } from "components/insights/marketplace/dashboards/templates/platform/platformDashboardTemplate.actions";
 import OpseraDashboardMarketplaceDashboardTemplateCardView
-  from "components/insights/marketplace/dashboards/templates/platform/OpseraDashboardMarketplaceDashboardTemplateCardView";
+from "components/insights/marketplace/dashboards/templates/platform/OpseraDashboardMarketplaceDashboardTemplateCardView";
 
 function OpseraDashboardMarketplace () {
   const [dashboardTemplates, setDashboardTemplates] = useState([]);

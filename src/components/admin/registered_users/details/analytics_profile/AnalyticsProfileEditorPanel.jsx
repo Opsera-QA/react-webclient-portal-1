@@ -13,7 +13,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import ToolIdentifierMultiSelectInput
-  from "components/common/list_of_values_input/admin/tools/ToolIdentifierMultiSelectInput";
+from "components/common/list_of_values_input/admin/tools/ToolIdentifierMultiSelectInput";
 import axios from "axios";
 
 function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfileData }) {
@@ -108,7 +108,7 @@ function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfile
       <Row>
         <Col>
           <TextInputBase fieldName="analyticsServerUrl" setDataObject={setAnalyticsProfileDataDto}
-                        dataObject={analyticsProfileDataDto}/>
+            dataObject={analyticsProfileDataDto}/>
         </Col>
         <Col>
           <TextInputBase fieldName="defaultPersona" setDataObject={setAnalyticsProfileDataDto} dataObject={analyticsProfileDataDto}/>

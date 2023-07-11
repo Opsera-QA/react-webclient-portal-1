@@ -4,26 +4,26 @@ import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlo
 import ThreeLineScoreDataBlock from "components/common/metrics/score/ThreeLineScoreDataBlock";
 
 function BoomiFrequencyDataBlock({ data, dataPoint, lastScore, icon, className }) {
-    return (
-        <DataBlockBoxContainer showBorder={true}>
-            <ThreeLineScoreDataBlock
-                className={`${className} p-2 h-70`}
-                icon={icon}
-                score={data}
-                bottomText={`Previous: ${lastScore || lastScore === 0? lastScore : "NA"}`}
-                topText={"Average Frequency"}
-                dataPoint={dataPoint}
-            />
-        </DataBlockBoxContainer>
-    );
+  return (
+    <DataBlockBoxContainer showBorder={true}>
+      <ThreeLineScoreDataBlock
+        className={`${className} p-2 h-70`}
+        icon={icon}
+        score={data}
+        bottomText={`Previous: ${lastScore || lastScore === 0? lastScore : "NA"}`}
+        topText={"Average Frequency"}
+        dataPoint={dataPoint}
+      />
+    </DataBlockBoxContainer>
+  );
 }
 
 BoomiFrequencyDataBlock.propTypes = {
-    data: PropTypes.number,
-    lastScore: PropTypes.number,
-    dataPoint: PropTypes.object,
-    icon: PropTypes.object,
-    className: PropTypes.string,
+  data: PropTypes.number,
+  lastScore: PropTypes.number,
+  dataPoint: PropTypes.object,
+  icon: PropTypes.object,
+  className: PropTypes.string,
 };
 
 export default BoomiFrequencyDataBlock;

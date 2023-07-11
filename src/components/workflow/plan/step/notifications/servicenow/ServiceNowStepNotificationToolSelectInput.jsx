@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedServiceNowToolSelectInput
-  from "components/common/list_of_values_input/tools/service_now/RoleRestrictedServiceNowToolSelectInput";
+from "components/common/list_of_values_input/tools/service_now/RoleRestrictedServiceNowToolSelectInput";
 
 function ServiceNowStepNotificationToolSelectInput({visible, model, setModel, disabled}) {
   const getPlaceholderText = () => {
@@ -20,7 +20,7 @@ function ServiceNowStepNotificationToolSelectInput({visible, model, setModel, di
       placeholderText={getPlaceholderText()}
       visible={visible}
       disabled={disabled || model?.getData("enabled") === false}
-   />
+    />
   );
 }
 

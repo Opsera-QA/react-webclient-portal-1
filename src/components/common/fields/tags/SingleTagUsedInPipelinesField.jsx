@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import {AuthContext} from "contexts/AuthContext";
 import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
 import pipelineSummaryMetadata
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 import Model from "core/data_model/model";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import axios from "axios";
@@ -99,7 +99,7 @@ function SingleTagUsedInPipelinesField({ tag, closePanel, className }) {
       <div className={className}>
         <div className="text-muted mb-2">
           <div>
-          <span><IconBase icon={faExclamationCircle} className={"text-muted mr-1"}/>
+            <span><IconBase icon={faExclamationCircle} className={"text-muted mr-1"}/>
           This tag is not currently applied on any pipeline</span>
           </div>
         </div>

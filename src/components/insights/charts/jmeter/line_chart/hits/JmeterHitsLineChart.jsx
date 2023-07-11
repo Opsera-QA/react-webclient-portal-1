@@ -76,18 +76,18 @@ function JMeterHitsLineChart({ kpiConfiguration, setKpiConfiguration, dashboardD
     }
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
-            <ResponsiveLine
-              data={metrics}
-              onClick={() => setShowModal(true)}
-              {...defaultConfig("Hits", "Build Number", 
-                  true, false, "wholeNumbers", "wholeNumbers")}
-              {...config(getColor)}
-              tooltip={({ point, color }) => <ChartTooltip 
-                              titles = {["Build ID", "Hits"]}
-                              values = {[point.data.x, point.data.y]}
-                              color = {color} />}
-            />
-        </div>
+        <ResponsiveLine
+          data={metrics}
+          onClick={() => setShowModal(true)}
+          {...defaultConfig("Hits", "Build Number", 
+            true, false, "wholeNumbers", "wholeNumbers")}
+          {...config(getColor)}
+          tooltip={({ point, color }) => <ChartTooltip 
+            titles = {["Build ID", "Hits"]}
+            values = {[point.data.x, point.data.y]}
+            color = {color} />}
+        />
+      </div>
     );
   };
   return (

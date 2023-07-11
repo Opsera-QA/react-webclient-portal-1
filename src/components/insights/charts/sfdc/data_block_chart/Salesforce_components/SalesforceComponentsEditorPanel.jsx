@@ -6,46 +6,46 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {salesforceComponentsMetadata} from "./salesforceComponents.metadata";
 
 function SalesforceComponentsEditorPanel(
-    {
-        metricModel,
-        unpackedFilterData,
-        metricFilterModel,
-        setMetricFilterModel,
-    }) {
-    useEffect(() => {
-        setMetricFilterModel(undefined);
+  {
+    metricModel,
+    unpackedFilterData,
+    metricFilterModel,
+    setMetricFilterModel,
+  }) {
+  useEffect(() => {
+    setMetricFilterModel(undefined);
 
-        if (unpackedFilterData) {
-            setMetricFilterModel(modelHelpers.parseObjectIntoModel(unpackedFilterData, salesforceComponentsMetadata));
-        }
-
-    }, [unpackedFilterData]);
-
-    if (metricFilterModel == null) {
-        return null;
+    if (unpackedFilterData) {
+      setMetricFilterModel(modelHelpers.parseObjectIntoModel(unpackedFilterData, salesforceComponentsMetadata));
     }
 
-    return (
-        <div>
-            <MetricTagFilterInput
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-            />
-            <MetricDateRangeFilterInput
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-            />
-        </div>
-    );
+  }, [unpackedFilterData]);
+
+  if (metricFilterModel == null) {
+    return null;
+  }
+
+  return (
+    <div>
+      <MetricTagFilterInput
+        metricModel={metricModel}
+        metricFilterModel={metricFilterModel}
+        setMetricFilterModel={setMetricFilterModel}
+      />
+      <MetricDateRangeFilterInput
+        metricModel={metricModel}
+        metricFilterModel={metricFilterModel}
+        setMetricFilterModel={setMetricFilterModel}
+      />
+    </div>
+  );
 }
 
 SalesforceComponentsEditorPanel.propTypes = {
-    metricModel: PropTypes.object,
-    unpackedFilterData: PropTypes.object,
-    metricFilterModel: PropTypes.object,
-    setMetricFilterModel: PropTypes.func,
+  metricModel: PropTypes.object,
+  unpackedFilterData: PropTypes.object,
+  metricFilterModel: PropTypes.object,
+  setMetricFilterModel: PropTypes.func,
 };
 
 export default SalesforceComponentsEditorPanel;

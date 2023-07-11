@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import useGetTaskById from "hooks/workflow/tasks/useGetTaskById";
 import useGetPollingTaskOrchestrationStatusById
-  from "hooks/workflow/tasks/orchestration/useGetPollingTaskOrchestrationStatusById";
+from "hooks/workflow/tasks/orchestration/useGetPollingTaskOrchestrationStatusById";
 
 export default function useGetPollingTaskById(
   id,

@@ -78,7 +78,7 @@ function ArgoCdRepositoryAzureTagSelectInput(
       azureToolConfigId,
       acrLoginUrl,
       acrRepoName,
-      );
+    );
     const repositoryTags = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositoryTags)) {

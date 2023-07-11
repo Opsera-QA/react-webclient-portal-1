@@ -52,21 +52,21 @@ function FiltersDateSelectOverlay({showModal, dataModel, saveDataFunction, type}
 
   const getConfirmButtonContainer = () => {
     return (
-        <div className={"p-3 bg-white"}>
-          <SaveButtonContainer>
-            <LenientSaveButton
-              recordDto={temporaryDataObject}
-              updateRecord={handleSave}
-              customLabel={"Yes"}
-              className={"mr-2"}
-            />
-            <CancelButton
-              cancelFunction={()=> { setShowEditDateConfirmModal(false); } }
-              size={"md"}
-              buttonText={"No"}
-            />
-          </SaveButtonContainer>
-        </div>
+      <div className={"p-3 bg-white"}>
+        <SaveButtonContainer>
+          <LenientSaveButton
+            recordDto={temporaryDataObject}
+            updateRecord={handleSave}
+            customLabel={"Yes"}
+            className={"mr-2"}
+          />
+          <CancelButton
+            cancelFunction={()=> { setShowEditDateConfirmModal(false); } }
+            size={"md"}
+            buttonText={"No"}
+          />
+        </SaveButtonContainer>
+      </div>
     );
   };
 
@@ -133,21 +133,21 @@ function FiltersDateSelectOverlay({showModal, dataModel, saveDataFunction, type}
 
   return (
     <>
-    <CenterOverlayContainer
-      closePanel={closePanel}
-      titleIcon={faCalendarAlt}
-      titleText={`Update All KPI Date Filters`}
-      showCloseButton={false}
-      showPanel={true}
-      buttonContainer={getButtonContainer()}
-    >
-      <div className="m-3">
-        {toastContext.getInlineBanner()}
-        <div className="p-3">
-          {getFiltersInput()}
+      <CenterOverlayContainer
+        closePanel={closePanel}
+        titleIcon={faCalendarAlt}
+        titleText={`Update All KPI Date Filters`}
+        showCloseButton={false}
+        showPanel={true}
+        buttonContainer={getButtonContainer()}
+      >
+        <div className="m-3">
+          {toastContext.getInlineBanner()}
+          <div className="p-3">
+            {getFiltersInput()}
+          </div>
         </div>
-      </div>
-    </CenterOverlayContainer>
+      </CenterOverlayContainer>
       {showEditDateWarning()}
     </>
   );

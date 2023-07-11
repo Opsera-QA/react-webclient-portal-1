@@ -10,7 +10,7 @@ import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import CustomTab from "components/common/tabs/CustomTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import LdapSettingsPanel
-  from "components/admin/registered_users/details/ldap_settings/LdapSettingsPanel";
+from "components/admin/registered_users/details/ldap_settings/LdapSettingsPanel";
 import UserAssignedRolesPanel from "components/settings/users/details/assigned_roles/UserAssignedRolesPanel";
 import UserAccessTokenActivityLogPanel from "components/settings/users/details/UserAccessTokenActivityLogPanel";
 
@@ -52,33 +52,33 @@ function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return <RegisteredUserSummary userData={userData} setActiveTab={setActiveTab} showDbConnectionString={true} />;
-      case "tools":
-        return <RegisteredUserToolsPanel userData={userData} setIsDeployingElk={setIsDeployingElk} isDeployingElk={isDeployingElk} />;
-      case "customerDB":
-        return <CustomerDatabaseEditorPanel userId={userData?.getMongoDbId()} customerDatabaseData={analyticsProfileData} setCustomerDatabaseData={setAnalyticsProfileData} />;
-      case "analyticsSettings":
-        return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
-      case "ldap":
-        return <LdapSettingsPanel userData={userData} ldapData={userData?.getData("ldap")} loadData={loadData} showSyncButton={true} />;
-      case "assigned-roles":
-        return (
-          <UserAssignedRolesPanel
-            userEmailAddress={userData?.getData("email")}
-          />
-        );
-      case "access-token-activity-logs":
-        return (
-          <UserAccessTokenActivityLogPanel
-            userId={userData?.getData("_id")}
-            className={"mt-2"}
-          />
-        );
+    case "summary":
+      return <RegisteredUserSummary userData={userData} setActiveTab={setActiveTab} showDbConnectionString={true} />;
+    case "tools":
+      return <RegisteredUserToolsPanel userData={userData} setIsDeployingElk={setIsDeployingElk} isDeployingElk={isDeployingElk} />;
+    case "customerDB":
+      return <CustomerDatabaseEditorPanel userId={userData?.getMongoDbId()} customerDatabaseData={analyticsProfileData} setCustomerDatabaseData={setAnalyticsProfileData} />;
+    case "analyticsSettings":
+      return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
+    case "ldap":
+      return <LdapSettingsPanel userData={userData} ldapData={userData?.getData("ldap")} loadData={loadData} showSyncButton={true} />;
+    case "assigned-roles":
+      return (
+        <UserAssignedRolesPanel
+          userEmailAddress={userData?.getData("email")}
+        />
+      );
+    case "access-token-activity-logs":
+      return (
+        <UserAccessTokenActivityLogPanel
+          userId={userData?.getData("_id")}
+          className={"mt-2"}
+        />
+      );
       // case "settings":
       // return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
-      default:
-        return null;
+    default:
+      return null;
     }
   };
 

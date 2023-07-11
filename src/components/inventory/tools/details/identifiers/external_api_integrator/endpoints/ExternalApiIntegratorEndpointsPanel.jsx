@@ -3,11 +3,11 @@ import ExternalApiIntegratorEndpointsTable from "components/inventory/tools/deta
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
 import ExternalApiIntegratorEndpointEditorPanel
-  from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointEditorPanel";
+from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointEditorPanel";
 import externalApiIntegratorEndpointMetadata
-  from "@opsera/definitions/constants/registry/tools/external_api_integrator/externalApiIntegratorEndpoint.metadata";
+from "@opsera/definitions/constants/registry/tools/external_api_integrator/externalApiIntegratorEndpoint.metadata";
 import useGetExternalApiIntegratorEndpoints
-  from "hooks/tools/external_api_integrator/endpoints/useGetExternalApiIntegratorEndpoints";
+from "hooks/tools/external_api_integrator/endpoints/useGetExternalApiIntegratorEndpoints";
 
 function ExternalApiIntegratorEndpointsPanel({ toolId }) {
   const [externalApiIntegratorModel, setExternalApiIntegratorModel] = useState(undefined);

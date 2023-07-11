@@ -13,7 +13,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColorByData, assignHealthColors,
-         adjustBarWidth } from "../../../charts-views";
+  adjustBarWidth } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 
 function JiraHealthBySprintBarChart( { kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis } ) {
@@ -84,14 +84,14 @@ function JiraHealthBySprintBarChart( { kpiConfiguration, setKpiConfiguration, da
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Project", "Number of Issues", 
-                  false, false, "cutoffString", "wholeNumbers")}
+            false, false, "cutoffString", "wholeNumbers")}
           {...config(keys)}
           {...adjustBarWidth(metrics)}
           onClick={() => setShowModal(true)}
           tooltip={({ indexValue, value, id }) => <ChartTooltip 
-                                    titles = {["Project", "Issue Stage", "Number of Issues"]}
-                                    values = {[indexValue, id, value]} 
-                                    style={false} />}
+            titles = {["Project", "Issue Stage", "Number of Issues"]}
+            values = {[indexValue, id, value]} 
+            style={false} />}
         />
       </div>
     );

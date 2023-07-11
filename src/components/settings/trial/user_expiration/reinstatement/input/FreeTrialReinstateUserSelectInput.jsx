@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import ActiveSsoUserSelectInput from "components/common/list_of_values_input/users/sso/active/ActiveSsoUserSelectInput";
 import RevokedSsoUserSelectInput
-  from "components/common/list_of_values_input/users/sso/revoked/RevokedSsoUserSelectInput";
+from "components/common/list_of_values_input/users/sso/revoked/RevokedSsoUserSelectInput";
 
 export default function FreeTrialRevokeUserSelectInput(
   {
@@ -23,16 +23,16 @@ export default function FreeTrialRevokeUserSelectInput(
   };
 
   return (
-     <RevokedSsoUserSelectInput
-       fieldName={fieldName}
-       model={model}
-       setModel={setModel}
-       setDataFunction={setDataFunction}
-       clearDataFunction={clearDataFunction}
-       textField={textFieldFunction}
-       disabled={[userData?._id]}
-       className={className}
-     />
+    <RevokedSsoUserSelectInput
+      fieldName={fieldName}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      textField={textFieldFunction}
+      disabled={[userData?._id]}
+      className={className}
+    />
   );
 }
 

@@ -4,12 +4,12 @@ import Model from "core/data_model/model";
 import analyticsDataFilterMetadata from "components/settings/analytics_data_entry/analytics-data-filter-metadata";
 import AnalyticsDataEntryTable from "components/settings/analytics_data_entry/AnalyticsDataEntryTable";
 import AnalyticsDataEntryManagementSubNavigationBar
-  from "components/settings/analytics_data_entry/AnalyticsDataEntryManagementSubNavigationBar";
+from "components/settings/analytics_data_entry/AnalyticsDataEntryManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useAnalyticsDataEntryActions from "hooks/settings/insights/analytics_data_entries/useAnalyticsDataEntryActions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import AnalyticsDataEntryRoleHelper
-  from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
+from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
 
 export default function AnalyticsDataEntryManagement() {
   const [isLoading, setIsLoading] = useState(true);

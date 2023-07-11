@@ -8,7 +8,7 @@ export default function useTaskActivityLogActions() {
   taskActivityLogActions.getSecondaryTaskActivityLogs = async (
     taskActivityFilterModel,
     taskId,
- ) => {
+  ) => {
     const apiUrl = `/tasks/logs/activity/v2/secondary`;
     const queryParameters = {
       search: taskActivityFilterModel?.getData("search"),

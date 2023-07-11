@@ -84,7 +84,7 @@ function ArgoToolRepositoriesPanel({ toolId }) {
   const searchFilter = (repository) => {
     const searchTerm = filterModel?.getFilterValue("search");
     return (
-         stringIncludesValue(repository?.name, searchTerm)
+      stringIncludesValue(repository?.name, searchTerm)
       || stringIncludesValue(repository?.project, searchTerm)
       || stringIncludesValue(repository?.repo, searchTerm)
       || stringIncludesValue(repository?.connectionState?.status, searchTerm)

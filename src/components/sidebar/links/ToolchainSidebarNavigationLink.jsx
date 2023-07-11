@@ -17,7 +17,7 @@ export default function ToolchainSidebarNavigationLink({ isSidebarCollapsed, }) 
       && isOpseraAdministrator !== true
       && isPowerUser !== true
       && isSiteAdministrator !== true
-    ) {
+  ) {
     return null;
   }
 

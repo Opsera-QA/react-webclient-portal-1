@@ -6,7 +6,7 @@ import {faExclamationTriangle} from "@fortawesome/pro-solid-svg-icons/faExclamat
 import {AuthContext} from "contexts/AuthContext";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import SourceRepositoryActions
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/source-repository-actions";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/source-repository-actions";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";

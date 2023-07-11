@@ -6,7 +6,7 @@ import {
   customerPipelineTemplateCatalogActions
 } from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
 import CustomerPipelineTemplateRoleHelper
-  from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
+from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
 
 export default function CustomerPipelineTemplateRoleAccessInput(
   {

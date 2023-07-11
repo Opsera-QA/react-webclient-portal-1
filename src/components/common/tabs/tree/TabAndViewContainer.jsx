@@ -55,8 +55,8 @@ function TabAndViewContainer(
       <Row className={bodyClassName} style={getContainerStylingObject()}>
         {verticalTabContainer &&
             <Col
-                xs={getTabColumnSize()}
-                className={"px-0 makeup-tree-container"}
+              xs={getTabColumnSize()}
+              className={"px-0 makeup-tree-container"}
             >
               <div style={getBodyStylingObject()} className={"h-100"}>
                 {verticalTabContainer}

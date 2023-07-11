@@ -71,7 +71,7 @@ function GitScraperViewListOfIssuesOverlay({ dataObject, kpiConfiguration, dashb
       );
 
       const dataBlocks = response?.data && response?.status === 200 ? 
-                                                  response?.data?.data?.data : [];      
+        response?.data?.data?.data : [];      
 
       if (isMounted?.current === true && dataBlocks) {
         setActionableInsightsData(dataBlocks[0].data);

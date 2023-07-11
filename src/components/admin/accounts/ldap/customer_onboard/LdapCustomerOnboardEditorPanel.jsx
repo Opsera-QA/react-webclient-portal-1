@@ -276,46 +276,46 @@ function LdapCustomerOnboardEditorPanel() {
             <Row>
               <Col lg={12}>
                 <TextInputBase disabled={true || !ldapOrganizationAccountDataDto.isNew()} fieldName={"orgOwner"}
-                               dataObject={ldapOrganizationAccountDataDto}
-                               setDataObject={setLdapOrganizationAccountDataDto}/>
+                  dataObject={ldapOrganizationAccountDataDto}
+                  setDataObject={setLdapOrganizationAccountDataDto}/>
               </Col>
               <Col lg={12}>
                 <TextInputBase disabled={true} fieldName={"orgOwnerEmail"} dataObject={ldapOrganizationAccountDataDto}
-                               setDataObject={setLdapOrganizationAccountDataDto}/>
+                  setDataObject={setLdapOrganizationAccountDataDto}/>
               </Col>
               <Col lg={12}>
                 <TextInputBase disabled={true || !ldapOrganizationAccountDataDto.isNew()} fieldName={"orgDomain"}
-                               dataObject={ldapOrganizationAccountDataDto}
-                               setDataObject={setLdapOrganizationAccountDataDto}/>
+                  dataObject={ldapOrganizationAccountDataDto}
+                  setDataObject={setLdapOrganizationAccountDataDto}/>
               </Col>
               <Col lg={12}>
                 <TextInputBase disabled={true || !ldapOrganizationAccountDataDto.isNew()} fieldName={"name"}
-                               dataObject={ldapOrganizationAccountDataDto}
-                               setDataObject={setLdapOrganizationAccountDataDto}/>
+                  dataObject={ldapOrganizationAccountDataDto}
+                  setDataObject={setLdapOrganizationAccountDataDto}/>
               </Col>
               <Col lg={12}>
                 <TextInputBase disabled={true} fieldName={"accountName"} dataObject={ldapOrganizationAccountDataDto}
-                               setDataObject={setLdapOrganizationAccountDataDto}/>
+                  setDataObject={setLdapOrganizationAccountDataDto}/>
               </Col>
               <Col lg={12}>
                 <TextInputBase disabled={true} fieldName={"description"} dataObject={ldapOrganizationAccountDataDto}
-                               setDataObject={setLdapOrganizationAccountDataDto}/>
+                  setDataObject={setLdapOrganizationAccountDataDto}/>
               </Col>
               <Col lg={12}>
                 <TextInputBase disabled={true} fieldName={"configEntryType"} dataObject={ldapOrganizationAccountDataDto}
-                               setDataObject={setLdapOrganizationAccountDataDto}/>
+                  setDataObject={setLdapOrganizationAccountDataDto}/>
               </Col>
               <Col lg={12}>
                 <TextInputBase disabled={true} fieldName={"entityID"} dataObject={ldapOrganizationAccountDataDto}
-                               setDataObject={setLdapOrganizationAccountDataDto}/>
+                  setDataObject={setLdapOrganizationAccountDataDto}/>
               </Col>
               <Col lg={12}>
                 <TextInputBase disabled={true} fieldName={"idpPostURL"} dataObject={ldapOrganizationAccountDataDto}
-                               setDataObject={setLdapOrganizationAccountDataDto}/>
+                  setDataObject={setLdapOrganizationAccountDataDto}/>
               </Col>
               <Col lg={12}>
                 <TextInputBase disabled={true} fieldName={"idpVendor"} dataObject={ldapOrganizationAccountDataDto}
-                               setDataObject={setLdapOrganizationAccountDataDto}/>
+                  setDataObject={setLdapOrganizationAccountDataDto}/>
               </Col>
               {/*<Col>*/}
               {/*  <ItemInput field={fields.idpReturnAttributes} setData={setFormField}*/}
@@ -323,22 +323,22 @@ function LdapCustomerOnboardEditorPanel() {
               {/*</Col>*/}
               <Col lg={12}>
                 <BooleanToggleInput disabled={true} fieldName={"isMultipleIDP"}
-                                    dataObject={ldapOrganizationAccountDataDto}
-                                    setDataObject={setLdapOrganizationAccountDataDto}/>
+                  dataObject={ldapOrganizationAccountDataDto}
+                  setDataObject={setLdapOrganizationAccountDataDto}/>
               </Col>
               <Col lg={12}>
                 <BooleanToggleInput disabled={true} fieldName={"localAuth"} dataObject={ldapOrganizationAccountDataDto}
-                                    setDataObject={setLdapOrganizationAccountDataDto}/>
+                  setDataObject={setLdapOrganizationAccountDataDto}/>
               </Col>
               <Col lg={12}>
                 <BooleanToggleInput disabled={true} fieldName={"samlEnabled"}
-                                    dataObject={ldapOrganizationAccountDataDto}
-                                    setDataObject={setLdapOrganizationAccountDataDto}/>
+                  dataObject={ldapOrganizationAccountDataDto}
+                  setDataObject={setLdapOrganizationAccountDataDto}/>
               </Col>
               <Col lg={12}>
                 <BooleanToggleInput disabled={true} fieldName={"oAuthEnabled"}
-                                    dataObject={ldapOrganizationAccountDataDto}
-                                    setDataObject={setLdapOrganizationAccountDataDto}/>
+                  dataObject={ldapOrganizationAccountDataDto}
+                  setDataObject={setLdapOrganizationAccountDataDto}/>
               </Col>
             </Row>
           </EditorPanelContainer>

@@ -10,7 +10,7 @@ import TasksEcsActionButtons from "components/tasks/buttons/ecs/TasksEcsActionBu
 import TaskAksActionButtons from "components/tasks/buttons/aks/TaskAksActionButtons";
 import RunTaskButton from "components/tasks/buttons/RunTaskButton";
 import TaskOrchestrationNotificationInlineInput
-  from "components/common/fields/notifications/orchestration/tasks/TaskOrchestrationNotificationInlineInput";
+from "components/common/fields/notifications/orchestration/tasks/TaskOrchestrationNotificationInlineInput";
 import { TASK_TYPES } from "components/tasks/task.types";
 import TaskSchedulerField, { SCHEDULER_SUPPORTED_TASK_TYPES } from "components/tasks/scheduler/TaskSchedulerField";
 import GitScraperActionButton from "../buttons/gitscraper/GitScraperActionButton";
@@ -19,9 +19,9 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import TaskStateField from "temp-library-components/fields/orchestration/state/task/TaskStateField";
 import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
 import TaskOrchestrationSummaryField
-  from "temp-library-components/fields/orchestration/task/TaskOrchestrationSummaryField";
+from "temp-library-components/fields/orchestration/task/TaskOrchestrationSummaryField";
 import TaskRunDurationMetricsStandaloneField
-  from "temp-library-components/fields/orchestration/task/metrics/TaskRunDurationMetricsStandaloneField";
+from "temp-library-components/fields/orchestration/task/metrics/TaskRunDurationMetricsStandaloneField";
 import TaskTagManagerInput from "components/tasks/details/inputs/TaskTagManagerInput";
 import TaskActivityPanel from "components/tasks/activity_logs/TaskActivityPanel";
 import DateTimeField from "components/common/fields/date/DateTimeField";
@@ -42,42 +42,42 @@ function TaskSummaryPanel(
 
   const getButtonForTaskType = () => {
     switch (gitTasksData?.getData("type")) {
-      case TASK_TYPES.AZURE_CLUSTER_CREATION:
-        return (
-          <TaskAksActionButtons
-            gitTasksData={gitTasksData}
-            status={status}
-            runCount={runCount}
-          />
-        );
-      case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
-        return (
-          <TasksEcsActionButtons
-            gitTasksData={gitTasksData}
-            status={status}
-            runCount={runCount}
-          />
-        );
-      case TASK_TYPES.GITSCRAPER:
-        return (
-          <GitScraperActionButton
-            gitTasksData={gitTasksData}
-            status={status}
-            runCount={runCount}
-          />
-        );
-      default:
-        return (
-          <RunTaskButton
-            taskModel={gitTasksData}
-            setTaskModel={setGitTasksData}
-            loadData={loadData}
-            status={status}
-            actionAllowed={TaskRoleHelper.canRunTask(userData, gitTasksData?.getPersistData())}
-            taskType={gitTasksData?.getData("type")}
-            runCount={runCount}
-          />
-        );
+    case TASK_TYPES.AZURE_CLUSTER_CREATION:
+      return (
+        <TaskAksActionButtons
+          gitTasksData={gitTasksData}
+          status={status}
+          runCount={runCount}
+        />
+      );
+    case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
+      return (
+        <TasksEcsActionButtons
+          gitTasksData={gitTasksData}
+          status={status}
+          runCount={runCount}
+        />
+      );
+    case TASK_TYPES.GITSCRAPER:
+      return (
+        <GitScraperActionButton
+          gitTasksData={gitTasksData}
+          status={status}
+          runCount={runCount}
+        />
+      );
+    default:
+      return (
+        <RunTaskButton
+          taskModel={gitTasksData}
+          setTaskModel={setGitTasksData}
+          loadData={loadData}
+          status={status}
+          actionAllowed={TaskRoleHelper.canRunTask(userData, gitTasksData?.getPersistData())}
+          taskType={gitTasksData?.getData("type")}
+          runCount={runCount}
+        />
+      );
     }
   };
 

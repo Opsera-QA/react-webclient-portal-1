@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 import OwnershipReportLdapUserSelectInput
-  from "components/common/list_of_values_input/reports/user_reports/OwnershipReportLdapUserSelectInput";
+from "components/common/list_of_values_input/reports/user_reports/OwnershipReportLdapUserSelectInput";
 import Model from "core/data_model/model";
 import pipelineActions from "components/workflow/pipeline-actions";
 import reportsFilterMetadata from "components/reports/reports-filter-metadata";

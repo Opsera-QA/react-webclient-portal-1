@@ -8,7 +8,7 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import useComponentStateReference from "hooks/useComponentStateReference";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineTypeMultiSelectInput
-  from "components/common/list_of_values_input/admin/pipeline_templates/PipelineTypeMultiSelectInput";
+from "components/common/list_of_values_input/admin/pipeline_templates/PipelineTypeMultiSelectInput";
 import TagManager from "components/common/inputs/tags/TagManager";
 import {
   customerPipelineTemplateCatalogActions

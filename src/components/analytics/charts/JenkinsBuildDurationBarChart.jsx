@@ -9,7 +9,7 @@ import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
 import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
-         capitalizeLegend } from "../../insights/charts/charts-views";
+  capitalizeLegend } from "../../insights/charts/charts-views";
 import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function JenkinsBuildDurationBarChart({ persona, date }) {
@@ -95,7 +95,7 @@ function JenkinsBuildDurationBarChart({ persona, date }) {
           ) : (
             <ResponsiveBar
               {...defaultConfig("Build Duration (Minutes)", "Build Number", 
-                      false, false, "wholeNumbers", "numbers")}
+                false, false, "wholeNumbers", "numbers")}
               {...adjustBarWidth(data ? data.data : [])}
               data={data ? data.data : []}
               keys={["Value"]}
@@ -104,10 +104,10 @@ function JenkinsBuildDurationBarChart({ persona, date }) {
               colors={getColorByData}
               onClick={() => setShowModal(true)}
               tooltip={({ data, value, color }) => <ChartTooltip 
-                              titles = {["Duration", "Build Number", "Job Name"]}
-                              values = {[`${value} minutes`, data.buildNum, data.jobName]}
-                              style = {false}
-                              color = {color} />}
+                titles = {["Duration", "Build Number", "Job Name"]}
+                values = {[`${value} minutes`, data.buildNum, data.jobName]}
+                style = {false}
+                color = {color} />}
             />
           )}
         </div>

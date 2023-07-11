@@ -26,34 +26,34 @@ function DashboardNotificationTabView(
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "email":
-        return (
-          <EmailNotificationEditorPanel
-            emailNotificationModel={emailNotificationModel}
-            setEmailNotificationModel={setEmailNotificationModel}
-          />
-        );      
-      case "slack":
-        return (
-          <SlackNotificationEditorPanel
-            slackNotificationModel={slackNotificationModel}
-            setSlackNotificationModel={setSlackNotificationModel}
-          />
-        );      
-      case "teams":
-        return (
-          <MicrosoftTeamsNotificationEditorPanel
-            teamsNotificationModel={teamsNotificationModel}
-            setTeamsNotificationModel={setTeamsNotificationModel}
-          />
-        );
-      case "gchat":
-        return (
-          <GChatNotificationEditorPanel
-            gChatNotificationModel={gChatNotificationModel}
-            setGChatNotificationModel={setGChatNotificationModel}
-          />
-        );
+    case "email":
+      return (
+        <EmailNotificationEditorPanel
+          emailNotificationModel={emailNotificationModel}
+          setEmailNotificationModel={setEmailNotificationModel}
+        />
+      );      
+    case "slack":
+      return (
+        <SlackNotificationEditorPanel
+          slackNotificationModel={slackNotificationModel}
+          setSlackNotificationModel={setSlackNotificationModel}
+        />
+      );      
+    case "teams":
+      return (
+        <MicrosoftTeamsNotificationEditorPanel
+          teamsNotificationModel={teamsNotificationModel}
+          setTeamsNotificationModel={setTeamsNotificationModel}
+        />
+      );
+    case "gchat":
+      return (
+        <GChatNotificationEditorPanel
+          gChatNotificationModel={gChatNotificationModel}
+          setGChatNotificationModel={setGChatNotificationModel}
+        />
+      );
     }
   };
 

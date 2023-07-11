@@ -58,17 +58,17 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
     return (
       <DataBlockBoxContainer showBorder={true}>
         <ThreeLineDataBlockBase
-            className={`${trend} p-2`}
-            topText={"Change Failure Rate"}
-            icon={getReverseTrendIcon(trend)}
-            bottomText={`Prev Failure Rate: ${ !isNaN(metricData?.prevChangeFailureRate) ? metricData?.prevChangeFailureRate +` %` :'NA'}`}
-            middleText={
-              <MetricScoreText
-                  score={`${ !isNaN(metricData?.changeFailureRate) ? metricData?.changeFailureRate +` %` :'NA'}`}
-                  dataPoint={dataPoint}
-                  className={"metric-block-content-text"}
-              />}
-            dataPoint={dataPoint}
+          className={`${trend} p-2`}
+          topText={"Change Failure Rate"}
+          icon={getReverseTrendIcon(trend)}
+          bottomText={`Prev Failure Rate: ${ !isNaN(metricData?.prevChangeFailureRate) ? metricData?.prevChangeFailureRate +` %` :'NA'}`}
+          middleText={
+            <MetricScoreText
+              score={`${ !isNaN(metricData?.changeFailureRate) ? metricData?.changeFailureRate +` %` :'NA'}`}
+              dataPoint={dataPoint}
+              className={"metric-block-content-text"}
+            />}
+          dataPoint={dataPoint}
         />
       </DataBlockBoxContainer>
     );
@@ -105,11 +105,11 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
       <div className="new-chart p-0" style={{height: "150px"}}>
         <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
           {getLegends()}
-          </div>
+        </div>
         <ResponsiveLine
           data={cfrChartData}
           {...defaultConfig("", "Date", 
-                false, true, "numbers", "monthDate2")}
+            false, true, "numbers", "monthDate2")}
           {...config()}
           yScale={{ type: 'linear', min: '0', max: maxGoalsValue, stacked: false, reverse: false }}
           axisLeft={{            
@@ -127,10 +127,10 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
           )}
           markers={[
             {
-                axis: 'y',
-                value: goalsData,
-                lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
-                legend: '',
+              axis: 'y',
+              value: goalsData,
+              lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
+              legend: '',
             }            
           ]}
         />

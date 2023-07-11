@@ -9,7 +9,7 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import PipelineWizardFileUploadMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/pipeline-wizard-file-upload-metadata.js";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import SfdcPipelineWizardSubmitFileTypeButton
-  from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardSubmitFileTypeButton";
+from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardSubmitFileTypeButton";
 import CancelButton from "components/common/buttons/CancelButton";
 import ExternalPageLink from "components/common/links/ExternalPageLink";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
@@ -18,11 +18,11 @@ import VanityTable from "components/common/table/VanityTable";
 import _ from "lodash";
 import PackageXmlFieldBase from "components/common/fields/code/PackageXmlFieldBase";
 import SfdcPipelineWizardIncludeDependenciesToggle
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
+from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
 import SfdcPipelineWizardTranslationToggleInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardTranslationToggleInput";
+from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardTranslationToggleInput";
 import SfdcPipelineWizardUploadComponentSummary
-  from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardUploadComponentSummary";
+from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardUploadComponentSummary";
 
 function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) {
   const fields = PipelineWizardFileUploadMetadata.fields;
@@ -296,11 +296,11 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     if (pipelineWizardModel.getData("xmlFileContent").length === 0 && pipelineWizardModel.getData("csvFileContent").length === 0) {
       return (
         <div className="drop-container"
-             onDragOver={dragOver}
-             onDragEnter={dragEnter}
-             onDragLeave={dragLeave}
-             onDrop={fileDrop}
-             onClick={fileInputClicked}
+          onDragOver={dragOver}
+          onDragEnter={dragEnter}
+          onDragLeave={dragLeave}
+          onDrop={fileDrop}
+          onClick={fileInputClicked}
         >
           <div className="drop-message">
             <div className="upload-icon"><i className="fa fa-upload" aria-hidden="true" /></div>
@@ -342,9 +342,9 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     if (pipelineWizardModel?.getData("isProfiles") === true) {
       return (
         <SfdcPipelineWizardTranslationToggleInput
-            pipelineWizardModel={pipelineWizardModel}
-            setPipelineWizardModel={setPipelineWizardModel}
-          />
+          pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardModel={setPipelineWizardModel}
+        />
       );
     }
   };

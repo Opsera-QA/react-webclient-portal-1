@@ -17,16 +17,16 @@ function CommandLineStepV2GitRepositoryInput({dataObject, setDataObject, disable
   };
 
   return (
-     <RepositorySelectInput
-       fieldName={"repoId"}
-       service={dataObject.getData("service")}
-       gitToolId={dataObject.getData("gitToolId")}
-       workspace={dataObject.getData("workspace")}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       setDataFunction={setRepository}
-       disabled={disabled}
-     />
+    <RepositorySelectInput
+      fieldName={"repoId"}
+      service={dataObject.getData("service")}
+      gitToolId={dataObject.getData("gitToolId")}
+      workspace={dataObject.getData("workspace")}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      setDataFunction={setRepository}
+      disabled={disabled}
+    />
   );
 }
 

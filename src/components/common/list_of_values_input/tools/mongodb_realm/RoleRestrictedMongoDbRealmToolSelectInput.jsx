@@ -4,19 +4,19 @@ import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_v
 
 function RoleRestrictedMongoDbRealmToolSelectInput({className, fieldName, model, setModel, setDataFunction, disabled}) {
   return (
-     <RoleRestrictedToolByIdentifierInputBase
-       toolIdentifier={"mongodb_realm"}
-       toolFriendlyName={"MongoDB Realm"}
-       fieldName={fieldName}
-       placeholderText={"Select MongoDB Realm Tool"}
-       configurationRequired={true}
-       model={model}
-       setModel={setModel}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-       className={className}
-       // fields={["_id", "configuration", "name"]}
-     />
+    <RoleRestrictedToolByIdentifierInputBase
+      toolIdentifier={"mongodb_realm"}
+      toolFriendlyName={"MongoDB Realm"}
+      fieldName={fieldName}
+      placeholderText={"Select MongoDB Realm Tool"}
+      configurationRequired={true}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+      className={className}
+      // fields={["_id", "configuration", "name"]}
+    />
   );
 }
 

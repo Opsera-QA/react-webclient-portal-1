@@ -2,11 +2,11 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
 import EndpointRequestHeaderTokenConfiguration
-  from "components/common/inputs/endpoints/endpoint/request/headers/EndpointRequestHeaderTokenConfiguration";
+from "components/common/inputs/endpoints/endpoint/request/headers/EndpointRequestHeaderTokenConfiguration";
 import EndpointRequestHeaderUseAuthorizationTokenToggleInput
-  from "components/common/inputs/endpoints/endpoint/request/headers/EndpointRequestHeaderUseAuthorizationTokenToggleInput";
+from "components/common/inputs/endpoints/endpoint/request/headers/EndpointRequestHeaderUseAuthorizationTokenToggleInput";
 import endpointRequestHeaderConfigurationMetadata
-  from "@opsera/definitions/constants/api/request/header/endpointRequestHeaderConfiguration.metadata";
+from "@opsera/definitions/constants/api/request/header/endpointRequestHeaderConfiguration.metadata";
 
 function EndpointRequestHeaderConfigurationInput(
   {

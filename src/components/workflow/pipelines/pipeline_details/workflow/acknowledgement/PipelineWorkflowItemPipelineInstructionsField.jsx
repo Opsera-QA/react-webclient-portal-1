@@ -10,13 +10,13 @@ import { faSearch } from "@fortawesome/pro-solid-svg-icons";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import PipelineInstructionsAcknowledgementOverlay
-  from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
+from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
 import UserActionsPipelineInstructionsDisplayerOverlay
-  from "components/workflow/plan/step/user_actions/UserActionsPipelineInstructionsDisplayerOverlay";
+from "components/workflow/plan/step/user_actions/UserActionsPipelineInstructionsDisplayerOverlay";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import useGetPipelineInstructionModelByPipelineStep
-  from "components/workflow/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
+from "components/workflow/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
 
 export default function PipelineWorkflowItemPipelineInstructionsField(
   {

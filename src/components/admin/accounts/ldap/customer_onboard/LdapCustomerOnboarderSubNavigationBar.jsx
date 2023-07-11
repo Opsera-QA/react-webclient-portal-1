@@ -12,12 +12,12 @@ function LdapCustomerOnboardingSubNavigationBar({activeTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-      case "adminTools":
-        history.push(`/admin`);
-        return;
-      case "customerOnboarding":
-        history.push(`/accounts/create`);
-        return;
+    case "adminTools":
+      history.push(`/admin`);
+      return;
+    case "customerOnboarding":
+      history.push(`/accounts/create`);
+      return;
     }
   };
 

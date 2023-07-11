@@ -29,34 +29,34 @@ export default function CreateFreeTrialGithubToolButton(
     try {
       const configuration = gitToolModel?.getPersistData();
       configuration.accountPassword = await toolsActions.saveSimpleVaultPasswordToVaultV2(
-          getAccessToken,
-          cancelTokenSource,
-          toolId,
-          toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
-          configuration?.accountPassword,
+        getAccessToken,
+        cancelTokenSource,
+        toolId,
+        toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
+        configuration?.accountPassword,
       );
       configuration.secretPrivateKey = await toolsActions.saveThreePartToolPasswordToVaultV3(
-          getAccessToken,
-          cancelTokenSource,
-          toolId,
-          toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
-          "secretPrivateKey",
-          configuration?.secretPrivateKey,
+        getAccessToken,
+        cancelTokenSource,
+        toolId,
+        toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
+        "secretPrivateKey",
+        configuration?.secretPrivateKey,
       );
       configuration.secretAccessTokenKey = await toolsActions.saveThreePartToolPasswordToVaultV3(
-          getAccessToken,
-          cancelTokenSource,
-          toolId,
-          toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
-          "secretAccessTokenKey",
-          configuration?.secretAccessTokenKey,
+        getAccessToken,
+        cancelTokenSource,
+        toolId,
+        toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
+        "secretAccessTokenKey",
+        configuration?.secretAccessTokenKey,
       );
 
       return await toolsActions.updateToolConnectionDetails(
-          getAccessToken,
-          cancelTokenSource,
-          toolId,
-          configuration,
+        getAccessToken,
+        cancelTokenSource,
+        toolId,
+        configuration,
       );
     } catch (error) {
       if (isMounted?.current === true) {

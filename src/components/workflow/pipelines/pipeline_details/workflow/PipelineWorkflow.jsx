@@ -10,25 +10,25 @@ import {
   sourceRepositoryConfigurationMetadata
 } from "components/workflow/plan/source/sourceRepositoryConfiguration.metadata";
 import PipelineWorkflowViewConfigurationButton
-  from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowViewConfigurationButton";
+from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowViewConfigurationButton";
 import PipelineWorkflowExportWorkflowButton
-  from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowExportWorkflowButton";
+from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowExportWorkflowButton";
 import PipelineWorkflowWorkflowEditingToggleButton
-  from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowWorkflowEditingToggleButton";
+from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowWorkflowEditingToggleButton";
 import PipelineWorkflowSourceRepositoryItem
-  from "components/workflow/pipelines/pipeline_details/workflow/source/PipelineWorkflowSourceRepositoryItem";
+from "components/workflow/pipelines/pipeline_details/workflow/source/PipelineWorkflowSourceRepositoryItem";
 import PipelineWorkflowZoomButtons
-  from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowZoomButtons";
+from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowZoomButtons";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const getZoomClass = (val) => {
   switch (val) {
-    case 1:
-      return "scale-80"; // .8x zoom
-    case 2:
-      return "scale-100"; //standard 100% zoom
-    case 3:
-      return "scale-120"; // 1.2x zoom
+  case 1:
+    return "scale-80"; // .8x zoom
+  case 2:
+    return "scale-100"; //standard 100% zoom
+  case 3:
+    return "scale-120"; // 1.2x zoom
   }
 };
 
@@ -49,7 +49,7 @@ function PipelineWorkflow({
   const {
     toastContext,
     getAccessToken,
-   } = useComponentStateReference();
+  } = useComponentStateReference();
 
 
   const callbackFunctionEditItem = async (item) => {

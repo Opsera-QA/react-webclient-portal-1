@@ -4,7 +4,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import LdapSiteRoleGroupRoleHelper
-  from "@opsera/know-your-role/roles/accounts/groups/role/ldapSiteRoleGroupRole.helper";
+from "@opsera/know-your-role/roles/accounts/groups/role/ldapSiteRoleGroupRole.helper";
 import useLdapSiteRoleActions from "hooks/ldap/site_roles/useLdapSiteRoleActions";
 import useGetSiteRoleModel from "hooks/ldap/site_roles/useGetSiteRoleModel";
 

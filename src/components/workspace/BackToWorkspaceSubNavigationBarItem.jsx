@@ -15,9 +15,9 @@ export default function BackToWorkspaceSubNavigationBarItem() {
     e.preventDefault();
 
     switch (tabSelection) {
-      case "workspace":
-        history.push(workspaceHelper.getManagementScreenLink());
-        return;
+    case "workspace":
+      history.push(workspaceHelper.getManagementScreenLink());
+      return;
     }
   };
 

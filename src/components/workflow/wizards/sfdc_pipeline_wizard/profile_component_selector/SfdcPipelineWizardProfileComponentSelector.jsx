@@ -11,9 +11,9 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SfdcPipelineWizardProfileComponentTable
-  from "components/workflow/wizards/sfdc_pipeline_wizard/profile_component_selector/SfdcPipelineWizardProfileComponentTable";
+from "components/workflow/wizards/sfdc_pipeline_wizard/profile_component_selector/SfdcPipelineWizardProfileComponentTable";
 import SfdcPipelineWizardSubmitProfileComponentsButton
-  from "components/workflow/wizards/sfdc_pipeline_wizard/profile_component_selector/SfdcPipelineWizardSubmitProfileComponentsButton";
+from "components/workflow/wizards/sfdc_pipeline_wizard/profile_component_selector/SfdcPipelineWizardSubmitProfileComponentsButton";
 import ErrorDialog from "components/common/status_notifications/error";
 import IconBase from "components/common/icons/IconBase";
 

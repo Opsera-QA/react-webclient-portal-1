@@ -90,19 +90,19 @@ function TerraformVcsWorkspaceSelectInput({ fieldName, dataObject, setDataObject
   };
 
   return (
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        selectOptions={workspaces}
-        busy={isLoading}
-        valueField={valueField}
-        textField={textField}
-        placeholderText={placeholder}
-        disabled={disabled || isLoading}
-        setDataFunction={setDataFunction}
-        clearDataFunction={clearDataFunction}
-      />
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      selectOptions={workspaces}
+      busy={isLoading}
+      valueField={valueField}
+      textField={textField}
+      placeholderText={placeholder}
+      disabled={disabled || isLoading}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+    />
   );
 }
 

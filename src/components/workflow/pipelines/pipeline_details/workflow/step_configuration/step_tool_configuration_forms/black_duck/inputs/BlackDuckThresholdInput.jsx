@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PipelineThresholdInputBase
-  from "components/common/inputs/object/pipelines/threshhold/PipelineThresholdInputBase";
+from "components/common/inputs/object/pipelines/threshhold/PipelineThresholdInputBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 export const THRESHOLD_LEVELS = [

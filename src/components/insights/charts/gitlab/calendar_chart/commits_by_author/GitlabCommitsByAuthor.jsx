@@ -108,7 +108,7 @@ function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
           data={metrics}
           {...defaultConfig("Date", "", true, true, "yearMonthDate", "cutoffString")}
           {...config("purple_orange")}
-          onClick={(node) => { onNodeSelect(node) }}
+          onClick={(node) => { onNodeSelect(node); }}
         />
       </div>
     );

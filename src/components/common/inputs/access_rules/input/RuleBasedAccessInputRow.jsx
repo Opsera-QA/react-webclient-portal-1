@@ -8,10 +8,10 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import IconBase from "components/common/icons/IconBase";
 import AccessRuleTypeStandaloneSelectInput
-  from "components/common/inputs/access_rules/input/AccessRuleTypeStandaloneSelectInput";
+from "components/common/inputs/access_rules/input/AccessRuleTypeStandaloneSelectInput";
 import {accessRuleTypeConstants} from "components/common/inputs/access_rules/constants/AccessRuleType.constants";
 import AccessRuleSsoUserOrganizationNameStandaloneMultiSelectInput
-  from "components/common/inputs/access_rules/input/AccessRuleSsoUserOrganizationNameStandaloneMultiSelectInput";
+from "components/common/inputs/access_rules/input/AccessRuleSsoUserOrganizationNameStandaloneMultiSelectInput";
 
 function RuleBasedAccessInputRow(
   { 
@@ -41,15 +41,15 @@ function RuleBasedAccessInputRow(
 
   const getValueInput = () => {
     switch(accessRule?.type) {
-      case accessRuleTypeConstants.ACCESS_RULE_TYPES.ALLOWED_SSO_USER_ORGANIZATIONS:
-        return (
-          <AccessRuleSsoUserOrganizationNameStandaloneMultiSelectInput
-            disabled={disabled || disabledSsoUserOrganizations}
-            setDataFunction={setAccessRoleValueFunction}
-            value={accessRule?.value}
-            ssoUserOrganizationNames={ssoUserOrganizationNames}
-          />
-        );
+    case accessRuleTypeConstants.ACCESS_RULE_TYPES.ALLOWED_SSO_USER_ORGANIZATIONS:
+      return (
+        <AccessRuleSsoUserOrganizationNameStandaloneMultiSelectInput
+          disabled={disabled || disabledSsoUserOrganizations}
+          setDataFunction={setAccessRoleValueFunction}
+          value={accessRule?.value}
+          ssoUserOrganizationNames={ssoUserOrganizationNames}
+        />
+      );
     }
   };
 

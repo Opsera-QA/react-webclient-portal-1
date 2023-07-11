@@ -93,7 +93,7 @@ function AzureClusterConfigurationPanel({ gitTasksDataDto, gitTasksConfiguration
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
           fieldName={"disk_size_gb"}
-          />
+        />
       </Col>
       <Col lg={12}>
         <TextInputBase

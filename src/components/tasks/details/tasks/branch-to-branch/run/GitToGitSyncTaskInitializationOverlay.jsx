@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import GitToGitSyncTaskRunTaskConfirmationScreen
-  from "components/tasks/details/tasks/branch-to-branch/run/GitToGitSyncTaskRunTaskConfirmationScreen";
+from "components/tasks/details/tasks/branch-to-branch/run/GitToGitSyncTaskRunTaskConfirmationScreen";
 import GitToGitSyncTaskPreRunTaskScreen
-  from "components/tasks/details/tasks/branch-to-branch/run/GitToGitSyncTaskPreRunTaskScreen";
+from "components/tasks/details/tasks/branch-to-branch/run/GitToGitSyncTaskPreRunTaskScreen";
 
 export const GIT_TO_GIT_SYNC_TASK_INITIALIZATION_SCREENS = {
   PRE_RUN_TASK_SCREEN: "pre_run_task_screen",

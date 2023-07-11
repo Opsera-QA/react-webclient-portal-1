@@ -154,7 +154,7 @@ function FilesInputBase({
               {property["inputFilePath"]}
             </Col>
             <Col sm={6} className={"pl-2 pr-0 force-text-wrap"}>
-            {property["inputFileName"]}
+              {property["inputFileName"]}
             </Col>
           </Row>
         </Col>

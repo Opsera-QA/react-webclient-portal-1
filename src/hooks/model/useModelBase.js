@@ -5,7 +5,7 @@ export default function useModelBase(
   data,
   metadata,
   newModel,
-  ) {
+) {
   const {
     userData,
     cancelTokenSource,

@@ -14,7 +14,7 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import userDataMappingMetadata from "@opsera/definitions/constants/settings/data_mapping/user/userDataMapping.metadata";
 import {analyticsUserDataMappingHelper} from "components/settings/data_mapping/users/analyticsUserDataMapping.helper";
 import AnalyticsUserDataMappingRoleHelper
-  from "@opsera/know-your-role/roles/settings/analytics_data_mappings/users/analyticsUserDataMappingRole.helper";
+from "@opsera/know-your-role/roles/settings/analytics_data_mappings/users/analyticsUserDataMappingRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function UserDataMappingsTable(

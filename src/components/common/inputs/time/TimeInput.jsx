@@ -74,7 +74,7 @@ function TimeInput({ fieldName, dataObject, setDataObject, disabled, setDataFunc
         errorMessage={errorMessage}
       />
     </InputContainer>
-    );
+  );
 }
 
 TimeInput.propTypes = {

@@ -70,9 +70,9 @@ function SfdcTagFilterInputRow({
             className={"pl-0 pr-1"}
           >
             <StandaloneTextInputBase
-             value={filterField}
-             setDataFunction={updateFilterField}
-             disabled={disabled}
+              value={filterField}
+              setDataFunction={updateFilterField}
+              disabled={disabled}
             />
           </Col>
           <Col
@@ -86,9 +86,9 @@ function SfdcTagFilterInputRow({
             className={"pl-3 pr-0"}
           >
             <StandaloneTextInputBase
-             value={filterValue}
-             setDataFunction={updateFilterValue}
-             disabled={disabled}
+              value={filterValue}
+              setDataFunction={updateFilterValue}
+              disabled={disabled}
             />
           </Col>          
         </Row>

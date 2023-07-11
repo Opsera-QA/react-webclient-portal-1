@@ -29,10 +29,10 @@ function OracleFusionReportMigrationNexusRepoSelectInput({visible, model, setMod
     setNexusRepositoriesList([]);
     if (hasStringValue(nexusToolConfigId)) {
       loadRepos(nexusToolConfigId, source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
     }
     
     return () => {
@@ -72,9 +72,9 @@ function OracleFusionReportMigrationNexusRepoSelectInput({visible, model, setMod
         toastContext.showErrorDialog("Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry.");
       }
     } finally {
-        if (isMounted?.current === true) {
-          setIsLoading(false);
-        }
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
     
   };

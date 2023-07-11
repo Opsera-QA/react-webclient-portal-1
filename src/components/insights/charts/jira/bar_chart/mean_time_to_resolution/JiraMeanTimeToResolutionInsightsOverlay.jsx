@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import {
-    getTableDateTimeColumn,
-    getTableTextColumn
+  getTableDateTimeColumn,
+  getTableTextColumn
 } from "../../../../../common/table/table-column-helpers";
 import { getField } from "../../../../../common/metadata/metadata-helpers";
 import CustomTable from "../../../../../common/table/CustomTable";

@@ -23,14 +23,14 @@ function DeleteTools() {
   } = useComponentStateReference();
 
   // TODO: I think this can be removed. We don't need to pull this data if it's set by the select input
- const loadApplicationTools = async () => {
-  const response = await platformActions.getApplicationsV2(getAccessToken, cancelTokenSource);
-  if (isMounted?.current === true && response?.data) {
-    const application = response.data.find(ele => ele._id  === deleteToolDto.getData("applicationId"));
-    // console.log(application);
-    deleteToolDto.setData("toolsList", application?.tools);
-  }
-};
+  const loadApplicationTools = async () => {
+    const response = await platformActions.getApplicationsV2(getAccessToken, cancelTokenSource);
+    if (isMounted?.current === true && response?.data) {
+      const application = response.data.find(ele => ele._id  === deleteToolDto.getData("applicationId"));
+      // console.log(application);
+      deleteToolDto.setData("toolsList", application?.tools);
+    }
+  };
 
   const getToolsTable = () => {
     if (deleteToolDto.getData("applicationId") && deleteToolDto.getData("applicationId").length > 0 && deleteToolDto.getData("toolsList")) {

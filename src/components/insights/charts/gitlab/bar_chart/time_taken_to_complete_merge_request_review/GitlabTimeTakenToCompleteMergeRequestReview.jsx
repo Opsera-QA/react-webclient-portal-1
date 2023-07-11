@@ -8,11 +8,11 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, assignStandardColors,
-         adjustBarWidth, spaceOutMergeRequestTimeTakenLegend } from '../../../charts-views';
+  adjustBarWidth, spaceOutMergeRequestTimeTakenLegend } from '../../../charts-views';
 import ChartTooltip from "../../../ChartTooltip";
 import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 import GitlabTimeTakenToCompleteMergeRequestReviewActionableOverlay
-  from "./GitlabTimeTakenToCompleteMergeRequestReviewActionableOverlay";
+from "./GitlabTimeTakenToCompleteMergeRequestReviewActionableOverlay";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 
 
@@ -90,23 +90,23 @@ function GitlabTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiC
       return null;
     }
 
-  return (
-    <div className="new-chart mb-3" style={{height: METRIC_CHART_STANDARD_HEIGHT}}>
-          <ResponsiveBar
-            data={metrics}
-            {...defaultConfig("Reviewer", "Time (Hours)", 
-                  true, false, "cutoffString", "wholeNumbers")}
-            {...config()}
-            {...adjustBarWidth(metrics, false)}
-            onClick={onChartClick}
-            tooltip={({ indexValue, color, value }) => <ChartTooltip 
-                    titles={["Reviewer", "Merge Request Time Taken"]}
-                    values={[indexValue, value ]}
-                    style={false}
-                     />}
-          />
+    return (
+      <div className="new-chart mb-3" style={{height: METRIC_CHART_STANDARD_HEIGHT}}>
+        <ResponsiveBar
+          data={metrics}
+          {...defaultConfig("Reviewer", "Time (Hours)", 
+            true, false, "cutoffString", "wholeNumbers")}
+          {...config()}
+          {...adjustBarWidth(metrics, false)}
+          onClick={onChartClick}
+          tooltip={({ indexValue, color, value }) => <ChartTooltip 
+            titles={["Reviewer", "Merge Request Time Taken"]}
+            values={[indexValue, value ]}
+            style={false}
+          />}
+        />
       </div>
-  );
+    );
   };
 
   return (

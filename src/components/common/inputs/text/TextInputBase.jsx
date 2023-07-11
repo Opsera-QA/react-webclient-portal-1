@@ -29,7 +29,7 @@ function TextInputBase(
     inputHelpOverlay,
     visible,
     helpTooltipText,
-      placeholderText
+    placeholderText
   }) {
   const field = dataObject?.getFieldById(fieldName);
   const [errorMessage, setErrorMessage] = useState("");

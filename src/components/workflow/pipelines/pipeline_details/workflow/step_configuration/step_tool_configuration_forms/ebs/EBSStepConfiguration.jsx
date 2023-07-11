@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
 import ebsStepFormMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/ebs-stepForm-metadata";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/ebs-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import EBSCreateDomainToggleInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSCreateDomainToggleInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSCreateDomainToggleInput";
 import RoleRestrictedAwsAccountToolSelectInput from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
@@ -85,7 +85,7 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
         <>
           <EbsCustomDockerComposeToggleInput  dataObject={ebsStepConfigurationDto} setDataObject={setEBSStepConfigurationDataDto} fieldName={"customDockerCompose"} />
           {ebsStepConfigurationDto.getData("customDockerCompose") === true ?
-           (
+            (
               <ScriptLibrarySelectInput
                 fieldName={"dockerComposeScriptId"}
                 model={ebsStepConfigurationDto}
@@ -93,12 +93,12 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
                 busy={isLoading}
                 disabled={isLoading}
               />
-           ) : (
-            <div>
-              <JsonInput fieldName={"dockerVolumePath"} model={ebsStepConfigurationDto} setModel={setEBSStepConfigurationDataDto}/>
-              <JsonInput fieldName={"environments"} model={ebsStepConfigurationDto} setModel={setEBSStepConfigurationDataDto}/>
-            </div>
-           )
+            ) : (
+              <div>
+                <JsonInput fieldName={"dockerVolumePath"} model={ebsStepConfigurationDto} setModel={setEBSStepConfigurationDataDto}/>
+                <JsonInput fieldName={"environments"} model={ebsStepConfigurationDto} setModel={setEBSStepConfigurationDataDto}/>
+              </div>
+            )
           }
         </>
       );
@@ -149,9 +149,9 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
         setModel={setEBSStepConfigurationDataDto}
       />
       <EBSBucketInput
-          fieldName={"bucketName"}
-          dataObject={ebsStepConfigurationDto}
-          setDataObject={setEBSStepConfigurationDataDto}
+        fieldName={"bucketName"}
+        dataObject={ebsStepConfigurationDto}
+        setDataObject={setEBSStepConfigurationDataDto}
       />
       <EBSKeyPairInput
         fieldName={"ec2KeyName"}
@@ -205,9 +205,9 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
       {getDynamicDomainFields()}
       {getCustomDockerFields()}
       <TextInputBase
-          setDataObject={setEBSStepConfigurationDataDto}
-          dataObject={ebsStepConfigurationDto}
-          fieldName={"delayTime"}
+        setDataObject={setEBSStepConfigurationDataDto}
+        dataObject={ebsStepConfigurationDto}
+        fieldName={"delayTime"}
       />
       <EbsEnvironmentVariablesInput 
         setModel={setEBSStepConfigurationDataDto}

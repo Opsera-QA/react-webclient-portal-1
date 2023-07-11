@@ -9,7 +9,7 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
 import { defaultConfig, getColor, assignStandardColors,
-         shortenLegend } from "../../insights/charts/charts-views";
+  shortenLegend } from "../../insights/charts/charts-views";
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 
 function CpuUsageByTimeLineChart({ persona, date }) {
@@ -102,9 +102,9 @@ function CpuUsageByTimeLineChart({ persona, date }) {
             xScale={{ type: "point" }}
             yScale={{ type: "linear", min: "auto", max: "auto", stacked: false, reverse: false }}
             tooltip={({ point, color }) => <ChartTooltip 
-                                  titles = {["Date & Time", "Node name", "CPU usage"]}
-                                  values = {[String(point.data.xFormatted), point.serieId, point.data.y + "%"]}
-                                  color={color} />}
+              titles = {["Date & Time", "Node name", "CPU usage"]}
+              values = {[String(point.data.xFormatted), point.serieId, point.data.y + "%"]}
+              color={color} />}
           />
         )}
       </div>

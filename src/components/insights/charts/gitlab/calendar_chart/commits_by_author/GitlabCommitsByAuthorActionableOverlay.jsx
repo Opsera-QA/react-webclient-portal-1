@@ -4,10 +4,10 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer
-  from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
+from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import Model from "../../../../../../core/data_model/model";
 import actionableInsightsGenericChartFilterMetadata
-  from "../../../generic_filters/actionableInsightsGenericChartFilterMetadata";
+from "../../../generic_filters/actionableInsightsGenericChartFilterMetadata";
 import GitlabCommitsByAuthorActionableTable from "./GitlabCommitsByAuthorActionableTable";
 import gitlabActions from "../../gitlab.action";
 
@@ -103,8 +103,8 @@ function GitlabCommitsByAuthorActionableModal({ kpiConfiguration, dashboardData,
           loadData={loadData}
           tableTitleIcon={icon}
         />
-      </div>)
-  }
+      </div>);
+  };
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}

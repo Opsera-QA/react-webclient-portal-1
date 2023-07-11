@@ -18,14 +18,14 @@ function PowershellBitbucketWorkspaceInput({dataObject, setDataObject, disabled}
   }
 
   return (
-     <BitbucketWorkspaceInput
-       fieldName={"workspace"}
-       gitToolId={dataObject.getData("gitToolId")}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       setDataFunction={setWorkspace}
-       disabled={disabled}
-     />
+    <BitbucketWorkspaceInput
+      fieldName={"workspace"}
+      gitToolId={dataObject.getData("gitToolId")}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      setDataFunction={setWorkspace}
+      disabled={disabled}
+    />
   );
 }
 

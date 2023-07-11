@@ -4,7 +4,7 @@ export const ARGO_APPLICATION_TYPE_CONSTANTS = {};
 ARGO_APPLICATION_TYPE_CONSTANTS.LIST = ["Directory", "Helm", "Kustomize"];
 
 ARGO_APPLICATION_TYPE_CONSTANTS.TYPE = {
-    DIRECTORY:"Directory",
-    HELM:"Helm",
-    KUSTOMIZE:"Kustomize"
+  DIRECTORY:"Directory",
+  HELM:"Helm",
+  KUSTOMIZE:"Kustomize"
 };

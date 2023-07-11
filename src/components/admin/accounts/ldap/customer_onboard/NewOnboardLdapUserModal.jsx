@@ -38,7 +38,7 @@ function NewOnboardLdapUserModal({onModalClose, showModal}) {
           <div className="content-block m-3 full-height">
             <div className="p-3">
               <LdapUserEditorPanel showButton={false} setLdapUserData={setLdapUserData} newLdapUser={true}
-                                   ldapUserData={ldapUserData}/>
+                ldapUserData={ldapUserData}/>
             </div>
           </div>
         </Modal.Body>

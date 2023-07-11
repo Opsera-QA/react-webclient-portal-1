@@ -6,7 +6,7 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import PipelineTaskStateField from "components/common/fields/workflow/pipelines/PipelineTaskStateField";
 import PipelineTaskSummaryMessageField
-  from "components/common/fields/pipelines/activity/PipelineTaskSummaryMessageField";
+from "components/common/fields/pipelines/activity/PipelineTaskSummaryMessageField";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import UserNameField from "components/common/fields/user/UserNameField";
 import ToggleJsonViewIcon from "components/common/icons/details/ToggleJsonViewIcon";

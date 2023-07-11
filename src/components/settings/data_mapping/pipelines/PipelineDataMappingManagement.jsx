@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import PipelineDataMappingsTable from "components/settings/data_mapping/pipelines/PipelineDataMappingsTable";
 import useAnalyticsPipelineDataMappingActions
-  from "hooks/settings/insights/analytics_data_mappings/pipelines/useAnalyticsPipelineDataMappingActions";
+from "hooks/settings/insights/analytics_data_mappings/pipelines/useAnalyticsPipelineDataMappingActions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function PipelineDataMappingManagement() {

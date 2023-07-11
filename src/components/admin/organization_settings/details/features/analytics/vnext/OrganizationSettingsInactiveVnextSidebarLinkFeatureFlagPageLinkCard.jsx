@@ -2,15 +2,15 @@ import React from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PropType from "prop-types";
 import featureFlagConstants
-  from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
+from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
 import OrganizationSettingsFeatureFlagActivationConfirmationOverlay
-  from "components/admin/organization_settings/details/features/inactive/OrganizationSettingsFeatureFlagActivationConfirmationOverlay";
+from "components/admin/organization_settings/details/features/inactive/OrganizationSettingsFeatureFlagActivationConfirmationOverlay";
 import SelectionCardBase from "components/common/card/selection/SelectionCardBase";
 
 export default function OrganizationSettingsInactiveVnextSidebarLinkFeatureFlagPageLinkCard(
   {
     organizationDomain,
-   organizationAccountId,
+    organizationAccountId,
   }) {
   const {
     toastContext,

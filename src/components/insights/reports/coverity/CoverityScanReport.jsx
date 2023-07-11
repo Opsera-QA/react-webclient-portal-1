@@ -4,7 +4,7 @@ import axios from "axios";
 import CoverityScanReportTable from "./CoverityScanReportTable";
 import { AuthContext } from "contexts/AuthContext";
 import actionableInsightsGenericChartFilterMetadata
-  from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
+from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import Model from "core/data_model/model";
 import chartsActions from "components/insights/charts/charts-actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";

@@ -5,7 +5,7 @@ import {
   OverlayTrigger,
   Popover,
   Tooltip
- } from "react-bootstrap";
+} from "react-bootstrap";
 
 import { NewAppContext } from "./context";
 
@@ -79,11 +79,11 @@ function ConfigurationManagement(props) {
                 </Tooltip>
               }
             >
-            <div
+              <div
                 // className={`newApp__service-logo ${tools.includes("Ansible") ? "newApp__service-logo--alredy-installed" : ""}`}
                 className="newApp__service-logo newApp__service-logo--disabledButAvailable"
                 // onClick={() => selectCard("Ansible")}
-                >
+              >
                 <input type="checkbox"
                   disabled={tools.includes("Ansible") ? true : false}
                   checked={isChecked.Ansible && data["Ansible"]}
@@ -104,18 +104,18 @@ function ConfigurationManagement(props) {
                 </Tooltip>
               }
             >
-            <div
+              <div
               // className="newApp__service-logo newApp__service-logo--disabled"
-              className="newApp__service-logo newApp__service-logo--disabledButAvailable"
-            >
-              <input type="checkbox"
-                disabled={tools.includes("Chef") ? true : false}
-                checked={isChecked.Chef && data["Chef"]}
-                className="newApp__checkbox"
-              />
-              <img src={"/img/tools/chef.png"} alt="Chef" />
-              <span className="newApp__service-title">Chef</span>
-            </div>
+                className="newApp__service-logo newApp__service-logo--disabledButAvailable"
+              >
+                <input type="checkbox"
+                  disabled={tools.includes("Chef") ? true : false}
+                  checked={isChecked.Chef && data["Chef"]}
+                  className="newApp__checkbox"
+                />
+                <img src={"/img/tools/chef.png"} alt="Chef" />
+                <span className="newApp__service-title">Chef</span>
+              </div>
             </OverlayTrigger>
             
             <OverlayTrigger
@@ -127,18 +127,18 @@ function ConfigurationManagement(props) {
                 </Tooltip>
               }
             >
-            <div
+              <div
               // className="newApp__service-logo newApp__service-logo--disabled"
-              className="newApp__service-logo newApp__service-logo--disabledButAvailable"
-            >
-              <input type="checkbox"
-                disabled={tools.includes("Puppet") ? true : false}
-                checked={isChecked.Puppet && data["Puppet"]}
-                className="newApp__checkbox"
-              />
-              <img src={"/img/tools/puppet.png"} alt="Puppet"/>
-              <span className="newApp__service-title">Puppet</span>
-            </div>
+                className="newApp__service-logo newApp__service-logo--disabledButAvailable"
+              >
+                <input type="checkbox"
+                  disabled={tools.includes("Puppet") ? true : false}
+                  checked={isChecked.Puppet && data["Puppet"]}
+                  className="newApp__checkbox"
+                />
+                <img src={"/img/tools/puppet.png"} alt="Puppet"/>
+                <span className="newApp__service-title">Puppet</span>
+              </div>
             </OverlayTrigger>
           </div>
         </Card.Body>

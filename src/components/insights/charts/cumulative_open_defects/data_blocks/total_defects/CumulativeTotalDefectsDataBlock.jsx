@@ -7,10 +7,10 @@ import TwoLineScoreDataBlock from "../../../../../common/metrics/score/TwoLineSc
 function CumulativeTotalDefectsDataBlock({ defects }) {
   return (
     <DataBlockBoxContainer showBorder={true}>
-        <TwoLineScoreDataBlock
-          className={"p-3"}
-          score={defects}
-          subtitle={"Total No of Defects"} />
+      <TwoLineScoreDataBlock
+        className={"p-3"}
+        score={defects}
+        subtitle={"Total No of Defects"} />
     </DataBlockBoxContainer>
   );
 }

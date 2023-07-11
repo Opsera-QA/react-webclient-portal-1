@@ -33,7 +33,7 @@ function GitlabLeadTimeTrendDataBlock({
         bottomText={`${bottomText}${prevValue}`}
         middleText={
           <TooltipWrapper innerText={toolTipText}>
-           <span className={`${getQualityBasedClassName(qualityLevel)} metric-block-header-text`}>{value}</span>
+            <span className={`${getQualityBasedClassName(qualityLevel)} metric-block-header-text`}>{value}</span>
           </TooltipWrapper>
         }
         dataPoint={dataPoint}

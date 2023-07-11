@@ -13,8 +13,8 @@ export const frequency = [
 function PipelineScheduledTaskFrequencySelectInput({ fieldName, dataObject, setDataObject, disabled, scheduledTaskData, updateScheduleName}) {
 
   const handleChange = () => {
-   scheduledTaskData.setData("schedule", dataObject);
-  updateScheduleName(dataObject);
+    scheduledTaskData.setData("schedule", dataObject);
+    updateScheduleName(dataObject);
   };
 
   return (

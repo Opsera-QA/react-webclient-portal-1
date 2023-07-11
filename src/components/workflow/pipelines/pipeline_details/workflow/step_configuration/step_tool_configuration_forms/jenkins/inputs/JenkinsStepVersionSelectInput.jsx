@@ -20,6 +20,6 @@ function JenkinsStepVersionSelectInput({ model, setModel }) {
 JenkinsStepVersionSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
-}
+};
 
 export default JenkinsStepVersionSelectInput;

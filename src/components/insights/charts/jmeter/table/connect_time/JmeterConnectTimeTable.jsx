@@ -11,7 +11,7 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import jmeterConnectTimeTableMetadata
-  from "components/insights/charts/jmeter/table/connect_time/jmeter-connect-time-metadata";
+from "components/insights/charts/jmeter/table/connect_time/jmeter-connect-time-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
 
 function JmeterConnectTimeTable({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {

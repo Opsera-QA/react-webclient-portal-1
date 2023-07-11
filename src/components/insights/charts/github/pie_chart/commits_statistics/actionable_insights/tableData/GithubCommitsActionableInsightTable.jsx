@@ -56,33 +56,33 @@ function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filter
   );
 
   const getTable = () => {
-      if (showExportPanel === true && type === "open") {
-          return (
-              <ExportOpenPanel
-                  showExportPanel={showExportPanel}
-                  setShowExportPanel={setShowExportPanel}
-                  LookupDetailsData={data}
-              />
-          );
-      }
-      else if (showExportPanel === true && type === "declined"){
-          return (
-              <ExportDeclinedPanel
-                  showExportPanel={showExportPanel}
-                  setShowExportPanel={setShowExportPanel}
-                  LookupDetailsData={data}
-              />
-          );
-      }
-      else if (showExportPanel === true && type === "merged"){
-          return (
-              <ExportMergedPanel
-                  showExportPanel={showExportPanel}
-                  setShowExportPanel={setShowExportPanel}
-                  LookupDetailsData={data}
-              />
-          );
-      }
+    if (showExportPanel === true && type === "open") {
+      return (
+        <ExportOpenPanel
+          showExportPanel={showExportPanel}
+          setShowExportPanel={setShowExportPanel}
+          LookupDetailsData={data}
+        />
+      );
+    }
+    else if (showExportPanel === true && type === "declined"){
+      return (
+        <ExportDeclinedPanel
+          showExportPanel={showExportPanel}
+          setShowExportPanel={setShowExportPanel}
+          LookupDetailsData={data}
+        />
+      );
+    }
+    else if (showExportPanel === true && type === "merged"){
+      return (
+        <ExportMergedPanel
+          showExportPanel={showExportPanel}
+          setShowExportPanel={setShowExportPanel}
+          LookupDetailsData={data}
+        />
+      );
+    }
 
     return (
       <CustomTable
@@ -108,11 +108,11 @@ function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filter
       setFilterDto={setFilterModel}
       filterDto={filterModel}
       exportButton={
-          <ExportGithubCommitsButton
-              className={"ml-2"}
-              setShowExportPanel={setShowExportPanel}
-              showExportPanel={showExportPanel}
-          />
+        <ExportGithubCommitsButton
+          className={"ml-2"}
+          setShowExportPanel={setShowExportPanel}
+          showExportPanel={showExportPanel}
+        />
       }
     />
   );

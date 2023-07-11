@@ -10,7 +10,7 @@ export async function persistNewRecordAndViewDetails(model, toastContext, showSu
     lenient,
     true,
     isIncomplete,
-    );
+  );
 
   if (response != null && response !== false && history != null) {
     const newData = response?.data?.data ? response?.data?.data : response?.data;
@@ -118,7 +118,7 @@ export async function persistUpdatedRecord(
   clearChangeMap = true,
   customSuccessMessage,
   customIncompleteDataMessage,
-  ) {
+) {
   try {
     if (model == null) {
       return false;

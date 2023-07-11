@@ -43,7 +43,7 @@ const OctopusEnvironmentMetadata = {
       label: "ID",
       id: "id"
     }
-],
+  ],
   newObjectFields: {
     _id: "",
     type: "environment",

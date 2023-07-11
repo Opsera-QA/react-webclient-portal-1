@@ -307,62 +307,62 @@ const LoginForm = () => {
             <div className="auth-box-w">
               <div className="logo-w">
                 <img alt="Opsera"
-                     src="/img/logos/opsera_bird_infinity_171_126.png"
-                     width="171"
-                     height="126"
+                  src="/img/logos/opsera_bird_infinity_171_126.png"
+                  width="171"
+                  height="126"
                 />
               </div>
 
               <div id="osw-container">
-                  <div className="h4 auth-header">
+                <div className="h4 auth-header">
                     Sign in
+                </div>
+
+                <form onSubmit={handleSubmit}>
+                  <div className="form-group">
+                    <label htmlFor="username">Email Address</label>
+                    <input className="form-control"
+                      id="username" type="text"
+                      value={username}
+                      disabled={true}
+                      onChange={handleUsernameChange} />
+                    <div className="pre-icon os-icon os-icon-user-male-circle"></div>
                   </div>
+                  <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <input className="form-control"
+                      id="password" type="password"
+                      value={password}
+                      onChange={handlePasswordChange} />
+                    <div className="pre-icon os-icon os-icon-fingerprint"></div>
+                  </div>
+                  <div className="buttons-w text-center">
 
-                  <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                      <label htmlFor="username">Email Address</label>
-                      <input className="form-control"
-                             id="username" type="text"
-                             value={username}
-                             disabled={true}
-                             onChange={handleUsernameChange} />
-                      <div className="pre-icon os-icon os-icon-user-male-circle"></div>
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="password">Password</label>
-                      <input className="form-control"
-                             id="password" type="password"
-                             value={password}
-                             onChange={handlePasswordChange} />
-                      <div className="pre-icon os-icon os-icon-fingerprint"></div>
-                    </div>
-                    <div className="buttons-w text-center">
-
-                      <Button variant="outline-secondary"
-                              className="mb-3 mr-1" style={{ width: "46%" }}
-                              type="button"
-                              onClick={() => {
-                                setViewType("domain");
-                              }}>
-                        <IconBase icon={faArrowLeft} className={"mr-1"} iconSize={"sm"} />
+                    <Button variant="outline-secondary"
+                      className="mb-3 mr-1" style={{ width: "46%" }}
+                      type="button"
+                      onClick={() => {
+                        setViewType("domain");
+                      }}>
+                      <IconBase icon={faArrowLeft} className={"mr-1"} iconSize={"sm"} />
                         Back
-                      </Button>
+                    </Button>
 
-                      <Button variant="warning"
-                              className="ml-1 mb-3"
-                              style={{ width: "46%" }}
-                              type="submit"
-                              disabled={!username || !password}>
-                        {loading && <LoadingIcon className={"mr-1"} iconSize={"sm"} />}
+                    <Button variant="warning"
+                      className="ml-1 mb-3"
+                      style={{ width: "46%" }}
+                      type="submit"
+                      disabled={!username || !password}>
+                      {loading && <LoadingIcon className={"mr-1"} iconSize={"sm"} />}
                         Sign in</Button>
-                    </div>
-                    <div className="text-center">
-                      <Button variant="link" size="sm"
-                              onClick={() => {
-                                setViewType("reset");
-                              }}>Forgot Password</Button>
-                    </div>
-                  </form>
+                  </div>
+                  <div className="text-center">
+                    <Button variant="link" size="sm"
+                      onClick={() => {
+                        setViewType("reset");
+                      }}>Forgot Password</Button>
+                  </div>
+                </form>
               </div>
 
             </div>
@@ -387,11 +387,11 @@ const LoginForm = () => {
 
               <div className="buttons-w text-center">
                 <Button variant="outline-secondary"
-                        className="mb-3 mr-1" style={{ width: "46%" }}
-                        type="button"
-                        onClick={() => {
-                          setViewType("domain");
-                        }}>
+                  className="mb-3 mr-1" style={{ width: "46%" }}
+                  type="button"
+                  onClick={() => {
+                    setViewType("domain");
+                  }}>
                   <IconBase icon={faArrowLeft} className={"mr-1"} iconSize={"sm"} />
                   Back
                 </Button>
@@ -410,9 +410,9 @@ const LoginForm = () => {
         <div className="auth-box-w">
           <div className="logo-w">
             <img alt="Opsera"
-                 src="/img/logos/opsera_bird_infinity_171_126.png"
-                 width="171"
-                 height="126"
+              src="/img/logos/opsera_bird_infinity_171_126.png"
+              width="171"
+              height="126"
             />
           </div>
           <h4 className="auth-header">
@@ -423,9 +423,9 @@ const LoginForm = () => {
             <div className="form-group">
               <label htmlFor="username">Email Address</label>
               <input className="form-control"
-                     id="username" type="text"
-                     value={resetEmailAddress}
-                     onChange={handleResetEmailChange} />
+                id="username" type="text"
+                value={resetEmailAddress}
+                onChange={handleResetEmailChange} />
               <div className="pre-icon os-icon os-icon-user-male-circle"></div>
             </div>
 
@@ -436,9 +436,9 @@ const LoginForm = () => {
             </div>
             <div className="text-center">
               <Button variant="link" size="sm"
-                      onClick={() => {
-                        setViewType("login");
-                      }}>Login Form</Button>
+                onClick={() => {
+                  setViewType("login");
+                }}>Login Form</Button>
             </div>
           </form>
         </div>
@@ -455,9 +455,9 @@ const LoginForm = () => {
             <div className="auth-box-w">
               <div className="logo-w">
                 <img alt="Opsera"
-                     src="/img/logos/opsera_bird_infinity_171_126.png"
-                     width="171"
-                     height="126"
+                  src="/img/logos/opsera_bird_infinity_171_126.png"
+                  width="171"
+                  height="126"
                 />
               </div>
               <h4 className="auth-header">
@@ -468,15 +468,15 @@ const LoginForm = () => {
                 <div className="form-group">
                   <label htmlFor="username">Email Address</label>
                   <input className="form-control"
-                         id="username" type="text"
-                         value={lookupAccountEmail}
-                         onChange={handleLookupAccountEmailChange} />
+                    id="username" type="text"
+                    value={lookupAccountEmail}
+                    onChange={handleLookupAccountEmailChange} />
                   <div className="pre-icon os-icon os-icon-user-male-circle"></div>
                 </div>
 
                 <div className="buttons-w">
                   <Button variant="warning" className="w-100 mb-3" type="submit"
-                          disabled={!lookupAccountEmail}>
+                    disabled={!lookupAccountEmail}>
                     {loading && <LoadingIcon className={"mr-1"} iconSize={"sm"} />}
                     Next</Button>
                 </div>

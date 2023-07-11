@@ -16,9 +16,9 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import SfdcPipelineWizardFileUploadComponent
-  from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardFileUploadComponent";
+from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardFileUploadComponent";
 import SfdcPipelineWizardPastRunComponent
-  from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardPastRunComponent";
+from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardPastRunComponent";
 import { parseError } from "components/common/helpers/error-helpers";
 const DataParsingHelper = require("@opsera/persephone/helpers/data/dataParsing.helper");
 
@@ -363,30 +363,30 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
           {pipelineWizardModel.getData("isProfiles") === true ? 
             <SaveButtonContainer>
               <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading}
-                      onClick={() => createNewPipelineWizardRecord(undefined, true, false)}>
+                onClick={() => createNewPipelineWizardRecord(undefined, true, false)}>
                 <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Profile Instance</span>
               </Button>
               <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading}
-                      onClick={() => createNewPipelineWizardRecord(undefined, true, true)}>
+                onClick={() => createNewPipelineWizardRecord(undefined, true, true)}>
                 <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Translation Instance</span>
               </Button>
               <Button size={"sm"} variant="success" disabled={isLoading} onClick={() => unpackPreviousPipelineRun()}>
                 <span><IconBase icon={faStepForward} fixedWidth className="mr-2"/>Continue Where The Last Instance Left Off</span>
               </Button>
               <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose}
-                            size={"sm"}/>
+                size={"sm"}/>
             </SaveButtonContainer>
             :
             <SaveButtonContainer>
               <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading}
-                      onClick={() => createNewPipelineWizardRecord(undefined, true, false)}>
+                onClick={() => createNewPipelineWizardRecord(undefined, true, false)}>
                 <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Instance</span>
               </Button>
               <Button size={"sm"} variant="success" disabled={isLoading} onClick={() => unpackPreviousPipelineRun()}>
                 <span><IconBase icon={faStepForward} fixedWidth className="mr-2"/>Continue Where The Last Instance Left Off</span>
               </Button>
               <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose}
-                            size={"sm"}/>
+                size={"sm"}/>
             </SaveButtonContainer>
           }
           
@@ -503,12 +503,12 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
 
   const getView = () => {
     switch (activeTab) {
-      case "manual":
-        return getBody();
-      case "past_run":
-        return getPastRunBody();
-      case "automatic":
-        return getFileUploadBody();
+    case "manual":
+      return getBody();
+    case "past_run":
+      return getPastRunBody();
+    case "automatic":
+      return getFileUploadBody();
     }
   };
 

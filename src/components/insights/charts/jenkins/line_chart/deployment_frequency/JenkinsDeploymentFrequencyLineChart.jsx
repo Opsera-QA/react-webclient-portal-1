@@ -101,13 +101,13 @@ function JenkinsDeploymentFrequencyLineChart({ persona, date }) {
             <ResponsiveLine
               data={data ? data.data : []}
               {...defaultConfig("Number of Deployments", "Date", 
-                                false, false, "wholeNumbers", "monthDate")}
+                false, false, "wholeNumbers", "monthDate")}
               {...config(getColor)}
               onClick={() => setShowModal(true)}
               tooltip={({ point, color }) => <ChartTooltip 
-                              titles = {["Number of Deployments"]}
-                              values = {[point.data.y]}
-                              color = {color} />}
+                titles = {["Number of Deployments"]}
+                values = {[point.data.y]}
+                color = {color} />}
             />
           )}
         </div>

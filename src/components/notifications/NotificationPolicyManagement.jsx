@@ -3,7 +3,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import NotificationPolicySubNavigationBar from "components/notifications/NotificationPolicySubNavigationBar";
 import NotificationPoliciesTable from "components/notifications/NotificationPoliciesTable";
 import NotificationManagementHelpDocumentation
-  from "../common/help/documentation/notifications/NotificationManagementHelpDocumentation";
+from "../common/help/documentation/notifications/NotificationManagementHelpDocumentation";
 import useGetNotificationPolicies from "hooks/notification_policies/useGetNotificationPolicies";
 
 function NotificationPolicyManagement() {

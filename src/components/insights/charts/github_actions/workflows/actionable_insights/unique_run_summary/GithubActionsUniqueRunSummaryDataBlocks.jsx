@@ -9,7 +9,7 @@ import TwoLinePercentageDataBlock from "components/common/metrics/percentage/Two
 import { AuthContext } from "contexts/AuthContext";
 import { metricHelpers } from "components/insights/metric.helpers";
 import githubActionsWorkflowActions
-  from "components/insights/charts/github_actions/workflows/github-actions-workflow-actions";
+from "components/insights/charts/github_actions/workflows/github-actions-workflow-actions";
 import { faInfoCircle } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
 

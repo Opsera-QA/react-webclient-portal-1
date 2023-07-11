@@ -87,19 +87,19 @@ function ConsolidatedUserTaskAccessReport({ userEmailAddress }) {
   }
 
   return (
-      <FilterContainer
-        style={{minWidth: "505px"}}
-        loadData={loadData}
-        filterDto={taskFilterDto}
-        setFilterDto={setTaskFilterDto}
-        supportSearch={true}
-        isLoading={isLoading}
-        metadata={taskMetadata}
-        type={"tasks"}
-        body={getTaskAccessTable()}
-        titleIcon={faTasks}
-        title={"Tasks"}
-      />
+    <FilterContainer
+      style={{minWidth: "505px"}}
+      loadData={loadData}
+      filterDto={taskFilterDto}
+      setFilterDto={setTaskFilterDto}
+      supportSearch={true}
+      isLoading={isLoading}
+      metadata={taskMetadata}
+      type={"tasks"}
+      body={getTaskAccessTable()}
+      titleIcon={faTasks}
+      title={"Tasks"}
+    />
   );
 }
 

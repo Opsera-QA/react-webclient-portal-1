@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import pipelineInstructionsTypeConstants
-  from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructionsType.constants";
+from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructionsType.constants";
 
 function PipelineInstructionsTypeFilter(
   {

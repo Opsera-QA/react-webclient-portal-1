@@ -81,7 +81,7 @@ function BitbucketMergeRequestByMaximumTimeChart({
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Time (Hours)", "Project", 
-                      true, false, "values", "cutoffString")}
+            true, false, "values", "cutoffString")}
           {...config(getColorByData, METRIC_THEME_CHART_PALETTE_COLORS)}
           {...adjustBarWidth(metrics)}
           onClick={() => setShowModal(true)}

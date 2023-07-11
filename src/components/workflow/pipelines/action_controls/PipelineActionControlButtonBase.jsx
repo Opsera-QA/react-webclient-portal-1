@@ -61,14 +61,14 @@ export default function PipelineActionControlButtonBase(
         size={"sm"}
         className={className}
       >
-          <span>
-            <IconBase
-              isLoading={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY}
-              icon={getButtonIcon()}
-              className={iconClassName}
-            />
-            {getLabel()}
-          </span>
+        <span>
+          <IconBase
+            isLoading={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY}
+            icon={getButtonIcon()}
+            className={iconClassName}
+          />
+          {getLabel()}
+        </span>
       </Button>
     </ButtonTooltip>
   );

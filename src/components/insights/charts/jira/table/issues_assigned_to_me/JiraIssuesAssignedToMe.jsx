@@ -9,7 +9,7 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import jiraIssuesAssignedToMeMetadata
-  from "components/insights/charts/jira/table/issues_assigned_to_me/jira-issues-assigned-to-me-metadata.js";
+from "components/insights/charts/jira/table/issues_assigned_to_me/jira-issues-assigned-to-me-metadata.js";
 import {getField} from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";

@@ -95,16 +95,16 @@ function StepToolActivityView({ pipelineId, stepId, runCount, tool_identifier, h
             <LoadingIcon iconSize={"sm"} />
             :
             <IconBase icon={faSync}
-                             className={"pointer"}
-                             onClickFunction={() => {
-                               loadFormData(pipelineId, stepId, tool_identifier);
-                             }} />}
+              className={"pointer"}
+              onClickFunction={() => {
+                loadFormData(pipelineId, stepId, tool_identifier);
+              }} />}
           <div className="text-right float-right">
             <IconBase icon={faTimes}
-                             className={"pointer"}
-                             onClickFunction={() => {
-                               handleCloseWindow();
-                             }} />
+              className={"pointer"}
+              onClickFunction={() => {
+                handleCloseWindow();
+              }} />
           </div>
         </div>
         <div className="workflow-tool-activity-window">

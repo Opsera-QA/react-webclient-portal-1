@@ -30,17 +30,17 @@ githubActions.githubBranchList = async (getAccessToken, cancelTokenSource,reposi
   // TODO FILTER WITH TAGS
   const apiUrl = githubBaseURL + "githubBranchList";
   let postBody = {};
-    if (Array.isArray(repository)) {
-      if (repository.length > 0) {
-        postBody = { 
-          githubRepositoryList: repository,
-          size: 10, };
-      }
-    } else if (repository) {
+  if (Array.isArray(repository)) {
+    if (repository.length > 0) {
       postBody = { 
-        githubRepositoryList: [repository],
+        githubRepositoryList: repository,
         size: 10, };
     }
+  } else if (repository) {
+    postBody = { 
+      githubRepositoryList: [repository],
+      size: 10, };
+  }
   
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,
@@ -51,14 +51,14 @@ githubActions.githubBranchList = async (getAccessToken, cancelTokenSource,reposi
 };
 
 githubActions.githubMergeReqAndPushActionableTable = async (
-    getAccessToken,
-    cancelTokenSource,
-    kpiConfiguration,
-    dashboardTags,
-    dashboardOrgs,
-    tableFilterDto,
-    date,
-    projectName
+  getAccessToken,
+  cancelTokenSource,
+  kpiConfiguration,
+  dashboardTags,
+  dashboardOrgs,
+  tableFilterDto,
+  date,
+  projectName
 ) => {
   const apiUrl = githubBaseURL + "githubMergeReqAndPushActionableTable";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
@@ -85,17 +85,17 @@ githubActions.githubMergeReqAndPushActionableTable = async (
     endDate: dateRange?.end,
     tags:
         tags && dashboardTags
-            ? tags.concat(dashboardTags)
-            : dashboardTags?.length > 0
-                ? dashboardTags
-                : tags,
+          ? tags.concat(dashboardTags)
+          : dashboardTags?.length > 0
+            ? dashboardTags
+            : tags,
     dashboardOrgs: dashboardOrgs,
     page: tableFilterDto?.getData("currentPage")
-        ? tableFilterDto?.getData("currentPage")
-        : 1,
+      ? tableFilterDto?.getData("currentPage")
+      : 1,
     size: tableFilterDto?.getData("pageSize")
-        ? tableFilterDto?.getData("pageSize")
-        : 5,
+      ? tableFilterDto?.getData("pageSize")
+      : 5,
     githubRepository: githubRepository,
     githubBranch: githubBranch,
     date: date,
@@ -103,20 +103,20 @@ githubActions.githubMergeReqAndPushActionableTable = async (
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
-      getAccessToken,
-      cancelTokenSource,
-      apiUrl,
-      postBody,
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
   );
 };
 
 githubActions.githubMergeReqAndPushActionableVerticalContainer = async (
-    getAccessToken,
-    cancelTokenSource,
-    kpiConfiguration,
-    dashboardTags,
-    dashboardOrgs,
-    date
+  getAccessToken,
+  cancelTokenSource,
+  kpiConfiguration,
+  dashboardTags,
+  dashboardOrgs,
+  date
 ) => {
   const apiUrl = githubBaseURL + "githubMergeReqAndPushActionableVerticalContainer";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
@@ -143,10 +143,10 @@ githubActions.githubMergeReqAndPushActionableVerticalContainer = async (
     endDate: dateRange?.end,
     tags:
         tags && dashboardTags
-            ? tags.concat(dashboardTags)
-            : dashboardTags?.length > 0
-                ? dashboardTags
-                : tags,
+          ? tags.concat(dashboardTags)
+          : dashboardTags?.length > 0
+            ? dashboardTags
+            : tags,
     dashboardOrgs: dashboardOrgs,
     githubRepository: githubRepository,
     githubBranch: githubBranch,
@@ -154,10 +154,10 @@ githubActions.githubMergeReqAndPushActionableVerticalContainer = async (
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
-      getAccessToken,
-      cancelTokenSource,
-      apiUrl,
-      postBody,
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
   );
 };
 

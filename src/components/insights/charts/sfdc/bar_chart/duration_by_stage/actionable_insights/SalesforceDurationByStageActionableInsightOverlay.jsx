@@ -47,11 +47,11 @@ function SalesforceDurationByStageActionableInsightsOverlay({
     )
   );
   const [filterModel2, setFilterModel2] = useState(
-      new Model(
-          { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
-          actionableInsightsGenericChartFilterMetadata,
-          false
-      )
+    new Model(
+      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+      actionableInsightsGenericChartFilterMetadata,
+      false
+    )
   );
 
   useEffect(() => {
@@ -117,8 +117,8 @@ function SalesforceDurationByStageActionableInsightsOverlay({
           setMetrics2(dataObject2);
         }
         let dataCount2 = response?.data
-            ? response?.data?.data[0]?.salesforceDurationByStage?.data?.quickDeployResults[0]?.count[0]?.count
-            : [];
+          ? response?.data?.data[0]?.salesforceDurationByStage?.data?.quickDeployResults[0]?.count[0]?.count
+          : [];
         let newFilterDto2 = filterDto;
         newFilterDto2.setData("totalCount", dataCount2);
         setFilterModel2({ ...newFilterDto2 });
@@ -185,27 +185,27 @@ function SalesforceDurationByStageActionableInsightsOverlay({
   const getBody = () => {
     if (activeTab == "pipelines") {
       return (
-          <SalesforceDurationByStageActionableInsightsTable
-              dashboardData={dashboardData}
-              kpiConfiguration={kpiConfiguration}
-              data={metrics}
-              isLoading={isLoading}
-              loadData={loadData}
-              filterModel={filterModel}
-              setFilterModel={setFilterModel}
-          />
+        <SalesforceDurationByStageActionableInsightsTable
+          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
+          data={metrics}
+          isLoading={isLoading}
+          loadData={loadData}
+          filterModel={filterModel}
+          setFilterModel={setFilterModel}
+        />
       );
     } else if (activeTab == "jobs") {
       return (
-          <SalesforceDurationByStageTasksActionableTable
-              dashboardData={dashboardData}
-              kpiConfiguration={kpiConfiguration}
-              data={metrics2}
-              isLoading={isLoading}
-              loadData={loadData}
-              filterModel={filterModel2}
-              setFilterModel={setFilterModel2}
-          />
+        <SalesforceDurationByStageTasksActionableTable
+          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
+          data={metrics2}
+          isLoading={isLoading}
+          loadData={loadData}
+          filterModel={filterModel2}
+          setFilterModel={setFilterModel2}
+        />
       );
     }
   };
@@ -217,69 +217,69 @@ function SalesforceDurationByStageActionableInsightsOverlay({
 
   const getTabContainer = () => {
     return (
-        <CustomTabContainer>
-          <CustomTab
-              activeTab={activeTab}
-              tabText={"Pipelines"}
-              handleTabClick={handleTabClick}
-              tabName={"pipelines"}
-          />
-          <CustomTab
-              activeTab={activeTab}
-              tabText={"Tasks"}
-              handleTabClick={handleTabClick}
-              tabName={"jobs"}
-          />
-        </CustomTabContainer>
+      <CustomTabContainer>
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Pipelines"}
+          handleTabClick={handleTabClick}
+          tabName={"pipelines"}
+        />
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Tasks"}
+          handleTabClick={handleTabClick}
+          tabName={"jobs"}
+        />
+      </CustomTabContainer>
     );
   };
 
   if(actionableInsightsQueryData.serieId === "Deploy") {
     return (
-        <FullScreenCenterOverlayContainer
-            closePanel={closePanel}
-            showPanel={true}
-            titleText={title}
-            showToasts={true}
-            titleIcon={faTable}
-            isLoading={isLoading}
-            linkTooltipText={"View Full Blueprint"}
-        >
+      <FullScreenCenterOverlayContainer
+        closePanel={closePanel}
+        showPanel={true}
+        titleText={title}
+        showToasts={true}
+        titleIcon={faTable}
+        isLoading={isLoading}
+        linkTooltipText={"View Full Blueprint"}
+      >
+        <div className={"p-3"}>
+          {getDateBadge()}
+          <SalesforceDurationByStageOverviewDataBlockContainer data={dataBlockValues}/>
           <div className={"p-3"}>
-            {getDateBadge()}
-            <SalesforceDurationByStageOverviewDataBlockContainer data={dataBlockValues}/>
-            <div className={"p-3"}>
-              <TabPanelContainer currentView={getBody()} tabContainer={getTabContainer()} />
-            </div>
+            <TabPanelContainer currentView={getBody()} tabContainer={getTabContainer()} />
           </div>
-        </FullScreenCenterOverlayContainer>
+        </div>
+      </FullScreenCenterOverlayContainer>
     );
   }
-    return (
-        <FullScreenCenterOverlayContainer
-            closePanel={closePanel}
-            showPanel={true}
-            titleText={title}
-            showToasts={true}
-            titleIcon={faTable}
-            isLoading={isLoading}
-            linkTooltipText={"View Full Blueprint"}
-        >
-          <div className={"p-3"}>
-            {getDateBadge()}
-            <SalesforceDurationByStageOverviewDataBlockContainer data={dataBlockValues}/>
-            <SalesforceDurationByStageActionableInsightsTable
-                data={metrics}
-                isLoading={isLoading}
-                loadData={loadData}
-                filterModel={filterModel}
-                setFilterModel={setFilterModel}
-                title={title}
-            />
-            {/* {getFooterDetails()} */}
-          </div>
-        </FullScreenCenterOverlayContainer>
-    );
+  return (
+    <FullScreenCenterOverlayContainer
+      closePanel={closePanel}
+      showPanel={true}
+      titleText={title}
+      showToasts={true}
+      titleIcon={faTable}
+      isLoading={isLoading}
+      linkTooltipText={"View Full Blueprint"}
+    >
+      <div className={"p-3"}>
+        {getDateBadge()}
+        <SalesforceDurationByStageOverviewDataBlockContainer data={dataBlockValues}/>
+        <SalesforceDurationByStageActionableInsightsTable
+          data={metrics}
+          isLoading={isLoading}
+          loadData={loadData}
+          filterModel={filterModel}
+          setFilterModel={setFilterModel}
+          title={title}
+        />
+        {/* {getFooterDetails()} */}
+      </div>
+    </FullScreenCenterOverlayContainer>
+  );
 
 }
 

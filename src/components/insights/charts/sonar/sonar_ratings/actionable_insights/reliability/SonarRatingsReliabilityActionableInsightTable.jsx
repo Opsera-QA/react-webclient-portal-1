@@ -39,21 +39,21 @@ function SonarRatingsReliabilityActionableInsightTable(
         const value = row?.value;
         if (value > 0) {
           switch (block) {
-            case "vulnerability":
-            case "bugs":
-            case "code_smells":
-            case "critical":
-            case "blocker":
-              classNm = 'danger-red';
-              break;
-            case "major":
-              classNm = value <= 1 ? 'opsera-yellow' : "danger-red";
-              break;
-            case "minor":
-              classNm = value < 10 ? 'opsera-yellow' : "danger-red";
-              break;
-            default:
-              classNm = "dark-gray-text-primary";
+          case "vulnerability":
+          case "bugs":
+          case "code_smells":
+          case "critical":
+          case "blocker":
+            classNm = 'danger-red';
+            break;
+          case "major":
+            classNm = value <= 1 ? 'opsera-yellow' : "danger-red";
+            break;
+          case "minor":
+            classNm = value < 10 ? 'opsera-yellow' : "danger-red";
+            break;
+          default:
+            classNm = "dark-gray-text-primary";
           }
         }
         return (<div className={`${classNm}`}>

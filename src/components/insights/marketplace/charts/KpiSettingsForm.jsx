@@ -74,9 +74,9 @@ import {dashboardMetricActions} from "components/insights/dashboards/metrics/das
 import DeleteDashboardMetricButton from "components/common/buttons/dashboards/metric/DeleteDashboardMetricButton";
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
 import DeleteDashboardMetricConfirmationPanel
-  from "components/insights/marketplace/dashboards/metrics/delete/DeleteDashboardMetricConfirmationPanel";
+from "components/insights/marketplace/dashboards/metrics/delete/DeleteDashboardMetricConfirmationPanel";
 import DashboardMetricEditorPanelContainer
-  from "components/common/panels/detail_panel_container/dashboard_metrics/DashboardMetricEditorPanelContainer";
+from "components/common/panels/detail_panel_container/dashboard_metrics/DashboardMetricEditorPanelContainer";
 import { kpiIdentifierConstants } from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 import { KPI_FILTER_TYPES } from "components/common/list_of_values_input/admin/kpi_configurations/filters/kpiFilter.types";
 
@@ -353,377 +353,377 @@ function KpiSettingsForm({
 
   const getKpiFilters = (filter) => {
     switch (filter.type) {
-      case "date":
-        if (kpiConfiguration.kpi_identifier === "jira-lead-time") {
-          return (
-            <div>
-              <ThreeMonthsRestrictedDateRangeInput
-                dataObject={kpiDateFilter}
-                setDataObject={setKpiDateFilter}
-                fieldName={"value"}
+    case "date":
+      if (kpiConfiguration.kpi_identifier === "jira-lead-time") {
+        return (
+          <div>
+            <ThreeMonthsRestrictedDateRangeInput
+              dataObject={kpiDateFilter}
+              setDataObject={setKpiDateFilter}
+              fieldName={"value"}
+            />
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            <DateRangeInput dataObject={kpiDateFilter} setDataObject={setKpiDateFilter} fieldName={"value"} />
+          </div>
+        );
+      }
+    case "tags":
+      return (
+        <div>
+          <Row>
+            <Col md={6}>
+              <BooleanToggleInput
+                fieldName={"useKpiTags"}
+                dataObject={kpiConfigSettings}
+                setDataObject={setKpiConfigSettings}
               />
-            </div>
-          );
-        } else {
-          return (
-            <div>
-              <DateRangeInput dataObject={kpiDateFilter} setDataObject={setKpiDateFilter} fieldName={"value"} />
-            </div>
-          );
-        }
-      case "tags":
-        return (
-          <div>
-            <Row>
-              <Col md={6}>
-                <BooleanToggleInput
-                  fieldName={"useKpiTags"}
-                  dataObject={kpiConfigSettings}
-                  setDataObject={setKpiConfigSettings}
-                />
-              </Col>
-              <Col md={6}>
-                <BooleanToggleInput
-                  fieldName={"useDashboardTags"}
-                  dataObject={kpiConfigSettings}
-                  setDataObject={setKpiConfigSettings}
-                />
-              </Col>
-            </Row>
-            <TagManager
-              type={"kpi_filter"}
-              fieldName={"value"}
-              setDataObject={setKpiTagsFilter}
-              dataObject={kpiTagsFilter}
-              disabled={
-                !tagFilterEnabled.includes(kpiSettings.getData("kpi_identifier")) ||
+            </Col>
+            <Col md={6}>
+              <BooleanToggleInput
+                fieldName={"useDashboardTags"}
+                dataObject={kpiConfigSettings}
+                setDataObject={setKpiConfigSettings}
+              />
+            </Col>
+          </Row>
+          <TagManager
+            type={"kpi_filter"}
+            fieldName={"value"}
+            setDataObject={setKpiTagsFilter}
+            dataObject={kpiTagsFilter}
+            disabled={
+              !tagFilterEnabled.includes(kpiSettings.getData("kpi_identifier")) ||
                 !kpiConfigSettings.getData("useKpiTags")
-              }
-            />
-          </div>
-        );
-      case "goals":
-        return (
-          <div>
-            <GoalsInputBase
-              type={"kpi_filter"}
-              fieldName={"value"}
-              setDataObject={setKpiGoalsFilter}
-              dataObject={kpiGoalsFilter}
-              kpiName={kpiSettings.getData("kpi_identifier")}
-            />
-          </div>
-        );
-      case "notes":
-        return (
-          <div>
-            <TextAreaInput
-              type={"kpi_filter"}
-              fieldName={"value"}
-              setDataObject={setKpiNotesFilter}
-              dataObject={kpiNotesFilter}
-            />
-          </div>
-        );
-      case "jenkins-result":
-        return (
-          <div>
-            <JenkinsResultFilterInput
-              type={"kpi_filter"}
-              fieldName={"value"}
-              setDataObject={setKpiJenkinsResultFilter}
-              dataObject={kpiJenkinsResultFilter}
-            />
-          </div>
-        );
-      case "jenkins-job-url":
-        return (
-          <div>
-            <TextInputBase
-              type={"kpi_filter"}
-              fieldName={"value"}
-              setDataObject={setKpiJenkinsJobUrlFilter}
-              dataObject={kpiJenkinsJobUrlFilter}
-            />
-          </div>
-        );
-      case "jenkins-build-number":
-        return (
-          <div>
-            <MultiTextInputBase
-              type={"kpi_filter"}
-              fieldName={"value"}
-              setDataObject={setKpiJenkinsBuildNumberFilter}
-              dataObject={kpiJenkinsBuildNumberFilter}
-            />
-          </div>
-        );
-      case "jira-issue-type":
-        return (
-          <div>
-            <MultiTextInputBase
-              type={"kpi_filter"}
-              fieldName={"value"}
-              setDataObject={setKpiJiraIssueTypeFilter}
-              dataObject={kpiJiraIssueTypeFilter}
-            />
-          </div>
-        );
-      case "jira-issue-components":
-        return (
-          <div>
-            <MultiTextInputBase
-              type={"kpi_filter"}
-              fieldName={"value"}
-              setDataObject={setKpiJiraIssueComponentsFilter}
-              dataObject={kpiJiraIssueComponentsFilter}
-            />
-          </div>
-        );
-      case "jira-issue-labels":
-        return (
-          <div>
-            <MultiTextInputBase
-              type={"kpi_filter"}
-              fieldName={"value"}
-              setDataObject={setKpiJiraIssueLabelsFilter}
-              dataObject={kpiJiraIssueLabelsFilter}
-            />
-          </div>
-        );
-      case "jira-issue-status":
-        return (
-          <div>
-            <MultiTextInputBase
-              type={"kpi_filter"}
-              fieldName={"value"}
-              setDataObject={setKpiJiraIssueStatusFilter}
-              dataObject={kpiJiraIssueStatusFilter}
-            />
-          </div>
-        );
-      case "jira-issue-start-status":
-        return (
-          <div>
-            <MultiTextInputBase
-              type={"kpi_filter"}
-              fieldName={"value"}
-              setDataObject={setKpiJiraIssueStartStatusFilter}
-              dataObject={kpiJiraIssueStartStatusFilter}
-            />
-          </div>
-        );
-      case KPI_FILTER_TYPES.JIRA_ISSUE_START_STAGE:
-        return (
-          <div>
-            <MultiTextInputBase
-              type={"kpi_filter"}
-              fieldName={"value"}
-              setDataObject={setKpiJiraIssueStartStageFilter}
-              dataObject={kpiJiraIssueStartStageFilter}
-            />
-          </div>
-        );
-      case "jira-issue-done-status":
-        return (
-          <div>
-            <MultiTextInputBase
-              type={"kpi_filter"}
-              fieldName={"value"}
-              setDataObject={setKpiJiraIssueDoneStatusFilter}
-              dataObject={kpiJiraIssueDoneStatusFilter}
-            />
-          </div>
-        );
-      case "sonar-project-key":
-        return (
-          <div>
-            <SonarProjectsMultiSelectInput
-              placeholderText={"Select Project(s)"}
-              type={"kpi_filter"}
-              fieldName={"value"}
-              setDataObject={setKpiSonarProjectKeyFilter}
-              dataObject={kpiSonarProjectKeyFilter}
-            />
-          </div>
-        );
-      case "domain":
-        return (
-          <div>
-            <ManualKpiMultiSelectInputBase
-              type={"domain"}
-              fieldName={"value"}
-              setDataObject={setKpiDomainFilter}
-              dataObject={kpiDomainFilter}
-            />
-          </div>
-        );
-      case "project":
-        return (
-          <div>
-            <ManualKpiMultiSelectInputBase
-              type={"project"}
-              fieldName={"value"}
-              setDataObject={setKpiProjectFilter}
-              dataObject={kpiProjectFilter}
-            />
-          </div>
-        );
-      case "application":
-        return (
-          <div>
-            <ManualKpiMultiSelectInputBase
-              type={"application"}
-              fieldName={"value"}
-              setDataObject={setKpiApplicationFilter}
-              dataObject={kpiApplicationFilter}
-            />
-          </div>
-        );
-      case "release":
-        return (
-          <div>
-            <ManualKpiMultiSelectInputBase
-              type={"release"}
-              fieldName={"value"}
-              setDataObject={setKpiReleaseFilter}
-              dataObject={kpiReleaseFilter}
-            />
-          </div>
-        );
-      case "sprint":
-        return (
-          <div>
-            <ManualKpiMultiSelectInputBase
-              type={"sprint"}
-              fieldName={"value"}
-              setDataObject={setKpiSprintFilter}
-              dataObject={kpiSprintFilter}
-            />
-          </div>
-        );
-      case "selenium-test-suites":
-        return (
-          <div>
-            <SeleniumTestSuitesMultiSelectInput
-              placeholderText={"Select Test Suites"}
-              type={"kpi_filter"}
-              fieldName={"value"}
-              valueField={"value"}
-              textField={"text"}
-              setDataObject={setKpiSeleniumTestSuitesFilter}
-              dataObject={kpiSeleniumTestSuitesFilter}
-            />
-          </div>
-        );
-      case "sonar-project-languages":
-        return (
-          <div>
-            <SonarProjectLanguagesMultiSelectInput
-              placeholderText={"Select Language(s)"}
-              type={"kpi_filter"}
-              fieldName={"value"}
-              valueField={"value"}
-              textField={"text"}
-              setDataObject={setKpiSonarProjectLanguagesFilter}
-              dataObject={kpiSonarProjectLanguagesFilter}
-            />
-          </div>
-        );
-      case "servicenow-priorities":
-        return (
-          <div>
-            <ServiceNowPrioritiesMultiSelectInput
-              placeholderText={"Select Priorities"}
-              type={"kpi_filter"}
-              fieldName={"value"}
-              valueField={"value"}
-              textField={"text"}
-              setModel={setKpiServiceNowPrioritiesFilter}
-              model={kpiServiceNowPrioritiesFilter}
-            />
-          </div>
-        );
-      case "servicenow-tools":
-        return (
-          <div>
-            <ServiceNowToolsSelectInputLegacy
-              placeholderText={"Select Tools"}
-              type={"kpi_filter"}
-              fieldName={"value"}
-              valueField={"_id"}
-              textField={"name"}
-              setDataObject={setKpiServiceNowToolsFilter}
-              dataObject={kpiServiceNowToolsFilter}
-              groupsDataObject={kpiServiceNowAssignmentGroupsFilter}
-              groupsSetDataObject={setKpiServiceNowAssignmentGroupsFilter}
-            />
-          </div>
-        );
-      case "servicenow-assignment-groups":
-        return (
-          <div>
-            <ServiceNowAssignmentGroupSelectInput
-              visible={true}
-              placeholderText={"Select Assignment Groups"}
-              type={"kpi_filter"}
-              fieldName={"value"}
-              valueField={"sys_id"}
-              textField={"name"}
-              setDataObject={setKpiServiceNowAssignmentGroupsFilter}
-              dataObject={kpiServiceNowAssignmentGroupsFilter}
-              serviceNowToolId={kpiServiceNowToolsFilter.getData("value")}
-            />
-          </div>
-        );
-      case "servicenow-service-offerings":
-        return (
-          <div>
-            <ServiceNowServiceOfferingsSelectInput
-              visible={true}
-              placeholderText={"Select Service Offerings"}
-              type={"kpi_filter"}
-              fieldName={"value"}
-              valueField={"sys_id"}
-              textField={"name"}
-              setDataObject={setKpiServiceNowServiceOfferingsFilter}
-              dataObject={kpiServiceNowServiceOfferingsFilter}
-              serviceNowToolId={kpiServiceNowToolsFilter.getData("value")}
-            />
-          </div>
-        );
-      case "servicenow-configuration-items":
-        return (
-          <div>
-            <ServiceNowConfigurationItemsSelectInput
-              visible={true}
-              placeholderText={"Select Configuration Items"}
-              type={"kpi_filter"}
-              fieldName={"value"}
-              valueField={"sys_id"}
-              textField={"name"}
-              setDataObject={setKpiServiceNowConfigurationItemsFilter}
-              dataObject={kpiServiceNowConfigurationItemsFilter}
-              serviceNowToolId={kpiServiceNowToolsFilter.getData("value")}
-            />
-          </div>
-        );
-      case "servicenow-business-services":
-        return (
-          <div>
-            <ServiceNowBusinessServicesSelectInput
-              visible={true}
-              placeholderText={"Select Business Services"}
-              type={"kpi_filter"}
-              fieldName={"value"}
-              valueField={"sys_id"}
-              textField={"name"}
-              setDataObject={setKpiServiceNowBusinessServicesFilter}
-              dataObject={kpiServiceNowBusinessServicesFilter}
-              serviceNowToolId={kpiServiceNowToolsFilter.getData("value")}
-            />
-          </div>
-        );
+            }
+          />
+        </div>
+      );
+    case "goals":
+      return (
+        <div>
+          <GoalsInputBase
+            type={"kpi_filter"}
+            fieldName={"value"}
+            setDataObject={setKpiGoalsFilter}
+            dataObject={kpiGoalsFilter}
+            kpiName={kpiSettings.getData("kpi_identifier")}
+          />
+        </div>
+      );
+    case "notes":
+      return (
+        <div>
+          <TextAreaInput
+            type={"kpi_filter"}
+            fieldName={"value"}
+            setDataObject={setKpiNotesFilter}
+            dataObject={kpiNotesFilter}
+          />
+        </div>
+      );
+    case "jenkins-result":
+      return (
+        <div>
+          <JenkinsResultFilterInput
+            type={"kpi_filter"}
+            fieldName={"value"}
+            setDataObject={setKpiJenkinsResultFilter}
+            dataObject={kpiJenkinsResultFilter}
+          />
+        </div>
+      );
+    case "jenkins-job-url":
+      return (
+        <div>
+          <TextInputBase
+            type={"kpi_filter"}
+            fieldName={"value"}
+            setDataObject={setKpiJenkinsJobUrlFilter}
+            dataObject={kpiJenkinsJobUrlFilter}
+          />
+        </div>
+      );
+    case "jenkins-build-number":
+      return (
+        <div>
+          <MultiTextInputBase
+            type={"kpi_filter"}
+            fieldName={"value"}
+            setDataObject={setKpiJenkinsBuildNumberFilter}
+            dataObject={kpiJenkinsBuildNumberFilter}
+          />
+        </div>
+      );
+    case "jira-issue-type":
+      return (
+        <div>
+          <MultiTextInputBase
+            type={"kpi_filter"}
+            fieldName={"value"}
+            setDataObject={setKpiJiraIssueTypeFilter}
+            dataObject={kpiJiraIssueTypeFilter}
+          />
+        </div>
+      );
+    case "jira-issue-components":
+      return (
+        <div>
+          <MultiTextInputBase
+            type={"kpi_filter"}
+            fieldName={"value"}
+            setDataObject={setKpiJiraIssueComponentsFilter}
+            dataObject={kpiJiraIssueComponentsFilter}
+          />
+        </div>
+      );
+    case "jira-issue-labels":
+      return (
+        <div>
+          <MultiTextInputBase
+            type={"kpi_filter"}
+            fieldName={"value"}
+            setDataObject={setKpiJiraIssueLabelsFilter}
+            dataObject={kpiJiraIssueLabelsFilter}
+          />
+        </div>
+      );
+    case "jira-issue-status":
+      return (
+        <div>
+          <MultiTextInputBase
+            type={"kpi_filter"}
+            fieldName={"value"}
+            setDataObject={setKpiJiraIssueStatusFilter}
+            dataObject={kpiJiraIssueStatusFilter}
+          />
+        </div>
+      );
+    case "jira-issue-start-status":
+      return (
+        <div>
+          <MultiTextInputBase
+            type={"kpi_filter"}
+            fieldName={"value"}
+            setDataObject={setKpiJiraIssueStartStatusFilter}
+            dataObject={kpiJiraIssueStartStatusFilter}
+          />
+        </div>
+      );
+    case KPI_FILTER_TYPES.JIRA_ISSUE_START_STAGE:
+      return (
+        <div>
+          <MultiTextInputBase
+            type={"kpi_filter"}
+            fieldName={"value"}
+            setDataObject={setKpiJiraIssueStartStageFilter}
+            dataObject={kpiJiraIssueStartStageFilter}
+          />
+        </div>
+      );
+    case "jira-issue-done-status":
+      return (
+        <div>
+          <MultiTextInputBase
+            type={"kpi_filter"}
+            fieldName={"value"}
+            setDataObject={setKpiJiraIssueDoneStatusFilter}
+            dataObject={kpiJiraIssueDoneStatusFilter}
+          />
+        </div>
+      );
+    case "sonar-project-key":
+      return (
+        <div>
+          <SonarProjectsMultiSelectInput
+            placeholderText={"Select Project(s)"}
+            type={"kpi_filter"}
+            fieldName={"value"}
+            setDataObject={setKpiSonarProjectKeyFilter}
+            dataObject={kpiSonarProjectKeyFilter}
+          />
+        </div>
+      );
+    case "domain":
+      return (
+        <div>
+          <ManualKpiMultiSelectInputBase
+            type={"domain"}
+            fieldName={"value"}
+            setDataObject={setKpiDomainFilter}
+            dataObject={kpiDomainFilter}
+          />
+        </div>
+      );
+    case "project":
+      return (
+        <div>
+          <ManualKpiMultiSelectInputBase
+            type={"project"}
+            fieldName={"value"}
+            setDataObject={setKpiProjectFilter}
+            dataObject={kpiProjectFilter}
+          />
+        </div>
+      );
+    case "application":
+      return (
+        <div>
+          <ManualKpiMultiSelectInputBase
+            type={"application"}
+            fieldName={"value"}
+            setDataObject={setKpiApplicationFilter}
+            dataObject={kpiApplicationFilter}
+          />
+        </div>
+      );
+    case "release":
+      return (
+        <div>
+          <ManualKpiMultiSelectInputBase
+            type={"release"}
+            fieldName={"value"}
+            setDataObject={setKpiReleaseFilter}
+            dataObject={kpiReleaseFilter}
+          />
+        </div>
+      );
+    case "sprint":
+      return (
+        <div>
+          <ManualKpiMultiSelectInputBase
+            type={"sprint"}
+            fieldName={"value"}
+            setDataObject={setKpiSprintFilter}
+            dataObject={kpiSprintFilter}
+          />
+        </div>
+      );
+    case "selenium-test-suites":
+      return (
+        <div>
+          <SeleniumTestSuitesMultiSelectInput
+            placeholderText={"Select Test Suites"}
+            type={"kpi_filter"}
+            fieldName={"value"}
+            valueField={"value"}
+            textField={"text"}
+            setDataObject={setKpiSeleniumTestSuitesFilter}
+            dataObject={kpiSeleniumTestSuitesFilter}
+          />
+        </div>
+      );
+    case "sonar-project-languages":
+      return (
+        <div>
+          <SonarProjectLanguagesMultiSelectInput
+            placeholderText={"Select Language(s)"}
+            type={"kpi_filter"}
+            fieldName={"value"}
+            valueField={"value"}
+            textField={"text"}
+            setDataObject={setKpiSonarProjectLanguagesFilter}
+            dataObject={kpiSonarProjectLanguagesFilter}
+          />
+        </div>
+      );
+    case "servicenow-priorities":
+      return (
+        <div>
+          <ServiceNowPrioritiesMultiSelectInput
+            placeholderText={"Select Priorities"}
+            type={"kpi_filter"}
+            fieldName={"value"}
+            valueField={"value"}
+            textField={"text"}
+            setModel={setKpiServiceNowPrioritiesFilter}
+            model={kpiServiceNowPrioritiesFilter}
+          />
+        </div>
+      );
+    case "servicenow-tools":
+      return (
+        <div>
+          <ServiceNowToolsSelectInputLegacy
+            placeholderText={"Select Tools"}
+            type={"kpi_filter"}
+            fieldName={"value"}
+            valueField={"_id"}
+            textField={"name"}
+            setDataObject={setKpiServiceNowToolsFilter}
+            dataObject={kpiServiceNowToolsFilter}
+            groupsDataObject={kpiServiceNowAssignmentGroupsFilter}
+            groupsSetDataObject={setKpiServiceNowAssignmentGroupsFilter}
+          />
+        </div>
+      );
+    case "servicenow-assignment-groups":
+      return (
+        <div>
+          <ServiceNowAssignmentGroupSelectInput
+            visible={true}
+            placeholderText={"Select Assignment Groups"}
+            type={"kpi_filter"}
+            fieldName={"value"}
+            valueField={"sys_id"}
+            textField={"name"}
+            setDataObject={setKpiServiceNowAssignmentGroupsFilter}
+            dataObject={kpiServiceNowAssignmentGroupsFilter}
+            serviceNowToolId={kpiServiceNowToolsFilter.getData("value")}
+          />
+        </div>
+      );
+    case "servicenow-service-offerings":
+      return (
+        <div>
+          <ServiceNowServiceOfferingsSelectInput
+            visible={true}
+            placeholderText={"Select Service Offerings"}
+            type={"kpi_filter"}
+            fieldName={"value"}
+            valueField={"sys_id"}
+            textField={"name"}
+            setDataObject={setKpiServiceNowServiceOfferingsFilter}
+            dataObject={kpiServiceNowServiceOfferingsFilter}
+            serviceNowToolId={kpiServiceNowToolsFilter.getData("value")}
+          />
+        </div>
+      );
+    case "servicenow-configuration-items":
+      return (
+        <div>
+          <ServiceNowConfigurationItemsSelectInput
+            visible={true}
+            placeholderText={"Select Configuration Items"}
+            type={"kpi_filter"}
+            fieldName={"value"}
+            valueField={"sys_id"}
+            textField={"name"}
+            setDataObject={setKpiServiceNowConfigurationItemsFilter}
+            dataObject={kpiServiceNowConfigurationItemsFilter}
+            serviceNowToolId={kpiServiceNowToolsFilter.getData("value")}
+          />
+        </div>
+      );
+    case "servicenow-business-services":
+      return (
+        <div>
+          <ServiceNowBusinessServicesSelectInput
+            visible={true}
+            placeholderText={"Select Business Services"}
+            type={"kpi_filter"}
+            fieldName={"value"}
+            valueField={"sys_id"}
+            textField={"name"}
+            setDataObject={setKpiServiceNowBusinessServicesFilter}
+            dataObject={kpiServiceNowBusinessServicesFilter}
+            serviceNowToolId={kpiServiceNowToolsFilter.getData("value")}
+          />
+        </div>
+      );
     }
   };
 

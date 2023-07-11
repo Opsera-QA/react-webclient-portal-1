@@ -5,10 +5,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import SiteNotificationTypeInput
-  from "components/common/list_of_values_input/admin/site_notifications/SiteNotificationTypeInput";
+from "components/common/list_of_values_input/admin/site_notifications/SiteNotificationTypeInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import SiteNotificationViewInput
-  from "components/common/list_of_values_input/admin/site_notifications/SiteNotificationViewInput";
+from "components/common/list_of_values_input/admin/site_notifications/SiteNotificationViewInput";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import siteNotificationActions from "components/admin/site_notifications/site-notification-actions";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";

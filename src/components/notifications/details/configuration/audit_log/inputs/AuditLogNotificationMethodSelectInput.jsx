@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import AuditLogNotificationMethodSelectInputBase
-  from "components/common/list_of_values_input/notifications/method/audit_logs/AuditLogNotificationMethodSelectInputBase";
+from "components/common/list_of_values_input/notifications/method/audit_logs/AuditLogNotificationMethodSelectInputBase";
 import auditLogActionConstants from "@opsera/definitions/constants/audit-logs/actions/auditLogAction.constants";
 import constantsHelper from "@opsera/definitions/constants/constants.helper";
 

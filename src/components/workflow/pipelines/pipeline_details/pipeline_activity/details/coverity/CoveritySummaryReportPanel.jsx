@@ -7,9 +7,9 @@ import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabV
 import { faClipboardListCheck } from "@fortawesome/pro-light-svg-icons";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import CoverityReportView
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/coverity/components/CoverityReportView";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/coverity/components/CoverityReportView";
 import CoveritySummaryVerticalTabContainer 
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/coverity/CoveritySummaryVerticalTabContainer";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/coverity/CoveritySummaryVerticalTabContainer";
 
 function CoveritySummaryReportPanel({ pipelineTaskData }) {
   const [coverityObj, setCoverityObj] = useState(undefined);

@@ -5,13 +5,13 @@ import modelHelpers from "components/common/model/modelHelpers";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {auditLogNotificationConfigurationMetadata}
-  from "components/notifications/details/configuration/audit_log/auditLogNotificationConfigurationMetadata";
+from "components/notifications/details/configuration/audit_log/auditLogNotificationConfigurationMetadata";
 import AuditLogNotificationMethodSelectInput
-  from "components/notifications/details/configuration/audit_log/inputs/AuditLogNotificationMethodSelectInput";
+from "components/notifications/details/configuration/audit_log/inputs/AuditLogNotificationMethodSelectInput";
 import AuditLogActionsMultiSelectCheckboxInput
-  from "components/common/audit_log/inputs/AuditLogActionsMultiSelectCheckboxInput";
+from "components/common/audit_log/inputs/AuditLogActionsMultiSelectCheckboxInput";
 import AuditLogNotificationTargetMultiSelectInput
-  from "components/notifications/details/configuration/audit_log/inputs/AuditLogNotificationTargetMultiSelectInput";
+from "components/notifications/details/configuration/audit_log/inputs/AuditLogNotificationTargetMultiSelectInput";
 import WarningMessageFieldBase from "components/common/fields/text/message/WarningMessageFieldBase";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import auditLogTypeConstants from "@opsera/definitions/constants/audit-logs/types/auditLogType.constants";

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PipelineActionControlButtonBase
-  from "components/workflow/pipelines/action_controls/PipelineActionControlButtonBase";
+from "components/workflow/pipelines/action_controls/PipelineActionControlButtonBase";
 import {faSync} from "@fortawesome/pro-light-svg-icons";
 import {buttonLabelHelper} from "temp-library-components/helpers/label/button/buttonLabel.helper";
 

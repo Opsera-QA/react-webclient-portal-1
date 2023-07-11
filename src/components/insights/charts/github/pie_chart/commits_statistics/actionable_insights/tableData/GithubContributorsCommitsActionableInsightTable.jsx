@@ -34,11 +34,11 @@ function GithubContributorsCommitsActionableInsightTable({
   const getTable = () => {
     if (showExportPanel === true) {
       return (
-          <ExportContributorsPanel
-              showExportPanel={showExportPanel}
-              setShowExportPanel={setShowExportPanel}
-              LookupDetailsData={data}
-          />
+        <ExportContributorsPanel
+          showExportPanel={showExportPanel}
+          setShowExportPanel={setShowExportPanel}
+          LookupDetailsData={data}
+        />
       );
     }
 
@@ -67,9 +67,9 @@ function GithubContributorsCommitsActionableInsightTable({
       filterDto={filterModel}
       exportButton={
         <ExportGithubCommitsButton
-            className={"ml-2"}
-            setShowExportPanel={setShowExportPanel}
-            showExportPanel={showExportPanel}
+          className={"ml-2"}
+          setShowExportPanel={setShowExportPanel}
+          showExportPanel={showExportPanel}
         />
       }
     />

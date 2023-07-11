@@ -7,25 +7,25 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import TaskWizardConfirmRepositorySettingsButton
-  from "components/tasks/wizard/TaskWizardConfirmRepositorySettingsButton";
+from "components/tasks/wizard/TaskWizardConfirmRepositorySettingsButton";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 import GitToGitSyncTaskScmTypeSelectInput
-  from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskScmTypeSelectInput";
+from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskScmTypeSelectInput";
 import GitToGitSyncTaskScmToolSelectInput
-  from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskScmToolSelectInput";
+from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskScmToolSelectInput";
 import GitToGitSyncTaskBitbucketWorkspaceSelectInput
-  from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskBitbucketWorkspaceSelectInput";
+from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskBitbucketWorkspaceSelectInput";
 import GitToGitSyncTaskRepositorySelectInput
-  from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskRepositorySelectInput";
+from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskRepositorySelectInput";
 import GitToGitSyncTaskSourceBranchSelectInput
-  from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskSourceBranchSelectInput";
+from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskSourceBranchSelectInput";
 import GitToGitSyncTaskDestinationBranchSelectInput
-  from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskDestinationBranchSelectInput";
+from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskDestinationBranchSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import branchToBranchGitTaskConfigurationMetadata
-  from "components/tasks/details/tasks/branch-to-branch/branch-to-branch-git-task-configuration";
+from "components/tasks/details/tasks/branch-to-branch/branch-to-branch-git-task-configuration";
 import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 

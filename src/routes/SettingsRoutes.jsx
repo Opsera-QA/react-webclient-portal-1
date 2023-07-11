@@ -11,7 +11,7 @@ import OrganizationManagement from "components/settings/organizations/Organizati
 import OrganizationDetailView from "components/settings/organizations/organization_detail_view/OrganizationDetailView";
 import AnalyticsDataEntryManagement from "components/settings/analytics_data_entry/AnalyticsDataEntryManagement";
 import AnalyticsDataEntryDetailView
-  from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryDetailView";
+from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryDetailView";
 import UserManagement from "components/settings/users/UserManagement";
 import UserDetailView from "components/settings/users/details/UserDetailView";
 import SsoUserDetailView from "components/settings/users/sso_user_details/SsoUserDetailView";
@@ -22,9 +22,9 @@ import TagDetailView from "components/settings/tags/details/TagDetailView";
 import AnalyticsProfileSettings from "components/settings/analytics/analyticsProfileSettings";
 import DataMappingManagement from "components/settings/data_mapping/DataMappingManagement";
 import ProjectDataMappingDetailView
-  from "components/settings/data_mapping/projects/details/ProjectDataMappingDetailView";
+from "components/settings/data_mapping/projects/details/ProjectDataMappingDetailView";
 import PipelineDataMappingDetailView
-  from "components/settings/data_mapping/pipelines/details/PipelineDataMappingDetailView";
+from "components/settings/data_mapping/pipelines/details/PipelineDataMappingDetailView";
 import UserDataMappingDetailView from "components/settings/data_mapping/users/details/UserDataMappingDetailView";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import InsightsSettings from "components/settings/insights/InsightsSettings";

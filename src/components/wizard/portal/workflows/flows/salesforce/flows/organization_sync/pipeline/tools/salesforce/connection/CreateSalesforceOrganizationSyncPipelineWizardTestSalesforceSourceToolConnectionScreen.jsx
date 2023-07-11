@@ -5,11 +5,11 @@ import {
 } from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/CreateSalesforceOrganizationSyncPipelineWizard";
 import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
 import WorkflowWizardToolConnectionScreenBase
-  from "components/wizard/portal/workflows/flows/tools/test_connection/WorkflowWizardToolConnectionScreenBase";
+from "components/wizard/portal/workflows/flows/tools/test_connection/WorkflowWizardToolConnectionScreenBase";
 import CreateWorkflowWizardTestSalesforceToolConnectionScreenBase
-  from "components/wizard/portal/workflows/flows/tools/salesforce/CreateWorkflowWizardTestSalesforceToolConnectionScreenBase";
+from "components/wizard/portal/workflows/flows/tools/salesforce/CreateWorkflowWizardTestSalesforceToolConnectionScreenBase";
 import OverlayWizardButtonContainerBase
-  from "../../../../../../../../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+from "../../../../../../../../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import VanityButtonBase from "../../../../../../../../../../../../temp-library-components/button/VanityButtonBase";
 import {faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
 

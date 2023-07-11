@@ -109,14 +109,14 @@ function PlanningView_Manager({ persona, date, index }) {
     ) {
       gitlabIssueDifference.data[0].difference
         ? summaryCountsData.push({
-            name: "Average Resolution Time (hrs)",
-            value: gitlabIssueDifference.data[0].difference,
-            footer: "Gitlab",
-            status:
+          name: "Average Resolution Time (hrs)",
+          value: gitlabIssueDifference.data[0].difference,
+          footer: "Gitlab",
+          status:
               gitlabIssueDifference.data[0].difference > 5
                 ? "warning"
                 : "success",
-          })
+        })
         : console.log("time filter active");
     }
 

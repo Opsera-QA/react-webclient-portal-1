@@ -6,21 +6,21 @@ import {toolIdentifierConstants} from "../../../admin/tools/identifiers/toolIden
 function ToolDataTransformerRulesMappingPanel({ toolData, loadData, isLoading }) {
   const getPanel = (toolIdentifier, loadData) => {
     switch (toolIdentifier) {      
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR:
-        return (
-          <SfdcDataTransformerRulesPanel
-            toolActions={toolData?.getData("actions")}
-            isLoading={isLoading}
-            toolData={toolData}
-            loadData={loadData}
-          />
-        );
-      default:
-        return (
-          <div className="text-center p-5 text-muted mt-5">
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR:
+      return (
+        <SfdcDataTransformerRulesPanel
+          toolActions={toolData?.getData("actions")}
+          isLoading={isLoading}
+          toolData={toolData}
+          loadData={loadData}
+        />
+      );
+    default:
+      return (
+        <div className="text-center p-5 text-muted mt-5">
             Tool Mapping is not currently available for this tool.
-          </div>
-        );
+        </div>
+      );
     }
   };
 

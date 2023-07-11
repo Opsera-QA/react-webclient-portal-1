@@ -6,7 +6,7 @@ import UserToolOwnershipReportTable from "components/reports/users/tools/UserToo
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 import toolsActions from "components/inventory/tools/tools-actions";
 import OwnershipReportLdapUserSelectInput
-  from "components/common/list_of_values_input/reports/user_reports/OwnershipReportLdapUserSelectInput";
+from "components/common/list_of_values_input/reports/user_reports/OwnershipReportLdapUserSelectInput";
 import ToolFilterModel from "components/inventory/tools/tool.filter.model";
 import useComponentStateReference from "hooks/useComponentStateReference";
 

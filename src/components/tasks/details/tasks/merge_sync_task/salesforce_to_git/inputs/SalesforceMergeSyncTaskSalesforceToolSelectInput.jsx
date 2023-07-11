@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleRestrictedSalesforceConfiguratorToolSelectInput
-  from "components/common/list_of_values_input/tools/salesforce/sfdc-configurator/RoleRestrictedSalesforceConfiguratorToolSelectInput";
+from "components/common/list_of_values_input/tools/salesforce/sfdc-configurator/RoleRestrictedSalesforceConfiguratorToolSelectInput";
 
 function SalesforceMergeSyncTaskSalesforceToolSelectInput(
   {
@@ -11,12 +11,12 @@ function SalesforceMergeSyncTaskSalesforceToolSelectInput(
     fieldName,
   }) {
   return (
-     <RoleRestrictedSalesforceConfiguratorToolSelectInput
-       fieldName={fieldName}
-       model={model}
-       setModel={setModel}
-       disabled={disabled}
-     />
+    <RoleRestrictedSalesforceConfiguratorToolSelectInput
+      fieldName={fieldName}
+      model={model}
+      setModel={setModel}
+      disabled={disabled}
+    />
   );
 }
 

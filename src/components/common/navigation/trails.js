@@ -189,14 +189,14 @@ export const breadcrumbs = {
     icon: faRadar,
   },
   insightsConnectedAssets: {
-      parent: "insights",
-      name: "connectedAssets",
-      path: paths.insightsConnectedAssets,
-      title: "Connected Assets",
-      linkText: "Connected Assets",
-      icon: faLink,
-      isBeta: true
-    },
+    parent: "insights",
+    name: "connectedAssets",
+    path: paths.insightsConnectedAssets,
+    title: "Connected Assets",
+    linkText: "Connected Assets",
+    icon: faLink,
+    isBeta: true
+  },
   insightsGitCustodian: {
     parent: "insights",
     name: "gitCustodian",

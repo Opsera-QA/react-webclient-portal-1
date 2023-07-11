@@ -5,7 +5,7 @@ function ModalTabPanelContainer({ tabContainer, detailView }) {
   return (
     <div>
       <div>
-          {tabContainer}
+        {tabContainer}
       </div>
       <div className={"py-2 modal-detail-view-body"}>
         {detailView}

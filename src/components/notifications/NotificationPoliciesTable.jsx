@@ -16,13 +16,13 @@ import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import NotificationTypeFilter from "components/common/filters/notifications/notification_type/NotificationTypeFilter";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import InlineNotificationTypeFilter
-  from "components/common/filters/notifications/notification_type/InlineNotificationTypeFilter";
+from "components/common/filters/notifications/notification_type/InlineNotificationTypeFilter";
 import NewNotificationPolicyOverlay from "components/notifications/NewNotificationPolicyOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {getNotificationTypeLabel} from "components/common/list_of_values_input/notifications/type/notificationTypes.constants";
 import {notificationPolicyHelper} from "hooks/notification_policies/notificationPolicy.helper";
 import notificationPolicyMetadata
-  from "@opsera/definitions/constants/notification_policies/notificationPolicy.metadata";
+from "@opsera/definitions/constants/notification_policies/notificationPolicy.metadata";
 
 function NotificationPoliciesTable(
   {

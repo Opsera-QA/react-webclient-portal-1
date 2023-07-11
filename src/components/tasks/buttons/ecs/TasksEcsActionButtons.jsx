@@ -106,7 +106,7 @@ function TasksEcsActionButtons(
     if (status === "running") {
       return (
         <span>
-        <LoadingIcon className={"mr-2"} />
+          <LoadingIcon className={"mr-2"} />
           Running Task
         </span>
       );

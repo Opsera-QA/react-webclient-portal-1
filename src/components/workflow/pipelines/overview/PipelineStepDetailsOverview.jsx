@@ -1,17 +1,17 @@
 import React, {useContext, useState} from 'react';
 import PropTypes from 'prop-types';
 import PipelineStepConfigurationSummary
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepConfigurationSummary";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepConfigurationSummary";
 import PipelineStepDetailsContainer from "components/workflow/pipelines/overview/PipelineStepDetailsContainer";
 import PipelineStepJsonPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepJsonPanel";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepJsonPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import JsonTab from "components/common/tabs/detail_view/JsonTab";
 import GeneralTabPanelContainer from "components/common/panels/general/GeneralTabPanelContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import PipelineStepNotificationConfigurationSummaryPanel
-  from "components/workflow/plan/step/notifications/PipelineStepNotificationConfigurationSummaryPanel";
+from "components/workflow/plan/step/notifications/PipelineStepNotificationConfigurationSummaryPanel";
 import {faEnvelope, faFileCode} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 
@@ -26,27 +26,27 @@ function PipelineStepDetailsOverview({ pipelineStep, index }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return (
-          <PipelineStepConfigurationSummary
-            pipelineData={pipelineStep}
-          />
-        );
-      case "notifications":
-        return (
-          <PipelineStepNotificationConfigurationSummaryPanel
-            pipelineStepData={pipelineStep}
-          />
-        );
-      case "json":
-        return (
-          <PipelineStepJsonPanel
-            pipelineStepData={pipelineStep}
-          />
-        );
-      case "yaml":
-      default:
-        return null;
+    case "summary":
+      return (
+        <PipelineStepConfigurationSummary
+          pipelineData={pipelineStep}
+        />
+      );
+    case "notifications":
+      return (
+        <PipelineStepNotificationConfigurationSummaryPanel
+          pipelineStepData={pipelineStep}
+        />
+      );
+    case "json":
+      return (
+        <PipelineStepJsonPanel
+          pipelineStepData={pipelineStep}
+        />
+      );
+    case "yaml":
+    default:
+      return null;
     }
   };
 

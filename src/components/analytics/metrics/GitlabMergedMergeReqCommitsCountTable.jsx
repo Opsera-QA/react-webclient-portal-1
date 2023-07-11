@@ -227,31 +227,31 @@ function GitlabMergedMergeReqCommitsCountTable({ date }) {
       {typeof data !== "object" ||
       data.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime === undefined ||
       data.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime.status !== 200 ? (
-        <>
-          <div className="chart mb-3" style={{ height: "300px" }}>
-            <div className="chart-label-text">Recent Merge Requests</div>
-            <div
-              className="max-content-width p-5 mt-5"
-              style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-            >
-              <InfoDialog message="No Data is available for this chart at this time." />
+          <>
+            <div className="chart mb-3" style={{ height: "300px" }}>
+              <div className="chart-label-text">Recent Merge Requests</div>
+              <div
+                className="max-content-width p-5 mt-5"
+                style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+              >
+                <InfoDialog message="No Data is available for this chart at this time." />
+              </div>
             </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="mt-3 d-flex justify-content-between">
-            <div className="h6 activity-label-text mb-2">Recent Merge Requests</div>
-          </div>
-          <CustomTable
-            columns={columns}
-            data={data.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime.data}
-            rowStyling={""}
-            noDataMessage={noDataMessage}
-            noFooter={true}
-          ></CustomTable>
-        </>
-      )}
+          </>
+        ) : (
+          <>
+            <div className="mt-3 d-flex justify-content-between">
+              <div className="h6 activity-label-text mb-2">Recent Merge Requests</div>
+            </div>
+            <CustomTable
+              columns={columns}
+              data={data.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime.data}
+              rowStyling={""}
+              noDataMessage={noDataMessage}
+              noFooter={true}
+            ></CustomTable>
+          </>
+        )}
     </>
   );
 }

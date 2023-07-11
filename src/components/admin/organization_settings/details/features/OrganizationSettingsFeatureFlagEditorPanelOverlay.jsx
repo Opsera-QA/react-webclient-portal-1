@@ -6,12 +6,12 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import PolicyEditorPanelBase from "components/settings/organization_settings/policies/details/PolicyEditorPanelBase";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import usePolicyAdministrationActions
-  from "hooks/settings/organization_settings/policies/usePolicyAdministrationActions";
+from "hooks/settings/organization_settings/policies/usePolicyAdministrationActions";
 import DeleteOrganizationAccountPolicyActionBarButton
-  from "components/admin/organization_settings/details/policies/DeleteOrganizationAccountPolicyActionBarButton";
+from "components/admin/organization_settings/details/policies/DeleteOrganizationAccountPolicyActionBarButton";
 import {useHistory} from "react-router-dom";
 import DeleteOrganizationAccountFeatureFlagActionBarButton
-  from "components/admin/organization_settings/details/features/DeleteOrganizationAccountFeatureFlagActionBarButton";
+from "components/admin/organization_settings/details/features/DeleteOrganizationAccountFeatureFlagActionBarButton";
 
 export default function OrganizationSettingsFeatureFlagEditorPanelOverlay(
   {

@@ -3,19 +3,19 @@ import PropTypes from "prop-types";
 import VanitySetTextInputBase from "temp-library-components/inputs/VanitySetTextInputBase";
 import Col from "react-bootstrap/Col";
 import GithubTwoFactorAuthenticationBooleanToggleInput
-  from "components/inventory/tools/tool_details/tool_jobs/github/GithubTwoFactorAuthenticationBooleanToggleInput";
+from "components/inventory/tools/tool_details/tool_jobs/github/GithubTwoFactorAuthenticationBooleanToggleInput";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import CreateFreeTrialGithubToolButton
-  from "components/wizard/free_trial/workflows/flows/tools/git/github/CreateFreeTrialGithubToolButton";
+from "components/wizard/free_trial/workflows/flows/tools/git/github/CreateFreeTrialGithubToolButton";
 import Row from "react-bootstrap/Row";
 import CreateSalesforceWorkflowWizardSelectToolInputBase
-  from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizardSelectToolInputBase";
+from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizardSelectToolInputBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { Form } from "react-bootstrap";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import { faArrowRight } from "@fortawesome/pro-light-svg-icons";
 import CreateWorkflowWizardRegisterToolHeaderText
-  from "components/wizard/free_trial/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
+from "components/wizard/free_trial/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
 
 export default function CreateWorkflowWizardCreateGithubToolEditorPanel(
   {

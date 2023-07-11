@@ -9,7 +9,7 @@ import VanityButtonBase from "../../../../../../temp-library-components/button/V
 import { faTriangleExclamation } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "../../../../../../hooks/useComponentStateReference";
 import toolIdentifierConnectionCheckConstants
-  from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 export default function ToolConnectionCheck({
   setCurrentScreen,
@@ -30,8 +30,8 @@ export default function ToolConnectionCheck({
     handleClose();
     history.push(`/inventory/tools/details/${toolData?.getData("_id")}`);
     toastContext.showCreateFailureResultDialog(
-        toolData.getType(),
-        "The tool will not be usable in Pipelines and Tasks until the connection is resolved.",
+      toolData.getType(),
+      "The tool will not be usable in Pipelines and Tasks until the connection is resolved.",
     );
   };
 

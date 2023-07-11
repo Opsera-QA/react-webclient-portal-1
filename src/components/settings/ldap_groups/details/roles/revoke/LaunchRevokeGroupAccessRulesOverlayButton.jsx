@@ -5,7 +5,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {faUsersSlash} from "@fortawesome/pro-light-svg-icons";
 import RevokeAssignedGroupAccessRulesOverlay
-  from "components/settings/ldap_groups/details/roles/revoke/RevokeAssignedGroupAccessRulesOverlay";
+from "components/settings/ldap_groups/details/roles/revoke/RevokeAssignedGroupAccessRulesOverlay";
 
 export default function LaunchRevokeGroupAccessRulesOverlayButton(
   {

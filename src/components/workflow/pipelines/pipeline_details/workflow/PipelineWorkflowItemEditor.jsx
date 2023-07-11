@@ -56,21 +56,21 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
   const getTitleBar = (title) => {
     return (
       <div className={"p-2 my-auto content-block-header d-flex"}>
-          <h5 className={"my-auto d-flex justify-content-between h-100 w-100"}>
-            <div className={"my-auto"}>{title}</div>
-            <div className={"d-flex"}>
-              <StepToolHelpIcon
-                type={editItem?.type}
-                tool={editItem?.tool_name?.toLowerCase()}
-              />
-              <IconBase
-                icon={faTimes}
-                iconSize={"lg"}
-                className={"pointer"}
-                onClickFunction={() => {handleCloseClick();}}
-              />
-            </div>
-          </h5>
+        <h5 className={"my-auto d-flex justify-content-between h-100 w-100"}>
+          <div className={"my-auto"}>{title}</div>
+          <div className={"d-flex"}>
+            <StepToolHelpIcon
+              type={editItem?.type}
+              tool={editItem?.tool_name?.toLowerCase()}
+            />
+            <IconBase
+              icon={faTimes}
+              iconSize={"lg"}
+              className={"pointer"}
+              onClickFunction={() => {handleCloseClick();}}
+            />
+          </div>
+        </h5>
       </div>
     );
   };

@@ -56,14 +56,14 @@ function GitCustodianFiltersMultiSelectOverlay({ showModal, filterModel, setFilt
 
     if (JSON.stringify(previousFilter) !== JSON.stringify(filters)) {
       loadData(source, filters)
-      .then(() => {
-        setPreviousFilter(filters);
-      })
-      .catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
+        .then(() => {
+          setPreviousFilter(filters);
+        })
+        .catch((error) => {
+          if (isMounted?.current === true) {
+            throw error;
+          }
+        });
     }
 
     return () => {

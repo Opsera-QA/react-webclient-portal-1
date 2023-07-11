@@ -6,12 +6,12 @@ import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 import ApigeePipelineRunAssistantInitializationScreen
-  from "components/workflow/run_assistants/apigee/initialization_screen/ApigeePipelineRunAssistantInitializationScreen";
+from "components/workflow/run_assistants/apigee/initialization_screen/ApigeePipelineRunAssistantInitializationScreen";
 import {apigeeRunParametersMetadata} from "components/workflow/run_assistants/apigee/apigeeRunParameters.metadata";
 import ApigeeRunAssistantConfigurationSelectionScreen
-  from "components/workflow/run_assistants/apigee/configuration_selection_screen/ApigeeRunAssistantConfigurationSelectionScreen";
+from "components/workflow/run_assistants/apigee/configuration_selection_screen/ApigeeRunAssistantConfigurationSelectionScreen";
 import ApigeeRunAssistantMigrationObjectSelectionScreen
-  from "components/workflow/run_assistants/apigee/migration_object_selection_screen/ApigeeRunAssistantMigrationObjectSelectionScreen";
+from "components/workflow/run_assistants/apigee/migration_object_selection_screen/ApigeeRunAssistantMigrationObjectSelectionScreen";
 
 export const APIGEE_RUN_ASSISTANT_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
@@ -49,51 +49,51 @@ const ApigeePipelineRunAssistant = ({ pipeline, startPipelineRunFunction, closeP
 
   const getBody = () => {
     switch (runAssistantScreen) {
-      case APIGEE_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN:
-        return (
-          <ApigeePipelineRunAssistantInitializationScreen
-            pipeline={pipeline}
-            apigeeRunParametersModel={apigeeRunParametersModel}
-            setApigeeRunParametersModel={setApigeeRunParametersModel}
-            setError={setError}
-            setRunAssistantScreen={setRunAssistantScreen}
-          />
-        );
-      case APIGEE_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN:
-        return (
-          <ApigeeRunAssistantConfigurationSelectionScreen
-            apigeeRunParametersModel={apigeeRunParametersModel}
-            setApigeeRunParametersModel={setApigeeRunParametersModel}
-            setRunAssistantScreen={setRunAssistantScreen}
-            closePanelFunction={closePanelFunction}
-          />
-        );
-      case APIGEE_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTION_SCREEN:
-        return (
-          <ApigeeRunAssistantMigrationObjectSelectionScreen
-            apigeeRunParametersModel={apigeeRunParametersModel}
-            setApigeeRunParametersModel={setApigeeRunParametersModel}
-            setRunAssistantScreen={setRunAssistantScreen}
-            startPipelineRunFunction={startPipelineRunFunction}
-            closePanelFunction={closePanelFunction}
-          />
-        );
-      case APIGEE_RUN_ASSISTANT_SCREENS.CONFIRMATION_SCREEN:
-        return (
-          <div>You have reached the confirmation screen.</div>
-        );
-      default:
-        return null;
+    case APIGEE_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN:
+      return (
+        <ApigeePipelineRunAssistantInitializationScreen
+          pipeline={pipeline}
+          apigeeRunParametersModel={apigeeRunParametersModel}
+          setApigeeRunParametersModel={setApigeeRunParametersModel}
+          setError={setError}
+          setRunAssistantScreen={setRunAssistantScreen}
+        />
+      );
+    case APIGEE_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN:
+      return (
+        <ApigeeRunAssistantConfigurationSelectionScreen
+          apigeeRunParametersModel={apigeeRunParametersModel}
+          setApigeeRunParametersModel={setApigeeRunParametersModel}
+          setRunAssistantScreen={setRunAssistantScreen}
+          closePanelFunction={closePanelFunction}
+        />
+      );
+    case APIGEE_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTION_SCREEN:
+      return (
+        <ApigeeRunAssistantMigrationObjectSelectionScreen
+          apigeeRunParametersModel={apigeeRunParametersModel}
+          setApigeeRunParametersModel={setApigeeRunParametersModel}
+          setRunAssistantScreen={setRunAssistantScreen}
+          startPipelineRunFunction={startPipelineRunFunction}
+          closePanelFunction={closePanelFunction}
+        />
+      );
+    case APIGEE_RUN_ASSISTANT_SCREENS.CONFIRMATION_SCREEN:
+      return (
+        <div>You have reached the confirmation screen.</div>
+      );
+    default:
+      return null;
     }
   };
 
   const getHelpComponentFunction = (setHelpIsShown) => {
     switch (runAssistantScreen) {
-      case APIGEE_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN:
-      case APIGEE_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN:
-      case APIGEE_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTION_SCREEN:
-      default:
-        return null;
+    case APIGEE_RUN_ASSISTANT_SCREENS.INITIALIZATION_SCREEN:
+    case APIGEE_RUN_ASSISTANT_SCREENS.CONFIGURATION_SELECTION_SCREEN:
+    case APIGEE_RUN_ASSISTANT_SCREENS.MIGRATION_OBJECT_SELECTION_SCREEN:
+    default:
+      return null;
     }
   };
 

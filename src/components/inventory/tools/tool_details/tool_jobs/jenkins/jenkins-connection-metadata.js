@@ -1,16 +1,16 @@
 const jenkinsConnectionMetadata = {
   type: "Jenkins Tool Configuration",
   fields: [
-  {
-    label: "Jenkins Container URL",
-    id: "jenkinsUrl",
-    isRequired: true,
-    isSecureUrl: true,
-  },
-  {
-    label: "Jenkins Port",
-    id: "jenkinsPort",
-  },
+    {
+      label: "Jenkins Container URL",
+      id: "jenkinsUrl",
+      isRequired: true,
+      isSecureUrl: true,
+    },
+    {
+      label: "Jenkins Port",
+      id: "jenkinsPort",
+    },
     {
       label: "Jenkins User ID",
       id: "jUserId",
@@ -41,7 +41,7 @@ const jenkinsConnectionMetadata = {
       label: "Auto-Scaling Enabled?",
       id: "autoScaleEnable",
     },
-],
+  ],
   fieldsAlt: [
     {
       label: "Jenkins Container URL",

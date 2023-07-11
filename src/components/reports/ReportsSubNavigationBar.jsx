@@ -19,61 +19,61 @@ function ReportsSubNavigationBar({currentTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-      case "toolReports":
-        history.push(`/reports/tools`);
-        return;
-      case "pipelineReports":
-        history.push(`/reports/pipelines`);
-        return;
-      case "tagReports":
-        history.push(`/reports/tags`);
-        return;
-      case "userReports":
-        history.push(`/reports/users`);
-        return;
-      case "auditReports":
-        history.push(`/reports/audit`);
-        return;
-      case "all":
-        history.push(`/reports`);
-        return;
+    case "toolReports":
+      history.push(`/reports/tools`);
+      return;
+    case "pipelineReports":
+      history.push(`/reports/pipelines`);
+      return;
+    case "tagReports":
+      history.push(`/reports/tags`);
+      return;
+    case "userReports":
+      history.push(`/reports/users`);
+      return;
+    case "auditReports":
+      history.push(`/reports/audit`);
+      return;
+    case "all":
+      history.push(`/reports`);
+      return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (currentTab) {
-      case "toolReportViewer":
-        return (
-          <NavigationTab
-            icon={faTools}
-            tabName={currentTab}
-            handleTabClick={handleTabClick}
-            activeTab={"toolReportViewer"}
-            tabText={"Tool Report Viewer"}
-          />
-        );
-      case "tagReportViewer":
-        return (
-          <NavigationTab
-            icon={faTags}
-            tabName={currentTab}
-            handleTabClick={handleTabClick}
-            activeTab={"tagReportViewer"}
-            tabText={"Tag Report Viewer"}
-          />
-        );
-      case "userReportViewer":
-        return (
-          <NavigationTab
-            icon={faUsers}
-            tabName={currentTab}
-            handleTabClick={handleTabClick}
-            activeTab={"userReportViewer"}
-            tabText={"User Report Viewer"}
-          />
-        );
-      default:
-        return null;
+    case "toolReportViewer":
+      return (
+        <NavigationTab
+          icon={faTools}
+          tabName={currentTab}
+          handleTabClick={handleTabClick}
+          activeTab={"toolReportViewer"}
+          tabText={"Tool Report Viewer"}
+        />
+      );
+    case "tagReportViewer":
+      return (
+        <NavigationTab
+          icon={faTags}
+          tabName={currentTab}
+          handleTabClick={handleTabClick}
+          activeTab={"tagReportViewer"}
+          tabText={"Tag Report Viewer"}
+        />
+      );
+    case "userReportViewer":
+      return (
+        <NavigationTab
+          icon={faUsers}
+          tabName={currentTab}
+          handleTabClick={handleTabClick}
+          activeTab={"userReportViewer"}
+          tabText={"User Report Viewer"}
+        />
+      );
+    default:
+      return null;
     }
   };
 

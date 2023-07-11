@@ -7,7 +7,7 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import LocalInputParametersValueInputRow
-  from "components/common/list_of_values_input/parameters/local/value/LocalInputParametersValueInputRow";
+from "components/common/list_of_values_input/parameters/local/value/LocalInputParametersValueInputRow";
 
 export default function LocalInputParametersValueInputBase(
   {
@@ -55,16 +55,16 @@ export default function LocalInputParametersValueInputBase(
     return (
       <div className="flex-fill">
         {data.map((parameter, index) => {
-            return (
-              <LocalInputParametersValueInputRow
-                disabled={disabled}
-                setDataFunction={updateParameterFunction}
-                index={index}
-                key={index}
-                localParameter={parameter}
-              />
-            );
-          }
+          return (
+            <LocalInputParametersValueInputRow
+              disabled={disabled}
+              setDataFunction={updateParameterFunction}
+              index={index}
+              key={index}
+              localParameter={parameter}
+            />
+          );
+        }
         )}
       </div>
     );

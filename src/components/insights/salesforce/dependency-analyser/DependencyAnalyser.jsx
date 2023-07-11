@@ -7,7 +7,7 @@ import DependencyAnalyserInitializationScreen from "./initialization_screen/Depe
 import ErrorDialog from "../../../common/status_notifications/error";
 import sfdcDataAnalyserMetadata from "./sfdc-dependency-analyser-metadata";
 import DependencyAnalyserComponentSelectionScreen
-  from "./component_selection_screen/DependencyAnalyserComponentSelectionScreen";
+from "./component_selection_screen/DependencyAnalyserComponentSelectionScreen";
 import DependencyAnalyserFileValidationScreen from "./file_validation_screen/DependencyAnalyserFileValidationScreen";
 import DependencyAnalyserModifiedFileViewer from "./file_viewer_screen/DependencyAnalyserModifiedFileViewer";
 import DependencyAnalyserViewScreen from "./dependent_list_screen/DependencyAnalyserViewScreen";
@@ -47,51 +47,51 @@ function DependencyAnalyser() {
 
   const getBody = () => {
     switch (screen) {
-      case DEPENDENCY_ANALYSER_SCREENS.INITIALIZATION_SCREEN:
-        return (
-          <DependencyAnalyserInitializationScreen
-            pipelineWizardModel={dependencyAnalyserModel}
-            setPipelineWizardModel={setDependencyAnalyserModel}
-            setPipelineWizardScreen={setScreen}
-            setError={setError}
+    case DEPENDENCY_ANALYSER_SCREENS.INITIALIZATION_SCREEN:
+      return (
+        <DependencyAnalyserInitializationScreen
+          pipelineWizardModel={dependencyAnalyserModel}
+          setPipelineWizardModel={setDependencyAnalyserModel}
+          setPipelineWizardScreen={setScreen}
+          setError={setError}
         />
-        );
-      case DEPENDENCY_ANALYSER_SCREENS.COMPONENT_SELECTOR:
-        return (
-          <DependencyAnalyserComponentSelectionScreen
-            pipelineWizardModel={dependencyAnalyserModel}
-            setPipelineWizardModel={setDependencyAnalyserModel}
-            setPipelineWizardScreen={setScreen}
-            setError={setError}
-          />
-        );
-      case DEPENDENCY_ANALYSER_SCREENS.VALIDATED_FILE_VIEWER:
-        return (
-          <DependencyAnalyserFileValidationScreen
-            pipelineWizardModel={dependencyAnalyserModel}
-            setPipelineWizardModel={setDependencyAnalyserModel}
-            setPipelineWizardScreen={setScreen}
-            setError={setError}
-          />
-        );
-      case DEPENDENCY_ANALYSER_SCREENS.MODIFIED_FILE_LIST_VIEWER:
-        return (
-          <DependencyAnalyserModifiedFileViewer
-            pipelineWizardModel={dependencyAnalyserModel}
-            setPipelineWizardModel={setDependencyAnalyserModel}
-            setPipelineWizardScreen={setScreen}
-            setError={setError}
-          />
-        );
-      case DEPENDENCY_ANALYSER_SCREENS.DEPENDENCY_VIEWER:
-        return (
-          <DependencyAnalyserViewScreen
-            pipelineWizardModel={dependencyAnalyserModel}
-            setPipelineWizardModel={setDependencyAnalyserModel}
-            setPipelineWizardScreen={setScreen}
-            setError={setError}
-          />
-        );
+      );
+    case DEPENDENCY_ANALYSER_SCREENS.COMPONENT_SELECTOR:
+      return (
+        <DependencyAnalyserComponentSelectionScreen
+          pipelineWizardModel={dependencyAnalyserModel}
+          setPipelineWizardModel={setDependencyAnalyserModel}
+          setPipelineWizardScreen={setScreen}
+          setError={setError}
+        />
+      );
+    case DEPENDENCY_ANALYSER_SCREENS.VALIDATED_FILE_VIEWER:
+      return (
+        <DependencyAnalyserFileValidationScreen
+          pipelineWizardModel={dependencyAnalyserModel}
+          setPipelineWizardModel={setDependencyAnalyserModel}
+          setPipelineWizardScreen={setScreen}
+          setError={setError}
+        />
+      );
+    case DEPENDENCY_ANALYSER_SCREENS.MODIFIED_FILE_LIST_VIEWER:
+      return (
+        <DependencyAnalyserModifiedFileViewer
+          pipelineWizardModel={dependencyAnalyserModel}
+          setPipelineWizardModel={setDependencyAnalyserModel}
+          setPipelineWizardScreen={setScreen}
+          setError={setError}
+        />
+      );
+    case DEPENDENCY_ANALYSER_SCREENS.DEPENDENCY_VIEWER:
+      return (
+        <DependencyAnalyserViewScreen
+          pipelineWizardModel={dependencyAnalyserModel}
+          setPipelineWizardModel={setDependencyAnalyserModel}
+          setPipelineWizardScreen={setScreen}
+          setError={setError}
+        />
+      );
     }
   };
 

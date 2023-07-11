@@ -13,7 +13,7 @@ import {getField} from "../../../../../../common/metadata/metadata-helpers";
 import {DialogToastContext} from "../../../../../../../contexts/DialogToastContext";
 import TwoLineDataBlockBase from "../../../../../../common/metrics/data_blocks/base/TwoLineDataBlockBase";
 import FullScreenCenterOverlayContainer
-  from "../../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
+from "../../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import chartsActions from "../../../../charts-actions";
 
 function FailedExecutionsDetailedActionableInsights({ repositoryName, actionName, headCommitSha, kpiConfiguration, dashboardData}) {

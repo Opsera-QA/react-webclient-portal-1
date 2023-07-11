@@ -64,7 +64,7 @@ function SfdxScanExecLogSummaryTable({ execLogResults }) {
 }
 
 SfdxScanExecLogSummaryTable.propTypes = {
-    execLogResults: PropTypes.array,
+  execLogResults: PropTypes.array,
 };
 
 export default SfdxScanExecLogSummaryTable;

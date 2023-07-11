@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import pipelineInstructionsStatusConstants
-  from "@opsera/definitions/constants/pipelines/instructions/status/pipelineInstructionsStatus.constants";
+from "@opsera/definitions/constants/pipelines/instructions/status/pipelineInstructionsStatus.constants";
 
 export default function PipelineInstructionsStatusSelectInput(
   {

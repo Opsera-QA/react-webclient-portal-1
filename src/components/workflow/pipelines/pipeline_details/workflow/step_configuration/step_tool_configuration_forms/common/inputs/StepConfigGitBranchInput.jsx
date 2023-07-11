@@ -20,18 +20,18 @@ function StepConfigGitBranchInput({dataObject, setDataObject, disabled}) {
   };
 
   return (
-     <GitBranchInput
-       fieldName={"gitBranch"}
-       service={dataObject.getData("service")}
-       gitToolId={dataObject.getData("gitToolId")}
-       workspace={dataObject.getData("workspace")}
-       repoId={dataObject.getData("repoId")}
-       dataObject={dataObject}
-       setDataFunction={setBranch}
-       setDataObject={setDataObject}
-       clearDataFunction={clearBranch}
-       disabled={disabled}
-     />
+    <GitBranchInput
+      fieldName={"gitBranch"}
+      service={dataObject.getData("service")}
+      gitToolId={dataObject.getData("gitToolId")}
+      workspace={dataObject.getData("workspace")}
+      repoId={dataObject.getData("repoId")}
+      dataObject={dataObject}
+      setDataFunction={setBranch}
+      setDataObject={setDataObject}
+      clearDataFunction={clearBranch}
+      disabled={disabled}
+    />
   );
 }
 

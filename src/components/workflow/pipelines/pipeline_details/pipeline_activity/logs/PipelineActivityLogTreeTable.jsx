@@ -5,11 +5,11 @@ import FilterContainer from "components/common/table/FilterContainer";
 import ExportPipelineActivityLogButton from "components/common/buttons/export/pipelines/ExportPipelineActivityLogButton";
 import TreeAndTableBase from "components/common/table/TreeAndTableBase";
 import PipelineActivityLogTree
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTree";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTree";
 import PipelineStatusFilter from "components/common/filters/pipelines/status/PipelineStatusFilter";
 import InlinePipelineStatusFilter from "components/common/filters/pipelines/status/InlinePipelineStatusFilter";
 import PipelineActivityLogTable
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTable";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTable";
 import CustomTable from "components/common/table/CustomTable";
 import PaginationHelper from "@opsera/persephone/helpers/array/pagination.helper";
 import useGetPipelineActivityLogs from "hooks/workflow/pipelines/logs/useGetPipelineActivityLogs";

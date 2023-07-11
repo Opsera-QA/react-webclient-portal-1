@@ -7,7 +7,7 @@ import OctopusFeedMetadata from "../octopus-feed-metadata";
 import OctopusTomcatMetadata from "../octopus-tomcat-metadata";
 import Model from "core/data_model/model";
 import OctopusApplicationEditorPanel
-  from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/OctopusApplicationEditorPanel";
+from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/OctopusApplicationEditorPanel";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import CreateModal from "components/common/modal/CreateModal";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -42,18 +42,18 @@ function OctopusApplicationWrapper(
 
   const getMetadata = (type) => {
     switch (type) {
-      case "environment":
-        return OctopusEnvironmentMetadata;
-      case "account":
-        return OctopusAccountMetadata;
-      case "target":
-        return OctopusTargetMetadata;
-      case "feed":
-        return OctopusFeedMetadata;
-      case "tomcat":
-        return OctopusTomcatMetadata;
-      default:
-        return null;
+    case "environment":
+      return OctopusEnvironmentMetadata;
+    case "account":
+      return OctopusAccountMetadata;
+    case "target":
+      return OctopusTargetMetadata;
+    case "feed":
+      return OctopusFeedMetadata;
+    case "tomcat":
+      return OctopusTomcatMetadata;
+    default:
+      return null;
     }
   };
 

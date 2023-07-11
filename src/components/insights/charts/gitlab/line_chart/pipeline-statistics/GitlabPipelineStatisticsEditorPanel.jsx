@@ -7,7 +7,7 @@ import { gitlabPipelineStatisticsMetadata } from "./gitlabPipelineStatistics.met
 import MetricDeploymentStageFilterInput from "components/common/inputs/metric/filters/deployment-frequency/MetricsDeploymentStageFilterInput";
 import MetricGitLabProjectFilterInput from "components/common/inputs/metric/filters/deployment-frequency/MetricGitLabProjectFilterInput";
 import MetricGitlabBranchFilterInput
-    from "../../../../../common/inputs/metric/filters/deployment-frequency/MetricGitlabBranchFilterInput";
+from "../../../../../common/inputs/metric/filters/deployment-frequency/MetricGitlabBranchFilterInput";
 function GitlabPipelineStatisticsEditorPanel({
   metricModel,
   unpackedFilterData,

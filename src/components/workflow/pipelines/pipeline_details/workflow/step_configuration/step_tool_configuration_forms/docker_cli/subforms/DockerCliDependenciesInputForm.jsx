@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import CommandLineDependencyTypeInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineDependencyTypeInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineDependencyTypeInput";
 import EditableParameterMappingInput from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingInput";
 import DockerCliCommandLineInputParameterInput from "../inputs/DockerCliCommandLineInputParameterInput";
 import PipelineStepParameterInputBase
-  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBase";
+from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBase";
 
 function DockerCliDependenciesInputForm({ model, setModel, plan }) {
 

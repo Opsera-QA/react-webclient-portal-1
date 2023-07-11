@@ -13,12 +13,12 @@ export default function OrganizationSettingsManagementSubNavigationBar({activeTa
     e.preventDefault();
 
     switch (tabSelection) {
-      case "adminTools":
-        history.push(`/admin`);
-        return;
-      case adminToolsTrails.ldapOrganizationSettingsManagement.name:
-        history.push(`/admin/organization-settings`);
-        return;
+    case "adminTools":
+      history.push(`/admin`);
+      return;
+    case adminToolsTrails.ldapOrganizationSettingsManagement.name:
+      history.push(`/admin/organization-settings`);
+      return;
     }
   };
 

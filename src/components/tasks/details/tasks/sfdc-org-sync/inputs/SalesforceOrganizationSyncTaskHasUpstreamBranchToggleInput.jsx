@@ -8,7 +8,7 @@ function SalesforceOrganizationSyncTaskHasUpstreamBranchToggleInput({model, setM
     newModel.setData("hasUpstreamBranch", value);
     
     if (value === false) {
-        newModel.setData("upstreamBranch", "");
+      newModel.setData("upstreamBranch", "");
     }
 
     setModel({...newModel});

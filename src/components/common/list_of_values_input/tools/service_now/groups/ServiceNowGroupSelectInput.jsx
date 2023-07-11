@@ -35,10 +35,10 @@ function ServiceNowGroupSelectInput(
 
     if (isMongoDbId(serviceNowId) === true) {
       loadGroups(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
     }
     
     return () => {

@@ -68,79 +68,79 @@ function LogManagement(props) {
       <Card.Body className="text-center">
         <Card.Title>Log Management</Card.Title>
         <div>
-        <OverlayTrigger
-              key="top"
-              placement="top"
-              overlay={
-                <Tooltip id={`tooltip-top`}>
+          <OverlayTrigger
+            key="top"
+            placement="top"
+            overlay={
+              <Tooltip id={`tooltip-top`}>
                   For spinning up this tool, please contact <strong>support@opsera.io</strong>
-                </Tooltip>
-              }
-            >
-          <div 
+              </Tooltip>
+            }
+          >
+            <div 
             // className={`newApp__service-logo ${tools.includes("ElasticSearch") ? "newApp__service-logo--alredy-installed" : ""}`} 
-            className="newApp__service-logo newApp__service-logo--disabledButAvailable"
+              className="newApp__service-logo newApp__service-logo--disabledButAvailable"
             // onClick={() => selectCard("ElasticSearch")} 
             >
-            <input type="checkbox"
-              disabled={tools.includes("ElasticSearch") ? true : false}
-              checked={isChecked.ElasticSearch && data["ElasticSearch"]}
-              className="newApp__checkbox"
+              <input type="checkbox"
+                disabled={tools.includes("ElasticSearch") ? true : false}
+                checked={isChecked.ElasticSearch && data["ElasticSearch"]}
+                className="newApp__checkbox"
               // onClick={() => selectCard("ElasticSearch")}
-            />
-            <img src={"/img/tools/elastic-search.png"} />
-            <span className="newApp__service-title">ElasticSearch</span>
-          </div>
+              />
+              <img src={"/img/tools/elastic-search.png"} />
+              <span className="newApp__service-title">ElasticSearch</span>
+            </div>
           </OverlayTrigger>
 
           <OverlayTrigger
-              key="top"
-              placement="top"
-              overlay={
-                <Tooltip id={`tooltip-top`}>
+            key="top"
+            placement="top"
+            overlay={
+              <Tooltip id={`tooltip-top`}>
                   For spinning up this tool, please contact <strong>support@opsera.io</strong>
-                </Tooltip>
-              }
-            >
-          <div
+              </Tooltip>
+            }
+          >
+            <div
             // className={`newApp__service-logo ${tools.includes("Kibana") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
-            className="newApp__service-logo newApp__service-logo--disabledButAvailable"
+              className="newApp__service-logo newApp__service-logo--disabledButAvailable"
             // onClick={() => selectCard("Kibana")}
-          >
-            <input type="checkbox"
-              disabled={tools.includes("Kibana") ? true : false}
-              checked={isChecked.Kibana && data["Kibana"]}
-              className="newApp__checkbox"
+            >
+              <input type="checkbox"
+                disabled={tools.includes("Kibana") ? true : false}
+                checked={isChecked.Kibana && data["Kibana"]}
+                className="newApp__checkbox"
               // onClick={() => selectCard("Kibana")}
-            />
-            <img src={"/img/tools/kibana.png"} />
-            <span className="newApp__service-title">Kibana</span>
-          </div>
+              />
+              <img src={"/img/tools/kibana.png"} />
+              <span className="newApp__service-title">Kibana</span>
+            </div>
           </OverlayTrigger>
 
           <OverlayTrigger
-              key="top"
-              placement="top"
-              overlay={
-                <Tooltip id={`tooltip-top`}>
+            key="top"
+            placement="top"
+            overlay={
+              <Tooltip id={`tooltip-top`}>
                   For spinning up this tool, please contact <strong>support@opsera.io</strong>
-                </Tooltip>
-              }
+              </Tooltip>
+            }
           >
-          <div
-          //  className={`newApp__service-logo ${tools.includes("LogStash") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
-          className="newApp__service-logo newApp__service-logo--disabledButAvailable"
-          //  onClick={() => selectCard("LogStash")}
-          >
-            <input type="checkbox"
-              disabled={tools.includes("LogStash") ? true : false}
-              checked={isChecked.LogStash && data["LogStash"]}
-              className="newApp__checkbox"
+            <div
+              //  className={`newApp__service-logo ${tools.includes("LogStash") ? "newApp__service-logo--alredy-installed" : !isEKS ? "newApp__service-logo--disabled" : ""}`}
+              className="newApp__service-logo newApp__service-logo--disabledButAvailable"
+              //  onClick={() => selectCard("LogStash")}
+            >
+              <input type="checkbox"
+                disabled={tools.includes("LogStash") ? true : false}
+                checked={isChecked.LogStash && data["LogStash"]}
+                className="newApp__checkbox"
               // onClick={() => selectCard("LogStash")}
-            />
-            <img src={"/img/tools/log-stash.png"} />
-            <span className="newApp__service-title">LogStash</span>
-          </div>
+              />
+              <img src={"/img/tools/log-stash.png"} />
+              <span className="newApp__service-title">LogStash</span>
+            </div>
           </OverlayTrigger>
         </div>
       </Card.Body>

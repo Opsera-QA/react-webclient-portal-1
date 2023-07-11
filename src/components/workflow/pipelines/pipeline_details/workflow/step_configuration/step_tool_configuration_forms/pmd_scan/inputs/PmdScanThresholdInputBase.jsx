@@ -125,7 +125,7 @@ function PmdScanThresholdInputBase({ fieldName, model, setModel, helpComponent, 
     if (thresholdRows.length > 0) {
       const disabledThresholdLevels = [];
       thresholdRows.map((property) => {
-          disabledThresholdLevels.push(property?.level);
+        disabledThresholdLevels.push(property?.level);
       });
       return disabledThresholdLevels;
     }

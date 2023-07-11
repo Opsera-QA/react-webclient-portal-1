@@ -14,21 +14,21 @@ function RoleRestrictedArgoToolSelectInput(
     clearDataFunction,
   }) {
   return (
-     <RoleRestrictedToolByIdentifierInputBase
-       toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO}
-       toolFriendlyName={"Argo CD"}
-       fieldName={fieldName}
-       placeholderText={"Select Argo CD Tool"}
-       configurationRequired={true}
-       model={model}
-       setModel={setModel}
-       setDataFunction={setDataFunction}
-       clearDataFunction={clearDataFunction}
-       disabled={disabled}
-       className={className}
-       // TODO: Until read-only tool view is done, pulling entire tool so tools table works properly
-       // fields={["_id", "configuration", "name"]}
-     />
+    <RoleRestrictedToolByIdentifierInputBase
+      toolIdentifier={toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO}
+      toolFriendlyName={"Argo CD"}
+      fieldName={fieldName}
+      placeholderText={"Select Argo CD Tool"}
+      configurationRequired={true}
+      model={model}
+      setModel={setModel}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      disabled={disabled}
+      className={className}
+      // TODO: Until read-only tool view is done, pulling entire tool so tools table works properly
+      // fields={["_id", "configuration", "name"]}
+    />
   );
 }
 

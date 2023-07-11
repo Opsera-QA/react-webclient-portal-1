@@ -11,7 +11,7 @@ import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import WarningMessageFieldBase from "components/common/fields/text/message/WarningMessageFieldBase";
 import LdapSiteRoleGroupRoleHelper
-  from "@opsera/know-your-role/roles/accounts/groups/role/ldapSiteRoleGroupRole.helper";
+from "@opsera/know-your-role/roles/accounts/groups/role/ldapSiteRoleGroupRole.helper";
 import useGetLdapSiteRolesForDomain from "hooks/ldap/site_roles/useGetLdapSiteRolesForDomain";
 
 export default function SiteRoleManagement() {

@@ -73,7 +73,7 @@ function GitScraperActionButton(
     if (isStarting === true) {
       return (
         <span>
-        <LoadingIcon className={"mr-2"}/>
+          <LoadingIcon className={"mr-2"}/>
           Starting Task
         </span>
       );
@@ -82,7 +82,7 @@ function GitScraperActionButton(
     if (status === "running") {
       return (
         <span>
-        <LoadingIcon className={"mr-2"}/>
+          <LoadingIcon className={"mr-2"}/>
           Running Task
         </span>
       );
@@ -90,7 +90,7 @@ function GitScraperActionButton(
 
     return (
       <span>
-          <IconBase icon={faPlay} className={"mr-2"}/>
+        <IconBase icon={faPlay} className={"mr-2"}/>
         Run Task
       </span>
     );
@@ -100,7 +100,7 @@ function GitScraperActionButton(
     if (isCanceling) {
       return (
         <span>
-        <LoadingIcon className={"mr-2"}/>
+          <LoadingIcon className={"mr-2"}/>
           Cancelling
         </span>
       );

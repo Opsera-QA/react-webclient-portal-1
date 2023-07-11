@@ -111,8 +111,8 @@ function OpseraDeploymentFrequencyLineChart({ persona, date }) {
                 stacked: false,
               }}
               tooltip={({point}) => <ChartTooltip 
-                                            titles = {["Date", "Number of Deployments"]}
-                                            values = {[String(point.data.xFormatted), point.data.y]} />}
+                titles = {["Date", "Number of Deployments"]}
+                values = {[String(point.data.xFormatted), point.data.y]} />}
             />
           )}
         </div>

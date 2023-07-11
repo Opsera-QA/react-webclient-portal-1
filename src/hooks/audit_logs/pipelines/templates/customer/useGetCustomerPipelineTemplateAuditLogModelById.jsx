@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import useGetUserActivityAuditLogModel from "hooks/audit_logs/useGetUserActivityAuditLogModel";
 import useGetCustomerPipelineTemplateAuditLogById
-  from "hooks/audit_logs/pipelines/templates/customer/useGetCustomerPipelineTemplateAuditLogById";
+from "hooks/audit_logs/pipelines/templates/customer/useGetCustomerPipelineTemplateAuditLogById";
 
 export default function useGetCustomerPipelineTemplateAuditLogModelById(
   templateId,

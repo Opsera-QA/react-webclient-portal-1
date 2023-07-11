@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
 import toolsActions from "components/inventory/tools/tools-actions";
 import ToolRegistryRoleAccessHelpDocumentation
-  from "components/common/help/documentation/tool_registry/ToolRegistryRoleAccessHelpDocumentation";
+from "components/common/help/documentation/tool_registry/ToolRegistryRoleAccessHelpDocumentation";
 import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {toolHelper} from "components/inventory/tools/tool.helper";

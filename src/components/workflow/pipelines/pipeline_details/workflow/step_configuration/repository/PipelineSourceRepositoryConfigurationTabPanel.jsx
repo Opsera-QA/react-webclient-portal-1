@@ -1,16 +1,16 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import PipelineSourceRepositoryRepositoryInputPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryRepositoryInputPanel";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryRepositoryInputPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import PipelineSourceRepositoryWebhookInputPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryWebhookInputPanel";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryWebhookInputPanel";
 import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
-  from "components/workflow/plan/source/PipelineSourceRepositoryDynamicSettingsBooleanToggleInput";
+from "components/workflow/plan/source/PipelineSourceRepositoryDynamicSettingsBooleanToggleInput";
 import PipelineSourceRepositoryGitExportEnabledInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryGitExportEnabledInput";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryGitExportEnabledInput";
 import VanityTabPanelContainer from "components/common/panels/general/VanityTabPanelContainer";
 
 export default function PipelineSourceRepositoryConfigurationTabPanel(
@@ -60,45 +60,45 @@ export default function PipelineSourceRepositoryConfigurationTabPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "repository":
-        return (
-          <PipelineSourceRepositoryRepositoryInputPanel
-            sourceRepositoryModel={sourceRepositoryModel}
-            setSourceRepositoryModel={setSourceRepositoryModel}
-            className={"mt-3"}
-          />
-        );
-      case "webhook":
-        return (
-          <PipelineSourceRepositoryWebhookInputPanel
-            model={sourceRepositoryModel}
-            setModel={setSourceRepositoryModel}
-            pipeline={pipeline}
-            savePipelineFunction={callbackFunction}
-            className={"mt-3"}
-          />
-        );
-      case "dynamicSettings":
-        return (
-          <PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
-            model={sourceRepositoryModel}
-            setModel={setSourceRepositoryModel}
-            pipelineType={pipelineTypeConstants.getTypeForTypesArray(pipeline?.type, false)}
-            className={"mt-3"}
-          />
-        );
-      case "gitExportOptions":
-        return (
-          <PipelineSourceRepositoryGitExportEnabledInput
-            fieldName={"gitExportEnabled"}
-            model={sourceRepositoryModel}
-            setModel={setSourceRepositoryModel}
-            disabled={["gitlab", "github"].includes(sourceRepositoryModel.getData("service")) !== true}
-            className={"mt-3"}
-          />
-        );
-      default:
-        return null;
+    case "repository":
+      return (
+        <PipelineSourceRepositoryRepositoryInputPanel
+          sourceRepositoryModel={sourceRepositoryModel}
+          setSourceRepositoryModel={setSourceRepositoryModel}
+          className={"mt-3"}
+        />
+      );
+    case "webhook":
+      return (
+        <PipelineSourceRepositoryWebhookInputPanel
+          model={sourceRepositoryModel}
+          setModel={setSourceRepositoryModel}
+          pipeline={pipeline}
+          savePipelineFunction={callbackFunction}
+          className={"mt-3"}
+        />
+      );
+    case "dynamicSettings":
+      return (
+        <PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
+          model={sourceRepositoryModel}
+          setModel={setSourceRepositoryModel}
+          pipelineType={pipelineTypeConstants.getTypeForTypesArray(pipeline?.type, false)}
+          className={"mt-3"}
+        />
+      );
+    case "gitExportOptions":
+      return (
+        <PipelineSourceRepositoryGitExportEnabledInput
+          fieldName={"gitExportEnabled"}
+          model={sourceRepositoryModel}
+          setModel={setSourceRepositoryModel}
+          disabled={["gitlab", "github"].includes(sourceRepositoryModel.getData("service")) !== true}
+          className={"mt-3"}
+        />
+      );
+    default:
+      return null;
     }
   };
 

@@ -18,12 +18,12 @@ function AccessTokenDetailPanel({ accessToken, setAccessToken, loadData }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return <AccessTokenSummaryPanel accessToken={accessToken} />;
-      case "logs":
-        return <div className="mt-2"><AccessTokenLogPanel accessToken={accessToken} /></div>;
-      default:
-        return null;
+    case "summary":
+      return <AccessTokenSummaryPanel accessToken={accessToken} />;
+    case "logs":
+      return <div className="mt-2"><AccessTokenLogPanel accessToken={accessToken} /></div>;
+    default:
+      return null;
     }
   };
 

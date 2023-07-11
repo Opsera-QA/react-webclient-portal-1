@@ -6,7 +6,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 import ScriptLanguageSelectInput
-  from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
+from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
 import ScriptValueInput from "components/inventory/scripts/details/ScriptValueInput";
 
 export default function ScriptsEditorPanel(

@@ -10,7 +10,7 @@ import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
 import { defaultConfig, getColor, assignStandardColors,
-         adjustBarWidth, capitalizeLegend } from '../../insights/charts/charts-views';
+  adjustBarWidth, capitalizeLegend } from '../../insights/charts/charts-views';
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 function OpseraBuildsByUserBarChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -94,7 +94,7 @@ function OpseraBuildsByUserBarChart({ persona, date }) {
           ) : (
             <ResponsiveBar
               {...defaultConfig('Users', 'Number of Builds', 
-                    true, false, 'cutoffString', 'wholeNumbers')}
+                true, false, 'cutoffString', 'wholeNumbers')}
               {...adjustBarWidth(data ? data.data : [], false)}
               data={data ? data.data : []}
               keys={["Value"]}
@@ -105,10 +105,10 @@ function OpseraBuildsByUserBarChart({ persona, date }) {
               colorBy="id"
               colors={d => getColor(d.data)}
               tooltip={({ indexValue, value, color }) => <ChartTooltip 
-                                            titles = {["User", "Number of Builds"]}
-                                            values={[indexValue, value]}
-                                            color = {color}
-                                            style = {false} />}
+                titles = {["User", "Number of Builds"]}
+                values={[indexValue, value]}
+                color = {color}
+                style = {false} />}
             />
           )}
         </div>

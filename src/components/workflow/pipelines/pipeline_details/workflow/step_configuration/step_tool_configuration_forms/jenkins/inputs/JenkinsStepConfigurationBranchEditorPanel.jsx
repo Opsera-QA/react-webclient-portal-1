@@ -94,7 +94,7 @@ function JenkinsStepConfigurationBranchEditorPanel(
   // TODO: Rework
   const valid = () => {
     return (
-         service != null && service !== ""
+      service != null && service !== ""
       && gitToolId != null && gitToolId !== ""
       && repoId != null && repoId !== ""
       && !disallowedJobTypes.includes(jobType)

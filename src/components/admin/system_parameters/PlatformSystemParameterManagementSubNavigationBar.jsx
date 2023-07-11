@@ -12,29 +12,29 @@ export default function PlatformSystemParameterManagementSubNavigationBar({activ
     e.preventDefault();
 
     switch (tabSelection) {
-      case "adminTools":
-        history.push(`/admin`);
-        return;
-      case "platformSystemParameterManagement":
-        history.push(`/admin/platform/system-parameters`);
-        return;
+    case "adminTools":
+      history.push(`/admin`);
+      return;
+    case "platformSystemParameterManagement":
+      history.push(`/admin/platform/system-parameters`);
+      return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-      case "platformSystemParameterViewer":
-        return (
-          <NavigationTab
-            icon={faCogs}
-            tabName={"platformSystemParameterViewer"}
-            handleTabClick={handleTabClick}
-            activeTab={activeTab}
-            tabText={"Platform System Parameter Viewer"}
-          />
-        );
-      default:
-        return null;
+    case "platformSystemParameterViewer":
+      return (
+        <NavigationTab
+          icon={faCogs}
+          tabName={"platformSystemParameterViewer"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Platform System Parameter Viewer"}
+        />
+      );
+    default:
+      return null;
     }
   };
 

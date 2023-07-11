@@ -55,7 +55,7 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, handleClose} ) {
       getAccessToken,
       cancelTokenSource,
       toolIdentifierModel,
-      );
+    );
   };
 
   const updateToolIdentifier = async () => {
@@ -63,7 +63,7 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, handleClose} ) {
       getAccessToken,
       cancelTokenSource,
       toolIdentifierModel,
-      );
+    );
   };
 
   if (toolIdentifierModel == null) {

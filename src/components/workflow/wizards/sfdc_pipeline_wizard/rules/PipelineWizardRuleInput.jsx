@@ -6,16 +6,16 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import RuleTypeSelectInput from "components/common/list_of_values_input/rules/type/RuleTypeSelectInput";
 import RuleValueMultiSelectInput
-  from "components/common/list_of_values_input/workflow/wizard/rules/SfdcRuleValueMulitSelectInput";
+from "components/common/list_of_values_input/workflow/wizard/rules/SfdcRuleValueMulitSelectInput";
 import SfdcRuleFieldSelectInput from "components/common/list_of_values_input/workflow/wizard/rules/SfdcRuleFieldSelectInput";
 import SfdcRuleComponentTypeMultiSelectInput
-  from "components/common/list_of_values_input/workflow/wizard/rules/SfdcRuleComponentTypeMultiSelectInput";
+from "components/common/list_of_values_input/workflow/wizard/rules/SfdcRuleComponentTypeMultiSelectInput";
 import Model from "core/data_model/model";
 import sfdcRuleMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/rules/sfdc-rule-metadata";
 import GitRuleFieldSelectInput
-  from "components/common/list_of_values_input/workflow/wizard/rules/GitRuleFieldSelectInput";
+from "components/common/list_of_values_input/workflow/wizard/rules/GitRuleFieldSelectInput";
 import SfdcPipelineWizardRuleFieldFilterSelectInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/rules/SfdcPipelineWizardRuleFieldFilterSelectInput";
+from "components/workflow/wizards/sfdc_pipeline_wizard/rules/SfdcPipelineWizardRuleFieldFilterSelectInput";
 import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
 import IconBase from "components/common/icons/IconBase";
 
@@ -71,30 +71,30 @@ function PipelineWizardRuleInput({pipelineWizardModel, ruleData, index, addRule,
 
   const getRuleValueInput = () => {
     switch (ruleModel.getData("fieldFilter")) {
-      case "startsWith":
-      case "endsWith":
-      case "contains":
-        return (
-          <MultiTextInputBase
-            dataObject={ruleModel}
-            setDataObject={updateData}
-            fieldName={"values"}
-            showLabel={false}
-          />
-        );
-      case "equals":
-      default:
-        return (
-          <RuleValueMultiSelectInput
-            ruleField={ruleModel?.getData("field")}
-            dataObject={ruleModel}
-            setDataObject={updateData}
-            showLabel={false}
-            fetchAttribute={fetchAttribute}
-            componentTypes={ruleModel?.getData("componentTypes")}
-            pipelineWizardModel={pipelineWizardModel}
-          />
-        );
+    case "startsWith":
+    case "endsWith":
+    case "contains":
+      return (
+        <MultiTextInputBase
+          dataObject={ruleModel}
+          setDataObject={updateData}
+          fieldName={"values"}
+          showLabel={false}
+        />
+      );
+    case "equals":
+    default:
+      return (
+        <RuleValueMultiSelectInput
+          ruleField={ruleModel?.getData("field")}
+          dataObject={ruleModel}
+          setDataObject={updateData}
+          showLabel={false}
+          fetchAttribute={fetchAttribute}
+          componentTypes={ruleModel?.getData("componentTypes")}
+          pipelineWizardModel={pipelineWizardModel}
+        />
+      );
     }
   };
 

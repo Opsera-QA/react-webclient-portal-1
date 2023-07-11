@@ -11,13 +11,13 @@ function MetricGitLogBranchFilterInput(
     fieldName
   }) {
   return (
-      <GitLogBranchesList
-        fieldName={fieldName}
-        valueField={"value"}
-        textField={"text"}
-        model={metricFilterModel}
-        setModel={setMetricFilterModel}
-      />
+    <GitLogBranchesList
+      fieldName={fieldName}
+      valueField={"value"}
+      textField={"text"}
+      model={metricFilterModel}
+      setModel={setMetricFilterModel}
+    />
   );
 }
 

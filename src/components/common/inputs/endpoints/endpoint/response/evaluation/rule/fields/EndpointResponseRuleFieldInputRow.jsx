@@ -4,10 +4,10 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import modelHelpers from "components/common/model/modelHelpers";
 import ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput
-  from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput";
+from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
 import CustomParameterComboBoxInput
-  from "components/common/list_of_values_input/parameters/CustomParameterComboBoxInput";
+from "components/common/list_of_values_input/parameters/CustomParameterComboBoxInput";
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
@@ -16,7 +16,7 @@ import NumberPickerInputBase from "components/common/inputs/number/picker/base/N
 import IntegerTextInputBase from "components/common/inputs/text/number/integer/IntegerTextInputBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import endpointResponseFieldEvaluationRuleMetadata
-  from "@opsera/definitions/constants/api/evaluation/rule/fields/endpointResponseFieldEvaluationRule.metadata";
+from "@opsera/definitions/constants/api/evaluation/rule/fields/endpointResponseFieldEvaluationRule.metadata";
 
 function EndpointResponseRuleFieldInputRow(
   {
@@ -55,101 +55,101 @@ function EndpointResponseRuleFieldInputRow(
 
     if (canEnterValue.includes(filter)) {
       switch (type) {
-        case "string":
-          if (isSensitiveData === true) {
-            return (
-              <div style={{minHeight: responseParameterInputHeight}}>
-                <CustomParameterSelectInput
-                  model={endpointFieldModel}
-                  setModel={setEndpointFieldModel}
-                  fieldName={"value"}
-                  className={"value-parameter"}
-                  requireVaultSavedParameters={true}
-                  setDataFunction={updateCustomParameterField}
-                  disabled={disabled}
-                />
-              </div>
-            );
-          }
-
+      case "string":
+        if (isSensitiveData === true) {
           return (
             <div style={{minHeight: responseParameterInputHeight}}>
-              <CustomParameterComboBoxInput
+              <CustomParameterSelectInput
                 model={endpointFieldModel}
                 setModel={setEndpointFieldModel}
                 fieldName={"value"}
                 className={"value-parameter"}
-                requireInsensitiveParameters={true}
+                requireVaultSavedParameters={true}
                 setDataFunction={updateCustomParameterField}
                 disabled={disabled}
               />
             </div>
           );
-        case "array":
-          return (
-            <MultiTextListInputBase
+        }
+
+        return (
+          <div style={{minHeight: responseParameterInputHeight}}>
+            <CustomParameterComboBoxInput
               model={endpointFieldModel}
               setModel={setEndpointFieldModel}
               fieldName={"value"}
-              setDataFunction={updateMainModelFunction}
+              className={"value-parameter"}
+              requireInsensitiveParameters={true}
+              setDataFunction={updateCustomParameterField}
               disabled={disabled}
-              singularTopic={"Value"}
-              pluralTopic={"Values"}
-              minimumHeight={responseParameterArrayInputHeight}
-              maximumHeight={responseParameterArrayInputHeight}
             />
-          );
-        case "date":
-          return (
-            <div style={{minHeight: responseParameterInputHeight}}>
-              <DateTimeInput
-                dataObject={endpointFieldModel}
-                setDataObject={setEndpointFieldModel}
-                setDataFunction={updateMainModelFunction}
-                fieldName={"value"}
-                defaultToNull={true}
-                disabled={disabled}
-                clearDataFunction={() => updateMainModelFunction("value", undefined)}
-              />
-            </div>
-          );
-        case "number":
-          return (
-            <div style={{minHeight: responseParameterInputHeight}}>
-              <NumberPickerInputBase
-                dataObject={endpointFieldModel}
-                setDataObject={setEndpointFieldModel}
-                setDataFunction={updateMainModelFunction}
-                fieldName={"value"}
-                disabled={disabled}
-              />
-            </div>
-          );
-        case "integer":
-          return (
-            <div style={{minHeight: responseParameterInputHeight}}>
-              <IntegerTextInputBase
-                dataObject={endpointFieldModel}
-                setDataObject={setEndpointFieldModel}
-                setDataFunction={updateMainModelFunction}
-                fieldName={"value"}
-                disabled={disabled}
-              />
-            </div>
-          );
-        case "boolean":
-          return (
-            <div style={{minHeight: responseParameterInputHeight}}>
-              <BooleanToggleInput
-                dataObject={endpointFieldModel}
-                setDataObject={updateMainModel}
-                fieldName={"value"}
-                disabled={disabled}
-              />
-            </div>
-          );
-        case "object":
-        default:
+          </div>
+        );
+      case "array":
+        return (
+          <MultiTextListInputBase
+            model={endpointFieldModel}
+            setModel={setEndpointFieldModel}
+            fieldName={"value"}
+            setDataFunction={updateMainModelFunction}
+            disabled={disabled}
+            singularTopic={"Value"}
+            pluralTopic={"Values"}
+            minimumHeight={responseParameterArrayInputHeight}
+            maximumHeight={responseParameterArrayInputHeight}
+          />
+        );
+      case "date":
+        return (
+          <div style={{minHeight: responseParameterInputHeight}}>
+            <DateTimeInput
+              dataObject={endpointFieldModel}
+              setDataObject={setEndpointFieldModel}
+              setDataFunction={updateMainModelFunction}
+              fieldName={"value"}
+              defaultToNull={true}
+              disabled={disabled}
+              clearDataFunction={() => updateMainModelFunction("value", undefined)}
+            />
+          </div>
+        );
+      case "number":
+        return (
+          <div style={{minHeight: responseParameterInputHeight}}>
+            <NumberPickerInputBase
+              dataObject={endpointFieldModel}
+              setDataObject={setEndpointFieldModel}
+              setDataFunction={updateMainModelFunction}
+              fieldName={"value"}
+              disabled={disabled}
+            />
+          </div>
+        );
+      case "integer":
+        return (
+          <div style={{minHeight: responseParameterInputHeight}}>
+            <IntegerTextInputBase
+              dataObject={endpointFieldModel}
+              setDataObject={setEndpointFieldModel}
+              setDataFunction={updateMainModelFunction}
+              fieldName={"value"}
+              disabled={disabled}
+            />
+          </div>
+        );
+      case "boolean":
+        return (
+          <div style={{minHeight: responseParameterInputHeight}}>
+            <BooleanToggleInput
+              dataObject={endpointFieldModel}
+              setDataObject={updateMainModel}
+              fieldName={"value"}
+              disabled={disabled}
+            />
+          </div>
+        );
+      case "object":
+      default:
         return (
           <CenteredContentWrapper>
             <div>{`Entering this parameter type's value is not currently supported.`}</div>

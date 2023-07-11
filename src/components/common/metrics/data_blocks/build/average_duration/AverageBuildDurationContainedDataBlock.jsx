@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import MetricTextBase from "components/common/metrics/text/MetricTextBase";
 import ContainedThreeLineDataBlockBase
-  from "components/common/metrics/data_blocks/base/ContainedThreeLineDataBlockBase";
+from "components/common/metrics/data_blocks/base/ContainedThreeLineDataBlockBase";
 
 function AverageBuildDurationContainedDataBlock({ className, averageDuration, qualityLevel, bottomText, onClickFunction }) {
   return (

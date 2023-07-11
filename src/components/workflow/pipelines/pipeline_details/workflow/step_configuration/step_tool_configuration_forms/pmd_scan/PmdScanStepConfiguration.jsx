@@ -12,12 +12,12 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PmdScanThresholdInputBase
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/inputs/PmdScanThresholdInputBase";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/inputs/PmdScanThresholdInputBase";
 import PMDScanHelper
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/pmd-scan-helper";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/pmd-scan-helper";
 
 const RULE_LIST_VALUES = [
   "bestPracticeThreshold",
@@ -74,12 +74,12 @@ function PmdScanStepConfiguration({
     setPmdStepConfigurationDto(pmdConfigurationData);
 
     if (job_type) {
-        setJobType(job_type);
+      setJobType(job_type);
     }
 
     if (threshold) {
-        setThresholdType(threshold?.type);
-        setThresholdValue(threshold?.value);
+      setThresholdType(threshold?.type);
+      setThresholdValue(threshold?.value);
     }
 
     setIsLoading(false);

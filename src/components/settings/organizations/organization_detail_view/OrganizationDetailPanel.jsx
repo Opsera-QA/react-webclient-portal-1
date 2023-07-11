@@ -42,12 +42,12 @@ function OrganizationDetailPanel({organizationData }) {
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return <OrganizationSummaryPanel organizationData={organizationData} setActiveTab={setActiveTab} />;
-      case "settings":
-        return <OrganizationEditorPanel handleClose={toggleSummaryPanel} organizationData={organizationData} />;
-      default:
-        return null;
+    case "summary":
+      return <OrganizationSummaryPanel organizationData={organizationData} setActiveTab={setActiveTab} />;
+    case "settings":
+      return <OrganizationEditorPanel handleClose={toggleSummaryPanel} organizationData={organizationData} />;
+    default:
+      return null;
     }
   };
 

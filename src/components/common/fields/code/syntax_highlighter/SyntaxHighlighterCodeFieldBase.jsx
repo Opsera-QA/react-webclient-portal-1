@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { faCode } from "@fortawesome/pro-light-svg-icons";
 import InfoContainer from "components/common/containers/InfoContainer";
 import SyntaxHighlighterFieldBase
-  from "components/common/fields/code/syntax_highlighter/SyntaxHighlighterFieldBase";
+from "components/common/fields/code/syntax_highlighter/SyntaxHighlighterFieldBase";
 import CopyToClipboardIcon from "components/common/icons/CopyToClipboardIcon";
 
 function SyntaxHighlighterCodeFieldBase(

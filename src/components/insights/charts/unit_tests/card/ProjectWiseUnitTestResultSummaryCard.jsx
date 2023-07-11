@@ -28,7 +28,7 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
   }, [mergeRequestData]);
 
   const initializeDto = async () => 
-  setUnitTestMetricScorecardDto(new Model({...mergeRequestData}, projectWiseUnitTestResultsMetadata, false));
+    setUnitTestMetricScorecardDto(new Model({...mergeRequestData}, projectWiseUnitTestResultsMetadata, false));
 
   const getTitleBar = () => {
     return (
@@ -43,35 +43,35 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
   }
 
   const chartData = [{
-        "id": "Success",
-        "label": "Success",
-        "value": unitTestMetricScorecardDto.getData("test_success_density"),
-        "color": "#5B5851"
-      },
-      {
-        "id": "Failure",
-        "label": "Failure",
-        "value": unitTestMetricScorecardDto.getData("test_failures"),
-        "color": "#7A756C"
-      },
-      {
-        "id": "Errors",
-        "label": "Errors",
-        "value": unitTestMetricScorecardDto.getData("test_errors"),
-        "color": "#7A756C"
-      },
-      {
-        "id": "Skipped",
-        "label": "Skipped",
-        "value": unitTestMetricScorecardDto.getData("skipped_tests"),
-        "color": "#7A756C"
-      }
-    ];
+    "id": "Success",
+    "label": "Success",
+    "value": unitTestMetricScorecardDto.getData("test_success_density"),
+    "color": "#5B5851"
+  },
+  {
+    "id": "Failure",
+    "label": "Failure",
+    "value": unitTestMetricScorecardDto.getData("test_failures"),
+    "color": "#7A756C"
+  },
+  {
+    "id": "Errors",
+    "label": "Errors",
+    "value": unitTestMetricScorecardDto.getData("test_errors"),
+    "color": "#7A756C"
+  },
+  {
+    "id": "Skipped",
+    "label": "Skipped",
+    "value": unitTestMetricScorecardDto.getData("skipped_tests"),
+    "color": "#7A756C"
+  }
+  ];
 
-    const getDuration = () => {
-      const duration = unitTestMetricScorecardDto.getData('test_execution_time');
-      return duration === 0 ? '0 Seconds' : dateHelpers.humanizeDurationForMilliseconds(duration);
-    };
+  const getDuration = () => {
+    const duration = unitTestMetricScorecardDto.getData('test_execution_time');
+    return duration === 0 ? '0 Seconds' : dateHelpers.humanizeDurationForMilliseconds(duration);
+  };
 
   return (
     <InsightsCardContainerBase titleBar={getTitleBar()}>
@@ -85,9 +85,9 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
           <Col sm={12} md={4} lg={4}> 
             <div className="data-block-box ml-2" >
               <InsightHighlightFieldWithTrendIcon
-                  dataObject={unitTestMetricScorecardDto}
-                  fieldName="tests"
-                  trendFieldName="status"
+                dataObject={unitTestMetricScorecardDto}
+                fieldName="tests"
+                trendFieldName="status"
               />
             </div>
           </Col>
@@ -102,7 +102,7 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
             </div>
           </Col>
         </Row>         
-        </div>
+      </div>
     </InsightsCardContainerBase>
   );
 }

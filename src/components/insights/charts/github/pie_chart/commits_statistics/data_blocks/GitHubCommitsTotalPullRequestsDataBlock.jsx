@@ -4,19 +4,19 @@ import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlo
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 
 function GitHubCommitsTotalPullRequestsDataBlock({ data }) {
-    return (
-        <DataBlockBoxContainer showBorder={true}>
-            <TwoLineScoreDataBlock
-                className={"p-3"}
-                score={data}
-                subtitle={"Total Pull Requests"}
-            />
-        </DataBlockBoxContainer>
-    );
+  return (
+    <DataBlockBoxContainer showBorder={true}>
+      <TwoLineScoreDataBlock
+        className={"p-3"}
+        score={data}
+        subtitle={"Total Pull Requests"}
+      />
+    </DataBlockBoxContainer>
+  );
 }
 
 GitHubCommitsTotalPullRequestsDataBlock.propTypes = {
-    data: PropTypes.number,
+  data: PropTypes.number,
 };
 
 export default GitHubCommitsTotalPullRequestsDataBlock;

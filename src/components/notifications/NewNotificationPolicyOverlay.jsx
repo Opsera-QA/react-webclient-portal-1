@@ -5,7 +5,7 @@ import CreateCenterPanel from "components/common/overlays/center/CreateCenterPan
 import useGetNewNotificationPolicyModel from "hooks/notification_policies/model/useGetNewNotificationPolicyModel";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import notificationPolicyMetadata
-  from "@opsera/definitions/constants/notification_policies/notificationPolicy.metadata";
+from "@opsera/definitions/constants/notification_policies/notificationPolicy.metadata";
 
 export default function NewNotificationPolicyOverlay({ loadData } ) {
   const { toastContext } = useComponentStateReference();

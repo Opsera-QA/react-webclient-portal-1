@@ -9,7 +9,7 @@ import CustomTab from "components/common/tabs/CustomTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import LdapGroupMembershipManagementPanel
-  from "components/common/inputs/user/membership/manager/LdapGroupMembershipManagementPanel";
+from "components/common/inputs/user/membership/manager/LdapGroupMembershipManagementPanel";
 import LdapGroupAssignedRolesPanel from "components/settings/ldap_groups/details/roles/LdapGroupAssignedRolesPanel";
 import LdapUserGroupRoleHelper from "@opsera/know-your-role/roles/accounts/groups/user/ldapUserGroupRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
@@ -66,44 +66,44 @@ function LdapGroupDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return (
-          <LdapGroupSummaryPanel
-            ldapGroupData={ldapGroupData}
-            domain={orgDomain}
-            loadData={loadData}
-            isLoading={isLoading}
-          />
-        );
-      case "manage":
-        return (
-          <LdapGroupMembershipManagementPanel
-            orgDomain={orgDomain}
-            setActiveTab={setActiveTab}
-            ldapGroupData={ldapGroupData}
-            authorizedActions={authorizedActions}
-            loadData={loadData}
-          />
-          );
-      case "settings":
-        return (
-          <LdapGroupEditorPanel
-            handleClose={toggleSummaryPanel}
-            authorizedActions={authorizedActions}
-            setLdapGroupData={setLdapGroupData}
-            ldapGroupData={ldapGroupData}
-            orgDomain={orgDomain}
-          />
-        );
-      case "assigned-roles":
-        return (
-          <LdapGroupAssignedRolesPanel
-            groupModel={ldapGroupData}
-            domain={orgDomain}
-          />
-        );
-      default:
-        return null;
+    case "summary":
+      return (
+        <LdapGroupSummaryPanel
+          ldapGroupData={ldapGroupData}
+          domain={orgDomain}
+          loadData={loadData}
+          isLoading={isLoading}
+        />
+      );
+    case "manage":
+      return (
+        <LdapGroupMembershipManagementPanel
+          orgDomain={orgDomain}
+          setActiveTab={setActiveTab}
+          ldapGroupData={ldapGroupData}
+          authorizedActions={authorizedActions}
+          loadData={loadData}
+        />
+      );
+    case "settings":
+      return (
+        <LdapGroupEditorPanel
+          handleClose={toggleSummaryPanel}
+          authorizedActions={authorizedActions}
+          setLdapGroupData={setLdapGroupData}
+          ldapGroupData={ldapGroupData}
+          orgDomain={orgDomain}
+        />
+      );
+    case "assigned-roles":
+      return (
+        <LdapGroupAssignedRolesPanel
+          groupModel={ldapGroupData}
+          domain={orgDomain}
+        />
+      );
+    default:
+      return null;
     }
   };
 

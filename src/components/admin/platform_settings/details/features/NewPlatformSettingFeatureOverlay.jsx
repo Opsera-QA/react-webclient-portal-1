@@ -4,7 +4,7 @@ import CreateCenterPanel from "components/common/overlays/center/CreateCenterPan
 import { DialogToastContext } from "contexts/DialogToastContext";
 import modelHelpers from "components/common/model/modelHelpers";
 import PlatformSettingFeatureEditorPanel
-  from "components/admin/platform_settings/details/features/PlatformSettingFeatureEditorPanel";
+from "components/admin/platform_settings/details/features/PlatformSettingFeatureEditorPanel";
 import {
   platformSettingFeatureMetadata
 } from "components/admin/platform_settings/details/features/platformSettingFeature.metadata";

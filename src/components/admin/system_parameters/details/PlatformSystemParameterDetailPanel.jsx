@@ -5,9 +5,9 @@ import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import PlatformSystemParameterSummaryPanel
-  from "components/admin/system_parameters/details/PlatformSystemParameterSummaryPanel";
+from "components/admin/system_parameters/details/PlatformSystemParameterSummaryPanel";
 import PlatformSystemParameterEditorPanel
-  from "components/admin/system_parameters/details/PlatformSystemParameterEditorPanel";
+from "components/admin/system_parameters/details/PlatformSystemParameterEditorPanel";
 
 export default function PlatformSystemParameterDetailPanel(
   {
@@ -36,23 +36,23 @@ export default function PlatformSystemParameterDetailPanel(
 
   const getCurrentView = () => {
     switch (activeTab) {
-      case "summary":
-        return (
-          <PlatformSystemParameterSummaryPanel
-            platformSystemParameterModel={platformSystemParameterModel}
-            setActiveTab={setActiveTab}
-          />
-        );
-      case "settings":
-        return (
-          <PlatformSystemParameterEditorPanel
-            platformSystemParameterModel={platformSystemParameterModel}
-            setPlatformSystemParameterModel={setPlatformSystemParameterModel}
-            handleClose={toggleSummaryPanel}
-          />
-        );
-      default:
-        return null;
+    case "summary":
+      return (
+        <PlatformSystemParameterSummaryPanel
+          platformSystemParameterModel={platformSystemParameterModel}
+          setActiveTab={setActiveTab}
+        />
+      );
+    case "settings":
+      return (
+        <PlatformSystemParameterEditorPanel
+          platformSystemParameterModel={platformSystemParameterModel}
+          setPlatformSystemParameterModel={setPlatformSystemParameterModel}
+          handleClose={toggleSummaryPanel}
+        />
+      );
+    default:
+      return null;
     }
   };
 

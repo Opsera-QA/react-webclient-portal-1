@@ -97,17 +97,17 @@ function SonarMetricByProjectLineChart({ kpiConfiguration, setKpiConfiguration, 
 
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
-            <ResponsiveLine
-              data={metrics}
-              {...defaultConfig("Vulnerabilities", "Date", 
-                    false, true, "wholeNumbers", "monthDate")}
-              {...config(getColor)}
-              onClick={() => setShowModal(true)}
-              tooltip={(node) => <ChartTooltip 
-                    titles={["Status", "Qualifier", "Date", capitalizeFirstLetter(node.point.data.metric)]}
-                    values={[node.point.data.status, node.point.data.gate, 
-                             node.point.data.xFormatted, node.point.data.yFormatted]} />}
-            />        
+        <ResponsiveLine
+          data={metrics}
+          {...defaultConfig("Vulnerabilities", "Date", 
+            false, true, "wholeNumbers", "monthDate")}
+          {...config(getColor)}
+          onClick={() => setShowModal(true)}
+          tooltip={(node) => <ChartTooltip 
+            titles={["Status", "Qualifier", "Date", capitalizeFirstLetter(node.point.data.metric)]}
+            values={[node.point.data.status, node.point.data.gate, 
+              node.point.data.xFormatted, node.point.data.yFormatted]} />}
+        />        
       </div>
     );
   };

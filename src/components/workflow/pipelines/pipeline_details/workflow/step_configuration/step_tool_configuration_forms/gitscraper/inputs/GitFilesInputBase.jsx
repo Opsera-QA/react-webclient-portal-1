@@ -9,15 +9,15 @@ import IconBase from "components/common/icons/IconBase";
 import MultiSelectInputBase from "../../../../../../../../common/inputs/multi_select/MultiSelectInputBase";
 
 function GitFilesInputBase({
-                                               fieldName,
-                                               dataObject,
-                                               setDataObject,
-                                               disabled,
-                                               textField,
-                                               valueField,
-                                               tool_prop,
-                                               pipelineId,
-                                             }) {
+  fieldName,
+  dataObject,
+  setDataObject,
+  disabled,
+  textField,
+  valueField,
+  tool_prop,
+  pipelineId,
+}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [repoFiles, setKafkaConnectSCMRepoFiles] = useState([]);

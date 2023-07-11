@@ -23,18 +23,18 @@ function TerraformProviderSelectInput({ fieldName, dataObject, setDataObject, di
   };
 
   return (
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        selectOptions={vcsProviders}
-        setDataFunction={setDataFunction}
-        clearDataFunction={clearDataFunction}
-        valueField={valueField}
-        textField={textField}
-        placeholderText={"Select VCS Provider"}
-        disabled={disabled}
-      />
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      selectOptions={vcsProviders}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      valueField={valueField}
+      textField={textField}
+      placeholderText={"Select VCS Provider"}
+      disabled={disabled}
+    />
   );
 }
 

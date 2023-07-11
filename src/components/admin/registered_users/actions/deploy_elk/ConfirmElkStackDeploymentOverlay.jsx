@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SignificantOperationConfirmationOverlayBase
-  from "components/common/overlays/center/SignificantOperationConfirmationOverlayBase";
+from "components/common/overlays/center/SignificantOperationConfirmationOverlayBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import WarningMessageFieldBase from "components/common/fields/text/message/WarningMessageFieldBase";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";

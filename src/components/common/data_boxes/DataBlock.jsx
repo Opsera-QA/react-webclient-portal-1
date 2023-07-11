@@ -5,7 +5,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 // TODO: I need to remember to rewrite this
 function DataBlock({ title, subTitle, toolTipText, clickAction, statusColor, 
-                   ellipsesContent, footerText, modal, view, className }) {
+  ellipsesContent, footerText, modal, view, className }) {
   const statusColors = {
     success: "#00897b",
     danger: "#E57373",
@@ -30,11 +30,11 @@ function DataBlock({ title, subTitle, toolTipText, clickAction, statusColor,
     <>
       <TooltipWrapper innerText={toolTipText}>
         <Card className={getCardClassNames()}
-              style={{ height: view !== "small" ? "100px" : "auto", maxWidth: "250px"}}
-              onClick={clickAction}>
+          style={{ height: view !== "small" ? "100px" : "auto", maxWidth: "250px"}}
+          onClick={clickAction}>
           <Card.Body className="data-blocks-body">
             <div className="data-blocks-status"
-                style={{backgroundColor: statusColors[statusColor]}}>      
+              style={{backgroundColor: statusColors[statusColor]}}>      
             </div>
             <Card.Title className="data-blocks-title">
               {title}

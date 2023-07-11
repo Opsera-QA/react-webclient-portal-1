@@ -19,15 +19,15 @@ function WorkflowSubNavigationBar({currentTab}) {
     e.preventDefault();
 
     switch (tabSelection) {
-      case "catalog":
-        history.push(pipelineCatalogHelper.getManagementScreenLink());
-        return;
-      case "pipelines":
-        history.push(pipelineHelper.getManagementScreenLink());
-        return;
-      case "pipelineInstructionsManagement":
-        history.push(pipelineInstructionsHelper.getManagementScreenLink());
-        return;
+    case "catalog":
+      history.push(pipelineCatalogHelper.getManagementScreenLink());
+      return;
+    case "pipelines":
+      history.push(pipelineHelper.getManagementScreenLink());
+      return;
+    case "pipelineInstructionsManagement":
+      history.push(pipelineInstructionsHelper.getManagementScreenLink());
+      return;
     }
   };
 

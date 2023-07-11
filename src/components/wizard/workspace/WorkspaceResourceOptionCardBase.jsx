@@ -63,34 +63,34 @@ export default function WorkspaceResourceOptionCardBase(
 
   const getIconForWorkspaceResourceType = () => {
     switch (option) {
-      case WORKSPACE_RESOURCE_TYPES.TASK:
-        return faTasks;
-      case WORKSPACE_RESOURCE_TYPES.PIPELINE:
-        return faDraftingCompass;
-      case WORKSPACE_RESOURCE_TYPES.TOOL:
-        return faTools;
+    case WORKSPACE_RESOURCE_TYPES.TASK:
+      return faTasks;
+    case WORKSPACE_RESOURCE_TYPES.PIPELINE:
+      return faDraftingCompass;
+    case WORKSPACE_RESOURCE_TYPES.TOOL:
+      return faTools;
     }
   };
 
   const getCardFooterForWorkspaceResourceType = () => {
     switch (option) {
-      case WORKSPACE_RESOURCE_TYPES.TASK:
-        return <TaskCardFooter />;
-      case WORKSPACE_RESOURCE_TYPES.PIPELINE:
-        return <PipelineCardFooter />;
-      case WORKSPACE_RESOURCE_TYPES.TOOL:
-        return <ToolCardFooter />;
+    case WORKSPACE_RESOURCE_TYPES.TASK:
+      return <TaskCardFooter />;
+    case WORKSPACE_RESOURCE_TYPES.PIPELINE:
+      return <PipelineCardFooter />;
+    case WORKSPACE_RESOURCE_TYPES.TOOL:
+      return <ToolCardFooter />;
     }
   };
 
   const getHighlightedBorderColorForWorkspaceResourceType = () => {
     switch (option) {
-      case WORKSPACE_RESOURCE_TYPES.TASK:
-        return themeConstants.RESOURCE_COLORS.TASKS;
-      case WORKSPACE_RESOURCE_TYPES.PIPELINE:
-        return themeConstants.RESOURCE_COLORS.PIPELINES;
-      case WORKSPACE_RESOURCE_TYPES.TOOL:
-        return themeConstants.RESOURCE_COLORS.TOOLS;
+    case WORKSPACE_RESOURCE_TYPES.TASK:
+      return themeConstants.RESOURCE_COLORS.TASKS;
+    case WORKSPACE_RESOURCE_TYPES.PIPELINE:
+      return themeConstants.RESOURCE_COLORS.PIPELINES;
+    case WORKSPACE_RESOURCE_TYPES.TOOL:
+      return themeConstants.RESOURCE_COLORS.TOOLS;
     }
   };
 

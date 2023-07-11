@@ -17,18 +17,18 @@ function TagDisplayerInput({tags, className, showNoTagsAppliedBadge}) {
             if (typeof tag !== "string") {
               return (
                 // <div>
-                  <CustomBadge
-                    badgeText={
-                      <span>
-                        <span className="mr-1">
-                          {capitalizeFirstLetter(tag.type)}:
-                        </span>
-                        {capitalizeFirstLetter(tag.value)}
+                <CustomBadge
+                  badgeText={
+                    <span>
+                      <span className="mr-1">
+                        {capitalizeFirstLetter(tag.type)}:
                       </span>
-                    }
-                    icon={faTag}
-                    key={index}
-                  />
+                      {capitalizeFirstLetter(tag.value)}
+                    </span>
+                  }
+                  icon={faTag}
+                  key={index}
+                />
                 // </div>
               );
             }
@@ -48,14 +48,14 @@ function TagDisplayerInput({tags, className, showNoTagsAppliedBadge}) {
           className={"popover-filter"}
         >
           <div className={className}>
-        <span className="item-field">
-          <span>
-            <span className="mr-1 badge badge-light group-badge">
-              <IconBase icon={faTag} className={"mr-1"}/>
+            <span className="item-field">
+              <span>
+                <span className="mr-1 badge badge-light group-badge">
+                  <IconBase icon={faTag} className={"mr-1"}/>
               No Tags Applied. Click to edit.
+                </span>
+              </span>
             </span>
-          </span>
-        </span>
           </div>
         </TooltipWrapper>
       );

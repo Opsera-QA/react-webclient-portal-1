@@ -10,20 +10,20 @@ function ExportLogDataOverlay({ formattedData, rawData, isLoading}) {
   };
 
   const getPdfExporter = () => {
-      const searchResults = formattedData;
-      const pdfExporter = new jsPDF();
-      const resultsToExport = searchResults[0].hits;
+    const searchResults = formattedData;
+    const pdfExporter = new jsPDF();
+    const resultsToExport = searchResults[0].hits;
 
-      pdfExporter.autoTable({
-        startY: 2,
-        headStyles:{fillColor: [54, 46, 84]},
-        showHead: "firstPage",
-        margin: { left: 2, right: 2 },
-        head:[["Logs Search Results"]],
-        body: resultsToExport.map(item => [JSON.stringify(item, null, 2)])
-      });
+    pdfExporter.autoTable({
+      startY: 2,
+      headStyles:{fillColor: [54, 46, 84]},
+      showHead: "firstPage",
+      margin: { left: 2, right: 2 },
+      head:[["Logs Search Results"]],
+      body: resultsToExport.map(item => [JSON.stringify(item, null, 2)])
+    });
 
-      return pdfExporter;
+    return pdfExporter;
   };
 
   return (

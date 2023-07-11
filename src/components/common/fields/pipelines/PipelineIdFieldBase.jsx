@@ -16,7 +16,7 @@ export default function PipelineIdFieldBase(
     pipeline,
   } = useGetPipelineNameById(pipelineId);
 
-// TODO: Make overlay to show more details without needing to visit pipeline screen
+  // TODO: Make overlay to show more details without needing to visit pipeline screen
   // const getToolInfoOverlay = () => {
   //   if (isMongoDbId(toolId) && toolName) {
   //     return (

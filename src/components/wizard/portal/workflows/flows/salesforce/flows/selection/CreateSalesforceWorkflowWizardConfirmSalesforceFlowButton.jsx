@@ -23,13 +23,13 @@ export default function CreateSalesforceWorkflowWizardConfirmSalesforceFlowButto
           onClick={() => setCurrentScreen(CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS.WIZARD_FLOW_SCREEN)}
           variant={"primary"}
         >
-        <span>
-          <IconBase
-            icon={faCheckCircle}
-            className={"mr-2"}
-          />
+          <span>
+            <IconBase
+              icon={faCheckCircle}
+              className={"mr-2"}
+            />
           Confirm Flow
-        </span>
+          </span>
         </Button>
       </ButtonContainerBase>
     </div>

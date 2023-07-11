@@ -66,7 +66,7 @@ export default function FilterSelectionPopoverButton(
             </div>
             <div className="w-50 ml-1">
               <Button variant="outline-secondary" size="sm" onClick={() => resetFiltersAndCloseItem()} className="w-100"
-                      disabled={isLoading || filterDto?.getData("activeFilters").length === 0}>
+                disabled={isLoading || filterDto?.getData("activeFilters").length === 0}>
                 <span><span className="mr-2"><StackedFilterRemovalIcon/></span>Remove</span>
               </Button>
             </div>

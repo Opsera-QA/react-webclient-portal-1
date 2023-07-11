@@ -45,7 +45,7 @@ function OrchestrationNotificationLevelSelectInput(
         valueField={"value"}
         textField={"text"}
         disabled={disabled || model?.getData("enabled") === false}
-     />
+      />
       {/*<InfoText customMessage={getInfoText()} />*/}
     </div>
   );

@@ -6,8 +6,8 @@ import ExportDataPanel from "components/common/modal/export_data/ExportDataPanel
 export default function ExportContributorsPanel({ showExportPanel, setShowExportPanel, LookupDetailsData, isLoading}) {
   const getRawData = () => {
     const rawData = Array.isArray(LookupDetailsData)
-        ? LookupDetailsData?.map((item) => JSON.stringify(item))
-        : "export failure";
+      ? LookupDetailsData?.map((item) => JSON.stringify(item))
+      : "export failure";
     return new Blob([rawData], {type: "text/plain"});
   };
 
@@ -26,8 +26,8 @@ export default function ExportContributorsPanel({ showExportPanel, setShowExport
       margin: {left: 2, right: 2},
       head: [
         [
-            "Reviewer Name",
-            "Total Commits",
+          "Reviewer Name",
+          "Total Commits",
         ],
       ],
       body: LookupDetailsData.map((item) => [
@@ -58,11 +58,11 @@ export default function ExportContributorsPanel({ showExportPanel, setShowExport
 
   return (
     <ExportDataPanel
-        isLoading={isLoading}
-        getRawData={getRawData}
-        getCsvData={getCsvData}
-        getPdfExporter={getPdfExporter}
-        closePanelFunction={() => setShowExportPanel(!showExportPanel)}
+      isLoading={isLoading}
+      getRawData={getRawData}
+      getCsvData={getCsvData}
+      getPdfExporter={getPdfExporter}
+      closePanelFunction={() => setShowExportPanel(!showExportPanel)}
     />
   );
 }

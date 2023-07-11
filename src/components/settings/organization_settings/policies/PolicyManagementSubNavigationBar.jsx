@@ -18,9 +18,9 @@ export default function PolicyManagementSubNavigationBar({activeTab}) {
     }
 
     switch (tabSelection) {
-      case "policyManagement":
-        history.push(policyHelper.getManagementScreenLink());
-        return;
+    case "policyManagement":
+      history.push(policyHelper.getManagementScreenLink());
+      return;
     }
   };
 

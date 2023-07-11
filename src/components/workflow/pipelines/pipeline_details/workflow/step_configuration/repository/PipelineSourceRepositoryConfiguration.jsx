@@ -2,27 +2,27 @@ import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PipelineSourceRepositoryWebhookInputPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryWebhookInputPanel";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryWebhookInputPanel";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineSourceRepositoryGitExportEnabledInput from "./PipelineSourceRepositoryGitExportEnabledInput";
 import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
-  from "components/workflow/plan/source/PipelineSourceRepositoryDynamicSettingsBooleanToggleInput";
+from "components/workflow/plan/source/PipelineSourceRepositoryDynamicSettingsBooleanToggleInput";
 import {
   sourceRepositoryConfigurationMetadata
 } from "components/workflow/plan/source/sourceRepositoryConfiguration.metadata";
 import usePipelineSourceRepositoryActions from "components/workflow/plan/source/usePipelineSourceRepositoryActions";
 import PipelineSourceRepositoryRepositoryInputPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryRepositoryInputPanel";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryRepositoryInputPanel";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faChartNetwork, faDraftingCompass, faWrench} from "@fortawesome/pro-light-svg-icons";
 import PipelineSourceRepositoryConfigurationTabPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryConfigurationTabPanel";
+from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryConfigurationTabPanel";
 
 export default function PipelineSourceRepositoryConfiguration(
   {
@@ -74,7 +74,7 @@ export default function PipelineSourceRepositoryConfiguration(
   };
 
   if (sourceRepositoryModel == null) {
-     return <LoadingDialog message={"Loading Data"} />;
+    return <LoadingDialog message={"Loading Data"} />;
   }
 
   return (

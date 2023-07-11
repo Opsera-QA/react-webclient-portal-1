@@ -17,14 +17,14 @@ function DotNetBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
   }
 
   return (
-     <BitbucketWorkspaceInput
-       fieldName={"workspaceName"}
-       setDataFunction={setWorkspace}
-       gitToolId={dataObject.getData("gitToolId")}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       disabled={disabled}
-     />
+    <BitbucketWorkspaceInput
+      fieldName={"workspaceName"}
+      setDataFunction={setWorkspace}
+      gitToolId={dataObject.getData("gitToolId")}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      disabled={disabled}
+    />
   );
 }
 

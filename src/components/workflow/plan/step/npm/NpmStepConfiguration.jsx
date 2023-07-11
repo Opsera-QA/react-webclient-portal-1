@@ -1,13 +1,13 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import {npmStepMetadata}
-  from "components/workflow/plan/step/npm/npmStep.metadata";
+from "components/workflow/plan/step/npm/npmStep.metadata";
 
 function NpmStepConfiguration(
   {

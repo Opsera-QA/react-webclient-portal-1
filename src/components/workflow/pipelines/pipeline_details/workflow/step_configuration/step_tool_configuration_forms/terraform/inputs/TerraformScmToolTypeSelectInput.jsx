@@ -32,18 +32,18 @@ function TerraformScmToolTypeSelectInput({model, setModel, isLoading, disabled})
   };
 
   return (
-     <SelectInputBase
-       fieldName={"type"}
-       dataObject={model}
-       setDataObject={setModel}
-       selectOptions={TERRAFORM_SCM_TOOL_LIST}
-       valueField={"value"}
-       textField={"name"}
-       placeholderText={"Select a Tool Type"}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-       busy={isLoading}
-     />
+    <SelectInputBase
+      fieldName={"type"}
+      dataObject={model}
+      setDataObject={setModel}
+      selectOptions={TERRAFORM_SCM_TOOL_LIST}
+      valueField={"value"}
+      textField={"name"}
+      placeholderText={"Select a Tool Type"}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+      busy={isLoading}
+    />
   );
 }
 

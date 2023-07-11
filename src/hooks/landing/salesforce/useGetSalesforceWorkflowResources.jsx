@@ -37,28 +37,28 @@ export default function useGetSalesforceWorkflowResources(
     let response;
 
     switch (currentView) {
-      case WORKFLOW_WIDGET_VIEWS.FOLLOWING:
-        response = await salesforceLandingActions.getSubscribedWorkflowResources(
-          newFilterModel,
-          fields,
-          newFilterModel?.getData("active"),
-        );
-        break;
-      case WORKFLOW_WIDGET_VIEWS.RECENT_ACTIVITY:
-        response = await salesforceLandingActions.getRecentWorkflowResources(
-          newFilterModel,
-          fields,
-          newFilterModel?.getData("active"),
-        );
-        break;
-      case WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS:
-      default:
-        response = await salesforceLandingActions.getMyWorkspaceWorkflowResources(
-          newFilterModel,
-          fields,
-          newFilterModel?.getData("active"),
-        );
-        break;
+    case WORKFLOW_WIDGET_VIEWS.FOLLOWING:
+      response = await salesforceLandingActions.getSubscribedWorkflowResources(
+        newFilterModel,
+        fields,
+        newFilterModel?.getData("active"),
+      );
+      break;
+    case WORKFLOW_WIDGET_VIEWS.RECENT_ACTIVITY:
+      response = await salesforceLandingActions.getRecentWorkflowResources(
+        newFilterModel,
+        fields,
+        newFilterModel?.getData("active"),
+      );
+      break;
+    case WORKFLOW_WIDGET_VIEWS.MY_WORKFLOWS:
+    default:
+      response = await salesforceLandingActions.getMyWorkspaceWorkflowResources(
+        newFilterModel,
+        fields,
+        newFilterModel?.getData("active"),
+      );
+      break;
     }
 
     const items = DataParsingHelper.parseNestedArray(response, "data.data", []);

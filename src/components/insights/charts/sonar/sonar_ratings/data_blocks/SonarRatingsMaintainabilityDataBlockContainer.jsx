@@ -15,10 +15,10 @@ function SonarRatingsMaintainabilityDataBlockContainer({
   kpiConfiguration,
   dashboardData,
   dataPoint,
- className,
- lastScore,
- icon,
- iconOverlayBody,
+  className,
+  lastScore,
+  icon,
+  iconOverlayBody,
 }) {
   const toastContext = useContext(DialogToastContext);
 

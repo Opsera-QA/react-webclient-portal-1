@@ -14,34 +14,34 @@ import OctopusCustomParametersInput from "../input/OctopusCustomParametersInput"
 function OctopusDeployToJavaArchiveView({dataObject, setDataObject, isLoading, disabled, platformType, pipelineId}) {
 
   const getCustomScriptsInput = () => {
-      if(!dataObject.getData("customDeploymentScriptsEnabled")){
-          return null;
-      }
-      return (
-        <>
-          <ScriptLibrarySelectInput
-            fieldName={"preDeploymentScriptId"}
-            model={dataObject}
-            setModel={setDataObject}
-            busy={isLoading}
-            disabled={disabled || isLoading}
-          />
-          <ScriptLibrarySelectInput
-            fieldName={"deploymentScriptId"}
-            model={dataObject}
-            setModel={setDataObject}
-            busy={isLoading}
-            disabled={disabled || isLoading}
-          />
-          <ScriptLibrarySelectInput
-            fieldName={"postDeploymentScriptId"}
-            model={dataObject}
-            setModel={setDataObject}
-            busy={isLoading}
-            disabled={disabled || isLoading}
-          />
-        </>
-      );
+    if(!dataObject.getData("customDeploymentScriptsEnabled")){
+      return null;
+    }
+    return (
+      <>
+        <ScriptLibrarySelectInput
+          fieldName={"preDeploymentScriptId"}
+          model={dataObject}
+          setModel={setDataObject}
+          busy={isLoading}
+          disabled={disabled || isLoading}
+        />
+        <ScriptLibrarySelectInput
+          fieldName={"deploymentScriptId"}
+          model={dataObject}
+          setModel={setDataObject}
+          busy={isLoading}
+          disabled={disabled || isLoading}
+        />
+        <ScriptLibrarySelectInput
+          fieldName={"postDeploymentScriptId"}
+          model={dataObject}
+          setModel={setDataObject}
+          busy={isLoading}
+          disabled={disabled || isLoading}
+        />
+      </>
+    );
   };
 
   return (

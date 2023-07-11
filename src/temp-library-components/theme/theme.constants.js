@@ -10,12 +10,12 @@ export const THEME_LABELS = {
 
 export const getThemeLabel = (theme) => {
   switch (theme) {
-    case THEMES.LIGHT:
-      return THEME_LABELS.LIGHT;
-    case THEMES.NIGHT:
-      return THEME_LABELS.NIGHT;
-    default:
-      return theme;
+  case THEMES.LIGHT:
+    return THEME_LABELS.LIGHT;
+  case THEMES.NIGHT:
+    return THEME_LABELS.NIGHT;
+  default:
+    return theme;
   }
 };
 

@@ -4,7 +4,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
 import useAnalyticsPipelineDataMappingActions
-  from "hooks/settings/insights/analytics_data_mappings/pipelines/useAnalyticsPipelineDataMappingActions";
+from "hooks/settings/insights/analytics_data_mappings/pipelines/useAnalyticsPipelineDataMappingActions";
 
 export default function useGetAnalyticsPipelineDataMappingById(analyticsPipelineDataMappingId, handleErrorFunction) {
   const analyticsPipelineDataMappingActions = useAnalyticsPipelineDataMappingActions();

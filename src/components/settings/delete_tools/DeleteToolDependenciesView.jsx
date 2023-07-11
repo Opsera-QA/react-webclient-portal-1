@@ -54,16 +54,16 @@ function DeleteToolDependenciesView({ selectedTool }) {
       }
     }
   };
-    return (
-        <div className="mt-2 mb-2">
-        <div className="pb-2">
-          <span>Deleting this Tool will terminate the instance and all the data will be permanently lost. If you proceed with deleting this tool, these <b>tool registry</b> records using this tool will break. Please review them and delete them if they are not in use anymore.</span>
-        </div>
-        <div className="pt-2 pb-2">
-          <PlatformToolRegistryTable isLoading={loading} setIsLoading={setLoading} data={relevantToolRegistries} setData={setRelevantToolRegistries} reLoadData={loadData} />
-        </div>
+  return (
+    <div className="mt-2 mb-2">
+      <div className="pb-2">
+        <span>Deleting this Tool will terminate the instance and all the data will be permanently lost. If you proceed with deleting this tool, these <b>tool registry</b> records using this tool will break. Please review them and delete them if they are not in use anymore.</span>
       </div>
-    );
+      <div className="pt-2 pb-2">
+        <PlatformToolRegistryTable isLoading={loading} setIsLoading={setLoading} data={relevantToolRegistries} setData={setRelevantToolRegistries} reLoadData={loadData} />
+      </div>
+    </div>
+  );
 }
 
 DeleteToolDependenciesView.propTypes = {

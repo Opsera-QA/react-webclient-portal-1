@@ -7,7 +7,7 @@ import {toolCategoryActions} from "components/admin/tools/categories/toolCategor
 export default function useGetToolTypes(
   includeInactive,
   handleErrorFunction,
-  ) {
+) {
   const [toolTypes, setToolTypes] = useState([]);
   const {
     getAccessToken,

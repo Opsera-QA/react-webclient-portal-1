@@ -5,9 +5,9 @@ import {Col, Row} from "react-bootstrap";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import H4FieldSubHeader from "components/common/fields/subheader/H4FieldSubHeader";
 import SalesforceLogSummarySuccessfulComponentsTable
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/components/SalesforceLogSummarySuccessfulComponentsTable";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/components/SalesforceLogSummarySuccessfulComponentsTable";
 import SalesforceLogSummaryUnsuccessfulComponentsTable
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/components/SalesforceLogSummaryUnsuccessfulComponentsTable";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/components/SalesforceLogSummaryUnsuccessfulComponentsTable";
 import SalesforceLogSummaryCodeCoverageTable from "./SalesforceLogSummaryCodeCoverageTable";
 
 function SalesforceLogSummaryComponentResultsSummaryPanel({ salesforceDeployResultsModel, codeCoverageWarnings }) {

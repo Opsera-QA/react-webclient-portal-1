@@ -51,7 +51,7 @@ function SaveButtonBase(
       clearChangeMapAfterSave,
       customSuccessMessage,
       customIncompleteDataMessage,
-      );
+    );
 
     if (isMounted.current === true) {
       setIsSaving(false);

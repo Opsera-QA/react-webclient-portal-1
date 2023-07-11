@@ -18,7 +18,7 @@ export default function RegistryRoutes() {
       <SecureRoute path="/inventory/scripts" exact component={ScriptsInventory} />
       <SecureRoute path="/inventory/tools/details/:id/:tab?" exact component={ToolDetailView} />
       <SecureRoute path="/inventory/tools/details/:id/projects/:projectId" exact
-                   component={ToolProjectsView} />
+        component={ToolProjectsView} />
     </>
   );
 }

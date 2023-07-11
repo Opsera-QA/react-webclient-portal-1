@@ -6,7 +6,7 @@ import landingActions from "components/landing/landing.actions";
 import LoadingDialog from "../common/status_notifications/loading";
 import OverviewLandingToolchainContentBlock from "components/landing/blocks/OverviewLandingToolchainContentBlock";
 import OverviewLandingDeclarativePipelinesContentBlock
-  from "components/landing/blocks/OverviewLandingDeclarativePipelinesContentBlock";
+from "components/landing/blocks/OverviewLandingDeclarativePipelinesContentBlock";
 import OverviewLandingInsightsContentBlock from "components/landing/blocks/OverviewLandingInsightsContentBlock";
 import { faEnvelope, faQuestion } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
@@ -119,13 +119,13 @@ function OverviewLanding() {
     if (Array.isArray(summaryStats) && summaryStats.length > 0) {
       return (
         summaryStats.map(function (item, index) {
-            return (
-              <li className="nav-item" key={index}>
-                <a className={"nav-link"} href="#"
-                   onClick={handleTabClick(index)}>{item.name}: {item.value}</a>
-              </li>
-            );
-          }
+          return (
+            <li className="nav-item" key={index}>
+              <a className={"nav-link"} href="#"
+                onClick={handleTabClick(index)}>{item.name}: {item.value}</a>
+            </li>
+          );
+        }
         )
       );
     }

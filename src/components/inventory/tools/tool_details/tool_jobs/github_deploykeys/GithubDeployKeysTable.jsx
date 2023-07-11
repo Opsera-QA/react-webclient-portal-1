@@ -6,7 +6,7 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import GithubDeployKeyOverlay
-  from "components/inventory/tools/tool_details/tool_jobs/github_deploykeys/GithubDeployKeyOverlay";
+from "components/inventory/tools/tool_details/tool_jobs/github_deploykeys/GithubDeployKeyOverlay";
 import {getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 

@@ -2,10 +2,10 @@ import React, {useEffect, useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import {faCheckCircle, faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import boomiReportMetaData
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/boomi/metadata/boomiReport.metadata";
+from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/boomi/metadata/boomiReport.metadata";
 import {
-    getColumnHeader, getColumnId, getTableBooleanIconColumn, getTableDateColumn, getTableDateTimeColumn,
-    getTableTextColumn
+  getColumnHeader, getColumnId, getTableBooleanIconColumn, getTableDateColumn, getTableDateTimeColumn,
+  getTableTextColumn
 } from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import VanityTable from "components/common/table/VanityTable";
@@ -66,13 +66,13 @@ function BoomiLogSummaryTable({ boomiObj, jobType }) {
   );
 
   const getColumns = () => {
-      if (jobType === "DEPLOY_PACKAGE_COMPONENT") {
-          return deployColumns;
-      }
-      if (jobType === "MIGRATE_PACKAGE_COMPONENT") {
-          return migrateColumns;
-      }
-      return createPackageColumns;
+    if (jobType === "DEPLOY_PACKAGE_COMPONENT") {
+      return deployColumns;
+    }
+    if (jobType === "MIGRATE_PACKAGE_COMPONENT") {
+      return migrateColumns;
+    }
+    return createPackageColumns;
   };
 
   const getComponentResultsTable = () => {

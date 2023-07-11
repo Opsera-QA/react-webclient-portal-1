@@ -88,8 +88,8 @@ function GitScrapperMetrics({
           : [];
       const lineChart =
           response?.data && response?.status === 200
-              ? response?.data?.data?.gitScraperLineChartFrequency?.data
-              : [];
+            ? response?.data?.data?.gitScraperLineChartFrequency?.data
+            : [];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -120,53 +120,53 @@ function GitScrapperMetrics({
 
   const getIcon = (severity) => {
     switch (severity) {
-      case "Red":
-        return faArrowCircleDown;
-      case "Green":
-        return faArrowCircleUp;
-      case "Neutral":
-        return faMinusCircle;
-      default:
-        break;
+    case "Red":
+      return faArrowCircleDown;
+    case "Green":
+      return faArrowCircleUp;
+    case "Neutral":
+      return faMinusCircle;
+    default:
+      break;
     }
   };
 
   const getIconColor = (severity) => {
     switch (severity) {
-      case "Red":
-        return "red";
-      case "Green":
-        return "green";
-      case "Neutral":
-        return "light-gray-text-secondary";
-      case "-":
-        return "black";
-      default:
-        break;
+    case "Red":
+      return "red";
+    case "Green":
+      return "green";
+    case "Neutral":
+      return "light-gray-text-secondary";
+    case "-":
+      return "black";
+    default:
+      break;
     }
   };
 
   const getIconIssuesTrend = (severity) => {
     switch (severity) {
-      case "Red":
-        return faArrowCircleUp;
-      case "Green":
-        return faArrowCircleDown;
-      case "Neutral":
-        return faMinusCircle;
-      default:
-        break;
+    case "Red":
+      return faArrowCircleUp;
+    case "Green":
+      return faArrowCircleDown;
+    case "Neutral":
+      return faMinusCircle;
+    default:
+      break;
     }
   };
 
   const getDescription = (severity) => {
     switch (severity) {
-      case "Red":
-        return "The project  issues show an upward trend";
-      case "Green":
-        return "The project issues show a downward trend";
-      case "Neutral":
-        return "Neutral: This project's issues have experienced no change";
+    case "Red":
+      return "The project  issues show an upward trend";
+    case "Green":
+      return "The project issues show a downward trend";
+    case "Neutral":
+      return "Neutral: This project's issues have experienced no change";
     }
   };
 
@@ -176,74 +176,74 @@ function GitScrapperMetrics({
     }
 
     const getDataBlocks = () =>{
-    return (<><Row className={'pb-1'}>
-          <Col>
-              <GitScrapperOverallScannedRepositoriesTrendDataBlock
-                score={metrics[0]?.current?.count || 0}
-                icon={getIcon(metrics[0]?.trend?.count)}
-                className={getIconColor(metrics[0]?.trend?.count)}
-                // onSelect={() => onRowSelect({type: 'totalRepositoriesScanned', label: "Total Repositories Scanned"}")}
-                lastScore={metrics[0]?.previous?.count}
-                iconOverlayBody={getDescription(metrics[0]?.trend?.count)}
-              />
-          </Col>
-          </Row><Row className={'pb-1 pt-1'}>
-            <Col>
-              <GitScrapperOverallCleanRepositoriesTrendDataBlock
-                score={metrics[0]?.current?.cleanRepoCount || 0}
-                icon={getIcon(metrics[0]?.trend?.cleanRepoCount)}
-                className={getIconColor(metrics[0]?.trend?.cleanRepoCount)}
-                onSelect={() =>
-                  onRowSelect({
-                    type: "totalCleanRepositories",
-                    label: "Total Clean Repositories",
-                  })
-                }
-                lastScore={metrics[0]?.previous?.cleanRepoCount}
-                iconOverlayBody={getDescription(
-                  metrics[0]?.trend?.cleanRepoCount,
-                )}
-              />
-            </Col>
-        </Row><Row className={'pb-1 pt-1'}>
-            <Col>
-              <GitScrapperOverallIssuesTrendDataBlock
-                score={metrics[0]?.current?.issueCount || 0}
-                icon={getIconIssuesTrend(metrics[0]?.trend?.issueCount)}
-                className={getIconColor(metrics[0]?.trend?.issueCount)}
-                onSelect={() =>
-                  onRowSelect({
-                    type: "totalNumberofIssues",
-                    label: "Total Number of Issues",
-                  })
-                }
-                lastScore={metrics[0]?.previous?.issueCount}
-                iconOverlayBody={getDescription(metrics[0]?.trend?.issueCount)}
-              />
-            </Col>
-        </Row></>
-    );};
+      return (<><Row className={'pb-1'}>
+        <Col>
+          <GitScrapperOverallScannedRepositoriesTrendDataBlock
+            score={metrics[0]?.current?.count || 0}
+            icon={getIcon(metrics[0]?.trend?.count)}
+            className={getIconColor(metrics[0]?.trend?.count)}
+            // onSelect={() => onRowSelect({type: 'totalRepositoriesScanned', label: "Total Repositories Scanned"}")}
+            lastScore={metrics[0]?.previous?.count}
+            iconOverlayBody={getDescription(metrics[0]?.trend?.count)}
+          />
+        </Col>
+      </Row><Row className={'pb-1 pt-1'}>
+        <Col>
+          <GitScrapperOverallCleanRepositoriesTrendDataBlock
+            score={metrics[0]?.current?.cleanRepoCount || 0}
+            icon={getIcon(metrics[0]?.trend?.cleanRepoCount)}
+            className={getIconColor(metrics[0]?.trend?.cleanRepoCount)}
+            onSelect={() =>
+              onRowSelect({
+                type: "totalCleanRepositories",
+                label: "Total Clean Repositories",
+              })
+            }
+            lastScore={metrics[0]?.previous?.cleanRepoCount}
+            iconOverlayBody={getDescription(
+              metrics[0]?.trend?.cleanRepoCount,
+            )}
+          />
+        </Col>
+      </Row><Row className={'pb-1 pt-1'}>
+        <Col>
+          <GitScrapperOverallIssuesTrendDataBlock
+            score={metrics[0]?.current?.issueCount || 0}
+            icon={getIconIssuesTrend(metrics[0]?.trend?.issueCount)}
+            className={getIconColor(metrics[0]?.trend?.issueCount)}
+            onSelect={() =>
+              onRowSelect({
+                type: "totalNumberofIssues",
+                label: "Total Number of Issues",
+              })
+            }
+            lastScore={metrics[0]?.previous?.issueCount}
+            iconOverlayBody={getDescription(metrics[0]?.trend?.issueCount)}
+          />
+        </Col>
+      </Row></>
+      );};
 
     const getChart = () =>{
       return(<Row>
         <Col md={12} sm={12} lg={12} >
           <div className="chart" style={{ height: "354px" }} >
             <ResponsiveLine
-                data={lineChart}
-                {...defaultConfig(
-                    "Count",
-                    "Date",
-                    false,
-                    false,
-                    "wholeNumbers",
-                    "monthDate2",
-                )}
-                {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
-                {...adjustBarWidth(metrics)}
-                tooltip={({point, color}) => <ChartTooltip
-                    titles = {["Date", "Deployments"]}
-                    values = {[String(point.data.xFormatted), point.data.y]}
-                    color = {color} />}
+              data={lineChart}
+              {...defaultConfig(
+                "Count",
+                "Date",
+                false,
+                false,
+                "wholeNumbers",
+                "monthDate2",
+              )}
+              {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
+              {...adjustBarWidth(metrics)}
+              tooltip={({point, color}) => <ChartTooltip
+                titles = {["Date", "Deployments"]}
+                values = {[String(point.data.xFormatted), point.data.y]}
+                color = {color} />}
             />
           </div>
         </Col>
@@ -251,14 +251,14 @@ function GitScrapperMetrics({
     };
 
     return (
-        <>
-          <div className="new-chart m-3">
-            <Row>
-              <Col md={3} sm={6} lg={3}>{getDataBlocks()}</Col>
-              <Col md={9} sm={6} lg={9}>{getChart()}</Col>
-            </Row>
-          </div>
-        </>
+      <>
+        <div className="new-chart m-3">
+          <Row>
+            <Col md={3} sm={6} lg={3}>{getDataBlocks()}</Col>
+            <Col md={9} sm={6} lg={9}>{getChart()}</Col>
+          </Row>
+        </div>
+      </>
     );
   };
 

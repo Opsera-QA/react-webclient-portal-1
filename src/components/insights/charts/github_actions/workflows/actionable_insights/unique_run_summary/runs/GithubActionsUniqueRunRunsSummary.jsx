@@ -6,7 +6,7 @@ import {metricHelpers} from "components/insights/metric.helpers";
 import githubActionsWorkflowActions from "components/insights/charts/github_actions/workflows/github-actions-workflow-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import GithubActionsUniqueRunSummaryRunsTable
-  from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/runs/GithubActionsUniqueRunSummaryRunsTable";
+from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/runs/GithubActionsUniqueRunSummaryRunsTable";
 
 function GithubActionsUniqueRunRunsSummary(
   {

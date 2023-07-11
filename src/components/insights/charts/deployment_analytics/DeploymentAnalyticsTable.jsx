@@ -71,13 +71,13 @@ function DeploymentAnalyticsTable({ kpiConfiguration, metadataName, dashboardDat
       let dashboardTags =
         dashboardData?.data?.filters[
           dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
-          ]?.value;
+        ]?.value;
       let dashboardOrgs =
         dashboardData?.data?.filters[
           dashboardData?.data?.filters.findIndex(
             (obj) => obj.type === "organizations",
           )
-          ]?.value;
+        ]?.value;
       
       const response = await chartsActions.getDeploymentAnalytics(
         kpiConfiguration,
@@ -89,7 +89,7 @@ function DeploymentAnalyticsTable({ kpiConfiguration, metadataName, dashboardDat
         dashboardOrgs
       );
       let dataObject = response?.data?.data[0]?.data;
-        console.log(response?.data?.data[0]?.data,'***Test table');
+      console.log(response?.data?.data[0]?.data,'***Test table');
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;
@@ -116,22 +116,22 @@ function DeploymentAnalyticsTable({ kpiConfiguration, metadataName, dashboardDat
 
   return (
     <CustomTable
-    columns={columns}
-    data={metrics}
-    noDataMessage={noDataMessage}
-    paginationDto={tableFilterDto}
-    setPaginationDto={setTableFilterDto}
-    loadData={loadData}
-    scrollOnLoad={false}
-    onRowSelect={onRowSelect}
-  />
+      columns={columns}
+      data={metrics}
+      noDataMessage={noDataMessage}
+      paginationDto={tableFilterDto}
+      setPaginationDto={setTableFilterDto}
+      loadData={loadData}
+      scrollOnLoad={false}
+      onRowSelect={onRowSelect}
+    />
   );
 }
 
 DeploymentAnalyticsTable.propTypes = {
- metadataName:PropTypes.string.isRequired,
- kpiConfiguration: PropTypes.object,
- dashboardData: PropTypes.object,
+  metadataName:PropTypes.string.isRequired,
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
 
 };
 
