@@ -4,8 +4,7 @@ import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
-import SalesforcePipelineWizardComponentCountTable
-from "components/workflow/wizards/sfdc_pipeline_wizard/xml_viewer/counts/SalesforcePipelineWizardComponentCountTable";
+import SalesforcePipelineWizardComponentCountTable from "components/workflow/wizards/sfdc_pipeline_wizard/xml_viewer/counts/SalesforcePipelineWizardComponentCountTable";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 

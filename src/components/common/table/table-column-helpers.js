@@ -12,7 +12,13 @@ import {
   faTimesCircle,
   faTrash,
 } from "@fortawesome/pro-light-svg-icons";
-import { faBitbucket, faGithub, faGitlab, faJira, faSlack } from "@fortawesome/free-brands-svg-icons";
+import {
+  faBitbucket,
+  faGithub,
+  faGitlab,
+  faJira,
+  faSlack
+} from "@fortawesome/free-brands-svg-icons";
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
 import WarningIcon from "../../common/icons/table/WarningIcon";
 import FailIcon from "../../common/icons/table/FailIcon";
@@ -31,8 +37,7 @@ import IconBase from "components/common/icons/IconBase";
 import PageLinkIcon from "components/common/icons/general/PageLinkIcon";
 import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";
 import PipelineTypeIconBase from "components/common/fields/pipelines/types/PipelineTypeIconBase";
-import OrchestrationStateFieldBase
-from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
+import OrchestrationStateFieldBase from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
 import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";

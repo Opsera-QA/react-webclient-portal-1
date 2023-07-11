@@ -6,8 +6,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import mergeSyncTaskWizardActions
-from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
+import mergeSyncTaskWizardActions from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 
 function MergeSyncTaskWizardCommitFileDiffSelectionsButton(
   {

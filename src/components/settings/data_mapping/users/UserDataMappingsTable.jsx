@@ -1,10 +1,7 @@
 import React, {useMemo, useContext} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import {
-  getTableBooleanIconColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers";
+import { getTableBooleanIconColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import { useHistory } from "react-router-dom";
 import NewUserDataMappingOverlay from "components/settings/data_mapping/users/NewUserDataMappingOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -13,8 +10,7 @@ import {faTags} from "@fortawesome/pro-light-svg-icons";
 import {getField} from "components/common/metadata/metadata-helpers";
 import userDataMappingMetadata from "@opsera/definitions/constants/settings/data_mapping/user/userDataMapping.metadata";
 import {analyticsUserDataMappingHelper} from "components/settings/data_mapping/users/analyticsUserDataMapping.helper";
-import AnalyticsUserDataMappingRoleHelper
-from "@opsera/know-your-role/roles/settings/analytics_data_mappings/users/analyticsUserDataMappingRole.helper";
+import AnalyticsUserDataMappingRoleHelper from "@opsera/know-your-role/roles/settings/analytics_data_mappings/users/analyticsUserDataMappingRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function UserDataMappingsTable(

@@ -1,17 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import PipelineSourceWebhookTriggerDetailsPanel
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceWebhookTriggerDetailsPanel";
-import PipelineSourceRepositorySecretInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositorySecretInput";
+import PipelineSourceWebhookTriggerDetailsPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceWebhookTriggerDetailsPanel";
+import PipelineSourceRepositorySecretInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositorySecretInput";
 import IconBase from "components/common/icons/IconBase";
 import {faClipboardList, faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import FieldLabelBase from "components/common/fields/FieldLabelBase";
 import CopyToClipboardIconBase from "components/common/icons/link/CopyToClipboardIconBase";
-import RegisterSourceRepositoryHookButton
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/RegisterSourceRepositoryHookButton";
+import RegisterSourceRepositoryHookButton from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/RegisterSourceRepositoryHookButton";
 import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
 
 function PipelineSourceRepositoryWebhookInputPanel({

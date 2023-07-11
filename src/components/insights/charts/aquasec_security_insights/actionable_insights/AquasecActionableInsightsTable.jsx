@@ -3,9 +3,12 @@ import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import AquasecActionableInsightsMetadata from "./aquasec-actionable-insights-metadata";
 import {
-  getChartTrendStatusColumn, getCustomTableAccessor, getCustomTableHeader, getTableDateTimeColumn,
+  getChartTrendStatusColumn,
+  getCustomTableAccessor,
+  getCustomTableHeader,
+  getTableDateTimeColumn,
   getTableTextColumn,
-  getTableTextColumnWithoutField,
+  getTableTextColumnWithoutField
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";

@@ -2,8 +2,7 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 import LoadingDialog from "components/common/status_notifications/loading";
-import VanityEditorPanelButtonContainer
-from "components/common/buttons/saving/containers/VanityEditorPanelButtonContainer";
+import VanityEditorPanelButtonContainer from "components/common/buttons/saving/containers/VanityEditorPanelButtonContainer";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import EditorPanelToggleInput from "components/common/inputs/boolean/EditorPanelToggleInput";
 

@@ -10,7 +10,13 @@ import { line } from "d3-shape";
 import { defaultConfig, getColor, assignStandardColors } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 import { Col, Row } from "react-bootstrap";
-import { faMinus, faCircle, faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/pro-solid-svg-icons";
+import {
+  faMinus,
+  faCircle,
+  faArrowCircleDown,
+  faArrowCircleUp,
+  faMinusCircle
+} from "@fortawesome/pro-solid-svg-icons";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import JiraBugsCompletedDataBlock from "../../data_blocks/JiraBugsCompletedDataBlock";
 import JiraIssuesCompletedDataBlock from "../../data_blocks/JiraIssuesCompletedDataBlock";

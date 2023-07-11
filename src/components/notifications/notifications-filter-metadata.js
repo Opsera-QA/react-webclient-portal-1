@@ -1,8 +1,6 @@
 import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
 import { getTaskTypeLabel } from "components/tasks/task.types";
-import {
-  getNotificationTypeLabel
-} from "components/common/list_of_values_input/notifications/type/notificationTypes.constants";
+import { getNotificationTypeLabel } from "components/common/list_of_values_input/notifications/type/notificationTypes.constants";
 
 const notificationsFilterMetadata = {
   idProperty: "_id",

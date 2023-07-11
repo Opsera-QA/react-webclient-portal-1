@@ -6,10 +6,8 @@ import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/Vani
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
 import { faClipboardListCheck } from "@fortawesome/pro-light-svg-icons";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import SnykReportView
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/snyk/components/SnykReportView";
-import SnykSummaryVerticalTabContainer
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/snyk/SnykSummaryVerticalTabContainer";
+import SnykReportView from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/snyk/components/SnykReportView";
+import SnykSummaryVerticalTabContainer from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/snyk/SnykSummaryVerticalTabContainer";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function SnykSummaryReportPanel({ pipelineTaskData }) {

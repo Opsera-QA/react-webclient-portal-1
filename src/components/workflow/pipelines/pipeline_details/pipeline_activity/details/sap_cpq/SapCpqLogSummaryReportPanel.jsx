@@ -1,8 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import sapCpqSummaryLogResultMetadata
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/sap_cpq/metadata/sapCpqSummaryLogResult.metadata";
+import sapCpqSummaryLogResultMetadata from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/sap_cpq/metadata/sapCpqSummaryLogResult.metadata";
 import LoadingDialog from "components/common/status_notifications/loading";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";

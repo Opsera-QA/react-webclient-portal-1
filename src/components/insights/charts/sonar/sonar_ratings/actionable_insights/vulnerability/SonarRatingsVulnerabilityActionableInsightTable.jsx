@@ -2,16 +2,10 @@ import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import SonarPipelineTableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar.pipeline.table.metadata";
-import {
-  getChartTrendStatusColumn,
-  getTableTextColumnWithoutField,
-  getCustomTableHeader, getCustomTableAccessor,
-} from "components/common/table/table-column-helpers";
+import { getChartTrendStatusColumn, getTableTextColumnWithoutField, getCustomTableHeader, getCustomTableAccessor } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
-import {
-  faDraftingCompass,
-} from "@fortawesome/pro-light-svg-icons";
+import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import { useHistory } from "react-router-dom";
 

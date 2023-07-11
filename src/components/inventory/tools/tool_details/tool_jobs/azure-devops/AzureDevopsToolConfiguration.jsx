@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
-import ToolConfigurationEditorPanelContainer
-from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+import ToolConfigurationEditorPanelContainer from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Row from "react-bootstrap/Row";
 import AzureDevopsConnectionMetadata from "./azureDevops-connection-metadata";
 import toolsActions from "components/inventory/tools/tools-actions";
@@ -12,8 +11,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
-import toolIdentifierConnectionCheckConstants
-from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+import toolIdentifierConnectionCheckConstants from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function AzureDevopsToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);

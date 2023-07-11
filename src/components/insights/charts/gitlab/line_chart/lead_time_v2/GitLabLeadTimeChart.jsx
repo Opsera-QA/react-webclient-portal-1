@@ -10,13 +10,14 @@ import GitlabLeadTimeHelpDocumentation from "../../../../../common/help/document
 import GitlabLeadTimeScatterPlotContainer from "./GitlabLeadTimeScatterPlotContainer";
 import GitlabLeadTimeDataBlock from "./GitlabLeadTimeDataBlock";
 import {
-  convertMStoDays, convertMStoHours,
+  convertMStoDays,
+  convertMStoHours,
   getDeploymentStageFromKpiConfiguration,
   getMaturityColorClass,
   getMaturityScoreText,
   getReverseTrend,
   getReverseTrendIcon,
-  getTimeDisplay,
+  getTimeDisplay
 } from "../../../charts-helpers";
 import GitlabLeadTimeTrendDataBlock from "./GitlabLeadTimeTrendDataBlock";
 import gitlabAction from "../../gitlab.action";

@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import FieldLabel from "components/common/fields/FieldLabel";
 import FieldContainer from "components/common/fields/FieldContainer";
-import OrchestrationStateFieldBase
-from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
+import OrchestrationStateFieldBase from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 
 export default function OrchestrationStateField(
   {

@@ -7,8 +7,7 @@ import taskScheduleMetadata from "components/workflow/pipelines/scheduler/schedu
 import ScheduleCalendarInput from "components/workflow/pipelines/scheduler/schedule/ScheduleCalendarInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import ScheduleTimeInput from "components/workflow/pipelines/scheduler/schedule/ScheduleTimeInput";
-import LogsExportManagementScheduleFrequencyRadioInput
-from "components/settings/logs_management/inputs/LogsExportManagementScheduleFrequencyRadioInput";
+import LogsExportManagementScheduleFrequencyRadioInput from "components/settings/logs_management/inputs/LogsExportManagementScheduleFrequencyRadioInput";
 
 // TODO: Jim, when this is all done and working, I will probably make a component out of the schedule component and hook it up here.
 function LogsExportScheduleEditorPanel(

@@ -2,16 +2,11 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
-import jiraConfigurationMetadata
-from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/jiraConfigurationMetadata";
-import JiraToolProjectProjectSelectInput
-from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraToolProjectProjectSelectInput";
-import JiraToolProjectSprintSelectInput
-from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraToolProjectSprintSelectInput";
-import JiraToolProjectBoardSelectInput
-from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraToolProjectBoardSelectInput";
-import JiraToolProjectParentTicketSelectInput
-from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraToolProjectParentTicketSelectInput";
+import jiraConfigurationMetadata from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/jiraConfigurationMetadata";
+import JiraToolProjectProjectSelectInput from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraToolProjectProjectSelectInput";
+import JiraToolProjectSprintSelectInput from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraToolProjectSprintSelectInput";
+import JiraToolProjectBoardSelectInput from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraToolProjectBoardSelectInput";
+import JiraToolProjectParentTicketSelectInput from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraToolProjectParentTicketSelectInput";
 import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
 
 // TODO: Just pass tool id if that's all that's used

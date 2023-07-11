@@ -17,8 +17,7 @@ import {parseError} from "components/common/helpers/error-helpers";
 import InputContainer from "components/common/inputs/InputContainer";
 import {Button} from "react-bootstrap";
 import CustomParameterInputRow from "components/common/list_of_values_input/parameters/list/CustomParameterInputRow";
-import SyncTerraformOutputParametersButton
-from "components/common/list_of_values_input/parameters/list/SyncTerraformOutputParametersButton";
+import SyncTerraformOutputParametersButton from "components/common/list_of_values_input/parameters/list/SyncTerraformOutputParametersButton";
 
 function CustomParameterMultiSelectListInput({
   model,

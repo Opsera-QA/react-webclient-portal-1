@@ -4,8 +4,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import modelHelpers from "components/common/model/modelHelpers";
-import PlatformSystemParameterEditorPanel
-from "components/admin/system_parameters/details/PlatformSystemParameterEditorPanel";
+import PlatformSystemParameterEditorPanel from "components/admin/system_parameters/details/PlatformSystemParameterEditorPanel";
 import { platformSystemParametersMetadata } from "components/admin/system_parameters/platformSystemParameters.metadata";
 
 export default function NewPlatformSystemParameterOverlay({ loadData} ) {

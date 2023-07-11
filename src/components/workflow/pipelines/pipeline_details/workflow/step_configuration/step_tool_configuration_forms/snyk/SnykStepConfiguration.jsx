@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
 import SnykToolSelectInput from "./inputs/SnykToolSelectInput";
@@ -16,8 +15,7 @@ import SnykScmToolSelectInput from "./inputs/SnykScmToolSelectInput";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 import SnykScmRepositorySelectInput from "./inputs/SnykScmRepositorySelectInput";
 import SnykBitbucketWorkspaceInput from "./inputs/SnykBitbucketWorkspaceInput";
-import SnykPipelineStepLanguageSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snyk/inputs/SnykPipelineStepLanguageSelectInput";
+import SnykPipelineStepLanguageSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snyk/inputs/SnykPipelineStepLanguageSelectInput";
 import SourceRepositoryTypeSelectInput from "../sap_cpq/inputs/SourceRepositoryTypeSelectInput";
  
 function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {

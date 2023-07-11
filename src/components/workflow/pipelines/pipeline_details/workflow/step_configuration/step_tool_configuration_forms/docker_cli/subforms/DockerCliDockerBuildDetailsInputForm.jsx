@@ -3,11 +3,9 @@ import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import EditableParameterMappingInput from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingInput";
-import DockerTagTypeSelectionInput 
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/DockerTagTypeSelectionInput";
+import DockerTagTypeSelectionInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/DockerTagTypeSelectionInput";
 import DockerCliCommandLineInputParameterInput from "../inputs/DockerCliCommandLineInputParameterInput";
-import PipelineStepParameterInputBase
-from "../../../../../../../../common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBase";
+import PipelineStepParameterInputBase from "../../../../../../../../common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBase";
 
 
 function DockerCliDockerBuildDetailsInputForm({ model, setModel, plan }) {

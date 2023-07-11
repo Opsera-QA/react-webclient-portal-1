@@ -2,39 +2,27 @@ import React, { useEffect, useState } from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import PropTypes from "prop-types";
-import commandLineStepFormMetadata
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/commandline-stepForm-metadata";
+import commandLineStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/commandline-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import CommandLineStepJenkinsToolSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineStepJenkinsToolSelectInput";
-import CommandLineStepJenkinsJobSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineStepJenkinsJobSelectInput";
+import CommandLineStepJenkinsToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineStepJenkinsToolSelectInput";
+import CommandLineStepJenkinsJobSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineStepJenkinsJobSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import CommandLineJenkinsAccountInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineJenkinsAccountInput";
-import CommandLineGitRepositoryInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineGitRepositoryInput";
-import CommandLineGitBranchInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineGitBranchInput";
-import CommandLineBitbucketWorkspaceInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineBitbucketWorkspaceInput";
-import CommandLineDependencyTypeInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineDependencyTypeInput";
-import CommandLineSourceScriptToggleInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineSourceScriptToggleInput";
+import CommandLineJenkinsAccountInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineJenkinsAccountInput";
+import CommandLineGitRepositoryInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineGitRepositoryInput";
+import CommandLineGitBranchInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineGitBranchInput";
+import CommandLineBitbucketWorkspaceInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineBitbucketWorkspaceInput";
+import CommandLineDependencyTypeInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineDependencyTypeInput";
+import CommandLineSourceScriptToggleInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineSourceScriptToggleInput";
 import WorkspaceDeleteToggleInput from "./inputs/WorkspaceDeleteToggleInput";
 import StepConfigTerraformStepSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/common/inputs/StepConfigTerraformStepSelectInput";
 import { faHandshake } from "@fortawesome/pro-light-svg-icons";
-import ParameterSelectListInputBase
-from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
+import ParameterSelectListInputBase from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
 import StepConfigUseTerraformOutput from "../common/inputs/StepConfigUseTerraformOutput";
 import CommandLineSonarScannerToggleInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineSonarScannerToggleInput";
-import RoleRestrictedSonarToolSelectInput
-from "components/common/list_of_values_input/tools/sonar/tool/RoleRestrictedSonarToolSelectInput";
+import RoleRestrictedSonarToolSelectInput from "components/common/list_of_values_input/tools/sonar/tool/RoleRestrictedSonarToolSelectInput";
 import CommandLineSonarCustomParametersToggle from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineSonarCustomParametersToggle";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import PipelineStepParameterInputBase
-from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBase";
+import PipelineStepParameterInputBase from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBase";
 
 function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan }) {
   const [isLoading, setIsLoading] = useState(false);

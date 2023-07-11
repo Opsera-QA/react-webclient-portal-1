@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
-from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationSummaryBase";
+import ExternalRestApiIntegrationEndpointOrchestrationSummaryBase from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationSummaryBase";
 
 export default function ExternalRestApiIntegrationConnectionCheckEndpointOrchestrationSummary(
   {

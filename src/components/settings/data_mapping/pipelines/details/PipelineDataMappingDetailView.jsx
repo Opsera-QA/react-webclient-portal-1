@@ -3,20 +3,13 @@ import { useParams } from "react-router-dom";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import DataMappingManagementSubNavigationBar
-from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
-import PipelineDataMappingDetailPanel
-from "components/settings/data_mapping/pipelines/details/PipelineDataMappingDetailPanel";
-import useGetAnalyticsPipelineDataMappingModelById
-from "hooks/settings/insights/analytics_data_mappings/pipelines/useGetAnalyticsPipelineDataMappingModelById";
+import DataMappingManagementSubNavigationBar from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
+import PipelineDataMappingDetailPanel from "components/settings/data_mapping/pipelines/details/PipelineDataMappingDetailPanel";
+import useGetAnalyticsPipelineDataMappingModelById from "hooks/settings/insights/analytics_data_mappings/pipelines/useGetAnalyticsPipelineDataMappingModelById";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {
-  analyticsPipelineDataMappingHelper
-} from "components/settings/data_mapping/pipelines/analyticsPipelineDataMapping.helper";
-import pipelineDataMappingMetadata
-from "@opsera/definitions/constants/settings/data_mapping/pipeline/pipelineDataMapping.metadata";
-import DeleteAnalyticsPipelineDataMappingActionBarButton
-from "components/settings/data_mapping/pipelines/actions/DeleteAnalyticsPipelineDataMappingActionBarButton";
+import { analyticsPipelineDataMappingHelper } from "components/settings/data_mapping/pipelines/analyticsPipelineDataMapping.helper";
+import pipelineDataMappingMetadata from "@opsera/definitions/constants/settings/data_mapping/pipeline/pipelineDataMapping.metadata";
+import DeleteAnalyticsPipelineDataMappingActionBarButton from "components/settings/data_mapping/pipelines/actions/DeleteAnalyticsPipelineDataMappingActionBarButton";
 
 function PipelineDataMappingDetailView() {
   const { pipelineDataMappingId } = useParams();

@@ -2,12 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { faSave } from "@fortawesome/pro-light-svg-icons";
-import {
-  persistNewRecord,
-  persistNewRecordAndAddAnother,
-  persistNewRecordAndClose,
-  persistNewRecordAndViewDetails,
-} from "./saving-helpers";
+import { persistNewRecord, persistNewRecordAndAddAnother, persistNewRecordAndClose, persistNewRecordAndViewDetails } from "./saving-helpers";
 import { useHistory } from "react-router-dom";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";

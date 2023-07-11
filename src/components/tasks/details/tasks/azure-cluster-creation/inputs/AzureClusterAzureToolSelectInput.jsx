@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RoleRestrictedAzureToolSelectInput
-from "components/common/list_of_values_input/tools/azure/tools/RoleRestrictedAzureToolSelectInput";
+import RoleRestrictedAzureToolSelectInput from "components/common/list_of_values_input/tools/azure/tools/RoleRestrictedAzureToolSelectInput";
 
 function AzureClusterAzureToolSelectInput({ fieldName, dataObject, setDataObject, disabled, setAzureConfig}) {
   const setDataFunction = (fieldName, selectedOption) => {

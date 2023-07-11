@@ -2,7 +2,13 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faArrowLeft, faBallotCheck, faDraftingCompass, faHexagon, faLayerGroup} from "@fortawesome/pro-light-svg-icons";
+import {
+  faArrowLeft,
+  faBallotCheck,
+  faDraftingCompass,
+  faHexagon,
+  faLayerGroup
+} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import {pipelineInstructionsHelper} from "components/workflow/instructions/pipelineInstructions.helper";
 import {pipelineHelper} from "components/workflow/pipeline.helper";

@@ -5,12 +5,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import {
-  assignStandardColors,
-  shortenPieChartLegend,
-  defaultConfig,
-  getColorByData,
-} from "components/insights/charts/charts-views";
+import { assignStandardColors, shortenPieChartLegend, defaultConfig, getColorByData } from "components/insights/charts/charts-views";
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import { Col, Row } from "react-bootstrap";
 import "components/insights/charts/qa_metrics/Styling.css";
@@ -20,10 +15,7 @@ import AutomationPercentageChartHelpDocumentation from "components/common/help/d
 import { AUTOMATION_PERCENTAGE_METRIC_CONSTANTS as dataPointConstants } from "./AutomationPercentageMteric_kpi_datapoint_identifiers";
 import { ResponsivePie } from "@nivo/pie";
 import config from "./automationPercentageMetricConfig";
-import {
-  METRIC_THEME_CHART_PALETTE_COLORS,
-  METRIC_CHART_STANDARD_HEIGHT,
-} from "components/common/helpers/metrics/metricTheme.helpers";
+import { METRIC_THEME_CHART_PALETTE_COLORS, METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 import AutomationPercentageDataBlock from "./data_blocks/AutomationPercentageDataBlock";
 import TotalAutomationCandidatesDataBlock from "./data_blocks/TotalAutomationCandidatesDataBlock";
 import TotalFunctionalTestsDataBlock from "./data_blocks/TotalFunctionalTestsDataBlock";

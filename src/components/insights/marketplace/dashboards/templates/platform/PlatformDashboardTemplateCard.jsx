@@ -5,10 +5,8 @@ import { faClipboard, faTag, faUsers } from "@fortawesome/pro-light-svg-icons";
 import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
-import ActionBarDeletePlatformDashboardTemplateButton
-from "components/insights/marketplace/dashboards/templates/platform/ActionBarDeletePlatformDashboardTemplateButton";
-import AddPlatformDashboardButton
-from "components/insights/marketplace/dashboards/templates/platform/AddPlatformDashboardButton";
+import ActionBarDeletePlatformDashboardTemplateButton from "components/insights/marketplace/dashboards/templates/platform/ActionBarDeletePlatformDashboardTemplateButton";
+import AddPlatformDashboardButton from "components/insights/marketplace/dashboards/templates/platform/AddPlatformDashboardButton";
 
 // TODO: This needs to be rewritten, I only separated out the two types of dashboards but did not work on this
 export default function PlatformDashboardTemplateCard(

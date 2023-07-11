@@ -4,12 +4,10 @@ import { Row} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import CancelButton from "components/common/buttons/CancelButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
-import SalesforceBulkMigrationWizardComponentListInput
-from "components/workflow/wizards/salesforce_bulk_migration/component_selector/SalesforceBulkMigrationWizardComponentListInput";
+import SalesforceBulkMigrationWizardComponentListInput from "components/workflow/wizards/salesforce_bulk_migration/component_selector/SalesforceBulkMigrationWizardComponentListInput";
 import {SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS} from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationWizard";
 import BackButton from "components/common/buttons/back/BackButton";
-import SalesforceBulkMigrationWizardSubmitComponentTypesButton
-from "components/workflow/wizards/salesforce_bulk_migration/component_selector/SalesforceBulkMigrationWizardSubmitComponentTypesButton";
+import SalesforceBulkMigrationWizardSubmitComponentTypesButton from "components/workflow/wizards/salesforce_bulk_migration/component_selector/SalesforceBulkMigrationWizardSubmitComponentTypesButton";
 
 const SalesforceBulkMigrationWizardComponentSelectionScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) => {
   if (pipelineWizardModel == null) {

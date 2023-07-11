@@ -3,12 +3,9 @@ import PropTypes from "prop-types";
 import { faEnvelope } from "@fortawesome/pro-light-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import modelHelpers from "components/common/model/modelHelpers";
-import approvalGatePipelineStepThresholdMetadata
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/approval_gate/approval-gate-pipeline-step-threshold-metadata";
-import approvalGatePipelineStepConfigurationMetadata
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/approval_gate/approval-gate-pipeline-step-configuration-metadata";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import approvalGatePipelineStepThresholdMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/approval_gate/approval-gate-pipeline-step-threshold-metadata";
+import approvalGatePipelineStepConfigurationMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/approval_gate/approval-gate-pipeline-step-configuration-metadata";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import IconBase from "components/common/icons/IconBase";

@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineInstructionsStatusFilterSelectInput
-from "components/common/list_of_values_input/workflow/instructions/status/PipelineInstructionsStatusFilterSelectInput";
+import PipelineInstructionsStatusFilterSelectInput from "components/common/list_of_values_input/workflow/instructions/status/PipelineInstructionsStatusFilterSelectInput";
 
 export default function InlinePipelineInstructionsStatusFilterSelectInput(
   {

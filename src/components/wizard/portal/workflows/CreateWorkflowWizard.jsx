@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import CreateSalesforceWorkflowWizard
-from "components/wizard/portal/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
-import CreateWorkflowWizardFlowSelectionScreen
-from "components/wizard/portal/workflows/flows/selection/CreateWorkflowWizardFlowSelectionScreen";
+import CreateSalesforceWorkflowWizard from "components/wizard/portal/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
+import CreateWorkflowWizardFlowSelectionScreen from "components/wizard/portal/workflows/flows/selection/CreateWorkflowWizardFlowSelectionScreen";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { useHistory } from "react-router-dom";

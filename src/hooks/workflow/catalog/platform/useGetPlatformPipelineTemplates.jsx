@@ -2,9 +2,7 @@ import {useEffect, useState} from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
-import {
-  platformPipelineTemplateCatalogActions
-} from "components/workflow/catalog/platform/platformPipelineTemplateCatalog.actions";
+import { platformPipelineTemplateCatalogActions } from "components/workflow/catalog/platform/platformPipelineTemplateCatalog.actions";
 import pipelineTemplateCatalogFilterMetadata from "components/workflow/catalog/pipelineTemplateCatalogFilter.metadata";
 import FilterModelBase from "core/data_model/filterModel.base";
 

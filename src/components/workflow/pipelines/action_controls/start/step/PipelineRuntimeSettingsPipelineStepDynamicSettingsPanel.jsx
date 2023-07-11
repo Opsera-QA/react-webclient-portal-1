@@ -1,12 +1,9 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
-import LocalInputParametersValueInputBase
-from "components/common/list_of_values_input/parameters/local/value/LocalInputParametersValueInputBase";
+import LocalInputParametersValueInputBase from "components/common/list_of_values_input/parameters/local/value/LocalInputParametersValueInputBase";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
-import {
-  pipelineStepRuntimeSettingsMetadata
-} from "components/workflow/pipelines/action_controls/start/step/pipelineStepRuntimeSettings.metadata";
+import { pipelineStepRuntimeSettingsMetadata } from "components/workflow/pipelines/action_controls/start/step/pipelineStepRuntimeSettings.metadata";
 
 export default function PipelineRuntimeSettingsPipelineStepDynamicSettingsPanel(
   {

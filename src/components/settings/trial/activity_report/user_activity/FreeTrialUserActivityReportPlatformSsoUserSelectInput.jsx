@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PlatformSsoUserSelectInput
-from "components/common/list_of_values_input/users/sso/platform/PlatformSsoUserSelectInput";
+import PlatformSsoUserSelectInput from "components/common/list_of_values_input/users/sso/platform/PlatformSsoUserSelectInput";
 
 export default function FreeTrialUserActivityReportPlatformSsoUserSelectInput(
   {

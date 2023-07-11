@@ -2,21 +2,13 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
-import {
-  getCustomTablePipelineStateColumnDefinition,
-  getFormattedLabelWithFunctionColumnDefinition,
-  getTableDateTimeColumn,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getCustomTablePipelineStateColumnDefinition, getFormattedLabelWithFunctionColumnDefinition, getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
-import FilterContainer, {
-} from "components/common/table/FilterContainer";
+import FilterContainer from "components/common/table/FilterContainer";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import { workspaceHelper } from "components/workspace/workspace.helper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import {
-  freeTrialUserActivityReportMetadata
-} from "components/settings/trial/activity_report/freeTrialUserActivityReport.metadata";
+import { freeTrialUserActivityReportMetadata } from "components/settings/trial/activity_report/freeTrialUserActivityReport.metadata";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 

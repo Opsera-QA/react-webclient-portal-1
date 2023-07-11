@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import argoApplicationsMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/applications/argo-application-metadata";
-import ArgoApplicationEditorPanel
-from "components/inventory/tools/tool_details/tool_jobs/argo/applications/details/ArgoApplicationEditorPanel";
+import ArgoApplicationEditorPanel from "components/inventory/tools/tool_details/tool_jobs/argo/applications/details/ArgoApplicationEditorPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";

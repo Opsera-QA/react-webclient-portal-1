@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  getLargeVendorIconFromToolIdentifier
-} from "components/common/helpers/icon-helpers";
+import { getLargeVendorIconFromToolIdentifier } from "components/common/helpers/icon-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";

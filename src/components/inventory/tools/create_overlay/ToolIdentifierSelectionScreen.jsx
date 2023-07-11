@@ -10,8 +10,7 @@ import {hasStringValue, stringIncludesValue} from "components/common/helpers/str
 import ToolIdentifierSelectionTable from "components/admin/tools/identifiers/ToolIdentifierSelectionTable";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {CreateToolFilterModel} from "components/inventory/tools/create_overlay/createTool.filter.model";
-import OverlayWizardButtonContainerBase
-from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import OverlayWizardButtonContainerBase from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 
 function ToolIdentifierSelectionScreen(
   {

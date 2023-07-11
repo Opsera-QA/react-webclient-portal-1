@@ -6,9 +6,7 @@ import ButtonContainerBase from "components/common/buttons/saving/containers/But
 import CloseButton from "components/common/buttons/CloseButton";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 import SalesforceToGitMergeSyncUniqueRunSummaryDataBlocks from "./SalesforceToGitMergeSyncUniqueRunSummaryDataBlocks";
-import {
-  SALESFORCE_TO_GIT_MERGE_SYNC_ACTIONABLE_INSIGHT_SCREENS,
-} from "../SalesforceToGitMergeSyncActionableInsightOverlay";
+import { SALESFORCE_TO_GIT_MERGE_SYNC_ACTIONABLE_INSIGHT_SCREENS } from "../SalesforceToGitMergeSyncActionableInsightOverlay";
 import SalesforceToGitMergeSyncUniqueRunSummary from "./SalesforceToGitMergeSyncUniqueRunSummary";
 
 function SalesforceToGitMergeSyncUniqueRunSummaryOverlay(

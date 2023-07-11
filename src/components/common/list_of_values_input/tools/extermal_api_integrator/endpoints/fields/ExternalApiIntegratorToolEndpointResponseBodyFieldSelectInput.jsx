@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import useGetExternalApiIntegratorEndpointById
-from "hooks/tools/external_api_integrator/endpoints/useGetExternalApiIntegratorEndpointById";
+import useGetExternalApiIntegratorEndpointById from "hooks/tools/external_api_integrator/endpoints/useGetExternalApiIntegratorEndpointById";
 
 export default function ExternalApiIntegratorToolEndpointResponseBodyFieldSelectInput(
   {

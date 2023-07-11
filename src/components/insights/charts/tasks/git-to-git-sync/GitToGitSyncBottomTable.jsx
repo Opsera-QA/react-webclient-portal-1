@@ -11,14 +11,10 @@ import {
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
-import {
-  faTasks,
-  faExternalLink,
-} from "@fortawesome/pro-light-svg-icons";
+import { faTasks, faExternalLink } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import ExportReportPanel from "../ExportReportPanel";
-import GitToGitSyncActionableInsightOverlay
-from "./actionable_insights/GitToGitSyncActionableInsightOverlay";
+import GitToGitSyncActionableInsightOverlay from "./actionable_insights/GitToGitSyncActionableInsightOverlay";
 import {gitToGitSyncMetadata} from "./gitToGitSync.metadata";
 import TaskExportReportButton from "../TaskExportReportButton";
 import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";

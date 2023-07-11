@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {faCheckCircle, faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
-import SalesforceLogSummaryTestResultsTableBase
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummaryTestResultsTableBase";
+import SalesforceLogSummaryTestResultsTableBase from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummaryTestResultsTableBase";
 import IconBase from "components/common/icons/IconBase";
 
 function SalesforceLogSummarySuccessfulTestsTable({ hasUnsuccessfulTests, successfulTests }) {

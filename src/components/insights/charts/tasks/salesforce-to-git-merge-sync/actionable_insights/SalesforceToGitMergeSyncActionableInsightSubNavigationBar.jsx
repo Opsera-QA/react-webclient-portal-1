@@ -4,9 +4,7 @@ import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {
-  SALESFORCE_TO_GIT_MERGE_SYNC_ACTIONABLE_INSIGHT_SCREENS,
-} from "./SalesforceToGitMergeSyncActionableInsightOverlay";
+import { SALESFORCE_TO_GIT_MERGE_SYNC_ACTIONABLE_INSIGHT_SCREENS } from "./SalesforceToGitMergeSyncActionableInsightOverlay";
 
 export default function SalesforceToGitMergeSyncActionableInsightSubNavigationBar(
   {

@@ -12,8 +12,7 @@ import axios from "axios";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import SfdxMapRuleSetSelectInput from "./inputs/SfdxMapRuleSetSelectInput";
 import SfdxScanThresholdInputBase from "./inputs/SfdxScanThresholdInputBase";
-import PositiveIntegerNumberPickerInput
-from "../../../../../../../common/inputs/number/picker/PositiveIntegerNumberPickerInput";
+import PositiveIntegerNumberPickerInput from "../../../../../../../common/inputs/number/picker/PositiveIntegerNumberPickerInput";
 
 function SfdxRulesEditorPanel({ pmdRuleData, toolData, ruleId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);

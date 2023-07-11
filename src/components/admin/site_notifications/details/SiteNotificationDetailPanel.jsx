@@ -3,10 +3,8 @@ import PropTypes from "prop-types";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
-import SiteNotificationSummaryPanel
-from "components/admin/site_notifications/details/SiteNotificationSummaryPanel";
-import SiteNotificationEditorPanel
-from "components/admin/site_notifications/details/SiteNotificationEditorPanel";
+import SiteNotificationSummaryPanel from "components/admin/site_notifications/details/SiteNotificationSummaryPanel";
+import SiteNotificationEditorPanel from "components/admin/site_notifications/details/SiteNotificationEditorPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
 function SiteNotificationDetailPanel({ siteNotificationData, setSiteNotificationData }) {

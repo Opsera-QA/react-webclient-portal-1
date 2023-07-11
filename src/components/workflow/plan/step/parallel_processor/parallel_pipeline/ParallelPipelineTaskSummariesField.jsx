@@ -3,10 +3,8 @@ import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
-import pipelineSummaryMetadata
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
-import ParallelPipelineTaskSummaryCard
-from "components/workflow/plan/step/parallel_processor/parallel_pipeline/ParallelPipelineTaskSummaryCard";
+import pipelineSummaryMetadata from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
+import ParallelPipelineTaskSummaryCard from "components/workflow/plan/step/parallel_processor/parallel_pipeline/ParallelPipelineTaskSummaryCard";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";

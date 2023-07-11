@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {
-  faExclamationTriangle,
-  faFileCode,
-  faFileDownload,
-} from "@fortawesome/pro-light-svg-icons";
+import { faExclamationTriangle, faFileCode, faFileDownload } from "@fortawesome/pro-light-svg-icons";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import ToggleThemeIconButton from "components/common/buttons/toggle/ToggleThemeIconButton";

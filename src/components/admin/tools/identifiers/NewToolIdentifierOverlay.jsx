@@ -2,8 +2,7 @@ import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import toolIdentifierMetadata from "components/admin/tools/identifiers/toolIdentifier.metadata";
-import ToolIdentifierEditorPanel
-from "components/admin/tools/identifiers/details/ToolIdentifierEditorPanel";
+import ToolIdentifierEditorPanel from "components/admin/tools/identifiers/details/ToolIdentifierEditorPanel";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 

@@ -1,4 +1,10 @@
-import React, {useState, useEffect, useContext, useRef, Fragment} from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  Fragment
+} from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import config from "./opseraMeanTimeToRestoreConfigs.js";
@@ -9,17 +15,21 @@ import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { line } from "d3-shape";
 import {
-  defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
-  accentColor, mainPurple, neutralColor, mainColor,
+  defaultConfig,
+  getColorByData,
+  assignStandardColors,
+  adjustBarWidth,
+  accentColor,
+  mainPurple,
+  neutralColor,
+  mainColor
 } from "../../../charts-views";
 import ChartTooltip from '../../../ChartTooltip';
-import DeploymentFrequencyInsightsTableMetadata
-from "components/insights/charts/opsera/OpseraDeploymentFreqStats/deployment-frequency-actionable-metadata";
+import DeploymentFrequencyInsightsTableMetadata from "components/insights/charts/opsera/OpseraDeploymentFreqStats/deployment-frequency-actionable-metadata";
 import Model from "../../../../../../core/data_model/model";
 import ChartDetailsOverlay from "../../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import MeanTimeToDeployHelpDocumentation
-from "../../../../../common/help/documentation/insights/charts/MeanTimeToDeployHelpDocumentation";
+import MeanTimeToDeployHelpDocumentation from "../../../../../common/help/documentation/insights/charts/MeanTimeToDeployHelpDocumentation";
 import { faMinus , faSquare} from "@fortawesome/pro-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 

@@ -5,8 +5,7 @@ import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreD
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import { getTimeDisplay } from "../github_actions-utility";
-import DeploymentFrequencyStatisticsDataBlockContainer
-from "../bar_chart/metrics/deployment_frequency_statistics/DeploymentFrequencyStatisticsDataBlockContainer";
+import DeploymentFrequencyStatisticsDataBlockContainer from "../bar_chart/metrics/deployment_frequency_statistics/DeploymentFrequencyStatisticsDataBlockContainer";
 import LeadTimeAndReleaseDurationDeployMetric from "../bar_chart/metrics/deploy/LeadTimeAndReleaseDurationDeployMetric";
 
 function LeadTimeAndReleaseDurationDataBlockContainer({ data, kpiConfiguration, dashboardData, meanData, countData, metric, statisticsData, chartData }) {

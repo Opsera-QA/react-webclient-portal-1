@@ -6,25 +6,16 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import TaskWizardConfirmRepositorySettingsButton
-from "components/tasks/wizard/TaskWizardConfirmRepositorySettingsButton";
+import TaskWizardConfirmRepositorySettingsButton from "components/tasks/wizard/TaskWizardConfirmRepositorySettingsButton";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
-import {
-  salesforceBulkMigrationTaskConfigurationMetadata
-} from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
-import SalesforceBulkMigrationTaskGitBranchTextInput
-from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskGitBranchTextInput";
-import SalesforceBulkMigrationTaskUpstreamBranchSelectInput
-from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskUpstreamBranchSelectInput";
-import SalesforceBulkMigrationTaskGitBranchSelectInput
-from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskGitBranchSelectInput";
-import SalesforceBulkMigrationTaskBitbucketWorkspaceSelectInput
-from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskBitbucketWorkspaceSelectInput";
-import SalesforceBulkMigrationTaskRepositorySelectInput
-from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskRepositorySelectInput";
-import SalesforceBulkMigrationTaskNewBranchToggleInput
-from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskNewBranchToggleInput";
+import { salesforceBulkMigrationTaskConfigurationMetadata } from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
+import SalesforceBulkMigrationTaskGitBranchTextInput from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskGitBranchTextInput";
+import SalesforceBulkMigrationTaskUpstreamBranchSelectInput from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskUpstreamBranchSelectInput";
+import SalesforceBulkMigrationTaskGitBranchSelectInput from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskGitBranchSelectInput";
+import SalesforceBulkMigrationTaskBitbucketWorkspaceSelectInput from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskBitbucketWorkspaceSelectInput";
+import SalesforceBulkMigrationTaskRepositorySelectInput from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskRepositorySelectInput";
+import SalesforceBulkMigrationTaskNewBranchToggleInput from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskNewBranchToggleInput";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 
 export default function SalesforceBulkMigrationTaskWizardPreRunTaskScreen(

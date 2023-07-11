@@ -1,4 +1,10 @@
-import React, { useEffect, useContext, useState, useMemo, useRef } from "react";
+import React, {
+  useEffect,
+  useContext,
+  useState,
+  useMemo,
+  useRef
+} from "react";
 import { AuthContext } from "contexts/AuthContext";
 import CustomTable from "components/common/table/CustomTable";
 import "components/analytics/charts/charts.css";
@@ -6,11 +12,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import PropTypes from "prop-types";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import {
-  getLimitedTableTextColumn,
-  getTableDateTimeColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers";
+import { getLimitedTableTextColumn, getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import bitbucketRejectedMergeRequestsMetadata from "components/insights/charts/bitbucket/table/bitbucket-rejected-merge-requests/bitbucket-rejected-merge-requests-metadata";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";

@@ -16,9 +16,7 @@ import PipelineVerticalTabContainer from "components/workflow/pipelines/Pipeline
 import TableCardView from "components/common/table/TableCardView";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
-import {
-  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
-} from "components/common/table/FilterContainer";
+import { FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION } from "components/common/table/FilterContainer";
 import {useHistory} from "react-router-dom";
 import CreateNewPipelineWizard from "../wizards/updated_pipeline_wizard/CreateNewPipelineWizard";
 

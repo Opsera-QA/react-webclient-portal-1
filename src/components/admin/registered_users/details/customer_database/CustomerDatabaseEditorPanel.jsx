@@ -5,8 +5,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
-import registeredUserToolsMetadata
-from "components/admin/registered_users/details/tools/registered-user-tools-form-fields";
+import registeredUserToolsMetadata from "components/admin/registered_users/details/tools/registered-user-tools-form-fields";
 import Model from "core/data_model/model";
 import JsonField from "components/common/fields/json/JsonField";
 import ErrorDialog from "components/common/status_notifications/error";

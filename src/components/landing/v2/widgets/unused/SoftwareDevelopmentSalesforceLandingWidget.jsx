@@ -4,8 +4,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import FreeTrialLaunchSalesforceWorkflowWizardOverlay
-from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
+import FreeTrialLaunchSalesforceWorkflowWizardOverlay from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
 
 const EXTERNAL_LINKS = {
   YOUTUBE_CHANNEL: "https://youtube.com/channel/UCJJFTWPkGfK8Kq4nPbNAtaQ",

@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
-import {
-  faCompass,
-  faDatabase,
-  faDraftingCompass,
-} from "@fortawesome/pro-light-svg-icons";
+import { faCompass, faDatabase, faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 

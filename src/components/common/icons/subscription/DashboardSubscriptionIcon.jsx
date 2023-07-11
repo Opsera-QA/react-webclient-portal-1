@@ -5,9 +5,7 @@ import axios from "axios";
 import SubscriptionIcon from "components/common/icons/subscription/SubscriptionIcon";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import {
-  dashboardSubscriptionActions
-} from "components/insights/dashboards/subscriptions/dashboardSubscription.actions";
+import { dashboardSubscriptionActions } from "components/insights/dashboards/subscriptions/dashboardSubscription.actions";
 
 function DashboardSubscriptionIcon(
   {

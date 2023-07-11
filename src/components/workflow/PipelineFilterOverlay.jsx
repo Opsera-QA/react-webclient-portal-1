@@ -2,8 +2,7 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import FilterSelectionOverlayContainer from "components/common/filters/buttons/FilterSelectionOverlayContainer";
 import PipelineStatusFilter from "components/common/filters/pipelines/status/PipelineStatusFilter";
-import PipelineStepToolIdentifierFilter
-from "components/common/filters/tools/tool_identifier/pipelines/PipelineStepToolIdentifierFilter";
+import PipelineStepToolIdentifierFilter from "components/common/filters/tools/tool_identifier/pipelines/PipelineStepToolIdentifierFilter";
 import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 import PipelineTagFilter from "components/common/filters/tags/tag/pipelines/PipelineTagFilter";
 import PipelineStepTagFilter from "components/common/filters/tags/tag/pipelines/PipelineStepTagFilter";

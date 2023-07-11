@@ -5,10 +5,8 @@ import axios from "axios";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import JenkinsAccountEditorPanel
-from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/JenkinsAccountEditorPanel";
-import jenkinsAccountActions
-from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/jenkinsToolAccounts.actions";
+import JenkinsAccountEditorPanel from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/JenkinsAccountEditorPanel";
+import jenkinsAccountActions from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/jenkinsToolAccounts.actions";
 
 function JenkinsToolAccounts({ toolId }) {
   const { getAccessToken } = useContext(AuthContext);

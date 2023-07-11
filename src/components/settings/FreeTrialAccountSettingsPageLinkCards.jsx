@@ -1,9 +1,7 @@
 import React from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import FreeTrialUserExpirationManagementPageLinkCard
-from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagementPageLinkCard";
-import FreeTrialUserActivityReportPageLinkCard
-from "components/settings/trial/activity_report/FreeTrialUserActivityReportPageLinkCard";
+import FreeTrialUserExpirationManagementPageLinkCard from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagementPageLinkCard";
+import FreeTrialUserActivityReportPageLinkCard from "components/settings/trial/activity_report/FreeTrialUserActivityReportPageLinkCard";
 
 export default function FreeTrialAccountSettingsPageLinkCards() {
   const {

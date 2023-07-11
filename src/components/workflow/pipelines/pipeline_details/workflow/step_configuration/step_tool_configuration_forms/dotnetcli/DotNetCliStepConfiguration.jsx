@@ -1,28 +1,19 @@
 import React, { useEffect, useState } from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import PropTypes from "prop-types";
-import dotNetCliStepFormMetadata
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/dotnet-cli-stepForm-metadata";
+import dotNetCliStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/dotnet-cli-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import DotNetCliStepJenkinsToolSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliStepJenkinsToolSelectInput";
-import DotNetCliStepJenkinsJobSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliStepJenkinsJobSelectInput";
+import DotNetCliStepJenkinsToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliStepJenkinsToolSelectInput";
+import DotNetCliStepJenkinsJobSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliStepJenkinsJobSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import DotNetJenkinsAccountInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetJenkinsAccountInput";
-import DotNetGitRepositoryInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetGitRepositoryInput";
-import DotNetGitBranchInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetGitBranchInput";
-import DotNetBitbucketWorkspaceInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetBitbucketWorkspaceInput";
+import DotNetJenkinsAccountInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetJenkinsAccountInput";
+import DotNetGitRepositoryInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetGitRepositoryInput";
+import DotNetGitBranchInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetGitBranchInput";
+import DotNetBitbucketWorkspaceInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetBitbucketWorkspaceInput";
 import WorkspaceDeleteToggleInput from "./inputs/WorkspaceDeleteToggleInput";
-import ParameterSelectListInputBase
-from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
+import ParameterSelectListInputBase from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
 import DotNetCliTypeSelectInput from "./inputs/DotNetCliTypeSelectInput";
 import DotNetCliSdkVersionSelectInput from "./inputs/DotNetCliSdkVersionSelectInput";
 

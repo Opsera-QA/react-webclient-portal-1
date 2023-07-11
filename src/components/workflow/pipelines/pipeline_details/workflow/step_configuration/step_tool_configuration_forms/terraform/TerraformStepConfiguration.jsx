@@ -11,8 +11,7 @@ import TerraformBitbucketWorkspaceSelectInput from "components/workflow/pipeline
 import TerraformGitRepositorySelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformGitRepositorySelectInput";
 import TerraformGitBranchSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformGitBranchSelectInput";
 import terraformStepFormMetadata from "./terraform-stepForm-metadata";
-import TerraformCustomParametersInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformCustomParametersInput";
+import TerraformCustomParametersInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformCustomParametersInput";
 import TerraformCloudProviderSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformCloudProviderSelectInput";
 import TerraformTagSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformTagSelectInput";
 import TerraformStateSubForm from "./sub_forms/TerraformStateSubForm";

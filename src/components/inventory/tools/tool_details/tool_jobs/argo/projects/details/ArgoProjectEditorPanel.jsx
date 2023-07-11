@@ -11,8 +11,7 @@ import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete
 import ArgoClusterNamespaceInput from "./inputs/ArgoClusterNamespaceInput";
 import ArgoGroupKindInput from "./inputs/ArgoGroupKindInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import ArgoRepositoryMultiSelectInput
-from "components/common/list_of_values_input/tools/argo_cd/repositories/ArgoRepositoryMultiSelectInput";
+import ArgoRepositoryMultiSelectInput from "components/common/list_of_values_input/tools/argo_cd/repositories/ArgoRepositoryMultiSelectInput";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ArgoProjectEditorPanel({ argoProjectData, toolId, handleClose }) {

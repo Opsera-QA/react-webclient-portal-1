@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RoleRestrictedToolByIdentifierInputBase
-from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
 function TerraformAwsCredentialsSelectInput({model, setModel, disabled}) {
   return (

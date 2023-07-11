@@ -6,8 +6,7 @@ import Model from "core/data_model/model";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {platformMetadata} from "components/inventory/platform/platform.metadata";
-import PlatformInventoryPlatformApplicationSelectInput
-from "components/inventory/platform/inputs/PlatformInventoryPlatformApplicationSelectInput";
+import PlatformInventoryPlatformApplicationSelectInput from "components/inventory/platform/inputs/PlatformInventoryPlatformApplicationSelectInput";
 
 function PlatformInventory () {
   const [platformModel, setPlatformModel] = useState(new Model(platformMetadata.newObjectFields, platformMetadata, true));

@@ -8,8 +8,7 @@ import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreD
 import TwoLinePercentageDataBlock from "components/common/metrics/percentage/TwoLinePercentageDataBlock";
 import { AuthContext } from "contexts/AuthContext";
 import { metricHelpers } from "components/insights/metric.helpers";
-import githubActionsWorkflowActions
-from "components/insights/charts/github_actions/workflows/github-actions-workflow-actions";
+import githubActionsWorkflowActions from "components/insights/charts/github_actions/workflows/github-actions-workflow-actions";
 import { faInfoCircle } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { getTimeDisplay } from "components/insights/charts/github_actions/github_actions-utility";

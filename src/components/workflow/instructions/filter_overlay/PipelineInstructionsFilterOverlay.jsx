@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
-import PipelineInstructionsTypeFilter
-from "components/common/filters/pipelines/instructions/PipelineInstructionsTypeFilter";
-import PipelineInstructionsStatusFilterSelectInput
-from "components/common/list_of_values_input/workflow/instructions/status/PipelineInstructionsStatusFilterSelectInput";
+import PipelineInstructionsTypeFilter from "components/common/filters/pipelines/instructions/PipelineInstructionsTypeFilter";
+import PipelineInstructionsStatusFilterSelectInput from "components/common/list_of_values_input/workflow/instructions/status/PipelineInstructionsStatusFilterSelectInput";
 import NewDateRangeInput from "components/common/inputs/date/range/NewDateRangeInput";
 import FilterSelectionOverlayContainer from "components/common/filters/buttons/FilterSelectionOverlayContainer";
 import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";

@@ -5,12 +5,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import {
-  assignStandardColors,
-  defaultConfig,
-  getColorByData,
-  shortenPieChartLegend,
-} from "components/insights/charts/charts-views";
+import { assignStandardColors, defaultConfig, getColorByData, shortenPieChartLegend } from "components/insights/charts/charts-views";
 import { Col, Row } from "react-bootstrap";
 import "components/insights/charts/qa_metrics/Styling.css";
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
@@ -22,10 +17,7 @@ import NivoPieChartBase from "components/common/metrics/charts/nivo/pie/NivoPieC
 import { nivoChartLegendDefinitions } from "components/common/metrics/charts/nivo/nivoChartLegend.definitions";
 import config from "./adoptionTestPercentagePieChartConfig";
 import AdoptionTestPercentageChartHelpDocumentation from "../../../../common/help/documentation/insights/charts/AdoptionTestPercentageChartHelpDocumentation";
-import {
-  METRIC_CHART_STANDARD_HEIGHT,
-  METRIC_THEME_CHART_PALETTE_COLORS,
-} from "../../../../common/helpers/metrics/metricTheme.helpers";
+import { METRIC_CHART_STANDARD_HEIGHT, METRIC_THEME_CHART_PALETTE_COLORS } from "../../../../common/helpers/metrics/metricTheme.helpers";
 import { ResponsivePie } from "@nivo/pie";
 import { Container } from "@nivo/core";
 

@@ -1,9 +1,7 @@
 import React from "react";
 import TableCardView from "components/common/table/TableCardView";
 import PropTypes from "prop-types";
-import {
-  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
-} from "components/common/table/FilterContainer";
+import { FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION } from "components/common/table/FilterContainer";
 import WorkspaceTaskCardView from "components/workspace/views/task/WorkspaceTaskCardView";
 import WorkspaceTaskTable from "components/workspace/views/task/WorkspaceTaskTable";
 

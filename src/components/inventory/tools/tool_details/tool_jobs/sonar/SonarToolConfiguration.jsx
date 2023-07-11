@@ -5,14 +5,12 @@ import modelHelpers from "components/common/model/modelHelpers";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import sonarConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/sonar/sonar-connection-metadata";
-import ToolConfigurationEditorPanelContainer
-from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+import ToolConfigurationEditorPanelContainer from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Col from "react-bootstrap/Col";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import SonarEditionSelectInput from "components/common/list_of_values_input/tools/code_scan/SonarEditionSelectInput";
-import toolIdentifierConnectionCheckConstants
-from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+import toolIdentifierConnectionCheckConstants from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function SonarToolConfiguration( { toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);

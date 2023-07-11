@@ -4,8 +4,7 @@ import {Button} from "react-bootstrap";
 import { faLaptopMedical } from "@fortawesome/pro-light-svg-icons";
 import {faExclamationTriangle} from "@fortawesome/pro-solid-svg-icons/faExclamationTriangle";
 import {AuthContext} from "contexts/AuthContext";
-import OctopusStepActions
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
+import OctopusStepActions from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
 import { isObject } from "@okta/okta-auth-js";
 import OctopusFeedPackageIdInputModal from "./OctopusFeedPackageIdInputModal";
 import Model from "core/data_model/model";

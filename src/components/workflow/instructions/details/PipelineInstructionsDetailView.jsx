@@ -4,19 +4,14 @@ import DetailScreenContainer from "components/common/panels/detail_view_containe
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import ActionBarTransferOwnershipButtonBase
-from "components/common/actions/buttons/ActionBarTransferOwnershipButtonBase";
+import ActionBarTransferOwnershipButtonBase from "components/common/actions/buttons/ActionBarTransferOwnershipButtonBase";
 import PipelineInstructionsDetailPanel from "components/workflow/instructions/details/PipelineInstructionsDetailPanel";
-import useGetPipelineInstructionModelById
-from "components/workflow/instructions/hooks/useGetPipelineInstructionModelById";
-import ActionBarDeletePipelineInstructionsButton
-from "components/workflow/instructions/action_bar/ActionBarDeletePipelineInstructionsButton";
+import useGetPipelineInstructionModelById from "components/workflow/instructions/hooks/useGetPipelineInstructionModelById";
+import ActionBarDeletePipelineInstructionsButton from "components/workflow/instructions/action_bar/ActionBarDeletePipelineInstructionsButton";
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
-import pipelineInstructionsMetadata
-from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructions.metadata";
+import pipelineInstructionsMetadata from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructions.metadata";
 import {pipelineInstructionsHelper} from "components/workflow/instructions/pipelineInstructions.helper";
-import ViewInstructionsAuditLogsActionBarButton
-from "components/workflow/instructions/action_bar/ViewInstructionsAuditLogsActionBarButton";
+import ViewInstructionsAuditLogsActionBarButton from "components/workflow/instructions/action_bar/ViewInstructionsAuditLogsActionBarButton";
 
 function PipelineInstructionsDetailView() {
   const { pipelineInstructionsId } = useParams();

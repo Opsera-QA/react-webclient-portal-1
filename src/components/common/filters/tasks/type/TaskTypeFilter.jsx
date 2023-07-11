@@ -2,10 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
-import {
-  getNonProductionTaskTypesForCategory,
-  getProductionTaskTypesForCategory,
-} from "components/tasks/task.types";
+import { getNonProductionTaskTypesForCategory, getProductionTaskTypesForCategory } from "components/tasks/task.types";
 
 function TaskTypeFilter(
   {

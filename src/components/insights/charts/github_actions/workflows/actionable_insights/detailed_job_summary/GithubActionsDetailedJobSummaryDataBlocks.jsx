@@ -6,8 +6,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import TwoLinePercentageDataBlock from "components/common/metrics/percentage/TwoLinePercentageDataBlock";
 import { metricHelpers } from "components/insights/metric.helpers";
-import githubActionsWorkflowActions
-from "components/insights/charts/github_actions/workflows/github-actions-workflow-actions";
+import githubActionsWorkflowActions from "components/insights/charts/github_actions/workflows/github-actions-workflow-actions";
 import { faInfoCircle } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
 

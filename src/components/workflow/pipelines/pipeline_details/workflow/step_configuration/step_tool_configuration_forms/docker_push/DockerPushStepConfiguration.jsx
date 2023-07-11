@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
-import dockerPushStepFormMetadata
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/dockerpush-stepForm-metadata";
+import dockerPushStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/dockerpush-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import DockerPushStepJenkinsToolSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushStepJenkinsToolSelectInput";
-import DockerPushStepJenkinsJobSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushStepJenkinsJobSelectInput";
+import DockerPushStepJenkinsToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushStepJenkinsToolSelectInput";
+import DockerPushStepJenkinsJobSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushStepJenkinsJobSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import DockerPushNewRepoToggleInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushNewRepoToggleInput";
+import DockerPushNewRepoToggleInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushNewRepoToggleInput";
 import _ from "lodash";
 import DockerPushAwsRepoInput from "./inputs/DockerPushAwsRepoInput";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import RoleRestrictedAwsAccountToolSelectInput
-from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
+import RoleRestrictedAwsAccountToolSelectInput from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 
 function DockerPushStepConfiguration({ pipelineId, plan, stepTool, stepId, createJob, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);

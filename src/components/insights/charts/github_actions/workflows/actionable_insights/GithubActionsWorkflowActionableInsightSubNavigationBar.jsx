@@ -4,9 +4,7 @@ import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {
-  GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS,
-} from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
+import { GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS } from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 
 export default function GithubActionsWorkflowActionableInsightSubNavigationBar(
   {

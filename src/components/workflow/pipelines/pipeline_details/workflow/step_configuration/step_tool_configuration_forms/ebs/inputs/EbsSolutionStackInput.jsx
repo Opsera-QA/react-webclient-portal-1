@@ -3,8 +3,7 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import PropTypes from 'prop-types';
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import AWSActionsHelper
-from "components/common/list_of_values_input/tools/aws/aws-actions-helper";
+import AWSActionsHelper from "components/common/list_of_values_input/tools/aws/aws-actions-helper";
 import EbsSolutionStackVersionInput from "./EbsSolutionStackVersionInput";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 

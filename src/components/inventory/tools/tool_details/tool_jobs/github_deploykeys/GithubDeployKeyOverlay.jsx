@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import githubDeployKeyMetadata from "components/inventory/tools/tool_details/tool_jobs/github_deploykeys/github-deploykeys-metadata";
-import GithubDeployKeysEditorPanel
-from "components/inventory/tools/tool_details/tool_jobs/github_deploykeys/details/GithubDeployKeysEditorPanel";
+import GithubDeployKeysEditorPanel from "components/inventory/tools/tool_details/tool_jobs/github_deploykeys/details/GithubDeployKeysEditorPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";

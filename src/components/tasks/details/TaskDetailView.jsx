@@ -4,37 +4,24 @@ import TaskDetailPanel from "components/tasks/details/TaskDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
-import VanitySetDetailScreenContainer
-from "components/common/panels/detail_view_container/VanitySetDetailScreenContainer";
+import VanitySetDetailScreenContainer from "components/common/panels/detail_view_container/VanitySetDetailScreenContainer";
 import {TASK_TYPES} from "components/tasks/task.types";
-import AwsEcsClusterCreationTaskDetailsHelpDocumentation
-from "../../common/help/documentation/tasks/details/AwsEcsClusterCreationTaskDetailsHelpDocumentation";
-import AwsEcsServiceCreationTaskDetailsHelpDocumentation
-from "../../common/help/documentation/tasks/details/AwsEcsServiceCreationTaskDetailsHelpDocumentation";
-import AwsLambdaFunctionCreationTaskDetailsHelpDocumentation
-from "../../common/help/documentation/tasks/details/AwsLambdaFunctionCreationTaskDetailsHelpDocumentation";
-import AzureAKSClusterCreationTaskDetailsHelpDocumentation
-from "../../common/help/documentation/tasks/details/AzureAKSClusterCreationTaskDetailsHelpDocumentation";
-import GitToGitSyncTaskDetailsHelpDocumentation
-from "../../common/help/documentation/tasks/details/GitToGitSyncTaskDetailsHelpDocumentation";
-import SalesforceBulkMigrationTaskDetailsHelpDocumentation
-from "../../common/help/documentation/tasks/details/SalesforceBulkMigrationTaskDetailsHelpDocumentation";
-import SfdcOrgSyncTaskDetailsHelpDocumentation
-from "../../common/help/documentation/tasks/details/SfdcOrgSyncTaskDetailsHelpDocumentation";
-import GitToGitMergeSyncTaskDetailsHelpDocumentation
-from "../../common/help/documentation/tasks/details/GitToGitMergeSyncTaskDetailsHelpDocumentation";
-import SalesforceToGitMergeSyncTaskDetailsHelpDocumentation
-from "../../common/help/documentation/tasks/details/SalesforceToGitMergeSyncTaskDetailsHelpDocumentation";
-import SfdxQuickDeployTaskDetailsHelpDocumentation
-from "../../common/help/documentation/tasks/details/SfdxQuickDeployTaskDetailsHelpDocumentation";
-import GitCustodianTaskDetailsHelpDocumentation
-from "../../common/help/documentation/tasks/details/GitCustodianTaskDetailsHelpDocumentation";
+import AwsEcsClusterCreationTaskDetailsHelpDocumentation from "../../common/help/documentation/tasks/details/AwsEcsClusterCreationTaskDetailsHelpDocumentation";
+import AwsEcsServiceCreationTaskDetailsHelpDocumentation from "../../common/help/documentation/tasks/details/AwsEcsServiceCreationTaskDetailsHelpDocumentation";
+import AwsLambdaFunctionCreationTaskDetailsHelpDocumentation from "../../common/help/documentation/tasks/details/AwsLambdaFunctionCreationTaskDetailsHelpDocumentation";
+import AzureAKSClusterCreationTaskDetailsHelpDocumentation from "../../common/help/documentation/tasks/details/AzureAKSClusterCreationTaskDetailsHelpDocumentation";
+import GitToGitSyncTaskDetailsHelpDocumentation from "../../common/help/documentation/tasks/details/GitToGitSyncTaskDetailsHelpDocumentation";
+import SalesforceBulkMigrationTaskDetailsHelpDocumentation from "../../common/help/documentation/tasks/details/SalesforceBulkMigrationTaskDetailsHelpDocumentation";
+import SfdcOrgSyncTaskDetailsHelpDocumentation from "../../common/help/documentation/tasks/details/SfdcOrgSyncTaskDetailsHelpDocumentation";
+import GitToGitMergeSyncTaskDetailsHelpDocumentation from "../../common/help/documentation/tasks/details/GitToGitMergeSyncTaskDetailsHelpDocumentation";
+import SalesforceToGitMergeSyncTaskDetailsHelpDocumentation from "../../common/help/documentation/tasks/details/SalesforceToGitMergeSyncTaskDetailsHelpDocumentation";
+import SfdxQuickDeployTaskDetailsHelpDocumentation from "../../common/help/documentation/tasks/details/SfdxQuickDeployTaskDetailsHelpDocumentation";
+import GitCustodianTaskDetailsHelpDocumentation from "../../common/help/documentation/tasks/details/GitCustodianTaskDetailsHelpDocumentation";
 import ActionBarDeleteTaskButton from "components/tasks/buttons/ActionBarDeleteTaskButton";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetTaskModelById from "components/tasks/hooks/useGetTaskModelById";
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
-import useGetPollingTaskOrchestrationStatusById
-from "hooks/workflow/tasks/orchestration/useGetPollingTaskOrchestrationStatusById";
+import useGetPollingTaskOrchestrationStatusById from "hooks/workflow/tasks/orchestration/useGetPollingTaskOrchestrationStatusById";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {numberHelpers} from "components/common/helpers/number/number.helpers";
 import ViewTaskAuditLogsActionBarButton from "components/tasks/buttons/ViewTaskAuditLogsActionBarButton";

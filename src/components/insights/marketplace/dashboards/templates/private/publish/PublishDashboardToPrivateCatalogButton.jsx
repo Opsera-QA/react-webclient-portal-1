@@ -3,9 +3,7 @@ import PropTypes from "prop-types";
 import { faShareSquare } from "@fortawesome/pro-light-svg-icons";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {
-  customerDashboardTemplateCatalogActions
-} from "components/insights/marketplace/dashboards/templates/private/customerDashboardTemplateCatalog.actions";
+import { customerDashboardTemplateCatalogActions } from "components/insights/marketplace/dashboards/templates/private/customerDashboardTemplateCatalog.actions";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 
 export default function PublishDashboardToPrivateCatalogButton(

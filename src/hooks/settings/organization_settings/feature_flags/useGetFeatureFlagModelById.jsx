@@ -4,8 +4,7 @@ import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import useFeatureFlagActions from "hooks/settings/organization_settings/policies/useFeatureFlagActions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useGetFeatureFlagModel from "hooks/settings/organization_settings/feature_flags/useGetFeatureFlagModel";
-import useFeatureFlagAdministrationActions
-from "hooks/settings/organization_settings/feature_flags/useFeatureFlagAdministrationActions";
+import useFeatureFlagAdministrationActions from "hooks/settings/organization_settings/feature_flags/useFeatureFlagAdministrationActions";
 
 export default function useGetFeatureFlagModelById(
   featureFlagId,

@@ -1,23 +1,15 @@
 import React, { useEffect, useState } from "react";
-import CreateSalesforceWorkflowWizardFlowSelectionScreen
-from "components/wizard/portal/workflows/flows/salesforce/flows/selection/CreateSalesforceWorkflowWizardFlowSelectionScreen";
-import CreateSalesforceWorkflowWizardFlowWrapper
-from "components/wizard/portal/workflows/flows/salesforce/flows/wizards/CreateSalesforceWorkflowWizardFlowWrapper";
+import CreateSalesforceWorkflowWizardFlowSelectionScreen from "components/wizard/portal/workflows/flows/salesforce/flows/selection/CreateSalesforceWorkflowWizardFlowSelectionScreen";
+import CreateSalesforceWorkflowWizardFlowWrapper from "components/wizard/portal/workflows/flows/salesforce/flows/wizards/CreateSalesforceWorkflowWizardFlowWrapper";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import {
-  OVERLAY_PANEL_MIN_HEIGHT_MINUS_TITLE,
-} from "components/common/overlays/center/CenterOverlayContainer";
-import FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen
-from "components/wizard/portal/workflows/flows/pipeline/limitation/FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen";
-import FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
-from "components/wizard/portal/workflows/flows/tasks/limitation/FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen";
-import FreeTrialDeletePipelineWorkflowConfirmationScreen
-from "components/wizard/portal/workflows/flows/pipeline/deletion/FreeTrialDeletePipelineWorkflowConfirmationScreen";
-import FreeTrialDeleteTaskWorkflowConfirmationScreen
-from "components/wizard/portal/workflows/flows/tasks/deletion/FreeTrialDeleteTaskWorkflowConfirmationScreen";
+import { OVERLAY_PANEL_MIN_HEIGHT_MINUS_TITLE } from "components/common/overlays/center/CenterOverlayContainer";
+import FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen from "components/wizard/portal/workflows/flows/pipeline/limitation/FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen";
+import FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen from "components/wizard/portal/workflows/flows/tasks/limitation/FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen";
+import FreeTrialDeletePipelineWorkflowConfirmationScreen from "components/wizard/portal/workflows/flows/pipeline/deletion/FreeTrialDeletePipelineWorkflowConfirmationScreen";
+import FreeTrialDeleteTaskWorkflowConfirmationScreen from "components/wizard/portal/workflows/flows/tasks/deletion/FreeTrialDeleteTaskWorkflowConfirmationScreen";
 
 export const CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS = {
   SELECT_FLOW_SCREEN: "select_flow_screen",

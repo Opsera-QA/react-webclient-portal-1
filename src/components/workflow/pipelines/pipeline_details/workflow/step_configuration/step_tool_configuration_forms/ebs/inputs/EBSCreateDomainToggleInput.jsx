@@ -2,8 +2,7 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import InputContainer from "components/common/inputs/InputContainer";
 import {Form} from "react-bootstrap";
-import ebsStepFormMetadata
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/ebs-stepForm-metadata";
+import ebsStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/ebs-stepForm-metadata";
 
 function EBSCreateDomainToggleInput({dataObject, setDataObject, fieldName, disabled}) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));

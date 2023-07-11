@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RoleRestrictedOctopusToolSelectInput
-from "components/common/list_of_values_input/tools/octopus/RoleRestrictedOctopusToolSelectInput";
+import RoleRestrictedOctopusToolSelectInput from "components/common/list_of_values_input/tools/octopus/RoleRestrictedOctopusToolSelectInput";
 
 function OctopusToolSelectInput({className, fieldName, model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {

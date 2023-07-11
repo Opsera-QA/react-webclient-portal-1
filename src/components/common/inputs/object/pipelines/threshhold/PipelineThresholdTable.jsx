@@ -1,13 +1,9 @@
 import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import TableBase from "components/common/table/TableBase";
-import {
-  getPipelineThresholdLevelColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers-v2";
+import { getPipelineThresholdLevelColumn, getTableTextColumn } from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
-import pipelineThresholdMetadata
-from "components/common/inputs/object/pipelines/threshhold/pipeline-threshold-metadata";
+import pipelineThresholdMetadata from "components/common/inputs/object/pipelines/threshhold/pipeline-threshold-metadata";
 
 function PipelineThresholdTable({ thresholdRows, isLoading }) {
   let fields = pipelineThresholdMetadata.fields;

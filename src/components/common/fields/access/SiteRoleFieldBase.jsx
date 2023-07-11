@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  getAccessRolePermissionMessageWithoutRole,
-} from "components/common/helpers/role-helpers";
+import { getAccessRolePermissionMessageWithoutRole } from "components/common/helpers/role-helpers";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabelBase from "components/common/fields/FieldLabelBase";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";

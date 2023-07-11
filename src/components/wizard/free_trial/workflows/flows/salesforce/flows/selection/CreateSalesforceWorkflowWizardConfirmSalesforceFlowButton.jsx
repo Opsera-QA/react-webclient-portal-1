@@ -4,9 +4,7 @@ import ButtonContainerBase from "components/common/buttons/saving/containers/But
 import IconBase from "components/common/icons/IconBase";
 import { faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import { Button } from "react-bootstrap";
-import {
-  CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS
-} from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
+import { CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS } from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
 export default function CreateSalesforceWorkflowWizardConfirmSalesforceFlowButton(

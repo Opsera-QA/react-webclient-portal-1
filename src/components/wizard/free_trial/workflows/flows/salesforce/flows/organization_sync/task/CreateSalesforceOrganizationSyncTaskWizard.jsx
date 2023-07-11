@@ -1,24 +1,15 @@
 import React, {useState} from "react";
-import CreateWorkflowWizardCreateGitToolScreenBase
-from "components/wizard/free_trial/workflows/flows/tools/git/CreateWorkflowWizardCreateGitToolScreenBase";
+import CreateWorkflowWizardCreateGitToolScreenBase from "components/wizard/free_trial/workflows/flows/tools/git/CreateWorkflowWizardCreateGitToolScreenBase";
 import sfdcConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/sfdc/sfdc-connection-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
-import CreateWorkflowWizardCreateSalesforceToolEditorPanel
-from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateWorkflowWizardCreateSalesforceToolEditorPanel";
+import CreateWorkflowWizardCreateSalesforceToolEditorPanel from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateWorkflowWizardCreateSalesforceToolEditorPanel";
 import * as PropType from "prop-types";
-import CreateSalesforceOrganizationSyncTaskInitializationScreen
-from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/task/initialization/CreateSalesforceOrganizationSyncTaskInitializationScreen";
-import CreateWorkflowWizardTaskCompletionScreen
-from "components/wizard/free_trial/workflows/flows/tasks/completion/CreateWorkflowWizardTaskCompletionScreen";
-import CreateSalesforceOrganizationSyncTaskTestGitToolConnectionScreen
-from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/task/tools/git/connection/CreateSalesforceOrganizationSyncTaskTestGitToolConnectionScreen";
-import CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScreen
-from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/task/tools/salesforce/connection/CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScreen";
-import {
-  salesforceWorkflowFlowConstants
-} from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
-import CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase
-from "components/wizard/free_trial/workflows/flows/tools/jenkins/CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase";
+import CreateSalesforceOrganizationSyncTaskInitializationScreen from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/task/initialization/CreateSalesforceOrganizationSyncTaskInitializationScreen";
+import CreateWorkflowWizardTaskCompletionScreen from "components/wizard/free_trial/workflows/flows/tasks/completion/CreateWorkflowWizardTaskCompletionScreen";
+import CreateSalesforceOrganizationSyncTaskTestGitToolConnectionScreen from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/task/tools/git/connection/CreateSalesforceOrganizationSyncTaskTestGitToolConnectionScreen";
+import CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScreen from "components/wizard/free_trial/workflows/flows/salesforce/flows/organization_sync/task/tools/salesforce/connection/CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScreen";
+import { salesforceWorkflowFlowConstants } from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
+import CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase from "components/wizard/free_trial/workflows/flows/tools/jenkins/CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase";
 import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
 
 export const CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS = {

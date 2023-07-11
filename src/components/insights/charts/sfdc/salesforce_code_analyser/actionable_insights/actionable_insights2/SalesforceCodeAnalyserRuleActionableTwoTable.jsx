@@ -2,10 +2,7 @@ import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import SalesforceCodeAnalyserActionableTwoMetadata from "./SalesforceCodeAnalyserActionableTwo.metadata";
-import {
-  getTableDateTimeColumn,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import BlueprintLogOverlay from "../../../../../../blueprint/BlueprintLogOverlay";

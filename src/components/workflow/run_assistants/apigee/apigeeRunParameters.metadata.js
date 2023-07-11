@@ -1,6 +1,4 @@
-import {
-  apigeeRunParameterConfigurationMetadata
-} from "components/workflow/run_assistants/apigee/configuration_selection_screen/apigeeRunParameterConfiguration.metadata";
+import { apigeeRunParameterConfigurationMetadata } from "components/workflow/run_assistants/apigee/configuration_selection_screen/apigeeRunParameterConfiguration.metadata";
 
 export const apigeeRunParametersMetadata = {
   type: "Apigee Run Parameters",

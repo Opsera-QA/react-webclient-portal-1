@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ActionBarDeleteButtonBase from "components/common/actions/buttons/ActionBarDeleteButtonBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import DeletePipelineInstructionsOverlay
-from "components/workflow/instructions/delete_overlay/DeletePipelineInstructionsOverlay";
+import DeletePipelineInstructionsOverlay from "components/workflow/instructions/delete_overlay/DeletePipelineInstructionsOverlay";
 
 export default function ActionBarDeletePipelineInstructionsButton(
   {

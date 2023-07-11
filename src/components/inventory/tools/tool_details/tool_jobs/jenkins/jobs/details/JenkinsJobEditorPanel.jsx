@@ -11,10 +11,8 @@ import JenkinsJobSummaryPanel from "./JenkinsJobSummaryPanel";
 import {AuthContext} from "contexts/AuthContext";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import axios from "axios";
-import JenkinsJobSubEditorPanel
-from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/JenkinsJobSubEditorPanel";
-import StandaloneDeleteButtonWithConfirmationModal
-from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
+import JenkinsJobSubEditorPanel from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/JenkinsJobSubEditorPanel";
+import StandaloneDeleteButtonWithConfirmationModal from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 
 function JenkinsJobEditorPanel({ handleClose, jenkinsJobModel, setJenkinsJobModel, toolData, loadData }) {
   const { getAccessToken } = useContext(AuthContext);

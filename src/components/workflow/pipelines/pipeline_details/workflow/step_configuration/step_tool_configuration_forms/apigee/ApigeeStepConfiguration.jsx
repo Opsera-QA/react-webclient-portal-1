@@ -4,8 +4,7 @@ import ApigeeStepFormMetadata from "./apigee-stepForm-metadata";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import ApigeeTypeSelectInput from "./inputs/ApigeeTypeSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";

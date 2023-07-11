@@ -5,8 +5,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 //import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
-import PipelineSummaryAndWebhookOverviewDetailPanel
-from "components/workflow/pipelines/overview/PipelineSummaryAndWebhookOverviewDetailPanel";
+import PipelineSummaryAndWebhookOverviewDetailPanel from "components/workflow/pipelines/overview/PipelineSummaryAndWebhookOverviewDetailPanel";
 
 function PipelineSourceConfigurationDetailsOverviewOverlay({ pipeline }) {
   const toastContext = useContext(DialogToastContext);

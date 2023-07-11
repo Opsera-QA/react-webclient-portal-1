@@ -1,11 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
-import ToolRegistryRoleAccessHelpDocumentation
-from "components/common/help/documentation/tool_registry/ToolRegistryRoleAccessHelpDocumentation";
+import ToolRegistryRoleAccessHelpDocumentation from "components/common/help/documentation/tool_registry/ToolRegistryRoleAccessHelpDocumentation";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import PipelineInstructionsRoleHelper
-from "@opsera/know-your-role/roles/settings/pipelines/instructions/pipelineInstructionsRole.helper";
+import PipelineInstructionsRoleHelper from "@opsera/know-your-role/roles/settings/pipelines/instructions/pipelineInstructionsRole.helper";
 
 export default function PipelineInstructionsRoleAccessInlineInput(
   {

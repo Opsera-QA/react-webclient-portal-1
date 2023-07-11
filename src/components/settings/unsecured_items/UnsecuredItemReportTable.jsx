@@ -1,10 +1,7 @@
 import React, { useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-import {
-  getTableTextColumn,
-  getTableDateTimeColumn, getFormattedLabelWithFunctionColumnDefinition,
-} from "components/common/table/table-column-helpers-v2";
+import { getTableTextColumn, getTableDateTimeColumn, getFormattedLabelWithFunctionColumnDefinition } from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { unsecureItemsReportMetadata } from "components/settings/unsecured_items/unsecuredItemReport.metadata";

@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import useGetAwsSecurityGroups
-from "components/common/list_of_values_input/aws/security_groups/useGetAwsSecurityGroups";
+import useGetAwsSecurityGroups from "components/common/list_of_values_input/aws/security_groups/useGetAwsSecurityGroups";
 
 export default function AwsSecurityGroupSelectInput(
   {

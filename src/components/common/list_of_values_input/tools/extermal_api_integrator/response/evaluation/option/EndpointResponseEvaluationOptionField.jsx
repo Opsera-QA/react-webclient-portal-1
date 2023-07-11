@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ConstantFieldBase from "components/common/fields/constant/ConstantFieldBase";
-import endpointResponseEvaluationOptionConstants
-from "@opsera/definitions/constants/api/request/endpoint/endpointResponseEvaluationOption.constants";
+import endpointResponseEvaluationOptionConstants from "@opsera/definitions/constants/api/request/endpoint/endpointResponseEvaluationOption.constants";
 
 function EndpointResponseEvaluationOptionField(
   {

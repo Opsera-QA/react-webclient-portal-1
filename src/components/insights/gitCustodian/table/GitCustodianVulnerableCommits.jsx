@@ -4,8 +4,7 @@ import chartsActions from "../../charts/charts-actions";
 import { GitCustodianFilterMetadata } from "components/insights/gitCustodian/table/gitCustodianFilter.metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import modelHelpers from "components/common/model/modelHelpers";
-import GitCustodianVulnerableCommitsTable
-from "components/insights/gitCustodian/table/GitCustodianVulnerableCommitsTable";
+import GitCustodianVulnerableCommitsTable from "components/insights/gitCustodian/table/GitCustodianVulnerableCommitsTable";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function GitCustodianVulnerableCommits({ gitCustodianData, gitCustodianFilterModel, setGitCustodianFilterModel }) {

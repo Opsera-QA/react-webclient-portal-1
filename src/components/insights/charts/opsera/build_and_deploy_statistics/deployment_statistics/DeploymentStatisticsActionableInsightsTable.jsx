@@ -1,4 +1,10 @@
-import React, { useEffect, useContext, useState, useMemo, useRef } from "react";
+import React, {
+  useEffect,
+  useContext,
+  useState,
+  useMemo,
+  useRef
+} from "react";
 import { AuthContext } from "contexts/AuthContext";
 import PropTypes from "prop-types";
 import axios from "axios";
@@ -21,10 +27,8 @@ import AverageDurationToResolve from "../data_blocks/AverageDurationToResolve";
 import TotalDurationToResolve from "../data_blocks/TotalDurationToResolve";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import IconBase from "components/common/icons/IconBase";
-import SalesforceDurationByStageActionableInsightsTable
-from "../../../sfdc/bar_chart/duration_by_stage/actionable_insights/SalesforceDurationByStageActionableInsightTable";
-import SalesforceDurationByStageTasksActionableTable
-from "../../../sfdc/bar_chart/duration_by_stage/actionable_insights/SalesforceDurationByStageTasksActionableTable";
+import SalesforceDurationByStageActionableInsightsTable from "../../../sfdc/bar_chart/duration_by_stage/actionable_insights/SalesforceDurationByStageActionableInsightTable";
+import SalesforceDurationByStageTasksActionableTable from "../../../sfdc/bar_chart/duration_by_stage/actionable_insights/SalesforceDurationByStageTasksActionableTable";
 import CustomTabContainer from "../../../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../../../common/tabs/CustomTab";
 import DeploymentStatisticsTasksActionableTable from "./DeploymentStatisticsActionableTasksTable";

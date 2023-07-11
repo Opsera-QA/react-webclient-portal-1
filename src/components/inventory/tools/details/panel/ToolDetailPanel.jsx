@@ -15,8 +15,7 @@ import ToolAttributeEditorPanel from "components/inventory/tools/tool_details/To
 import ToolVaultPanel from "components/inventory/tools/tool_details/vault/ToolVaultPanel";
 import ToolRepositoriesPanel from "components/inventory/tools/tool_details/ToolRepositoriesPanel";
 import ToolStoragePanel from "components/inventory/tools/tool_details/ToolStoragePanel";
-import ToolDetailPanelTabContainer
-, {TOOL_DETAIL_PANEL_TABS} from "components/inventory/tools/details/panel/tab_container/ToolDetailPanelTabContainer";
+import ToolDetailPanelTabContainer, { TOOL_DETAIL_PANEL_TABS } from "components/inventory/tools/details/panel/tab_container/ToolDetailPanelTabContainer";
 import ToolPathsPanel from "components/inventory/tools/tool_details/paths/ToolPathsPanel";
 import ToolServiceTypeMappingPanel from "components/inventory/tools/tool_details/ToolServiceTypeMappingPanel";
 import ToolClustersPanel from "components/inventory/tools/tool_details/clusters/ToolClustersPanel";
@@ -25,8 +24,7 @@ import ToolWorkspacesPanel from "components/inventory/tools/tool_details/ToolWor
 import ToolEndpointsPanel from "components/inventory/tools/details/endpoints/ToolEndpointsPanel";
 import ToolProvidersPanel from "components/inventory/tools/tool_details/ToolProvidersPanel";
 import ToolLicensePanel from "../../tool_details/ToolLicensePanel";
-import ToolDataTransformerRulesMappingPanel 
-from "components/inventory/tools/tool_details/ToolDataTransformerRulesMappingPanel";
+import ToolDataTransformerRulesMappingPanel from "components/inventory/tools/tool_details/ToolDataTransformerRulesMappingPanel";
 
 function ToolDetailPanel(
   { 

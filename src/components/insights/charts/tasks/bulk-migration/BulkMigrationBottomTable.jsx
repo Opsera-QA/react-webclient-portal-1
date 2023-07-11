@@ -11,13 +11,9 @@ import {
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
-import {
-  faTasks,
-  faExternalLink,
-} from "@fortawesome/pro-light-svg-icons";
+import { faTasks, faExternalLink } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import BulkMigrationActionableInsightOverlay
-from "./actionable_insights/BulkMigrationActionableInsightOverlay";
+import BulkMigrationActionableInsightOverlay from "./actionable_insights/BulkMigrationActionableInsightOverlay";
 import { bulkMigrationMetadata } from "./bulkMigration.metadata";
 import TaskExportReportButton from "../TaskExportReportButton";
 import ExportReportPanel from "../ExportReportPanel";

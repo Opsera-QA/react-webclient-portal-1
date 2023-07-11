@@ -4,8 +4,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import ParametersEditorPanel from "components/inventory/parameters/details/ParametersEditorPanel";
 import useGetNewParameterModel from "components/inventory/parameters/hooks/useGetNewParameterModel";
-import customParametersMetadata
-from "@opsera/definitions/constants/registry/custom_parameters/customParameters.metadata";
+import customParametersMetadata from "@opsera/definitions/constants/registry/custom_parameters/customParameters.metadata";
 
 export default function NewParameterOverlay({ loadData }) {
   const toastContext = useContext(DialogToastContext);

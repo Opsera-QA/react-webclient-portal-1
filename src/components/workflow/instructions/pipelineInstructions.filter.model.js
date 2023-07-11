@@ -1,10 +1,8 @@
 import FilterModelBase from "core/data_model/filterModel.base";
 import {capitalizeFirstLetter, hasStringValue} from "components/common/helpers/string-helpers";
 import TagParsingHelper from "@opsera/persephone/helpers/data/tags/tagParsing.helper";
-import pipelineInstructionsTypeConstants
-from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructionsType.constants";
-import pipelineInstructionsStatusConstants
-from "@opsera/definitions/constants/pipelines/instructions/status/pipelineInstructionsStatus.constants";
+import pipelineInstructionsTypeConstants from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructionsType.constants";
+import pipelineInstructionsStatusConstants from "@opsera/definitions/constants/pipelines/instructions/status/pipelineInstructionsStatus.constants";
 import {hasDateValue} from "components/common/helpers/date/date.helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";

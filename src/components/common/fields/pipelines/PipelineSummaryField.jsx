@@ -2,8 +2,7 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import pipelineActions from "components/workflow/pipeline-actions";
-import pipelineSummaryMetadata
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
+import pipelineSummaryMetadata from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";

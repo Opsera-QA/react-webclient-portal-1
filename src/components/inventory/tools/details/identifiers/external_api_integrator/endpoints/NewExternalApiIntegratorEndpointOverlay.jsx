@@ -2,10 +2,8 @@ import React, {useContext, useState} from "react";
 import PropTypes from "prop-types";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import externalApiIntegratorEndpointMetadata
-from "@opsera/definitions/constants/registry/tools/external_api_integrator/externalApiIntegratorEndpoint.metadata";
-import ExternalApiIntegratorEndpointEditorPanel
-from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointEditorPanel";
+import externalApiIntegratorEndpointMetadata from "@opsera/definitions/constants/registry/tools/external_api_integrator/externalApiIntegratorEndpoint.metadata";
+import ExternalApiIntegratorEndpointEditorPanel from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointEditorPanel";
 import modelHelpers from "components/common/model/modelHelpers";
 
 function NewExternalApiIntegratorEndpointOverlay(

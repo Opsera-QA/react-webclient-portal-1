@@ -2,13 +2,10 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import GitToolCreationSelectionOptionInput from "components/wizard/free_trial/workflows/flows/tools/git/GitToolCreationSelectionOptionInput";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
-import CreateWorkflowWizardCreateGithubToolEditorPanel
-from "components/wizard/free_trial/workflows/flows/tools/git/github/CreateWorkflowWizardCreateGithubToolEditorPanel";
-import CreateWorkflowWizardCreateGitlabToolEditorPanel
-from "components/wizard/free_trial/workflows/flows/tools/git/gitlab/CreateWorkflowWizardCreateGitlabToolEditorPanel";
+import CreateWorkflowWizardCreateGithubToolEditorPanel from "components/wizard/free_trial/workflows/flows/tools/git/github/CreateWorkflowWizardCreateGithubToolEditorPanel";
+import CreateWorkflowWizardCreateGitlabToolEditorPanel from "components/wizard/free_trial/workflows/flows/tools/git/gitlab/CreateWorkflowWizardCreateGitlabToolEditorPanel";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
-import CreateWorkflowWizardRegisterAccountContainer
-from "components/wizard/free_trial/workflows/flows/tools/CreateWorkflowWizardRegisterAccountContainer";
+import CreateWorkflowWizardRegisterAccountContainer from "components/wizard/free_trial/workflows/flows/tools/CreateWorkflowWizardRegisterAccountContainer";
 
 export default function CreateWorkflowWizardCreateGitToolScreenBase(
   {

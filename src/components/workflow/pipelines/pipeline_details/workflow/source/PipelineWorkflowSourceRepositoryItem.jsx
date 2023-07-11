@@ -1,25 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  faCode, faCodeBranch, faClipboardCheck, faSearchPlus,
-} from "@fortawesome/pro-light-svg-icons";
+import { faCode, faCodeBranch, faClipboardCheck, faSearchPlus } from "@fortawesome/pro-light-svg-icons";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import PipelineSourceConfigurationDetailsOverviewOverlay
-from "components/workflow/pipelines/overview/source/PipelineSourceConfigurationDetailsOverviewOverlay";
+import PipelineSourceConfigurationDetailsOverviewOverlay from "components/workflow/pipelines/overview/source/PipelineSourceConfigurationDetailsOverviewOverlay";
 import modelHelpers from "components/common/model/modelHelpers";
-import {
-  sourceRepositoryConfigurationMetadata
-} from "components/workflow/plan/source/sourceRepositoryConfiguration.metadata";
+import { sourceRepositoryConfigurationMetadata } from "components/workflow/plan/source/sourceRepositoryConfiguration.metadata";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import PipelineWorkflowItemFieldBase
-from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
-import PipelineWorkflowStepTextField
-from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowStepTextField";
+import PipelineWorkflowItemFieldBase from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
+import PipelineWorkflowStepTextField from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowStepTextField";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
-import EditPipelineWorkflowSourceRepositoryIcon
-from "components/workflow/pipelines/pipeline_details/workflow/source/EditPipelineWorkflowSourceRepositoryIcon";
+import EditPipelineWorkflowSourceRepositoryIcon from "components/workflow/pipelines/pipeline_details/workflow/source/EditPipelineWorkflowSourceRepositoryIcon";
 
 // TODO: Rewrite and separate into more components
 export default function PipelineWorkflowSourceRepositoryItem(

@@ -1,19 +1,12 @@
 import {ORCHESTRATION_NOTIFICATION_TYPES} from "components/common/fields/notifications/notificationTypes.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import emailStepNotificationMetadata
-from "components/workflow/plan/step/notifications/email/emailStepNotification.metadata";
+import emailStepNotificationMetadata from "components/workflow/plan/step/notifications/email/emailStepNotification.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
-import slackStepNotificationMetadata
-from "components/workflow/plan/step/notifications/slack/slackStepNotificationMetadata";
-import teamsStepNotificationMetadata
-from "components/workflow/plan/step/notifications/teams/teamsStepNotificationMetadata";
-import {
-  jiraStepNotificationMetadata
-} from "components/workflow/plan/step/notifications/jira/jiraStepNotification.metadata";
-import serviceNowStepNotificationMetadata
-from "components/workflow/plan/step/notifications/servicenow/serviceNowStepNotificationMetadata";
-import gChatStepNotificationMetadata
-from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
+import slackStepNotificationMetadata from "components/workflow/plan/step/notifications/slack/slackStepNotificationMetadata";
+import teamsStepNotificationMetadata from "components/workflow/plan/step/notifications/teams/teamsStepNotificationMetadata";
+import { jiraStepNotificationMetadata } from "components/workflow/plan/step/notifications/jira/jiraStepNotification.metadata";
+import serviceNowStepNotificationMetadata from "components/workflow/plan/step/notifications/servicenow/serviceNowStepNotificationMetadata";
+import gChatStepNotificationMetadata from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
 
 // TODO: Move to Node so we can validate there.
 export const notificationMethodHelper = {};

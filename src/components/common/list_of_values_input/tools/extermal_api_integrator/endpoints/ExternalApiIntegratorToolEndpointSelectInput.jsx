@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import useGetExternalApiIntegratorEndpoints
-from "hooks/tools/external_api_integrator/endpoints/useGetExternalApiIntegratorEndpoints";
+import useGetExternalApiIntegratorEndpoints from "hooks/tools/external_api_integrator/endpoints/useGetExternalApiIntegratorEndpoints";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function ExternalApiIntegratorToolEndpointSelectInput(

@@ -12,8 +12,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColor, assignStandardColors,
-  shortenLegend } from "../../../charts-views";
+import { defaultConfig, getColor, assignStandardColors, shortenLegend } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 
 function JiraSprintBurndownLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {

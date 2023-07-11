@@ -6,8 +6,7 @@ import DeleteConfirmationOverlay from "components/common/overlays/center/delete/
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PolicyRoleHelper from "@opsera/know-your-role/roles/settings/policies/policyRole.helper";
 import {useHistory} from "react-router-dom";
-import useFeatureFlagAdministrationActions
-from "hooks/settings/organization_settings/feature_flags/useFeatureFlagAdministrationActions";
+import useFeatureFlagAdministrationActions from "hooks/settings/organization_settings/feature_flags/useFeatureFlagAdministrationActions";
 
 export default function DeleteOrganizationAccountFeatureFlagActionBarButton(
   {

@@ -2,17 +2,19 @@ import React, { useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import FilterContainer from "components/common/table/FilterContainer";
-import { getTableDateTimeColumn, getTableTextColumn, getStaticIconColumn, getTableDurationTextColumn, getTaskStatusColumnWithoutRunCount } from "components/common/table/table-column-helpers";
+import {
+  getTableDateTimeColumn,
+  getTableTextColumn,
+  getStaticIconColumn,
+  getTableDurationTextColumn,
+  getTaskStatusColumnWithoutRunCount
+} from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
-import {
-  faTasks,
-  faExternalLink,
-} from "@fortawesome/pro-light-svg-icons";
+import { faTasks, faExternalLink } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import ExportReportPanel from "../ExportReportPanel";
-import SalesforceOrgSyncActionableInsightOverlay
-from "./actionable_insights/SalesforceOrgSyncActionableInsightOverlay";
+import SalesforceOrgSyncActionableInsightOverlay from "./actionable_insights/SalesforceOrgSyncActionableInsightOverlay";
 import {salesforceOrgSyncMetadata} from "./salesforceOrgSync.metadata";
 import TaskExportReportButton from "../TaskExportReportButton";
 import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";

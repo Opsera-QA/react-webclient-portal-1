@@ -1,17 +1,11 @@
 import PropTypes from "prop-types";
 import React, {useEffect} from "react";
-import FailedOrchestrationStateFieldBase
-from "temp-library-components/fields/orchestration/state/FailedOrchestrationStateFieldBase";
-import RunningOrchestrationStateFieldBase
-from "temp-library-components/fields/orchestration/state/RunningOrchestrationStateFieldBase";
-import PausedOrchestrationStateFieldBase
-from "temp-library-components/fields/orchestration/state/PausedOrchestrationStateFieldBase";
-import SuccessOrchestrationStateFieldBase
-from "temp-library-components/fields/orchestration/state/SuccessOrchestrationStateFieldBase";
-import StoppedOrchestrationStateFieldBase
-from "temp-library-components/fields/orchestration/state/StoppedOrchestrationStateFieldBase";
-import CreatedOrchestrationStateFieldBase
-from "temp-library-components/fields/orchestration/state/CreatedOrchestrationStateFieldBase";
+import FailedOrchestrationStateFieldBase from "temp-library-components/fields/orchestration/state/FailedOrchestrationStateFieldBase";
+import RunningOrchestrationStateFieldBase from "temp-library-components/fields/orchestration/state/RunningOrchestrationStateFieldBase";
+import PausedOrchestrationStateFieldBase from "temp-library-components/fields/orchestration/state/PausedOrchestrationStateFieldBase";
+import SuccessOrchestrationStateFieldBase from "temp-library-components/fields/orchestration/state/SuccessOrchestrationStateFieldBase";
+import StoppedOrchestrationStateFieldBase from "temp-library-components/fields/orchestration/state/StoppedOrchestrationStateFieldBase";
+import CreatedOrchestrationStateFieldBase from "temp-library-components/fields/orchestration/state/CreatedOrchestrationStateFieldBase";
 
 export default function OrchestrationStateFieldBase(
   {

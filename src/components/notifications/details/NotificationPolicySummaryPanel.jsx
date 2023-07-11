@@ -1,19 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import pipelineNotificationConfigurationMetadata
-from "components/notifications/details/configuration/pipeline/pipeline-notification-configuration-metadata";
-import metricNotificationConfigurationMetadata
-from "components/notifications/details/configuration/metric/metric-notification-configuration-metadata";
-import MetricNotificationTypeSummaryCard
-from "components/notifications/details/configuration/metric/MetricNotificationTypeSummaryCard";
-import PipelineNotificationTypeSummaryCard
-from "components/notifications/details/configuration/pipeline/PipelineNotificationTypeSummaryCard";
+import pipelineNotificationConfigurationMetadata from "components/notifications/details/configuration/pipeline/pipeline-notification-configuration-metadata";
+import metricNotificationConfigurationMetadata from "components/notifications/details/configuration/metric/metric-notification-configuration-metadata";
+import MetricNotificationTypeSummaryCard from "components/notifications/details/configuration/metric/MetricNotificationTypeSummaryCard";
+import PipelineNotificationTypeSummaryCard from "components/notifications/details/configuration/pipeline/PipelineNotificationTypeSummaryCard";
 import modelHelpers from "components/common/model/modelHelpers";
-import AuditLogNotificationTypeSummaryPanel
-from "components/notifications/details/configuration/audit_log/AuditLogNotificationTypeSummaryPanel";
-import {
-  auditLogNotificationConfigurationMetadata
-} from "components/notifications/details/configuration/audit_log/auditLogNotificationConfigurationMetadata";
+import AuditLogNotificationTypeSummaryPanel from "components/notifications/details/configuration/audit_log/AuditLogNotificationTypeSummaryPanel";
+import { auditLogNotificationConfigurationMetadata } from "components/notifications/details/configuration/audit_log/auditLogNotificationConfigurationMetadata";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import {Col, Row} from "react-bootstrap";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";

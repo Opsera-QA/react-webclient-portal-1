@@ -9,12 +9,10 @@ import MergeSyncSfdcRuleFieldSelectInput from "./MergeSyncSfdcRuleFieldSelectInp
 import Model from "core/data_model/model";
 import sfdcRuleMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/rules/sfdc-rule-metadata";
 import MergeSyncGitRuleFieldSelectInput from "./MergeSyncGitRuleFieldSelectInput";
-import SfdcPipelineWizardRuleFieldFilterSelectInput
-from "components/workflow/wizards/sfdc_pipeline_wizard/rules/SfdcPipelineWizardRuleFieldFilterSelectInput";
+import SfdcPipelineWizardRuleFieldFilterSelectInput from "components/workflow/wizards/sfdc_pipeline_wizard/rules/SfdcPipelineWizardRuleFieldFilterSelectInput";
 import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
 import IconBase from "components/common/icons/IconBase";
-import MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/rules/MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput";
+import MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/rules/MergeSyncTaskWizardFileSelectorRuleValueMultiSelectInput";
 
 function MergeSyncTaskRuleInput({ wizardModel, ruleData, index, addRule, deleteRule, updateRule, fetchAttribute }) {
   const [ruleModel, setRuleModel] = useState(undefined);

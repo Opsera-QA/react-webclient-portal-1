@@ -4,9 +4,7 @@ import DeleteConfirmationOverlay from "components/common/overlays/center/delete/
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {useHistory} from "react-router-dom";
 import ActionBarDeleteButtonBase from "components/common/actions/buttons/ActionBarDeleteButtonBase";
-import {
-  analyticsPipelineDataMappingHelper
-} from "components/settings/data_mapping/pipelines/analyticsPipelineDataMapping.helper";
+import { analyticsPipelineDataMappingHelper } from "components/settings/data_mapping/pipelines/analyticsPipelineDataMapping.helper";
 
 export default function DeleteAnalyticsPipelineDataMappingActionBarButton(
   {

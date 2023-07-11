@@ -7,20 +7,14 @@ import ECSServiceCreationTaskConfigurationPanel from "./ecs-service-creation/ECS
 import AwsLambdaConfigurationPanel from "./aws-lambda-creation/AwsLambdaConfigurationPanel";
 import AzureClusterConfigurationPanel from "./azure-cluster-creation/AzureClusterConfigurationPanel";
 import {TASK_TYPES} from "components/tasks/task.types";
-import SalesforceOrganizationSyncTaskConfigurationEditorPanel
-from "components/tasks/details/tasks/sfdc-org-sync/SalesforceOrganizationSyncTaskConfigurationEditorPanel";
-import SalesforceBulkMigrationTaskConfigurationEditorPanel
-from "components/tasks/details/tasks/sfdc-bulk-migration/SalesforceBulkMigrationTaskConfigurationEditorPanel";
-import GitToGitMergeSyncTaskConfigurationEditorPanel
-from "components/tasks/details/tasks/merge_sync_task/git_to_git/GitToGitMergeSyncTaskConfigurationEditorPanel";
-import SalesforceToGitMergeSyncTaskConfigurationEditorPanel
-from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/SalesforceToGitMergeSyncTaskConfigurationEditorPanel";
-import SalesforceQuickDeployTaskConfigurationEditorPanel
-from "components/tasks/details/tasks/sfdc-quick-deploy/SalesforceQuickDeployTaskConfigurationEditorPanel";
+import SalesforceOrganizationSyncTaskConfigurationEditorPanel from "components/tasks/details/tasks/sfdc-org-sync/SalesforceOrganizationSyncTaskConfigurationEditorPanel";
+import SalesforceBulkMigrationTaskConfigurationEditorPanel from "components/tasks/details/tasks/sfdc-bulk-migration/SalesforceBulkMigrationTaskConfigurationEditorPanel";
+import GitToGitMergeSyncTaskConfigurationEditorPanel from "components/tasks/details/tasks/merge_sync_task/git_to_git/GitToGitMergeSyncTaskConfigurationEditorPanel";
+import SalesforceToGitMergeSyncTaskConfigurationEditorPanel from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/SalesforceToGitMergeSyncTaskConfigurationEditorPanel";
+import SalesforceQuickDeployTaskConfigurationEditorPanel from "components/tasks/details/tasks/sfdc-quick-deploy/SalesforceQuickDeployTaskConfigurationEditorPanel";
 import SnaplogicTaskConfigurationEditorPanel from "./snaplogic/SnaplogicTaskConfigurationEditorPanel";
 import GitScraperConfigurationPanel from "./gitscraper/GitScraperConfigurationPanel";
-import SalesforceCustomSettingMigrationTaskEditorPanel
-from "./sfdc-custom-setting-migration/SalesforceCustomSettingMigrationTaskEditorPanel";
+import SalesforceCustomSettingMigrationTaskEditorPanel from "./sfdc-custom-setting-migration/SalesforceCustomSettingMigrationTaskEditorPanel";
 import SalesforceDataSeedingTaskEditorPanel from "./sfdc-data-seeding/SalesforceDataSeedingTaskEditorPanel";
 
 function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationModel, setTaskConfigurationModel, taskType }) {

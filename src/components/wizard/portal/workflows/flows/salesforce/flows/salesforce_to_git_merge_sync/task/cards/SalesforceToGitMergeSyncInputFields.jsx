@@ -16,9 +16,7 @@ import SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput from "../../
 import SalesforceToGitMergeSyncTaskIncludePackageXmlToggleInput from "../../../../../../../../../tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskIncludePackageXmlToggleInput";
 import { mergeSyncTaskConfigurationMetadata } from "../../../../../../../../../tasks/details/tasks/merge_sync_task/mergeSyncTaskConfiguration.metadata";
 import { mergeSyncTaskSalesforceConfigurationMetadata } from "../../../../../../../../../tasks/details/tasks/merge_sync_task/salesforce_to_git/mergeSyncTaskSalesforceConfiguration.metadata";
-import {
-  mergeSyncTaskGitConfigurationMetadata
-} from "components/tasks/details/tasks/merge_sync_task/git_to_git/mergeSyncTaskGitConfiguration.metadata";
+import { mergeSyncTaskGitConfigurationMetadata } from "components/tasks/details/tasks/merge_sync_task/git_to_git/mergeSyncTaskGitConfiguration.metadata";
 import SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput from "../../../../../../../../../tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput";
 import SalesforceToGitMergeSyncTaskTargetBranchSelectInput from "../../../../../../../../../tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskTargetBranchSelectInput";
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";

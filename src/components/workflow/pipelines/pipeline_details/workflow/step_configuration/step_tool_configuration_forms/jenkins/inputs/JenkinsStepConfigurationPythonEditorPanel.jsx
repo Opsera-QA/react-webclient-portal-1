@@ -5,8 +5,7 @@ import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import PythonFilesInput from "../PythonFilesInput";
 import StepConfigTerraformStepSelectInput from "../../common/inputs/StepConfigTerraformStepSelectInput";
 import StepConfigUseTerraformOutput from "../../common/inputs/StepConfigUseTerraformOutput";
-import ParameterSelectListInputBase
-from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
+import ParameterSelectListInputBase from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
 import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 
 const allowedBuildTypes = [

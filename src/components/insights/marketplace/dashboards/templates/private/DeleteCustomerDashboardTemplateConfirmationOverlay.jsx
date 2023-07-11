@@ -4,9 +4,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DeleteOverlayBase from "components/common/overlays/center/delete/DeleteOverlayBase";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import {
-  customerDashboardTemplateCatalogActions
-} from "components/insights/marketplace/dashboards/templates/private/customerDashboardTemplateCatalog.actions";
+import { customerDashboardTemplateCatalogActions } from "components/insights/marketplace/dashboards/templates/private/customerDashboardTemplateCatalog.actions";
 
 export default function DeleteCustomerDashboardTemplateConfirmationOverlay(
   {

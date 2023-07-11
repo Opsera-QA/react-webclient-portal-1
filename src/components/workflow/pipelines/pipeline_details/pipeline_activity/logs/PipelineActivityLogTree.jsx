@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import pipelineLogHelpers
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineLog.helpers";
+import pipelineLogHelpers from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineLog.helpers";
 import ExtendedTreeBase from "components/common/tree/ExtendedTreeBase";
 
 function PipelineActivityLogTree(

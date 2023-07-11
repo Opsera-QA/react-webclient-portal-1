@@ -2,10 +2,7 @@ import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { githubActionsDetailedJobSummaryMetadata } from "components/insights/charts/github_actions/workflows/actionable_insights/detailed_job_summary/githubActionsDetailedJobSummary.metadata";
 import CustomTable from "components/common/table/CustomTable";
-import {
-  getTableTextColumn,
-  getTableDurationTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getTableTextColumn, getTableDurationTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";

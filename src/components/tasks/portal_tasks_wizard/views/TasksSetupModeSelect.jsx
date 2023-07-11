@@ -10,15 +10,13 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import {faGear, faWandMagicSparkles} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "../../../common/icons/IconBase";
 import OpseraInfinityLogo from "../../../logo/OpseraInfinityLogo";
-import OverlayWizardButtonContainerBase
-from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import OverlayWizardButtonContainerBase from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import SelectionCardColumn from "../../../../temp-library-components/cards/SelectionCardColumn";
 import {platformImageConstants} from "../../../../temp-library-components/image/platformImage.constants";
 import {ImageBase} from "@opsera/react-vanity-set";
 import TaskCreationFlowSelectionCardBase from "../task_cards/TaskCreationFlowSelectionCardBase";
 import {TASK_TYPE_LABELS, TASK_TYPES} from "../../task.types";
-import {WORKFLOW_OPTION_TYPES
-} from "../../../wizard/portal/workflows/flows/WorkflowOptionCardBase";
+import { WORKFLOW_OPTION_TYPES } from "../../../wizard/portal/workflows/flows/WorkflowOptionCardBase";
 
 export const TOOL_CREATION_OPTIONS = {
   WIZARD: "wizard",

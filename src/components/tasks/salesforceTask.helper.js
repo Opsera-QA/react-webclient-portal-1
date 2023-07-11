@@ -1,9 +1,7 @@
 import React from "react";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { hasStringValue } from "../common/helpers/string-helpers";
-import {
-  salesforceWorkflowFlowConstants,
-} from "../wizard/portal/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
+import { salesforceWorkflowFlowConstants } from "../wizard/portal/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { ReactLoggingHandler } from "temp-library-components/handler/reactLogging.handler";
 import {TASK_TYPES} from "./task.types";

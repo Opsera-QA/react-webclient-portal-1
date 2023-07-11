@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
-import ToolConfigurationEditorPanelContainer
-from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+import ToolConfigurationEditorPanelContainer from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import toolsActions from "components/inventory/tools/tools-actions";
 import { AuthContext } from "contexts/AuthContext";
 import modelHelpers from "components/common/model/modelHelpers";
@@ -13,8 +12,7 @@ import FortifyMetadata from "./fortify-tool-metadata";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import FortifyScanToolSelectInput from "./inputs/FortifyScanToolSelectInput";
 import FortifyPortalSelectInput from "./inputs/FortifyPortalSelectInput";
-import toolIdentifierConnectionCheckConstants
-from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+import toolIdentifierConnectionCheckConstants from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 const FortifyToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) => {
   const { getAccessToken } = useContext(AuthContext);

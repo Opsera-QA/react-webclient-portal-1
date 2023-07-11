@@ -2,10 +2,7 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import toolIdentifierMetadata from "components/admin/tools/identifiers/toolIdentifier.metadata";
-import {
-  getLimitedTableTextColumn,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getLimitedTableTextColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 
 function ToolIdentifierSelectionTable(

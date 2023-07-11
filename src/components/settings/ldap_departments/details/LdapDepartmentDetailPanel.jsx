@@ -5,13 +5,10 @@ import {faUsers} from "@fortawesome/pro-light-svg-icons";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import CustomTab from "components/common/tabs/CustomTab";
-import LdapDepartmentSummaryPanel
-from "components/settings/ldap_departments/details/LdapDepartmentSummaryPanel";
-import LdapDepartmentEditorPanel
-from "components/settings/ldap_departments/details/LdapDepartmentEditorPanel";
+import LdapDepartmentSummaryPanel from "components/settings/ldap_departments/details/LdapDepartmentSummaryPanel";
+import LdapDepartmentEditorPanel from "components/settings/ldap_departments/details/LdapDepartmentEditorPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
-import LdapGroupMembershipManagementPanel
-from "components/common/inputs/user/membership/manager/LdapGroupMembershipManagementPanel";
+import LdapGroupMembershipManagementPanel from "components/common/inputs/user/membership/manager/LdapGroupMembershipManagementPanel";
 
 function LdapDepartmentDetailPanel({ ldapDepartmentData, loadData, setLdapDepartmentData, ldapDepartmentGroupData, orgDomain }) {
   const [activeTab, setActiveTab] = useState("summary");

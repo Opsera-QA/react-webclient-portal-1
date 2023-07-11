@@ -5,11 +5,8 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import CancelButton from "components/common/buttons/CancelButton";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
-import TriggerGitToGitSyncTaskRunButton
-from "components/tasks/details/tasks/branch-to-branch/run/TriggerGitToGitSyncTaskRunButton";
-import {
-  GIT_TO_GIT_SYNC_TASK_INITIALIZATION_SCREENS
-} from "components/tasks/details/tasks/branch-to-branch/run/GitToGitSyncTaskInitializationOverlay";
+import TriggerGitToGitSyncTaskRunButton from "components/tasks/details/tasks/branch-to-branch/run/TriggerGitToGitSyncTaskRunButton";
+import { GIT_TO_GIT_SYNC_TASK_INITIALIZATION_SCREENS } from "components/tasks/details/tasks/branch-to-branch/run/GitToGitSyncTaskInitializationOverlay";
 import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";

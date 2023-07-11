@@ -3,10 +3,7 @@ import PropTypes from "prop-types";
 import { faBug } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import ClientSidePaginationMakeupTable from "components/common/table/makeup/ClientSidePaginationMakeupTable";
-import {
-  getTableBooleanIconColumn,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getTableBooleanIconColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import ExportSnykSecurityReportButton from "./export/ExportSnykSecurityReportButton";
 import ExportSnykOpenSourceScanSecurityReportPanel from "./export/ExportSnykOpenSourceScanSecurityReportPanel";

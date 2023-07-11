@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import SalesforceToGitMergeSyncDetailedRunSummaryOverlay
-from "./detailed_run_summary/SalesforceToGitMergeSyncDetailedRunSummaryOverlay";
-import SalesforceToGitMergeSyncUniqueRunSummaryOverlay
-from "./unique_run_summary/SalesforceToGitMergeSyncUniqueRunSummaryOverlay";
-import SalesforceToGitMergeSyncActionableInsightSubNavigationBar
-from "./SalesforceToGitMergeSyncActionableInsightSubNavigationBar";
+import SalesforceToGitMergeSyncDetailedRunSummaryOverlay from "./detailed_run_summary/SalesforceToGitMergeSyncDetailedRunSummaryOverlay";
+import SalesforceToGitMergeSyncUniqueRunSummaryOverlay from "./unique_run_summary/SalesforceToGitMergeSyncUniqueRunSummaryOverlay";
+import SalesforceToGitMergeSyncActionableInsightSubNavigationBar from "./SalesforceToGitMergeSyncActionableInsightSubNavigationBar";
 
 export const SALESFORCE_TO_GIT_MERGE_SYNC_ACTIONABLE_INSIGHT_SCREENS = {
   SALESFORCE_TO_GIT_MERGE_SYNC_RUN_SUMMARY: "salesforce_to_git_merge_sync_run_summary",

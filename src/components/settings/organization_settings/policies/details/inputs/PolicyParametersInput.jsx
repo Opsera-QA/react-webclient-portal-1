@@ -1,11 +1,9 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
-import SiteRoleAccessMultiCheckboxSelectInput
-from "components/common/list_of_values_input/ldap/site_roles/SiteRoleAccessMultiCheckboxSelectInput";
+import SiteRoleAccessMultiCheckboxSelectInput from "components/common/list_of_values_input/ldap/site_roles/SiteRoleAccessMultiCheckboxSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import policyParametersMetadata
-from "@opsera/definitions/constants/settings/organization-settings/policies/parameters/policyParameters.metadata";
+import policyParametersMetadata from "@opsera/definitions/constants/settings/organization-settings/policies/parameters/policyParameters.metadata";
 
 export default function PolicyParametersInput(
   {

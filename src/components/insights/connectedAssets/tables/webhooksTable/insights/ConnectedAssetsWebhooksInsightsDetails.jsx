@@ -1,12 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import {
-  faGithub,
-  faGitlab,
-  faBitbucket,
-  faJira,
-} from "@fortawesome/free-brands-svg-icons";
+import { faGithub, faGitlab, faBitbucket, faJira } from "@fortawesome/free-brands-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import connectedAssetsActions from "../../../connectedAssets.actions";
 import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../../connecetdAssets.constants";

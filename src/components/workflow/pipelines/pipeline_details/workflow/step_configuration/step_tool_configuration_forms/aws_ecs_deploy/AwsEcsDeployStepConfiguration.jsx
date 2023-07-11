@@ -8,8 +8,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DockerPushStepSelectInput from "./inputs/DockerPushStepSelectInput";
 import DynamicNameToggleInput from "./inputs/DynamicNameToggleInput";
 import DeleteResourceToggle from "./inputs/DeleteResourceToggle";
-import AwsEcsTaskSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/aws_ecs_deploy/inputs/AwsEcsTaskSelectInput";
+import AwsEcsTaskSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/aws_ecs_deploy/inputs/AwsEcsTaskSelectInput";
 
 function AwsEcsDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan, stepId, pipelineId }) {
   const [isLoading, setIsLoading] = useState(false);

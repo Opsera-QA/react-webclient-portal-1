@@ -1,9 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  faPen,
-  faCheck,
-} from "@fortawesome/pro-light-svg-icons";
+import { faPen, faCheck } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";

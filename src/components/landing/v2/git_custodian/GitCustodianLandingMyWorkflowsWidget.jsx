@@ -3,13 +3,10 @@ import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
 import CreateWorkspaceResourceWizard from "components/wizard/workspace/CreateWorkspaceResourceWizard";
-import WorkflowWidgetNavigationBar, {
-  WORKFLOW_WIDGET_VIEWS
-} from "components/landing/v2/widgets/workspace/WorkflowWidgetNavigationBar";
+import WorkflowWidgetNavigationBar, { WORKFLOW_WIDGET_VIEWS } from "components/landing/v2/widgets/workspace/WorkflowWidgetNavigationBar";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import sessionHelper from "utils/session.helper";
-import WorkspaceWorkflowSelectionCardView
-from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
+import WorkspaceWorkflowSelectionCardView from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
 import SoftwareDevelopmentSocialMediaWidget from "components/landing/v2/widgets/unused/SoftwareDevelopmentSocialMediaWidget";
 import useGetSalesforceWorkflowResources from "hooks/landing/salesforce/useGetSalesforceWorkflowResources";
 import SearchFilter from "components/common/filters/search/SearchFilter";

@@ -7,8 +7,7 @@ import taskActions from "components/tasks/task.actions";
 import modelHelpers from "components/common/model/modelHelpers";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import FreeTrialLaunchWorkflowButton
-from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
+import FreeTrialLaunchWorkflowButton from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import OpseraInfinityLogoLarge from "components/logo/OpseraInfinityLogoLarge";
 import CancelOverlayButton from "components/common/buttons/cancel/overlay/CancelOverlayButton";

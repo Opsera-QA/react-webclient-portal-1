@@ -9,8 +9,7 @@ import ActionBarBackButton from "components/common/actions/buttons/ActionBarBack
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import KpiIdentifierDetailPanel from "components/admin/kpi_identifiers/details/KpiIdentifierDetailPanel";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import KpiIdentifierManagementSubNavigationBar
-from "components/admin/kpi_identifiers/KpiIdentifierManagementSubNavigationBar";
+import KpiIdentifierManagementSubNavigationBar from "components/admin/kpi_identifiers/KpiIdentifierManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function KpiIdentifierDetailView() {

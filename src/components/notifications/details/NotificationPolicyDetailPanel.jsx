@@ -5,12 +5,10 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
-import NotificationPolicySummaryPanel
-from "components/notifications/details/NotificationPolicySummaryPanel";
+import NotificationPolicySummaryPanel from "components/notifications/details/NotificationPolicySummaryPanel";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
-import NotificationPolicyActivityLogs
-from "components/notifications/details/NotificationPolicyActivityLogs";
+import NotificationPolicyActivityLogs from "components/notifications/details/NotificationPolicyActivityLogs";
 
 function NotificationPolicyDetailPanel({ notificationData, setNotificationData, loadData, isLoading }) {
   const [activeTab, setActiveTab] = useState("summary");

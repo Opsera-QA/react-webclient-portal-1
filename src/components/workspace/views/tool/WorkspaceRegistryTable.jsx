@@ -1,11 +1,7 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import {
-  getTableBooleanIconColumn,
-  getTableDateColumn,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getTableBooleanIconColumn, getTableDateColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import {useHistory} from "react-router-dom";
 import {getField} from "components/common/metadata/metadata-helpers";
 import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";

@@ -2,11 +2,9 @@ import { useEffect, useState } from "react";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import useEntitlementAdministrationActions
-from "hooks/settings/organization_settings/entitlements/useEntitlementAdministrationActions";
+import useEntitlementAdministrationActions from "hooks/settings/organization_settings/entitlements/useEntitlementAdministrationActions";
 import useGetEntitlementModel from "hooks/settings/organization_settings/entitlements/useGetEntitlementModel";
-import entitlementConstants
-from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
+import entitlementConstants from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
 
 // TODO: Don't use this for now, use useGetPlatformSettingsEntitlementByName
 export default function useGetEntitlementModelByNameWithDataPull(

@@ -8,8 +8,7 @@ import { getTableTextColumn } from "components/common/table/table-column-helpers
 import { getField } from "components/common/metadata/metadata-helpers";
 import PipelineWizardFileUploadMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/pipeline-wizard-file-upload-metadata.js";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
-import SfdcPipelineWizardSubmitFileTypeButton
-from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardSubmitFileTypeButton";
+import SfdcPipelineWizardSubmitFileTypeButton from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardSubmitFileTypeButton";
 import CancelButton from "components/common/buttons/CancelButton";
 import ExternalPageLink from "components/common/links/ExternalPageLink";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
@@ -17,12 +16,9 @@ import FilterContainer from "components/common/table/FilterContainer";
 import VanityTable from "components/common/table/VanityTable";
 import _ from "lodash";
 import PackageXmlFieldBase from "components/common/fields/code/PackageXmlFieldBase";
-import SfdcPipelineWizardIncludeDependenciesToggle
-from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
-import SfdcPipelineWizardTranslationToggleInput
-from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardTranslationToggleInput";
-import SfdcPipelineWizardUploadComponentSummary
-from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardUploadComponentSummary";
+import SfdcPipelineWizardIncludeDependenciesToggle from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
+import SfdcPipelineWizardTranslationToggleInput from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardTranslationToggleInput";
+import SfdcPipelineWizardUploadComponentSummary from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardUploadComponentSummary";
 
 function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) {
   const fields = PipelineWizardFileUploadMetadata.fields;

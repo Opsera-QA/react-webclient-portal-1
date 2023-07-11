@@ -1,25 +1,16 @@
 import React, { useEffect, useState } from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
-import terrascanStepFormMetadata
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/terrascan-stepForm-metadata";
-import TerrascanJenkinsToolSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanJenkinsToolSelectInput";
-import TerrascanStepJenkinsJobSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanStepJenkinsJobSelectInput";
+import terrascanStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/terrascan-stepForm-metadata";
+import TerrascanJenkinsToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanJenkinsToolSelectInput";
+import TerrascanStepJenkinsJobSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanStepJenkinsJobSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import TerrascanJenkinsAccountInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanJenkinsAccountInput";
-import TerrascanGitRepositoryInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanGitRepositoryInput";
-import TerrascanGitBranchInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanGitBranchInput";
-import TerrascanBitbucketWorkspaceInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanBitbucketWorkspaceInput";
-import TerrascanDependencyTypeInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanDependencyTypeInput";
+import TerrascanJenkinsAccountInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanJenkinsAccountInput";
+import TerrascanGitRepositoryInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanGitRepositoryInput";
+import TerrascanGitBranchInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanGitBranchInput";
+import TerrascanBitbucketWorkspaceInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanBitbucketWorkspaceInput";
+import TerrascanDependencyTypeInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/inputs/TerrascanDependencyTypeInput";
 import WorkspaceDeleteToggleInput from "./inputs/WorkspaceDeleteToggleInput";
 import TerrascanPlatformSelectInput from "./inputs/TerrascanPlatformSelectInput";
 import TerrascanRulesInput from "./inputs/TerrascanRulesInput";

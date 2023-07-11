@@ -2,8 +2,10 @@ import React, {useContext, useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  getTableButtonColumn, getTableDateAndTimeUntilValueColumn,
-  getTableDateColumn, getTableDateTimeColumn,
+  getTableButtonColumn,
+  getTableDateAndTimeUntilValueColumn,
+  getTableDateColumn,
+  getTableDateTimeColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";

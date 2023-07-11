@@ -10,8 +10,7 @@ import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "../../../../../common/inputs/text/TextInputBase";
 import axios from "axios";
-import toolIdentifierConnectionCheckConstants
-from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+import toolIdentifierConnectionCheckConstants from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function BuildkiteToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);

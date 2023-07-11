@@ -1,10 +1,5 @@
 import baseActions from "utils/actionsBase";
-import {
-  getDateObjectFromKpiConfiguration,
-  getTagsFromKpiConfiguration,
-  getUseKpiTagsFromKpiConfiguration,
-  getUseDashboardTagsFromKpiConfiguration,
-} from "components/insights/charts/charts-helpers";
+import { getDateObjectFromKpiConfiguration, getTagsFromKpiConfiguration, getUseKpiTagsFromKpiConfiguration, getUseDashboardTagsFromKpiConfiguration } from "components/insights/charts/charts-helpers";
 
 const tasksActions = {};
 

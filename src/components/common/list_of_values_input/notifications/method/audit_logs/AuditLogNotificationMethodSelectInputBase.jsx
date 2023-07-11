@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {
-  AUDIT_LOG_NOTIFICATION_METHOD_SELECT_OPTIONS
-} from "components/common/list_of_values_input/notifications/method/audit_logs/auditLogNotificationMethod.constants";
+import { AUDIT_LOG_NOTIFICATION_METHOD_SELECT_OPTIONS } from "components/common/list_of_values_input/notifications/method/audit_logs/auditLogNotificationMethod.constants";
 
 export default function AuditLogNotificationMethodSelectInputBase(
   {

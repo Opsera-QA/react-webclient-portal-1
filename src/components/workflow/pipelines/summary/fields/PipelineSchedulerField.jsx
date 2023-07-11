@@ -6,9 +6,7 @@ import { scheduledTaskActions } from "components/common/fields/scheduler/schedul
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import SchedulerFieldBase from "components/common/fields/scheduler/SchedulerFieldBase";
-import {
-  PIPELINE_TYPES,
-} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
+import { PIPELINE_TYPES } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 function PipelineSchedulerField(

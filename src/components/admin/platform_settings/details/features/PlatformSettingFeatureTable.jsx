@@ -1,22 +1,14 @@
 import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import {
-  getFormattedLabelWithFunctionColumnDefinition,
-  getTableBooleanIconColumn,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getFormattedLabelWithFunctionColumnDefinition, getTableBooleanIconColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import { faFileBinary } from "@fortawesome/pro-light-svg-icons";
-import {
-  platformSettingFeatureMetadata
-} from "components/admin/platform_settings/details/features/platformSettingFeature.metadata";
-import NewPlatformSettingFeatureOverlay
-from "components/admin/platform_settings/details/features/NewPlatformSettingFeatureOverlay";
+import { platformSettingFeatureMetadata } from "components/admin/platform_settings/details/features/platformSettingFeature.metadata";
+import NewPlatformSettingFeatureOverlay from "components/admin/platform_settings/details/features/NewPlatformSettingFeatureOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import platformSettingFeatureConstants
-from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
+import platformSettingFeatureConstants from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
 
 export default function PlatformSettingFeatureTable(
   {

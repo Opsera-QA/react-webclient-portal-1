@@ -4,8 +4,7 @@ import CustomTable from "components/common/table/CustomTable";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTally} from "@fortawesome/pro-light-svg-icons";
-import ExportSonarQubeScanDetailsButton
-from "components/insights/reports/sonar/export/ExportSonarQubeScanDetailsButton";
+import ExportSonarQubeScanDetailsButton from "components/insights/reports/sonar/export/ExportSonarQubeScanDetailsButton";
 import sonarPipelineScanReportMetadata from "components/insights/reports/sonar/sonarPipelineScanReport.metadata";
 
 function SonarScanReportTable(

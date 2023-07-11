@@ -1,15 +1,11 @@
 import React from "react";
 import PropType from "prop-types";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import PolicyManagementPipelinePublishingPolicyPageLinkCard
-from "components/settings/organization_settings/policies/cards/pipelines/publishing/PolicyManagementPipelinePublishingPolicyPageLinkCard";
+import PolicyManagementPipelinePublishingPolicyPageLinkCard from "components/settings/organization_settings/policies/cards/pipelines/publishing/PolicyManagementPipelinePublishingPolicyPageLinkCard";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
-import PolicyManagementPlatformPipelineCatalogVisibilityPageLinkCard
-from "components/settings/organization_settings/policies/cards/pipelines/templates/public_marketplace/PolicyManagementPlatformPipelineCatalogVisibilityPageLinkCard";
-import PolicyManagementPipelineStepTagRequirementPolicyPageLinkCard
-from "components/settings/organization_settings/policies/cards/pipelines/steps/tags/PolicyManagementPipelineStepTagRequirementPolicyPageLinkCard";
-import PolicyManagementSalesforceDataMigrationPolicyPageLinkCard
-from "components/settings/organization_settings/policies/cards/task/salesforce/PolicyManagementSalesforceDataMigrationPolicyPageLinkCard";
+import PolicyManagementPlatformPipelineCatalogVisibilityPageLinkCard from "components/settings/organization_settings/policies/cards/pipelines/templates/public_marketplace/PolicyManagementPlatformPipelineCatalogVisibilityPageLinkCard";
+import PolicyManagementPipelineStepTagRequirementPolicyPageLinkCard from "components/settings/organization_settings/policies/cards/pipelines/steps/tags/PolicyManagementPipelineStepTagRequirementPolicyPageLinkCard";
+import PolicyManagementSalesforceDataMigrationPolicyPageLinkCard from "components/settings/organization_settings/policies/cards/task/salesforce/PolicyManagementSalesforceDataMigrationPolicyPageLinkCard";
 
 export default function PolicyManagementPageLinkCards({policies}) {
   const parsedPolicies = DataParsingHelper.parseArray(policies, []);

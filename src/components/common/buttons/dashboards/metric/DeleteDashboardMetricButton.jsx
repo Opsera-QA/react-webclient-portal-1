@@ -1,8 +1,7 @@
 import React, {useContext} from 'react';
 import PropTypes from "prop-types";
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
-import DeleteDashboardMetricConfirmationPanel
-from "components/insights/marketplace/dashboards/metrics/delete/DeleteDashboardMetricConfirmationPanel";
+import DeleteDashboardMetricConfirmationPanel from "components/insights/marketplace/dashboards/metrics/delete/DeleteDashboardMetricConfirmationPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
 function DeleteDashboardMetricButton(

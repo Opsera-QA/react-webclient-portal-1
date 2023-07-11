@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import InfoContainer from "components/common/containers/InfoContainer";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import FieldContainer from "components/common/fields/FieldContainer";
-import apiResponseEvaluationOptionConstants
-from "@opsera/definitions/constants/api/response/apiResponseEvaluationOption.constants";
+import apiResponseEvaluationOptionConstants from "@opsera/definitions/constants/api/response/apiResponseEvaluationOption.constants";
 
 function EndpointResponseEvaluationRuleField(
   {

@@ -1,13 +1,9 @@
 import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import {
-  EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
-} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
-import EndpointApiConfigurationInputBase
-from "components/common/inputs/endpoints/endpoint/request/EndpointApiConfigurationInputBase";
-import useGetExternalApiIntegratorEndpointById
-from "hooks/tools/external_api_integrator/endpoints/useGetExternalApiIntegratorEndpointById";
+import { EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
+import EndpointApiConfigurationInputBase from "components/common/inputs/endpoints/endpoint/request/EndpointApiConfigurationInputBase";
+import useGetExternalApiIntegratorEndpointById from "hooks/tools/external_api_integrator/endpoints/useGetExternalApiIntegratorEndpointById";
 
 function ExternalApiIntegrationStepRunEndpointRequestInputBase(
   {

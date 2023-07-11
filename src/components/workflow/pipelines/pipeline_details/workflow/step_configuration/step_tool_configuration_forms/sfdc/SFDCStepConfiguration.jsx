@@ -5,11 +5,7 @@ import { faSave, faSpinner, faExclamationCircle, faExclamationTriangle } from "@
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
-import {
-  getErrorDialog,
-  getMissingRequiredFieldsErrorDialog,
-  getServiceUnavailableDialog
-} from "../../../../../../../common/toasts/toasts";
+import { getErrorDialog, getMissingRequiredFieldsErrorDialog, getServiceUnavailableDialog } from "../../../../../../../common/toasts/toasts";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import IconBase from "components/common/icons/IconBase";

@@ -1,7 +1,6 @@
 import React from 'react';
 import usePollingInterval from "hooks/general/usePollingInterval";
-import useGetPipelineOrchestrationStatusById
-from "hooks/workflow/pipelines/orchestration/useGetPipelineOrchestrationStatusById";
+import useGetPipelineOrchestrationStatusById from "hooks/workflow/pipelines/orchestration/useGetPipelineOrchestrationStatusById";
 
 export default function useGetPollingPipelineOrchestrationStatusById(
   id,

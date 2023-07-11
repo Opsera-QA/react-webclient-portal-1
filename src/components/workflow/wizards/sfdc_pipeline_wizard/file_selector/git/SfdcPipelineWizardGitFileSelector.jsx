@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import Model from "core/data_model/model";
-import sfdcComponentFilterMetadata
-from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-component-filter-metadata";
+import sfdcComponentFilterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-component-filter-metadata";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 import {AuthContext} from "contexts/AuthContext";
@@ -13,12 +12,9 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import {Button} from "react-bootstrap";
 import CancelButton from "components/common/buttons/CancelButton";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
-import SfdcPipelineWizardGitFilesTable
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardGitFilesTable";
-import SfdcPipelineWizardSubmitGitFilesButton
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardSubmitGitFilesButton";
-import SfdcPipelineWizardGitRollbackModeButton
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardGitRollbackModeButton";
+import SfdcPipelineWizardGitFilesTable from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardGitFilesTable";
+import SfdcPipelineWizardSubmitGitFilesButton from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardSubmitGitFilesButton";
+import SfdcPipelineWizardGitRollbackModeButton from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardGitRollbackModeButton";
 import {parseError} from "components/common/helpers/error-helpers";
 import IconBase from "components/common/icons/IconBase";
 

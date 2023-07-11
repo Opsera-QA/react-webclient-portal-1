@@ -1,15 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  salesforceWorkflowFlowConstants,
-} from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
+import { salesforceWorkflowFlowConstants } from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
-import WorkflowOptionCardBase, {
-  WORKFLOW_OPTION_TYPES,
-} from "components/wizard/free_trial/workflows/flows/WorkflowOptionCardBase";
-import {
-  pipelineTemplateIdentifierConstants
-} from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
+import WorkflowOptionCardBase, { WORKFLOW_OPTION_TYPES } from "components/wizard/free_trial/workflows/flows/WorkflowOptionCardBase";
+import { pipelineTemplateIdentifierConstants } from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 

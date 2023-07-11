@@ -1,6 +1,5 @@
 import ModelBase from "core/data_model/model.base";
-import organizationSettingsMetadata
-from "@opsera/definitions/constants/settings/organization-settings/organizationSettings.metadata";
+import organizationSettingsMetadata from "@opsera/definitions/constants/settings/organization-settings/organizationSettings.metadata";
 
 export default class OrganizationSettingsModel extends ModelBase {
   constructor(

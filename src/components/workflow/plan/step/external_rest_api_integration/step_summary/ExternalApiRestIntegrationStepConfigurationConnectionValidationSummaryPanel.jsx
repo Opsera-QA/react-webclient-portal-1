@@ -4,8 +4,7 @@ import { Col } from "react-bootstrap";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import EndpointField from "components/common/fields/inventory/tools/endpoints/EndpointField";
 import JsonField from "components/common/fields/json/JsonField";
-import EndpointResponseEvaluationRulesField
-from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesField";
+import EndpointResponseEvaluationRulesField from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesField";
 import Row from "react-bootstrap/Row";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 

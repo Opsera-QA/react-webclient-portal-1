@@ -2,9 +2,7 @@ import React, { useContext } from "react";
 import FreeTrialWorkspaceVerticalTabContainer from "components/workspace/trial/views/FreeTrialWorkspaceVerticalTabContainer";
 import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import { faRectangleList } from "@fortawesome/pro-light-svg-icons";
-import FilterContainer, {
-  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION,
-} from "components/common/table/FilterContainer";
+import FilterContainer, { FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION } from "components/common/table/FilterContainer";
 import CreateWorkflowWizard from "components/wizard/free_trial/workflows/CreateWorkflowWizard";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import PropTypes from "prop-types";

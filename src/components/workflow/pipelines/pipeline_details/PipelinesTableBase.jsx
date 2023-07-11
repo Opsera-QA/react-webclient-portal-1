@@ -2,10 +2,13 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  getCustomTablePipelineStateColumnDefinition, getLimitedTableTextColumn, getOwnerNameField,
-  getPipelineTypeColumn, getRoleAccessColumn,
+  getCustomTablePipelineStateColumnDefinition,
+  getLimitedTableTextColumn,
+  getOwnerNameField,
+  getPipelineTypeColumn,
+  getRoleAccessColumn,
   getTableDateTimeColumn,
-  getTableTextColumn,
+  getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import pipelineMetadata from "./pipeline-metadata";
 import { getField } from "components/common/metadata/metadata-helpers";

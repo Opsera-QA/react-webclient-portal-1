@@ -8,8 +8,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import FeedToolTypeSelectInput from "../input/FeedToolTypeSelectInput";
 import OctopusFeedJfrogToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/OctopusFeedJfrogToolSelectInput";
 import JfrogRepoSelectInput from "../input/JfrogRepoSelectInput";
-import RoleRestrictedNexusToolSelectInput
-from "components/common/list_of_values_input/tools/nexus/RoleRestrictedNexusToolSelectInput";
+import RoleRestrictedNexusToolSelectInput from "components/common/list_of_values_input/tools/nexus/RoleRestrictedNexusToolSelectInput";
 
 const OctopusFeedEditorForm = ({ dataObject, setDataObject, appID }) => {
   return (

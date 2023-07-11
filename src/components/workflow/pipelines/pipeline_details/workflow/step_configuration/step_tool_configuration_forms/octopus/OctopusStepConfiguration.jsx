@@ -9,13 +9,11 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import octopusActions from "../../../../../../../inventory/tools/tool_details/tool_jobs/octopus/octopus-actions";
 import OctopusToolSelectInput from "./input/OctopusToolSelectInput";
 import OctopusSpaceNameSelectInput from "./input/OctopusSpaceNameSelectInput";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import OctopusProjectTypeSelectInput from "./input/OctopusProjectTypeSelectInput";
 import OctopusCustomProjectForm from "./sub-forms/OctopusCustomProjectForm";
 import OctopusOpseraManagedProjectForm from "./sub-forms/OctopusOpseraManagedProjectForm";
-import OctopusStepOctopusEnvironmentListInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/input/OctopusStepOctopusEnvironmentListInput";
+import OctopusStepOctopusEnvironmentListInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/input/OctopusStepOctopusEnvironmentListInput";
 
 // TODO: This needs a refactor. I plan on doing it soon.
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, callbackSaveToVault, closeEditorPanel, pipelineId }) {

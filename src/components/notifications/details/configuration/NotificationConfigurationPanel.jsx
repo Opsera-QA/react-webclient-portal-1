@@ -1,16 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import MetricNotificationConfigurationPanel
-from "components/notifications/details/configuration/metric/MetricNotificationConfigurationPanel";
-import PipelineNotificationEditorPanel
-from "components/notifications/details/configuration/pipeline/PipelineNotificationConfigurationPanel";
-import NotificationTypeSelectInput
-from "components/common/list_of_values_input/notifications/type/NotificationTypeSelectInput";
-import {
-  NOTIFICATION_TYPES
-} from "components/common/list_of_values_input/notifications/type/notificationTypes.constants";
-import AuditLogNotificationConfigurationPanel
-from "components/notifications/details/configuration/audit_log/AuditLogNotificationConfigurationPanel";
+import MetricNotificationConfigurationPanel from "components/notifications/details/configuration/metric/MetricNotificationConfigurationPanel";
+import PipelineNotificationEditorPanel from "components/notifications/details/configuration/pipeline/PipelineNotificationConfigurationPanel";
+import NotificationTypeSelectInput from "components/common/list_of_values_input/notifications/type/NotificationTypeSelectInput";
+import { NOTIFICATION_TYPES } from "components/common/list_of_values_input/notifications/type/notificationTypes.constants";
+import AuditLogNotificationConfigurationPanel from "components/notifications/details/configuration/audit_log/AuditLogNotificationConfigurationPanel";
 
 export default function NotificationConfigurationPanel(
   {

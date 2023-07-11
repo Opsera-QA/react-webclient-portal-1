@@ -1,10 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS
-} from "../../../CreateSalesforceOrganizationToGitMergeSyncTaskWizard";
-import CreateWorkflowWizardTestSalesforceToolConnectionScreenBase
-from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateWorkflowWizardTestSalesforceToolConnectionScreenBase";
+import { CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS } from "../../../CreateSalesforceOrganizationToGitMergeSyncTaskWizard";
+import CreateWorkflowWizardTestSalesforceToolConnectionScreenBase from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateWorkflowWizardTestSalesforceToolConnectionScreenBase";
 
 export default function CreateSalesforceOrganizationToGitMergeSyncTaskWizardTestSalesforceSourceToolConnectionScreen({
   setCurrentScreen,

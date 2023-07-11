@@ -2,10 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import EndpointResponseField
-from "components/common/inputs/endpoints/endpoint/response/EndpointResponseField";
-import EndpointRequestField
-from "components/common/inputs/endpoints/endpoint/request/EndpointRequestField";
+import EndpointResponseField from "components/common/inputs/endpoints/endpoint/response/EndpointResponseField";
+import EndpointRequestField from "components/common/inputs/endpoints/endpoint/request/EndpointRequestField";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { hasStringValue } from "components/common/helpers/string-helpers";

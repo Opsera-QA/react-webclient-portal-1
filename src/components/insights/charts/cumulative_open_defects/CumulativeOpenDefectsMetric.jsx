@@ -5,12 +5,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import {
-  assignStandardColors,
-  shortenPieChartLegend,
-  defaultConfig,
-  getColorByData,
-} from "components/insights/charts/charts-views";
+import { assignStandardColors, shortenPieChartLegend, defaultConfig, getColorByData } from "components/insights/charts/charts-views";
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import { Col, Row } from "react-bootstrap";
 import "components/insights/charts/qa_metrics/Styling.css";
@@ -22,10 +17,7 @@ import CumulativeTotalValidDefectsDataBlock from "./data_blocks/total_valid_defe
 import CumulativeOpenDefectsHelpDocumentation from "components/common/help/documentation/insights/charts/CumulativeOpenDefectsHelpDocumentation";
 import { ResponsivePie } from "@nivo/pie";
 import config from "./cumulativeOpenDefectsMetricsConfig";
-import {
-  METRIC_THEME_CHART_PALETTE_COLORS,
-  METRIC_CHART_STANDARD_HEIGHT,
-} from "components/common/helpers/metrics/metricTheme.helpers";
+import { METRIC_THEME_CHART_PALETTE_COLORS, METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 
 const CUMILATIVE_OPEN_DEFECT = "cumulative_open_defect";
 

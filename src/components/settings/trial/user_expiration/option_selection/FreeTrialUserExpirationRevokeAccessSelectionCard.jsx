@@ -4,9 +4,7 @@ import SelectionIconCard from "components/common/card_containers/SelectionIconCa
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { faUserAltSlash } from "@fortawesome/pro-light-svg-icons";
 import { useHistory } from "react-router-dom";
-import {
-  FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREEN_LINKS
-} from "components/settings/trial/user_expiration/option_selection/FreeTrialUserExpirationOptionSelectionScreen";
+import { FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREEN_LINKS } from "components/settings/trial/user_expiration/option_selection/FreeTrialUserExpirationOptionSelectionScreen";
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 
 export default function FreeTrialUserExpirationRevokeAccessSelectionCard(

@@ -1,16 +1,12 @@
 import React from "react";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
-import FreeTrialRevokeUserSelectInput
-from "components/settings/trial/user_expiration/revocation/input/FreeTrialRevokeUserSelectInput";
+import FreeTrialRevokeUserSelectInput from "components/settings/trial/user_expiration/revocation/input/FreeTrialRevokeUserSelectInput";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import FreeTrialUserExpirationRevokeUserAccessButton
-from "components/settings/trial/user_expiration/revocation/FreeTrialUserExpirationRevokeUserAccessButton";
+import FreeTrialUserExpirationRevokeUserAccessButton from "components/settings/trial/user_expiration/revocation/FreeTrialUserExpirationRevokeUserAccessButton";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
-import FreeTrialUserExpirationManagementSubNavigationBar
-from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagementSubNavigationBar";
+import FreeTrialUserExpirationManagementSubNavigationBar from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import useGetFreeTrialUserExpirationManagementModel
-from "components/settings/trial/user_expiration/useGetFreeTrialUserExpirationManagementModel";
+import useGetFreeTrialUserExpirationManagementModel from "components/settings/trial/user_expiration/useGetFreeTrialUserExpirationManagementModel";
 import { useHistory } from "react-router-dom";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 

@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RoleRestrictedJenkinsAccountSelectInput
-from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsAccountSelectInput";
+import RoleRestrictedJenkinsAccountSelectInput from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsAccountSelectInput";
 
 function CoverityStepJenkinsAccountSelectInput({dataObject, setDataObject, disabled, className}) {
   return (

@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
-import {
-  faTimes,
-} from "@fortawesome/pro-light-svg-icons";
+import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";

@@ -2,19 +2,15 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import jenkinsPipelineStepConfigurationMetadata
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/jenkinsPipelineStepConfigurationMetadata";
+import jenkinsPipelineStepConfigurationMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/jenkinsPipelineStepConfigurationMetadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import SalesforcePipelineWizardRepositorySelectInput
-from "components/workflow/wizards/sfdc_pipeline_wizard/pre_run_tasks/inputs/SalesforcePipelineWizardRepositorySelectInput";
-import SalesforcePipelineWizardBranchSelectInput
-from "components/workflow/wizards/sfdc_pipeline_wizard/pre_run_tasks/inputs/SalesforcePipelineWizardBranchSelectInput";
+import SalesforcePipelineWizardRepositorySelectInput from "components/workflow/wizards/sfdc_pipeline_wizard/pre_run_tasks/inputs/SalesforcePipelineWizardRepositorySelectInput";
+import SalesforcePipelineWizardBranchSelectInput from "components/workflow/wizards/sfdc_pipeline_wizard/pre_run_tasks/inputs/SalesforcePipelineWizardBranchSelectInput";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import SalesforcePipelineWizardConfirmRepositorySettingsButton
-from "components/workflow/wizards/sfdc_pipeline_wizard/pre_run_tasks/SalesforcePipelineWizardConfirmRepositorySettingsButton";
+import SalesforcePipelineWizardConfirmRepositorySettingsButton from "components/workflow/wizards/sfdc_pipeline_wizard/pre_run_tasks/SalesforcePipelineWizardConfirmRepositorySettingsButton";
 import InlineErrorText from "components/common/status_notifications/inline/InlineErrorText";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import OpseraInfinityLogo from "../../../../logo/OpseraInfinityLogo";

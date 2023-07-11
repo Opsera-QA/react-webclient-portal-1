@@ -1,4 +1,10 @@
-import React, { useState, useMemo, useEffect, useRef, useContext } from "react";
+import React, {
+  useState,
+  useMemo,
+  useEffect,
+  useRef,
+  useContext
+} from "react";
 import PropTypes from "prop-types";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import CancelButton from "components/common/buttons/CancelButton";
@@ -17,9 +23,7 @@ import customSettingMigrationTaskWizardActions from "../../customSettingMigratio
 import { parseError } from "../../../../../../../common/helpers/error-helpers";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
-import CustomSettingQueryBuilderMenuBar, {
-  QUERY_BUILDER_VIEWS,
-} from "./CustomSettingQueryBuilderMenuBar";
+import CustomSettingQueryBuilderMenuBar, { QUERY_BUILDER_VIEWS } from "./CustomSettingQueryBuilderMenuBar";
 import axios from "axios";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 import Col from "react-bootstrap/Col";

@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AzureToolApplicationSelectInput
-from "components/common/list_of_values_input/tools/azure/credentials/AzureToolApplicationSelectInput";
+import AzureToolApplicationSelectInput from "components/common/list_of_values_input/tools/azure/credentials/AzureToolApplicationSelectInput";
 
 export default function AzureAcrPushCredentialIdSelectInput(
   {

@@ -9,9 +9,7 @@ import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {
-  SALESFORCE_WIZARD_CONFIGURATION_CONTAINER_HEIGHTS
-} from "../../../../tasks/details/tasks/merge_sync_task/wizard/screens/configuration_screen/SalesforceWizardConfigurationContainer.heights";
+import { SALESFORCE_WIZARD_CONFIGURATION_CONTAINER_HEIGHTS } from "../../../../tasks/details/tasks/merge_sync_task/wizard/screens/configuration_screen/SalesforceWizardConfigurationContainer.heights";
 
 const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel, forceLoadData }) => {
   const { getAccessToken } = useContext(AuthContext);

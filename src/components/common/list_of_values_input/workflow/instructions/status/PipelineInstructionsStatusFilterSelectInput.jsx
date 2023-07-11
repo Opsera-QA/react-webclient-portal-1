@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
-import pipelineInstructionsStatusConstants
-from "@opsera/definitions/constants/pipelines/instructions/status/pipelineInstructionsStatus.constants";
+import pipelineInstructionsStatusConstants from "@opsera/definitions/constants/pipelines/instructions/status/pipelineInstructionsStatus.constants";
 
 function PipelineInstructionsStatusFilterSelectInput(
   {

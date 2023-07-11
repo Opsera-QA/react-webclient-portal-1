@@ -6,13 +6,10 @@ import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import modelHelpers from "components/common/model/modelHelpers";
-import externalApiIntegratorEndpointMetadata
-from "@opsera/definitions/constants/registry/tools/external_api_integrator/externalApiIntegratorEndpoint.metadata";
+import externalApiIntegratorEndpointMetadata from "@opsera/definitions/constants/registry/tools/external_api_integrator/externalApiIntegratorEndpoint.metadata";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import ExternalApiIntegratorEndpointSummaryCard
-from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointSummaryCard";
-import useGetExternalApiIntegratorEndpointById
-from "hooks/tools/external_api_integrator/endpoints/useGetExternalApiIntegratorEndpointById";
+import ExternalApiIntegratorEndpointSummaryCard from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointSummaryCard";
+import useGetExternalApiIntegratorEndpointById from "hooks/tools/external_api_integrator/endpoints/useGetExternalApiIntegratorEndpointById";
 
 function EndpointField(
   {

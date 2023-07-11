@@ -13,11 +13,9 @@ import StandaloneSelectInput from "components/common/inputs/select/StandaloneSel
 import IconBase from "components/common/icons/IconBase";
 import InfoContainer from "components/common/containers/InfoContainer";
 import InputContainer from "components/common/inputs/InputContainer";
-import ParameterSelectListHeaderField
-from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListHeaderField";
+import ParameterSelectListHeaderField from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListHeaderField";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
-import ParameterSelectListInputBaseHelpIcon
-from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBaseHelpIcon";
+import ParameterSelectListInputBaseHelpIcon from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBaseHelpIcon";
 
 function ParameterSelectListInputBase({
   dataObject,

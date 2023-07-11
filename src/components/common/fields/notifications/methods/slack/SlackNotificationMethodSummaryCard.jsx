@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import NotificationMethodSummaryCardContainer
-from "components/common/fields/notifications/methods/NotificationMethodSummaryCardContainer";
+import NotificationMethodSummaryCardContainer from "components/common/fields/notifications/methods/NotificationMethodSummaryCardContainer";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 export default function SlackNotificationMethodSummaryCard({ slackNotificationModel }) {

@@ -1,6 +1,12 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
-import { Container, Row, Col, Popover, OverlayTrigger } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Popover,
+  OverlayTrigger
+} from "react-bootstrap";
 import ModalLogs from "components/common/modal/modalLogs";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
@@ -8,12 +14,10 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { faEllipsisH } from "@fortawesome/pro-solid-svg-icons";
 import Model from "../../../../../core/data_model/model";
-import DeploymentFrequencyInsightsTableMetadata
-from "./deployment-frequency-actionable-metadata.js";
+import DeploymentFrequencyInsightsTableMetadata from "./deployment-frequency-actionable-metadata.js";
 import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import OpseraDeploymentFrequencyHelpDocumentation
-from "../../../../common/help/documentation/insights/charts/OpseraDeploymentFrequencyHelpDocumentation";
+import OpseraDeploymentFrequencyHelpDocumentation from "../../../../common/help/documentation/insights/charts/OpseraDeploymentFrequencyHelpDocumentation";
 import genericChartFilterMetadata from "../../generic_filters/genericChartFilterMetadata";
 import IconBase from "components/common/icons/IconBase";
 

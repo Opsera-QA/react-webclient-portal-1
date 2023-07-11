@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import PropTypes from "prop-types";
-import { 
-  Card, 
+import {
+  Card,
   Form,
   OverlayTrigger,
   Popover,
-  Tooltip } from "react-bootstrap";
+  Tooltip
+} from "react-bootstrap";
 import { NewAppContext } from "./context";
 
 function LogManagement(props) {

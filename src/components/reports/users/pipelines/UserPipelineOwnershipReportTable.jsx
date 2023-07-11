@@ -3,12 +3,7 @@ import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
-import {
-  getPipelineRunCountColumn,
-  getPipelineTypeColumn,
-  getTableDateColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers-v2";
+import { getPipelineRunCountColumn, getPipelineTypeColumn, getTableDateColumn, getTableTextColumn } from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import { useHistory } from "react-router-dom";
 import VanityTable from "components/common/table/VanityTable";

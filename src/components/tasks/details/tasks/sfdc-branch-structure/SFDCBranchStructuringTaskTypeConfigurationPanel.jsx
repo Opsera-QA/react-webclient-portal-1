@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
-import sfdcGitBranchTaskConfigurationMetadata
-from "components/tasks/details/tasks/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
+import sfdcGitBranchTaskConfigurationMetadata from "components/tasks/details/tasks/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SalesforceOrganizationSyncTaskJenkinsToolSelectInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsToolSelectInput";
@@ -13,10 +12,8 @@ import SalesforceOrganizationSyncTaskGitBranchSelectInput from "components/tasks
 import SalesforceBranchStructuringTaskSalesforceConfiguratorToolSelectInput from "components/tasks/details/tasks/sfdc-branch-structure/inputs/SalesforceBranchStructuringTaskSalesforceConfiguratorToolSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import AgentLabelsSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
-import SalesforceOrganizationSyncTaskBranchTypeSelectInput
-from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBranchTypeSelectInput";
-import SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
-from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput";
+import SalesforceOrganizationSyncTaskBranchTypeSelectInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBranchTypeSelectInput";
+import SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput";
 
 function SFDCBranchStructuringTaskTypeConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   useEffect(() => {loadData();}, []);

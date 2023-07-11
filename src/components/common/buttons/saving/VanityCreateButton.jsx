@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { faSave } from "@fortawesome/pro-light-svg-icons";
-import {
-  persistNewRecord,
-  persistNewRecordAndAddAnother,
-  persistNewRecordAndClose,
-  persistNewRecordAndViewDetails,
-} from "./saving-helpers-v2";
+import { persistNewRecord, persistNewRecordAndAddAnother, persistNewRecordAndClose, persistNewRecordAndViewDetails } from "./saving-helpers-v2";
 import { useHistory } from "react-router-dom";
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";

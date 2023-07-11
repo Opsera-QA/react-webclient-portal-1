@@ -1,8 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {
-  faIdCard,
-} from "@fortawesome/pro-light-svg-icons";
+import { faIdCard } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";

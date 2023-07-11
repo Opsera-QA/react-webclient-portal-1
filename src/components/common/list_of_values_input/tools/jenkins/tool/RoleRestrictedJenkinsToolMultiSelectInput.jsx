@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RoleRestrictedToolByIdentifierMultiSelectInputBase
-from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierMultiSelectInputBase";
+import RoleRestrictedToolByIdentifierMultiSelectInputBase from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierMultiSelectInputBase";
 
 function RoleRestrictedJenkinsToolMultiSelectInput({model, setModel, setDataFunction, clearDataFunction, fieldName, disabled}) {
   return (

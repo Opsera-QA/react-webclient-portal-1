@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import EndpointRequestParametersInputBase
-from "components/common/inputs/endpoints/endpoint/request/parameters/EndpointRequestParametersInputBase";
+import EndpointRequestParametersInputBase from "components/common/inputs/endpoints/endpoint/request/parameters/EndpointRequestParametersInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import endpointRequestParametersMetadata
-from "@opsera/definitions/constants/api/request/parameters/endpointRequestParameters.metadata";
+import endpointRequestParametersMetadata from "@opsera/definitions/constants/api/request/parameters/endpointRequestParameters.metadata";
 import endpointRequestType from "@opsera/definitions/constants/api/request/endpoint/endpointRequestType.constants";
 
 function EndpointApiConfigurationInputBase(

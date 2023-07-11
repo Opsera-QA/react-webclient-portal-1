@@ -2,10 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {AuthContext} from "contexts/AuthContext";
-import {
-  NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS,
-  PRODUCTION_TASK_TYPE_SELECT_OPTIONS,
-} from "components/tasks/task.types";
+import { NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS, PRODUCTION_TASK_TYPE_SELECT_OPTIONS } from "components/tasks/task.types";
 
 function TaskTypeSelectInputBase({ fieldName, model, setModel, isLoading, setDataFunction, disabled }) {
   const { featureFlagHideItemInProd } = useContext(AuthContext);

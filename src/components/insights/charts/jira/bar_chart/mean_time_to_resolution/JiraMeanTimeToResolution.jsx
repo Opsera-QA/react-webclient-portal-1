@@ -6,10 +6,7 @@ import axios from "axios";
 import { Col, Row } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import {
-  assignStandardColors,
-  spaceOutServiceNowCountBySeverityLegend,
-} from "../../../charts-views";
+import { assignStandardColors, spaceOutServiceNowCountBySeverityLegend } from "../../../charts-views";
 import { dataPointHelpers } from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import { JIRA_MEAN_TIME_TO_RESOLUTION_CONSTANTS as constants } from "./JiraMeanTimeToResolutionConstants";
 import DataPointVisibilityWrapper from "../../../../../common/metrics/data_points/DataPointVisibilityWrapper";

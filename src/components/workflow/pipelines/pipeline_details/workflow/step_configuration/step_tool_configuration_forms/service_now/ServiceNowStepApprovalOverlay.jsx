@@ -1,7 +1,15 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
-import { Button, Modal, Form, OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
+import {
+  Button,
+  Modal,
+  Form,
+  OverlayTrigger,
+  Tooltip,
+  Row,
+  Col
+} from "react-bootstrap";
 import {
   faArrowRight,
   faCheck,

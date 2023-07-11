@@ -7,12 +7,10 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, assignStandardColors,
-  adjustBarWidth, spaceOutMergeRequestTimeTakenLegend } from '../../../charts-views';
+import { defaultConfig, assignStandardColors, adjustBarWidth, spaceOutMergeRequestTimeTakenLegend } from '../../../charts-views';
 import ChartTooltip from "../../../ChartTooltip";
 import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
-import GitlabTimeTakenToCompleteMergeRequestReviewActionableOverlay
-from "./GitlabTimeTakenToCompleteMergeRequestReviewActionableOverlay";
+import GitlabTimeTakenToCompleteMergeRequestReviewActionableOverlay from "./GitlabTimeTakenToCompleteMergeRequestReviewActionableOverlay";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 
 

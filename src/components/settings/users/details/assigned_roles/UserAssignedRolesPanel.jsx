@@ -1,18 +1,11 @@
 import PropTypes from "prop-types";
 import React from "react";
-import {
-  faIdCard,
-} from "@fortawesome/pro-light-svg-icons";
-import VanitySetTabAndViewContainer, {
-  DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT,
-} from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
+import { faIdCard } from "@fortawesome/pro-light-svg-icons";
+import VanitySetTabAndViewContainer, { DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT } from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import useGetResourcesByAssignedUser from "hooks/ldap/users/assigned_resources/useGetResourcesByAssignedUser";
-import UserAssignedRolesTabContainer
-from "components/settings/users/details/assigned_roles/UserAssignedRolesTabContainer";
-import UserAssignedRolesTableBase
-from "components/settings/users/details/assigned_roles/tables/UserAssignedRolesTableBase";
-import LaunchRevokeUserAccessRulesOverlayButton
-from "components/settings/users/details/assigned_roles/revoke/LaunchRevokeUserAccessRulesOverlayButton";
+import UserAssignedRolesTabContainer from "components/settings/users/details/assigned_roles/UserAssignedRolesTabContainer";
+import UserAssignedRolesTableBase from "components/settings/users/details/assigned_roles/tables/UserAssignedRolesTableBase";
+import LaunchRevokeUserAccessRulesOverlayButton from "components/settings/users/details/assigned_roles/revoke/LaunchRevokeUserAccessRulesOverlayButton";
 
 const height = `calc(${DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT} - 110px)`;
 

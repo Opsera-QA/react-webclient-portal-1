@@ -4,10 +4,8 @@ import { bitbucketActions } from "components/inventory/tools/tool_details/tool_j
 import { githubActions } from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
 import { gitlabActions } from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput
-from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput";
-import SalesforceToGitMergeSyncTaskTargetBranchSelectInput
-from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskTargetBranchSelectInput";
+import SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput";
+import SalesforceToGitMergeSyncTaskTargetBranchSelectInput from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskTargetBranchSelectInput";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import Col from "react-bootstrap/Col";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";

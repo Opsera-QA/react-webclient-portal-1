@@ -8,8 +8,7 @@ import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import AnalyticsDataEntrySummaryPanel from "components/settings/analytics_data_entry/detail_view/summary_panels/AnalyticsDataEntrySummaryPanel";
 import AnalyticsDataEntryEditorPanel from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryEditorPanel";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import AnalyticsDataEntryRoleHelper
-from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
+import AnalyticsDataEntryRoleHelper from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
 
 function AnalyticsDataEntryDetailPanel({ analyticsDataEntry }) {
   const [activeTab, setActiveTab] = useState("summary");

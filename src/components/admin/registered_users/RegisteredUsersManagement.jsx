@@ -6,8 +6,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faUserCircle} from "@fortawesome/pro-light-svg-icons";
 import RegisteredUserCardView from "components/admin/registered_users/RegisteredUserCardView";
-import RegisteredUsersManagementSubNavigationBar
-from "components/admin/registered_users/RegisteredUsersManagementSubNavigationBar";
+import RegisteredUsersManagementSubNavigationBar from "components/admin/registered_users/RegisteredUsersManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function RegisteredUsersManagement() {

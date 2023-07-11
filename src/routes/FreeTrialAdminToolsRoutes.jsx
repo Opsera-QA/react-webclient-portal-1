@@ -1,10 +1,8 @@
 import React from "react";
 import { SecureRoute } from "@okta/okta-react";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import FreeTrialCustomerWorkspaceManagement
-from "components/admin/customer/workspace/free_trial/FreeTrialCustomerWorkspaceManagement";
-import FreeTrialCustomerWorkspaceView
-from "components/admin/customer/workspace/free_trial/FreeTrialCustomerWorkspaceView";
+import FreeTrialCustomerWorkspaceManagement from "components/admin/customer/workspace/free_trial/FreeTrialCustomerWorkspaceManagement";
+import FreeTrialCustomerWorkspaceView from "components/admin/customer/workspace/free_trial/FreeTrialCustomerWorkspaceView";
 
 export default function FreeTrialAdminToolsRoutes() {
   const {

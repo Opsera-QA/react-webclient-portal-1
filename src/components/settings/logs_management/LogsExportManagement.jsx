@@ -4,12 +4,10 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import { logsExportScheduledTaskMetadata } from "components/settings/logs_management/LogsExportScheduledTask.metadata";
 import LogsExportManagementTableLoader from "./LogExportManagementTableLoader";
-import LogsExportManagementAwsAccountToolSelectInput
-from "components/settings/logs_management/inputs/LogsExportManagementAwsAccountToolSelectInput";
+import LogsExportManagementAwsAccountToolSelectInput from "components/settings/logs_management/inputs/LogsExportManagementAwsAccountToolSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import LogsExportOptionsSubNavigationBar from "components/settings/logs_management/LogsExportOptionsSubNavigationBar";
-import LogsExportManagementHelpDocumentation
-from "../../common/help/documentation/settings/LogsExportManagementHelpDocumentation";
+import LogsExportManagementHelpDocumentation from "../../common/help/documentation/settings/LogsExportManagementHelpDocumentation";
 function LogsExportManagement() {
   const [scheduledTaskModel, setScheduledTaskModel] = useState(modelHelpers.parseObjectIntoModel(undefined, logsExportScheduledTaskMetadata));
 

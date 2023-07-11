@@ -7,8 +7,7 @@ import axios from "axios";
 import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
 import modelHelpers from "components/common/model/modelHelpers";
 import argoClusterMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/argo-cluster-metadata";
-import ArgoClusterEditorPanel
-from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/details/ArgoClusterEditorPanel";
+import ArgoClusterEditorPanel from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/details/ArgoClusterEditorPanel";
 import argoFiltersMetadata from "../argo-filters-metadata";
 import Model from "core/data_model/model";
 import {stringIncludesValue} from "components/common/helpers/string-helpers";

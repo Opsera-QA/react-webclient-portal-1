@@ -2,13 +2,10 @@ import io from 'socket.io-client';
 import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {ReactLoggingHandler} from "temp-library-components/handler/reactLogging.handler";
-import websocketEventNameConstants
-from "@opsera/definitions/constants/websocket/constants/websocketEventName.constants";
+import websocketEventNameConstants from "@opsera/definitions/constants/websocket/constants/websocketEventName.constants";
 import liveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessageTopic.constants";
-import WebsocketSubscriptionRequestHelper
-from "@opsera/definitions/constants/websocket/helpers/websocketSubscriptionRequest.helper";
-import websocketSubscriptionTypeConstants
-from "@opsera/definitions/constants/websocket/constants/websocketSubscriptionType.constants";
+import WebsocketSubscriptionRequestHelper from "@opsera/definitions/constants/websocket/helpers/websocketSubscriptionRequest.helper";
+import websocketSubscriptionTypeConstants from "@opsera/definitions/constants/websocket/constants/websocketSubscriptionType.constants";
 const websocketEnabled = DataParsingHelper.parseBooleanV2(process.env.REACT_APP_WEBSOCKET_ENABLED);
 const isDevelopmentEnvironment = process.env.REACT_APP_ENVIRONMENT === "development";
 const isMismatchedEnvironment = NODE_API_ORCHESTRATOR_SERVER_URL !== process.env.REACT_APP_OPSERA_API_SERVER_URL;

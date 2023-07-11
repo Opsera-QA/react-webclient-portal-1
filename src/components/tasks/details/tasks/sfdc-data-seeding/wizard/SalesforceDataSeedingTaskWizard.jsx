@@ -9,10 +9,8 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { TASK_TYPES } from "components/tasks/task.types";
-import DataSeedingTaskWizardInitializationScreen
-from "./screens/initialization_screen/DataSeedingTaskWizardInitializationScreen";
-import CustomSettingTaskWizardConfigScreen
-from "./screens/custom_setting_selection_screen/CustomSettingTaskWizardConfigScreen";
+import DataSeedingTaskWizardInitializationScreen from "./screens/initialization_screen/DataSeedingTaskWizardInitializationScreen";
+import CustomSettingTaskWizardConfigScreen from "./screens/custom_setting_selection_screen/CustomSettingTaskWizardConfigScreen";
 import CustomSettingQueryBuilderScreen from "./screens/query_builder_screen/CustomSettingQueryBuilderScreen";
 import CustomSettingTaskConfirmationScreen from "./screens/confirmation_screen/CustomSettingTaskConfirmationScreen";
 import { DATA_SEEDING_WIZARD_SCREENS } from "./dataSeedingTaskWizard.constants";

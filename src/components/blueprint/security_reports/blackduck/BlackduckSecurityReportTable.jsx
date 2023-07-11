@@ -3,10 +3,7 @@ import PropTypes from "prop-types";
 import { faBug } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import ClientSidePaginationMakeupTable from "components/common/table/makeup/ClientSidePaginationMakeupTable";
-import {
-  getTableTextColumn,
-  getUppercaseTableTextColumn
-} from "components/common/table/table-column-helpers";
+import { getTableTextColumn, getUppercaseTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import ExportBlackduckSecurityReportButton from "./export/ExportBlackduckSecurityReportButton";
 import ExportBlackduckSecurityReportPanel from "./export/ExportBlackduckSecurityReportPanel";

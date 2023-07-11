@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 import ScreenContainerTitleBar from "components/common/fields/ScreenContainerTitleBar";
-import {
-  getBreadcrumb,
-  getParentBreadcrumb,
-} from "components/common/navigation/trails";
+import { getBreadcrumb, getParentBreadcrumb } from "components/common/navigation/trails";
 import ScreenContainerBodyLoadingDialog from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
 import TitleActionBarContainer from "components/common/actions/TitleActionBarContainer";
 import PublishCustomerDashboardIcon from "components/insights/marketplace/dashboards/templates/private/publish/PublishCustomerDashboardIcon";

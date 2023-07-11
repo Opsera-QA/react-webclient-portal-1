@@ -3,7 +3,14 @@ import PropTypes from "prop-types";
 import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import {
   faTrash,
-  faQuestion, faCalendarDay, faShareAlt, faCog, faRedo, faUnlink, faExclamation, faFlag
+  faQuestion,
+  faCalendarDay,
+  faShareAlt,
+  faCog,
+  faRedo,
+  faUnlink,
+  faExclamation,
+  faFlag
 } from "@fortawesome/pro-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 

@@ -4,10 +4,8 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
 import FreeTrialRegistrationWelcomeScreen from "components/trial/registration/FreeTrialRegistrationWelcomeScreen";
 import FreeTrialRegistrationSignupScreen from "components/trial/registration/FreeTrialRegistrationSignupScreen";
-import FreeTrialRegistrationSelectSignupOptionScreen
-from "components/trial/registration/FreeTrialRegistrationSelectSignupOptionScreen";
-import FreeTrialRegistrationCongratulationsScreen
-from "components/trial/registration/FreeTrialRegistrationCongratulationsScreen";
+import FreeTrialRegistrationSelectSignupOptionScreen from "components/trial/registration/FreeTrialRegistrationSelectSignupOptionScreen";
+import FreeTrialRegistrationCongratulationsScreen from "components/trial/registration/FreeTrialRegistrationCongratulationsScreen";
 import useBackgroundColorReference from "hooks/useBackgroundColorReference";
 import useComponentStateReference from "hooks/useComponentStateReference";
 

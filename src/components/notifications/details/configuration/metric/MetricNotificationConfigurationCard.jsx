@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
-import MetricConfigurationInput
-from "components/notifications/details/configuration/metric/MetricKpiConfigurationSelectInput";
+import MetricConfigurationInput from "components/notifications/details/configuration/metric/MetricKpiConfigurationSelectInput";
 
 // TODO: Rename with whatever is relevant after more details are given. This is probably not how we'll wire it up exactly, I just wanted a placeholder
 function MetricNotificationConfigurationCard({ notificationDataDto, notificationConfigurationData, setNotificationConfigurationData }) {

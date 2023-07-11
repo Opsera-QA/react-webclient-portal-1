@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RoleRestrictedSalesforceConfiguratorToolSelectInput
-from "components/common/list_of_values_input/tools/salesforce/sfdc-configurator/RoleRestrictedSalesforceConfiguratorToolSelectInput";
+import RoleRestrictedSalesforceConfiguratorToolSelectInput from "components/common/list_of_values_input/tools/salesforce/sfdc-configurator/RoleRestrictedSalesforceConfiguratorToolSelectInput";
 
 function SalesforceQuickDeployTaskSalesforceToolSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {

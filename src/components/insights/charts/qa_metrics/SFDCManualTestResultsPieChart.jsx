@@ -8,8 +8,13 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import {
-  defaultConfig, getColorByData, getColor, assignStandardColors,
-  shortenPieChartLegend, mainColor, getColorById,
+  defaultConfig,
+  getColorByData,
+  getColor,
+  assignStandardColors,
+  shortenPieChartLegend,
+  mainColor,
+  getColorById
 } from "../charts-views";
 import ChartTooltip from "../ChartTooltip";
 import { Col, Container, Row } from "react-bootstrap";

@@ -4,8 +4,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import RemoteApplicationTelemetryActions from "components/admin/remote_applications/remote-application-actions";
 import RemoteApplicationTelemetryTable from "components/admin/remote_applications/RemoteApplicationTelemetryTable";
-import RemoteApplicationTelemetryManagementSubNavigationBar
-from "components/admin/remote_applications/RemoteApplicationTelemetryManagementSubNavigationBar";
+import RemoteApplicationTelemetryManagementSubNavigationBar from "components/admin/remote_applications/RemoteApplicationTelemetryManagementSubNavigationBar";
 import kpiFilterMetadata from "../kpi_identifiers/kpi-filter-metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";
 

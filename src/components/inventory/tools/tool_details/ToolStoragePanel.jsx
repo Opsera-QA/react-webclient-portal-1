@@ -1,8 +1,7 @@
 import React from "react";
 import AwsS3BucketsToolStoragePanel from "components/inventory/tools/tool_details/tool_jobs/aws/buckets/AwsS3BucketsToolStoragePanel";
 import PropTypes from "prop-types";
-import AzureToolStorageAccountsPanel
-from "components/inventory/tools/tool_details/tool_jobs/azureV2/storage_accounts/AzureToolStorageAccountsPanel";
+import AzureToolStorageAccountsPanel from "components/inventory/tools/tool_details/tool_jobs/azureV2/storage_accounts/AzureToolStorageAccountsPanel";
 
 function ToolStoragePanel({ toolData, loadData, isLoading }) {
   const getPanel = (toolIdentifier, loadData) => {

@@ -1,21 +1,17 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import FortifyReportSummaryOverview
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/fortify/components/FortifyReportSummaryOverview";
-import fortifySummaryLogResultMetaData
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/fortify/metadata/fortifySummaryLogResult.metadata";
+import FortifyReportSummaryOverview from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/fortify/components/FortifyReportSummaryOverview";
+import fortifySummaryLogResultMetaData from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/fortify/metadata/fortifySummaryLogResult.metadata";
 import LoadingDialog from "components/common/status_notifications/loading";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
-import FortifySummaryLogVerticalTabContainer
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/fortify/FortifySummaryLogVerticalTabContainer";
+import FortifySummaryLogVerticalTabContainer from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/fortify/FortifySummaryLogVerticalTabContainer";
 import { faClipboardListCheck, faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import FortifyReportView
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/fortify/components/FortifyReportView";
+import FortifyReportView from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/fortify/components/FortifyReportView";
 
 function FortifyLogSummaryReportPanel({ pipelineTaskData }) {
   const [fortifyReportModel, setFortifyReportModel] = useState(undefined);

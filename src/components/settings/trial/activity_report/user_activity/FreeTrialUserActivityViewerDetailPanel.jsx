@@ -4,10 +4,8 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import { faDraftingCompass, faTools } from "@fortawesome/pro-light-svg-icons";
-import FreeTrialUserActivityReportWorkflowsTable
-from "components/settings/trial/activity_report/user_activity/workflows/FreeTrialUserActivityReportWorkflowsTable";
-import FreeTrialUserActivityReportToolsTable
-from "components/settings/trial/activity_report/user_activity/tools/FreeTrialUserActivityReportToolsTable";
+import FreeTrialUserActivityReportWorkflowsTable from "components/settings/trial/activity_report/user_activity/workflows/FreeTrialUserActivityReportWorkflowsTable";
+import FreeTrialUserActivityReportToolsTable from "components/settings/trial/activity_report/user_activity/tools/FreeTrialUserActivityReportToolsTable";
 
 export default function FreeTrialUserActivityViewerDetailPanel(
   {

@@ -9,10 +9,8 @@ import TextInputBase from "../../../../common/inputs/text/TextInputBase";
 import ClusterTemplateSelectInput from "./inputs/ClusterTemplateSelectInput";
 import NetworkingOnlySubForm from "./sub_forms/NetworkingOnlySubForm";
 import EcsClusterCreationTaskConfigurationEc2EditorPanel from "components/tasks/details/tasks/ecs-cluster-creation/sub_forms/EcsClusterCreationTaskConfigurationEc2EditorPanel";
-import RoleRestrictedAwsAccountToolSelectInput
-from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
-import AwsCloudProviderRegionSelectInput
-from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
+import RoleRestrictedAwsAccountToolSelectInput from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
+import AwsCloudProviderRegionSelectInput from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 

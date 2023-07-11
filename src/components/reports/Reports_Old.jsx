@@ -1,5 +1,11 @@
 import React, { PureComponent } from "react";
-import { Form, Tooltip, OverlayTrigger, Button, Container } from "react-bootstrap";
+import {
+  Form,
+  Tooltip,
+  OverlayTrigger,
+  Button,
+  Container
+} from "react-bootstrap";
 import { faInfoCircle } from "@fortawesome/pro-solid-svg-icons";
 import ErrorDialog from "../common/status_notifications/error";
 import { Link } from "react-router-dom";

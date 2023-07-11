@@ -6,8 +6,7 @@ import PipelineCardFooter from "temp-library-components/cards/pipelines/Pipeline
 import useComponentStateReference from "hooks/useComponentStateReference";
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 import ToolCardFooter from "../../../../../temp-library-components/cards/tools/ToolCardFooter";
-import PipelineTemplateCardFooter
-from "../../../../../temp-library-components/cards/templates/pipelines/PipelineTemplateCardFooter";
+import PipelineTemplateCardFooter from "../../../../../temp-library-components/cards/templates/pipelines/PipelineTemplateCardFooter";
 
 export const WORKFLOW_OPTION_TYPES = {
   PIPELINE: "pipeline",

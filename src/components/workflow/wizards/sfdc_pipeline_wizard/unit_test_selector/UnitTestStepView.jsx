@@ -1,11 +1,7 @@
 import React  from "react";
 import { Col, Row } from "react-bootstrap";
 import IconBase from "../../../../common/icons/IconBase";
-import {
-  faCheckCircle,
-  faIdBadge,
-  faToolbox,
-} from "@fortawesome/pro-light-svg-icons";
+import { faCheckCircle, faIdBadge, faToolbox } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import ToolNameFieldDisplayer from "components/common/fields/inventory/name/ToolNameFieldDisplayer";
 

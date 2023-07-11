@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
-import ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput
-from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput";
+import ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput";
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import BooleanSelectInput from "components/common/list_of_values_input/boolean/BooleanSelectInput";

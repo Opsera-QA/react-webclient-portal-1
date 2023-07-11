@@ -7,8 +7,7 @@ import ScreenContainerTitleBar from "components/common/fields/ScreenContainerTit
 import RoleRequirementField from "components/common/fields/access/RoleRequirementField";
 import {meetsRequirements} from "components/common/helpers/role-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import ScreenContainerBodyLoadingDialog
-from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
+import ScreenContainerBodyLoadingDialog from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
 import useComponentStateReference from "hooks/useComponentStateReference";

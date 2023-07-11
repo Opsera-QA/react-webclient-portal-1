@@ -2,11 +2,7 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {
-  faChartNetwork,
-  faClipboardUser,
-  faCogs,
-} from "@fortawesome/pro-light-svg-icons";
+import { faChartNetwork, faClipboardUser, faCogs } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 
 export default function FreeTrialUserActivityReportSubNavigationBar({activeTab}) {

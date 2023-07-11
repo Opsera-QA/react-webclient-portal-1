@@ -5,8 +5,7 @@ import MyTagCloud from "components/common/fields/tags/cloud/MyTagCloud";
 import landingActions from "components/landing/landing.actions";
 import LoadingDialog from "../common/status_notifications/loading";
 import OverviewLandingToolchainContentBlock from "components/landing/blocks/OverviewLandingToolchainContentBlock";
-import OverviewLandingDeclarativePipelinesContentBlock
-from "components/landing/blocks/OverviewLandingDeclarativePipelinesContentBlock";
+import OverviewLandingDeclarativePipelinesContentBlock from "components/landing/blocks/OverviewLandingDeclarativePipelinesContentBlock";
 import OverviewLandingInsightsContentBlock from "components/landing/blocks/OverviewLandingInsightsContentBlock";
 import { faEnvelope, faQuestion } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";

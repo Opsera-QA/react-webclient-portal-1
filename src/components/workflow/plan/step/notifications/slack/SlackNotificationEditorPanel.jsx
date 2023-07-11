@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import EnabledNotificationBooleanToggle from "components/workflow/plan/step/notifications/EnabledNotificationBooleanToggle";
 import OrchestrationNotificationLevelSelectInput from "components/workflow/plan/step/notifications/OrchestrationNotificationLevelSelectInput";
-import SlackStepNotificationToolInput
-from "components/workflow/plan/step/notifications/slack/SlackStepNotificationToolInput";
+import SlackStepNotificationToolInput from "components/workflow/plan/step/notifications/slack/SlackStepNotificationToolInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";

@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import BlackDuckStepFormMetadata from "./blackduck-stepForm-metadata";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import BlackDuckToolSelectInput from "./inputs/BlackDuckToolSelectInput";
 import BlackDuckProjectSelectInput from "./inputs/BlackDuckProjectSelectInput";
@@ -14,8 +13,7 @@ import BlackDuckScmToolSelectInput from "./inputs/BlackDuckScmToolSelectInput";
 import BlackDuckBitbucketWorkspaceInput from "./inputs/BlackDuckBitbucketWorkspaceInput";
 import BlackDuckGitRepositoryInput from "./inputs/BlackDuckGitRepositoryInput";
 import BlackDuckGitBranchInput from "./inputs/BlackDuckGitBranchInput";
-import ParameterMappingInputBase
-from "components/common/list_of_values_input/parameters/ParameterMappingInputBase";
+import ParameterMappingInputBase from "components/common/list_of_values_input/parameters/ParameterMappingInputBase";
 import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import BlackDuckDependencyMultiSelectInput from "./inputs/BlackDuckDependencyMultiSelectInput";

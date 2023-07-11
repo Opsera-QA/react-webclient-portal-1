@@ -1,13 +1,11 @@
 import React, {useState} from "react";
-import CreateWorkspaceResourceWizardResourceSelectionScreen
-from "components/wizard/workspace/CreateWorkspaceResourceWizardResourceSelectionScreen";
+import CreateWorkspaceResourceWizardResourceSelectionScreen from "components/wizard/workspace/CreateWorkspaceResourceWizardResourceSelectionScreen";
 import NewTaskOverlay from "components/tasks/NewTaskOverlay";
 import PropTypes from "prop-types";
 import NewToolOverlay from "components/inventory/tools/create_overlay/NewToolOverlay";
 import NewPipelineOverlay from "components/workflow/create/NewPipelineOverlay";
 import useGetPlatformSettingsFeatureFlagByName from "hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
-import platformSettingFeatureConstants
-from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
+import platformSettingFeatureConstants from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
 import CreateToolRegistryWizard from "components/inventory/tools/tool_details/wizards/CreateToolRegistryWizard";
 import CreateTasksWizard from "components/tasks/portal_tasks_wizard/CreateTasksWizard";
 import CreateNewPipelineWizard from "../../workflow/wizards/updated_pipeline_wizard/CreateNewPipelineWizard";

@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RoleRestrictedSonarToolSelectInput
-from "components/common/list_of_values_input/tools/sonar/tool/RoleRestrictedSonarToolSelectInput";
+import RoleRestrictedSonarToolSelectInput from "components/common/list_of_values_input/tools/sonar/tool/RoleRestrictedSonarToolSelectInput";
 
 function SonarStepSonarToolSelectInput({fieldName, model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {

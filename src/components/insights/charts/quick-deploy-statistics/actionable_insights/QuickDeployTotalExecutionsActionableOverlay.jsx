@@ -9,7 +9,8 @@ import {
   faCodePullRequest,
   faCodePullRequestClosed,
   faExternalLink,
-  faTable, faUsers
+  faTable,
+  faUsers
 } from "@fortawesome/pro-light-svg-icons";
 import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";

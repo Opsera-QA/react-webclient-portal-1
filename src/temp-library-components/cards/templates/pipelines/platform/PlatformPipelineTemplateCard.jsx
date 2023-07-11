@@ -1,17 +1,13 @@
 import PropTypes from "prop-types";
 import React, {useEffect, useState} from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {
-  PIPELINE_TYPES,
-} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
+import { PIPELINE_TYPES } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 import {getLargeVendorIconComponentFromPipeline} from "components/common/helpers/icon-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import PlatformPipelineTemplateCardBody
-from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCardBody";
-import PlatformPipelineTemplateCardHeader
-from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCardHeader";
+import PlatformPipelineTemplateCardBody from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCardBody";
+import PlatformPipelineTemplateCardHeader from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCardHeader";
 import PipelineTemplateCardFooter from "temp-library-components/cards/templates/pipelines/PipelineTemplateCardFooter";
 
 // TODO: Rewrite to use model

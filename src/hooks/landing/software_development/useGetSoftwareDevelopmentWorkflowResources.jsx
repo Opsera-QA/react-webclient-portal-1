@@ -3,8 +3,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import {WORKFLOW_WIDGET_VIEWS} from "components/landing/v2/widgets/workspace/WorkflowWidgetNavigationBar";
 import WorkflowWidgetFilterModel from "hooks/workspace/workflowWidget.filter.model";
-import useSoftwareDevelopmentLandingActions
-from "hooks/landing/software_development/useSoftwareDevelopmentLandingActions";
+import useSoftwareDevelopmentLandingActions from "hooks/landing/software_development/useSoftwareDevelopmentLandingActions";
 
 export default function useGetSoftwareDevelopmentWorkflowResources(
   currentView,

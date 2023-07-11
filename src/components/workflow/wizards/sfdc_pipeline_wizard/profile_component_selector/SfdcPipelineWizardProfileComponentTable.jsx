@@ -1,9 +1,14 @@
-import React, {useContext, useState, useEffect, useRef, useMemo} from "react";
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  useMemo
+} from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
-import sfdcComponentFilterMetadata
-from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-component-filter-metadata";
+import sfdcComponentFilterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-component-filter-metadata";
 import axios from "axios";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {getTableDateTimeColumn, getTableTextColumn} from "components/common/table/table-column-helpers-v2";
@@ -12,10 +17,8 @@ import sfdcTableConstants from "components/workflow/wizards/sfdc_pipeline_wizard
 import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import FilterContainer from "components/common/table/FilterContainer";
-import InlineSfdcComponentTypesFilter
-from "components/common/filters/sfdc/sfdc_component/InlineSfdcComponentTypesFilter";
-import SfdcPipelineWizardProfileComponentRulesInput
-from "components/workflow/wizards/sfdc_pipeline_wizard/profile_component_selector/SfdcPipelineWizardProfileComponentRulesInput";
+import InlineSfdcComponentTypesFilter from "components/common/filters/sfdc/sfdc_component/InlineSfdcComponentTypesFilter";
+import SfdcPipelineWizardProfileComponentRulesInput from "components/workflow/wizards/sfdc_pipeline_wizard/profile_component_selector/SfdcPipelineWizardProfileComponentRulesInput";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
 const SfdcPipelineWizardProfileComponentTable = ({ pipelineWizardModel, setPipelineWizardModel, setFilteredFileCount }) => {

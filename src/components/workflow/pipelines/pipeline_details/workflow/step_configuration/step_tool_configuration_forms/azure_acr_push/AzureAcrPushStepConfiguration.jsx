@@ -13,8 +13,7 @@ import AzureAcrPushNewRepoBooleanInput from "./inputs/AzureAcrPushNewRepoBoolean
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import AzureAcrPushRepositoryNameSelectInput from "./inputs/AzureAcrPushRepositoryNameSelectInput";
 import AzureAcrPushStepToolTypeSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_acr_push/inputs/AzureAcrPushStepToolTypeSelectInput";
-import AzureAcrPushCredentialIdSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_acr_push/inputs/AzureAcrPushCredentialIdSelectInput";
+import AzureAcrPushCredentialIdSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_acr_push/inputs/AzureAcrPushCredentialIdSelectInput";
 
 function AzureAcrPushStepConfiguration({ stepTool, closeEditorPanel, plan, stepId, pipelineId, createJob }) {
   const [isLoading, setIsLoading] = useState(false);

@@ -4,8 +4,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 import JenkinsXcodeContentTypeSelectInput from "./JenkinsXcodeContentTypeSelectInput";
 import JenkinsXcodeScriptTypeSelectInput from "./JenkinsXcodeScriptTypeSelectInput";
-import ParameterSelectListInputBase
-from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
+import ParameterSelectListInputBase from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
 import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 import JenkinsXcodeCertificateSelectInput from "./JenkinsXcodeCertificateSelectInput";
 

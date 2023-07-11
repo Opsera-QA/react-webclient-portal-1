@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {CYPRESS_JOB_TYPES} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/inputs/CypressStepJobTypeSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import JenkinsRegistryToolJobSelectInput
-from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
+import JenkinsRegistryToolJobSelectInput from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 
 function CypressStepJenkinsJobSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {

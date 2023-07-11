@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {faCode} from "@fortawesome/pro-light-svg-icons";
-import EndpointRequestParameterInputRow
-from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/EndpointRequestParameterInputRow";
+import EndpointRequestParameterInputRow from "components/common/inputs/endpoints/endpoint/request/parameters/parameter/EndpointRequestParameterInputRow";
 import InfoContainer from "components/common/containers/InfoContainer";
 import {dataParsingHelper} from "components/common/helpers/data/dataParsing.helper";
 import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
@@ -13,8 +12,7 @@ import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-import ExternalRestApiIntegrationEndpointParameterField
-from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationEndpointParameterField";
+import ExternalRestApiIntegrationEndpointParameterField from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationEndpointParameterField";
 
 function EndpointRequestParametersInputBase(
   {

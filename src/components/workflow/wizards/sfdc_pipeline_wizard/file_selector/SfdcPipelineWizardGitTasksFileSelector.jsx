@@ -10,8 +10,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
-import SfdcPipelineWizardBasicSummary
-from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardBasicSummary";
+import SfdcPipelineWizardBasicSummary from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardBasicSummary";
 
 const SfdcPipelineWizardGitTasksFileSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) => {
   const { getAccessToken } = useContext(AuthContext);

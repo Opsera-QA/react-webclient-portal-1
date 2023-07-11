@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RoleRestrictedJFrogArtifactoryMavenToolSelectInput
-from "components/common/list_of_values_input/tools/jfrog/RoleRestrictedJFrogArtifactoryMavenToolSelectInput";
+import RoleRestrictedJFrogArtifactoryMavenToolSelectInput from "components/common/list_of_values_input/tools/jfrog/RoleRestrictedJFrogArtifactoryMavenToolSelectInput";
 
 function JfrogMavenStepJfrogArtifactoryMavenToolSelectInput({model, setModel, disabled}) {
   return (

@@ -5,12 +5,9 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import CloseButton from "components/common/buttons/CloseButton";
-import {
-  GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS
-} from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
+import { GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS } from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
-import GithubActionsUniqueRunSummaryDetailPanel
-from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/GithubActionsUniqueRunSummaryDetailPanel";
+import GithubActionsUniqueRunSummaryDetailPanel from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/GithubActionsUniqueRunSummaryDetailPanel";
 
 function GithubActionsUniqueRunSummaryOverlay(
   {

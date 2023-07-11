@@ -3,13 +3,10 @@ import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import TriggerSalesforceBranchStructureTaskRunButton
-from "components/tasks/details/tasks/sfdc-branch-structure/run/TriggerSalesforceBranchStructureTaskRunButton";
+import TriggerSalesforceBranchStructureTaskRunButton from "components/tasks/details/tasks/sfdc-branch-structure/run/TriggerSalesforceBranchStructureTaskRunButton";
 import CancelButton from "components/common/buttons/CancelButton";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
-import {
-  SALESFORCE_BRANCH_STRUCTURE_TASK_INITIALIZATION_SCREENS
-} from "components/tasks/details/tasks/sfdc-branch-structure/run/SalesforceBranchStructureTaskInitializationOverlay";
+import { SALESFORCE_BRANCH_STRUCTURE_TASK_INITIALIZATION_SCREENS } from "components/tasks/details/tasks/sfdc-branch-structure/run/SalesforceBranchStructureTaskInitializationOverlay";
 import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";

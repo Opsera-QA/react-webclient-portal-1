@@ -9,10 +9,8 @@ import Model from "core/data_model/model";
 import CreateButton from "components/common/buttons/saving/CreateButton";
 import TextAreaClipboardField from "components/common/fields/clipboard/TextAreaClipboardField";
 import {faKey} from "@fortawesome/pro-light-svg-icons";
-import AccessTokenExpirationSelectInput
-from "components/common/list_of_values_input/users/access_tokens/AccessTokenExpirationSelectInput";
-import AccessTokenScopeRadioInput
-from "components/common/list_of_values_input/users/access_tokens/AccessTokenScopeRadioInput";
+import AccessTokenExpirationSelectInput from "components/common/list_of_values_input/users/access_tokens/AccessTokenExpirationSelectInput";
+import AccessTokenScopeRadioInput from "components/common/list_of_values_input/users/access_tokens/AccessTokenScopeRadioInput";
 import InfoContainer from "components/common/containers/InfoContainer";
 import accessTokenMetadata from "@opsera/definitions/constants/access_tokens/accessToken.metadata";
 

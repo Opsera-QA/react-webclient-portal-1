@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SalesforceSelectionCardBase from "temp-library-components/cards/salesforce/SalesforceSelectionCardBase";
-import OpseraInfinityLogoSelectionCardBase
-from "temp-library-components/cards/opsera/OpseraInfinityLogoSelectionCardBase";
+import OpseraInfinityLogoSelectionCardBase from "temp-library-components/cards/opsera/OpseraInfinityLogoSelectionCardBase";
 import GitSelectionCardBase from "temp-library-components/cards/git/GitSelectionCardBase";
 import { CREATE_WORKFLOW_WIZARD_SCREENS } from "components/wizard/free_trial/workflows/CreateWorkflowWizard";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";

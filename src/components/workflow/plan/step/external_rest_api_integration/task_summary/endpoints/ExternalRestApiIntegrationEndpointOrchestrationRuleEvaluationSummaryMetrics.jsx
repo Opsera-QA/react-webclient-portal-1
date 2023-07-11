@@ -3,9 +3,7 @@ import PropTypes from "prop-types";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 import VanityTwoLineDataBlockBase from "temp-library-components/metric/data_block/VanityTwoLineDataBlockBase";
-import {
-  externalRestApiIntegrationStepHelper
-} from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/externalRestApiIntegrationStep.helper";
+import { externalRestApiIntegrationStepHelper } from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/externalRestApiIntegrationStep.helper";
 import WidgetDataBlockBase from "temp-library-components/widgets/data_blocks/WidgetDataBlockBase";
 import {IconBase} from "@opsera/react-vanity-set";
 import {VanityFocusTextBase} from "temp-library-components/label/VanityFocusTextBase";

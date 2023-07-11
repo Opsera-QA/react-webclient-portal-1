@@ -3,9 +3,7 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import modelHelpers from "components/common/model/modelHelpers";
-import {
-  pipelineMockWorkflowMetadata
-} from "components/common/metrics/mock_pipeline/workflow/pipelineMockWorkflowMetadata";
+import { pipelineMockWorkflowMetadata } from "components/common/metrics/mock_pipeline/workflow/pipelineMockWorkflowMetadata";
 import PipelineMockPlanInput from "components/common/metrics/mock_pipeline/steps/PipelineMockPlanInput";
 
 function PipelineMockWorkflowEditorPanel(

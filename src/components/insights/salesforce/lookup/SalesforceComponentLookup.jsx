@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
-import SalesforceLookUpHelpDocumentation
-from "../../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation";
+import SalesforceLookUpHelpDocumentation from "../../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {insightsLookupActions} from "components/insights/salesforce/lookup/insightsLookup.actions";
 import LookupResults from "components/insights/salesforce/lookup/LookupResults";

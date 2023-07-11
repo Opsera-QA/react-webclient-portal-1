@@ -9,8 +9,7 @@ import ErrorDialog from "../../common/status_notifications/error";
 import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
-import { defaultConfig, getColor, assignStandardColors,
-  capitalizeLegend } from '../../insights/charts/charts-views';
+import { defaultConfig, getColor, assignStandardColors, capitalizeLegend } from '../../insights/charts/charts-views';
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 
 function JiraTicketsAssignedByUserBarChart( { persona, date } ) {

@@ -1,16 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {INSIGHTS_HELP_DOCUMENTS} from "components/common/help/documentation/insights/insights.help_documents";
-import SonarRatingsChartHelpDocumentation
-from "components/common/help/documentation/insights/charts/SonarRatingsV2ChartHelpDocumentation";
-import InsightsPipelinesOverviewHelpDocumentation
-from "components/common/help/documentation/insights/synopsis/InsightsPipelinesOverviewHelpDocumentation";
-import CoverityIssuesByCategoryHelpDocumentation
-from "components/common/help/documentation/insights/charts/CoverityIssuesByCategoryHelpDocumentation";
-import GenericChartSettingsHelpDocumentation
-from "components/common/help/documentation/insights/charts/GenericChartSettingsHelpDocumentation";
-import MeanTimeToDeployHelpDocumentation
-from "components/common/help/documentation/insights/charts/MeanTimeToDeployHelpDocumentation";
+import SonarRatingsChartHelpDocumentation from "components/common/help/documentation/insights/charts/SonarRatingsV2ChartHelpDocumentation";
+import InsightsPipelinesOverviewHelpDocumentation from "components/common/help/documentation/insights/synopsis/InsightsPipelinesOverviewHelpDocumentation";
+import CoverityIssuesByCategoryHelpDocumentation from "components/common/help/documentation/insights/charts/CoverityIssuesByCategoryHelpDocumentation";
+import GenericChartSettingsHelpDocumentation from "components/common/help/documentation/insights/charts/GenericChartSettingsHelpDocumentation";
+import MeanTimeToDeployHelpDocumentation from "components/common/help/documentation/insights/charts/MeanTimeToDeployHelpDocumentation";
 import InsightsHelpDocumentation from "components/common/help/documentation/insights/InsightsHelpDocumentation";
 
 const HELP_DOCUMENTS = {

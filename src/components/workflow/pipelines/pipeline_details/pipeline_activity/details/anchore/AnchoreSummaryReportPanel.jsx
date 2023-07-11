@@ -6,10 +6,8 @@ import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/Vani
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
 import { faClipboardListCheck } from "@fortawesome/pro-light-svg-icons";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import AnchoreReportView
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/anchore/components/AnchoreReportView";
-import AnchoreSummaryVerticalTabContainer
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/anchore/AnchoreSummaryVerticalTabContainer";
+import AnchoreReportView from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/anchore/components/AnchoreReportView";
+import AnchoreSummaryVerticalTabContainer from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/anchore/AnchoreSummaryVerticalTabContainer";
 
 function AnchoreSummaryReportPanel({ pipelineTaskData }) {
   const [anchoreObj, setAnchoreObj] = useState(undefined);

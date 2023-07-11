@@ -1,12 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import InfoOverlayContainer, {getInfoOverlay} from "components/common/inputs/info_text/InfoOverlayContainer";
-import ArgoApplicationsTable
-from "components/inventory/tools/tool_details/tool_jobs/argo/applications/ArgoApplicationsTable";
+import ArgoApplicationsTable from "components/inventory/tools/tool_details/tool_jobs/argo/applications/ArgoApplicationsTable";
 import argoApplicationsMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/applications/argo-application-metadata";
 import Model from "core/data_model/model";
-import ArgoApplicationSummaryPanel
-from "components/inventory/tools/tool_details/tool_jobs/argo/applications/details/ArgoApplicationSummaryPanel";
+import ArgoApplicationSummaryPanel from "components/inventory/tools/tool_details/tool_jobs/argo/applications/details/ArgoApplicationSummaryPanel";
 
 function ArgoCdApplicationInfoOverlay({argoApplications, selectedArgoApplicationName}) {
   const getBody = () => {

@@ -3,12 +3,9 @@ import PropTypes from "prop-types";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
-import EditableParameterMappingHeaderField
-from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingHeaderField";
-import EditableParameterMappingInlineField
-from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingInlineField";
-import PipelineStepSaveEnvironmentVariablesBooleanToggle
-from "components/common/list_of_values_input/parameters/pipeline/PipelineStepSaveEnvironmentVariablesBooleanToggle";
+import EditableParameterMappingHeaderField from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingHeaderField";
+import EditableParameterMappingInlineField from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingInlineField";
+import PipelineStepSaveEnvironmentVariablesBooleanToggle from "components/common/list_of_values_input/parameters/pipeline/PipelineStepSaveEnvironmentVariablesBooleanToggle";
 
 export default function EditableParameterMappingInlineFields(
   {

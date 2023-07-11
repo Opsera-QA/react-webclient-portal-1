@@ -4,8 +4,7 @@ import {faShieldCheck} from "@fortawesome/pro-light-svg-icons";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import InstructionsAuditLogDetailOverlay
-from "components/workflow/instructions/audit/details/InstructionsAuditLogDetailOverlay";
+import InstructionsAuditLogDetailOverlay from "components/workflow/instructions/audit/details/InstructionsAuditLogDetailOverlay";
 import InstructionsAuditLogsDisplayer from "components/workflow/instructions/audit/InstructionsAuditLogsDisplayer";
 
 export default function InstructionsAuditLogOverlay({instructionsId}) {

@@ -5,14 +5,8 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import CreateArgoApplicationOverlay
-from "components/inventory/tools/tool_details/tool_jobs/argo/applications/CreateArgoApplicationOverlay";
-import {
-  getLimitedTableTextColumn,
-  getTableBooleanIconColumn,
-  getTableDateTimeColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers-v2";
+import CreateArgoApplicationOverlay from "components/inventory/tools/tool_details/tool_jobs/argo/applications/CreateArgoApplicationOverlay";
+import { getLimitedTableTextColumn, getTableBooleanIconColumn, getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 import modelHelpers from "components/common/model/modelHelpers";
 

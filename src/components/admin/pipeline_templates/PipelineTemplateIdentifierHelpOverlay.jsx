@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import {
-  pipelineTemplateIdentifierConstants
-} from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
+import { pipelineTemplateIdentifierConstants } from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";

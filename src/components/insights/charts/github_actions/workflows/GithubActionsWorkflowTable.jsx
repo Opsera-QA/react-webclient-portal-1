@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import PropTypes from "prop-types";
 import { githubActionsWorkflowMetadata } from "components/insights/charts/github_actions/workflows/githubActionsWorkflow.metadata";
 import CustomTable from "components/common/table/CustomTable";
@@ -12,8 +18,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import ExportGithubActionsWorkflowReportButton from "components/insights/charts/github_actions/workflows/export/ExportGithubActionWorkflowReportButton";
 import ExportGithubActionsWorkflowReportPanel from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportPanel";
-import GithubActionsWorkflowActionableInsightOverlay
-from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
+import GithubActionsWorkflowActionableInsightOverlay from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 
 function GithubActionsWorkflowTable({
   kpiConfiguration,

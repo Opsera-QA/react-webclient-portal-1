@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import {faWandMagic} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import SapCpqPipelineRunAssistant
-from "components/workflow/run_assistants/sap_cpq/SapCpqPipelineRunAssistant";
+import SapCpqPipelineRunAssistant from "components/workflow/run_assistants/sap_cpq/SapCpqPipelineRunAssistant";
 
 function SapCpqPipelineRunAssistantOverlay({ pipeline, startPipelineRunFunction }) {
   const toastContext = useContext(DialogToastContext);

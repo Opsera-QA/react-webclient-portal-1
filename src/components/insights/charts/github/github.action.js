@@ -1,7 +1,10 @@
 import baseActions from "utils/actionsBase";
 import {
-  getDateObjectFromKpiConfiguration, getGithubBranchFromKpiConfiguration, getGithubRepositoryFromKpiConfiguration,
-  getTagsFromKpiConfiguration, getUseDashboardTagsFromKpiConfiguration,
+  getDateObjectFromKpiConfiguration,
+  getGithubBranchFromKpiConfiguration,
+  getGithubRepositoryFromKpiConfiguration,
+  getTagsFromKpiConfiguration,
+  getUseDashboardTagsFromKpiConfiguration,
   getUseKpiTagsFromKpiConfiguration
 } from "../charts-helpers";
 

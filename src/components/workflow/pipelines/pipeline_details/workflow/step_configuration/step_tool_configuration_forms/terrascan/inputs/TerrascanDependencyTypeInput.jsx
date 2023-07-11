@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DependencyMultiSelectInput
-from "components/common/list_of_values_input/workflow/pipelines/DependencyMultiSelectInput";
+import DependencyMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/DependencyMultiSelectInput";
 
 function TerrascanDependencyTypeInput({dataObject, setDataObject, disabled}) {
 

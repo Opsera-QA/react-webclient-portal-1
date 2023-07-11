@@ -5,11 +5,9 @@ import SelectionCardBase from "components/common/card/selection/SelectionCardBas
 import {policyHelper} from "components/settings/organization_settings/policies/policy.helper";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
 import useGetPolicyModel from "hooks/settings/organization_settings/policies/useGetPolicyModel";
-import PolicyParametersSummaryPanel
-from "components/settings/organization_settings/policies/details/PolicyParametersSummaryPanel";
+import PolicyParametersSummaryPanel from "components/settings/organization_settings/policies/details/PolicyParametersSummaryPanel";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import OrganizationSettingsPolicyEditorPanelOverlay
-from "components/admin/organization_settings/details/policies/OrganizationSettingsPolicyEditorPanelOverlay";
+import OrganizationSettingsPolicyEditorPanelOverlay from "components/admin/organization_settings/details/policies/OrganizationSettingsPolicyEditorPanelOverlay";
 
 export default function OrganizationSettingsCustomerPolicyPageLinkCardBase(
   {

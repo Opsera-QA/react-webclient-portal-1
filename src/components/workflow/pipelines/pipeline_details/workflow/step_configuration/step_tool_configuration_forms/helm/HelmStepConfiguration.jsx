@@ -9,8 +9,7 @@ import HelmScmToolSelectInput from "components/workflow/pipelines/pipeline_detai
 import HelmBitbucketWorkspaceSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformBitbucketWorkspaceSelectInput";
 import HelmGitRepositorySelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/helm/inputs/HelmGitRepositorySelectInput";
 import helmStepFormMetadata from "./helm-stepForm-metadata";
-import HelmCustomParametersInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/helm/inputs/HelmCustomParametersInput";
+import HelmCustomParametersInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/helm/inputs/HelmCustomParametersInput";
 import HelmCloudProviderSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/helm/inputs/HelmCloudProviderSelectInput";
 import CloudCredentialSubForm from "./sub_forms/CloudCredentialSubForm";
 import CustomScriptSubForm from "./sub_forms/CustomScriptSubForm";

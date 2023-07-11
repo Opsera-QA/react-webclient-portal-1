@@ -4,13 +4,11 @@ import {faIdCard} from "@fortawesome/pro-light-svg-icons";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
-import LdapGroupMembershipManagementPanel
-from "components/common/inputs/user/membership/manager/LdapGroupMembershipManagementPanel";
+import LdapGroupMembershipManagementPanel from "components/common/inputs/user/membership/manager/LdapGroupMembershipManagementPanel";
 import SiteRoleSummaryPanel from "components/settings/ldap_site_roles/details/SiteRoleSummaryPanel";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import LdapSiteRoleGroupRoleHelper
-from "@opsera/know-your-role/roles/accounts/groups/role/ldapSiteRoleGroupRole.helper";
+import LdapSiteRoleGroupRoleHelper from "@opsera/know-your-role/roles/accounts/groups/role/ldapSiteRoleGroupRole.helper";
 
 function SiteRoleDetailPanel({ldapGroupData, orgDomain, loadData, isLoading }) {
   const [activeTab, setActiveTab] = useState("summary");

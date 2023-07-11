@@ -8,11 +8,7 @@ import CreateFreeTrialSalesforceToolButton from "components/wizard/portal/workfl
 import CreateSalesforceWorkflowWizardSelectToolInputBase from "components/wizard/portal/workflows/flows/salesforce/CreateSalesforceWorkflowWizardSelectToolInputBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
-import {
-  faArrowRight,
-  faInfoCircle,
-  faTriangleExclamation,
-} from "@fortawesome/pro-light-svg-icons";
+import { faArrowRight, faInfoCircle, faTriangleExclamation } from "@fortawesome/pro-light-svg-icons";
 import CreateWorkflowWizardRegisterToolHeaderText from "components/wizard/portal/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
@@ -30,8 +26,7 @@ import IconBase from "../../../../../../common/icons/IconBase";
 import {ImageBase} from "@opsera/react-vanity-set";
 import {vendorImageConstants} from "../../../../../../../temp-library-components/image/vendorImage.constants";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import SFDCBuildTypeSelectInput
-from "../../../../../../common/list_of_values_input/workflow/pipelines/SFDCBuildTypeSelectInput";
+import SFDCBuildTypeSelectInput from "../../../../../../common/list_of_values_input/workflow/pipelines/SFDCBuildTypeSelectInput";
 
 export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel({
   className,

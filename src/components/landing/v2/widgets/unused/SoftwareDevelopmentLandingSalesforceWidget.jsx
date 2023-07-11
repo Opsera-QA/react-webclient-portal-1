@@ -6,8 +6,7 @@ import IconBase from "components/common/icons/IconBase";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import FreeTrialLaunchSalesforceWorkflowWizardOverlay
-from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
+import FreeTrialLaunchSalesforceWorkflowWizardOverlay from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
 import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
 import { faHandPointer } from "@fortawesome/pro-light-svg-icons";
 

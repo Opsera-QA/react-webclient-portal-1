@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
-import mergeSyncTaskWizardActions
-from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
+import mergeSyncTaskWizardActions from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 

@@ -1,30 +1,19 @@
 import React, {useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {
-  Form,
-} from "react-bootstrap";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import { Form } from "react-bootstrap";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import modelHelpers from "components/common/model/modelHelpers";
-import cypressPipelineStepConfigurationMetadata
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/cypressPipelineStepConfigurationMetadata";
-import CypressStepJenkinsToolSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/inputs/CypressStepJenkinsToolSelectInput";
+import cypressPipelineStepConfigurationMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/cypressPipelineStepConfigurationMetadata";
+import CypressStepJenkinsToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/inputs/CypressStepJenkinsToolSelectInput";
 import LoadingDialog from "components/common/status_notifications/loading";
-import CypressStepJobTypeSelectInput
-, {CYPRESS_JOB_TYPES} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/inputs/CypressStepJobTypeSelectInput";
+import CypressStepJobTypeSelectInput, { CYPRESS_JOB_TYPES } from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/inputs/CypressStepJobTypeSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import CypressStepJenkinsJobSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/inputs/CypressStepJenkinsJobSelectInput";
-import CypressStepRepositorySelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/inputs/CypressStepRepositorySelectInput";
-import CypressStepBranchSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/inputs/CypressStepBranchSelectInput";
+import CypressStepJenkinsJobSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/inputs/CypressStepJenkinsJobSelectInput";
+import CypressStepRepositorySelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/inputs/CypressStepRepositorySelectInput";
+import CypressStepBranchSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/inputs/CypressStepBranchSelectInput";
 import CheckboxInputBase from "components/common/inputs/boolean/CheckboxInputBase";
-import CypressStepBitbucketWorkspaceSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/inputs/CypressStepBitbucketWorkspaceSelectInput";
-import CypressStepJenkinsAccountSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/inputs/CypressStepJenkinsAccountSelectInput";
+import CypressStepBitbucketWorkspaceSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/inputs/CypressStepBitbucketWorkspaceSelectInput";
+import CypressStepJenkinsAccountSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/inputs/CypressStepJenkinsAccountSelectInput";
 
 function CypressStepConfiguration({
   stepTool,

@@ -3,13 +3,10 @@ import PropType from "prop-types";
 import SelectionCardBase from "components/common/card/selection/SelectionCardBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetFeatureFlagModel from "hooks/settings/organization_settings/feature_flags/useGetFeatureFlagModel";
-import OrganizationSettingsFeatureFlagEditorPanelOverlay
-from "components/admin/organization_settings/details/features/OrganizationSettingsFeatureFlagEditorPanelOverlay";
-import featureFlagConstants
-from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
+import OrganizationSettingsFeatureFlagEditorPanelOverlay from "components/admin/organization_settings/details/features/OrganizationSettingsFeatureFlagEditorPanelOverlay";
+import featureFlagConstants from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
 import DeleteConfirmationOverlay from "components/common/overlays/center/delete/DeleteConfirmationOverlay";
-import useFeatureFlagAdministrationActions
-from "hooks/settings/organization_settings/feature_flags/useFeatureFlagAdministrationActions";
+import useFeatureFlagAdministrationActions from "hooks/settings/organization_settings/feature_flags/useFeatureFlagAdministrationActions";
 import {useHistory} from "react-router-dom";
 
 export default function OrganizationSettingsFeatureFlagsPageLinkCardBase(

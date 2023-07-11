@@ -4,21 +4,14 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import PipelineNotificationVerticalTabContainer
-from "components/workflow/plan/step/notifications/PipelineNotificationVerticalTabContainer";
-import SlackNotificationEditorPanel
-from "components/workflow/plan/step/notifications/slack/SlackNotificationEditorPanel";
-import MicrosoftTeamsNotificationEditorPanel
-from "components/workflow/plan/step/notifications/teams/MicrosoftTeamsNotificationEditorPanel";
-import JiraNotificationEditorPanel
-from "components/workflow/plan/step/notifications/jira/JiraNotificationEditorPanel";
-import ServiceNowNotificationEditorPanel
-from "components/workflow/plan/step/notifications/servicenow/ServiceNowNotificationEditorPanel";
-import EmailNotificationEditorPanel
-from "components/workflow/plan/step/notifications/email/EmailNotificationEditorPanel";
+import PipelineNotificationVerticalTabContainer from "components/workflow/plan/step/notifications/PipelineNotificationVerticalTabContainer";
+import SlackNotificationEditorPanel from "components/workflow/plan/step/notifications/slack/SlackNotificationEditorPanel";
+import MicrosoftTeamsNotificationEditorPanel from "components/workflow/plan/step/notifications/teams/MicrosoftTeamsNotificationEditorPanel";
+import JiraNotificationEditorPanel from "components/workflow/plan/step/notifications/jira/JiraNotificationEditorPanel";
+import ServiceNowNotificationEditorPanel from "components/workflow/plan/step/notifications/servicenow/ServiceNowNotificationEditorPanel";
+import EmailNotificationEditorPanel from "components/workflow/plan/step/notifications/email/EmailNotificationEditorPanel";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
-import GChatNotificationEditorPanel
-from "components/workflow/plan/step/notifications/gchat/GChatNotificationEditorPanel";
+import GChatNotificationEditorPanel from "components/workflow/plan/step/notifications/gchat/GChatNotificationEditorPanel";
 
 function PipelineNotificationTabView(
   {

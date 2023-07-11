@@ -1,8 +1,7 @@
 import React from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import UnsecuredItemReportViews from "components/settings/unsecured_items/UnsecuredItemReportViews";
-import UnsecuredItemReportSubNavigationBar
-from "components/settings/unsecured_items/UnsecuredItemReportSubNavigationBar";
+import UnsecuredItemReportSubNavigationBar from "components/settings/unsecured_items/UnsecuredItemReportSubNavigationBar";
 import useGetUnsecuredItems from "hooks/settings/unsecured_items/useGetUnsecuredItems";
 
 export default function UnsecuredItemReport() {

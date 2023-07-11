@@ -5,10 +5,8 @@ import { faClipboard, faTag, faUsers } from "@fortawesome/pro-light-svg-icons";
 import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
-import ActionBarDeleteCustomerDashboardTemplateButton
-from "components/insights/marketplace/dashboards/templates/private/ActionBarDeleteCustomerDashboardTemplateButton";
-import AddCustomerDashboardButton
-from "components/insights/marketplace/dashboards/templates/private/AddCustomerDashboardButton";
+import ActionBarDeleteCustomerDashboardTemplateButton from "components/insights/marketplace/dashboards/templates/private/ActionBarDeleteCustomerDashboardTemplateButton";
+import AddCustomerDashboardButton from "components/insights/marketplace/dashboards/templates/private/AddCustomerDashboardButton";
 import AccessRoleDisplayerField from "components/common/fields/multiple_items/roles/displayer/AccessRoleDisplayerField";
 import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
 

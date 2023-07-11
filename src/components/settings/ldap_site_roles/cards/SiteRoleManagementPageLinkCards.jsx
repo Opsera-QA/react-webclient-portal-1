@@ -1,12 +1,10 @@
 import React from "react";
 import PropType from "prop-types";
-import AdministratorsSiteRolePageLinkCard
-from "components/settings/ldap_site_roles/cards/AdministratorsSiteRolePageLinkCard";
+import AdministratorsSiteRolePageLinkCard from "components/settings/ldap_site_roles/cards/AdministratorsSiteRolePageLinkCard";
 import PowerUsersSiteRolePageLinkCard from "components/settings/ldap_site_roles/cards/PowerUsersSiteRolePageLinkCard";
 import UsersSiteRolePageLinkCard from "components/settings/ldap_site_roles/cards/UsersSiteRolePageLinkCard";
 import AuditorsRolePageLinkCard from "components/settings/ldap_site_roles/cards/AuditorsRolePageLinkCard";
-import SecurityManagersRolePageLinkCard
-from "components/settings/ldap_site_roles/cards/SecurityManagersRolePageLinkCard";
+import SecurityManagersRolePageLinkCard from "components/settings/ldap_site_roles/cards/SecurityManagersRolePageLinkCard";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 

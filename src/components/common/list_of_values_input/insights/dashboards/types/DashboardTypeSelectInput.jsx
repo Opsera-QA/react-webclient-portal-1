@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {
-  dashboardTypeConstants
-} from "components/common/list_of_values_input/insights/dashboards/types/dashboardType.constants";
+import { dashboardTypeConstants } from "components/common/list_of_values_input/insights/dashboards/types/dashboardType.constants";
 
 function DashboardTypeSelectInput({ fieldName, dataObject, setDataObject, disabled }) {
   return (

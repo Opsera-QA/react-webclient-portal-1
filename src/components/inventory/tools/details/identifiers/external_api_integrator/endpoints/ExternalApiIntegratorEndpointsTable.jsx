@@ -2,20 +2,14 @@ import React, {useMemo, useContext, useRef, useEffect} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import {
-  getFormattedLabelWithFunctionColumnDefinition, getLimitedTableTextColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers";
+import { getFormattedLabelWithFunctionColumnDefinition, getLimitedTableTextColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faLink} from "@fortawesome/pro-light-svg-icons";
-import externalApiIntegratorEndpointMetadata
-from "@opsera/definitions/constants/registry/tools/external_api_integrator/externalApiIntegratorEndpoint.metadata";
-import NewExternalApiIntegratorEndpointOverlay
-from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/NewExternalApiIntegratorEndpointOverlay";
+import externalApiIntegratorEndpointMetadata from "@opsera/definitions/constants/registry/tools/external_api_integrator/externalApiIntegratorEndpoint.metadata";
+import NewExternalApiIntegratorEndpointOverlay from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/NewExternalApiIntegratorEndpointOverlay";
 import endpointTypeConstants from "@opsera/definitions/constants/api/request/endpoint/endpointType.constants";
-import endpointRequestTypeConstants
-from "@opsera/definitions/constants/api/request/endpoint/endpointRequestType.constants";
+import endpointRequestTypeConstants from "@opsera/definitions/constants/api/request/endpoint/endpointRequestType.constants";
 
 function ExternalApiIntegratorEndpointsTable(
   {

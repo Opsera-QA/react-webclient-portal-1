@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import useGetRevocableFreeTrialSsoUsers
-from "components/common/list_of_values_input/users/sso/revocable/useGetRevocableFreeTrialSsoUsers";
+import useGetRevocableFreeTrialSsoUsers from "components/common/list_of_values_input/users/sso/revocable/useGetRevocableFreeTrialSsoUsers";
 
 export default function RevocableFreeTrialSsoUserSelectInput(
   {

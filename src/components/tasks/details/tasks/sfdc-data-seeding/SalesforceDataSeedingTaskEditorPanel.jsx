@@ -5,9 +5,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SalesforceMergeSyncTaskSalesforceToolSelectInput from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceMergeSyncTaskSalesforceToolSelectInput";
-import dataSeedingMigrationTaskMetadata, {
-  dataSeedingTaskSalesforceConfigurationMetadata
-} from "./salesforceDataSeedingTaskMetadata";
+import dataSeedingMigrationTaskMetadata, { dataSeedingTaskSalesforceConfigurationMetadata } from "./salesforceDataSeedingTaskMetadata";
 import SalesforceDataSeedingTaskActionSelectInput from "./inputs/SalesforceDataSeedingTaskActionSelectInput";
 
 function SalesforceDataSeedingTaskEditorPanel({

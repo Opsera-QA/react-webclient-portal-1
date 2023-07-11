@@ -1,9 +1,6 @@
 import React, { useContext } from "react";
 import {AuthContext} from "contexts/AuthContext";
-import {
-  getSiteViewModeLabel,
-  SITE_VIEW_MODE_SELECT_OPTIONS,
-} from "components/header/view_modes/siteViewMode.constants";
+import { getSiteViewModeLabel, SITE_VIEW_MODE_SELECT_OPTIONS } from "components/header/view_modes/siteViewMode.constants";
 import {NavigationDropdownSelectInputBase} from "@opsera/react-vanity-set";
 
 export default function SiteViewModeNavigationSelectInput() {

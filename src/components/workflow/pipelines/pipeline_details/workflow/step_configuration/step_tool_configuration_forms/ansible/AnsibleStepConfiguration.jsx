@@ -10,8 +10,7 @@ import AnsibleStepScmServiceTypeSelectInput from "./inputs/AnsibleStepScmService
 import AnsibleStepGitRepositorySelectInput from "./inputs/AnsibleStepGitRepositorySelectInput";
 import AnsibleStepGitBranchSelectInput from "./inputs/AnsibleStepGitBranchSelectInput";
 import AnsibleStepScmRepositoryFileSelectInput from "./inputs/AnsibleStepScmRepositoryFileSelectInput";
-import RoleRestrictedToolByIdentifierInputBase
-from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 import AnsibleStepBitbucketWorkspaceInput from "./inputs/AnsibleStepBitbucketWorkspaceInput";
 
 function AnsibleStepConfiguration({ stepTool, stepId, closeEditorPanel, parentCallback }) {

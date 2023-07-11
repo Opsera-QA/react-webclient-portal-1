@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import ldapSettingsMetadata
-from "components/admin/registered_users/details/ldap_settings/ldapSettingsMetadata";
+import ldapSettingsMetadata from "components/admin/registered_users/details/ldap_settings/ldapSettingsMetadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";

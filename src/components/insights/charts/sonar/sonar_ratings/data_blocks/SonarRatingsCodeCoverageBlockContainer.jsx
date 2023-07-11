@@ -4,8 +4,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import Col from "react-bootstrap/Col";
 import TwoLineScoreDataBlock from "../../../../../common/metrics/score/TwoLineScoreDataBlock";
-import SonarRatingCodeCoverageActionableInsightOverlay
-from "../actionable_insights/coverage/SonarRatingCodeCoverageActionableInsightOverlay";
+import SonarRatingCodeCoverageActionableInsightOverlay from "../actionable_insights/coverage/SonarRatingCodeCoverageActionableInsightOverlay";
 import TwoLinePercentageDataBlock from "../../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
 import ThreeLinePercentageBlockBase from "../../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
 function SonarRatingsCodeCoverageBlockContainer({ tests, lineCoverage, duplicate, kpiConfiguration, dashboardData, dataPoint, className,

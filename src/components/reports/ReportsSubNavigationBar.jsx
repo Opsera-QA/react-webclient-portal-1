@@ -2,12 +2,7 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {
-  faAnalytics,
-  faTags,
-  faTools,
-  faUsers
-} from "@fortawesome/pro-light-svg-icons";
+import { faAnalytics, faTags, faTools, faUsers } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 

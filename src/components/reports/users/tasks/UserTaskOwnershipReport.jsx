@@ -5,8 +5,7 @@ import Model from "core/data_model/model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import UserTaskOwnershipReportTable from "components/reports/users/tasks/UserTaskOwnershipReportTable";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
-import OwnershipReportLdapUserSelectInput
-from "components/common/list_of_values_input/reports/user_reports/OwnershipReportLdapUserSelectInput";
+import OwnershipReportLdapUserSelectInput from "components/common/list_of_values_input/reports/user_reports/OwnershipReportLdapUserSelectInput";
 import taskActions from "components/tasks/task.actions";
 import reportsFilterMetadata from "components/reports/reports-filter-metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";

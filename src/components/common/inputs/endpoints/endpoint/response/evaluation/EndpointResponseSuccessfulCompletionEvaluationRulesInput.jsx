@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import EndpointResponseEvaluationRulesInput
-from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesInput";
+import EndpointResponseEvaluationRulesInput from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesInput";
 
 export default function EndpointResponseSuccessfulCompletionEvaluationRulesInput(
   {

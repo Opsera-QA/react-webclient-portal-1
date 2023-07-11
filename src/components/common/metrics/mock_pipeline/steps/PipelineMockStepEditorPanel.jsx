@@ -1,17 +1,13 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {
-  faTimes,
-} from "@fortawesome/pro-light-svg-icons";
+import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import IconBase from "components/common/icons/IconBase";
-import PipelineMockStepTypeSelectInput
-from "components/common/metrics/mock_pipeline/steps/PipelineMockStepTypeSelectInput";
+import PipelineMockStepTypeSelectInput from "components/common/metrics/mock_pipeline/steps/PipelineMockStepTypeSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import PipelineMappingEnvironmentInput
-from "components/common/metrics/mock_pipeline/environments/PipelineMappingEnvironmentInput";
+import PipelineMappingEnvironmentInput from "components/common/metrics/mock_pipeline/environments/PipelineMappingEnvironmentInput";
 import TagManager from "components/common/inputs/tags/TagManager";
 import modelHelpers from "components/common/model/modelHelpers";
 import {pipelineMockStepMetadata} from "components/common/metrics/mock_pipeline/steps/pipelineMockStepMetadata";

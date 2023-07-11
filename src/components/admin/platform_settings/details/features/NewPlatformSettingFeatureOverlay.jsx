@@ -3,11 +3,8 @@ import PropTypes from "prop-types";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import modelHelpers from "components/common/model/modelHelpers";
-import PlatformSettingFeatureEditorPanel
-from "components/admin/platform_settings/details/features/PlatformSettingFeatureEditorPanel";
-import {
-  platformSettingFeatureMetadata
-} from "components/admin/platform_settings/details/features/platformSettingFeature.metadata";
+import PlatformSettingFeatureEditorPanel from "components/admin/platform_settings/details/features/PlatformSettingFeatureEditorPanel";
+import { platformSettingFeatureMetadata } from "components/admin/platform_settings/details/features/platformSettingFeature.metadata";
 
 function NewPlatformSettingFeatureOverlay(
   {

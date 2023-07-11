@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import ActionBarDeleteButtonBase from "components/common/actions/buttons/ActionBarDeleteButtonBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import DeleteCustomerDashboardTemplateConfirmationOverlay
-from "components/insights/marketplace/dashboards/templates/private/DeleteCustomerDashboardTemplateConfirmationOverlay";
+import DeleteCustomerDashboardTemplateConfirmationOverlay from "components/insights/marketplace/dashboards/templates/private/DeleteCustomerDashboardTemplateConfirmationOverlay";
 
 export default function ActionBarDeleteCustomerPipelineTemplateButton(
   {

@@ -1,16 +1,12 @@
 import React from "react";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import FreeTrialExtendUserAccessSelectInput
-from "components/settings/trial/user_expiration/extension/input/FreeTrialExtendUserAccessSelectInput";
-import FreeTrialUserExpirationExtendUserAccessButton
-from "components/settings/trial/user_expiration/extension/FreeTrialUserExpirationExtendUserAccessButton";
+import FreeTrialExtendUserAccessSelectInput from "components/settings/trial/user_expiration/extension/input/FreeTrialExtendUserAccessSelectInput";
+import FreeTrialUserExpirationExtendUserAccessButton from "components/settings/trial/user_expiration/extension/FreeTrialUserExpirationExtendUserAccessButton";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
-import useGetFreeTrialUserExpirationManagementModel
-from "components/settings/trial/user_expiration/useGetFreeTrialUserExpirationManagementModel";
+import useGetFreeTrialUserExpirationManagementModel from "components/settings/trial/user_expiration/useGetFreeTrialUserExpirationManagementModel";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
-import FreeTrialUserExpirationManagementSubNavigationBar
-from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagementSubNavigationBar";
+import FreeTrialUserExpirationManagementSubNavigationBar from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import { useHistory } from "react-router-dom";

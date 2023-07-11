@@ -3,8 +3,7 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useGetEntitlementModel from "hooks/settings/organization_settings/entitlements/useGetEntitlementModel";
-import useEntitlementAdministrationActions
-from "hooks/settings/organization_settings/entitlements/useEntitlementAdministrationActions";
+import useEntitlementAdministrationActions from "hooks/settings/organization_settings/entitlements/useEntitlementAdministrationActions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function useGetEntitlementModelById(

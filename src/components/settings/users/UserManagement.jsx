@@ -7,14 +7,12 @@ import {faUserHardHat, faUsers, faUsersSlash} from "@fortawesome/pro-light-svg-i
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import PendingUsersTable from "components/settings/users/PendingUsersTable";
 import UserManagementSubNavigationBar from "components/settings/users/UserManagementSubNavigationBar";
-import UserManagementHelpDocumentation
-from "../../common/help/documentation/settings/UserManagementHelpDocumentation";
+import UserManagementHelpDocumentation from "../../common/help/documentation/settings/UserManagementHelpDocumentation";
 import useGetLdapUsersInCurrentUserDomain from "hooks/ldap/users/useGetLdapUsersInCurrentUserDomain";
 import useGetPendingUsers from "hooks/platform/users/useGetPendingUsers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import useGetDeactivatedLdapUsersInCurrentUserDomain
-from "hooks/ldap/users/useGetDeactivatedLdapUsersInCurrentUserDomain";
+import useGetDeactivatedLdapUsersInCurrentUserDomain from "hooks/ldap/users/useGetDeactivatedLdapUsersInCurrentUserDomain";
 import DeactivatedUsersTable from "components/settings/users/DeactivatedUsersTable";
 
 const USER_MANAGEMENT_VIEWS = {

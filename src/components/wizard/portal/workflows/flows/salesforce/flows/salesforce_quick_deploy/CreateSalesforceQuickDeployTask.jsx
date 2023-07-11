@@ -8,8 +8,7 @@ import CreateWorkflowWizardCreateSalesforceToolEditorPanel from "../../../tools/
 import CreateSalesforceWizardTestSalesforceSourceToolConnectionScreen from "../organization_sync/task/tools/salesforce/connection/CreateSalesforceWizardTestSalesforceSourceToolConnectionScreen";
 import sfdcConnectionMetadata from "../../../../../../../inventory/tools/tool_details/tool_jobs/sfdc/sfdc-connection-metadata";
 import CreateSalesforceQuickDeployTaskInitializationScreen from "./CreateSalesforceQuickDeployTaskInitializationScreen";
-import CreateSalesforceBulkMigrationInputFields
-from "../salesforce_bulk_migration/CreateSalesforceBulkMigrationInputFields";
+import CreateSalesforceBulkMigrationInputFields from "../salesforce_bulk_migration/CreateSalesforceBulkMigrationInputFields";
 import CreateSalesforceQuickDeployInputFields from "./CreateSalesforceQuickDeployInputFields";
 import { getTaskTypeLabel } from "components/tasks/task.types";
 

@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import {faWandMagic} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import InformaticaPipelineRunAssistant
-from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistant";
+import InformaticaPipelineRunAssistant from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistant";
 
 function InformaticaPipelineRunAssistantOverlay( { pipeline, startPipelineRunFunction }) {
   const toastContext = useContext(DialogToastContext);

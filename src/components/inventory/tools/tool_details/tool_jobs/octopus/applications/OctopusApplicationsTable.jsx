@@ -7,14 +7,9 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import {octopusApplicationsMetadata} from "components/inventory/tools/tool_details/tool_jobs/octopus/octopus-applications-metadata";
-import {
-  getTableBooleanIconColumn,
-  getTableDateTimeColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers";
+import { getTableBooleanIconColumn, getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import NewOctopusApplicationOverlay
-from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/create_overlay/NewOctopusApplicationOverlay";
+import NewOctopusApplicationOverlay from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/create_overlay/NewOctopusApplicationOverlay";
 import {octopusCustomTableColumnDefinitions} from "components/common/table/column_definitions/tools/octopus/octopus.customTable.columnDefinitions";
 import IconBase from "components/common/icons/IconBase";
 

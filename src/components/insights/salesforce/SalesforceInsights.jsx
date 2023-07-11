@@ -1,10 +1,7 @@
 import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import SalesforceInsightsOptionCardBase, {
-  SALESFORCE_INSIGHTS_TYPES,
-  SALESFORCE_INSIGHTS_TYPE_LABELS,
-} from "components/insights/salesforce/SalesforceInsightsOptionCardBase";
+import SalesforceInsightsOptionCardBase, { SALESFORCE_INSIGHTS_TYPES, SALESFORCE_INSIGHTS_TYPE_LABELS } from "components/insights/salesforce/SalesforceInsightsOptionCardBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import ScreenContainer from "../../common/panels/general/ScreenContainer";
 import InsightsSubNavigationBar from "../InsightsSubNavigationBar";

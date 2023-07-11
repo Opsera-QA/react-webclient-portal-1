@@ -1,28 +1,19 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import WizardSelectionRadioOption from "temp-library-components/wizard/option/WizardSelectionRadioOption";
-import {
-  salesforceWorkflowFlowConstants,
-} from "components/wizard/portal/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
+import { salesforceWorkflowFlowConstants } from "components/wizard/portal/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
 import { DividerWithCenteredText } from "temp-library-components/divider/DividerWithCenteredText";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import Row from "react-bootstrap/Row";
 import SelectionCardColumn from "temp-library-components/cards/SelectionCardColumn";
-import {
-  CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS
-} from "components/wizard/portal/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
+import { CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS } from "components/wizard/portal/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
-import CreateSalesforceWorkflowWizardSalesforceOrganizationSyncTaskSelectionCard
-from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/task/cards/CreateSalesforceWorkflowWizardSalesforceOrganizationSyncTaskSelectionCard";
-import SalesforceOrganizationSyncPipelineSelectionCard
-from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/cards/SalesforceOrganizationSyncPipelineSelectionCard";
-import SalesforceOrganizationSyncPipelineWithUnitTestingSelectionCard
-from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/cards/SalesforceOrganizationSyncPipelineWithUnitTestingSelectionCard";
-import SalesforceOrganizationSyncPipelineWithUnitTestingAndBackupSelectionCard
-from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/cards/SalesforceOrganizationSyncPipelineWithUnitTestingAndBackupSelectionCard";
-import CreateSalesforceWorkflowWizardSalesforceToGitMergeSyncTaskSelectionCard
-from "components/wizard/portal/workflows/flows/salesforce/flows/salesforce_to_git_merge_sync/task/cards/CreateSalesforceWorkflowWizardSalesforceToGitMergeSyncTaskSelectionCard";
+import CreateSalesforceWorkflowWizardSalesforceOrganizationSyncTaskSelectionCard from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/task/cards/CreateSalesforceWorkflowWizardSalesforceOrganizationSyncTaskSelectionCard";
+import SalesforceOrganizationSyncPipelineSelectionCard from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/cards/SalesforceOrganizationSyncPipelineSelectionCard";
+import SalesforceOrganizationSyncPipelineWithUnitTestingSelectionCard from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/cards/SalesforceOrganizationSyncPipelineWithUnitTestingSelectionCard";
+import SalesforceOrganizationSyncPipelineWithUnitTestingAndBackupSelectionCard from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/cards/SalesforceOrganizationSyncPipelineWithUnitTestingAndBackupSelectionCard";
+import CreateSalesforceWorkflowWizardSalesforceToGitMergeSyncTaskSelectionCard from "components/wizard/portal/workflows/flows/salesforce/flows/salesforce_to_git_merge_sync/task/cards/CreateSalesforceWorkflowWizardSalesforceToGitMergeSyncTaskSelectionCard";
 
 export default function CreateSalesforceWorkflowWizardFlowSelectionScreen(
   {

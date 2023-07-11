@@ -7,10 +7,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import CreateSalesforceWorkflowWizardSelectToolInputBase from "components/wizard/portal/workflows/flows/salesforce/CreateSalesforceWorkflowWizardSelectToolInputBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
-import {
-  faArrowRight,
-  faTriangleExclamation,
-} from "@fortawesome/pro-light-svg-icons";
+import { faArrowRight, faTriangleExclamation } from "@fortawesome/pro-light-svg-icons";
 import CreateWorkflowWizardRegisterToolHeaderText from "components/wizard/portal/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";

@@ -4,8 +4,7 @@ import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
-import PipelineStepNotificationConfigurationOverlay
-from "components/workflow/plan/step/notifications/PipelineStepNotificationConfigurationOverlay";
+import PipelineStepNotificationConfigurationOverlay from "components/workflow/plan/step/notifications/PipelineStepNotificationConfigurationOverlay";
 
 export default function PipelineStepWorkflowItemEditNotificationSettingsButton(
   {

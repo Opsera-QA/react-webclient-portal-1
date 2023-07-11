@@ -8,14 +8,10 @@ import PipelineActivityLogSummaryPanel from "components/workflow/pipelines/pipel
 import PipelineTaskConsoleLogPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskConsoleLogPanel";
 import ConsoleLogTab from "components/common/tabs/detail_view/ConsoleLogTab";
 import OverlayTabPanelContainer from "components/common/panels/general/OverlayTabPanelContainer";
-import PipelineTaskRunConfigurationSummaryPanel, {
-  RUN_CONFIGURATION_SUMMARY_SUPPORTED_TOOL_IDENTIFIERS
-} from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskRunConfigurationSummaryPanel";
+import PipelineTaskRunConfigurationSummaryPanel, { RUN_CONFIGURATION_SUMMARY_SUPPORTED_TOOL_IDENTIFIERS } from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskRunConfigurationSummaryPanel";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faFile, faShield} from "@fortawesome/pro-light-svg-icons";
-import PipelineTaskAuditLogSummaryPanel, {
-  AUDIT_LOG_SUMMARY_SUPPORTED_TOOL_IDENTIFIERS
-} from "components/workflow/pipelines/activity/PipelineTaskAuditLogSummaryPanel";
+import PipelineTaskAuditLogSummaryPanel, { AUDIT_LOG_SUMMARY_SUPPORTED_TOOL_IDENTIFIERS } from "components/workflow/pipelines/activity/PipelineTaskAuditLogSummaryPanel";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function PipelineTaskTabPanel({ pipelineTaskData }) {

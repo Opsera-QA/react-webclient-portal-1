@@ -7,13 +7,9 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icons";
 import ExportGithubActionsWorkflowReportButton from "components/insights/charts/github_actions/workflows/export/ExportGithubActionWorkflowReportButton";
 import {githubActionsUniqueRunJobsSummaryMetadata} from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/jobs/githubActionsUniqueRunJobsSummary.metadata";
-import {
-  GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS
-} from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
-import GithubActionsWorkflowWarningMessage
-from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowWarningMessage";
-import ExportGithubActionWorkflowReportActionalbeInsights2Panel
-from "../../../export/ExportGithubActionsWorkflowReportActionableInsights2Panel";
+import { GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS } from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
+import GithubActionsWorkflowWarningMessage from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowWarningMessage";
+import ExportGithubActionWorkflowReportActionalbeInsights2Panel from "../../../export/ExportGithubActionsWorkflowReportActionableInsights2Panel";
 
 function GithubActionsUniqueRunSummaryJobsTable(
   {

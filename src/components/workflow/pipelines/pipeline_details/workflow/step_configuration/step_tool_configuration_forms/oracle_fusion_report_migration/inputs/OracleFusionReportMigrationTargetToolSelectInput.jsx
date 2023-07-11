@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RoleRestrictedOracleFusionToolSelectInput
-from "components/common/list_of_values_input/tools/oracle_fusion/RoleRestrictedOracleFusionToolSelectInput";
+import RoleRestrictedOracleFusionToolSelectInput from "components/common/list_of_values_input/tools/oracle_fusion/RoleRestrictedOracleFusionToolSelectInput";
 
 function OracleFusionReportMigrationTargetToolSelectInput({ model, setModel, className, disabled }) {
 

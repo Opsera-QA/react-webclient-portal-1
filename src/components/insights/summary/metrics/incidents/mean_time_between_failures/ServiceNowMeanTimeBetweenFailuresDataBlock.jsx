@@ -4,8 +4,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
-import ServiceNowMeanTimeBetweenFailuresBarChart
-from "components/insights/charts/servicenow/bar_chart/mean_time_between_failures/ServiceNowMeanTimeBetweenFailuresBarChart";
+import ServiceNowMeanTimeBetweenFailuresBarChart from "components/insights/charts/servicenow/bar_chart/mean_time_between_failures/ServiceNowMeanTimeBetweenFailuresBarChart";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function ServiceNowMeanTimeBetweenFailuresDataBlock({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {

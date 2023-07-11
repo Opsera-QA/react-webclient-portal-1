@@ -13,8 +13,7 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
-import { defaultConfig, assignBooleanColors, adjustBarWidth,
-  capitalizeLegend } from "../../insights/charts/charts-views";
+import { defaultConfig, assignBooleanColors, adjustBarWidth, capitalizeLegend } from "../../insights/charts/charts-views";
 import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function DeploymentsStackedBarChart({ persona, date }) {

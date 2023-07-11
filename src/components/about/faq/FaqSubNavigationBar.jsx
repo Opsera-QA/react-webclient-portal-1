@@ -2,9 +2,7 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {
-  faQuestion
-} from "@fortawesome/pro-light-svg-icons";
+import { faQuestion } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 
 function FaqSubNavigationBar({currentTab}) {

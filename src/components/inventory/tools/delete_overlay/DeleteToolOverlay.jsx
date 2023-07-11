@@ -6,8 +6,7 @@ import axios from "axios";
 import vaultActions from "components/vault/vault.actions";
 import toolsActions from "components/inventory/tools/tools-actions";
 import ToolPipelinesTable from "components/inventory/tools/tool_details/ToolPipelinesTable";
-import DestructiveDeleteConfirmationOverlay
-from "components/common/overlays/center/delete/DestructiveDeleteConfirmationOverlay";
+import DestructiveDeleteConfirmationOverlay from "components/common/overlays/center/delete/DestructiveDeleteConfirmationOverlay";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {useHistory} from "react-router-dom";
 

@@ -2,8 +2,7 @@ import React, {useState, useRef, useEffect, useContext} from 'react';
 import PropTypes from "prop-types";
 import axios from "axios";
 import Model from "core/data_model/model";
-import sfdcComponentFilterMetadata
-from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-component-filter-metadata";
+import sfdcComponentFilterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-component-filter-metadata";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
@@ -13,10 +12,8 @@ import {Button} from "react-bootstrap";
 import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
 import CancelButton from "components/common/buttons/CancelButton";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
-import SfdcPipelineWizardSubmitSfdcFilesButton
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSubmitSfdcFilesButton";
-import SfdcPipelineWizardSfdcFilesTable
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSfdcFilesTable";
+import SfdcPipelineWizardSubmitSfdcFilesButton from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSubmitSfdcFilesButton";
+import SfdcPipelineWizardSfdcFilesTable from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSfdcFilesTable";
 import {parseError} from "components/common/helpers/error-helpers";
 import IconBase from "components/common/icons/IconBase";
 

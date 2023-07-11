@@ -3,9 +3,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import pipelineTemplateCatalogFilterMetadata from "components/workflow/catalog/pipelineTemplateCatalogFilter.metadata";
-import {
-  customerPipelineTemplateCatalogActions
-} from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
+import { customerPipelineTemplateCatalogActions } from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
 import FilterModelBase from "core/data_model/filterModel.base";
 
 export default function useGetCustomerPipelineTemplates(

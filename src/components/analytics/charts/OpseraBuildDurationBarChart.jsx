@@ -9,8 +9,13 @@ import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-import { defaultConfig, getColor, assignStandardColors, 
-  adjustBarWidth, capitalizeLegend } from '../../insights/charts/charts-views';
+import {
+  defaultConfig,
+  getColor,
+  assignStandardColors,
+  adjustBarWidth,
+  capitalizeLegend
+} from '../../insights/charts/charts-views';
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 function OpseraBuildDurationBarChart({ persona, date }) {
   const contextType = useContext(AuthContext);

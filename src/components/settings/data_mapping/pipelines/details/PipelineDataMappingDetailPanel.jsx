@@ -4,10 +4,8 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
-import PipelineDataMappingSummaryPanel
-from "components/settings/data_mapping/pipelines/details/PipelineDataMappingSummaryPanel";
-import PipelineDataMappingEditorPanel
-from "components/settings/data_mapping/pipelines/details/PipelineDataMappingEditorPanel";
+import PipelineDataMappingSummaryPanel from "components/settings/data_mapping/pipelines/details/PipelineDataMappingSummaryPanel";
+import PipelineDataMappingEditorPanel from "components/settings/data_mapping/pipelines/details/PipelineDataMappingEditorPanel";
 
 function PipelineDataMappingDetailPanel(
   {

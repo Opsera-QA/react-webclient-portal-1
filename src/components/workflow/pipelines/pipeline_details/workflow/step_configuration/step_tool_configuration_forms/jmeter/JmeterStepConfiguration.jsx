@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {
-  getMissingRequiredFieldsErrorDialog
-} from "../../../../../../../common/toasts/toasts";
+import { getMissingRequiredFieldsErrorDialog } from "../../../../../../../common/toasts/toasts";
 import jmeterPipelineStepConfigurationMetadata from "./jmeterPipelineStepConfigurationMetadata";
 
 import StepConfigBitbucketWorkspaceInput from "../common/inputs/StepConfigBitbucketWorkspaceInput";
@@ -15,8 +13,7 @@ import StepConfigWorkspaceDeleteToggleInput from "../common/inputs/StepConfigWor
 
 import modelHelpers from "components/common/model/modelHelpers";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function JmeterStepConfiguration({

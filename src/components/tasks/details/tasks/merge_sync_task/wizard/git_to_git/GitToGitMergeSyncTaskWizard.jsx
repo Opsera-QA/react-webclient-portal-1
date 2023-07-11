@@ -3,24 +3,15 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import LoadingDialog from "components/common/status_notifications/loading";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import {
-  mergeSyncTaskWizardMetadata
-} from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.metadata";
+import { mergeSyncTaskWizardMetadata } from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
-import MergeSyncTaskWizardInitializationScreen
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/initialization_screen/MergeSyncTaskWizardInitializationScreen";
-import GitToGitMergeSyncTaskWizardConfigurationScreen
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/configuration_screen/git_to_git/GitToGitMergeSyncTaskWizardConfigurationScreen";
+import MergeSyncTaskWizardInitializationScreen from "components/tasks/details/tasks/merge_sync_task/wizard/screens/initialization_screen/MergeSyncTaskWizardInitializationScreen";
+import GitToGitMergeSyncTaskWizardConfigurationScreen from "components/tasks/details/tasks/merge_sync_task/wizard/screens/configuration_screen/git_to_git/GitToGitMergeSyncTaskWizardConfigurationScreen";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import MergeSyncTaskWizardConfirmationScreen
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/MergeSyncTaskWizardConfirmationScreen";
-import {
-  MERGE_SYNC_WIZARD_SCREENS
-} from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
-import GitToGitMergeSyncTaskWizardFileSelectionScreen
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/git_to_git/GitToGitMergeSyncTaskWizardFileSelectionScreen";
-import MergeSyncTaskWizardCommitSelectionScreen
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitSelectionScreen";
+import MergeSyncTaskWizardConfirmationScreen from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/MergeSyncTaskWizardConfirmationScreen";
+import { MERGE_SYNC_WIZARD_SCREENS } from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
+import GitToGitMergeSyncTaskWizardFileSelectionScreen from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/git_to_git/GitToGitMergeSyncTaskWizardFileSelectionScreen";
+import MergeSyncTaskWizardCommitSelectionScreen from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitSelectionScreen";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { TASK_TYPES } from "components/tasks/task.types";
 

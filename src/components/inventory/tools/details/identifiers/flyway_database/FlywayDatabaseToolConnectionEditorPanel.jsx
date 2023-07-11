@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
-import ToolConfigurationEditorPanelContainer
-from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+import ToolConfigurationEditorPanelContainer from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Row from "react-bootstrap/Row";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
@@ -11,12 +10,9 @@ import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import FlywayDatabaseTypeSelectInput from "components/common/list_of_values_input/tools/flyway_database/FlywayDatabaseTypeSelectInput";
 import axios from "axios";
-import {
-  flywayDatabaseToolConnectionMetadata
-} from "components/inventory/tools/details/identifiers/flyway_database/flywayDatabaseToolConnection.metadata";
+import { flywayDatabaseToolConnectionMetadata } from "components/inventory/tools/details/identifiers/flyway_database/flywayDatabaseToolConnection.metadata";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
-import toolIdentifierConnectionCheckConstants
-from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+import toolIdentifierConnectionCheckConstants from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function FlywayDatabaseToolConnectionEditorPanel({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);

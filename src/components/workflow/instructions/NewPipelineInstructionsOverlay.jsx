@@ -3,10 +3,8 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import PipelineInstructionsEditorPanel from "components/workflow/instructions/details/PipelineInstructionsEditorPanel";
-import useGetNewPipelineInstructionsModel
-from "components/workflow/instructions/hooks/useGetNewPipelineInstructionsModel";
-import pipelineInstructionsMetadata
-from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructions.metadata";
+import useGetNewPipelineInstructionsModel from "components/workflow/instructions/hooks/useGetNewPipelineInstructionsModel";
+import pipelineInstructionsMetadata from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructions.metadata";
 
 export default function NewPipelineInstructionsOverlay(
   {

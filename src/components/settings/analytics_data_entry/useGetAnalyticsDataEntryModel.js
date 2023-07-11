@@ -1,8 +1,6 @@
-import analyticsDataEntryMetadata
-from "@opsera/definitions/constants/settings/analytics_data_entries/analyticsDataEntry.metadata";
+import analyticsDataEntryMetadata from "@opsera/definitions/constants/settings/analytics_data_entries/analyticsDataEntry.metadata";
 import {analyticsDataEntryHelper} from "components/settings/analytics_data_entry/analyticsDataEntry.helper";
-import AnalyticsDataEntryRoleHelper
-from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
+import AnalyticsDataEntryRoleHelper from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
 import useGetModelBase from "hooks/model/useGetModelBase";
 import useAnalyticsDataEntryActions from "hooks/settings/insights/analytics_data_entries/useAnalyticsDataEntryActions";
 

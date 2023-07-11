@@ -3,22 +3,16 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import LdapOrganizationAccountEditorPanel from "./LdapOrganizationAccountEditorPanel";
 import {faUsers, faUsersClass, faBuilding, faServer} from "@fortawesome/pro-light-svg-icons";
-import LdapOrganizationAccountSummaryPanel
-from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountSummaryPanel";
+import LdapOrganizationAccountSummaryPanel from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountSummaryPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
-import LdapOrganizationAccountUsersPanel
-from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountUsersPanel";
-import LdapOrganizationAccountGroupsPanel
-from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountGroupsPanel";
-import LdapOrganizationAccountIdpPanel
-from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountIdpPanel";
-import LdapOrganizationAccountDepartmentsPanel
-from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountDepartmentsPanel";
-import LdapOrganizationAccountSiteRolesPanel
-from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountSiteRolesPanel";
+import LdapOrganizationAccountUsersPanel from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountUsersPanel";
+import LdapOrganizationAccountGroupsPanel from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountGroupsPanel";
+import LdapOrganizationAccountIdpPanel from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountIdpPanel";
+import LdapOrganizationAccountDepartmentsPanel from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountDepartmentsPanel";
+import LdapOrganizationAccountSiteRolesPanel from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountSiteRolesPanel";
 
 function LdapOrganizationAccountDetailPanel(
   {

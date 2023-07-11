@@ -3,8 +3,7 @@ import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
-import useAnalyticsPipelineDataMappingActions
-from "hooks/settings/insights/analytics_data_mappings/pipelines/useAnalyticsPipelineDataMappingActions";
+import useAnalyticsPipelineDataMappingActions from "hooks/settings/insights/analytics_data_mappings/pipelines/useAnalyticsPipelineDataMappingActions";
 
 export default function useGetAnalyticsPipelineDataMappingById(analyticsPipelineDataMappingId, handleErrorFunction) {
   const analyticsPipelineDataMappingActions = useAnalyticsPipelineDataMappingActions();

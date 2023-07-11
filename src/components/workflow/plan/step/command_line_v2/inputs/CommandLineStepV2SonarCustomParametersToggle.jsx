@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import CommandLineParameterSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineParameterSelectInput";
+import CommandLineParameterSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineParameterSelectInput";
 
 function CommandLineStepV2SonarCustomParametersToggle({model, setModel, fieldName, disabled}) {
 

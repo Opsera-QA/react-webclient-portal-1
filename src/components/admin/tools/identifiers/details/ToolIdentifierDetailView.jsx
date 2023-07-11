@@ -3,8 +3,7 @@ import { useParams } from "react-router-dom";
 import Model from "core/data_model/model";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
-import ToolIdentifierDetailPanel
-from "components/admin/tools/identifiers/details/ToolIdentifierDetailPanel";
+import ToolIdentifierDetailPanel from "components/admin/tools/identifiers/details/ToolIdentifierDetailPanel";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import toolIdentifierMetadata from "components/admin/tools/identifiers/toolIdentifier.metadata";
 import ActionBarOpseraAdminDeleteButton from "components/common/actions/buttons/ActionBarOpseraAdminDeleteButton";

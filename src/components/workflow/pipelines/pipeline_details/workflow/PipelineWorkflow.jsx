@@ -6,19 +6,12 @@ import ErrorDialog from "components/common/status_notifications/error";
 import PipelineWorkflowItemList from "./PipelineWorkflowItemList";
 import modelHelpers from "components/common/model/modelHelpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {
-  sourceRepositoryConfigurationMetadata
-} from "components/workflow/plan/source/sourceRepositoryConfiguration.metadata";
-import PipelineWorkflowViewConfigurationButton
-from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowViewConfigurationButton";
-import PipelineWorkflowExportWorkflowButton
-from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowExportWorkflowButton";
-import PipelineWorkflowWorkflowEditingToggleButton
-from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowWorkflowEditingToggleButton";
-import PipelineWorkflowSourceRepositoryItem
-from "components/workflow/pipelines/pipeline_details/workflow/source/PipelineWorkflowSourceRepositoryItem";
-import PipelineWorkflowZoomButtons
-from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowZoomButtons";
+import { sourceRepositoryConfigurationMetadata } from "components/workflow/plan/source/sourceRepositoryConfiguration.metadata";
+import PipelineWorkflowViewConfigurationButton from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowViewConfigurationButton";
+import PipelineWorkflowExportWorkflowButton from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowExportWorkflowButton";
+import PipelineWorkflowWorkflowEditingToggleButton from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowWorkflowEditingToggleButton";
+import PipelineWorkflowSourceRepositoryItem from "components/workflow/pipelines/pipeline_details/workflow/source/PipelineWorkflowSourceRepositoryItem";
+import PipelineWorkflowZoomButtons from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowZoomButtons";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const getZoomClass = (val) => {

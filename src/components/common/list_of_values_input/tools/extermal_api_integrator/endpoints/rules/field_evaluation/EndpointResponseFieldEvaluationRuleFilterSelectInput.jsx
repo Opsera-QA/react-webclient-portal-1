@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import apiResponseEvaluationOptionConstants
-from "@opsera/definitions/constants/api/response/apiResponseEvaluationOption.constants";
+import apiResponseEvaluationOptionConstants from "@opsera/definitions/constants/api/response/apiResponseEvaluationOption.constants";
 
 function EndpointResponseFieldEvaluationRuleFilterSelectInput(
   {

@@ -11,18 +11,13 @@ import OverlayWizardButtonContainerBase from "../../../../../temp-library-compon
 import { platformImageConstants } from "../../../../../temp-library-components/image/platformImage.constants";
 import { ImageBase } from "@opsera/react-vanity-set";
 import SelectionCardColumn from "../../../../../temp-library-components/cards/SelectionCardColumn";
-import {
-  platformPipelineTemplateCatalogActions
-} from "../../../catalog/platform/platformPipelineTemplateCatalog.actions";
-import {
-  pipelineTemplateIdentifierConstants
-} from "../../../../admin/pipeline_templates/pipelineTemplateIdentifier.constants";
+import { platformPipelineTemplateCatalogActions } from "../../../catalog/platform/platformPipelineTemplateCatalog.actions";
+import { pipelineTemplateIdentifierConstants } from "../../../../admin/pipeline_templates/pipelineTemplateIdentifier.constants";
 import {buttonLabelHelper} from "../../../../../temp-library-components/helpers/label/button/buttonLabel.helper";
 import {isMongoDbId} from "../../../../common/helpers/mongo/mongoDb.helpers";
 import {pipelineHelper} from "../../../pipeline.helper";
 import {useHistory} from "react-router-dom";
-import PipelineCreationFlowSelectionCardBase
-from "../../../../../temp-library-components/cards/pipelines/PipelineCreationFlowSelectionCardBase";
+import PipelineCreationFlowSelectionCardBase from "../../../../../temp-library-components/cards/pipelines/PipelineCreationFlowSelectionCardBase";
 import {WORKFLOW_OPTION_TYPES} from "../../../../wizard/portal/workflows/flows/WorkflowOptionCardBase";
 
 export const TOOL_CREATION_OPTIONS = {

@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import platformSystemParameterConstants
-from "@opsera/definitions/constants/platform/system_parameters/platformSystemParameter.constants";
-import PlatformSystemParameterTypeSelectInputBase
-from "components/common/list_of_values_input/admin/platform/system-parameters/PlatformSystemParameterTypeSelectInputBase";
+import platformSystemParameterConstants from "@opsera/definitions/constants/platform/system_parameters/platformSystemParameter.constants";
+import PlatformSystemParameterTypeSelectInputBase from "components/common/list_of_values_input/admin/platform/system-parameters/PlatformSystemParameterTypeSelectInputBase";
 
 export default function PlatformSystemParameterTypeSelectInput(
   {

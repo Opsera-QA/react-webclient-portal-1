@@ -6,13 +6,9 @@ import IconBase from "components/common/icons/IconBase";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import mergeSyncTaskWizardActions from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
-import {
-  MERGE_SYNC_WIZARD_SCREENS
-} from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
+import { MERGE_SYNC_WIZARD_SCREENS } from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import {
-  MERGE_SYNC_TASK_JOB_TYPES
-} from "../../../../../../../common/list_of_values_input/tasks/type/merge_sync_task/mergeSyncTaskJob.types";
+import { MERGE_SYNC_TASK_JOB_TYPES } from "../../../../../../../common/list_of_values_input/tasks/type/merge_sync_task/mergeSyncTaskJob.types";
 
 function MergeSyncTaskWizardUpdateConfigurationButton({
   wizardModel,

@@ -6,12 +6,10 @@ import ActionBarBackButton from "components/common/actions/buttons/ActionBarBack
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetPolicyModelById from "hooks/settings/organization_settings/policies/useGetPolicyModelById";
 import {policyHelper} from "components/settings/organization_settings/policies/policy.helper";
-import PolicyManagementSubNavigationBar
-from "components/settings/organization_settings/policies/PolicyManagementSubNavigationBar";
+import PolicyManagementSubNavigationBar from "components/settings/organization_settings/policies/PolicyManagementSubNavigationBar";
 import policyMetadata from "@opsera/definitions/constants/settings/organization-settings/policies/policy.metadata";
 import PolicyDetailPanel from "components/settings/organization_settings/policies/details/PolicyDetailPanel";
-import DeletePolicyActionBarButton
-from "components/settings/organization_settings/policies/action_bar/DeletePolicyActionBarButton";
+import DeletePolicyActionBarButton from "components/settings/organization_settings/policies/action_bar/DeletePolicyActionBarButton";
 
 export default function PolicyDetailView() {
   const { policyId } = useParams();

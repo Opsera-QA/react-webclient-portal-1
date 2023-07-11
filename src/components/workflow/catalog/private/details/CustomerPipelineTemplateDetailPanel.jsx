@@ -3,16 +3,13 @@ import PropTypes from "prop-types";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
-import CustomerPipelineTemplateEditorPanel
-from "components/workflow/catalog/private/details/CustomerPipelineTemplateEditorPanel";
-import CustomerPipelineTemplateSummaryPanel
-from "components/workflow/catalog/private/details/CustomerPipelineTemplateSummaryPanel";
+import CustomerPipelineTemplateEditorPanel from "components/workflow/catalog/private/details/CustomerPipelineTemplateEditorPanel";
+import CustomerPipelineTemplateSummaryPanel from "components/workflow/catalog/private/details/CustomerPipelineTemplateSummaryPanel";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faFileAlt} from "@fortawesome/pro-light-svg-icons";
 import JsonTab from "components/common/tabs/detail_view/JsonTab";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
-import PipelineTemplatePlanOverviewContainer
-from "components/workflow/catalog/overview/PipelineTemplatePlanOverviewContainer";
+import PipelineTemplatePlanOverviewContainer from "components/workflow/catalog/overview/PipelineTemplatePlanOverviewContainer";
 
 export default function CustomerPipelineTemplateDetailPanel(
   {

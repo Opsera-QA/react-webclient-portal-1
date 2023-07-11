@@ -7,7 +7,8 @@ import {
   faFileCode,
   faHandshake,
   faProjectDiagram,
-  faServer, faTable,
+  faServer,
+  faTable,
   faTools
 } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";

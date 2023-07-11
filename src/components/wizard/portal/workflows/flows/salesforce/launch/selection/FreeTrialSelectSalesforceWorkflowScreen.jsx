@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import CreateSalesforceWorkflowWizard
-from "components/wizard/portal/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
+import CreateSalesforceWorkflowWizard from "components/wizard/portal/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { workspaceActions } from "components/workspace/workspace.actions";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import { PIPELINE_TYPES } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import { isTaskTypeOfCategory, TASK_TYPE_CATEGORIES } from "components/tasks/task.types";
-import {
-  LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS,
-} from "components/wizard/portal/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
-import FreeTrialLaunchSalesforceWorkflowScreen
-from "components/wizard/portal/workflows/flows/salesforce/launch/FreeTrialLaunchSalesforceWorkflowScreen";
-import FreeTrialSelectSalesforceWorkflowOptionScreen
-from "components/wizard/portal/workflows/flows/salesforce/launch/selection/FreeTrialSelectSalesforceWorkflowOptionScreen";
+import { LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS } from "components/wizard/portal/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
+import FreeTrialLaunchSalesforceWorkflowScreen from "components/wizard/portal/workflows/flows/salesforce/launch/FreeTrialLaunchSalesforceWorkflowScreen";
+import FreeTrialSelectSalesforceWorkflowOptionScreen from "components/wizard/portal/workflows/flows/salesforce/launch/selection/FreeTrialSelectSalesforceWorkflowOptionScreen";
 
 export default function FreeTrialSelectSalesforceWorkflowScreen(
   {

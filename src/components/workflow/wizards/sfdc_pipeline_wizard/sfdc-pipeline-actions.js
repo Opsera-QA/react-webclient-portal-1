@@ -1,7 +1,6 @@
 import baseActions from "utils/actionsBase";
 import {axiosApiService} from "api/apiService";
-import pipelineActivityLogsActions
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineActivityLogs.actions";
+import pipelineActivityLogsActions from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipelineActivityLogs.actions";
 import {parsePackageXml} from "components/common/helpers/code-helpers";
 
 const sfdcPipelineActions = {};

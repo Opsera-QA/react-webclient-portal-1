@@ -5,17 +5,13 @@ import {faPlus, faTimes} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import RuleTypeSelectInput from "components/common/list_of_values_input/rules/type/RuleTypeSelectInput";
-import RuleValueMultiSelectInput
-from "components/common/list_of_values_input/workflow/wizard/rules/SfdcRuleValueMulitSelectInput";
+import RuleValueMultiSelectInput from "components/common/list_of_values_input/workflow/wizard/rules/SfdcRuleValueMulitSelectInput";
 import SfdcRuleFieldSelectInput from "components/common/list_of_values_input/workflow/wizard/rules/SfdcRuleFieldSelectInput";
-import SfdcRuleComponentTypeMultiSelectInput
-from "components/common/list_of_values_input/workflow/wizard/rules/SfdcRuleComponentTypeMultiSelectInput";
+import SfdcRuleComponentTypeMultiSelectInput from "components/common/list_of_values_input/workflow/wizard/rules/SfdcRuleComponentTypeMultiSelectInput";
 import Model from "core/data_model/model";
 import sfdcRuleMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/rules/sfdc-rule-metadata";
-import GitRuleFieldSelectInput
-from "components/common/list_of_values_input/workflow/wizard/rules/GitRuleFieldSelectInput";
-import SfdcPipelineWizardRuleFieldFilterSelectInput
-from "components/workflow/wizards/sfdc_pipeline_wizard/rules/SfdcPipelineWizardRuleFieldFilterSelectInput";
+import GitRuleFieldSelectInput from "components/common/list_of_values_input/workflow/wizard/rules/GitRuleFieldSelectInput";
+import SfdcPipelineWizardRuleFieldFilterSelectInput from "components/workflow/wizards/sfdc_pipeline_wizard/rules/SfdcPipelineWizardRuleFieldFilterSelectInput";
 import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
 import IconBase from "components/common/icons/IconBase";
 

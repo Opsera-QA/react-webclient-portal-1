@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import {organizationMetadata} from "components/settings/organizations/organization.metadata";
-import OrganizationEditorPanel
-from "components/settings/organizations/organization_detail_view/OrganizationEditorPanel";
+import OrganizationEditorPanel from "components/settings/organizations/organization_detail_view/OrganizationEditorPanel";
 import useGetOrganizationModel from "hooks/settings/insights/organizations/useGetOrganizationModel";
 
 function NewOrganizationOverlay({ isMounted, loadData }) {

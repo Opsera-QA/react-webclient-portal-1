@@ -3,21 +3,14 @@ import PropTypes from "prop-types";
 import { Card, Col, Row } from "react-bootstrap";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
-import UserMappingToolIdentifierSelectInput
-from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingToolIdentifierSelectInput";
-import UserMappingToolSelectInput
-from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingToolSelectInput";
-import UserMappingProjectSelectInput
-from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingProjectSelectInput";
-import UserMappingJiraUserSelectInput
-from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingJiraUserSelectInput";
-import UserMappingOpseraUserSelectInput
-from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingOpseraUserSelectInput";
-import UserMappingSourceControlUserSelectInput
-from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingSourceControlUserSelectInput";
+import UserMappingToolIdentifierSelectInput from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingToolIdentifierSelectInput";
+import UserMappingToolSelectInput from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingToolSelectInput";
+import UserMappingProjectSelectInput from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingProjectSelectInput";
+import UserMappingJiraUserSelectInput from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingJiraUserSelectInput";
+import UserMappingOpseraUserSelectInput from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingOpseraUserSelectInput";
+import UserMappingSourceControlUserSelectInput from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingSourceControlUserSelectInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
-import AnalyticsDataMappingEditWarningMessage
-from "components/settings/data_mapping/AnalyticsDataMappingEditWarningMessage";
+import AnalyticsDataMappingEditWarningMessage from "components/settings/data_mapping/AnalyticsDataMappingEditWarningMessage";
 
 function UserDataMappingEditorPanel(
   {

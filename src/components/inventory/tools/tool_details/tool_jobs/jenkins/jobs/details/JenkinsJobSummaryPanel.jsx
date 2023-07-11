@@ -8,9 +8,7 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import CloseButton from "components/common/buttons/CloseButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import modelHelpers from "components/common/model/modelHelpers";
-import {
-  getJenkinsJobConfigurationMetadata
-} from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/JenkinsJobSubEditorPanel";
+import { getJenkinsJobConfigurationMetadata } from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/JenkinsJobSubEditorPanel";
 import JenkinsJobTypes from "../jenkinsJobTypes.constants";
 import ArrayToTextField from "components/common/fields/text/ArrayToTextField";
 

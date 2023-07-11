@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {
-  getMissingRequiredFieldsErrorDialog
-} from "../../../../../../../common/toasts/toasts";
+import { getMissingRequiredFieldsErrorDialog } from "../../../../../../../common/toasts/toasts";
 import seleniumPipelineStepConfigurationMetadata from "./seleniumPipelineStepConfigurationMetadata";
 import StepConfigBitbucketWorkspaceInput from "../common/inputs/StepConfigBitbucketWorkspaceInput";
 import StepConfigGitBranchInput from "../common/inputs/StepConfigGitBranchInput";
@@ -13,8 +11,7 @@ import StepConfigJenkinsToolInput from "../common/inputs/StepConfigJenkinsToolIn
 
 import modelHelpers from "components/common/model/modelHelpers";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 
 function SeleniumStepConfiguration({
   stepTool,

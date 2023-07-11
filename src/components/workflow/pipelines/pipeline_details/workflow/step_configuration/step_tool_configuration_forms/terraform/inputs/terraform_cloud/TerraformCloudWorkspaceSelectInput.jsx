@@ -4,8 +4,7 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import { AuthContext } from "../../../../../../../../../../contexts/AuthContext";
-import terraformCloudWorkspacesActions
-from "components/inventory/tools/tool_details/tool_jobs/terraform_cloud/workspaces/terraformCloudWorkspaces.actions";
+import terraformCloudWorkspacesActions from "components/inventory/tools/tool_details/tool_jobs/terraform_cloud/workspaces/terraformCloudWorkspaces.actions";
 
 function TerraformCloudWorkspaceSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, toolId}) {
   const toastContext = useContext(DialogToastContext);

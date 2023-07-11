@@ -1,26 +1,17 @@
 import React, { useEffect, useState } from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
-import powershellStepFormMetadata
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/powershell-stepForm-metadata";
+import powershellStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/powershell-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import PowershellStepJenkinsToolSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellStepJenkinsToolSelectInput";
-import PowershellStepJenkinsJobSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellStepJenkinsJobSelectInput";
+import PowershellStepJenkinsToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellStepJenkinsToolSelectInput";
+import PowershellStepJenkinsJobSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellStepJenkinsJobSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import PowershellJenkinsAccountInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellJenkinsAccountInput";
-import PowershellGitRepositoryInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellGitRepositoryInput";
-import PowershellGitBranchInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellGitBranchInput";
-import PowershellBitbucketWorkspaceInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellBitbucketWorkspaceInput";
-import AgentLabelsSelectInput
-from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
+import PowershellJenkinsAccountInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellJenkinsAccountInput";
+import PowershellGitRepositoryInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellGitRepositoryInput";
+import PowershellGitBranchInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellGitBranchInput";
+import PowershellBitbucketWorkspaceInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellBitbucketWorkspaceInput";
+import AgentLabelsSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
 import WorkspaceDeleteToggleInput from "../command_line/inputs/WorkspaceDeleteToggleInput";
 
 function PowershellStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel }) {

@@ -1,32 +1,19 @@
 import React, {useState} from "react";
-import CreateWorkflowWizardCreateGitToolScreenBase
-from "components/wizard/portal/workflows/flows/tools/git/CreateWorkflowWizardCreateGitToolScreenBase";
+import CreateWorkflowWizardCreateGitToolScreenBase from "components/wizard/portal/workflows/flows/tools/git/CreateWorkflowWizardCreateGitToolScreenBase";
 import sfdcConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/sfdc/sfdc-connection-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
-import CreateWorkflowWizardCreateSalesforceToolEditorPanel
-from "components/wizard/portal/workflows/flows/tools/salesforce/CreateWorkflowWizardCreateSalesforceToolEditorPanel";
-import CreateWorkflowWizardPipelineCompletionScreen
-from "components/wizard/portal/workflows/flows/pipeline/completion/CreateWorkflowWizardPipelineCompletionScreen";
+import CreateWorkflowWizardCreateSalesforceToolEditorPanel from "components/wizard/portal/workflows/flows/tools/salesforce/CreateWorkflowWizardCreateSalesforceToolEditorPanel";
+import CreateWorkflowWizardPipelineCompletionScreen from "components/wizard/portal/workflows/flows/pipeline/completion/CreateWorkflowWizardPipelineCompletionScreen";
 import * as PropType from "prop-types";
-import CreateSalesforceOrganizationSyncPipelineInitializationScreen
-from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/initialization/CreateSalesforceOrganizationSyncPipelineInitializationScreen";
-import CreateSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen
-from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/tools/git/connection/CreateSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen";
-import CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen
-from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/tools/salesforce/connection/CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen";
-import CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen
-from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/tools/salesforce/connection/CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen";
-import {
-  salesforceWorkflowFlowConstants
-} from "components/wizard/portal/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
+import CreateSalesforceOrganizationSyncPipelineInitializationScreen from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/initialization/CreateSalesforceOrganizationSyncPipelineInitializationScreen";
+import CreateSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/tools/git/connection/CreateSalesforceOrganizationSyncPipelineTestGitToolConnectionScreen";
+import CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/tools/salesforce/connection/CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceSourceToolConnectionScreen";
+import CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/tools/salesforce/connection/CreateSalesforceOrganizationSyncPipelineWizardTestSalesforceDestinationToolConnectionScreen";
+import { salesforceWorkflowFlowConstants } from "components/wizard/portal/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
 import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
-import CreateWorkflowWizardTestGitToolConnectionScreen
-from "components/wizard/portal/workflows/flows/tools/git/CreateWorkflowWizardTestGitToolConnectionScreen";
-import CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase
-from "components/wizard/portal/workflows/flows/tools/jenkins/CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase";
-import {
-  CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES
-} from "components/wizard/portal/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
+import CreateWorkflowWizardTestGitToolConnectionScreen from "components/wizard/portal/workflows/flows/tools/git/CreateWorkflowWizardTestGitToolConnectionScreen";
+import CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase from "components/wizard/portal/workflows/flows/tools/jenkins/CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase";
+import { CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES } from "components/wizard/portal/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
 import {getTaskTypeLabel} from "../../../../../../../../tasks/task.types";
 
 export const CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS = {

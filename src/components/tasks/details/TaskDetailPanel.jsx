@@ -5,8 +5,7 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faTable, faKey, faComputerClassic} from "@fortawesome/pro-light-svg-icons";
-import TaskSummaryPanel
-from "components/tasks/details/TaskSummaryPanel";
+import TaskSummaryPanel from "components/tasks/details/TaskSummaryPanel";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import TaskActivityPanel from "components/tasks/activity_logs/TaskActivityPanel";
 import { AuthContext } from "contexts/AuthContext";

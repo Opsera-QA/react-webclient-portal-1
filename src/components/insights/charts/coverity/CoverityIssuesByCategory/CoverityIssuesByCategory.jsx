@@ -6,11 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import {
-  faArrowCircleDown,
-  faArrowCircleUp,
-  faMinusCircle,
-} from "@fortawesome/pro-solid-svg-icons";
+import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/pro-solid-svg-icons";
 import Model from "../../../../../core/data_model/model";
 import CoverityIssuesByCategoryActionableMetadata from "./actionable_insights/coverity-actionable-insight-metadata";
 // import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";

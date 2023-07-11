@@ -4,8 +4,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import kpiFilterMetadata from "components/admin/kpi_identifiers/kpi-filter-metadata";
 import KpiIdentifierTable from "components/admin/kpi_identifiers/KpiIdentifierTable";
 import KpiActions from "components/admin/kpi_identifiers/kpi.actions";
-import KpiIdentifierManagementSubNavigationBar
-from "components/admin/kpi_identifiers/KpiIdentifierManagementSubNavigationBar";
+import KpiIdentifierManagementSubNavigationBar from "components/admin/kpi_identifiers/KpiIdentifierManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function KpiIdentifierManagement() {

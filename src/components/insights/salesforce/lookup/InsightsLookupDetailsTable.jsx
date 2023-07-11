@@ -1,9 +1,6 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import {
-  getTableTextColumn,
-  getTableDateTimeColumn, getColumnHeader, getColumnId
-} from "components/common/table/table-column-helpers-v2";
+import { getTableTextColumn, getTableDateTimeColumn, getColumnHeader, getColumnId } from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { insightsLookupDetailsMetadata } from "./insightsLookupDetails.metadata";

@@ -2,62 +2,28 @@ import React from "react";
 import PropTypes from "prop-types";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
-import ToolJobsTab, {
-  JOBS_SUPPORTED_TOOL_IDENTIFIERS,
-} from "components/inventory/tools/details/panel/tab_container/tabs/ToolJobsTab";
-import ToolVaultTab, {
-  VAULT_SUPPORTED_TOOL_IDENTIFIERS,
-} from "components/inventory/tools/details/panel/tab_container/tabs/ToolVaultTab";
-import ToolAccountsTab, {
-  ACCOUNT_SUPPORTED_TOOL_IDENTIFIERS,
-} from "components/inventory/tools/details/panel/tab_container/tabs/ToolAccountsTab";
-import ToolLogsTab, {
-  LOG_SUPPORTED_TOOL_IDENTIFIERS,
-} from "components/inventory/tools/details/panel/tab_container/tabs/ToolLogsTab";
+import ToolJobsTab, { JOBS_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolJobsTab";
+import ToolVaultTab, { VAULT_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolVaultTab";
+import ToolAccountsTab, { ACCOUNT_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolAccountsTab";
+import ToolLogsTab, { LOG_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolLogsTab";
 import ToolAttributesTab from "components/inventory/tools/details/panel/tab_container/tabs/ToolAttributesTab";
-import ToolApplicationsTab, {
-  APPLICATION_SUPPORTED_TOOL_IDENTIFIERS,
-} from "components/inventory/tools/details/panel/tab_container/tabs/ToolApplicationsTab";
-import ToolRepositoriesTab, {
-  REPOSITORY_SUPPORTED_TOOL_IDENTIFIERS,
-} from "components/inventory/tools/details/panel/tab_container/tabs/ToolRepositoriesTab";
+import ToolApplicationsTab, { APPLICATION_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolApplicationsTab";
+import ToolRepositoriesTab, { REPOSITORY_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolRepositoriesTab";
 import ToolConnectionTab from "components/inventory/tools/details/panel/tab_container/tabs/ToolConnectionTab";
-import ToolProjectsTab, {
-  PROJECT_SUPPORTED_TOOL_IDENTIFIERS,
-} from "components/inventory/tools/details/panel/tab_container/tabs/ToolProjectsTab";
-import ToolStorageTab, {
-  STORAGE_SUPPORTED_TOOL_IDENTIFIERS,
-} from "components/inventory/tools/details/panel/tab_container/tabs/ToolStorageTab";
+import ToolProjectsTab, { PROJECT_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolProjectsTab";
+import ToolStorageTab, { STORAGE_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolStorageTab";
 import ToolUsageTab from "components/inventory/tools/details/panel/tab_container/tabs/ToolUsageTab";
-import ToolServiceTypeMappingTab, {
-  SERVICE_MAPPING_SUPPORTED_TOOL_IDENTIFIERS,
-} from "components/inventory/tools/details/panel/tab_container/tabs/ToolServiceTypeMappingTab";
-import ToolPathsTab, {
-  PATHS_TAB_SUPPORTED_TOOL_IDENTIFIERS,
-} from "components/inventory/tools/details/panel/tab_container/tabs/ToolPathsTab";
-import ToolOrganizationsTab, {
-  ORGANIZATIONS_SUPPORTED_TOOL_IDENTIFIERS,
-} from "components/inventory/tools/details/panel/tab_container/tabs/ToolOrganizationsTab";
-import ToolClustersTab, {
-  ARGO_CLUSTER_SUPPORTED_TOOL_IDENTIFIERS,
-} from "components/inventory/tools/details/panel/tab_container/tabs/ToolClustersTab";
-import ToolWorkspacesTab, {
-  WORKSPACES_SUPPORTED_TOOL_IDENTIFIERS,
-} from "components/inventory/tools/details/panel/tab_container/tabs/ToolWorkspacesTab";
+import ToolServiceTypeMappingTab, { SERVICE_MAPPING_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolServiceTypeMappingTab";
+import ToolPathsTab, { PATHS_TAB_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolPathsTab";
+import ToolOrganizationsTab, { ORGANIZATIONS_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolOrganizationsTab";
+import ToolClustersTab, { ARGO_CLUSTER_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolClustersTab";
+import ToolWorkspacesTab, { WORKSPACES_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolWorkspacesTab";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import ToolEndpointsTab, {
-  ENDPOINTS_TAB_SUPPORTED_TOOL_IDENTIFIERS,
-} from "components/inventory/tools/details/panel/tab_container/tabs/ToolEndpointsTab";
-import ToolProvidersTab, {
-  PROVIDERS_SUPPORTED_TOOL_IDENTIFIERS,
-} from "components/inventory/tools/details/panel/tab_container/tabs/ToolProvidersTab";
-import ToolLicenseTab, {
-  LICENSE_SUPPORTED_TOOL_IDENTIFIERS,
-} from "../../../tool_details/ToolLicenseTab";
+import ToolEndpointsTab, { ENDPOINTS_TAB_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolEndpointsTab";
+import ToolProvidersTab, { PROVIDERS_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolProvidersTab";
+import ToolLicenseTab, { LICENSE_SUPPORTED_TOOL_IDENTIFIERS } from "../../../tool_details/ToolLicenseTab";
 import { CONNECTION_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/tool_details/ToolConnectionPanel";
-import ToolDataTransformerRulesMappingTab, {
-  DATA_TRANSFORMER_RULES_SUPPORTED_TOOL_IDENTIFIERS,
-} from "components/inventory/tools/details/panel/tab_container/tabs/ToolDataTransformerRulesMappingTab";
+import ToolDataTransformerRulesMappingTab, { DATA_TRANSFORMER_RULES_SUPPORTED_TOOL_IDENTIFIERS } from "components/inventory/tools/details/panel/tab_container/tabs/ToolDataTransformerRulesMappingTab";
 
 export const TOOL_DETAIL_PANEL_TABS = {
   ACCOUNTS: "accounts",

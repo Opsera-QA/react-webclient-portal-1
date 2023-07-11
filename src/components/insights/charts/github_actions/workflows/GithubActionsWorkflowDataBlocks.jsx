@@ -13,11 +13,7 @@ import { dataPointHelpers } from "components/common/helpers/metrics/data_point/d
 import { GITHUB_ACTIONS_WORKFLOW_METRIC_CONSTANTS } from "components/insights/charts/github_actions/workflows/GithubActionsWorkflow_kpi_datapoint_identifiers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import ThreeLineScoreDataBlock from "../../../../common/metrics/score/ThreeLineScoreDataBlock";
-import {
-  faArrowCircleDown,
-  faArrowCircleUp,
-  faMinusCircle,
-} from "@fortawesome/pro-solid-svg-icons";
+import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/pro-solid-svg-icons";
 import ThreeLinePercentageBlockBase from "../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
 import { getTimeDisplay } from "components/insights/charts/github_actions/github_actions-utility";
 import { AuthContext } from "../../../../../contexts/AuthContext";

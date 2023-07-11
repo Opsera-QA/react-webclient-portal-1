@@ -3,15 +3,13 @@ import PropTypes from "prop-types";
 import {Row} from "react-bootstrap";
 import modelHelpers from "components/common/model/modelHelpers";
 import anchoreScanConnectionMetadata from "./anchore-scan-connection-metadata";
-import ToolConfigurationEditorPanelContainer
-from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+import ToolConfigurationEditorPanelContainer from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Col from "react-bootstrap/Col";
 import {AuthContext} from "contexts/AuthContext";
 import toolsActions from "components/inventory/tools/tools-actions";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
-import toolIdentifierConnectionCheckConstants
-from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+import toolIdentifierConnectionCheckConstants from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function AnchoreScanToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);

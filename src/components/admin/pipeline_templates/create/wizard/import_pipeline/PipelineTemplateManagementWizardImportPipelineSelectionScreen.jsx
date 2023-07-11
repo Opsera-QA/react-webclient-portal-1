@@ -4,8 +4,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import PropTypes from "prop-types";
 import pipelineActions from "components/workflow/pipeline-actions";
 import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
-import ImportPipelineTableCardView
-from "components/admin/pipeline_templates/create/wizard/import_pipeline/ImportPipelineTableCardView";
+import ImportPipelineTableCardView from "components/admin/pipeline_templates/create/wizard/import_pipeline/ImportPipelineTableCardView";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function PipelineTemplateManagementWizardImportPipelineSelectionScreen(

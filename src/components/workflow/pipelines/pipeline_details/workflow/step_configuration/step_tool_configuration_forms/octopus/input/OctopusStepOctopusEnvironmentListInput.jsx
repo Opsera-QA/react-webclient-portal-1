@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import OctopusEnvironmentListInput
-from "components/common/list_of_values_input/tools/octopus/environments/OctopusEnvironmentListInput";
+import OctopusEnvironmentListInput from "components/common/list_of_values_input/tools/octopus/environments/OctopusEnvironmentListInput";
 
 function OctopusStepOctopusEnvironmentListInput({ fieldName, model, setModel, disabled}) {
   const [errorMessage, setErrorMessage] = useState("");

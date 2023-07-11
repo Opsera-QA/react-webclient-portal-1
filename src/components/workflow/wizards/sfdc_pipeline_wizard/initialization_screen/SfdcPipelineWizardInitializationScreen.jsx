@@ -15,10 +15,8 @@ import {parseDate} from "utils/helpers";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import SfdcPipelineWizardFileUploadComponent
-from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardFileUploadComponent";
-import SfdcPipelineWizardPastRunComponent
-from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardPastRunComponent";
+import SfdcPipelineWizardFileUploadComponent from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardFileUploadComponent";
+import SfdcPipelineWizardPastRunComponent from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardPastRunComponent";
 import { parseError } from "components/common/helpers/error-helpers";
 const DataParsingHelper = require("@opsera/persephone/helpers/data/dataParsing.helper");
 

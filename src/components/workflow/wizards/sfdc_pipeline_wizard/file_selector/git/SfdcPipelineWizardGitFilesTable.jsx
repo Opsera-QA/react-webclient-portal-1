@@ -1,17 +1,13 @@
 import React, { useMemo }  from 'react';
 import PropTypes from "prop-types";
-import {
-  getTableDateTimeColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers-v2";
+import { getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers-v2";
 import sfdcTableConstants from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-table-constants";
 import FilterContainer from "components/common/table/FilterContainer";
 import { faCode } from "@fortawesome/pro-solid-svg-icons";
 import InlineSfdcComponentTypesFilter from "components/common/filters/sfdc/sfdc_component/InlineSfdcComponentTypesFilter";
 import VanityTable from "components/common/table/VanityTable";
 import {getField} from "components/common/metadata/metadata-helpers";
-import SfdcPipelineWizardGitRulesInput
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardGitRulesInput";
+import SfdcPipelineWizardGitRulesInput from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardGitRulesInput";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
 const SfdcPipelineWizardGitFilesTable = ({ pipelineWizardModel, setPipelineWizardModel, loadData, gitFiles, isLoading, gitFilesPaginationModel, setGitFilesPaginationModel, filePullCompleted }) => {

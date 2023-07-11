@@ -1,8 +1,7 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
-import analyticsDataEntryMetadata
-from "@opsera/definitions/constants/settings/analytics_data_entries/analyticsDataEntry.metadata";
+import analyticsDataEntryMetadata from "@opsera/definitions/constants/settings/analytics_data_entries/analyticsDataEntry.metadata";
 import AnalyticsDataEntryEditorPanel from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryEditorPanel";
 import useGetAnalyticsDataEntryModel from "hooks/settings/insights/analytics_data_entries/useGetAnalyticsDataEntryModel";
 import useComponentStateReference from "hooks/useComponentStateReference";

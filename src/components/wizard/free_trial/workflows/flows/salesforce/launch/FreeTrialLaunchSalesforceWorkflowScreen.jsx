@@ -3,15 +3,11 @@ import PropTypes from "prop-types";
 import { faRectangleList } from "@fortawesome/pro-light-svg-icons";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import FilterContainer from "components/common/table/FilterContainer";
-import {
-  LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS,
-} from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
+import { LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS } from "components/wizard/free_trial/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
 import BackButton from "components/common/buttons/back/BackButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import WorkspaceWorkflowSelectionCardView
-from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
-import FreeTrialLaunchWorkflowButton
-from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
+import WorkspaceWorkflowSelectionCardView from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
+import FreeTrialLaunchWorkflowButton from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 
 // TODO: Rename

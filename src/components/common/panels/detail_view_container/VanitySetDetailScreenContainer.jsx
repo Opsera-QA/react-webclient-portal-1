@@ -6,8 +6,7 @@ import {getBreadcrumb} from "components/common/navigation/trails";
 import RoleRequirementField from "components/common/fields/access/RoleRequirementField";
 import {meetsRequirements} from "components/common/helpers/role-helpers";
 import AccessRoleLevelField from "components/common/fields/access/AccessRoleLevelField";
-import ScreenContainerBodyLoadingDialog
-from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
+import ScreenContainerBodyLoadingDialog from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function VanitySetDetailScreenContainer(

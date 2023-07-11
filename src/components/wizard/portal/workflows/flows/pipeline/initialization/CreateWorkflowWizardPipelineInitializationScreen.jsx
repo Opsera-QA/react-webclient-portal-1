@@ -4,9 +4,7 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import PropTypes from "prop-types";
-import {
-  platformPipelineTemplateCatalogActions
-} from "components/workflow/catalog/platform/platformPipelineTemplateCatalog.actions";
+import { platformPipelineTemplateCatalogActions } from "components/workflow/catalog/platform/platformPipelineTemplateCatalog.actions";
 
 export default function CreateWorkflowWizardPipelineInitializationScreen(
   {

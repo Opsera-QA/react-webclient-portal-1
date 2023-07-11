@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import tokenActions from "components/user/user_settings/access_tokens/token-actions";
 import AccessTokenLogTable from "components/user/user_settings/access_tokens/details/logs/AccessTokenLogTable";
 import Model from "core/data_model/model";
-import accessTokenLogFilterMetadata
-from "components/user/user_settings/access_tokens/details/logs/access-token-log-filter-metadata";
+import accessTokenLogFilterMetadata from "components/user/user_settings/access_tokens/details/logs/access-token-log-filter-metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function AccessTokenLogPanel({ accessToken }) {

@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
-import azureFunctionsActions
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_functions/azure-functions-step-actions";
+import azureFunctionsActions from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_functions/azure-functions-step-actions";
 import toolsActions from "components/inventory/tools/tools-actions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 

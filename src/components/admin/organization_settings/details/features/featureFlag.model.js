@@ -1,9 +1,7 @@
 import ModelBase from "core/data_model/model.base";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import featureFlagConstants
-from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
-import featureFlagMetadata
-from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.metadata";
+import featureFlagConstants from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
+import featureFlagMetadata from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.metadata";
 
 export default class FeatureFlagModel extends ModelBase {
   constructor(

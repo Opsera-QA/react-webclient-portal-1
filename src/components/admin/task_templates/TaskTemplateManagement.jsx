@@ -3,8 +3,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import TaskTemplateManagementSubNavigationBar
-from "components/admin/task_templates/TaskTemplateManagementSubNavigationBar";
+import TaskTemplateManagementSubNavigationBar from "components/admin/task_templates/TaskTemplateManagementSubNavigationBar";
 import { taskTemplateActions } from "components/admin/task_templates/taskTemplate.actions";
 import TaskTemplatesTable from "components/admin/task_templates/TaskTemplatesTable";
 

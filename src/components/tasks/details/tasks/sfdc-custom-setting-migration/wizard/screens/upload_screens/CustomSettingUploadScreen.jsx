@@ -10,10 +10,7 @@ import { faArrowLeft, faArrowRight } from "@fortawesome/pro-light-svg-icons";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
-import {
-  getMigrationTypeLabel,
-  MIGRATION_TYPES,
-} from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
+import { getMigrationTypeLabel, MIGRATION_TYPES } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 import CustomSettingFileUploadComponent from "./CustomSettingFileUploadComponent";
 import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
 import { parseError } from "../../../../../../../common/helpers/error-helpers";

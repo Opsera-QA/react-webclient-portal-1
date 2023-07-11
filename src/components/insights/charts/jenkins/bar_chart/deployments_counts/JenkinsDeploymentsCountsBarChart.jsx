@@ -14,8 +14,13 @@ import { axiosApiService } from "../../../../../../api/apiService";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ModalLogs from "components/common/modal/modalLogs";
-import { defaultConfig, getColorByData, assignBooleanColors, adjustBarWidth,
-  capitalizeLegend } from "../../../charts-views";
+import {
+  defaultConfig,
+  getColorByData,
+  assignBooleanColors,
+  adjustBarWidth,
+  capitalizeLegend
+} from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 

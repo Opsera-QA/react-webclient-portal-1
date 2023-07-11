@@ -11,13 +11,16 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { neutralColor, goalSuccessColor } from "../../../../charts/charts-views";
-import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth, spaceOutServiceNowCountBySeverityLegend } from "../../../charts-views";
+import {
+  defaultConfig,
+  getColorByData,
+  assignStandardColors,
+  adjustBarWidth,
+  spaceOutServiceNowCountBySeverityLegend
+} from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
-import {
-  METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY,
-  METRIC_THEME_CHART_PALETTE_COLORS,
-} from "components/common/helpers/metrics/metricTheme.helpers";
+import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY, METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import ServiceNowTotalIncidentsDataBlock from "../../data_blocks/ServiceNowTotalIncidentsDataBlock";
 import ServiceNowTotalResolvedIncidentsDataBlock from "../../data_blocks/ServiceNowTotalResolvedIncidentsDatBlock";
 import BadgeBase from "../../../../../common/badges/BadgeBase";

@@ -5,9 +5,7 @@ import StandaloneTextFieldBase from "components/common/fields/text/standalone/St
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import {
-  externalRestApiIntegrationStepHelper
-} from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/externalRestApiIntegrationStep.helper";
+import { externalRestApiIntegrationStepHelper } from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/externalRestApiIntegrationStep.helper";
 
 // TODO: Write metadata rather than constructing standalone components
 export default function ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary(

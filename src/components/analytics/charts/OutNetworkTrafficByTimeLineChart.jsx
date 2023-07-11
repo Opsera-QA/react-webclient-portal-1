@@ -9,8 +9,7 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
-import { defaultConfig, getColor, assignStandardColors,
-  shortenLegend } from "../../insights/charts/charts-views";
+import { defaultConfig, getColor, assignStandardColors, shortenLegend } from "../../insights/charts/charts-views";
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 
 function OutNetworkTrafficByTimeLineChart({ persona, date }) {

@@ -2,8 +2,7 @@ import React from "react";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import {organizationMetadata} from "components/settings/organizations/organization.metadata";
-import OrganizationDetailPanel
-from "components/settings/organizations/organization_detail_view/OrganizationDetailPanel";
+import OrganizationDetailPanel from "components/settings/organizations/organization_detail_view/OrganizationDetailPanel";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
@@ -12,8 +11,7 @@ import useGetOrganizationModelById from "hooks/settings/insights/organizations/u
 import {organizationHelper} from "components/settings/organizations/organization.helper";
 import {useParams} from "react-router-dom";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import DeleteOrganizationActionBarButton
-from "components/settings/organizations/actions/DeleteOrganizationActionBarButton";
+import DeleteOrganizationActionBarButton from "components/settings/organizations/actions/DeleteOrganizationActionBarButton";
 import OrganizationRoleHelper from "@opsera/know-your-role/roles/settings/organizations/organizationRole.helper";
 
 export default function OrganizationDetailView() {

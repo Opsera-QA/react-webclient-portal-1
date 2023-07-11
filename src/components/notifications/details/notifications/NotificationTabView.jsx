@@ -1,22 +1,15 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
-import SlackNotificationEditorPanel
-from "components/workflow/plan/step/notifications/slack/SlackNotificationEditorPanel";
-import MicrosoftTeamsNotificationEditorPanel
-from "components/workflow/plan/step/notifications/teams/MicrosoftTeamsNotificationEditorPanel";
-import JiraNotificationEditorPanel
-from "components/workflow/plan/step/notifications/jira/JiraNotificationEditorPanel";
-import ServiceNowNotificationEditorPanel
-from "components/workflow/plan/step/notifications/servicenow/ServiceNowNotificationEditorPanel";
-import EmailNotificationEditorPanel
-from "components/workflow/plan/step/notifications/email/EmailNotificationEditorPanel";
+import SlackNotificationEditorPanel from "components/workflow/plan/step/notifications/slack/SlackNotificationEditorPanel";
+import MicrosoftTeamsNotificationEditorPanel from "components/workflow/plan/step/notifications/teams/MicrosoftTeamsNotificationEditorPanel";
+import JiraNotificationEditorPanel from "components/workflow/plan/step/notifications/jira/JiraNotificationEditorPanel";
+import ServiceNowNotificationEditorPanel from "components/workflow/plan/step/notifications/servicenow/ServiceNowNotificationEditorPanel";
+import EmailNotificationEditorPanel from "components/workflow/plan/step/notifications/email/EmailNotificationEditorPanel";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-import GChatNotificationEditorPanel
-from "components/workflow/plan/step/notifications/gchat/GChatNotificationEditorPanel";
-import NotificationVerticalTabContainer
-from "components/notifications/details/notifications/NotificationVerticalTabContainer";
+import GChatNotificationEditorPanel from "components/workflow/plan/step/notifications/gchat/GChatNotificationEditorPanel";
+import NotificationVerticalTabContainer from "components/notifications/details/notifications/NotificationVerticalTabContainer";
 import {ORCHESTRATION_NOTIFICATION_TYPES} from "components/common/fields/notifications/notificationTypes.constants";
 
 const tabAndViewContainerHeight =`500px`;

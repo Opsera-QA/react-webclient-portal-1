@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import SalesforceLogSummaryReportPanel
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceLogSummaryReportPanel";
+import SalesforceLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceLogSummaryReportPanel";
 import InformaticaLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica/InformaticaLogSummaryReportPanel";
 import InformaticaIdqLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica_idq/InformaticaIdqLogSummaryReportPanel";
 import GitScraperLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/GitScraperLogSummaryReportPanel";
@@ -12,21 +11,15 @@ import PipelineTaskSummaryPanelBase from "./PipelineTaskSummaryPanelBase";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import SfdxScanLogSummaryReportPanel from "./sfdx_scan/SfdxScanLogSummaryReportPanel";
 import SapCpqLogSummaryReportPanel from "./sap_cpq/SapCpqLogSummaryReportPanel";
-import ProvarLogSummaryReportPanel
-from "../../workflow/step_configuration/step_tool_configuration_forms/provar/report/ProvarLogSummaryReportPanel";
+import ProvarLogSummaryReportPanel from "../../workflow/step_configuration/step_tool_configuration_forms/provar/report/ProvarLogSummaryReportPanel";
 import BoomiLogSummaryReportPanel from "./boomi/BoomiLogSummaryReportPanel";
-import FortifyLogSummaryReportPanel
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/fortify/FortifyLogSummaryReportPanel";
-import CoveritySummaryReportPanel 
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/coverity/CoveritySummaryReportPanel";
-import SonarLogSummaryReportPanel 
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/sonar/SonarLogSummaryReportPanel";
+import FortifyLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/fortify/FortifyLogSummaryReportPanel";
+import CoveritySummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/coverity/CoveritySummaryReportPanel";
+import SonarLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/sonar/SonarLogSummaryReportPanel";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import AnchoreSummaryReportPanel from "./anchore/AnchoreSummaryReportPanel";
-import BlackduckLogSummaryReportPanel 
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/blackduck/BlackduckLogSummaryReportPanel";
-import SnykSummaryReportPanel
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/snyk/SnykSummaryReportPanel";
+import BlackduckLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/blackduck/BlackduckLogSummaryReportPanel";
+import SnykSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/snyk/SnykSummaryReportPanel";
 import AquasecLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/aquasec/AquasecLogSummaryReportPanel";
 
 function PipelineSummaryReportPanel(

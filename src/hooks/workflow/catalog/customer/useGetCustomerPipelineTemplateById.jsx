@@ -3,9 +3,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
-import {
-  customerPipelineTemplateCatalogActions
-} from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
+import { customerPipelineTemplateCatalogActions } from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
 
 export default function useGetCustomerPipelineTemplateById(
   id,

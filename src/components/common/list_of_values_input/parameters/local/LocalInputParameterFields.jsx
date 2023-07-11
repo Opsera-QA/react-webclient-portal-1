@@ -2,10 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
-import LocalInputParameterHeaderField
-from "components/common/list_of_values_input/parameters/local/LocalInputParameterHeaderField";
-import LocalInputParameterInlineField
-from "components/common/list_of_values_input/parameters/local/LocalInputParameterInlineField";
+import LocalInputParameterHeaderField from "components/common/list_of_values_input/parameters/local/LocalInputParameterHeaderField";
+import LocalInputParameterInlineField from "components/common/list_of_values_input/parameters/local/LocalInputParameterInlineField";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 export default function LocalInputParameterFields(

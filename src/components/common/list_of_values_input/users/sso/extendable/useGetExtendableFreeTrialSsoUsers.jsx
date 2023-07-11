@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import {
-  freeTrialUserExpirationActions
-} from "components/settings/trial/user_expiration/freeTrialUserExpiration.actions";
+import { freeTrialUserExpirationActions } from "components/settings/trial/user_expiration/freeTrialUserExpiration.actions";
 
 export default function useGetExtendableFreeTrialSsoUsers(handleErrorFunction) {
   const [isLoading, setIsLoading] = useState(false);

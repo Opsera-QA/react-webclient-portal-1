@@ -1,10 +1,7 @@
 import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import TaskDetailViewer from "components/tasks/activity_logs/details/TaskDetailViewer";
-import {
-  getPipelineActivityStatusColumn, getTableDateTimeColumn,
-  getTableTextColumn, getFormattedLabelWithFunctionColumnDefinition
-} from "components/common/table/table-column-helpers-v2";
+import { getPipelineActivityStatusColumn, getTableDateTimeColumn, getTableTextColumn, getFormattedLabelWithFunctionColumnDefinition } from "components/common/table/table-column-helpers-v2";
 import TableBase from "components/common/table/TableBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {getField} from "components/common/metadata/metadata-helpers";

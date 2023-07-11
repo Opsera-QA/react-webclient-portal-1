@@ -6,11 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import {
-  faArrowCircleDown,
-  faArrowCircleUp,
-  faMinusCircle,
-} from "@fortawesome/pro-solid-svg-icons";
+import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/pro-solid-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import TotalComponentsDeployed from "./data_blocks/TotalComponentsDeployed";
 import AvgComponentsDeployedPerExecution from "./data_blocks/AvgComponentsDeployedPerExecution";

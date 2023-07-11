@@ -16,14 +16,10 @@ import modelHelpers from "components/common/model/modelHelpers";
 import PipelineNotificationTabView from "components/workflow/plan/step/notifications/PipelineNotificationTabView";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import {jiraStepApprovalMetadata} from "components/workflow/plan/step/notifications/jira/jiraStepApproval.metadata";
-import {
-  jiraStepNotificationMetadata
-} from "components/workflow/plan/step/notifications/jira/jiraStepNotification.metadata";
+import { jiraStepNotificationMetadata } from "components/workflow/plan/step/notifications/jira/jiraStepNotification.metadata";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import PipelineStepNotificationConfigurationHelpDocumentation
-from "../../../../common/help/documentation/pipelines/step_configuration/PipelineStepNotificationConfigurationHelpDocumentation";
-import gChatStepNotificationMetadata 
-from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
+import PipelineStepNotificationConfigurationHelpDocumentation from "../../../../common/help/documentation/pipelines/step_configuration/PipelineStepNotificationConfigurationHelpDocumentation";
+import gChatStepNotificationMetadata from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 
 function PipelineStepNotificationEditorPanel(

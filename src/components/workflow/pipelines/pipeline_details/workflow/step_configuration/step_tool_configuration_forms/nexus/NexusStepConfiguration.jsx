@@ -7,8 +7,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import NexusRepoSelectInput from "./inputs/NexusRepoSelectInput";
 import NexusRepoFormatSelectInput from "./inputs/NexusRepoFormatSelectInput";
 import NexusStepJenkinsToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nexus/inputs/NexusStepJenkinsToolSelectInput";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import NexusStepNexusToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/nexus/inputs/NexusStepNexusToolSelectInput";
 import NexusArtifactStepSelectInput from "./inputs/NexusArtifactStepSelectInput";
 import NexusStepTypeSelectInput from "./inputs/NexusStepTypeSelectInput";

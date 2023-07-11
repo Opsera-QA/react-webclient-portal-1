@@ -4,23 +4,14 @@ import FilterContainer from "components/common/table/FilterContainer";
 import { getTableTextColumn, getStaticIconColumn, getTableDurationTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
-import {
-  faDraftingCompass,
-  faExternalLink,
-} from "@fortawesome/pro-light-svg-icons";
+import { faDraftingCompass, faExternalLink } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import {
-  githubActionsWorkflowMetadata,
-} from "components/insights/charts/github_actions/workflows/githubActionsWorkflow.metadata";
-import ExportGithubActionsWorkflowReportPanel
-from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportPanel";
-import ExportGithubActionsWorkflowReportButton
-from "components/insights/charts/github_actions/workflows/export/ExportGithubActionWorkflowReportButton";
-import GithubActionsWorkflowActionableInsightOverlay
-from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
+import { githubActionsWorkflowMetadata } from "components/insights/charts/github_actions/workflows/githubActionsWorkflow.metadata";
+import ExportGithubActionsWorkflowReportPanel from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportPanel";
+import ExportGithubActionsWorkflowReportButton from "components/insights/charts/github_actions/workflows/export/ExportGithubActionWorkflowReportButton";
+import GithubActionsWorkflowActionableInsightOverlay from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 import { Col, Row } from "react-bootstrap";
-import GithubActionsWorkflowWarningMessage
-from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowWarningMessage";
+import GithubActionsWorkflowWarningMessage from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowWarningMessage";
 
 // TODO: Convert to cards
 function GithubActionsBottomTable(

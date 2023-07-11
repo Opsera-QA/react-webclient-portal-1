@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AuditLogActionsMultiSelectCheckboxInput
-from "components/common/audit_log/inputs/AuditLogActionsMultiSelectCheckboxInput";
+import AuditLogActionsMultiSelectCheckboxInput from "components/common/audit_log/inputs/AuditLogActionsMultiSelectCheckboxInput";
 
 export default function InlineAuditLogActionsMultiSelectCheckboxFilter(
   { 

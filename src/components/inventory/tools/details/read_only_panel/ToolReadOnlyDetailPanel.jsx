@@ -7,10 +7,7 @@ import ToolAccountsPanel from "components/inventory/tools/tool_details/ToolAccou
 import ToolAttributesPanel from "components/inventory/tools/tool_details/ToolAttributesPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
-import {
-  faClipboardList,
-  faList,
-} from "@fortawesome/pro-light-svg-icons";
+import { faClipboardList, faList } from "@fortawesome/pro-light-svg-icons";
 import ToolApplicationsPanel from "components/inventory/tools/tool_details/ToolAppliationsPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import ToolSummaryPanel from "components/inventory/tools/tool_details/ToolSummaryPanel";

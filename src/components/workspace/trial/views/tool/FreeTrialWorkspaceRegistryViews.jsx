@@ -3,9 +3,7 @@ import TableCardView from "components/common/table/TableCardView";
 import PropTypes from "prop-types";
 import FreeTrialWorkspaceRegistryTable from "components/workspace/trial/views/tool/FreeTrialWorkspaceRegistryTable";
 import FreeTrialWorkspaceRegistryCardView from "components/workspace/trial/views/tool/FreeTrialWorkspaceRegistryCardView";
-import {
-  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
-} from "components/common/table/FilterContainer";
+import { FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION } from "components/common/table/FilterContainer";
 
 export default function FreeTrialWorkspaceRegistryViews(
   {

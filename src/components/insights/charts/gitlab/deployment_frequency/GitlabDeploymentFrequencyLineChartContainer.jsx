@@ -9,8 +9,7 @@ import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/met
 import IconBase from "components/common/icons/IconBase";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import ChartTooltip from "../../ChartTooltip";
-import GitlabDeploymentFreqActionableMasterTab
-from "./actionable_insights/tabs/GitlabDeploymentFreqActionableMasterTab";
+import GitlabDeploymentFreqActionableMasterTab from "./actionable_insights/tabs/GitlabDeploymentFreqActionableMasterTab";
 
 function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfiguration, dashboardData }) {
   const [maxCharVal, setMaxChartVal] = useState(0);

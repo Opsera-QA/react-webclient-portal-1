@@ -1,15 +1,12 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import {
-  CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS,
-} from "components/wizard/portal/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
+import { CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS } from "components/wizard/portal/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import { faWarning } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
-import FreeTrialConfirmTaskWorkflowDeletionButton
-from "components/wizard/portal/workflows/flows/tasks/deletion/FreeTrialConfirmTaskWorkflowDeletionButton";
+import FreeTrialConfirmTaskWorkflowDeletionButton from "components/wizard/portal/workflows/flows/tasks/deletion/FreeTrialConfirmTaskWorkflowDeletionButton";
 
 export default function FreeTrialDeleteTaskWorkflowConfirmationScreen(
   {

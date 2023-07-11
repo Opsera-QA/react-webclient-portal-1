@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import TerrascanStepActions
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/terrascan-step-actions";
+import TerrascanStepActions from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terrascan/terrascan-step-actions";
 import {faFileContract} from "@fortawesome/pro-light-svg-icons/faFileContract";
 import ListInputBase from "components/common/inputs/list/ListInputBase";
 

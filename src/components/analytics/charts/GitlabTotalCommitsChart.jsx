@@ -9,8 +9,7 @@ import ErrorDialog from "../../common/status_notifications/error";
 import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
-import { defaultConfig, getColorByData, assignStandardColors,
-  shortenPieChartLegend } from "../../insights/charts/charts-views";
+import { defaultConfig, getColorByData, assignStandardColors, shortenPieChartLegend } from "../../insights/charts/charts-views";
 
 function GitlabTotalCommitsChart({ persona, date }) {
   const contextType = useContext(AuthContext);

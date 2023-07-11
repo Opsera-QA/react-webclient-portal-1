@@ -4,9 +4,7 @@ import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {
-  SALESFORCE_ORG_SYNC_ACTIONABLE_INSIGHT_SCREENS,
-} from "./SalesforceOrgSyncActionableInsightOverlay";
+import { SALESFORCE_ORG_SYNC_ACTIONABLE_INSIGHT_SCREENS } from "./SalesforceOrgSyncActionableInsightOverlay";
 
 export default function SalesforceOrgSyncActionableInsightSubNavigationBar(
   {

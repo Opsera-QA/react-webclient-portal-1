@@ -5,8 +5,7 @@ import RoleHelper from "@opsera/know-your-role/roles/role.helper";
 import OwnershipTransferOverlayBase from "components/common/overlays/center/ownership/OwnershipTransferOverlayBase";
 import { useHistory } from "react-router-dom";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import OwnershipTransferConfirmationOverlay
-from "components/common/overlays/center/ownership/OwnershipTransferConfirmationOverlay";
+import OwnershipTransferConfirmationOverlay from "components/common/overlays/center/ownership/OwnershipTransferConfirmationOverlay";
 
 export default function ToolOwnershipTransferOverlay(
   {

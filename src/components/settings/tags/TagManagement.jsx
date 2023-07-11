@@ -10,9 +10,7 @@ import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.he
 import TagFilterOverlay from "components/settings/tags/TagFilterOverlay";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 import TableCardView from "components/common/table/TableCardView";
-import {
-  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
-} from "components/common/table/FilterContainer";
+import { FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION } from "components/common/table/FilterContainer";
 
 export default function TagManagement() {
   const {

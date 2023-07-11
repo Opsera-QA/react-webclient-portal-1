@@ -4,13 +4,9 @@ import { faFileCode } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import { getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
-import {
-  MERGE_SYNC_TASK_WIZARD_FILE_SELECTOR_CONTAINER_HEIGHTS
-} from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/mergeSyncTaskWizardFileSelectorContainer.heights";
+import { MERGE_SYNC_TASK_WIZARD_FILE_SELECTOR_CONTAINER_HEIGHTS } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/mergeSyncTaskWizardFileSelectorContainer.heights";
 import { getField } from "components/common/metadata/metadata-helpers";
-import {
-  salesforceToGitSourceCommitFileMetadata
-} from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/salesforce_to_git/salesforceToGitSourceCommitFile.metadata";
+import { salesforceToGitSourceCommitFileMetadata } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/salesforce_to_git/salesforceToGitSourceCommitFile.metadata";
 
 const SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable = ({
   sourceCommitList,

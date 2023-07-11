@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RoleRestrictedGcpAccountToolSelectInput
-from "components/common/list_of_values_input/tools/gcp/tool/RoleRestrictedGcpAccountToolSelectInput";
+import RoleRestrictedGcpAccountToolSelectInput from "components/common/list_of_values_input/tools/gcp/tool/RoleRestrictedGcpAccountToolSelectInput";
 
 function PackerGcpToolSelectInput({ fieldName, model, setModel, disabled, textField, valueField}) {
 

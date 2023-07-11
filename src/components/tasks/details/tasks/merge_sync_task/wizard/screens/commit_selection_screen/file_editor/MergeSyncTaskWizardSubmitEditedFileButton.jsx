@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import { faCheckSquare, faSave, faExclamationTriangle } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
-import mergeSyncTaskWizardActions
-from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
+import mergeSyncTaskWizardActions from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { xmlHelpers } from "utils/xml.helper";
 import { hasStringValue } from "components/common/helpers/string-helpers";

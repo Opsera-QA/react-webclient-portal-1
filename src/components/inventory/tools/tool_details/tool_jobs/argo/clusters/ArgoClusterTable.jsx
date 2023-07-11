@@ -5,8 +5,7 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import CreateArgoClusterOverlay
-from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/CreateArgoClusterOverlay";
+import CreateArgoClusterOverlay from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/CreateArgoClusterOverlay";
 import {getTableTextColumn, getConnectionStatus} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 

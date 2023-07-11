@@ -3,16 +3,13 @@ import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
 import { freeTrialWorkspaceActions } from "components/workspace/trial/freeTrialWorkspace.actions";
-import WorkspaceWorkflowSelectionCardView
-from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
-import FreeTrialLandingPipelineWorkflowWidget
-from "components/trial/landing/widgets/pipelines/widgets/FreeTrialLandingPipelineWorkflowWidget";
+import WorkspaceWorkflowSelectionCardView from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
+import FreeTrialLandingPipelineWorkflowWidget from "components/trial/landing/widgets/pipelines/widgets/FreeTrialLandingPipelineWorkflowWidget";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import NoRegisteredWorkflowsCard from "components/wizard/free_trial/workflows/NoRegisteredWorkflowsCard";
-import FreeTrialLandingTaskWorkflowWidget
-from "components/trial/landing/widgets/tasks/FreeTrialLandingTaskWorkflowWidget";
+import FreeTrialLandingTaskWorkflowWidget from "components/trial/landing/widgets/tasks/FreeTrialLandingTaskWorkflowWidget";
 import FreeTrialLandingSalesforceWidget from "components/trial/landing/widgets/FreeTrialLandingSalesforceWidget";
 import CreateWorkflowWizard from "components/wizard/free_trial/workflows/CreateWorkflowWizard";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";

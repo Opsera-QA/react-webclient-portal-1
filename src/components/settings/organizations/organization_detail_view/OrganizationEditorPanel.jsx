@@ -5,8 +5,7 @@ import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
-import OrganizationLeaderLdapUserSelectInput
-from "components/common/list_of_values_input/settings/organizations/OrganizationLeaderLdapUserSelectInput";
+import OrganizationLeaderLdapUserSelectInput from "components/common/list_of_values_input/settings/organizations/OrganizationLeaderLdapUserSelectInput";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";

@@ -3,10 +3,8 @@ import PropTypes from "prop-types";
 import {faShareAlt} from "@fortawesome/pro-light-svg-icons";
 import ActionBarPopoverButton from "components/common/actions/buttons/ActionBarPopoverButton";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import CustomerPipelineTemplateOwnershipTransferOverlay
-from "components/workflow/catalog/private/action_bar/CustomerPipelineTemplateOwnershipTransferOverlay";
-import CustomerPipelineTemplateRoleHelper
-from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
+import CustomerPipelineTemplateOwnershipTransferOverlay from "components/workflow/catalog/private/action_bar/CustomerPipelineTemplateOwnershipTransferOverlay";
+import CustomerPipelineTemplateRoleHelper from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
 
 export default function ActionBarTransferCustomerPipelineTemplateButton(
   {

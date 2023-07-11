@@ -1,9 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import OrchestrationNotificationInlineInputBase
-from "components/common/fields/notifications/orchestration/OrchestrationNotificationInlineInputBase";
-import TaskNotificationConfigurationOverlay
-from "components/tasks/details/tasks/notifications/TaskNotificationConfigurationOverlay";
+import OrchestrationNotificationInlineInputBase from "components/common/fields/notifications/orchestration/OrchestrationNotificationInlineInputBase";
+import TaskNotificationConfigurationOverlay from "components/tasks/details/tasks/notifications/TaskNotificationConfigurationOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 
 function TaskOrchestrationNotificationInlineInput(

@@ -1,7 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import ErrorDialog from "../common/status_notifications/error";
-import { ListGroup, Tooltip, OverlayTrigger, Col, Row } from "react-bootstrap";
+import {
+  ListGroup,
+  Tooltip,
+  OverlayTrigger,
+  Col,
+  Row
+} from "react-bootstrap";
 import SummaryChartsView from "./views/pipeline/buildView_developer";
 import ReliabilityMetricsCharts from "./views/reliability/ReliabilityMetricsView";
 import CodeCoverageMetricsView from "./views/sonarCodeCoverageView";

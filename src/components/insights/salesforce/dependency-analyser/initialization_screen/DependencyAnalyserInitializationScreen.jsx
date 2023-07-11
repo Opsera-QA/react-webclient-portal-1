@@ -4,12 +4,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import { Button } from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
-import {
-  faArrowLeft,
-  faFileCode,
-  faStepForward,
-  faSync
-} from "@fortawesome/pro-light-svg-icons";
+import { faArrowLeft, faFileCode, faStepForward, faSync } from "@fortawesome/pro-light-svg-icons";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";

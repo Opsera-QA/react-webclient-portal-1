@@ -5,8 +5,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
-import PlatformSystemParameterTypeField
-from "components/common/list_of_values_input/admin/platform/system-parameters/PlatformSystemParameterTypeField";
+import PlatformSystemParameterTypeField from "components/common/list_of_values_input/admin/platform/system-parameters/PlatformSystemParameterTypeField";
 
 export default function PlatformSystemParameterSummaryPanel(
   { 

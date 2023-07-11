@@ -3,11 +3,9 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import PolicyParametersInput
-from "components/settings/organization_settings/policies/details/inputs/PolicyParametersInput";
+import PolicyParametersInput from "components/settings/organization_settings/policies/details/inputs/PolicyParametersInput";
 import PolicyNameField from "components/common/fields/settings/organization_settings/policies/PolicyNameField";
-import PolicyValueTextInput
-from "components/settings/organization_settings/policies/details/inputs/PolicyValueTextInput";
+import PolicyValueTextInput from "components/settings/organization_settings/policies/details/inputs/PolicyValueTextInput";
 
 export default function PolicyEditorPanelBase(
   {

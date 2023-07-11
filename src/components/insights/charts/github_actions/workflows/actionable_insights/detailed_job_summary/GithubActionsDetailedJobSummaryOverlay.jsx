@@ -4,9 +4,7 @@ import GithubActionsDetailedJobSummaryDataBlocks from "components/insights/chart
 import GithubActionsWorkflowActionableTableOverlay3 from "components/insights/charts/github_actions/workflows/actionable_insights/detailed_job_summary/GithubActionsDetailedJobSummary";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import {
-  GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS
-} from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
+import { GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS } from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 import CloseButton from "components/common/buttons/CloseButton";

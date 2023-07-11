@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import LdapOpseraUserSelectInputBase
-from "components/common/list_of_values_input/admin/accounts/ldap_accounts/LdapOpseraUserSelectInputBase";
+import LdapOpseraUserSelectInputBase from "components/common/list_of_values_input/admin/accounts/ldap_accounts/LdapOpseraUserSelectInputBase";
 
 function LdapOrganizationOpseraUserSelectInput({ model, setModel}) {
   const handleOpseraUserChange = (fieldName, selectedOption) => {

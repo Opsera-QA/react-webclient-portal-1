@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import IndividualObjectAuditLogsDisplayer from "components/common/audit_log/IndividualObjectAuditLogsDisplayer";
-import useGetAuditLogsForPlatformPipelineTemplate
-from "hooks/audit_logs/pipelines/templates/platform/useGetAuditLogsForPlatformPipelineTemplate";
+import useGetAuditLogsForPlatformPipelineTemplate from "hooks/audit_logs/pipelines/templates/platform/useGetAuditLogsForPlatformPipelineTemplate";
 
 export default function PlatformPipelineTemplateAuditLogsDisplayer(
   {

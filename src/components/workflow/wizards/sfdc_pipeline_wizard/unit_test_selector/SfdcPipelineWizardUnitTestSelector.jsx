@@ -1,10 +1,7 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import { Button, Row, Col } from "react-bootstrap";
-import {
-  faArrowLeft,
-  faArrowRight,
-} from "@fortawesome/pro-light-svg-icons";
+import { faArrowLeft, faArrowRight } from "@fortawesome/pro-light-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
@@ -15,8 +12,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import CancelButton from "components/common/buttons/CancelButton";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import axios from "axios";
-import SfdcPipelineWizardManualTestClassSelector
-from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/SfdcPipelineWizardManualTestClassSelector";
+import SfdcPipelineWizardManualTestClassSelector from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/SfdcPipelineWizardManualTestClassSelector";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import IconBase from "components/common/icons/IconBase";
 import {UnitTestStepView} from "./UnitTestStepView";

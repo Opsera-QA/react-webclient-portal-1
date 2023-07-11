@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import LiquibaseStepFormMetadata from "./liquibase-stepForm-metadata";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import LiquibaseToolSelectInput from "./inputs/LiquibaseToolSelectInput";

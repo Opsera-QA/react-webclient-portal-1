@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import useGetLdapOrganizationAccountOrganizationSettings
-from "hooks/ldap/organization_accounts/useGetLdapOrganizationAccountOrganizationSettings";
+import useGetLdapOrganizationAccountOrganizationSettings from "hooks/ldap/organization_accounts/useGetLdapOrganizationAccountOrganizationSettings";
 import OrganizationSettingsModel from "components/admin/organization_settings/organizationSettings.model";
 
 export default function useGetLdapOrganizationAccountOrganizationSettingsModel(

@@ -2,9 +2,7 @@ import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import usersToolMetadata from "components/admin/registered_users/actions/users_tools/users-tool-metadata";
-import {
-  getTableTextColumn
-} from "components/common/table/table-column-helpers";
+import { getTableTextColumn } from "components/common/table/table-column-helpers";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 

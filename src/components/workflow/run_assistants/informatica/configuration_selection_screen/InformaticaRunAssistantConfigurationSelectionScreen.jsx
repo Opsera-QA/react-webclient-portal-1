@@ -1,15 +1,12 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
-import InformaticaRunAssistantConfigurationEditorPanel
-from "components/workflow/run_assistants/informatica/configuration_selection_screen/InformaticaRunAssistantConfigurationEditorPanel";
-import InformaticaRunParameterConfigurationIndexSelectInput
-from "components/workflow/run_assistants/informatica/configuration_selection_screen/inputs/InformaticaRunParameterConfigurationIndexSelectInput";
+import InformaticaRunAssistantConfigurationEditorPanel from "components/workflow/run_assistants/informatica/configuration_selection_screen/InformaticaRunAssistantConfigurationEditorPanel";
+import InformaticaRunParameterConfigurationIndexSelectInput from "components/workflow/run_assistants/informatica/configuration_selection_screen/inputs/InformaticaRunParameterConfigurationIndexSelectInput";
 import Col from "react-bootstrap/Col";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import CancelButton from "components/common/buttons/CancelButton";
-import InformaticaRunAssistantSelectConfigurationButton
-from "components/workflow/run_assistants/informatica/configuration_selection_screen/InformaticaRunAssistantSelectConfigurationButton";
+import InformaticaRunAssistantSelectConfigurationButton from "components/workflow/run_assistants/informatica/configuration_selection_screen/InformaticaRunAssistantSelectConfigurationButton";
 
 const InformaticaRunAssistantConfigurationSelectionScreen = (
   {

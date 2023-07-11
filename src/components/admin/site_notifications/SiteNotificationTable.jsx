@@ -3,12 +3,7 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import siteNotificationMetadata from "components/admin/site_notifications/siteNotification.metadata";
-import {
-  getLimitedTableTextColumn,
-  getTableBooleanIconColumn,
-  getTableDateColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers";
+import { getLimitedTableTextColumn, getTableBooleanIconColumn, getTableDateColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import NewSiteNotificationOverlay from "components/admin/site_notifications/NewSiteNotificationOverlay";
 import {getField} from "components/common/metadata/metadata-helpers";

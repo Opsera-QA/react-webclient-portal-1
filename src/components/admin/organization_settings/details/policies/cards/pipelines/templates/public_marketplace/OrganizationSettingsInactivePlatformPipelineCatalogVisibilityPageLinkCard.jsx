@@ -1,10 +1,8 @@
 import React from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
-import InactivePlatformPipelineCatalogVisibilityPageLinkCardBase
-from "temp-library-components/cards/policies/pipelines/templates/public_marketplace/InactivePlatformPipelineCatalogVisibilityPageLinkCardBase";
-import OrganizationSettingsPolicyActivationConfirmationOverlay
-from "components/admin/organization_settings/details/policies/inactive/OrganizationSettingsPolicyActivationConfirmationOverlay";
+import InactivePlatformPipelineCatalogVisibilityPageLinkCardBase from "temp-library-components/cards/policies/pipelines/templates/public_marketplace/InactivePlatformPipelineCatalogVisibilityPageLinkCardBase";
+import OrganizationSettingsPolicyActivationConfirmationOverlay from "components/admin/organization_settings/details/policies/inactive/OrganizationSettingsPolicyActivationConfirmationOverlay";
 import PropType from "prop-types";
 
 export default function OrganizationSettingsInactivePlatformPipelineCatalogVisibilityPageLinkCard(

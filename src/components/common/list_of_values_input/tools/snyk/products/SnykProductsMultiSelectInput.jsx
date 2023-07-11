@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
-import snykProductOptionConstants
-from "@opsera/definitions/constants/java/service/snyk/snykProductOption.constants";
+import snykProductOptionConstants from "@opsera/definitions/constants/java/service/snyk/snykProductOption.constants";
 
 function SnykProductsMultiSelectInput({
   fieldName,

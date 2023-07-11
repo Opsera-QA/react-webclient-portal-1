@@ -1,10 +1,12 @@
 import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import {faCheckCircle, faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
-import boomiReportMetaData
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/boomi/metadata/boomiReport.metadata";
+import boomiReportMetaData from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/boomi/metadata/boomiReport.metadata";
 import {
-  getColumnHeader, getColumnId, getTableBooleanIconColumn, getTableDateColumn,
+  getColumnHeader,
+  getColumnId,
+  getTableBooleanIconColumn,
+  getTableDateColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";

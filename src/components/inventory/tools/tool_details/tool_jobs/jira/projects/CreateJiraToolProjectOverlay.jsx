@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
-import JiraToolProjectEditorPanel
-from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/JiraToolProjectEditorPanel";
+import JiraToolProjectEditorPanel from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/JiraToolProjectEditorPanel";
 import Model from "core/data_model/model";
 import {jiraToolProjectMetadata} from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jiraToolProject.metadata";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";

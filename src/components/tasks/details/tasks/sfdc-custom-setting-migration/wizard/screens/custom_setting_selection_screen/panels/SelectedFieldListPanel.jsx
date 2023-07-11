@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {
-  faArrowLeft,
-  faMinusCircle,
-  faCode,
-} from "@fortawesome/pro-light-svg-icons";
+import { faArrowLeft, faMinusCircle, faCode } from "@fortawesome/pro-light-svg-icons";
 import ClientSideBottomPaginator from "components/common/pagination/client_side/ClientSideBottomPaginator";
 import { Button } from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";

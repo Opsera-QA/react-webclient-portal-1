@@ -1,9 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {
-  PIPELINE_TYPES,
-} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
+import { PIPELINE_TYPES } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import PipelineCardFooter from "temp-library-components/cards/pipelines/PipelineCardFooter";
 import PipelineCardHeader from "temp-library-components/cards/pipelines/PipelineCardHeader";
 import SelectionIconCard from "components/common/card_containers/SelectionIconCard";

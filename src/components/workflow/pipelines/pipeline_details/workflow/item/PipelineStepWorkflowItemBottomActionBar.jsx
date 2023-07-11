@@ -1,16 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  faIdBadge,
-  faToolbox, faCodeBranch
-} from "@fortawesome/pro-light-svg-icons";
+import { faIdBadge, faToolbox, faCodeBranch } from "@fortawesome/pro-light-svg-icons";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
-import PipelineWorkflowItemActionField
-from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemActionField";
+import PipelineWorkflowItemActionField from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemActionField";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import PipelineWorkflowItemFieldBase
-from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
+import PipelineWorkflowItemFieldBase from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
 
 // TODO: Implement
 export default function PipelineStepWorkflowItemBottomActionBar(

@@ -10,11 +10,9 @@ import { dataParsingHelper } from "components/common/helpers/data/dataParsing.he
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { TASK_TYPES } from "components/tasks/task.types";
 import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "./customSettingMigrationTaskWizard.constants";
-import CustomSettingTaskWizardInitializationScreen
-from "./screens/initialization_screen/CustomSettingTaskWizardInitializationScreen";
+import CustomSettingTaskWizardInitializationScreen from "./screens/initialization_screen/CustomSettingTaskWizardInitializationScreen";
 import { customSettingMigrationTaskWizardMetadata } from "./customSettingMigrationWizard.metadata";
-import CustomSettingTaskWizardConfigScreen
-from "./screens/custom_setting_selection_screen/CustomSettingTaskWizardConfigScreen";
+import CustomSettingTaskWizardConfigScreen from "./screens/custom_setting_selection_screen/CustomSettingTaskWizardConfigScreen";
 import CustomSettingQueryBuilderScreen from "./screens/query_builder_screen/CustomSettingQueryBuilderScreen";
 import CustomSettingTaskConfirmationScreen from "./screens/confirmation_screen/CustomSettingTaskConfirmationScreen";
 import CustomSettingUploadScreen from "./screens/upload_screens/CustomSettingUploadScreen";

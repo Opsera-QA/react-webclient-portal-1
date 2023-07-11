@@ -1,16 +1,14 @@
 import React, { useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
-import EndpointResponseRuleFieldInputRow
-from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/fields/EndpointResponseRuleFieldInputRow";
+import EndpointResponseRuleFieldInputRow from "components/common/inputs/endpoints/endpoint/response/evaluation/rule/fields/EndpointResponseRuleFieldInputRow";
 import {dataParsingHelper} from "components/common/helpers/data/dataParsing.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-import apiResponseEvaluationOptionConstants
-from "@opsera/definitions/constants/api/response/apiResponseEvaluationOption.constants";
+import apiResponseEvaluationOptionConstants from "@opsera/definitions/constants/api/response/apiResponseEvaluationOption.constants";
 
 function EndpointResponseFieldEvaluationRulesInputBase(
   {

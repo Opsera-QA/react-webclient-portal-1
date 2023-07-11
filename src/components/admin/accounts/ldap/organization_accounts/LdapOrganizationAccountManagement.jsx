@@ -2,11 +2,9 @@ import React, {useState, useEffect, useRef} from "react";
 import {useHistory, useParams} from "react-router-dom";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import accountsActions from "components/admin/accounts/accounts-actions";
-import LdapOrganizationAccountsTable
-from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountsTable";
+import LdapOrganizationAccountsTable from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountsTable";
 import axios from "axios";
-import LdapOrganizationAccountManagementSubNavigationBar
-from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountManagementSubNavigationBar";
+import LdapOrganizationAccountManagementSubNavigationBar from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 

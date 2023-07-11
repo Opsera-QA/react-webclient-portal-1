@@ -13,9 +13,7 @@ import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
-import {
-  OPSERA_BUILD_DATA_AND_DEPLOYMENT_STATISTICS_CONSTANTS as constants
-} from "../OpseraBuildAndDeploymentStatistics_kpi_datapoint_identifiers";
+import { OPSERA_BUILD_DATA_AND_DEPLOYMENT_STATISTICS_CONSTANTS as constants } from "../OpseraBuildAndDeploymentStatistics_kpi_datapoint_identifiers";
 import IconBase from "components/common/icons/IconBase";
 
 // TODO: Pass in relevant data and don't use hardcoded data

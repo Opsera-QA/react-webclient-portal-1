@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DashboardTemplateSourceFilterInput
-from "components/common/filters/insights/marketplace/dashboards/DashboardTemplateSourceFilterInput";
+import DashboardTemplateSourceFilterInput from "components/common/filters/insights/marketplace/dashboards/DashboardTemplateSourceFilterInput";
 
 function InlineDashboardTemplateSourceFilterInput({ fieldName, filterModel, setFilterModel, loadData, disabled, className }) {
   const setDataFunction = (fieldName, value) => {

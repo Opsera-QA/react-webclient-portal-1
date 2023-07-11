@@ -9,9 +9,7 @@ import WorkspaceRegistryViews from "components/workspace/views/tool/WorkspaceReg
 import WorkspaceTaskViews from "components/workspace/views/task/WorkspaceTaskViews";
 import WorkspaceItemViews from "components/workspace/views/all/WorkspaceItemViews";
 import WorkspaceVerticalTabContainer from "components/workspace/views/WorkspaceVerticalTabContainer";
-import {
-  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
-} from "components/common/table/FilterContainer";
+import { FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION } from "components/common/table/FilterContainer";
 import InlineWorkspaceItemTypeFilter from "components/common/filters/workspace/type/InlineWorkspaceItemTypeFilter";
 import CreateWorkspaceResourceWizard from "components/wizard/workspace/CreateWorkspaceResourceWizard";
 import PaginationContainer from "components/common/pagination/PaginationContainer";

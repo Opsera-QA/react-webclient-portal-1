@@ -9,8 +9,7 @@ import policyConstants from "@opsera/definitions/constants/settings/organization
 import useGetNewPolicyModel from "hooks/settings/organization_settings/policies/useGetNewPolicyModel";
 import PolicyEditorPanelBase from "components/settings/organization_settings/policies/details/PolicyEditorPanelBase";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import OrganizationSettingsActivatePolicyButton
-from "components/admin/organization_settings/details/policies/inactive/OrganizationSettingsActivatePolicyButton";
+import OrganizationSettingsActivatePolicyButton from "components/admin/organization_settings/details/policies/inactive/OrganizationSettingsActivatePolicyButton";
 
 export default function OrganizationSettingsPolicyActivationConfirmationOverlay(
   {

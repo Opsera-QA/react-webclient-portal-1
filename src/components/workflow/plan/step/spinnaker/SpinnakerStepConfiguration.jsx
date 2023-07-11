@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import spinnakerStepFormMetadata from "components/workflow/plan/step/spinnaker/spinnaker-stepForm-metadata";
-import SpinnakerStepSpinnakerToolSelectInput
-from "components/workflow/plan/step/spinnaker/inputs/SpinnakerStepSpinnakerToolSelectInput";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
-import SpinnakerApplicationNameSelectInput
-from "components/common/list_of_values_input/tools/spinnaker/application/SpinnakerApplicationNameSelectInput";
+import SpinnakerStepSpinnakerToolSelectInput from "components/workflow/plan/step/spinnaker/inputs/SpinnakerStepSpinnakerToolSelectInput";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import SpinnakerApplicationNameSelectInput from "components/common/list_of_values_input/tools/spinnaker/application/SpinnakerApplicationNameSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import SpinnakerPipelineSelectInput
-from "components/common/list_of_values_input/tools/spinnaker/tool/SpinnakerPipelineSelectInput";
+import SpinnakerPipelineSelectInput from "components/common/list_of_values_input/tools/spinnaker/tool/SpinnakerPipelineSelectInput";
 
 function SpinnakerStepConfiguration({ stepTool, parentCallback, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);

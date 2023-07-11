@@ -4,20 +4,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import modelHelpers from "components/common/model/modelHelpers";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import {
-  pipelineStepParameterMetadata
-} from "components/common/list_of_values_input/parameters/pipeline/pipelineStepParameter.metadata";
-import PipelineStepAddLocalParameterButton
-from "components/common/list_of_values_input/parameters/pipeline/PipelineStepAddLocalParameterButton";
+import { pipelineStepParameterMetadata } from "components/common/list_of_values_input/parameters/pipeline/pipelineStepParameter.metadata";
+import PipelineStepAddLocalParameterButton from "components/common/list_of_values_input/parameters/pipeline/PipelineStepAddLocalParameterButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import PipelineStepAddCustomParameterButton
-from "components/common/list_of_values_input/parameters/pipeline/PipelineStepAddCustomParameterButton";
-import PipelineStepInputParameterTypeSelectInput
-from "components/common/list_of_values_input/parameters/pipeline/PipelineStepInputParameterTypeSelectInput";
-import PipelineStepAddEnvironmentVariableParameterButton
-from "components/common/list_of_values_input/parameters/pipeline/PipelineStepAddEnvironmentVariableParameterButton";
-import PipelineStepParameterInputRowInputs
-from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputRowInputs";
+import PipelineStepAddCustomParameterButton from "components/common/list_of_values_input/parameters/pipeline/PipelineStepAddCustomParameterButton";
+import PipelineStepInputParameterTypeSelectInput from "components/common/list_of_values_input/parameters/pipeline/PipelineStepInputParameterTypeSelectInput";
+import PipelineStepAddEnvironmentVariableParameterButton from "components/common/list_of_values_input/parameters/pipeline/PipelineStepAddEnvironmentVariableParameterButton";
+import PipelineStepParameterInputRowInputs from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputRowInputs";
 
 export default function PipelineStepInputParameterInputRow(
   {

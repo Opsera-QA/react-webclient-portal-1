@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {
-  CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS,
-} from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
+import { CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS } from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { freeTrialWorkspaceActions } from "components/workspace/trial/freeTrialWorkspace.actions";
 import { workspaceConstants } from "components/workspace/workspace.constants";
@@ -11,14 +9,10 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import { faWarning } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
-import {
-  pipelineTemplateIdentifierConstants
-} from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
-import WorkspaceWorkflowSelectionCardView
-from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
+import { pipelineTemplateIdentifierConstants } from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
+import WorkspaceWorkflowSelectionCardView from "components/landing/v2/widgets/workspace/card/WorkspaceWorkflowSelectionCardView";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import FreeTrialLaunchWorkflowButton
-from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
+import FreeTrialLaunchWorkflowButton from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
 import DeleteButtonBase from "temp-library-components/button/delete/DeleteButtonBase";
 
 export default function FreeTrialAccountPipelineLimitReachedSalesforceWorkflowScreen(

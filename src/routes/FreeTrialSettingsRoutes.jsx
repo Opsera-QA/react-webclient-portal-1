@@ -1,18 +1,13 @@
 import React from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import FreeTrialUserExpirationManagement
-from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagement";
+import FreeTrialUserExpirationManagement from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagement";
 import RoleRestrictedRoute from "temp-library-components/routes/RoleRestrictedRoute";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
-import FreeTrialUserExpirationUserRevocationScreen
-from "components/settings/trial/user_expiration/revocation/FreeTrialUserExpirationUserRevocationScreen";
-import FreeTrialUserExpirationUserReinstatementScreen
-from "components/settings/trial/user_expiration/reinstatement/FreeTrialUserExpirationUserReinstatementScreen";
-import FreeTrialUserExpirationExtendUserAccessScreen
-from "components/settings/trial/user_expiration/extension/FreeTrialUserExpirationExtendUserAccessScreen";
+import FreeTrialUserExpirationUserRevocationScreen from "components/settings/trial/user_expiration/revocation/FreeTrialUserExpirationUserRevocationScreen";
+import FreeTrialUserExpirationUserReinstatementScreen from "components/settings/trial/user_expiration/reinstatement/FreeTrialUserExpirationUserReinstatementScreen";
+import FreeTrialUserExpirationExtendUserAccessScreen from "components/settings/trial/user_expiration/extension/FreeTrialUserExpirationExtendUserAccessScreen";
 import FreeTrialUserActivityReportUserActivityViewer from "components/settings/trial/activity_report/user_activity/FreeTrialUserActivityReportUserActivityViewer";
-import FreeTrialUserActivityReport
-from "components/settings/trial/activity_report/users/FreeTrialUserActivityReport";
+import FreeTrialUserActivityReport from "components/settings/trial/activity_report/users/FreeTrialUserActivityReport";
 
 export default function FreeTrialSettingsRoutes() {
   const {

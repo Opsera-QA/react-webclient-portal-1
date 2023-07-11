@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
-import ExternalApiIntegratorEndpointsPanel
-from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointsPanel";
+import ExternalApiIntegratorEndpointsPanel from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointsPanel";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 function ToolEndpointsPanel({toolModel}) {

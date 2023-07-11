@@ -12,8 +12,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
 import VaultTextInput from "../../../../../../../common/inputs/text/VaultTextInput";
 import toolsActions from "../../../../../tools-actions";
-import DeleteButtonWithInlineConfirmation
-from "../../../../../../../common/buttons/delete/DeleteButtonWithInlineConfirmation";
+import DeleteButtonWithInlineConfirmation from "../../../../../../../common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import { generateUUID, hasStringValue } from "components/common/helpers/string-helpers";
 
 function AzureApplicationEditorPanel({ azureApplicationData, toolData, applicationId, handleClose }) {

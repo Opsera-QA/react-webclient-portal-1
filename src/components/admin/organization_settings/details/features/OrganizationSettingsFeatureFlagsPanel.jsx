@@ -1,14 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import featureFlagConstants
-from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
-import OrganizationSettingsVnextSidebarLinkFeatureFlagPageLinkCard
-from "components/admin/organization_settings/details/features/analytics/vnext/OrganizationSettingsVnextSidebarLinkFeatureFlagPageLinkCard";
-import OrganizationSettingsAiMlChatbotFeatureFlagPageLinkCard
-from "components/admin/organization_settings/details/features/ai_ml/OrganizationSettingsAiMlChatbotFeatureFlagPageLinkCard";
-import OrganizationSettingsGitCustodianLandingPageFeatureFlagPageLinkCard
-from "components/admin/organization_settings/details/features/analytics/git_custodian/OrganizationSettingsGitCustodianLandingPageFeatureFlagPageLinkCard";
+import featureFlagConstants from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
+import OrganizationSettingsVnextSidebarLinkFeatureFlagPageLinkCard from "components/admin/organization_settings/details/features/analytics/vnext/OrganizationSettingsVnextSidebarLinkFeatureFlagPageLinkCard";
+import OrganizationSettingsAiMlChatbotFeatureFlagPageLinkCard from "components/admin/organization_settings/details/features/ai_ml/OrganizationSettingsAiMlChatbotFeatureFlagPageLinkCard";
+import OrganizationSettingsGitCustodianLandingPageFeatureFlagPageLinkCard from "components/admin/organization_settings/details/features/analytics/git_custodian/OrganizationSettingsGitCustodianLandingPageFeatureFlagPageLinkCard";
 
 export default function OrganizationSettingsFeatureFlagsPanel(
   {

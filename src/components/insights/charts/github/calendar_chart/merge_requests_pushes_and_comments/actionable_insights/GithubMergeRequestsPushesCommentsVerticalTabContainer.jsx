@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-import GithubMergeRequestsPushesCommentsActionableTableOverlay
-from "./GithubMergeRequestsPushesCommentsActionableTableOverlay";
+import GithubMergeRequestsPushesCommentsActionableTableOverlay from "./GithubMergeRequestsPushesCommentsActionableTableOverlay";
 import VanitySetTabViewContainer from "../../../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "../../../../../../common/tabs/vertical_tabs/VanitySetTabView";
 import GithubMergesPushesVerticalTabContainer from "./GithubMergesPushesVerticalTabContainer";

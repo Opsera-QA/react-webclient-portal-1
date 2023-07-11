@@ -8,9 +8,7 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {faExternalLink} from "@fortawesome/pro-light-svg-icons";
 import MergeSyncTaskJiraTicketInfoOverlay from "../details/MergeSyncTaskJiraTicketInfoOverlay";
 import modelHelpers from "components/common/model/modelHelpers";
-import {
-  mergeSyncTaskJiraTicketMetadata
-} from "components/tasks/details/tasks/merge_sync_task/details/mergeSyncTaskJiraTicket.metadata";
+import { mergeSyncTaskJiraTicketMetadata } from "components/tasks/details/tasks/merge_sync_task/details/mergeSyncTaskJiraTicket.metadata";
 
 function MergeSyncTaskJiraIssueSelectInput(
   {

@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DataPointInfoPanel
-from "components/common/metrics/panels/strategic_criteria/data_point/DataPointInfoPanel";
+import DataPointInfoPanel from "components/common/metrics/panels/strategic_criteria/data_point/DataPointInfoPanel";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
 function MetricDataPointsInfoPanel({ dataPoints }) {

@@ -3,11 +3,7 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {useHistory} from "react-router-dom";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
-import {
-  getLimitedTableTextColumn, getRoleAccessColumn,
-  getTableDateColumn,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getLimitedTableTextColumn, getRoleAccessColumn, getTableDateColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 

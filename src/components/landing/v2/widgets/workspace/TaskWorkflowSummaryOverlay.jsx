@@ -12,24 +12,18 @@ import {errorHelpers} from "components/common/helpers/error-helpers";
 import useGetPollingTaskModelById from "hooks/workflow/tasks/useGetPollingTaskModelById";
 import OverlayContainer from "components/common/overlays/OverlayContainer";
 import {orchestrationHelper} from "temp-library-components/helpers/orchestration/orchestration.helper";
-import TaskOrchestrationProgressBarBase
-from "temp-library-components/fields/orchestration/progress/TaskOrchestrationProgressBarBase";
+import TaskOrchestrationProgressBarBase from "temp-library-components/fields/orchestration/progress/TaskOrchestrationProgressBarBase";
 import ViewTaskButton from "temp-library-components/button/task/ViewTaskButton";
 import ViewTaskLogsButton from "temp-library-components/button/task/ViewTaskLogsButton";
 import {PlacementHelperDiv} from "@opsera/react-vanity-set";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import TaskFooter from "components/landing/v2/widgets/workspace/TaskFooter";
-import {
-  getLargeVendorIconComponentFromTaskType
-} from "components/common/helpers/icon-helpers";
+import { getLargeVendorIconComponentFromTaskType } from "components/common/helpers/icon-helpers";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import OrchestrationLastRunDurationDataBlock
-from "temp-library-components/fields/orchestration/metrics/OrchestrationLastRunDurationDataBlock";
-import OrchestrationAverageRunDurationDataBlock
-from "temp-library-components/fields/orchestration/metrics/OrchestrationAverageRunDurationDataBlock";
+import OrchestrationLastRunDurationDataBlock from "temp-library-components/fields/orchestration/metrics/OrchestrationLastRunDurationDataBlock";
+import OrchestrationAverageRunDurationDataBlock from "temp-library-components/fields/orchestration/metrics/OrchestrationAverageRunDurationDataBlock";
 import useGetTaskRunMetricsById from "hooks/workflow/tasks/orchestration/metrics/useGetTaskRunMetricsById";
-import OrchestrationNoRunsDataBlock
-from "temp-library-components/fields/orchestration/metrics/OrchestrationNoRunsDataBlock";
+import OrchestrationNoRunsDataBlock from "temp-library-components/fields/orchestration/metrics/OrchestrationNoRunsDataBlock";
 
 // TODO: Should this be two separate panels?
 export default function TaskWorkflowSummaryOverlay({ taskId }) {

@@ -3,10 +3,8 @@ import SidebarNavigationLinkBase from "components/common/links/sidebar/SidebarNa
 import {faMicrochipAi} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import useGetOrganizationSettingsFeatureFlagModelByName
-from "../../../hooks/settings/organization_settings/feature_flags/useGetOrganizationSettingsFeatureFlagModelByName";
-import featureFlagConstants
-from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
+import useGetOrganizationSettingsFeatureFlagModelByName from "../../../hooks/settings/organization_settings/feature_flags/useGetOrganizationSettingsFeatureFlagModelByName";
+import featureFlagConstants from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
 
 export default function AIMLSidebarNavigationLink({ isSidebarCollapsed, }) {
   const {

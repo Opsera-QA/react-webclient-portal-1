@@ -4,8 +4,7 @@ import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSel
 import { DialogToastContext } from "contexts/DialogToastContext";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
-import sfdcDataTransformerRulesActions
-from "components/inventory/tools/tool_details/tool_jobs/sfdc/data_transformer_rules_mapping/sfdc-data-transformer-rules-actions";
+import sfdcDataTransformerRulesActions from "components/inventory/tools/tool_details/tool_jobs/sfdc/data_transformer_rules_mapping/sfdc-data-transformer-rules-actions";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 // TODO: Rework

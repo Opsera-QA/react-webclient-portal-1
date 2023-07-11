@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
-import ExportGitCustodianVulnerabilitiesDataOverlay
-from "components/insights/gitCustodian/export/ExportGitCustodianVulnerabilitiesDataOverlay";
+import ExportGitCustodianVulnerabilitiesDataOverlay from "components/insights/gitCustodian/export/ExportGitCustodianVulnerabilitiesDataOverlay";
 import ExportDataButtonBase from "../../../common/modal/export_data/ExportDataButtonBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import InfoOverlayBase from "components/common/overlays/info/InfoOverlayBase";

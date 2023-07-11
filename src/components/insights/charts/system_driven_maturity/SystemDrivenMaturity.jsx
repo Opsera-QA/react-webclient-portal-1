@@ -7,10 +7,7 @@ import InfoDialog from "components/common/status_notifications/info";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SystemDrivenMaturityHelpDocumentation from "components/common/help/documentation/insights/charts/SystemDrivenMaturityHelpDocumentation";
-import {
-  getResultFromKpiConfiguration,
-  getUseDashboardTagsFromKpiConfiguration
-} from "../charts-helpers";
+import { getResultFromKpiConfiguration, getUseDashboardTagsFromKpiConfiguration } from "../charts-helpers";
 import doraActions from "../dora/dora.action";
 import SystemDrivenMaturityChart from './SystemDrivenMaturityChart';
 import SystemDrivenMaturityOverlay from "./SystemDrivenMaturityOverlay";

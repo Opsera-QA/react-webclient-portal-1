@@ -9,9 +9,7 @@ import { isMongoDbId } from "../../../../common/helpers/mongo/mongoDb.helpers";
 import { pipelineHelper } from "../../../pipeline.helper";
 import OverlayWizardButtonContainerBase from "../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import ErrorMessageFieldBase from "../../../../common/fields/text/message/ErrorMessageFieldBase";
-import {
-  pipelineTemplateIdentifierConstants
-} from "../../../../admin/pipeline_templates/pipelineTemplateIdentifier.constants";
+import { pipelineTemplateIdentifierConstants } from "../../../../admin/pipeline_templates/pipelineTemplateIdentifier.constants";
 import {useHistory} from "react-router-dom";
 
 const HEIGHT = "700px";

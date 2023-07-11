@@ -29,15 +29,10 @@ import snaplogicTaskConfigurationMetadata from "./tasks/snaplogic/snaplogicTaskC
 import GitscraperSummaryPanel from "./tasks/gitscraper/GitscraperSummaryPanel";
 import gitscraperTaskConfigurationMetadata from "./tasks/gitscraper/gitscraper-metadata";
 import salesforceQuickDeployTaskConfigurationMetadata from "./tasks/sfdc-quick-deploy/salesforceQuickDeployTaskConfigurationMetadata";
-import SalesforceCustomSettingMigrationTaskSummaryCard
-from "./tasks/sfdc-custom-setting-migration/SalesforceCustomSettingMigrationTaskSummaryCard";
-import salesforceCustomSettingMigrationTaskMetadata, {
-  customSettingTaskSalesforceConfigurationMetadata
-} from "./tasks/sfdc-custom-setting-migration/salesforceCustomSettingMigrationTaskMetadata";
+import SalesforceCustomSettingMigrationTaskSummaryCard from "./tasks/sfdc-custom-setting-migration/SalesforceCustomSettingMigrationTaskSummaryCard";
+import salesforceCustomSettingMigrationTaskMetadata, { customSettingTaskSalesforceConfigurationMetadata } from "./tasks/sfdc-custom-setting-migration/salesforceCustomSettingMigrationTaskMetadata";
 import SalesforceDataSeedingTaskSummaryCard from "./tasks/sfdc-data-seeding/SalesforceDataSeedingTaskSummaryCard";
-import dataSeedingMigrationTaskMetadata, {
-  dataSeedingTaskSalesforceConfigurationMetadata
-} from "./tasks/sfdc-data-seeding/salesforceDataSeedingTaskMetadata";
+import dataSeedingMigrationTaskMetadata, { dataSeedingTaskSalesforceConfigurationMetadata } from "./tasks/sfdc-data-seeding/salesforceDataSeedingTaskMetadata";
 
 function TaskConfigurationSummaryPanel({ taskModel }) {
   const getTaskTypeSummaryPanel = () => {

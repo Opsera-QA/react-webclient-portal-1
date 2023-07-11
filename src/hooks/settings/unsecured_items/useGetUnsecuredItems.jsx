@@ -2,11 +2,8 @@ import { useEffect, useState } from "react";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import Model from "core/data_model/model";
-import {
-  unsecureItemsReportFilterMetadata
-} from "components/settings/unsecured_items/unsecuredItemReportFilter.metadata";
-import UnsecuredItemReportRoleHelper
-from "@opsera/know-your-role/roles/settings/unsecured_items/unsecuredItemReportRole.helper";
+import { unsecureItemsReportFilterMetadata } from "components/settings/unsecured_items/unsecuredItemReportFilter.metadata";
+import UnsecuredItemReportRoleHelper from "@opsera/know-your-role/roles/settings/unsecured_items/unsecuredItemReportRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useUnsecuredItemReportActions from "components/settings/unsecured_items/useUnsecuredItemReportActions";
 

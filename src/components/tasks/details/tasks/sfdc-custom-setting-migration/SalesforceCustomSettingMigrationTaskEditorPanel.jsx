@@ -5,13 +5,9 @@ import modelHelpers from "components/common/model/modelHelpers";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SalesforceMergeSyncTaskSalesforceToolSelectInput from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceMergeSyncTaskSalesforceToolSelectInput";
-import salesforceCustomSettingMigrationTaskMetadata, {
-  customSettingTaskSalesforceConfigurationMetadata,
-} from "./salesforceCustomSettingMigrationTaskMetadata";
+import salesforceCustomSettingMigrationTaskMetadata, { customSettingTaskSalesforceConfigurationMetadata } from "./salesforceCustomSettingMigrationTaskMetadata";
 import SalesforceCustomSettingTaskActionSelectInput from "./inputs/SalesforceCustomSettingTaskActionSelectInput";
-import SalesforceCustomSettingTaskTypeSelectInput, {
-  MIGRATION_TYPES,
-} from "./inputs/SalesforceCustomSettingTaskTypeSelectInput";
+import SalesforceCustomSettingTaskTypeSelectInput, { MIGRATION_TYPES } from "./inputs/SalesforceCustomSettingTaskTypeSelectInput";
 
 function SalesforceCustomSettingMigrationTaskEditorPanel({
   taskModel,

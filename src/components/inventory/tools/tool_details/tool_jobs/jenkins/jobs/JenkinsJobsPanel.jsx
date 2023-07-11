@@ -7,8 +7,7 @@ import JenkinsJobMetadata from "components/inventory/tools/tool_details/tool_job
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import jenkinsToolJobActions
-from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/jenkinsToolJob.actions";
+import jenkinsToolJobActions from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/jenkinsToolJob.actions";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
 function JenkinsJobsPanel({ toolData, toolId }) {

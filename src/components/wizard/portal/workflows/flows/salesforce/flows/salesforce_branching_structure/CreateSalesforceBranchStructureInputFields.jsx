@@ -14,13 +14,10 @@ import SalesforceOrganizationSyncTaskRepositorySelectInput from "../../../../../
 import SalesforceOrganizationSyncTaskGitBranchSelectInput from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
 import TextInputBase from "../../../../../../../common/inputs/text/TextInputBase";
 import AgentLabelsSelectInput from "../../../../../../../common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
-import SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
-from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput";
+import SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput";
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
-import SalesforceOrganizationSyncTaskBranchTypeSelectInput
-from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBranchTypeSelectInput";
-import SalesforceOrganizationSyncTaskJenkinsAccountSelectInput
-from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsAccountSelectInput";
+import SalesforceOrganizationSyncTaskBranchTypeSelectInput from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBranchTypeSelectInput";
+import SalesforceOrganizationSyncTaskJenkinsAccountSelectInput from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsAccountSelectInput";
 
 function CreateSalesforceBranchStructureInputFields({
   taskModel,

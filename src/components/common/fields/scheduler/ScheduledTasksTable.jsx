@@ -1,19 +1,12 @@
 import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import { scheduledTaskMetadata } from "components/common/fields/scheduler/scheduledTask.metadata";
-import {
-  getTableActiveBooleanIconColumn,
-  getTableTextColumn,
-  getFormattedLabelWithFunctionColumnDefinition,
-  getTableDateTimeColumnWithTimeZone
-} from "components/common/table/table-column-helpers-v2";
+import { getTableActiveBooleanIconColumn, getTableTextColumn, getFormattedLabelWithFunctionColumnDefinition, getTableDateTimeColumnWithTimeZone } from "components/common/table/table-column-helpers-v2";
 import {faCalendarAlt} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import VanityTable from "components/common/table/VanityTable";
 import { getField } from "components/common/metadata/metadata-helpers";
-import {
-  getSchedulerFrequencyLabel
-} from "components/common/fields/scheduler/frequencies/schedulerFrequency.constants";
+import { getSchedulerFrequencyLabel } from "components/common/fields/scheduler/frequencies/schedulerFrequency.constants";
 import modelHelpers from "components/common/model/modelHelpers";
 
 function ScheduledTasksTable(

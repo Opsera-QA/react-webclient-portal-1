@@ -1,11 +1,7 @@
 import React, { useContext, useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import {
-  getFormattedLabelWithFunctionColumnDefinition,
-  getLimitedTableTextColumn,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getFormattedLabelWithFunctionColumnDefinition, getLimitedTableTextColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faBezierCurve} from "@fortawesome/pro-light-svg-icons";
@@ -14,8 +10,7 @@ import NewKpiDataPointOverlay from "components/admin/kpi_identifiers/details/dat
 import {getDataPointTypeLabel} from "components/common/list_of_values_input/insights/data_points/type/dataPoint.types";
 import kpiDataPointMetadata from "components/common/inputs/metric/data_points/kpiDataPoint.metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import useGetKpiDataPointModel
-from "components/admin/kpi_identifiers/details/data_points/hooks/useGetKpiDataPointModel";
+import useGetKpiDataPointModel from "components/admin/kpi_identifiers/details/data_points/hooks/useGetKpiDataPointModel";
 
 export default function KpiDataPointsTable(
   {

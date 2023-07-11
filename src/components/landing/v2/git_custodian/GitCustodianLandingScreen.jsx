@@ -2,15 +2,11 @@ import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import GitCustodianLandingWelcomeWidget from "components/landing/v2/git_custodian/GitCustodianLandingWelcomeWidget";
-import GitCustodianLandingAccountStatsWidget
-from "components/landing/v2/git_custodian/GitCustodianLandingAccountStatsWidget";
-import GitCustodianLandingMyWorkflowsWidget
-from "components/landing/v2/git_custodian/GitCustodianLandingMyWorkflowsWidget";
+import GitCustodianLandingAccountStatsWidget from "components/landing/v2/git_custodian/GitCustodianLandingAccountStatsWidget";
+import GitCustodianLandingMyWorkflowsWidget from "components/landing/v2/git_custodian/GitCustodianLandingMyWorkflowsWidget";
 import GitCustodian from "components/insights/gitCustodian/GitCustodian";
-import useGetOrganizationSettingsFeatureFlagModelByName
-from "hooks/settings/organization_settings/feature_flags/useGetOrganizationSettingsFeatureFlagModelByName";
-import featureFlagConstants
-from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
+import useGetOrganizationSettingsFeatureFlagModelByName from "hooks/settings/organization_settings/feature_flags/useGetOrganizationSettingsFeatureFlagModelByName";
+import featureFlagConstants from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
 

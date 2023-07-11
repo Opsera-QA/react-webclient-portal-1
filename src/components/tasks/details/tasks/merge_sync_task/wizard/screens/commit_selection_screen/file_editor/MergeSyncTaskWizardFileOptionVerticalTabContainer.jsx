@@ -3,10 +3,7 @@ import PropTypes from "prop-types";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-import {
-  faBracketsCurly,
-  faQuestionCircle,
-} from "@fortawesome/pro-light-svg-icons";
+import { faBracketsCurly, faQuestionCircle } from "@fortawesome/pro-light-svg-icons";
 import { MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
 import SideBySideDeltaDiffField from "components/common/fields/file/diff/delta/SideBySideDeltaDiffField";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";

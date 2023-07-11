@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import PlatformSettingsManagementSubNavigationBar
-from "components/admin/platform_settings/PlatformSettingsManagementSubNavigationBar";
+import PlatformSettingsManagementSubNavigationBar from "components/admin/platform_settings/PlatformSettingsManagementSubNavigationBar";
 import { platformSettingsActions } from "components/admin/platform_settings/platformSettings.actions";
 import PlatformSettingsTable from "components/admin/platform_settings/PlatformSettingsTable";
 

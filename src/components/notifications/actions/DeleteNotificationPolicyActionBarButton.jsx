@@ -7,8 +7,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import {useHistory} from "react-router-dom";
 import useNotificationPolicyActions from "hooks/notification_policies/useNotificationPolicyActions";
 import {notificationPolicyHelper} from "hooks/notification_policies/notificationPolicy.helper";
-import NotificationPolicyRoleHelper
-from "@opsera/know-your-role/roles/notification_policies/notificationPolicyRole.helper";
+import NotificationPolicyRoleHelper from "@opsera/know-your-role/roles/notification_policies/notificationPolicyRole.helper";
 
 export default function DeleteNotificationPolicyActionBarButton(
   {

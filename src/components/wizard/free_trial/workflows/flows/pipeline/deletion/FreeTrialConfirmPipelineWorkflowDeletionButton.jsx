@@ -3,9 +3,7 @@ import PropTypes from "prop-types";
 import DeleteButtonBase from "temp-library-components/button/delete/DeleteButtonBase";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {
-  CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS,
-} from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
+import { CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS } from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import pipelineActions from "components/workflow/pipeline-actions";
 

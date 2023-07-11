@@ -3,14 +3,9 @@ import PropTypes from "prop-types";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import PipelineHelpers from "../../pipelineHelpers";
 import PipelineActions from "../../pipeline-actions";
-import {
-  faRedo,
-  faInfoCircle, faRepeat1, faClock,
-} from "@fortawesome/pro-light-svg-icons";
-import CancelPipelineQueueConfirmationOverlay
-from "components/workflow/pipelines/pipeline_details/queuing/cancellation/CancelPipelineQueueConfirmationOverlay";
-import InformaticaPipelineRunAssistantOverlay
-from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistantOverlay";
+import { faRedo, faInfoCircle, faRepeat1, faClock } from "@fortawesome/pro-light-svg-icons";
+import CancelPipelineQueueConfirmationOverlay from "components/workflow/pipelines/pipeline_details/queuing/cancellation/CancelPipelineQueueConfirmationOverlay";
+import InformaticaPipelineRunAssistantOverlay from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistantOverlay";
 import ApigeePipelineRunAssistantOverlay from "components/workflow/run_assistants/apigee/ApigeePipelineRunAssistantOverlay";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
@@ -22,16 +17,13 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import PipelineStartWizard from "components/workflow/pipelines/pipeline_details/PipelineStartWizard";
 import PipelineActionControlsUserApprovalButton from "components/workflow/pipelines/action_controls/PipelineActionControlsUserApprovalButton";
 import PipelineActionControlsStopButton from "components/workflow/pipelines/action_controls/PipelineActionControlsStopButton";
-import PipelineActionControlsRefreshButton
-from "components/workflow/pipelines/action_controls/PipelineActionControlsRefreshButton";
+import PipelineActionControlsRefreshButton from "components/workflow/pipelines/action_controls/PipelineActionControlsRefreshButton";
 import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
-import PipelineActionControlsStartPipelineButton
-from "components/workflow/pipelines/action_controls/start/PipelineActionControlsStartPipelineButton";
+import PipelineActionControlsStartPipelineButton from "components/workflow/pipelines/action_controls/start/PipelineActionControlsStartPipelineButton";
 import useGetPlatformFeatureFlags from "hooks/platform/useGetPlatformFeatureFlags";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 import {buttonLabelHelper} from "temp-library-components/helpers/label/button/buttonLabel.helper";
-import PipelineActionControlButtonBase
-from "components/workflow/pipelines/action_controls/PipelineActionControlButtonBase";
+import PipelineActionControlButtonBase from "components/workflow/pipelines/action_controls/PipelineActionControlButtonBase";
 import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 import {sleep} from "utils/helpers";
 import PipelineStartConfirmationOverlay from "components/workflow/pipelines/PipelineStartConfirmationOverlay";

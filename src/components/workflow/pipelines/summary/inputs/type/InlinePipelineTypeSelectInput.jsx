@@ -4,10 +4,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 import InlineSelectInputBase from "components/common/inputs/select/inline/InlineSelectInputBase";
-import {
-  getPipelineTypeLabel,
-  PIPELINE_TYPE_SELECT_OPTIONS
-} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
+import { getPipelineTypeLabel, PIPELINE_TYPE_SELECT_OPTIONS } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {pipelineTypeMetadata} from "components/workflow/pipelines/summary/inputs/type/pipelineType.metadata";
 import modelHelpers from "components/common/model/modelHelpers";

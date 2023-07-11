@@ -29,62 +29,45 @@ import TerraformStepConfiguration from "./step_tool_configuration_forms/terrafor
 import TerraformVcsStepConfiguration from "./step_tool_configuration_forms/terraform_vcs/TerraformVcsStepConfiguration";
 import OctopusStepConfiguration from "./step_tool_configuration_forms/octopus/OctopusStepConfiguration";
 import EBSStepConfiguration from "./step_tool_configuration_forms/ebs/EBSStepConfiguration";
-import AnchoreIntegratorStepConfiguration
-from "./step_tool_configuration_forms/anchore_integrator/AnchoreIntegratorStepConfiguration";
+import AnchoreIntegratorStepConfiguration from "./step_tool_configuration_forms/anchore_integrator/AnchoreIntegratorStepConfiguration";
 import ChildPipelineStepConfiguration from "../../../../plan/step/child/ChildPipelineStepConfiguration";
 import MockPipelineStepConfiguration from "./step_tool_configuration_forms/mock/MockPipelineStepConfiguration";
-import ParallelProcessPipelineStepConfiguration
-from "../../../../plan/step/parallel_processor/ParallelProcessPipelineStepConfiguration";
-import ConditionalOperationPipelineStepConfiguration
-from "./step_tool_configuration_forms/conditional_operation/ConditionalOperationPipelineStepConfiguration";
+import ParallelProcessPipelineStepConfiguration from "../../../../plan/step/parallel_processor/ParallelProcessPipelineStepConfiguration";
+import ConditionalOperationPipelineStepConfiguration from "./step_tool_configuration_forms/conditional_operation/ConditionalOperationPipelineStepConfiguration";
 import PowershellStepConfiguration from "./step_tool_configuration_forms/powershell/PowershellStepConfiguration";
 import DotNetStepConfiguration from "./step_tool_configuration_forms/dotnet/DotNetStepConfiguration";
 import DotNetCliStepConfiguration from "./step_tool_configuration_forms/dotnetcli/DotNetCliStepConfiguration";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import NUnitStepConfiguration from "./step_tool_configuration_forms/nunit/NUnitStepConfiguration";
-import JFrogDockerStepConfiguration
-from "./step_tool_configuration_forms/jfrog_artifactory_docker/JFrogDockerStepConfiguration";
+import JFrogDockerStepConfiguration from "./step_tool_configuration_forms/jfrog_artifactory_docker/JFrogDockerStepConfiguration";
 import TerrascanStepConfiguration from "./step_tool_configuration_forms/terrascan/TerrascanStepConfiguration";
-import AzureDevopsStepConfiguration
-from "./step_tool_configuration_forms/azure_devops/AzureDevopsStepToolConfiguration";
+import AzureDevopsStepConfiguration from "./step_tool_configuration_forms/azure_devops/AzureDevopsStepToolConfiguration";
 import KafkaConnectStepConfiguration from "./step_tool_configuration_forms/kafka_connect/KafkaConnectStepConfiguration";
-import AwsEcsDeployStepConfiguration
-from "./step_tool_configuration_forms/aws_ecs_deploy/AwsEcsDeployStepConfiguration";
+import AwsEcsDeployStepConfiguration from "./step_tool_configuration_forms/aws_ecs_deploy/AwsEcsDeployStepConfiguration";
 import CoverityStepConfiguration from "./step_tool_configuration_forms/coverity/CoverityStepConfiguration";
 import AzureAcrPushStepConfiguration from "./step_tool_configuration_forms/azure_acr_push/AzureAcrPushStepConfiguration";
-import JFrogMavenStepConfiguration 
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_maven/JFrogMavenStepConfiguration";
-import AwsLambdaDeployStepConfiguration
-from "./step_tool_configuration_forms/aws_lambda_publish/AwsLambdaDeployStepConfiguration";
+import JFrogMavenStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jfrog_artifactory_maven/JFrogMavenStepConfiguration";
+import AwsLambdaDeployStepConfiguration from "./step_tool_configuration_forms/aws_lambda_publish/AwsLambdaDeployStepConfiguration";
 import MongodbRealmStepConfiguration from "./step_tool_configuration_forms/mongodb_realm/MongodbRealmStepConfiguration";
-import AksServiceDeployStepConfiguration
-from "./step_tool_configuration_forms/aks_service_deploy/AksServiceDeployStepConfiguration";
+import AksServiceDeployStepConfiguration from "./step_tool_configuration_forms/aks_service_deploy/AksServiceDeployStepConfiguration";
 import AzureFunctionsStepConfiguration from "./step_tool_configuration_forms/azure_functions/AzureFunctionsStepConfiguration";
 import AnsibleStepConfiguration from "./step_tool_configuration_forms/ansible/AnsibleStepConfiguration";
-import JenkinsStepConfiguration
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
-import CypressStepConfiguration
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/CypressStepConfiguration";
-import FlywayDatabaseStepConfiguration
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/FlywayDatabaseStepConfiguration";
+import JenkinsStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
+import CypressStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/CypressStepConfiguration";
+import FlywayDatabaseStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/flyway_database/FlywayDatabaseStepConfiguration";
 import InformaticaStepConfiguration from "./step_tool_configuration_forms/informatica/InformaticaStepConfiguration";
-import PmdScanStepConfiguration
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/PmdScanStepConfiguration";
-import AzureZipDeploymentStepConfiguration
-from "./step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfiguration";
+import PmdScanStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/PmdScanStepConfiguration";
+import AzureZipDeploymentStepConfiguration from "./step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfiguration";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import SentinelStepConfiguration from "./step_tool_configuration_forms/sentenial/SentinelStepConfiguration";
 import BuildkiteStepConfiguration from "./step_tool_configuration_forms/buildkite/BuildkiteStepConfiguration";
 import PackerStepConfiguration from "./step_tool_configuration_forms/packer/PackerStepConfiguration";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
-import ExternalRestApiIntegrationStepEditorPanel
-from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationStepEditorPanel";
+import ExternalRestApiIntegrationStepEditorPanel from "components/workflow/plan/step/external_rest_api_integration/ExternalRestApiIntegrationStepEditorPanel";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import AzureScriptsStepEditorPanel from "components/workflow/plan/step/azure_scripts/AzureScriptsStepEditorPanel";
-import GitScraperStepFormConfiguration
-from "./step_tool_configuration_forms/gitscraper/GitScraperStepFormConfiguration";
-import SalesforceScanStepConfiguration
-from "./step_tool_configuration_forms/salesforce_scan/SalesforceScanStepConfiguration";
+import GitScraperStepFormConfiguration from "./step_tool_configuration_forms/gitscraper/GitScraperStepFormConfiguration";
+import SalesforceScanStepConfiguration from "./step_tool_configuration_forms/salesforce_scan/SalesforceScanStepConfiguration";
 import GitOperationStepConfiguration from "./step_tool_configuration_forms/git_operation/GitOperationStepConfiguration";
 import ApigeeStepConfiguration from "./step_tool_configuration_forms/apigee/ApigeeStepConfiguration";
 import SnaplogicStepConfiguration from "./step_tool_configuration_forms/snaplogic/SnaplogicStepConfiguration";
@@ -93,23 +76,19 @@ import ProvarStepToolConfiguration from "./step_tool_configuration_forms/provar/
 import AzureWebappsStepConfiguration from "./step_tool_configuration_forms/azure_webapps/AzureWebappsStepConfiguration";
 import AzureCliStepConfiguration from "./step_tool_configuration_forms/azure_cli/AzureCliStepConfiguration";
 import BoomiStepConfiguration from "./step_tool_configuration_forms/boomi/BoomiStepConfiguration";
-import InformaticaIdqStepConfiguration
-from "./step_tool_configuration_forms/informatica_idq/InformaticaIdqStepConfiguration";
-import LiquibaseStepConfiguration
-from "./step_tool_configuration_forms/liquibase/LiquibaseStepConfiguration";
+import InformaticaIdqStepConfiguration from "./step_tool_configuration_forms/informatica_idq/InformaticaIdqStepConfiguration";
+import LiquibaseStepConfiguration from "./step_tool_configuration_forms/liquibase/LiquibaseStepConfiguration";
 import BlackDuckStepConfiguration from "./step_tool_configuration_forms/black_duck/BlackDuckStepConfiguration";
 import FortifyStepConfiguration from "./step_tool_configuration_forms/fortify/FortifyStepConfiguration";
 import DockerCliStepConfiguration from "./step_tool_configuration_forms/docker_cli/DockerCliStepConfiguration";
 import SnykStepConfiguration from "./step_tool_configuration_forms/snyk/SnykStepConfiguration";
 import AquasecStepConfiguration from "./step_tool_configuration_forms/aquasec/AquasecStepConfiguration";
-import UserActionsPipelineStepEditorPanel
-from "components/workflow/plan/step/user_actions/UserActionsPipelineStepEditorPanel";
+import UserActionsPipelineStepEditorPanel from "components/workflow/plan/step/user_actions/UserActionsPipelineStepEditorPanel";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import HelmStepConfiguration from "./step_tool_configuration_forms/helm/HelmStepConfiguration";
 import ServiceNowStepConfiguration from "./step_tool_configuration_forms/service_now/ServiceNowStepConfiguration";
-import OracleFusionReportMigrationStepConfiguration 
-from "./step_tool_configuration_forms/oracle_fusion_report_migration/OracleFusionReportMigrationStepConfiguration";
+import OracleFusionReportMigrationStepConfiguration from "./step_tool_configuration_forms/oracle_fusion_report_migration/OracleFusionReportMigrationStepConfiguration";
 import CommandLineStepV2EditorPanel from "components/workflow/plan/step/command_line_v2/CommandLineStepV2EditorPanel";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt

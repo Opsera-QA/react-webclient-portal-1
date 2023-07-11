@@ -13,8 +13,7 @@ import SpinnakerToolConfiguration from "./tool_jobs/spinnaker/SpinnakerToolConfi
 import BitbucketToolConfiguration from "./tool_jobs/bitbucket/BitbucketToolConfiguration";
 import AnchoreScanToolConfiguration from "./tool_jobs/anchore_scan/AnchoreScanToolConfiguration";
 import GithubToolConfiguration from "./tool_jobs/github/GithubToolConfiguration";
-import AnchoreIntegratorToolConfiguration
-from "components/inventory/tools/tool_details/tool_jobs/anchore_integrator/AnchoreIntegratorToolConfiguration";
+import AnchoreIntegratorToolConfiguration from "components/inventory/tools/tool_details/tool_jobs/anchore_integrator/AnchoreIntegratorToolConfiguration";
 import AwsToolConfiguration from "./tool_jobs/aws/AwsToolConfiguration";
 import CypressToolConfiguration from "./tool_jobs/cypress/CypressToolConfiguration";
 import GitlabToolConfiguration from "components/inventory/tools/tool_details/tool_jobs/gitlab/GitlabToolConfiguration";
@@ -34,13 +33,10 @@ import TerraformCloudToolConfiguration from "./tool_jobs/terraform_cloud/Terrafo
 import GcpToolConfiguration from "./tool_jobs/gcp/GcpToolConfiguration";
 import BuildkiteToolConfiguration from "./tool_jobs/buildkite/BuildkiteToolConfiguration";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
-import FlywayDatabaseToolConnectionEditorPanel
-from "components/inventory/tools/details/identifiers/flyway_database/FlywayDatabaseToolConnectionEditorPanel";
+import FlywayDatabaseToolConnectionEditorPanel from "components/inventory/tools/details/identifiers/flyway_database/FlywayDatabaseToolConnectionEditorPanel";
 import GithubDeploykeysToolConfigurationPanel from "components/inventory/tools/tool_details/tool_jobs/github_deploykeys/GithubDeploykeysToolConfigurationPanel";
-import ApigeeToolConnectionEditorPanel
-from "components/inventory/tools/details/identifiers/apigee/ApigeeToolConnectionEditorPanel";
-import SnaplogicToolConfiguration
-from "components/inventory/tools/tool_details/tool_jobs/snaplogic/SnaplogicToolConfiguration";
+import ApigeeToolConnectionEditorPanel from "components/inventory/tools/details/identifiers/apigee/ApigeeToolConnectionEditorPanel";
+import SnaplogicToolConfiguration from "components/inventory/tools/tool_details/tool_jobs/snaplogic/SnaplogicToolConfiguration";
 import SapCpqToolConfiguration from "./tool_jobs/sap/SapCpqToolConfiguration";
 import BoomiToolConfiguration from "./tool_jobs/boomi/BoomiToolConfiguration";
 import InformaticaIdqToolConfiguration from "./tool_jobs/informatica_idq/InformaticaIdqToolConfiguration";

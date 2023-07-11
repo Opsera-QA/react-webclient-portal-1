@@ -2,16 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import OpseraInfinityLogoSelectionCardBase
-from "temp-library-components/cards/opsera/OpseraInfinityLogoSelectionCardBase";
+import OpseraInfinityLogoSelectionCardBase from "temp-library-components/cards/opsera/OpseraInfinityLogoSelectionCardBase";
 import GitSelectionCardBase from "temp-library-components/cards/git/GitSelectionCardBase";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
-import WorkspaceResourceOptionCardBase, {
-  WORKSPACE_RESOURCE_TYPES,
-  WORKSPACE_RESOURCE_TYPE_LABELS,
-} from "components/wizard/workspace/WorkspaceResourceOptionCardBase";
+import WorkspaceResourceOptionCardBase, { WORKSPACE_RESOURCE_TYPES, WORKSPACE_RESOURCE_TYPE_LABELS } from "components/wizard/workspace/WorkspaceResourceOptionCardBase";
 import {CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS} from "components/wizard/workspace/CreateWorkspaceResourceWizard";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";

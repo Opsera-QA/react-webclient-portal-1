@@ -3,11 +3,7 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import NewJenkinsJobOverlay from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/NewJenkinsJobOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import {
-  getLimitedTableTextColumn,
-  getTableBooleanIconColumn,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getLimitedTableTextColumn, getTableBooleanIconColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import JenkinsJobMetadata from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/jenkins-job-metadata";
 import FilterContainer from "components/common/table/FilterContainer";

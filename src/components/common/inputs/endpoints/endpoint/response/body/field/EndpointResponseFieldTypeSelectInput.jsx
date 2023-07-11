@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ApiResponseFieldTypeSelectInput
-from "components/common/list_of_values_input/api/response/body/fields/ApiResponseFieldTypeSelectInput";
+import ApiResponseFieldTypeSelectInput from "components/common/list_of_values_input/api/response/body/fields/ApiResponseFieldTypeSelectInput";
 
 function EndpointResponseFieldTypeSelectInput(
   {

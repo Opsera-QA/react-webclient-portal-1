@@ -5,16 +5,12 @@ import Col from "react-bootstrap/Col";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import PipelineTaskStateField from "components/common/fields/workflow/pipelines/PipelineTaskStateField";
-import PipelineTaskSummaryMessageField
-from "components/common/fields/pipelines/activity/PipelineTaskSummaryMessageField";
+import PipelineTaskSummaryMessageField from "components/common/fields/pipelines/activity/PipelineTaskSummaryMessageField";
 import DateTimeField from "components/common/fields/date/DateTimeField";
-import SalesforceLogSummaryReportPanel
-from "../../../workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceLogSummaryReportPanel";
+import SalesforceLogSummaryReportPanel from "../../../workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceLogSummaryReportPanel";
 import GitscraperLogSummaryReportPanel from "../../details/tasks/gitscraper/GitscraperLogSummaryPanel";
-import CustomSettingMigrationLogSummaryReportPanel
-from "../../details/tasks/sfdc-custom-setting-migration/report/CustomSettingMigrationLogSummaryReportPanel";
-import DataSeedingLogSummaryReportPanel
-from "../../details/tasks/sfdc-data-seeding/report/DataSeedingLogSummaryReportPanel";
+import CustomSettingMigrationLogSummaryReportPanel from "../../details/tasks/sfdc-custom-setting-migration/report/CustomSettingMigrationLogSummaryReportPanel";
+import DataSeedingLogSummaryReportPanel from "../../details/tasks/sfdc-data-seeding/report/DataSeedingLogSummaryReportPanel";
 
 function TaskActivitySummaryPanel({ taskActivityLogModel }) {
 

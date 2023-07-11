@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {
-  faQuestionCircle,
-} from "@fortawesome/pro-light-svg-icons";
+import { faQuestionCircle } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import CancelButton from "components/common/buttons/CancelButton";

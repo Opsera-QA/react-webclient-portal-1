@@ -5,15 +5,11 @@ import InfoContainer from "components/common/containers/InfoContainer";
 import InputContainer from "components/common/inputs/InputContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import PipelineStepParameterInputBaseHelpText
-from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBaseHelpText";
-import LocalInputParameterFields
-from "components/common/list_of_values_input/parameters/local/LocalInputParameterFields";
-import EditableParameterMappingInlineFields
-from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingInlineFields";
+import PipelineStepParameterInputBaseHelpText from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBaseHelpText";
+import LocalInputParameterFields from "components/common/list_of_values_input/parameters/local/LocalInputParameterFields";
+import EditableParameterMappingInlineFields from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingInlineFields";
 import GlobalParameterFields from "components/common/list_of_values_input/parameters/global/GlobalParameterFields";
-import PipelineStepInputParameterInputRow
-from "components/common/list_of_values_input/parameters/pipeline/PipelineStepInputParameterInputRow";
+import PipelineStepInputParameterInputRow from "components/common/list_of_values_input/parameters/pipeline/PipelineStepInputParameterInputRow";
 
 export default function PipelineStepParameterInputBase(
   {

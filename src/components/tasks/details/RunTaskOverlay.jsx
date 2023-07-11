@@ -10,8 +10,7 @@ import ec2ClusterCreationTaskConfigurationMetadata from "components/tasks/detail
 import ec2ServiceCreationTaskConfigurationMetadata from "components/tasks/details/tasks/ecs-service-creation/ecs-service-creation-git-task-configuration";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 import {TASK_TYPES} from "components/tasks/task.types";
-import azureAksClusterTaskConfigurationMetadata
-from "components/tasks/details/tasks/azure-cluster-creation/azure-cluster-metadata";
+import azureAksClusterTaskConfigurationMetadata from "components/tasks/details/tasks/azure-cluster-creation/azure-cluster-metadata";
 import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import salesforceQuickDeployTaskConfigurationMetadata from "components/tasks/details/tasks/sfdc-quick-deploy/salesforceQuickDeployTaskConfigurationMetadata";
 import SalesforceQuickDeployTaskSalesforceToolSelectInput from "./tasks/sfdc-quick-deploy/inputs/SalesforceQuickDeployTaskSalesforceToolSelectInput";

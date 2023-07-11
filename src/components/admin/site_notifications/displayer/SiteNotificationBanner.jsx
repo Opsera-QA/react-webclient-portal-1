@@ -1,11 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  faCheckCircle,
-  faExclamationCircle,
-  faExclamationSquare,
-  faExclamationTriangle
-} from "@fortawesome/pro-light-svg-icons";
+import { faCheckCircle, faExclamationCircle, faExclamationSquare, faExclamationTriangle } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
 function SiteNotificationBanner({ siteNotification }) {

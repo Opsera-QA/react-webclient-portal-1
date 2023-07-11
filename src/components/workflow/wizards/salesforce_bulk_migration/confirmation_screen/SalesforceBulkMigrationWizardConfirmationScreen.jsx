@@ -6,8 +6,7 @@ import CancelButton from "components/common/buttons/CancelButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import {SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS} from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationWizard";
 import BackButton from "components/common/buttons/back/BackButton";
-import SalesforceBulkMigrationTriggerTaskButton
-from "components/workflow/wizards/salesforce_bulk_migration/confirmation_screen/SalesforceBulkMigrationTriggerTaskButton";
+import SalesforceBulkMigrationTriggerTaskButton from "components/workflow/wizards/salesforce_bulk_migration/confirmation_screen/SalesforceBulkMigrationTriggerTaskButton";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import ListInputBase from "components/common/inputs/list/ListInputBase";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";

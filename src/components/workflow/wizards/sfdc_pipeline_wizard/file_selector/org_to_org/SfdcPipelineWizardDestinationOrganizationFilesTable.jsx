@@ -1,10 +1,8 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
-import SfdcPipelineWizardOrganizationFilesTableBase
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/org_to_org/SfdcPipelineWizardOrganizationFilesTableBase";
+import SfdcPipelineWizardOrganizationFilesTableBase from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/org_to_org/SfdcPipelineWizardOrganizationFilesTableBase";
 import Model from "core/data_model/model";
-import sfdcComponentFilterMetadata
-from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-component-filter-metadata";
+import sfdcComponentFilterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-component-filter-metadata";
 import axios from "axios";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";

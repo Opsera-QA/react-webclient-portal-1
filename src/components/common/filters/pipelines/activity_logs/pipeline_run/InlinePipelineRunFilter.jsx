@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineRunNumberInput
-from "components/common/inputs/number/pipelines/PipelineRunNumberInput";
+import PipelineRunNumberInput from "components/common/inputs/number/pipelines/PipelineRunNumberInput";
 
 function InlinePipelineRunNumberInput({ model, setModel, fieldName, maximumRunCount, className, loadData, showLabel}) {
   const setDataFunction = (fieldName, value) => {

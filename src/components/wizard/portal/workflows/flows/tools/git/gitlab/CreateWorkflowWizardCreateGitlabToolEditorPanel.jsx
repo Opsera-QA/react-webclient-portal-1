@@ -11,10 +11,7 @@ import CreateSalesforceWorkflowWizardSelectToolInputBase from "components/wizard
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { Form } from "react-bootstrap";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
-import {
-  faArrowRight,
-  faTriangleExclamation,
-} from "@fortawesome/pro-light-svg-icons";
+import { faArrowRight, faTriangleExclamation } from "@fortawesome/pro-light-svg-icons";
 import CreateWorkflowWizardRegisterToolHeaderText from "components/wizard/portal/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import VanityButtonBase from "../../../../../../../../temp-library-components/button/VanityButtonBase";

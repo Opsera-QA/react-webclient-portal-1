@@ -1,4 +1,10 @@
-import React, {useEffect, useState, useRef, useContext, useMemo} from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useContext,
+  useMemo
+} from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Row, Col } from "react-bootstrap";
@@ -18,8 +24,7 @@ import VanitySetTabAndViewContainer from "../../../../../../common/tabs/vertical
 import VanitySetVerticalTabContainer from "../../../../../../common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetVerticalTab from "../../../../../../common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetTabView from "../../../../../../common/tabs/vertical_tabs/VanitySetTabView";import VanitySetTabViewContainer from "../../../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
-import SuccessExecutionsActionableInsightsMetaData
-from "../SuccessExecutions/SuccessExecutionsActionableInsightsMetaData";
+import SuccessExecutionsActionableInsightsMetaData from "../SuccessExecutions/SuccessExecutionsActionableInsightsMetaData";
 import {DialogToastContext} from "../../../../../../../contexts/DialogToastContext";
 import FailedExecutionsDetailedActionableInsights from "./FailedExecutionsDetailedActionableInsights";
 

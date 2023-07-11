@@ -1,9 +1,7 @@
 import React from "react";
 import PropType from "prop-types";
-import OrganizationSettingsFeatureFlagsPageLinkCardBase
-from "components/admin/organization_settings/details/features/OrganizationSettingsFeatureFlagsPageLinkCardBase";
-import OrganizationSettingsInactiveAiMlChatbotFeatureFlagPageLinkCard
-from "components/admin/organization_settings/details/features/ai_ml/OrganizationSettingsInactiveAiMlChatbotFeatureFlagPageLinkCard";
+import OrganizationSettingsFeatureFlagsPageLinkCardBase from "components/admin/organization_settings/details/features/OrganizationSettingsFeatureFlagsPageLinkCardBase";
+import OrganizationSettingsInactiveAiMlChatbotFeatureFlagPageLinkCard from "components/admin/organization_settings/details/features/ai_ml/OrganizationSettingsInactiveAiMlChatbotFeatureFlagPageLinkCard";
 
 export default function OrganizationSettingsAiMlChatbotFeatureFlagPageLinkCard(
   {

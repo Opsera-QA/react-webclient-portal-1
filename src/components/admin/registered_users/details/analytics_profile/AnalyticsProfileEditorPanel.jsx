@@ -12,8 +12,7 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
-import ToolIdentifierMultiSelectInput
-from "components/common/list_of_values_input/admin/tools/ToolIdentifierMultiSelectInput";
+import ToolIdentifierMultiSelectInput from "components/common/list_of_values_input/admin/tools/ToolIdentifierMultiSelectInput";
 import axios from "axios";
 
 function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfileData }) {

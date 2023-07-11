@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {faSearchPlus} from "@fortawesome/pro-light-svg-icons";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
-import PipelineStepDetailsOverviewOverlay
-from "components/workflow/pipelines/overview/step/PipelineStepDetailsOverviewOverlay";
+import PipelineStepDetailsOverviewOverlay from "components/workflow/pipelines/overview/step/PipelineStepDetailsOverviewOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 

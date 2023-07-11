@@ -3,14 +3,9 @@ import PropTypes from "prop-types";
 import {faBug} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import ClientSidePaginationMakeupTable from "components/common/table/makeup/ClientSidePaginationMakeupTable";
-import {
-  getCustomTableAccessor,
-  getCustomTableHeader, getExternalLinkIconColumnDefinition,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers";
+import { getCustomTableAccessor, getCustomTableHeader, getExternalLinkIconColumnDefinition, getTableTextColumn } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
-import twistlockSecurityReportMetadata
-from "components/blueprint/security_reports/twistlock/twistlockSecurityReport.metadata";
+import twistlockSecurityReportMetadata from "components/blueprint/security_reports/twistlock/twistlockSecurityReport.metadata";
 import RiskFactorDisplayer from "components/blueprint/security_reports/twistlock/RiskFactorDisplayer";
 
 export const getRiskFactorColumnDefinition = (field, className) => {

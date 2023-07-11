@@ -6,13 +6,10 @@ import Model from "core/data_model/model";
 import userReportsMetadata from "components/reports/users/user-reports-metadata";
 import LdapUserByDomainSelectInput from "components/common/list_of_values_input/users/LdapUserByDomainSelectInput";
 import ConsolidatedUserToolAccessReport from "components/reports/users/user/consolidated_user_report/tool_access/ConsolidatedUserToolAccessReport";
-import ConsolidatedUserGroupMembershipReport
-from "components/reports/users/user/consolidated_user_report/group_membership/ConsolidatedUserGroupMembershipReport";
+import ConsolidatedUserGroupMembershipReport from "components/reports/users/user/consolidated_user_report/group_membership/ConsolidatedUserGroupMembershipReport";
 import InformationDialog from "components/common/status_notifications/info";
-import ConsolidatedUserPipelineAccessReport
-from "components/reports/users/user/consolidated_user_report/pipeline_access/ConsolidatedUserPipelineAccessReport";
-import ConsolidatedUserTaskAccessReport
-from "components/reports/users/user/consolidated_user_report/task_access/ConsolidatedUserTaskAccessReport";
+import ConsolidatedUserPipelineAccessReport from "components/reports/users/user/consolidated_user_report/pipeline_access/ConsolidatedUserPipelineAccessReport";
+import ConsolidatedUserTaskAccessReport from "components/reports/users/user/consolidated_user_report/task_access/ConsolidatedUserTaskAccessReport";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 

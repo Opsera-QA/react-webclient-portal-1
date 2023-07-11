@@ -1,9 +1,7 @@
 import React from "react";
-import SiteRoleManagementPageLinkCardBase
-from "components/settings/ldap_site_roles/cards/SiteRoleManagementPageLinkCardBase";
+import SiteRoleManagementPageLinkCardBase from "components/settings/ldap_site_roles/cards/SiteRoleManagementPageLinkCardBase";
 import PropType from "prop-types";
-import InactiveSecurityManagersRolePageLinkCard
-from "components/settings/ldap_site_roles/cards/inactive/InactiveSecurityManagersRolePageLinkCard";
+import InactiveSecurityManagersRolePageLinkCard from "components/settings/ldap_site_roles/cards/inactive/InactiveSecurityManagersRolePageLinkCard";
 
 export default function SecurityManagersRolePageLinkCard({ securityManagersSiteRole, }) {
   if (securityManagersSiteRole == null) {

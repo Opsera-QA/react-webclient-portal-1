@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import UserDataMappingsTable from "components/settings/data_mapping/users/UserDataMappingsTable";
-import useAnalyticsUserDataMappingActions
-from "hooks/settings/insights/analytics_data_mappings/users/useAnalyticsUserDataMappingActions";
+import useAnalyticsUserDataMappingActions from "hooks/settings/insights/analytics_data_mappings/users/useAnalyticsUserDataMappingActions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function UserDataMappingManagement() {

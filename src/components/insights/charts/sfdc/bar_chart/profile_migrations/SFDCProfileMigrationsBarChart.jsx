@@ -10,8 +10,7 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 import axios from "axios";
 import Model from "core/data_model/model";
-import { defaultConfig, getColorById, assignBooleanColors,
-  adjustBarWidth } from '../../../charts-views';
+import { defaultConfig, getColorById, assignBooleanColors, adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 import SFDCPipelinesInsightsTableMetadata from "components/insights/charts/sfdc/sfdc-pipelines-actionable-metadata.js";
 

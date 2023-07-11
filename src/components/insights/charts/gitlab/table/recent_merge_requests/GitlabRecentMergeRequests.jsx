@@ -1,4 +1,10 @@
-import React, { useEffect, useContext, useState, useMemo, useRef } from "react";
+import React, {
+  useEffect,
+  useContext,
+  useState,
+  useMemo,
+  useRef
+} from "react";
 import CustomTable from "components/common/table/CustomTable";
 import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
@@ -8,8 +14,9 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {
   getExternalLinkIconColumnDefinition,
   getLimitedTableTextColumn,
-  getTableDateTimeColumn, getTableDurationTextColumn,
-  getTableTextColumn,
+  getTableDateTimeColumn,
+  getTableDurationTextColumn,
+  getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import gitlabRecentMergeRequestsMetadata from "./gitlab-recent-merge-requests-metadata";
 import { getField } from "components/common/metadata/metadata-helpers";

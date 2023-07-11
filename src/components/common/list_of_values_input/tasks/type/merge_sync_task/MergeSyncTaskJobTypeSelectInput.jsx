@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {
-  MERGE_SYNC_TASK_JOB_TYPE_SELECT_OPTIONS
-} from "components/common/list_of_values_input/tasks/type/merge_sync_task/mergeSyncTaskJob.types";
+import { MERGE_SYNC_TASK_JOB_TYPE_SELECT_OPTIONS } from "components/common/list_of_values_input/tasks/type/merge_sync_task/mergeSyncTaskJob.types";
 
 function MergeSyncTaskJobTypeSelectInput({
   model,

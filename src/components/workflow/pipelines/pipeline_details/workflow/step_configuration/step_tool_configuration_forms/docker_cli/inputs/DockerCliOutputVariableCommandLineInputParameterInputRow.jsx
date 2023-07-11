@@ -9,9 +9,7 @@ import CustomParameterSelectInput from "components/common/list_of_values_input/p
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {
-  pipelineStepParameterMetadata
-} from "components/common/list_of_values_input/parameters/pipeline/pipelineStepParameter.metadata";
+import { pipelineStepParameterMetadata } from "components/common/list_of_values_input/parameters/pipeline/pipelineStepParameter.metadata";
 
 const DOCKER_CLI_OUTPUT_VARIABLE_SELECT_OPTIONS = [
   {text: "Docker Registry Name", value: "docker_registry_name"},

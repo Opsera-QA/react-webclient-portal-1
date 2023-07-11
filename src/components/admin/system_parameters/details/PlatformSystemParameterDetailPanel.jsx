@@ -4,10 +4,8 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
-import PlatformSystemParameterSummaryPanel
-from "components/admin/system_parameters/details/PlatformSystemParameterSummaryPanel";
-import PlatformSystemParameterEditorPanel
-from "components/admin/system_parameters/details/PlatformSystemParameterEditorPanel";
+import PlatformSystemParameterSummaryPanel from "components/admin/system_parameters/details/PlatformSystemParameterSummaryPanel";
+import PlatformSystemParameterEditorPanel from "components/admin/system_parameters/details/PlatformSystemParameterEditorPanel";
 
 export default function PlatformSystemParameterDetailPanel(
   {

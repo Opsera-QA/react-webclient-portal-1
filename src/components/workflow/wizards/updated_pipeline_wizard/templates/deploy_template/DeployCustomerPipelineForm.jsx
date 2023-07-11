@@ -1,15 +1,12 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {
-  faQuestionCircle,
-} from "@fortawesome/pro-light-svg-icons";
+import { faQuestionCircle } from "@fortawesome/pro-light-svg-icons";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import DeployCustomerPipelineButton
-from "temp-library-components/cards/templates/pipelines/customer/deploy/DeployCustomerPipelineButton";
+import DeployCustomerPipelineButton from "temp-library-components/cards/templates/pipelines/customer/deploy/DeployCustomerPipelineButton";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";

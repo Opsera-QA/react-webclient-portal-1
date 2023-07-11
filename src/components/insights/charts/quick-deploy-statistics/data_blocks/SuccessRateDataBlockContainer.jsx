@@ -3,21 +3,23 @@ import PropTypes from "prop-types";
 import { Container, Col, Row } from "react-bootstrap";
 import { ResponsiveLine } from '@nivo/line';
 import {defaultConfig, goalSuccessColor} from 'components/insights/charts/charts-views';
-import { faMinus, faSquare, faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/pro-solid-svg-icons";
+import {
+  faMinus,
+  faSquare,
+  faArrowCircleDown,
+  faArrowCircleUp,
+  faMinusCircle
+} from "@fortawesome/pro-solid-svg-icons";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import config from "../QuickDeployLineChartConfig";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import IconBase from "components/common/icons/IconBase";
-import QuickDeployTotalExecutionsDataBlock
-from "./QuickDeployTotalExecutionsDataBlock";
+import QuickDeployTotalExecutionsDataBlock from "./QuickDeployTotalExecutionsDataBlock";
 import QuickDeploySuccessRateDataBlock from "./QuickDeploySuccessRateDateBlock";
-import QuickDeployTotalComponentsDataBlock
-from "./QuickDeployTotalComponentsDataBlock";
+import QuickDeployTotalComponentsDataBlock from "./QuickDeployTotalComponentsDataBlock";
 import QuickDeployTotalSuccessActionableOverlay from "../actionable_insights/QuickDeployTotalSuccessActionableOverlay";
-import QuickDeployTotalExecutionsActionableOverlay
-from "../actionable_insights/QuickDeployTotalExecutionsActionableOverlay";
-import QuickDeployTotalComponentsActionableOverlay
-from "../actionable_insights/QuickDeployTotalComponentsActionableOverlay";
+import QuickDeployTotalExecutionsActionableOverlay from "../actionable_insights/QuickDeployTotalExecutionsActionableOverlay";
+import QuickDeployTotalComponentsActionableOverlay from "../actionable_insights/QuickDeployTotalComponentsActionableOverlay";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 

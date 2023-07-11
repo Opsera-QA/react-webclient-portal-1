@@ -1,6 +1,4 @@
-import {
-  sapCpqRunParameterConfigurationMetadata,
-} from "components/workflow/run_assistants/sap_cpq/configuration_selection_screen/sapCpqRunParameterConfiguration.metadata";
+import { sapCpqRunParameterConfigurationMetadata } from "components/workflow/run_assistants/sap_cpq/configuration_selection_screen/sapCpqRunParameterConfiguration.metadata";
 
 export const sapCpqRunParametersMetadata = {
   type: "SAP CPQ Run Parameters",

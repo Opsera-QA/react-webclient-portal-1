@@ -5,15 +5,11 @@ import ConfirmationOverlay from "components/common/overlays/center/ConfirmationO
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import entitlementConstants
-from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
-import SalesforceFeaturesChildEntitlementEditorPanel
-from "components/admin/organization_settings/details/entitlements/cards/salesforce_landing/SalesforceFeaturesChildEntitlementEditorPanel";
-import UpdateOrganizationSettingsEntitlementButton
-from "components/admin/organization_settings/details/entitlements/active/UpdateOrganizationSettingsEntitlementButton";
+import entitlementConstants from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
+import SalesforceFeaturesChildEntitlementEditorPanel from "components/admin/organization_settings/details/entitlements/cards/salesforce_landing/SalesforceFeaturesChildEntitlementEditorPanel";
+import UpdateOrganizationSettingsEntitlementButton from "components/admin/organization_settings/details/entitlements/active/UpdateOrganizationSettingsEntitlementButton";
 import DeleteConfirmationOverlay from "components/common/overlays/center/delete/DeleteConfirmationOverlay";
-import useEntitlementAdministrationActions
-from "hooks/settings/organization_settings/entitlements/useEntitlementAdministrationActions";
+import useEntitlementAdministrationActions from "hooks/settings/organization_settings/entitlements/useEntitlementAdministrationActions";
 import useGetEntitlementModel from "hooks/settings/organization_settings/entitlements/useGetEntitlementModel";
 import DeleteButtonBase from "temp-library-components/button/delete/DeleteButtonBase";
 import {useHistory} from "react-router-dom";

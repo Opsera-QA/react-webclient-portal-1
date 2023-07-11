@@ -2,12 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
-import OrganizationSettingsPipelinePublishingPolicyPageLinkCard
-from "components/admin/organization_settings/details/policies/cards/pipelines/publishing/OrganizationSettingsPipelinePublishingPolicyPageLinkCard";
-import OrganizationSettingsPlatformPipelineCatalogVisibilityPageLinkCard
-from "components/admin/organization_settings/details/policies/cards/pipelines/templates/public_marketplace/OrganizationSettingsPlatformPipelineCatalogVisibilityPageLinkCard";
-import OrganizationSettingsPipelineStepTagRequirementPolicyPageLinkCard
-from "components/admin/organization_settings/details/policies/cards/pipelines/steps/tags/OrganizationSettingsPipelineStepTagRequirementPolicyPageLinkCard";
+import OrganizationSettingsPipelinePublishingPolicyPageLinkCard from "components/admin/organization_settings/details/policies/cards/pipelines/publishing/OrganizationSettingsPipelinePublishingPolicyPageLinkCard";
+import OrganizationSettingsPlatformPipelineCatalogVisibilityPageLinkCard from "components/admin/organization_settings/details/policies/cards/pipelines/templates/public_marketplace/OrganizationSettingsPlatformPipelineCatalogVisibilityPageLinkCard";
+import OrganizationSettingsPipelineStepTagRequirementPolicyPageLinkCard from "components/admin/organization_settings/details/policies/cards/pipelines/steps/tags/OrganizationSettingsPipelineStepTagRequirementPolicyPageLinkCard";
 
 export default function OrganizationSettingsPoliciesPanel(
   {

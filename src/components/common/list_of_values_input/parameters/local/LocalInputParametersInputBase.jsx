@@ -4,14 +4,11 @@ import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import InfoContainer from "components/common/containers/InfoContainer";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import LocalInputParametersInputRow
-from "components/common/list_of_values_input/parameters/local/LocalInputParametersInputRow";
+import LocalInputParametersInputRow from "components/common/list_of_values_input/parameters/local/LocalInputParametersInputRow";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import LocalInputParameterInlineField
-from "components/common/list_of_values_input/parameters/local/LocalInputParameterInlineField";
-import LocalInputParameterHeaderField
-from "components/common/list_of_values_input/parameters/local/LocalInputParameterHeaderField";
+import LocalInputParameterInlineField from "components/common/list_of_values_input/parameters/local/LocalInputParameterInlineField";
+import LocalInputParameterHeaderField from "components/common/list_of_values_input/parameters/local/LocalInputParameterHeaderField";
 
 export default function LocalInputParametersInputBase(
   {

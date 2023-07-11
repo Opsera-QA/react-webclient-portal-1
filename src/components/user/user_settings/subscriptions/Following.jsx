@@ -5,9 +5,7 @@ import UserSettingsSubNavigationBar from "components/user/user_settings/UserSett
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {USER_SETTINGS_PAGES} from "components/user/user_settings/userSettings.paths";
 import {userSettingsTrails} from "components/user/user_settings/userSettings.trails";
-import {
-  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER,
-} from "components/common/table/FilterContainer";
+import { FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER } from "components/common/table/FilterContainer";
 import SideBySideViewBase from "components/common/tabs/SideBySideViewBase";
 import FollowingVerticalTabContainer from "components/user/user_settings/subscriptions/FollowingVerticalTabContainer";
 import userSubscriptionConstants from "@opsera/definitions/constants/subscriptions/userSubscription.constants";

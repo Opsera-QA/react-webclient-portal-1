@@ -3,8 +3,7 @@ import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import liveMessageTopicConstants from "@opsera/definitions/constants/websocket/constants/liveMessageTopic.constants";
 import TaskActivityLogFilterModel from "components/tasks/activity_logs/taskActivityLog.filter.model";
 import useTaskActivityLogActions from "hooks/workflow/tasks/logs/useTaskActivityLogActions";
-import useTaskActivityLogCollectionSubscriptionHelper
-from "core/websocket/hooks/collection/activity_logs/useTaskActivityLogCollectionSubscriptionHelper";
+import useTaskActivityLogCollectionSubscriptionHelper from "core/websocket/hooks/collection/activity_logs/useTaskActivityLogCollectionSubscriptionHelper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useGetPollingTaskActivityLogCountForRun from "hooks/workflow/tasks/logs/useGetPollingTaskActivityLogCountForRun";
 import taskActivityLogHelpers from "components/tasks/activity_logs/taskActivityLog.helpers";

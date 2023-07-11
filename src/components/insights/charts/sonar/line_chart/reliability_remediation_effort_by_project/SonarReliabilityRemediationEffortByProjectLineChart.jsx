@@ -11,21 +11,12 @@ import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 // import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import {
-  defaultConfig,
-  getColor,
-  assignStandardColors,
-  shortenLegend,
-} from "../../../charts-views";
+import { defaultConfig, getColor, assignStandardColors, shortenLegend } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import VanityTable from "components/common/table/VanityTable";
 // import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
-import {
-  // getChartPipelineStatusColumn,
-  // getTableDateTimeColumn,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers-v2";
+import { getTableTextColumn } from "components/common/table/table-column-helpers-v2";
 import { getField } from "components/common/metadata/metadata-helpers";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import LoadingDialog from "components/common/status_notifications/loading";

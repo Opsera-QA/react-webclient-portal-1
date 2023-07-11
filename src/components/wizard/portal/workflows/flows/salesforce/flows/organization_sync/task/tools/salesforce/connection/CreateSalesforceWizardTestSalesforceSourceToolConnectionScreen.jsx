@@ -1,10 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS
-} from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/task/CreateSalesforceOrganizationSyncTaskWizard";
-import CreateWorkflowWizardTestSalesforceToolConnectionScreenBase
-from "components/wizard/portal/workflows/flows/tools/salesforce/CreateWorkflowWizardTestSalesforceToolConnectionScreenBase";
+import { CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS } from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/task/CreateSalesforceOrganizationSyncTaskWizard";
+import CreateWorkflowWizardTestSalesforceToolConnectionScreenBase from "components/wizard/portal/workflows/flows/tools/salesforce/CreateWorkflowWizardTestSalesforceToolConnectionScreenBase";
 import {TASK_TYPES} from "../../../../../../../../../../../tasks/task.types";
 
 export default function CreateSalesforceWizardTestSalesforceSourceToolConnectionScreen({

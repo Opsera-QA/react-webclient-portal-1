@@ -5,9 +5,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import {ldapOrganizationMetaData} from "components/admin/accounts/ldap/organizations/ldap-organizations-metadata";
 import {ldapIdpAccountsMetaData} from "../idp_accounts/ldap-idp-account-metadata";
-import {
-  ldapOrganizationAccountMetaData
-} from "components/admin/accounts/ldap/organization_accounts/ldap-organization-account-metadata";
+import { ldapOrganizationAccountMetaData } from "components/admin/accounts/ldap/organization_accounts/ldap-organization-account-metadata";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";

@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import JiraSprintTicketSelectInput
-from "components/common/list_of_values_input/tools/jira/tickets/JiraSprintTicketSelectInput";
+import JiraSprintTicketSelectInput from "components/common/list_of_values_input/tools/jira/tickets/JiraSprintTicketSelectInput";
 
 function JiraToolProjectParentTicketSelectInput(
   {

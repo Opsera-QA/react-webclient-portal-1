@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import SiteNotificationEditorPanel
-from "components/admin/site_notifications/details/SiteNotificationEditorPanel";
+import SiteNotificationEditorPanel from "components/admin/site_notifications/details/SiteNotificationEditorPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faSitemap} from "@fortawesome/pro-light-svg-icons";

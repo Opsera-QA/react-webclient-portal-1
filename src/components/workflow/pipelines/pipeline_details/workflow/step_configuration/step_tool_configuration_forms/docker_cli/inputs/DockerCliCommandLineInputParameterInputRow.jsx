@@ -9,9 +9,7 @@ import {faPlus} from "@fortawesome/pro-light-svg-icons";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import {
-  pipelineStepParameterMetadata
-} from "components/common/list_of_values_input/parameters/pipeline/pipelineStepParameter.metadata";
+import { pipelineStepParameterMetadata } from "components/common/list_of_values_input/parameters/pipeline/pipelineStepParameter.metadata";
 
 export default function DockerCliCommandLineInputParameterInputRow( 
   {

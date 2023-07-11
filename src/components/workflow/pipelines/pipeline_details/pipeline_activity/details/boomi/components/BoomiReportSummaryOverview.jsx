@@ -5,10 +5,7 @@ import { Col, Row } from "react-bootstrap";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import H4FieldSubHeader from "components/common/fields/subheader/H4FieldSubHeader";
 import IconBase from "../../../../../../../common/icons/IconBase";
-import {
-  faCheckCircle,
-  faExclamationCircle,
-} from "@fortawesome/pro-light-svg-icons";
+import { faCheckCircle, faExclamationCircle } from "@fortawesome/pro-light-svg-icons";
 
 function BoomiReportSummaryOverview({ boomiResultsModel, jobType }) {
   if (boomiResultsModel == null) {

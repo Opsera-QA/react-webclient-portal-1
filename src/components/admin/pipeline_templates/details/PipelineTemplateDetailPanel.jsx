@@ -6,8 +6,7 @@ import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import PipelineTemplateSummaryPanel from "components/admin/pipeline_templates/details/PipelineTemplateSummaryPanel";
 import PipelineTemplateEditorPanel from "components/admin/pipeline_templates/details/PipelineTemplateEditorPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
-import PipelineTemplatePlanOverviewContainer
-from "components/workflow/catalog/overview/PipelineTemplatePlanOverviewContainer";
+import PipelineTemplatePlanOverviewContainer from "components/workflow/catalog/overview/PipelineTemplatePlanOverviewContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faFileAlt} from "@fortawesome/pro-light-svg-icons";
 

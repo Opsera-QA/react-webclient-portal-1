@@ -1,4 +1,10 @@
-import React, {useState, useEffect, useContext, useMemo, useRef} from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useMemo,
+  useRef
+} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import BuildDetailsTableModal from "components/common/modal/BuildDetailsTableModal";

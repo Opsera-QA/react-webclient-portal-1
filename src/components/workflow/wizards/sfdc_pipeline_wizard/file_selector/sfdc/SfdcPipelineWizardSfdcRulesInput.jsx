@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SfdcPipelineWizardRulesInputContainerBase
-from "components/workflow/wizards/sfdc_pipeline_wizard/rules/SfdcPipelineWizardRulesInputContainerBase";
+import SfdcPipelineWizardRulesInputContainerBase from "components/workflow/wizards/sfdc_pipeline_wizard/rules/SfdcPipelineWizardRulesInputContainerBase";
 
 function SfdcPipelineWizardSfdcRulesInput({pipelineWizardModel, setPipelineWizardModel, sfdcFiles, isLoading, filePullCompleted}) {
   return (

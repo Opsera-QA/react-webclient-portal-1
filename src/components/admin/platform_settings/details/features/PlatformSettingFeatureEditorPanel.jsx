@@ -1,17 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import StandaloneDeleteButtonWithConfirmationModal
-from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
-import { platformSettingFeatureActions }
-from "components/admin/platform_settings/details/features/platformSettingFeature.actions";
+import StandaloneDeleteButtonWithConfirmationModal from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
+import { platformSettingFeatureActions } from "components/admin/platform_settings/details/features/platformSettingFeature.actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import JsonInput from "components/common/inputs/object/JsonInput";
-import PlatformSettingsFeatureNameComboBoxInput
-from "components/common/list_of_values_input/platform/settings/features/PlatformSettingsFeatureNameComboBoxInput";
+import PlatformSettingsFeatureNameComboBoxInput from "components/common/list_of_values_input/platform/settings/features/PlatformSettingsFeatureNameComboBoxInput";
 
 export default function PlatformSettingFeatureEditorPanel(
   {

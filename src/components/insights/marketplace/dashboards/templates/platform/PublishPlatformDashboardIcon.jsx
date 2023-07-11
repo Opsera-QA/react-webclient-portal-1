@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { faShareAll } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {
-  platformDashboardTemplateActions,
-} from "components/insights/marketplace/dashboards/templates/platform/platformDashboardTemplate.actions";
+import { platformDashboardTemplateActions } from "components/insights/marketplace/dashboards/templates/platform/platformDashboardTemplate.actions";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";

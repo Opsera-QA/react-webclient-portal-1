@@ -1,10 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  cutOffExcessCharacters,
-  ensureStringFallsMeetsCharacterLimits,
-  hasStringValue,
-} from "components/common/helpers/string-helpers";
+import { cutOffExcessCharacters, ensureStringFallsMeetsCharacterLimits, hasStringValue } from "components/common/helpers/string-helpers";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import IconBase from "components/common/icons/IconBase";
 

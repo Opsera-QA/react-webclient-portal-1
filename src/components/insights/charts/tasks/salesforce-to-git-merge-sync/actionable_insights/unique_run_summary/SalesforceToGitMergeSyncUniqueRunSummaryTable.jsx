@@ -1,9 +1,7 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
-import {
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import { faTasks } from "@fortawesome/pro-light-svg-icons";

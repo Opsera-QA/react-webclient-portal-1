@@ -2,10 +2,7 @@ import React, { useContext, useState, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
-import {
-  faPlay,
-  faArrowLeft,
-} from "@fortawesome/pro-solid-svg-icons";
+import { faPlay, faArrowLeft } from "@fortawesome/pro-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";

@@ -13,8 +13,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
 import {azureScriptsStepMetadata} from "components/workflow/plan/step/azure_scripts/azureScriptsStep.metadata";
-import CustomParameterMultiSelectListInput
-from "components/common/list_of_values_input/parameters/list/CustomParameterMultiSelectListInput";
+import CustomParameterMultiSelectListInput from "components/common/list_of_values_input/parameters/list/CustomParameterMultiSelectListInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CodeInput from "components/common/inputs/code/CodeInput";

@@ -1,6 +1,5 @@
 import modelHelpers from "components/common/model/modelHelpers";
-import pipelineInstructionsAttributesMetadata
-from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructionsAttributes.metadata";
+import pipelineInstructionsAttributesMetadata from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructionsAttributes.metadata";
 
 export default function useGetPipelineInstructionsAttributesModel() {
   const getPipelineInstructionsAttributesModel = (

@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import RoleRestrictedToolByIdentifierInputBase
-from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 

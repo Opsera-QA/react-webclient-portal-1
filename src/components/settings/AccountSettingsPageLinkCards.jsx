@@ -6,8 +6,7 @@ import UserManagementPageLinkCard from "components/settings/users/UserManagement
 import LogsExportManagementPageLinkCard from "components/settings/logs_management/LogsExportManagementPageLinkCard";
 import UnsecuredItemReportPageLinkCard from "components/settings/unsecured_items/UnsecuredItemReportPageLinkCard";
 import TagManagementPageLinkCard from "components/settings/tags/TagManagementPageLinkCard";
-import PolicyManagementPageLinkCard
-from "components/settings/organization_settings/policies/PolicyManagementPageLinkCard";
+import PolicyManagementPageLinkCard from "components/settings/organization_settings/policies/PolicyManagementPageLinkCard";
 
 export default function AccountSettingsPageLinkCards() {
   return (

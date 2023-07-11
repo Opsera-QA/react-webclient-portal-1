@@ -15,9 +15,10 @@ import DataPointVisibilityWrapper from "components/common/metrics/data_points/Da
 import ChartTooltip from "../../ChartTooltip.jsx";
 import {
   adjustBarWidth,
-  assignStandardColors, assignStandardLineColors,
+  assignStandardColors,
+  assignStandardLineColors,
   defaultConfig,
-  spaceOutServiceNowCountBySeverityLegend,
+  spaceOutServiceNowCountBySeverityLegend
 } from "../../charts-views.js";
 import BoomiSuccessPercentageDataBlock from "../data_blocks/BoomiSuccessPercentageDataBlock.jsx";
 import BoomiFrequencyDataBlock from "../data_blocks/BoomiFrequencyDataBlock.jsx";
@@ -25,10 +26,8 @@ import { DialogToastContext } from "contexts/DialogToastContext.js";
 import { ResponsiveLine } from "@nivo/line";
 import chartsActions from "../../charts-actions";
 import BoomiActionableTabOverlay from "../actionable_insights/BoomiActionableTabOverlay";
-import AutomationPercentageChartHelpDocumentation
-from "../../../../common/help/documentation/insights/charts/AutomationPercentageChartHelpDocumentation";
-import BoomiChartHelpDocumentation
-from "../../../../common/help/documentation/insights/charts/BoomiChartHelpDocumentation";
+import AutomationPercentageChartHelpDocumentation from "../../../../common/help/documentation/insights/charts/AutomationPercentageChartHelpDocumentation";
+import BoomiChartHelpDocumentation from "../../../../common/help/documentation/insights/charts/BoomiChartHelpDocumentation";
 import BoomiAverageDurationDataBlock from "../data_blocks/BoomiAverageDurationDataBlock";
 
 function BoomiBarChart({

@@ -8,8 +8,7 @@ import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-import { defaultConfig, getColorById, assignBooleanColors,
-  adjustBarWidth } from '../../insights/charts/charts-views';
+import { defaultConfig, getColorById, assignBooleanColors, adjustBarWidth } from '../../insights/charts/charts-views';
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 
 function OpseraPipelineByStatusBarChart( { persona, date  } ) {

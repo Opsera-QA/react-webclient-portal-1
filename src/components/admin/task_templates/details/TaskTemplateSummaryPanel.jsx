@@ -9,8 +9,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import TaskTemplateInlineRoleAccessInput
-from "components/admin/task_templates/details/inputs/TaskTemplateInlineRoleAccessInput";
+import TaskTemplateInlineRoleAccessInput from "components/admin/task_templates/details/inputs/TaskTemplateInlineRoleAccessInput";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 
 export default function TaskTemplateSummaryPanel(

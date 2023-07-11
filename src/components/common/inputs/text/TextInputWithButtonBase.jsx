@@ -3,7 +3,13 @@ import PropTypes from "prop-types";
 import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import { Button, Col, Row, OverlayTrigger, Tooltip } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Row,
+  OverlayTrigger,
+  Tooltip
+} from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 

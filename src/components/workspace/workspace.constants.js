@@ -1,8 +1,6 @@
 import constantsHelper from "@opsera/definitions/constants/constants.helper";
 import { taskTemplateIdentifierConstants } from "components/admin/task_templates/taskTemplateIdentifier.constants";
-import {
-  pipelineTemplateIdentifierConstants
-} from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
+import { pipelineTemplateIdentifierConstants } from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
 
 export const workspaceConstants = {};
 

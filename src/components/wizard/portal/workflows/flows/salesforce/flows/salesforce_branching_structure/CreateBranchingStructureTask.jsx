@@ -14,8 +14,7 @@ import jenkinsConnectionMetadata from "../../../../../../../inventory/tools/tool
 import CreateWorkflowWizardTestJenkinsTool from "../../../tools/jenkins/CreateWorkflowWizardTestJenkinsTool";
 import CreateSalesforceBranchingStructureTaskInitializationScreen from "./CreateSalesforceBranchingStructureTaskInitializationScreen";
 import CreateSalesforceWizardTestSalesforceSourceToolConnectionScreen from "../organization_sync/task/tools/salesforce/connection/CreateSalesforceWizardTestSalesforceSourceToolConnectionScreen";
-import CreateSalesforceBulkMigrationInputFields
-from "../salesforce_bulk_migration/CreateSalesforceBulkMigrationInputFields";
+import CreateSalesforceBulkMigrationInputFields from "../salesforce_bulk_migration/CreateSalesforceBulkMigrationInputFields";
 import CreateSalesforceBranchStructureInputFields from "./CreateSalesforceBranchStructureInputFields";
 import { getTaskTypeLabel } from "components/tasks/task.types";
 

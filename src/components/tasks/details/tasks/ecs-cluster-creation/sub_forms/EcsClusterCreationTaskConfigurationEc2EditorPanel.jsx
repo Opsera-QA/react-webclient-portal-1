@@ -2,13 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import TextInputBase from "../../../../../common/inputs/text/TextInputBase";
 import ImageTypeSelectInput from "../inputs/ImageTypeSelect";
-import AwsEcsInstanceTypeSelectInput
-from "components/common/list_of_values_input/aws/ecs/instances/AwsEcsInstanceTypeSelectInput";
+import AwsEcsInstanceTypeSelectInput from "components/common/list_of_values_input/aws/ecs/instances/AwsEcsInstanceTypeSelectInput";
 import AwsKeyPairSelectInput from "components/common/list_of_values_input/aws/key_pairs/AwsKeyPairSelectInput";
-import AwsSecurityGroupSelectInput
-from "components/common/list_of_values_input/aws/security_groups/AwsSecurityGroupSelectInput";
-import EcsCreationTaskVpcBooleanToggleInput
-from "components/tasks/details/tasks/ecs-cluster-creation/inputs/EcsCreationTaskVpcBooleanToggleInput";
+import AwsSecurityGroupSelectInput from "components/common/list_of_values_input/aws/security_groups/AwsSecurityGroupSelectInput";
+import EcsCreationTaskVpcBooleanToggleInput from "components/tasks/details/tasks/ecs-cluster-creation/inputs/EcsCreationTaskVpcBooleanToggleInput";
 import AwsVpcSelectInput from "components/common/list_of_values_input/aws/vpcs/AwsVpcSelectInput";
 import AwsSubnetMultiSelectInput from "components/common/list_of_values_input/aws/subnets/AwsSubnetMultiSelectInput";
 

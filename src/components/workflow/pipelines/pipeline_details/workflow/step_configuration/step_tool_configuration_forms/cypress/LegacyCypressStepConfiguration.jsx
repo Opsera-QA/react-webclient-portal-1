@@ -1,11 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {
-  Button,
-  Form,
-  OverlayTrigger,
-  Popover,
-} from "react-bootstrap";
+import { Button, Form, OverlayTrigger, Popover } from "react-bootstrap";
 import {
   faExclamationCircle,
   faTimes,
@@ -16,10 +11,7 @@ import {
 } from "@fortawesome/pro-solid-svg-icons";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { Link } from "react-router-dom";
-import {
-  getErrorDialog,
-  getMissingRequiredFieldsErrorDialog,
-} from "../../../../../../../common/toasts/toasts";
+import { getErrorDialog, getMissingRequiredFieldsErrorDialog } from "../../../../../../../common/toasts/toasts";
 
 import pipelineActions from "components/workflow/pipeline-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";

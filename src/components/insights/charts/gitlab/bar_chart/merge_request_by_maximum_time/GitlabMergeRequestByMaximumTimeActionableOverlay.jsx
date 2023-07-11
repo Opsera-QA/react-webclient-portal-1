@@ -5,8 +5,7 @@ import CustomTable from "../../../../../common/table/CustomTable";
 import {getTableTextColumn, getTableDateTimeColumn, getExternalLinkIconColumnDefinition} from "../../../../../common/table/table-column-helpers";
 import {getField} from "../../../../../common/metadata/metadata-helpers";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
-import FullScreenCenterOverlayContainer
-from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
+import FullScreenCenterOverlayContainer from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import FilterContainer from "../../../../../common/table/FilterContainer";
 
 function GitlabMergeRequestByMaximumTimeActionableOverlay({ metrics}) {

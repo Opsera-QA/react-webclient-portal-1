@@ -5,8 +5,7 @@ import axios from "axios";
 import gitlabAction from "../../gitlab.action";
 import { faTable} from "@fortawesome/pro-light-svg-icons";
 import Model from "../../../../../../core/data_model/model";
-import actionableInsightsGenericChartFilterMetadata
-from "../../../generic_filters/actionableInsightsGenericChartFilterMetadata";
+import actionableInsightsGenericChartFilterMetadata from "../../../generic_filters/actionableInsightsGenericChartFilterMetadata";
 import GitlabDeploymentActionablePipelinesTable from "./GitlabDeploymentActionablePipelineTable";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";

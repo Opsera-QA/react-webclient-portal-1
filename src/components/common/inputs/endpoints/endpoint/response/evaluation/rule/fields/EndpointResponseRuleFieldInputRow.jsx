@@ -3,11 +3,9 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import modelHelpers from "components/common/model/modelHelpers";
-import ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput
-from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput";
+import ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput from "components/workflow/plan/step/external_rest_api_integration/inputs/request/ExternalApiIntegratorStepEndpointResponseFieldEvaluationRuleFilterSelectInput";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
-import CustomParameterComboBoxInput
-from "components/common/list_of_values_input/parameters/CustomParameterComboBoxInput";
+import CustomParameterComboBoxInput from "components/common/list_of_values_input/parameters/CustomParameterComboBoxInput";
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
@@ -15,8 +13,7 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import NumberPickerInputBase from "components/common/inputs/number/picker/base/NumberPickerInputBase";
 import IntegerTextInputBase from "components/common/inputs/text/number/integer/IntegerTextInputBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import endpointResponseFieldEvaluationRuleMetadata
-from "@opsera/definitions/constants/api/evaluation/rule/fields/endpointResponseFieldEvaluationRule.metadata";
+import endpointResponseFieldEvaluationRuleMetadata from "@opsera/definitions/constants/api/evaluation/rule/fields/endpointResponseFieldEvaluationRule.metadata";
 
 function EndpointResponseRuleFieldInputRow(
   {

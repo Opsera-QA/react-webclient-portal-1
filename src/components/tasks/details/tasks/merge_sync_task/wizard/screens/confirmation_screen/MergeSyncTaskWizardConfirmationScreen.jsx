@@ -4,16 +4,11 @@ import { Row, Col } from "react-bootstrap";
 import CancelButton from "components/common/buttons/CancelButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import BackButton from "components/common/buttons/back/BackButton";
-import TriggerMergeSyncTaskButton
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/TriggerMergeSyncTaskButton";
-import {
-  MERGE_SYNC_WIZARD_SCREENS
-} from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
-import MergeSyncTaskWizardSelectedCommitTable
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/selected_commits_table/MergeSyncTaskWizardSelectedCommitTable";
+import TriggerMergeSyncTaskButton from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/TriggerMergeSyncTaskButton";
+import { MERGE_SYNC_WIZARD_SCREENS } from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
+import MergeSyncTaskWizardSelectedCommitTable from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/selected_commits_table/MergeSyncTaskWizardSelectedCommitTable";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
-import MergeSyncTaskWizardSelectedDeltasVerticalTabContainer
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/selected_deltas_table/MergeSyncTaskWizardSelectedDeltasVerticalTabContainer";
+import MergeSyncTaskWizardSelectedDeltasVerticalTabContainer from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/selected_deltas_table/MergeSyncTaskWizardSelectedDeltasVerticalTabContainer";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import ConflictFilesTable from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/conflict_files_table/ConflictFilesTable";
 

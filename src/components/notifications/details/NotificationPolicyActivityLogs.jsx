@@ -3,12 +3,10 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import axios from "axios";
-import NotificationActivityLogsTable
-from "components/notifications/activity_logs/NotificationActivityLogsTable";
+import NotificationActivityLogsTable from "components/notifications/activity_logs/NotificationActivityLogsTable";
 import PropTypes from "prop-types";
 import notificationsActions from "components/notifications/notifications-actions";
-import notificationActivityLogFilterMetadata
-from "components/notifications/activity_logs/notifications-activity-log-filter-metadata";
+import notificationActivityLogFilterMetadata from "components/notifications/activity_logs/notifications-activity-log-filter-metadata";
 
 function NotificationPolicyActivityLogs({notificationId}) {
   const { getAccessToken } = useContext(AuthContext);

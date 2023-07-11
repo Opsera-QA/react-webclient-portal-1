@@ -2,13 +2,10 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import GitToolCreationSelectionOptionInput from "components/wizard/portal/workflows/flows/tools/git/GitToolCreationSelectionOptionInput";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
-import CreateWorkflowWizardCreateGithubToolEditorPanel
-from "components/wizard/portal/workflows/flows/tools/git/github/CreateWorkflowWizardCreateGithubToolEditorPanel";
-import CreateWorkflowWizardCreateGitlabToolEditorPanel
-from "components/wizard/portal/workflows/flows/tools/git/gitlab/CreateWorkflowWizardCreateGitlabToolEditorPanel";
+import CreateWorkflowWizardCreateGithubToolEditorPanel from "components/wizard/portal/workflows/flows/tools/git/github/CreateWorkflowWizardCreateGithubToolEditorPanel";
+import CreateWorkflowWizardCreateGitlabToolEditorPanel from "components/wizard/portal/workflows/flows/tools/git/gitlab/CreateWorkflowWizardCreateGitlabToolEditorPanel";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
-import CreateWorkflowWizardRegisterAccountContainer
-from "components/wizard/portal/workflows/flows/tools/CreateWorkflowWizardRegisterAccountContainer";
+import CreateWorkflowWizardRegisterAccountContainer from "components/wizard/portal/workflows/flows/tools/CreateWorkflowWizardRegisterAccountContainer";
 import VanityButtonBase from "../../../../../../../temp-library-components/button/VanityButtonBase";
 import {faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
@@ -20,8 +17,7 @@ import DoneOverlayButton from "../../../../../../common/buttons/done/overlay/Don
 import PortalRouteToWorkflowButton from "../../tasks/completion/PortalRouteToWorkflowButton";
 import {workspaceConstants} from "../../../../../../workspace/workspace.constants";
 import CenteredContentWrapper from "../../../../../../common/wrapper/CenteredContentWrapper";
-import CreateWorkflowWizardCreateBitbucketToolEditorPanel
-from "./bitbucket/CreateWorkflowWizardCreateBitbucketToolEditorPanel";
+import CreateWorkflowWizardCreateBitbucketToolEditorPanel from "./bitbucket/CreateWorkflowWizardCreateBitbucketToolEditorPanel";
 import CreateWorkflowWizardCreateAzureDevopsToolEditorPanel from "./azure_devops/CreateWorkflowWizardCreateAzureDevopsToolEditorPanel";
 
 export default function CreateWorkflowWizardCreateGitToolScreenBase(

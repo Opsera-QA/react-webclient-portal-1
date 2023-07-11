@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  faCaretSquareUp,
-} from "@fortawesome/pro-light-svg-icons";
+import { faCaretSquareUp } from "@fortawesome/pro-light-svg-icons";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";

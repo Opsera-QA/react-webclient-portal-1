@@ -4,8 +4,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
-import JiraLeadTimeChartNoDataBlocks
-from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks";
+import JiraLeadTimeChartNoDataBlocks from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function PipelineFailedSecurity({

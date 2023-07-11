@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import pipelineInstructionsTypeConstants
-from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructionsType.constants";
+import pipelineInstructionsTypeConstants from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructionsType.constants";
 
 export default function PipelineInstructionsTypeSelectInput(
   {

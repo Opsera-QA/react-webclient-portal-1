@@ -3,8 +3,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetLdapOrganizationAccounts from "hooks/ldap/organization_accounts/useGetLdapOrganizationAccounts";
-import OrganizationSettingsManagementSubNavigationBar
-from "components/admin/organization_settings/OrganizationSettingsManagementSubNavigationBar";
+import OrganizationSettingsManagementSubNavigationBar from "components/admin/organization_settings/OrganizationSettingsManagementSubNavigationBar";
 import OrganizationSettingsTable from "components/admin/organization_settings/OrganizationSettingsTable";
 
 export default function OrganizationSettingsManagement() {

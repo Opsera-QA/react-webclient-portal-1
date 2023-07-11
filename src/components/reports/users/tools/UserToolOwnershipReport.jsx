@@ -5,8 +5,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import UserToolOwnershipReportTable from "components/reports/users/tools/UserToolOwnershipReportTable";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 import toolsActions from "components/inventory/tools/tools-actions";
-import OwnershipReportLdapUserSelectInput
-from "components/common/list_of_values_input/reports/user_reports/OwnershipReportLdapUserSelectInput";
+import OwnershipReportLdapUserSelectInput from "components/common/list_of_values_input/reports/user_reports/OwnershipReportLdapUserSelectInput";
 import ToolFilterModel from "components/inventory/tools/tool.filter.model";
 import useComponentStateReference from "hooks/useComponentStateReference";
 

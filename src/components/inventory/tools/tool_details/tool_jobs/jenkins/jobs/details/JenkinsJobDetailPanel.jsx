@@ -6,8 +6,7 @@ import Row from "react-bootstrap/Row";
 import CustomTabContainer from "../../../../../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../../../../../common/tabs/CustomTab";
 import {faCogs} from "@fortawesome/pro-solid-svg-icons/faCogs";
-import JenkinsJobEditorPanel
-from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/JenkinsJobEditorPanel";
+import JenkinsJobEditorPanel from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/JenkinsJobEditorPanel";
 
 // TODO: Implement
 function JenkinsJobDetailPanel({ jenkinsJobData, setJenkinsJobData }) {

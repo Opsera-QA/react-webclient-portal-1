@@ -1,10 +1,6 @@
 import { addDays } from "date-fns";
 import { faChartBar } from "@fortawesome/pro-light-svg-icons";
-import {
-  faArrowCircleDown,
-  faArrowCircleUp,
-  faMinusCircle,
-} from "@fortawesome/pro-solid-svg-icons";
+import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/pro-solid-svg-icons";
 import moment from "moment";
 import { METRIC_QUALITY_LEVELS } from "../../common/metrics/text/MetricTextBase";
 import { KPI_FILTER_TYPES } from "components/common/list_of_values_input/admin/kpi_configurations/filters/kpiFilter.types";

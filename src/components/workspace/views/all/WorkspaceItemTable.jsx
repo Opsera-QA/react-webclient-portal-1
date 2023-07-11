@@ -2,9 +2,11 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  getFormattedLabelWithFunctionColumnDefinition, getOwnerNameField, getTableBooleanIconColumn,
+  getFormattedLabelWithFunctionColumnDefinition,
+  getOwnerNameField,
+  getTableBooleanIconColumn,
   getTableDateTimeColumn,
-  getTableTextColumn,
+  getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { workspaceItemMetadata } from "components/workspace/workspaceItem.metadata";

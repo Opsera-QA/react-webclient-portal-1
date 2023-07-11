@@ -13,12 +13,9 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
-import SfdcPipelineWizardValidatedSfdcFilesTable
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/sfdc/SfdcPipelineWizardValidatedSfdcFilesTable";
-import SfdcPipelineWizardInvalidSfdcFilesTable
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/sfdc/SfdcPipelineWizardInvalidSfdcFilesTable";
-import SfdcPipelineWizardSubmitSfdcFilesButton
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSubmitSfdcFilesButton";
+import SfdcPipelineWizardValidatedSfdcFilesTable from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/sfdc/SfdcPipelineWizardValidatedSfdcFilesTable";
+import SfdcPipelineWizardInvalidSfdcFilesTable from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/sfdc/SfdcPipelineWizardInvalidSfdcFilesTable";
+import SfdcPipelineWizardSubmitSfdcFilesButton from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSubmitSfdcFilesButton";
 import IconBase from "components/common/icons/IconBase";
 
 const SfdcPipelineWizardValidatedSfdcFileViewer = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {

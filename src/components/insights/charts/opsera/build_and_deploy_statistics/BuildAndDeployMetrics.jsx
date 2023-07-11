@@ -2,23 +2,16 @@ import React, {useState, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import SonarRatingsChartHelpDocumentation
-from "components/common/help/documentation/insights/charts/SonarRatingsV2ChartHelpDocumentation";
-import DeploymentStatisticsDataBlockContainer
-from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/DeploymentStatisticsDataBlockContainer";
+import SonarRatingsChartHelpDocumentation from "components/common/help/documentation/insights/charts/SonarRatingsV2ChartHelpDocumentation";
+import DeploymentStatisticsDataBlockContainer from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/DeploymentStatisticsDataBlockContainer";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
-import BuildStatisticsDataBlockContainer
-from "components/insights/charts/opsera/build_and_deploy_statistics/build_statistics/BuildStatisticsDataBlockContainer";
-import DeploymentFrequencyStatisticsDataBlockContainer
-from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_frequency_statistics/DeploymentFrequencyStatisticsDataBlockContainer";
-import BuildFrequencyStatisticsDataBlockContainer
-from "components/insights/charts/opsera/build_and_deploy_statistics/build_frequency_statistics/BuildFrequencyStatisticsDataBlockContainer";
-import AllDeploymentStatisticsDataBlockContainer
-from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/AllDeploymentStatisticsDataBlockContainer";
-import AllBuildStatisticsDataBlockContainer
-from "components/insights/charts/opsera/build_and_deploy_statistics/build_statistics/AllBuildStatisticsDataBlockContainer";
+import BuildStatisticsDataBlockContainer from "components/insights/charts/opsera/build_and_deploy_statistics/build_statistics/BuildStatisticsDataBlockContainer";
+import DeploymentFrequencyStatisticsDataBlockContainer from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_frequency_statistics/DeploymentFrequencyStatisticsDataBlockContainer";
+import BuildFrequencyStatisticsDataBlockContainer from "components/insights/charts/opsera/build_and_deploy_statistics/build_frequency_statistics/BuildFrequencyStatisticsDataBlockContainer";
+import AllDeploymentStatisticsDataBlockContainer from "components/insights/charts/opsera/build_and_deploy_statistics/deployment_statistics/AllDeploymentStatisticsDataBlockContainer";
+import AllBuildStatisticsDataBlockContainer from "components/insights/charts/opsera/build_and_deploy_statistics/build_statistics/AllBuildStatisticsDataBlockContainer";
 
 function BuildAndDeployMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);

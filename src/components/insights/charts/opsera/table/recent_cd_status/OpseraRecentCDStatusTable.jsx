@@ -1,4 +1,10 @@
-import React, {useEffect, useContext, useState, useMemo, useRef} from "react";
+import React, {
+  useEffect,
+  useContext,
+  useState,
+  useMemo,
+  useRef
+} from "react";
 import { AuthContext } from "contexts/AuthContext";
 import CustomTable from "components/common/table/CustomTable";
 import "components/analytics/charts/charts.css";
@@ -7,8 +13,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import PropTypes from "prop-types";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import {getChartPipelineStatusColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
-import opseraRecentCdStatusMetadata
-from "components/insights/charts/opsera/table/recent_cd_status/opsera-recent-cd-status-metadata";
+import opseraRecentCdStatusMetadata from "components/insights/charts/opsera/table/recent_cd_status/opsera-recent-cd-status-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";

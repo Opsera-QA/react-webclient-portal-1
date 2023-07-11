@@ -1,15 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FreeTrialLandingTaskWidgetTaskSummaryPanel
-from "components/trial/landing/widgets/tasks/body/FreeTrialLandingTaskWidgetTaskSummaryPanel";
+import FreeTrialLandingTaskWidgetTaskSummaryPanel from "components/trial/landing/widgets/tasks/body/FreeTrialLandingTaskWidgetTaskSummaryPanel";
 import TaskActivityPanel from "components/tasks/activity_logs/TaskActivityPanel";
-import {
-  FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS
-} from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
-import FreeTrialLandingTaskWidgetAnalyticsBody
-from "components/trial/landing/widgets/tasks/analytics/FreeTrialLandingTaskWidgetAnalyticsBody";
-import FreeTrialLandingTaskWidgetTaskActivityLogsPanel
-from "components/trial/landing/widgets/tasks/body/FreeTrialLandingTaskWidgetTaskActivityLogsPanel";
+import { FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS } from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
+import FreeTrialLandingTaskWidgetAnalyticsBody from "components/trial/landing/widgets/tasks/analytics/FreeTrialLandingTaskWidgetAnalyticsBody";
+import FreeTrialLandingTaskWidgetTaskActivityLogsPanel from "components/trial/landing/widgets/tasks/body/FreeTrialLandingTaskWidgetTaskActivityLogsPanel";
 
 export default function FreeTrialLandingTaskWidgetBody(
   {

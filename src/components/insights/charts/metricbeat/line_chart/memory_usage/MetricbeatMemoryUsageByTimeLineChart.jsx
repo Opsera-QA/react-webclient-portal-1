@@ -3,7 +3,13 @@ import { ResponsiveLine } from "@nivo/line";
 import config from "./MetricbeatMemoryUsageByTimeLineChartConfigs";
 import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
-import React, {useState, useEffect, useContext, useCallback, useRef} from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  useRef
+} from "react";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ErrorDialog from "components/common/status_notifications/error";

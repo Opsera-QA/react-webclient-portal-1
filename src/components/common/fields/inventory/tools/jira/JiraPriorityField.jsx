@@ -2,8 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import pipelineStepNotificationActions
-from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
+import pipelineStepNotificationActions from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 import LoadingIcon from "components/common/icons/LoadingIcon";

@@ -1,21 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
-import {
-  FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS
-} from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagement";
-import RevokedSsoUserSelectInput
-from "components/common/list_of_values_input/users/sso/revoked/RevokedSsoUserSelectInput";
+import { FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREENS } from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagement";
+import RevokedSsoUserSelectInput from "components/common/list_of_values_input/users/sso/revoked/RevokedSsoUserSelectInput";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import FreeTrialUserExpirationReinstateUserAccessButton
-from "components/settings/trial/user_expiration/reinstatement/FreeTrialUserExpirationReinstateUserAccessButton";
+import FreeTrialUserExpirationReinstateUserAccessButton from "components/settings/trial/user_expiration/reinstatement/FreeTrialUserExpirationReinstateUserAccessButton";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import useGetFreeTrialUserExpirationManagementModel
-from "components/settings/trial/user_expiration/useGetFreeTrialUserExpirationManagementModel";
+import useGetFreeTrialUserExpirationManagementModel from "components/settings/trial/user_expiration/useGetFreeTrialUserExpirationManagementModel";
 import { useHistory } from "react-router-dom";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
-import FreeTrialUserExpirationManagementSubNavigationBar
-from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagementSubNavigationBar";
+import FreeTrialUserExpirationManagementSubNavigationBar from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagementSubNavigationBar";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 export default function FreeTrialUserExpirationUserReinstatementScreen() {

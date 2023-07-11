@@ -1,14 +1,17 @@
-import React, { useEffect, useContext, useState, useMemo, useRef } from "react";
+import React, {
+  useEffect,
+  useContext,
+  useState,
+  useMemo,
+  useRef
+} from "react";
 import CustomTable from "components/common/table/CustomTable";
 import { AuthContext } from "contexts/AuthContext";
 import PropTypes from "prop-types";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 
-import {
-  getLimitedTableTextColumn,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getLimitedTableTextColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import DeploymentAnalyticsMetadata from "./deployment-analytics-metadata";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";

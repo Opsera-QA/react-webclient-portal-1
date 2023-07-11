@@ -1,11 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ToolMetadata from "components/settings/delete_tools/tool-metadata";
-import {
-  getTableDateColumn,
-  getTableTextColumn,
-  getDeletePlatformToolTableButtonColumn,
-} from "components/common/table/table-column-helpers";
+import { getTableDateColumn, getTableTextColumn, getDeletePlatformToolTableButtonColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import DestructiveDeleteModal from "components/common/modal/DestructiveDeleteModal";
 import Model from "../../../core/data_model/model";

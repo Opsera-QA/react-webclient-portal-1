@@ -1,37 +1,24 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import emailStepNotificationMetadata
-from "components/workflow/plan/step/notifications/email/emailStepNotification.metadata";
-import slackStepNotificationMetadata
-from "components/workflow/plan/step/notifications/slack/slackStepNotificationMetadata";
-import teamsStepNotificationMetadata
-from "components/workflow/plan/step/notifications/teams/teamsStepNotificationMetadata";
-import serviceNowStepNotificationMetadata
-from "components/workflow/plan/step/notifications/servicenow/serviceNowStepNotificationMetadata";
+import emailStepNotificationMetadata from "components/workflow/plan/step/notifications/email/emailStepNotification.metadata";
+import slackStepNotificationMetadata from "components/workflow/plan/step/notifications/slack/slackStepNotificationMetadata";
+import teamsStepNotificationMetadata from "components/workflow/plan/step/notifications/teams/teamsStepNotificationMetadata";
+import serviceNowStepNotificationMetadata from "components/workflow/plan/step/notifications/servicenow/serviceNowStepNotificationMetadata";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
-import PipelineStepJiraNotificationSummaryPanel
-from "components/workflow/plan/step/notifications/jira/PipelineStepJiraNotificationSummaryPanel";
-import PipelineStepEmailNotificationSummaryPanel
-from "components/workflow/plan/step/notifications/email/PipelineStepEmailNotificationSummaryPanel";
+import PipelineStepJiraNotificationSummaryPanel from "components/workflow/plan/step/notifications/jira/PipelineStepJiraNotificationSummaryPanel";
+import PipelineStepEmailNotificationSummaryPanel from "components/workflow/plan/step/notifications/email/PipelineStepEmailNotificationSummaryPanel";
 import InfoContainer from "components/common/containers/InfoContainer";
 import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
-import PipelineStepServiceNowNotificationSummaryPanel
-from "components/workflow/plan/step/notifications/servicenow/PipelineStepServiceNowNotificationSummaryPanel";
-import PipelineStepSlackNotificationSummaryPanel
-from "components/workflow/plan/step/notifications/slack/PipelineStepSlackNotificationSummaryPanel";
-import PipelineStepMicrosoftTeamsNotificationSummaryPanel
-from "components/workflow/plan/step/notifications/teams/PipelineStepMicrosoftTeamsNotificationSummaryPanel";
+import PipelineStepServiceNowNotificationSummaryPanel from "components/workflow/plan/step/notifications/servicenow/PipelineStepServiceNowNotificationSummaryPanel";
+import PipelineStepSlackNotificationSummaryPanel from "components/workflow/plan/step/notifications/slack/PipelineStepSlackNotificationSummaryPanel";
+import PipelineStepMicrosoftTeamsNotificationSummaryPanel from "components/workflow/plan/step/notifications/teams/PipelineStepMicrosoftTeamsNotificationSummaryPanel";
 import NoDataMessageField from "components/common/fields/text/standalone/NoDataMessageField";
 import modelHelpers from "components/common/model/modelHelpers";
 import {jiraStepApprovalMetadata} from "components/workflow/plan/step/notifications/jira/jiraStepApproval.metadata";
-import {
-  jiraStepNotificationMetadata
-} from "components/workflow/plan/step/notifications/jira/jiraStepNotification.metadata";
-import PipelineStepGChatNotificationSummaryPanel
-from "components/workflow/plan/step/notifications/gchat/PipelineStepGChatNotificationSummaryPanel";
-import gChatStepNotificationMetadata
-from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
+import { jiraStepNotificationMetadata } from "components/workflow/plan/step/notifications/jira/jiraStepNotification.metadata";
+import PipelineStepGChatNotificationSummaryPanel from "components/workflow/plan/step/notifications/gchat/PipelineStepGChatNotificationSummaryPanel";
+import gChatStepNotificationMetadata from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
 
 // TODO: Style and utilize the left tab construct
 function PipelineStepNotificationConfigurationSummaryPanel({ pipelineStepData }) {

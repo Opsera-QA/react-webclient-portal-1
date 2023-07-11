@@ -3,10 +3,8 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import modelHelpers from "components/common/model/modelHelpers";
-import JenkinsJobsGenericAgentTypeSelectInput
-from "components/common/list_of_values_input/tools/jenkins/jobs/JenkinsJobsGenericAgentTypeSelectInput";
-import AzureDockerPushJobMetadata
-from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/azure_docker_push/azure-docker-push-metadata";
+import JenkinsJobsGenericAgentTypeSelectInput from "components/common/list_of_values_input/tools/jenkins/jobs/JenkinsJobsGenericAgentTypeSelectInput";
+import AzureDockerPushJobMetadata from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/azure_docker_push/azure-docker-push-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function AzureDockerPushJobEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled, jenkinsJobType }) {

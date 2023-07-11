@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineInstructionsTypeFilter
-from "components/common/filters/pipelines/instructions/PipelineInstructionsTypeFilter";
+import PipelineInstructionsTypeFilter from "components/common/filters/pipelines/instructions/PipelineInstructionsTypeFilter";
 
 export default function InlinePipelineInstructionsTypeFilter(
   {

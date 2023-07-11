@@ -8,8 +8,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import axios from "axios";
 import IconBase from "components/common/icons/IconBase";
 import {parseError} from "components/common/helpers/error-helpers";
-import externalApiIntegratorEndpointsActions
-from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoints.actions";
+import externalApiIntegratorEndpointsActions from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoints.actions";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 function ValidateEndpointButton(

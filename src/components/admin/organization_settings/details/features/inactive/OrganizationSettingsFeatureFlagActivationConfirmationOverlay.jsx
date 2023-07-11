@@ -6,11 +6,9 @@ import ConfirmationOverlay from "components/common/overlays/center/ConfirmationO
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import featureFlagConstants
-from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
+import featureFlagConstants from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
 import useGetNewFeatureFlagModel from "hooks/settings/organization_settings/feature_flags/useGetNewFeatureFlagModel";
-import OrganizationSettingsActivateFeatureFlagButton
-from "components/admin/organization_settings/details/features/inactive/OrganizationSettingsActivateFeatureFlagButton";
+import OrganizationSettingsActivateFeatureFlagButton from "components/admin/organization_settings/details/features/inactive/OrganizationSettingsActivateFeatureFlagButton";
 
 export default function OrganizationSettingsFeatureFlagActivationConfirmationOverlay(
   {

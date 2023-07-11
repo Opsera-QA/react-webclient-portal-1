@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {faBezierCurve} from "@fortawesome/pro-light-svg-icons";
-import DataPointStrategicCriteriaInfoPanel
-from "components/common/metrics/panels/strategic_criteria/data_point/DataPointStrategicCriteriaInfoPanel";
+import DataPointStrategicCriteriaInfoPanel from "components/common/metrics/panels/strategic_criteria/data_point/DataPointStrategicCriteriaInfoPanel";
 import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import {objectHelpers} from "components/common/helpers/object/object.helpers";
 import MetricInfoContainer from "components/common/containers/MetricInfoContainer";

@@ -9,22 +9,15 @@ import RunTaskOverlay from "components/tasks/details/RunTaskOverlay";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {TASK_TYPES} from "components/tasks/task.types";
 import CancelTaskButton from "components/tasks/buttons/CancelTaskButton";
-import GitToGitMergeSyncTaskWizardOverlay
-from "components/tasks/details/tasks/merge_sync_task/wizard/git_to_git/GitToGitMergeSyncTaskWizardOverlay";
-import SalesforceToGitMergeSyncTaskWizardOverlay
-from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";
+import GitToGitMergeSyncTaskWizardOverlay from "components/tasks/details/tasks/merge_sync_task/wizard/git_to_git/GitToGitMergeSyncTaskWizardOverlay";
+import SalesforceToGitMergeSyncTaskWizardOverlay from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";
 import SalesforceOrganizationSyncTaskWizardOverlay from "components/tasks/wizard/organization_sync/SalesforceOrganizationSyncTaskWizardOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import SalesforceBulkMigrationTaskWizardOverlay
-from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationTaskWizardOverlay";
-import SalesforceBranchStructureTaskInitializationOverlay
-from "components/tasks/details/tasks/sfdc-branch-structure/run/SalesforceBranchStructureTaskInitializationOverlay";
-import GitToGitSyncTaskInitializationOverlay
-from "components/tasks/details/tasks/branch-to-branch/run/GitToGitSyncTaskInitializationOverlay";
-import SalesforceCustomSettingMigrationTaskWizardOverlay
-from "../details/tasks/sfdc-custom-setting-migration/wizard/SalesforceCustomSettingMigrationTaskWizardOverlay";
-import SalesforceDataSeedingTaskWizardOverlay
-from "../details/tasks/sfdc-data-seeding/wizard/SalesforceDataSeedingTaskWizardOverlay";
+import SalesforceBulkMigrationTaskWizardOverlay from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationTaskWizardOverlay";
+import SalesforceBranchStructureTaskInitializationOverlay from "components/tasks/details/tasks/sfdc-branch-structure/run/SalesforceBranchStructureTaskInitializationOverlay";
+import GitToGitSyncTaskInitializationOverlay from "components/tasks/details/tasks/branch-to-branch/run/GitToGitSyncTaskInitializationOverlay";
+import SalesforceCustomSettingMigrationTaskWizardOverlay from "../details/tasks/sfdc-custom-setting-migration/wizard/SalesforceCustomSettingMigrationTaskWizardOverlay";
+import SalesforceDataSeedingTaskWizardOverlay from "../details/tasks/sfdc-data-seeding/wizard/SalesforceDataSeedingTaskWizardOverlay";
 
 const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_GIT_BRANCHES,

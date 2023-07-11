@@ -1,10 +1,7 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import {
-  getGroupRoleLevelColumnDefinition,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getGroupRoleLevelColumnDefinition, getTableTextColumn } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import { pipelineHelper } from "components/workflow/pipeline.helper";

@@ -1,21 +1,17 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import ApigeeReportSummaryOverview
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/apigee/components/ApigeeReportSummaryOverview";
-import apigeeSummaryLogResultMetaData
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/apigee/metadata/apigeeSummaryLogResult.metadata";
+import ApigeeReportSummaryOverview from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/apigee/components/ApigeeReportSummaryOverview";
+import apigeeSummaryLogResultMetaData from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/apigee/metadata/apigeeSummaryLogResult.metadata";
 import LoadingDialog from "components/common/status_notifications/loading";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
-import ApigeeSummaryLogVerticalTabContainer
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/apigee/ApigeeSummaryLogVerticalTabContainer";
+import ApigeeSummaryLogVerticalTabContainer from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/apigee/ApigeeSummaryLogVerticalTabContainer";
 import { faClipboardListCheck, faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import ApigeeReportView
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/apigee/components/ApigeeReportView";
+import ApigeeReportView from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/apigee/components/ApigeeReportView";
 
 function ApigeeLogSummaryReportPanel({ pipelineTaskData }) {
   const [apigeeReportModel, setApigeeReportModel] = useState(undefined);

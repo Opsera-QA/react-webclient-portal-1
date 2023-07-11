@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import InformaticaMappingInputBase
-from "./map_input/InformaticaMappingInputBase";
+import InformaticaMappingInputBase from "./map_input/InformaticaMappingInputBase";
 
 function InformaticaMappingInput(
   {

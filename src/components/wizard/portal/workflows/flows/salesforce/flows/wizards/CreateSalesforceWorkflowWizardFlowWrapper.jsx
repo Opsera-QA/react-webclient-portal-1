@@ -1,14 +1,9 @@
 import React from "react";
-import {
-  salesforceWorkflowFlowConstants
-} from "components/wizard/portal/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
-import CreateSalesforceOrganizationSyncTaskWizard
-from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/task/CreateSalesforceOrganizationSyncTaskWizard";
+import { salesforceWorkflowFlowConstants } from "components/wizard/portal/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
+import CreateSalesforceOrganizationSyncTaskWizard from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/task/CreateSalesforceOrganizationSyncTaskWizard";
 import * as PropType from "prop-types";
-import CreateSalesforceOrganizationSyncPipelineWizard
-from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/CreateSalesforceOrganizationSyncPipelineWizard";
-import CreateSalesforceOrganizationToGitMergeSyncTaskWizard
-from "components/wizard/portal/workflows/flows/salesforce/flows/salesforce_to_git_merge_sync/task/CreateSalesforceOrganizationToGitMergeSyncTaskWizard";
+import CreateSalesforceOrganizationSyncPipelineWizard from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/CreateSalesforceOrganizationSyncPipelineWizard";
+import CreateSalesforceOrganizationToGitMergeSyncTaskWizard from "components/wizard/portal/workflows/flows/salesforce/flows/salesforce_to_git_merge_sync/task/CreateSalesforceOrganizationToGitMergeSyncTaskWizard";
 
 export default function CreateSalesforceWorkflowWizardFlowWrapper(
   {

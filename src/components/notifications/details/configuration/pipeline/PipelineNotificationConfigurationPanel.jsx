@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
-import pipelineNotificationConfigurationMetadata
-from "components/notifications/details/configuration/pipeline/pipeline-notification-configuration-metadata";
+import pipelineNotificationConfigurationMetadata from "components/notifications/details/configuration/pipeline/pipeline-notification-configuration-metadata";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";

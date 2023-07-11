@@ -4,8 +4,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
-import RemoteApplicationSummaryPanel
-from "components/admin/remote_applications/details/RemoteApplicationSummaryPanel";
+import RemoteApplicationSummaryPanel from "components/admin/remote_applications/details/RemoteApplicationSummaryPanel";
 
 function RemoteApplicationDetailPanel({ telemetryData }) {
   const [activeTab, setActiveTab] = useState("summary");

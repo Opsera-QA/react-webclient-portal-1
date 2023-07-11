@@ -1,8 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import dataPointVisibilityMetadata
-from "components/common/inputs/metric/data_points/visibility/dataPointVisibility.metadata";
+import dataPointVisibilityMetadata from "components/common/inputs/metric/data_points/visibility/dataPointVisibility.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import H4MetricSubHeader from "components/common/fields/subheader/metric/H4MetricSubHeader";
 

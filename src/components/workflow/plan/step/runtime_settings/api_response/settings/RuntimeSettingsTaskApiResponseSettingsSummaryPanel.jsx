@@ -4,9 +4,7 @@ import Col from "react-bootstrap/Col";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
-import {
-  runtimeSettingsTaskApiResponseSettingsMetadata
-} from "components/workflow/plan/step/runtime_settings/api_response/settings/runtimeSettingsTaskApiResponseSettings.metadata";
+import { runtimeSettingsTaskApiResponseSettingsMetadata } from "components/workflow/plan/step/runtime_settings/api_response/settings/runtimeSettingsTaskApiResponseSettings.metadata";
 
 export default function RuntimeSettingsTaskApiResponseSettingsSummaryPanel({ settings }) {
   const runtimeSettingsModel = modelHelpers.parseObjectIntoModel(settings, runtimeSettingsTaskApiResponseSettingsMetadata);

@@ -4,8 +4,7 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import azureStorageAccountActions
-from "components/inventory/tools/tool_details/tool_jobs/azureV2/storage_accounts/azureStorageAccount.actions";
+import azureStorageAccountActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/storage_accounts/azureStorageAccount.actions";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
 function AzureToolStorageAccountSelectInput(

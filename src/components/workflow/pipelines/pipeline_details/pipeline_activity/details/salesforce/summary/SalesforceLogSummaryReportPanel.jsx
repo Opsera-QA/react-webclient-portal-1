@@ -1,21 +1,16 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import SalesforceLogSummaryOverviewSummaryPanel
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/SalesforceLogSummaryOverviewSummaryPanel";
-import salesforceSummaryLogDeployResultMetadata
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/metadata/salesforceSummaryLogDeployResult.metadata";
+import SalesforceLogSummaryOverviewSummaryPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/SalesforceLogSummaryOverviewSummaryPanel";
+import salesforceSummaryLogDeployResultMetadata from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/metadata/salesforceSummaryLogDeployResult.metadata";
 import LoadingDialog from "components/common/status_notifications/loading";
-import SalesforceLogSummaryTestResultsSummaryPanel
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummaryTestResultsSummaryPanel";
+import SalesforceLogSummaryTestResultsSummaryPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/deploy_results/tests/SalesforceLogSummaryTestResultsSummaryPanel";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
-import SalesforceSummaryLogVerticalTabContainer
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceSummaryLogVerticalTabContainer";
+import SalesforceSummaryLogVerticalTabContainer from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceSummaryLogVerticalTabContainer";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import SalesforceLogSummaryComponentResultsSummaryPanel
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/components/SalesforceLogSummaryComponentResultsSummaryPanel";
+import SalesforceLogSummaryComponentResultsSummaryPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/components/SalesforceLogSummaryComponentResultsSummaryPanel";
 import IconBase from "components/common/icons/IconBase";
 import {faCheckCircle} from "@fortawesome/pro-light-svg-icons";
 

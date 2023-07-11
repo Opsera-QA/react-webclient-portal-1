@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import SalesforceOrgSyncDetailedRunSummaryOverlay
-from "./detailed_run_summary/SalesforceOrgSyncDetailedRunSummaryOverlay";
-import SalesforceOrgSyncUniqueRunSummaryOverlay
-from "./unique_run_summary/SalesforceOrgSyncUniqueRunSummaryOverlay";
-import SalesforceOrgSyncActionableInsightSubNavigationBar
-from "./SalesforceOrgSyncActionableInsightSubNavigationBar";
+import SalesforceOrgSyncDetailedRunSummaryOverlay from "./detailed_run_summary/SalesforceOrgSyncDetailedRunSummaryOverlay";
+import SalesforceOrgSyncUniqueRunSummaryOverlay from "./unique_run_summary/SalesforceOrgSyncUniqueRunSummaryOverlay";
+import SalesforceOrgSyncActionableInsightSubNavigationBar from "./SalesforceOrgSyncActionableInsightSubNavigationBar";
 
 export const SALESFORCE_ORG_SYNC_ACTIONABLE_INSIGHT_SCREENS = {
   SALESFORCE_ORG_SYNC_RUN_SUMMARY: "salesforce_org_sync_run_summary",

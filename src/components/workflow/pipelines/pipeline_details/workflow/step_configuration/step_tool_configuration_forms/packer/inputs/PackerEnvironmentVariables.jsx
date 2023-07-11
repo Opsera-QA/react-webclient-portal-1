@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {faHandshake} from "@fortawesome/pro-light-svg-icons";
-import ParameterMappingInputBase
-from "components/common/list_of_values_input/parameters/ParameterMappingInputBase";
+import ParameterMappingInputBase from "components/common/list_of_values_input/parameters/ParameterMappingInputBase";
 
 function PackerEnvironmentVariables({ dataObject, setDataObject, disabled, fieldName}) {
 

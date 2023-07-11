@@ -1,4 +1,10 @@
-import React, { useEffect, useContext, useState, useMemo, useRef } from "react";
+import React, {
+  useEffect,
+  useContext,
+  useState,
+  useMemo,
+  useRef
+} from "react";
 import { AuthContext } from "contexts/AuthContext";
 import CustomTable from "components/common/table/CustomTable";
 import "components/analytics/charts/charts.css";

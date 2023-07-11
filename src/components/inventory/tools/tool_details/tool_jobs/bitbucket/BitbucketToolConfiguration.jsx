@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
-import ToolConfigurationEditorPanelContainer
-from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+import ToolConfigurationEditorPanelContainer from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import modelHelpers from "components/common/model/modelHelpers";
 import bitbucketConnectionMetadata from "./bitbucket-connection-metadata";
 import Col from "react-bootstrap/Col";
@@ -12,8 +11,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
-import toolIdentifierConnectionCheckConstants
-from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+import toolIdentifierConnectionCheckConstants from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 const bitBucketApiTypeArray = [
   {

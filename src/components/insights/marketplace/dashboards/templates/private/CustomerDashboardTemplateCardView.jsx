@@ -4,8 +4,7 @@ import {CardColumns} from "react-bootstrap";
 import CardView from "components/common/card/CardView";
 import InlineInformation from "components/common/status_notifications/inline/InlineInformation";
 import LoadingDialog from "components/common/status_notifications/loading";
-import CustomerDashboardTemplateCard
-from "components/insights/marketplace/dashboards/templates/private/CustomerDashboardTemplateCard";
+import CustomerDashboardTemplateCard from "components/insights/marketplace/dashboards/templates/private/CustomerDashboardTemplateCard";
 
 function CustomerDashboardTemplateCardView(
   {

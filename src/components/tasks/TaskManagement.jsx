@@ -11,16 +11,12 @@ import TableCardView from "components/common/table/TableCardView";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 import SideBySideViewBase from "components/common/tabs/SideBySideViewBase";
 import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
-import {
-  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
-} from "components/common/table/FilterContainer";
+import { FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION } from "components/common/table/FilterContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import TaskFilterOverlay from "components/tasks/TaskFilterOverlay";
 import NewTaskOverlay from "components/tasks/NewTaskOverlay";
-import useGetPlatformSettingsFeatureFlagByName
-from "../../hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
-import platformSettingFeatureConstants
-from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
+import useGetPlatformSettingsFeatureFlagByName from "../../hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
+import platformSettingFeatureConstants from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
 import CreateTasksWizard from "./portal_tasks_wizard/CreateTasksWizard";
 
 const tableFields = ["name", "description", "type", "tags", "createdAt", "updatedAt", "active", "status", "run_count", "completion"];

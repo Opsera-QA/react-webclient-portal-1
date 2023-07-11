@@ -4,11 +4,8 @@ import RoleHelper from "@opsera/know-your-role/roles/role.helper";
 import OwnershipTransferOverlayBase from "components/common/overlays/center/ownership/OwnershipTransferOverlayBase";
 import { useHistory } from "react-router-dom";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import OwnershipTransferConfirmationOverlay
-from "components/common/overlays/center/ownership/OwnershipTransferConfirmationOverlay";
-import {
-  customerPipelineTemplateCatalogActions
-} from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
+import OwnershipTransferConfirmationOverlay from "components/common/overlays/center/ownership/OwnershipTransferConfirmationOverlay";
+import { customerPipelineTemplateCatalogActions } from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
 import {pipelineCatalogHelper} from "components/workflow/catalog/pipelineCatalog.helper";
 
 export default function CustomerPipelineTemplateOwnershipTransferOverlay(

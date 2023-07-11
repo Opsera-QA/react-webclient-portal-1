@@ -4,12 +4,10 @@ import modelHelpers from "components/common/model/modelHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import cumulativeOpenDefectsMetadata
-from "components/settings/analytics_data_entry/detail_view/configuration_panels/cumulative_open_defects/cumulative-open-defects-metadata";
+import cumulativeOpenDefectsMetadata from "components/settings/analytics_data_entry/detail_view/configuration_panels/cumulative_open_defects/cumulative-open-defects-metadata";
 import PipelineSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineSelectInput";
 import DateTimeRangeInputBase from "components/common/inputs/date/DateTimeRangeInputBase";
-import ManualKpiMultiSelectInputBase
-from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
+import ManualKpiMultiSelectInputBase from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
 import PositiveIntegerNumberPickerInput from "components/common/inputs/number/picker/PositiveIntegerNumberPickerInput";
 
 function CumulativeOpenDefectsConfiguration({ analyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {

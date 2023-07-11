@@ -3,7 +3,13 @@ import { ResponsiveLine } from "@nivo/line";
 import config from "./metricbeatCpuUsageByTimeLineChartConfigs";
 import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
-import React, {useState, useEffect, useContext, useCallback, useRef} from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  useRef
+} from "react";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../api/apiService";
 import LoadingDialog from "components/common/status_notifications/loading";

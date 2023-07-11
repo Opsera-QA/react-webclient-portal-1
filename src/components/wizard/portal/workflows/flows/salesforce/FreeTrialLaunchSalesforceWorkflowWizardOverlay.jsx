@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import { faWandMagicSparkles } from "@fortawesome/pro-light-svg-icons";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
-import FreeTrialSelectSalesforceWorkflowScreen
-from "components/wizard/portal/workflows/flows/salesforce/launch/selection/FreeTrialSelectSalesforceWorkflowScreen";
+import FreeTrialSelectSalesforceWorkflowScreen from "components/wizard/portal/workflows/flows/salesforce/launch/selection/FreeTrialSelectSalesforceWorkflowScreen";
 
 export const LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS = {
   SELECT_OPTION_SCREEN: "select_workflow_screen",

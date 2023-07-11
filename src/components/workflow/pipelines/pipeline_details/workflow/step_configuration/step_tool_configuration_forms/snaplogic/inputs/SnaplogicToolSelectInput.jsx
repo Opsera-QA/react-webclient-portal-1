@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RoleRestrictedSnaplogicToolSelectInput
-from "components/common/list_of_values_input/tools/snaplogic/RoleRestrictedSnaplogicToolSelectInput";
+import RoleRestrictedSnaplogicToolSelectInput from "components/common/list_of_values_input/tools/snaplogic/RoleRestrictedSnaplogicToolSelectInput";
 
 function SnaplogicToolSelectInput({ model, setModel, className, disabled }) {
 

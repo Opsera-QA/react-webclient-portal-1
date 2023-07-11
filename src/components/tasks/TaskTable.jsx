@@ -7,7 +7,9 @@ import {
   getTableTextColumn,
   getTaskStatusColumn,
   getFormattedLabelWithFunctionColumnDefinition,
-  getRoleAccessColumn, getTableDateTimeColumn, getOwnerNameField,
+  getRoleAccessColumn,
+  getTableDateTimeColumn,
+  getOwnerNameField
 } from "components/common/table/table-column-helpers";
 import { useHistory } from "react-router-dom";
 import { getField } from "components/common/metadata/metadata-helpers";

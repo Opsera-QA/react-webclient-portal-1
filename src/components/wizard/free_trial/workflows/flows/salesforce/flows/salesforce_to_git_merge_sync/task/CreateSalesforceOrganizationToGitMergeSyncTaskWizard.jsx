@@ -1,25 +1,15 @@
 import React, {useState} from "react";
-import CreateWorkflowWizardCreateGitToolScreenBase
-from "components/wizard/free_trial/workflows/flows/tools/git/CreateWorkflowWizardCreateGitToolScreenBase";
+import CreateWorkflowWizardCreateGitToolScreenBase from "components/wizard/free_trial/workflows/flows/tools/git/CreateWorkflowWizardCreateGitToolScreenBase";
 import sfdcConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/sfdc/sfdc-connection-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
-import CreateWorkflowWizardCreateSalesforceToolEditorPanel
-from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateWorkflowWizardCreateSalesforceToolEditorPanel";
+import CreateWorkflowWizardCreateSalesforceToolEditorPanel from "components/wizard/free_trial/workflows/flows/tools/salesforce/CreateWorkflowWizardCreateSalesforceToolEditorPanel";
 import * as PropType from "prop-types";
-import CreateWorkflowWizardTaskCompletionScreen
-from "components/wizard/free_trial/workflows/flows/tasks/completion/CreateWorkflowWizardTaskCompletionScreen";
-import {
-  salesforceWorkflowFlowConstants
-} from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
-import CreateSalesforceOrganizationToGitMergeSyncTaskInitializationScreen
-from "./initialization/CreateSalesforceOrganizationToGitMergeSyncTaskInitializationScreen";
-import CreateSalesforceOrganizationToGitMergeSyncTaskTestGitToolConnectionScreen
-from "./tools/git/connection/CreateSalesforceOrganizationToGitMergeSyncTaskTestGitToolConnectionScreen";
-import CreateSalesforceOrganizationToGitMergeSyncTaskWizardTestSalesforceSourceToolConnectionScreen
-from "./tools/salesforce/connection/CreateSalesforceOrganizationToGitMergeSyncTaskWizardTestSalesforceSourceToolConnectionScreen";
-import {
-  CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES
-} from "components/wizard/free_trial/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
+import CreateWorkflowWizardTaskCompletionScreen from "components/wizard/free_trial/workflows/flows/tasks/completion/CreateWorkflowWizardTaskCompletionScreen";
+import { salesforceWorkflowFlowConstants } from "components/wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
+import CreateSalesforceOrganizationToGitMergeSyncTaskInitializationScreen from "./initialization/CreateSalesforceOrganizationToGitMergeSyncTaskInitializationScreen";
+import CreateSalesforceOrganizationToGitMergeSyncTaskTestGitToolConnectionScreen from "./tools/git/connection/CreateSalesforceOrganizationToGitMergeSyncTaskTestGitToolConnectionScreen";
+import CreateSalesforceOrganizationToGitMergeSyncTaskWizardTestSalesforceSourceToolConnectionScreen from "./tools/salesforce/connection/CreateSalesforceOrganizationToGitMergeSyncTaskWizardTestSalesforceSourceToolConnectionScreen";
+import { CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES } from "components/wizard/free_trial/workflows/flows/tools/CreateWorkflowWizardRegisterToolHeaderText";
 
 export const CREATE_SALESFORCE_ORGANIZATION_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS = {
   REGISTER_SOURCE_SALESFORCE_ACCOUNT_SCREEN: "register_source_salesforce_tool_screen",

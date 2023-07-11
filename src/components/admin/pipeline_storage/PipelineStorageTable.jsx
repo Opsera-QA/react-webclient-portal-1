@@ -1,11 +1,7 @@
 import React, {useEffect, useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
-import {
-  getTableDateColumn,
-  getTableTextColumn,
-  getOwnerNameField
-} from "components/common/table/table-column-helpers-v2";
+import { getTableDateColumn, getTableTextColumn, getOwnerNameField } from "components/common/table/table-column-helpers-v2";
 import { getField } from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faFileArchive} from "@fortawesome/pro-light-svg-icons";

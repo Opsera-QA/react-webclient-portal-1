@@ -10,8 +10,7 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
-import { defaultConfig, getColor, assignStandardColors,
-  shortenLegend } from "../../insights/charts/charts-views";
+import { defaultConfig, getColor, assignStandardColors, shortenLegend } from "../../insights/charts/charts-views";
 import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 import "./charts.css";

@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import BulkMigrationDetailedRunSummaryOverlay
-from "./detailed_run_summary/BulkMigrationDetailedRunSummaryOverlay";
-import BulkMigrationActionableInsightSubNavigationBar
-from "./BulkMigrationActionableInsightSubNavigationBar";
+import BulkMigrationDetailedRunSummaryOverlay from "./detailed_run_summary/BulkMigrationDetailedRunSummaryOverlay";
+import BulkMigrationActionableInsightSubNavigationBar from "./BulkMigrationActionableInsightSubNavigationBar";
 
 export const BULK_MIGRATION_ACTIONABLE_INSIGHT_SCREENS = {
   BULK_MIGRATION_RUN_SUMMARY: "bulk_migration_run_summary",

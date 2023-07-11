@@ -2,11 +2,7 @@ import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import projectSummaryMetadata from "./project-summary-metadata";
-import {
-  getTableDateColumn,
-  getTableTextColumn,
-  getTagColumn,
-} from "components/common/table/table-column-helpers";
+import { getTableDateColumn, getTableTextColumn, getTagColumn } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";

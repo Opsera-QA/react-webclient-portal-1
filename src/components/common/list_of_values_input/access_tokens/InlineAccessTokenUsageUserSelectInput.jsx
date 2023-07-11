@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AccessTokenUsageUserSelectInput
-from "components/common/list_of_values_input/access_tokens/AccessTokenUsageUserSelectInput";
+import AccessTokenUsageUserSelectInput from "components/common/list_of_values_input/access_tokens/AccessTokenUsageUserSelectInput";
 
 export default function InlineAccessTokenUsageUserSelectInput(
   {

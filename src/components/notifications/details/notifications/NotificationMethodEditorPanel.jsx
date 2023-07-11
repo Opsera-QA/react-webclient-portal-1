@@ -1,24 +1,17 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
-import emailStepNotificationMetadata
-from "components/workflow/plan/step/notifications/email/emailStepNotification.metadata";
+import emailStepNotificationMetadata from "components/workflow/plan/step/notifications/email/emailStepNotification.metadata";
 import { ORCHESTRATION_NOTIFICATION_TYPES } from "components/common/fields/notifications/notificationTypes.constants";
 import NotificationTabView from "components/notifications/details/notifications/NotificationTabView";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import {notificationMethodHelper} from "components/notifications/notificationMethod.helper";
-import slackStepNotificationMetadata
-from "components/workflow/plan/step/notifications/slack/slackStepNotificationMetadata";
-import teamsStepNotificationMetadata
-from "components/workflow/plan/step/notifications/teams/teamsStepNotificationMetadata";
-import {
-  jiraStepNotificationMetadata
-} from "components/workflow/plan/step/notifications/jira/jiraStepNotification.metadata";
-import serviceNowStepNotificationMetadata
-from "components/workflow/plan/step/notifications/servicenow/serviceNowStepNotificationMetadata";
-import gChatStepNotificationMetadata
-from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
+import slackStepNotificationMetadata from "components/workflow/plan/step/notifications/slack/slackStepNotificationMetadata";
+import teamsStepNotificationMetadata from "components/workflow/plan/step/notifications/teams/teamsStepNotificationMetadata";
+import { jiraStepNotificationMetadata } from "components/workflow/plan/step/notifications/jira/jiraStepNotification.metadata";
+import serviceNowStepNotificationMetadata from "components/workflow/plan/step/notifications/servicenow/serviceNowStepNotificationMetadata";
+import gChatStepNotificationMetadata from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
 
 export default function NotificationMethodEditorPanel(
   {

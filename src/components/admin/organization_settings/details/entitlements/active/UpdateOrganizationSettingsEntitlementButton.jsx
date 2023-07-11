@@ -4,8 +4,7 @@ import PropTypes from "prop-types";
 import useButtonState from "hooks/general/buttons/useButtonState";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import {useHistory} from "react-router-dom";
-import useEntitlementAdministrationActions
-from "hooks/settings/organization_settings/entitlements/useEntitlementAdministrationActions";
+import useEntitlementAdministrationActions from "hooks/settings/organization_settings/entitlements/useEntitlementAdministrationActions";
 
 export default function UpdateOrganizationSettingsEntitlementButton(
   {

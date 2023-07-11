@@ -2,20 +2,14 @@ import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {useHistory} from "react-router-dom";
-import {
-  getFormattedLabelWithFunctionColumnDefinition,
-  getLimitedTableTextColumn,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getFormattedLabelWithFunctionColumnDefinition, getLimitedTableTextColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faStream} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import NewPlatformSystemParameterOverlay
-from "components/admin/system_parameters/create/NewPlatformSystemParameterOverlay";
+import NewPlatformSystemParameterOverlay from "components/admin/system_parameters/create/NewPlatformSystemParameterOverlay";
 import { platformSystemParametersMetadata } from "components/admin/system_parameters/platformSystemParameters.metadata";
-import platformSystemParameterConstants
-from "@opsera/definitions/constants/platform/system_parameters/platformSystemParameter.constants";
+import platformSystemParameterConstants from "@opsera/definitions/constants/platform/system_parameters/platformSystemParameter.constants";
 
 export default function PlatformSystemParameterTable(
   {

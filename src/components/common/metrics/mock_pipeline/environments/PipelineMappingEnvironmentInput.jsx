@@ -4,8 +4,7 @@ import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
-import PipelineMappingEnvironmentInputRow
-from "components/common/metrics/mock_pipeline/environments/PipelineMappingEnvironmentInputRow";
+import PipelineMappingEnvironmentInputRow from "components/common/metrics/mock_pipeline/environments/PipelineMappingEnvironmentInputRow";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function PipelineMappingEnvironmentInput({ fieldName, model, setModel, disabled}) {

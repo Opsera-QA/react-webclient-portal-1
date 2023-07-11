@@ -2,18 +2,11 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { faFileCode } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
-import {
-  getTableTextColumn,
-  getTableTextColumnBase,
-} from "components/common/table/table-column-helpers-v2";
+import { getTableTextColumn, getTableTextColumnBase } from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 import { getField } from "components/common/metadata/metadata-helpers";
-import {
-  MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
-} from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
-import {
-  mergeSyncTaskWizardSelectedDeltaCommitMetadata
-} from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/selected_deltas_table/mergeSyncTaskWizardSelectedDeltaCommit.metadata";
+import { MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
+import { mergeSyncTaskWizardSelectedDeltaCommitMetadata } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/selected_deltas_table/mergeSyncTaskWizardSelectedDeltaCommit.metadata";
 
 const getFormattedTextLabel = (ignoreIncoming) => {
   return ignoreIncoming === true ? "Keeping Destination Branch Changes" : "Merging In Incoming Changes";

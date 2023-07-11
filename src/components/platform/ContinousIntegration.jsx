@@ -1,10 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import PropTypes from "prop-types";
-import { 
-  Card,
-  OverlayTrigger,
-  Popover,
-  Tooltip } from "react-bootstrap";
+import { Card, OverlayTrigger, Popover, Tooltip } from "react-bootstrap";
 import { NewAppContext } from "./context";
 
 function ContinousIntegration(props) {

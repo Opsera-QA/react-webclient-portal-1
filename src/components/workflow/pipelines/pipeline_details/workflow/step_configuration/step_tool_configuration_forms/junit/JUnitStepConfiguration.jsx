@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-import {
-  getMissingRequiredFieldsErrorDialog
-} from "../../../../../../../common/toasts/toasts";
+import { getMissingRequiredFieldsErrorDialog } from "../../../../../../../common/toasts/toasts";
 
 import StepConfigBitbucketWorkspaceInput from "../common/inputs/StepConfigBitbucketWorkspaceInput";
 import StepConfigGitBranchInput from "../common/inputs/StepConfigGitBranchInput";
@@ -13,8 +11,7 @@ import StepConfigJenkinsJobInput from "../common/inputs/StepConfigJenkinsJobInpu
 import StepConfigJenkinsToolInput from "../common/inputs/StepConfigJenkinsToolInput";
 import StepConfigWorkspaceDeleteToggleInput from "../common/inputs/StepConfigWorkspaceDeleteToggleInput";
 
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import junitPipelineStepConfigurationMetadata from "./junitPipelineStepConfigurationMetadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";

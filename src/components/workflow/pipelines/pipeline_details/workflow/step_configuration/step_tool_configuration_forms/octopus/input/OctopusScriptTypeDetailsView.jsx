@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import TextInputBase from "../../../../../../../../common/inputs/text/TextInputBase";
-import ScriptLibrarySelectInput
-from "../../../../../../../../common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
+import ScriptLibrarySelectInput from "../../../../../../../../common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
 
 function OctopusScriptTypeDetailsView({dataObject, setDataObject, isLoading, disabled, tool_prop}) {
 

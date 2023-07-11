@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { faBracketsCurly, faInfoCircle, faSync, faTimes, faHandshake} from "@fortawesome/pro-light-svg-icons";
+import {
+  faBracketsCurly,
+  faInfoCircle,
+  faSync,
+  faTimes,
+  faHandshake
+} from "@fortawesome/pro-light-svg-icons";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
@@ -7,8 +13,7 @@ import awsLambdaStepFormMetadata from "./awsLambda-stepForm-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import MultiTaskSelectInputBase from "./inputs/MultiTaskSelectInput";
 import AwsLambdaActionSelectInput from "./inputs/ActionTypeSelectInput";
-import RoleRestrictedAwsAccountToolSelectInput
-from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
+import RoleRestrictedAwsAccountToolSelectInput from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 
 function AwsLambdaDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan, stepId, pipelineId }) {
   const [isLoading, setIsLoading] = useState(false);

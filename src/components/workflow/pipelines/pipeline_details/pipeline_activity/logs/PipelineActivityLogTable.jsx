@@ -1,17 +1,12 @@
 import React, { useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
-import {
-  getPipelineActivityStatusColumn,
-  getTableDateTimeColumn,
-  getTableTextColumn, getUppercaseTableTextColumn
-} from "components/common/table/table-column-helpers-v2";
+import { getPipelineActivityStatusColumn, getTableDateTimeColumn, getTableTextColumn, getUppercaseTableTextColumn } from "components/common/table/table-column-helpers-v2";
 import PipelineActivityLogDetailViewOverlay from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogDetailViewOverlay";
 import TableBase from "components/common/table/TableBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
-import PipelineInstructionsAcknowledgementOverlay
-from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
+import PipelineInstructionsAcknowledgementOverlay from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
 import pipelineActivityMetadata from "@opsera/definitions/constants/pipelines/logs/pipelineActivity.metadata";
 import { getField } from "components/common/metadata/metadata-helpers";
 import StepApprovalOverlay from "components/workflow/StepApprovalOverlay";

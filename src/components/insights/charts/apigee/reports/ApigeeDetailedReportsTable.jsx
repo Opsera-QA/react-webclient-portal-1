@@ -1,4 +1,10 @@
-import React, {useState, useEffect, useContext, useRef, useMemo} from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  useMemo
+} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import axios from "axios";
@@ -6,9 +12,7 @@ import { AuthContext } from "contexts/AuthContext";
 import { apigeeReportsMetadata } from "./apigeeReports-metadata";
 import FilterContainer from "../../../../common/table/FilterContainer";
 import CustomTable from "../../../../common/table/CustomTable";
-import {
-  getTableTextColumn, getTableBooleanIconColumn
-} from "components/common/table/table-column-helpers";
+import { getTableTextColumn, getTableBooleanIconColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import {parseError} from "../../../../common/helpers/error-helpers";
 import apigeeActions from "../apigee.action";

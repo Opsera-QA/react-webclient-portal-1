@@ -1,13 +1,17 @@
-import React, { useState, useContext, useMemo, useRef, useEffect } from "react";
+import React, {
+  useState,
+  useContext,
+  useMemo,
+  useRef,
+  useEffect
+} from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
-import FullScreenCenterOverlayContainer
-from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
+import FullScreenCenterOverlayContainer from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import Model from "../../../../../../core/data_model/model";
-import actionableInsightsGenericChartFilterMetadata
-from "../../../generic_filters/actionableInsightsGenericChartFilterMetadata";
+import actionableInsightsGenericChartFilterMetadata from "../../../generic_filters/actionableInsightsGenericChartFilterMetadata";
 import GitlabCommitsByAuthorActionableTable from "./GitlabCommitsByAuthorActionableTable";
 import gitlabActions from "../../gitlab.action";
 

@@ -2,15 +2,11 @@ import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import SalesforceCodeAnalyserActionableMetadata from "./SalesforceCodeAnalyserActionable.metadata";
-import {
-  getTableDateTimeColumn,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
-import SalesforceCodeAnalyserRuleActionableTwoOverlay
-from "./actionable_insights2/SalesforceCodeAnalyserRuleActionableTwoOverlay";
+import SalesforceCodeAnalyserRuleActionableTwoOverlay from "./actionable_insights2/SalesforceCodeAnalyserRuleActionableTwoOverlay";
 
 function SalesforceCodeAnalyserPipelineActionableTable({ data, isLoading, loadData, filterModel, setFilterModel, tableTitleIcon, total }) {
   const fields = SalesforceCodeAnalyserActionableMetadata.fields;

@@ -11,10 +11,8 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import DockerCliOutputVariableCommandLineInputParameterInputRow from "./DockerCliOutputVariableCommandLineInputParameterInputRow";
 import DockerCliParameterSelectListHeaderField from "../parameters/DockerCliParameterSelectListHeaderField";
 import DockerCliParameterSelectListInlineField from "../parameters/DockerCliParameterSelectListInlineField";
-import PipelineStepSaveEnvironmentVariablesBooleanToggle
-from "components/common/list_of_values_input/parameters/pipeline/PipelineStepSaveEnvironmentVariablesBooleanToggle";
-import PipelineStepParameterInputBaseHelpText
-from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBaseHelpText";
+import PipelineStepSaveEnvironmentVariablesBooleanToggle from "components/common/list_of_values_input/parameters/pipeline/PipelineStepSaveEnvironmentVariablesBooleanToggle";
+import PipelineStepParameterInputBaseHelpText from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBaseHelpText";
 
 export default function DockerCliOutputVariableCommandLineInputParameterInput(
   {

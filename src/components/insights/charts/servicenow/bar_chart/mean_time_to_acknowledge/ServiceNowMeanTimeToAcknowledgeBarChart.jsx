@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useContext, useRef, Fragment } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  Fragment
+} from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import config from "./ServiceNowMeanTimeToAcknowledgeConfigs.js";
@@ -12,10 +18,7 @@ import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth } f
 import ChartTooltip from "../../../ChartTooltip";
 import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
 import { neutralColor, goalSuccessColor, mainColor } from "../../../../charts/charts-views";
-import {
-  METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY,
-  METRIC_THEME_CHART_PALETTE_COLORS,
-} from "components/common/helpers/metrics/metricTheme.helpers";
+import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY, METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import { Col, Row } from "react-bootstrap";
 import ServiceNowTotalIncidentsDataBlock from "../../data_blocks/ServiceNowTotalIncidentsDataBlock";
 import ServiceNowTotalAcknowledgedIncidentsDataBlock from "../../data_blocks/ServiceNowTotalAcknowledgedIncidentsDataBlock";

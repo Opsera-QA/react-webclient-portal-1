@@ -1,4 +1,10 @@
-import React, {useState, useEffect, useContext, useRef, useMemo} from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  useMemo
+} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import axios from "axios";
@@ -8,10 +14,7 @@ import connectedAssetsActions from "../../../connectedAssets.actions";
 import connectedAssetsMetadata from "../../../connectedAssets-metadata";
 import FilterContainer from "../../../../../common/table/FilterContainer";
 import CustomTable from "../../../../../common/table/CustomTable";
-import {
-  getTableDateTimeColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers";
+import { getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { CONNECTED_ASSETS_CONSTANTS as constants } from "../../../connecetdAssets.constants";
 import {parseError} from "../../../../../common/helpers/error-helpers";

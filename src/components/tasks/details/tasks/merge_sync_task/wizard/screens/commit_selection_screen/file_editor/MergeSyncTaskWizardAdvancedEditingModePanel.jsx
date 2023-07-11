@@ -2,32 +2,22 @@ import React, {useState, useEffect, useContext} from 'react';
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import mergeSyncTaskWizardActions
-from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
+import mergeSyncTaskWizardActions from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import LoadingDialog from "components/common/status_notifications/loading";
-import {
-  comparisonFileMetadata
-} from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/comparisonFile.metadata";
+import { comparisonFileMetadata } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/comparisonFile.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import MergeSyncTaskWizardDiffSelectorVerticalTabContainer
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/diff_viewer/MergeSyncTaskWizardDiffSelectorVerticalTabContainer";
+import MergeSyncTaskWizardDiffSelectorVerticalTabContainer from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/diff_viewer/MergeSyncTaskWizardDiffSelectorVerticalTabContainer";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import MergeSyncTaskWizardCommitFileDiffSelectionsButton
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/diff_viewer/MergeSyncTaskWizardCommitFileDiffSelectionsButton";
-import MergeSyncTaskWizardAdvancedFileEditingButton
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/file_editor/MergeSyncTaskWizardAdvancedFileEditingButton";
+import MergeSyncTaskWizardCommitFileDiffSelectionsButton from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/diff_viewer/MergeSyncTaskWizardCommitFileDiffSelectionsButton";
+import MergeSyncTaskWizardAdvancedFileEditingButton from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/file_editor/MergeSyncTaskWizardAdvancedFileEditingButton";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SideBySideCodeComparisonField from "components/common/fields/file/comparison/SideBySideCodeComparisonField";
-import {
-  MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
-} from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
+import { MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
-import MergeSyncTaskWizardSelectFileOptionButton
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/file_editor/MergeSyncTaskWizardSelectFileOptionButton";
-import MergeSyncTaskWizardFileEditor
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/file_editor/MergeSyncTaskWizardFileEditor";
+import MergeSyncTaskWizardSelectFileOptionButton from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/file_editor/MergeSyncTaskWizardSelectFileOptionButton";
+import MergeSyncTaskWizardFileEditor from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/file_editor/MergeSyncTaskWizardFileEditor";
 
 const MergeSyncTaskWizardAdvancedEditingModePanel = (
   {

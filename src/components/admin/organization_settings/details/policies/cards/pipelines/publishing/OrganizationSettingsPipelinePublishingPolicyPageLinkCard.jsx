@@ -1,9 +1,7 @@
 import React from "react";
 import PropType from "prop-types";
-import OrganizationSettingsInactivePipelinePublishingPolicyPageLinkCard
-from "components/admin/organization_settings/details/policies/cards/pipelines/publishing/OrganizationSettingsInactivePipelinePublishingPolicyPageLinkCard";
-import OrganizationSettingsCustomerPolicyPageLinkCardBase
-from "components/admin/organization_settings/details/policies/OrganizationSettingsCustomerPolicyPageLinkCardBase";
+import OrganizationSettingsInactivePipelinePublishingPolicyPageLinkCard from "components/admin/organization_settings/details/policies/cards/pipelines/publishing/OrganizationSettingsInactivePipelinePublishingPolicyPageLinkCard";
+import OrganizationSettingsCustomerPolicyPageLinkCardBase from "components/admin/organization_settings/details/policies/OrganizationSettingsCustomerPolicyPageLinkCardBase";
 
 export default function OrganizationSettingsPipelinePublishingPolicyPageLinkCard(
   {

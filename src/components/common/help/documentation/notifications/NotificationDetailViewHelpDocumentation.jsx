@@ -2,10 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
-import {
-  doesToolSupportTab,
-  TOOL_DETAIL_PANEL_TABS
-} from "components/inventory/tools/details/panel/tab_container/ToolDetailPanelTabContainer";
+import { doesToolSupportTab, TOOL_DETAIL_PANEL_TABS } from "components/inventory/tools/details/panel/tab_container/ToolDetailPanelTabContainer";
 import {NOTIFICATION_TYPES} from "components/common/list_of_values_input/notifications/type/notificationTypes.constants";
 import {NOTIFICATION_METHODS} from "components/common/list_of_values_input/notifications/method/notificationMethod.constants";
 

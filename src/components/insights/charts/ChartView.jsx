@@ -160,10 +160,7 @@ import CoverityIssuesByCategory from "./coverity/CoverityIssuesByCategory/Coveri
 // Boomi KPIs
 import BoomiBarChart from "./boomi/bar_chart/BoomiBarChart";
 
-import {
-  getDateObjectFromKpiConfiguration,
-  getTagsFromKpiConfiguration,
-} from "components/insights/charts/charts-helpers";
+import { getDateObjectFromKpiConfiguration, getTagsFromKpiConfiguration } from "components/insights/charts/charts-helpers";
 import { Col } from "react-bootstrap";
 import LegacySonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings_legacy/LegacySonarRatingMetrics";
 import SonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings/SonarRatingMetrics";

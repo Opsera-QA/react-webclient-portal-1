@@ -3,12 +3,7 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {useHistory} from "react-router-dom";
 import toolIdentifierMetadata from "components/admin/tools/identifiers/toolIdentifier.metadata";
-import {
-  getLimitedTableTextColumn,
-  getTableBooleanIconColumn,
-  getTableDateColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers";
+import { getLimitedTableTextColumn, getTableBooleanIconColumn, getTableDateColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 
 function ToolIdentifierTable({toolIdentifiers, isLoading}) {

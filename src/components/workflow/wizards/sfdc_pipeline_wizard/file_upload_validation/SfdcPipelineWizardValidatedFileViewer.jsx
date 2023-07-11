@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import SfdcPipelineWizardValidatedGitFileViewer
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/git/SfdcPipelineWizardValidatedGitFileViewer";
-import SfdcPipelineWizardValidatedSfdcFileViewer
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/sfdc/SfdcPipelineWizardValidatedSfdcFileViewer";
+import SfdcPipelineWizardValidatedGitFileViewer from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/git/SfdcPipelineWizardValidatedGitFileViewer";
+import SfdcPipelineWizardValidatedSfdcFileViewer from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/sfdc/SfdcPipelineWizardValidatedSfdcFileViewer";
 
 const SfdcPipelineWizardValidatedFileViewer = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {
   const getPipelineOrTaskText = () => pipelineWizardModel.getData('fromGitTasks') ? 'Task' : 'Pipeline';

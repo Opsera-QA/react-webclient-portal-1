@@ -9,14 +9,8 @@ import ScriptLibraryRoleHelper from "@opsera/know-your-role/roles/registry/scrip
 import scriptsLibraryMetadata from "@opsera/definitions/constants/registry/script_library/scriptsLibrary.metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetScriptModel from "components/inventory/scripts/hooks/useGetScriptModel";
-import {
-  getFormattedLabelWithFunctionColumnDefinition,
-  getOwnerNameField,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
-import {
-  getScriptLanguageDisplayText
-} from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
+import { getFormattedLabelWithFunctionColumnDefinition, getOwnerNameField, getTableTextColumn } from "components/common/table/table-column-helpers";
+import { getScriptLanguageDisplayText } from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
 
 function ScriptTable(
   {

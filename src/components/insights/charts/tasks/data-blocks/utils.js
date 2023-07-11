@@ -1,8 +1,4 @@
-import {
-  faArrowCircleDown,
-  faArrowCircleUp,
-  faMinusCircle,
-} from "@fortawesome/pro-solid-svg-icons";
+import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/pro-solid-svg-icons";
 
 const getIconColor = (severity) => {
   switch (severity) {

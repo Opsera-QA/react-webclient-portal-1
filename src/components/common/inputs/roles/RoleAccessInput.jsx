@@ -1,9 +1,6 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {
-  faIdCard,
-  faTrash,
-} from "@fortawesome/pro-light-svg-icons";
+import { faIdCard, faTrash } from "@fortawesome/pro-light-svg-icons";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import RoleAccessInputHeaderField from "components/common/inputs/roles/RoleAccessInputHeaderField";

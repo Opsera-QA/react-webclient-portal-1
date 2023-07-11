@@ -4,8 +4,7 @@ import { faShareSquare } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
-import PublishCustomerDashboardOverlay
-from "components/insights/marketplace/dashboards/templates/private/publish/PublishCustomerDashboardOverlay";
+import PublishCustomerDashboardOverlay from "components/insights/marketplace/dashboards/templates/private/publish/PublishCustomerDashboardOverlay";
 
 export default function PublishCustomerDashboardIcon(
   {

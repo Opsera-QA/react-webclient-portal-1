@@ -5,8 +5,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import kpiMarketplaceFilterMetadata from "components/insights/marketplace/charts/kpi-marketplace-filter-metadata";
 import axios from "axios";
-import InlineKpiCategoryFilterSelectInput
-from "components/common/filters/insights/kpi/category/InlineKpiCategoryFilterSelectInput";
+import InlineKpiCategoryFilterSelectInput from "components/common/filters/insights/kpi/category/InlineKpiCategoryFilterSelectInput";
 import InlineToolIdentifierFilter from "components/common/filters/tools/tool_identifier/InlineToolIdentifierFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faChartArea} from "@fortawesome/pro-light-svg-icons";

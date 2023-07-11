@@ -2,21 +2,15 @@ import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
-import {
-  getTableTextColumn
-} from "components/common/table/table-column-helpers";
+import { getTableTextColumn } from "components/common/table/table-column-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import {getField} from "components/common/metadata/metadata-helpers";
 import NewPipelineDataMappingOverlay from "components/settings/data_mapping/pipelines/NewPipelineDataMappingOverlay";
-import pipelineDataMappingMetadata
-from "@opsera/definitions/constants/settings/data_mapping/pipeline/pipelineDataMapping.metadata";
-import {
-  analyticsPipelineDataMappingHelper
-} from "components/settings/data_mapping/pipelines/analyticsPipelineDataMapping.helper";
-import AnalyticsPipelineDataMappingRoleHelper
-from "@opsera/know-your-role/roles/settings/analytics_data_mappings/pipelines/analyticsPipelineDataMappingRole.helper";
+import pipelineDataMappingMetadata from "@opsera/definitions/constants/settings/data_mapping/pipeline/pipelineDataMapping.metadata";
+import { analyticsPipelineDataMappingHelper } from "components/settings/data_mapping/pipelines/analyticsPipelineDataMapping.helper";
+import AnalyticsPipelineDataMappingRoleHelper from "@opsera/know-your-role/roles/settings/analytics_data_mappings/pipelines/analyticsPipelineDataMappingRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function PipelineDataMappingsTable(

@@ -5,8 +5,7 @@ import { TASK_TYPES } from "../../task.types";
 import CreateBranchingStructureTask from "../../../wizard/portal/workflows/flows/salesforce/flows/salesforce_branching_structure/CreateBranchingStructureTask";
 import CreateSalesforceBulkMigrationTask from "../../../wizard/portal/workflows/flows/salesforce/flows/salesforce_bulk_migration/CreateSalesforceBulkMigrationTask";
 import CreateSalesforceQuickDeployTask from "../../../wizard/portal/workflows/flows/salesforce/flows/salesforce_quick_deploy/CreateSalesforceQuickDeployTask";
-import CreateSalesforceOrganizationToGitMergeSyncTaskWizard
-from "../../../wizard/portal/workflows/flows/salesforce/flows/salesforce_to_git_merge_sync/task/CreateSalesforceOrganizationToGitMergeSyncTaskWizard";
+import CreateSalesforceOrganizationToGitMergeSyncTaskWizard from "../../../wizard/portal/workflows/flows/salesforce/flows/salesforce_to_git_merge_sync/task/CreateSalesforceOrganizationToGitMergeSyncTaskWizard";
 
 export default function WizardTaskConfigurationRouter({
   flow,

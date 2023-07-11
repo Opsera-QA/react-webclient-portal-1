@@ -1,11 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  faCog,
-} from "@fortawesome/pro-light-svg-icons";
+import { faCog } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import PipelineSourceRepositoryEditorOverlay
-from "components/workflow/plan/source/PipelineSourceRepositoryEditorOverlay";
+import PipelineSourceRepositoryEditorOverlay from "components/workflow/plan/source/PipelineSourceRepositoryEditorOverlay";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 
 export default function EditPipelineWorkflowSourceRepositoryIcon(

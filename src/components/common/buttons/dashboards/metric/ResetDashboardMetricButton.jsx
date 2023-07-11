@@ -2,8 +2,7 @@ import React, {useContext} from 'react';
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ResetButton from "components/common/buttons/reset/ResetButton";
-import ResetMetricConfirmationPanel
-from "components/insights/marketplace/dashboards/metrics/reset/ResetMetricConfirmationPanel";
+import ResetMetricConfirmationPanel from "components/insights/marketplace/dashboards/metrics/reset/ResetMetricConfirmationPanel";
 
 function ResetDashboardMetricButton(
   {

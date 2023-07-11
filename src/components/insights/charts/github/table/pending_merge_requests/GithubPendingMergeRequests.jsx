@@ -1,4 +1,10 @@
-import React, { useEffect, useContext, useState, useMemo, useRef } from "react";
+import React, {
+  useEffect,
+  useContext,
+  useState,
+  useMemo,
+  useRef
+} from "react";
 import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import PropTypes from "prop-types";
@@ -10,12 +16,7 @@ import FilterContainer from "../../../../../common/table/FilterContainer";
 import VanitySetTabViewContainer from "../../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import GithubPendingMergeRequestVerticalTabContainer from "./GithubPendingMergeRequestVerticalTabContainer";
 import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
-import {
-  getLimitedTableTextColumn,
-  getTableDateTimeColumn,
-  getTableTextColumn,
-  getTableHourDurationTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getLimitedTableTextColumn, getTableDateTimeColumn, getTableTextColumn, getTableHourDurationTextColumn } from "components/common/table/table-column-helpers";
 import CustomTable from "../../../../../common/table/CustomTable";
 import { getField } from "components/common/metadata/metadata-helpers";
 

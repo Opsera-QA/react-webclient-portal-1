@@ -3,10 +3,7 @@ import Col from "react-bootstrap/Col";
 import Model from "../../../core/data_model/model";
 import chatbotModel from "./chatbot-model";
 import TextInputBase from "../../common/inputs/text/TextInputBase";
-import {
-  faMagnifyingGlassArrowRight,
-  faSpinner,
-} from "@fortawesome/pro-light-svg-icons";
+import { faMagnifyingGlassArrowRight, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import ButtonBase from "../../common/buttons/ButtonBase";
 import PropTypes from "prop-types";
 import CenterLoadingIndicator from "../../common/loading/CenterLoadingIndicator";

@@ -1,4 +1,10 @@
-import React, {useContext, useMemo, useState, useEffect, useRef} from "react";
+import React, {
+  useContext,
+  useMemo,
+  useState,
+  useEffect,
+  useRef
+} from "react";
 import PropTypes from "prop-types";
 import awsS3BucketMetadata from "./aws-s3-bucket-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";

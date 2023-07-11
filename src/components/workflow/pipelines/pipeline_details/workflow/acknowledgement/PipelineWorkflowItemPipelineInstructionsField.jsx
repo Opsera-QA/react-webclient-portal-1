@@ -1,22 +1,17 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
-import {
-  userActionsPipelineStepMetadata
-} from "components/workflow/plan/step/user_actions/userActionsPipelineStep.metadata";
+import { userActionsPipelineStepMetadata } from "components/workflow/plan/step/user_actions/userActionsPipelineStep.metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import IconBase from "components/common/icons/IconBase";
 import { faSearch } from "@fortawesome/pro-solid-svg-icons";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
-import PipelineInstructionsAcknowledgementOverlay
-from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
-import UserActionsPipelineInstructionsDisplayerOverlay
-from "components/workflow/plan/step/user_actions/UserActionsPipelineInstructionsDisplayerOverlay";
+import PipelineInstructionsAcknowledgementOverlay from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
+import UserActionsPipelineInstructionsDisplayerOverlay from "components/workflow/plan/step/user_actions/UserActionsPipelineInstructionsDisplayerOverlay";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import useGetPipelineInstructionModelByPipelineStep
-from "components/workflow/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
+import useGetPipelineInstructionModelByPipelineStep from "components/workflow/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
 
 export default function PipelineWorkflowItemPipelineInstructionsField(
   {

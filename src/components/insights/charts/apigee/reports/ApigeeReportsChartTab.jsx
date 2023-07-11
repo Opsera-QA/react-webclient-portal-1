@@ -13,10 +13,7 @@ import VanitySetVerticalTabContainer from "../../../../common/tabs/vertical_tabs
 import IconBase from "../../../../common/icons/IconBase";
 import VanitySetVerticalTab from "../../../../common/tabs/vertical_tabs/VanitySetVerticalTab";
 import ApigeeReportsPipelineTable from "./ApigeeReportsPipelineTable";
-import {
-  getDateObjectFromKpiConfiguration,
-  getTagsFromKpiConfiguration
-} from "components/insights/charts/charts-helpers";
+import { getDateObjectFromKpiConfiguration, getTagsFromKpiConfiguration } from "components/insights/charts/charts-helpers";
 import Model from "../../../../../core/data_model/model";
 import {apigeeReportsMetadata} from "./apigeeReports-metadata";
 import PaginationContainer from "../../../../common/pagination/PaginationContainer";

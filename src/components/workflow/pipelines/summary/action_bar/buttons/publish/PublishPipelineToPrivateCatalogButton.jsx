@@ -4,9 +4,7 @@ import {faShareAll} from "@fortawesome/pro-light-svg-icons";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
-import {
-  customerPipelineTemplateCatalogActions
-} from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
+import { customerPipelineTemplateCatalogActions } from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
 
 export default function PublishPipelineToPrivateCatalogButton(
   {

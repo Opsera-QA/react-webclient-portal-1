@@ -3,23 +3,18 @@ import PropTypes from "prop-types";
 import {faCog} from "@fortawesome/pro-light-svg-icons";
 import Model from "core/data_model/model";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import StepConfigurationToolIdentifierSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/StepConfigurationToolIdentifierSelectInput";
-import StepConfigurationTagsInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/StepConfigurationTagsInput";
+import StepConfigurationToolIdentifierSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/StepConfigurationToolIdentifierSelectInput";
+import StepConfigurationTagsInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/StepConfigurationTagsInput";
 import IconBase from "components/common/icons/IconBase";
 import StepConfigurationTypeSelectInput from "./StepConfigurationTypeSelectInput";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import PipelineStepTagWarningOverlay
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/tag_warning/PipelineStepTagWarningOverlay";
+import PipelineStepTagWarningOverlay from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/tag_warning/PipelineStepTagWarningOverlay";
 import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
-import pipelineStepDefinitionMetadata
-from "@opsera/definitions/constants/pipelines/steps/definitions/pipelineStepDefinition.metadata";
+import pipelineStepDefinitionMetadata from "@opsera/definitions/constants/pipelines/steps/definitions/pipelineStepDefinition.metadata";
 
 function PipelineStepConfiguration(
   {

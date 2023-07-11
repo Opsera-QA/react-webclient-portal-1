@@ -10,8 +10,7 @@ import StepConfigJenkinsToolInput from "../common/inputs/StepConfigJenkinsToolIn
 import StepConfigWorkspaceDeleteToggleInput from "../common/inputs/StepConfigWorkspaceDeleteToggleInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
 function XUnitStepConfiguration({

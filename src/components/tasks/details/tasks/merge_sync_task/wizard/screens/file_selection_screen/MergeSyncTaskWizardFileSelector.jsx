@@ -6,19 +6,13 @@ import {AuthContext} from "contexts/AuthContext";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import CancelButton from "components/common/buttons/CancelButton";
 import {parseError} from "components/common/helpers/error-helpers";
-import mergeSyncTaskWizardActions
-from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
+import mergeSyncTaskWizardActions from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 import BackButton from "components/common/buttons/back/BackButton";
-import {
-  MERGE_SYNC_WIZARD_SCREENS
-} from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
-import GitToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/git_to_git/GitToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable";
-import MergeSyncTaskWizardSubmitSelectedFilesButton
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/MergeSyncTaskWizardSubmitSelectedFilesButton";
+import { MERGE_SYNC_WIZARD_SCREENS } from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
+import GitToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/git_to_git/GitToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable";
+import MergeSyncTaskWizardSubmitSelectedFilesButton from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/MergeSyncTaskWizardSubmitSelectedFilesButton";
 import { TASK_TYPES } from "components/tasks/task.types";
-import SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable";
+import SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable";
 import MergeSyncTaskRulesInputContainerBase from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_selection_screen/rules/SalesforceToGitFilter/MergeSyncTaskRulesInputContainerBase";
 
 const MergeSyncTaskWizardFileSelector = ({

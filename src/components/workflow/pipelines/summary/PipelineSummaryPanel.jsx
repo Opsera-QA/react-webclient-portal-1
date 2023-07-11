@@ -2,8 +2,7 @@ import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
 import InformationDialog from "components/common/status_notifications/info";
-import PipelineDurationMetricsStandaloneField
-from "components/common/fields/pipelines/metrics/PipelineDurationMetricsStandaloneField";
+import PipelineDurationMetricsStandaloneField from "components/common/fields/pipelines/metrics/PipelineDurationMetricsStandaloneField";
 import PipelineSchedulerField from "components/workflow/pipelines/summary/fields/PipelineSchedulerField";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
@@ -12,8 +11,7 @@ import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import InlinePipelineTypeSelectInput from "components/workflow/pipelines/summary/inputs/type/InlinePipelineTypeSelectInput";
-import PipelineOrchestrationSummaryField
-from "temp-library-components/fields/orchestration/pipeline/PipelineOrchestrationSummaryField";
+import PipelineOrchestrationSummaryField from "temp-library-components/fields/orchestration/pipeline/PipelineOrchestrationSummaryField";
 import PipelineModel from "components/workflow/pipeline.model";
 import PipelineDescriptionTextInput from "components/workflow/pipelines/summary/inputs/PipelineDescriptionTextInput";
 import PipelineTagManagerInput from "components/workflow/pipelines/summary/inputs/PipelineTagManagerInput";

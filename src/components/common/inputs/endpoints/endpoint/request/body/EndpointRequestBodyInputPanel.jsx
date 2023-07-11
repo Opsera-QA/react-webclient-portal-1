@@ -11,9 +11,7 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import InfoContainer from "components/common/containers/InfoContainer";
-import {
-  EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS
-} from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
+import { EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS } from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
 import endpointRequestFieldMetadata from "@opsera/definitions/constants/api/request/body/endpointRequestField.metadata";
 
 function EndpointRequestBodyInputPanel(

@@ -7,35 +7,21 @@ import Col from "react-bootstrap/Col";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import { mergeSyncTaskGitConfigurationMetadata } from "components/tasks/details/tasks/merge_sync_task/git_to_git/mergeSyncTaskGitConfiguration.metadata";
 import GitToGitMergeSyncTaskSourceControlTypeSelectInput from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskSourceControlTypeSelectInput";
-import GitToGitMergeSyncTaskSourceControlToolSelectInput
-from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskSourceControlToolSelectInput";
-import GitToGitMergeSyncTaskBitbucketWorkspaceSelectInput
-from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskBitbucketWorkspaceSelectInput";
-import GitToGitMergeSyncTaskRepositorySelectInput
-from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskRepositorySelectInput";
-import GitToGitMergeSyncTaskSourceBranchSelectInput
-from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskSourceBranchSelectInput";
-import GitToGitMergeSyncTaskTargetBranchSelectInput
-from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskTargetBranchSelectInput";
-import GitToGitMergeSyncTaskUpstreamBranchSelectInput
-from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskUpstreamBranchSelectInput";
-import {
-  mergeSyncTaskConfigurationMetadata
-} from "components/tasks/details/tasks/merge_sync_task/mergeSyncTaskConfiguration.metadata";
+import GitToGitMergeSyncTaskSourceControlToolSelectInput from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskSourceControlToolSelectInput";
+import GitToGitMergeSyncTaskBitbucketWorkspaceSelectInput from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskBitbucketWorkspaceSelectInput";
+import GitToGitMergeSyncTaskRepositorySelectInput from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskRepositorySelectInput";
+import GitToGitMergeSyncTaskSourceBranchSelectInput from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskSourceBranchSelectInput";
+import GitToGitMergeSyncTaskTargetBranchSelectInput from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskTargetBranchSelectInput";
+import GitToGitMergeSyncTaskUpstreamBranchSelectInput from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskUpstreamBranchSelectInput";
+import { mergeSyncTaskConfigurationMetadata } from "components/tasks/details/tasks/merge_sync_task/mergeSyncTaskConfiguration.metadata";
 import { TASK_TYPES } from "components/tasks/task.types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput
-from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput";
-import MergeSyncTaskJiraToolSelectInput
-from "components/tasks/details/tasks/merge_sync_task/inputs/MergeSyncTaskJiraToolSelectInput";
-import MergeSyncTaskJiraProjectSelectInput
-from "components/tasks/details/tasks/merge_sync_task/inputs/MergeSyncTaskJiraProjectSelectInput";
-import MergeSyncTaskJiraIssueMultiSelectInput
-from "components/tasks/details/tasks/merge_sync_task/inputs/MergeSyncTaskJiraIssueMultiSelectInput";
-import GitToGitMergeSyncTaskBuildTypeSelectInput
-from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskBuildTypeSelectInput";
-import GitToGitMergeSyncTaskSalesforceToggleInput
-from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskSalesforceToggleInput";
+import GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput";
+import MergeSyncTaskJiraToolSelectInput from "components/tasks/details/tasks/merge_sync_task/inputs/MergeSyncTaskJiraToolSelectInput";
+import MergeSyncTaskJiraProjectSelectInput from "components/tasks/details/tasks/merge_sync_task/inputs/MergeSyncTaskJiraProjectSelectInput";
+import MergeSyncTaskJiraIssueMultiSelectInput from "components/tasks/details/tasks/merge_sync_task/inputs/MergeSyncTaskJiraIssueMultiSelectInput";
+import GitToGitMergeSyncTaskBuildTypeSelectInput from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskBuildTypeSelectInput";
+import GitToGitMergeSyncTaskSalesforceToggleInput from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskSalesforceToggleInput";
 import GitToGitMergeSyncTaskEnableJiraToggleInput from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskEnableJiraToggleInput";
 
 function GitToGitMergeSyncTaskConfigurationEditorPanel({

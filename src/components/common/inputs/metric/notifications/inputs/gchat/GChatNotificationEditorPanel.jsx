@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import EnabledNotificationBooleanToggle from "components/workflow/plan/step/notifications/EnabledNotificationBooleanToggle";
-import GChatStepNotificationToolSelectInput
-from "components/workflow/plan/step/notifications/gchat/GChatStepNotificationToolSelectInput";
+import GChatStepNotificationToolSelectInput from "components/workflow/plan/step/notifications/gchat/GChatStepNotificationToolSelectInput";
 import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";

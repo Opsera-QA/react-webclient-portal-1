@@ -4,12 +4,10 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
-import PlatformSystemParameterEditorPanel
-from "components/admin/system_parameters/details/PlatformSystemParameterEditorPanel";
+import PlatformSystemParameterEditorPanel from "components/admin/system_parameters/details/PlatformSystemParameterEditorPanel";
 import PlatformSettingsSummaryPanel from "components/admin/platform_settings/details/PlatformSettingsSummaryPanel";
 import PlatformSettingsEditorPanel from "components/admin/platform_settings/details/PlatformSettingsEditorPanel";
-import PlatformSettingFeaturesPanel
-from "components/admin/platform_settings/details/features/PlatformSettingFeaturesPanel";
+import PlatformSettingFeaturesPanel from "components/admin/platform_settings/details/features/PlatformSettingFeaturesPanel";
 import { faFileAlt, faFileBinary } from "@fortawesome/pro-light-svg-icons";
 import CustomTab from "components/common/tabs/CustomTab";
 

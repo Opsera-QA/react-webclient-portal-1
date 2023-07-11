@@ -10,8 +10,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import modelHelpers from "components/common/model/modelHelpers";
 import { platformSettingsActions } from "components/admin/platform_settings/platformSettings.actions";
 import { platformSettingsMetadata } from "components/admin/platform_settings/platformSettings.metadata";
-import PlatformSettingsManagementSubNavigationBar
-from "components/admin/platform_settings/PlatformSettingsManagementSubNavigationBar";
+import PlatformSettingsManagementSubNavigationBar from "components/admin/platform_settings/PlatformSettingsManagementSubNavigationBar";
 import PlatformSettingsDetailPanel from "components/admin/platform_settings/details/PlatformSettingsDetailPanel";
 
 export default function PlatformSettingsDetailView() {

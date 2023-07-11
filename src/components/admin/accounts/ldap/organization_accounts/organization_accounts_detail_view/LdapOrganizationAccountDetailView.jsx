@@ -6,10 +6,8 @@ import {ldapOrganizationAccountMetaData} from "components/admin/accounts/ldap/or
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import LdapOrganizationAccountDetailPanel
-from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountDetailPanel";
-import LdapOrganizationAccountManagementSubNavigationBar
-from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountManagementSubNavigationBar";
+import LdapOrganizationAccountDetailPanel from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountDetailPanel";
+import LdapOrganizationAccountManagementSubNavigationBar from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function LdapOrganizationAccountDetailView() {

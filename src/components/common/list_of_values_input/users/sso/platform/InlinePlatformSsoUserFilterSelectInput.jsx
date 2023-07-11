@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PlatformSsoUserSelectFilterSelectInput
-from "components/common/list_of_values_input/users/sso/platform/PlatformSsoUserSelectFilterSelectInput";
+import PlatformSsoUserSelectFilterSelectInput from "components/common/list_of_values_input/users/sso/platform/PlatformSsoUserSelectFilterSelectInput";
 
 export default function InlinePlatformSsoUserFilterSelectInput(
   {

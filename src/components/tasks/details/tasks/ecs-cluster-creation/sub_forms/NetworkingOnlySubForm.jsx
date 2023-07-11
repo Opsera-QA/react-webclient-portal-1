@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import TextInputBase from "../../../../../common/inputs/text/TextInputBase";
-import EcsCreationTaskVpcBooleanToggleInput
-from "components/tasks/details/tasks/ecs-cluster-creation/inputs/EcsCreationTaskVpcBooleanToggleInput";
+import EcsCreationTaskVpcBooleanToggleInput from "components/tasks/details/tasks/ecs-cluster-creation/inputs/EcsCreationTaskVpcBooleanToggleInput";
 
 function NetworkingOnlySubForm({ dataObject, setDataObject, disabled }) {
   const getDynamicFields = () => {

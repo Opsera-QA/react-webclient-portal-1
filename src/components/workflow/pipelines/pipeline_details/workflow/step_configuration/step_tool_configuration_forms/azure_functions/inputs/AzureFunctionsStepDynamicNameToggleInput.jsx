@@ -4,8 +4,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import { Form } from "react-bootstrap";
 import TextInputBase from "../../../../../../../../common/inputs/text/TextInputBase";
 import FieldContainer from "../../../../../../../../common/fields/FieldContainer";
-import AzureFunctionsStepServiceNameTextInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_functions/inputs/AzureFunctionsServiceNameTextInput";
+import AzureFunctionsStepServiceNameTextInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_functions/inputs/AzureFunctionsServiceNameTextInput";
 
 function AzureFunctionsStepDynamicNameToggleInput({ model, setModel, fieldName, disabled }) {
   const [field, setField] = useState(model?.getFieldById(fieldName));

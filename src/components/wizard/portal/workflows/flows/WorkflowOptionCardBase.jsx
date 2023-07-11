@@ -6,8 +6,7 @@ import TaskCardFooter from "temp-library-components/cards/tasks/TaskCardFooter";
 import PipelineCardFooter from "temp-library-components/cards/pipelines/PipelineCardFooter";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import ToolCardFooter from "temp-library-components/cards/tools/ToolCardFooter";
-import PipelineTemplateCardFooter
-from "../../../../../temp-library-components/cards/templates/pipelines/PipelineTemplateCardFooter";
+import PipelineTemplateCardFooter from "../../../../../temp-library-components/cards/templates/pipelines/PipelineTemplateCardFooter";
 
 export const WORKFLOW_OPTION_TYPES = {
   PIPELINE: "pipeline",

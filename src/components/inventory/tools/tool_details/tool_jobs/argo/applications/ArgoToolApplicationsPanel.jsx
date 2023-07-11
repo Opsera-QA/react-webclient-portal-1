@@ -5,8 +5,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
 import {AuthContext} from "contexts/AuthContext";
-import ArgoApplicationEditorPanel
-from "components/inventory/tools/tool_details/tool_jobs/argo/applications/details/ArgoApplicationEditorPanel";
+import ArgoApplicationEditorPanel from "components/inventory/tools/tool_details/tool_jobs/argo/applications/details/ArgoApplicationEditorPanel";
 import argoFiltersMetadata from "../argo-filters-metadata";
 import Model from "core/data_model/model";
 import {stringIncludesValue} from "components/common/helpers/string-helpers";

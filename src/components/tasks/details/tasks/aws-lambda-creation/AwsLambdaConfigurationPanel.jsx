@@ -9,10 +9,8 @@ import IAMRoleSelectInput from "./inputs/IAMRoleSelectInput";
 import awsLambdaFunctionTaskConfigurationMetadata from "./aws-lambda-metadata";
 import LanguageSelectInput from "./inputs/LanguageSelectInput";
 import FunctionNameWithButton from "./inputs/FunctionNameWithButton";
-import RoleRestrictedAwsAccountToolSelectInput
-from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
-import AwsCloudProviderRegionSelectInput
-from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
+import RoleRestrictedAwsAccountToolSelectInput from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
+import AwsCloudProviderRegionSelectInput from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
 
 function AwsLambdaConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   useEffect(() => {

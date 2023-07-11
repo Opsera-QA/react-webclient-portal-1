@@ -1,6 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faChartNetwork, faDraftingCompass, faEye, faTag, faWrench} from "@fortawesome/pro-light-svg-icons";
+import {
+  faChartNetwork,
+  faDraftingCompass,
+  faEye,
+  faTag,
+  faWrench
+} from "@fortawesome/pro-light-svg-icons";
 import {capitalizeFirstLetter, truncateString} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";

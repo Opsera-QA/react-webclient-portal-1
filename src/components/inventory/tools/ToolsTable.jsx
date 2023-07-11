@@ -2,10 +2,13 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  getLimitedTableTextColumn, getOwnerNameField, getRoleAccessColumn,
+  getLimitedTableTextColumn,
+  getOwnerNameField,
+  getRoleAccessColumn,
   getTableBooleanIconColumn,
   getTableDateColumn,
-  getTableTextColumn, getToolIdentifierNameField,
+  getTableTextColumn,
+  getToolIdentifierNameField
 } from "components/common/table/table-column-helpers";
 import {useHistory} from "react-router-dom";
 import {getField} from "components/common/metadata/metadata-helpers";

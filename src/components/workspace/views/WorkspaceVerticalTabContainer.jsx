@@ -1,12 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
-import {
-  faTasks,
-  faClipboardList,
-  faDraftingCompass,
-  faChartTreeMap,
-} from "@fortawesome/pro-light-svg-icons";
+import { faTasks, faClipboardList, faDraftingCompass, faChartTreeMap } from "@fortawesome/pro-light-svg-icons";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { workspaceConstants } from "components/workspace/workspace.constants";

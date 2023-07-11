@@ -6,8 +6,7 @@ import Model from "../../../../core/data_model/model";
 import DependencyAnalyserInitializationScreen from "./initialization_screen/DependencyAnalyserInitializationScreen";
 import ErrorDialog from "../../../common/status_notifications/error";
 import sfdcDataAnalyserMetadata from "./sfdc-dependency-analyser-metadata";
-import DependencyAnalyserComponentSelectionScreen
-from "./component_selection_screen/DependencyAnalyserComponentSelectionScreen";
+import DependencyAnalyserComponentSelectionScreen from "./component_selection_screen/DependencyAnalyserComponentSelectionScreen";
 import DependencyAnalyserFileValidationScreen from "./file_validation_screen/DependencyAnalyserFileValidationScreen";
 import DependencyAnalyserModifiedFileViewer from "./file_viewer_screen/DependencyAnalyserModifiedFileViewer";
 import DependencyAnalyserViewScreen from "./dependent_list_screen/DependencyAnalyserViewScreen";

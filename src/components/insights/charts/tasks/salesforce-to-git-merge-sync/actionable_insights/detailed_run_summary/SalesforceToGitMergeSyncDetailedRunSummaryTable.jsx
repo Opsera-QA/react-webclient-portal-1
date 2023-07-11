@@ -11,16 +11,11 @@ import {
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
-import {
-  faTasks,
-  faExternalLink,
-} from "@fortawesome/pro-light-svg-icons";
+import { faTasks, faExternalLink } from "@fortawesome/pro-light-svg-icons";
 import ExportReportPanel from "../../../ExportReportPanel";
 import { salesforceToGitMergeSyncMetadata } from "../../salesforceToGitMergeSync.metadata";
 import TaskExportReportButton from "../../../TaskExportReportButton";
-import {
-  SALESFORCE_TO_GIT_MERGE_SYNC_ACTIONABLE_INSIGHT_SCREENS,
-} from "../SalesforceToGitMergeSyncActionableInsightOverlay";
+import { SALESFORCE_TO_GIT_MERGE_SYNC_ACTIONABLE_INSIGHT_SCREENS } from "../SalesforceToGitMergeSyncActionableInsightOverlay";
 import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";
 
 const pdfHeaderList = [

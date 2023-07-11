@@ -8,15 +8,8 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import {
-  defaultConfig,
-  assignStandardColors,
-  adjustBarWidth,
-} from "../../../charts-views";
-import {
-  METRIC_THEME_CHART_PALETTE_COLORS,
-  METRIC_CHART_STANDARD_HEIGHT,
-} from "components/common/helpers/metrics/metricTheme.helpers";
+import { defaultConfig, assignStandardColors, adjustBarWidth } from "../../../charts-views";
+import { METRIC_THEME_CHART_PALETTE_COLORS, METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 import { Col, Row } from "react-bootstrap";
 import GitHubCommitsTotalCommitsDataBlock from "./data_blocks/GitHubCommitsTotalCommitsDataBlock";
 import GitHubCommitsTotalMergesDataBlock from "./data_blocks/GitHubCommitsTotalMergesDataBlock";
@@ -30,8 +23,7 @@ import GitHubCommitsTotalActivityDataBlock from "./data_blocks/GithubCommitsTota
 import GitHubCommitsOpenPullRequestDataBlock from "./data_blocks/GithubCommitsOpenPullRequestDataBlock";
 import GitHubCommitsTotalDeclinedDataBlock from "./data_blocks/GitHubCommitsTotalDeclinedDataBlock";
 import GithubCommitsTotalFixedDataBlock from "./data_blocks/GithubCommitsTotalFixedDataBlock";
-import GithubCommitStatisticsHelpDocumentation
-from "../../../../../common/help/documentation/insights/charts/GithubCommitStatisticsHelpDocumentation";
+import GithubCommitStatisticsHelpDocumentation from "../../../../../common/help/documentation/insights/charts/GithubCommitStatisticsHelpDocumentation";
 // import GithubCommitStatisticsHelpDocumentation from "components/common/help/documentation/insights/charts/github/GithubCommitStatisticsHelpDocumentation";
 
 function GithubCommitsStatistics({

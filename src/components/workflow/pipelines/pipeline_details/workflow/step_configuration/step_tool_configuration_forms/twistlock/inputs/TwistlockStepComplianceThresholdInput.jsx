@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineThresholdInputBase
-from "components/common/inputs/object/pipelines/threshhold/PipelineThresholdInputBase";
+import PipelineThresholdInputBase from "components/common/inputs/object/pipelines/threshhold/PipelineThresholdInputBase";
 
 function TwistlockStepComplianceThresholdInput(
   {

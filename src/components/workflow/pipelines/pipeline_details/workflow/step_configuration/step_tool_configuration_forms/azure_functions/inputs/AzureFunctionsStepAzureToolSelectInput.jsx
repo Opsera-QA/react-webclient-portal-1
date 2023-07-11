@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RoleRestrictedAzureToolSelectInput
-from "components/common/list_of_values_input/tools/azure/tools/RoleRestrictedAzureToolSelectInput";
+import RoleRestrictedAzureToolSelectInput from "components/common/list_of_values_input/tools/azure/tools/RoleRestrictedAzureToolSelectInput";
 
 function AzureFunctionsStepAzureToolSelectInput({ fieldName, model, setModel, disabled, setAzureConfig}) {
   // TODO: The Azure Credential Select Input should pull the configs directly off the tools, so it can be reused without a tool select input

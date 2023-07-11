@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import useEntitlementAdministrationActions
-from "hooks/settings/organization_settings/entitlements/useEntitlementAdministrationActions";
+import useEntitlementAdministrationActions from "hooks/settings/organization_settings/entitlements/useEntitlementAdministrationActions";
 import EntitlementRoleHelper from "@opsera/know-your-role/roles/accounts/entitlements/entitlementRole.helper";
 
 export default function useGetEntitlements(handleErrorFunction) {

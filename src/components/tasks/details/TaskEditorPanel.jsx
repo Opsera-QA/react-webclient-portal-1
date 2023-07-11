@@ -5,34 +5,24 @@ import Row from "react-bootstrap/Row";
 import taskActions from "components/tasks/task.actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import TaskConfigurationPanel
-from "components/tasks/details/tasks/TaskConfigurationPanel";
+import TaskConfigurationPanel from "components/tasks/details/tasks/TaskConfigurationPanel";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TagManager from "components/common/inputs/tags/TagManager";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
-import AwsEcsClusterCreationTaskHelpDocumentation
-from "components/common/help/documentation/tasks/AwsEcsClusterCreationTaskHelpDocumentation";
+import AwsEcsClusterCreationTaskHelpDocumentation from "components/common/help/documentation/tasks/AwsEcsClusterCreationTaskHelpDocumentation";
 import TaskCreationHelpDocumentation from "components/common/help/documentation/tasks/TaskCreationHelpDocumentation";
-import AwsEcsServiceCreationTaskHelpDocumentation
-from "components/common/help/documentation/tasks/AwsEcsServiceCreationTaskHelpDocumentation";
+import AwsEcsServiceCreationTaskHelpDocumentation from "components/common/help/documentation/tasks/AwsEcsServiceCreationTaskHelpDocumentation";
 import {TASK_TYPES} from "components/tasks/task.types";
-import AzureAksClusterCreationTaskHelpDocumentation
-from "components/common/help/documentation/tasks/AzureAksClusterCreationTaskHelpDocumentation";
+import AzureAksClusterCreationTaskHelpDocumentation from "components/common/help/documentation/tasks/AzureAksClusterCreationTaskHelpDocumentation";
 import TasksTaskTypeSelectInput from "components/tasks/details/TasksTaskTypeSelectInput";
-import AwsLambdaFunctionCreationTaskHelpDocumentation
-from "components/common/help/documentation/tasks/AwsLambdaFunctionCreationTaskHelpDocumentation";
-import SfdcOrgSyncTaskHelpDocumentation
-from "components/common/help/documentation/tasks/SfdcOrgSyncTaskHelpDocumentation";
+import AwsLambdaFunctionCreationTaskHelpDocumentation from "components/common/help/documentation/tasks/AwsLambdaFunctionCreationTaskHelpDocumentation";
+import SfdcOrgSyncTaskHelpDocumentation from "components/common/help/documentation/tasks/SfdcOrgSyncTaskHelpDocumentation";
 import GitToGitSyncTaskHelpDocumentation from "../../common/help/documentation/tasks/GitToGitSyncTaskHelpDocumentation";
-import SalesforceBulkMigrationHelpDocumentation
-from "../../common/help/documentation/tasks/SalesforceBulkMigrationHelpDocumentation";
-import GitToGitMergeSyncTaskHelpDocumentation
-from "../../common/help/documentation/tasks/GitToGitMergeSyncTaskHelpDocumentation";
-import SalesforceToGitMergeSyncTaskHelpDocumentation
-from "../../common/help/documentation/tasks/SalesforceToGitMergeSyncTaskHelpDocumentation";
+import SalesforceBulkMigrationHelpDocumentation from "../../common/help/documentation/tasks/SalesforceBulkMigrationHelpDocumentation";
+import GitToGitMergeSyncTaskHelpDocumentation from "../../common/help/documentation/tasks/GitToGitMergeSyncTaskHelpDocumentation";
+import SalesforceToGitMergeSyncTaskHelpDocumentation from "../../common/help/documentation/tasks/SalesforceToGitMergeSyncTaskHelpDocumentation";
 import modelHelpers from "components/common/model/modelHelpers";
-import SfdxQuickDeployTaskHelpDocumentation
-from "../../common/help/documentation/tasks/SfdxQuickDeployTaskHelpDocumentation";
+import SfdxQuickDeployTaskHelpDocumentation from "../../common/help/documentation/tasks/SfdxQuickDeployTaskHelpDocumentation";
 import GitCustodianTaskHelpDocumentation from "../../common/help/documentation/tasks/GitCustodianTaskHelpDocumentation";
 import useComponentStateReference from "hooks/useComponentStateReference";
 

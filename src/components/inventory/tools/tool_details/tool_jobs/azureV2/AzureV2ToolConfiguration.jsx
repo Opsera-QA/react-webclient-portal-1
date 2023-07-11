@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
-import ToolConfigurationEditorPanelContainer
-from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+import ToolConfigurationEditorPanelContainer from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Row from "react-bootstrap/Row";
 import AzureConnectionMetadata from "./azure-connection-metadata";
 import toolsActions from "components/inventory/tools/tools-actions";

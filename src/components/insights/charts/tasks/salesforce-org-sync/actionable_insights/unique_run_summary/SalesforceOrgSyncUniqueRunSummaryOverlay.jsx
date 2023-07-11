@@ -6,9 +6,7 @@ import ButtonContainerBase from "components/common/buttons/saving/containers/But
 import CloseButton from "components/common/buttons/CloseButton";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 import SalesforceOrgSyncUniqueRunSummaryDataBlocks from "./SalesforceOrgSyncUniqueRunSummaryDataBlocks";
-import {
-  SALESFORCE_ORG_SYNC_ACTIONABLE_INSIGHT_SCREENS,
-} from "../SalesforceOrgSyncActionableInsightOverlay";
+import { SALESFORCE_ORG_SYNC_ACTIONABLE_INSIGHT_SCREENS } from "../SalesforceOrgSyncActionableInsightOverlay";
 import SalesforceOrgSyncUniqueRunSummary from "./SalesforceOrgSyncUniqueRunSummary";
 
 function SalesforceOrgSyncUniqueRunSummaryOverlay(

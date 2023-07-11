@@ -4,8 +4,7 @@ import PipelineStepEditorPanelContainer from "components/common/panels/detail_pa
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
 import terraformVcsStepFormMetadata from "./terraform-vcs-stepForm-metadata";
-import TerraformCustomParametersInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformCustomParametersInput";
+import TerraformCustomParametersInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformCustomParametersInput";
 import TerraformVcsCloudOrganizationsSelectInput from "./inputs/TerraformVcsCloudOrganizationsSelectInput";
 import TerraformEnterpriseToolSelectInput from "../terraform/inputs/terraform_cloud/TerraformEnterpriseToolSelectInput";
 import TerraformEnvironmentVariables from "../terraform/inputs/custom_scripts/TerraformEnvironmentVariables";

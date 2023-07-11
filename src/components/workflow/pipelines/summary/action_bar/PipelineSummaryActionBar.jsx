@@ -5,15 +5,11 @@ import PipelineSubscriptionIcon from "components/common/icons/subscription/Pipel
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import PipelinesSummaryHelpDocumentation from "components/common/help/documentation/pipelines/PipelinesSummaryHelpDocumentation";
-import ActionBarDuplicatePipelineButton
-from "components/workflow/pipelines/summary/action_bar/buttons/duplicate/ActionBarDuplicatePipelineButton";
+import ActionBarDuplicatePipelineButton from "components/workflow/pipelines/summary/action_bar/buttons/duplicate/ActionBarDuplicatePipelineButton";
 import ActionBarDeletePipelineButton from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarDeletePipelineButton";
-import ActionBarShowPipelineSummaryOverlayButton
-from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarShowPipelineSummaryOverlayButton";
-import ActionBarPublishPipelineToCustomerCatalogButton
-from "components/workflow/pipelines/summary/action_bar/buttons/publish/ActionBarPublishPipelineToCustomerCatalogButton";
-import ActionBarViewPipelineAuditLogsButton
-from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarViewPipelineAuditLogsButton";
+import ActionBarShowPipelineSummaryOverlayButton from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarShowPipelineSummaryOverlayButton";
+import ActionBarPublishPipelineToCustomerCatalogButton from "components/workflow/pipelines/summary/action_bar/buttons/publish/ActionBarPublishPipelineToCustomerCatalogButton";
+import ActionBarViewPipelineAuditLogsButton from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarViewPipelineAuditLogsButton";
 
 function PipelineSummaryActionBar({pipelineModel, pipeline, loadPipeline}) {
   const toastContext = useContext(DialogToastContext);

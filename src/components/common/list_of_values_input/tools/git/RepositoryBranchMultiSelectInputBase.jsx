@@ -1,13 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AzureDevOpsBranchMultiSelectInput
-from "components/common/list_of_values_input/tools/azure/branches/AzureDevOpsBranchMultiSelectInput";
-import BitbucketBranchMultiSelectInput
-from "components/common/list_of_values_input/tools/bitbucket/branches/BitbucketBranchMultiSelectInput";
-import GithubBranchMultiSelectInput
-from "components/common/list_of_values_input/tools/github/branches/GithubBranchMultiSelectInput";
-import GitlabBranchMutliSelectInput
-from "components/common/list_of_values_input/tools/gitlab/branches/GitlabBranchMutliSelectInput";
+import AzureDevOpsBranchMultiSelectInput from "components/common/list_of_values_input/tools/azure/branches/AzureDevOpsBranchMultiSelectInput";
+import BitbucketBranchMultiSelectInput from "components/common/list_of_values_input/tools/bitbucket/branches/BitbucketBranchMultiSelectInput";
+import GithubBranchMultiSelectInput from "components/common/list_of_values_input/tools/github/branches/GithubBranchMultiSelectInput";
+import GitlabBranchMutliSelectInput from "components/common/list_of_values_input/tools/gitlab/branches/GitlabBranchMutliSelectInput";
 
 function RepositoryBranchMultiSelectInputBase(
   {

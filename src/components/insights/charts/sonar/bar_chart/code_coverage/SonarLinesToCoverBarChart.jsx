@@ -9,8 +9,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
-import { defaultConfig, getColorByData, assignStandardColors,
-  adjustBarWidth } from "../../../charts-views";
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 
 function SonarLinesToCoverBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {

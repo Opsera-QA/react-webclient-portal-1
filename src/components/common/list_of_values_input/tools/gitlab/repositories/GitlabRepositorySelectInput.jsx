@@ -1,7 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { gitlabActions } from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";

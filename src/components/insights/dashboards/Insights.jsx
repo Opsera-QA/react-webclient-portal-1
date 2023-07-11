@@ -14,9 +14,7 @@ import DashboardsTable from "components/insights/dashboards/views/DashboardsTabl
 import DashboardVerticalTabContainer from "components/insights/dashboards/views/DashboardVerticalTabContainer";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 import SideBySideViewBase from "components/common/tabs/SideBySideViewBase";
-import {
-  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
-} from "components/common/table/FilterContainer";
+import { FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION } from "components/common/table/FilterContainer";
 
 export default function Insights() {
   const {

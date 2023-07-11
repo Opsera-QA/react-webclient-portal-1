@@ -2,11 +2,9 @@ import React, {useState, useEffect} from "react";
 import siteNotificationActions from "components/admin/site_notifications/site-notification-actions";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import siteNotificationHelpers from "components/admin/site_notifications/site-notification-helpers";
-import SiteNotificationManagerDetailPanel
-from "components/admin/site_notifications/manager/SiteNotificationManagerDetailPanel";
+import SiteNotificationManagerDetailPanel from "components/admin/site_notifications/manager/SiteNotificationManagerDetailPanel";
 import siteNotificationMetadata from "components/admin/site_notifications/siteNotification.metadata";
-import SiteNotificationManagementSubNavigationBar
-from "components/admin/site_notifications/SiteNotificationManagementSubNavigationBar";
+import SiteNotificationManagementSubNavigationBar from "components/admin/site_notifications/SiteNotificationManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function SiteNotificationManager() {

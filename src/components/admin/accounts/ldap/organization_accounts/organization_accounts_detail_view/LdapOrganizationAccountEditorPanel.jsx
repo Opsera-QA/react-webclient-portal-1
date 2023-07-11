@@ -8,10 +8,8 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import IdpVendorSelectInput
-from "components/common/list_of_values_input/admin/accounts/ldap_idp_accounts/IdpVendorSelectInput";
-import LdapOrganizationAccountOpseraUserSelectInput
-from "components/common/list_of_values_input/admin/accounts/ldap_accounts/LdapOrganizationAccountOpseraUserSelectInput";
+import IdpVendorSelectInput from "components/common/list_of_values_input/admin/accounts/ldap_idp_accounts/IdpVendorSelectInput";
+import LdapOrganizationAccountOpseraUserSelectInput from "components/common/list_of_values_input/admin/accounts/ldap_accounts/LdapOrganizationAccountOpseraUserSelectInput";
 
 function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, handleClose}) {
   const {getAccessToken} = useContext(AuthContext);

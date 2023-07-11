@@ -6,7 +6,13 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import { Row, Col } from "react-bootstrap";
 import CustomTable from "components/common/table/CustomTable";
 
-import { faCircleInfo, faTable, faPeople, faTags, faFolderGear } from "@fortawesome/pro-light-svg-icons";
+import {
+  faCircleInfo,
+  faTable,
+  faPeople,
+  faTags,
+  faFolderGear
+} from "@fortawesome/pro-light-svg-icons";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";

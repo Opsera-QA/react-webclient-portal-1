@@ -4,7 +4,8 @@ import NavigationTabContainer from "components/common/tabs/navigation/Navigation
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {
   faChartArea,
-  faChartNetwork, faCircle,
+  faChartNetwork,
+  faCircle,
   faRadar,
   faUserChart,
   faLink,

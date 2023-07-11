@@ -5,12 +5,10 @@ import IconBase from "components/common/icons/IconBase";
 import { Button } from "react-bootstrap";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import SalesforcePipelineWizardOverlay
-from "components/workflow/wizards/sfdc_pipeline_wizard/SalesforcePipelineWizardOverlay";
+import SalesforcePipelineWizardOverlay from "components/workflow/wizards/sfdc_pipeline_wizard/SalesforcePipelineWizardOverlay";
 import SalesforceOrganizationSyncTaskWizardOverlay from "components/tasks/wizard/organization_sync/SalesforceOrganizationSyncTaskWizardOverlay";
 import { TASK_TYPES } from "components/tasks/task.types";
-import SalesforceToGitMergeSyncTaskWizardOverlay
-from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";
+import SalesforceToGitMergeSyncTaskWizardOverlay from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";
 import RunTaskOverlay from "components/tasks/details/RunTaskOverlay";
 import modelHelpers from "components/common/model/modelHelpers";
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";

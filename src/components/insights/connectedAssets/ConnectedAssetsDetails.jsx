@@ -4,7 +4,16 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ThreeLineIconDataBlockBase from "../../common/metrics/icon/ThreeLineIconDataBlockBase";
 import DataBlockBoxContainer from "../../common/metrics/data_blocks/DataBlockBoxContainer";
-import { faDatabase, faCodeBranch, faBox, faStopwatch, faUsers, faListCheck, faCompressArrowsAlt, faDiagramSuccessor } from "@fortawesome/pro-solid-svg-icons";
+import {
+  faDatabase,
+  faCodeBranch,
+  faBox,
+  faStopwatch,
+  faUsers,
+  faListCheck,
+  faCompressArrowsAlt,
+  faDiagramSuccessor
+} from "@fortawesome/pro-solid-svg-icons";
 import {AuthContext} from "../../../contexts/AuthContext";
 import axios from "axios";
 import LoadingDialog from "../../common/status_notifications/loading";
@@ -14,8 +23,7 @@ import ConnectedAssetsRepositoryTabContainer from "./tables/repositoryTable/Conn
 import ConnectedAssetsBranchesTabContainer from "./tables/branchesTable/ConnectedAssetsBranchesTabContainer";
 import ConnectedAssetsPipelinesTabContainer from "./tables/pipelinesTable/ConnectedAssetsPipelinesTabContainer";
 import ConnectedAssetsTasksTabContainer from "./tables/tasksTable/ConnectedAssetsTasksTabContainer";
-import ConnectedAssetsCollaboratorsTabContainer
-from "./tables/collaboratorsTable/ConnectedAssetsCollaboratorsTabContainer";
+import ConnectedAssetsCollaboratorsTabContainer from "./tables/collaboratorsTable/ConnectedAssetsCollaboratorsTabContainer";
 import ConnectedAssetsJobsTabContainer from "./tables/jobsTable/ConnectedAssetsJobsTabContainer";
 import ConnectedAssetsWebhooksTabContainer from "./tables/webhooksTable/ConnectedAssetsWebhooksTabContainer";
 import ConnectedAssetsPackagesPipelinesTab from "./tables/packageTable/pipelines/ConnectedAssetsPackagesPipelinesTab";

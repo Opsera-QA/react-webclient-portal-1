@@ -1,14 +1,12 @@
 import React, {useEffect} from "react";
 import PropTypes from "prop-types";
-import ToolRegistryHelpDocumentation
-from "components/common/help/documentation/tool_registry/ToolRegistryHelpDocumentation";
+import ToolRegistryHelpDocumentation from "components/common/help/documentation/tool_registry/ToolRegistryHelpDocumentation";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 import useGetRegistryTools from "hooks/tools/useGetRegistryTools";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetPlatformSettingsFeatureFlagByName from "hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
-import platformSettingFeatureConstants
-from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
+import platformSettingFeatureConstants from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
 import CreateToolRegistryWizard from "components/inventory/tools/tool_details/wizards/CreateToolRegistryWizard";
 import NewToolOverlay from "components/inventory/tools/create_overlay/NewToolOverlay";
 import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
@@ -18,9 +16,7 @@ import ToolsTable from "components/inventory/tools/ToolsTable";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 import TableCardView from "components/common/table/TableCardView";
 import ToolFilterOverlay from "components/inventory/tools/ToolFilterOverlay";
-import {
-  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
-} from "components/common/table/FilterContainer";
+import { FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION } from "components/common/table/FilterContainer";
 
 function ToolInventory() {
   const {

@@ -1,21 +1,16 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {
-  faPlus,
-} from "@fortawesome/pro-light-svg-icons";
+import { faPlus } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import AccessControlRoleSelectInput from "components/common/inputs/roles/type/AccessControlRoleSelectInput";
-import RoleAccessInputLdapUserSelectInput
-from "components/common/inputs/roles/users/RoleAccessInputLdapUserSelectInput";
-import RoleAccessInputLdapGroupSelectInput
-from "components/common/inputs/roles/groups/RoleAccessInputLdapGroupSelectInput";
+import RoleAccessInputLdapUserSelectInput from "components/common/inputs/roles/users/RoleAccessInputLdapUserSelectInput";
+import RoleAccessInputLdapGroupSelectInput from "components/common/inputs/roles/groups/RoleAccessInputLdapGroupSelectInput";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
-import RoleAccessInputSiteRoleSelectInput
-from "components/common/inputs/roles/site_roles/RoleAccessInputSiteRoleSelectInput";
+import RoleAccessInputSiteRoleSelectInput from "components/common/inputs/roles/site_roles/RoleAccessInputSiteRoleSelectInput";
 import accessControlRuleTypeConstants from "@opsera/know-your-role/constants/accessControlRuleType.constants";
 
 export default function RoleAccessInputRow(

@@ -7,12 +7,9 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import LoadingDialog from "components/common/status_notifications/loading";
-import PipelineTypeMultiSelectInput
-from "components/common/list_of_values_input/admin/pipeline_templates/PipelineTypeMultiSelectInput";
+import PipelineTypeMultiSelectInput from "components/common/list_of_values_input/admin/pipeline_templates/PipelineTypeMultiSelectInput";
 import TagManager from "components/common/inputs/tags/TagManager";
-import {
-  customerPipelineTemplateCatalogActions
-} from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
+import { customerPipelineTemplateCatalogActions } from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
 
 function CustomerPipelineTemplateEditorPanel(
   {

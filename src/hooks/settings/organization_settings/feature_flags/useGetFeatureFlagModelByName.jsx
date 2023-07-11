@@ -2,10 +2,8 @@ import { useEffect, useState } from "react";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useGetFeatureFlagModel from "hooks/settings/organization_settings/feature_flags/useGetFeatureFlagModel";
-import useFeatureFlagAdministrationActions
-from "hooks/settings/organization_settings/feature_flags/useFeatureFlagAdministrationActions";
-import featureFlagConstants
-from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
+import useFeatureFlagAdministrationActions from "hooks/settings/organization_settings/feature_flags/useFeatureFlagAdministrationActions";
+import featureFlagConstants from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
 
 // Unless you absolutely need to pull directly, use useGetOrganizationSettingsFeatureFlagModelByName instead
 export default function useGetFeatureFlagModelByName(

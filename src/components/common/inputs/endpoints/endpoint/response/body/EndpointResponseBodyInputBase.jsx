@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import EndpointResponseBodyFieldInputRow
-from "components/common/inputs/endpoints/endpoint/response/body/field/EndpointResponseBodyFieldInputRow";
+import EndpointResponseBodyFieldInputRow from "components/common/inputs/endpoints/endpoint/response/body/field/EndpointResponseBodyFieldInputRow";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import InfoText from "components/common/inputs/info_text/InfoText";
@@ -12,13 +11,9 @@ import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import InfoContainer from "components/common/containers/InfoContainer";
-import EndpointResponseBodyTypeSelectInput
-from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyTypeSelectInput";
-import {
-  EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS
-} from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
-import endpointResponseFieldMetadata
-from "@opsera/definitions/constants/api/response/body/field/endpointResponseField.metadata";
+import EndpointResponseBodyTypeSelectInput from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyTypeSelectInput";
+import { EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS } from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
+import endpointResponseFieldMetadata from "@opsera/definitions/constants/api/response/body/field/endpointResponseField.metadata";
 
 function EndpointResponseBodyInputBase(
   {

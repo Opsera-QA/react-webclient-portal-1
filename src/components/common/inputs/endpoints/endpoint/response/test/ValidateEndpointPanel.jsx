@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import ValidateEndpointButton
-from "components/common/inputs/endpoints/endpoint/ValidateEndpointButton";
+import ValidateEndpointButton from "components/common/inputs/endpoints/endpoint/ValidateEndpointButton";
 import StandaloneConsoleLogField from "components/common/fields/log/StandaloneConsoleLogField";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import {
-  EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS
-} from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
+import { EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS } from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
 
 function ValidateEndpointPanel(
   {

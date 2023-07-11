@@ -13,8 +13,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import {parseError} from "components/common/helpers/error-helpers";
-import SfdcPipelineWizardBasicSummary
-from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardBasicSummary";
+import SfdcPipelineWizardBasicSummary from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardBasicSummary";
 
 const SfdcPipelineWizardStandardFileSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) => {
   const { getAccessToken } = useContext(AuthContext);

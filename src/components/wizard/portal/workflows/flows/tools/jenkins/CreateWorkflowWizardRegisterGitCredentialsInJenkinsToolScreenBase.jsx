@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
-import {
-  jenkinsToolAccountMetadata
-} from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/jenkinsToolAccount.metadata";
+import { jenkinsToolAccountMetadata } from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/jenkinsToolAccount.metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import jenkinsAccountActions
-from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/jenkinsToolAccounts.actions";
+import jenkinsAccountActions from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/jenkinsToolAccounts.actions";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import OverlayWizardButtonContainerBase from "temp-library-components/button/overlay/OverlayWizardButtonContainerBase";

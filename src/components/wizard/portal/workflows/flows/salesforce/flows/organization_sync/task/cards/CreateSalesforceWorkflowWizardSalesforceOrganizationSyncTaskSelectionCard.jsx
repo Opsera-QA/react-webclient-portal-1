@@ -1,12 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  salesforceWorkflowFlowConstants,
-} from "components/wizard/portal/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
+import { salesforceWorkflowFlowConstants } from "components/wizard/portal/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
-import WorkflowOptionCardBase, {
-  WORKFLOW_OPTION_TYPES,
-} from "components/wizard/portal/workflows/flows/WorkflowOptionCardBase";
+import WorkflowOptionCardBase, { WORKFLOW_OPTION_TYPES } from "components/wizard/portal/workflows/flows/WorkflowOptionCardBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { taskTemplateIdentifierConstants } from "components/admin/task_templates/taskTemplateIdentifier.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";

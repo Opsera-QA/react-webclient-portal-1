@@ -2,7 +2,13 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faFileCode, faHandshake, faProjectDiagram, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
+import {
+  faFileCode,
+  faHandshake,
+  faProjectDiagram,
+  faServer,
+  faTools
+} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import BackToWorkspaceSubNavigationBarItem from "components/workspace/BackToWorkspaceSubNavigationBarItem";
 

@@ -1,10 +1,6 @@
 import React, {useMemo} from "react";
 import PropTypes from "prop-types";
-import {
-  getTableTextColumn,
-  getStaticInfoColumn,
-  getRoleAccessLevelColumn
-} from "components/common/table/table-column-helpers-v2";
+import { getTableTextColumn, getStaticInfoColumn, getRoleAccessLevelColumn } from "components/common/table/table-column-helpers-v2";
 import {useHistory} from "react-router-dom";
 import VanityTable from "components/common/table/VanityTable";
 import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";

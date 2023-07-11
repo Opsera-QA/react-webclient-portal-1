@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import WorkflowWizardToolConnectionScreenBase
-from "components/wizard/free_trial/workflows/flows/tools/test_connection/WorkflowWizardToolConnectionScreenBase";
+import WorkflowWizardToolConnectionScreenBase from "components/wizard/free_trial/workflows/flows/tools/test_connection/WorkflowWizardToolConnectionScreenBase";
 
 export default function CreateWorkflowWizardTestSalesforceToolConnectionScreenBase(
   {

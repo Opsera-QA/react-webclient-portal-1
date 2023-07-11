@@ -3,14 +3,10 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
-import EndpointRequestHeaderBearerTokenTypeSelectInput
-from "components/common/list_of_values_input/inventory/endpoints/header/bearer_token/EndpointRequestHeaderBearerTokenTypeSelectInput";
-import EndpointRequestHeaderBearerTokenEndpointSelectInput
-from "components/common/list_of_values_input/inventory/endpoints/header/token_endpoint/EndpointRequestHeaderBearerTokenEndpointSelectInput";
-import EndpointResponseBodyFieldSelectInput
-from "components/common/list_of_values_input/inventory/endpoints/field/EndpointResponseBodyFieldSelectInput";
-import endpointRequestHeaderBearerTokenTypeConstants
-from "@opsera/definitions/constants/api/request/header/endpointRequestHeaderBearerTokenType.constants";
+import EndpointRequestHeaderBearerTokenTypeSelectInput from "components/common/list_of_values_input/inventory/endpoints/header/bearer_token/EndpointRequestHeaderBearerTokenTypeSelectInput";
+import EndpointRequestHeaderBearerTokenEndpointSelectInput from "components/common/list_of_values_input/inventory/endpoints/header/token_endpoint/EndpointRequestHeaderBearerTokenEndpointSelectInput";
+import EndpointResponseBodyFieldSelectInput from "components/common/list_of_values_input/inventory/endpoints/field/EndpointResponseBodyFieldSelectInput";
+import endpointRequestHeaderBearerTokenTypeConstants from "@opsera/definitions/constants/api/request/header/endpointRequestHeaderBearerTokenType.constants";
 
 function EndpointRequestHeaderTokenConfiguration(
   {

@@ -1,6 +1,12 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {Row, Col, Button, Form, Table} from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Button,
+  Form,
+  Table
+} from "react-bootstrap";
 import {faPlus, faTrash} from "@fortawesome/pro-solid-svg-icons";
 import InputContainer from "components/common/inputs/InputContainer";
 import IconBase from "components/common/icons/IconBase";

@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import mockPipelineStepConfigurationMetadata from "./mock-pipeline-step-configuration-metadata";
-import PipelineStepEditorPanelContainer
-from "../../../../../../../common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "../../../../../../../common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function MockPipelineStepConfiguration({ stepTool, parentCallback, closeEditorPanel }) {

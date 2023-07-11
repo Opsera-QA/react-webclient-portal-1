@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
-import branchToBranchGitTaskConfigurationMetadata
-from "components/tasks/details/tasks/branch-to-branch/branch-to-branch-git-task-configuration";
+import branchToBranchGitTaskConfigurationMetadata from "components/tasks/details/tasks/branch-to-branch/branch-to-branch-git-task-configuration";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import AgentLabelsSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsSelectInput";
@@ -13,12 +12,9 @@ import GitToGitSyncTaskSourceBranchSelectInput from "components/tasks/details/ta
 import GitToGitSyncTaskDestinationBranchSelectInput from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskDestinationBranchSelectInput";
 import GitToGitSyncTaskScmTypeSelectInput from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskScmTypeSelectInput";
 import GitToGitSyncTaskScmToolSelectInput from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskScmToolSelectInput";
-import GitToGitSyncTaskAutoApprovalToggleInput
-from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskAutoApprovalToggleInput";
-import GitToGitSyncTaskRepositorySelectInput
-from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskRepositorySelectInput";
-import GitToGitSyncTaskBitbucketWorkspaceSelectInput
-from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskBitbucketWorkspaceSelectInput";
+import GitToGitSyncTaskAutoApprovalToggleInput from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskAutoApprovalToggleInput";
+import GitToGitSyncTaskRepositorySelectInput from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskRepositorySelectInput";
+import GitToGitSyncTaskBitbucketWorkspaceSelectInput from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskBitbucketWorkspaceSelectInput";
 
 function GitToGitSyncTaskConfigurationEditorPanel({ taskModel, taskConfigurationModel, setTaskConfigurationModel }) {
   useEffect(() => {loadData();}, []);

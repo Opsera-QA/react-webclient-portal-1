@@ -1,10 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {
-  faIdCard,
-  faTimes,
-} from "@fortawesome/pro-light-svg-icons";
+import { faIdCard, faTimes } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import {AuthContext} from "contexts/AuthContext";
@@ -14,8 +11,7 @@ import axios from "axios";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import IconBase from "components/common/icons/IconBase";
 import parametersActions from "components/inventory/parameters/parameters-actions";
-import EditableParameterMappingHeaderField
-from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingHeaderField";
+import EditableParameterMappingHeaderField from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingHeaderField";
 
 function EditableParameterMappingInput({ fieldName, model, setModel, helpComponent, disabled, nameMaxLength, titleText, type }) {
   const {getAccessToken} = useContext(AuthContext);

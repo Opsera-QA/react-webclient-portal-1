@@ -1,12 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
-import {
-  platformPipelineTemplateCatalogActions
-} from "components/workflow/catalog/platform/platformPipelineTemplateCatalog.actions";
+import { platformPipelineTemplateCatalogActions } from "components/workflow/catalog/platform/platformPipelineTemplateCatalog.actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import PlatformPipelineTemplateRoleHelper
-from "@opsera/know-your-role/roles/pipelines/templates/platform/platformPipelineTemplateRole.helper";
+import PlatformPipelineTemplateRoleHelper from "@opsera/know-your-role/roles/pipelines/templates/platform/platformPipelineTemplateRole.helper";
 
 export default function PlatformPipelineTemplateRoleAccessInput(
   {

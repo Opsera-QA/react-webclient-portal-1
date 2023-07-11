@@ -5,15 +5,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import axios from "axios";
-import {
-  GITLAB_DEPLOYMENT_FREQUENCY_CONSTANTS as constants
-} from "./GitlabDeploymentFrequencyConstants";
+import { GITLAB_DEPLOYMENT_FREQUENCY_CONSTANTS as constants } from "./GitlabDeploymentFrequencyConstants";
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import GitlabDeployFrequencyChartHelpDocumentation from "../../../../common/help/documentation/insights/charts/GitlabDeployFrequencyChartHelpDocumentation";
 import GitlabDeploymentFrequencyDataBlock from "./GitlabDeploymentFrequencyDataBlock";
 import {
   getDeploymentStageFromKpiConfiguration,
-  getMaturityColorClass, getMaturityScoreText,
+  getMaturityColorClass,
+  getMaturityScoreText,
   getTrend,
   getTrendIcon
 } from "../../charts-helpers";

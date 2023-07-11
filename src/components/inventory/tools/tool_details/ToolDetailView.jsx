@@ -8,8 +8,7 @@ import InventorySubNavigationBar from "components/inventory/InventorySubNavigati
 import ToolDetailHelpDocumentation from "../../../common/help/documentation/tool_registry/ToolDetailHelpDocumentation";
 import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
 import useGetRegistryToolModelById from "components/inventory/tools/hooks/useGetRegistryToolModelById";
-import RegistryToolViewJsonActionBarButton
-from "components/inventory/tools/details/json/RegistryToolViewJsonActionBarButton";
+import RegistryToolViewJsonActionBarButton from "components/inventory/tools/details/json/RegistryToolViewJsonActionBarButton";
 import ActionBarDeleteToolButton from "components/inventory/tools/action_bar/ActionBarDeleteToolButton";
 import ActionBarTransferToolButton from "components/inventory/tools/action_bar/ActionBarTransferToolButton";
 import ActionBarViewToolAuditLogsButton from "components/inventory/tools/action_bar/ActionBarViewToolAuditLogsButton";

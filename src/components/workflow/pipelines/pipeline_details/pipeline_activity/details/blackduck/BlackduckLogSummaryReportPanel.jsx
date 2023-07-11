@@ -4,12 +4,10 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
-import BlackduckSummaryLogVerticalTabContainer
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/blackduck/BlackduckSummaryLogVerticalTabContainer";
+import BlackduckSummaryLogVerticalTabContainer from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/blackduck/BlackduckSummaryLogVerticalTabContainer";
 import { faClipboardListCheck } from "@fortawesome/pro-light-svg-icons";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import BlackduckReportView
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/blackduck/components/BlackduckReportView";
+import BlackduckReportView from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/blackduck/components/BlackduckReportView";
 
 function BlackduckLogSummaryReportPanel({ pipelineTaskData }) {
   const [blackduckObj, setBlackduckObj] = useState(undefined);

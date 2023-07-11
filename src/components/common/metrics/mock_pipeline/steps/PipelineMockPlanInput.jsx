@@ -2,8 +2,7 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {pipelineMockStepMetadata} from "components/common/metrics/mock_pipeline/steps/pipelineMockStepMetadata";
-import PipelineMockStepInputRow
-from "components/common/metrics/mock_pipeline/steps/PipelineMockStepEditorPanel";
+import PipelineMockStepInputRow from "components/common/metrics/mock_pipeline/steps/PipelineMockStepEditorPanel";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 

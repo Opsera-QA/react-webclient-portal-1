@@ -7,8 +7,7 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import azureStorageAccountActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/storage_accounts/azureStorageAccount.actions";
-import StandaloneDeleteButtonWithConfirmationModal
-from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
+import StandaloneDeleteButtonWithConfirmationModal from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 
 function AzureToolStorageEditorPanel({ azureStorageAccountsModel, setAzureStorageAccountsModel, toolId, handleClose }) {

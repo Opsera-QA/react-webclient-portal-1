@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import PipelinesOverviewMetrics from "components/insights/summary/metrics/pipelines_overview/PipelinesOverviewMetrics";
-import PipelinesFailureScoreMetrics
-from "components/insights/summary/metrics/pipelines_failure_score/PipelinesFailureScoreMetrics";
+import PipelinesFailureScoreMetrics from "components/insights/summary/metrics/pipelines_failure_score/PipelinesFailureScoreMetrics";
 import ValueStreamMetrics from "components/insights/summary/metrics/value_stream/ValueStreamMetrics";
 import PipelineIncidentsMetrics from "components/insights/summary/metrics/incidents/PipelineIncidentsMetrics";
-import PipelineAverageDurationMetrics
-from "components/insights/summary/metrics/pipelines_average_duration/PipelineAverageDurationMetrics";
+import PipelineAverageDurationMetrics from "components/insights/summary/metrics/pipelines_average_duration/PipelineAverageDurationMetrics";
 
 function InsightsSynopsisDetails({ dashboardData }) {
   const [selectedDataBlock, setSelectedDataBlock] = useState("");

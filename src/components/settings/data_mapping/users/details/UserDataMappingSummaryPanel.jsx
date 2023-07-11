@@ -8,11 +8,9 @@ import ToolNameField from "components/common/fields/inventory/ToolNameField";
 import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
 import ToolIdentifierNameField from "components/common/fields/tool_identifier/ToolIdentifierNameField";
 import ExternalToolPropertyCacheField from "components/common/fields/cache/ExternalToolPropertyCacheField";
-import JiraProjectUserCacheField
-from "components/common/list_of_values_input/tools/jira/users/JiraProjectUserCacheField";
+import JiraProjectUserCacheField from "components/common/list_of_values_input/tools/jira/users/JiraProjectUserCacheField";
 import toolIdentifierConstants from "@opsera/definitions/constants/tool_identifiers/toolIdentifier.constants";
-import AnalyticsUserDataMappingRoleHelper
-from "@opsera/know-your-role/roles/settings/analytics_data_mappings/users/analyticsUserDataMappingRole.helper";
+import AnalyticsUserDataMappingRoleHelper from "@opsera/know-your-role/roles/settings/analytics_data_mappings/users/analyticsUserDataMappingRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function UserDataMappingSummaryPanel({ userDataMappingModel, setActiveTab }) {

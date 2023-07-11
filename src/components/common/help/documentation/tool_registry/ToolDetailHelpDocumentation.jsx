@@ -2,10 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
-import {
-  doesToolSupportTab,
-  TOOL_DETAIL_PANEL_TABS
-} from "components/inventory/tools/details/panel/tab_container/ToolDetailPanelTabContainer";
+import { doesToolSupportTab, TOOL_DETAIL_PANEL_TABS } from "components/inventory/tools/details/panel/tab_container/ToolDetailPanelTabContainer";
 import {toolIdentifierConstants} from "../../../../admin/tools/identifiers/toolIdentifier.constants";
 
 

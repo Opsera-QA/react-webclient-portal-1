@@ -3,11 +3,7 @@ import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
-import {
-  getChartPipelineStatusColumn,
-  getTableDateTimeColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers-v2";
+import { getChartPipelineStatusColumn, getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";

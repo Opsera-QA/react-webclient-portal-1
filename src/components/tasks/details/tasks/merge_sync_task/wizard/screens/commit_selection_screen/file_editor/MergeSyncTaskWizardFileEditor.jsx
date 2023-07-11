@@ -7,12 +7,9 @@ import { faCode } from "@fortawesome/pro-light-svg-icons";
 import SyntaxHighlighterFieldBase from "components/common/fields/code/syntax_highlighter/SyntaxHighlighterFieldBase";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import CodeInput, { CODE_THEME_TYPES } from "components/common/inputs/code/CodeInput";
-import {
-  MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
-} from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
+import { MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import MergeSyncTaskWizardSubmitEditedFileButton
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/file_editor/MergeSyncTaskWizardSubmitEditedFileButton";
+import MergeSyncTaskWizardSubmitEditedFileButton from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/file_editor/MergeSyncTaskWizardSubmitEditedFileButton";
 import CopyToClipboardIcon from "components/common/icons/CopyToClipboardIcon";
 import SyntaxHighlighterCodeFieldBase from "components/common/fields/code/syntax_highlighter/SyntaxHighlighterCodeFieldBase";
 

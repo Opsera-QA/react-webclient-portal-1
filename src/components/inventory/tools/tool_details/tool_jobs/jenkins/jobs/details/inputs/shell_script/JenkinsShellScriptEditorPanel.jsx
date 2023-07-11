@@ -3,14 +3,10 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import modelHelpers from "components/common/model/modelHelpers";
-import JenkinsShellScriptJobMetadata
-from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/shell_script/jenkins-shell-script-metadata";
-import JenkinsJobsGenericAgentTypeSelectInput
-from "components/common/list_of_values_input/tools/jenkins/jobs/JenkinsJobsGenericAgentTypeSelectInput";
-import JenkinsJobsShellScriptBuildTypeSelectInput
-from "components/common/list_of_values_input/tools/jenkins/jobs/shell_script/JenkinsJobsShellScriptBuildTypeSelectInput";
-import JenkinsJobsPythonAgentLabelSelectInput
-from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobsPythonAgentLabelSelectInput";
+import JenkinsShellScriptJobMetadata from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/shell_script/jenkins-shell-script-metadata";
+import JenkinsJobsGenericAgentTypeSelectInput from "components/common/list_of_values_input/tools/jenkins/jobs/JenkinsJobsGenericAgentTypeSelectInput";
+import JenkinsJobsShellScriptBuildTypeSelectInput from "components/common/list_of_values_input/tools/jenkins/jobs/shell_script/JenkinsJobsShellScriptBuildTypeSelectInput";
+import JenkinsJobsPythonAgentLabelSelectInput from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobsPythonAgentLabelSelectInput";
 
 const JENKINS_JOBS_GENERIC_AGENT_TYPES = [
   {

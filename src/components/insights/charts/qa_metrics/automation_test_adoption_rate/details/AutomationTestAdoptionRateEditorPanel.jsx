@@ -14,8 +14,7 @@ import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete
 import ResetButton from "components/common/buttons/reset/ResetButton";
 import Model from "core/data_model/model";
 import kpiConfigurationMetadata from "components/insights/marketplace/charts/kpi-configuration-metadata";
-import ResetMetricConfirmationPanel
-from "components/insights/marketplace/dashboards/metrics/reset/ResetMetricConfirmationPanel";
+import ResetMetricConfirmationPanel from "components/insights/marketplace/dashboards/metrics/reset/ResetMetricConfirmationPanel";
 
 function AutomationTestAdoptionRateEditorPanel({ kpiConfiguration, setKpiConfiguration, index, dashboardData, setKpis, closePanelFunction }) {
   const { getAccessToken } = useContext(AuthContext);

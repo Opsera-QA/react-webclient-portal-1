@@ -2,9 +2,7 @@ import React, {useEffect, useState, useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import { ResponsiveCirclePackingCanvas } from '@nivo/circle-packing';
 import { Col} from "react-bootstrap";
-import {
-  METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY_VNEXT
-} from "../../../../common/helpers/metrics/metricTheme.helpers";
+import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY_VNEXT } from "../../../../common/helpers/metrics/metricTheme.helpers";
 import Row from "react-bootstrap/Row";
 import gitLogDeveloperActivitiesMetaData from "./gitlog-developer-360-metedata";
 import {getLimitedTableTextColumn, getTableTextColumn} from "../../../../common/table/table-column-helpers";

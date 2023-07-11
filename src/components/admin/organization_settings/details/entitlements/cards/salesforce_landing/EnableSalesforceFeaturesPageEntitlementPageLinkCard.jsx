@@ -1,9 +1,7 @@
 import React from "react";
 import PropType from "prop-types";
-import OrganizationSettingsEntitlementPageLinkCardBase
-from "components/admin/organization_settings/details/entitlements/OrganizationSettingsEntitlementPageLinkCardBase";
-import EnableSalesforceFeaturesInactiveEntitlementPageLinkCard
-from "components/admin/organization_settings/details/entitlements/cards/salesforce_landing/EnableSalesforceFeaturesInactiveEntitlementPageLinkCard";
+import OrganizationSettingsEntitlementPageLinkCardBase from "components/admin/organization_settings/details/entitlements/OrganizationSettingsEntitlementPageLinkCardBase";
+import EnableSalesforceFeaturesInactiveEntitlementPageLinkCard from "components/admin/organization_settings/details/entitlements/cards/salesforce_landing/EnableSalesforceFeaturesInactiveEntitlementPageLinkCard";
 
 export default function EnableSalesforceFeaturesPageEntitlementPageLinkCard(
   {

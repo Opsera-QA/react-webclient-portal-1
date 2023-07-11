@@ -6,9 +6,7 @@ import { ssoUserActions } from "components/settings/users/ssoUser.actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import { faUserAltSlash } from "@fortawesome/pro-light-svg-icons";
-import {
-  freeTrialUserExpirationActions
-} from "components/settings/trial/user_expiration/freeTrialUserExpiration.actions";
+import { freeTrialUserExpirationActions } from "components/settings/trial/user_expiration/freeTrialUserExpiration.actions";
 import { useHistory } from "react-router-dom";
 
 export default function FreeTrialUserExpirationRevokeUserAccessButton(

@@ -4,15 +4,10 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {
-  mergeSyncTaskConfigurationMetadata
-} from "components/tasks/details/tasks/merge_sync_task/mergeSyncTaskConfiguration.metadata";
+import { mergeSyncTaskConfigurationMetadata } from "components/tasks/details/tasks/merge_sync_task/mergeSyncTaskConfiguration.metadata";
 import { TASK_TYPES } from "components/tasks/task.types";
-import {
-  mergeSyncTaskSalesforceConfigurationMetadata
-} from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/mergeSyncTaskSalesforceConfiguration.metadata";
-import SalesforceMergeSyncTaskSalesforceToolSelectInput
-from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceMergeSyncTaskSalesforceToolSelectInput";
+import { mergeSyncTaskSalesforceConfigurationMetadata } from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/mergeSyncTaskSalesforceConfiguration.metadata";
+import SalesforceMergeSyncTaskSalesforceToolSelectInput from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceMergeSyncTaskSalesforceToolSelectInput";
 
 function SalesforceToSalesforceMergeSyncTaskConfigurationEditorPanel({
   taskModel,

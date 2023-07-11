@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import useGetExtendableFreeTrialSsoUsers
-from "components/common/list_of_values_input/users/sso/extendable/useGetExtendableFreeTrialSsoUsers";
+import useGetExtendableFreeTrialSsoUsers from "components/common/list_of_values_input/users/sso/extendable/useGetExtendableFreeTrialSsoUsers";
 
 export default function ExtendableFreeTrialSsoUserSelectInput(
   {

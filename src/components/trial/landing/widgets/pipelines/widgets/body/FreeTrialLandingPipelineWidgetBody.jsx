@@ -1,14 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FreeTrialLandingPipelineWidgetPipelineSummaryPanel
-from "components/trial/landing/widgets/pipelines/widgets/body/FreeTrialLandingPipelineWidgetPipelineSummaryPanel";
-import FreeTrialLandingPipelineWidgetPipelineActivityLogsPanel
-from "components/trial/landing/widgets/pipelines/widgets/body/FreeTrialLandingPipelineWidgetPipelineActivityLogsPanel";
-import {
-  FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS
-} from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
-import FreeTrialLandingPipelineWidgetAnalyticsBody
-from "components/trial/landing/widgets/pipelines/analytics/FreeTrialLandingPipelineWidgetAnalyticsBody";
+import FreeTrialLandingPipelineWidgetPipelineSummaryPanel from "components/trial/landing/widgets/pipelines/widgets/body/FreeTrialLandingPipelineWidgetPipelineSummaryPanel";
+import FreeTrialLandingPipelineWidgetPipelineActivityLogsPanel from "components/trial/landing/widgets/pipelines/widgets/body/FreeTrialLandingPipelineWidgetPipelineActivityLogsPanel";
+import { FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS } from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
+import FreeTrialLandingPipelineWidgetAnalyticsBody from "components/trial/landing/widgets/pipelines/analytics/FreeTrialLandingPipelineWidgetAnalyticsBody";
 
 export default function FreeTrialLandingPipelineWidgetBody(
   {

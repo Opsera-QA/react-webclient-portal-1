@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Card, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Card,
+  Button,
+  OverlayTrigger,
+  Tooltip
+} from "react-bootstrap";
 import analyticsActions from "components/settings/analytics/analytics-settings-actions";
 import Model from "core/data_model/model";
 import AnalyticsProfileMetadata from "components/settings/analytics/analyticsProfile.metadata";
@@ -9,8 +16,7 @@ import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
-import AnalyticsDefaultPersonaSelectInput
-from "components/common/list_of_values_input/analytics_profile/AnalyticsDefaultPersonaSelectInput";
+import AnalyticsDefaultPersonaSelectInput from "components/common/list_of_values_input/analytics_profile/AnalyticsDefaultPersonaSelectInput";
 import AnalyticsProfileSubNavigationBar from "components/settings/analytics/AnalyticsProfileSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 

@@ -1,13 +1,8 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import {
-  faCheckCircle,
-  faExclamationCircle,
-} from "@fortawesome/pro-light-svg-icons";
+import { faCheckCircle, faExclamationCircle } from "@fortawesome/pro-light-svg-icons";
 import fortifyReportMetaData from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/fortify/metadata/fortifyReport.metadata";
-import {
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers-v2";
+import { getTableTextColumn } from "components/common/table/table-column-helpers-v2";
 import { getField } from "components/common/metadata/metadata-helpers";
 import VanityTable from "components/common/table/VanityTable";
 import FilterContainer from "components/common/table/FilterContainer";

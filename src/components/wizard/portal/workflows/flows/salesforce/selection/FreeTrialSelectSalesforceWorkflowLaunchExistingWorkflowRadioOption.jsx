@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS,
-} from "components/wizard/portal/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
+import { LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS } from "components/wizard/portal/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
 import OpseraInfinityLogoSelectionCardBase from "temp-library-components/cards/opsera/OpseraInfinityLogoSelectionCardBase";
 
 export default function FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption(

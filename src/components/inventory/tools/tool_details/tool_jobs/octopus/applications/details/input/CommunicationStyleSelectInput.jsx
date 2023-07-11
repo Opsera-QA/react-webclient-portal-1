@@ -2,8 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import OctopusStepActions
-from "../../../../../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
+import OctopusStepActions from "../../../../../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
 
 function CommunicationStyleSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool_prop}) {

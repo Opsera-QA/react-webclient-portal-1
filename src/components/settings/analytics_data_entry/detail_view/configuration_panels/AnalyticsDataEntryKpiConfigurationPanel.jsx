@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AnalyticsDataEntryKpiIdentifierSelectInput
-from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryKpiIdentifierSelectInput";
-import QaManualTestConfigurationPanel
-from "components/settings/analytics_data_entry/detail_view/configuration_panels/qa_manual_test/QaManualTestConfigurationPanel";
+import AnalyticsDataEntryKpiIdentifierSelectInput from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryKpiIdentifierSelectInput";
+import QaManualTestConfigurationPanel from "components/settings/analytics_data_entry/detail_view/configuration_panels/qa_manual_test/QaManualTestConfigurationPanel";
 import FirstPassYieldConfiguration from "./first_pass_yield/FirstPassYieldConfiguration";
 import CumulativeOpenDefectsConfiguration from "./cumulative_open_defects/CumulativeOpenDefectsConfiguration";
 import AutomationPercentageConfiguration from "./automation_percentage/AutomationPercentageConfiguration";

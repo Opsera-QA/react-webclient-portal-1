@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
-import SfdcPipelineWizardStepUnitTestList
-from "components/workflow/wizards/sfdc_pipeline_wizard/xml_viewer/unit_test/SfdcPipelineWizardStepUnitTestList";
+import SfdcPipelineWizardStepUnitTestList from "components/workflow/wizards/sfdc_pipeline_wizard/xml_viewer/unit_test/SfdcPipelineWizardStepUnitTestList";
 
 const UnitTestClassesViewer = ({pipelineWizardModel}) => {
   const getUnitTestSteps = () => {

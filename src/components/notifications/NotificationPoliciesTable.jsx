@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
   getFormattedLabelWithFunctionColumnDefinition,
-  getLimitedTableTextColumn, getOwnerNameField,
+  getLimitedTableTextColumn,
+  getOwnerNameField,
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn
@@ -15,14 +16,12 @@ import FilterContainer from "components/common/table/FilterContainer";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import NotificationTypeFilter from "components/common/filters/notifications/notification_type/NotificationTypeFilter";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
-import InlineNotificationTypeFilter
-from "components/common/filters/notifications/notification_type/InlineNotificationTypeFilter";
+import InlineNotificationTypeFilter from "components/common/filters/notifications/notification_type/InlineNotificationTypeFilter";
 import NewNotificationPolicyOverlay from "components/notifications/NewNotificationPolicyOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {getNotificationTypeLabel} from "components/common/list_of_values_input/notifications/type/notificationTypes.constants";
 import {notificationPolicyHelper} from "hooks/notification_policies/notificationPolicy.helper";
-import notificationPolicyMetadata
-from "@opsera/definitions/constants/notification_policies/notificationPolicy.metadata";
+import notificationPolicyMetadata from "@opsera/definitions/constants/notification_policies/notificationPolicy.metadata";
 
 function NotificationPoliciesTable(
   {

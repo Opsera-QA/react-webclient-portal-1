@@ -6,9 +6,7 @@ import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import chartsActions from "components/insights/charts/charts-actions";
 import axios from "axios";
-import {
-  QUICK_DEPLOY_STATISTICS_CONSTANTS as constants
-} from "./quickDeploy_kpi_datapoint_identifiers";
+import { QUICK_DEPLOY_STATISTICS_CONSTANTS as constants } from "./quickDeploy_kpi_datapoint_identifiers";
 import SuccessRateDataBlockContainer from "./data_blocks/SuccessRateDataBlockContainer";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import {dataPointHelpers} from "../../../common/helpers/metrics/data_point/dataPoint.helpers";

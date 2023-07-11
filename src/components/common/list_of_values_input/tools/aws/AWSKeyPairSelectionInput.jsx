@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import AWSActionsHelper
-from "components/common/list_of_values_input/tools/aws/aws-actions-helper";
+import AWSActionsHelper from "components/common/list_of_values_input/tools/aws/aws-actions-helper";
 import axios from "axios";
 
 function AWSKeyPairSelectionInput({  awsToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {

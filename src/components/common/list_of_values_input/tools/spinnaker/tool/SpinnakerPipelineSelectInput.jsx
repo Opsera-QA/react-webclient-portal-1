@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {AuthContext} from "contexts/AuthContext";
-import SpinnakerStepActions
-from "components/workflow/plan/step/spinnaker/spinnaker-step-actions";
+import SpinnakerStepActions from "components/workflow/plan/step/spinnaker/spinnaker-step-actions";
 
 function SpinnakerPipelineSelectInput({className, spinnakerToolId, spinnakerApplicationName, fieldName, model, setModel, setDataFunction, disabled, clearDataFunction}) {
   const { getAccessToken } = useContext(AuthContext);

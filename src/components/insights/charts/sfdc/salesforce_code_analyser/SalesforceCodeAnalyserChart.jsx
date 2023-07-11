@@ -11,20 +11,18 @@ import {faArrowCircleDown, faArrowCircleUp, faCircleMinus, faMinusCircle} from "
 import ChartTooltip from "../../ChartTooltip.jsx";
 import {
   adjustBarWidth,
-  assignStandardColors, assignStandardLineColors,
+  assignStandardColors,
+  assignStandardLineColors,
   defaultConfig,
-  spaceOutServiceNowCountBySeverityLegend,
+  spaceOutServiceNowCountBySeverityLegend
 } from "../../charts-views.js";
 import { DialogToastContext } from "contexts/DialogToastContext.js";
 import { ResponsiveLine } from "@nivo/line";
 import SalesforceCodeAnalyserCategoryDataBlock from "./data_blocks/SalesforceCodeAnalyserCategoryDataBlock";
 import SalesforceCodeAnalyserRuleDataBlock from "./data_blocks/SalesforceCodeAnalyserRuleDataBlock";
-import SalesforceCodeAnalyserCategoryActionableOverlay
-from "./actionable_insights/SalesforceCodeAnalyserCategoryActionableOverlay";
-import SalesforceCodeAnalyserRuleActionableOverlay
-from "./actionable_insights/SalesforceCodeAnalyserRuleActionableOverlay";
-import SalesforceCodeAnalyserPipelineActionableOverlay
-from "./actionable_insights/SalesforceCodeAnalyserPipelineActionableOverlay";
+import SalesforceCodeAnalyserCategoryActionableOverlay from "./actionable_insights/SalesforceCodeAnalyserCategoryActionableOverlay";
+import SalesforceCodeAnalyserRuleActionableOverlay from "./actionable_insights/SalesforceCodeAnalyserRuleActionableOverlay";
+import SalesforceCodeAnalyserPipelineActionableOverlay from "./actionable_insights/SalesforceCodeAnalyserPipelineActionableOverlay";
 import codeAnalyserActions from "./codeanalyser.action";
 
 function SalesforceCodeAnalyserChart({

@@ -1,17 +1,14 @@
 import React, {useContext, useState} from 'react';
 import PropTypes from 'prop-types';
-import PipelineStepConfigurationSummary
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepConfigurationSummary";
+import PipelineStepConfigurationSummary from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepConfigurationSummary";
 import PipelineStepDetailsContainer from "components/workflow/pipelines/overview/PipelineStepDetailsContainer";
-import PipelineStepJsonPanel
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepJsonPanel";
+import PipelineStepJsonPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepJsonPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import JsonTab from "components/common/tabs/detail_view/JsonTab";
 import GeneralTabPanelContainer from "components/common/panels/general/GeneralTabPanelContainer";
 import CustomTab from "components/common/tabs/CustomTab";
-import PipelineStepNotificationConfigurationSummaryPanel
-from "components/workflow/plan/step/notifications/PipelineStepNotificationConfigurationSummaryPanel";
+import PipelineStepNotificationConfigurationSummaryPanel from "components/workflow/plan/step/notifications/PipelineStepNotificationConfigurationSummaryPanel";
 import {faEnvelope, faFileCode} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 

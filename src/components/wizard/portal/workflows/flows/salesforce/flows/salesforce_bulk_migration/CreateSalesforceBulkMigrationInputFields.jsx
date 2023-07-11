@@ -11,18 +11,14 @@ import SalesforceBulkMigrationTaskUpstreamBranchSelectInput from "components/tas
 import SalesforceBulkMigrationTaskGitBranchSelectInput from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskGitBranchSelectInput";
 import { salesforceBulkMigrationTaskConfigurationMetadata } from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
 import OverlayWizardButtonContainerBase from "../../../../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
-import {
-  faArrowRight,
-} from "@fortawesome/pro-light-svg-icons";
+import { faArrowRight } from "@fortawesome/pro-light-svg-icons";
 import CreateWorkflowWizardRegisterAccountContainer from "../../../tools/CreateWorkflowWizardRegisterAccountContainer";
 import VanityButtonBase from "../../../../../../../../temp-library-components/button/VanityButtonBase";
 import H5FieldSubHeader from "../../../../../../../common/fields/subheader/H5FieldSubHeader";
-import SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
-from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput";
+import SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput";
 import TextInputBase from "../../../../../../../common/inputs/text/TextInputBase";
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
-import SalesforceOrganizationSyncTaskJenkinsAccountSelectInput
-from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsAccountSelectInput";
+import SalesforceOrganizationSyncTaskJenkinsAccountSelectInput from "../../../../../../../tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskJenkinsAccountSelectInput";
 
 function CreateSalesforceBulkMigrationInputFields({
   taskModel,

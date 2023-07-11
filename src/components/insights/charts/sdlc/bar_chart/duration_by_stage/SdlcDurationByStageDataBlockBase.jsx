@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
-import {
-  getMiddleText
-} from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";
+import { getMiddleText } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";
 import "components/insights/charts/sdlc/sdlc-duration-by-stage-kpi.css";
 function SdlcDurationByStageDataBlockBase({ topText, meanData, countData, goalsData, dataPoint }) {
 

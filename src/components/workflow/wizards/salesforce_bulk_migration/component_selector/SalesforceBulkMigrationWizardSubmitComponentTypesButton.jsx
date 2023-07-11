@@ -6,8 +6,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import salesforceBulkMigrationWizardActions
-from "components/workflow/wizards/salesforce_bulk_migration/salesforceBulkMigrationWizard.actions";
+import salesforceBulkMigrationWizardActions from "components/workflow/wizards/salesforce_bulk_migration/salesforceBulkMigrationWizard.actions";
 import {SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS} from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationWizard";
 
 function SalesforceBulkMigrationWizardSubmitComponentTypesButton({pipelineWizardModel, setPipelineWizardScreen, disable, size, className, icon}) {

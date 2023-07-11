@@ -1,11 +1,23 @@
 import {
-  faChartBar, faCogs,
-  faEdit, faFileArchive,
-  faFileCode, faFileInvoice, faFlag, faFolderCog,
+  faChartBar,
+  faCogs,
+  faEdit,
+  faFileArchive,
+  faFileCode,
+  faFileInvoice,
+  faFlag,
+  faFolderCog,
   faFolderGear,
   faHeartbeat,
-  faLink, faServer, faSitemap, faStream,
-  faTools, faUserCircle, faUserPlus, faUsers, faWrench
+  faLink,
+  faServer,
+  faSitemap,
+  faStream,
+  faTools,
+  faUserCircle,
+  faUserPlus,
+  faUsers,
+  faWrench
 } from "@fortawesome/pro-light-svg-icons";
 import {organizationSettingsHelper} from "components/admin/organization_settings/organizationSettings.helper";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";

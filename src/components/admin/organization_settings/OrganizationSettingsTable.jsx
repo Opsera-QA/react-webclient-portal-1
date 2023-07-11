@@ -2,16 +2,11 @@ import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
-import {
-  getLimitedTableTextColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers";
+import { getLimitedTableTextColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faSitemap} from "@fortawesome/pro-light-svg-icons";
-import {
-  ldapOrganizationAccountMetaData
-} from "components/admin/accounts/ldap/organization_accounts/ldap-organization-account-metadata";
+import { ldapOrganizationAccountMetaData } from "components/admin/accounts/ldap/organization_accounts/ldap-organization-account-metadata";
 import {organizationSettingsHelper} from "components/admin/organization_settings/organizationSettings.helper";
 
 export default function OrganizationSettingsTable(

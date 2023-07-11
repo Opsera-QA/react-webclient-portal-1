@@ -6,8 +6,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import LocalInputParametersValueInputRow
-from "components/common/list_of_values_input/parameters/local/value/LocalInputParametersValueInputRow";
+import LocalInputParametersValueInputRow from "components/common/list_of_values_input/parameters/local/value/LocalInputParametersValueInputRow";
 
 export default function LocalInputParametersValueInputBase(
   {

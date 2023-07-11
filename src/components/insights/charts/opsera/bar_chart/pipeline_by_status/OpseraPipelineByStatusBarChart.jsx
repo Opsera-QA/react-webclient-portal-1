@@ -7,8 +7,7 @@ import {AuthContext} from "contexts/AuthContext";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import axios from "axios";
-import { defaultConfig, getColorById, assignBooleanColors,
-  adjustBarWidth } from '../../../charts-views';
+import { defaultConfig, getColorById, assignBooleanColors, adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 import Model from "../../../../../../core/data_model/model";
 import PipelineByStatusTableMetadata from "components/insights/charts/opsera/bar_chart/pipeline_by_status/pipeline-by-status-table-metadata";

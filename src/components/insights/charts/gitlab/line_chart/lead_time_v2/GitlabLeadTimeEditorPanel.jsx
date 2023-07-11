@@ -4,10 +4,8 @@ import MetricTagFilterInput from "components/common/inputs/metric/filters/tags/M
 import MetricDateRangeFilterInput from "components/common/inputs/metric/filters/date/MetricDateRangeFilterInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import {gitlabLeadTimeMetadata} from "./gitlabLeadTime.metadata";
-import MetricDeploymentStageFilterInputV2
-from "components/common/inputs/metric/filters/deployment-frequency/MetricsDeploymentStageFilterInputV2";
-import MetricGitLabProjectFilterInput
-from "components/common/inputs/metric/filters/deployment-frequency/MetricGitLabProjectFilterInput";
+import MetricDeploymentStageFilterInputV2 from "components/common/inputs/metric/filters/deployment-frequency/MetricsDeploymentStageFilterInputV2";
+import MetricGitLabProjectFilterInput from "components/common/inputs/metric/filters/deployment-frequency/MetricGitLabProjectFilterInput";
 function GitlabLeadTimeEditorPanelV2(
   {
     metricModel,

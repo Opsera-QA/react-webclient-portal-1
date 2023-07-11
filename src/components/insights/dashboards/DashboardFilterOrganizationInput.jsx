@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
-import OrganizationMultiSelectInput
-from "components/common/list_of_values_input/settings/organizations/OrganizationMultiSelectInput";
+import OrganizationMultiSelectInput from "components/common/list_of_values_input/settings/organizations/OrganizationMultiSelectInput";
 
 function DashboardFilterOrganizationInput({ dataObject, setDataObject, dashboardData, loadData, className, fieldName}) {
   const validateAndSetData = (fieldName, value) => {

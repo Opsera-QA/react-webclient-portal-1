@@ -2,9 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { faHourglassClock } from "@fortawesome/pro-light-svg-icons";
-import {
-  FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREEN_LINKS
-} from "components/settings/trial/user_expiration/option_selection/FreeTrialUserExpirationOptionSelectionScreen";
+import { FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREEN_LINKS } from "components/settings/trial/user_expiration/option_selection/FreeTrialUserExpirationOptionSelectionScreen";
 import { useHistory } from "react-router-dom";
 import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";

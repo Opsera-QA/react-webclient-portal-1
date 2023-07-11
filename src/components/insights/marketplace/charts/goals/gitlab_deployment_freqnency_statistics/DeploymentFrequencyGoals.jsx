@@ -1,8 +1,7 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import buildAndDeployGoalsMetadata
-from "components/insights/marketplace/charts/goals/build_and_deploy_statistics/build-and-deploy-goals-metadata";
+import buildAndDeployGoalsMetadata from "components/insights/marketplace/charts/goals/build_and_deploy_statistics/build-and-deploy-goals-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import PositiveIntegerNumberPickerInput from "components/common/inputs/number/picker/PositiveIntegerNumberPickerInput";

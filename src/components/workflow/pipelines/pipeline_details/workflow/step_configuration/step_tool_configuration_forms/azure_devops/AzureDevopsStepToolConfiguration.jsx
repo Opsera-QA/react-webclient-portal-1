@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
-import azureDevopsStepFormMetadata
-from "./azureDevops-stepForm-metadata";
+import azureDevopsStepFormMetadata from "./azureDevops-stepForm-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import AzureDevopsToolSelectInput from "./inputs/AzureDevopsToolSelectInput";
 import AzureDevopsPipelineSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_devops/inputs/AzureDevopsPipelineSelectInput";

@@ -5,8 +5,7 @@ import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
 import DeleteConfirmationOverlay from "components/common/overlays/center/delete/DeleteConfirmationOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {useHistory} from "react-router-dom";
-import useFeatureFlagAdministrationActions
-from "hooks/settings/organization_settings/feature_flags/useFeatureFlagAdministrationActions";
+import useFeatureFlagAdministrationActions from "hooks/settings/organization_settings/feature_flags/useFeatureFlagAdministrationActions";
 
 export default function DeleteOrganizationAccountEntitlementActionBarButton(
   {

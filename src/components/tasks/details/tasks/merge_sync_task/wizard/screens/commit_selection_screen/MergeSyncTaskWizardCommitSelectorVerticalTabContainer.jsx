@@ -4,16 +4,19 @@ import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySet
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import { faBracketsCurly } from "@fortawesome/pro-light-svg-icons";
-import MergeSyncTaskWizardCommitViewer
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitViewer";
+import MergeSyncTaskWizardCommitViewer from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitViewer";
 import axios from "axios";
 import InfoContainer from "components/common/containers/InfoContainer";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import {
-  MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
-} from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
+import { MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import { faPlus, faMinus, faEdit, faFile, faTriangleExclamation } from "@fortawesome/pro-solid-svg-icons";
+import {
+  faPlus,
+  faMinus,
+  faEdit,
+  faFile,
+  faTriangleExclamation
+} from "@fortawesome/pro-solid-svg-icons";
 import IconBase from "../../../../../../../common/icons/IconBase";
 import ToggleThemeIconButton from "components/common/buttons/toggle/ToggleThemeIconButton";
 import ToggleDiffViewIconButton from "components/common/buttons/toggle/ToggleDiffViewIconButton";

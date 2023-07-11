@@ -8,11 +8,9 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarDestructiveDeleteButton from "components/common/actions/buttons/ActionBarDestructiveDeleteButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import LdapDepartmentDetailPanel
-from "components/settings/ldap_departments/details/LdapDepartmentDetailPanel";
+import LdapDepartmentDetailPanel from "components/settings/ldap_departments/details/LdapDepartmentDetailPanel";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
-import LdapDepartmentManagementSubNavigationBar
-from "components/settings/ldap_departments/LdapDepartmentManagementSubNavigationBar";
+import LdapDepartmentManagementSubNavigationBar from "components/settings/ldap_departments/LdapDepartmentManagementSubNavigationBar";
 import {roleGroups} from "components/settings/ldap_site_roles/details/SiteRoleDetailView";
 import useComponentStateReference from "hooks/useComponentStateReference";
 

@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
-import useCustomerPipelineTemplateAuditLogActions
-from "hooks/audit_logs/pipelines/templates/customer/useCustomerPipelineTemplateAuditLogActions";
+import useCustomerPipelineTemplateAuditLogActions from "hooks/audit_logs/pipelines/templates/customer/useCustomerPipelineTemplateAuditLogActions";
 
 export default function useGetCustomerPipelineTemplateAuditLogById(
   templateId,

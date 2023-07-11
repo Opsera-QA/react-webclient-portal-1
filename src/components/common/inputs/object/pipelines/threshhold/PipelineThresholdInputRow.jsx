@@ -1,14 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {
-  faTimes,
-} from "@fortawesome/pro-light-svg-icons";
+import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import {THRESHOLD_LEVELS} from "components/common/list_of_values_input/pipelines/thresholds/PipelineThresholdLevelSelectInputBase";
-import StandalonePositiveIntegerNumberTextInput
-from "components/common/inputs/text/number/integer/StandalonePositiveIntegerNumberTextInput";
+import StandalonePositiveIntegerNumberTextInput from "components/common/inputs/text/number/integer/StandalonePositiveIntegerNumberTextInput";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import IconBase from "components/common/icons/IconBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";

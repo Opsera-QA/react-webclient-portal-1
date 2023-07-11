@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import WorkflowOrchestrationProgressBarBase
-from "temp-library-components/fields/orchestration/progress/WorkflowOrchestrationProgressBarBase";
+import WorkflowOrchestrationProgressBarBase from "temp-library-components/fields/orchestration/progress/WorkflowOrchestrationProgressBarBase";
 import useGetTaskRunMetricsById from "hooks/workflow/tasks/orchestration/metrics/useGetTaskRunMetricsById";
 import {orchestrationHelper} from "temp-library-components/helpers/orchestration/orchestration.helper";
 

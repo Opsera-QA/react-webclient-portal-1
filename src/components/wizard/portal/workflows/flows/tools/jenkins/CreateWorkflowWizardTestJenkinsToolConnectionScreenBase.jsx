@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import WorkflowWizardToolConnectionScreenBase
-from "components/wizard/portal/workflows/flows/tools/test_connection/WorkflowWizardToolConnectionScreenBase";
+import WorkflowWizardToolConnectionScreenBase from "components/wizard/portal/workflows/flows/tools/test_connection/WorkflowWizardToolConnectionScreenBase";
 
 export default function CreateWorkflowWizardTestJenkinsToolConnectionScreenBase(
   {

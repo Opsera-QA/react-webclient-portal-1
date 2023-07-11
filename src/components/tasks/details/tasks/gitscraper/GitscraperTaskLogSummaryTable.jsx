@@ -1,16 +1,8 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import {
-  faCheckCircle,
-  faExclamationCircle,
-} from "@fortawesome/pro-light-svg-icons";
+import { faCheckCircle, faExclamationCircle } from "@fortawesome/pro-light-svg-icons";
 import gitScraperReportMetaData from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/metadata/gitScraperReport.metadata";
-import {
-  getTableTextColumn,
-  getTableDateTimeColumn,
-  getGitCustodianScmLinkIconColumnDefinition,
-  getPathDefinition,
-} from "components/common/table/table-column-helpers";
+import { getTableTextColumn, getTableDateTimeColumn, getGitCustodianScmLinkIconColumnDefinition, getPathDefinition } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import IconBase from "components/common/icons/IconBase";

@@ -11,10 +11,8 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import modelHelpers from "components/common/model/modelHelpers";
 import { platformSystemParameterActions } from "components/admin/system_parameters/platformSystemParameter.actions";
 import { platformSystemParametersMetadata } from "components/admin/system_parameters/platformSystemParameters.metadata";
-import PlatformSystemParameterManagementSubNavigationBar
-from "components/admin/system_parameters/PlatformSystemParameterManagementSubNavigationBar";
-import PlatformSystemParameterDetailPanel
-from "components/admin/system_parameters/details/PlatformSystemParameterDetailPanel";
+import PlatformSystemParameterManagementSubNavigationBar from "components/admin/system_parameters/PlatformSystemParameterManagementSubNavigationBar";
+import PlatformSystemParameterDetailPanel from "components/admin/system_parameters/details/PlatformSystemParameterDetailPanel";
 
 export default function PlatformSystemParameterDetailView() {
   const { systemParameterId } = useParams();

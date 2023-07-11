@@ -4,9 +4,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import {
-  customerDashboardTemplateCatalogActions
-} from "components/insights/marketplace/dashboards/templates/private/customerDashboardTemplateCatalog.actions";
+import { customerDashboardTemplateCatalogActions } from "components/insights/marketplace/dashboards/templates/private/customerDashboardTemplateCatalog.actions";
 
 export default function AddCustomerDashboardButton(
   {

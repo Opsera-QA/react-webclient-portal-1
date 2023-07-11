@@ -1,6 +1,5 @@
 import useGetPipelineById from "hooks/workflow/pipelines/useGetPipelineById";
-import useGetPollingPipelineOrchestrationStatusById
-from "hooks/workflow/pipelines/orchestration/useGetPollingPipelineOrchestrationStatusById";
+import useGetPollingPipelineOrchestrationStatusById from "hooks/workflow/pipelines/orchestration/useGetPollingPipelineOrchestrationStatusById";
 import {useEffect} from "react";
 
 export default function useGetPollingPipelineById(

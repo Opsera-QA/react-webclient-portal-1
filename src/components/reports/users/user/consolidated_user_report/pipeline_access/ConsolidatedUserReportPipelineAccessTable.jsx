@@ -1,9 +1,6 @@
 import React, {useMemo} from "react";
 import PropTypes from "prop-types";
-import {
-  getTableTextColumn,
-  getStaticInfoColumn, getRoleAccessLevelColumn
-} from "components/common/table/table-column-helpers-v2";
+import { getTableTextColumn, getStaticInfoColumn, getRoleAccessLevelColumn } from "components/common/table/table-column-helpers-v2";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import {useHistory} from "react-router-dom";
 import {faSearch} from "@fortawesome/pro-light-svg-icons";

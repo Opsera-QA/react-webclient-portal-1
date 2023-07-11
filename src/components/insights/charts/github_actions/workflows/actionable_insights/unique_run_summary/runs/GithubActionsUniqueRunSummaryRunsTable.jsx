@@ -11,17 +11,11 @@ import {
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icons";
-import ExportGithubActionWorkflowReportActionableInsights4Panel
-from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportActionableInsights4Panel";
+import ExportGithubActionWorkflowReportActionableInsights4Panel from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportActionableInsights4Panel";
 import ExportGithubActionsWorkflowReportButton from "components/insights/charts/github_actions/workflows/export/ExportGithubActionWorkflowReportButton";
-import {
-  GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS
-} from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
-import GithubActionsWorkflowWarningMessage
-from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowWarningMessage";
-import {
-  githubActionsUniqueRunRunsSummaryMetadata
-} from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/runs/githubActionsUniqueRunRunsSummary.metadata";
+import { GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS } from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
+import GithubActionsWorkflowWarningMessage from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowWarningMessage";
+import { githubActionsUniqueRunRunsSummaryMetadata } from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/runs/githubActionsUniqueRunRunsSummary.metadata";
 
 function GithubActionsUniqueRunSummaryRunsTable(
   {

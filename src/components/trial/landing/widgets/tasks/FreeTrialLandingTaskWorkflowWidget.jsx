@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
-import FreeTrialLandingWorkflowWidgetHeaderTabBarBase
-, {
-  FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS,
-} from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
+import FreeTrialLandingWorkflowWidgetHeaderTabBarBase, { FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS } from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
 import FreeTrialLandingTaskWidgetBody from "components/trial/landing/widgets/tasks/body/FreeTrialLandingTaskWidgetBody";
 import ActionBarDeleteTaskButton from "components/tasks/buttons/ActionBarDeleteTaskButton";
 

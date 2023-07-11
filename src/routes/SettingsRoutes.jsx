@@ -10,8 +10,7 @@ import LdapDepartmentDetailView from "components/settings/ldap_departments/detai
 import OrganizationManagement from "components/settings/organizations/OrganizationManagement";
 import OrganizationDetailView from "components/settings/organizations/organization_detail_view/OrganizationDetailView";
 import AnalyticsDataEntryManagement from "components/settings/analytics_data_entry/AnalyticsDataEntryManagement";
-import AnalyticsDataEntryDetailView
-from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryDetailView";
+import AnalyticsDataEntryDetailView from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryDetailView";
 import UserManagement from "components/settings/users/UserManagement";
 import UserDetailView from "components/settings/users/details/UserDetailView";
 import SsoUserDetailView from "components/settings/users/sso_user_details/SsoUserDetailView";
@@ -21,10 +20,8 @@ import TagEditor from "components/settings/tags/TagManagement";
 import TagDetailView from "components/settings/tags/details/TagDetailView";
 import AnalyticsProfileSettings from "components/settings/analytics/analyticsProfileSettings";
 import DataMappingManagement from "components/settings/data_mapping/DataMappingManagement";
-import ProjectDataMappingDetailView
-from "components/settings/data_mapping/projects/details/ProjectDataMappingDetailView";
-import PipelineDataMappingDetailView
-from "components/settings/data_mapping/pipelines/details/PipelineDataMappingDetailView";
+import ProjectDataMappingDetailView from "components/settings/data_mapping/projects/details/ProjectDataMappingDetailView";
+import PipelineDataMappingDetailView from "components/settings/data_mapping/pipelines/details/PipelineDataMappingDetailView";
 import UserDataMappingDetailView from "components/settings/data_mapping/users/details/UserDataMappingDetailView";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import InsightsSettings from "components/settings/insights/InsightsSettings";

@@ -4,23 +4,15 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
-import JenkinsJobsBuildMetadata
-from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/build/jenkins-jobs-build-metadata";
-import JenkinsJobsGenericAgentTypeSelectInput
-from "components/common/list_of_values_input/tools/jenkins/jobs/JenkinsJobsGenericAgentTypeSelectInput";
-import JenkinsJobsBuildTypeSelectInput
-from "components/common/list_of_values_input/tools/jenkins/jobs/build/JenkinsJobsBuildTypeSelectInput";
-import JenkinsJobsPythonAgentLabelSelectInput
-from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobsPythonAgentLabelSelectInput";
+import JenkinsJobsBuildMetadata from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/build/jenkins-jobs-build-metadata";
+import JenkinsJobsGenericAgentTypeSelectInput from "components/common/list_of_values_input/tools/jenkins/jobs/JenkinsJobsGenericAgentTypeSelectInput";
+import JenkinsJobsBuildTypeSelectInput from "components/common/list_of_values_input/tools/jenkins/jobs/build/JenkinsJobsBuildTypeSelectInput";
+import JenkinsJobsPythonAgentLabelSelectInput from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobsPythonAgentLabelSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import ScriptLibrarySelectInput from "components/common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
 import PasswordInput from "components/common/inputs/text/PasswordInput";
-import {
-  jenkinsXcodeBuildJobMetadata
-} from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/build/jenkinsXcodeBuildJob.metadata";
-import {
-  jenkinsMSBuildJobMetadata
-} from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/build/jenkinsMSBuildJob.metadata";
+import { jenkinsXcodeBuildJobMetadata } from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/build/jenkinsXcodeBuildJob.metadata";
+import { jenkinsMSBuildJobMetadata } from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/build/jenkinsMSBuildJob.metadata";
 
 export const getMetadataForJenkinsJobBuildType = (buildType) => {
   switch (buildType) {

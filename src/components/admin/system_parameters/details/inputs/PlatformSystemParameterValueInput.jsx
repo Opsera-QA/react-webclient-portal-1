@@ -1,17 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import platformSystemParameterConstants
-from "@opsera/definitions/constants/platform/system_parameters/platformSystemParameter.constants";
+import platformSystemParameterConstants from "@opsera/definitions/constants/platform/system_parameters/platformSystemParameter.constants";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import NumberPickerInputBase from "components/common/inputs/number/picker/base/NumberPickerInputBase";
 import JsonInput from "components/common/inputs/object/JsonInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
-import SsoUserSideBySideListInputBase
-from "components/common/list_of_values_input/users/sso/SsoUserSideBySideListInputBase";
-import PlatformSystemVerboseLoggingMultiCheckboxInput
-from "components/common/list_of_values_input/platform/system_parameters/PlatformSystemVerboseLoggingMultiCheckboxInput";
+import SsoUserSideBySideListInputBase from "components/common/list_of_values_input/users/sso/SsoUserSideBySideListInputBase";
+import PlatformSystemVerboseLoggingMultiCheckboxInput from "components/common/list_of_values_input/platform/system_parameters/PlatformSystemVerboseLoggingMultiCheckboxInput";
 
 export default function PlatformSystemParameterValueInput(
   {

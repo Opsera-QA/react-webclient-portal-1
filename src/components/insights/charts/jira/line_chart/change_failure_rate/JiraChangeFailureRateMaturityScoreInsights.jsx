@@ -1,9 +1,7 @@
 import React, { useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import {
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { Row, Col } from "react-bootstrap";
 import CustomTable from "components/common/table/CustomTable";
@@ -26,8 +24,7 @@ import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer
 import TabPanelContainer from "../../../../../common/panels/general/TabPanelContainer";
 import {getMaturityScoreText} from "../../../charts-helpers";
 import JiraChangeFailureRateMaturityScoreInsightsMetadata from "./JiraChangeFailureRateMaturityScoreInsightsMetaData";
-import JiraMeanTimeToResolutionInsightsDataBlock
-from "../../bar_chart/mean_time_to_resolution/JiraMeanTimeToResolutionInsightsDataBlock";
+import JiraMeanTimeToResolutionInsightsDataBlock from "../../bar_chart/mean_time_to_resolution/JiraMeanTimeToResolutionInsightsDataBlock";
 
 function JiraChangeFailureRateMaturityScoreInsights({ kpiConfiguration, insightsData }) {
   const [activeHorizontalTab, setActiveHorizontalTab] = useState("projects");

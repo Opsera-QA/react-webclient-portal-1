@@ -1,14 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ExternalRestApiIntegrationEndpointOrchestrationSummaryBase
-from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationSummaryBase";
+import ExternalRestApiIntegrationEndpointOrchestrationSummaryBase from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationSummaryBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import endpointRequestHeaderBearerTokenTypeConstants
-from "@opsera/definitions/constants/api/request/header/endpointRequestHeaderBearerTokenType.constants";
+import endpointRequestHeaderBearerTokenTypeConstants from "@opsera/definitions/constants/api/request/header/endpointRequestHeaderBearerTokenType.constants";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
-from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary";
+import ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 

@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import GitScraperParameterSelectInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/GitScraperParameterSelectInput";
+import GitScraperParameterSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/GitScraperParameterSelectInput";
 import GitScraperInputParameters from "./GitScraperInputParameters";
 import GitScraperEnvironmentVariables from "./custom_scripts/GitScraperEnvironmentVariables";
 

@@ -3,8 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 import AquasecScanReportTable from "./AquasecScanReportTable";
 import { AuthContext } from "contexts/AuthContext";
-import actionableInsightsGenericChartFilterMetadata
-from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
+import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import Model from "core/data_model/model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";

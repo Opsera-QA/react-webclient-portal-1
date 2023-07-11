@@ -8,8 +8,7 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
-import LdapGroupMembershipManagementPanel
-from "components/common/inputs/user/membership/manager/LdapGroupMembershipManagementPanel";
+import LdapGroupMembershipManagementPanel from "components/common/inputs/user/membership/manager/LdapGroupMembershipManagementPanel";
 import LdapGroupAssignedRolesPanel from "components/settings/ldap_groups/details/roles/LdapGroupAssignedRolesPanel";
 import LdapUserGroupRoleHelper from "@opsera/know-your-role/roles/accounts/groups/user/ldapUserGroupRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";

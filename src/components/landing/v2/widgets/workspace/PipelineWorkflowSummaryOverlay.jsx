@@ -13,8 +13,7 @@ import useGetPollingPipelineModelById from "hooks/workflow/pipelines/useGetPolli
 import OverlayContainer from "components/common/overlays/OverlayContainer";
 import useGetPipelineDurationMetrics from "hooks/workflow/pipelines/metrics/useGetPipelineDurationMetrics";
 import {orchestrationHelper} from "temp-library-components/helpers/orchestration/orchestration.helper";
-import PipelineOrchestrationProgressBarBase
-from "temp-library-components/fields/orchestration/progress/PipelineOrchestrationProgressBarBase";
+import PipelineOrchestrationProgressBarBase from "temp-library-components/fields/orchestration/progress/PipelineOrchestrationProgressBarBase";
 import ViewPipelineButton from "temp-library-components/button/pipeline/ViewPipelineButton";
 import ViewPipelineLogsButton from "temp-library-components/button/pipeline/ViewPipelineLogsButton";
 import {PlacementHelperDiv} from "@opsera/react-vanity-set";
@@ -22,12 +21,9 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineFooter from "components/landing/v2/widgets/workspace/PipelineFooter";
 import {getLargeVendorIconComponentFromPipeline} from "components/common/helpers/icon-helpers";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import OrchestrationLastRunDurationDataBlock
-from "temp-library-components/fields/orchestration/metrics/OrchestrationLastRunDurationDataBlock";
-import OrchestrationAverageRunDurationDataBlock
-from "temp-library-components/fields/orchestration/metrics/OrchestrationAverageRunDurationDataBlock";
-import OrchestrationNoRunsDataBlock
-from "temp-library-components/fields/orchestration/metrics/OrchestrationNoRunsDataBlock";
+import OrchestrationLastRunDurationDataBlock from "temp-library-components/fields/orchestration/metrics/OrchestrationLastRunDurationDataBlock";
+import OrchestrationAverageRunDurationDataBlock from "temp-library-components/fields/orchestration/metrics/OrchestrationAverageRunDurationDataBlock";
+import OrchestrationNoRunsDataBlock from "temp-library-components/fields/orchestration/metrics/OrchestrationNoRunsDataBlock";
 
 // TODO: Should this be two separate panels?
 export default function PipelineWorkflowSummaryOverlay({ pipelineId }) {

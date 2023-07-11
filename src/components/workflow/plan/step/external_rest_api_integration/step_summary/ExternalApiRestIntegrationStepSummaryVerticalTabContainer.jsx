@@ -3,15 +3,12 @@ import PropTypes from "prop-types";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-import {
-  EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
-} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
+import { EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS } from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
 import { Col } from "react-bootstrap";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import EndpointField from "components/common/fields/inventory/tools/endpoints/EndpointField";
 import JsonField from "components/common/fields/json/JsonField";
-import EndpointResponseEvaluationRulesField
-from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesField";
+import EndpointResponseEvaluationRulesField from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesField";
 import Row from "react-bootstrap/Row";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 

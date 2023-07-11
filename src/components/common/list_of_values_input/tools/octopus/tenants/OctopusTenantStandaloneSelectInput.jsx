@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { DialogToastContext } from 'contexts/DialogToastContext';
 import { AuthContext } from 'contexts/AuthContext';
 import axios from 'axios';
-import OctopusStepActions
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
+import OctopusStepActions from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
 // TODO: Refactor when refactoring Octopus step

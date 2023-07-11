@@ -8,8 +8,7 @@ import { useHistory } from "react-router-dom";
 import VanityButtonBase from "../../../../../../temp-library-components/button/VanityButtonBase";
 import { faTriangleExclamation } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "../../../../../../hooks/useComponentStateReference";
-import toolIdentifierConnectionCheckConstants
-from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+import toolIdentifierConnectionCheckConstants from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 export default function ToolConnectionCheck({
   setCurrentScreen,

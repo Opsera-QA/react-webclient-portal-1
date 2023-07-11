@@ -6,8 +6,7 @@ import StepConfigGitBranchInput from "../common/inputs/StepConfigGitBranchInput"
 import StepConfigGitRepositoryInput from "../common/inputs/StepConfigGitRepositoryInput";
 import StepConfigJenkinsAccountInput from "../common/inputs/StepConfigJenkinsAccountInput";
 import StepConfigJenkinsToolInput from "../common/inputs/StepConfigJenkinsToolInput";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import mongodbRealmStepFormMetadata from "./mongodb-realm-stepForm-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";

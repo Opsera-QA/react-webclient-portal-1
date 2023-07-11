@@ -1,8 +1,6 @@
 import {useEffect, useState} from "react";
-import useGetAnalyticsUserDataMappingModel
-from "hooks/settings/insights/analytics_data_mappings/users/useGetAnalyticsUserDataMappingModel";
-import useGetAnalyticsUserDataMappingById
-from "hooks/settings/insights/analytics_data_mappings/users/useGetAnalyticsUserDataMappingById";
+import useGetAnalyticsUserDataMappingModel from "hooks/settings/insights/analytics_data_mappings/users/useGetAnalyticsUserDataMappingModel";
+import useGetAnalyticsUserDataMappingById from "hooks/settings/insights/analytics_data_mappings/users/useGetAnalyticsUserDataMappingById";
 
 export default function useGetAnalyticsUserDataMappingModelById(analyticsDataUserMappingId, handleErrorFunction) {
   const [analyticsUserDataMappingModel, setAnalyticsUserDataMappingModel] = useState(undefined);

@@ -7,12 +7,9 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { platformSystemParameterActions } from "components/admin/system_parameters/platformSystemParameter.actions";
-import PlatformSystemParameterTypeSelectInput
-from "components/admin/system_parameters/details/inputs/PlatformSystemParameterTypeSelectInput";
-import PlatformSystemParameterValueInput
-from "components/admin/system_parameters/details/inputs/PlatformSystemParameterValueInput";
-import PlatformSystemParameterComboBoxInput
-from "components/common/list_of_values_input/platform/system_parameters/PlatformSystemParameterComboBoxInput";
+import PlatformSystemParameterTypeSelectInput from "components/admin/system_parameters/details/inputs/PlatformSystemParameterTypeSelectInput";
+import PlatformSystemParameterValueInput from "components/admin/system_parameters/details/inputs/PlatformSystemParameterValueInput";
+import PlatformSystemParameterComboBoxInput from "components/common/list_of_values_input/platform/system_parameters/PlatformSystemParameterComboBoxInput";
 
 export default function PlatformSystemParameterEditorPanel(
   {

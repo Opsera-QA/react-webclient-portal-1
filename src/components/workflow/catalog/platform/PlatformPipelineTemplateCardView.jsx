@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
-import PlatformPipelineTemplateCard
-from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCard";
+import PlatformPipelineTemplateCard from "temp-library-components/cards/templates/pipelines/platform/PlatformPipelineTemplateCard";
 
 export default function PlatformPipelineTemplateCardView(
   {

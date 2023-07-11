@@ -1,7 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Button, OverlayTrigger, Popover } from "react-bootstrap";
-import { faBracketsCurly, faInfoCircle, faSync, faTimes, faHandshake } from "@fortawesome/pro-light-svg-icons";
+import {
+  faBracketsCurly,
+  faInfoCircle,
+  faSync,
+  faTimes,
+  faHandshake
+} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { DialogToastContext } from "contexts/DialogToastContext";

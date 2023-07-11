@@ -1,9 +1,6 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import {
-  getTableDateTimeColumn,
-  getTableTextColumn
-} from "../../../../../common/table/table-column-helpers";
+import { getTableDateTimeColumn, getTableTextColumn } from "../../../../../common/table/table-column-helpers";
 import { getField } from "../../../../../common/metadata/metadata-helpers";
 import CustomTable from "../../../../../common/table/CustomTable";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";

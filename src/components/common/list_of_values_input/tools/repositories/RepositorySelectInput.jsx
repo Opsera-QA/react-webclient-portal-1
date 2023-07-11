@@ -1,13 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AzureDevOpsRepositorySelectInput
-from "components/common/list_of_values_input/tools/azure/repositories/AzureDevOpsRepositorySelectInput";
-import BitbucketRepositorySelectInput
-from "components/common/list_of_values_input/tools/bitbucket/repositories/BitbucketRepositorySelectInput";
-import GithubRepositorySelectInput
-from "components/common/list_of_values_input/tools/github/repositories/GithubRepositorySelectInput";
-import GitlabRepositorySelectInput
-from "components/common/list_of_values_input/tools/gitlab/repositories/GitlabRepositorySelectInput";
+import AzureDevOpsRepositorySelectInput from "components/common/list_of_values_input/tools/azure/repositories/AzureDevOpsRepositorySelectInput";
+import BitbucketRepositorySelectInput from "components/common/list_of_values_input/tools/bitbucket/repositories/BitbucketRepositorySelectInput";
+import GithubRepositorySelectInput from "components/common/list_of_values_input/tools/github/repositories/GithubRepositorySelectInput";
+import GitlabRepositorySelectInput from "components/common/list_of_values_input/tools/gitlab/repositories/GitlabRepositorySelectInput";
 import GithubMonoRepositorySelectInput from "../github/repositories/GithubMonoRepositorySelectInput";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";

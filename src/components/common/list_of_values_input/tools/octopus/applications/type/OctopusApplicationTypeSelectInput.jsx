@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {
-  OCTOPUS_APPLICATION_TYPE_LABELS,
-  OCTOPUS_APPLICATION_TYPES
-} from "components/common/list_of_values_input/tools/octopus/applications/type/octopus.application.types";
+import { OCTOPUS_APPLICATION_TYPE_LABELS, OCTOPUS_APPLICATION_TYPES } from "components/common/list_of_values_input/tools/octopus/applications/type/octopus.application.types";
 
 export const OCTOPUS_APPLICATION_TYPE_OPTIONS = [
   {

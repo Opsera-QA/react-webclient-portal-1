@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import KpiPolicySupportFilterSelectInput
-from "components/common/filters/insights/kpi/policy_support/KpiPolicySupportFilterSelectInput";
+import KpiPolicySupportFilterSelectInput from "components/common/filters/insights/kpi/policy_support/KpiPolicySupportFilterSelectInput";
 
 function InlineKpiPolicySupportFilterSelectInput({ fieldName, filterModel, setFilterModel, loadData, className}) {
   const setDataFunction = (fieldName, value) => {

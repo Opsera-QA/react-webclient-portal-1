@@ -6,8 +6,7 @@ import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
 import IconBase from "components/common/icons/IconBase";
 import { ExternalLink } from "temp-library-components/link/ExternalLink";
-import FreetrialWizardHelpDocumentation
-from "../../../common/help/documentation/freetrial/FreetrialWizardHelpDocumentation";
+import FreetrialWizardHelpDocumentation from "../../../common/help/documentation/freetrial/FreetrialWizardHelpDocumentation";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {EXTERNAL_LINKS} from "assets/links/externalLinks";
 

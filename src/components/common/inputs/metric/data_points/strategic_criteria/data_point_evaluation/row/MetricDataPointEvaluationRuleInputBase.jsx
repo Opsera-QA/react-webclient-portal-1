@@ -3,20 +3,14 @@ import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Model from "core/data_model/model";
-import dataPointEvaluationRowMetadata
-from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/dataPointEvaluationRowMetadata";
-import dataPointEvaluationRulesMetadata
-from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/dataPointEvaluationRules.metadata";
-import DataPointEvaluationTriggerFilterSelectInput
-from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/DataPointEvaluationTriggerFilterSelectInput";
-import DataPointEvaluationTriggerValuesInput
-from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/DataPointEvaluationTriggerValuesInput";
+import dataPointEvaluationRowMetadata from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/dataPointEvaluationRowMetadata";
+import dataPointEvaluationRulesMetadata from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/dataPointEvaluationRules.metadata";
+import DataPointEvaluationTriggerFilterSelectInput from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/DataPointEvaluationTriggerFilterSelectInput";
+import DataPointEvaluationTriggerValuesInput from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/DataPointEvaluationTriggerValuesInput";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InfoContainer from "components/common/containers/InfoContainer";
 import StandaloneBooleanToggleInput from "components/common/inputs/boolean/StandaloneBooleanToggleInput";
-import {
-  getDataPointTypeHelpText,
-} from "../../../../../../list_of_values_input/insights/data_points/type/dataPoint.types";
+import { getDataPointTypeHelpText } from "../../../../../../list_of_values_input/insights/data_points/type/dataPoint.types";
 
 function MetricDataPointEvaluationRuleInputBase(
   {

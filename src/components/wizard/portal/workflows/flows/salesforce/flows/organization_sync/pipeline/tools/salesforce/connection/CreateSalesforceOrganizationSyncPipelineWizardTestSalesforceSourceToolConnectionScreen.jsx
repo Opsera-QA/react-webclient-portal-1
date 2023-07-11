@@ -1,15 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS
-} from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/CreateSalesforceOrganizationSyncPipelineWizard";
+import { CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS } from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/pipeline/CreateSalesforceOrganizationSyncPipelineWizard";
 import { salesforcePipelineHelper } from "components/workflow/wizards/sfdc_pipeline_wizard/salesforcePipeline.helper";
-import WorkflowWizardToolConnectionScreenBase
-from "components/wizard/portal/workflows/flows/tools/test_connection/WorkflowWizardToolConnectionScreenBase";
-import CreateWorkflowWizardTestSalesforceToolConnectionScreenBase
-from "components/wizard/portal/workflows/flows/tools/salesforce/CreateWorkflowWizardTestSalesforceToolConnectionScreenBase";
-import OverlayWizardButtonContainerBase
-from "../../../../../../../../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import WorkflowWizardToolConnectionScreenBase from "components/wizard/portal/workflows/flows/tools/test_connection/WorkflowWizardToolConnectionScreenBase";
+import CreateWorkflowWizardTestSalesforceToolConnectionScreenBase from "components/wizard/portal/workflows/flows/tools/salesforce/CreateWorkflowWizardTestSalesforceToolConnectionScreenBase";
+import OverlayWizardButtonContainerBase from "../../../../../../../../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import VanityButtonBase from "../../../../../../../../../../../../temp-library-components/button/VanityButtonBase";
 import {faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
 

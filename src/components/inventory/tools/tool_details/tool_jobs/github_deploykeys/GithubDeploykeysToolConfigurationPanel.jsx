@@ -2,8 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
 import GithubDeployKeysTable from "./GithubDeployKeysTable";
 import PropTypes from "prop-types";
-import GithubDeployKeysEditorPanel
-from "components/inventory/tools/tool_details/tool_jobs/github_deploykeys/details/GithubDeployKeysEditorPanel";
+import GithubDeployKeysEditorPanel from "components/inventory/tools/tool_details/tool_jobs/github_deploykeys/details/GithubDeployKeysEditorPanel";
 import githubDeployKeyMetadata from "components/inventory/tools/tool_details/tool_jobs/github_deploykeys/github-deploykeys-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import useGetRegistryToolModelById from "components/inventory/tools/hooks/useGetRegistryToolModelById";

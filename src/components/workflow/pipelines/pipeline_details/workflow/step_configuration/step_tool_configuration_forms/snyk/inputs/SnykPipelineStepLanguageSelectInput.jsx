@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import snykIntegratorLanguageOptionConstants
-from "@opsera/definitions/constants/java/service/snyk/snykIntegratorLanguageOption.constants";
-import SnykLanguageSelectInput
-from "components/common/list_of_values_input/tools/snyk/languages/SnykLanguageSelectInput";
+import snykIntegratorLanguageOptionConstants from "@opsera/definitions/constants/java/service/snyk/snykIntegratorLanguageOption.constants";
+import SnykLanguageSelectInput from "components/common/list_of_values_input/tools/snyk/languages/SnykLanguageSelectInput";
 
 export default function SnykPipelineStepLanguageSelectInput({
   fieldName,

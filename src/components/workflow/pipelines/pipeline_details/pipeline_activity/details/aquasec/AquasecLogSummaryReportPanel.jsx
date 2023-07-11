@@ -4,14 +4,11 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
-import AquasecSummaryLogVerticalTabContainer
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/aquasec/AquasecSummaryLogVerticalTabContainer";
+import AquasecSummaryLogVerticalTabContainer from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/aquasec/AquasecSummaryLogVerticalTabContainer";
 import { faClipboardListCheck } from "@fortawesome/pro-light-svg-icons";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import AquasecReportView
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/aquasec/components/AquasecReportView";
-import AquasecReportSummaryOverview
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/aquasec/components/AquasecReportSummaryOverview";
+import AquasecReportView from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/aquasec/components/AquasecReportView";
+import AquasecReportSummaryOverview from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/aquasec/components/AquasecReportSummaryOverview";
 
 function AquasecLogSummaryReportPanel({ pipelineTaskData }) {
   const [aquasecSummaryObject, setAquasecSummaryObject] = useState(undefined);

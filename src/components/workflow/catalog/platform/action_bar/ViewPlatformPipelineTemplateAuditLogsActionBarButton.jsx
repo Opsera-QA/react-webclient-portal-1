@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import {faShieldCheck} from "@fortawesome/pro-light-svg-icons";
 import ActionBarPopoverButton from "components/common/actions/buttons/ActionBarPopoverButton";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import PlatformPipelineTemplateAuditLogOverlay
-from "components/workflow/catalog/platform/audit/PlatformPipelineTemplateAuditLogOverlay";
+import PlatformPipelineTemplateAuditLogOverlay from "components/workflow/catalog/platform/audit/PlatformPipelineTemplateAuditLogOverlay";
 
 export default function ViewPlatformPipelineTemplateAuditLogsActionBarButton(
   {

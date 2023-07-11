@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ConstantFieldBase from "components/common/fields/constant/ConstantFieldBase";
-import {
-  getMigrationTypeLabel
-} from "../../../tasks/details/tasks/sfdc-custom-setting-migration/inputs/SalesforceCustomSettingTaskTypeSelectInput";
+import { getMigrationTypeLabel } from "../../../tasks/details/tasks/sfdc-custom-setting-migration/inputs/SalesforceCustomSettingTaskTypeSelectInput";
 
 function TaskMigrationTypeField({model, fieldName, className, showLabel }) {
   return (

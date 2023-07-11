@@ -1,12 +1,10 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import PipelineWorkflowItemFieldBase
-from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
+import PipelineWorkflowItemFieldBase from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
 import { faFileCheck } from "@fortawesome/pro-light-svg-icons";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import PipelineWorkflowItemPipelineInstructionsField
-from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineWorkflowItemPipelineInstructionsField";
+import PipelineWorkflowItemPipelineInstructionsField from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineWorkflowItemPipelineInstructionsField";
 
 const PIPELINE_ACTIONS_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION,

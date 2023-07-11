@@ -2,8 +2,7 @@ import React, {useContext, useEffect, useState, useRef} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import OctopusStepActions
-from "../octopus-step-actions";
+import OctopusStepActions from "../octopus-step-actions";
 import axios from "axios";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
 

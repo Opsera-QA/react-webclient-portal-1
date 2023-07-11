@@ -6,13 +6,9 @@ import CancelButton from "components/common/buttons/CancelButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import BackButton from "components/common/buttons/back/BackButton";
 import DateTimeInputBase from "components/common/inputs/date/DateTimeInputBase";
-import {
-  MERGE_SYNC_WIZARD_SCREENS
-} from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
-import MergeSyncTaskWizardUpdateConfigurationButton
-from "components/tasks/details/tasks/merge_sync_task/wizard/screens/configuration_screen/MergeSyncTaskWizardUpdateConfigurationButton";
-import SfdcComponentListInput
-from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcComponentListInput";
+import { MERGE_SYNC_WIZARD_SCREENS } from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
+import MergeSyncTaskWizardUpdateConfigurationButton from "components/tasks/details/tasks/merge_sync_task/wizard/screens/configuration_screen/MergeSyncTaskWizardUpdateConfigurationButton";
+import SfdcComponentListInput from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcComponentListInput";
 
 const SalesforceToGitMergeSyncTaskWizardConfigurationScreen = ({
   wizardModel,

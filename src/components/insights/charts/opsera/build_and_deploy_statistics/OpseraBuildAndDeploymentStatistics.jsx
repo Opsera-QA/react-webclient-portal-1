@@ -12,9 +12,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import axios from "axios";
 import BuildAndDeployChartHelpDocumentation from "../../../../common/help/documentation/insights/charts/BuildAndDeployChartHelpDocumentation";
 import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
-import {
-  OPSERA_BUILD_DATA_AND_DEPLOYMENT_STATISTICS_CONSTANTS as constants
-} from "./OpseraBuildAndDeploymentStatistics_kpi_datapoint_identifiers";
+import { OPSERA_BUILD_DATA_AND_DEPLOYMENT_STATISTICS_CONSTANTS as constants } from "./OpseraBuildAndDeploymentStatistics_kpi_datapoint_identifiers";
 
 const DEFAULT_GOALS = {
   build_success_rate: 90,

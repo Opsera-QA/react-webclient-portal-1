@@ -5,8 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {AuthContext} from "contexts/AuthContext";
 import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
-import pipelineSummaryMetadata
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
+import pipelineSummaryMetadata from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";

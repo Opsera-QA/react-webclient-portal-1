@@ -2,10 +2,7 @@ import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
-import {
-  getFormattedLabelWithFunctionColumnDefinition,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getFormattedLabelWithFunctionColumnDefinition, getTableTextColumn } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faServer} from "@fortawesome/pro-light-svg-icons";

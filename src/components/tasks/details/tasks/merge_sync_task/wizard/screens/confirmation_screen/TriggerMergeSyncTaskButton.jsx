@@ -5,8 +5,7 @@ import {faCheck} from "@fortawesome/pro-solid-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import IconBase from "components/common/icons/IconBase";
-import mergeSyncTaskWizardActions
-from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
+import mergeSyncTaskWizardActions from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 

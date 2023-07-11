@@ -12,12 +12,9 @@ import CenterOverlayContainer from "components/common/overlays/center/CenterOver
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
-import DuplicatePipelineButton
-from "components/workflow/pipelines/summary/action_bar/buttons/duplicate/DuplicatePipelineButton";
+import DuplicatePipelineButton from "components/workflow/pipelines/summary/action_bar/buttons/duplicate/DuplicatePipelineButton";
 import modelHelpers from "components/common/model/modelHelpers";
-import {
-  duplicatePipelineMetadata
-} from "components/workflow/pipelines/summary/action_bar/buttons/duplicate/duplicatePipeline.metadata";
+import { duplicatePipelineMetadata } from "components/workflow/pipelines/summary/action_bar/buttons/duplicate/duplicatePipeline.metadata";
 
 export default function DuplicatePipelineConfirmationOverlay(
   {

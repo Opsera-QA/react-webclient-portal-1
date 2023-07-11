@@ -1,11 +1,8 @@
 import React from "react";
 import PropType from "prop-types";
-import PolicyManagementPageLinkCardBase
-from "components/settings/organization_settings/policies/cards/PolicyManagementPageLinkCardBase";
-import useGetSalesforceFeatureOrganizationSettingsEntitlement
-from "hooks/settings/organization_settings/entitlements/useGetSalesforceFeatureOrganizationSettingsEntitlement";
-import PolicyManagementInactiveSalesforceDataMigrationPolicyPageLinkCard
-from "components/settings/organization_settings/policies/cards/task/salesforce/PolicyManagementInactiveSalesforceDataMigrationPolicyPageLinkCard";
+import PolicyManagementPageLinkCardBase from "components/settings/organization_settings/policies/cards/PolicyManagementPageLinkCardBase";
+import useGetSalesforceFeatureOrganizationSettingsEntitlement from "hooks/settings/organization_settings/entitlements/useGetSalesforceFeatureOrganizationSettingsEntitlement";
+import PolicyManagementInactiveSalesforceDataMigrationPolicyPageLinkCard from "components/settings/organization_settings/policies/cards/task/salesforce/PolicyManagementInactiveSalesforceDataMigrationPolicyPageLinkCard";
 
 export default function PolicyManagementSalesforceDataMigrationPolicyPageLinkCard({ salesforceDataMigrationTaskPolicy, }) {
   const {

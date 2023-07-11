@@ -1,11 +1,8 @@
 import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import {
-  ldapOrganizationAccountMetaData
-} from "components/admin/accounts/ldap/organization_accounts/ldap-organization-account-metadata";
-import LdapOrganizationAccountEditorPanel
-from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountEditorPanel";
+import { ldapOrganizationAccountMetaData } from "components/admin/accounts/ldap/organization_accounts/ldap-organization-account-metadata";
+import LdapOrganizationAccountEditorPanel from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountEditorPanel";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";

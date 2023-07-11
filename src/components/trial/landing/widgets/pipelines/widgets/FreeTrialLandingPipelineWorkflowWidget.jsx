@@ -2,11 +2,8 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import FreeTrialLandingPipelineWidgetBody from "components/trial/landing/widgets/pipelines/widgets/body/FreeTrialLandingPipelineWidgetBody";
 import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
-import FreeTrialLandingWorkflowWidgetHeaderTabBarBase, {
-  FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS,
-} from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
-import FreeTrialLandingPipelineWidgetHeaderTitleBar
-from "components/trial/landing/widgets/pipelines/widgets/FreeTrialLandingPipelineWidgetHeaderTitleBar";
+import FreeTrialLandingWorkflowWidgetHeaderTabBarBase, { FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS } from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
+import FreeTrialLandingPipelineWidgetHeaderTitleBar from "components/trial/landing/widgets/pipelines/widgets/FreeTrialLandingPipelineWidgetHeaderTitleBar";
 
 export default function FreeTrialLandingPipelineWorkflowWidget(
   {

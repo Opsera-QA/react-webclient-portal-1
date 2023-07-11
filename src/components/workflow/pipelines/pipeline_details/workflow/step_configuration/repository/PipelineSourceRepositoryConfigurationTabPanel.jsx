@@ -1,16 +1,12 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import PipelineSourceRepositoryRepositoryInputPanel
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryRepositoryInputPanel";
+import PipelineSourceRepositoryRepositoryInputPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryRepositoryInputPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
-import PipelineSourceRepositoryWebhookInputPanel
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryWebhookInputPanel";
+import PipelineSourceRepositoryWebhookInputPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryWebhookInputPanel";
 import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
-import PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
-from "components/workflow/plan/source/PipelineSourceRepositoryDynamicSettingsBooleanToggleInput";
-import PipelineSourceRepositoryGitExportEnabledInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryGitExportEnabledInput";
+import PipelineSourceRepositoryDynamicSettingsBooleanToggleInput from "components/workflow/plan/source/PipelineSourceRepositoryDynamicSettingsBooleanToggleInput";
+import PipelineSourceRepositoryGitExportEnabledInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryGitExportEnabledInput";
 import VanityTabPanelContainer from "components/common/panels/general/VanityTabPanelContainer";
 
 export default function PipelineSourceRepositoryConfigurationTabPanel(

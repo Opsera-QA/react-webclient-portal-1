@@ -1,4 +1,10 @@
-import React, { useState, useMemo, useEffect, useRef, useContext } from "react";
+import React, {
+  useState,
+  useMemo,
+  useEffect,
+  useRef,
+  useContext
+} from "react";
 import PropTypes from "prop-types";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import CancelButton from "components/common/buttons/CancelButton";
@@ -11,10 +17,7 @@ import IconBase from "../../../../../../../common/icons/IconBase";
 import { faArrowLeft, faCheck } from "@fortawesome/pro-solid-svg-icons";
 import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "../../customSettingMigrationTaskWizard.constants";
 import DetailPanelContainer from "../../../../../../../common/panels/detail_panel_container/DetailPanelContainer";
-import {
-  getMigrationTypeLabel,
-  MIGRATION_TYPES,
-} from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
+import { getMigrationTypeLabel, MIGRATION_TYPES } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 import customSettingMigrationTaskWizardActions from "../../customSettingMigrationTaskWizard.actions";
 import { parseError } from "../../../../../../../common/helpers/error-helpers";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";

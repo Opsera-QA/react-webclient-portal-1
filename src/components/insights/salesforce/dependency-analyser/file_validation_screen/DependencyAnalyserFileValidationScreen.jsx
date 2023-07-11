@@ -11,12 +11,9 @@ import CancelButton from "components/common/buttons/CancelButton";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
-import SfdcPipelineWizardValidatedSfdcFilesTable
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/sfdc/SfdcPipelineWizardValidatedSfdcFilesTable";
-import SfdcPipelineWizardInvalidSfdcFilesTable
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/sfdc/SfdcPipelineWizardInvalidSfdcFilesTable";
-import SfdcPipelineWizardSubmitSfdcFilesButton
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSubmitSfdcFilesButton";
+import SfdcPipelineWizardValidatedSfdcFilesTable from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/sfdc/SfdcPipelineWizardValidatedSfdcFilesTable";
+import SfdcPipelineWizardInvalidSfdcFilesTable from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/sfdc/SfdcPipelineWizardInvalidSfdcFilesTable";
+import SfdcPipelineWizardSubmitSfdcFilesButton from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSubmitSfdcFilesButton";
 import IconBase from "components/common/icons/IconBase";
 import sfdcDependencyAnalyserActions from "../sfdc-dependency-analyser-actions";
 import { DEPENDENCY_ANALYSER_SCREENS } from "../DependencyAnalyser";

@@ -3,7 +3,14 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
-import { Form, Button, Overlay, Popover, Row, Col } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Overlay,
+  Popover,
+  Row,
+  Col
+} from "react-bootstrap";
 import { format, addDays } from "date-fns";
 import { faCalendar } from "@fortawesome/pro-light-svg-icons";
 import "react-date-range/dist/styles.css";

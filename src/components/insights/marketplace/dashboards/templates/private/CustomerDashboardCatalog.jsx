@@ -2,15 +2,11 @@ import React, {useState, useEffect} from 'react';
 import Model from "core/data_model/model";
 import FilterContainer from "components/common/table/FilterContainer";
 import { faChartArea, faChartUser } from "@fortawesome/pro-light-svg-icons";
-import dashboardTemplateFilterMetadata
-from "components/insights/marketplace/dashboards/dashboard-template-filter-metadata";
+import dashboardTemplateFilterMetadata from "components/insights/marketplace/dashboards/dashboard-template-filter-metadata";
 import InlineDashboardTypeFilter from "components/common/filters/dashboards/dashboard_type/InlineDashboardTypeFilter";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {
-  customerDashboardTemplateCatalogActions
-} from "components/insights/marketplace/dashboards/templates/private/customerDashboardTemplateCatalog.actions";
-import CustomerDashboardTemplateCardView
-from "components/insights/marketplace/dashboards/templates/private/CustomerDashboardTemplateCardView";
+import { customerDashboardTemplateCatalogActions } from "components/insights/marketplace/dashboards/templates/private/customerDashboardTemplateCatalog.actions";
+import CustomerDashboardTemplateCardView from "components/insights/marketplace/dashboards/templates/private/CustomerDashboardTemplateCardView";
 
 function CustomerDashboardCatalog () {
   const [dashboardTemplates, setDashboardTemplates] = useState([]);

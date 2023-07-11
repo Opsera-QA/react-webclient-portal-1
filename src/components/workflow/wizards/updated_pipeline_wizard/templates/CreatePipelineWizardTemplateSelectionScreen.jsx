@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import PipelineTemplateSelectionScreen from "components/workflow/create/PipelineTemplateSelectionScreen";
 import DeployPlatformPipelineForm from "./deploy_template/DeployPlatformPipelineForm";
 import DeployCustomerPipelineForm from "./deploy_template/DeployCustomerPipelineForm";
-import OverlayWizardButtonContainerBase
-from "../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import OverlayWizardButtonContainerBase from "../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import useGetCustomerPipelineTemplateModel from "hooks/workflow/catalog/customer/useGetCustomerPipelineTemplateModel";
 import useGetPlatformPipelineTemplateModel from "hooks/workflow/catalog/platform/useGetPlatformPipelineTemplateModel";
 

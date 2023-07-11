@@ -4,8 +4,7 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import {UserActivityAuditLogFilterModel} from "hooks/audit_logs/userActivityAuditLogFilter.model";
 import auditLogTypeConstants from "@opsera/definitions/constants/audit-logs/types/auditLogType.constants";
-import useCustomerPipelineTemplateAuditLogActions
-from "hooks/audit_logs/pipelines/templates/customer/useCustomerPipelineTemplateAuditLogActions";
+import useCustomerPipelineTemplateAuditLogActions from "hooks/audit_logs/pipelines/templates/customer/useCustomerPipelineTemplateAuditLogActions";
 
 export default function useGetAuditLogsForCustomerPipelineTemplate(
   templateId,

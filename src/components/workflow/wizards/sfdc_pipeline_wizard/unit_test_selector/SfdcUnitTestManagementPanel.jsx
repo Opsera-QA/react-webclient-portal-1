@@ -10,8 +10,7 @@ import DetailPanelContainer from "components/common/panels/detail_panel_containe
 import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 import SelectedUnitTestClassesPanel from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/panels/SelectedUnitTestClassesPanel";
-import UnitTestClassesPanel
-from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/panels/UnitTestClassesPanel";
+import UnitTestClassesPanel from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/panels/UnitTestClassesPanel";
 import {faSearch} from "@fortawesome/pro-light-svg-icons";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import axios from "axios";

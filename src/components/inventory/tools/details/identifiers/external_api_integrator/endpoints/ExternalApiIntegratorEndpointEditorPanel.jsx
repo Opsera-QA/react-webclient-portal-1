@@ -7,16 +7,11 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import externalApiIntegratorEndpointsActions
-from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoints.actions";
-import StandaloneDeleteButtonWithConfirmationModal
-from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
-import EndpointRequestTypeSelectInput
-from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/EndpointRequestTypeSelectInput";
-import ExternalApiIntegratorEndpointParametersVerticalTabContainer
-from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointParametersVerticalTabContainer";
-import EndpointTypeSelectInput
-from "components/common/list_of_values_input/inventory/endpoints/type/EndpointTypeSelectInput";
+import externalApiIntegratorEndpointsActions from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpoints.actions";
+import StandaloneDeleteButtonWithConfirmationModal from "components/common/buttons/delete/StandaloneDeleteButtonWithConfirmationModal";
+import EndpointRequestTypeSelectInput from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/EndpointRequestTypeSelectInput";
+import ExternalApiIntegratorEndpointParametersVerticalTabContainer from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/ExternalApiIntegratorEndpointParametersVerticalTabContainer";
+import EndpointTypeSelectInput from "components/common/list_of_values_input/inventory/endpoints/type/EndpointTypeSelectInput";
 
 function ExternalApiIntegratorEndpointEditorPanel(
   {

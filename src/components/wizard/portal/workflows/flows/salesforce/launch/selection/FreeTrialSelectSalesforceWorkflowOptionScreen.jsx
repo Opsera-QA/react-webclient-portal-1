@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import {
-  LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS,
-} from "components/wizard/portal/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
+import { LAUNCH_SALESFORCE_WORKFLOW_WIZARD_SCREENS } from "components/wizard/portal/workflows/flows/salesforce/FreeTrialLaunchSalesforceWorkflowWizardOverlay";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
-import FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption
-from "components/wizard/portal/workflows/flows/salesforce/selection/FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption";
+import FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption from "components/wizard/portal/workflows/flows/salesforce/selection/FreeTrialSelectSalesforceWorkflowLaunchExistingWorkflowRadioOption";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SalesforceSelectionCardBase from "temp-library-components/cards/salesforce/SalesforceSelectionCardBase";

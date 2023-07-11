@@ -5,14 +5,10 @@ import PropTypes from "prop-types";
 import twistlockStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/twistlockPipelineStepForm.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import TwistlockDockerPushSelectInput from "./inputs/TwistlockDockerPushSelectInput";
-import RoleRestrictedJenkinsToolSelectInput
-from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
-import RoleRestrictedTwistlockToolSelectInput
-from "components/common/list_of_values_input/tools/twistlock/RoleRestrictedTwistlockToolSelectInput";
-import TwistlockStepComplianceThresholdInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/inputs/TwistlockStepComplianceThresholdInput";
-import TwistlockStepVulnerabilityThresholdInput
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/inputs/TwistlockStepVulnerabilityThresholdInput";
+import RoleRestrictedJenkinsToolSelectInput from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
+import RoleRestrictedTwistlockToolSelectInput from "components/common/list_of_values_input/tools/twistlock/RoleRestrictedTwistlockToolSelectInput";
+import TwistlockStepComplianceThresholdInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/inputs/TwistlockStepComplianceThresholdInput";
+import TwistlockStepVulnerabilityThresholdInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/inputs/TwistlockStepVulnerabilityThresholdInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function TwistlockStepConfiguration({ pipelineId, stepTool, stepId, closeEditorPanel, parentCallback, plan, createJob}) {

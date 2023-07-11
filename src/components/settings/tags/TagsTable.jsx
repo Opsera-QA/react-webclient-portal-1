@@ -3,18 +3,11 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import tagMetadata from "components/settings/tags/tag.metadata";
-import {
-  getFormattedLabelWithFunctionColumnDefinition,
-  getTableBooleanIconColumn,
-  getTableDateColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers";
+import { getFormattedLabelWithFunctionColumnDefinition, getTableBooleanIconColumn, getTableDateColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import tagTypeConstants from "@opsera/definitions/constants/settings/tags/tagType.constants";
 import {tagHelper} from "components/settings/tags/tag.helper";
-import {
-  FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
-} from "components/common/table/FilterContainer";
+import { FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION } from "components/common/table/FilterContainer";
 
 export default function TagsTable(
   {

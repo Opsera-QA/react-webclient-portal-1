@@ -1,17 +1,19 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import PropTypes from "prop-types";
-import {
-  getTableDateTimeColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers-v2";
+import { getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers-v2";
 import sfdcTableConstants from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-table-constants";
 import FilterContainer from "components/common/table/FilterContainer";
 import InlineSfdcComponentTypesFilter from "components/common/filters/sfdc/sfdc_component/InlineSfdcComponentTypesFilter";
 import VanityTable from "components/common/table/VanityTable";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
-import SfdcPipelineWizardSfdcRulesInput
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSfdcRulesInput";
+import SfdcPipelineWizardSfdcRulesInput from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSfdcRulesInput";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
 const SfdcPipelineWizardSfdcFilesTable = ({ pipelineWizardModel, setPipelineWizardModel, loadData, sfdcFiles, isLoading, setPipelineWizardScreen, sfdcFilesPaginationModel, setSfdcFilesPaginationModel, filePullCompleted }) => {

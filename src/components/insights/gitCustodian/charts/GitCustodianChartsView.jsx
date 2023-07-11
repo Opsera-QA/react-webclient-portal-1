@@ -8,10 +8,8 @@ import LoadingDialog from "../../../common/status_notifications/loading";
 import {parseError} from "../../../common/helpers/error-helpers";
 import GitCustodianVulnerabilityTypesChart from "./bar_chart/git_custodian_vulnerability_types_chart/GitCustodianVulnerabilityTypesChart";
 import GitCustodianTopRepositoriesChart from "../charts/pie_chart/git_custodian_top_repositories_chart/gitCustodianTopRepositoriesChart";
-import GitCustodianTopAuthorsChart
-from "../charts/bar_chart/git_custodian_top_authors_chart/gitCustodianTopAuthorsChart";
-import GitCustodianTotalRepositoriesChart
-from "./pie_chart/git_custodian_top_clean_repositories_chart/gitCustodianTotalRepositoriesChart";
+import GitCustodianTopAuthorsChart from "../charts/bar_chart/git_custodian_top_authors_chart/gitCustodianTopAuthorsChart";
+import GitCustodianTotalRepositoriesChart from "./pie_chart/git_custodian_top_clean_repositories_chart/gitCustodianTotalRepositoriesChart";
 import GitCustodianTimelineChart from "../charts/line_chart/git_custodian_timeline_chart/gitCustodianTimelineChart";
 import chartsActions from "../../charts/charts-actions";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";

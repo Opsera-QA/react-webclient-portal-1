@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import RevocableFreeTrialSsoUserSelectInput
-from "components/common/list_of_values_input/users/sso/revocable/RevocableFreeTrialSsoUserSelectInput";
+import RevocableFreeTrialSsoUserSelectInput from "components/common/list_of_values_input/users/sso/revocable/RevocableFreeTrialSsoUserSelectInput";
 
 export default function FreeTrialRevokeUserSelectInput(
   {

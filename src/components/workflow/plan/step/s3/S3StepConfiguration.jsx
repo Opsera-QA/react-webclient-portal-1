@@ -1,18 +1,14 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import modelHelpers from "components/common/model/modelHelpers";
 import {s3PipelineStepConfigurationMetadata} from "components/workflow/plan/step/s3/s3PipelineStepConfiguration.metadata";
-import S3StepAwsAccountToolSelectInput
-from "components/workflow/plan/step/s3/inputs/S3StepAwsAccountToolSelectInput";
+import S3StepAwsAccountToolSelectInput from "components/workflow/plan/step/s3/inputs/S3StepAwsAccountToolSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PipelineStepSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineStepSelectInput";
-import AwsBucketAccessLevelSelectInput
-from "components/common/list_of_values_input/tools/aws/access/AwsBucketAccessLevelSelectInput";
+import AwsBucketAccessLevelSelectInput from "components/common/list_of_values_input/tools/aws/access/AwsBucketAccessLevelSelectInput";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import EBSBucketInput
-from "../../../pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSBucketInput";
+import EBSBucketInput from "../../../pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSBucketInput";
 
 function S3StepConfiguration(
   {

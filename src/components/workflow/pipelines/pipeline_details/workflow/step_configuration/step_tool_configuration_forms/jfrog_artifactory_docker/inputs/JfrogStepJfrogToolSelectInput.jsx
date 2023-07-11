@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RoleRestrictedJFrogArtifactoryDockerToolSelectInput
-from "components/common/list_of_values_input/tools/jfrog/RoleRestrictedJFrogArtifactoryDockerToolSelectInput";
+import RoleRestrictedJFrogArtifactoryDockerToolSelectInput from "components/common/list_of_values_input/tools/jfrog/RoleRestrictedJFrogArtifactoryDockerToolSelectInput";
 
 function JfrogStepJfrogToolSelectInput({model, setModel, disabled}) {
   return (

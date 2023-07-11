@@ -6,8 +6,7 @@ import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {faUsers} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
-import CreateJenkinsAccountOverlay
-from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/CreateJenkinsAccountOverlay";
+import CreateJenkinsAccountOverlay from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/CreateJenkinsAccountOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import modelHelpers from "components/common/model/modelHelpers";
 

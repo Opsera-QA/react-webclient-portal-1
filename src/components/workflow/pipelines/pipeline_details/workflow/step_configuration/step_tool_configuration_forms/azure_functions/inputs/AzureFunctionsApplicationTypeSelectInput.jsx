@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AzureApplicationTypeSelectInput
-from "components/common/list_of_values_input/tools/azure/application_types/AzureApplicationTypeSelectInput";
+import AzureApplicationTypeSelectInput from "components/common/list_of_values_input/tools/azure/application_types/AzureApplicationTypeSelectInput";
 
 function AzureFunctionsApplicationTypeSelectInput(
   {

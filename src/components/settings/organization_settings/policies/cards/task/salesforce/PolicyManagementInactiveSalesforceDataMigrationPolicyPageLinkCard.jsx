@@ -1,10 +1,8 @@
 import React from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
-import PolicyManagementPolicyActivationConfirmationOverlay
-from "components/settings/organization_settings/policies/cards/inactive/PolicyManagementPolicyActivationConfirmationOverlay";
-import InactiveSalesforceDataMigrationTaskSupportPolicyPageLinkCardBase
-from "temp-library-components/cards/policies/tasks/InactiveSalesforceDataMigrationTaskSupportPolicyPageLinkCardBase";
+import PolicyManagementPolicyActivationConfirmationOverlay from "components/settings/organization_settings/policies/cards/inactive/PolicyManagementPolicyActivationConfirmationOverlay";
+import InactiveSalesforceDataMigrationTaskSupportPolicyPageLinkCardBase from "temp-library-components/cards/policies/tasks/InactiveSalesforceDataMigrationTaskSupportPolicyPageLinkCardBase";
 
 export default function PolicyManagementInactiveSalesforceDataMigrationPolicyPageLinkCard() {
   const {

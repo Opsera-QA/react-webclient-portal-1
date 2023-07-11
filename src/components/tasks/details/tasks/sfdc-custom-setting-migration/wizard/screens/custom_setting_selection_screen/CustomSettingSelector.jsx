@@ -12,10 +12,7 @@ import { Button, Col, Row } from "react-bootstrap";
 import SaveButtonContainer from "../../../../../../../common/buttons/saving/containers/SaveButtonContainer";
 import FieldPropertiesSelectorView from "./FieldPropertiesSelectorView";
 import EnableEditingIcon from "../../../../../../../common/icons/enable/EnableEditingIcon";
-import {
-  getMigrationTypeLabel,
-  MIGRATION_TYPES,
-} from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
+import { getMigrationTypeLabel, MIGRATION_TYPES } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 import H5FieldSubHeader from "../../../../../../../common/fields/subheader/H5FieldSubHeader";
 import ToolNameField from "../../../../../../../common/fields/inventory/ToolNameField";
 import LoadingDialog from "components/common/status_notifications/loading";

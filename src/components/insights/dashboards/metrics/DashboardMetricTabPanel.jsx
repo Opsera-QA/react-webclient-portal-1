@@ -2,8 +2,7 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import MetricSettingsInputPanel from "components/common/inputs/metric/settings/MetricSettingsInputPanel";
-import DashboardMetricDataPointsInputPanel
-from "components/common/inputs/metric/data_points/dashboard/DashboardMetricDataPointsInputPanel";
+import DashboardMetricDataPointsInputPanel from "components/common/inputs/metric/data_points/dashboard/DashboardMetricDataPointsInputPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import ModalTabPanelContainer from "components/common/panels/detail_view/ModalTabPanelContainer";
 import CustomTab from "components/common/tabs/CustomTab";

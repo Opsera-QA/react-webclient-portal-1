@@ -1,20 +1,17 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import ProvarReportSummaryOverview
-from "./ProvarSummaryReportOverview";
+import ProvarReportSummaryOverview from "./ProvarSummaryReportOverview";
 import provarSummaryLogResultMetadata from "./provarSummaryLogResultMetadata";
 import LoadingDialog from "components/common/status_notifications/loading";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
-import ProvarSummaryLogVerticalTabContainer
-from "./ProvarSummaryLogVerticalTabContainer";
+import ProvarSummaryLogVerticalTabContainer from "./ProvarSummaryLogVerticalTabContainer";
 import { faClipboardListCheck, faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import ProvarReportView
-from "./ProvarReportView";
+import ProvarReportView from "./ProvarReportView";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import pipelineActions from "../../../../../../../pipeline-actions";
 import useComponentStateReference from "../../../../../../../../../hooks/useComponentStateReference";

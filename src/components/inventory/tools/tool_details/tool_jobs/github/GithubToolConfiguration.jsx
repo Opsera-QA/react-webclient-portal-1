@@ -2,16 +2,14 @@ import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
 import githubConnectionMetadata from "./github-connection-metadata";
-import ToolConfigurationEditorPanelContainer
-from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+import ToolConfigurationEditorPanelContainer from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Col from "react-bootstrap/Col";
 import GithubTwoFactorToggle from "components/inventory/tools/tool_details/tool_jobs/github/GithubTwoFactorToggle";
 import {AuthContext} from "contexts/AuthContext";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import toolsActions from "components/inventory/tools/tools-actions";
-import toolIdentifierConnectionCheckConstants
-from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+import toolIdentifierConnectionCheckConstants from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function GithubToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);

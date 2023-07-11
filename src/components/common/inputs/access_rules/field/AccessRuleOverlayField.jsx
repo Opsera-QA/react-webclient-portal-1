@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import SpyglassBadge from "components/common/badges/spyglass/SpyglassBadge";
 import {accessRuleTypeConstants} from "components/common/inputs/access_rules/constants/AccessRuleType.constants";
-import AllowedSsoUserOrganizationNamesBadgeDisplayer
-from "components/common/inputs/access_rules/field/AllowedSsoUserOrganizationNamesBadgeDisplayer";
+import AllowedSsoUserOrganizationNamesBadgeDisplayer from "components/common/inputs/access_rules/field/AllowedSsoUserOrganizationNamesBadgeDisplayer";
 
 function AccessRuleOverlayField({rules, className, noDataMessage}) {
   const [ssoUserOrganizations, setSsoUserOrganizations] = useState([]);

@@ -1,9 +1,4 @@
-import {
-  getDateObjectFromKpiConfiguration,
-  getTagsFromKpiConfiguration,
-  getUseKpiTagsFromKpiConfiguration,
-  getUseDashboardTagsFromKpiConfiguration
-} from "components/insights/charts/charts-helpers";
+import { getDateObjectFromKpiConfiguration, getTagsFromKpiConfiguration, getUseKpiTagsFromKpiConfiguration, getUseDashboardTagsFromKpiConfiguration } from "components/insights/charts/charts-helpers";
 
 import baseActions from "utils/actionsBase";
 

@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
-import ConfirmElkStackDeploymentOverlay
-from "components/admin/registered_users/actions/deploy_elk/ConfirmElkStackDeploymentOverlay";
+import ConfirmElkStackDeploymentOverlay from "components/admin/registered_users/actions/deploy_elk/ConfirmElkStackDeploymentOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function DeployElkButton({ user }) {

@@ -5,9 +5,7 @@ import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {sapCpqRunParametersActions} from "components/workflow/run_assistants/sap_cpq/sapCpqRunParameters.actions";
 import {pipelineHelpers} from "components/common/helpers/pipelines/pipeline.helpers";
-import {
-  SAP_CPQ_RUN_ASSISTANT_SCREENS
-} from "components/workflow/run_assistants/sap_cpq/SapCpqPipelineRunAssistant";
+import { SAP_CPQ_RUN_ASSISTANT_SCREENS } from "components/workflow/run_assistants/sap_cpq/SapCpqPipelineRunAssistant";
 
 const SapCpqPipelineRunAssistantInitializationScreen = (
   {

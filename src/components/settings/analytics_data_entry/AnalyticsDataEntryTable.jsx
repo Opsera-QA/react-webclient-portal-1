@@ -2,24 +2,18 @@ import React, { useContext, useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
-import {
-  getTableBooleanIconColumn,
-  getTableTextColumn,
-  getTableDateTimeColumn,
-} from "components/common/table/table-column-helpers";
+import { getTableBooleanIconColumn, getTableTextColumn, getTableDateTimeColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import { faUserChart } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import analyticsDataEntryMetadata
-from "@opsera/definitions/constants/settings/analytics_data_entries/analyticsDataEntry.metadata";
+import analyticsDataEntryMetadata from "@opsera/definitions/constants/settings/analytics_data_entries/analyticsDataEntry.metadata";
 import NewAnalyticsDataEntryOverlay from "components/settings/analytics_data_entry/NewAnalyticsDataEntryOverlay";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import KpiIdentifierFilter from "components/common/filters/admin/kpis/kpi_identifier/KpiIdentifierFilter";
 import InlineKpiIdentifierFilter from "components/common/filters/admin/kpis/kpi_identifier/InlineKpiIdentifierFilter";
 import {analyticsDataEntryHelper} from "components/settings/analytics_data_entry/analyticsDataEntry.helper";
-import AnalyticsDataEntryRoleHelper
-from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
+import AnalyticsDataEntryRoleHelper from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function AnalyticsDataEntryTable({

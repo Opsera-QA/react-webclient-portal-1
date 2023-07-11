@@ -1,12 +1,21 @@
 import {
   faBuilding,
   faChartNetwork,
-  faCogs, faDraftingCompass,
+  faCogs,
+  faDraftingCompass,
   faHeartbeat,
-  faIdBadge, faProjectDiagram,
-  faServer, faShield, faSitemap, faTags, faTimes,
+  faIdBadge,
+  faProjectDiagram,
+  faServer,
+  faShield,
+  faSitemap,
+  faTags,
+  faTimes,
   faUser,
-  faUserChart, faUserFriends, faUserHardHat, faUserTag
+  faUserChart,
+  faUserFriends,
+  faUserHardHat,
+  faUserTag
 } from "@fortawesome/pro-light-svg-icons";
 import {accountSettingsPaths} from "components/settings/accountSettings.paths";
 import {siteRoleHelper} from "components/settings/ldap_site_roles/siteRole.helper";

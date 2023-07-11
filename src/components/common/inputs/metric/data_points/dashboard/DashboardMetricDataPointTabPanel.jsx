@@ -4,8 +4,7 @@ import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySet
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import DashboardMetricDataPointInputBase
-from "components/common/inputs/metric/data_points/dashboard/DashboardMetricDataPointInputBase";
+import DashboardMetricDataPointInputBase from "components/common/inputs/metric/data_points/dashboard/DashboardMetricDataPointInputBase";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 

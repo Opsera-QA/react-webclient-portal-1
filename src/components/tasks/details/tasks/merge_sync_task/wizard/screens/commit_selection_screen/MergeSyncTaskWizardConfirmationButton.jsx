@@ -3,9 +3,7 @@ import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
-import {
-  MERGE_SYNC_WIZARD_SCREENS
-} from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
+import { MERGE_SYNC_WIZARD_SCREENS } from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
 import { DialogToastContext } from "contexts/DialogToastContext";
 
 function MergeSyncTaskWizardConfirmationButton(

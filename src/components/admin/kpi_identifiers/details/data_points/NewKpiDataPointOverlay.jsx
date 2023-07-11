@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel.jsx";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import KpiDataPointEditorPanel from "components/admin/kpi_identifiers/details/data_points/KpiDataPointEditorPanel";
-import useGetNewKpiDataPointModel
-from "components/admin/kpi_identifiers/details/data_points/hooks/useGetNewKpiDataPointModel";
+import useGetNewKpiDataPointModel from "components/admin/kpi_identifiers/details/data_points/hooks/useGetNewKpiDataPointModel";
 
 export default function NewKpiDataPointOverlay(
   {

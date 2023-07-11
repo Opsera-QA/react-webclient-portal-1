@@ -5,8 +5,7 @@ import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
 import useAnalyticsDataEntryActions from "hooks/settings/insights/analytics_data_entries/useAnalyticsDataEntryActions";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import AnalyticsDataEntryRoleHelper
-from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
+import AnalyticsDataEntryRoleHelper from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
 
 export default function useGetAnalyticsProjectDataMappingById(analyticsDataEntryId, handleErrorFunction) {
   const analyticsDataEntryActions = useAnalyticsDataEntryActions();

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { Row } from "react-bootstrap";
-import LdapSettingsPanel
-from "components/admin/registered_users/details/ldap_settings/LdapSettingsPanel";
+import LdapSettingsPanel from "components/admin/registered_users/details/ldap_settings/LdapSettingsPanel";
 import Model from "core/data_model/model";
 import registeredUsersMetadata from "components/admin/registered_users/registeredUsers.metadata";
 import RegisteredUserSummary from "components/admin/registered_users/details/RegisteredUserSummary";

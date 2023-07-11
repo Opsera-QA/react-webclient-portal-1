@@ -5,19 +5,15 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import axios from "axios";
-import {
-  getDeploymentStageFromKpiConfiguration, getResultFromKpiConfiguration, getUseDashboardTagsFromKpiConfiguration, MATURITY_SCORE_TEXT
-} from "../../charts-helpers";
+import { getDeploymentStageFromKpiConfiguration, getResultFromKpiConfiguration, getUseDashboardTagsFromKpiConfiguration, MATURITY_SCORE_TEXT } from "../../charts-helpers";
 import InfoDialog from "../../../../common/status_notifications/info";
 import doraAction from "../dora.action";
 import DoraJiraGitlabRolledUpColumnDataBlock from "./DoraJiraGitlabRolledUpColumnDataBlock";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import DoraJiraOrgsActionableOverlay from "./actionable_insights/DoraJiraOrgsActionableOverlay";
 import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
-import CoverityIssuesByCategoryHelpDocumentation
-from "../../../../common/help/documentation/insights/charts/CoverityIssuesByCategoryHelpDocumentation";
-import DoraJiraGitlabHelpDocumentation
-from "../../../../common/help/documentation/insights/charts/DoraJiraGitlabHelpDocumentation";
+import CoverityIssuesByCategoryHelpDocumentation from "../../../../common/help/documentation/insights/charts/CoverityIssuesByCategoryHelpDocumentation";
+import DoraJiraGitlabHelpDocumentation from "../../../../common/help/documentation/insights/charts/DoraJiraGitlabHelpDocumentation";
 
 function DoraJiraGitlabRolledUpChart({
   kpiConfiguration,

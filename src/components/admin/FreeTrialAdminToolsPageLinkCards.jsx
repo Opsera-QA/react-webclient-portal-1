@@ -1,6 +1,5 @@
 import React from "react";
-import FreeTrialCustomerWorkspaceManagementPageLinkCard
-from "components/admin/customer/workspace/free_trial/FreeTrialCustomerWorkspaceManagementPageLinkCard";
+import FreeTrialCustomerWorkspaceManagementPageLinkCard from "components/admin/customer/workspace/free_trial/FreeTrialCustomerWorkspaceManagementPageLinkCard";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function FreeTrialAdminToolsPageLinkCards() {

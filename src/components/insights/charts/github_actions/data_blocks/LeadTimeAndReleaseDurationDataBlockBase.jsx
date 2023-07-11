@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
-import {
-  getMiddleText
-} from "../github_actions-utility";
+import { getMiddleText } from "../github_actions-utility";
 function LeadTimeAndReleaseDurationDataBlockBase({ topText, meanData, countData, goalsData, dataPoint }) {
 
   return (

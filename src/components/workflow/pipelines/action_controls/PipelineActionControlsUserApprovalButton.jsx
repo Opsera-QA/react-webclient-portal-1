@@ -1,17 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import StepApprovalOverlay from "components/workflow/StepApprovalOverlay";
-import PipelineInstructionsAcknowledgementOverlay
-from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
+import PipelineInstructionsAcknowledgementOverlay from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineHelpers from "components/workflow/pipelineHelpers";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
-import PipelineActionControlButtonBase
-from "components/workflow/pipelines/action_controls/PipelineActionControlButtonBase";
+import PipelineActionControlButtonBase from "components/workflow/pipelines/action_controls/PipelineActionControlButtonBase";
 import { faFlag } from "@fortawesome/pro-light-svg-icons";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
-import ServiceNowStepApprovalOverlay 
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/service_now/ServiceNowStepApprovalOverlay";
+import ServiceNowStepApprovalOverlay from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/service_now/ServiceNowStepApprovalOverlay";
 
 export default function PipelineActionControlsUserApprovalButton(
   {

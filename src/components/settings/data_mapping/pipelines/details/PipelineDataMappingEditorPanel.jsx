@@ -8,11 +8,9 @@ import Col from "react-bootstrap/Col";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
-import PipelineMockWorkflowEditorPanel
-from "components/common/metrics/mock_pipeline/workflow/PipelineMockWorkflowEditorPanel";
+import PipelineMockWorkflowEditorPanel from "components/common/metrics/mock_pipeline/workflow/PipelineMockWorkflowEditorPanel";
 import WarningMessageFieldBase from "components/common/fields/text/message/WarningMessageFieldBase";
-import AnalyticsDataMappingEditWarningMessage
-from "components/settings/data_mapping/AnalyticsDataMappingEditWarningMessage";
+import AnalyticsDataMappingEditWarningMessage from "components/settings/data_mapping/AnalyticsDataMappingEditWarningMessage";
 
 function PipelineDataMappingEditorPanel(
   {

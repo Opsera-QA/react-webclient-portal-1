@@ -1,14 +1,7 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import {
-  faCheckCircle,
-  faExclamationCircle,
-} from "@fortawesome/pro-light-svg-icons";
-import {
-  getCustomTableAccessor,
-  getCustomTableHeader,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { faCheckCircle, faExclamationCircle } from "@fortawesome/pro-light-svg-icons";
+import { getCustomTableAccessor, getCustomTableHeader, getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import IconBase from "components/common/icons/IconBase";

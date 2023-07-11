@@ -1,12 +1,6 @@
 import {getBaseTreeItem} from "components/common/tree/tree-helpers";
-import {
-  INSIGHTS_CHARTS_HELP_DOCUMENT_TREE,
-  INSIGHTS_CHARTS_HELP_DOCUMENTS
-} from "components/common/help/documentation/insights/charts/insights.charts.help_documents";
-import {
-  INSIGHTS_SYNOPSIS_HELP_DOCUMENT_TREE,
-  INSIGHTS_SYNOPSIS_HELP_DOCUMENTS
-} from "components/common/help/documentation/insights/synopsis/insights.synopsis.help_documents";
+import { INSIGHTS_CHARTS_HELP_DOCUMENT_TREE, INSIGHTS_CHARTS_HELP_DOCUMENTS } from "components/common/help/documentation/insights/charts/insights.charts.help_documents";
+import { INSIGHTS_SYNOPSIS_HELP_DOCUMENT_TREE, INSIGHTS_SYNOPSIS_HELP_DOCUMENTS } from "components/common/help/documentation/insights/synopsis/insights.synopsis.help_documents";
 
 export const INSIGHTS_HELP_DOCUMENTS = {
   INSIGHTS_MAIN_HELP_DOCUMENTATION: "insights",

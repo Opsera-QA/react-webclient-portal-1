@@ -8,8 +8,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColor, assignStageColors,
-  adjustBarWidth } from '../../../charts-views';
+import { defaultConfig, getColor, assignStageColors, adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 import { useHistory } from "react-router-dom";
 

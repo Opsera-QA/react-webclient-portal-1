@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
-import ToolConfigurationEditorPanelContainer
-from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+import ToolConfigurationEditorPanelContainer from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Row from "react-bootstrap/Row";
 import toolsActions from "components/inventory/tools/tools-actions";
 import { AuthContext } from "contexts/AuthContext";
@@ -10,13 +9,10 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
-import {
-  apigeeToolConnectionMetadata
-} from "components/inventory/tools/details/identifiers/apigee/apigeeToolConnection.metadata";
+import { apigeeToolConnectionMetadata } from "components/inventory/tools/details/identifiers/apigee/apigeeToolConnection.metadata";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import ApigeeVersionSelectInput from "components/common/list_of_values_input/tools/apigee/ApigeeVersionSelectInput";
-import toolIdentifierConnectionCheckConstants
-from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+import toolIdentifierConnectionCheckConstants from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function ApigeeToolConnectionEditorPanel({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);

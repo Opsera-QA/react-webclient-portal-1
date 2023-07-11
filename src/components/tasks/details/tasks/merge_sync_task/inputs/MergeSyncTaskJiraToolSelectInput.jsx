@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RoleRestrictedJiraToolSelectInput
-from "components/common/list_of_values_input/tools/jira/RoleRestrictedJiraToolSelectInput";
+import RoleRestrictedJiraToolSelectInput from "components/common/list_of_values_input/tools/jira/RoleRestrictedJiraToolSelectInput";
 
 function MergeSyncTaskJiraToolSelectInput(
   {    

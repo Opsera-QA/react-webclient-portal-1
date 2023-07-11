@@ -6,16 +6,12 @@ import useLocationReference from "hooks/useLocationReference";
 import {SubMenuContainer, SubMenuItem} from "@opsera/react-vanity-set";
 import GitCustodianRoleHelper from "@opsera/know-your-role/roles/compliance/git_custodian/gitCustodianRole.helper";
 import useGetPlatformSettingsFeatureFlagByName from "hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
-import platformSettingFeatureConstants
-from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
+import platformSettingFeatureConstants from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
 import sessionHelper from "utils/session.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import entitlementConstants
-from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
-import useGetOrganizationSettingsEntitlementByName
-from "hooks/settings/organization_settings/entitlements/useGetOrganizationSettingsEntitlementByName";
-import useGetSalesforceFeatureOrganizationSettingsEntitlement
-from "hooks/settings/organization_settings/entitlements/useGetSalesforceFeatureOrganizationSettingsEntitlement";
+import entitlementConstants from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
+import useGetOrganizationSettingsEntitlementByName from "hooks/settings/organization_settings/entitlements/useGetOrganizationSettingsEntitlementByName";
+import useGetSalesforceFeatureOrganizationSettingsEntitlement from "hooks/settings/organization_settings/entitlements/useGetSalesforceFeatureOrganizationSettingsEntitlement";
 
 const HEADER_NAVIGATION_SCREENS = {
   HOME: "home",

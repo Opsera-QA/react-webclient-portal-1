@@ -5,13 +5,10 @@ import axios from "axios";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import ApigeePipelineRunAssistantInitializationScreen
-from "components/workflow/run_assistants/apigee/initialization_screen/ApigeePipelineRunAssistantInitializationScreen";
+import ApigeePipelineRunAssistantInitializationScreen from "components/workflow/run_assistants/apigee/initialization_screen/ApigeePipelineRunAssistantInitializationScreen";
 import {apigeeRunParametersMetadata} from "components/workflow/run_assistants/apigee/apigeeRunParameters.metadata";
-import ApigeeRunAssistantConfigurationSelectionScreen
-from "components/workflow/run_assistants/apigee/configuration_selection_screen/ApigeeRunAssistantConfigurationSelectionScreen";
-import ApigeeRunAssistantMigrationObjectSelectionScreen
-from "components/workflow/run_assistants/apigee/migration_object_selection_screen/ApigeeRunAssistantMigrationObjectSelectionScreen";
+import ApigeeRunAssistantConfigurationSelectionScreen from "components/workflow/run_assistants/apigee/configuration_selection_screen/ApigeeRunAssistantConfigurationSelectionScreen";
+import ApigeeRunAssistantMigrationObjectSelectionScreen from "components/workflow/run_assistants/apigee/migration_object_selection_screen/ApigeeRunAssistantMigrationObjectSelectionScreen";
 
 export const APIGEE_RUN_ASSISTANT_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",

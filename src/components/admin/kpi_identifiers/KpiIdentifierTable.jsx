@@ -4,10 +4,11 @@ import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import kpiIdentifierMetadata from "components/admin/kpi_identifiers/kpiIdentifier.metadata";
 import {
-  getLimitedTableTextColumn, getTableArrayCountColumn,
+  getLimitedTableTextColumn,
+  getTableArrayCountColumn,
   getTableBooleanIconColumn,
   getTableDateColumn,
-  getTableTextColumn,
+  getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import NewKpiOverlay from "components/admin/kpi_identifiers/NewKpiOverlay";
@@ -15,8 +16,7 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import { faFileInvoice } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import KpiPolicySupportFilterSelectInput
-from "components/common/filters/insights/kpi/policy_support/KpiPolicySupportFilterSelectInput";
+import KpiPolicySupportFilterSelectInput from "components/common/filters/insights/kpi/policy_support/KpiPolicySupportFilterSelectInput";
 
 function KpiIdentifierTable({ data, loadData, isLoading, kpiFilterDto, setKpiFilterDto, isMounted }) {
   const toastContext = useContext(DialogToastContext);

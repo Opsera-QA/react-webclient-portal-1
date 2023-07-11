@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
-import CustomParameterComboBoxInput
-from "components/common/list_of_values_input/parameters/CustomParameterComboBoxInput";
+import CustomParameterComboBoxInput from "components/common/list_of_values_input/parameters/CustomParameterComboBoxInput";
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";

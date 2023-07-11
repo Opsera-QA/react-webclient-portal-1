@@ -4,11 +4,8 @@ import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import PolicyNameField from "components/common/fields/settings/organization_settings/policies/PolicyNameField";
-import PolicyParametersSummaryPanel
-from "components/settings/organization_settings/policies/details/PolicyParametersSummaryPanel";
-import {
-  VALUE_SUPPORTED_POLICIES
-} from "components/settings/organization_settings/policies/details/inputs/PolicyValueTextInput";
+import PolicyParametersSummaryPanel from "components/settings/organization_settings/policies/details/PolicyParametersSummaryPanel";
+import { VALUE_SUPPORTED_POLICIES } from "components/settings/organization_settings/policies/details/inputs/PolicyValueTextInput";
 
 export default function PolicySummaryPanel(
   {

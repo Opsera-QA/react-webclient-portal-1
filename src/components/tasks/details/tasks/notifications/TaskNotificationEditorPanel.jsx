@@ -15,11 +15,9 @@ import OverlayPanelBodyContainer from "components/common/panels/detail_panel_con
 import TaskNotificationTabView from "components/tasks/details/tasks/notifications/TaskNotificationTabView";
 import taskActions from "components/tasks/task.actions";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import emailStepNotificationMetadata
-from "components/workflow/plan/step/notifications/email/emailStepNotification.metadata";
+import emailStepNotificationMetadata from "components/workflow/plan/step/notifications/email/emailStepNotification.metadata";
 import { ORCHESTRATION_NOTIFICATION_TYPES } from "components/common/fields/notifications/notificationTypes.constants";
-import TaskNotificationConfigurationHelpDocumentation
-from "../../../../common/help/documentation/tasks/TaskNotificationConfigurationHelpDocumentation";
+import TaskNotificationConfigurationHelpDocumentation from "../../../../common/help/documentation/tasks/TaskNotificationConfigurationHelpDocumentation";
 import { getTaskTypeLabel } from "components/tasks/task.types";
 import gChatStepNotificationMetadata from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
 

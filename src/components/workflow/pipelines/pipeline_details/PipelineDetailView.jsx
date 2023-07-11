@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
-import PipelineActivityLogTreeTable
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTreeTable";
+import PipelineActivityLogTreeTable from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTreeTable";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import {useParams} from "react-router-dom";
@@ -10,8 +9,7 @@ import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationB
 import pipelineActions from "components/workflow/pipeline-actions";
 import PipelineWorkflowTabBar from "components/workflow/pipelines/pipeline_details/PipelineWorkflowTabBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import useGetPollingPipelineOrchestrationStatusById
-from "hooks/workflow/pipelines/orchestration/useGetPollingPipelineOrchestrationStatusById";
+import useGetPollingPipelineOrchestrationStatusById from "hooks/workflow/pipelines/orchestration/useGetPollingPipelineOrchestrationStatusById";
 import PipelineSummaryActionBar from "components/workflow/pipelines/summary/action_bar/PipelineSummaryActionBar";
 import Model from "core/data_model/model";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";

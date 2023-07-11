@@ -4,8 +4,7 @@ import SnaplogicStepFormMetadata from "./snaplogic-stepForm-metadata";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import SnaplogicToolSelectInput from "./inputs/SnaplogicToolSelectInput";
 import SnaplogicScmToolTypeSelectInput from "./inputs/SnaplogicScmToolTypeSelectInput";
 import SnaplogicScmToolSelectInput from "./inputs/SnaplogicScmToolSelectInput";

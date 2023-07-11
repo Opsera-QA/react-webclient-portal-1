@@ -9,8 +9,7 @@ import TagManager from "components/common/inputs/tags/TagManager";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import OverlayWizardButtonContainerBase
-from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import OverlayWizardButtonContainerBase from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 
 function ToolEditorPanel(
   {

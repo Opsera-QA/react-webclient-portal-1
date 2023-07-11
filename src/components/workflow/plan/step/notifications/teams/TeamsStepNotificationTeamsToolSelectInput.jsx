@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RoleRestrictedMicrosoftTeamsToolSelectInput
-from "components/common/list_of_values_input/tools/teams/RoleRestrictedMicrosoftTeamsToolSelectInput";
+import RoleRestrictedMicrosoftTeamsToolSelectInput from "components/common/list_of_values_input/tools/teams/RoleRestrictedMicrosoftTeamsToolSelectInput";
 
 function TeamsStepNotificationTeamsToolSelectInput(
   {

@@ -4,12 +4,10 @@ import modelHelpers from "components/common/model/modelHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import automatedTestResultsConfigMetadata
-from "components/settings/analytics_data_entry/detail_view/configuration_panels/automated_test_results/automated-test-results-config-metadata";
+import automatedTestResultsConfigMetadata from "components/settings/analytics_data_entry/detail_view/configuration_panels/automated_test_results/automated-test-results-config-metadata";
 import PipelineSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineSelectInput";
 import DateTimeRangeInputBase from "components/common/inputs/date/DateTimeRangeInputBase";
-import ManualKpiMultiSelectInputBase
-from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
+import ManualKpiMultiSelectInputBase from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
 import PositiveIntegerNumberPickerInput from "components/common/inputs/number/picker/PositiveIntegerNumberPickerInput";
 
 function AutomatedTestResultsConfigPanel({ analyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {

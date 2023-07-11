@@ -8,10 +8,8 @@ import actionableInsightsGenericChartFilterMetadata from "components/insights/ch
 import GithubMergeRequestsPushesCommentsActionableTable from "./GithubMergeRequestsPushesCommentsActionableTable";
 import {faCodeMerge, faTable} from "@fortawesome/pro-light-svg-icons";
 import TabPanelContainer from "../../../../../../common/panels/general/TabPanelContainer";
-import FullScreenCenterOverlayContainer
-from "../../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
-import GithubMergeRequestsPushesCommentsVerticalTabContainer
-from "./GithubMergeRequestsPushesCommentsVerticalTabContainer";
+import FullScreenCenterOverlayContainer from "../../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
+import GithubMergeRequestsPushesCommentsVerticalTabContainer from "./GithubMergeRequestsPushesCommentsVerticalTabContainer";
 import {DialogToastContext} from "../../../../../../../contexts/DialogToastContext";
 import githubActions from "../../../github.action";
 

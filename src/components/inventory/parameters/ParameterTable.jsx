@@ -6,14 +6,10 @@ import NewParameterOverlay from "components/inventory/parameters/NewParameterOve
 import VanitySelectionTable from "components/common/table/VanitySelectionTable";
 import VanityDataContainer from "components/common/containers/VanityDataContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import customParametersMetadata
-from "@opsera/definitions/constants/registry/custom_parameters/customParameters.metadata";
+import customParametersMetadata from "@opsera/definitions/constants/registry/custom_parameters/customParameters.metadata";
 import CustomParameterRoleHelper from "@opsera/know-your-role/roles/registry/parameters/customParameterRole.helper";
 import useGetParameterModel from "components/inventory/parameters/hooks/useGetParameterModel";
-import {
-  getTableBooleanIconColumn,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getTableBooleanIconColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 
 export default function ParameterTable(
   {

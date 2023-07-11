@@ -4,11 +4,9 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import RemoteApplicationTelemetryActions from "components/admin/remote_applications/remote-application-actions";
-import RemoteApplicationDetailPanel
-from "components/admin/remote_applications/details/RemoteApplicationDetailPanel";
+import RemoteApplicationDetailPanel from "components/admin/remote_applications/details/RemoteApplicationDetailPanel";
 import RemoteApplicationModel from "components/admin/remote_applications/remoteApplication.model";
-import RemoteApplicationTelemetryManagementSubNavigationBar
-from "components/admin/remote_applications/RemoteApplicationTelemetryManagementSubNavigationBar";
+import RemoteApplicationTelemetryManagementSubNavigationBar from "components/admin/remote_applications/RemoteApplicationTelemetryManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function RemoteApplicationDetailView() {

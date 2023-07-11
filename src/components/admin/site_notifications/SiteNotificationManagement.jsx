@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import siteNotificationActions from "./site-notification-actions";
 import SiteNotificationTable from "./SiteNotificationTable";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import SiteNotificationManagementSubNavigationBar
-from "components/admin/site_notifications/SiteNotificationManagementSubNavigationBar";
+import SiteNotificationManagementSubNavigationBar from "components/admin/site_notifications/SiteNotificationManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function SiteNotificationManagement() {

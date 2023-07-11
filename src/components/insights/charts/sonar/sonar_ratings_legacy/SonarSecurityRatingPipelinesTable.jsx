@@ -1,13 +1,15 @@
-import React, { useState, useEffect, useContext, useMemo, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useMemo,
+  useRef
+} from "react";
 import CustomTable from "components/common/table/CustomTable";
 import {AuthContext} from "contexts/AuthContext";
 import PropTypes from "prop-types";
 import axios from "axios";
-import {
-  getLimitedTableTextColumn,
-  getTableDateTimeColumn,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getLimitedTableTextColumn, getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import chartsActions from "components/insights/charts/charts-actions";

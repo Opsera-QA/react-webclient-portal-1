@@ -9,8 +9,7 @@ import config from "./GitlabMergeRequestsByUserChartConfig";
 import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
-import { defaultConfig, getColorByData, assignStandardColors,
-  adjustBarWidth } from "../../insights/charts/charts-views";
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth } from "../../insights/charts/charts-views";
 
 function GitlabMergeRequestsByUser({ persona, date }) {
   const contextType = useContext(AuthContext);

@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import ActionBarDuplicateButton from "components/common/actions/buttons/ActionBarDuplicateButton";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import DuplicatePipelineConfirmationOverlay
-from "components/workflow/pipelines/summary/action_bar/buttons/duplicate/DuplicatePipelineConfirmationOverlay";
+import DuplicatePipelineConfirmationOverlay from "components/workflow/pipelines/summary/action_bar/buttons/duplicate/DuplicatePipelineConfirmationOverlay";
 
 export default function ActionBarDuplicatePipelineButton({pipelineModel}) {
   const {

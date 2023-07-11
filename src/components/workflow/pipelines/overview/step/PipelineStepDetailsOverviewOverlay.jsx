@@ -5,8 +5,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {faCog} from "@fortawesome/pro-light-svg-icons";
 //import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
-import PipelineStepTabPanel
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepTabPanel";
+import PipelineStepTabPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepTabPanel";
 
 function PipelineStepDetailsOverviewOverlay({ pipelineStepData }) {
   const toastContext = useContext(DialogToastContext);

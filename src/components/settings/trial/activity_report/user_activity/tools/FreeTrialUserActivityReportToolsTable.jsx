@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FilterContainer, {
-} from "components/common/table/FilterContainer";
+import FilterContainer from "components/common/table/FilterContainer";
 import { faTools } from "@fortawesome/pro-light-svg-icons";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import FreeTrialWorkspaceRegistryViews from "components/workspace/trial/views/tool/FreeTrialWorkspaceRegistryViews";

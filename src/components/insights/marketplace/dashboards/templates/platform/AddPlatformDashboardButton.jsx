@@ -3,9 +3,7 @@ import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
-import {
-  platformDashboardTemplateActions
-} from "components/insights/marketplace/dashboards/templates/platform/platformDashboardTemplate.actions";
+import { platformDashboardTemplateActions } from "components/insights/marketplace/dashboards/templates/platform/platformDashboardTemplate.actions";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 export default function AddPlatformDashboardButton(

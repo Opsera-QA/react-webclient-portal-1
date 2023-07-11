@@ -1,10 +1,6 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {
-  faCaretSquareDown,
-  faCaretSquareUp,
-  faCopy, faPlusSquare,
-} from "@fortawesome/pro-light-svg-icons";
+import { faCaretSquareDown, faCaretSquareUp, faCopy, faPlusSquare } from "@fortawesome/pro-light-svg-icons";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";

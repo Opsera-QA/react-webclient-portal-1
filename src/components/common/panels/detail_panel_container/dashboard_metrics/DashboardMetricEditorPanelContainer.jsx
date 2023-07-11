@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DashboardMetricButtonContainer
-from "components/common/panels/detail_panel_container/dashboard_metrics/DashboardMetricButtonContainer";
+import DashboardMetricButtonContainer from "components/common/panels/detail_panel_container/dashboard_metrics/DashboardMetricButtonContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 
 function DashboardMetricEditorPanelContainer(

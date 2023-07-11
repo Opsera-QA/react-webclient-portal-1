@@ -1,7 +1,6 @@
 import ModelBase, { DataState } from "core/data_model/model.base";
 import parametersActions from "components/inventory/parameters/parameters-actions";
-import customParametersMetadata
-from "@opsera/definitions/constants/registry/custom_parameters/customParameters.metadata";
+import customParametersMetadata from "@opsera/definitions/constants/registry/custom_parameters/customParameters.metadata";
 import CustomParameterRoleHelper from "@opsera/know-your-role/roles/registry/parameters/customParameterRole.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 

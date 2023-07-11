@@ -2,25 +2,17 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
-import EndpointRequestBodyInputPanel
-from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestBodyInputPanel";
-import EndpointResponseBodyInputBase
-from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyInputBase";
+import EndpointRequestBodyInputPanel from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestBodyInputPanel";
+import EndpointResponseBodyInputBase from "components/common/inputs/endpoints/endpoint/response/body/EndpointResponseBodyInputBase";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-import EndpointRequestHeaderConfigurationInput
-from "components/common/inputs/endpoints/endpoint/request/headers/EndpointRequestHeaderConfigurationInput";
-import {
-  EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS
-} from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
-import EndpointApiConfigurationInputBase
-from "components/common/inputs/endpoints/endpoint/request/EndpointApiConfigurationInputBase";
-import EndpointResponseEvaluationRulesInputBase
-from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesInputBase";
+import EndpointRequestHeaderConfigurationInput from "components/common/inputs/endpoints/endpoint/request/headers/EndpointRequestHeaderConfigurationInput";
+import { EXTERNAL_API_INTEGRATOR_ENDPOINT_PARAMETER_INPUT_HEIGHTS } from "components/inventory/tools/details/identifiers/external_api_integrator/endpoints/externalApiIntegratorEndpointInput.heights";
+import EndpointApiConfigurationInputBase from "components/common/inputs/endpoints/endpoint/request/EndpointApiConfigurationInputBase";
+import EndpointResponseEvaluationRulesInputBase from "components/common/inputs/endpoints/endpoint/response/evaluation/EndpointResponseEvaluationRulesInputBase";
 import ValidateEndpointPanel from "components/common/inputs/endpoints/endpoint/response/test/ValidateEndpointPanel";
 import endpointTypeConstants from "@opsera/definitions/constants/api/request/endpoint/endpointType.constants";
-import endpointRequestTypeConstants
-from "@opsera/definitions/constants/api/request/endpoint/endpointRequestType.constants";
+import endpointRequestTypeConstants from "@opsera/definitions/constants/api/request/endpoint/endpointRequestType.constants";
 
 function ExternalApiIntegratorEndpointParametersVerticalTabContainer(
   {

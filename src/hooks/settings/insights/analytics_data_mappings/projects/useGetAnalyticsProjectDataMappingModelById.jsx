@@ -1,8 +1,6 @@
 import {useEffect, useState} from "react";
-import useGetAnalyticsProjectDataMappingModel
-from "hooks/settings/insights/analytics_data_mappings/projects/useGetAnalyticsProjectDataMappingModel";
-import useGetAnalyticsProjectDataMappingById
-from "hooks/settings/insights/analytics_data_mappings/projects/useGetAnalyticsProjectDataMappingById";
+import useGetAnalyticsProjectDataMappingModel from "hooks/settings/insights/analytics_data_mappings/projects/useGetAnalyticsProjectDataMappingModel";
+import useGetAnalyticsProjectDataMappingById from "hooks/settings/insights/analytics_data_mappings/projects/useGetAnalyticsProjectDataMappingById";
 
 export default function useGetAnalyticsProjectDataMappingModelById(analyticsDataProjectMappingId, handleErrorFunction) {
   const [analyticsProjectDataMappingModel, setAnalyticsProjectDataMappingModel] = useState(undefined);

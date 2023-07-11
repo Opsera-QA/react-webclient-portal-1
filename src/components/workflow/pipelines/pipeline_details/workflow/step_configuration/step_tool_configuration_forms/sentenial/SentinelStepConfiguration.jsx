@@ -10,8 +10,7 @@ import SentinelBitbucketWorkspaceSelectInput from "./inputs/SentinelBitbucketWor
 import SentinelGitRepositorySelectInput from "./inputs/SentinelGitRepositorySelectInput";
 import SentinelGitBranchSelectInput from "./inputs/SentinelGitBranchSelectInput";
 import TextAreaInput from "../../../../../../../common/inputs/text/TextAreaInput";
-import ParameterSelectListInputBase
-from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
+import ParameterSelectListInputBase from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
 import { faHandshake } from "@fortawesome/pro-light-svg-icons";
 import SentinelTagsSelectInput from "./inputs/SentinalTagsSelectInput";
 

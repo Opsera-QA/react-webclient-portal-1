@@ -5,8 +5,7 @@ import AccessDeniedMessage from "components/common/status_notifications/AccessDe
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
-import LdapCustomerOnboardingSubNavigationBar
-from "components/admin/accounts/ldap/customer_onboard/LdapCustomerOnboarderSubNavigationBar";
+import LdapCustomerOnboardingSubNavigationBar from "components/admin/accounts/ldap/customer_onboard/LdapCustomerOnboarderSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function LdapCustomerOnboard() {

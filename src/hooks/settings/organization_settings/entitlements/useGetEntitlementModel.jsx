@@ -1,8 +1,7 @@
 import useComponentStateReference from "hooks/useComponentStateReference";
 import EntitlementModel from "components/admin/organization_settings/details/entitlements/entitlement.model";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import entitlementConstants
-from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
+import entitlementConstants from "@opsera/definitions/constants/settings/organization-settings/entitlements/entitlement.constants";
 import modelHelpers from "components/common/model/modelHelpers";
 
 export default function useGetEntitlementModel() {

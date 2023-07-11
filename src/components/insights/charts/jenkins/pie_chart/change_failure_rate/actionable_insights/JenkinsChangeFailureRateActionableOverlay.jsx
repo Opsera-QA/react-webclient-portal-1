@@ -11,8 +11,7 @@ import { getMetricFilterValue } from "components/common/helpers/metrics/metricFi
 import JenkinsChangeFailureRateActionableTable from "./JenkinsChangeFailureRateActionableTable";
 import {metricHelpers} from "../../../../../metric.helpers";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
-import FullScreenCenterOverlayContainer
-from "../../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
+import FullScreenCenterOverlayContainer from "../../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import jenkinsActions from "../../../jenkins.action";
 
 function JenkinsChangeFailureRateActionableOverlay({ kpiConfiguration, dashboardData }) {

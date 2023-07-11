@@ -1,8 +1,6 @@
 import React from "react";
 import { RMContext } from "./RMContext";
-import ReleaseManagementOtherServices, {
-  Confirmation,
-} from "./ReleaseManagementOtherServices";
+import ReleaseManagementOtherServices, { Confirmation } from "./ReleaseManagementOtherServices";
 import { Form, Card } from "react-bootstrap";
 import PropTypes from "prop-types";
 

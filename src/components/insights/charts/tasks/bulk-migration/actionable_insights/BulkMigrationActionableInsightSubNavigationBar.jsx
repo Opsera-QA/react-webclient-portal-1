@@ -4,9 +4,7 @@ import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {
-  BULK_MIGRATION_ACTIONABLE_INSIGHT_SCREENS,
-} from "./BulkMigrationActionableInsightOverlay";
+import { BULK_MIGRATION_ACTIONABLE_INSIGHT_SCREENS } from "./BulkMigrationActionableInsightOverlay";
 
 export default function BulkMigrationActionableInsightSubNavigationBar(
   {

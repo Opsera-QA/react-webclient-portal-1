@@ -1,25 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  faCodeBranch, faInfoCircle
-} from "@fortawesome/pro-light-svg-icons";
+import { faCodeBranch, faInfoCircle } from "@fortawesome/pro-light-svg-icons";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
-import PipelineWorkflowItemActionField
-from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemActionField";
+import PipelineWorkflowItemActionField from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemActionField";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import PipelineWorkflowItemFieldBase
-from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
+import PipelineWorkflowItemFieldBase from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
 import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
 import {pipelineStepMetadataConstants} from "components/workflow/pipelines/pipelineStepMetadata.constants";
-import ChildPipelinePipelineStepWorkflowItemBody
-from "components/workflow/plan/step/child/ChildPipelinePipelineStepWorkflowItemBody";
-import PipelineWorkflowStepIdField
-from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowStepIdField";
-import PipelineWorkflowStepToolIdentifierField
-from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowStepToolIdentifierField";
-import ParallelProcessorPipelineStepWorkflowItemBody
-from "components/workflow/plan/step/parallel_processor/ParallelProcessorPipelineStepWorkflowItemBody";
+import ChildPipelinePipelineStepWorkflowItemBody from "components/workflow/plan/step/child/ChildPipelinePipelineStepWorkflowItemBody";
+import PipelineWorkflowStepIdField from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowStepIdField";
+import PipelineWorkflowStepToolIdentifierField from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowStepToolIdentifierField";
+import ParallelProcessorPipelineStepWorkflowItemBody from "components/workflow/plan/step/parallel_processor/ParallelProcessorPipelineStepWorkflowItemBody";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 // TODO: Use the workflow item step field instead of hardcoding these for consistency,

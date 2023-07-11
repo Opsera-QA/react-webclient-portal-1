@@ -4,10 +4,8 @@ import {faShareAll} from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
-import PublishCustomerPipelineOverlay
-from "components/workflow/pipelines/summary/action_bar/buttons/publish/PublishCustomerPipelineOverlay";
-import CustomerPipelineTemplateRoleHelper
-from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
+import PublishCustomerPipelineOverlay from "components/workflow/pipelines/summary/action_bar/buttons/publish/PublishCustomerPipelineOverlay";
+import CustomerPipelineTemplateRoleHelper from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
 import useGetPolicyModelByName from "hooks/settings/organization_settings/policies/useGetPolicyModelByName";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";

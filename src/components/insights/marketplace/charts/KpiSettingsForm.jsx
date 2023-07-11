@@ -73,10 +73,8 @@ import ResetButton from "components/common/buttons/reset/ResetButton";
 import {dashboardMetricActions} from "components/insights/dashboards/metrics/dashboardMetric.actions";
 import DeleteDashboardMetricButton from "components/common/buttons/dashboards/metric/DeleteDashboardMetricButton";
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
-import DeleteDashboardMetricConfirmationPanel
-from "components/insights/marketplace/dashboards/metrics/delete/DeleteDashboardMetricConfirmationPanel";
-import DashboardMetricEditorPanelContainer
-from "components/common/panels/detail_panel_container/dashboard_metrics/DashboardMetricEditorPanelContainer";
+import DeleteDashboardMetricConfirmationPanel from "components/insights/marketplace/dashboards/metrics/delete/DeleteDashboardMetricConfirmationPanel";
+import DashboardMetricEditorPanelContainer from "components/common/panels/detail_panel_container/dashboard_metrics/DashboardMetricEditorPanelContainer";
 import { kpiIdentifierConstants } from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 import { KPI_FILTER_TYPES } from "components/common/list_of_values_input/admin/kpi_configurations/filters/kpiFilter.types";
 

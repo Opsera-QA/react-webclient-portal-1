@@ -2,11 +2,7 @@ import React, { useContext, useMemo } from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import SalesforcePipelineTableMetadata from "./salesforce-duration-by-stage-actionable-deploy";
-import {
-  getTableTextColumn,
-  getTableTextColumnWithoutField,
-  getTableDurationTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getTableTextColumn, getTableTextColumnWithoutField, getTableDurationTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";

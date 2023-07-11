@@ -1,7 +1,8 @@
 import {faOctopusDeploy, faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import {
   faClipboardListCheck,
-  faDraftingCompass, faMicrochip,
+  faDraftingCompass,
+  faMicrochip,
   faShieldKeyhole,
   faTasks,
   faWrench
@@ -10,10 +11,7 @@ import React from "react";
 import {TASK_TYPE_CATEGORIES, TASK_TYPES, taskTypeConstants} from "components/tasks/task.types";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import IconBase from "components/common/icons/IconBase";
-import {
-  PIPELINE_TYPES,
-  pipelineTypeConstants
-} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
+import { PIPELINE_TYPES, pipelineTypeConstants } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import {vendorImageConstants} from "temp-library-components/image/vendorImage.constants";
 import {ImageBase} from "@opsera/react-vanity-set";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";

@@ -11,13 +11,10 @@ import StepConfigWorkspaceDeleteToggleInput from "../common/inputs/StepConfigWor
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import PmdScanThresholdInputBase
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/inputs/PmdScanThresholdInputBase";
-import PMDScanHelper
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/pmd-scan-helper";
+import PmdScanThresholdInputBase from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/inputs/PmdScanThresholdInputBase";
+import PMDScanHelper from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/pmd_scan/pmd-scan-helper";
 
 const RULE_LIST_VALUES = [
   "bestPracticeThreshold",

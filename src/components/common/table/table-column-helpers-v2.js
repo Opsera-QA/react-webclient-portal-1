@@ -1,8 +1,6 @@
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import React from "react";
-import {
-  getScriptLanguageDisplayText,
-} from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
+import { getScriptLanguageDisplayText } from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
 import { capitalizeFirstLetter, hasStringValue, truncateString } from "components/common/helpers/string-helpers";
 import pipelineHelpers from "components/workflow/pipelineHelpers";

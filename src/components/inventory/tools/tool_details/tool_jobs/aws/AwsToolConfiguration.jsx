@@ -1,18 +1,15 @@
 import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
-import ToolConfigurationEditorPanelContainer
-from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+import ToolConfigurationEditorPanelContainer from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Row from "react-bootstrap/Row";
 import awsConnectionMetadata from "./aws-connection-metadata";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import AwsCloudProviderRegionSelectInput
-from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
-import toolIdentifierConnectionCheckConstants
-from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
+import AwsCloudProviderRegionSelectInput from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
+import toolIdentifierConnectionCheckConstants from "@opsera/definitions/constants/tool_identifiers/connection/toolIdentifierConnectionCheck.constants";
 
 function AwsToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);

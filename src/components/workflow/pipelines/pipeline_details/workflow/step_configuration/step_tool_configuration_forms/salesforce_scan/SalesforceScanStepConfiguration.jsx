@@ -6,11 +6,9 @@ import StepConfigJenkinsToolInput from "../common/inputs/StepConfigJenkinsToolIn
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import PipelineStepEditorPanelContainer
-from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import SalesforceScanGatesMultiSelectInput from "./inputs/SalesforceScanGatesMultiSelectInput";
-import RoleRestrictedToolByIdentifierInputBase
-from "../../../../../../../common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
+import RoleRestrictedToolByIdentifierInputBase from "../../../../../../../common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
   
 function SalesforceScanStepConfiguration({
   stepTool,

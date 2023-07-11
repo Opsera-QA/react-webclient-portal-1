@@ -4,15 +4,9 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import CancelButton from "components/common/buttons/CancelButton";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import {
-  Button,
-  Row,
-} from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
 import IconBase from "../../../../../../../common/icons/IconBase";
-import {
-  faArrowLeft,
-  faArrowRight,
-} from "@fortawesome/pro-light-svg-icons";
+import { faArrowLeft, faArrowRight } from "@fortawesome/pro-light-svg-icons";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import dataSeedingTaskWizardActions from "../../dataSeedingTaskWizard.actions";

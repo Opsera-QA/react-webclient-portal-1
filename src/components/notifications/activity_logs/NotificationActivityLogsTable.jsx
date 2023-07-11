@@ -1,21 +1,15 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import {
-  getTableBooleanIconColumn,
-  getTableDateTimeColumn, getTableInfoIconColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers";
-import notificationActivityLogMetadata
-from "components/notifications/activity_logs/notification-activity-log-metadata";
+import { getTableBooleanIconColumn, getTableDateTimeColumn, getTableInfoIconColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
+import notificationActivityLogMetadata from "components/notifications/activity_logs/notification-activity-log-metadata";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import NotificationTypeFilter from "components/common/filters/notifications/notification_type/NotificationTypeFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import NotificationActivityLogOverlay
-from "components/notifications/activity_logs/NotificationActivityLogOverlay";
+import NotificationActivityLogOverlay from "components/notifications/activity_logs/NotificationActivityLogOverlay";
 
 function NotificationActivityLogsTable(
   {

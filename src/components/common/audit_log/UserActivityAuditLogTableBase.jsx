@@ -1,10 +1,6 @@
 import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
-import {
-  getFormattedLabelWithFunctionColumnDefinition,
-  getOwnerNameField,
-  getTableCreatedAtColumn,
-} from "components/common/table/table-column-helpers";
+import { getFormattedLabelWithFunctionColumnDefinition, getOwnerNameField, getTableCreatedAtColumn } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import userActivityAuditLogMetadata from "@opsera/definitions/constants/audit-logs/user/userActivityAuditLog.metadata";

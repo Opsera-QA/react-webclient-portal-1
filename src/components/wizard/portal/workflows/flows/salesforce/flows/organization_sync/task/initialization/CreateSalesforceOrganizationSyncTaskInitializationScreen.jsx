@@ -1,10 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import CreateWorkflowWizardTaskInitializationScreen
-from "components/wizard/portal/workflows/flows/tasks/initialization/CreateWorkflowWizardTaskInitializationScreen";
-import {
-  CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS
-} from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/task/CreateSalesforceOrganizationSyncTaskWizard";
+import CreateWorkflowWizardTaskInitializationScreen from "components/wizard/portal/workflows/flows/tasks/initialization/CreateWorkflowWizardTaskInitializationScreen";
+import { CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS } from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/task/CreateSalesforceOrganizationSyncTaskWizard";
 import { taskTemplateIdentifierConstants } from "components/admin/task_templates/taskTemplateIdentifier.constants";
 import { SalesforceTaskHelper } from "components/tasks/salesforceTask.helper";
 import {getTaskTypeLabel} from "../../../../../../../../../tasks/task.types";

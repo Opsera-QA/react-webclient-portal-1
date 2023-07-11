@@ -4,8 +4,7 @@ import ModalLogs from "components/common/modal/modalLogs";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import SonarRatingsLeadershipChartHelpDocumentation
-from "../../../../common/help/documentation/insights/charts/SonarRatingsLeadershipChartHelpDocumentation";
+import SonarRatingsLeadershipChartHelpDocumentation from "../../../../common/help/documentation/insights/charts/SonarRatingsLeadershipChartHelpDocumentation";
 import SonarRatingsLeadershipMaintainabilityDataBlockContainer from "components/insights/charts/sonar/sonar_leadership/data_blocks/SonarRatingsLeadershipMaintainabilityDataBlockContainer";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import BadgeBase from "components/common/badges/BadgeBase";

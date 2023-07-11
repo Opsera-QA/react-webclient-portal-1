@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RoleRestrictedCoverityToolSelectInput
-from "components/common/list_of_values_input/tools/coverity/tool/RoleRestrictedCoverityToolSelectInput";
+import RoleRestrictedCoverityToolSelectInput from "components/common/list_of_values_input/tools/coverity/tool/RoleRestrictedCoverityToolSelectInput";
 
 function CoverityStepCoverityToolSelectInput(
   {

@@ -3,12 +3,9 @@ import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import FreeTrialLandingSalesforcePipelineWizardWidget
-from "components/trial/landing/widgets/wizard/FreeTrialLandingSalesforcePipelineWizardWidget";
-import FreeTrialLandingSdlcPipelineWizardWidget
-from "components/trial/landing/widgets/wizard/FreeTrialLandingSdlcPipelineWizardWidget";
-import FreeTrialLandingGitCustodianWizardWidget
-from "components/trial/landing/widgets/wizard/FreeTrialLandingGitCustodianWizardWidget";
+import FreeTrialLandingSalesforcePipelineWizardWidget from "components/trial/landing/widgets/wizard/FreeTrialLandingSalesforcePipelineWizardWidget";
+import FreeTrialLandingSdlcPipelineWizardWidget from "components/trial/landing/widgets/wizard/FreeTrialLandingSdlcPipelineWizardWidget";
+import FreeTrialLandingGitCustodianWizardWidget from "components/trial/landing/widgets/wizard/FreeTrialLandingGitCustodianWizardWidget";
 
 export default function FreeTrialLandingWizardWidgets({className}) {
   const {themeConstants} = useComponentStateReference();

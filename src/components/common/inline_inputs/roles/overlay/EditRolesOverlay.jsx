@@ -9,8 +9,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {roleAccessInputMetadata} from "components/common/inline_inputs/roles/overlay/roleAccessInput.metadata";
 import RoleHelper from "@opsera/know-your-role/roles/role.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import AccessRoleLoseAccessConfirmationOverlay
-from "components/common/inline_inputs/roles/overlay/AccessRoleLoseAccessConfirmationOverlay";
+import AccessRoleLoseAccessConfirmationOverlay from "components/common/inline_inputs/roles/overlay/AccessRoleLoseAccessConfirmationOverlay";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import StandaloneSaveButton from "components/common/buttons/saving/StandaloneSaveButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";

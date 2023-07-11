@@ -1,15 +1,18 @@
-import React, {useEffect, useContext, useState, useMemo, useRef} from "react";
+import React, {
+  useEffect,
+  useContext,
+  useState,
+  useMemo,
+  useRef
+} from "react";
 import CustomTable from "components/common/table/CustomTable";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import PropTypes from "prop-types";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import {
-  getTableTextColumn
-} from "components/common/table/table-column-helpers";
-import jiraIssuesAssignedToMeMetadata
-from "components/insights/charts/jira/table/issues_assigned_to_me/jira-issues-assigned-to-me-metadata.js";
+import { getTableTextColumn } from "components/common/table/table-column-helpers";
+import jiraIssuesAssignedToMeMetadata from "components/insights/charts/jira/table/issues_assigned_to_me/jira-issues-assigned-to-me-metadata.js";
 import {getField} from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";

@@ -11,12 +11,9 @@ import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import CreateCustomerPipelineButton from "temp-library-components/cards/templates/pipelines/customer/deploy/CreateCustomerPipelineButton";
 import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
-import CustomerPipelineTemplateRoleHelper
-from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
-import PrimaryPipelineTypeField
-from "components/common/list_of_values_input/admin/pipeline_templates/PrimaryPipelineTypeField";
-import CustomerPipelineTemplateRoleAccessInput
-from "components/workflow/catalog/private/details/CustomerPipelineTemplateRoleAccessInput";
+import CustomerPipelineTemplateRoleHelper from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
+import PrimaryPipelineTypeField from "components/common/list_of_values_input/admin/pipeline_templates/PrimaryPipelineTypeField";
+import CustomerPipelineTemplateRoleAccessInput from "components/workflow/catalog/private/details/CustomerPipelineTemplateRoleAccessInput";
 
 function CustomerPipelineTemplateSummaryPanel(
   {

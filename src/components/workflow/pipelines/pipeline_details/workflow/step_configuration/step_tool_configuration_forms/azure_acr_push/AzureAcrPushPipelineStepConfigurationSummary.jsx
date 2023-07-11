@@ -5,8 +5,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 
-import PipelineStepSummaryPanelContainer
-from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+import PipelineStepSummaryPanelContainer from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function AzureAcrPushPipelineStepConfigurationSummary({ azureAcrPushPipelineDataObject, pipelineData, setActiveTab }) {

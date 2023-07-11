@@ -14,10 +14,7 @@ import SeleniumTestsCasesPassedDataBlock from "./data_blocks/tests_passed/Seleni
 import SeleniumTestsCasesFailedDataBlock from "./data_blocks/tests_failed/SeleniumTestsCasesFailedDataBlock";
 import SeleniumTestsCasesBlockedDataBlock from "./data_blocks/tests_blocked/SeleniumTestsCasesBlockedDataBlock";
 import SeleniumTestsCasesNotExecutedBlock from "./data_blocks/tests_not_executed/SeleniumTestsCasesNotExecutedBlock";
-import {
-  METRIC_THEME_CHART_PALETTE_COLORS,
-  METRIC_CHART_STANDARD_HEIGHT,
-} from "components/common/helpers/metrics/metricTheme.helpers";
+import { METRIC_THEME_CHART_PALETTE_COLORS, METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 
 function SeleniumTestSummaryPercentages({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);

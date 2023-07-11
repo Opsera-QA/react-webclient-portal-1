@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { OverlayTrigger, Popover } from "react-bootstrap";
-import {
-  MATURITY_SCORE_TEXT,
-  MATURITY_SCORE_VALUE
-} from "../charts-helpers";
+import { MATURITY_SCORE_TEXT, MATURITY_SCORE_VALUE } from "../charts-helpers";
 import { MaturityScoreItemType } from './maturityScoreItemType';
 
 function SystemDrivenMaturityChart ({ items, onRowSelect }) {

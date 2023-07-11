@@ -1,11 +1,7 @@
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
-import {
-  mergeSyncTaskGitConfigurationMetadata
-} from "components/tasks/details/tasks/merge_sync_task/git_to_git/mergeSyncTaskGitConfiguration.metadata";
+import { mergeSyncTaskGitConfigurationMetadata } from "components/tasks/details/tasks/merge_sync_task/git_to_git/mergeSyncTaskGitConfiguration.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
-import {
-  mergeSyncTaskSalesforceConfigurationMetadata
-} from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/mergeSyncTaskSalesforceConfiguration.metadata";
+import { mergeSyncTaskSalesforceConfigurationMetadata } from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/mergeSyncTaskSalesforceConfiguration.metadata";
 
 // TODO: The complex validators basically prove that we should rework the way we handle task configuration panels.
 export const mergeSyncTaskConfigurationMetadata = {

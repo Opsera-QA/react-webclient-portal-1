@@ -1,17 +1,10 @@
 import React, { useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
-import {
-  getTableTextColumn,
-  getStaticIconColumn,
-  getTableDurationTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getTableTextColumn, getStaticIconColumn, getTableDurationTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
-import {
-  faDraftingCompass,
-  faExternalLink,
-} from "@fortawesome/pro-light-svg-icons";
+import { faDraftingCompass, faExternalLink } from "@fortawesome/pro-light-svg-icons";
 import ExportGithubActionsWorkflowReportActionableInsights1Panel from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
 import ExportGithubActionsWorkflowReportButton from "components/insights/charts/github_actions/workflows/export/ExportGithubActionWorkflowReportButton";
 import { githubActionsWorkflowMetadata } from "components/insights/charts/github_actions/workflows/githubActionsWorkflow.metadata";

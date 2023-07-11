@@ -5,7 +5,9 @@ import {
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn,
-  getTagColumn, getTaskStatusColumn, getFormattedLabelWithFunctionColumnDefinition
+  getTagColumn,
+  getTaskStatusColumn,
+  getFormattedLabelWithFunctionColumnDefinition
 } from "components/common/table/table-column-helpers";
 import {useHistory} from "react-router-dom";
 import {getField} from "components/common/metadata/metadata-helpers";

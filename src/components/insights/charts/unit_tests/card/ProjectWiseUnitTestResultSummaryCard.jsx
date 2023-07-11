@@ -8,14 +8,9 @@ import InsightsCardContainerBase from "components/common/card_containers/Insight
 import InsightHighlightFieldWithTrendIcon from "components/common/fields/text/InsightHighlightFieldWithTrendIcon";
 import projectWiseUnitTestResultsMetadata from "../project_wise_results/project-wise-unit-test-results-metadata.js";
 import { ResponsivePie } from "@nivo/pie";
-import {
-  defaultConfig,
-  getColorByData,
-} from "components/insights/charts/charts-views";
+import { defaultConfig, getColorByData } from "components/insights/charts/charts-views";
 import config from "./projectWiseUnitTestConfig";
-import {
-  METRIC_THEME_CHART_PALETTE_COLORS
-} from "components/common/helpers/metrics/metricTheme.helpers";
+import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import MetricPipelineInfoSubheader from "components/common/metrics/subheaders/MetricPipelineInfoSubheader";
 import { dateHelpers } from 'components/common/helpers/date/date.helpers';
 import IconBase from "components/common/icons/IconBase";

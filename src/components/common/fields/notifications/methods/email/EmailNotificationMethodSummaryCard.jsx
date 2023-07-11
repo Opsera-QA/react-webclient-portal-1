@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import NotificationMethodSummaryCardContainer
-from "components/common/fields/notifications/methods/NotificationMethodSummaryCardContainer";
+import NotificationMethodSummaryCardContainer from "components/common/fields/notifications/methods/NotificationMethodSummaryCardContainer";
 import EmailAddressArrayField from "components/common/fields/multiple_items/email/EmailAddressArrayField";
 
 export default function EmailNotificationMethodSummaryCard(

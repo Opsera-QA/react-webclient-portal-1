@@ -4,9 +4,7 @@ import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {
-  GIT_TO_GIT_SYNC_ACTIONABLE_INSIGHT_SCREENS,
-} from "./GitToGitSyncActionableInsightOverlay";
+import { GIT_TO_GIT_SYNC_ACTIONABLE_INSIGHT_SCREENS } from "./GitToGitSyncActionableInsightOverlay";
 
 export default function GitToGitSyncActionableInsightSubNavigationBar(
   {

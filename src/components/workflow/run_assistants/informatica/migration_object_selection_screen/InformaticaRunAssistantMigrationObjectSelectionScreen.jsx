@@ -5,8 +5,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ErrorDialog from "components/common/status_notifications/error";
 import {informaticaRunParametersActions} from "components/workflow/run_assistants/informatica/informaticaRunParameters.actions";
-import InformaticaRunAssistantMigrationObjectSelector
-from "components/workflow/run_assistants/informatica/migration_object_selection_screen/InformaticaRunAssistantMigrationObjectSelector";
+import InformaticaRunAssistantMigrationObjectSelector from "components/workflow/run_assistants/informatica/migration_object_selection_screen/InformaticaRunAssistantMigrationObjectSelector";
 import LoadingDialog from "components/common/status_notifications/loading";
 
 const InformaticaRunAssistantMigrationObjectSelectionScreen = (

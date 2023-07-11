@@ -5,31 +5,21 @@ import ErrorDialog from "components/common/status_notifications/error";
 import SfdcPipelineWizardXmlViewer from "components/workflow/wizards/sfdc_pipeline_wizard/xml_viewer/SfdcPipelineWizardXmlViewer";
 import SfdcPipelineWizardUnitTestSelector from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/SfdcPipelineWizardUnitTestSelector";
 import SfdcPipelineWizardProfileComponentSelector from "components/workflow/wizards/sfdc_pipeline_wizard/profile_component_selector/SfdcPipelineWizardProfileComponentSelector";
-import SfdcPipelineWizardStandardFileSelector
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/SfdcPipelineWizardStandardFileSelector";
-import SfdcPipelineWizardGitTasksFileSelector
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/SfdcPipelineWizardGitTasksFileSelector";
-import SfdcPipelineWizardOrgToOrgFileSelector
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/SfdcPipelineWizardOrgToOrgFileSelector";
-import SfdcPipelineWizardInitializationScreen
-from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/SfdcPipelineWizardInitializationScreen";
+import SfdcPipelineWizardStandardFileSelector from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/SfdcPipelineWizardStandardFileSelector";
+import SfdcPipelineWizardGitTasksFileSelector from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/SfdcPipelineWizardGitTasksFileSelector";
+import SfdcPipelineWizardOrgToOrgFileSelector from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/SfdcPipelineWizardOrgToOrgFileSelector";
+import SfdcPipelineWizardInitializationScreen from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/SfdcPipelineWizardInitializationScreen";
 import axios from "axios";
 import sfdcPipelineWizardMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-wizard-metadata";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import SfdcWizardInitializationHelpDocumentation
-from "components/common/help/documentation/pipelines/wizard/SfdcWizardInitializationHelpDocumentation";
-import SfdcWizardComponentTypeSelectionHelpDocumentation
-from "components/common/help/documentation/pipelines/wizard/SfdcWizardComponentTypeSelectionHelpDocumentation";
-import SfdcWizardUnitTestSelectionViewHelpDocumentation
-from "components/common/help/documentation/pipelines/wizard/SfdcWizardUnitTestSelectionViewHelpDocumentation";
-import SfdcWizardFileSelectionHelpDocumentation
-from "components/common/help/documentation/pipelines/wizard/SfdcWizardFileSelectionHelpDocumentation";
-import SfdcWizardXmlViewerHelpDocumentation
-from "components/common/help/documentation/pipelines/wizard/SfdcWizardXmlViewerHelpDocumentation";
-import SfdcPipelineWizardValidatedFileViewer
-from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/SfdcPipelineWizardValidatedFileViewer";
+import SfdcWizardInitializationHelpDocumentation from "components/common/help/documentation/pipelines/wizard/SfdcWizardInitializationHelpDocumentation";
+import SfdcWizardComponentTypeSelectionHelpDocumentation from "components/common/help/documentation/pipelines/wizard/SfdcWizardComponentTypeSelectionHelpDocumentation";
+import SfdcWizardUnitTestSelectionViewHelpDocumentation from "components/common/help/documentation/pipelines/wizard/SfdcWizardUnitTestSelectionViewHelpDocumentation";
+import SfdcWizardFileSelectionHelpDocumentation from "components/common/help/documentation/pipelines/wizard/SfdcWizardFileSelectionHelpDocumentation";
+import SfdcWizardXmlViewerHelpDocumentation from "components/common/help/documentation/pipelines/wizard/SfdcWizardXmlViewerHelpDocumentation";
+import SfdcPipelineWizardValidatedFileViewer from "components/workflow/wizards/sfdc_pipeline_wizard/file_upload_validation/SfdcPipelineWizardValidatedFileViewer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";

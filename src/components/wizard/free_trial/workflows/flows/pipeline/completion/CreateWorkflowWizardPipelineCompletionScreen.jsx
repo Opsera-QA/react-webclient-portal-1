@@ -5,8 +5,7 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import { apiRequestHelper } from "temp-library-components/helpers/api/apiRequest.helper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
-import FreeTrialLaunchWorkflowButton
-from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
+import FreeTrialLaunchWorkflowButton from "components/wizard/free_trial/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";

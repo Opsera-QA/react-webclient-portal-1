@@ -3,18 +3,15 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import Model from "../../../../../../core/data_model/model";
-import actionableInsightsGenericChartFilterMetadata
-from "../../../generic_filters/actionableInsightsGenericChartFilterMetadata";
+import actionableInsightsGenericChartFilterMetadata from "../../../generic_filters/actionableInsightsGenericChartFilterMetadata";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import {metricHelpers} from "../../../../metric.helpers";
 import SalesforceCodeAnalyserCategoryActionableTable from "./SalesforceCodeAnalyserCategoryActionableTable";
 import chartsActions from "../../../charts-actions";
 import FullScreenCenterOverlayContainer from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
-import AquasecActionableDataBlockContainers
-from "../../../aquasec_security_insights/actionable_insights/AquasecActionableDataBlockContainers";
-import AquasecActionableInsightsTable
-from "../../../aquasec_security_insights/actionable_insights/AquasecActionableInsightsTable";
+import AquasecActionableDataBlockContainers from "../../../aquasec_security_insights/actionable_insights/AquasecActionableDataBlockContainers";
+import AquasecActionableInsightsTable from "../../../aquasec_security_insights/actionable_insights/AquasecActionableInsightsTable";
 import {getMetricFilterValue} from "../../../../../common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "../../../../../common/badges/date/metrics/MetricDateRangeBadge";
 import aquasecActions from "../../../aquasec_security_insights/aquasec.action";

@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineSummaryCardContainer
-from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCardContainer";
+import PipelineSummaryCardContainer from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCardContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import PipelineLinkButton from "components/common/buttons/pipeline/PipelineLinkButton";
 import PipelineTaskStateField from "components/common/fields/workflow/pipelines/PipelineTaskStateField";

@@ -3,16 +3,12 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import modelHelpers from "components/common/model/modelHelpers";
-import EndpointRequestFieldTypeSelectInput
-from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldTypeSelectInput";
-import EndpointRequestFieldIsRequiredToggleInput
-from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldIsRequiredToggleInput";
-import EndpointRequestFieldIsSensitiveDataToggleInput
-from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldIsSensitiveDataToggleInput";
+import EndpointRequestFieldTypeSelectInput from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldTypeSelectInput";
+import EndpointRequestFieldIsRequiredToggleInput from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldIsRequiredToggleInput";
+import EndpointRequestFieldIsSensitiveDataToggleInput from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldIsSensitiveDataToggleInput";
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import EndpointRequestFieldNameTextInput
-from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldNameTextInput";
+import EndpointRequestFieldNameTextInput from "components/common/inputs/endpoints/endpoint/request/body/EndpointRequestFieldNameTextInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import endpointRequestFieldMetadata from "@opsera/definitions/constants/api/request/body/endpointRequestField.metadata";
 import endpointTypeConstants from "@opsera/definitions/constants/api/request/endpoint/endpointType.constants";

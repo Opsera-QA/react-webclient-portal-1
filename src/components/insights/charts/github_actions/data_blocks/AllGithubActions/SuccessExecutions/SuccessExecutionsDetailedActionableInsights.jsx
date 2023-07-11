@@ -1,4 +1,10 @@
-import React, {useEffect, useState, useRef, useContext, useMemo} from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useContext,
+  useMemo
+} from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Row, Col } from "react-bootstrap";
@@ -12,8 +18,7 @@ import {getTableTextColumn, getTableDateTimeColumn} from "../../../../../../comm
 import {getField} from "../../../../../../common/metadata/metadata-helpers";
 import {DialogToastContext} from "../../../../../../../contexts/DialogToastContext";
 import TwoLineDataBlockBase from "../../../../../../common/metrics/data_blocks/base/TwoLineDataBlockBase";
-import FullScreenCenterOverlayContainer
-from "../../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
+import FullScreenCenterOverlayContainer from "../../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import chartsActions from "../../../../charts-actions";
 
 function SuccessExecutionsDetailedActionableInsights({ repositoryName, actionName, headCommitSha, kpiConfiguration, dashboardData}) {

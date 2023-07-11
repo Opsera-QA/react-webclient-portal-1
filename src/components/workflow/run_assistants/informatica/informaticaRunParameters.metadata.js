@@ -1,6 +1,4 @@
-import {
-  informaticaRunParameterConfigurationMetadata,
-} from "components/workflow/run_assistants/informatica/configuration_selection_screen/informaticaRunParameterConfiguration.metadata";
+import { informaticaRunParameterConfigurationMetadata } from "components/workflow/run_assistants/informatica/configuration_selection_screen/informaticaRunParameterConfiguration.metadata";
 
 export const informaticaRunParametersMetadata = {
   type: "Informatica Run Parameters",

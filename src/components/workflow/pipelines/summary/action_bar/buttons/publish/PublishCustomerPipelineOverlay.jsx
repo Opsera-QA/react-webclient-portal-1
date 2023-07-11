@@ -9,13 +9,10 @@ import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
-import PublishPipelineToPrivateCatalogButton
-from "components/workflow/pipelines/summary/action_bar/buttons/publish/PublishPipelineToPrivateCatalogButton";
+import PublishPipelineToPrivateCatalogButton from "components/workflow/pipelines/summary/action_bar/buttons/publish/PublishPipelineToPrivateCatalogButton";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import modelHelpers from "components/common/model/modelHelpers";
-import {
-  publishPipelineMetadata
-} from "components/workflow/pipelines/summary/action_bar/buttons/publish/publishPipeline.metadata";
+import { publishPipelineMetadata } from "components/workflow/pipelines/summary/action_bar/buttons/publish/publishPipeline.metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 

@@ -13,10 +13,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import FirstPassYieldMetricDataBlockBase from "./data_blocks/FirstPassYieldMetricDataBlockBase";
 import FirstPassYieldPercentageDataBlock from "./data_blocks/FirstPassYieldPercentageDataBlock";
 import { FIRST_PASS_YIELD_METRIC_CONSTANTS as dataPointConstants} from "./FirstPassYieldMetrics_kpi_datapoint_identifiers";
-import {
-  METRIC_THEME_CHART_PALETTE_COLORS,
-  METRIC_CHART_STANDARD_HEIGHT,
-} from "components/common/helpers/metrics/metricTheme.helpers";
+import { METRIC_THEME_CHART_PALETTE_COLORS, METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 
 const FIRST_PASS_YIELD = "first_pass_yield";
 

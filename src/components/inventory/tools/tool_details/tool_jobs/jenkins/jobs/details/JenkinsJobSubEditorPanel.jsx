@@ -5,19 +5,13 @@ import JenkinsSfdcJobEditorPanel from "./inputs/sfdc/JenkinsSfdcJobEditorPanel";
 import JenkinsUnitTestingEditorPanel from "./inputs/unit_testing/JenkinsUnitTestingEditorPanel";
 import JenkinsShellScriptEditorPanel from "./inputs/shell_script/JenkinsShellScriptEditorPanel";
 import JenkinsDockerPushEditorPanel from "./inputs/docker_push/JenkinsDockerPushEditorPanel";
-import JenkinsSfdcJobMetadata
-from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/sfdc/jenkins-sfdc-build-metadata";
-import JenkinsUnitTestJobMetadata
-from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/unit_testing/jenkins-unit-test-metadata";
-import JenkinsDockerPushJobMetadata
-from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/docker_push/jenkins-docker-push-metadata";
+import JenkinsSfdcJobMetadata from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/sfdc/jenkins-sfdc-build-metadata";
+import JenkinsUnitTestJobMetadata from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/unit_testing/jenkins-unit-test-metadata";
+import JenkinsDockerPushJobMetadata from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/docker_push/jenkins-docker-push-metadata";
 import axios from "axios";
-import JenkinsShellScriptJobMetadata
-from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/shell_script/jenkins-shell-script-metadata";
-import JenkinsGenericJobEditorPanel
-from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/generic/JenkinsPythonJobEditorPanel";
-import AzureDockerPushJobEditorPanel
-from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/azure_docker_push/AzureDockerPushJobEditorPanel";
+import JenkinsShellScriptJobMetadata from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/shell_script/jenkins-shell-script-metadata";
+import JenkinsGenericJobEditorPanel from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/generic/JenkinsPythonJobEditorPanel";
+import AzureDockerPushJobEditorPanel from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/azure_docker_push/AzureDockerPushJobEditorPanel";
 import JenkinsJobTypes from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/jenkinsJobTypes.constants";
 
 export const getJenkinsJobConfigurationMetadata = (jenkinsJobType, buildType) => {

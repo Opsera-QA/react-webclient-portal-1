@@ -1,14 +1,10 @@
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
-import {
-  salesforceJenkinsJobConstants
-} from "components/common/list_of_values_input/tools/jenkins/jobs/sfdc/salesforceJenkinsJob.constants";
+import { salesforceJenkinsJobConstants } from "components/common/list_of_values_input/tools/jenkins/jobs/sfdc/salesforceJenkinsJob.constants";
 import { pipelineHelpers } from "components/common/helpers/pipelines/pipeline.helpers";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import {
-  salesforceWorkflowFlowConstants
-} from "../../../wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
+import { salesforceWorkflowFlowConstants } from "../../../wizard/free_trial/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
 
 
 // TODO: Don't use these yet (outside of free trial). They're still being refined

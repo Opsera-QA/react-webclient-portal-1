@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import RuleFilterTypeSelectInput
-from "components/common/list_of_values_input/rules/filter_type/RuleFilterTypeSelectInput";
+import RuleFilterTypeSelectInput from "components/common/list_of_values_input/rules/filter_type/RuleFilterTypeSelectInput";
 
 // TODO: Refactor
 function SfdcPipelineWizardRuleFieldFilterSelectInput({fieldName, className, model, setModel, disabled, showLabel}) {

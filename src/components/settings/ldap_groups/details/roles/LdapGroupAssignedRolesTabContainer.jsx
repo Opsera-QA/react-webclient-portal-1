@@ -5,7 +5,10 @@ import {
   faTasks,
   faTools,
   faChartNetwork,
-  faDraftingCompass, faFileCode, faHandshake, faBallotCheck,
+  faDraftingCompass,
+  faFileCode,
+  faHandshake,
+  faBallotCheck
 } from "@fortawesome/pro-light-svg-icons";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 

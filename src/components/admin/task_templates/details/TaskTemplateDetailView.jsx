@@ -8,8 +8,7 @@ import ActionBarShowJsonButton from "components/common/actions/buttons/ActionBar
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
-import TaskTemplateManagementSubNavigationBar
-from "components/admin/task_templates/TaskTemplateManagementSubNavigationBar";
+import TaskTemplateManagementSubNavigationBar from "components/admin/task_templates/TaskTemplateManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { taskTemplateActions } from "components/admin/task_templates/taskTemplate.actions";
 import { taskTemplateMetadata } from "components/admin/task_templates/taskTemplate.metadata";

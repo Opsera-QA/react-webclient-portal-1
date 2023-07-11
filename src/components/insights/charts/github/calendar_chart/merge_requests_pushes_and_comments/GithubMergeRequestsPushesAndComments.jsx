@@ -10,8 +10,7 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { defaultConfig, gradationalColors } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
-import GithubMergeRequestsPushesCommentsActionableOverlay
-from "./actionable_insights/GithubMergeRequestsPushedCommentsActionableOverlay";
+import GithubMergeRequestsPushesCommentsActionableOverlay from "./actionable_insights/GithubMergeRequestsPushedCommentsActionableOverlay";
 function GithubMergeRequestsPushesAndComments({
   kpiConfiguration,
   setKpiConfiguration,

@@ -1,11 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
-import ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary
-from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary";
+import ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary from "components/workflow/plan/step/external_rest_api_integration/task_summary/endpoints/ExternalRestApiIntegrationEndpointOrchestrationRuleEvaluationSummary";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import ExternalRestApiIntegrationActivityLogSummaryPanelBase
-from "components/workflow/plan/step/external_rest_api_integration/task_summary/ExternalRestApiIntegrationActivityLogSummaryPanelBase";
+import ExternalRestApiIntegrationActivityLogSummaryPanelBase from "components/workflow/plan/step/external_rest_api_integration/task_summary/ExternalRestApiIntegrationActivityLogSummaryPanelBase";
 
 export default function ExternalRestApiIntegrationActivityLogOperationLogSummaryPanel(
   {

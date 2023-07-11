@@ -2,14 +2,10 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import { faBracketsCurly } from "@fortawesome/pro-light-svg-icons";
-import {
-  MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
-} from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
-import MonacoEditorCodeDiffInputBase
-from "components/common/inputs/code/monaco/MonacoEditorCodeDiffInputBase";
+import { MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
+import MonacoEditorCodeDiffInputBase from "components/common/inputs/code/monaco/MonacoEditorCodeDiffInputBase";
 import MergeSyncTaskWizardSubmitEditedFileButton from "../file_editor/MergeSyncTaskWizardSubmitEditedFileButton";
-import MergeSyncTaskWizardProfilesAdvancedEditingPanel
-from "../file_editor/MergeSyncTaskWizardProfilesAdvancedEditingPanel";
+import MergeSyncTaskWizardProfilesAdvancedEditingPanel from "../file_editor/MergeSyncTaskWizardProfilesAdvancedEditingPanel";
 
 const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = ({
   file,

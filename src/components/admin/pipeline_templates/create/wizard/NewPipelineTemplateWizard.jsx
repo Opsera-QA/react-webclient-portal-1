@@ -5,10 +5,8 @@ import PipelineTemplateEditorPanel from "components/admin/pipeline_templates/det
 import {DialogToastContext} from "contexts/DialogToastContext";
 import modelHelpers from "components/common/model/modelHelpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import NewPipelineTemplateWizardFlowSelectionScreen
-from "components/admin/pipeline_templates/create/wizard/flow_selection/NewPipelineTemplateWizardFlowSelectionScreen";
-import PipelineTemplateManagementWizardImportPipelineSelectionScreen
-from "components/admin/pipeline_templates/create/wizard/import_pipeline/PipelineTemplateManagementWizardImportPipelineSelectionScreen";
+import NewPipelineTemplateWizardFlowSelectionScreen from "components/admin/pipeline_templates/create/wizard/flow_selection/NewPipelineTemplateWizardFlowSelectionScreen";
+import PipelineTemplateManagementWizardImportPipelineSelectionScreen from "components/admin/pipeline_templates/create/wizard/import_pipeline/PipelineTemplateManagementWizardImportPipelineSelectionScreen";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import CenterOverlayContainer, { CENTER_OVERLAY_SIZES } from "components/common/overlays/center/CenterOverlayContainer";
 

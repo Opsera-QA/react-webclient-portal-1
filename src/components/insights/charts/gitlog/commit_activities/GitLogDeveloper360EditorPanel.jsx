@@ -3,12 +3,9 @@ import PropTypes from "prop-types";
 import MetricTagFilterInput from "components/common/inputs/metric/filters/tags/MetricTagFilterInput";
 import MetricDateRangeFilterInput from "components/common/inputs/metric/filters/date/MetricDateRangeFilterInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import MetricGitLogAuthorFilterInput
-from "../../../../common/inputs/metric/filters/developer_360/MetricGitLogAuthorFilterInput";
-import MetricGitLogBranchFilterInput
-from "../../../../common/inputs/metric/filters/developer_360/MetricGitLogBranchFilterInput";
-import MetricGitLogRepositoryFilterInput
-from "../../../../common/inputs/metric/filters/developer_360/MetricGitLogRepositoryFilterInput";
+import MetricGitLogAuthorFilterInput from "../../../../common/inputs/metric/filters/developer_360/MetricGitLogAuthorFilterInput";
+import MetricGitLogBranchFilterInput from "../../../../common/inputs/metric/filters/developer_360/MetricGitLogBranchFilterInput";
+import MetricGitLogRepositoryFilterInput from "../../../../common/inputs/metric/filters/developer_360/MetricGitLogRepositoryFilterInput";
 import gitLogDeveloperActivitiesMetaData from "./gitlog-developer-360-metedata";
 function GitLogDeveloper360EditorPanel({
   metricModel,

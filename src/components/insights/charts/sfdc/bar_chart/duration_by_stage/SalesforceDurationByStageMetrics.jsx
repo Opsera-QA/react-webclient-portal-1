@@ -16,9 +16,7 @@ import SalesforceDeploymentDurationMetric from "components/insights/charts/sfdc/
 import { assignStandardLineColors } from "components/insights/charts/charts-views";
 import SalesforceDurationByStageHelpDocumentation from "../../../../../common/help/documentation/insights/charts/SalesforceDurationByStageHelpDocumentation";
 import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
-import {
-  SALESFORCE_DURATION_BY_STAGE_METRICS_CONSTANTS as dataPointConstants
-} from "./SalesforceDurationByStageMetrics_kpi_datapoint_identifiers";
+import { SALESFORCE_DURATION_BY_STAGE_METRICS_CONSTANTS as dataPointConstants } from "./SalesforceDurationByStageMetrics_kpi_datapoint_identifiers";
 
 function SalesforceDurationByStageMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const history = useHistory();

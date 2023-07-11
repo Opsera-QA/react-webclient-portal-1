@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useContext, useRef, Fragment } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  Fragment
+} from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import config from "./ServiceNowMeanTimeBetweenFailuresConfigs.js";
@@ -9,13 +15,8 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 // import { line } from "d3-shape";
-import {
-  defaultConfig,
-  getColorByData,
-  assignStandardColors,
-  adjustBarWidth,
-  // accentColor,
-} from "../../../charts-views";
+// accentColor,
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth } from "../../../charts-views";
 
 import ChartTooltip from "../../../ChartTooltip";
 // import MeanTimeToResolutionSummaryPanelMetadata from "components/insights/charts/servicenow/bar_chart/mean_time_between_failures/ServiceNowMeanTimeBetweenFailuresSummaryPanelMetadata";

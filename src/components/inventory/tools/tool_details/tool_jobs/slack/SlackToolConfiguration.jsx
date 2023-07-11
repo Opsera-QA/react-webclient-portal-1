@@ -8,8 +8,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import axios from "axios";
 import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
-import OverlayWizardButtonContainerBase
-from "../../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import OverlayWizardButtonContainerBase from "../../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import VanityButtonBase from "../../../../../../temp-library-components/button/VanityButtonBase";
 import {faArrowRight} from "@fortawesome/pro-light-svg-icons";
 import WarningMessageFieldBase from "../../../../../common/fields/text/message/WarningMessageFieldBase";

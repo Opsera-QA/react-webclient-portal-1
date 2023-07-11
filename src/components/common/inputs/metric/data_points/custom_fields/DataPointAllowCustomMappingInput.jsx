@@ -2,8 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import H4FieldSubHeader from "components/common/fields/subheader/H4FieldSubHeader";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import dataPointCustomFieldsMappingMetadata
-from "components/common/inputs/metric/data_points/custom_fields/dataPointCustomFieldsMapping.metadata";
+import dataPointCustomFieldsMappingMetadata from "components/common/inputs/metric/data_points/custom_fields/dataPointCustomFieldsMapping.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 
 function DataPointAllowCustomMappingInput(

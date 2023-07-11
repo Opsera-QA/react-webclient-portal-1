@@ -8,7 +8,13 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { line } from "d3-shape";
-import { defaultConfig, getColor, assignStandardColors, mainPurple, accentColor } from '../../../charts-views';
+import {
+  defaultConfig,
+  getColor,
+  assignStandardColors,
+  mainPurple,
+  accentColor
+} from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 import {Col, Row, Container} from "react-bootstrap";
 import InputPopover from "components/common/inputs/info_text/InputPopover";

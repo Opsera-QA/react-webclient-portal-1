@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import UserActivityAuditLogDetailOverlayBase from "components/common/audit_log/UserActivityAuditLogDetailOverlayBase";
-import useGetPlatformPipelineTemplateAuditLogModelById
-from "hooks/audit_logs/pipelines/templates/platform/useGetPlatformPipelineTemplateAuditLogModelById";
+import useGetPlatformPipelineTemplateAuditLogModelById from "hooks/audit_logs/pipelines/templates/platform/useGetPlatformPipelineTemplateAuditLogModelById";
 
 export default function PlatformPipelineTemplateAuditLogDetailOverlay(
   {

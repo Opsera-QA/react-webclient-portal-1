@@ -2,18 +2,11 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
-import {
-  getSsoUserNameField, getTableDateColumn,
-  getTableDateTimeColumn,
-  getTableTextColumn,
-} from "components/common/table/table-column-helpers";
+import { getSsoUserNameField, getTableDateColumn, getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
-import FilterContainer, {
-} from "components/common/table/FilterContainer";
+import FilterContainer from "components/common/table/FilterContainer";
 import { faUsers } from "@fortawesome/pro-light-svg-icons";
-import {
-  freeTrialUserActivityReportUserMetadata
-} from "components/settings/trial/activity_report/users/freeTrialUserActivityReportUser.metadata";
+import { freeTrialUserActivityReportUserMetadata } from "components/settings/trial/activity_report/users/freeTrialUserActivityReportUser.metadata";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 

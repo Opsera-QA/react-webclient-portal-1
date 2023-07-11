@@ -1,20 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import VanityPaginationContainer from "components/common/pagination/v2/VanityPaginationContainer";
-import LdapGroupAssignedRolesToolsTable
-from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesToolsTable";
-import LdapGroupAssignedRolesTasksTable
-from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesTasksTable";
-import LdapGroupAssignedRolesPipelinesTable
-from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesPipelinesTable";
-import LdapGroupAssignedRolesParametersTable
-from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesParametersTable";
-import LdapGroupAssignedRolesDashboardsTable
-from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesDashboardsTable";
-import LdapGroupAssignedRolesScriptsTable
-from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesScriptsTable";
-import LdapGroupAssignedRolesPipelineInstructionsTable
-from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesPipelineInstructionsTable";
+import LdapGroupAssignedRolesToolsTable from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesToolsTable";
+import LdapGroupAssignedRolesTasksTable from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesTasksTable";
+import LdapGroupAssignedRolesPipelinesTable from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesPipelinesTable";
+import LdapGroupAssignedRolesParametersTable from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesParametersTable";
+import LdapGroupAssignedRolesDashboardsTable from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesDashboardsTable";
+import LdapGroupAssignedRolesScriptsTable from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesScriptsTable";
+import LdapGroupAssignedRolesPipelineInstructionsTable from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesPipelineInstructionsTable";
 
 export default function LdapGroupAssignedRolesTableBase(
   {

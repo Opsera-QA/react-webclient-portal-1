@@ -2,12 +2,10 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import RoleRestrictedJiraToolSelectInput
-from "components/common/list_of_values_input/tools/jira/RoleRestrictedJiraToolSelectInput";
+import RoleRestrictedJiraToolSelectInput from "components/common/list_of_values_input/tools/jira/RoleRestrictedJiraToolSelectInput";
 import CreateJiraTicketProjectSelectInput from "./inputs/CreateJiraTicketProjectSelectInput";
 import chartsActions from "../../charts/charts-actions";
-import GitCustodianCreateJiraTicketMetaData
-from "components/insights/gitCustodian/modal/gitCustodianCreateJiraTicketMetaData";
+import GitCustodianCreateJiraTicketMetaData from "components/insights/gitCustodian/modal/gitCustodianCreateJiraTicketMetaData";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import modelHelpers from "components/common/model/modelHelpers";
 import GitCustodianSelectedIssuesTable from "components/insights/gitCustodian/modal/GitCustodianSelectedIssuesTable";

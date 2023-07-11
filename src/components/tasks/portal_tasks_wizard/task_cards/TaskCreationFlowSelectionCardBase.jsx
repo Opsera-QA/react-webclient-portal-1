@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import WorkflowOptionCardBase, {
-  WORKFLOW_OPTION_TYPES,
-} from "components/wizard/portal/workflows/flows/WorkflowOptionCardBase";
+import WorkflowOptionCardBase, { WORKFLOW_OPTION_TYPES } from "components/wizard/portal/workflows/flows/WorkflowOptionCardBase";
 import { pipelineTemplateIdentifierConstants } from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
