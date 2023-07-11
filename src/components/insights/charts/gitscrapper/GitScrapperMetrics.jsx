@@ -29,7 +29,6 @@ function GitScrapperMetrics({
   index,
   setKpis,
 }) {
-  console.log("kpi scrpaer", kpiConfiguration);
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
