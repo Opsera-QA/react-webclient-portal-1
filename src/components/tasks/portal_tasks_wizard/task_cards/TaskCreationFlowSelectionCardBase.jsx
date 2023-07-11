@@ -6,7 +6,7 @@ import WorkflowOptionCardBase, {
 import { pipelineTemplateIdentifierConstants } from "components/admin/pipeline_templates/pipelineTemplateIdentifier.constants";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-export default function TaskCardBase({
+export default function TaskCreationFlowSelectionCardBase({
   selectedFlow,
   handleFlowSelection,
   option,
@@ -37,7 +37,7 @@ export default function TaskCardBase({
   );
 }
 
-TaskCardBase.propTypes = {
+TaskCreationFlowSelectionCardBase.propTypes = {
   selectedFlow: PropTypes.string,
   handleFlowSelection: PropTypes.func,
   option: PropTypes.string,
