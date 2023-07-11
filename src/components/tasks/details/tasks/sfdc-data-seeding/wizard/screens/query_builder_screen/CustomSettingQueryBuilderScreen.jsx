@@ -78,17 +78,17 @@ const CustomSettingQueryBuilderScreen = ({
   const loadData = () => {
     try {
       if (wizardModel?.getData("filteredFieldList")) {
-        const filteredData = wizardModel
-          ?.getData("filteredFieldList")
-          ?.filter((item) => {
-            return item.filterable === true;
-          });
+        // const filteredData = wizardModel
+        //   ?.getData("filteredFieldList")
+        //   ?.filter((item) => {
+        //     return item.filterable === true;
+        //   });
 
-        const filteredFieldsList = filteredData.map((item) => {
-          // return item.name;
-          return { name: item.name, type: item.type };
-        });
-        setFieldsList(filteredFieldsList);
+        // const filteredFieldsList = filteredData.map((item) => {
+        //   // return item.name;
+        //   return { name: item.name, type: item.type };
+        // });
+        setFieldsList(wizardModel?.getData("filteredFieldList"));
         setLimit(wizardModel?.getData("limit"));
         const filters =
           Array.isArray(wizardModel?.getData("queryFilters")) &&
