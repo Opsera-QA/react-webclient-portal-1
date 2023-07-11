@@ -13,9 +13,8 @@ function MetricGitScraperBranchFilterInput({
                                                setMetricFilterModel,
                                                metricModel,
                                                fieldName,
-                                                tags,
+                                               tags,
                                            }) {
-    console.log("tags", tags);
     return(
         <SupportedMetricFilterInputContainer
             filterType={KPI_FILTER_TYPES.GITSCRAPER_BRANCH}

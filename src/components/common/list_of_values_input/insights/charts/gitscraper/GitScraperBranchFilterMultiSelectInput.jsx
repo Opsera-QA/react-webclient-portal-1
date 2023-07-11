@@ -17,7 +17,7 @@ function GitScraperBranchFilterMultiSelectInput({
                                                     disabled,
                                                     setDataFunction,
                                                     clearDataFunction,
-    tags
+                                                    tags
                                                 }) {
     const { getAccessToken } = useContext(AuthContext);
     const [repositories, setRepositories] = useState([]);
@@ -69,7 +69,7 @@ function GitScraperBranchFilterMultiSelectInput({
             cancelSource,
             tags
         );
-        console.log("response", response);
+
         if (response.data != null) {
             setRepositories(response?.data?.data?.data);
         }
