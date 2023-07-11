@@ -12,6 +12,7 @@ function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filter
   const noDataMessage = "Github " + title + " report is currently unavailable at this time";
 
 
+
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "collaboratorName"), "collaboratorName"),

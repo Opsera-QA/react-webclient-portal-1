@@ -5,6 +5,7 @@ import GithubCommitsActionableMetadata from "../github-commits-actionable-insigh
 import { getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
+import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 
 function GithubContributorsCommitsActionableInsightTable({
   data,

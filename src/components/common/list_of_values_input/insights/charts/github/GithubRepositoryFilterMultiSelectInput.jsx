@@ -63,13 +63,12 @@ function GithubRepositoryFilterMultiSelectInput({
   };
 
   const loadRepositories = async (cancelSource = cancelTokenSource) => {
-    const response = await gitscaperActions.gitScraperBranchList(
+    const response = await githubAction.githubRepositoryList(
       getAccessToken,
       cancelSource,
     );
-    console.log("repos", response);
     if (response.data != null) {
-      setRepositories(response?.data?.data?.data);
+      setRepositories(response?.data?.data);
     }
   };
 
