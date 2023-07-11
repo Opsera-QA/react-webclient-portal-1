@@ -31,6 +31,8 @@ function GitScrapperEditorPanel({
         return null;
     }
 
+    console.log("metric model", metricModel);
+
     return (
         <div>
             <MetricTagFilterInput
@@ -42,6 +44,7 @@ function GitScrapperEditorPanel({
                 metricModel={metricModel}
                 metricFilterModel={metricFilterModel}
                 setMetricFilterModel={setMetricFilterModel}
+                tags={metricFilterModel?.getData("tags")}
             />
             <MetricDateRangeFilterInput
                 metricModel={metricModel}

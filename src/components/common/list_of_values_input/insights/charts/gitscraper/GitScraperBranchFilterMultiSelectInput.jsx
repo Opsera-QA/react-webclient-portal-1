@@ -17,6 +17,7 @@ function GitScraperBranchFilterMultiSelectInput({
                                                     disabled,
                                                     setDataFunction,
                                                     clearDataFunction,
+    tags
                                                 }) {
     const { getAccessToken } = useContext(AuthContext);
     const [repositories, setRepositories] = useState([]);
@@ -44,7 +45,7 @@ function GitScraperBranchFilterMultiSelectInput({
             source.cancel();
             isMounted.current = false;
         };
-    }, []);
+    }, [tags]);
 
     const loadData = async (cancelSource = cancelTokenSource) => {
         try {
@@ -66,6 +67,7 @@ function GitScraperBranchFilterMultiSelectInput({
         const response = await gitscaperActions.gitScraperBranchList(
             getAccessToken,
             cancelSource,
+            tags
         );
         console.log("response", response);
         if (response.data != null) {
@@ -103,6 +105,7 @@ GitScraperBranchFilterMultiSelectInput.propTypes = {
     visible: PropTypes.bool,
     project: PropTypes.array,
     disabled: PropTypes.bool,
+    tags: PropTypes.array
 };
 
 GitScraperBranchFilterMultiSelectInput.defaultProps = {

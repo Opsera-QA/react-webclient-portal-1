@@ -12,11 +12,13 @@ const gitscaperActions = {};
 gitscaperActions.gitScraperBranchList = async (
     getAccessToken,
     cancelTokenSource,
+    tags
 ) => {
     // TODO FILTER WITH TAGS
     const apiUrl = gitscaperBaseURL + "gitScraperBranchList";
     const postBody = {
         size: 10,
+        tags: tags
     };
     return await baseActions.handleNodeAnalyticsApiPostRequest(
         getAccessToken,

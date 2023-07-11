@@ -13,7 +13,9 @@ function MetricGitScraperBranchFilterInput({
                                                setMetricFilterModel,
                                                metricModel,
                                                fieldName,
+                                                tags,
                                            }) {
+    console.log("tags", tags);
     return(
         <SupportedMetricFilterInputContainer
             filterType={KPI_FILTER_TYPES.GITSCRAPER_BRANCH}
@@ -25,6 +27,7 @@ function MetricGitScraperBranchFilterInput({
                 textField={"text"}
                 model={metricFilterModel}
                 setModel={setMetricFilterModel}
+                tags={tags}
             />
         </SupportedMetricFilterInputContainer>
     );
@@ -35,6 +38,7 @@ MetricGitScraperBranchFilterInput.propTypes = {
     setMetricFilterModel: PropTypes.func,
     metricModel: PropTypes.object,
     fieldName: PropTypes.string,
+    tags: PropTypes.array
 };
 
 MetricGitScraperBranchFilterInput.defaultProps = {
