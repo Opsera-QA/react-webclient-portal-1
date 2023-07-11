@@ -26,12 +26,12 @@ export default function LandingRoutes() {
         entitlementName={entitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_FEATURES}
         childEntitlementName={salesforceFeatureEntitlementConstants.ENTITLEMENT_NAMES.ENABLE_SALESFORCE_LANDING_SCREEN}
       />
-      {/*<BreadcrumbRoute*/}
-      {/*  path={"/git-custodian"}*/}
-      {/*  exact={true}*/}
-      {/*  component={GitCustodianLandingScreen}*/}
-      {/*  breadcrumb={breadcrumbs.insightsGitCustodian}*/}
-      {/*/>*/}
+      <BreadcrumbRoute
+        path={"/git-custodian"}
+        exact={true}
+        component={GitCustodianLandingScreen}
+        breadcrumb={breadcrumbs.insightsGitCustodian}
+      />
     </>
   );
 }
