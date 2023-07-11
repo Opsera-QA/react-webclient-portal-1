@@ -9,57 +9,55 @@ import { gitScrapperEditorPanelMetadata } from "./gitScrapperEditorPanel.metadat
 import MetricGitScraperBranchFilterInput from "../../../common/inputs/metric/filters/MetricGitScraperBranchFilterInput";
 
 function GitScrapperEditorPanel({
-                                                metricModel,
-                                                unpackedFilterData,
-                                                metricFilterModel,
-                                                setMetricFilterModel,
-                                            }) {
-    useEffect(() => {
-        setMetricFilterModel(undefined);
+  metricModel,
+  unpackedFilterData,
+  metricFilterModel,
+  setMetricFilterModel,
+}) {
+  useEffect(() => {
+    setMetricFilterModel(undefined);
 
-        if (unpackedFilterData) {
-            setMetricFilterModel(
-                modelHelpers.parseObjectIntoModel(
-                    unpackedFilterData,
-                    gitScrapperEditorPanelMetadata,
-                ),
-            );
-        }
-    }, [unpackedFilterData]);
-
-    if (metricFilterModel == null) {
-        return null;
+    if (unpackedFilterData) {
+      setMetricFilterModel(
+        modelHelpers.parseObjectIntoModel(
+            unpackedFilterData,
+            gitScrapperEditorPanelMetadata,
+        ),
+      );
     }
+  }, [unpackedFilterData]);
 
-    console.log("metric model", metricModel);
+  if (metricFilterModel == null) {
+    return null;
+  }
 
-    return (
-        <div>
-            <MetricTagFilterInput
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-            />
-            <MetricGitScraperBranchFilterInput
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-                tags={metricFilterModel?.getData("tags")}
-            />
-            <MetricDateRangeFilterInput
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-            />
-        </div>
-    );
+  return (
+    <div>
+      <MetricTagFilterInput
+        metricModel={metricModel}
+        metricFilterModel={metricFilterModel}
+        setMetricFilterModel={setMetricFilterModel}
+      />
+      <MetricGitScraperBranchFilterInput
+        metricModel={metricModel}
+        metricFilterModel={metricFilterModel}
+        setMetricFilterModel={setMetricFilterModel}
+        tags={metricFilterModel?.getData("tags")}
+      />
+      <MetricDateRangeFilterInput
+        metricModel={metricModel}
+        metricFilterModel={metricFilterModel}
+        setMetricFilterModel={setMetricFilterModel}
+      />
+    </div>
+  );
 }
 
 GitScrapperEditorPanel.propTypes = {
-    metricModel: PropTypes.object,
-    unpackedFilterData: PropTypes.object,
-    metricFilterModel: PropTypes.object,
-    setMetricFilterModel: PropTypes.func,
+  metricModel: PropTypes.object,
+  unpackedFilterData: PropTypes.object,
+  metricFilterModel: PropTypes.object,
+  setMetricFilterModel: PropTypes.func,
 };
 
 export default GitScrapperEditorPanel;
