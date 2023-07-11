@@ -27,6 +27,7 @@ import Card from "react-bootstrap/Card";
 import { faChevronUp, faChevronDown } from "@fortawesome/pro-solid-svg-icons";
 import Col from "react-bootstrap/Col";
 import DataSeedingFieldSelectionBaseEditorPanel from "./DataSeedingFieldSelectionBaseEditorPanel";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const DataSeedingFieldMappingScreen = ({
   wizardModel,
@@ -150,6 +151,16 @@ const DataSeedingFieldMappingScreen = ({
       setIsSaving(true);
       wizardModel.setData("queryFilters", []);
       wizardModel.setData("filterQuery", "");
+
+      // Get Filterable Field List and save it to filteredFieldList
+      const filterableFieldsList = await dataSeedingTaskWizardActions.getFilterableFieldsList(
+        getAccessToken,
+        null,
+        wizardModel,
+        );
+
+      const finalFilterableFieldsList = DataParsingHelper.parseArray(filterableFieldsList?.data?.message, false, true);
+
       const formattedFieldList = fieldsPropertiesList.reduce((list, item) => {
         list[item.name] = item.fieldList;
         return list;
@@ -157,18 +168,12 @@ const DataSeedingFieldMappingScreen = ({
       delete formattedFieldList["fieldList"];
 
       // console.log(formattedFieldList);
-
-      let finalSelectedFields = fieldsPropertiesList.find((obj) => obj.name === wizardModel?.getData("selectedCustomSetting")?.componentName);
       let newDataObject = { ...wizardModel };
-
-      const query = `SELECT ${finalSelectedFields?.fieldList
-        ?.map((ele) => ele.name)
-        .join(", ")} FROM ${
+      const query = `SELECT Id FROM ${
         wizardModel?.getData("selectedCustomSetting")?.componentName
       }`;
-
-      // console.log(query);
-      newDataObject.setData("filteredFieldList", finalSelectedFields?.fieldList);
+      // newDataObject.setData("filteredFieldList", finalSelectedFields?.fieldList);
+      newDataObject.setData("filteredFieldList", finalFilterableFieldsList);
       newDataObject.setData("filterQuery", query);
       setWizardModel({ ...newDataObject });
 
