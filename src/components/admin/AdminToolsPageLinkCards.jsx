@@ -10,8 +10,6 @@ import SiteNotificationManagementPageLinkCard
   from "components/admin/site_notifications/SiteNotificationManagementPageLinkCard";
 import LdapOrganizationManagementPageLinkCard
   from "components/admin/accounts/ldap/organizations/LdapOrganizationManagementPageLinkCard";
-import LdapCustomerOnboardingPageLinkCard
-  from "components/admin/accounts/ldap/customer_onboard/LdapCustomerOnboardingPageLinkCard";
 import PipelineTemplateManagementPageLinkCard
   from "components/admin/pipeline_templates/PipelineTemplateManagementPageLinkCard";
 import ToolManagementPageLinkCard from "components/admin/tools/ToolManagementPageLinkCard";
@@ -26,52 +24,60 @@ import OrganizationSettingsManagementPageLinkCard
   from "components/admin/organization_settings/OrganizationSettingsManagementPageLinkCard";
 import RemoteApplicationManagementPageLinkCard
   from "components/admin/remote_applications/RemoteApplicationManagementPageLinkCard";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
 function AdminToolsPageLinkCards({accessRoleData}) {
   return (
     <div className={"mx-2"}>
-      <ApiConnectionDemoPageLinkCard
-        accessRoleData={accessRoleData}
-      />
-      <CustomEnvironmentVariableManagementPageLinkCard
-        accessRoleData={accessRoleData}
-      />
-      <LdapCustomerOnboardingPageLinkCard
-        accessRoleData={accessRoleData}
-      />
-      <KpiIdentifierManagementPageLinkCard
-        accessRoleData={accessRoleData}
-      />
-      <LdapOrganizationManagementPageLinkCard
-        accessRoleData={accessRoleData}
+      <H5FieldSubHeader
+        subheaderText={"Opsera User and LDAP Settings"}
       />
       <OrganizationSettingsManagementPageLinkCard />
-      <PipelineStorageManagementPageLinkCard
+      <LdapOrganizationManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
       <RegisteredUsersManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
+
+      <H5FieldSubHeader
+        subheaderText={"Platform Settings"}
+      />
+      <CustomEnvironmentVariableManagementPageLinkCard
+        accessRoleData={accessRoleData}
+      />
+      <PlatformSystemParameterManagementPageLinkCard />
+      <PlatformSettingsManagementPageLinkCard />
       <SiteNotificationManagementPageLinkCard
+        accessRoleData={accessRoleData}
+      />
+
+      <H5FieldSubHeader
+        subheaderText={"Platform Data Entry"}
+      />
+      <KpiIdentifierManagementPageLinkCard
+        accessRoleData={accessRoleData}
+      />
+      <PipelineStorageManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
       <PipelineTemplateManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
-      <PlatformSettingsManagementPageLinkCard />
-      <PlatformSystemParameterManagementPageLinkCard />
+      <RemoteApplicationManagementPageLinkCard
+      />
       <TaskTemplateManagementPageLinkCard />
       <ToolManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
-      <RemoteApplicationManagementPageLinkCard />
 
-      {/*TODO: These are left here for legacy reasons but will need to be fixed and have cards created if we want them visible.*/}
-      {/* <BreadcrumbPageLink breadcrumbDestination={"systemStatus"} /> */}
-      {/*<BreadcrumbPageLink breadcrumbDestination={"systemHealthCheck"} />*/}
-      {/*<BreadcrumbPageLink breadcrumbDestination={"deprecatedReports"} />*/}
-      {/*<BreadcrumbPageLink breadcrumbDestination={"reportsRegistration"} />*/}
-      {/*<BreadcrumbPageLink breadcrumbDestination={"systemManagement"} />*/}
+      <H5FieldSubHeader
+        subheaderText={"Platform Analysis"}
+      />
+      <ApiConnectionDemoPageLinkCard
+        accessRoleData={accessRoleData}
+      />
+
     </div>
   );
 }
