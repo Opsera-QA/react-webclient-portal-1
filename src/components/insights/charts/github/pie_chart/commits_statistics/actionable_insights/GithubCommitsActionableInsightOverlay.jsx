@@ -91,7 +91,7 @@ function GithubCommitsActionableInsightOverlay({
         />
         <CustomTab
           activeTab={activeTab}
-          tabText={"Declined Pull Requests"}
+          tabText={"Closed Pull Requests"}
           handleTabClick={handleTabClick}
           tabName={"closed"}
           icon={faCodePullRequestClosed}

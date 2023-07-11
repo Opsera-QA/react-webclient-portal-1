@@ -5,16 +5,11 @@ import GithubCommitsActionableMetadata from "../github-commits-actionable-insigh
 import { getTableDateTimeColumn, getTableTextColumn, getExternalLinkIconColumnDefinition} from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
-import ExportGithubCommitsButton from "../export/ExportGithubCommitsButton";
-import ExportOpenPanel from "../export/ExportOpenPanel";
-import ExportDeclinedPanel from "../export/ExportDeclinedPanel";
-import ExportMergedPanel from "../export/ExportMergedPanel";
 
 function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filterModel, setFilterModel, title, type, tableTitleIcon }) {
   const fields = GithubCommitsActionableMetadata.fields;
   const tableTitle = "Github " + title + " Report";
   const noDataMessage = "Github " + title + " report is currently unavailable at this time";
-  const [showExportPanel, setShowExportPanel] = useState(false);
 
 
   const columns = useMemo(
@@ -56,34 +51,6 @@ function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filter
   );
 
   const getTable = () => {
-      if (showExportPanel === true && type === "open") {
-          return (
-              <ExportOpenPanel
-                  showExportPanel={showExportPanel}
-                  setShowExportPanel={setShowExportPanel}
-                  LookupDetailsData={data}
-              />
-          );
-      }
-      else if (showExportPanel === true && type === "declined"){
-          return (
-              <ExportDeclinedPanel
-                  showExportPanel={showExportPanel}
-                  setShowExportPanel={setShowExportPanel}
-                  LookupDetailsData={data}
-              />
-          );
-      }
-      else if (showExportPanel === true && type === "merged"){
-          return (
-              <ExportMergedPanel
-                  showExportPanel={showExportPanel}
-                  setShowExportPanel={setShowExportPanel}
-                  LookupDetailsData={data}
-              />
-          );
-      }
-
     return (
       <CustomTable
         isLoading={isLoading}
@@ -107,13 +74,6 @@ function GithubCommitsActionableInsightTable({ data, isLoading, loadData, filter
       loadData={loadData}
       setFilterDto={setFilterModel}
       filterDto={filterModel}
-      exportButton={
-          <ExportGithubCommitsButton
-              className={"ml-2"}
-              setShowExportPanel={setShowExportPanel}
-              showExportPanel={showExportPanel}
-          />
-      }
     />
   );
 }

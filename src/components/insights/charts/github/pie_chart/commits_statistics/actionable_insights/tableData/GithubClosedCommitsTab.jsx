@@ -96,8 +96,8 @@ function GithubClosedCommitsTab({ repository, dashboardData, kpiConfiguration, i
         loadData={loadData}
         filterModel={filterModel}
         setFilterModel={setFilterModel}
-        title={"Declined Pull Requests" }
-        type={"declined"}
+        title={type === "declinedPie" ? "Declined Pull Requests" : "Closed Pull Requests"}
+        type={type === "declinedPie" ? "declined" : "closed"}
         tableTitleIcon={icon}
       />
     </div>
