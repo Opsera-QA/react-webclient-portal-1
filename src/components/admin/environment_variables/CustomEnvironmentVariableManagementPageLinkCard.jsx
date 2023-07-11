@@ -1,9 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
 import BreadcrumbPageLinkCard from "components/common/card/link/BreadcrumbPageLinkCard";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function CustomEnvironmentVariableManagementPageLinkCard({accessRoleData}) {
-  if (accessRoleData?.OpseraAdministrator !== true) {
+export default function CustomEnvironmentVariableManagementPageLinkCard() {
+  const { isOpseraAdministrator } = useComponentStateReference();
+
+  if (isOpseraAdministrator !== true) {
     return null;
   }
 
@@ -14,8 +16,4 @@ function CustomEnvironmentVariableManagementPageLinkCard({accessRoleData}) {
   );
 }
 
-CustomEnvironmentVariableManagementPageLinkCard.propTypes = {
-  accessRoleData: PropTypes.object,
-};
-
-export default CustomEnvironmentVariableManagementPageLinkCard;
+CustomEnvironmentVariableManagementPageLinkCard.propTypes = {};

@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import ApiConnectionDemoPageLinkCard from "components/admin/api_demo/ApiConnectionDemoPageLinkCard";
 import KpiIdentifierManagementPageLinkCard from "components/admin/kpi_identifiers/KpiIdentifierManagementPageLinkCard";
 import PipelineStorageManagementPageLinkCard
@@ -26,64 +25,40 @@ import RemoteApplicationManagementPageLinkCard
   from "components/admin/remote_applications/RemoteApplicationManagementPageLinkCard";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
-function AdminToolsPageLinkCards({accessRoleData}) {
+export default function AdminToolsPageLinkCards() {
   return (
     <div className={"mx-2"}>
       <H5FieldSubHeader
         subheaderText={"Opsera User and LDAP Settings"}
       />
       <OrganizationSettingsManagementPageLinkCard />
-      <LdapOrganizationManagementPageLinkCard
-        accessRoleData={accessRoleData}
-      />
-      <RegisteredUsersManagementPageLinkCard
-        accessRoleData={accessRoleData}
-      />
+      <LdapOrganizationManagementPageLinkCard />
+      <RegisteredUsersManagementPageLinkCard />
 
       <H5FieldSubHeader
         subheaderText={"Platform Settings"}
       />
-      <CustomEnvironmentVariableManagementPageLinkCard
-        accessRoleData={accessRoleData}
-      />
+      <CustomEnvironmentVariableManagementPageLinkCard />
       <PlatformSystemParameterManagementPageLinkCard />
       <PlatformSettingsManagementPageLinkCard />
-      <SiteNotificationManagementPageLinkCard
-        accessRoleData={accessRoleData}
-      />
+      <SiteNotificationManagementPageLinkCard />
 
       <H5FieldSubHeader
         subheaderText={"Platform Data Entry"}
       />
-      <KpiIdentifierManagementPageLinkCard
-        accessRoleData={accessRoleData}
-      />
-      <PipelineStorageManagementPageLinkCard
-        accessRoleData={accessRoleData}
-      />
-      <PipelineTemplateManagementPageLinkCard
-        accessRoleData={accessRoleData}
-      />
-      <RemoteApplicationManagementPageLinkCard
-      />
+      <KpiIdentifierManagementPageLinkCard />
+      <PipelineStorageManagementPageLinkCard />
+      <PipelineTemplateManagementPageLinkCard />
+      <RemoteApplicationManagementPageLinkCard />
       <TaskTemplateManagementPageLinkCard />
-      <ToolManagementPageLinkCard
-        accessRoleData={accessRoleData}
-      />
+      <ToolManagementPageLinkCard />
 
       <H5FieldSubHeader
         subheaderText={"Platform Analysis"}
       />
-      <ApiConnectionDemoPageLinkCard
-        accessRoleData={accessRoleData}
-      />
-
+      <ApiConnectionDemoPageLinkCard />
     </div>
   );
 }
 
-AdminToolsPageLinkCards.propTypes = {
-  accessRoleData: PropTypes.object,
-};
-
-export default AdminToolsPageLinkCards;
+AdminToolsPageLinkCards.propTypes = {};
