@@ -29,7 +29,7 @@ export default function AdminToolsPageLinkCards() {
   return (
     <div className={"mx-2"}>
       <H5FieldSubHeader
-        subheaderText={"Opsera User and LDAP Settings"}
+        subheaderText={"User and Organization Settings"}
       />
       <OrganizationSettingsManagementPageLinkCard />
       <LdapOrganizationManagementPageLinkCard />
