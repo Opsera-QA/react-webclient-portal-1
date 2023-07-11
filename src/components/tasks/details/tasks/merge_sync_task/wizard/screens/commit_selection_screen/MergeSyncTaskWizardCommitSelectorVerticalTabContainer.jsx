@@ -71,7 +71,7 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
       newWizardModel?.setData("conflictFilesList", res);
       setWizardModel({ ...newWizardModel });
     }
-  }, [wizardModel?.getData('updatedFileList')])
+  }, [wizardModel?.getData('updatedFileList')]);
 
   const handleTabClick = (newTab) => {
     if (newTab !== activeTab) {
@@ -132,7 +132,7 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
 
   const getVerticalTabContainer = () => {
     if (Array.isArray(diffFileList) && diffFileList.length > 0) {
-      let j = 0
+      let j = 0;
       for (let i = 0; i < diffFileList.length; i++) {
         if (diffFileList[i].commitAction === 'conflict') {
           let [a] = diffFileList.splice(i, 1);

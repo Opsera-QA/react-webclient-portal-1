@@ -59,7 +59,7 @@ const MergeSyncTaskWizardConfirmationScreen = (
         </Col>
       );
     }
-  }
+  };
 
   return (
     <div>

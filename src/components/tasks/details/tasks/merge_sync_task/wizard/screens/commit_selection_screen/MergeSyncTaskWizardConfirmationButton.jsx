@@ -23,7 +23,7 @@ function MergeSyncTaskWizardConfirmationButton(
   const relocateToConfirmationScreen = async () => {
     if (wizardModel?.getArrayData("updatedFileList") && wizardModel?.getArrayData("updatedFileList").length === 0 && diffFileList.every(item => item.commitAction === 'unmodified')) {
       toastContext.showInlineErrorMessage("There is no diff between any of the files selected.");
-      return
+      return;
     }
     if (setCurrentScreen) {
       setCurrentScreen(MERGE_SYNC_WIZARD_SCREENS.CONFIRMATION_SCREEN);
