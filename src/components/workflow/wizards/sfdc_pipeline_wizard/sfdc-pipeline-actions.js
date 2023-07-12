@@ -378,6 +378,19 @@ sfdcPipelineActions.setXmlFileContentsV2 = async (getAccessToken, cancelTokenSou
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+
+
+sfdcPipelineActions.setdestructiveXmlV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const postBody = {
+    packageXml: pipelineWizardModel?.getData("destructiveXml"),
+    isTranslations: pipelineWizardModel.getData("isTranslations"),
+  };
+
+  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/set_destructive_xml_file_contents`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+
 sfdcPipelineActions.setUploadedCsvFileListV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const postBody = {
     selectedFileList: pipelineWizardModel?.getData("csvFileContent"),

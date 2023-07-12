@@ -9,7 +9,7 @@ import axios from "axios";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 
-function SfdcPipelineWizardSubmitFileTypeButton({pipelineWizardModel, setPipelineWizardScreen, size, className, icon, isLoading, isXml}) {
+function SfdcPipelineWizardSubmitFileTypeButton({pipelineWizardModel, setPipelineWizardScreen, size, className, icon, isLoading, isXml,isCsv}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
@@ -38,9 +38,13 @@ function SfdcPipelineWizardSubmitFileTypeButton({pipelineWizardModel, setPipelin
       if (isXml) {
         await sfdcPipelineActions.setXmlFileContentsV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
         setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER);
-      } else {
+      } else if(isCsv){
         await sfdcPipelineActions.setUploadedCsvFileListV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
         setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER);
+      }
+      else{
+        await sfdcPipelineActions.setdestructiveXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+        setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.XML_VIEWER);
       }
     } catch (error) {
       console.error(error);
@@ -82,6 +86,7 @@ SfdcPipelineWizardSubmitFileTypeButton.propTypes = {
   className: PropTypes.string,
   isLoading: PropTypes.bool,
   isXml: PropTypes.bool,
+  isCsv: PropTypes.bool,
 };
 
 SfdcPipelineWizardSubmitFileTypeButton.defaultProps = {

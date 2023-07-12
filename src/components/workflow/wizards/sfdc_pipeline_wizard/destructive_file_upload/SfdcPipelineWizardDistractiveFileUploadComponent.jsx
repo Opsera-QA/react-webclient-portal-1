@@ -1,11 +1,7 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import PropTypes from 'prop-types'
-import ErrorDialog from "components/common/status_notifications/error";
-import {csvStringToObj} from "components/common/helpers/string-helpers";
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import './disfileupload.css';
 import {Button} from 'react-bootstrap';
-import { getTableTextColumn } from "components/common/table/table-column-helpers-v2";
-import { getField } from "components/common/metadata/metadata-helpers";
 import PipelineWizardFileUploadMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/pipeline-wizard-file-upload-metadata.js";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import SfdcPipelineWizardSubmitFileTypeButton
@@ -25,7 +21,6 @@ import SfdcPipelineWizardUploadComponentSummary
   from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardUploadComponentSummary";
 
 const SfdcPipelineWizardDistractiveFileUploadComponent = ({pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) => {
-    const fields = PipelineWizardFileUploadMetadata.fields;
     const fileInputRef = useRef();
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [validFiles, setValidFiles] = useState([]);
@@ -33,9 +28,10 @@ const SfdcPipelineWizardDistractiveFileUploadComponent = ({pipelineWizardModel, 
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [save, setSave] = useState(false);
-
+    const [desxml,setDesxml] = useState([]);
 
     useEffect(()=>{
+      resetStoredFileContents();
       let filteredArr = selectedFiles.reduce((acc, current) => {
         const x = acc.find(item => item.name === current.name);
         if (!x) {
@@ -45,20 +41,32 @@ const SfdcPipelineWizardDistractiveFileUploadComponent = ({pipelineWizardModel, 
         }
       }, []);
       setValidFiles([...filteredArr]);
-    },[selectedFiles])
+    },[selectedFiles]);
 
-
-    const fileInputClicked = () => {
-      fileInputRef.current.click();
-    };
+  const resetStoredFileContents=()=>{
+      let newDataObject = {...pipelineWizardModel};
+      newDataObject.setData("destructiveXml","");
+      newDataObject.setData("isXml",false);
+      newDataObject.setData("modifiedFilesOrigin",(pipelineWizardModel.getData('isOrgToOrg') || pipelineWizardModel.getData("fromGitTasks")) ? "sfdc" : "git");
+      setDesxml([]);
+      setPipelineWizardModel({...newDataObject});
+  };
+    
     const filesSelected = () => {
       if (fileInputRef.current.files.length) {
         handleFiles(fileInputRef.current.files);
       }
     };
 
+    const fileInputClicked = () => {
+      fileInputRef.current.click();
+    };
+
+
+    // handling the file which is selected/uploaded
     const handleFiles = (files) => {
       setError(false);
+      resetStoredFileContents();
       setSelectedFiles([]);
       setErrorMessage('');
       setUnsupportedFiles([]);
@@ -76,7 +84,11 @@ const SfdcPipelineWizardDistractiveFileUploadComponent = ({pipelineWizardModel, 
       }
     };
 
+    // checking and validating the file
     const validateFile = (file) => {
+       let newDataObject = {...pipelineWizardModel};
+        newDataObject.setData("destructiveXml", file?.type === "text/xml");
+        setPipelineWizardModel({...newDataObject});
       const validSize = 500000; // 500KB
       if (file.size > validSize) {
         return false;
@@ -85,6 +97,7 @@ const SfdcPipelineWizardDistractiveFileUploadComponent = ({pipelineWizardModel, 
       return true;
     };
   
+    // comparing the file size and validating it
     const fileSize = (size) => {
       if (size === 0) {
         return '0 Bytes';
@@ -94,14 +107,16 @@ const SfdcPipelineWizardDistractiveFileUploadComponent = ({pipelineWizardModel, 
       const i = Math.floor(Math.log(size) / Math.log(k));
       return parseFloat((size / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     };
-  
+
+    //verifing the file type 
     const fileType = (fileName) => {
       return fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length).toUpperCase() || fileName;
     };
 
-
+    // Deleting the file selected file
     const removeFile = () => {
       setError(false);
+      resetStoredFileContents();
       setSelectedFiles([]);
       setErrorMessage('');
       setUnsupportedFiles([]);
@@ -113,18 +128,17 @@ const SfdcPipelineWizardDistractiveFileUploadComponent = ({pipelineWizardModel, 
 
     const validateXMLObj = (obj) => {
       setSave(true);
+      setDesxml([]);
       let newDataObject = {...pipelineWizardModel};
-      newDataObject.setData("xmlFileContent", obj);
-      newDataObject.setData("csvFileContent", []);
+      newDataObject.setData("destructiveXml", obj);
       newDataObject.setData("isXml", true);
-      newDataObject.setData("isCsv", false);
       setPipelineWizardModel({...newDataObject});
       setSave(false);
-    };
-
+    }; 
+// have to work on both validatexmlObj and remove files
     
   const validateFiles = async () => {
-    // read the csv file and send string to node
+    // read the xml file and send string to node
     const file = validFiles[0];
     const reader = new FileReader();
     reader.onload = async (evt) => {
@@ -139,45 +153,32 @@ const SfdcPipelineWizardDistractiveFileUploadComponent = ({pipelineWizardModel, 
   };
 
   const getXMLView = () => {
+    if (pipelineWizardModel.getData("destructiveXml") && pipelineWizardModel.getData("destructiveXml").length > 0 ){
       return (
         <>
-          <PackageXmlFieldBase fieldName={"xmlFileContent"} model={pipelineWizardModel}/>
+          <PackageXmlFieldBase fieldName={"destructiveXml"} model={pipelineWizardModel}/>
           {buttonContainer()}
         </>
       );
+    }
   };
 
   const buttonContainer = () => {
     return (
       <SaveButtonContainer>
-        <SfdcPipelineWizardSubmitFileTypeButton
+       <SfdcPipelineWizardSubmitFileTypeButton
           pipelineWizardModel={pipelineWizardModel}
           setPipelineWizardScreen={setPipelineWizardScreen}
-          isXml={pipelineWizardModel?.getData("isXml")}
+          destructiveXml={pipelineWizardModel?.getData("destructiveXml")}
         />
         <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
       </SaveButtonContainer>
     );
   };
 
-  const columns = useMemo(
-    () => [
-      getTableTextColumn(getField(fields, "commitAction")),
-      getTableTextColumn(getField(fields, "componentType")),
-      getTableTextColumn(getField(fields, "componentName")),
-    ],
-    [fields]
-  );
-  const getTable = () => {
-    return (
-      <VanityTable
-        tableHeight={"250px"}
-        columns={columns}
-        data={csvData}
-      />
-    );
-  };
+
   const getFileUploadBody = () => {
+    if(pipelineWizardModel.getData("destructiveXml").length === 0 ){
       return (
         <div className="destructive-container"
           onClick={fileInputClicked}
@@ -196,7 +197,8 @@ const SfdcPipelineWizardDistractiveFileUploadComponent = ({pipelineWizardModel, 
             />
         </div>
       );
-  }
+    }
+  };
 
   const getFilesBody = () => {
     if (Array.isArray(validFiles) && validFiles.length > 0) {
@@ -215,32 +217,55 @@ const SfdcPipelineWizardDistractiveFileUploadComponent = ({pipelineWizardModel, 
       );
     }
   };
+
+
+  const getDependenciesToggle = () => {
+    if (pipelineWizardModel?.getData("isOrgToOrg") === false) {
+      return (
+        <SfdcPipelineWizardIncludeDependenciesToggle
+          pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardModel={setPipelineWizardModel}
+        />
+      );
+    }
+  };
+  
+  const getTranslationsToggle = () => {
+    if (pipelineWizardModel?.getData("isProfiles") === true) {
+      return (
+        <SfdcPipelineWizardTranslationToggleInput
+            pipelineWizardModel={pipelineWizardModel}
+            setPipelineWizardModel={setPipelineWizardModel}
+          />
+      );
+    }
+  };
+
   const getValidateButton = () => {
-    if (unsupportedFiles.length === 0 && validFiles.length>=0) {
+    if (unsupportedFiles.length === 0 && validFiles.length && pipelineWizardModel.getData("destructiveXml").length === 0) {
       return (
         <Button variant="primary" className={"mt-3"} onClick={() => validateFiles()}>Process File</Button>
       );
     }
   };
-
-  console.log("hurray selected",selectedFiles)
-  console.log("valid",validFiles);
   return (
     <div>
-          {getFileUploadBody()}
-          { getFilesBody() }
           <div>
-            {getXMLView()}
+            {getFileUploadBody()}
+            {getFilesBody()}
             {getValidateButton()}
           </div>
+            {getDependenciesToggle()}
+            {getTranslationsToggle()}
+            {getXMLView()}
     </div>
-  )
-}
+  );
+};
 
 SfdcPipelineWizardDistractiveFileUploadComponent.propTypes = {
-    pipelineWizardModel: PropTypes.object,
-    setPipelineWizardModel: PropTypes.func,
-    setPipelineWizardScreen : PropTypes.func,
-    handleClose : PropTypes.func,
+  pipelineWizardModel: PropTypes.object,
+  setPipelineWizardModel: PropTypes.func,
+  setPipelineWizardScreen : PropTypes.func,
+  handleClose : PropTypes.func,
   };
-export default SfdcPipelineWizardDistractiveFileUploadComponent
+export default SfdcPipelineWizardDistractiveFileUploadComponent;

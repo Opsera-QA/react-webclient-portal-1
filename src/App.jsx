@@ -20,12 +20,17 @@ import "temp-library-components/scss/opsera-theme.scss";
 import "temp-library-components/scss/sub-menu.scss";
 import "assets/scss/fonts.scss";
 import "@okta/okta-signin-widget/dist/css/okta-sign-in.min.css";
+// import SfdcPipelineWizardDistractiveFileUploadComponent from "components/workflow/wizards/sfdc_pipeline_wizard/destructive_file_upload/SfdcPipelineWizardDistractiveFileUploadComponent";
 
 const App = () => {
   return (
     <Router>
       <AppWithRouterAccess/>
     </Router>
+
+    // <div>
+    //   <SfdcPipelineWizardDistractiveFileUploadComponent/>
+    // </div>
   );
 };
 
