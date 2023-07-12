@@ -37,6 +37,8 @@ import PipelineStepCardBottomActionBar
   from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepCardBottomActionBar";
 import {getLargeVendorIconFromToolIdentifier} from "components/common/helpers/icon-helpers";
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
+import PipelineStepCardHeader
+  from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepCardHeader";
 
 const PipelineWorkflowItem = (
   {
@@ -187,22 +189,6 @@ const PipelineWorkflowItem = (
     }
   };
 
-  // TODO: Make separate component
-  const getStepDefinitionEditButton = () => {
-    const mongoDbId = DataParsingHelper.parseMongoDbId(item?._id);
-
-    if (mongoDbId && (editWorkflow || !isToolSet)) {
-      return (
-        <OverlayIconBase
-          icon={faPen}
-          className={"text-muted ml-2"}
-          overlayBody={"Step Setup"}
-          onClickFunction={() =>  handleEditClick("step", item.tool, item._id, item)}
-        />
-      );
-    }
-  };
-
   const getTitleBar = () => {
     const toolIdentifier = DataParsingHelper.parseNestedString(item, "tool.tool_identifier");
     const icon = getLargeVendorIconFromToolIdentifier(toolIdentifier);
@@ -241,99 +227,20 @@ const PipelineWorkflowItem = (
   return (
     <>
       <div className={"workflow-module-container-height p-1"}>
-        <div className={"title-text-6 upper-case-first ml-1 mt-1 d-flex"}>
-          <div className={"ml-auto d-flex"}>
-            <div className={"ml-auto d-flex mr-1"}>
-              <IconBase
-                isLoading={isLoading}
-                className={"green"}
-              />
-
-              {isToolSet && !editWorkflow && !isLoading &&
-              <>
-                {itemState === "failed" &&
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "View Errors" })}>
-                  <div>
-                    <IconBase icon={faTimesCircle} className={"ml-2 red pointer"}
-                              onClickFunction={() => {
-                                handleViewStepActivityLogClick(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id);
-                              }} />
-                  </div>
-                </OverlayTrigger>}
-
-                {itemState === "stopped" &&
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "The last run of this pipeline was stopped while this step was running." })}>
-                  <div>
-                    <IconBase icon={faOctagon} className={"ml-2 danger-red"}
-                              iconStyling={{ cursor: "help" }}
-                    />
-                  </div>
-                </OverlayTrigger>}
-
-                {itemState === "completed" &&
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "View last completed log" })}>
-                  <div>
-                    <IconBase icon={faCheckCircle} className={"ml-2 green pointer"}
-                              onClickFunction={() => {
-                                handleViewStepActivityLogClick(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id);
-                              }} />
-                  </div>
-                </OverlayTrigger>}
-
-                {itemState === "running" &&
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "View running step configuration" })}>
-                  <div>
-                  <IconBase icon={faSpinner} className={"ml-2 green pointer"}
-                                   spinIcon={true}
-                                   onClickFunction={() => {
-                                     handleViewStepActivityLogClick(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id);
-                                   }} />
-
-                  </div>
-                </OverlayTrigger>}
-                <PipelineStepWorkflowStepAwaitingApprovalStepIcon
-                  pipelineStepState={itemState}
-                  className={"ml-2 red"}
-                />
-                <PipelineWorkflowStepIncompleteStepIcon
-                  className={"ml-2 yellow"}
-                  pipelineStep={item}
-                />
-                <PipelineStepWorkflowStepDisabledStepIcon
-                  pipelineStep={item}
-                  className={"ml-2 dark-grey"}
-                />
-              </>
-              }
-
-              <PipelineStepWorkflowStepDeleteStepButton
-                pipeline={pipeline}
-                pipelineStep={item}
-                className={"ml-2"}
-                inWorkflowEditMode={editWorkflow}
-                loadPipelineFunction={loadPipeline}
-              />
-              {getStepDefinitionEditButton()}
-              <StepToolHelpIcon
-                iconClassName={"mb-1"}
-                className={"ml-2"}
-                tool={item?.tool?.tool_identifier}
-              />
-            </div>
-          </div>
-        </div>
+        <PipelineStepCardHeader
+          pipeline={pipeline}
+          pipelineStepId={item?._id}
+          itemState={itemState}
+          loadPipeline={loadPipeline}
+          isToolSet={isToolSet}
+          isLoading={isLoading}
+          handleEditClick={handleEditClick}
+          isEditingWorkflow={editWorkflow}
+          handleViewStepActivityLogClick={handleViewStepActivityLogClick}
+          pipelineId={pipelineId}
+          pipelineStep={item}
+          currentStatus={currentStatus}
+        />
 
         {getTitleBar()}
         <PipelineStepWorkflowItemBody
@@ -369,16 +276,6 @@ const PipelineWorkflowItem = (
     </>
   );
 };
-
-
-function renderTooltip(props) {
-  const { message } = props;
-  return (
-    <Tooltip id="button-tooltip" {...props}>
-      {message}
-    </Tooltip>
-  );
-}
 
 PipelineWorkflowItem.propTypes = {
   pipeline: PropTypes.object,

@@ -44,25 +44,25 @@ export default function PipelineWorkflowItemList(
           : "";
 
     //if operations have occurred and the step is still valid
-    if (typeof (lastStep) !== "undefined" && isStepValid) {
-      const {success, running, failed} = lastStep;
+    // if (typeof (lastStep) !== "undefined" && isStepValid) {
+    //   const {success, running, failed} = lastStep;
+    //
+    //   if (success && success.step_id === item_id) {
+    //     stepStatusClass = "workflow-step-success";
+    //   }
+    //
+    //   if (running && running.step_id === item_id) {
+    //     stepStatusClass = running.paused ? "workflow-step-warning"
+    //       : running.status === "stopped" ? "workflow-step-stopped"
+    //         : "workflow-step-running";
+    //   }
+    //
+    //   if (failed && failed.step_id === item_id) {
+    //     stepStatusClass = "workflow-step-failure";
+    //   }
+    // }
 
-      if (success && success.step_id === item_id) {
-        stepStatusClass = "workflow-step-success";
-      }
-
-      if (running && running.step_id === item_id) {
-        stepStatusClass = running.paused ? "workflow-step-warning"
-          : running.status === "stopped" ? "workflow-step-stopped"
-            : "workflow-step-running";
-      }
-
-      if (failed && failed.step_id === item_id) {
-        stepStatusClass = "workflow-step-failure";
-      }
-    }
-
-    return classString += " " + stepStatusClass;
+    return `${classString} ${stepStatusClass}`;
   };
 
   return (

@@ -75,6 +75,25 @@ pipelineHelper.getPipelineLastStepStatus = (pipeline) => {
   return status;
 };
 
+pipelineHelper.getStepStatusForPipeline = (pipeline, pipelineStepId,) => {
+  const lastStepSuccessId = DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.success.step_id");
+  const lastStepRunningStepId = DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.running.step_id");
+  const isPaused = lastStepRunningStepId && DataParsingHelper.safeObjectPropertyParser(pipeline, "workflow.last_step.running.paused");
+  const lastStepFailedId = DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.failed.step_id");
+
+  if (lastStepFailedId === pipelineStepId) {
+    return "failed";
+  } else if (isPaused === true) {
+    return "paused";
+  } else if (lastStepRunningStepId === pipelineStepId) {
+    return "running";
+  } else if (lastStepSuccessId === pipelineStepId) {
+    return "success";
+  } else {
+    return "stopped";
+  }
+};
+
 pipelineHelper.getPipelineModelOrchestrationState = (pipelineModel) => {
   const state = pipelineModel?.getData("state");
   const lastRunState = pipelineModel?.getData("workflow.last_run.status");
