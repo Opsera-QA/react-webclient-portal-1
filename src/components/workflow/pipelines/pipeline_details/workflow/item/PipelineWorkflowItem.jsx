@@ -22,12 +22,8 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import PipelineStepWorkflowItemBody
   from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepWorkflowItemBody";
-import PipelineStepWorkflowItemViewSettingsButton
-  from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowItemViewSettingsButton";
 import PipelineStepActivityLogOverlay
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineStepActivityLogOverlay";
-import PipelineStepWorkflowItemEditNotificationSettingsButton
-  from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowItemEditNotificationSettingsButton";
 import AccessDeniedOverlayBase from "components/common/overlays/center/denied/AccessDeniedOverlayBase";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 import PipelineStepWorkflowStepDeleteStepButton
