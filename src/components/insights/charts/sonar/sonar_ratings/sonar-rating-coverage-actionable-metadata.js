@@ -39,7 +39,7 @@ const SonarCoverageTableMetadata = {
       id: "lines_to_cover",
     },
     {
-      label: "Uncovered Lines",
+      label: "Total Issues",
       id: "uncovered_lines",
     },
   ],

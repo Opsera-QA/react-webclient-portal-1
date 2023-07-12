@@ -13,6 +13,7 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
+import {useHistory} from "react-router-dom";
 
 // TODO: Convert to cards
 function SonarRatingCodeCoverageActionableInsightTable(
@@ -23,10 +24,10 @@ function SonarRatingCodeCoverageActionableInsightTable(
     filterModel,
     setFilterModel,
   }) {
-  console.log("cover", coverageData);
   const toastContext = useContext(DialogToastContext);
   const noDataMessage = "Sonar Code Coverage report is currently unavailable at this time";
   const fields = SonarCoverageTableMetadata.fields;
+  let history = useHistory();
 
   // TODO: Handle colors with rules after written
   const getKpiSonarPipelineTableTextColumn = (field, block) => {
@@ -68,21 +69,24 @@ function SonarRatingCodeCoverageActionableInsightTable(
       getKpiSonarPipelineTableTextColumn(getField(fields, "pipelineName")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "runCount")),
       getKpiSonarPipelineTableTextColumn(getField(fields, "timestamp")),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "duplicate_lines")),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "duplicated_lines_density")),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "coverage")),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "tests")),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "lines_to_cover")),
-      getKpiSonarPipelineTableTextColumn(getField(fields, "uncovered_lines")),
-      getTableTextColumnWithoutField("Actions", "_blueprint", "text-center"),
+      //getKpiSonarPipelineTableTextColumn(getField(fields, "duplicate_lines")),
+      // getKpiSonarPipelineTableTextColumn(getField(fields, "duplicated_lines_density")),
+      // getKpiSonarPipelineTableTextColumn(getField(fields, "coverage")),
+      // getKpiSonarPipelineTableTextColumn(getField(fields, "tests")),
+      //getKpiSonarPipelineTableTextColumn(getField(fields, "lines_to_cover")),
+      // getKpiSonarPipelineTableTextColumn(getField(fields, "uncovered_lines")),
+      //getTableTextColumnWithoutField("Actions", "_blueprint", "text-center"),
     ],
     []
   );
 
   const onRowSelect = (rowData) => {
-    toastContext.showOverlayPanel(
-      <BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.runCount}/>
-    );
+    const row = rowData?.original;
+    const projectId = row?._id;
+    const toolId = row?.toolId;
+
+    toastContext.clearOverlayPanel();
+    history.push(`/insights/reports/scans/sonar/${projectId}/${toolId}`);
   };
 
   const getTable = () => {
