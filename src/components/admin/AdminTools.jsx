@@ -7,18 +7,10 @@ import AdministrationToolsHelpDocumentation
 import FreeTrialAdminToolsPageLinkCards from "components/admin/FreeTrialAdminToolsPageLinkCards";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-function AdminTools() {
-  const {
-    accessRoleData,
-    toastContext,
-    isOpseraAdministrator,
-  } = useComponentStateReference();
+export default function AdminTools() {
+  const { isOpseraAdministrator,} = useComponentStateReference();
 
   useEffect(() => {}, []);
-
-  const getHelpComponent = () => {
-    return (<AdministrationToolsHelpDocumentation/>);
-  };
 
   if (isOpseraAdministrator !== true) {
     return null;
@@ -28,15 +20,11 @@ function AdminTools() {
     <ScreenContainer
       breadcrumbDestination={"admin"}
       pageDescription={"Listed below are administration tools for the platform."}
-      helpComponent={getHelpComponent()}
+      helpComponent={<AdministrationToolsHelpDocumentation />}
       navigationTabContainer={<AdminToolsSubNavigationBar activeTab={"adminTools"} />}
     >
-      <AdminToolsPageLinkCards
-        accessRoleData={accessRoleData}
-      />
+      <AdminToolsPageLinkCards />
       <FreeTrialAdminToolsPageLinkCards />
     </ScreenContainer>
   );
 }
-
-export default AdminTools;
