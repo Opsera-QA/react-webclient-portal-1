@@ -4,12 +4,14 @@ import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayB
 import useComponentStateReference from "../../../../../hooks/useComponentStateReference";
 
 
-function AccountSettingsHelpDocumentation() {
+function PlatformSettingsHelpDocumentation() {
   const {
     isSiteAdministrator,
     isOpseraAdministrator,
     isPowerUser,
     isSaasUser,
+    isSecurityManager,
+    isAuditor,
     toastContext,
   } = useComponentStateReference();
 
@@ -78,7 +80,7 @@ function AccountSettingsHelpDocumentation() {
       && isSaasUser !== true
     ) {
       return (
-        <li><b>Site Roles</b> - Manage the following Site Roles levels: Administrators, Power Users and Users. View <b><a href="https://docs.opsera.io/role-based-access-pipelines-and-tool-registry" target="_blank" rel="noreferrer">Site Roles Help Documentation</a></b>. </li>
+        <li><b>Site Roles</b> - Manage the following Site Roles levels: Administrators, Power Users, Users, Security Managers and Auditors. View <b><a href="https://docs.opsera.io/role-based-access-pipelines-and-tool-registry" target="_blank" rel="noreferrer">Site Roles Help Documentation</a></b>. </li>
       );
     }
   };
@@ -123,7 +125,7 @@ function AccountSettingsHelpDocumentation() {
 
   const getHelpDocumentation = () => {
     return (
-      <div>Administrators and Power Users can manage account settings from this dashboard.
+      <div>Administrators can manage account settings from this dashboard. Auditors, Security Managers and Power Users have read-only access.
         <div className={"mt-2"}>
           <ul style={{listStyleType: "none"}}>
             {getDeleteToolChainsHelpInformation()}
@@ -152,4 +154,4 @@ function AccountSettingsHelpDocumentation() {
   );
 }
 
-export default React.memo(AccountSettingsHelpDocumentation);
+export default React.memo(PlatformSettingsHelpDocumentation);
