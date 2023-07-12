@@ -159,9 +159,9 @@ export default function PipelineStepWorkflowItemBody(
 
     return (
       <>
-        <PipelineWorkflowStepIdField
-          step={step}
-        />
+        {/*<PipelineWorkflowStepIdField*/}
+        {/*  step={step}*/}
+        {/*/>*/}
         <PipelineWorkflowStepToolIdentifierField
           toolIdentifier={toolIdentifier}
         />

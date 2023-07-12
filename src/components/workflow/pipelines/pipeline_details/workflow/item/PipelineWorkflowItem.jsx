@@ -35,6 +35,8 @@ import PipelineStepWorkflowStepAwaitingApprovalStepIcon
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import PipelineStepCardBottomActionBar
   from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepCardBottomActionBar";
+import {getLargeVendorIconFromToolIdentifier} from "components/common/helpers/icon-helpers";
+import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 
 const PipelineWorkflowItem = (
   {
@@ -201,6 +203,28 @@ const PipelineWorkflowItem = (
     }
   };
 
+  const getTitleBar = () => {
+    const toolIdentifier = DataParsingHelper.parseNestedString(item, "tool.tool_identifier");
+    const icon = getLargeVendorIconFromToolIdentifier(toolIdentifier);
+    const pipelineStepName = DataParsingHelper.parseNestedString(item, "name", "Un-configured Step");
+
+    if (hasStringValue(icon) === true) {
+      return (
+        <CardIconTitleBar
+          iconString={icon}
+          title={pipelineStepName}
+        />
+      );
+    }
+
+    return (
+      <CardIconTitleBar
+        formattedIcon={icon}
+        title={pipelineStepName}
+      />
+    );
+  };
+
   if (!DataParsingHelper.parseMongoDbId(item?._id)) {
     return (
       <div className="workflow-module-container-height">
@@ -216,10 +240,8 @@ const PipelineWorkflowItem = (
 
   return (
     <>
-      <div className="workflow-module-container-height">
-        <div className="title-text-6 upper-case-first ml-1 mt-1 d-flex">
-          <div className="text-muted mr-1">{item.name || "Un-configured Step"}</div>
-
+      <div className={"workflow-module-container-height"}>
+        <div className={"title-text-6 upper-case-first ml-1 mt-1 d-flex"}>
           <div className={"ml-auto d-flex"}>
             <div className={"ml-auto d-flex mr-1"}>
               <IconBase
@@ -313,6 +335,7 @@ const PipelineWorkflowItem = (
           </div>
         </div>
 
+        {getTitleBar()}
         <PipelineStepWorkflowItemBody
           pipeline={pipeline}
           step={item}
