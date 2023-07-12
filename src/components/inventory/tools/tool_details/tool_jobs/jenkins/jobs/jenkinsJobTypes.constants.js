@@ -16,6 +16,6 @@ const jenkinsJobTypes = {
   SFDC_PUSH_ARTIFACTS: "SFDC PUSH ARTIFACTS",
   POWERSHELL_SCRIPT: "POWERSHELL SCRIPT",
   AZURE_DOCKER_PUSH: "AZURE_DOCKER_PUSH",
-}
+};
 
 export default jenkinsJobTypes;
