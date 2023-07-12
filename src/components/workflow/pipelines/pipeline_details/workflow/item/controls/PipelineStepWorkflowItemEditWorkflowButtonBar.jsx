@@ -96,7 +96,7 @@ export default function PipelineStepWorkflowItemEditWorkflowButtonBar(
 
   return (
     <div
-      className={`text-center d-flex step-plus-${index}`}
+      className={`text-center d-flex`}
       style={{
         height: "42px",
       }}

@@ -13,7 +13,7 @@ import PipelineWorkflowItemFieldBase
   from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
 
 // TODO: Implement
-export default function PipelineStepWorkflowItemBottomActionBar(
+export default function PipelineStepCardBottomActionBar(
   {
     pipeline,
     step,
@@ -28,7 +28,7 @@ export default function PipelineStepWorkflowItemBottomActionBar(
   return null;
 }
 
-PipelineStepWorkflowItemBottomActionBar.propTypes = {
+PipelineStepCardBottomActionBar.propTypes = {
   pipeline: PropTypes.object,
   step: PropTypes.object,
   toolIdentifier: PropTypes.object,
