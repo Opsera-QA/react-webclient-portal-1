@@ -5,33 +5,38 @@ import JenkinsJobTypes from "components/inventory/tools/tool_details/tool_jobs/j
 
 export const JENKINS_JOBS_GENERIC_AGENT_TYPES = [
   {
-    "name": "Ubuntu Agent",
-    "env": "linux",
-    "value": "generic-linux",
+    name: "Ubuntu Agent",
+    env: "linux",
+    value: "generic-linux",
   },
   {
-    "name": "Windows Agent",
-    "env": "windows",
-    "value": "generic-windows",
-  }
+    name: "Windows Agent",
+    env: "windows",
+    value: "generic-windows",
+  },
 ];
 
-function JenkinsJobsGenericAgentTypeSelectInput({ fieldName, model, setModel, setDataFunction, agentList, jenkinsJobType }) {
-
+function JenkinsJobsGenericAgentTypeSelectInput({
+  fieldName,
+  model,
+  setModel,
+  setDataFunction,
+  agentList,
+  jenkinsJobType,
+}) {
   const getJenkinsJobAgentTypes = () => {
-
     const JENKINS_JOBS_WINDOWS_AGENT_TYPE = [
       {
-        "name": "Windows Agent",
-        "env": "windows",
-        "value": "generic-windows",
+        name: "Windows Agent",
+        env: "windows",
+        value: "generic-windows",
       },
     ];
     const JENKINS_JOBS_UBUNTU_AGENT_TYPE = [
       {
-        "name": "Ubuntu Agent",
-        "env": "linux",
-        "value": "generic-linux",
+        name: "Ubuntu Agent",
+        env: "linux",
+        value: "generic-linux",
       },
     ];
 
@@ -70,7 +75,7 @@ function JenkinsJobsGenericAgentTypeSelectInput({ fieldName, model, setModel, se
       case JenkinsJobTypes.COVERITY:
         return JENKINS_JOBS_GENERIC_AGENT_TYPES;
     }
-  }
+  };
 
   return (
     <SelectInputBase
@@ -91,7 +96,7 @@ JenkinsJobsGenericAgentTypeSelectInput.propTypes = {
   setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
   agentList: PropTypes.array,
-  jenkinsJobType: PropTypes.string
+  jenkinsJobType: PropTypes.string,
 };
 
 JenkinsJobsGenericAgentTypeSelectInput.defaultProps = {
