@@ -175,6 +175,18 @@ function GitScrapperMetrics({
       return null;
     }
 
+    let prevScanned = 0;
+    let prevClean = 0;
+    let prevIssues = 0;
+    if (metrics[0]?.previous?.count === undefined){prevScanned = "N/A";}
+    else {prevScanned = metrics[0]?.previous?.count;}
+
+    if (metrics[0]?.previous?.cleanRepoCount === undefined){prevClean = "N/A";}
+    else {prevClean = metrics[0]?.previous?.cleanRepoCount;}
+
+    if (metrics[0]?.previous?.issueCount === undefined){prevIssues = "N/A";}
+    else {prevIssues = metrics[0]?.previous?.issueCount;}
+
     const getDataBlocks = () =>{
     return (<><Row className={'pb-1'}>
           <Col>
@@ -183,7 +195,7 @@ function GitScrapperMetrics({
                 icon={getIcon(metrics[0]?.trend?.count)}
                 className={getIconColor(metrics[0]?.trend?.count)}
                 // onSelect={() => onRowSelect({type: 'totalRepositoriesScanned', label: "Total Repositories Scanned"}")}
-                lastScore={metrics[0]?.previous?.count}
+                lastScore={prevScanned}
                 iconOverlayBody={getDescription(metrics[0]?.trend?.count)}
               />
           </Col>
@@ -199,7 +211,7 @@ function GitScrapperMetrics({
                     label: "Total Clean Repositories",
                   })
                 }
-                lastScore={metrics[0]?.previous?.cleanRepoCount}
+                lastScore={prevClean}
                 iconOverlayBody={getDescription(
                   metrics[0]?.trend?.cleanRepoCount,
                 )}
@@ -217,7 +229,7 @@ function GitScrapperMetrics({
                     label: "Total Number of Issues",
                   })
                 }
-                lastScore={metrics[0]?.previous?.issueCount}
+                lastScore={prevIssues}
                 iconOverlayBody={getDescription(metrics[0]?.trend?.issueCount)}
               />
             </Col>
