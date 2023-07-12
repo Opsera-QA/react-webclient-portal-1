@@ -17,3 +17,5 @@ function LdapCustomerOnboardingPageLinkCard() {
 }
 
 LdapCustomerOnboardingPageLinkCard.propTypes = {};
+
+export default LdapCustomerOnboardingPageLinkCard;

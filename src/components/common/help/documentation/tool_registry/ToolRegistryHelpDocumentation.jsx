@@ -15,7 +15,7 @@ function ToolRegistryHelpDocumentation() {
   const getHelpDocumentation = () => {
     return (
       <div className={"ml-2"}>
-        <div>Opsera's Tool Registry allows you to register, track and configure all of the tools in your organization in one centralized location so you can integrate them into Opsera Pipelines. For information on individual tool configuration, view the <a href="https://docs.opsera.io/tool-registry" target="_blank" rel="noreferrer"><b>Opsera Tool Registry Help Documentation</b>.</a> </div>
+        <div>Opsera&apos;s Tool Registry allows you to register, track and configure all of the tools in your organization in one centralized location so you can integrate them into Opsera Pipelines. For information on individual tool configuration, view the <a href="https://docs.opsera.io/tool-registry" target="_blank" rel="noreferrer"><b>Opsera Tool Registry Help Documentation</b>.</a> </div>
         <div className={"mt-2 ml-2"}>
           <ul>
             <li>To manage or configure an <em>existing</em> tool, locate the tool using one of the following methods: <b>Filter by Tool</b> drop-down, search bar, or with filter icon (filter by <b>Active Status</b>, <b>Tool Owner</b>, or <b>Tag</b>), then click the tool.</li>
