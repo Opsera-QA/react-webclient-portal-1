@@ -1,6 +1,15 @@
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import { faAws, faGitAlt, faMicrosoft, faSalesforce } from "@fortawesome/free-brands-svg-icons";
-import {faClipboardListCheck, faShieldKeyhole, faTasks} from "@fortawesome/pro-light-svg-icons";
+import {
+  faAws,
+  faGitAlt,
+  faMicrosoft,
+  faSalesforce,
+} from "@fortawesome/free-brands-svg-icons";
+import {
+  faClipboardListCheck,
+  faShieldKeyhole,
+  faTasks,
+} from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Rewrite to follow current standards
 export const taskTypeConstants = {};
@@ -46,6 +55,7 @@ export const TASK_TYPES = {
   SYNC_GIT_BRANCHES: "sync-git-branches",
   GIT_TO_GIT_MERGE_SYNC: "GIT_VS_GIT_SYNC",
   GITSCRAPER: "gitscraper",
+  SCM_TO_SCM_MIGRATION: "SCM_TO_SCM_MIGRATION",
 
   //AWS
   AWS_CREATE_ECS_CLUSTER: "ecs_cluster_creation",
@@ -66,13 +76,15 @@ export const TASK_TYPE_LABELS = {
   SALESFORCE_BULK_MIGRATION: "Salesforce Bulk Migration",
   SALESFORCE_TO_GIT_MERGE_SYNC: "Salesforce to Git Merge Sync",
   SALESFORCE_QUICK_DEPLOY: "Salesforce Quick Deploy",
-  SALESFORCE_CUSTOM_SETTING_MIGRATION: "Salesforce Custom Setting Migration (BETA)",
+  SALESFORCE_CUSTOM_SETTING_MIGRATION:
+    "Salesforce Custom Setting Migration (BETA)",
   SALESFORCE_DATA_SEEDING: "Salesforce Data Seeding (BETA)",
 
   // Git
   SYNC_GIT_BRANCHES: "Git to Git Sync",
   GIT_TO_GIT_MERGE_SYNC: "Git to Git Merge Sync",
   GITSCRAPER: "Git Custodian",
+  SCM_TO_SCM_MIGRATION: "SCM to SCM Migration",
 
   // AWS
   AWS_CREATE_ECS_CLUSTER: "AWS ECS Cluster Creation",
@@ -102,7 +114,6 @@ export const getTaskTypeLabel = (taskType) => {
     case TASK_TYPES.SALESFORCE_DATA_SEEDING:
       return TASK_TYPE_LABELS.SALESFORCE_DATA_SEEDING;
 
-
     // Merge Sync
     case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
       return TASK_TYPE_LABELS.SALESFORCE_TO_GIT_MERGE_SYNC;
@@ -114,6 +125,8 @@ export const getTaskTypeLabel = (taskType) => {
       return TASK_TYPE_LABELS.SYNC_GIT_BRANCHES;
     case TASK_TYPES.GITSCRAPER:
       return TASK_TYPE_LABELS.GITSCRAPER;
+    case TASK_TYPES.SCM_TO_SCM_MIGRATION:
+      return TASK_TYPE_LABELS.SCM_TO_SCM_MIGRATION;
 
     // AWS
     case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
@@ -134,7 +147,6 @@ export const getTaskTypeLabel = (taskType) => {
   }
 };
 
-
 export const TASK_TYPE_CATEGORIES = {
   AWS: "AWS",
   AZURE: "Azure",
@@ -145,17 +157,46 @@ export const TASK_TYPE_CATEGORIES = {
 
 export const PRODUCTION_TASK_TYPE_SELECT_OPTIONS = [
   // AWS
-  { text: TASK_TYPE_LABELS.AWS_CREATE_ECS_CLUSTER, value: TASK_TYPES.AWS_CREATE_ECS_CLUSTER, category: "AWS" },
-  { text: TASK_TYPE_LABELS.AWS_CREATE_ECS_SERVICE, value: TASK_TYPES.AWS_CREATE_ECS_SERVICE, category: "AWS" },
-  { text: TASK_TYPE_LABELS.AWS_CREATE_LAMBDA_FUNCTION, value: TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION, category: "AWS" },
+  {
+    text: TASK_TYPE_LABELS.AWS_CREATE_ECS_CLUSTER,
+    value: TASK_TYPES.AWS_CREATE_ECS_CLUSTER,
+    category: "AWS",
+  },
+  {
+    text: TASK_TYPE_LABELS.AWS_CREATE_ECS_SERVICE,
+    value: TASK_TYPES.AWS_CREATE_ECS_SERVICE,
+    category: "AWS",
+  },
+  {
+    text: TASK_TYPE_LABELS.AWS_CREATE_LAMBDA_FUNCTION,
+    value: TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION,
+    category: "AWS",
+  },
 
   // Azure
-  { text: TASK_TYPE_LABELS.AZURE_CLUSTER_CREATION, value: TASK_TYPES.AZURE_CLUSTER_CREATION, category: "Azure" },
+  {
+    text: TASK_TYPE_LABELS.AZURE_CLUSTER_CREATION,
+    value: TASK_TYPES.AZURE_CLUSTER_CREATION,
+    category: "Azure",
+  },
 
   // Git
-  { text: TASK_TYPE_LABELS.GIT_TO_GIT_MERGE_SYNC, value: TASK_TYPES.GIT_TO_GIT_MERGE_SYNC, category: "Git" },
+  {
+    text: TASK_TYPE_LABELS.GIT_TO_GIT_MERGE_SYNC,
+    value: TASK_TYPES.GIT_TO_GIT_MERGE_SYNC,
+    category: "Git",
+  },
+  {
+    text: TASK_TYPE_LABELS.SCM_TO_SCM_MIGRATION,
+    value: TASK_TYPES.SCM_TO_SCM_MIGRATION,
+    category: "Git",
+  },
   // { text: TASK_TYPE_LABELS.SYNC_GIT_BRANCHES, value: TASK_TYPES.SYNC_GIT_BRANCHES, category: "Git" },
-  { text: TASK_TYPE_LABELS.GITSCRAPER, value: TASK_TYPES.GITSCRAPER, category: "Compliance" },
+  {
+    text: TASK_TYPE_LABELS.GITSCRAPER,
+    value: TASK_TYPES.GITSCRAPER,
+    category: "Compliance",
+  },
 
   // Salesforce
   {
@@ -163,7 +204,11 @@ export const PRODUCTION_TASK_TYPE_SELECT_OPTIONS = [
     value: TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE,
     category: "Salesforce",
   },
-  { text: TASK_TYPE_LABELS.SYNC_SALESFORCE_REPO, value: TASK_TYPES.SYNC_SALESFORCE_REPO, category: "Salesforce" },
+  {
+    text: TASK_TYPE_LABELS.SYNC_SALESFORCE_REPO,
+    value: TASK_TYPES.SYNC_SALESFORCE_REPO,
+    category: "Salesforce",
+  },
   {
     text: TASK_TYPE_LABELS.SALESFORCE_BULK_MIGRATION,
     value: TASK_TYPES.SALESFORCE_BULK_MIGRATION,
@@ -174,7 +219,11 @@ export const PRODUCTION_TASK_TYPE_SELECT_OPTIONS = [
     value: TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC,
     category: "Salesforce",
   },
-  { text: TASK_TYPE_LABELS.SALESFORCE_QUICK_DEPLOY, value: TASK_TYPES.SALESFORCE_QUICK_DEPLOY, category: "Salesforce" },
+  {
+    text: TASK_TYPE_LABELS.SALESFORCE_QUICK_DEPLOY,
+    value: TASK_TYPES.SALESFORCE_QUICK_DEPLOY,
+    category: "Salesforce",
+  },
   {
     text: TASK_TYPE_LABELS.SALESFORCE_CUSTOM_SETTING_MIGRATION,
     value: TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION,
@@ -187,22 +236,55 @@ export const PRODUCTION_TASK_TYPE_SELECT_OPTIONS = [
   },
 
   //snaplogic
-  { text: TASK_TYPE_LABELS.SNAPLOGIC_TASK, value: TASK_TYPES.SNAPLOGIC_TASK, category: "Git" },
+  {
+    text: TASK_TYPE_LABELS.SNAPLOGIC_TASK,
+    value: TASK_TYPES.SNAPLOGIC_TASK,
+    category: "Git",
+  },
 ];
 
 export const NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS = [
   // AWS
-  { text: TASK_TYPE_LABELS.AWS_CREATE_ECS_CLUSTER, value: TASK_TYPES.AWS_CREATE_ECS_CLUSTER, category: "AWS" },
-  { text: TASK_TYPE_LABELS.AWS_CREATE_ECS_SERVICE, value: TASK_TYPES.AWS_CREATE_ECS_SERVICE, category: "AWS" },
-  { text: TASK_TYPE_LABELS.AWS_CREATE_LAMBDA_FUNCTION, value: TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION, category: "AWS" },
+  {
+    text: TASK_TYPE_LABELS.AWS_CREATE_ECS_CLUSTER,
+    value: TASK_TYPES.AWS_CREATE_ECS_CLUSTER,
+    category: "AWS",
+  },
+  {
+    text: TASK_TYPE_LABELS.AWS_CREATE_ECS_SERVICE,
+    value: TASK_TYPES.AWS_CREATE_ECS_SERVICE,
+    category: "AWS",
+  },
+  {
+    text: TASK_TYPE_LABELS.AWS_CREATE_LAMBDA_FUNCTION,
+    value: TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION,
+    category: "AWS",
+  },
 
   // Azure
-  { text: TASK_TYPE_LABELS.AZURE_CLUSTER_CREATION, value: TASK_TYPES.AZURE_CLUSTER_CREATION, category: "Azure" },
+  {
+    text: TASK_TYPE_LABELS.AZURE_CLUSTER_CREATION,
+    value: TASK_TYPES.AZURE_CLUSTER_CREATION,
+    category: "Azure",
+  },
 
   // Git
-  { text: TASK_TYPE_LABELS.GIT_TO_GIT_MERGE_SYNC, value: TASK_TYPES.GIT_TO_GIT_MERGE_SYNC, category: "Git" },
+  {
+    text: TASK_TYPE_LABELS.GIT_TO_GIT_MERGE_SYNC,
+    value: TASK_TYPES.GIT_TO_GIT_MERGE_SYNC,
+    category: "Git",
+  },
   // { text: TASK_TYPE_LABELS.SYNC_GIT_BRANCHES, value: TASK_TYPES.SYNC_GIT_BRANCHES, category: "Git" },
-  { text: TASK_TYPE_LABELS.GITSCRAPER, value: TASK_TYPES.GITSCRAPER, category: "Compliance" },
+  {
+    text: TASK_TYPE_LABELS.SCM_TO_SCM_MIGRATION,
+    value: TASK_TYPES.SCM_TO_SCM_MIGRATION,
+    category: "Git",
+  },
+  {
+    text: TASK_TYPE_LABELS.GITSCRAPER,
+    value: TASK_TYPES.GITSCRAPER,
+    category: "Compliance",
+  },
 
   // Salesforce
   {
@@ -215,13 +297,21 @@ export const NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS = [
     value: TASK_TYPES.SALESFORCE_BULK_MIGRATION,
     category: "Salesforce",
   },
-  { text: TASK_TYPE_LABELS.SYNC_SALESFORCE_REPO, value: TASK_TYPES.SYNC_SALESFORCE_REPO, category: "Salesforce" },
+  {
+    text: TASK_TYPE_LABELS.SYNC_SALESFORCE_REPO,
+    value: TASK_TYPES.SYNC_SALESFORCE_REPO,
+    category: "Salesforce",
+  },
   {
     text: TASK_TYPE_LABELS.SALESFORCE_TO_GIT_MERGE_SYNC,
     value: TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC,
     category: "Salesforce",
   },
-  { text: TASK_TYPE_LABELS.SALESFORCE_QUICK_DEPLOY, value: TASK_TYPES.SALESFORCE_QUICK_DEPLOY, category: "Salesforce" },
+  {
+    text: TASK_TYPE_LABELS.SALESFORCE_QUICK_DEPLOY,
+    value: TASK_TYPES.SALESFORCE_QUICK_DEPLOY,
+    category: "Salesforce",
+  },
   {
     text: TASK_TYPE_LABELS.SALESFORCE_CUSTOM_SETTING_MIGRATION,
     value: TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION,
@@ -234,7 +324,11 @@ export const NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS = [
   },
 
   //snaplogic
-  { text: TASK_TYPE_LABELS.SNAPLOGIC_TASK, value: TASK_TYPES.SNAPLOGIC_TASK, category: "Git" },
+  {
+    text: TASK_TYPE_LABELS.SNAPLOGIC_TASK,
+    value: TASK_TYPES.SNAPLOGIC_TASK,
+    category: "Git",
+  },
 ];
 
 taskTypeConstants.getTaskCategoryForType = (taskType) => {
@@ -242,53 +336,83 @@ taskTypeConstants.getTaskCategoryForType = (taskType) => {
     return "";
   }
 
-  const taskTypeDefinition = NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS.find((taskTypeDefinition) => {
-    return taskTypeDefinition.value === taskType;
-  });
+  const taskTypeDefinition = NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS.find(
+    (taskTypeDefinition) => {
+      return taskTypeDefinition.value === taskType;
+    },
+  );
 
   return taskTypeDefinition?.category;
 };
 
-export const isTaskTypeOfCategory = (taskType, category, allowNullCategory = true) => {
+export const isTaskTypeOfCategory = (
+  taskType,
+  category,
+  allowNullCategory = true,
+) => {
   if (
-    hasStringValue(category) !== true
-    || hasStringValue(taskType) !== true
-    || category === "owner"
-    || category === "subscribed"
+    hasStringValue(category) !== true ||
+    hasStringValue(taskType) !== true ||
+    category === "owner" ||
+    category === "subscribed"
   ) {
     return true;
   }
 
-  const taskTypeDefinition = NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS.find((taskTypeDefinition) => {
-    return taskTypeDefinition.value === taskType;
-  });
+  const taskTypeDefinition = NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS.find(
+    (taskTypeDefinition) => {
+      return taskTypeDefinition.value === taskType;
+    },
+  );
   const taskTypeDefinitionCategory = taskTypeDefinition?.category;
 
   if (allowNullCategory === false) {
-    return hasStringValue(taskTypeDefinitionCategory) === true && taskTypeDefinitionCategory?.toLowerCase() === category?.toLowerCase();
+    return (
+      hasStringValue(taskTypeDefinitionCategory) === true &&
+      taskTypeDefinitionCategory?.toLowerCase() === category?.toLowerCase()
+    );
   }
 
-  return hasStringValue(taskTypeDefinitionCategory) !== true || taskTypeDefinitionCategory?.toLowerCase() === category;
+  return (
+    hasStringValue(taskTypeDefinitionCategory) !== true ||
+    taskTypeDefinitionCategory?.toLowerCase() === category
+  );
 };
 
 export const getProductionTaskTypesForCategory = (category) => {
-  if (hasStringValue(category) !== true || category === "owner" || category === "subscribed") {
+  if (
+    hasStringValue(category) !== true ||
+    category === "owner" ||
+    category === "subscribed"
+  ) {
     return PRODUCTION_TASK_TYPE_SELECT_OPTIONS;
   }
 
   return PRODUCTION_TASK_TYPE_SELECT_OPTIONS.filter((taskTypeDefinition) => {
     const taskTypeDefinitionCategory = taskTypeDefinition.category;
-    return hasStringValue(taskTypeDefinitionCategory) !== true || taskTypeDefinitionCategory.toLowerCase() === category.toLowerCase();
+    return (
+      hasStringValue(taskTypeDefinitionCategory) !== true ||
+      taskTypeDefinitionCategory.toLowerCase() === category.toLowerCase()
+    );
   });
 };
 
 export const getNonProductionTaskTypesForCategory = (category) => {
-  if (hasStringValue(category) !== true || category === "owner" || category === "subscribed") {
+  if (
+    hasStringValue(category) !== true ||
+    category === "owner" ||
+    category === "subscribed"
+  ) {
     return NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS;
   }
 
-  return NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS.filter((taskTypeDefinition) => {
-    const taskTypeDefinitionCategory = taskTypeDefinition.category;
-    return hasStringValue(taskTypeDefinitionCategory) !== true || taskTypeDefinitionCategory.toLowerCase() === category.toLowerCase();
-  });
+  return NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS.filter(
+    (taskTypeDefinition) => {
+      const taskTypeDefinitionCategory = taskTypeDefinition.category;
+      return (
+        hasStringValue(taskTypeDefinitionCategory) !== true ||
+        taskTypeDefinitionCategory.toLowerCase() === category.toLowerCase()
+      );
+    },
+  );
 };
