@@ -40,6 +40,8 @@ import PipelineWorkflowStepIncompleteStepIcon
 import PipelineStepWorkflowStepAwaitingApprovalStepIcon
   from "components/workflow/pipelines/pipeline_details/workflow/item/icon/PipelineStepWorkflowStepAwaitingApprovalStepIcon";
 import LoadingIcon from "components/common/icons/LoadingIcon";
+import PipelineStepCardBottomActionBar
+  from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepCardBottomActionBar";
 
 const PipelineWorkflowItem = (
   {
@@ -191,88 +193,6 @@ const PipelineWorkflowItem = (
     }
   };
 
-  const getBottomActionBarButtons = () => {
-    if (!editWorkflow) {
-      return (
-      <div className={"ml-auto d-flex"}>
-        {isToolSet === true &&
-          <>
-            <PipelineStepWorkflowItemViewSettingsButton
-              editingWorkflow={editWorkflow}
-              pipeline={pipeline}
-              step={item}
-            />
-            {itemState !== "running" ? //if THIS step is running
-              <>
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "View Step Activity Logs" })}>
-                  <div>
-                    <IconBase icon={faArchive}
-                              className={"text-muted mx-1 pointer"}
-                              onClickFunction={() => {
-                                handleViewStepActivityLogClick(pipelineId, item.tool.tool_identifier, item._id);
-                              }} />
-                  </div>
-                </OverlayTrigger>
-              </>
-              :
-              <>
-                {toolIdentifier?.properties && toolIdentifier?.properties?.isLiveStream && <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "View Running Tool Activity (if available)" })}>
-                  <div>
-                    <IconBase icon={faTerminal}
-                              className={"green mx-1 pointer"}
-                              onClickFunction={() => {
-                                setShowToolActivity(true);
-                              }} />
-                  </div>
-                </OverlayTrigger>}
-              </>}
-
-            <PipelineStepWorkflowItemEditNotificationSettingsButton
-              pipeline={pipeline}
-              step={item}
-              editingWorkflow={editWorkflow}
-              pipelineStatus={parentWorkflowStatus}
-            />
-          </>}
-        {parentWorkflowStatus !== "running" && parentWorkflowStatus !== "paused" ? //if the overall pipeline is in a running/locked state
-          <>
-            <OverlayTrigger
-              placement="top"
-              delay={{show: 250, hide: 400}}
-              overlay={renderTooltip({message: "Configure Step Settings"})}>
-              <div>
-                <IconBase icon={faCog}
-                          className={"text-muted mx-1 pointer"}
-                          onClickFunction={() => {
-                            handleEditClick("tool", item.tool, item._id, item);
-                          }}
-                />
-              </div>
-            </OverlayTrigger>
-          </>
-          :
-          <>
-            <OverlayTrigger
-              placement="top"
-              delay={{show: 250, hide: 400}}
-              overlay={renderTooltip({message: "Cannot access settings while pipeline is running"})}>
-              <div>
-                <IconBase icon={faCog}
-                          className={"text-muted mx-1"}/>
-              </div>
-            </OverlayTrigger>
-          </>}
-      </div>
-      );
-    }
-  };
-
   // TODO: Make separate component
   const getStepDefinitionEditButton = () => {
     const mongoDbId = DataParsingHelper.parseMongoDbId(item?._id);
@@ -414,7 +334,20 @@ const PipelineWorkflowItem = (
           }}
         >
           <div className={"ml-auto d-flex"}>
-            {getBottomActionBarButtons()}
+            <PipelineStepCardBottomActionBar
+              pipeline={pipeline}
+              pipelineId={pipelineId}
+              step={item}
+              loadPipeline={loadPipeline}
+              toolIdentifier={toolIdentifier}
+              handleEditClick={handleEditClick}
+              isEditingWorkflow={editWorkflow}
+              handleViewStepActivityLogClick={handleViewStepActivityLogClick}
+              isToolSet={isToolSet}
+              itemState={itemState}
+              parentWorkflowStatus={parentWorkflowStatus}
+              setShowToolActivity={setShowToolActivity}
+            />
           </div>
         </div>
       </div>
