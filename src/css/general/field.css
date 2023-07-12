@@ -191,7 +191,7 @@ pre {
 .vertical-selection-card .icon-card-title {
     font-size: 13px;
     color: #3D3B36;
-    font-weight: bold;
+    /*font-weight: bold;*/
     min-height: 32px;
     height: 32px;
     max-height: 32px;
