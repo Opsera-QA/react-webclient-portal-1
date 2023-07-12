@@ -6,6 +6,8 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import useGetToolIdentifiers from "components/admin/tools/identifiers/hooks/useGetToolIdentifiers";
 import PipelineStepCardWorkflowActionBar
   from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepCardWorkflowActionBar";
+import useTheme from "hooks/theme/useTheme";
+import ToolCardFooter from "temp-library-components/cards/tools/ToolCardFooter";
 
 export default function PipelineWorkflowItemList(
   {
@@ -19,6 +21,8 @@ export default function PipelineWorkflowItemList(
     parentWorkflowStatus,
   }) {
   const [isSaving, setIsSaving] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+  const {themeConstants} = useTheme();
   const {
     isLoading,
     getToolIdentifierByIdentifier,
@@ -69,11 +73,17 @@ export default function PipelineWorkflowItemList(
           className={isSaving ? "fa-disabled" : ""}
         >
           <div
-            className={"p-1 workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(item)}
+            className={"card h-100 vertical-selection-card workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(item)}
             style={{
-              boxShadow: "0 0 20px rgba(0, 0, 0, 0.2)",
-              borderRadius: ".35rem",
+              borderRadius: "1rem",
+              boxShadow: isHovering === true ? "0 0 20px rgba(46, 25, 86, .3)" : undefined,
+              // cursor: mouseHelper.getMouseCursor(onClickFunction, disabled || isLoading),
+              overflow: "hidden",
+              backgroundColor: isSaving === true || isLoading === true ? themeConstants.COLOR_PALETTE.BACKGROUND_GRAY : undefined,
+              // color: disabled === true || isLoading === true ? themeConstants.COLOR_PALETTE.DARK_GRAY : undefined,
             }}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
           >
             <PipelineWorkflowItem
               pipeline={pipeline}
@@ -89,6 +99,7 @@ export default function PipelineWorkflowItemList(
               toolIdentifier={getToolIdentifierByIdentifier(item?.tool?.tool_identifier)}
               loadPipeline={fetchPlan}
             />
+            <ToolCardFooter />
           </div>
           <PipelineStepCardWorkflowActionBar
             loadPipeline={fetchPlan}

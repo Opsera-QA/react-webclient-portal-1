@@ -240,7 +240,7 @@ const PipelineWorkflowItem = (
 
   return (
     <>
-      <div className={"workflow-module-container-height"}>
+      <div className={"workflow-module-container-height p-1"}>
         <div className={"title-text-6 upper-case-first ml-1 mt-1 d-flex"}>
           <div className={"ml-auto d-flex"}>
             <div className={"ml-auto d-flex mr-1"}>
