@@ -1,27 +1,33 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faTimes} from "@fortawesome/pro-light-svg-icons";
+import {faTimes, faSync} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
-function ConsoleLogOverlay({ handleCloseFunction, body}) {
-  const getCloseButton = () => {
-    if (handleCloseFunction) {
-      return (
-        <div style={{minHeight: "15px"}}>
-          <div className="text-right float-right">
-            <IconBase
-              icon={faTimes}
-              onClickFunction={handleCloseFunction}
-            />
-          </div>
-        </div>
-      );
-    }
-  };
-
+export default function ConsoleLogOverlay(
+  {
+    handleCloseFunction,
+    isLoading,
+    loadDataFunction,
+    body,
+  }) {
   return (
-    <div className="console-text workflow-tool-activity-container">
-      {getCloseButton()}
+    <div className={"console-text workflow-tool-activity-container"}>
+      <div className={"d-flex w-100"}>
+        <div className={"ml-auto"}>
+          <IconBase
+            className={"mr-2"}
+            isLoading={isLoading}
+            icon={faSync}
+            onClickFunction={loadDataFunction}
+            visible={loadDataFunction != null || isLoading === true}
+          />
+          <IconBase
+            icon={faTimes}
+            onClickFunction={handleCloseFunction}
+            visible={handleCloseFunction != null}
+          />
+        </div>
+      </div>
       <div className="workflow-tool-activity-window">
         {body}
       </div>
@@ -32,8 +38,6 @@ function ConsoleLogOverlay({ handleCloseFunction, body}) {
 ConsoleLogOverlay.propTypes = {
   handleCloseFunction: PropTypes.func,
   body: PropTypes.any,
+  loadDataFunction: PropTypes.func,
+  isLoading: PropTypes.bool,
 };
-
-export default ConsoleLogOverlay;
-
-

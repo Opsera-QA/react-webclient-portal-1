@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { axiosApiService } from "api/apiService";
-import { faSync } from "@fortawesome/pro-solid-svg-icons";
-import IconBase from "components/common/icons/IconBase";
 import ConsoleLogOverlay from "components/common/overlays/log/ConsoleLogOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
@@ -58,7 +56,7 @@ function PipelineStepLiveLogOverlay(
   }, [itemState]);
 
 
-  const loadFormData = async (pipelineId, stepId, tool_identifier, runCount) => {
+  const loadFormData = async () => {
     try {
       setLoading(true);
       const accessToken = await getAccessToken();
@@ -81,7 +79,7 @@ function PipelineStepLiveLogOverlay(
     const timerInterval = setInterval(async function() {
       counter++;
       console.log("checking data round ", counter);
-      await loadFormData(pipelineId, stepId, tool_identifier, runCount);
+      await loadFormData();
       if (counter > 9) {
         clearInterval(timerInterval);
         setLoading(false);
@@ -90,28 +88,12 @@ function PipelineStepLiveLogOverlay(
     return timerInterval;
   };
 
-  const getBody = () => {
-    return (
-      <>
-        <div style={{minHeight: "15px"}}>
-          <IconBase
-            isLoading={isLoading}
-            icon={faSync}
-            onClickFunction={() => {
-              loadFormData(pipelineId, stepId, tool_identifier);
-            }}
-          />
-        </div>
-        {data && data.length > 0 ? data : <>Loading tool activity, please stand by...</>}
-      </>
-    );
-  };
-
-
   return (
     <ConsoleLogOverlay
       handleCloseFunction={toastContext?.clearOverlayPanel}
-      body={getBody()}
+      body={data && data.length > 0 ? data : <>Loading tool activity, please stand by...</>}
+      isLoading={isLoading}
+      loadDataFunction={loadFormData}
     />
   );
 }
