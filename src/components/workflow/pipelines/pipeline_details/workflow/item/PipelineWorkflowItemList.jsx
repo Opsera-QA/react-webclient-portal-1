@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { SteppedLineTo } from "react-lineto";
 import { faPlusSquare, faCaretSquareDown, faCaretSquareUp, faCopy } from "@fortawesome/pro-light-svg-icons";
-import PipelineWorkflowItem from "./PipelineWorkflowItem";
+import PipelineWorkflowItem from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineWorkflowItem";
 import { pipelineValidationHelper } from "components/workflow/pipelines/helpers/pipelineValidation.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
