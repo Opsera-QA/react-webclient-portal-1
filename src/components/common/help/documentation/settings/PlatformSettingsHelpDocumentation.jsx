@@ -36,7 +36,9 @@ function PlatformSettingsHelpDocumentation() {
     if (
       (isSiteAdministrator === true
         || isOpseraAdministrator === true
-        || isPowerUser === true)
+        || isPowerUser === true
+        || isSecurityManager === true
+        || isAuditor === true)
       && isSaasUser !== true
     ) {
       return (
@@ -63,7 +65,7 @@ function PlatformSettingsHelpDocumentation() {
     if (
       (isSiteAdministrator === true
         || isOpseraAdministrator === true
-        || isPowerUser !== true)
+        || isPowerUser === true)
       && isSaasUser !== true
     ) {
       return (
@@ -101,7 +103,9 @@ function PlatformSettingsHelpDocumentation() {
     if (
       (isSiteAdministrator === true
         || isOpseraAdministrator === true
-        || isPowerUser === true)
+        || isPowerUser === true
+        || isSecurityManager === true
+        || isAuditor === true)
       && isSaasUser !== true
     ) {
       return (
@@ -114,7 +118,9 @@ function PlatformSettingsHelpDocumentation() {
     if (
       (isSiteAdministrator === true
         || isOpseraAdministrator === true
-        || isPowerUser === true)
+        || isPowerUser === true
+        || isSecurityManager === true
+        || isAuditor === true)
       || isSaasUser === true
     ) {
       return (
