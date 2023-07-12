@@ -1,45 +1,44 @@
 .destructive-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    width: 250px;
-    height: 200px;
-    border: 2px solid #ff0000;
-    border-radius: 5%;
-    cursor: pointer;
- }
- .destructive-message{
-    text-align: center;
-    color: #ff0000;
-    font-size: 20px;
-  }
-  .file-input {
-    display: none;
-  }  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  width: 250px;
+  height: 200px;
+  border: 2px solid #ff0000;
+  border-radius: 5%;
+  cursor: pointer;
+}
+.destructive-message{
+  text-align: center;
+  color: #ff0000;
+  font-size: 20px;
+}
+.file-input {
+  display: none;
+}  
 
-  .drop-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    width: 800px;
-    height: 200px;
-    border: 2px dashed #352f54;
-  }
-  
-  .upload-icon {
-    width: 50px;
-    height: 50px;
-    background-size: 100%;
-    text-align: center;
-    margin: 0 auto;
-  }
-  
-  .drop-message {
-    text-align: center;
-    color: #352f54;
-    /*font-family: Arial, sans-serif;*/
-    font-size: 20px;
-  }
-  
+.drop-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  width: 800px;
+  height: 200px;
+  border: 2px dashed #352f54;
+}
+
+.upload-icon {
+  width: 50px;
+  height: 50px;
+  background-size: 100%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.drop-message {
+  text-align: center;
+  color: #352f54;
+  /*font-family: Arial, sans-serif;*/
+  font-size: 20px;
+}

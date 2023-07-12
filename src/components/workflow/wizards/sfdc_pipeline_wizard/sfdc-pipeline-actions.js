@@ -382,7 +382,7 @@ sfdcPipelineActions.setXmlFileContentsV2 = async (getAccessToken, cancelTokenSou
 
 sfdcPipelineActions.setdestructiveXmlV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const postBody = {
-    packageXml: pipelineWizardModel?.getData("destructiveXml"),
+    destructiveXml: pipelineWizardModel?.getData("destructiveXml"),
     isTranslations: pipelineWizardModel.getData("isTranslations"),
   };
 

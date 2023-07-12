@@ -2,23 +2,16 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import './disfileupload.css';
 import {Button} from 'react-bootstrap';
-import PipelineWizardFileUploadMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/pipeline-wizard-file-upload-metadata.js";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import SfdcPipelineWizardSubmitFileTypeButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardSubmitFileTypeButton";
 import CancelButton from "components/common/buttons/CancelButton";
-import ExternalPageLink from "components/common/links/ExternalPageLink";
-import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import FilterContainer from "components/common/table/FilterContainer";
-import VanityTable from "components/common/table/VanityTable";
 import _ from "lodash";
 import PackageXmlFieldBase from "components/common/fields/code/PackageXmlFieldBase";
 import SfdcPipelineWizardIncludeDependenciesToggle
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
 import SfdcPipelineWizardTranslationToggleInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardTranslationToggleInput";
-import SfdcPipelineWizardUploadComponentSummary
-  from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardUploadComponentSummary";
 
 const SfdcPipelineWizardDistractiveFileUploadComponent = ({pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) => {
     const fileInputRef = useRef();
@@ -46,7 +39,7 @@ const SfdcPipelineWizardDistractiveFileUploadComponent = ({pipelineWizardModel, 
   const resetStoredFileContents=()=>{
       let newDataObject = {...pipelineWizardModel};
       newDataObject.setData("destructiveXml","");
-      newDataObject.setData("isXml",false);
+      newDataObject.setData("isDestructive",false);
       newDataObject.setData("modifiedFilesOrigin",(pipelineWizardModel.getData('isOrgToOrg') || pipelineWizardModel.getData("fromGitTasks")) ? "sfdc" : "git");
       setDesxml([]);
       setPipelineWizardModel({...newDataObject});
@@ -122,7 +115,7 @@ const SfdcPipelineWizardDistractiveFileUploadComponent = ({pipelineWizardModel, 
       setUnsupportedFiles([]);
   
       let newDataObject = {...pipelineWizardModel};
-      newDataObject.setData("isXml", false);
+      newDataObject.setData("isDestructive", false);
       setPipelineWizardModel({...newDataObject});
     };
 
@@ -131,7 +124,7 @@ const SfdcPipelineWizardDistractiveFileUploadComponent = ({pipelineWizardModel, 
       setDesxml([]);
       let newDataObject = {...pipelineWizardModel};
       newDataObject.setData("destructiveXml", obj);
-      newDataObject.setData("isXml", true);
+      newDataObject.setData("isDestructive", true);
       setPipelineWizardModel({...newDataObject});
       setSave(false);
     }; 
@@ -169,7 +162,7 @@ const SfdcPipelineWizardDistractiveFileUploadComponent = ({pipelineWizardModel, 
        <SfdcPipelineWizardSubmitFileTypeButton
           pipelineWizardModel={pipelineWizardModel}
           setPipelineWizardScreen={setPipelineWizardScreen}
-          destructiveXml={pipelineWizardModel?.getData("destructiveXml")}
+          isDestructive={pipelineWizardModel?.getData("isDestructive")}
         />
         <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
       </SaveButtonContainer>
@@ -242,7 +235,7 @@ const SfdcPipelineWizardDistractiveFileUploadComponent = ({pipelineWizardModel, 
   };
 
   const getValidateButton = () => {
-    if (unsupportedFiles.length === 0 && validFiles.length && pipelineWizardModel.getData("destructiveXml").length === 0) {
+    if (unsupportedFiles.length === 0 && validFiles.length && pipelineWizardModel.getData("xmlFileContent").length === 0 && pipelineWizardModel.getData("csvFileContent").length === 0 && pipelineWizardModel.getData("destructiveXml").length === 0) {
       return (
         <Button variant="primary" className={"mt-3"} onClick={() => validateFiles()}>Process File</Button>
       );

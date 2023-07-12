@@ -38,7 +38,7 @@ function SfdcPipelineWizardSubmitFileTypeButton({pipelineWizardModel, setPipelin
       if (isXml) {
         await sfdcPipelineActions.setXmlFileContentsV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
         setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER);
-      } else if(isCsv){
+      }else if(isCsv){
         await sfdcPipelineActions.setUploadedCsvFileListV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
         setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.VALIDATED_FILE_VIEWER);
       }

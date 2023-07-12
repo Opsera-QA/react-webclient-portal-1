@@ -23,7 +23,7 @@ import SfdcPipelineWizardTranslationToggleInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardTranslationToggleInput";
 import SfdcPipelineWizardUploadComponentSummary
   from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardUploadComponentSummary";
-import SfdcPipelineWizardDistractiveFileUploadComponent from '../destructive_file_upload/SfdcPipelineWizardDistractiveFileUploadComponent';
+  import SfdcPipelineWizardDistractiveFileUploadComponent from '../destructive_file_upload/SfdcPipelineWizardDistractiveFileUploadComponent';
 
 function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) {
   const fields = PipelineWizardFileUploadMetadata.fields;
@@ -269,7 +269,6 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     return (
       <VanityTable
         tableHeight={"250px"}
-        tableWidth={"150px"}
         columns={columns}
         data={csvData}
       />
@@ -361,10 +360,9 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
       );
     }
   };
-  
 
   const getValidateButton = () => {
-    if (unsupportedFiles.length === 0 && validFiles.length && pipelineWizardModel.getData("xmlFileContent").length === 0 && pipelineWizardModel.getData("csvFileContent").length === 0) {
+    if (unsupportedFiles.length === 0 && validFiles.length && pipelineWizardModel.getData("xmlFileContent").length === 0 && pipelineWizardModel.getData("csvFileContent").length === 0 && pipelineWizardModel.getData("destructiveXml").length === 0) {
       return (
         <Button variant="primary" className={"mt-3"} onClick={() => validateFiles()}>Process File</Button>
       );
@@ -374,27 +372,28 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
   const getBody = () => {
     if (pipelineWizardModel.getData("recordId") && pipelineWizardModel.getData("recordId").length > 0) {
       return (
-                        <div>
-                                <SfdcPipelineWizardUploadComponentSummary
-                                  pipelineWizardModel={pipelineWizardModel}
-                                />
-                              <div className="my-4 w-100" style={{ display:"flex", gap:"30px" }}>
-                                        <div>
-                                            {getFileUploadBody()}
-                                            {getFilesBody()}
-                                            {getValidateButton()}
-                                                  <div>
-                                                    {getDependenciesToggle()}
-                                                    {getTranslationsToggle()}
-                                                    {getXMLView()}
-                                                    {getCsvView()}
-                                                  </div>
-                                        </div>
-                                        <div>
-                                          <SfdcPipelineWizardDistractiveFileUploadComponent pipelineWizardModel={pipelineWizardModel} setPipelineWizardModel={setPipelineWizardModel} setPipelineWizardScreen={setPipelineWizardScreen} handleClose={handleClose}/>
-                                        </div>
-                              </div>
-                        </div>
+        <div>
+        <SfdcPipelineWizardUploadComponentSummary
+          pipelineWizardModel={pipelineWizardModel}
+        />
+      <div className="my-4 w-100" style={{ display:"flex", gap:"30px" }}>
+                <div>
+                    {getFileUploadBody()}
+                    {getFilesBody()}
+                    {getValidateButton()}
+                          <div>
+                            {getDependenciesToggle()}
+                            {getTranslationsToggle()}
+                            {getXMLView()}
+                            {getCsvView()}
+                          </div>
+                </div>
+                <div>
+                  <SfdcPipelineWizardDistractiveFileUploadComponent pipelineWizardModel={pipelineWizardModel} setPipelineWizardModel={setPipelineWizardModel} setPipelineWizardScreen={setPipelineWizardScreen} handleClose={handleClose}/>
+                </div>
+      </div>
+</div>
+
       );
     }
   };
