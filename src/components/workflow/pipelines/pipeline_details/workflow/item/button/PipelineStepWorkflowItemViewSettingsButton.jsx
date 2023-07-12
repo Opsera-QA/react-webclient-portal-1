@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faSearchPlus} from "@fortawesome/pro-light-svg-icons";
+import {faFileAlt} from "@fortawesome/pro-light-svg-icons";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 import PipelineStepDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/step/PipelineStepDetailsOverviewOverlay";
@@ -32,7 +32,7 @@ export default function PipelineStepWorkflowItemViewSettingsButton(
 
   return (
     <OverlayIconBase
-      icon={faSearchPlus}
+      icon={faFileAlt}
       className={"text-muted mx-1"}
       onClickFunction={handleSummaryViewClick}
       overlayBody={"View Settings"}
