@@ -28,7 +28,7 @@ export default function ConsoleLogOverlay(
           />
         </div>
       </div>
-      <div className="workflow-tool-activity-window">
+      <div className={"workflow-tool-activity-window mb-1"}>
         {body}
       </div>
     </div>
