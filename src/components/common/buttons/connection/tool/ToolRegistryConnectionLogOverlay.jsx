@@ -4,8 +4,8 @@ import ConsoleLogOverlay from "components/common/overlays/log/ConsoleLogOverlay"
 import toolsActions from "components/inventory/tools/tools-actions";
 import { parseError } from "components/common/helpers/error-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { TEST_CONNECTION_STATES } from "components/common/buttons/connection/TestConnectionButtonBase";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function ToolRegistryConnectionLogOverlay(
   {
@@ -102,7 +102,7 @@ function ToolRegistryConnectionLogOverlay(
   return (
     <ConsoleLogOverlay
       handleCloseFunction={handleCloseFunction}
-      body={dataParsingHelper.parseArray(logs, [])}
+      body={DataParsingHelper.parseArray(logs, [])}
     />
   );
 }
