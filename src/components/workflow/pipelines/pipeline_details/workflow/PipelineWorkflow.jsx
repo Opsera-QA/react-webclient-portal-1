@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { axiosApiService } from "api/apiService";
 import { SteppedLineTo } from "react-lineto";
 import ErrorDialog from "components/common/status_notifications/error";
-import PipelineWorkflowItemList from "./PipelineWorkflowItemList";
+import PipelineWorkflowItemList from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineWorkflowItemList";
 import modelHelpers from "components/common/model/modelHelpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {

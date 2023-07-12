@@ -10,7 +10,7 @@ import {
   faTimesCircle,
   faTerminal, faOctagon,
 } from "@fortawesome/pro-light-svg-icons";
-import StepToolActivityView from "./step_configuration/StepToolActivityView";
+import StepToolActivityView from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/StepToolActivityView";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 import { pipelineValidationHelper } from "components/workflow/pipelines/helpers/pipelineValidation.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
