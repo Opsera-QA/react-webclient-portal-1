@@ -4,7 +4,6 @@ import { SteppedLineTo } from "react-lineto";
 import { faPlusSquare, faCaretSquareDown, faCaretSquareUp, faCopy } from "@fortawesome/pro-light-svg-icons";
 import PipelineWorkflowItem from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineWorkflowItem";
 import { pipelineValidationHelper } from "components/workflow/pipelines/helpers/pipelineValidation.helper";
-import {hasStringValue} from "components/common/helpers/string-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
@@ -12,7 +11,7 @@ import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 import IconBase from "components/common/icons/IconBase";
 import useGetToolIdentifiers from "components/admin/tools/identifiers/hooks/useGetToolIdentifiers";
 
-function PipelineWorkflowItemList(
+export default function PipelineWorkflowItemList(
   {
     pipeline,
     plan,
@@ -20,7 +19,6 @@ function PipelineWorkflowItemList(
     editWorkflow,
     pipelineId,
     parentCallbackEditItem,
-    quietSavePlan,
     fetchPlan,
     parentWorkflowStatus,
   }) {
@@ -239,10 +237,7 @@ PipelineWorkflowItemList.propTypes = {
   editWorkflow: PropTypes.bool,
   pipelineId: PropTypes.string,
   parentCallbackEditItem: PropTypes.func,
-  quietSavePlan: PropTypes.func,
   fetchPlan: PropTypes.func,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   plan: PropTypes.array,
 };
-
-export default PipelineWorkflowItemList;
