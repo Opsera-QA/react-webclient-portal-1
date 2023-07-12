@@ -7,9 +7,13 @@ import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
 import PipelineStepWorkflowItemEditNotificationSettingsButton
   from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowItemEditNotificationSettingsButton";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import PipelineStepLiveLogOverlay
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepLiveLogOverlay";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function renderTooltip(props) {
-  const { message } = props;
+  const {message} = props;
   return (
     <Tooltip id="button-tooltip" {...props}>
       {message}
@@ -26,13 +30,66 @@ export default function PipelineStepCardBottomActionBar(
     loadPipeline,
     isEditingWorkflow,
     parentWorkflowStatus,
-    setShowToolActivity,
     toolIdentifier,
     itemState,
     handleEditClick,
     handleViewStepActivityLogClick,
     pipelineId,
+    runCount,
   }) {
+  const {
+    toastContext,
+  } = useComponentStateReference();
+
+  const showLiveLogOverlay = () => {
+    toastContext.showOverlayPanel(
+      <PipelineStepLiveLogOverlay
+        pipelineId={pipelineId}
+        stepId={step._id}
+        itemState={itemState}
+        runCount={runCount}
+        tool_identifier={toolIdentifier}
+      />
+    );
+  };
+
+  // TODO: Make separate icon component
+  const getActivityLogViewerIcon = () => {
+    if (itemState !== "running") {
+      return (
+        <OverlayTrigger
+          placement="top"
+          delay={{show: 250, hide: 400}}
+          overlay={renderTooltip({message: "View Step Activity Logs"})}>
+          <div>
+            <IconBase icon={faArchive}
+                      className={"text-muted mx-1 pointer"}
+                      onClickFunction={() => {
+                        handleViewStepActivityLogClick(pipelineId, step.tool.tool_identifier, step._id);
+                      }}/>
+          </div>
+        </OverlayTrigger>
+      );
+    }
+
+    if (DataParsingHelper.parseNestedBoolean(toolIdentifier, "properties.isLiveStream") === true) {
+      return (
+        <OverlayTrigger
+          placement="top"
+          delay={{show: 250, hide: 400}}
+          overlay={renderTooltip({message: "View Running Tool Activity (if available)"})}>
+          <div>
+            <IconBase
+              icon={faTerminal}
+              className={"green mx-1 pointer"}
+              onClickFunction={() => showLiveLogOverlay()}
+            />
+          </div>
+        </OverlayTrigger>
+      );
+    }
+  };
+
   if (isEditingWorkflow === true) {
     return null;
   }
@@ -46,37 +103,7 @@ export default function PipelineStepCardBottomActionBar(
             pipeline={pipeline}
             step={step}
           />
-          {itemState !== "running" ? //if THIS step is running
-            <>
-              <OverlayTrigger
-                placement="top"
-                delay={{show: 250, hide: 400}}
-                overlay={renderTooltip({message: "View Step Activity Logs"})}>
-                <div>
-                  <IconBase icon={faArchive}
-                            className={"text-muted mx-1 pointer"}
-                            onClickFunction={() => {
-                              handleViewStepActivityLogClick(pipelineId, step.tool.tool_identifier, step._id);
-                            }}/>
-                </div>
-              </OverlayTrigger>
-            </>
-            :
-            <>
-              {toolIdentifier?.properties && toolIdentifier?.properties?.isLiveStream && <OverlayTrigger
-                placement="top"
-                delay={{show: 250, hide: 400}}
-                overlay={renderTooltip({message: "View Running Tool Activity (if available)"})}>
-                <div>
-                  <IconBase icon={faTerminal}
-                            className={"green mx-1 pointer"}
-                            onClickFunction={() => {
-                              setShowToolActivity(true);
-                            }}/>
-                </div>
-              </OverlayTrigger>}
-            </>}
-
+          {getActivityLogViewerIcon()}
           <PipelineStepWorkflowItemEditNotificationSettingsButton
             pipeline={pipeline}
             step={step}
@@ -123,7 +150,7 @@ PipelineStepCardBottomActionBar.propTypes = {
   isEditingWorkflow: PropTypes.bool,
   parentWorkflowStatus: PropTypes.string,
   isToolSet: PropTypes.bool,
-  setShowToolActivity: PropTypes.func,
+  runCount: PropTypes.number,
   toolIdentifier: PropTypes.string,
   itemState: PropTypes.string,
   handleEditClick: PropTypes.func,
