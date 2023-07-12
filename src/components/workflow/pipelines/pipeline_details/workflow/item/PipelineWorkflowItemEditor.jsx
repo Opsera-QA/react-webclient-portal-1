@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import { faTimes } from "@fortawesome/pro-light-svg-icons";
-import StepToolConfiguration from "./step_configuration/StepToolConfiguration";
+import StepToolConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/StepToolConfiguration";
 import PipelineStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepConfiguration";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
