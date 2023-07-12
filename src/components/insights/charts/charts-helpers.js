@@ -212,6 +212,10 @@ export function getGitlabExcludedUsersFromKpiConfiguration(kpiConfiguration) {
   );
 }
 
+export function getGitscraperBranchFromKpiConfiguration(kpiConfiguration) {
+  return getResultFromKpiConfiguration(kpiConfiguration, "gitscraper-branch");
+}
+
 export function getServiceNowPrioritiesFromKpiConfiguration(kpiConfiguration) {
   return getResultFromKpiConfiguration(
     kpiConfiguration,
