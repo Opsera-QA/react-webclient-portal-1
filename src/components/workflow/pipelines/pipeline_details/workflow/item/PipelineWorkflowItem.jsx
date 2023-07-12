@@ -227,9 +227,9 @@ const PipelineWorkflowItem = (
 
   if (!DataParsingHelper.parseMongoDbId(item?._id)) {
     return (
-      <div className="workflow-module-container-height">
-        <div className="title-text-6 upper-case-first ml-1 mt-1 d-flex">
-          <div className="text-muted mr-1">
+      <div className={"workflow-module-container-height"}>
+        <div className={"title-text-6 upper-case-first ml-1 mt-1 d-flex"}>
+          <div className={"text-muted mr-1"}>
             <LoadingIcon className={"mr-2"} />
             Initializing Step
           </div>
