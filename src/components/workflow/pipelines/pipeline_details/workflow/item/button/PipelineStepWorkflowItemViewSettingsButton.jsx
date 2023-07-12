@@ -35,7 +35,7 @@ export default function PipelineStepWorkflowItemViewSettingsButton(
       icon={faFileAlt}
       className={"text-muted mx-1"}
       onClickFunction={handleSummaryViewClick}
-      overlayBody={"View Settings"}
+      overlayBody={"View Step Settings"}
     />
   );
 }
