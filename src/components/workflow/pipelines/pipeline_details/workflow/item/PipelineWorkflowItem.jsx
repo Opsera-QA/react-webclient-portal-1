@@ -2,15 +2,12 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import {
-  faCog,
-  faArchive,
   faPen,
   faSpinner,
   faCheckCircle,
   faTimesCircle,
-  faTerminal, faOctagon,
+  faOctagon,
 } from "@fortawesome/pro-light-svg-icons";
-import StepToolActivityView from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/StepToolActivityView";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 import { pipelineValidationHelper } from "components/workflow/pipelines/helpers/pipelineValidation.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
@@ -55,7 +52,6 @@ const PipelineWorkflowItem = (
   }) => {
   const [currentStatus, setCurrentStatus] = useState({});
   const [itemState, setItemState] = useState("");
-  const [showToolActivity, setShowToolActivity] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [runCountState, setRunCountState] = useState(undefined);
   const {
@@ -342,18 +338,11 @@ const PipelineWorkflowItem = (
               isToolSet={isToolSet}
               itemState={itemState}
               parentWorkflowStatus={parentWorkflowStatus}
-              setShowToolActivity={setShowToolActivity}
+              runCount={runCountState}
             />
           </div>
         </div>
       </div>
-
-      {showToolActivity && <StepToolActivityView pipelineId={pipelineId}
-                                                 stepId={item._id}
-                                                 itemState={itemState}
-                                                 runCount={runCountState}
-                                                 tool_identifier={item.tool.tool_identifier}
-                                                 handleClose={() => setShowToolActivity(false)} />}
     </>
   );
 };

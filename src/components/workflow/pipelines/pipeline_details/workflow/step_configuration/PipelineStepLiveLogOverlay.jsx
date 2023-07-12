@@ -1,17 +1,28 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
-import { faTimes, faSpinner, faSync } from "@fortawesome/pro-solid-svg-icons";
-import LoadingIcon from "components/common/icons/LoadingIcon";
+import { faSync } from "@fortawesome/pro-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
+import ConsoleLogOverlay from "components/common/overlays/log/ConsoleLogOverlay";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function StepToolActivityView({ pipelineId, stepId, runCount, tool_identifier, handleClose, itemState }) {
-  const { getAccessToken } = useContext(AuthContext);
+// TODO: Rewrite
+function PipelineStepLiveLogOverlay(
+  {
+    pipelineId,
+    stepId,
+    runCount,
+    tool_identifier,
+    itemState,
+  }) {
   const [isLoading, setLoading] = useState(false);
   const [errors, setErrors] = useState(false);
   const [data, setData] = useState("");
   const [timer, setTimer] = useState();
+  const {
+    getAccessToken,
+    toastContext,
+  } = useComponentStateReference();
 
   useEffect(() => {
     if (!pipelineId || !stepId || !tool_identifier || !runCount) {
@@ -79,49 +90,38 @@ function StepToolActivityView({ pipelineId, stepId, runCount, tool_identifier, h
     return timerInterval;
   };
 
-  const handleCloseWindow = () => {
-    console.log(timer);
-    handleClose(false);
-    clearInterval(timer);
-    setLoading(false);
+  const getBody = () => {
+    return (
+      <>
+        <div style={{minHeight: "15px"}}>
+          <IconBase
+            isLoading={isLoading}
+            icon={faSync}
+            onClickFunction={() => {
+              loadFormData(pipelineId, stepId, tool_identifier);
+            }}
+          />
+        </div>
+        {data && data.length > 0 ? data : <>Loading tool activity, please stand by...</>}
+      </>
+    );
   };
 
 
   return (
-    <>
-      <div className="console-text workflow-tool-activity-container">
-        <div style={{ minHeight: "15px" }}>
-          {isLoading ?
-            <LoadingIcon iconSize={"sm"} />
-            :
-            <IconBase icon={faSync}
-                             className={"pointer"}
-                             onClickFunction={() => {
-                               loadFormData(pipelineId, stepId, tool_identifier);
-                             }} />}
-          <div className="text-right float-right">
-            <IconBase icon={faTimes}
-                             className={"pointer"}
-                             onClickFunction={() => {
-                               handleCloseWindow();
-                             }} />
-          </div>
-        </div>
-        <div className="workflow-tool-activity-window">
-          {data && data.length > 0 ? data : <>Loading tool activity, please stand by...</>}
-        </div>
-      </div>
-    </>);
+    <ConsoleLogOverlay
+      handleCloseFunction={toastContext?.clearOverlayPanel}
+      body={getBody()}
+    />
+  );
 }
 
-
-StepToolActivityView.propTypes = {
+PipelineStepLiveLogOverlay.propTypes = {
   pipelineId: PropTypes.string,
   stepId: PropTypes.string,
   tool_identifier: PropTypes.string,
   runCount: PropTypes.number,
-  handleClose: PropTypes.func,
   itemState: PropTypes.string,
 };
 
-export default StepToolActivityView;
+export default PipelineStepLiveLogOverlay;
