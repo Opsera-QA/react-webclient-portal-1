@@ -34,7 +34,7 @@ function GithubCommitsActionableInsightClosedTab({
 
   return (
     <VanitySetTabAndViewContainer
-      title={`Github Closed Pull Requests`}
+      title={`Github Declined Pull Requests`}
       defaultActiveKey={
         highestMergesMetric &&
         Array.isArray(highestMergesMetric) &&
