@@ -27,7 +27,7 @@ function PipelinesSummaryHelpDocumentation({pipelineRoleDefinitions}) {
             <li><b>Transfer pipeline to new owner</b> - Select the owner you wish to transfer ownership to from the drop down and click Transfer.</li>
             <li><b>Delete this pipeline</b> - Delete the pipeline. Warning: the pipeline cannot be recovered once it is deleted.</li>
             <li><b>Status</b> - Reflects the success/failure of the last pipeline run.</li>
-            <li><b>Type</b> - Pipeline Type selections are Salesforce, Software Development and Machine Learning (AI). To enable <a href="https://docs.opsera.io/api-platform-and-integration/dynamic-settings-and-api#user-interface" target="_blank" rel="noreferrer"><b>Dynamic Settings</b></a>, set the Pipeline`s Type to SDLC.</li>
+            <li><b>Type</b> - Pipeline Type selections are Salesforce, Software Development and Machine Learning (AI). To enable <a href="https://docs.opsera.io/api-platform-and-integration/dynamic-settings-and-api#user-interface" target="_blank" rel="noreferrer"><b>Dynamic Settings</b></a>, set the Pipeline&apos;s Type to SDLC.</li>
             <li><b>Tags</b> - Used for analytics and data archiving purposes. Applying tags at this level will associate the tag with this pipeline, allowing for more targeted analytics and insights. Note: Tags are not regressive in nature. If a tag is applied after the pipeline has already run multiple times, tag data will ONLY apply to future runs. Prior log data will not be associated with the tag. The same applies if the tag is removed. Data with the tag already associated is not changed in any way.</li>
             <li><b>Schedule</b> - Schedule pipeline to run at a specific time, date and frequency.</li>
           </ul>
