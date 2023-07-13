@@ -16,7 +16,7 @@ export default function PipelineWorkflowStepToolIdentifierField(
 
   return (
     <PipelineWorkflowItemFieldBase
-      className={"pl-1 pt-1"}
+      className={"pt-1"}
       icon={faToolbox}
       label={"Tool"}
       value={DataParsingHelper.parseString(toolIdentifier?.name, "")}

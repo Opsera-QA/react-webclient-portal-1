@@ -14,8 +14,6 @@ import metadataConstants from "@opsera/definitions/constants/metadata/metadata.c
 import {pipelineStepMetadataConstants} from "components/workflow/pipelines/pipelineStepMetadata.constants";
 import ChildPipelinePipelineStepWorkflowItemBody
   from "components/workflow/plan/step/child/ChildPipelinePipelineStepWorkflowItemBody";
-import PipelineWorkflowStepIdField
-  from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowStepIdField";
 import PipelineWorkflowStepToolIdentifierField
   from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowStepToolIdentifierField";
 import ParallelProcessorPipelineStepWorkflowItemBody
@@ -38,7 +36,7 @@ export default function PipelineStepWorkflowItemBody(
     if (repository) {
       return (
         <PipelineWorkflowItemFieldBase
-          className={"pl-1 pt-1"}
+          className={"pt-1"}
           icon={faCodeBranch}
           label={"Repository"}
           value={repository}
@@ -62,7 +60,7 @@ export default function PipelineStepWorkflowItemBody(
       if (hasStringValue(branch) === true) {
         return (
           <PipelineWorkflowItemFieldBase
-            className={"pl-1 pt-1"}
+            className={"pt-1"}
             icon={faCodeBranch}
             label={"Branch"}
             value={branch}
@@ -76,7 +74,7 @@ export default function PipelineStepWorkflowItemBody(
     if (hasStringValue(branch) === true) {
       return (
         <PipelineWorkflowItemFieldBase
-          className={"pl-1 pt-1"}
+          className={"pt-1"}
           icon={faCodeBranch}
           label={"Branch"}
           value={branch}
@@ -98,7 +96,7 @@ export default function PipelineStepWorkflowItemBody(
       <>
         {hasStringValue(changeRequestNumber) === true && 
           <PipelineWorkflowItemFieldBase
-            className={"pl-1 pt-1"}
+            className={"pt-1"}
             icon={faInfoCircle}
             label={"Number"}
             value={changeRequestNumber}
@@ -106,7 +104,7 @@ export default function PipelineStepWorkflowItemBody(
         }
         {hasStringValue(changeRequestApproval) === true && 
           <PipelineWorkflowItemFieldBase
-            className={"pl-1 pt-1"}
+            className={"pt-1"}
             icon={faInfoCircle}
             label={"ServiceNow Approval"}
             value={changeRequestApproval}
@@ -114,7 +112,7 @@ export default function PipelineStepWorkflowItemBody(
         }
         {hasStringValue(changeRequestState) === true && 
           <PipelineWorkflowItemFieldBase
-            className={"pl-1 pt-1"}
+            className={"pt-1"}
             icon={faInfoCircle}
             label={"State"}
             value={changeRequestState}
@@ -122,7 +120,7 @@ export default function PipelineStepWorkflowItemBody(
         }
         {hasStringValue(changeRequestStartDate) === true && hasStringValue(changeRequestEndDate) === true &&
           <PipelineWorkflowItemFieldBase
-            className={"pl-1 pt-1"}
+            className={"pt-1"}
             icon={faInfoCircle}
             label={"Window"}
             value={`${changeRequestStartDate} to ${changeRequestEndDate} UTC`}

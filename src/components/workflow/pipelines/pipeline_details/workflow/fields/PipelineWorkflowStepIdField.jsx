@@ -18,7 +18,7 @@ export default function PipelineWorkflowStepIdField(
 
   return (
     <PipelineWorkflowItemFieldBase
-      className={"pl-1 pt-1"}
+      className={"pt-1"}
       icon={faIdBadge}
       label={"ID"}
       value={stepId}

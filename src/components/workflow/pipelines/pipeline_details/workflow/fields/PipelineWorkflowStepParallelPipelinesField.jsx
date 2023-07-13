@@ -16,7 +16,7 @@ export default function PipelineWorkflowStepParallelPipelinesField(
   }
 
   return (
-    <div className={"pl-1 pt-1 text-muted small d-flex"}>
+    <div className={"pt-1 text-muted small d-flex"}>
       <IconBase
         icon={faSplit}
         iconSize={"sm"}

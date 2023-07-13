@@ -19,7 +19,7 @@ export default function PipelineWorkflowStepChildPipelineField(
 
   return (
     <PipelineWorkflowItemFieldBase
-      className={"pl-1 pt-1"}
+      className={"pt-1"}
       icon={faDraftingCompass}
       label={"Child Pipeline"}
       value={<PipelineIdFieldBase pipelineId={childPipelineId} />}

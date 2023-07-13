@@ -183,12 +183,7 @@ const PipelineWorkflowItem = (
 
     const icon = pipelineStepIconConstants.getLargeVendorIconComponentFromPipelineStep(item, .33);
     return (
-      <div
-        style={{
-          minWidth: "150px",
-          maxWidth: "150px",
-        }}
-        className={"d-flex"}>
+      <div className={"d-flex"}>
         <div className={"mx-auto"}>
           {icon}
         </div>
@@ -228,7 +223,7 @@ const PipelineWorkflowItem = (
         />
         <div className={"w-100 d-flex"}>
           <div
-            className={"mr-2"}
+            className={"ml-1 mr-3"}
           >
             {getToolIcon()}
           </div>

@@ -47,7 +47,7 @@ export default function PipelineWorkflowItemActionField(
 
   return (
     <PipelineWorkflowItemFieldBase
-      className={"pl-1 pt-1"}
+      className={"pt-1"}
       icon={faFileCheck}
       label={"Action"}
       value={getValueField()}

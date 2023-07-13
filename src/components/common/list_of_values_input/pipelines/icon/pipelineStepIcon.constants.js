@@ -48,7 +48,7 @@ pipelineStepIconConstants.pipelineStepImageHeights = {
   NEXUS: 100,
   NPM: undefined,
   NUNIT: undefined,
-  OPSERA: 100,
+  OPSERA: 150,
   ORACLE: undefined,
   PROVAR: undefined,
   SAP: undefined,
@@ -99,10 +99,15 @@ pipelineStepIconConstants.getRecommendedPipelineStepVendorImageHeightForImageLin
 };
 
 pipelineStepIconConstants.getLargeVendorIconComponentFromPipelineStep = (pipelineStep, scaleFactor = 1) => {
-  const imageLink = pipelineStepIconConstants.getImageLinkForPipelineStep(pipelineStep);
+  const imageLink = vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.OPSERA;
+  const imageHeight =
+    vendorImageConstants.isValidVendorImageLink(imageLink) === true
+      ? pipelineStepIconConstants.getRecommendedPipelineStepVendorImageHeightForImageLink(imageLink)
+      : platformImageConstants.getRecommendedCardPlatformImageHeight(imageLink);
+  const scaledImageHeight = imageHeight ? imageHeight * scaleFactor : imageHeight;
 
   if (imageLink === vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.OPSERA) {
-    const imageSize = 150 * scaleFactor;
+    const imageSize = scaledImageHeight * scaleFactor;
 
     return (
       <OpseraInfinityLogo
@@ -112,13 +117,6 @@ pipelineStepIconConstants.getLargeVendorIconComponentFromPipelineStep = (pipelin
       />
     );
   }
-
-  const imageHeight =
-    vendorImageConstants.isValidVendorImageLink(imageLink) === true
-      ? vendorImageConstants.getRecommendedCardVendorImageHeightForImageLink(imageLink)
-      : platformImageConstants.getRecommendedCardPlatformImageHeight(imageLink);
-
-  const scaledImageHeight = imageHeight ? imageHeight * scaleFactor : imageHeight;
 
   return (
     <ImageBase
