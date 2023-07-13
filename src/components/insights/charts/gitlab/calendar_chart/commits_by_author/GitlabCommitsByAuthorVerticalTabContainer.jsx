@@ -12,19 +12,28 @@ import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer
 function GitlabCommitsByAuthorVerticalTabContainer({
   kpiConfiguration,
   dashboardData,
-  metrics
+  metrics,
 }) {
   const toastContext = useContext(DialogToastContext);
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearInfoOverlayPanel();
   };
-  let data = metrics[0]?.data;
+  let data = [];
+  for (let i = 0; i < metrics[0]?.data?.length; i++) {
+    data[i] = metrics[0]?.data[i].x;
+  }
+  data.sort();
   const getVerticalTabContainer = () => {
     return (
       <VanitySetVerticalTabContainer className={"h-100"}>
         {data?.map((item) => {
-          return <VanitySetVerticalTab tabName={item?.x} tabText={item?.x} />;
+          return (
+            <VanitySetVerticalTab
+              tabName={item}
+              tabText={item}
+            />
+          );
         })}
       </VanitySetVerticalTabContainer>
     );
@@ -35,10 +44,10 @@ function GitlabCommitsByAuthorVerticalTabContainer({
         {data?.map((item, index) => (
           <VanitySetTabView
             key={index}
-            tabKey={item?.x}
+            tabKey={item}
           >
             <GitlabCommitsByAuthorOverlay
-              author={item?.x}
+              author={item}
               dashboardData={dashboardData}
               kpiConfiguration={kpiConfiguration}
             />
@@ -60,7 +69,9 @@ function GitlabCommitsByAuthorVerticalTabContainer({
         <TabAndViewContainer
           verticalTabContainer={getVerticalTabContainer(metrics)}
           currentView={getTabContentContainer()}
-          defaultActiveKey={metrics && Array.isArray(metrics) && metrics[0]?.data[0]?.x && metrics[0]?.data[0]?.x}
+          defaultActiveKey={
+            metrics && Array.isArray(metrics) && data[0] && data[0]
+          }
           overflowYContainerStyle={"hidden"}
           overflowYBodyStyle="auto"
         />
