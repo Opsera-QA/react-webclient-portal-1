@@ -12,12 +12,14 @@ const ScmToScmMigrationTaskTargetGitToolIdSelectInput = ({
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = { ...model };
     newModel.setData("targetGitToolId", selectedOption?._id);
+    newModel.setDefaultValue("repositoryMapList");
     setModel({ ...newModel });
   };
 
   const clearDataFunction = () => {
     let newModel = { ...model };
     newModel.setDefaultValue("targetGitToolId");
+    newModel.setDefaultValue("repositoryMapList");
     setModel({ ...newModel });
   };
   return (

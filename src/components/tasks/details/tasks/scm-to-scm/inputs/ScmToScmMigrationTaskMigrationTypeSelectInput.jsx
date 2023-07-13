@@ -4,8 +4,8 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 export const MIGRATION_TYPES = [
   {
-    text: "Git2Git",
-    value: "git_2_git",
+    text: "Git to Git",
+    value: "GIT_TO_GIT",
   },
 ];
 
