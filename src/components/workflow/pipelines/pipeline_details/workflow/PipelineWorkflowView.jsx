@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PipelineWorkflow from "./PipelineWorkflow";
-import PipelineWorkflowEditor from "./PipelineWorkflowItemEditor";
+import PipelineWorkflowEditor from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineWorkflowItemEditor";
 import InformationDialog from "components/common/status_notifications/info";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 

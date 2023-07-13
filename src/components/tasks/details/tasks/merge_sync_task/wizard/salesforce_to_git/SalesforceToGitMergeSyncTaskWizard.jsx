@@ -29,6 +29,7 @@ import sfdcPipelineActions from "../../../../../../workflow/wizards/sfdc_pipelin
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { AuthContext } from "../../../../../../../contexts/AuthContext";
 import { parseError } from "../../../../../../common/helpers/error-helpers";
+import MergeSyncTaskWizardValidatedFileViewer from  "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_upload_validation/MergeSyncTaskWizardValidatedFileViewer";
 
 const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
   const toastContext = useContext(DialogToastContext);
@@ -115,6 +116,7 @@ const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
     }
     if (dataParsingHelper.parseObject(git)) {
       newWizardModel?.setData("targetBranch", git?.targetBranch);
+      newWizardModel?.setData("gitToolId", git?.toolId);
     }
 
     const runCount = taskModel?.getData("run_count");
@@ -156,6 +158,16 @@ const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
             setWizardModel={setWizardModel}
             setCurrentScreen={setCurrentScreen}
             handleClose={handleClose}
+          />
+        );
+      case MERGE_SYNC_WIZARD_SCREENS.VALIDATED_FILE_VIEWER:
+        return (
+          <MergeSyncTaskWizardValidatedFileViewer
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            handleClose={handleClose}
+            setCurrentScreen={setCurrentScreen}
+            mergeSyncType={"Salesforce to Git"}
           />
         );
       case MERGE_SYNC_WIZARD_SCREENS.COMMIT_SELECTION_SCREEN:

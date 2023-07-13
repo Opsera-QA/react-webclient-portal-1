@@ -23,6 +23,7 @@ import MergeSyncTaskWizardCommitSelectionScreen
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitSelectionScreen";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { TASK_TYPES } from "components/tasks/task.types";
+import MergeSyncTaskWizardValidatedFileViewer from "components/tasks/details/tasks/merge_sync_task/wizard/screens/file_upload_validation/MergeSyncTaskWizardValidatedFileViewer";
 
 const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
   const toastContext = useContext(DialogToastContext);
@@ -58,14 +59,17 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
     newWizardModel.setDefaultValue("selectedFileList");
     newWizardModel.setDefaultValue("diffFileList");
     newWizardModel.setDefaultValue("errorMessage");
-    newWizardModel.setData("fromDate", new Date(new Date().setHours(0,0,0,0)));
+    newWizardModel.setData("fromDate", new Date(new Date().setHours(0, 0, 0, 0)));
     newWizardModel.setData("toDate", new Date());
     newWizardModel.setData("taskType", TASK_TYPES.GIT_TO_GIT_MERGE_SYNC);
     newWizardModel.setData("taskId", taskModel?.getMongoDbId());
     newWizardModel.setData("configuration", taskModel?.getData('configuration'));
-    newWizardModel.setData("targetBranch", taskModel?.getData("configuration.git.targetBranch"));
-    newWizardModel.setData("sourceBranch", taskModel?.getData("configuration.git.sourceBranch"));
-
+    const configuration = taskModel?.getData("configuration");
+    const git = configuration?.git;
+    newWizardModel.setData("targetBranch", git?.targetBranch);
+    newWizardModel.setData("sourceBranch", git?.sourceBranch);
+    newWizardModel?.setData("gitToolId", git?.toolId);
+    newWizardModel?.setData("isSalesforce", git?.isSalesforce);
     const runCount = taskModel?.getData("run_count");
 
     if (runCount != null) {
@@ -125,6 +129,16 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
             setWizardModel={setWizardModel}
             setCurrentScreen={setCurrentScreen}
             handleClose={handleClose}
+          />
+        );
+      case MERGE_SYNC_WIZARD_SCREENS.VALIDATED_FILE_VIEWER:
+        return (
+          <MergeSyncTaskWizardValidatedFileViewer
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+            handleClose={handleClose}
+            setCurrentScreen={setCurrentScreen}
+            mergeSyncType={"Salesforce to Git"}
           />
         );
     }

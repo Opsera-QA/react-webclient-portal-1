@@ -49,10 +49,7 @@ function MergeSyncTaskWizardCreateNewRecordButton({
       const response = await mergeSyncTaskWizardActions.createNewRecordV2(
         getAccessToken,
         cancelTokenSource,
-        wizardModel?.getData("taskId"),
-        wizardModel?.getData("runCount"),
-        wizardModel?.getData("isProfiles"),
-        wizardModel?.getData("apiVersion"),
+        wizardModel,
       );
       const newRecord = response?.data?.data;
 

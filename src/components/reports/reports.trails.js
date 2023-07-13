@@ -47,6 +47,14 @@ reportsTrails.sonarReports = {
   linkText: "Sonar Reports",
   icon: faAnalytics
 };
+reportsTrails.sonarCoverageReport = {
+  parent: undefined,
+  name: "sonarCoverageReport",
+  path: reportsPaths.sonarCoverageReport,
+  title: "Sonar Coverage Report",
+  linkText: "Sonar Coverage Report",
+  icon: faAnalytics
+};
 reportsTrails.coverityReports = {
   parent: undefined,
   name: "coverityReports",
