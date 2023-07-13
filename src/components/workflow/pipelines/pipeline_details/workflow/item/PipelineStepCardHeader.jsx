@@ -1,11 +1,7 @@
 import React from "react";
-import CardHeaderBase from "temp-library-components/cards/CardHeaderBase";
 import PropTypes from "prop-types";
-import OrchestrationStateFieldBase
-  from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 import IconBase from "components/common/icons/IconBase";
-import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import {faCheckCircle, faOctagon, faPen, faSpinner, faTimesCircle} from "@fortawesome/pro-light-svg-icons";
 import PipelineStepWorkflowStepAwaitingApprovalStepIcon
   from "components/workflow/pipelines/pipeline_details/workflow/item/icon/PipelineStepWorkflowStepAwaitingApprovalStepIcon";
@@ -18,15 +14,6 @@ import PipelineStepWorkflowStepDeleteStepButton
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
-
-function renderTooltip(props) {
-  const { message } = props;
-  return (
-    <Tooltip id="button-tooltip" {...props}>
-      {message}
-    </Tooltip>
-  );
-}
 
 // TODO: Rewrite and cleanup
 export default function PipelineStepCardHeader(
@@ -63,6 +50,64 @@ export default function PipelineStepCardHeader(
     }
   };
 
+  // TODO: Make separate components
+  const getPipelineStepStateIcon = () => {
+    if (isToolSet && !isEditingWorkflow && !isLoading) {
+      return (
+        <>
+          <OverlayIconBase
+            icon={faTimesCircle}
+            className={"ml-2 red"}
+            onClickFunction={() => {
+              handleViewStepActivityLogClick(pipelineId, pipelineStep.tool.tool_identifier, pipelineStep._id, currentStatus.activity_id);
+            }}
+            overlayBody={"View Errors"}
+            visible={itemState === "failed"}
+          />
+          <OverlayIconBase
+            icon={faOctagon}
+            className={"ml-2 danger-red"}
+            onClickFunction={() => {
+              handleViewStepActivityLogClick(pipelineId, pipelineStep.tool.tool_identifier, pipelineStep._id, currentStatus.activity_id);
+            }}
+            overlayBody={"The last run of this pipeline was stopped while this step was running."}
+            visible={itemState === "stopped"}
+          />
+          <OverlayIconBase
+            icon={faCheckCircle}
+            className={"ml-2 green"}
+            onClickFunction={() => {
+              handleViewStepActivityLogClick(pipelineId, pipelineStep.tool.tool_identifier, pipelineStep._id, currentStatus.activity_id);
+            }}
+            overlayBody={"View last completed log"}
+            visible={itemState === "completed"}
+          />
+          <OverlayIconBase
+            icon={faSpinner}
+            className={"ml-2 green"}
+            onClickFunction={() => {
+              handleViewStepActivityLogClick(pipelineId, pipelineStep.tool.tool_identifier, pipelineStep._id, currentStatus.activity_id);
+            }}
+            overlayBody={"View running step configuration"}
+            visible={itemState === "running"}
+          />
+          <PipelineStepWorkflowStepAwaitingApprovalStepIcon
+            pipelineStepState={itemState}
+            className={"ml-2 red"}
+          />
+          <PipelineWorkflowStepIncompleteStepIcon
+            className={"ml-2 yellow"}
+            pipelineStep={pipelineStep}
+          />
+          <PipelineStepWorkflowStepDisabledStepIcon
+            pipelineStep={pipelineStep}
+            className={"ml-2 dark-grey"}
+          />
+        </>
+      );
+    }
+  };
+
   return (
     <div
       className={className}
@@ -83,74 +128,7 @@ export default function PipelineStepCardHeader(
                 className={"green"}
               />
 
-              {isToolSet && !isEditingWorkflow && !isLoading &&
-                <>
-                  {itemState === "failed" &&
-                    <OverlayTrigger
-                      placement="top"
-                      delay={{ show: 250, hide: 400 }}
-                      overlay={renderTooltip({ message: "View Errors" })}>
-                      <div>
-                        <IconBase icon={faTimesCircle} className={"ml-2 red pointer"}
-                                  onClickFunction={() => {
-                                    handleViewStepActivityLogClick(pipelineId, pipelineStep.tool.tool_identifier, pipelineStep._id, currentStatus.activity_id);
-                                  }} />
-                      </div>
-                    </OverlayTrigger>}
-
-                  {itemState === "stopped" &&
-                    <OverlayTrigger
-                      placement="top"
-                      delay={{ show: 250, hide: 400 }}
-                      overlay={renderTooltip({ message: "The last run of this pipeline was stopped while this step was running." })}>
-                      <div>
-                        <IconBase icon={faOctagon} className={"ml-2 danger-red"}
-                                  iconStyling={{ cursor: "help" }}
-                        />
-                      </div>
-                    </OverlayTrigger>}
-
-                  {itemState === "completed" &&
-                    <OverlayTrigger
-                      placement="top"
-                      delay={{ show: 250, hide: 400 }}
-                      overlay={renderTooltip({ message: "View last completed log" })}>
-                      <div>
-                        <IconBase icon={faCheckCircle} className={"ml-2 green pointer"}
-                                  onClickFunction={() => {
-                                    handleViewStepActivityLogClick(pipelineId, pipelineStep.tool.tool_identifier, pipelineStep._id, currentStatus.activity_id);
-                                  }} />
-                      </div>
-                    </OverlayTrigger>}
-
-                  {itemState === "running" &&
-                    <OverlayTrigger
-                      placement="top"
-                      delay={{ show: 250, hide: 400 }}
-                      overlay={renderTooltip({ message: "View running step configuration" })}>
-                      <div>
-                        <IconBase icon={faSpinner} className={"ml-2 green pointer"}
-                                  spinIcon={true}
-                                  onClickFunction={() => {
-                                    handleViewStepActivityLogClick(pipelineId, pipelineStep.tool.tool_identifier, pipelineStep._id, currentStatus.activity_id);
-                                  }} />
-
-                      </div>
-                    </OverlayTrigger>}
-                  <PipelineStepWorkflowStepAwaitingApprovalStepIcon
-                    pipelineStepState={itemState}
-                    className={"ml-2 red"}
-                  />
-                  <PipelineWorkflowStepIncompleteStepIcon
-                    className={"ml-2 yellow"}
-                    pipelineStep={pipelineStep}
-                  />
-                  <PipelineStepWorkflowStepDisabledStepIcon
-                    pipelineStep={pipelineStep}
-                    className={"ml-2 dark-grey"}
-                  />
-                </>
-              }
+              {getPipelineStepStateIcon()}
 
               <PipelineStepWorkflowStepDeleteStepButton
                 pipeline={pipeline}
