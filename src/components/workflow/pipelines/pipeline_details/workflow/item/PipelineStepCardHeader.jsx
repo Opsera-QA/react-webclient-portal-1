@@ -68,9 +68,9 @@ export default function PipelineStepCardHeader(
       style={{
         fontSize: "13px",
         letterSpacing: "0.6px",
-        minHeight: "25px",
-        height: "25px",
-        maxHeight: "25px",
+        minHeight: "20px",
+        height: "20px",
+        maxHeight: "20px",
       }}
     >
       <div className={"w-100 d-flex justify-content-between"}>
@@ -160,7 +160,6 @@ export default function PipelineStepCardHeader(
               />
               {getStepDefinitionEditButton()}
               <StepToolHelpIcon
-                iconClassName={"mb-1"}
                 className={"ml-2"}
                 tool={pipelineStep?.tool?.tool_identifier}
               />

@@ -202,7 +202,7 @@ const PipelineWorkflowItem = (
           currentStatus={currentStatus}
         />
         <div className={"w-100 d-flex"}>
-          <div>
+          <div className={"ml-1"}>
             <div className={"icon-card-title force-text-wrap"}>
               {DataParsingHelper.parseNestedString(item, "name", "Un-configured Step")}
             </div>

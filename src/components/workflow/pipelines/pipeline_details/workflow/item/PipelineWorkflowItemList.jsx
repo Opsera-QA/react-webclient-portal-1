@@ -75,7 +75,7 @@ export default function PipelineWorkflowItemList(
           className={isSaving ? "fa-disabled" : ""}
         >
           <div
-            className={"workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(item)}
+            className={`workflow-module-container workflow-module-container-width mx-auto ${setStepStatusClass(item)}`}
             style={{
               // borderRadius: "1rem",
               boxShadow: hoveringId === item?._id ? "0 0 20px rgba(46, 25, 86, .3)" : undefined,

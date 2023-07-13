@@ -11,7 +11,7 @@ export const pipelineStepIconConstants = {};
 
 pipelineStepIconConstants.pipelineStepImageHeights = {
   ANCHOR: 33,
-  ANSIBLE: 33,
+  ANSIBLE: 40,
   APIGEE: undefined,
   ARGO: 100,
   AQUASEC: 40,
