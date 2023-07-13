@@ -43,6 +43,7 @@ export default function PipelineStepCardHeader(
     handleViewStepActivityLogClick,
     pipelineId,
     currentStatus,
+    className,
   }) {
   const orchestrationState = pipelineHelper.getStepStatusForPipeline(pipeline, pipelineStepId);
 
@@ -64,7 +65,7 @@ export default function PipelineStepCardHeader(
 
   return (
     <div
-      className={"pt-1"}
+      className={className}
       style={{
         fontSize: "13px",
         letterSpacing: "0.6px",
@@ -184,4 +185,5 @@ PipelineStepCardHeader.propTypes = {
   handleViewStepActivityLogClick: PropTypes.func,
   pipelineId: PropTypes.string,
   currentStatus: PropTypes.object,
+  className: PropTypes.string,
 };

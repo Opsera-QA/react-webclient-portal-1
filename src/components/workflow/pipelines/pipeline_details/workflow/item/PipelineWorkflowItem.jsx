@@ -186,26 +186,30 @@ const PipelineWorkflowItem = (
 
   return (
     <>
-      <div className={"workflow-module-container-height p-1"}>
-        <PipelineStepCardHeader
-          pipeline={pipeline}
-          pipelineStepId={item?._id}
-          itemState={itemState}
-          loadPipeline={loadPipeline}
-          isToolSet={isToolSet}
-          isLoading={isLoading}
-          handleEditClick={handleEditClick}
-          isEditingWorkflow={editWorkflow}
-          handleViewStepActivityLogClick={handleViewStepActivityLogClick}
-          pipelineId={pipelineId}
-          pipelineStep={item}
-          currentStatus={currentStatus}
-        />
+      <div className={"workflow-module-container-height pt-2 px-2 pb-1"}>
+        <div className={"d-flex w-100 ml-1"}>
+          <div className={"icon-card-title force-text-wrap"}>
+            {DataParsingHelper.parseNestedString(item, "name", "Un-configured Step")}
+          </div>
+          <div className={"ml-auto"}>
+            <PipelineStepCardHeader
+              pipeline={pipeline}
+              pipelineStepId={item?._id}
+              itemState={itemState}
+              loadPipeline={loadPipeline}
+              isToolSet={isToolSet}
+              isLoading={isLoading}
+              handleEditClick={handleEditClick}
+              isEditingWorkflow={editWorkflow}
+              handleViewStepActivityLogClick={handleViewStepActivityLogClick}
+              pipelineId={pipelineId}
+              pipelineStep={item}
+              currentStatus={currentStatus}
+            />
+          </div>
+        </div>
         <div className={"w-100 d-flex"}>
           <div className={"ml-1"}>
-            <div className={"icon-card-title force-text-wrap"}>
-              {DataParsingHelper.parseNestedString(item, "name", "Un-configured Step")}
-            </div>
             <PipelineStepWorkflowItemBody
               pipeline={pipeline}
               step={item}
