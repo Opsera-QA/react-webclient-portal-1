@@ -25,7 +25,7 @@ pipelineStepIconConstants.pipelineStepImageHeights = {
   CYPRESS: 32,
   DOCKER: 40,
   DOTNET: 40,
-  FLYWAY: 90,
+  FLYWAY: 40,
   FORTIFY: undefined,
   GIT: 100,
   GITHUB: 100,
