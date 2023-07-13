@@ -53,6 +53,7 @@ import GithubRecentMergeRequestsEditorPanel from "../../charts/github/table/rece
 import GithubCommitsStatisticsEditorPanel from "../../charts/github/pie_chart/commits_statistics/GithubCommitsStatisticsEditorPanel";
 import JenkinsChangeFailureRateEditorPanel
   from "../../charts/jenkins/pie_chart/change_failure_rate/JenkinsChangeFailureRateEditorPanel";
+import GitScrapperEditorPanel from "../../charts/gitscrapper/GitScrapperEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer({
@@ -530,6 +531,16 @@ function DashboardMetricOverlayContainer({
       case kpiIdentifierConstants.KPI_IDENTIFIERS.JENKINS_CHANGE_FAILURE_RATE_V2:
         return (
             <JenkinsChangeFailureRateEditorPanel
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+                unpackedFilterData={unpackedFilterData}
+                kpiConfiguration={kpiConfiguration}
+            />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_SCRAPER_METRICS:
+        return (
+            <GitScrapperEditorPanel
                 metricModel={metricModel}
                 metricFilterModel={metricFilterModel}
                 setMetricFilterModel={setMetricFilterModel}
