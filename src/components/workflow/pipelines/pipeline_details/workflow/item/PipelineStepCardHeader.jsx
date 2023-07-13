@@ -66,12 +66,6 @@ export default function PipelineStepCardHeader(
     <CardHeaderBase>
       <div className={"w-100 d-flex justify-content-between"}>
         <div className={"w-100 d-flex"}>
-          <OrchestrationStateFieldBase
-            orchestrationState={orchestrationState}
-            type={"Pipeline Step"}
-            showStoppedState={false}
-            // className={"ml-auto"}
-          />
           <div className={"ml-auto title-text-6 upper-case-first d-flex"}>
             <div className={"ml-auto d-flex mr-1"}>
               <IconBase
