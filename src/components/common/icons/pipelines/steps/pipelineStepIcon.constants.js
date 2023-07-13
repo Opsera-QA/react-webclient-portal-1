@@ -23,8 +23,8 @@ pipelineStepIconConstants.pipelineStepImageHeights = {
   BUILDKITE: 32,
   COVERITY: 44,
   CYPRESS: 32,
-  DOCKER: 100,
-  DOTNET: 65,
+  DOCKER: 40,
+  DOTNET: 40,
   FLYWAY: 90,
   FORTIFY: undefined,
   GIT: 100,
@@ -100,7 +100,7 @@ pipelineStepIconConstants.getRecommendedPipelineStepVendorImageHeightForImageLin
 
 pipelineStepIconConstants.getLargeVendorIconComponentFromPipelineStep = (pipelineStep, scaleFactor = 1) => {
   // const imageLink = pipelineStepIconConstants.getImageLinkForPipelineStep(pipelineStep);
-  const imageLink = vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.DOCKER;
+  const imageLink = vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.FLYWAY;
   const imageHeight =
     vendorImageConstants.isValidVendorImageLink(imageLink) === true
       ? pipelineStepIconConstants.getRecommendedPipelineStepVendorImageHeightForImageLink(imageLink)
