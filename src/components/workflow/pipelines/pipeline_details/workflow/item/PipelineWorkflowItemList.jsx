@@ -23,7 +23,7 @@ export default function PipelineWorkflowItemList(
     parentWorkflowStatus,
   }) {
   const [isSaving, setIsSaving] = useState(false);
-  const [hoveringId, setHoveringId] = useState(false);
+  const [hoveringId, setHoveringId] = useState("");
   const {themeConstants} = useTheme();
   const {
     isLoading,
@@ -68,7 +68,7 @@ export default function PipelineWorkflowItemList(
   };
 
   return (
-    <div className="step-items workflow-module-container-width mx-auto">
+    <div className={"step-items workflow-module-container-width mx-auto"}>
       {Array.isArray(plan) && plan.map((item, index) => (
         <div
           key={index}
@@ -79,14 +79,13 @@ export default function PipelineWorkflowItemList(
             style={{
               // borderRadius: "1rem",
               boxShadow: hoveringId === item?._id ? "0 0 20px rgba(46, 25, 86, .3)" : undefined,
-              border: "1px solid rgb(215, 215, 215)",
+              // border: "1px solid rgb(215, 215, 215)",
               // cursor: mouseHelper.getMouseCursor(onClickFunction, disabled || isLoading),
-              overflow: "hidden",
               backgroundColor: item?.active === false ? themeConstants.COLOR_PALETTE.BACKGROUND_GRAY : undefined,
               // color: disabled === true || isLoading === true ? themeConstants.COLOR_PALETTE.DARK_GRAY : undefined,
             }}
             onMouseEnter={() => setHoveringId(item?._id)}
-            onMouseLeave={() => setHoveringId(item?._id)}
+            onMouseLeave={() => setHoveringId("")}
           >
             <PipelineWorkflowItem
               pipeline={pipeline}

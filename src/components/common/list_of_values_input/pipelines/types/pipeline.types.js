@@ -177,8 +177,8 @@ pipelineTypeConstants.getImageLinkForPipelineStep = (pipelineStep) => {
   const toolIdentifier = DataParsingHelper.parseNestedString(parsedPipelineStep, "tool.tool_identifier");
   const imageLink = vendorImageConstants.getVendorImageForToolIdentifier(toolIdentifier);
 
-  if (!toolIdentifier || !imageLink) {
-    return platformImageConstants.PLATFORM_IMAGE_LINKS.PIPELINES_GENERAL;
+  if (!toolIdentifier || toolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS || !imageLink) {
+    return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.OPSERA;
   }
 
   return imageLink;

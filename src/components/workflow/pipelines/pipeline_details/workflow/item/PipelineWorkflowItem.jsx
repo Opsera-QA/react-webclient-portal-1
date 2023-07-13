@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import {
   faPen,
   faSpinner,
@@ -9,7 +9,7 @@ import {
   faOctagon,
 } from "@fortawesome/pro-light-svg-icons";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
-import { pipelineValidationHelper } from "components/workflow/pipelines/helpers/pipelineValidation.helper";
+import {pipelineValidationHelper} from "components/workflow/pipelines/helpers/pipelineValidation.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
@@ -23,20 +23,13 @@ import PipelineStepActivityLogOverlay
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineStepActivityLogOverlay";
 import AccessDeniedOverlayBase from "components/common/overlays/center/denied/AccessDeniedOverlayBase";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
-import PipelineStepWorkflowStepDeleteStepButton
-  from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowStepDeleteStepButton";
-import PipelineStepWorkflowStepDisabledStepIcon
-  from "components/workflow/pipelines/pipeline_details/workflow/item/icon/PipelineStepWorkflowStepDisabledStepIcon";
-import OverlayIconBase from "components/common/icons/OverlayIconBase";
-import PipelineWorkflowStepIncompleteStepIcon
-  from "components/workflow/pipelines/pipeline_details/workflow/item/icon/PipelineWorkflowStepIncompleteStepIcon";
-import PipelineStepWorkflowStepAwaitingApprovalStepIcon
-  from "components/workflow/pipelines/pipeline_details/workflow/item/icon/PipelineStepWorkflowStepAwaitingApprovalStepIcon";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import PipelineStepCardBottomActionBar
   from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepCardBottomActionBar";
-import {getLargeVendorIconFromToolIdentifier} from "components/common/helpers/icon-helpers";
-import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
+import {
+  getLargeVendorIconComponentFromPipelineStep,
+  getLargeVendorIconFromToolIdentifier
+} from "components/common/helpers/icon-helpers";
 import PipelineStepCardHeader
   from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepCardHeader";
 
@@ -190,18 +183,19 @@ const PipelineWorkflowItem = (
   };
 
   const getToolIcon = () => {
-    const toolIdentifier = DataParsingHelper.parseNestedString(item, "tool.tool_identifier");
-    const icon = getLargeVendorIconFromToolIdentifier(toolIdentifier);
-      return (
-        <div
-          className={"d-flex mx-auto"}
-          style={{
-            width: "100px",
-          }}
-        >
+    const icon = getLargeVendorIconComponentFromPipelineStep(item, .33);
+    return (
+      <div
+        style={{
+          minWidth: "150px",
+          maxWidth: "150px",
+        }}
+        className={"d-flex"}>
+        <div className={"mx-auto"}>
           {icon}
         </div>
-      );
+      </div>
+    );
   };
 
   if (!DataParsingHelper.parseMongoDbId(item?._id)) {
@@ -209,7 +203,7 @@ const PipelineWorkflowItem = (
       <div className={"workflow-module-container-height"}>
         <div className={"title-text-6 upper-case-first ml-1 mt-1 d-flex"}>
           <div className={"text-muted mr-1"}>
-            <LoadingIcon className={"mr-2"} />
+            <LoadingIcon className={"mr-2"}/>
             Initializing Step
           </div>
         </div>

@@ -24,11 +24,11 @@
 }
 
 .workflow-module-container-width-sm {
-  max-width: 325px;
+  max-width: 500px;
 }
 
 .workflow-module-container-width {
-  max-width: 400px;
+  max-width: 550px;
 }
 
 .workflow-module-container-height {
@@ -96,32 +96,32 @@
 
 .workflow-step-failure {
   border-color: #ff0000;
-  border-width: 2px;
+  border-width: 1px;
 }
 
 .workflow-step-running {
   border-color: #28a745;
-  border-width: 2px;
+  border-width: 1px;
 }
 
 .workflow-step-success {
   border-color: #0f3e84;
-  border-width: 2px;
+  border-width: 1px;
 }
 
 .workflow-step-warning {
   border-color: #f9c116;
-  border-width: 2px;
+  border-width: 1px;
 }
 
 .workflow-step-stopped {
   border-color: #dc3545;
-  border-width: 2px;
+  border-width: 1px;
 }
 
 .workflow-step-disabled {
   border-color: #3D3B36;
-  border-width: 2px;
+  border-width: 1px;
   opacity: 0.65;
 }
 
