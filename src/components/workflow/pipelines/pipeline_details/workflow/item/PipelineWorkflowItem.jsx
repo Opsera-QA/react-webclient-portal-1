@@ -18,10 +18,8 @@ import PipelineStepCardBottomActionBar
   from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepCardBottomActionBar";
 import PipelineStepCardHeader
   from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepCardHeader";
-import {pipelineStepIconConstants} from "components/common/icons/pipelines/steps/pipelineStepIcon.constants";
 import PipelineStepIcon from "components/common/icons/pipelines/steps/PipelineStepIcon";
 
-// TODO: Try icon on right side between icons
 const PipelineWorkflowItem = (
   {
     pipeline,
@@ -190,26 +188,6 @@ const PipelineWorkflowItem = (
         <div className={"d-flex w-100 ml-1"}>
           <div className={"icon-card-title force-text-wrap"}>
             {DataParsingHelper.parseNestedString(item, "name", "Un-configured Step")}
-          </div>
-          <div className={"ml-auto"}>
-            <PipelineStepCardHeader
-              pipeline={pipeline}
-              pipelineStepId={item?._id}
-              itemState={itemState}
-              loadPipeline={loadPipeline}
-              isToolSet={isToolSet}
-              isLoading={isLoading}
-              handleEditClick={handleEditClick}
-              isEditingWorkflow={editWorkflow}
-              handleViewStepActivityLogClick={handleViewStepActivityLogClick}
-              pipelineId={pipelineId}
-              pipelineStep={item}
-              currentStatus={currentStatus}
-            />
-          </div>
-        </div>
-        <div className={"w-100 d-flex"}>
-          <div className={"ml-1"}>
             <PipelineStepWorkflowItemBody
               pipeline={pipeline}
               step={item}
@@ -217,20 +195,22 @@ const PipelineWorkflowItem = (
               toolIdentifier={toolIdentifier}
             />
           </div>
-          <div className={"ml-auto my-auto"}>
-            <PipelineStepIcon
-              pipelineStep={item}
-              className={"ml-2"}
-            />
+          <div className={"ml-auto"}>
+            <div className={"ml-auto my-auto"}>
+              <PipelineStepIcon
+                pipelineStep={item}
+                className={"ml-2 mr-1"}
+              />
+            </div>
           </div>
         </div>
         <div
-          className={"ml-auto mt-auto pt-2"}
+          className={"w-100 d-flex justify-content-between pt-2"}
           style={{
             height: "30px",
           }}
         >
-          <div className={"ml-auto d-flex"}>
+          <div>
             <PipelineStepCardBottomActionBar
               pipeline={pipeline}
               pipelineId={pipelineId}
@@ -244,6 +224,22 @@ const PipelineWorkflowItem = (
               itemState={itemState}
               parentWorkflowStatus={parentWorkflowStatus}
               runCount={runCountState}
+            />
+          </div>
+          <div>
+            <PipelineStepCardHeader
+              pipeline={pipeline}
+              pipelineStepId={item?._id}
+              itemState={itemState}
+              loadPipeline={loadPipeline}
+              isToolSet={isToolSet}
+              isLoading={isLoading}
+              handleEditClick={handleEditClick}
+              isEditingWorkflow={editWorkflow}
+              handleViewStepActivityLogClick={handleViewStepActivityLogClick}
+              pipelineId={pipelineId}
+              pipelineStep={item}
+              currentStatus={currentStatus}
             />
           </div>
         </div>
