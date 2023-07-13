@@ -189,26 +189,19 @@ const PipelineWorkflowItem = (
     }
   };
 
-  const getTitleBar = () => {
+  const getToolIcon = () => {
     const toolIdentifier = DataParsingHelper.parseNestedString(item, "tool.tool_identifier");
     const icon = getLargeVendorIconFromToolIdentifier(toolIdentifier);
-    const pipelineStepName = DataParsingHelper.parseNestedString(item, "name", "Un-configured Step");
-
-    if (hasStringValue(icon) === true) {
       return (
-        <CardIconTitleBar
-          iconString={icon}
-          title={pipelineStepName}
-        />
+        <div
+          className={"d-flex mx-auto"}
+          style={{
+            width: "100px",
+          }}
+        >
+          {icon}
+        </div>
       );
-    }
-
-    return (
-      <CardIconTitleBar
-        formattedIcon={icon}
-        title={pipelineStepName}
-      />
-    );
   };
 
   if (!DataParsingHelper.parseMongoDbId(item?._id)) {
@@ -241,16 +234,26 @@ const PipelineWorkflowItem = (
           pipelineStep={item}
           currentStatus={currentStatus}
         />
-
-        {getTitleBar()}
-        <PipelineStepWorkflowItemBody
-          pipeline={pipeline}
-          step={item}
-          loadPipeline={loadPipeline}
-          toolIdentifier={toolIdentifier}
-        />
+        <div className={"w-100 d-flex"}>
+          <div
+            className={"mr-2"}
+          >
+            {getToolIcon()}
+          </div>
+          <div>
+            <div className={"icon-card-title force-text-wrap"}>
+              {DataParsingHelper.parseNestedString(item, "name", "Un-configured Step")}
+            </div>
+            <PipelineStepWorkflowItemBody
+              pipeline={pipeline}
+              step={item}
+              loadPipeline={loadPipeline}
+              toolIdentifier={toolIdentifier}
+            />
+          </div>
+        </div>
         <div
-          className={"ml-auto mt-auto pt-2 "}
+          className={"ml-auto mt-auto pt-2"}
           style={{
             height: "30px",
           }}

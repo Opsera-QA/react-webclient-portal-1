@@ -23,6 +23,7 @@ export default function CardIconTitleBar(
     inactive,
     characterLimit,
     className,
+    height,
   }) {
   const parsedTitle = ensureStringFallsMeetsCharacterLimits(title, characterLimit);
 
@@ -32,7 +33,7 @@ export default function CardIconTitleBar(
         <div
           className={"d-flex"}
           style={{
-            height: "100px",
+            height: height,
           }}
         >
           <div className={"my-auto"}>
@@ -47,7 +48,7 @@ export default function CardIconTitleBar(
         <div
           className={"d-flex"}
           style={{
-            height: "100px",
+            height: height,
           }}
         >
           <div className={"my-auto"}>
@@ -61,7 +62,7 @@ export default function CardIconTitleBar(
       <div
         className={"d-flex"}
         style={{
-          height: "100px",
+          height: height,
         }}
       >
         <div className={"my-auto"}>
@@ -154,10 +155,12 @@ CardIconTitleBar.propTypes = {
   iconColor: PropTypes.string,
   iconSize: PropTypes.string,
   characterLimit: PropTypes.number,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  height: PropTypes.string,
 };
 
 CardIconTitleBar.defaultProps = {
   characterLimit: 60,
   iconSize: "3x",
+  height: "100px",
 };
