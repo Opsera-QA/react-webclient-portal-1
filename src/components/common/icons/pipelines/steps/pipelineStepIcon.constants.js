@@ -30,8 +30,8 @@ pipelineStepIconConstants.pipelineStepImageHeights = {
   GIT: 33,
   GITHUB: 33,
   GITLAB: 33,
-  GOOGLE_CHAT: 75,
-  GOOGLE_CLOUD_PLATFORM: 90,
+  GOOGLE_CHAT: 33,
+  GOOGLE_CLOUD_PLATFORM: 33,
   HASHICORP: 75,
   HELM: 100,
   INFORMATICA: 50,
@@ -100,7 +100,7 @@ pipelineStepIconConstants.getRecommendedPipelineStepVendorImageHeightForImageLin
 
 pipelineStepIconConstants.getLargeVendorIconComponentFromPipelineStep = (pipelineStep, scaleFactor = 1) => {
   // const imageLink = pipelineStepIconConstants.getImageLinkForPipelineStep(pipelineStep);
-  const imageLink = vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GITLAB;
+  const imageLink = vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.GOOGLE_CLOUD_PLATFORM;
   const imageHeight =
     vendorImageConstants.isValidVendorImageLink(imageLink) === true
       ? pipelineStepIconConstants.getRecommendedPipelineStepVendorImageHeightForImageLink(imageLink)
