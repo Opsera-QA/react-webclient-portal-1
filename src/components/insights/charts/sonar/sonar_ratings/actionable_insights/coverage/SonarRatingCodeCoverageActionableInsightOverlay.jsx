@@ -88,8 +88,6 @@ function SonarRatingCodeCoverageActionableInsightOverlay({ kpiConfiguration, das
 
       const metrics = response?.data.data[0].sonarCodeCoverageActionableInsights.data[0].data;
 
-      console.log("metrics", metrics);
-
       if (isMounted?.current === true && Array.isArray(metrics)) {
         setCoverageData(metrics);
 
@@ -119,8 +117,6 @@ function SonarRatingCodeCoverageActionableInsightOverlay({ kpiConfiguration, das
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
   };
-
-  console.log("coverageData", coverageData);
 
   return (
     <FullScreenCenterOverlayContainer
