@@ -199,7 +199,7 @@ const PipelineWorkflowItem = (
             <div className={"ml-auto my-auto"}>
               <PipelineStepIcon
                 pipelineStep={item}
-                className={"ml-2 mr-1"}
+                className={"ml-2 pr-1"}
               />
             </div>
           </div>
