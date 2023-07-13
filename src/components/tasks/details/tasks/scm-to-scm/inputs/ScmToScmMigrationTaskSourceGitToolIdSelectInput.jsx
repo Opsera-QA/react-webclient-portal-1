@@ -13,7 +13,7 @@ const ScmToScmMigrationTaskSourceGitToolIdSelectInput = ({
     let newModel = { ...model };
     newModel.setData("sourceGitToolId", selectedOption?._id);
     newModel.setDefaultValue("sourceWorkspace");
-
+    newModel.setDefaultValue("repositoryMapList");
     setModel({ ...newModel });
   };
 
@@ -21,6 +21,7 @@ const ScmToScmMigrationTaskSourceGitToolIdSelectInput = ({
     let newModel = { ...model };
     newModel.setDefaultValue("sourceGitToolId");
     newModel.setDefaultValue("sourceWorkspace");
+    newModel.setDefaultValue("repositoryMapList");
     setModel({ ...newModel });
   };
 

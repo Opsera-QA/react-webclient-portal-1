@@ -12,76 +12,83 @@ import ScmToScmMigrationTaskSourceGitToolIdSelectInput from "./inputs/ScmToScmMi
 import ScmToScmMigrationTaskBitbucketWorkspaceSelectInput from "./inputs/ScmToScmMigrationTaskBitbucketWorkspaceSelectInput";
 import ScmToScmMigrationTaskTargetScmTypeSelectInput from "./inputs/ScmToScmMigrationTaskTargetScmTypeSelectInput";
 import ScmToScmMigrationTaskTargetGitToolIdSelectInput from "./inputs/ScmToScmMigrationTaskTargetGitToolIdSelectInput";
+import ScmToScmMigrationRepositoryMappingInput from "./inputs/ScmToScmMigrationRepositoryMappingInput";
 
 const ScmToScmMigrationTaskConfigurationEditorPanel = ({
   taskModel,
   taskConfigurationModel,
   setTaskConfigurationModel,
 }) => {
-  const [scmConfigurationModel, setScmConfigurationModel] = useState(undefined);
-
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
-    const configurationData = modelHelpers.parseObjectIntoModel(
-      taskModel?.getData("configuration"),
+    const configurationData = modelHelpers.getToolConfigurationModel(
+      taskModel.getData("configuration"),
       scmToScmMigrationTaskConfigurationMetadata,
     );
     configurationData?.setData("jobType", TASK_TYPES.SCM_TO_SCM_MIGRATION);
     setTaskConfigurationModel({ ...configurationData });
-    const newGitModel = modelHelpers.getToolConfigurationModel(
-      configurationData?.getData("git"),
-      scmToScmMigrationTaskConfigurationMetadata,
-    );
-    newGitModel?.setData("jobType", TASK_TYPES.SCM_TO_SCM_MIGRATION);
-    setScmConfigurationModel({ ...newGitModel });
   };
+
+  if (!taskConfigurationModel) {
+    return null;
+  }
+
   return (
-    <>
+    <Row>
       <Col lg={12}>
         <ScmToScmMigrationTaskMigrationTypeSelectInput
-          model={scmConfigurationModel}
-          setModel={setScmConfigurationModel}
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
           fieldName={"migrationType"}
         />
       </Col>
       <Col lg={12}>
         <ScmToScmMigrationTaskSourceScmTypeSelectInput
-          model={scmConfigurationModel}
-          setModel={setScmConfigurationModel}
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
           fieldName={"sourceScmType"}
         />
       </Col>
       <Col lg={12}>
         <ScmToScmMigrationTaskSourceGitToolIdSelectInput
-          model={scmConfigurationModel}
-          setModel={setScmConfigurationModel}
-          toolIdentifier={scmConfigurationModel?.getData("sourceScmType")}
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
+          toolIdentifier={taskConfigurationModel?.getData("sourceScmType")}
         />
       </Col>
       <Col lg={12}>
         <ScmToScmMigrationTaskBitbucketWorkspaceSelectInput
-          model={scmConfigurationModel}
-          setModel={setScmConfigurationModel}
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
         />
       </Col>
       <Col lg={12}>
         <ScmToScmMigrationTaskTargetScmTypeSelectInput
-          model={scmConfigurationModel}
-          setModel={setScmConfigurationModel}
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
           fieldName={"targetScmType"}
         />
       </Col>
       <Col lg={12}>
         <ScmToScmMigrationTaskTargetGitToolIdSelectInput
-          model={scmConfigurationModel}
-          setModel={setScmConfigurationModel}
-          toolIdentifier={scmConfigurationModel?.getData("targetScmType")}
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
+          toolIdentifier={taskConfigurationModel?.getData("targetScmType")}
         />
       </Col>
-    </>
+      <Col lg={12}>
+        <ScmToScmMigrationRepositoryMappingInput 
+          model={taskConfigurationModel}
+          setModel={setTaskConfigurationModel}
+          fieldName={"repositoryMapList"}
+          type={"Repository Mappings"}
+          allowIncompleteItems={false}
+        />
+      </Col>
+    </Row>
   );
 };
 

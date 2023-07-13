@@ -14,6 +14,7 @@ import TaskOrchestrationNotificationInlineInput
 import { TASK_TYPES } from "components/tasks/task.types";
 import TaskSchedulerField, { SCHEDULER_SUPPORTED_TASK_TYPES } from "components/tasks/scheduler/TaskSchedulerField";
 import GitScraperActionButton from "../buttons/gitscraper/GitScraperActionButton";
+import ScmToScmTaskActionButton from "../buttons/scm_to_scm/ScmToScmTaskActionButton";
 import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import TaskStateField from "temp-library-components/fields/orchestration/state/task/TaskStateField";
@@ -61,6 +62,14 @@ function TaskSummaryPanel(
       case TASK_TYPES.GITSCRAPER:
         return (
           <GitScraperActionButton
+            gitTasksData={gitTasksData}
+            status={status}
+            runCount={runCount}
+          />
+        );
+      case TASK_TYPES.SCM_TO_SCM_MIGRATION:
+        return (
+          <ScmToScmTaskActionButton
             gitTasksData={gitTasksData}
             status={status}
             runCount={runCount}

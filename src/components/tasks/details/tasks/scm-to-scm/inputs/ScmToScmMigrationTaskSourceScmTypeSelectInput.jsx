@@ -28,7 +28,7 @@ const ScmToScmMigrationTaskSourceScmTypeSelectInput = ({
     newModel.setData("sourceScmType", selectedOption?.value);
     newModel.setDefaultValue("sourceGitToolId");
     newModel.setDefaultValue("sourceWorkspace");
-
+    newModel.setDefaultValue("repositoryMapList");
     setModel({ ...newModel });
   };
 
@@ -37,6 +37,7 @@ const ScmToScmMigrationTaskSourceScmTypeSelectInput = ({
     newModel.setDefaultValue("sourceScmType");
     newModel.setDefaultValue("sourceGitToolId");
     newModel.setDefaultValue("sourceWorkspace");
+    newModel.setDefaultValue("repositoryMapList");
     setModel({ ...newModel });
   };
   return (

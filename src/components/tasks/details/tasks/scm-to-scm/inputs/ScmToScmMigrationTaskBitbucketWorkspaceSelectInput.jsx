@@ -10,11 +10,15 @@ const ScmToScmMigrationTaskBitbucketWorkspaceSelectInput = ({
   const setWorkspace = (fieldName, selectedOption) => {
     const newModel = { ...model };
     newModel.setData("sourceWorkspace", selectedOption?.key);
+    newModel.setDefaultValue("repositoryMapList");
     setModel({ ...newModel });
   };
 
   const clearData = () => {
     const newModel = { ...model };
+    newModel.setDefaultValue("sourceWorkspace");
+    newModel.setDefaultValue("repositoryMapList");
+    setModel({ ...newModel });
   };
 
   if (model?.getData("sourceScmType") !== "bitbucket") {
