@@ -26,12 +26,9 @@ import {pipelineHelper} from "components/workflow/pipeline.helper";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import PipelineStepCardBottomActionBar
   from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepCardBottomActionBar";
-import {
-  getLargeVendorIconComponentFromPipelineStep,
-  getLargeVendorIconFromToolIdentifier
-} from "components/common/helpers/icon-helpers";
 import PipelineStepCardHeader
   from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepCardHeader";
+import {pipelineStepIconConstants} from "components/common/list_of_values_input/pipelines/icon/pipelineStepIcon.constants";
 
 const PipelineWorkflowItem = (
   {
@@ -183,7 +180,8 @@ const PipelineWorkflowItem = (
   };
 
   const getToolIcon = () => {
-    const icon = getLargeVendorIconComponentFromPipelineStep(item, .33);
+
+    const icon = pipelineStepIconConstants.getLargeVendorIconComponentFromPipelineStep(item, .33);
     return (
       <div
         style={{

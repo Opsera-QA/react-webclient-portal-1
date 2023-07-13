@@ -3,10 +3,13 @@ import {vendorImageConstants} from "temp-library-components/image/vendorImage.co
 import React from "react";
 import toolIdentifierConstants from "@opsera/definitions/constants/tool_identifiers/toolIdentifier.constants";
 import constantsHelper from "@opsera/definitions/constants/constants.helper";
+import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
+import {platformImageConstants} from "temp-library-components/image/platformImage.constants";
+import {ImageBase} from "@opsera/react-vanity-set";
 
-export const pipelineIconConstants = {};
+export const pipelineStepIconConstants = {};
 
-pipelineIconConstants.pipelineStepImageHeights = {
+pipelineStepIconConstants.pipelineStepImageHeights = {
   ANCHOR: 75,
   ANSIBLE: 100,
   APIGEE: undefined,
@@ -64,7 +67,7 @@ pipelineIconConstants.pipelineStepImageHeights = {
   XUNIT: 50,
 };
 
-pipelineIconConstants.getImageLinkForPipelineStep = (pipelineStep) => {
+pipelineStepIconConstants.getImageLinkForPipelineStep = (pipelineStep) => {
   const parsedPipelineStep = DataParsingHelper.parseObject(pipelineStep, {});
   const toolIdentifier = DataParsingHelper.parseNestedString(parsedPipelineStep, "tool.tool_identifier");
   const imageLink = vendorImageConstants.getVendorImageForToolIdentifier(toolIdentifier);
@@ -76,7 +79,7 @@ pipelineIconConstants.getImageLinkForPipelineStep = (pipelineStep) => {
   return imageLink;
 };
 
-pipelineIconConstants.getRecommendedPipelineStepVendorImageHeightForImageLink = (
+pipelineStepIconConstants.getRecommendedPipelineStepVendorImageHeightForImageLink = (
   vendorImageLink,
 ) => {
   const key = constantsHelper.getKeyForValue(
@@ -88,9 +91,39 @@ pipelineIconConstants.getRecommendedPipelineStepVendorImageHeightForImageLink = 
     return undefined;
   }
 
-  const recommendedHeight = DataParsingHelper.parseInteger(pipelineIconConstants.pipelineStepImageHeights[key]);
+  const recommendedHeight = DataParsingHelper.parseInteger(pipelineStepIconConstants.pipelineStepImageHeights[key]);
 
   if (recommendedHeight) {
     return recommendedHeight;
   }
+};
+
+pipelineStepIconConstants.getLargeVendorIconComponentFromPipelineStep = (pipelineStep, scaleFactor = 1) => {
+  const imageLink = pipelineStepIconConstants.getImageLinkForPipelineStep(pipelineStep);
+
+  if (imageLink === vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.OPSERA) {
+    const imageSize = 150 * scaleFactor;
+
+    return (
+      <OpseraInfinityLogo
+        desiredHeight={imageSize}
+        className={"d-flex h-100"}
+        imageClassName={"my-auto"}
+      />
+    );
+  }
+
+  const imageHeight =
+    vendorImageConstants.isValidVendorImageLink(imageLink) === true
+      ? vendorImageConstants.getRecommendedCardVendorImageHeightForImageLink(imageLink)
+      : platformImageConstants.getRecommendedCardPlatformImageHeight(imageLink);
+
+  const scaledImageHeight = imageHeight ? imageHeight * scaleFactor : imageHeight;
+
+  return (
+    <ImageBase
+      height={scaledImageHeight}
+      imageSource={imageLink}
+    />
+  );
 };
