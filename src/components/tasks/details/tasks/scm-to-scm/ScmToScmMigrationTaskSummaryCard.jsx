@@ -14,8 +14,6 @@ function ScmToScmMigrationTaskSummaryCard({ taskConfigurationModel, isLoading })
     );
   }
 
-  console.log({taskConfigurationModel});
-
   return (
     <TaskSummaryCardContainer isLoading={isLoading}>
       <Row>

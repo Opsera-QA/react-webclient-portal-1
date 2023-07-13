@@ -39,7 +39,7 @@ function ScmToScmTaskActionButton(
       toastContext.showSuccessDialog("SCM to SCM migration Task Triggered Successfully");
     } catch (error) {
       setIsStarting(false);
-      console.log(error);
+      console.error(error);
       if (error?.error?.response?.data?.message) {
         toastContext.showCreateFailureResultDialog("SCM to SCM migration Task", error.error.response.data.message);
       } else {
