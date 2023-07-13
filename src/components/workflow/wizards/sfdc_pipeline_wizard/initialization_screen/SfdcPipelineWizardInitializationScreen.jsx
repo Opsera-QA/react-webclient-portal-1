@@ -65,7 +65,9 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
         newPipelineWizardRecord = await loadSfdcInitStep(newPipelineWizardModel, plan, cancelSource);
       }
 
-      await initializePipelineWizardRecord(newPipelineWizardRecord);
+      if(newPipelineWizardRecord) {
+        await initializePipelineWizardRecord(newPipelineWizardRecord);
+      }
     }
     catch (error) {
       console.error(error);
