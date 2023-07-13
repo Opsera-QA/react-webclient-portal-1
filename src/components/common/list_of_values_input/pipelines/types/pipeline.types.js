@@ -172,18 +172,6 @@ pipelineTypeConstants.getImageLinkForPipeline = (pipeline) => {
   return imageLink;
 };
 
-pipelineTypeConstants.getImageLinkForPipelineStep = (pipelineStep) => {
-  const parsedPipelineStep = DataParsingHelper.parseObject(pipelineStep, {});
-  const toolIdentifier = DataParsingHelper.parseNestedString(parsedPipelineStep, "tool.tool_identifier");
-  const imageLink = vendorImageConstants.getVendorImageForToolIdentifier(toolIdentifier);
-
-  if (!toolIdentifier || toolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS || !imageLink) {
-    return vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.OPSERA;
-  }
-
-  return imageLink;
-};
-
 export const PIPELINE_TYPE_SELECT_OPTIONS = [
   {
     text: PIPELINE_TYPE_LABELS.APIGEE,

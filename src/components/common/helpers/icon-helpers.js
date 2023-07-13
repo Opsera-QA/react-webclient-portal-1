@@ -1,9 +1,8 @@
 import {faOctopusDeploy, faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import {
   faClipboardListCheck,
-  faDraftingCompass, faMicrochip,
+  faMicrochip,
   faShieldKeyhole,
-  faTasks,
   faWrench
 } from "@fortawesome/pro-light-svg-icons";
 import React from "react";
@@ -18,7 +17,7 @@ import {vendorImageConstants} from "temp-library-components/image/vendorImage.co
 import {ImageBase} from "@opsera/react-vanity-set";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import {platformImageConstants} from "temp-library-components/image/platformImage.constants";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import {pipelineIconConstants} from "components/common/list_of_values_input/pipelines/icon/pipelineIcon.constants";
 
 export const getToolIdentifiersWithMissingImages = () => {
   const keys = Object.keys(vendorImageConstants.TOOL_IDENTIFIER_LOGOS);
@@ -253,7 +252,7 @@ export function getLargeVendorIconComponentFromPipeline(pipeline, scaleFactor = 
 }
 
 export function getLargeVendorIconComponentFromPipelineStep(pipelineStep, scaleFactor = 1) {
-  const imageLink = pipelineTypeConstants.getImageLinkForPipelineStep(pipelineStep);
+  const imageLink = pipelineIconConstants.getImageLinkForPipelineStep(pipelineStep);
 
   if (imageLink === vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.OPSERA) {
     const imageSize = 150 * scaleFactor;
