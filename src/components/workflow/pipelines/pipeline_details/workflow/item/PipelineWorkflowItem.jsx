@@ -185,7 +185,7 @@ const PipelineWorkflowItem = (
   return (
     <>
       <div className={"workflow-module-container-height pt-2 px-2 pb-1"}>
-        <div className={"d-flex w-100 mx-1"}>
+        <div className={"d-flex w-100 px-1"}>
           <div className={"icon-card-title force-text-wrap"}>
             {DataParsingHelper.parseNestedString(item, "name", "Un-configured Step")}
             <PipelineStepWorkflowItemBody
