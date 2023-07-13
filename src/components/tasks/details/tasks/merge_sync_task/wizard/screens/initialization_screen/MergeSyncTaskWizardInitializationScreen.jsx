@@ -209,7 +209,7 @@ const MergeSyncTaskWizardInitializationScreen = ({
     return (
       <div>
         <div className={"mt-2"}>
-          Would you like to start a manual {mergeSyncType} wizard run or use the XML/File Upload Process?
+          {(wizardModel?.getData("taskType") === "SFDC_GIT_COMPARE_SYNC") || (wizardModel?.getData("taskType") === "GIT_VS_GIT_SYNC" && wizardModel?.getData("isSalesforce")) ? `Would you like to start a manual ${mergeSyncType} wizard run or use the XML/File Upload Process?` : `Would you like to start a manual ${mergeSyncType} wizard run?`}
         </div>
         <div className={"mt-2"}>
           <CustomTabContainer>
