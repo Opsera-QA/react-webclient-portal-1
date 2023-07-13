@@ -12,9 +12,9 @@ export const pipelineStepIconConstants = {};
 pipelineStepIconConstants.pipelineStepImageHeights = {
   ANCHOR: 33,
   ANSIBLE: 40,
-  APIGEE: undefined,
-  ARGO: 100,
-  AQUASEC: 40,
+  APIGEE: 19,
+  ARGO: 40,
+  AQUASEC: 33,
   AWS: 100,
   AZURE: 100,
   BITBUCKET: undefined,
@@ -100,7 +100,7 @@ pipelineStepIconConstants.getRecommendedPipelineStepVendorImageHeightForImageLin
 
 pipelineStepIconConstants.getLargeVendorIconComponentFromPipelineStep = (pipelineStep, scaleFactor = 1) => {
   // const imageLink = pipelineStepIconConstants.getImageLinkForPipelineStep(pipelineStep);
-  const imageLink = vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.ANSIBLE;
+  const imageLink = vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AWS;
   const imageHeight =
     vendorImageConstants.isValidVendorImageLink(imageLink) === true
       ? pipelineStepIconConstants.getRecommendedPipelineStepVendorImageHeightForImageLink(imageLink)
