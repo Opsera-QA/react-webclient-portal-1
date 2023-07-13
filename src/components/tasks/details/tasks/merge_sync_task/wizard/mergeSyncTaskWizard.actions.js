@@ -6,17 +6,16 @@ const mergeSyncTaskWizardActions = {};
 mergeSyncTaskWizardActions.createNewRecordV2 = async (
   getAccessToken,
   cancelTokenSource,
-  taskId,
-  runCount,
-  isProfiles,
-  apiVersion,
+  wizardModel,
 ) => {
   const apiUrl = `/tasks/merge-sync-task/wizard/create-record`;
   const postBody = {
-    taskId: taskId,
-    runCount: runCount,
-    isProfiles: isProfiles,
-    apiVersion: apiVersion,
+    taskId: wizardModel?.getData("taskId"),
+    runCount: wizardModel?.getData("runCount"),
+    isProfiles: wizardModel?.getData("isProfiles"),
+    apiVersion: wizardModel?.getData("apiVersion"),
+    sfdcToolId: wizardModel?.getData("sfdcToolId"),
+    gitToolId: wizardModel?.getData("gitToolId"),
   };
 
   return await baseActions.apiPostCallV2(
@@ -25,6 +24,81 @@ mergeSyncTaskWizardActions.createNewRecordV2 = async (
     apiUrl,
     postBody,
   );
+};
+
+mergeSyncTaskWizardActions.findExistingRecordV2 = async (getAccessToken, cancelTokenSource, wizardModel) => {
+  const postBody = {
+    dataType: "merge-sync-task",
+    gitTaskId: wizardModel?.getData("taskId"),
+    apiVersion: wizardModel?.getData("apiVersion"),
+    isProfiles: wizardModel?.getData("isProfiles"),
+    runCount: wizardModel?.getData("runCount"),
+  };
+
+  const apiUrl = `/tasks/merge-sync-task/wizard/find_existing_record`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+mergeSyncTaskWizardActions.setXmlFileContentsV2 = async (getAccessToken, cancelTokenSource, wizardModel) => {
+  const postBody = {
+    packageXml: wizardModel?.getData("xmlFileContent"),
+    excludeDependencies: wizardModel.getData("includeDependencies") === false,
+    isTranslations: wizardModel.getData("isTranslations"),
+    isProfiles: wizardModel.getData("isProfiles"),
+  };
+
+  const apiUrl = `/tasks/merge-sync-task/wizard/${wizardModel?.getData("recordId")}/set_xml_file_contents`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+mergeSyncTaskWizardActions.setUploadedCsvFileListV2 = async (getAccessToken, cancelTokenSource, wizardModel) => {
+  const postBody = {
+    selectedFileList: wizardModel?.getData("csvFileContent"),
+    excludeDependencies: wizardModel.getData("includeDependencies") === false,
+    isTranslations: wizardModel.getData("isTranslations"),
+    isProfiles: wizardModel.getData("isProfiles"),
+  };
+
+  const apiUrl = `/tasks/merge-sync-task/wizard/${wizardModel?.getData("recordId")}/set_csv_file_contents`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+mergeSyncTaskWizardActions.getValidatedFileList = async (getAccessToken, cancelTokenSource, wizardModel, newFilterDto) => {
+  const apiUrl = `/tasks/merge-sync-task/wizard/${wizardModel?.getData("recordId")}/get_validated_file_list`;
+  const urlParams = {
+    params: {
+      page: newFilterDto ? newFilterDto.getData("currentPage") : 1,
+      size: newFilterDto ? newFilterDto.getData("pageSize") : 3000,
+      search: newFilterDto ? newFilterDto.getData("search") : "",
+      componentFilter: newFilterDto ? newFilterDto.getData("componentFilter") : "",
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+mergeSyncTaskWizardActions.toggleTaskFilesValidation = async (getAccessToken, cancelTokenSource, wizardModel) => {
+  const apiUrl = `/tasks/merge-sync-task/wizard/${wizardModel?.getData("recordId")}/toggle_task_upload_validation`;
+  const postBody = {
+    gitToolId: wizardModel.getData("gitToolId"),
+    sfdcToolId: wizardModel.getData("sfdcToolId"),
+    isCsv: wizardModel?.getData("isCsv"),
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+mergeSyncTaskWizardActions.getInvalidFileList = async (getAccessToken, cancelTokenSource, wizardModel, filterModel) => {
+  const apiUrl = `/tasks/merge-sync-task/wizard/${wizardModel?.getData("recordId")}/get_invalid_file_list`;
+  const urlParams = {
+    params: {
+      page: filterModel ? filterModel.getData("currentPage") : 1,
+      size: filterModel ? filterModel.getData("pageSize") : 3000,
+      search: filterModel ? filterModel.getData("search") : "",
+      componentFilter: filterModel ? filterModel.getData("componentFilter") : "",
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 mergeSyncTaskWizardActions.updateCommitMsg = async (getAccessToken, cancelTokenSource, taskWizardModel) => {
