@@ -18,6 +18,10 @@ import PipelineWorkflowStepToolIdentifierField
   from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowStepToolIdentifierField";
 import ParallelProcessorPipelineStepWorkflowItemBody
   from "components/workflow/plan/step/parallel_processor/ParallelProcessorPipelineStepWorkflowItemBody";
+import {
+  pipelineStepIconConstants
+} from "components/common/icons/pipelines/steps/pipelineStepIcon.constants";
+import PipelineStepIcon from "components/common/icons/pipelines/steps/PipelineStepIcon";
 
 // TODO: Use the workflow item step field instead of hardcoding these for consistency,
 //  wire up fields based on the tool identifier (pull through metadata based on dynamic field type set)
@@ -129,7 +133,6 @@ export default function PipelineStepWorkflowItemBody(
       </>
     );
   };
-
 
   if (pipeline == null || step == null) {
     return null;

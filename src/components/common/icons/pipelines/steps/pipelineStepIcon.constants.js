@@ -10,8 +10,8 @@ import {ImageBase} from "@opsera/react-vanity-set";
 export const pipelineStepIconConstants = {};
 
 pipelineStepIconConstants.pipelineStepImageHeights = {
-  ANCHOR: 75,
-  ANSIBLE: 100,
+  ANCHOR: 33,
+  ANSIBLE: 33,
   APIGEE: undefined,
   ARGO: 100,
   AQUASEC: 40,
@@ -48,7 +48,7 @@ pipelineStepIconConstants.pipelineStepImageHeights = {
   NEXUS: 100,
   NPM: undefined,
   NUNIT: undefined,
-  OPSERA: 150,
+  OPSERA: 33,
   ORACLE: undefined,
   PROVAR: undefined,
   SAP: undefined,
@@ -99,7 +99,8 @@ pipelineStepIconConstants.getRecommendedPipelineStepVendorImageHeightForImageLin
 };
 
 pipelineStepIconConstants.getLargeVendorIconComponentFromPipelineStep = (pipelineStep, scaleFactor = 1) => {
-  const imageLink = vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.OPSERA;
+  // const imageLink = pipelineStepIconConstants.getImageLinkForPipelineStep(pipelineStep);
+  const imageLink = vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.ANSIBLE;
   const imageHeight =
     vendorImageConstants.isValidVendorImageLink(imageLink) === true
       ? pipelineStepIconConstants.getRecommendedPipelineStepVendorImageHeightForImageLink(imageLink)
@@ -107,11 +108,9 @@ pipelineStepIconConstants.getLargeVendorIconComponentFromPipelineStep = (pipelin
   const scaledImageHeight = imageHeight ? imageHeight * scaleFactor : imageHeight;
 
   if (imageLink === vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.OPSERA) {
-    const imageSize = scaledImageHeight * scaleFactor;
-
     return (
       <OpseraInfinityLogo
-        desiredHeight={imageSize}
+        desiredHeight={scaledImageHeight}
         className={"d-flex h-100"}
         imageClassName={"my-auto"}
       />

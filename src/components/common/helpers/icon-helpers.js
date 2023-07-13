@@ -17,7 +17,7 @@ import {vendorImageConstants} from "temp-library-components/image/vendorImage.co
 import {ImageBase} from "@opsera/react-vanity-set";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import {platformImageConstants} from "temp-library-components/image/platformImage.constants";
-import {pipelineStepIconConstants} from "components/common/list_of_values_input/pipelines/icon/pipelineStepIcon.constants";
+import {pipelineStepIconConstants} from "components/common/icons/pipelines/steps/pipelineStepIcon.constants";
 
 export const getToolIdentifiersWithMissingImages = () => {
   const keys = Object.keys(vendorImageConstants.TOOL_IDENTIFIER_LOGOS);

@@ -1,17 +1,7 @@
 import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import {OverlayTrigger, Tooltip} from "react-bootstrap";
-import {
-  faPen,
-  faSpinner,
-  faCheckCircle,
-  faTimesCircle,
-  faOctagon,
-} from "@fortawesome/pro-light-svg-icons";
-import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 import {pipelineValidationHelper} from "components/workflow/pipelines/helpers/pipelineValidation.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import IconBase from "components/common/icons/IconBase";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import PipelineStepEditorOverlay from "components/workflow/plan/step/PipelineStepEditorOverlay";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
@@ -28,8 +18,10 @@ import PipelineStepCardBottomActionBar
   from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepCardBottomActionBar";
 import PipelineStepCardHeader
   from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepCardHeader";
-import {pipelineStepIconConstants} from "components/common/list_of_values_input/pipelines/icon/pipelineStepIcon.constants";
+import {pipelineStepIconConstants} from "components/common/icons/pipelines/steps/pipelineStepIcon.constants";
+import PipelineStepIcon from "components/common/icons/pipelines/steps/PipelineStepIcon";
 
+// TODO: Try icon on right side between icons
 const PipelineWorkflowItem = (
   {
     pipeline,
@@ -179,18 +171,6 @@ const PipelineWorkflowItem = (
     }
   };
 
-  const getToolIcon = () => {
-
-    const icon = pipelineStepIconConstants.getLargeVendorIconComponentFromPipelineStep(item, .33);
-    return (
-      <div className={"d-flex"}>
-        <div className={"mx-auto"}>
-          {icon}
-        </div>
-      </div>
-    );
-  };
-
   if (!DataParsingHelper.parseMongoDbId(item?._id)) {
     return (
       <div className={"workflow-module-container-height"}>
@@ -222,11 +202,6 @@ const PipelineWorkflowItem = (
           currentStatus={currentStatus}
         />
         <div className={"w-100 d-flex"}>
-          <div
-            className={"ml-1 mr-3"}
-          >
-            {getToolIcon()}
-          </div>
           <div>
             <div className={"icon-card-title force-text-wrap"}>
               {DataParsingHelper.parseNestedString(item, "name", "Un-configured Step")}
@@ -236,6 +211,12 @@ const PipelineWorkflowItem = (
               step={item}
               loadPipeline={loadPipeline}
               toolIdentifier={toolIdentifier}
+            />
+          </div>
+          <div className={"ml-auto my-auto"}>
+            <PipelineStepIcon
+              pipelineStep={item}
+              className={"ml-2"}
             />
           </div>
         </div>

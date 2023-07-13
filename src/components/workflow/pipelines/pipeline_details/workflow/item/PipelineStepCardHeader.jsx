@@ -63,7 +63,16 @@ export default function PipelineStepCardHeader(
   };
 
   return (
-    <CardHeaderBase>
+    <div
+      className={"pt-1"}
+      style={{
+        fontSize: "13px",
+        letterSpacing: "0.6px",
+        minHeight: "25px",
+        height: "25px",
+        maxHeight: "25px",
+      }}
+    >
       <div className={"w-100 d-flex justify-content-between"}>
         <div className={"w-100 d-flex"}>
           <div className={"ml-auto title-text-6 upper-case-first d-flex"}>
@@ -159,7 +168,7 @@ export default function PipelineStepCardHeader(
           </div>
         </div>
       </div>
-    </CardHeaderBase>
+    </div>
   );
 }
 
