@@ -16,9 +16,9 @@ pipelineStepIconConstants.pipelineStepImageHeights = {
   ARGO: 40,
   AQUASEC: 33,
   AWS: 40,
-  AZURE: 100,
-  BITBUCKET: undefined,
-  BLACKDUCK: undefined,
+  AZURE: 40,
+  BITBUCKET: 33,
+  BLACKDUCK: 33,
   BOOMI: undefined,
   BUILDKITE: undefined,
   COVERITY: undefined,
@@ -100,7 +100,7 @@ pipelineStepIconConstants.getRecommendedPipelineStepVendorImageHeightForImageLin
 
 pipelineStepIconConstants.getLargeVendorIconComponentFromPipelineStep = (pipelineStep, scaleFactor = 1) => {
   // const imageLink = pipelineStepIconConstants.getImageLinkForPipelineStep(pipelineStep);
-  const imageLink = vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.AWS;
+  const imageLink = vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.BLACKDUCK;
   const imageHeight =
     vendorImageConstants.isValidVendorImageLink(imageLink) === true
       ? pipelineStepIconConstants.getRecommendedPipelineStepVendorImageHeightForImageLink(imageLink)
