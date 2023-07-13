@@ -15,7 +15,7 @@ pipelineStepIconConstants.pipelineStepImageHeights = {
   APIGEE: 19,
   ARGO: 40,
   AQUASEC: 33,
-  AWS: 100,
+  AWS: 40,
   AZURE: 100,
   BITBUCKET: undefined,
   BLACKDUCK: undefined,
