@@ -34,6 +34,10 @@ import SalesforceCustomSettingMigrationTaskSummaryCard
 import salesforceCustomSettingMigrationTaskMetadata, {
   customSettingTaskSalesforceConfigurationMetadata
 } from "./tasks/sfdc-custom-setting-migration/salesforceCustomSettingMigrationTaskMetadata";
+import SalesforceDataSeedingTaskSummaryCard from "./tasks/sfdc-data-seeding/SalesforceDataSeedingTaskSummaryCard";
+import dataSeedingMigrationTaskMetadata, {
+  dataSeedingTaskSalesforceConfigurationMetadata
+} from "./tasks/sfdc-data-seeding/salesforceDataSeedingTaskMetadata";
 
 function TaskConfigurationSummaryPanel({ taskModel }) {
   const getTaskTypeSummaryPanel = () => {
@@ -179,6 +183,19 @@ function TaskConfigurationSummaryPanel({ taskModel }) {
             salesforceConfigurationModel={modelHelpers.parseObjectIntoModel(
               taskModel?.getData("configuration")?.sfdc,
               customSettingTaskSalesforceConfigurationMetadata,
+            )}
+          />
+        );
+      case TASK_TYPES.SALESFORCE_DATA_SEEDING:
+        return (
+          <SalesforceDataSeedingTaskSummaryCard
+            taskConfigDataModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              dataSeedingMigrationTaskMetadata,
+            )}
+            salesforceConfigurationModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration")?.sfdc,
+              dataSeedingTaskSalesforceConfigurationMetadata,
             )}
           />
         );

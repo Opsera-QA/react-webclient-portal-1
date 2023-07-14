@@ -52,9 +52,6 @@ const SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable = ({
   };
 
   const getHeight = () => {
-    if (ruleCount > 0) {
-      return MERGE_SYNC_TASK_WIZARD_FILE_SELECTOR_CONTAINER_HEIGHTS.FILE_TABLE_CONTAINER_HEIGHT_WITH_RULES;
-    }
 
     return MERGE_SYNC_TASK_WIZARD_FILE_SELECTOR_CONTAINER_HEIGHTS.FILE_TABLE_CONTAINER_HEIGHT_WITHOUT_RULES;
   };
@@ -65,8 +62,6 @@ const SalesforceToGitMergeSyncTaskWizardFileSelectionSourceCommitListTable = ({
       title={`Source File Selection`}
       loadData={loadData}
       isLoading={isLoading}
-      minimumHeight={getHeight()}
-      maximumHeight={getHeight()}
       body={getFilesTable()}
     />
   );

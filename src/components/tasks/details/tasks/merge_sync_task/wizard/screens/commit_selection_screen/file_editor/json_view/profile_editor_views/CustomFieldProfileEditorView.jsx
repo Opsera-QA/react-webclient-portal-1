@@ -38,6 +38,9 @@ const CustomFieldProfileEditorView = ({
   const setDataFunction = (fieldName, newValue) => {
     const newModel = { ...customMetaJsonMetadata };
     newModel?.setData(fieldName, newValue);
+    if (fieldName === "editable" && !newModel?.getData("readable")) {
+      newModel?.setData("readable", true);
+    }
     if (fieldName === "readable" && !newValue) {
       newModel?.setData("editable", false);
     }
@@ -51,6 +54,7 @@ const CustomFieldProfileEditorView = ({
         <TextFieldBase
           dataObject={customMetaJsonMetadata}
           fieldName={"field"}
+          className="overflowWrapAnywhere"
         />
       </Col>
       <Col lg={6}>
@@ -68,7 +72,7 @@ const CustomFieldProfileEditorView = ({
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
-          disabled={disabled || !customMetaJsonMetadata?.getData("readable")}
+          disabled={disabled}
         />
       </Col>
     </Row>

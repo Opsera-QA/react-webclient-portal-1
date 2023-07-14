@@ -47,6 +47,10 @@ primary analytics font*/
     overflow: scroll;
 }
 
+.overflowWrapAnywhere {
+    overflow-wrap: anywhere;
+}
+
 .metric-sub-header-text-spacing {
     letter-spacing: 2px;
 }
@@ -944,6 +948,9 @@ a:hover, .active, .link-text:hover {
     min-height: 400px;
 }
 
+.flex {
+    display: flex;
+}
 
 .flex-container {
     min-height: 500px;

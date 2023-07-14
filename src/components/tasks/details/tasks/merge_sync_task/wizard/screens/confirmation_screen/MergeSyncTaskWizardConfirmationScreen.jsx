@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Row, Col } from "react-bootstrap";
 import CancelButton from "components/common/buttons/CancelButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import BackButton from "components/common/buttons/back/BackButton";
@@ -14,6 +15,7 @@ import InlineWarning from "components/common/status_notifications/inline/InlineW
 import MergeSyncTaskWizardSelectedDeltasVerticalTabContainer
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/selected_deltas_table/MergeSyncTaskWizardSelectedDeltasVerticalTabContainer";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
+import ConflictFilesTable from "components/tasks/details/tasks/merge_sync_task/wizard/screens/confirmation_screen/conflict_files_table/ConflictFilesTable";
 
 const MergeSyncTaskWizardConfirmationScreen = (
   {
@@ -29,21 +31,35 @@ const MergeSyncTaskWizardConfirmationScreen = (
   const getFileSelectionTable = () => {
     if (wizardModel?.getArrayData("updatedFileList")?.length > 0) {
       return (
-        <MergeSyncTaskWizardSelectedCommitTable
-          sourceCommitList={wizardModel?.getArrayData("updatedFileList")}
-        />
+        <Col xs={6}>
+          <MergeSyncTaskWizardSelectedCommitTable
+            sourceCommitList={wizardModel?.getArrayData("updatedFileList")}
+          />
+        </Col>
       );
     }
 
     const updatedFileDeltas = wizardModel?.getArrayData("updatedFileDeltas");
     if (updatedFileDeltas.length > 0) {
       return (
-        <MergeSyncTaskWizardSelectedDeltasVerticalTabContainer
-          updatedFileDeltas={updatedFileDeltas}
-        />
+        <Col xs={6}>
+          <MergeSyncTaskWizardSelectedDeltasVerticalTabContainer
+            updatedFileDeltas={updatedFileDeltas}
+          />
+        </Col>
       );
     }
   };
+
+  const getConflictFilesTable = () => {
+    if (wizardModel?.getArrayData("conflictFilesList") && wizardModel?.getArrayData("conflictFilesList").length > 0) {
+      return (
+        <Col xs={6}>
+          <ConflictFilesTable sourceCommitList={wizardModel?.getArrayData("conflictFilesList")} />
+        </Col>
+      );
+    }
+  }
 
   return (
     <div>
@@ -55,7 +71,10 @@ const MergeSyncTaskWizardConfirmationScreen = (
           The summary below only contains the manually selected changes.
        `}
         />
-        {getFileSelectionTable()}
+        <Row className="my-3">
+          {getFileSelectionTable()}
+          {getConflictFilesTable()}
+        </Row>
       </div>
       <TextAreaInput
         dataObject={wizardModel}

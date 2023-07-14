@@ -19,6 +19,7 @@ import StandaloneSaveButton from "../../../../../../../../../common/buttons/savi
 import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
 import ToolNameFieldDisplayer from "../../../../../../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
 import MergeSyncTaskWizardProfileSubmitFileButton from "../MergeSyncTaskWizardProfileSubmitFileButton";
+import { getDiff } from "./utils";
 
 const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
   wizardModel,
@@ -115,7 +116,6 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
           modifiedFileContent,
           "CustomApplication",
         );
-      console.log(response);
       if (response && response.status !== 200) {
         toastContext.showLoadingErrorDialog(response?.data?.message);
         return;
@@ -211,24 +211,29 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
           ?.toLowerCase()
           .includes(searchText.toLowerCase());
       });
+    if (filteredData && filteredData.length && originalContentJson?.applicationVisibilities) {
+      const { arr2 } = getDiff([...originalContentJson?.applicationVisibilities], [...filteredData], 'application');
+      filteredData = arr2;
+    }
     return (
       <Col>
-        <span className="h5">
+        {wizardModel?.getData("taskType") === "GIT_VS_GIT_SYNC" ? <span className="h5">
+          Source Git Branch ({wizardModel?.getData("sourceBranch")}
+          )</span> : <span className="h5">
           Source Salesforce Org (
           <ToolNameFieldDisplayer
             toolId={wizardModel?.getData("sfdcToolId")}
             loadToolInNewWindow={true}
           />
-          )
-        </span>
+          )</span>}
         {filteredData && filteredData.length > 0 ? (
           filteredData.map((customApp, idx, { length }) => (
             <div key={idx}>
-              <CustomApplicationProfileEditorView
+              {customApp?.isDummy !== undefined ? <div style={{ height: '77.59px' }}></div> : (<CustomApplicationProfileEditorView
                 customAppData={customApp}
                 setCustomAppJson={setCustomAppJson}
                 isLoading={isLoading}
-              />
+              />)}
               {idx + 1 !== length && <DividerWithCenteredText />}
             </div>
           ))
@@ -250,6 +255,10 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
           ?.toLowerCase()
           .includes(searchText.toLowerCase());
       });
+    if (filteredData && filteredData.length > 0 && modifiedContentJson?.applicationVisibilities) {
+      const { arr1 } = getDiff([...filteredData], [...modifiedContentJson?.applicationVisibilities], 'application');
+      filteredData = arr1;
+    }
     return (
       <Col>
         <span className="h5">
@@ -258,12 +267,12 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
         {filteredData && filteredData.length > 0 ? (
           filteredData.map((customApp, idx, { length }) => (
             <div key={idx}>
-              <CustomApplicationProfileEditorView
+              {customApp?.isDummy !== undefined ? <div style={{ height: '77.59px' }}></div> : (<CustomApplicationProfileEditorView
                 customAppData={customApp}
                 setCustomAppJson={setCustomAppJson}
                 isLoading={isLoading}
                 disabled={true}
-              />
+              />)}
               {idx + 1 !== length && <DividerWithCenteredText />}
             </div>
           ))

@@ -19,6 +19,7 @@ import StandaloneSaveButton from "../../../../../../../../../common/buttons/savi
 import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
 import ToolNameFieldDisplayer from "../../../../../../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
 import MergeSyncTaskWizardProfileSubmitFileButton from "../MergeSyncTaskWizardProfileSubmitFileButton";
+import { getDiff } from "./utils";
 
 const MergeSyncTaskWizardApexClassJsonEditPanel = ({
   wizardModel,
@@ -204,24 +205,31 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
       modifiedContentJson?.classAccesses?.filter((obj) => {
         return obj?.apexClass?.toLowerCase().includes(searchText.toLowerCase());
       });
+    if (filteredData && filteredData.length && originalContentJson?.classAccesses) {
+      const { arr2 } = getDiff([...originalContentJson?.classAccesses], [...filteredData], 'apexClass');
+      filteredData = arr2;
+    }
+
     return (
       <Col>
-        <span className="h5">
+        {wizardModel?.getData("taskType") === "GIT_VS_GIT_SYNC" ? <span className="h5">
+          Source Git Branch ({wizardModel?.getData("sourceBranch")}
+          )</span> : <span className="h5">
           Source Salesforce Org (
           <ToolNameFieldDisplayer
             toolId={wizardModel?.getData("sfdcToolId")}
             loadToolInNewWindow={true}
           />
-          )
-        </span>
+          )</span>}
         {filteredData && filteredData.length > 0 ? (
           filteredData.map((apexclass, idx, { length }) => (
             <div key={idx}>
-              <ApexClassProfleEditorView
-                apexClassData={apexclass}
-                setApexClassJson={setApexClassJson}
-                isLoading={isLoading}
-              />
+              {apexclass?.isDummy !== undefined ? <div style={{ height: '77.59px' }}></div> :
+                (<ApexClassProfleEditorView
+                  apexClassData={apexclass}
+                  setApexClassJson={setApexClassJson}
+                  isLoading={isLoading}
+                />)}
               {idx + 1 !== length && <DividerWithCenteredText />}
             </div>
           ))
@@ -241,6 +249,11 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
       originalContentJson?.classAccesses?.filter((obj) => {
         return obj?.apexClass?.toLowerCase().includes(searchText.toLowerCase());
       });
+    if (filteredData && filteredData.length > 0 && modifiedContentJson?.classAccesses) {
+      const { arr1 } = getDiff([...filteredData], [...modifiedContentJson?.classAccesses], 'apexClass');
+      filteredData = arr1;
+    }
+
     return (
       <Col>
         <span className="h5">
@@ -249,12 +262,12 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
         {filteredData && filteredData.length > 0 ? (
           filteredData.map((apexclass, idx, { length }) => (
             <div key={idx}>
-              <ApexClassProfleEditorView
+              {apexclass?.isDummy !== undefined ? <div style={{ height: '77.59px' }}></div> : (<ApexClassProfleEditorView
                 apexClassData={apexclass}
                 setApexClassJson={setApexClassJson}
                 isLoading={isLoading}
                 disabled={true}
-              />
+              />)}
               {idx + 1 !== length && <DividerWithCenteredText />}
             </div>
           ))

@@ -19,6 +19,7 @@ import StandaloneSaveButton from "../../../../../../../../../common/buttons/savi
 import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
 import ToolNameFieldDisplayer from "../../../../../../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
 import MergeSyncTaskWizardProfileSubmitFileButton from "../MergeSyncTaskWizardProfileSubmitFileButton";
+import { getDiff } from "./utils";
 
 const MergeSyncTaskWizardRecordTypeJsonEditPanel = ({
   wizardModel,
@@ -209,24 +210,29 @@ const MergeSyncTaskWizardRecordTypeJsonEditPanel = ({
           ?.toLowerCase()
           .includes(searchText.toLowerCase());
       });
+    if (filteredData && filteredData.length && originalContentJson?.recordTypeVisibilities) {
+      const { arr2 } = getDiff([...originalContentJson?.recordTypeVisibilities], [...filteredData], 'recordType');
+      filteredData = arr2;
+    }
     return (
       <Col>
-        <span className="h5">
+        {wizardModel?.getData("taskType") === "GIT_VS_GIT_SYNC" ? <span className="h5">
+          Source Git Branch ({wizardModel?.getData("sourceBranch")}
+          )</span> : <span className="h5">
           Source Salesforce Org (
           <ToolNameFieldDisplayer
             toolId={wizardModel?.getData("sfdcToolId")}
             loadToolInNewWindow={true}
           />
-          )
-        </span>
+          )</span>}
         {filteredData && filteredData.length > 0 ? (
           filteredData.map((recordTypeData, idx, { length }) => (
             <div key={idx}>
-              <RecordTypeProfileEditorView
+              {recordTypeData?.isDummy !== undefined ? <div style={{ height: '61px' }}></div> : (<RecordTypeProfileEditorView
                 recordTypeData={recordTypeData}
                 setRecordTypeDataJson={setRecordTypeDataJson}
                 isLoading={isLoading}
-              />
+              />)}
               {idx + 1 !== length && <DividerWithCenteredText />}
             </div>
           ))
@@ -248,6 +254,10 @@ const MergeSyncTaskWizardRecordTypeJsonEditPanel = ({
           ?.toLowerCase()
           .includes(searchText.toLowerCase());
       });
+    if (filteredData && filteredData.length > 0 && modifiedContentJson?.recordTypeVisibilities) {
+      const { arr1 } = getDiff([...filteredData], [...modifiedContentJson?.recordTypeVisibilities], 'recordType');
+      filteredData = arr1;
+    }
     return (
       <Col>
         <span className="h5">
@@ -256,12 +266,12 @@ const MergeSyncTaskWizardRecordTypeJsonEditPanel = ({
         {filteredData && filteredData.length > 0 ? (
           filteredData.map((recordTypeData, idx, { length }) => (
             <div key={idx}>
-              <RecordTypeProfileEditorView
+              {recordTypeData?.isDummy !== undefined ? <div style={{ height: '61px' }}></div> : (<RecordTypeProfileEditorView
                 recordTypeData={recordTypeData}
                 setRecordTypeDataJson={setRecordTypeDataJson}
                 isLoading={isLoading}
                 disabled={true}
-              />
+              />)}
               {idx + 1 !== length && <DividerWithCenteredText />}
             </div>
           ))

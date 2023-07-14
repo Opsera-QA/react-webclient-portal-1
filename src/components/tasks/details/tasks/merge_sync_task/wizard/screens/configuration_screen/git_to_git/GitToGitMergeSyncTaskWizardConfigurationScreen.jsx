@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Row} from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import CancelButton from "components/common/buttons/CancelButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
@@ -11,6 +11,8 @@ import {
 } from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.constants";
 import MergeSyncTaskWizardUpdateConfigurationButton
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/configuration_screen/MergeSyncTaskWizardUpdateConfigurationButton";
+import SfdcComponentListInput
+  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcComponentListInput";
 
 const GitToGitMergeSyncTaskWizardConfigurationScreen = ({
   wizardModel,
@@ -21,6 +23,7 @@ const GitToGitMergeSyncTaskWizardConfigurationScreen = ({
   if (wizardModel == null) {
     return null;
   }
+  const [isSalesforce] = useState(wizardModel?.getData("configuration.git.isSalesforce"));
 
   return (
     <div>
@@ -28,7 +31,14 @@ const GitToGitMergeSyncTaskWizardConfigurationScreen = ({
         Git to Git Merge Sync Task Wizard: Commit Configuration Selection
       </div>
       <Row className="my-3">
-        <Col xs={0} sm={3} />
+        {isSalesforce && <Col xs={12}>
+          <SfdcComponentListInput
+            pipelineWizardModel={wizardModel}
+            setPipelineWizardModel={setWizardModel}
+            forceLoadData={true}
+          />
+        </Col>}
+        {isSalesforce ? null : <Col xs={0} sm={3} />}
         <Col xs={12} sm={6} md={6}>
           <DateTimeInputBase
             dataObject={wizardModel}
@@ -36,8 +46,8 @@ const GitToGitMergeSyncTaskWizardConfigurationScreen = ({
             fieldName={"fromDate"}
           />
         </Col>
-        <Col xs={0} sm={3} />
-        <Col xs={0} sm={3} />
+        {isSalesforce ? null : <Col xs={0} sm={3} />}
+        {isSalesforce ? null : <Col xs={0} sm={3} />}
         <Col xs={12} sm={6}>
           <DateTimeInputBase
             dataObject={wizardModel}
@@ -45,7 +55,7 @@ const GitToGitMergeSyncTaskWizardConfigurationScreen = ({
             fieldName={"toDate"}
           />
         </Col>
-        <Col xs={0} sm={3} />
+        {isSalesforce ? null : <Col xs={0} sm={3} />}
       </Row>
       <SaveButtonContainer>
         <BackButton
