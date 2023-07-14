@@ -48,7 +48,6 @@ const ScmToScmMigrationStandaloneOrganizationSelectInput = ({ value,  disabled, 
       setErrorMessage("");
       setIsLoading(true);
       setOrganizations([]);
-      setDataFunction("");
 
       await loadGithubOrganizations(cancelSource);
     } catch (error) {
