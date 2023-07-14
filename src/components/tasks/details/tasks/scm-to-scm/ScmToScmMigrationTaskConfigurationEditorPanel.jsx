@@ -86,6 +86,11 @@ const ScmToScmMigrationTaskConfigurationEditorPanel = ({
           fieldName={"repositoryMapList"}
           type={"Repository Mappings"}
           allowIncompleteItems={false}
+          sourceScmType={taskConfigurationModel?.getData("sourceScmType")}
+          sourceGitToolId={taskConfigurationModel?.getData("sourceGitToolId")}
+          sourceWorkspace={taskConfigurationModel?.getData("sourceWorkspace")}
+          targetScmType={taskConfigurationModel?.getData("targetScmType")}
+          targetGitToolId={taskConfigurationModel?.getData("targetGitToolId")}
         />
       </Col>
     </Row>

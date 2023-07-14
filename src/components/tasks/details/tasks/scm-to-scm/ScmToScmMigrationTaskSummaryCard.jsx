@@ -4,6 +4,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import TaskSummaryCardContainer from "components/tasks/details/tasks/TaskSummaryCardContainer";
 import {Row, Col} from "react-bootstrap";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
+import JsonField from "components/common/fields/json/JsonField";
 
 function ScmToScmMigrationTaskSummaryCard({ taskConfigurationModel, isLoading }) {
   if (isLoading || taskConfigurationModel == null) {
@@ -52,6 +53,9 @@ function ScmToScmMigrationTaskSummaryCard({ taskConfigurationModel, isLoading })
             model={taskConfigurationModel}
             fieldName={"targetGitToolId"}
           />
+        </Col>
+        <Col xs={12}>
+          <JsonField dataObject={taskConfigurationModel} fieldName={"repositoryMapList"} />
         </Col>        
       </Row>
     </TaskSummaryCardContainer>
