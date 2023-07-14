@@ -183,7 +183,7 @@ function GitScrapperMetrics({
                 icon={getIcon(metrics[0]?.trend?.count)}
                 className={getIconColor(metrics[0]?.trend?.count)}
                 // onSelect={() => onRowSelect({type: 'totalRepositoriesScanned', label: "Total Repositories Scanned"}")}
-                lastScore={metrics[0]?.previous?.count}
+                lastScore={metrics[0]?.previous?.count || 0}
                 iconOverlayBody={getDescription(metrics[0]?.trend?.count)}
               />
           </Col>
@@ -199,7 +199,7 @@ function GitScrapperMetrics({
                     label: "Total Clean Repositories",
                   })
                 }
-                lastScore={metrics[0]?.previous?.cleanRepoCount}
+                lastScore={metrics[0]?.previous?.cleanRepoCount || 0}
                 iconOverlayBody={getDescription(
                   metrics[0]?.trend?.cleanRepoCount,
                 )}
@@ -217,7 +217,7 @@ function GitScrapperMetrics({
                     label: "Total Number of Issues",
                   })
                 }
-                lastScore={metrics[0]?.previous?.issueCount}
+                lastScore={metrics[0]?.previous?.issueCount || 0}
                 iconOverlayBody={getDescription(metrics[0]?.trend?.issueCount)}
               />
             </Col>

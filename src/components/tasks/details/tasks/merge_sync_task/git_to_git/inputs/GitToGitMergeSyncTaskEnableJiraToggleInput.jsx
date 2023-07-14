@@ -15,6 +15,7 @@ function GitToGitMergeSyncTaskEnableJiraToggleInput(
     newModel?.setDefaultValue("jiraProjectKey");
     newModel?.setDefaultValue("jiraIssueId");
     newModel?.setDefaultValue("jiraIssueIds");
+    newModel?.setDefaultValue("jiraProjectName");
     setModel({...newModel});
   };
 

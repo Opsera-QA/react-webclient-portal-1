@@ -38,6 +38,9 @@ import SalesforceDataSeedingTaskSummaryCard from "./tasks/sfdc-data-seeding/Sale
 import dataSeedingMigrationTaskMetadata, {
   dataSeedingTaskSalesforceConfigurationMetadata
 } from "./tasks/sfdc-data-seeding/salesforceDataSeedingTaskMetadata";
+import ScmToScmMigrationTaskSummaryCard from "./tasks/scm-to-scm/ScmToScmMigrationTaskSummaryCard";
+import { scmToScmMigrationTaskConfigurationMetadata } 
+  from "components/tasks/details/tasks/scm-to-scm/scmToScmMigrationTaskConfigurationMetadata";
 
 function TaskConfigurationSummaryPanel({ taskModel }) {
   const getTaskTypeSummaryPanel = () => {
@@ -196,6 +199,15 @@ function TaskConfigurationSummaryPanel({ taskModel }) {
             salesforceConfigurationModel={modelHelpers.parseObjectIntoModel(
               taskModel?.getData("configuration")?.sfdc,
               dataSeedingTaskSalesforceConfigurationMetadata,
+            )}
+          />
+        );
+      case TASK_TYPES.SCM_TO_SCM_MIGRATION:
+        return (
+          <ScmToScmMigrationTaskSummaryCard 
+            taskConfigurationModel={modelHelpers.parseObjectIntoModel(
+              taskModel?.getData("configuration"),
+              scmToScmMigrationTaskConfigurationMetadata,
             )}
           />
         );

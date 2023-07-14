@@ -20,6 +20,14 @@ export const mergeSyncTaskWizardMetadata = {
       formText: "To Date must be a date in the past and must be after To Date",
     },
     {
+      label: "XML File Content",
+      id: "xmlFileContent",
+    },
+    {
+      label: "CSV File Content",
+      id: "csvFileContent",
+    },
+    {
       label: "Source Commit List",
       id: "sourceCommitFiles",
     },
@@ -98,5 +106,7 @@ export const mergeSyncTaskWizardMetadata = {
     type: "",
     isProfiles: false,
     apiVersion: "",
+    xmlFileContent: "",
+    csvFileContent: [],
   }
 };

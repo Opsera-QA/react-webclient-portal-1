@@ -102,3 +102,35 @@ githubActions.getRepo = async (
 
   return baseActions.apiGetCallV3( getAccessToken, cancelTokenSource, apiUrl, queryParameters);
 };
+
+githubActions.getOrganizations = async (
+  getAccessToken,
+  cancelTokenSource,
+  toolId,
+  orgName,
+) => {
+  const apiUrl = `/tools/${toolId}/github/organizations`;
+
+  const queryParameters = {    
+    orgName: orgName,
+  };
+
+  return baseActions.apiGetCallV3( getAccessToken, cancelTokenSource, apiUrl, queryParameters);
+};
+
+githubActions.validateRepository = async (
+  getAccessToken,
+  cancelTokenSource,
+  toolId,
+  orgName,
+  repositoryName,
+) => {
+  const apiUrl = `/tools/${toolId}/validate/repository`;
+
+  const queryParameters = {    
+    orgName: orgName,
+    repositoryName: repositoryName,
+  };
+
+  return baseActions.apiGetCallV3( getAccessToken, cancelTokenSource, apiUrl, queryParameters);
+};

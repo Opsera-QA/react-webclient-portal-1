@@ -87,6 +87,14 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
       const response = await sfdcPipelineActions.getUnitTestClassesListV2(getAccessToken, cancelTokenSource, pipelineWizardModel, step);
       const testClasses = response?.data?.testClasses?.data;
       const selectedTestClasses = response?.data?.selectedTestClasses?.data;
+      if (response?.data?.error) {
+        toastContext.showInlineErrorMessage("Unit Test Fetch Error : " + response?.data.error);
+      }
+
+      if (response?.data.warning) {
+        toastContext.showInlineErrorMessage(response?.data.warning);
+      }
+
       if (isMounted?.current === true && Array.isArray(testClasses) && Array.isArray(selectedTestClasses)) {
         // save the mongo record id so that we can update it when saving selected data
         setUnitTestRecordId(response?.data?._id);
@@ -94,6 +102,7 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
           setSelectedUnitTestClassesList(testClasses?.filter((testClasses)=> selectedTestClasses.includes(testClasses)));
         }
         setUnitTestClassesList(testClasses);
+
         console.log("files pull completed");
         setFilePullCompleted(true);
         setUnitTestListLoading(false);
