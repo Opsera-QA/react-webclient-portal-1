@@ -26,7 +26,7 @@ import GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput
   from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput";
 import TaskWizardConfirmRepositorySettingsButton
   from "components/tasks/wizard/TaskWizardConfirmRepositorySettingsButton";
-import MergeSyncTaskJiraIssueMultiSelectInput 
+import MergeSyncTaskJiraIssueMultiSelectInput
   from "components/tasks/details/tasks/merge_sync_task/inputs/MergeSyncTaskJiraIssueMultiSelectInput";
 
 export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
@@ -43,7 +43,7 @@ export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
     if (taskModel) {
       try {
         const gitConfigurationModel = modelHelpers.getToolConfigurationModel(taskModel?.getData("configuration.git"), mergeSyncTaskGitConfigurationMetadata);
-        setGitConfigurationModel({...gitConfigurationModel});
+        setGitConfigurationModel({ ...gitConfigurationModel });
       }
       catch (error) {
         toastContext.showInlineErrorMessage(error, "Error initializing Task run:");
@@ -52,9 +52,9 @@ export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
   }, [taskModel]);
 
   const setModelFunction = (newModel) => {
-    setGitConfigurationModel({...newModel});
+    setGitConfigurationModel({ ...newModel });
     taskModel?.setData("configuration.git", newModel?.getPersistData());
-    setTaskModel({...taskModel});
+    setTaskModel({ ...taskModel });
   };
 
   const getDestinationBranchInputs = () => {
@@ -118,7 +118,7 @@ export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
       />
       <div>Please select the repository and branch you wish to use for this Salesforce workflow</div>
       <Row>
-        { gitConfigurationModel?.getData("isSalesforce") === true ?
+        {gitConfigurationModel?.getData("jiraIssueIds")?.length > 0 ?
           (<Col lg={12}>
             <MergeSyncTaskJiraIssueMultiSelectInput
               model={gitConfigurationModel}
@@ -140,7 +140,7 @@ export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
             setModel={setModelFunction}
           />
         </Col>
-        {(gitConfigurationModel?.getData("jiraIssueIds") === undefined || gitConfigurationModel?.getData("jiraIssueIds")?.length === 0) ? 
+        {(gitConfigurationModel?.getData("jiraIssueIds") === undefined || gitConfigurationModel?.getData("jiraIssueIds")?.length === 0) ?
           (<Col lg={12}>
             <GitToGitMergeSyncTaskSourceBranchSelectInput
               model={gitConfigurationModel}

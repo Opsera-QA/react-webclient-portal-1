@@ -59,7 +59,7 @@ const MergeSyncTaskWizardCommitViewer = ({
 
   const toggleView = async () => {
     const oldInJsonView = inJsonView;
-    if(oldInJsonView && hasStringValue(diffFile?.committedFile)) {
+    if (oldInJsonView && hasStringValue(diffFile?.committedFile)) {
       await loadData().catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -171,14 +171,102 @@ const MergeSyncTaskWizardCommitViewer = ({
     );
   }
 
+  const getCommitActionLabel = (action) => {
+    switch (action?.toLowerCase()) {
+      case "modified":
+        return (
+          <span style={{
+            display: "flex",
+            backgroundColor: "#b3d4ff",
+            borderColor: "#b3d4ff",
+            color: "#0052cc", border: 1,
+            padding: "2px 5px",
+            textAlign: 'center',
+            borderRadius: 3,
+            fontWeight: 500,
+            alignItems: 'center',
+            textTransform: 'capitalize',
+            marginLeft: 10 
+          }}>{action}</span>
+        );
+      case "added":
+        return (
+          <span style={{
+            display: "flex",
+            backgroundColor: "#00875a",
+            borderColor: "#00875a",
+            color: "#fff", border: 1,
+            padding: "2px 5px",
+            textAlign: 'center',
+            borderRadius: 3,
+            fontWeight: 500,
+            alignItems: 'center',
+            textTransform: 'capitalize',
+            marginLeft: 10
+          }}>{action}</span>
+        );
+      case "removed":
+        return (
+          <span style={{
+            display: "flex",
+            backgroundColor: "#E57373",
+            borderColor: "#E57373",
+            color: "#fff", border: 1,
+            padding: "2px 5px",
+            textAlign: 'center',
+            borderRadius: 3,
+            fontWeight: 500,
+            alignItems: 'center',
+            textTransform: 'capitalize',
+            marginLeft: 10
+          }}>{action}</span>
+        );
+      case "conflict":
+        return (
+          <span style={{
+            display: "flex",
+            backgroundColor: "#ffab00",
+            borderColor: "#ffab00",
+            color: "#253858", border: 1,
+            padding: "2px 5px",
+            textAlign: 'center',
+            borderRadius: 3,
+            fontWeight: 500,
+            alignItems: 'center',
+            textTransform: 'capitalize',
+            marginLeft: 10
+          }}>{action}</span>
+        );
+      default:
+        return (
+          <span style={{
+            display: "flex",
+            backgroundColor: "#00897b",
+            borderColor: "#00897b",
+            color: "#fff", border: 1,
+            padding: "2px 5px",
+            textAlign: 'center',
+            borderRadius: 3,
+            fontWeight: 500,
+            alignItems: 'center',
+            textTransform: 'capitalize',
+            marginLeft: 10
+          }}>{action}</span>
+        );
+    }
+  };
+
   const getTitleActionButtons = () => {
     return (
       <div className={"d-flex justify-content-between"}>
-        <TextFieldBase
-          dataObject={comparisonFileModel}
-          fieldName={"file"}
-          className={"my-auto"}
-        />
+        <div className="flex">
+          <TextFieldBase
+            dataObject={comparisonFileModel}
+            fieldName={"file"}
+            className={"my-auto"}
+          />
+          {getCommitActionLabel(diffFile?.commitAction)}
+        </div>
         <div className={"d-flex"}>
           <RefreshButton
             loadDataFunction={loadData}

@@ -20,6 +20,7 @@ function MergeSyncTaskWizardSubmitSelectedFilesButton({
   className,
   icon,
   isLoading,
+  newRecord,
 }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -46,12 +47,14 @@ function MergeSyncTaskWizardSubmitSelectedFilesButton({
   const submitSelectedFiles = async () => {
     try {
       setIsSaving(true);
-      await mergeSyncTaskWizardActions.setSelectedFileListV2(
-        getAccessToken,
-        cancelTokenSource,
-        wizardModel?.getData("recordId"),
-        wizardModel?.getArrayData("fileSelectionRules"),
-      );
+      if(newRecord){
+        await mergeSyncTaskWizardActions.setSelectedFileListV2(
+          getAccessToken,
+          cancelTokenSource,
+          wizardModel?.getData("recordId"),
+          wizardModel?.getArrayData("fileSelectionRules"),
+        );
+      }
       setCurrentScreen(MERGE_SYNC_WIZARD_SCREENS.COMMIT_SELECTION_SCREEN);
     } catch (error) {
       if (isMounted?.current === true) {
@@ -108,11 +111,13 @@ MergeSyncTaskWizardSubmitSelectedFilesButton.propTypes = {
   size: PropTypes.string,
   className: PropTypes.string,
   isLoading: PropTypes.bool,
+  newRecord: PropTypes.bool,
 };
 
 MergeSyncTaskWizardSubmitSelectedFilesButton.defaultProps = {
   size: "sm",
-  icon: faStepForward
+  icon: faStepForward,
+  newRecord: true,
 };
 
 export default MergeSyncTaskWizardSubmitSelectedFilesButton;
