@@ -205,10 +205,10 @@ function TaskConfigurationSummaryPanel({ taskModel }) {
       case TASK_TYPES.SCM_TO_SCM_MIGRATION:
         return (
           <ScmToScmMigrationTaskSummaryCard 
-            taskConfigDataModel={modelHelpers.parseObjectIntoModel(
+            taskConfigurationModel={modelHelpers.parseObjectIntoModel(
               taskModel?.getData("configuration"),
               scmToScmMigrationTaskConfigurationMetadata,
-            )}            
+            )}
           />
         );
       default:

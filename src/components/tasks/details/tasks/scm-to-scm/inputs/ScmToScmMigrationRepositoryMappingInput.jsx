@@ -22,6 +22,11 @@ function ScmToScmMigrationRepositoryMappingInput({
   allowIncompleteItems,
   regexValidationRequired,
   disabled,
+  sourceScmType,
+  sourceGitToolId,
+  sourceWorkspace,
+  targetScmType,
+  targetGitToolId,
 }) {
   const [field] = useState(model.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -34,6 +39,7 @@ function ScmToScmMigrationRepositoryMappingInput({
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
+  const { getAccessToken } = useContext(AuthContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
@@ -57,7 +63,13 @@ function ScmToScmMigrationRepositoryMappingInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [
+    sourceScmType,
+    sourceGitToolId,
+    sourceWorkspace,
+    targetScmType,
+    targetGitToolId,
+  ]);
 
   useEffect(() => {
     let newModel = { ...model };
@@ -156,7 +168,7 @@ function ScmToScmMigrationRepositoryMappingInput({
   const handleRepositorySelection = (data) => {
     setSourceRepoName(data.repository);
     setRepoUrl(data.gitUrl);
-    setTargetRepoName(data.repository);
+    setTargetRepoName(data?.nameSpacedPath?.substring(data?.nameSpacedPath?.lastIndexOf("/")+1));
   };
 
   const getInputRow = () => {
@@ -169,9 +181,9 @@ function ScmToScmMigrationRepositoryMappingInput({
                 <ScmToScmMigrationStandaloneRepositorySelectInput              
                   setDataFunction={handleRepositorySelection}
                   value={sourceRepoName}
-                  service={model?.getData("sourceScmType")}
-                  gitToolId={model?.getData("sourceGitToolId")}
-                  workspace={model?.getData("sourceWorkspace")}
+                  service={sourceScmType}
+                  gitToolId={sourceGitToolId}
+                  workspace={sourceWorkspace}
                   selectedRepositories={selectedRepositories}
                   setErrorMessage={setErrorMessage}
                 />            
@@ -180,8 +192,8 @@ function ScmToScmMigrationRepositoryMappingInput({
                 <ScmToScmMigrationStandaloneOrganizationSelectInput              
                   setDataFunction={setTargetOrgName}
                   value={targetOrgName}
-                  service={model?.getData("targetScmType")}
-                  gitToolId={model?.getData("targetGitToolId")}                  
+                  service={targetScmType}
+                  gitToolId={targetGitToolId}
                   setErrorMessage={setErrorMessage}
                 />
               </Col>
