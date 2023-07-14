@@ -34,6 +34,7 @@ function GitlabCommitsByAuthorVerticalTabContainer({
               tabText={item}
             />
           );
+
         })}
       </VanitySetVerticalTabContainer>
     );

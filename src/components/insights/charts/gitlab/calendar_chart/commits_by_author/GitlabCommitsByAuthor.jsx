@@ -1,17 +1,17 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveHeatMap } from "@nivo/heatmap";
 import config from "./gitlabCommitsByAuthorConfig";
 import ModalLogs from "components/common/modal/modalLogs";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig } from '../../../charts-views';
 import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
-import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
-import GitlabCommitsByAuthorActionableOverlay from "./GitlabCommitsByAuthorActionableOverlay";
-
+import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
+import GitlabCommitsByAuthorActionableModal from "./GitlabCommitsByAuthorActionableOverlay";
+import GitlabCommitsByAuthorVerticalTabContainer from "./GitlabCommitsByAuthorVerticalTabContainer";
 function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -48,12 +48,12 @@ function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let dashboardOrgs =
-      dashboardData?.data?.filters[
-        dashboardData?.data?.filters.findIndex(
-          (obj) => obj.type === "organizations",
-        )
-      ]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "gitlabTotalCommitsByUserAndDate", kpiConfiguration, dashboardTags,null,null,dashboardOrgs);
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "organizations",
+          )
+        ]?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "gitlabTotalCommitsByUserAndDate", kpiConfiguration, dashboardTags, null, null, dashboardOrgs);
       let dataObject = response?.data ? response?.data?.data[0]?.gitlabTotalCommitsByUserAndDate?.data : [];
 
       if (isMounted?.current === true && dataObject) {
@@ -73,24 +73,42 @@ function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
     }
   };
 
-  const onChartClick = () => {
+  const onNodeSelect = (node) => {
+    if (node?.data?.y != 0) {
+      toastContext.showInfoOverlayPanel(
+        <GitlabCommitsByAuthorActionableModal
+          kpiConfiguration={kpiConfiguration}
+          dashboardData={dashboardData}
+          author={node?.data?.x}
+          date={node?.serieId}
+          endDate={node?.data?.upperBound}
+          startDate={node?.data?.lowerBound}
+          y={node?.data?.y}
+        />
+      );
+    }
+  };
+  const onRowSelect = () => {
     toastContext.showInfoOverlayPanel(
-      <GitlabCommitsByAuthorActionableOverlay metrics={metrics} />
+      <GitlabCommitsByAuthorVerticalTabContainer
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+        metrics={metrics}
+      />
     );
   };
-
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
 
     return (
-      <div className="new-chart mb-3" style={{height: METRIC_CHART_STANDARD_HEIGHT}}>
+      <div className="new-chart mb-3" style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
         <ResponsiveHeatMap
           data={metrics}
           {...defaultConfig("Date", "", true, true, "yearMonthDate", "cutoffString")}
           {...config("purple_orange")}
-          onClick={onChartClick}
+          onClick={(node) => { onNodeSelect(node) }}
         />
       </div>
     );
@@ -109,6 +127,7 @@ function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        launchActionableInsightsFunction={onRowSelect}
       />
       <ModalLogs
         header="Commits By Author"
