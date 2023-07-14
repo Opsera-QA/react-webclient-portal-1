@@ -17,7 +17,7 @@ function GitlabCommitsByAuthorActionableTable({ data, isLoading, loadData, filte
         () => [
             getTableTextColumn(getField(fields, "userName"), "userName"),
             getTableDateTimeColumn(getField(fields, "commitTimeStamp"), "commitTimeStamp"),
-            getTableDateTimeColumn(getField(fields, "commitId"), "commitId"),
+            getTableTextColumn(getField(fields, "commitId"), "commitId"),
             getTableTextColumn(getField(fields, "repositoryName"), "repositoryName"),
             getTableTextColumn(getField(fields, "commitMessage"), "commitMessage"),
 
