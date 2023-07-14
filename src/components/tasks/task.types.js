@@ -40,6 +40,7 @@ export const TASK_TYPES = {
   SALESFORCE_TO_GIT_MERGE_SYNC: "SFDC_GIT_COMPARE_SYNC",
   SALESFORCE_QUICK_DEPLOY: "sfdc_quick_deploy",
   SALESFORCE_CUSTOM_SETTING_MIGRATION: "CUSTOM_SETTING_MIGRATION",
+  SALESFORCE_DATA_SEEDING: "SALESFORCE_DATA_SEEDING",
 
   //Git
   SYNC_GIT_BRANCHES: "sync-git-branches",
@@ -66,6 +67,7 @@ export const TASK_TYPE_LABELS = {
   SALESFORCE_TO_GIT_MERGE_SYNC: "Salesforce to Git Merge Sync",
   SALESFORCE_QUICK_DEPLOY: "Salesforce Quick Deploy",
   SALESFORCE_CUSTOM_SETTING_MIGRATION: "Salesforce Custom Setting Migration (BETA)",
+  SALESFORCE_DATA_SEEDING: "Salesforce Data Seeding (BETA)",
 
   // Git
   SYNC_GIT_BRANCHES: "Git to Git Sync",
@@ -97,6 +99,8 @@ export const getTaskTypeLabel = (taskType) => {
       return TASK_TYPE_LABELS.SALESFORCE_QUICK_DEPLOY;
     case TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION:
       return TASK_TYPE_LABELS.SALESFORCE_CUSTOM_SETTING_MIGRATION;
+    case TASK_TYPES.SALESFORCE_DATA_SEEDING:
+      return TASK_TYPE_LABELS.SALESFORCE_DATA_SEEDING;
 
 
     // Merge Sync
@@ -176,6 +180,11 @@ export const PRODUCTION_TASK_TYPE_SELECT_OPTIONS = [
     value: TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION,
     category: "Salesforce",
   },
+  {
+    text: TASK_TYPE_LABELS.SALESFORCE_DATA_SEEDING,
+    value: TASK_TYPES.SALESFORCE_DATA_SEEDING,
+    category: "Salesforce",
+  },
 
   //snaplogic
   { text: TASK_TYPE_LABELS.SNAPLOGIC_TASK, value: TASK_TYPES.SNAPLOGIC_TASK, category: "Git" },
@@ -216,6 +225,11 @@ export const NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS = [
   {
     text: TASK_TYPE_LABELS.SALESFORCE_CUSTOM_SETTING_MIGRATION,
     value: TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION,
+    category: "Salesforce",
+  },
+  {
+    text: TASK_TYPE_LABELS.SALESFORCE_DATA_SEEDING,
+    value: TASK_TYPES.SALESFORCE_DATA_SEEDING,
     category: "Salesforce",
   },
 

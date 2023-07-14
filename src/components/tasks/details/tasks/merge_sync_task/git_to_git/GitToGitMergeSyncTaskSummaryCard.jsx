@@ -47,7 +47,7 @@ function GitToGitMergeSyncTaskSummaryCard({ taskConfigurationModel, isLoading })
   };
 
   const getJiraFields = () => {
-    if (taskConfigurationModel?.getData("isSalesforce") !== true) {
+    if (taskConfigurationModel?.getData("enableJiraIntegration") !== true) {
       return null;
     }
     return (

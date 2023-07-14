@@ -90,15 +90,6 @@ function CustomSettingMigrationLogSummaryReportPanel({ activityData }) {
   };
 
 
-  if (summaryData == null) {
-    return (
-      <div className={"mt-3"}>
-        <IconBase className={"mr-2"} icon={faCheckCircle} />
-        There was no proper report captured with this execution.
-      </div>
-    );
-  }
-
   const getTabContentContainer = () => {
     return (
       <VanitySetTabViewContainer>
@@ -160,6 +151,15 @@ function CustomSettingMigrationLogSummaryReportPanel({ activityData }) {
         message={"Loading Summary Report"}
         size={'sm'}
       />
+    );
+  }
+
+  if (!isLoading && summaryData == null) {
+    return (
+      <div className={"mt-3"}>
+        <IconBase className={"mr-2"} icon={faCheckCircle} />
+        There was no proper report captured with this execution.
+      </div>
     );
   }
 

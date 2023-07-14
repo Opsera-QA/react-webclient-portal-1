@@ -19,6 +19,7 @@ import StandaloneSaveButton from "../../../../../../../../../common/buttons/savi
 import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
 import ToolNameFieldDisplayer from "../../../../../../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
 import MergeSyncTaskWizardProfileSubmitFileButton from "../MergeSyncTaskWizardProfileSubmitFileButton";
+import { getDiff } from "./utils";
 
 const MergeSyncTaskWizardFlowJsonEditPanel = ({
   wizardModel,
@@ -203,24 +204,29 @@ const MergeSyncTaskWizardFlowJsonEditPanel = ({
       modifiedContentJson?.flowAccesses?.filter((obj) => {
         return obj?.flow?.toLowerCase().includes(searchText.toLowerCase());
       });
+    if (filteredData && filteredData.length && originalContentJson?.flowAccesses) {
+      const { arr2 } = getDiff([...originalContentJson?.flowAccesses], [...filteredData], 'flow');
+      filteredData = arr2;
+    }
     return (
       <Col>
-        <span className="h5">
+        {wizardModel?.getData("taskType") === "GIT_VS_GIT_SYNC" ? <span className="h5">
+          Source Git Branch ({wizardModel?.getData("sourceBranch")}
+          )</span> : <span className="h5">
           Source Salesforce Org (
           <ToolNameFieldDisplayer
             toolId={wizardModel?.getData("sfdcToolId")}
             loadToolInNewWindow={true}
           />
-          )
-        </span>
+          )</span>}
         {filteredData && filteredData.length > 0 ? (
           filteredData.map((flowData, idx, { length }) => (
             <div key={idx}>
-              <FlowProfileEditorView
+              {flowData?.isDummy !== undefined ? <div style={{ height: '77.59px' }}></div> : (<FlowProfileEditorView
                 flowData={flowData}
                 setFlowDataJson={setFlowDataJson}
                 isLoading={isLoading}
-              />
+              />)}
               {idx + 1 !== length && <DividerWithCenteredText />}
             </div>
           ))
@@ -240,6 +246,10 @@ const MergeSyncTaskWizardFlowJsonEditPanel = ({
       originalContentJson?.flowAccesses?.filter((obj) => {
         return obj?.flow?.toLowerCase().includes(searchText.toLowerCase());
       });
+    if (filteredData && filteredData.length > 0 && modifiedContentJson?.flowAccesses) {
+      const { arr1 } = getDiff([...filteredData], [...modifiedContentJson?.flowAccesses], 'flow');
+      filteredData = arr1;
+    }
     return (
       <Col>
         <span className="h5">
@@ -248,12 +258,12 @@ const MergeSyncTaskWizardFlowJsonEditPanel = ({
         {filteredData && filteredData.length > 0 ? (
           filteredData.map((flowData, idx, { length }) => (
             <div key={idx}>
-              <FlowProfileEditorView
+              {flowData?.isDummy !== undefined ? <div style={{ height: '77.59px' }}></div> : (<FlowProfileEditorView
                 flowData={flowData}
                 setFlowDataJson={setFlowDataJson}
                 isLoading={isLoading}
                 disabled={true}
-              />
+              />)}
               {idx + 1 !== length && <DividerWithCenteredText />}
             </div>
           ))

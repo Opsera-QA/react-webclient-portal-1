@@ -12,10 +12,18 @@ import JFrogMavenStepTypeSelectInput from "./inputs/JFrogMavenStepTypeSelectInpu
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import JFrogRepositoryFormatSelectInput from "./inputs/JFrogRepositoryFormatSelectInput";
 
-function JFrogMavenStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan, parentCallback }) {
-
+function JFrogMavenStepConfiguration({
+  pipelineId,
+  stepTool,
+  stepId,
+  createJob,
+  closeEditorPanel,
+  plan,
+  parentCallback,
+}) {
   const [isLoading, setIsLoading] = useState(false);
-  const [jfrogStepConfigurationDto, setJFrogStepConfigurationDataDto] = useState(undefined);
+  const [jfrogStepConfigurationDto, setJFrogStepConfigurationDataDto] =
+    useState(undefined);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [listOfSteps, setListOfSteps] = useState([]);
@@ -30,10 +38,10 @@ function JFrogMavenStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
     }
   }, [plan, stepId]);
 
-  const formatStepOptions = (plan, stepId) => {    
+  const formatStepOptions = (plan, stepId) => {
     let STEP_OPTIONS = plan.slice(
       0,
-      plan.findIndex((element) => element._id === stepId)
+      plan.findIndex((element) => element._id === stepId),
     );
     return STEP_OPTIONS;
   };
@@ -41,7 +49,10 @@ function JFrogMavenStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
   const loadData = async () => {
     setIsLoading(true);
     let { threshold } = stepTool;
-    let jfrogConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, jfrogMavenStepFormMetadata);
+    let jfrogConfigurationData = modelHelpers.getPipelineStepConfigurationModel(
+      stepTool,
+      jfrogMavenStepFormMetadata,
+    );
 
     setJFrogStepConfigurationDataDto(jfrogConfigurationData);
 
@@ -60,9 +71,12 @@ function JFrogMavenStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
 
   const callbackFunction = async () => {
     let newDataObject = jfrogStepConfigurationDto;
-    const packageId = jfrogStepConfigurationDto.getData("groupName") + ":" + jfrogStepConfigurationDto.getData("artifactName");
+    const packageId =
+      jfrogStepConfigurationDto.getData("groupName") +
+      ":" +
+      jfrogStepConfigurationDto.getData("artifactName");
     newDataObject.setData("packageId", packageId);
-    setJFrogStepConfigurationDataDto({...newDataObject});
+    setJFrogStepConfigurationDataDto({ ...newDataObject });
     const item = {
       configuration: jfrogStepConfigurationDto.getPersistData(),
       threshold: {
@@ -108,6 +122,17 @@ function JFrogMavenStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
             />
           </>
         );
+      case "Generic":
+        return (
+          <>
+            <TextInputBase
+              setDataObject={setJFrogStepConfigurationDataDto}
+              dataObject={jfrogStepConfigurationDto}
+              fieldName={"serverPath"}
+              key={"serverPath"}
+            />
+          </>
+        );
       default:
         return null;
     }
@@ -128,16 +153,26 @@ function JFrogMavenStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
         model={jfrogStepConfigurationDto}
         setModel={setJFrogStepConfigurationDataDto}
       />
-      <JFrogMavenStepTypeSelectInput dataObject={jfrogStepConfigurationDto} setDataObject={setJFrogStepConfigurationDataDto} />
-      <JFrogRepositoryFormatSelectInput dataObject={jfrogStepConfigurationDto} setDataObject={setJFrogStepConfigurationDataDto} />
+      <JFrogMavenStepTypeSelectInput
+        dataObject={jfrogStepConfigurationDto}
+        setDataObject={setJFrogStepConfigurationDataDto}
+      />
+      <JFrogRepositoryFormatSelectInput
+        dataObject={jfrogStepConfigurationDto}
+        setDataObject={setJFrogStepConfigurationDataDto}
+      />
       <JfrogMavenRepoSelectInput
         fieldName={"repositoryName"}
         dataObject={jfrogStepConfigurationDto}
         setDataObject={setJFrogStepConfigurationDataDto}
         options={listOfSteps}
-        disabled={jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("jfrogToolConfigId")?.length === 0}
+        disabled={
+          jfrogStepConfigurationDto &&
+          jfrogStepConfigurationDto.getData("jfrogToolConfigId")?.length === 0
+        }
         tool_prop={
-          jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("jfrogToolConfigId")
+          jfrogStepConfigurationDto &&
+          jfrogStepConfigurationDto.getData("jfrogToolConfigId")
             ? jfrogStepConfigurationDto.getData("jfrogToolConfigId")
             : ""
         }
@@ -148,7 +183,9 @@ function JFrogMavenStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
         setDataObject={setJFrogStepConfigurationDataDto}
         options={listOfSteps}
         disabled={
-          (jfrogStepConfigurationDto && jfrogStepConfigurationDto.getData("jfrogToolConfigId")?.length === 0) ||
+          (jfrogStepConfigurationDto &&
+            jfrogStepConfigurationDto.getData("jfrogToolConfigId")?.length ===
+              0) ||
           (listOfSteps && listOfSteps.length === 0)
         }
       />
