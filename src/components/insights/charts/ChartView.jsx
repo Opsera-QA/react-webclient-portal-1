@@ -224,9 +224,7 @@ function ChartView({
   //  this should be deleted and we should just return getChart() at bottom of component instead
   const getView = () => {
     if (
-      kpiConfig?.kpi_identifier !== "jenkins-deployment-frequency" &&
       kpiConfig?.kpi_identifier !== "jenkins-change-failure-rate" &&
-      kpiConfig?.kpi_identifier !== "jenkins-deployments-counts" &&
       kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-cpu-usage" &&
       kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-memory-usage" &&
       kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-in-network-usage" &&
@@ -490,10 +488,19 @@ function ChartView({
         );
       case "jenkins-deployment-frequency":
         return (
-          <JenkinsDeploymentFrequencyLineChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-          />
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
+            <JenkinsDeploymentFrequencyLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "jenkins-change-failure-rate":
         return (
@@ -504,10 +511,19 @@ function ChartView({
         );
       case "jenkins-deployments-counts":
         return (
-          <JenkinsDeploymentsCountsBarChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-          />
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
+            <JenkinsDeploymentsCountsBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "jenkins-recent-build-status":
         return (
@@ -525,7 +541,8 @@ function ChartView({
             />
           </Col>
         );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.JENKINS_CHANGE_FAILURE_RATE_V2:
+      case kpiIdentifierConstants.KPI_IDENTIFIERS
+        .JENKINS_CHANGE_FAILURE_RATE_V2:
         return (
           <Col
             xl={6}
@@ -1753,7 +1770,8 @@ function ChartView({
             />
           </Col>
         );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_TO_GIT_MERGE_SYNC_TASK:
+      case kpiIdentifierConstants.KPI_IDENTIFIERS
+        .SALESFORCE_TO_GIT_MERGE_SYNC_TASK:
         return (
           <Col
             md={12}
@@ -2320,8 +2338,8 @@ function ChartView({
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_SCRAPER_METRICS:
         return (
           <Col
-              md={12}
-              className="p-2"
+            md={12}
+            className="p-2"
           >
             <GitSrapperMetrics
               kpiConfiguration={kpiConfig}
@@ -2379,7 +2397,10 @@ function ChartView({
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_LOG_DEVELOPER_360:
         return (
-          <Col md={6} className="p-2">
+          <Col
+            md={6}
+            className="p-2"
+          >
             <GitLogDeveloper360
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -2406,7 +2427,10 @@ function ChartView({
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.AQUASEC_ISSUES_BY_SEVERITY:
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <AquasecIssuesBySeverity
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -2418,7 +2442,10 @@ function ChartView({
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_CODE_ANALYSER:
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <SalesforceCodeAnalyserChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
