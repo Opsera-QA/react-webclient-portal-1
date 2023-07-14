@@ -39,7 +39,6 @@ function ScmToScmMigrationRepositoryMappingInput({
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
-  const { getAccessToken } = useContext(AuthContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
