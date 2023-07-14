@@ -46,6 +46,7 @@ export const TASK_TYPES = {
   SYNC_GIT_BRANCHES: "sync-git-branches",
   GIT_TO_GIT_MERGE_SYNC: "GIT_VS_GIT_SYNC",
   GITSCRAPER: "gitscraper",
+  SCM_TO_SCM_MIGRATION: "SCM_TO_SCM_MIGRATION",
 
   //AWS
   AWS_CREATE_ECS_CLUSTER: "ecs_cluster_creation",
@@ -73,6 +74,7 @@ export const TASK_TYPE_LABELS = {
   SYNC_GIT_BRANCHES: "Git to Git Sync",
   GIT_TO_GIT_MERGE_SYNC: "Git to Git Merge Sync",
   GITSCRAPER: "Git Custodian",
+  SCM_TO_SCM_MIGRATION: "SCM to SCM Migration",
 
   // AWS
   AWS_CREATE_ECS_CLUSTER: "AWS ECS Cluster Creation",
@@ -114,6 +116,8 @@ export const getTaskTypeLabel = (taskType) => {
       return TASK_TYPE_LABELS.SYNC_GIT_BRANCHES;
     case TASK_TYPES.GITSCRAPER:
       return TASK_TYPE_LABELS.GITSCRAPER;
+    case TASK_TYPES.SCM_TO_SCM_MIGRATION:
+      return TASK_TYPE_LABELS.SCM_TO_SCM_MIGRATION;
 
     // AWS
     case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
@@ -154,6 +158,11 @@ export const PRODUCTION_TASK_TYPE_SELECT_OPTIONS = [
 
   // Git
   { text: TASK_TYPE_LABELS.GIT_TO_GIT_MERGE_SYNC, value: TASK_TYPES.GIT_TO_GIT_MERGE_SYNC, category: "Git" },
+  {
+    text: TASK_TYPE_LABELS.SCM_TO_SCM_MIGRATION,
+    value: TASK_TYPES.SCM_TO_SCM_MIGRATION,
+    category: "Git",
+  },
   // { text: TASK_TYPE_LABELS.SYNC_GIT_BRANCHES, value: TASK_TYPES.SYNC_GIT_BRANCHES, category: "Git" },
   { text: TASK_TYPE_LABELS.GITSCRAPER, value: TASK_TYPES.GITSCRAPER, category: "Compliance" },
 
@@ -201,6 +210,11 @@ export const NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS = [
 
   // Git
   { text: TASK_TYPE_LABELS.GIT_TO_GIT_MERGE_SYNC, value: TASK_TYPES.GIT_TO_GIT_MERGE_SYNC, category: "Git" },
+  {
+    text: TASK_TYPE_LABELS.SCM_TO_SCM_MIGRATION,
+    value: TASK_TYPES.SCM_TO_SCM_MIGRATION,
+    category: "Git",
+  },
   // { text: TASK_TYPE_LABELS.SYNC_GIT_BRANCHES, value: TASK_TYPES.SYNC_GIT_BRANCHES, category: "Git" },
   { text: TASK_TYPE_LABELS.GITSCRAPER, value: TASK_TYPES.GITSCRAPER, category: "Compliance" },
 

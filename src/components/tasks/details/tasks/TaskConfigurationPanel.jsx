@@ -22,6 +22,7 @@ import GitScraperConfigurationPanel from "./gitscraper/GitScraperConfigurationPa
 import SalesforceCustomSettingMigrationTaskEditorPanel
   from "./sfdc-custom-setting-migration/SalesforceCustomSettingMigrationTaskEditorPanel";
 import SalesforceDataSeedingTaskEditorPanel from "./sfdc-data-seeding/SalesforceDataSeedingTaskEditorPanel";
+import ScmToScmMigrationTaskConfigurationEditorPanel from "./scm-to-scm/ScmToScmMigrationTaskConfigurationEditorPanel";
 
 function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationModel, setTaskConfigurationModel, taskType }) {
   const getConfigurationPanel = () => {
@@ -141,6 +142,14 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
       case TASK_TYPES.SALESFORCE_DATA_SEEDING:
         return (
           <SalesforceDataSeedingTaskEditorPanel
+            taskModel={taskModel}
+            setTaskConfigurationModel={setTaskConfigurationModel}
+            taskConfigurationModel={taskConfigurationModel}
+          />
+        );
+      case TASK_TYPES.SCM_TO_SCM_MIGRATION:
+        return (
+          <ScmToScmMigrationTaskConfigurationEditorPanel
             taskModel={taskModel}
             setTaskConfigurationModel={setTaskConfigurationModel}
             taskConfigurationModel={taskConfigurationModel}
