@@ -51,8 +51,9 @@ import GithubMostActiveContributorsEditorPanel from "../../charts/github/table/m
 import GithubPendingMergeRequestsEditorPanel from "../../charts/github/table/pending_merge_requests/GithubPendingMergeRequestsEditorPanel";
 import GithubRecentMergeRequestsEditorPanel from "../../charts/github/table/recent_merge_requests/GithubRecentMergeRequestsEditorPanel";
 import GithubCommitsStatisticsEditorPanel from "../../charts/github/pie_chart/commits_statistics/GithubCommitsStatisticsEditorPanel";
-import JenkinsChangeFailureRateEditorPanel
-  from "../../charts/jenkins/pie_chart/change_failure_rate/JenkinsChangeFailureRateEditorPanel";
+import JenkinsChangeFailureRateEditorPanel from "../../charts/jenkins/pie_chart/change_failure_rate/JenkinsChangeFailureRateEditorPanel";
+import JenkinsDeploymentFrequencyEditorPanel from "../../charts/jenkins/line_chart/deployment_frequency/JenkinsDeploymentFrequencyEditorPanel";
+import JenkinsDeploymentCountsEditorPanel from "../../charts/jenkins/bar_chart/deployments_counts/JenkinsDeploymentCountsEditorPanel";
 import GitScrapperEditorPanel from "../../charts/gitscrapper/GitScrapperEditorPanel";
 
 // TODO: combine with chart settings overlay?
@@ -528,25 +529,46 @@ function DashboardMetricOverlayContainer({
             kpiConfiguration={kpiConfiguration}
           />
         );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.JENKINS_CHANGE_FAILURE_RATE_V2:
+      case kpiIdentifierConstants.KPI_IDENTIFIERS
+        .JENKINS_CHANGE_FAILURE_RATE_V2:
         return (
-            <JenkinsChangeFailureRateEditorPanel
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-                unpackedFilterData={unpackedFilterData}
-                kpiConfiguration={kpiConfiguration}
-            />
+          <JenkinsChangeFailureRateEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.JENKINS_DEPLOYMENT_FREQUENCY:
+        return (
+          <JenkinsDeploymentFrequencyEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.JENKINS_DEPLOYMENT_COUNTS:
+        return (
+          <JenkinsDeploymentCountsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_SCRAPER_METRICS:
         return (
-            <GitScrapperEditorPanel
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-                unpackedFilterData={unpackedFilterData}
-                kpiConfiguration={kpiConfiguration}
-            />
+          <GitScrapperEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
         );
     }
   };
