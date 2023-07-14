@@ -27,6 +27,7 @@ function MergeSyncTaskWizardUpdateConfigurationButton({
   const [isSaving, setIsSaving] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [isSalesforce] = useState(wizardModel?.getData("configuration.git.isSalesforce"));
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -80,7 +81,7 @@ function MergeSyncTaskWizardUpdateConfigurationButton({
   };
 
   const checkSelectedComponentTypes = () => {
-    if(wizardModel?.getData("taskType") === MERGE_SYNC_TASK_JOB_TYPES.SFDC_GIT_COMPARE_SYNC) {
+    if((wizardModel?.getData("taskType") === MERGE_SYNC_TASK_JOB_TYPES.SFDC_GIT_COMPARE_SYNC) || (wizardModel?.getData("taskType") === MERGE_SYNC_TASK_JOB_TYPES.GIT_VS_GIT_SYNC && isSalesforce)) {
       return wizardModel?.getArrayData("selectedComponentTypes").length < 1;
     }
     return false;
