@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function SalesforceMergeSyncTaskEnableJiraToggleInput(
+function GitToGitMergeSyncTaskEnableJiraToggleInput(
   {
     model,
     setModel,
@@ -30,10 +30,10 @@ function SalesforceMergeSyncTaskEnableJiraToggleInput(
   );
 }
 
-SalesforceMergeSyncTaskEnableJiraToggleInput.propTypes = {
+GitToGitMergeSyncTaskEnableJiraToggleInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default SalesforceMergeSyncTaskEnableJiraToggleInput;
+export default GitToGitMergeSyncTaskEnableJiraToggleInput;
