@@ -51,7 +51,6 @@ const ScmToScmMigrationStandaloneRepositorySelectInput = ({ value,  disabled, se
       setErrorMessage("");
       setIsLoading(true);
       setRepositories([]);
-      setDataFunction([]);
 
       switch (service) {
         case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
